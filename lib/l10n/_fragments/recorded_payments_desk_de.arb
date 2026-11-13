@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "recordedPaymentsColMatched": "Zugeordnet am",
+  "statementDeskColLine": "Posten",
+  "usageColBilled": "Abgerechnet",
+  "moneyReportsForMonth": "Berichte für {month}"
+}

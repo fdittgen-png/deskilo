@@ -217,6 +217,89 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('supply-class-field')), findsNothing);
   });
+
+  // #3864 — a new service starts from the business's own switches, and the
+  // seller sees what each choice means.
+  // The new-service sheet with the class field is taller than the default
+  // test window: a phone-tall window keeps its Save button on screen.
+  void tallWindow(WidgetTester tester) {
+    tester.view.physicalSize = const Size(800, 1400);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+  }
+
+  Future<ServiceItem> createDayPass(
+      WidgetTester tester, FakeMoneyRepository money,
+      {String? expectShown}) async {
+    await tester.tap(find.byKey(const ValueKey('services-new')));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Day pass');
+    await tester.enterText(find.widgetWithText(TextField, 'Price'), '2.50');
+    if (expectShown != null) {
+      final field = find.byKey(const ValueKey('supply-class-field'));
+      await tester.ensureVisible(field);
+      expect(find.text(expectShown), findsOneWidget);
+    }
+    final save = find.byKey(const ValueKey('services-save'));
+    await tester.ensureVisible(save);
+    await tester.pump();
+    await tester.tap(save);
+    await tester.pumpAndSettle();
+    return money.services.singleWhere((s) => s.name == 'Day pass');
+  }
+
+  testWidgets('#3864 — a business that books no places starts a general '
+      'service, and is asked even without the classification', (tester) async {
+    tallWindow(tester);
+    final money = await pumpVatServices(tester,
+        flags: const {'placeBooking': false, 'supplyClassification': false});
+    final created = await createDayPass(tester, money,
+        expectShown: 'General service (not connected with the premises)');
+    expect(created.supplyClass, SupplyClass.general);
+  });
+
+  testWidgets('#3864 — a business that books places starts at the premises',
+      (tester) async {
+    tallWindow(tester);
+    final money = await pumpVatServices(tester,
+        flags: const {'placeBooking': true, 'supplyClassification': true});
+    final created = await createDayPass(tester, money,
+        expectShown: 'Connected with the premises');
+    expect(created.supplyClass, SupplyClass.property);
+  });
+
+  testWidgets('#3864 — each choice says how it is taxed', (tester) async {
+    await pumpVatServices(tester, flags: const {'placeBooking': false});
+    await tester.tap(find.byKey(const ValueKey('services-new')));
+    await tester.pumpAndSettle();
+    final field = find.byKey(const ValueKey('supply-class-field'));
+    await tester.ensureVisible(field);
+    await tester.tap(field);
+    await tester.pumpAndSettle();
+    expect(find.text('Taxed where the premises are.'), findsOneWidget);
+    expect(
+        find.text('Taxed by the general rule: a business customer in another '
+            'member state accounts for the VAT.'),
+        findsOneWidget);
+  });
+
+  testWidgets('#3864 — an existing service keeps its class when place '
+      'booking is switched off', (tester) async {
+    final money = await pumpVatServices(tester,
+        flags: const {'placeBooking': false});
+
+    await tester.tap(find.text('Coffee'));
+    await tester.pumpAndSettle();
+    final field = find.byKey(const ValueKey('supply-class-field'));
+    await tester.ensureVisible(field);
+    expect(find.text('Connected with the premises'), findsOneWidget,
+        reason: 'the class it was saved with, not the new default');
+    await tester.tap(find.byKey(const ValueKey('services-save')));
+    await tester.pumpAndSettle();
+
+    expect(money.services.singleWhere((s) => s.name == 'Coffee').supplyClass,
+        SupplyClass.property);
+  });
 }
 
 /// #3552 — the sheet is taller: a control is brought into view first.

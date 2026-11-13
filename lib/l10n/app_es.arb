@@ -5146,6 +5146,7 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "La plataforma aún no ha confirmado este documento. Vuelva a consultarla más tarde.",
   "eInvoiceEndpointIdField": "Dirección electrónica",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"
@@ -7292,7 +7293,7 @@
   "featureStockManagementTitle": "Gestión de existencias",
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
-  "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.",
+  "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece, salvo en un negocio que no reserva espacios, cuyos servicios nuevos empiezan como servicios generales.",
   "featureSupplyClassificationTitle": "Lugar de prestación por servicio",
   "featureSupplyExpensesDesc": "Un gasto puede ser un suministro para el espacio (cápsulas de café, bolsas de aspiradora…): validado, repone o crea un servicio consumible con precio unitario, y los consumos descuentan el stock.",
   "featureSupplyExpensesTitle": "Suministros desde gastos",
@@ -12721,6 +12722,7 @@
   "moneyPaymentPeriodLabel": "Se aplica a",
   "moneyRecordPayment": "Registrar un pago",
   "moneyRemindedTimes": "Recordada ×{count}",
+  "moneyReportsForMonth": "Informes de {month}",
   "moneySectionDocuments": "Documentos",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
@@ -15361,6 +15363,7 @@
     }
   },
   "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
+  "recordedPaymentsColMatched": "Conciliado el",
   "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
@@ -19195,6 +19198,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Reservado por usted para esta franja.",
+  "statementDeskColLine": "Línea",
   "statusAwaiting": "Pendiente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -19702,9 +19706,11 @@
     "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Servicio general (no vinculado a los locales)",
+  "supplyClassGeneralMeaning": "Tributa por la regla general: un cliente empresarial de otro Estado miembro liquida el IVA.",
   "supplyClassHelper": "Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.",
   "supplyClassLabel": "Lugar de prestación",
   "supplyClassProperty": "Vinculado a los locales",
+  "supplyClassPropertyMeaning": "Tributa donde están los locales.",
   "supportChanged": "El contexto cambió. Prepare una nueva vista previa.",
   "supportDay": "Últimas 24 horas",
   "supportDemo": "Demo: contexto local simulado",
@@ -20846,6 +20852,7 @@
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",
   "usageBilledDuration": "Facturado {duration}",
   "usageBookedDuration": "Reservado {duration}",
+  "usageColBilled": "Facturado",
   "usageCorrected": "Corregido",
   "usageDelete": "Eliminar este registro",
   "usageDeleteSubmitted": "Eliminación solicitada.",

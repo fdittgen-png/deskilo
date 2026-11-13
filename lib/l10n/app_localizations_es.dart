@@ -8215,6 +8215,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Teléfono del contacto de facturación';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'La plataforma aún no ha confirmado este documento. Vuelva a consultarla más tarde.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Dirección electrónica';
 
   @override
@@ -11520,7 +11524,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get featureSupplyClassificationDesc =>
-      'Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.';
+      'Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece, salvo en un negocio que no reserva espacios, cuyos servicios nuevos empiezan como servicios generales.';
 
   @override
   String get featureSupplyClassificationTitle =>
@@ -21108,6 +21112,11 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String moneyReportsForMonth(String month) {
+    return 'Informes de $month';
+  }
+
+  @override
   String get moneySectionDocuments => 'Documentos';
 
   @override
@@ -25635,6 +25644,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get recapEmpty =>
       'No hubo inversión del sujeto pasivo en este periodo.';
+
+  @override
+  String get recordedPaymentsColMatched => 'Conciliado el';
 
   @override
   String get recordedPaymentsEmpty =>
@@ -31864,6 +31876,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceYoursNow => 'Reservado por usted para esta franja.';
 
   @override
+  String get statementDeskColLine => 'Línea';
+
+  @override
   String get statusAwaiting => 'Pendiente';
 
   @override
@@ -32382,6 +32397,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Servicio general (no vinculado a los locales)';
 
   @override
+  String get supplyClassGeneralMeaning =>
+      'Tributa por la regla general: un cliente empresarial de otro Estado miembro liquida el IVA.';
+
+  @override
   String get supplyClassHelper =>
       'Un puesto, una oficina o una sala tributa donde se encuentra el inmueble, para cualquier cliente. Elija «servicio general» solo para lo que no está ligado a los locales, como la gestión del correo o una oficina virtual: una empresa de otro país de la UE autoliquida entonces el IVA.';
 
@@ -32390,6 +32409,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get supplyClassProperty => 'Vinculado a los locales';
+
+  @override
+  String get supplyClassPropertyMeaning => 'Tributa donde están los locales.';
 
   @override
   String get supportChanged =>
@@ -34866,6 +34888,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String usageBookedDuration(String duration) {
     return 'Reservado $duration';
   }
+
+  @override
+  String get usageColBilled => 'Facturado';
 
   @override
   String get usageCorrected => 'Corregido';

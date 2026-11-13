@@ -13,6 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -21,6 +22,7 @@ import '../../domain/recorded_payments.dart';
 import '../../domain/register_period.dart';
 import '../../providers/money_queries_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
+import '../widgets/recorded_payments_table.dart';
 import 'money_view_data.dart';
 
 class RecordedPaymentsScreen extends ConsumerWidget {
@@ -175,6 +177,10 @@ class _PaymentsListState extends ConsumerState<_PaymentsList> {
     final rows = <Widget>[
       for (final p in widget.first.items) _PaymentRow(payment: p),
     ];
+    // #3627 — the payments themselves, for the desk's table; [tail] what
+    // follows them (a failed page, a page being read, the next page).
+    final payments = [...widget.first.items];
+    final tail = <Widget>[];
     RecordedPaymentsCursor? next = widget.first.nextCursor;
     for (final cursor in _more) {
       final key = _keyAfter(cursor);
@@ -183,9 +189,10 @@ class _PaymentsListState extends ConsumerState<_PaymentsList> {
       if (value.hasValue) {
         final page = value.requireValue;
         rows.addAll([for (final p in page.items) _PaymentRow(payment: p)]);
+        payments.addAll(page.items);
         next = page.nextCursor;
       } else if (value.hasError && !value.isLoading) {
-        rows.add(
+        tail.add(
           ReadFailureBanner(
             error: value.error!,
             onRetry: () => ref.invalidate(provider),
@@ -193,15 +200,16 @@ class _PaymentsListState extends ConsumerState<_PaymentsList> {
         );
         next = null;
       } else {
-        rows.add(
+        tail.add(
           const LinearProgressIndicator(key: ValueKey('read-refreshing')),
         );
         next = null;
       }
     }
+    final complete = next == null && tail.isEmpty;
     if (next != null) {
       final cursor = next;
-      rows.add(
+      tail.add(
         Align(
           alignment: AlignmentDirectional.centerStart,
           child: TextButton(
@@ -212,7 +220,22 @@ class _PaymentsListState extends ConsumerState<_PaymentsList> {
         ),
       );
     }
-    return ListView(padding: AppSpacing.mdAll, children: rows);
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: RecordedPaymentsTable(
+              payments: payments,
+              complete: complete,
+              cardBuilder: (_, p) => _PaymentRow(payment: p),
+            ),
+          ),
+          ...tail,
+        ],
+      );
+    }
+    return ListView(padding: AppSpacing.mdAll, children: [...rows, ...tail]);
   }
 }
 

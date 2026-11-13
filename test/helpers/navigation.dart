@@ -193,10 +193,20 @@ Future<void> openMoneyWorkspaceTools(WidgetTester tester) async {
   final tools = find.byKey(const ValueKey('money-workspace-tools'));
   final body = find.byKey(const ValueKey('money-face-body-invoices'));
   if (body.evaluate().isNotEmpty && find.byKey(const ValueKey('invoices-button')).evaluate().isEmpty) {
-    await tester.scrollUntilVisible(tools, 160, scrollable: find.descendant(of: body, matching: find.byType(Scrollable)).first);
+    await scrollInMoneyFace(tester, tools);
     await tester.ensureVisible(tools);
     await tester.pumpAndSettle();
     await tester.tap(tools);
     await tester.pumpAndSettle();
   }
+}
+
+/// Brings [target] into view inside the Invoices face: scrolls the face's
+/// list on a phone; at the desk (#3627) the face is a page, not a list, so
+/// there is nothing to scroll and the target is already built.
+Future<void> scrollInMoneyFace(WidgetTester tester, Finder target) async {
+  final body = find.byKey(const ValueKey('money-face-body-invoices'));
+  final scrollables = find.descendant(of: body, matching: find.byType(Scrollable));
+  if (scrollables.evaluate().isEmpty) return;
+  await tester.scrollUntilVisible(target, 160, scrollable: scrollables.first);
 }

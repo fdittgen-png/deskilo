@@ -16,6 +16,9 @@ import '../../providers/money_face_controller.dart';
 // content-fit: two face cards side by side keep their figures readable
 const double _twoColumnsMinWidth = 480;
 
+// content-fit: the month chooser's band beside the face's title at the desk
+const double _periodBandMaxWidth = 360;
+
 /// The label of a face, as the tab and the help hint call it.
 String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
       MoneyFace.statement => l10n.invoiceTemplateDocStatement,
@@ -147,11 +150,17 @@ class MoneyFacesView extends ConsumerStatefulWidget {
     required this.periodHeader,
     required this.cards,
     required this.actions,
+    this.pages = const {},
   });
 
   final Widget periodHeader;
   final Map<MoneyFace, List<Widget>> cards;
   final Map<MoneyFace, List<Widget>> actions;
+
+  /// #3627 — a face drawn as a page of its own at the desk (a dashboard
+  /// over a records table fills the height left under the headers) instead
+  /// of a column of cards.
+  final Map<MoneyFace, Widget> pages;
 
   @override
   ConsumerState<MoneyFacesView> createState() => _MoneyFacesViewState();
@@ -206,7 +215,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     };
     final scopeHeader = Padding(
       key: ValueKey('money-scope-${face.name}'),
-      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(_moneyFaceLabel(l10n, face), style: theme.textTheme.headlineSmall?.strong),
         const SizedBox(height: AppSpacing.xs),
@@ -242,6 +251,35 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
         Padding(padding: AppSpacing.gutterAll, child: Material(
           color: scheme.surfaceContainerLow, borderRadius: AppRadius.lgAll, child: tabs,
         )),
+        if (widget.pages[face] case final page?)
+          Expanded(
+            child: Padding(
+              key: ValueKey('money-face-body-${face.name}'),
+              padding: AppSpacing.gutterAll,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // The scope and the month share one band, so the table
+                  // keeps the height: what is above it gives way first.
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: scopeHeader),
+                      if (monthly)
+                        Flexible(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: _periodBandMaxWidth),
+                            child: Card(margin: EdgeInsets.zero, child: widget.periodHeader),
+                          ),
+                        ),
+                    ],
+                  ),
+                  Expanded(child: page),
+                ],
+              ),
+            ),
+          )
+        else
         Expanded(
           child: ListView(
             key: ValueKey('money-face-body-${face.name}'),

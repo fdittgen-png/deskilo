@@ -18,6 +18,7 @@ import {
   ConnectorDocument,
   Fetch,
   join,
+  noVerdictYet,
   parseJson,
   refused,
   Submission,
@@ -60,9 +61,20 @@ export async function submitItSdi(
   return accepted(uuid, text, { uuid });
 }
 
-/** The SdI notifications the intermediary relayed. The latest one is
- * the verdict: RC delivered, NS refused, MC not delivered (the SdI still
- * made it available to the buyer). */
+/** #3881 -- the SdI notifications that decide the document, and how: NS
+ * refuses it; RC delivers it; MC (not delivered, made available to the
+ * buyer in its fiscal drawer) and AT (the same for a public administration)
+ * count it as issued. Any other notification (MT, EC, SE, NE, DT) follows an
+ * outcome or is no outcome. */
+export const SDI_OUTCOMES: Readonly<Record<string, "accepted" | "rejected">> = {
+  NS: "rejected",
+  RC: "accepted",
+  MC: "accepted",
+  AT: "accepted",
+};
+
+/** The SdI notifications the intermediary relayed. The SdI's outcome
+ * notification is the verdict ([SDI_OUTCOMES]); before it, there is none. */
 export async function statusItSdi(
   cfg: Config,
   uuid: string,
@@ -98,8 +110,18 @@ export async function statusItSdi(
   } catch {
     notifications = [];
   }
-  const latest = notifications.at(-1)?.type ?? "";
-  if (latest === "NS") {
+  const type = notifications
+    .map((n) => String(n?.type ?? ""))
+    .find((t) => Object.hasOwn(SDI_OUTCOMES, t));
+  const outcome = type === undefined ? undefined : SDI_OUTCOMES[type];
+  if (outcome === undefined) {
+    return noVerdictYet(uuid, notesText, {
+      uuid,
+      marking: invoice.marking ?? "",
+      notifications,
+    });
+  }
+  if (outcome === "rejected") {
     return {
       status: "rejected",
       externalId: uuid,
