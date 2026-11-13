@@ -13530,6 +13530,12 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "phoneCountryLabel": "País del número",
+  "phoneExtensionNoMessage": "Un número con extensión no puede recibir mensajes: quite la extensión.",
+  "phoneNeedsCorrection": "Este número se guardó antes de que se comprobaran los números: confírmelo o corríjalo y volverá a abrir llamadas y mensajes.",
+  "phoneNoCountry": "Elija el país de este número o escríbalo con su prefijo +.",
+  "phoneNotANumber": "Escriba solo cifras, con una extensión al final si la hay.",
+  "phoneNotValidForCountry": "Esto no puede ser un número de teléfono del país elegido.",
   "placeFeedbackAverage": "{average} · {count, plural, one{1 valoración} other{{count} valoraciones}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",

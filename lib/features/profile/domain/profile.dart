@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/i18n/format_prefs.dart';
+import '../../../core/phone/phone_entry.dart';
 import 'personal_info.dart';
 
 /// Rules for the self-set status line (#231). The cap is enforced three
@@ -22,6 +23,7 @@ class Profile implements SystemStamped {
     this.personId,
     this.displayName = '',
     this.whatsapp = '',
+    this.whatsappTyped = '',
     this.statusText = '',
     this.address = '',
     this.countryCode = '',
@@ -50,8 +52,14 @@ class Profile implements SystemStamped {
   final String displayName;
 
   /// Opt-in WhatsApp number in wire shape `+<digits>`; '' = not shared
-  /// (mirrors the display_name not-null-empty convention).
+  /// (mirrors the display_name not-null-empty convention). #3650 — read
+  /// as an international number through [whatsappEntry]: one stored before
+  /// numbers were checked may not be valid, and then opens nothing.
   final String whatsapp;
+
+  /// #3650 — the WhatsApp number as its owner typed it ('' for one stored
+  /// before numbers were checked).
+  final String whatsappTyped;
 
   /// Self-set status line shown in the member directory (#231/#232),
   /// e.g. "In a call · back at 14:00"; '' = no status. At most
@@ -124,11 +132,28 @@ class Profile implements SystemStamped {
 
   bool get sharesWhatsapp => whatsapp.isNotEmpty;
 
+  /// #3650 — the stored number read as an international number: it carries
+  /// its own country, so nothing is guessed. Its typed form is what the
+  /// owner typed, or the stored number for one saved before.
+  PhoneEntry get whatsappEntry {
+    final read = parsePhone(whatsapp);
+    return PhoneEntry(
+      typed: whatsappTyped.isNotEmpty ? whatsappTyped : whatsapp,
+      e164: read.e164,
+      extension: read.extension,
+      country: read.country,
+      problem: read.problem,
+    );
+  }
+
+  /// #3650 — a number is shared but cannot be validated: shown, flagged for
+  /// its owner to confirm or correct, and it opens nothing.
+  bool get whatsappNeedsCorrection =>
+      sharesWhatsapp && !whatsappEntry.isValidated;
+
   /// Chat deep link for the member directory (#224), or null when the
-  /// member does not share a number. wa.me wants the E.164 digits
-  /// without the leading `+`.
-  Uri? get whatsappUri =>
-      sharesWhatsapp ? Uri.https('wa.me', '/${whatsapp.substring(1)}') : null;
+  /// member does not share a number or it is not validated (#3650).
+  Uri? get whatsappUri => sharesWhatsapp ? whatsappLink(whatsappEntry) : null;
 
   bool get hasStatus => statusText.isNotEmpty;
 
@@ -138,6 +163,7 @@ class Profile implements SystemStamped {
     personId: db['person_id'] as String?,
     displayName: db['display_name'] as String? ?? '',
     whatsapp: db['whatsapp'] as String? ?? '',
+    whatsappTyped: db['whatsapp_typed'] as String? ?? '',
     statusText: db['status_text'] as String? ?? '',
     address: db['address'] as String? ?? '',
     countryCode: db['country_code'] as String? ?? '',
@@ -161,6 +187,7 @@ class Profile implements SystemStamped {
     'id': id,
     'display_name': displayName,
     'whatsapp': whatsapp,
+    'whatsapp_typed': whatsappTyped,
     'status_text': statusText,
     'address': address,
     'country_code': countryCode,
@@ -190,7 +217,7 @@ class Profile implements SystemStamped {
     id: id,
     personId: personId,
     displayName: displayName ?? this.displayName,
-    whatsapp: whatsapp ?? this.whatsapp,
+    whatsapp: whatsapp ?? this.whatsapp, whatsappTyped: whatsappTyped,
     statusText: statusText ?? this.statusText,
     address: address ?? this.address,
     countryCode: countryCode ?? this.countryCode,
@@ -208,6 +235,30 @@ class Profile implements SystemStamped {
     identity: identity ?? this.identity,
   );
 
+  /// #3650 — the same profile with its WhatsApp number: the validated
+  /// international form ('' to clear) and what was typed.
+  Profile withWhatsapp({required String whatsapp, required String typed}) =>
+      Profile(
+        system: system,
+        id: id,
+        personId: personId,
+        displayName: displayName,
+        whatsapp: whatsapp,
+        whatsappTyped: typed,
+        statusText: statusText,
+        address: address,
+        countryCode: countryCode,
+        vatId: vatId,
+        lastSeenAt: lastSeenAt,
+        birthday: birthday,
+        avatarPath: avatarPath,
+        preferredLocale: preferredLocale,
+        formatPrefs: formatPrefs,
+        privacyAcceptedVersion: privacyAcceptedVersion,
+        privacyAcceptedAt: privacyAcceptedAt,
+        identity: identity,
+      );
+
   /// #3278 — the same profile with its birthday set, or cleared with null.
   /// A method of its own (not a copyWith parameter) because null is a value
   /// here, and every other copy keeps the birthday it has.
@@ -217,6 +268,7 @@ class Profile implements SystemStamped {
     personId: personId,
     displayName: displayName,
     whatsapp: whatsapp,
+    whatsappTyped: whatsappTyped,
     statusText: statusText,
     address: address,
     countryCode: countryCode,
@@ -248,16 +300,6 @@ bool birthdayPlausible(DateTime day, DateTime today) =>
     !DateTime(day.year, day.month, day.day).isAfter(
       DateTime(today.year, today.month, today.day),
     );
-
-/// Normalizes user input to the stored wire shape (#223): keep digits
-/// only, fold the `00` international dialing prefix into `+`, prepend
-/// `+`. Blank/digit-less input normalizes to '' — which clears the
-/// number. `"+33 6 12-34.56.78"` → `"+33612345678"`.
-String normalizeWhatsapp(String input) {
-  var digits = input.replaceAll(RegExp('[^0-9]'), '');
-  if (digits.startsWith('00')) digits = digits.substring(2);
-  return digits.isEmpty ? '' : '+$digits';
-}
 
 /// Normalizes status-line input to the stored shape (#231): trim, then
 /// hard-cap at [StatusTextRules.maxLength]. Blank input normalizes to

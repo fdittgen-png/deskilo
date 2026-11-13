@@ -28993,6 +28993,30 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "phoneCountryLabel": "Country of the number",
+  "@phoneCountryLabel": {
+    "description": "the phone field's country, whose calling code a national number is read in (#3650)"
+  },
+  "phoneExtensionNoMessage": "A number with an extension cannot receive messages: leave the extension out.",
+  "@phoneExtensionNoMessage": {
+    "description": "a message to a number with an extension (#3650)"
+  },
+  "phoneNeedsCorrection": "This number was saved before numbers were checked: confirm or correct it, and it will open calls and messages again.",
+  "@phoneNeedsCorrection": {
+    "description": "a legacy number with no validated form (#3650)"
+  },
+  "phoneNoCountry": "Choose the country of this number, or type it with its + code.",
+  "@phoneNoCountry": {
+    "description": "(#3650)"
+  },
+  "phoneNotANumber": "Type digits only, with an extension at the end if there is one.",
+  "@phoneNotANumber": {
+    "description": "(#3650)"
+  },
+  "phoneNotValidForCountry": "This cannot be a phone number of the chosen country.",
+  "@phoneNotValidForCountry": {
+    "description": "(#3650)"
+  },
   "placeFeedbackAverage": "{average} · {count, plural, one{1 rating} other{{count} ratings}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",
