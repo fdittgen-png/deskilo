@@ -755,6 +755,8 @@
  "retUsYears": "Conservazione dei documenti, stato USA",
  "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
  "retUsRule": "Vale la regola di conservazione",
+ "stockAllowNegative": "Le scorte possono scendere sotto zero",
+ "stockAllowNegativeHint": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce. Modificabile poi nelle impostazioni dello spazio.",
  "badgeFailureLimit": "Badge con accesso fallito per spazio",
  "badgeFailureLimitHint": "Quando questo numero di badge diversi dello spazio sbaglia il PIN nella finestra di blocco, l’accesso con badge si sospende per quella finestra e i proprietari ricevono un avviso; un solo badge non può sospenderlo. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 è il valore predefinito.",
  "badgeSigninWhere": "L’accesso con badge funziona su",

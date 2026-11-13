@@ -1,0 +1,18 @@
+{
+  "@@locale": "de",
+  "featureStockManagementTitle": "Lagerverwaltung",
+  "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
+  "permViewStock": "Lager einsehen",
+  "permManageStock": "Waren ein- und auslagern",
+  "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",
+  "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
+  "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
+  "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
+  "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
+  "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
+  "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
+  "refusalStockLocation": "Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.",
+  "refusalStockLot": "Diese Charge gehört zu einem anderen Artikel, oder der Artikel wird chargenweise geführt und keine wurde angegeben. Nichts wurde bewegt.",
+  "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
+  "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an."
+}

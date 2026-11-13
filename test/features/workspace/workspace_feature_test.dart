@@ -67,6 +67,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   // #3673 — reminders by e-mail are asked for.
   WorkspaceFeature.reminderEmail,
   WorkspaceFeature.invoiceEmail,
+  // #3824 — the goods ledger is asked for.
+  WorkspaceFeature.stockManagement,
   // #1598 — renaming the gear a member sees is asked for, never
   // assumed: a space that is happy with Réglages is not changed under
   // its members' feet.
@@ -235,6 +237,7 @@ void main() {
       'invoiceEmail': true,
       'kioskEnrolment': true,
       'guestParticipation': true,
+      'stockManagement': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

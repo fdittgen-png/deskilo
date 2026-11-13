@@ -45,6 +45,11 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.invoiceEmail:
       'an invoice e-mail leaves from the server through the business\'s own '
       'provider; the Demo sends no e-mail',
+  // #3824 — the goods ledger has no screen before stock S2, and its Demo
+  // is the shop of stock S11 (#3823), whose figures agree with its pages.
+  WorkspaceFeature.stockManagement:
+      'the goods ledger is a server foundation without a screen yet; the '
+      'Demo shop of the stock epic shows it',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose

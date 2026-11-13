@@ -7209,6 +7209,8 @@
   },
   "featureSpaceQrCodes": "Raum-QR-Codes",
   "featureSpaceQrCodesDesc": "Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.",
+  "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
+  "featureStockManagementTitle": "Lagerverwaltung",
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
   "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.",
@@ -13307,6 +13309,7 @@
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
   },
+  "permApproveStockAdjustments": "Bestandskorrekturen genehmigen",
   "permDeployToDev": "In die Entwicklung ausrollen",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -13377,6 +13380,7 @@
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
+  "permManageStock": "Waren ein- und auslagern",
   "permManageValidation": "Validierungsregeln konfigurieren",
   "@permManageValidation": {
     "description": "Permission label (#513)"
@@ -13426,6 +13430,7 @@
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
   },
+  "permViewStock": "Lager einsehen",
   "permWorkspaceSettings": "Workspace-Einstellungen bearbeiten",
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
@@ -15238,6 +15243,14 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
+  "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.",
+  "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
+  "refusalStockLocation": "Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.",
+  "refusalStockLot": "Diese Charge gehört zu einem anderen Artikel, oder der Artikel wird chargenweise geführt und keine wurde angegeben. Nichts wurde bewegt.",
+  "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
+  "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
+  "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
+  "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -17700,6 +17713,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAllowNegative": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.",
   "settingHintVatViesEvidenceDays": "Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -17893,6 +17907,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAllowNegative": "Bestand darf unter null fallen",
   "settingLabelVatViesEvidenceDays": "Aktualität der USt-IdNr.-Prüfung",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

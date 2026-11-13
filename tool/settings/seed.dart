@@ -1505,6 +1505,24 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       source: 'badge_auth_verify (#3675)',
       note: 'Where badge sign-in works: only on the devices the business enrolled as kiosks, or on any device. On an enrolled kiosk the badge step greets the person by name; elsewhere nobody is named before the PIN. A business that already issued badges stays on any device until its owner switches.',
     ),
+  ),  (
+    since: 'stock_ledger',
+    row: (
+      key: 'stock.allow_negative',
+      type: 'bool',
+      defaultValue: false,
+      min: null,
+      max: null,
+      unit: '',
+      group: 'business',
+      scopes: ['workspace'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: null,
+      source: 'stock_move_v1 (#3824)',
+      note: 'Whether a move may leave less than nothing at a place. Off: the move is refused with its code and nothing moves. On: it is recorded and the place shows a negative quantity until goods arrive. The shelf count of a catalogue item never shows less than zero.',
+    ),
   ),
 ];
 
