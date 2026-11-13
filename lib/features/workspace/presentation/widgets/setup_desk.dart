@@ -28,17 +28,17 @@ import '../screens/setup_guide_screen.dart';
 import 'setup_steps_pane.dart';
 
 /// The guide's address; its pages are under it.
-const String setupPath = '/setup';
+const String _setupPath = '/setup';
 
 /// Whether the window holds the guide's steps beside its pages: the desk,
 /// where the business's navigation stands beside the content.
-bool setupStepsBeside(BuildContext context) =>
+bool _stepsBeside(BuildContext context) =>
     WindowClass.of(context).atLeast(WindowClass.expanded);
 
 /// The page of an address under the guide: nothing drawn on the desk (the
 /// guide draws it beside its steps), else [page] as a page of its own.
 Page<void> setupPage(BuildContext context, GoRouterState state, Widget page) =>
-    setupStepsBeside(context)
+    _stepsBeside(context)
     ? besidePage(state)
     : MaterialPage<void>(key: state.pageKey, child: page);
 
@@ -54,7 +54,7 @@ class SetupGuidePage extends StatelessWidget {
   final SetupPageFor pageFor;
 
   @override
-  Widget build(BuildContext context) => setupStepsBeside(context)
+  Widget build(BuildContext context) => _stepsBeside(context)
       ? _SetupDesk(pageFor: pageFor)
       : const SetupGuideScreen();
 }
@@ -62,7 +62,7 @@ class SetupGuidePage extends StatelessWidget {
 /// The address under the guide [path] names (`/setup/step/a` →
 /// `step/a`), or null for the guide itself.
 String? _addressIn(String path) {
-  const prefix = '$setupPath/';
+  const prefix = '$_setupPath/';
   if (!path.startsWith(prefix)) return null;
   final rest = path.substring(prefix.length);
   return rest.isEmpty ? null : rest;
@@ -134,7 +134,7 @@ class _SetupDesk extends ConsumerWidget {
   /// Goes to [to] under the guide (null: the guide): an entry in the
   /// history, so the browser's Back returns.
   void _go(BuildContext context, String? to) =>
-      context.go(to == null ? setupPath : '$setupPath/$to');
+      context.go(to == null ? _setupPath : '$_setupPath/$to');
 
   /// The page [by] places after (1) or before (-1) [open] in the steps'
   /// order; nothing past either end.

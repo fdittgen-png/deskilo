@@ -18459,7 +18459,7 @@
   "setupChoicesSaving": "Guardando…",
   "setupChoicesSummary": "Ajustes que cambiarán: {count}",
   "setupChoicesUnsaved": "Solo vista previa: no se ha aplicado nada.",
-  "setupDeskProgress": "{total, plural, =1{{done} de 1 paso hecho} other{{done} de {total} pasos hechos}}",
+  "setupDeskProgress": "{total, plural, one{{total} paso} other{{total} pasos}}, {done, plural, =0{ninguno hecho} one{{done} hecho} other{{done} hechos}}",
   "setupDraftChanged": "Otra persona lo ha cambiado mientras usted editaba.",
   "setupDraftDiscard": "Descartar",
   "setupDraftKeepMine": "Conservar las mías",

@@ -1,5 +1,5 @@
 {
-  "setupDeskProgress": "{total, plural, =1{{done} passo su 1 fatto} other{{done} passi su {total} fatti}}",
+  "setupDeskProgress": "{total, plural, one{{total} passo} other{{total} passi}}, {done, plural, =0{nessuno fatto} one{{done} fatto} other{{done} fatti}}",
   "setupStepLeaveTitle": "Lasciare questo passo?",
   "setupStepLeaveMessage": "Le risposte non sono ancora applicate. Restano salvate come bozza e le ritrovi qui quando torni.",
   "setupStepLeave": "Esci"

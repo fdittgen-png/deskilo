@@ -1,5 +1,5 @@
 {
-  "setupDeskProgress": "{total, plural, =1{{done} of 1 step done} other{{done} of {total} steps done}}",
+  "setupDeskProgress": "{total, plural, one{{total} step} other{{total} steps}}, {done, plural, =0{none done} one{{done} done} other{{done} done}}",
   "@setupDeskProgress": {
     "description": "#3629 the setup guide's steps beside a step on a large window: how many of the steps the space uses are done.",
     "placeholders": {

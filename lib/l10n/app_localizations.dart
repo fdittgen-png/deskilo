@@ -47791,7 +47791,7 @@ abstract class AppLocalizations {
   /// #3629 the setup guide's steps beside a step on a large window: how many of the steps the space uses are done.
   ///
   /// In en, this message translates to:
-  /// **'{total, plural, =1{{done} of 1 step done} other{{done} of {total} steps done}}'**
+  /// **'{total, plural, one{{total} step} other{{total} steps}}, {done, plural, =0{none done} one{{done} done} other{{done} done}}'**
   String setupDeskProgress(int done, int total);
 
   /// #2869 setup drafts: another configurer changed the setup step's draft meanwhile

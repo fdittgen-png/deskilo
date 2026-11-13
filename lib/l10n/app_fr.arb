@@ -18459,7 +18459,7 @@
   "setupChoicesSaving": "Enregistrement…",
   "setupChoicesSummary": "Réglages qui changeront : {count}",
   "setupChoicesUnsaved": "Aperçu uniquement : rien n’a été appliqué.",
-  "setupDeskProgress": "{total, plural, =1{{done} étape faite sur 1} other{{done} étapes faites sur {total}}}",
+  "setupDeskProgress": "{total, plural, one{{total} étape} other{{total} étapes}}, {done, plural, =0{aucune faite} one{{done} faite} other{{done} faites}}",
   "setupDraftChanged": "Modifié par quelqu’un d’autre pendant votre saisie.",
   "setupDraftDiscard": "Abandonner",
   "setupDraftKeepMine": "Garder les miennes",

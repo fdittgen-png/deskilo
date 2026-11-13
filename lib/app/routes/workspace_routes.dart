@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
+import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -28,6 +29,9 @@ import '../../features/workspace/presentation/screens/questions_screen.dart';
 import '../../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../../features/workspace/presentation/screens/roles_screen.dart';
 import '../../features/workspace/presentation/screens/scan_join_screen.dart';
+import '../../features/workspace/presentation/screens/setup_launch_screen.dart';
+import '../../features/workspace/presentation/screens/setup_levels_screen.dart';
+import '../../features/workspace/presentation/screens/setup_step_screen.dart';
 import '../../features/workspace/presentation/screens/sites_screen.dart';
 import '../../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../../features/workspace/presentation/screens/wording_screen.dart';
@@ -41,7 +45,9 @@ import '../../features/workspace/presentation/widgets/setup_desk.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import 'setup_grow_pages.dart';
 import 'setup_pages.dart';
+import 'setup_run_pages.dart';
 
 /// Routes of the workspace feature.
 List<RouteBase> workspaceRoutes(RouteEnv env) => [
@@ -317,7 +323,7 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
     // #3629 — its pages are addresses under it: on the desk the guide
     // draws them beside its steps, elsewhere each is a page of its own.
     GoRoute(
-      path: setupPath,
+      path: '/setup',
       redirect: env.guard(
         const RouteAccess(
           features: [WorkspaceFeature.setupGuide],
@@ -332,13 +338,13 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         GoRoute(
           path: 'levels',
           pageBuilder: (context, state) =>
-              setupPage(context, state, setupPageFor('levels')!),
+              setupPage(context, state, const SetupLevelsScreen()),
         ),
         // #2876 — check the answers and go live.
         GoRoute(
           path: 'launch',
           pageBuilder: (context, state) =>
-              setupPage(context, state, setupPageFor('launch')!),
+              setupPage(context, state, const SetupLaunchScreen()),
         ),
         // #2870 — one step of the guide: its form beside what members will
         // see. Every way out of it asks the step first (#3629).
@@ -347,10 +353,19 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
           onExit: (_, _) => env.ref.read(authStateProvider).value == null
               ? true
               : setupStepNavigation.requestExit(),
+          // The screen is built here (the feature audit reads which screens
+          // a route builds) and in `setupPageFor` for the desk: the same.
           pageBuilder: (context, state) => setupPage(
             context,
             state,
-            setupPageFor('step/${state.pathParameters['id'] ?? ''}')!,
+            SetupStepScreen(
+              stepId: state.pathParameters['id'] ?? '',
+              placesStep: SetupPlacesStep.new,
+              runPages: setupRunPages,
+              growPages: setupGrowPages,
+              moneyRecorded: setupMoneyRecorded,
+              navigation: setupStepNavigation,
+            ),
           ),
         ),
       ],

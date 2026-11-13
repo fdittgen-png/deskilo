@@ -29893,10 +29893,17 @@ class AppLocalizationsIt extends AppLocalizations {
     String _temp0 = intl.Intl.pluralLogic(
       total,
       locale: localeName,
-      other: '$done passi su $total fatti',
-      one: '$done passo su 1 fatto',
+      other: '$total passi',
+      one: '$total passo',
     );
-    return '$_temp0';
+    String _temp1 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done fatti',
+      one: '$done fatto',
+      zero: 'nessuno fatto',
+    );
+    return '$_temp0, $_temp1';
   }
 
   @override

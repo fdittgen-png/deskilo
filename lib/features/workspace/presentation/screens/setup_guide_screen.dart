@@ -196,10 +196,6 @@ class _SetupGuideBody extends ConsumerWidget {
         ),
       ];
     }
-    final toDo = [
-      for (final s in status.toDo)
-        if (s != next) s,
-    ];
     return [
       if (next != null) ...[
         if (!status.toDo.contains(next) && status.toDo.isNotEmpty)
@@ -220,55 +216,56 @@ class _SetupGuideBody extends ConsumerWidget {
           onAction: actions.reload,
         ),
       // #3629 — beside the steps on the desk, the lists are those steps.
-      if (!listBeside) ...[
-        if (toDo.isNotEmpty) ...[
-          const SizedBox(height: AppSpacing.md),
-          _Header(text: l10n.setupGuideToDo),
-          for (final s in toDo)
-            _StepTile(step: s, status: status, actions: actions),
-        ],
-        _Folded(
-          id: 'waiting',
-          title: l10n.setupGuideWaiting,
-          steps: status.waiting,
-          status: status,
-          actions: actions,
-        ),
-        _Folded(
-          id: 'later',
-          title: l10n.setupGuideLater,
-          steps: [
-            for (final s in status.later)
-              if (s != next) s,
-          ],
-          actions: actions,
-        ),
-        _Folded(
-          id: 'optional',
-          title: l10n.setupGuideOptional,
-          steps: [
-            for (final s in status.optional)
-              if (s != next) s,
-          ],
-          actions: actions,
-        ),
-        _Folded(
-          id: 'deferred',
-          title: l10n.setupGuideDeferred,
-          steps: status.deferred,
-          actions: actions,
-        ),
-        _Folded(
-          id: 'done',
-          title: l10n.setupGuideDone,
-          steps: status.done,
-          actions: actions,
-        ),
-      ],
+      if (!listBeside) ..._lists(l10n, status, next, actions),
       SetupGuideAddMore(
         steps: status.addable,
         onAdd: () => _openLevels(context, actions.reload),
       ),
+    ];
+  }
+
+  /// The steps by where they stand, the next one left out: what is to do,
+  /// then folded what waits, comes later, could be added, is set aside, is
+  /// done.
+  List<Widget> _lists(
+    AppLocalizations l10n,
+    SetupStatus status,
+    SetupStepStatus? next,
+    _Actions actions,
+  ) {
+    final toDo = [
+      for (final s in status.toDo)
+        if (s != next) s,
+    ];
+    return [
+      if (toDo.isNotEmpty) ...[
+        const SizedBox(height: AppSpacing.md),
+        _Header(text: l10n.setupGuideToDo),
+        for (final s in toDo)
+          _StepTile(step: s, status: status, actions: actions),
+      ],
+      _Folded(
+        id: 'waiting',
+        title: l10n.setupGuideWaiting,
+        steps: status.waiting,
+        status: status,
+        actions: actions,
+      ),
+      for (final (id, title, steps) in [
+        ('later', l10n.setupGuideLater, status.later),
+        ('optional', l10n.setupGuideOptional, status.optional),
+        ('deferred', l10n.setupGuideDeferred, status.deferred),
+        ('done', l10n.setupGuideDone, status.done),
+      ])
+        _Folded(
+          id: id,
+          title: title,
+          steps: [
+            for (final s in steps)
+              if (s != next) s,
+          ],
+          actions: actions,
+        ),
     ];
   }
 }

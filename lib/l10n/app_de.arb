@@ -18459,7 +18459,7 @@
   "setupChoicesSaving": "Wird gespeichert…",
   "setupChoicesSummary": "Einstellungen, die sich ändern: {count}",
   "setupChoicesUnsaved": "Nur Vorschau – noch nichts angewendet.",
-  "setupDeskProgress": "{total, plural, =1{{done} von 1 Schritt erledigt} other{{done} von {total} Schritten erledigt}}",
+  "setupDeskProgress": "{total, plural, one{{total} Schritt} other{{total} Schritte}}, {done, plural, =0{keiner erledigt} one{{done} erledigt} other{{done} erledigt}}",
   "setupDraftChanged": "Von jemand anderem geändert, während Sie bearbeitet haben.",
   "setupDraftDiscard": "Verwerfen",
   "setupDraftKeepMine": "Meine behalten",

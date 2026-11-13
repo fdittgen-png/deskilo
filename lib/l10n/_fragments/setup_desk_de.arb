@@ -1,5 +1,5 @@
 {
-  "setupDeskProgress": "{total, plural, =1{{done} von 1 Schritt erledigt} other{{done} von {total} Schritten erledigt}}",
+  "setupDeskProgress": "{total, plural, one{{total} Schritt} other{{total} Schritte}}, {done, plural, =0{keiner erledigt} one{{done} erledigt} other{{done} erledigt}}",
   "setupStepLeaveTitle": "Diesen Schritt verlassen?",
   "setupStepLeaveMessage": "Ihre Antworten sind noch nicht übernommen. Sie bleiben als Entwurf gespeichert, und Sie finden sie hier wieder, wenn Sie zurückkommen.",
   "setupStepLeave": "Verlassen"

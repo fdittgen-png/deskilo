@@ -70,6 +70,7 @@ class SetupStepsPane extends ConsumerWidget {
       number: ++number,
       rail: rail,
       selected: open == 'step/${s.step}',
+      // recorder-key-exempt: handed to its keyed tile
       onTap: () => onOpen('step/${s.step}'),
     );
     return Material(
@@ -85,6 +86,7 @@ class SetupStepsPane extends ConsumerWidget {
             detail: l10n.setupDeskProgress(done, steps.length),
             rail: rail,
             selected: open == null,
+            // recorder-key-exempt: handed to its keyed tile
             onTap: () => onOpen(null),
           ),
           _PageEntry(
@@ -93,6 +95,7 @@ class SetupStepsPane extends ConsumerWidget {
             label: l10n.setupLevelsTitle,
             rail: rail,
             selected: open == 'levels',
+            // recorder-key-exempt: handed to its keyed tile
             onTap: () => onOpen('levels'),
           ),
           for (final g in groups) ...[
@@ -105,6 +108,7 @@ class SetupStepsPane extends ConsumerWidget {
             label: l10n.setupLaunchLink,
             rail: rail,
             selected: open == 'launch',
+            // recorder-key-exempt: handed to its keyed tile
             onTap: () => onOpen('launch'),
           ),
         ],
@@ -261,6 +265,7 @@ class _RailEntry extends StatelessWidget {
         child: Material(
           color: selected ? scheme.secondaryContainer : Colors.transparent,
           child: InkWell(
+            // recorder-key-exempt: the entry around it carries the key
             onTap: onTap,
             child: SizedBox(
               height: _height,
