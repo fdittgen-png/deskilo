@@ -15931,6 +15931,10 @@
   "@guestPassFrom": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassHolder": "Guest",
+  "@guestPassHolder": {
+    "description": "Column of the guest passes sold: who holds the pass."
+  },
   "guestPassName": "Name",
   "@guestPassName": {
     "description": "#3308 guest passes sold at the desk"
@@ -16048,6 +16052,10 @@
   "@guestPassUnitHour": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassUsed": "Used",
+  "@guestPassUsed": {
+    "description": "Column of the guest passes sold: how many of its days or hours have begun."
+  },
   "guestPassesEmpty": "No pass yet. Add the passes the space sells.",
   "@guestPassesEmpty": {
     "description": "#3308 guest passes sold at the desk"
@@ -16055,6 +16063,14 @@
   "guestPassesIntro": "Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.",
   "@guestPassesIntro": {
     "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesSoldEmpty": "No pass sold yet.",
+  "@guestPassesSoldEmpty": {
+    "description": "The table of guest passes sold when none was sold."
+  },
+  "guestPassesSoldTitle": "Passes sold",
+  "@guestPassesSoldTitle": {
+    "description": "Heading of the table of guest passes sold."
   },
   "guestPassesTitle": "Guest passes",
   "@guestPassesTitle": {
@@ -20805,6 +20821,15 @@
   "invoicingSearchHint": "A customer or a number",
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
+  },
+  "invoicingShareRemindersSelected": "{count, plural, one{Share {count} reminder} other{Share {count} reminders}}",
+  "@invoicingShareRemindersSelected": {
+    "description": "#3614 the invoicing table at the desk: share the reminders of the selected invoices, one after the other",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicingSourceCredits": "Customer credits",
   "@invoicingSourceCredits": {

@@ -1,0 +1,12 @@
+{
+  "@@locale": "en",
+  "invoicingShareRemindersSelected": "{count, plural, one{Share {count} reminder} other{Share {count} reminders}}",
+  "@invoicingShareRemindersSelected": {
+    "description": "#3614 the invoicing table at the desk: share the reminders of the selected invoices, one after the other",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

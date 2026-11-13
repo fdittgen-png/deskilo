@@ -11,9 +11,7 @@
 //   it, and a link to one the reader cannot read says so in words, never an
 //   empty pane.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/core/ui/kit/filter_chips.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
-import 'package:deskilo/features/money/presentation/invoicing/invoicing_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,7 +43,7 @@ Future<(GoRouter, String)> _pump(WidgetTester tester, Size size) async {
   final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
     ..go('/invoices');
   await tester.pumpAndSettle();
-  // The Invoices view: one line per invoice.
+  // The Invoices view: at the desk, the records table (#3614).
   await tester.tap(
     find.descendant(of: _k('invoicing-view'), matching: find.text('Invoices')),
   );
@@ -61,7 +59,7 @@ void main() {
   testWidgets('an invoice open at 1440 stays open across a resize to 1024 and '
       'back, at its address, and one Back returns to the list', (tester) async {
     final (router, id) = await _pump(tester, const Size(1440, 900));
-    await tester.tap(_k('invoicing-row-$id'));
+    await tester.tap(_k('records-row-$id'));
     await tester.pumpAndSettle();
     expect(_k('invoicing-panel-$id'), findsOneWidget);
 
@@ -80,22 +78,20 @@ void main() {
     await tester.pumpAndSettle();
     expect(_at(router), '/invoices');
     expect(find.byType(InvoicePage), findsNothing);
-    expect(_k('invoicing-row-$id'), findsOneWidget);
+    expect(_k('records-row-$id'), findsOneWidget);
   });
 
   testWidgets('Escape goes to the list\'s address and the list keeps its '
       'filter and its search', (tester) async {
     final (router, id) = await _pump(tester, const Size(1440, 900));
-    // A filter other than the default, and a search.
-    await tester.tap(_k('invoicing-filter-overdue'));
+    // A chip other than the default and back, and a filter text.
+    await tester.tap(_k('records-chip-overdue'));
     await tester.pumpAndSettle();
-    await tester.tap(_k('invoicing-filter-open'));
+    await tester.tap(_k('records-chip-open'));
     await tester.pumpAndSettle();
-    await tester.tap(_k('invoicing-search'));
+    await tester.enterText(_k('records-filter'), 'INV');
     await tester.pumpAndSettle();
-    await tester.enterText(_k('invoicing-search-field'), 'INV');
-    await tester.pumpAndSettle();
-    await tester.tap(_k('invoicing-row-$id'));
+    await tester.tap(_k('records-row-$id'));
     await tester.pumpAndSettle();
     expect(_at(router), '/invoices/$id');
 
@@ -105,25 +101,18 @@ void main() {
     expect(_k('invoicing-panel-$id'), findsNothing);
     expect(
       tester
-          .widget<TextField>(
-            find.descendant(
-              of: _k('invoicing-search-field'),
-              matching: find.byType(TextField),
-            ),
-          )
+          .widget<TextField>(_k('records-filter'))
           .controller
           ?.text,
       'INV',
       reason: 'the search survives Close',
     );
     expect(
-      tester
-          .widget<FilterChips<InvoicingFilter>>(_k('invoicing-filters'))
-          .selected,
-      InvoicingFilter.open,
+      tester.widget<FilterChip>(_k('records-chip-open')).selected,
+      isTrue,
       reason: 'the filter survives Close',
     );
-    expect(_k('invoicing-row-$id'), findsOneWidget);
+    expect(_k('records-row-$id'), findsOneWidget);
   });
 
   testWidgets('a direct link to an invoice the list does not show opens it '
@@ -132,9 +121,9 @@ void main() {
   ) async {
     final (router, id) = await _pump(tester, const Size(1440, 900));
     // The Paid filter: the open invoice is not in the list.
-    await tester.tap(_k('invoicing-filter-paid'));
+    await tester.tap(_k('records-chip-paid'));
     await tester.pumpAndSettle();
-    expect(_k('invoicing-row-$id'), findsNothing);
+    expect(_k('records-row-$id'), findsNothing);
     router.go('/invoices/$id');
     await tester.pumpAndSettle();
     expect(_k('invoicing-panel-$id'), findsOneWidget);

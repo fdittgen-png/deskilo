@@ -24,6 +24,18 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
   }
 
   @override
+  Future<List<GuestPassRecord>> passesSold(String workspaceId) async {
+    final rows = await _client
+        .from('guest_passes')
+        .select(
+          'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at',
+        )
+        .eq('workspace_id', workspaceId)
+        .order('sold_at', ascending: false);
+    return [for (final r in rows) GuestPassRecord.fromJson(r)];
+  }
+
+  @override
   Future<List<GuestPassPlace>> places(String workspaceId) async {
     final rows = await _client
         .from('seats')

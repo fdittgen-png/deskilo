@@ -9,6 +9,7 @@ import '../../core/navigation/list_detail_route.dart';
 
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
+import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -76,11 +77,19 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
       ),
-      builder: (context, state) =>
-          InvoicesScreen(customer: state.uri.queryParameters['customer']),
+      builder: (context, state) => const InvoicesScreen(),
       // #3607 — an open invoice's address: beside the list on a large
       // window, a page of its own otherwise.
       routes: [
+        // #3614 — a customer's address, the same way.
+        GoRoute(
+          path: 'customer/:id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => CustomerRecord(customerId: id),
+          ),
+        ),
         GoRoute(
           path: ':id',
           pageBuilder: (context, state) => recordPage(
@@ -243,13 +252,9 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
 
 List<RouteBase> _financeRoutes(RouteEnv env) {
   return [
-    GoRoute(
-      path: '/money/sales',
-      redirect: env.guard(
-        const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
-      ),
-      builder: (context, state) => const SalesHubScreen(),
-    ),
+    // #3614 — Sales opens on the invoicing home; the hub's links are the
+    // Sales group of the menu. The address stays for the links to it.
+    GoRoute(path: '/money/sales', redirect: (context, state) => '/invoices'),
     GoRoute(
       path: '/money/accounting',
       redirect: env.guard(

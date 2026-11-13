@@ -59,7 +59,7 @@ void main() {
       (tester) async {
     final money = await pumpServices(tester);
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(const ValueKey('services-new')));
     await tester.pumpAndSettle();
 
     await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Day pass');

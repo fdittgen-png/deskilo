@@ -55,11 +55,15 @@ class LiveCustomerPage extends ConsumerWidget {
     required this.customerId,
     required this.onOpenInvoice,
     required this.onAction,
+    this.onClose,
   });
 
   final String customerId;
   final ValueChanged<String> onOpenInvoice;
   final ValueChanged<InvoiceAction> onAction;
+
+  /// #3614 — set when the customer stands beside the list: its close.
+  final VoidCallback? onClose;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -88,6 +92,7 @@ class LiveCustomerPage extends ConsumerWidget {
       ),
       onOpenInvoice: onOpenInvoice,
       onAction: onAction,
+      onClose: onClose,
       onStatement: () => CustomerStatementPrint(context, ref).show(
         workspaceId: ref.read(invoicingBusinessProvider).id,
         customerId: customerId,
@@ -99,23 +104,37 @@ class LiveCustomerPage extends ConsumerWidget {
 /// The reminder queue on the current reads: drawn again whenever they
 /// change; nothing is shared while who holds money is not known.
 class LiveReminderQueue extends ConsumerWidget {
-  const LiveReminderQueue({super.key, required this.onMatch});
+  const LiveReminderQueue({super.key, required this.onMatch, this.only});
 
   /// Opens Payments to match for a customer under "Check first".
   final ValueChanged<String> onMatch;
+
+  /// #3614 — the invoices a person selected at the desk: the queue is only
+  /// theirs, for as long as it is open, whatever the reads become.
+  final Set<String>? only;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final now = _now(ref);
     final money = now.money;
+    final ids = only;
+    final queue = money == null
+        ? null
+        : reminderQueueOf(
+            now.receivables!,
+            now.today,
+            now.mode,
+            holdsUnassigned: money.holders,
+          );
     return ReminderQueueScreen(
-      queue: money == null
-          ? null
-          : reminderQueueOf(
-              now.receivables!,
-              now.today,
-              now.mode,
-              holdsUnassigned: money.holders,
+      queue: queue == null || ids == null
+          ? queue
+          : queue.only(
+              ids,
+              customers: {
+                for (final r in now.receivables!)
+                  if (ids.contains(r.invoiceId)) r.customerId,
+              },
             ),
       today: now.today,
       onMatch: onMatch,

@@ -46,11 +46,33 @@ class FakeGuestPassRepository implements GuestPassRepository {
   final List<Seat> Function() floorPlanSeats;
   final List<GuestPassOffer> offerList;
   final Map<String, GuestPassSale> sales = {};
+
+  /// #3614 — the passes sold in this visit, the latest first.
+  final List<GuestPassRecord> records = [];
   int _next = 1;
 
   @override
   Future<List<GuestPassOffer>> offers(String workspaceId) async =>
       [...offerList]..sort((a, b) => compareNames(a.name, b.name));
+
+  /// #3614 — [sale] among the passes sold, first.
+  void _keep(GuestPassSale sale, GuestPassOffer offer, GuestPassDraft draft) =>
+      records.insert(
+        0,
+        GuestPassRecord(
+          id: sale.passId,
+          memberId: sale.memberId,
+          offerId: offer.id,
+          unit: offer.unit,
+          units: sale.units,
+          amountCents: sale.amountCents,
+          startsAt: draft.startsAt,
+          endsAt: draft.endsAt.add(Duration(days: draft.days - 1)),
+        ),
+      );
+
+  @override
+  Future<List<GuestPassRecord>> passesSold(String workspaceId) async => [...records];
 
   @override
   Future<List<GuestPassPlace>> places(String workspaceId) async => [
@@ -222,6 +244,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
       paymentEventId: paymentId,
     );
     sales[requestId] = sale;
+    _keep(sale, offer, draft);
     return sale;
   }
 }

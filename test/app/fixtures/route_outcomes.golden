@@ -37,6 +37,7 @@ signed-out on  /installation/assistants -> /auth
 signed-out on  /invoice-register -> /auth
 signed-out on  /invoices -> /auth
 signed-out on  /invoices/:id -> /auth
+signed-out on  /invoices/customer/:id -> /auth
 signed-out on  /invoicing/wizard -> /auth
 signed-out on  /kiosk -> /auth
 signed-out on  /kiosk-gate -> /auth
@@ -172,6 +173,7 @@ signed-out off /installation/assistants -> /auth
 signed-out off /invoice-register -> /auth
 signed-out off /invoices -> /auth
 signed-out off /invoices/:id -> /auth
+signed-out off /invoices/customer/:id -> /auth
 signed-out off /invoicing/wizard -> /auth
 signed-out off /kiosk -> /auth
 signed-out off /kiosk-gate -> /auth
@@ -307,6 +309,7 @@ no-space on  /installation/assistants -> (open)
 no-space on  /invoice-register -> /me
 no-space on  /invoices -> /me
 no-space on  /invoices/:id -> /me
+no-space on  /invoices/customer/:id -> /me
 no-space on  /invoicing/wizard -> /me
 no-space on  /kiosk -> /me
 no-space on  /kiosk-gate -> /me
@@ -442,6 +445,7 @@ no-space off /installation/assistants -> (open)
 no-space off /invoice-register -> /me
 no-space off /invoices -> /me
 no-space off /invoices/:id -> /me
+no-space off /invoices/customer/:id -> /me
 no-space off /invoicing/wizard -> /me
 no-space off /kiosk -> /me
 no-space off /kiosk-gate -> /me
@@ -577,6 +581,7 @@ member on  /installation/assistants -> (open)
 member on  /invoice-register -> (open)
 member on  /invoices -> (open)
 member on  /invoices/:id -> (open)
+member on  /invoices/customer/:id -> /calendar
 member on  /invoicing/wizard -> /calendar
 member on  /kiosk -> /reserve
 member on  /kiosk-gate -> /reserve
@@ -712,6 +717,7 @@ member off /installation/assistants -> (open)
 member off /invoice-register -> /messages
 member off /invoices -> /messages
 member off /invoices/:id -> /messages
+member off /invoices/customer/:id -> /messages
 member off /invoicing/wizard -> /messages
 member off /kiosk -> /messages
 member off /kiosk-gate -> /messages
@@ -847,6 +853,7 @@ admin on  /installation/assistants -> (open)
 admin on  /invoice-register -> (open)
 admin on  /invoices -> (open)
 admin on  /invoices/:id -> (open)
+admin on  /invoices/customer/:id -> (open)
 admin on  /invoicing/wizard -> /calendar
 admin on  /kiosk -> /reserve
 admin on  /kiosk-gate -> /reserve
@@ -884,7 +891,7 @@ admin on  /money/purchases -> /money
 admin on  /money/purchases/approvals -> /money
 admin on  /money/repartition -> (open)
 admin on  /money/repartition-wizard -> /calendar
-admin on  /money/sales -> (open)
+admin on  /money/sales -> /invoices
 admin on  /money/settlement -> (open)
 admin on  /money/status -> /money
 admin on  /money/suppliers -> (open)
@@ -982,6 +989,7 @@ admin off /installation/assistants -> (open)
 admin off /invoice-register -> /messages
 admin off /invoices -> /messages
 admin off /invoices/:id -> /messages
+admin off /invoices/customer/:id -> /messages
 admin off /invoicing/wizard -> /messages
 admin off /kiosk -> /messages
 admin off /kiosk-gate -> /messages
@@ -1117,6 +1125,7 @@ owner on  /installation/assistants -> (open)
 owner on  /invoice-register -> (open)
 owner on  /invoices -> (open)
 owner on  /invoices/:id -> (open)
+owner on  /invoices/customer/:id -> (open)
 owner on  /invoicing/wizard -> (open)
 owner on  /kiosk -> /reserve
 owner on  /kiosk-gate -> /reserve
@@ -1154,7 +1163,7 @@ owner on  /money/purchases -> /money
 owner on  /money/purchases/approvals -> /money
 owner on  /money/repartition -> (open)
 owner on  /money/repartition-wizard -> /money
-owner on  /money/sales -> (open)
+owner on  /money/sales -> /invoices
 owner on  /money/settlement -> (open)
 owner on  /money/status -> /money
 owner on  /money/suppliers -> (open)
@@ -1252,6 +1261,7 @@ owner off /installation/assistants -> (open)
 owner off /invoice-register -> /messages
 owner off /invoices -> /messages
 owner off /invoices/:id -> /messages
+owner off /invoices/customer/:id -> /messages
 owner off /invoicing/wizard -> /messages
 owner off /kiosk -> /messages
 owner off /kiosk-gate -> /messages

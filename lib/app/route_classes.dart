@@ -209,7 +209,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/nfc-config', RouteClass.workspace, place: 'drawer-nfc-config'),
   RouteRule('/badge-kiosks', RouteClass.workspace, place: 'drawer-nfc-config', measure: PageMeasure.form),
   RouteRule('/payment-config', RouteClass.workspace, place: 'drawer-payment-config'),
-  RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing'),
+  RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing', measure: PageMeasure.form), // #3614: a settings form
   RouteRule(
     '/invoices',
     RouteClass.workspace,
@@ -217,6 +217,13 @@ const List<RouteRule> routeRules = [
     measure: PageMeasure.work,
   ),
   // #3607 — an open invoice beside the list (or its page).
+  // #3614 — an open customer beside the list (or their page).
+  RouteRule(
+    '/invoices/customer/:id',
+    RouteClass.workspace,
+    place: 'drawer-invoices',
+    measure: PageMeasure.work,
+  ),
   RouteRule(
     '/invoices/:id',
     RouteClass.workspace,
@@ -241,13 +248,13 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases'),
-  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
+  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-guest-passes', measure: PageMeasure.work), // #3614
   RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals'),
-  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
+  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
   RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
   RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders'),
   RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
-  RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-sales'),
+  RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-invoices'),
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
   RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting'),
   RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
@@ -276,7 +283,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations'),
   RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat'),
-  RouteRule('/services', RouteClass.workspace, place: 'drawer-services'),
+  RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories'),
   RouteRule('/features', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/workspace-settings', RouteClass.workspace, place: 'drawer-setup-guide'),
