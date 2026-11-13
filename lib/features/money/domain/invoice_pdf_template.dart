@@ -222,7 +222,7 @@ class InvoicePdfTemplate {
     'buyer_reference',
     'issued_by',
     'replaces',
-    'total',
+    'total', 'currency', // #3851: the ISO 4217 code
     'charges',
     'payments',
     'voided',

@@ -15983,6 +15983,10 @@
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
   },
+  "reportFieldMeaningCurrency": "El código ISO de la moneda, por ejemplo EUR o CAD",
+  "@reportFieldMeaningCurrency": {
+    "description": "#3851 report guide: meaning of currency"
+  },
   "reportFieldMeaningDeclarationNote": "La advertencia de la declaración: verificar antes de presentar",
   "reportFieldMeaningDueDate": "La fecha de vencimiento",
   "@reportFieldMeaningDueDate": {

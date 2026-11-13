@@ -11712,6 +11712,7 @@ const Set<String> uiLabelKeys = {
   'reportFieldMeaningClientVatId',
   'reportFieldMeaningCopy',
   'reportFieldMeaningCreditNote',
+  'reportFieldMeaningCurrency',
   'reportFieldMeaningDeclarationNote',
   'reportFieldMeaningDueDate',
   'reportFieldMeaningEscompte',
