@@ -418,11 +418,7 @@ enum WorkspaceFeature {
   invoiceEmail,
   kioskEnrolment,
   quickSearch,
-
-  /// #3824 — the goods ledger (stock S1, epic #3823): locations, item units
-  /// with exact factors, codes, lots, movements and balances behind one move
-  /// command. Asked for, under the catalogue; the parent of every later stock
-  /// flag. Off: the shelf count works as before.
+  /// #3824 — the goods ledger (feature_manifest_stock.dart).
   stockManagement;
 
   /// The key of this feature inside `workspaces.feature_flags`.
@@ -521,10 +517,7 @@ class FeatureManifestEntry {
   final Set<String>? availableIn;
 }
 
-/// The declarative feature registry, in DISPLAY order: children follow
-/// their parent. Everything ships enabled except the explicit owner
-/// decisions (seat-blocking delegation #161, accessory billing #170,
-/// online payments, whole-space booking 0050 and its admin delegation).
+/// The declarative feature registry, in DISPLAY order: children follow their parent.
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
   ..._manifest1, ..._manifest2, ..._manifest3, ...stockFeatureManifest,
 };

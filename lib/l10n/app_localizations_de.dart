@@ -25031,7 +25031,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get refusalStockHistory =>
-      'Dieser Artikel hat Lagerbewegungen, die erhalten bleiben. Deaktivieren Sie ihn stattdessen.';
+      'Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.';
 
   @override
   String get refusalStockItem =>

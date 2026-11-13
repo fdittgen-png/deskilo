@@ -511,9 +511,29 @@ create trigger workspaces_stock_open after insert or update of feature_flags, co
   on public.workspaces for each row execute function public.workspaces_stock_open();
 
 -- ── the shelf count, while the ledger is on ─────────────────────────────
+-- Who changes a count by hand: a person needs manageStock (the server's own
+-- writers, with no person, record none).
+create or replace function public.stock_count_actor(p_workspace_id uuid)
+returns uuid language plpgsql stable security definer set search_path = public as $fn$
+declare
+  v_me uuid;
+begin
+  if auth.uid() is null then return null; end if;
+  select id into v_me from public.members
+   where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
+  if v_me is null or not public.has_permission(p_workspace_id, 'manageStock') then
+    raise exception 'not allowed to change the stock' using errcode = 'DKN01';
+  end if;
+  return v_me;
+end;
+$fn$;
+revoke execute on function public.stock_count_actor(uuid) from public, anon, authenticated;
+
 -- A row with a count is kept in stock. A new row's count is its opening; an
 -- edited count is an adjustment to or from the loss place, so the count
--- keeps mirroring the ledger.
+-- keeps mirroring the ledger. Either moves goods, so a person needs
+-- manageStock for it and is recorded as its actor. The unit and the
+-- tracking the history was written in do not change under it.
 create or replace function public.services_stock_ledger_before()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 declare
@@ -522,27 +542,34 @@ declare
   v_loss uuid;
   v_req uuid := gen_random_uuid();
   v_part int := 0;
+  v_actor uuid;
   t record;
 begin
   if new.stock is not null then new.stockable := true; end if;
   if tg_op = 'INSERT' then return new; end if;
+  if (new.inventory_unit is distinct from old.inventory_unit or new.tracking is distinct from old.tracking)
+     and exists (select 1 from public.stock_movements m where m.item_id = new.id) then
+    raise exception 'this item has stock movements: its unit and tracking stay as they were written'
+      using errcode = 'DKG08';
+  end if;
   if new.stock is not distinct from old.stock
      or coalesce(current_setting('deskilo.stock_count_edit', true), '') = 'on'
      or not public.feature_effective(new.workspace_id, 'stockManagement') then
     return new;
   end if;
+  v_actor := public.stock_count_actor(new.workspace_id);
   v_diff := coalesce(new.stock, 0) - coalesce(old.stock, 0);
   v_main := public.stock_place(new.workspace_id, 'warehouse');
   v_loss := public.stock_place(new.workspace_id, 'loss');
   perform set_config('deskilo.stock_count_edit', 'on', true);
   if v_diff > 0 then
     perform public.stock_record(new.workspace_id, new.id, null, v_loss, v_main, v_diff,
-      new.inventory_unit, v_diff, now(), 'adjustment', null, v_req, 1, 1, '{}'::jsonb);
+      new.inventory_unit, v_diff, now(), 'adjustment', v_actor, v_req, 1, 1, '{}'::jsonb);
   elsif v_diff < 0 then
     for t in select * from public.stock_take(new.workspace_id, new.id, v_main, -v_diff) loop
       v_part := v_part + 1;
       perform public.stock_record(new.workspace_id, new.id, t.lot_id, v_main, v_loss, t.quantity,
-        new.inventory_unit, t.quantity, now(), 'adjustment', null, v_req, 1, v_part, '{}'::jsonb);
+        new.inventory_unit, t.quantity, now(), 'adjustment', v_actor, v_req, 1, v_part, '{}'::jsonb);
     end loop;
   end if;
   perform set_config('deskilo.stock_count_edit', '', true);
@@ -550,7 +577,7 @@ begin
 end;
 $fn$;
 revoke execute on function public.services_stock_ledger_before() from public, anon, authenticated;
-create trigger services_stock_ledger_before before insert or update of stock on public.services
+create trigger services_stock_ledger_before before insert or update of stock, inventory_unit, tracking on public.services
   for each row execute function public.services_stock_ledger_before();
 
 create or replace function public.services_stock_ledger_after()
@@ -560,7 +587,8 @@ begin
      and public.feature_effective(new.workspace_id, 'stockManagement') then
     perform public.stock_record(new.workspace_id, new.id, null,
       public.stock_place(new.workspace_id, 'opening'), public.stock_place(new.workspace_id, 'warehouse'),
-      new.stock, new.inventory_unit, new.stock, now(), 'opening', null, gen_random_uuid(), 1, 1, '{}'::jsonb);
+      new.stock, new.inventory_unit, new.stock, now(), 'opening', public.stock_count_actor(new.workspace_id),
+      gen_random_uuid(), 1, 1, '{}'::jsonb);
   end if;
   return null;
 end;

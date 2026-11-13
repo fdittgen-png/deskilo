@@ -24779,7 +24779,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refusalStockHistory =>
-      'This item has stock movements, which are kept. Deactivate it instead.';
+      'This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.';
 
   @override
   String get refusalStockItem =>

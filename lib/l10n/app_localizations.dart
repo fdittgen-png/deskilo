@@ -40239,7 +40239,7 @@ abstract class AppLocalizations {
   /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
   ///
   /// In en, this message translates to:
-  /// **'This item has stock movements, which are kept. Deactivate it instead.'**
+  /// **'This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.'**
   String get refusalStockHistory;
 
   /// refusal DKG04 (#3824)

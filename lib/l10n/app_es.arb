@@ -15231,7 +15231,7 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
-  "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan. Desactívelo en su lugar.",
+  "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan: no se puede eliminar, y su unidad de existencias y su seguimiento quedan como están. Desactívelo o cree un artículo nuevo.",
   "refusalStockItem": "No es un artículo que este negocio tenga en existencias. No se ha movido nada.",
   "refusalStockLocation": "Este lugar no es de este negocio, ya no se usa o es a la vez el origen y el destino del movimiento. No se ha movido nada.",
   "refusalStockLot": "Este lote pertenece a otro artículo, o el artículo se sigue por lotes y no se indicó ninguno. No se ha movido nada.",

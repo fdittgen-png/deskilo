@@ -14,5 +14,5 @@
   "refusalStockLocation": "Este lugar no es de este negocio, ya no se usa o es a la vez el origen y el destino del movimiento. No se ha movido nada.",
   "refusalStockLot": "Este lote pertenece a otro artículo, o el artículo se sigue por lotes y no se indicó ninguno. No se ha movido nada.",
   "refusalStockMove": "Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.",
-  "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan. Desactívelo en su lugar."
+  "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan: no se puede eliminar, y su unidad de existencias y su seguimiento quedan como están. Desactívelo o cree un artículo nuevo."
 }

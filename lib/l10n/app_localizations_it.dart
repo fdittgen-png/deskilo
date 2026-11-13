@@ -24992,7 +24992,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get refusalStockHistory =>
-      'Questo articolo ha movimenti di magazzino, che vengono conservati. Disattivalo invece.';
+      'Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.';
 
   @override
   String get refusalStockItem =>

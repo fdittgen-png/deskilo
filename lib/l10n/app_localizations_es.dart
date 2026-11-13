@@ -24965,7 +24965,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get refusalStockHistory =>
-      'Este artículo tiene movimientos de existencias, que se conservan. Desactívelo en su lugar.';
+      'Este artículo tiene movimientos de existencias, que se conservan: no se puede eliminar, y su unidad de existencias y su seguimiento quedan como están. Desactívelo o cree un artículo nuevo.';
 
   @override
   String get refusalStockItem =>

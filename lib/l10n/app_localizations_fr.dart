@@ -25073,7 +25073,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get refusalStockHistory =>
-      'Cet article a des mouvements de stock, qui sont conservés. Désactivez-le plutôt.';
+      'Cet article a des mouvements de stock, qui sont conservés : il ne peut pas être supprimé, et son unité de stock et son suivi restent tels quels. Désactivez-le, ou créez un nouvel article.';
 
   @override
   String get refusalStockItem =>

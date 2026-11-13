@@ -8,7 +8,7 @@
 -- and a delegated assistant see or move nothing; with the feature off the
 -- command refuses and the old shelf count works as before. Rolled back.
 begin;
-select plan(23);
+select plan(25);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -80,7 +80,7 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
        'stock-' || n || '@deskilo.test', '', now(), now(), now()
   from generate_series(1, 4) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions) values
-  (pg_temp.u(101), 'Stock A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"stockManagement": false}', '{"member": ["viewStock"]}'),
+  (pg_temp.u(101), 'Stock A', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{"stockManagement": false}', '{"member": ["viewStock", "manageServices"]}'),
   (pg_temp.u(102), 'Stock B', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(3), '{"stockManagement": true}', '{}'),
   (pg_temp.u(103), 'Stock C', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(4), '{}', '{}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status) values
@@ -180,6 +180,13 @@ select is(pg_temp.run_as(pg_temp.u(1), format('select count(*) from public.stock
   '0 0', 'a delegated assistant session reads nothing of the ledger');
 select ok(pg_temp.move(513, jsonb_build_array(pg_temp.line(301, 1, 'MAIN', 'SHELF-A')), 'transfer', null, 2) like 'ERR DKN01 %',
   'a member without manageStock moves nothing (DKN01)');
+
+select is(left(pg_temp.run_as(pg_temp.u(2), format('update public.services set stock = 99 where id = %L returning stock::text', pg_temp.u(301))), 9)
+          || ' ' || (select stock from public.services where id = pg_temp.u(301))::text,
+  'ERR DKN01 26', 'a member who edits the catalogue but may not move stock cannot change a count');
+select is(pg_temp.refusal(format($q$update public.services set inventory_unit = 'kg' where id = %L$q$, pg_temp.u(301)))
+          || ' ' || pg_temp.refusal(format($q$update public.services set tracking = 'lot' where id = %L$q$, pg_temp.u(301))),
+  'DKG08 DKG08', 'an item with movements keeps the unit and the tracking its history was written in');
 
 -- With the feature off.
 select is(left(pg_temp.run_as(pg_temp.u(4), format($q$select public.stock_move_v1(%L, %L, '[]'::jsonb, 'receipt')::text$q$, pg_temp.u(103), pg_temp.u(514))), 9)

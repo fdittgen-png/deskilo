@@ -32552,7 +32552,7 @@
   "@refusalSession": {
     "description": "#1305 Shown when the session expired during an action"
   },
-  "refusalStockHistory": "This item has stock movements, which are kept. Deactivate it instead.",
+  "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
   "@refusalStockHistory": {
     "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
   },
