@@ -68,6 +68,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # #3473 -- the digest-pinned Gradle distribution (and, per the policy in
+      # the composite, the dependency cache)
+      - uses: ./.github/actions/gradle-cache
+        with:
+          dependencies: none
+
       - id: flutter_pin
         run: echo "version=$(cat .flutter-version)" >> "$GITHUB_OUTPUT"
 

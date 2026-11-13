@@ -37,6 +37,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # #3473 -- the digest-pinned Gradle distribution (and, per the policy in
+      # the composite, the dependency cache)
+      - uses: ./.github/actions/gradle-cache
+        with:
+          dependencies: restore
+
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}

@@ -53,6 +53,12 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      # #3473 -- the digest-pinned Gradle distribution (and, per the policy in
+      # the composite, the dependency cache)
+      - uses: ./.github/actions/gradle-cache
+        with:
+          dependencies: restore
+
       # #809 — the version is pinned in .flutter-version, the same file
       # fdroiddata's recipe reads, so our gate and F-Droid build with the
       # same Flutter.

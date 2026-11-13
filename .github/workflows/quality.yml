@@ -105,7 +105,7 @@ jobs:
           fetch-depth: 0
       - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
         with:
-          sdk: stable
+          sdk: "3.13.4" # the Dart of Flutter 3.47.5 (#3473; pinned by workflow_pins_test)
       - id: verdict
         uses: ./.github/actions/classify-change
         with:

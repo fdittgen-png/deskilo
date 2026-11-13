@@ -59,4 +59,27 @@ void main() {
       reason: 'workflows disagree on the Flutter version: $versions',
     );
   });
+
+  test('every Dart setup names an exact SDK version, never `stable`', () {
+    // #3473 -- the jobs that classify the change install Dart on every run
+    // and feed a gate line of the required report: a floating channel is a
+    // different toolchain on a different day.
+    var seen = 0;
+    for (final file in filesWithExtension('.github/workflows', '.yml')) {
+      final source = file.readAsStringSync();
+      final steps = RegExp(
+        r'uses:\s*dart-lang/setup-dart@[^\n]*\n\s*with:\s*\n\s*sdk:\s*([^\s#]+)',
+      ).allMatches(source);
+      for (final step in steps) {
+        seen++;
+        expect(
+          step.group(1)!.replaceAll('"', ''),
+          matches(RegExp(r'^\d+\.\d+\.\d+$')),
+          reason: '${file.path}: a Dart setup must pin x.y.z, the Dart of '
+              'the pinned Flutter',
+        );
+      }
+    }
+    expect(seen, greaterThanOrEqualTo(2), reason: 'no Dart setup found?');
+  });
 }
