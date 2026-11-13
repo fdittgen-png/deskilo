@@ -238,6 +238,49 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
     );
   }
 
+  @override
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'test_state',
+    });
+    return data == null
+        ? EInvoiceTestState.unavailable
+        : EInvoiceTestState.fromWire(data);
+  }
+
+  @override
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  }) async {
+    final data = await _invokeSend({
+      'workspace_id': workspaceId,
+      'action': 'test',
+      'file_name': fileName,
+      'mime_type': 'application/xml',
+      'format': 'fatturaPa',
+      'content_base64': base64Encode(bytes),
+    });
+    if (data == null) {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.unavailable);
+    }
+    final error = data['error'] as String?;
+    final phase = data['phase'] as String?;
+    return EInvoiceTestSent(
+      refusal: error != null
+          ? EInvoiceTestRefusal.fromWire(error)
+          : phase == 'rejected' || phase == 'failed'
+          ? EInvoiceTestRefusal.failed
+          : EInvoiceTestRefusal.none,
+      missing: [
+        for (final field in (data['missing'] as List? ?? const []))
+          '$field',
+      ],
+    );
+  }
+
   /// Same seam as the payment function: a 404 means "not deployed", which
   /// is a configuration answer, not an error.
   Future<Map<String, dynamic>?> _invokeSend(Map<String, dynamic> body) async {

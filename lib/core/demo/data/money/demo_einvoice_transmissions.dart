@@ -12,6 +12,11 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
 
   final FakeMoneyRepository _m;
 
+  /// #3883 — the demo's latest sandbox test document.
+  EInvoiceTestVerdict testVerdict = EInvoiceTestVerdict.none;
+  String testId = '';
+  int tests = 0;
+
   @override
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(
     String workspaceId,
@@ -139,4 +144,34 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
   @override
   Future<void> clearEInvoiceCredentials(String workspaceId) async =>
       _m.einvoiceConfig.clear();
+
+  /// #3883 — offered where the configured channel is the SdI, the one whose
+  /// verdict opens an issuing gate; the demo's test awaits until a test
+  /// settles it.
+  @override
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) async =>
+      _m.einvoiceGateway.provider == 'it_sdi'
+      ? EInvoiceTestState(
+          available: true,
+          transmissionId: testId,
+          verdict: testVerdict,
+        )
+      : EInvoiceTestState.unavailable;
+
+  @override
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  }) async {
+    if (_m.einvoiceGateway.provider != 'it_sdi') {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.unavailable);
+    }
+    if (testVerdict == EInvoiceTestVerdict.awaiting) {
+      return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.pending);
+    }
+    testId = 'demo-test-${++tests}';
+    testVerdict = EInvoiceTestVerdict.awaiting;
+    return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.none);
+  }
 }
