@@ -36,7 +36,11 @@ class CustomerStatementPrint {
     required String customerId,
   }) => printOrRetry(context, 'customer statement', () async {
     await readDocumentPolicies(ref); // #3742 — the template, read
-    final now = ref.read(clockProvider).now();
+    // #3876 — the business's day, as the customer page reads it.
+    final now = statementDayOf(
+      ref.read(invoicingBusinessProvider),
+      ref.read(clockProvider).now(),
+    );
     final statement = await ref
         .read(customerStatementReaderProvider)
         .read(workspaceId, customerId, now);

@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/app_date_picker.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/print_or_retry.dart';
 import '../domain/customer_statement.dart';
 import '../domain/customer_statement_period_report.dart';
@@ -37,8 +38,11 @@ class CustomerStatementPeriodPrint {
     required String workspaceId,
     required String customerId,
   }) async {
-    final now = ref.read(clockProvider).now();
-    final today = DateTime(now.year, now.month, now.day);
+    // #3876 — the business's day, as the customer page reads it.
+    final today = statementDayOf(
+      ref.read(invoicingBusinessProvider),
+      ref.read(clockProvider).now(),
+    );
     final range = await showAppDateRangePicker(
       context: context,
       firstDate: DateTime(today.year - 10, today.month, today.day),
@@ -66,12 +70,19 @@ class CustomerStatementPeriodPrint {
     required DateTime to,
   }) => printOrRetry(context, 'customer statement period', () async {
     await readDocumentPolicies(ref); // #3742 — the template, read
-    final now = ref.read(clockProvider).now();
+    final now = statementDayOf(
+      ref.read(invoicingBusinessProvider),
+      ref.read(clockProvider).now(),
+    );
     final period = await ref
         .read(customerStatementReaderProvider)
         .period(workspaceId, customerId, from, to);
     final invoices = await ref.read(invoicesProvider.future);
-    if (!context.mounted || period.currencies.isEmpty) return;
+    if (!context.mounted) return;
+    if (period.currencies.isEmpty) {
+      AppSnack.info(context, context.l10n.customerStatementPeriodNothing);
+      return;
+    }
     final one = period.currencies.length == 1
         ? period.currencies.single
         : await _pick(period.currencies);

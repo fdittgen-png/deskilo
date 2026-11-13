@@ -177,7 +177,7 @@ UnassignedMoney? unassignedMoneyKnown(AsyncValue<UnassignedMoney> read) =>
 final customerStatementProvider = FutureProvider.autoDispose
     .family<CustomerStatement, String>((ref, customerId) async {
       final business = ref.watch(invoicingBusinessProvider);
-      final today = business.dayOf(ref.watch(clockProvider).now());
+      final today = statementDayOf(business, ref.watch(clockProvider).now());
       // A match or a new invoice changes the statement: read it again.
       await ref.watch(invoicesProvider.future);
       await ref.watch(invoiceMatchesProvider.future);

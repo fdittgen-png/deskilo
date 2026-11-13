@@ -55,17 +55,15 @@ source "$(dirname "$0")/closing_keywords.sh"
 stray=$(stray_closes "$title" "$body_only" | sed 's/^/#/' | tr '\n' ' ' | sed 's/ $//')
 [ -z "$stray" ] || fail "the body closes $stray, the title does not"
 
-# Commits AUTHORED before the tool-line guard's cutoff keep their lines
-# (#3685: the same epoch the guard compares with).
-cutoff=1794373200
-recent=$(git log "origin/master..$head" --format='%H %at' \
-  | while read -r sha at; do
-      [ "$at" -ge "$cutoff" ] && git log -1 --format=%B "$sha"
-    done || true)
-tools=$( { printf '%s\n' "$body"; printf '%s\n' "$recent"; } \
-  | grep -ciE 'co-authored-by|generated with|claude\.ai/code' || true)
+# One definition, one cutoff: the CI guard itself (#3872), fed the head, the
+# merge base, the title and the body. Its exit 2 (a range it could not read)
+# is a failure here too, never a pass.
+guard_out=$(BASE=$(git merge-base origin/master "$head") HEAD=$(git rev-parse "$head") \
+  PR_TITLE="$title" PR_BODY="$body_only" bash "$(dirname "$0")/tool_lines_check.sh" 2>&1) && guard_rc=0 || guard_rc=$?
+tools=$(printf '%s\n' "$guard_out" | grep -c '^::error::' || true)
+[ "$guard_rc" != 2 ] || tools=unreadable
 echo "tools:    $tools"
-[ "$tools" = 0 ] || fail "tool lines in the body or the commits"
+[ "$guard_rc" = 0 ] || fail "tool lines in the body or the commits"
 
 for b in ${contains[@]+"${contains[@]}"}; do
   git fetch -q origin "$b"

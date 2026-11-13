@@ -53,7 +53,9 @@ class InvoiceDetailsSection extends ConsumerWidget {
       transmission: ref.watch(invoiceTransmissionsProvider).value?[invoice.id],
       journey: null,
     );
-    final association = ref.watch(sellerIsAssociationProvider);
+    final association = invoice.sellerIsAssociationOr(
+      ref.watch(sellerIsAssociationProvider),
+    );
     final dates = appFormatOf(context).dates(DateShape.date);
     Widget line(String text) => Padding(
       padding: const EdgeInsets.only(top: AppSpacing.xs),

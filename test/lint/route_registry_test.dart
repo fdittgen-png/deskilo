@@ -35,6 +35,7 @@ const Map<String, String> _structural = {
   '/workspace-settings': 'the identity every money and date rule reads',
   '/reports': 'its documents section is part of workspace settings (#2301)',
   '/members': 'admission and roles cannot be managed without it',
+  '/members/:id': 'one member of /members, beside its table (#3618)',
   '/validation': 'admission and every pending request run through it',
   '/settings/assistants':
       'narrows assistant exposure; not behind mcpAccess (#1826)',
