@@ -1859,6 +1859,7 @@ Vous voulez vous connecter en scannant votre badge plutôt qu'en saisissant votr
 - La ligne indique **Pas encore de code** ou **Code défini**.
 - Vous seul pouvez le définir, et personne, pas même un propriétaire, ne peut le relire.
 - **Modifier le code** le remplace ; **Supprimer le code** désactive la connexion par badge pour tous vos badges.
+- Un badge vous connecte à son propre espace. Le propriétaire ou l'administrateur d'un autre espace se connecte avec son mot de passe, pas avec le badge.
 
 **Voir aussi:** [Votre badge](help:user.profile.settings.badge)
 

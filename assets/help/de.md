@@ -1859,6 +1859,7 @@ Sie möchten sich durch Scannen Ihres Badges anmelden, statt Ihre E-Mail einzuti
 - Die Zeile lautet **Noch keine PIN** oder **PIN gesetzt**.
 - Nur Sie können sie festlegen, und niemand, auch kein Inhaber, kann sie wieder auslesen.
 - **PIN ändern** ersetzt sie; **PIN entfernen** schaltet die Badge-Anmeldung für alle Ihre Badges aus.
+- Ein Badge meldet Sie in seinem eigenen Bereich an. Wer einen anderen Bereich besitzt oder verwaltet, meldet sich mit dem Passwort an, nicht mit dem Badge.
 
 **Siehe auch:** [Ihr Badge](help:user.profile.settings.badge)
 
