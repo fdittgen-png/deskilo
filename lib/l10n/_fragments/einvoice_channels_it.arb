@@ -254,5 +254,22 @@
   "memberEInvoiceAddressFailed": "Non è stato possibile salvare l’indirizzo di fatturazione elettronica.",
   "@memberEInvoiceAddressFailed": {
     "description": "#2358 member dialog: the save was refused"
+  },
+  "eInvoiceTestFieldsTitle": "Ambiente di prova (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
+  "eInvoiceTestFieldsHelp": "Chiavi di prova per la piattaforma di test. Sono conservate a parte rispetto a quelle di produzione; un campo vuoto mantiene il valore salvato.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldLabel": "{field} (prova)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
   }
 }

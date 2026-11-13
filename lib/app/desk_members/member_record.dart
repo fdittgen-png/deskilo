@@ -79,41 +79,52 @@ class MemberRecord extends ConsumerWidget {
           ('notes', l.membersTabNotes, _Notes(member: member, name: name)),
       ],
     ];
+    final bar = AppBar(
+      title: Text(name, overflow: TextOverflow.ellipsis),
+      automaticallyImplyLeading: onClose == null,
+      actions: [
+        if (onClose case final close?)
+          CloseButton(key: const ValueKey('member-close'), onPressed: close),
+      ],
+      bottom: TabBar(
+        isScrollable: true,
+        tabAlignment: TabAlignment.start,
+        tabs: [
+          for (final (id, label, _) in tabs)
+            Tab(key: ValueKey('member-tab-$id'), text: label),
+        ],
+      ),
+    );
+    // #3891 — the bar then the body, stated: by reading order a body
+    // scrolled up would come before the bar its Tab cycle starts with.
     return DefaultTabController(
       length: tabs.length,
-      child: Scaffold(
+      child: FocusTraversalGroup(
+        policy: OrderedTraversalPolicy(),
+        child: Scaffold(
         key: const ValueKey('member-record'),
-        appBar: AppBar(
-          title: Text(name, overflow: TextOverflow.ellipsis),
-          automaticallyImplyLeading: onClose == null,
-          actions: [
-            if (onClose case final close?)
-              CloseButton(
-                key: const ValueKey('member-close'),
-                onPressed: close,
-              ),
-          ],
-          bottom: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.start,
-            tabs: [
-              for (final (id, label, _) in tabs)
-                Tab(key: ValueKey('member-tab-$id'), text: label),
-            ],
+        appBar: PreferredSize(
+          preferredSize: bar.preferredSize,
+          child: FocusTraversalOrder(
+            order: const NumericFocusOrder(1),
+            child: bar,
           ),
         ),
         // A member the reader cannot read, or none of that id, is said in
         // words; nothing is shown as if it were theirs.
-        body: members != null && member == null
-            ? Center(
-                child: Text(
-                  l.searchRecordUnreadable,
-                  key: const ValueKey('search-record-unreadable'),
-                ),
-              )
-            : TabBarView(children: [for (final (_, _, body) in tabs) body]),
+        body: FocusTraversalOrder(
+          order: const NumericFocusOrder(2),
+          child: members != null && member == null
+              ? Center(
+                  child: Text(
+                    l.searchRecordUnreadable,
+                    key: const ValueKey('search-record-unreadable'),
+                  ),
+                )
+              : TabBarView(children: [for (final (_, _, body) in tabs) body]),
+        ),
       ),
-    );
+    ));
   }
 }
 

@@ -201,8 +201,9 @@ void main() {
     }
 
     for (final listed in [true, false]) {
-      testWidgets('workspace settings link the public page only with '
-          'publicListings; publicListings=$listed', (tester) async {
+      // #3870 — the owner keeps the way to the editor of a withdrawn page.
+      testWidgets('workspace settings link the public page to the owner '
+          'whatever publicListings says; publicListings=$listed', (tester) async {
         await pumpWorkspaceSettings(
           tester,
           repository: FakeWorkspaceRepository.withWorkspace(
@@ -211,7 +212,7 @@ void main() {
         );
         expect(
           find.byKey(const ValueKey('workspace-settings-portal-publication')),
-          listed ? findsOneWidget : findsNothing,
+          findsOneWidget,
         );
       });
     }

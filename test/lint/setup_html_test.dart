@@ -15,8 +15,10 @@
 // So: every parameter the app can configure has to be REACHABLE from
 // this file, and the file may not offer anything the app cannot store.
 // See docs/AGENT_RULES.md ("The setup questionnaire").
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
 import '../../tool/setup/page_sources.dart';
@@ -46,6 +48,30 @@ void main() {
     expect(over, isEmpty,
         reason: 'split by concern, as #2926 split web/setup.html; a '
             '_part file is not a concern');
+  });
+
+  // #3888 — an owner who never opens the reminders step imports the page's
+  // starting values, so they must be the app's: DunningRules.defaults,
+  // delivered through the generated registry, never a literal in the page.
+  test('the reminder answers start at the app defaults (#3888)', () {
+    final line = RegExp(r'^ reminders:(.*),$', multiLine: true)
+        .firstMatch(html)!
+        .group(1)!;
+    expect(line, contains('REMINDER_DEFAULTS'),
+        reason: 'the page keeps no copy of the dunning defaults');
+    final catalogue = File('web/setup_catalogue.js').readAsStringSync();
+    const prefix = 'window.SETUP_REGISTRY=';
+    final start = catalogue.indexOf(prefix) + prefix.length;
+    final registry = jsonDecode(
+      catalogue.substring(start, catalogue.indexOf(';\n', start)),
+    ) as Map<String, dynamic>;
+    const d = DunningRules.defaults;
+    expect(registry['reminders'], {
+      'levels': d.levels,
+      'firstDays': d.firstAfterDays,
+      'betweenDays': d.betweenDays,
+      'automatic': d.automatic,
+    });
   });
 
   // #2923 — the feature list, its defaults, REQUIRES and AVAILABLE_IN are

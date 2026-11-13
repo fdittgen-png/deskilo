@@ -8473,6 +8473,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Département, județ ou province (p. ex. RO-B, MI)';
 
   @override
+  String eInvoiceTestFieldLabel(String field) {
+    return '$field (test)';
+  }
+
+  @override
+  String get eInvoiceTestFieldsHelp =>
+      'Clés de répétition pour la plateforme de test. Elles sont conservées à part de celles de production ; un champ vide garde la valeur enregistrée.';
+
+  @override
+  String get eInvoiceTestFieldsTitle => 'Environnement de test (UAT)';
+
+  @override
   String get editorAddLevel => 'Ajouter un étage';
 
   @override

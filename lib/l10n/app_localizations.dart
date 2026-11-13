@@ -13427,6 +13427,24 @@ abstract class AppLocalizations {
   /// **'County or province (e.g. RO-B, MI)'**
   String get eInvoiceSubdivisionField;
 
+  /// #3882 e-invoice config: a connector field's test-environment twin
+  ///
+  /// In en, this message translates to:
+  /// **'{field} (test)'**
+  String eInvoiceTestFieldLabel(String field);
+
+  /// #3882 e-invoice config: what the test-environment fields are for
+  ///
+  /// In en, this message translates to:
+  /// **'Rehearsal keys for the test platform. They are kept apart from the production ones; a blank field keeps what is stored.'**
+  String get eInvoiceTestFieldsHelp;
+
+  /// #3882 e-invoice config: the test-environment fields of the chosen connector
+  ///
+  /// In en, this message translates to:
+  /// **'Test environment (UAT)'**
+  String get eInvoiceTestFieldsTitle;
+
   /// FAB label / dialog title for creating a level (floor)
   ///
   /// In en, this message translates to:

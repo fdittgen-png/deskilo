@@ -29,11 +29,13 @@ bool placeFeedbackAvailable(Ref ref) =>
 
 /// Whether the directory can show a workspace's feedback: it lives on this
 /// installation (a workspace of another server has no feedback here).
+/// #3869 — "this installation" is the selected business's, so it is
+/// asked again when the selection moves to another server.
 @Riverpod(keepAlive: true)
 bool Function(String source) directorySourceIsLocal(Ref ref) {
   String? origin;
   try {
-    origin = Uri.parse(ref.read(selectedWorkspaceClientProvider).rest.url).host;
+    origin = Uri.parse(ref.watch(selectedWorkspaceClientProvider).rest.url).host;
   } on Object catch (e, st) {
     // Not initialised: nothing is local (tests override it).
     TraceLogger.instance.warn('directory', 'no backend to compare a workspace source with',
