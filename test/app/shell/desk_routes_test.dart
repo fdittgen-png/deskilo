@@ -12,8 +12,8 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/app/shell/desk_scaffold.dart';
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
+import 'package:deskilo/core/ui/adaptive/page_measure.dart';
 import 'package:deskilo/core/ui/adaptive/task_surface.dart';
-import 'package:deskilo/core/ui/app_frame.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
@@ -91,6 +91,10 @@ List<String> _crumbs(WidgetTester tester) => [
 
 String _windowTitle(WidgetTester tester) =>
     tester.widget<Title>(find.byKey(const ValueKey('window-title'))).title;
+
+/// The width a work page takes in a page area [room] wide.
+double _workAreaWidth(double room) =>
+    (room - 2 * WorkArea.gutterFor(room)).clamp(0.0, kWorkAreaMaxWidth);
 
 void main() {
   // The five pages of the acceptance, each with the entry it is reached from.
@@ -268,8 +272,10 @@ void main() {
     (1440.0, false),
     (1920.0, false),
   ]) {
-    testWidgets('at ${width.toInt()} the window is the desk\'s and the reading '
-        'column the page\'s', (tester) async {
+    // #3619 — no workspace route is on the frame: the page takes the work
+    // area beside the navigation, with the gutter of its window class.
+    testWidgets('at ${width.toInt()} the window is the desk\'s and the work '
+        'area the page\'s', (tester) async {
       final router = await _pump(tester, size: Size(width, 900));
       await _go(tester, router, '/money/cash');
       final nav = tester.getRect(_key('desk-navigation'));
@@ -282,13 +288,7 @@ void main() {
       expect(top.right, width);
       final area = Rect.fromLTRB(top.left, top.bottom, width, 900);
       final page = pageRect(tester);
-      expect(page.width, lessThanOrEqualTo(frameWidthFor('/money/cash')));
-      expect(
-        page.width,
-        area.width < kReadingColumnMaxWidth
-            ? area.width
-            : kReadingColumnMaxWidth,
-      );
+      expect(page.width, _workAreaWidth(area.width));
       expect(page.center.dx, closeTo(area.center.dx, 0.5));
     });
   }
@@ -297,9 +297,10 @@ void main() {
     tester,
   ) async {
     final router = await _pump(tester, size: const Size(1920, 900));
-    // A canvas route still on today's frame (#3604: /invoices has its own).
+    // #3619 — a canvas is a work page like the others.
     await _go(tester, router, '/editor');
-    expect(pageRect(tester).width, kAppFrameMaxWidth);
+    final top = tester.getRect(_key('desk-top-bar'));
+    expect(pageRect(tester).width, _workAreaWidth(1920 - top.left));
   });
 
   testWidgets('a medium window is unchanged: no desk, the page as wide as '

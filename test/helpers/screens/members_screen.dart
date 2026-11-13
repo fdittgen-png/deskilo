@@ -58,6 +58,7 @@ Future<FakeWorkspaceRepository> pumpMembers(
   await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
+  await revealInSettings(tester, find.text('Members & plans'));
   await tester.ensureVisible(find.text('Members & plans'));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Members & plans'));

@@ -65,19 +65,23 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   // list, so on a short viewport it is simply not built and the tap
   // finds nothing. Tall viewports hid that for as long as this helper
   // has existed.
-  await tester.scrollUntilVisible(
-    find.byIcon(Icons.toggle_on_outlined),
-    200,
-    scrollable: pageScrollable(),
-  );
+  if (!await revealInSettings(tester, find.byIcon(Icons.toggle_on_outlined))) {
+    await tester.scrollUntilVisible(
+      find.byIcon(Icons.toggle_on_outlined),
+      200,
+      scrollable: pageScrollable(),
+    );
+  }
   await tester.ensureVisible(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.toggle_on_outlined));
   await tester.pumpAndSettle();
-  if (switches) {
-    await tester.tap(find.byKey(const ValueKey('features-view-switches')));
-    await tester.pumpAndSettle();
-  }
+  // #3619 — the desk opens on the table, a phone on the overview: the
+  // view asked for is chosen either way.
+  await tester.tap(
+    find.byKey(ValueKey('features-view-${switches ? 'switches' : 'processes'}')),
+  );
+  await tester.pumpAndSettle();
   return workspace;
 }
 

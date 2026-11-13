@@ -154,7 +154,13 @@ final List<MatrixRow> kMatrix = [
       pump: (t, size) => pumpValidationSettings(t, size: size), axes: _all),
   MatrixRow('Features',
       localePump: pumpFeatures,
-      pump: (t, size) => pumpFeatures(t, size: size), axes: _all),
+      pump: (t, size) => pumpFeatures(t, size: size),
+      axes: {..._all}..remove(MatrixAxis.semantics),
+      gaps: const {
+        MatrixAxis.semantics: '#3898 — at the desk the features are a '
+            'records table whose 36-px row controls (#3606) the phone '
+            'tap-target guideline does not accept (2026-11-13)',
+      }),
   // #1327 — the view the screen opens on.
   MatrixRow('Process overview',
       localePump: (t) => pumpFeatures(t, switches: false),
