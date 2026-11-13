@@ -9,6 +9,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -159,10 +160,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              l10n.bookChartTitle(widget.issuer.name),
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
+            _ChartTitle(widget.issuer.name, workspace.id),
             if (accounts.isEmpty)
               OutlinedButton(
                 key: const ValueKey('book-chart-suggest'),
@@ -251,10 +249,8 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
             for (final role in BookRole.values)
               _RoleRow(
                 role: role,
-                accounts: [
-                  for (final a in accounts)
-                    if (mappingProblem(role, a, widget.issuer.id) == null) a,
-                ],
+                accounts: accounts,
+                issuerId: widget.issuer.id,
                 current: mappingOn(
                   chart.mappings,
                   widget.issuer.id,
@@ -314,31 +310,77 @@ class _RoleRow extends StatelessWidget {
   const _RoleRow({
     required this.role,
     required this.accounts,
+    required this.issuerId,
     required this.current,
     required this.onChosen,
   });
 
   final BookRole role;
+
+  /// Every account of the issuer; a role offers those that fit it.
   final List<BookAccount> accounts;
+  final String issuerId;
   final BookMapping? current;
   final ValueChanged<BookAccount>? onChosen;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final selected = accounts.where((a) => a.id == current?.accountId);
+    // #3884 -- a role mapped to an account this version cannot read is not
+    // an unmapped role: it is said so and cannot be changed from here.
+    if (current != null && !accounts.any((a) => a.id == current!.accountId)) {
+      return ListTile(
+        key: ValueKey('book-role-${role.wire}'),
+        enabled: false,
+        dense: true,
+        contentPadding: EdgeInsets.zero,
+        title: Text(bookRoleLabel(l10n, role)),
+        subtitle: Text(l10n.bookRoleMappedUnreadable),
+      );
+    }
+    final fitting = [
+      for (final a in accounts)
+        if (mappingProblem(role, a, issuerId) == null) a,
+    ];
+    final selected = fitting.where((a) => a.id == current?.accountId);
     return DropdownButtonFormField<String>(
       key: ValueKey('book-role-${role.wire}'),
       initialValue: selected.isEmpty ? null : selected.first.id,
       isExpanded: true,
       decoration: InputDecoration(labelText: bookRoleLabel(l10n, role)),
       items: [
-        for (final a in accounts)
+        for (final a in fitting)
           DropdownMenuItem(value: a.id, child: Text('${a.code} · ${a.name}')),
       ],
       onChanged: onChosen == null
           ? null
-          : (id) => onChosen!(accounts.firstWhere((a) => a.id == id)),
+          : (id) => onChosen!(fitting.firstWhere((a) => a.id == id)),
     );
   }
+}
+
+/// The sheet's title and, under it, the one line (#3884) saying accounts or
+/// mappings this version could not read were left out.
+class _ChartTitle extends StatelessWidget {
+  const _ChartTitle(this.issuerName, this.workspaceId);
+
+  final String issuerName;
+  final String workspaceId;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Text(
+        context.l10n.bookChartTitle(issuerName),
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      UnreadableRowsNotice(
+        areas: [
+          booksAccountsArea(workspaceId),
+          booksMappingsArea(workspaceId),
+        ],
+      ),
+    ],
+  );
 }

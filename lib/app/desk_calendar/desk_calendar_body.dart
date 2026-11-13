@@ -27,6 +27,7 @@ import '../../core/time/day_axis.dart';
 import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_calendar.dart';
 import '../../core/ui/availability_unavailable_banner.dart';
+import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/loading_view.dart';
 import '../../features/reservations/domain/reservation.dart';
@@ -227,6 +228,7 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
       },
       child: Column(
         children: [
+          const UnreadableRowsNotice(areas: [reservationsArea]), // #3884
           DeskFilterRow(
             filter: _filter,
             levels: data.levels,

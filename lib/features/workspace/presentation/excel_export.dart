@@ -17,6 +17,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../../reservations/providers/reservation_providers.dart';
+import '../domain/export_unreadable_note.dart';
 import '../domain/member.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_excel.dart';
@@ -73,7 +74,8 @@ Future<void> exportWorkspaceExcel(
       final decisions = await ref
           .read(eventRepositoryProvider)
           .fetchDecisions(workspace.id, [for (final e in events) e.id]);
-      final sheets = [
+      final bookings = await ref.read(reservationRepositoryProvider).fetchAllForExportRead(workspace.id);
+      final sheets = withBookingsNote([
         ...buildWorkspaceExcelExport(
         workspace: workspace,
         enabledFeatures: {for (final f in features) f.dbKey},
@@ -81,9 +83,7 @@ Future<void> exportWorkspaceExcel(
         plansByLevel: plans,
         members: members,
         profilesByUserId: profilesByUserId,
-        reservations: await ref
-            .read(reservationRepositoryProvider)
-            .fetchAllForExport(workspace.id),
+        reservations: bookings.rows,
         ledger: ledger,
         pendingEvents: [
           for (final e in events)
@@ -126,7 +126,7 @@ Future<void> exportWorkspaceExcel(
               .fetchRecords(workspace.id),
           currencyCode: workspace.currencyCode,
         ),
-      ];
+      ], bookings.unreadable, l10n.workspaceExportUnreadableBookings);
 
       // #1310 — the space's own stored files travel with its rows. A
       // file that cannot be read fails the export: a copy that silently
@@ -207,11 +207,17 @@ Future<void> exportWorkspaceExcel(
 
 /// #2862 — the rows the workbook's sheets are written from, as the data
 /// report reads them.
-Future<WorkspaceExportDetails> readDataReportDetails(
-  WidgetRef ref, Workspace workspace) async {
+///
+/// #3884 -- with how many bookings could not be read: a report counting
+/// bookings without some of them is wrong, so the caller refuses it.
+Future<({WorkspaceExportDetails details, int unreadable})>
+    readDataReportDetails(WidgetRef ref, Workspace workspace) async {
   final levels = await ref.read(levelsProvider.future);
   final invoices = ref.read(invoiceQueriesProvider);
-  return WorkspaceExportDetails(
+  final bookings = await ref
+      .read(reservationRepositoryProvider)
+      .fetchAllForExportRead(workspace.id);
+  return (unreadable: bookings.unreadable, details: WorkspaceExportDetails(
     workspace: workspace,
     levels: levels,
     plansByLevel: {
@@ -226,9 +232,7 @@ Future<WorkspaceExportDetails> readDataReportDetails(
     decisions: const {},
     invoices: await invoices.fetchInvoices(workspace.id),
     members: await ref.read(workspaceMembersProvider.future),
-    reservations: await ref
-        .read(reservationRepositoryProvider)
-        .fetchAllForExport(workspace.id),
+    reservations: bookings.rows,
     invoiceMatches: await invoices.fetchInvoiceMatches(workspace.id),
-  );
+  ));
 }
