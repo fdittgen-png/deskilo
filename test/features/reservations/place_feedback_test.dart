@@ -172,7 +172,7 @@ void main() {
             .overrideWith((ref) => ref.watch(selected)),
       ],
     );
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(PlaceFeedbackChip.heartKey('w1')), findsOneWidget);
     expect(find.byKey(PlaceFeedbackChip.heartKey('w2')), findsNothing);
 
@@ -180,14 +180,14 @@ void main() {
         .read(selected.notifier)
         .use(h2);
     routed.current = repos['h2.example']!;
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(PlaceFeedbackChip.heartKey('w1')), findsNothing);
     expect(find.byKey(PlaceFeedbackChip.heartKey('w2')), findsOneWidget);
 
     await tester.tap(find.byKey(PlaceFeedbackChip.rateKey('w2')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(PlaceFeedbackBar.starKey('w2', 4)));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect((await repos['h2.example']!.fetch('w2', PlaceKind.workspace, 'w2')).mine, 4);
     expect((await repos['h1.example']!.fetch('w1', PlaceKind.workspace, 'w1')).mine, isNull);
   });
@@ -196,6 +196,13 @@ void main() {
 /// A client that only knows its address: no refresh timer, no network.
 SupabaseClient _client(String url) => SupabaseClient(url, 'k',
     authOptions: const AuthClientOptions(autoRefreshToken: false));
+
+/// Lets the futures and the sheet's animation finish, in bounded steps.
+Future<void> _settle(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 1));
+}
 
 class _Selected extends Notifier<SupabaseClient> {
   _Selected(this._first);
