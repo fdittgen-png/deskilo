@@ -38,5 +38,9 @@
   "recordedPaymentsReversalReviewed": "Looked at",
   "@recordedPaymentsReversalReviewed": {
     "description": "#3925 a payment the provider reversed: the button that marks it looked at"
+  },
+  "recordedPaymentsReversalReviewFailed": "The reversal could not be marked as looked at. Try again.",
+  "@recordedPaymentsReversalReviewFailed": {
+    "description": "#3925 a payment the provider reversed: marking it looked at failed"
   }
 }

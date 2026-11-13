@@ -6,5 +6,6 @@
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
   "recordedPaymentsReversalsTitle": "Revertidos por el proveedor",
   "recordedPaymentsReversalsHint": "Un reembolso o una disputa en el proveedor. Corrija el saldo del miembro y marque la reversión como revisada.",
-  "recordedPaymentsReversalReviewed": "Revisado"
+  "recordedPaymentsReversalReviewed": "Revisado",
+  "recordedPaymentsReversalReviewFailed": "La reversión no se pudo marcar como revisada. Inténtelo de nuevo."
 }

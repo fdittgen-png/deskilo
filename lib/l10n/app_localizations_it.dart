@@ -25692,6 +25692,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'Lo storno non è stato segnato come esaminato. Riprovi.';
+
+  @override
   String get recordedPaymentsReversalReviewed => 'Esaminato';
 
   @override

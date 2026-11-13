@@ -6,5 +6,6 @@
   "recordedPaymentsPeriod": "Zeitraum: {from} – {to}",
   "recordedPaymentsReversalsTitle": "Vom Anbieter rückgängig gemacht",
   "recordedPaymentsReversalsHint": "Eine Erstattung oder ein Widerspruch beim Anbieter. Berichtigen Sie den Saldo des Mitglieds und markieren Sie die Rückbuchung dann als angesehen.",
-  "recordedPaymentsReversalReviewed": "Angesehen"
+  "recordedPaymentsReversalReviewed": "Angesehen",
+  "recordedPaymentsReversalReviewFailed": "Die Rückbuchung konnte nicht als angesehen markiert werden. Versuchen Sie es erneut."
 }

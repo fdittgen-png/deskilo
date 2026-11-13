@@ -25472,6 +25472,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'The reversal could not be marked as looked at. Try again.';
+
+  @override
   String get recordedPaymentsReversalReviewed => 'Looked at';
 
   @override

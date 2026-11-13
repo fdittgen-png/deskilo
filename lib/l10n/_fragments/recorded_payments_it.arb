@@ -6,5 +6,6 @@
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
   "recordedPaymentsReversalsTitle": "Stornati dal fornitore",
   "recordedPaymentsReversalsHint": "Un rimborso o una contestazione presso il fornitore. Corregga il saldo del membro, poi segni lo storno come esaminato.",
-  "recordedPaymentsReversalReviewed": "Esaminato"
+  "recordedPaymentsReversalReviewed": "Esaminato",
+  "recordedPaymentsReversalReviewFailed": "Lo storno non è stato segnato come esaminato. Riprovi."
 }
