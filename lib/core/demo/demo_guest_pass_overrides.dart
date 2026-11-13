@@ -8,17 +8,10 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/domain/guest_pass.dart';
 import '../../features/money/providers/guest_pass_providers.dart';
-import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import 'data/guest_pass_repository.dart';
-import 'data/money_repository.dart';
-import 'data/reservation_repository.dart';
-import 'data/workspace_repository.dart';
 import 'demo_fixture.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_trade_city_seed.dart';
+import 'demo_space_pick.dart';
 
 const _pezenasPasses = [
   GuestPassOffer(id: 'demo-pass-pezenas-day', name: 'Pass journée', unit: GuestPassUnit.day, priceCents: 1800),
@@ -37,55 +30,58 @@ class _Rights {
   bool has(WorkspacePermission p) => held().contains(p);
 }
 
-List<Override> demoGuestPassOverrides(DemoFixture fixture) {
-  final rights = _Rights();
-  FakeGuestPassRepository space(
-    String id,
-    String currency,
-    ({FakeReservationRepository reservations, FakeWorkspaceRepository workspaces, FakeMoneyRepository money, List<Seat> Function() seats}) stores,
-    List<GuestPassOffer> offers,
-  ) =>
-      FakeGuestPassRepository(
-        workspaceId: id,
-        currency: currency,
-        reservations: stores.reservations,
-        workspaces: stores.workspaces,
-        money: stores.money,
-        now: () => fixture.seededAt,
-        maySell: () => rights.has(WorkspacePermission.issueInvoices),
-        mayPrice: () => rights.has(WorkspacePermission.manageServices),
-        floorPlanSeats: stores.seats,
-        offers: offers,
-      );
-  final home = space(demoFirstSpaceId, 'EUR',
-      (reservations: fixture.reservations, workspaces: fixture.workspaces, money: fixture.money, seats: () => fixture.floorPlan.seats), _pezenasPasses);
-  final leipzig = space(demoSecondSpaceId, 'EUR',
-      (reservations: fixture.secondSpace.reservations, workspaces: fixture.secondSpace.workspaces,
-       money: fixture.secondSpace.money, seats: () => fixture.secondSpace.floorPlan.seats), const []);
-  final london = space(demoLondonSpaceId, 'GBP',
-      (reservations: fixture.london.reservations, workspaces: fixture.london.workspaces,
-       money: fixture.london.money, seats: () => fixture.london.floorPlan.seats), _londonPasses);
-  final newYork = space(demoNewYorkSpaceId, 'USD',
-      (reservations: fixture.newYork.reservations, workspaces: fixture.newYork.workspaces,
-       money: fixture.newYork.money, seats: () => fixture.newYork.floorPlan.seats), _newYorkPasses);
-  // #3832 — the trade cities sell no passes yet, like Leipzig.
-  final zurich = space(demoZurichSpaceId, demoZurich.currency,
-      (reservations: fixture.zurich.reservations, workspaces: fixture.zurich.workspaces,
-       money: fixture.zurich.money, seats: () => fixture.zurich.floorPlan.seats), const []);
-  final milan = space(demoMilanSpaceId, demoMilan.currency,
-      (reservations: fixture.milan.reservations, workspaces: fixture.milan.workspaces,
-       money: fixture.milan.money, seats: () => fixture.milan.floorPlan.seats), const []);
-  return [
-    guestPassRepositoryProvider.overrideWith((ref) {
-      rights.held = () => ref.read(myPermissionsProvider).toSet();
-      return switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoSecondSpaceId => leipzig,
-        demoLondonSpaceId => london,
-        demoNewYorkSpaceId => newYork,
-        demoZurichSpaceId => zurich,
-        demoMilanSpaceId => milan,
-        _ => home,
-      };
-    }),
-  ];
+/// One space's guest passes, kept on its stores for the session (#3846: a
+/// switch of persona reaches the same sales), and the rights they are sold
+/// under, set by whoever reads them.
+class DemoGuestPasses {
+  DemoGuestPasses._(this.repository, this._rights);
+
+  final FakeGuestPassRepository repository;
+  final _Rights _rights;
+
+  /// The rights the persona holds, read when a pass is sold or priced.
+  void heldBy(Set<WorkspacePermission> Function() rights) {
+    _rights.held = rights;
+  }
 }
+
+/// The passes the space [key] offers.
+List<GuestPassOffer> _offers(DemoSpaceKey key) => switch (key) {
+  DemoSpaceKey.home => _pezenasPasses,
+  DemoSpaceKey.london => _londonPasses,
+  DemoSpaceKey.newYork => _newYorkPasses,
+  // Leipzig, the trade cities (#3832) and the twin sell none yet.
+  DemoSpaceKey.leipzig ||
+  DemoSpaceKey.zurich ||
+  DemoSpaceKey.milan ||
+  DemoSpaceKey.twin => const [],
+};
+
+/// The guest passes of the space [key] over the space's own parts.
+DemoGuestPasses demoGuestPasses(DemoFixture fixture, DemoSpaceKey key) {
+  final rights = _Rights();
+  final parts = fixture.space(key);
+  return DemoGuestPasses._(
+    FakeGuestPassRepository(
+      workspaceId: key.id,
+      currency: key.currency,
+      reservations: parts.reservations,
+      workspaces: parts.workspaces,
+      money: parts.money,
+      now: () => fixture.seededAt,
+      maySell: () => rights.has(WorkspacePermission.issueInvoices),
+      mayPrice: () => rights.has(WorkspacePermission.manageServices),
+      floorPlanSeats: () => parts.floorPlan.seats,
+      offers: _offers(key),
+    ),
+    rights,
+  );
+}
+
+List<Override> demoGuestPassOverrides(DemoFixture fixture) => [
+  guestPassRepositoryProvider.overrideWith((ref) {
+    final passes = fixture.stores.at(demoOpenSpace(ref)).guestPasses
+      ..heldBy(() => ref.read(myPermissionsProvider).toSet());
+    return passes.repository;
+  }),
+];
