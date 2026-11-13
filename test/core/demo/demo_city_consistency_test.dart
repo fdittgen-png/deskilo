@@ -26,6 +26,23 @@ void main() {
         money: fixture.newYork.money,
         months: 48,
       ),
+      // #3832 - the trade cities: two years, no hourly usage line.
+      (
+        id: 'ws-5',
+        space: fixture.zurich.workspaces,
+        plan: fixture.zurich.floorPlan,
+        bookings: fixture.zurich.reservations,
+        money: fixture.zurich.money,
+        months: 24,
+      ),
+      (
+        id: 'ws-6',
+        space: fixture.milan.workspaces,
+        plan: fixture.milan.floorPlan,
+        bookings: fixture.milan.reservations,
+        money: fixture.milan.money,
+        months: 24,
+      ),
     ]) {
       final members = {
         city.space.myMember.id,

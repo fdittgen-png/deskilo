@@ -4,25 +4,33 @@ import '../../../features/profile/domain/personal_info.dart';
 import '../../../features/profile/domain/profile.dart';
 import '../data/workspace_repository.dart';
 
-List<Profile> demoCityProfiles(FakeWorkspaceRepository space, String prefix) =>
-    [
-      for (final member in [space.myMember, ...space.otherMembers])
-        if (member.userId.startsWith('$prefix-user-'))
-          Profile(
-            id: member.userId,
-            displayName: space.memberNames[member.id] ?? '',
-            countryCode: prefix == 'uk' ? 'GB' : 'US',
-            address: prefix == 'uk'
-                ? 'Example Street, London'
-                : 'Example Avenue, New York',
-            identity: PersonalInfo(
-              firstName: space.memberNames[member.id] ?? '',
-              city: prefix == 'uk' ? 'London' : 'New York',
-              countryCode: prefix == 'uk' ? 'GB' : 'US',
-              email: space.memberEmails[member.id] ?? '',
-            ),
+/// Where the people of a city's prefix live: their country, town and street.
+const _homes = <String, ({String country, String city, String street})>{
+  'uk': (country: 'GB', city: 'London', street: 'Example Street'),
+  'ch': (country: 'CH', city: 'Zurich', street: 'Beispielstrasse'),
+  'it': (country: 'IT', city: 'Milano', street: 'Via Esempio'),
+};
+const _newYork = (country: 'US', city: 'New York', street: 'Example Avenue');
+
+List<Profile> demoCityProfiles(FakeWorkspaceRepository space, String prefix) {
+  final home = _homes[prefix] ?? _newYork;
+  return [
+    for (final member in [space.myMember, ...space.otherMembers])
+      if (member.userId.startsWith('$prefix-user-'))
+        Profile(
+          id: member.userId,
+          displayName: space.memberNames[member.id] ?? '',
+          countryCode: home.country,
+          address: '${home.street}, ${home.city}',
+          identity: PersonalInfo(
+            firstName: space.memberNames[member.id] ?? '',
+            city: home.city,
+            countryCode: home.country,
+            email: space.memberEmails[member.id] ?? '',
           ),
-    ];
+        ),
+  ];
+}
 
 const _first = [
   'Avery',

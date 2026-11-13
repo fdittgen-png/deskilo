@@ -5,18 +5,27 @@
 // workspace's Money pages read, so the two never disagree (the demo used to answer an empty
 // overview while Money showed the member's invoices and payments).
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:meta/meta.dart';
 
+import '../../features/money/domain/account_activity.dart';
 import '../../features/money/domain/billing_rules.dart';
 import '../../features/money/domain/finance_overview.dart';
+import '../../features/money/domain/ledger_entry.dart';
+import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
+import 'seed/demo_london_seed.dart';
+import 'seed/demo_new_york_seed.dart';
+import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 
 /// The overview the server's `my_finance_overview` (0380) would answer for
 /// the persona [fixture] is acting as.
+@visibleForTesting
 FinanceOverview demoFinanceOverview(DemoFixture fixture) {
-  // Me reads every space the person is in: the main space, Leipzig, London
-  // and New York. Each keeps its own currency (euros, pounds, dollars); Me
-  // never adds them together (FinanceOverview.owedByCurrency).
+  // Me reads every space the person is in: the main space, Leipzig, London,
+  // New York, Zurich and Milan. Each keeps its own currency (euros, pounds,
+  // dollars, francs); Me never adds them together (FinanceOverview.owedByCurrency).
   final names = {for (final w in fixture.workspaces.workspaces) w.id: w.name};
   // #3659 — each invoice carries its business's zone, as 0736 answers it.
   final zones = {for (final w in fixture.workspaces.workspaces) w.id: w.timezone};
@@ -26,6 +35,8 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
       fixture.secondSpace.money,
       fixture.london.money,
       fixture.newYork.money,
+      fixture.zurich.money,
+      fixture.milan.money,
     ])
       _overviewOf(money, fixture.actor.memberId, names, zones),
   ];
@@ -93,3 +104,99 @@ FinanceOverview _overviewOf(
     ],
   );
 }
+
+/// #3832 - the persona's own history, derived from the spaces' records.
+FakeAccountActivityRepository demoActivityRepository(DemoFixture fixture) =>
+    FakeAccountActivityRepository(
+      derive: () => demoFinanceOverview(fixture),
+      deriveRows: (kind) => _accountActivity(fixture, kind),
+    );
+
+typedef _Space = ({String id, String name, String currency, FakeMoneyRepository money});
+
+/// #3832 - Me > Activity in the demonstration: the acting persona's own
+/// invoices, payments and usage, in every space they are in, as the server's
+/// my_financial_activity (0304) answers them. Each row keeps its own space's
+/// currency; nothing is added across currencies or across people.
+List<AccountActivity> _accountActivity(
+  DemoFixture fixture,
+  AccountActivityKind kind,
+) {
+  final me = fixture.actor.memberId;
+  final rows = {for (final w in fixture.workspaces.workspaces) w.id: w};
+  _Space space(String id, FakeMoneyRepository money) => (
+    id: id,
+    name: rows[id]?.name ?? id,
+    currency: rows[id]?.currencyCode ?? '',
+    money: money,
+  );
+  return [
+    for (final s in [
+      space(demoFirstSpaceId, fixture.money),
+      space(demoSecondSpaceId, fixture.secondSpace.money),
+      space(demoLondonSpaceId, fixture.london.money),
+      space(demoNewYorkSpaceId, fixture.newYork.money),
+      space(demoZurichSpaceId, fixture.zurich.money),
+      space(demoMilanSpaceId, fixture.milan.money),
+    ])
+      ...switch (kind) {
+        AccountActivityKind.invoices => _invoiceRows(s, me),
+        AccountActivityKind.payments => _paymentRows(s, me),
+        AccountActivityKind.usage => _usageRows(s, me),
+      },
+  ];
+}
+
+List<AccountActivity> _invoiceRows(_Space s, String me) => [
+  for (final i in s.money.invoices)
+    if (i.memberId == me)
+      AccountActivity(
+        id: i.id,
+        workspaceId: i.workspaceId,
+        workspaceName: s.name,
+        occurredAt: i.issuedAt,
+        reference: i.number,
+        description: i.title,
+        currency: i.currency,
+        status: i.voidedAt != null
+            ? 'voided'
+            : i.settledByInvoiceId != null
+            ? 'regrouped'
+            : 'issued',
+        amountCents: i.totalCents,
+      ),
+];
+
+List<AccountActivity> _paymentRows(_Space s, String me) => [
+  for (final l in s.money.ledger)
+    if (l.memberId == me &&
+        l.category == LedgerCategory.payment &&
+        l.kind == LedgerKind.credit)
+      AccountActivity(
+        id: l.id,
+        workspaceId: s.id,
+        workspaceName: s.name,
+        occurredAt: l.createdAt,
+        reference: '',
+        description: l.description,
+        currency: s.currency,
+        status: 'confirmed',
+        amountCents: l.amountCents,
+      ),
+];
+
+List<AccountActivity> _usageRows(_Space s, String me) => [
+  for (final u in s.money.usageRecords)
+    if (u.memberId == me)
+      AccountActivity(
+        id: u.id,
+        workspaceId: s.id,
+        workspaceName: s.name,
+        occurredAt: u.reservedFrom,
+        reference: '',
+        description: u.spaceLabel,
+        currency: s.currency,
+        status: u.basis.name,
+        minutes: u.countedMinutes,
+      ),
+];
