@@ -22,6 +22,7 @@ import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -192,6 +193,10 @@ const _pages = [
     'money',
     'purchases-open',
   ),
+  // #3617 — reports and analysis at the desk.
+  ('/reports', PageKind.records, 'reports', 'reports'),
+  ('/money/status', PageKind.dashboard, 'money', 'status'),
+  ('/bi', PageKind.dashboard, 'reports', 'analysis'),
 ];
 
 /// Pages whose guard waits on the kit, each with its issue. The list only
@@ -313,6 +318,8 @@ void main() {
               RecordsHeader<BookExport>,
               RecordRow<FeatureManifestEntry>,
               RecordsHeader<FeatureManifestEntry>,
+              RecordRow<ReportPage>,
+              RecordsHeader<ReportPage>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -325,6 +332,7 @@ void main() {
               RecordsHeader<_PurchaseRow>,
               RecordsHeader<BookExport>,
               RecordsHeader<FeatureManifestEntry>,
+              RecordsHeader<ReportPage>,
             ],
           ),
           isEmpty,

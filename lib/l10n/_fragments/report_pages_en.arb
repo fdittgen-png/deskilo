@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "reportCoversRegister": "Every invoice on one line: date, name, amount and status.",
+  "@reportCoversRegister": {
+    "description": "#3617 the reports declared once: reportCoversRegister"
+  },
+  "reportCoversVat": "The VAT returns of each period, prepared from the issued invoices.",
+  "@reportCoversVat": {
+    "description": "#3617 the reports declared once: reportCoversVat"
+  },
+  "reportCoversOverview": "What needs you, then the figures you may read.",
+  "@reportCoversOverview": {
+    "description": "#3617 the reports declared once: reportCoversOverview"
+  },
+  "reportCoversAnalysis": "Occupancy, sales, purchases and cash over a period, compared and grouped.",
+  "@reportCoversAnalysis": {
+    "description": "#3617 the reports declared once: reportCoversAnalysis"
+  },
+  "reportsColumnName": "Report",
+  "@reportsColumnName": {
+    "description": "#3617 the reports declared once: reportsColumnName"
+  },
+  "reportsColumnCovers": "What it covers",
+  "@reportsColumnCovers": {
+    "description": "#3617 the reports declared once: reportsColumnCovers"
+  },
+  "reportsTools": "Tools",
+  "@reportsTools": {
+    "description": "#3617 the reports declared once: reportsTools"
+  }
+}

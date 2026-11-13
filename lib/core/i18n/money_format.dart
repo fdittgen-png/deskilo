@@ -53,9 +53,12 @@ class MoneyFormat {
   MoneyFormat(
     this.code, {
     required String? locale,
-    this.spaceAlphabetic = false,
+    bool spaceAlphabetic = false,
     bool distinct = false,
   }) : _unavailable = null,
+       // A code standing in for a shared symbol reads `USD 100.00`, never
+       // `USD100.00` (#3851).
+       spaceAlphabetic = spaceAlphabetic || distinct,
        _format = NumberFormat.currency(
           locale: locale,
           name: code,
@@ -163,16 +166,39 @@ String _distinctSymbol(String code, {required String? locale}) =>
 final Map<(String?, String), String> _distinctSymbols = {};
 
 /// The one-liner the sweep replaced `NumberFormat.simpleCurrency(name:)`
-/// with. #3658: a missing or malformed code is not read as any currency —
+/// with. [distinct] (#3851): a symbol another selectable currency shares is
+/// spelled as the ISO code -- what a printed document uses. #3658: a missing or malformed code is not read as any currency —
 /// every amount then reads "Currency unavailable".
 MoneyFormat moneyFormat(
   String? code, {
   required String? locale,
   bool spaceAlphabetic = false,
+  bool distinct = false,
 }) =>
     isCurrencyCode(code)
-        ? MoneyFormat(code!, locale: locale, spaceAlphabetic: spaceAlphabetic)
+        ? MoneyFormat(
+            code!,
+            locale: locale,
+            spaceAlphabetic: spaceAlphabetic,
+            distinct: distinct,
+          )
         : MoneyFormat.unavailable(
             text: currencyUnavailableText(locale),
             locale: locale,
           );
+
+/// #3851 -- the formatter of a printed document: a symbol another currency
+/// shares is spelled as the ISO code, on every amount.
+MoneyFormat documentMoneyFormat(String? code, {required String? locale}) =>
+    moneyFormat(code, locale: locale, distinct: true);
+
+/// #3851 -- a document's `total` and `currency` placeholders: the amount and
+/// the ISO code beside it (empty when the code is unknown).
+Map<String, Object?> documentTotalData(
+  String? code,
+  MoneyFormat format,
+  int minor,
+) => {
+  'total': format.formatMinor(minor),
+  'currency': isCurrencyCode(code) ? code : '',
+};
