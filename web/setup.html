@@ -199,9 +199,9 @@ function applyChrome(){
 // domainGates the switch each needs, domainEventTypes the server's name
 // where it differs from the page's key; invoicingCountries: where the app
 // issues invoices itself; countries: [ISO code, currency, time zone, bank
-// scheme]. Names and descriptions come from the ARB through setup_l10n.js.
+// scheme]; reminders: DunningRules.defaults (#3888). Names and descriptions come from the ARB through setup_l10n.js.
 const {features:FEATURES,requires:REQUIRES,availableIn:AVAILABLE_IN,permissions:PERMS,defaultMatrix:PERM_DEFAULTS,
- domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,countries:COUNTRIES}=window.SETUP_REGISTRY;
+ domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,countries:COUNTRIES,reminders:REMINDER_DEFAULTS}=window.SETUP_REGISTRY;
 // #2926 — the untranslated words (language names, statutory VAT rate
 // labels, the XML fallback names) are in setup_params.js.
 const seedVatRates=()=>set('vatRates',(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent})));
@@ -251,7 +251,7 @@ const DEFAULTS={
  pay:{iban:'',paypal_me:'',wero:'',lydia:'',wise:'',reference:'',bank_name:'',account_number:'',bank_code:'',bic:'',qr_iban:''},
  org:'association',customerCapacity:'',vatRegime:'not_subject',vatExigibility:'standard',numbering:{prefix:'INV-',datePart:'year',digits:'4',reset:'yearly'},memberNumbering:{prefix:'M-',digits:'4'},regNumber:'',vatId:'',exemption:'',street:'',postal:'',city:'',vatRates:[],
  mentions:{legalForm:'',register:'',terms:'',penalty:'',recovery:'',escompte:'',insurance:'',special:''},
- reminders:{levels:2,firstDays:14,betweenDays:14,automatic:false},
+ reminders:{...REMINDER_DEFAULTS},
  perms:JSON.parse(JSON.stringify(PERM_DEFAULTS)),permsV:2,
  validation:{required:1,ownerSignOff:false},
  domains:Object.fromEntries(DOMAINS.map(d=>[d,{on:false,required:1,ownerSignOff:false}])),

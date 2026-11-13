@@ -1135,7 +1135,13 @@ window.SETUP_REGISTRY={
    "America/Toronto",
    "ca"
   ]
- ]
+ ],
+ "reminders": {
+  "levels": 3,
+  "firstDays": 14,
+  "betweenDays": 14,
+  "automatic": false
+ }
 };
 window.SETUP_PROCESSES=[
  {
