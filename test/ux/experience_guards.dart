@@ -552,9 +552,18 @@ List<FocusNode> _focusables({
         n is! FocusScopeNode &&
         // A container whose controls are inside it is not one itself.
         !n.descendants.any((d) => d.canRequestFocus) &&
+        // #3891 — a read-only selectable text is skipped by Tab by design
+        // (Flutter's own); a person selects it with the pointer.
+        (tabStops || !_isReadOnlyText(n)) &&
         _onScreen(n))
       n,
 ];
+
+bool _isReadOnlyText(FocusNode n) {
+  final editable = n.context
+      ?.findAncestorWidgetOfExactType<EditableText>();
+  return editable != null && editable.readOnly;
+}
 
 bool _onScreen(FocusNode n) {
   final box = n.context!.findRenderObject();
