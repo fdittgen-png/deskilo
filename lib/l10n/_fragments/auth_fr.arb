@@ -21,7 +21,7 @@
   "authSignUpButton": "Créer le compte",
   "authToggleToSignUp": "Nouveau ici ? Créez un compte",
   "authToggleToSignIn": "Déjà un compte ? Connectez-vous",
-  "authPasswordTooShort": "Au moins 8 caractères",
+  "authPasswordTooShort": "Au moins {length} caractères",
   "authGenericError": "Échec de l'authentification. Vérifiez vos identifiants et réessayez.",
   "authSignOut": "Se déconnecter",
   "authNetworkError": "Impossible de joindre le serveur. Vérifiez votre connexion et réessayez.",

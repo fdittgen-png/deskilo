@@ -206,6 +206,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
           });
         }
       });
+      await _builder.configurePush(ref);
       setState(() => _schemaInstalled = true);
     });
   }

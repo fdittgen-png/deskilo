@@ -234,6 +234,11 @@ void main() {
             {'policies': 'public.invoices.invoices_select'},
           ];
         }
+        if (sql == pushConfigSql) {
+          return [
+            {'functions_url': 'https://$ref.supabase.co/functions/v1'},
+          ];
+        }
         if (sql == storageReadPolicySql) {
           return [
             {
@@ -320,6 +325,44 @@ void main() {
         throwsA(isA<InstanceStepFailure>()
             .having((e) => e.message, 'message', 'function does not exist')),
       );
+    });
+  });
+
+  group('#3904 — the server calls the instance\'s own functions', () {
+    test('the push configuration names this project and its key', () async {
+      final api = FakeSupabaseManagement();
+      const ref = 'abcdefghij0123456789';
+      await InstanceBuilder(api).configurePush(ref);
+      expect(api.sql[ref]!.single, allOf(
+        contains('insert into public.push_config'),
+        contains("'https://$ref.supabase.co/functions/v1'"),
+        contains("'sb_publishable_${ref}_key'"),
+        contains('on conflict (id) do update'),
+      ));
+    });
+
+    test('a value that is not a project reference is refused, nothing sent', () async {
+      final api = FakeSupabaseManagement();
+      for (final ref in ["abc'; drop table x; --", 'ABCDEFGHIJ0123456789', 'short']) {
+        await expectLater(InstanceBuilder(api).configurePush(ref),
+            throwsA(isA<InstanceStepFailure>()));
+      }
+      expect(api.sql, isEmpty);
+    });
+
+    test('the doctor names a push configuration for another project', () {
+      const ref = 'abcdefghij0123456789';
+      final own = checkPushConfig([
+        {'functions_url': 'https://$ref.supabase.co/functions/v1'},
+      ], ref: ref);
+      expect(own.single.level, DoctorLevel.ok);
+      final foreign = checkPushConfig([
+        {'functions_url': 'https://zzzzzzzzzzzzzzzzzzzz.supabase.co/functions/v1'},
+      ], ref: ref);
+      expect(foreign.single.level, DoctorLevel.alarm);
+      expect(foreign.single.words, DoctorWords.pushForeign);
+      expect(foreign.single.detail, contains('zzzzzzzzzzzzzzzzzzzz.supabase.co'));
+      expect(checkPushConfig(const [], ref: ref).single.level, DoctorLevel.alarm);
     });
   });
 }

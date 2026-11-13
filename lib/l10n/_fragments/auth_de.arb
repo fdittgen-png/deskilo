@@ -21,7 +21,7 @@
   "authSignUpButton": "Konto erstellen",
   "authToggleToSignUp": "Neu hier? Konto erstellen",
   "authToggleToSignIn": "Schon ein Konto? Anmelden",
-  "authPasswordTooShort": "Mindestens 8 Zeichen",
+  "authPasswordTooShort": "Mindestens {length} Zeichen",
   "authGenericError": "Anmeldung fehlgeschlagen. Bitte Zugangsdaten prüfen und erneut versuchen.",
   "authSignOut": "Abmelden",
   "authNetworkError": "Server nicht erreichbar. Prüfen Sie Ihre Verbindung und versuchen Sie es erneut.",

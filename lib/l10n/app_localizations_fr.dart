@@ -1433,7 +1433,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get authPasswordLabel => 'Mot de passe';
 
   @override
-  String get authPasswordTooShort => 'Au moins 8 caractères';
+  String authPasswordTooShort(int length) {
+    return 'Au moins $length caractères';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -13827,6 +13829,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get instanceDoctorAttention => 'Attention requise';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    return 'les codes durent au plus une heure, les mots de passe ont au moins $length caractères, un changement de mot de passe demande de se reconnecter';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Socle de connexion';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'Les codes de connexion durent plus d\'une heure';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'valeur  $value\n        Correctif : $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    return 'Les mots de passe peuvent avoir moins de $length caractères';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'Un changement de mot de passe ne demande pas de se reconnecter';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Sans security_invoker, la vue lit avec les droits du propriétaire et contourne les politiques des tables sous-jacentes.';
   }
@@ -13958,6 +13986,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Politiques';
 
   @override
+  String get instanceDoctorProbePush => 'Configuration des notifications';
+
+  @override
   String get instanceDoctorProbeRoles => 'Rôles de l\'installation';
 
   @override
@@ -13974,6 +14005,23 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Protégé';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Correctif : dart run tool/instance.dart push --ref <ref>, ou faites pointer push_config vers ce projet.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Les appels de notification et de règlement vont à un autre projet';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'les appels de notification et de règlement vont à ce projet ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Configuration des notifications';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {
