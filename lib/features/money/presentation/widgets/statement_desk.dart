@@ -121,41 +121,43 @@ class _StatementDeskState extends State<StatementDesk> {
           ],
         ),
         const SizedBox(height: dashboardGap * 2),
-        RecordsTable<StatementLine>(
-          key: const ValueKey('statement-desk-lines'),
-          tableId: 'statement-lines',
-          rows: shown,
-          keyOf: (line) => line.id,
-          searchText: (line) => line.label,
-          onOpen: (line) => _choose(line.kind),
-          cardBuilder: (context, line) => ListTile(
-            title: Text(line.label),
-            trailing: Text(money.formatMinor(line.cents)),
+        Expanded(
+          child: RecordsTable<StatementLine>(
+            key: const ValueKey('statement-desk-lines'),
+            tableId: 'statement-lines',
+            rows: shown,
+            keyOf: (line) => line.id,
+            searchText: (line) => line.label,
+            onOpen: (line) => _choose(line.kind),
+            cardBuilder: (context, line) => ListTile(
+              title: Text(line.label),
+              trailing: Text(money.formatMinor(line.cents)),
+            ),
+            empty: const SizedBox.shrink(),
+            amountOf: (line) =>
+                (currency: widget.currencyCode, minor: line.cents),
+            amountColumn: 'amount',
+            formatAmount: (code, minor) =>
+                appFormatOf(context).moneyIn(code).formatMinor(minor),
+            columns: [
+              RecordColumn(
+                id: 'line',
+                label: l.statementDeskColLine,
+                flex: 3,
+                hideable: false,
+                sortKey: (line) => line.kind.index,
+                cell: (_, line) => Text(line.label),
+              ),
+              RecordColumn(
+                id: 'amount',
+                label: l.financesColumnAmount,
+                flex: 2,
+                numeric: true,
+                sortKey: (line) => line.cents,
+                cell: (_, line) => Text(money.formatMinor(line.cents)),
+              ),
+            ],
           ),
-          empty: const SizedBox.shrink(),
-          amountOf: (line) =>
-              (currency: widget.currencyCode, minor: line.cents),
-          amountColumn: 'amount',
-          formatAmount: (code, minor) =>
-              appFormatOf(context).moneyIn(code).formatMinor(minor),
-          columns: [
-            RecordColumn(
-              id: 'line',
-              label: l.statementDeskColLine,
-              flex: 3,
-              hideable: false,
-              sortKey: (line) => line.kind.index,
-              cell: (_, line) => Text(line.label),
-            ),
-            RecordColumn(
-              id: 'amount',
-              label: l.financesColumnAmount,
-              flex: 2,
-              numeric: true,
-              sortKey: (line) => line.cents,
-              cell: (_, line) => Text(money.formatMinor(line.cents)),
-            ),
-          ],
         ),
       ],
     );

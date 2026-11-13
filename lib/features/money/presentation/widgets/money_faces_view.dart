@@ -147,11 +147,17 @@ class MoneyFacesView extends ConsumerStatefulWidget {
     required this.periodHeader,
     required this.cards,
     required this.actions,
+    this.pages = const {},
   });
 
   final Widget periodHeader;
   final Map<MoneyFace, List<Widget>> cards;
   final Map<MoneyFace, List<Widget>> actions;
+
+  /// #3627 — a face drawn as a page of its own at the desk (a dashboard
+  /// over a records table fills the height left under the headers) instead
+  /// of a column of cards.
+  final Map<MoneyFace, Widget> pages;
 
   @override
   ConsumerState<MoneyFacesView> createState() => _MoneyFacesViewState();
@@ -242,6 +248,23 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
         Padding(padding: AppSpacing.gutterAll, child: Material(
           color: scheme.surfaceContainerLow, borderRadius: AppRadius.lgAll, child: tabs,
         )),
+        if (widget.pages[face] case final page?)
+          Expanded(
+            child: Padding(
+              key: ValueKey('money-face-body-${face.name}'),
+              padding: AppSpacing.gutterAll,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  scopeHeader,
+                  if (monthly) Padding(padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+                      child: Card(child: widget.periodHeader)),
+                  Expanded(child: page),
+                ],
+              ),
+            ),
+          )
+        else
         Expanded(
           child: ListView(
             key: ValueKey('money-face-body-${face.name}'),

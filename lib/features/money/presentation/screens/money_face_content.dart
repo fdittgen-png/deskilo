@@ -56,6 +56,15 @@ class MoneyFaceContent {
   bool get _atDesk =>
       WindowClass.of(context).index >= WindowClass.expanded.index;
 
+  /// #3627 — the faces drawn as pages of their own at the desk.
+  Map<MoneyFace, Widget> pages() => {
+    if (data.statement case final statement? when _atDesk)
+      MoneyFace.statement: StatementDesk(
+        statement: statement,
+        currencyCode: data.currencyCode,
+      ),
+  };
+
   Widget bill(MoneyFace? face) => BillView(
         statement: data.statement!,
         ledger: data.ledger,
@@ -160,10 +169,7 @@ class MoneyFaceContent {
       MoneyFace.statement: [
         ...data.attemptsCard,
         // #3627 — at the desk the month is a dashboard over its lines.
-        if (statement != null && _atDesk)
-          StatementDesk(statement: statement, currencyCode: data.currencyCode)
-        else if (statement != null)
-          bill(MoneyFace.statement),
+        if (statement != null && !_atDesk) bill(MoneyFace.statement),
         if (account != null && account.isNotable) ...[
           const SizedBox(height: 8),
           AccountCard(

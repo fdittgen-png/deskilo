@@ -32,9 +32,7 @@ const _statement = Statement(
 Future<void> _pump(WidgetTester tester) => pumpStateScreen(
   tester,
   const Scaffold(
-    body: SingleChildScrollView(
-      child: StatementDesk(statement: _statement, currencyCode: 'EUR'),
-    ),
+    body: StatementDesk(statement: _statement, currencyCode: 'EUR'),
   ),
   overrides: standardTestOverrides(),
   size: const Size(1440, 1200),
