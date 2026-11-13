@@ -57,6 +57,13 @@ abstract class SupabaseManagement {
   /// a wizard reopened on it resumes instead of redeploying everything.
   Future<List<String>> listFunctions(String ref);
 
+  /// #3520 -- the deployed functions with the `verify_jwt` setting each one
+  /// carries, for the drift check. `verifyJwt` is null when the API does not
+  /// say, which a check must read as "not verified", never as a default.
+  Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
+    String ref,
+  );
+
   /// Deploys one edge function from its sources.
   Future<void> deployFunction(
     String ref, {
@@ -179,6 +186,21 @@ class DioSupabaseManagement implements SupabaseManagement {
         () => _dio.get('/v1/projects/$ref/functions'));
     return [
       for (final f in list.cast<Map<dynamic, dynamic>>()) '${f['slug']}',
+    ];
+  }
+
+  @override
+  Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
+    String ref,
+  ) async {
+    final list = await _call<List<dynamic>>(
+        () => _dio.get('/v1/projects/$ref/functions'));
+    return [
+      for (final f in list.cast<Map<dynamic, dynamic>>())
+        (
+          slug: '${f['slug']}',
+          verifyJwt: f['verify_jwt'] is bool ? f['verify_jwt'] as bool : null,
+        ),
     ];
   }
 
