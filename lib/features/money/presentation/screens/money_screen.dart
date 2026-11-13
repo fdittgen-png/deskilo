@@ -5,11 +5,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/navigation/address_query.dart';
 import '../../../../core/time/clock.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/bill_sections.dart';
+import '../../domain/money_face.dart';
 import '../../providers/billing_invoice_sweep.dart';
 import '../../providers/finance_overview_provider.dart';
+import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/payment_reminder_sweep.dart';
@@ -72,11 +75,36 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
 
   void _applyFocus(String? period) {
     if (period == null) return;
-    final parts = period.split('-');
-    if (parts.length == 2) {
-      setState(() => _month = DateTime(int.parse(parts[0]), int.parse(parts[1])));
-    }
+    if (_monthOf(period) case final month?) _showMonth(month);
     ref.read(moneyFocusControllerProvider.notifier).clear();
+  }
+
+  /// #3627 — `yyyy-MM` as the first day of that month, or null.
+  static DateTime? _monthOf(String? period) {
+    final m = RegExp(r'^(\d{4})-(\d{2})$').firstMatch(period ?? '');
+    if (m == null) return null;
+    final month = int.parse(m.group(2)!);
+    return month < 1 || month > 12 ? null : DateTime(int.parse(m.group(1)!), month);
+  }
+
+  /// #3627 — the month shown: the address's (`?month=yyyy-MM`), else the
+  /// month this page keeps itself (no router: a test pumping it alone).
+  DateTime get _shown => _monthOf(addressQuery(context, 'month')) ?? _month;
+
+  void _showMonth(DateTime month) {
+    final period = currentPeriod(month);
+    if (!setAddressQuery(context, {'month': period})) {
+      setState(() => _month = month);
+    }
+  }
+
+  /// #3627 — the face shown is kept in the address (`?face=`): an address
+  /// naming one shows it; choosing one writes it.
+  void _syncFace() {
+    final asked = MoneyFace.fromWire(addressQuery(context, 'face'));
+    if (asked != null && asked != ref.read(moneyFaceControllerProvider)) {
+      ref.read(moneyFaceControllerProvider.notifier).show(asked);
+    }
   }
 
   /// Me › Finances asked for one invoice of this space: open it here.
@@ -94,7 +122,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
   }
 
   void _shiftMonth(int delta) {
-    setState(() => _month = DateTime(_month.year, _month.month + delta));
+    final shown = _shown;
+    _showMonth(DateTime(shown.year, shown.month + delta));
   }
 
   @override
@@ -105,9 +134,14 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     // The space may arrive after the request: try again once it does.
     ref.listen(currentWorkspaceProvider, (_, _) =>
         _applyInvoiceFocus(ref.read(invoiceFocusProvider)));
+    ref.listen(moneyFaceControllerProvider,
+        (_, face) => setAddressQuery(context, {'face': face.name}));
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _syncFace();
+    });
     return MoneyBody(
       ops: MoneyScreenOps(
-        month: _month,
+        month: _shown,
         nowPeriod: currentPeriod(ref.read(clockProvider).now()),
         shiftMonth: _shiftMonth,
         sheets: _sheets,
