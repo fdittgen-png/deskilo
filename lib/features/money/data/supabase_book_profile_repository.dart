@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/unreadable_rows.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
 
@@ -57,17 +58,11 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       'book_chart',
       params: {'p_workspace_id': workspaceId},
     );
-    final map = Map<String, Object?>.from(row as Map);
-    return (
-      accounts: [
-        for (final a in (map['accounts'] as List? ?? const []))
-          BookAccount.fromJson(Map<String, Object?>.from(a as Map)),
-      ],
-      mappings: [
-        for (final m in (map['mappings'] as List? ?? const []))
-          BookMapping.fromJson(Map<String, Object?>.from(m as Map)),
-      ],
-    );
+    final read = bookChartFromJson(Map<String, Object?>.from(row as Map));
+    UnreadableRows.instance
+      ..record(booksAccountsArea(workspaceId), 'chart', read.unreadableAccounts)
+      ..record(booksMappingsArea(workspaceId), 'chart', read.unreadableMappings);
+    return (accounts: read.accounts, mappings: read.mappings);
   }
 
   @override
@@ -143,7 +138,17 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
         'p_to': isoDay(to),
       },
     );
-    return PostingSet.fromJson(Map<String, Object?>.from(row! as Map));
+    final set = PostingSet.fromJson(Map<String, Object?>.from(row! as Map));
+    UnreadableRows.instance.record(
+      booksPostingsArea(workspaceId),
+      '${isoDay(from)}|${isoDay(to)}',
+      {
+        for (final b in set.blockers)
+          if (b.block == PostingBlock.unreadable)
+            b.subject: 'posting role, kind, journal or block',
+      },
+    );
+    return set;
   }
 
   @override

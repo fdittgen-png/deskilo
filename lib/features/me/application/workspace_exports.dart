@@ -20,7 +20,7 @@ List<WorkspaceExportSource> workspaceExportSourcesOf(
   PersonalWorkspaceRefs refs,
 ) => List.unmodifiable([
   for (final ref in refs.refs)
-    if (!(ref.hostedHere && ref.status == null) &&
+    if (!ref.holdsNoRelationshipHere &&
         ref.status != RefStatus.exited)
       WorkspaceExportSource(
         installationId: ref.installationId,

@@ -49,17 +49,26 @@ class BookAccount {
   });
 
   /// #2387 — read through [JsonReader].
-  factory BookAccount.fromJson(Map<String, Object?> json) {
+  factory BookAccount.fromJson(Map<String, Object?> json) =>
+      tryFromJson(json) ??
+      (throw const FormatException('unknown account type or origin'));
+
+  /// The account, or null when its type or origin is one this build does
+  /// not know (#3884): never read as another type.
+  static BookAccount? tryFromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'book_accounts');
+    final type = AccountType.values.asNameMap()[r.string('account_type')];
+    final origin = AccountOrigin.values.asNameMap()[r.string('origin')];
+    if (type == null || origin == null) return null;
     return BookAccount(
       id: r.stringOr('id'),
       workspaceId: r.string('workspace_id'),
       issuerSiteId: r.string('issuer_site_id'),
       code: r.string('code'),
       name: r.string('name'),
-      type: AccountType.values.byName(r.string('account_type')),
+      type: type,
       isPosting: r.boolOr('is_posting', fallback: false),
-      origin: AccountOrigin.values.byName(r.string('origin')),
+      origin: origin,
       revision: r.integer('revision'),
     );
   }
@@ -105,16 +114,26 @@ class BookMapping {
   });
 
   /// #2387 — read through [JsonReader].
-  factory BookMapping.fromJson(Map<String, Object?> json) {
+  factory BookMapping.fromJson(Map<String, Object?> json) =>
+      tryFromJson(json) ??
+      (throw const FormatException('unknown role'));
+
+  /// The mapping, or null when its role is one this build does not know
+  /// (#3884): never read as another role, with or without a qualifier.
+  static BookMapping? tryFromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'book_mappings');
     // #2365 (0517) — `revenue:standard` is the base and its qualifier.
     final wire = r.stringOrNull('role');
     final colon = wire?.indexOf(':') ?? -1;
+    final role = BookRole.tryFromWire(
+      colon < 0 ? wire : wire!.substring(0, colon),
+    );
+    if (role == null) return null;
     return BookMapping(
       id: r.stringOr('id'),
       workspaceId: r.string('workspace_id'),
       issuerSiteId: r.string('issuer_site_id'),
-      role: BookRole.fromWire(colon < 0 ? wire : wire!.substring(0, colon)),
+      role: role,
       qualifier: colon < 0 ? null : wire!.substring(colon + 1),
       accountId: r.string('account_id'),
       effectiveFrom: r.dateTime('effective_from'),
@@ -247,3 +266,52 @@ List<SuggestedAccount> suggestedAccounts({
       .firstOrNull;
   return role == null ? null : (role, colon < 0 ? null : wire.substring(colon + 1));
 }
+
+/// #3884 -- the chart `book_chart` answers, with the accounts and the
+/// mappings this build could not read (a type, origin or role a newer server
+/// sends) left out of the lists instead of failing them: `id` -> the unknown
+/// value, per kind of row, so the caller can say how many and why.
+({
+  List<BookAccount> accounts,
+  List<BookMapping> mappings,
+  Map<String, String> unreadableAccounts,
+  Map<String, String> unreadableMappings,
+})
+bookChartFromJson(Map<String, Object?> map) {
+  final badAccounts = <String, String>{};
+  final badMappings = <String, String>{};
+  final accounts = <BookAccount>[];
+  for (final a in (map['accounts'] as List? ?? const [])) {
+    final row = Map<String, Object?>.from(a as Map);
+    final read = BookAccount.tryFromJson(row);
+    if (read == null) {
+      badAccounts['${row['id']}'] =
+          'account type ${row['account_type']} / origin ${row['origin']}';
+    } else {
+      accounts.add(read);
+    }
+  }
+  final mappings = <BookMapping>[];
+  for (final m in (map['mappings'] as List? ?? const [])) {
+    final row = Map<String, Object?>.from(m as Map);
+    final read = BookMapping.tryFromJson(row);
+    if (read == null) {
+      badMappings['${row['id']}'] = 'book role ${row['role']}';
+    } else {
+      mappings.add(read);
+    }
+  }
+  return (
+    accounts: accounts,
+    mappings: mappings,
+    unreadableAccounts: badAccounts,
+    unreadableMappings: badMappings,
+  );
+}
+
+/// #3884 -- the areas under which a workspace's books count what this build
+/// could not read: accounts and role mappings of the chart, and the posted
+/// entries of a period. Separate, so one list never says another's count.
+String booksAccountsArea(String workspaceId) => 'books:$workspaceId:accounts';
+String booksMappingsArea(String workspaceId) => 'books:$workspaceId:mappings';
+String booksPostingsArea(String workspaceId) => 'books:$workspaceId:postings';

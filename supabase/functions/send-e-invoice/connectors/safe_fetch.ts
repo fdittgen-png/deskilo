@@ -98,6 +98,10 @@ export async function assertPublicUrl(
   if (url.protocol !== "https:") {
     throw new DestinationRefused("destination_not_allowed");
   }
+  // https on its own port only.
+  if (url.port !== "" && url.port !== "443") {
+    throw new DestinationRefused("destination_not_allowed");
+  }
   const host = url.hostname.replace(/^\[|\]$/g, "");
   const lower = host.toLowerCase();
   if (
@@ -118,8 +122,11 @@ export async function assertPublicUrl(
   }
 }
 
+/** How long a call to a provider may take when its caller set no limit. */
+const CALL_TIMEOUT_MS = 20_000;
+
 /** [inner] behind the destination check; a redirect is refused, not
- * followed. */
+ * followed; a call without its own signal ends after [CALL_TIMEOUT_MS]. */
 export function safeFetch(
   inner: Fetch = fetch,
   resolve: Resolver = resolveHost,
@@ -129,7 +136,11 @@ export function safeFetch(
       input instanceof Request ? input.url : String(input),
       resolve,
     );
-    const res = await inner(input, { ...init, redirect: "manual" });
+    const res = await inner(input, {
+      ...init,
+      redirect: "manual",
+      signal: init?.signal ?? AbortSignal.timeout(CALL_TIMEOUT_MS),
+    });
     if (res.status >= 300 && res.status < 400) {
       throw new DestinationRefused("redirect_refused");
     }

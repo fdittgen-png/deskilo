@@ -132,6 +132,31 @@ class _Slow implements WorkspaceExportRepository {
 
 void main() {
   group('the sources and the answer', () {
+    test('#3884: a workspace whose status this version does not know stays '
+        'in the own-data export; one with no relationship does not', () {
+      final refs = PersonalWorkspaceRefs.fromJson({
+        'home': {'installation_id': _instA},
+        'refs': [
+          {
+            'network_id': '$_instA:$_wsA',
+            'hosted_here': true,
+            'freshness': 'local',
+            'status': 'future_status',
+          },
+          {
+            'network_id': '$_instA:$_wsB',
+            'hosted_here': true,
+            'freshness': 'local',
+            'status': null,
+          },
+        ],
+      });
+      expect(
+        workspaceExportSourcesOf(refs).map((s) => s.workspaceId),
+        [_wsA],
+      );
+    });
+
     test('every workspace my account names with a relationship is one '
         'source; one I left or hold nothing in is not', () {
       PersonalWorkspaceRef ref(

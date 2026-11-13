@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
-import 'wizard_form_layout.dart';
+import 'adaptive/window_class.dart';
 import 'wizard_scaffold.dart';
 
 enum WizardStepState { available, completed, skipped, unavailable }
@@ -33,7 +33,8 @@ class WizardProgress extends StatelessWidget {
       WizardStepState.available => Icons.circle_outlined,
     };
     return LayoutBuilder(builder: (context, box) {
-      final compact = box.maxWidth < WizardFormLayout.shortFormWidth ||
+      // #3619 — a phone's window class lists the steps compactly.
+      final compact = WindowClass.ofWidth(box.maxWidth) == WindowClass.compact ||
           MediaQuery.textScalerOf(context).scale(1) > 1.3;
       final items = [for (final (i, step) in steps.indexed)
         Semantics(container: true, key: ValueKey('wizard-step-${step.name}'),

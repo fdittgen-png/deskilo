@@ -16,7 +16,9 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_target.dart';
 import 'package:deskilo/core/backend/connection_outcome.dart';
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/settings/settings.dart';
+import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/reservations/data/host_my_reservations_repository.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -308,8 +310,25 @@ void main() {
     test('a missing has_more is malformed, never defaulted', () =>
         expectFailure((_page()..remove('has_more')), MyReservationsFailure.malformed));
 
-    test('an unknown status is malformed, never a guess', () =>
-        expectFailure(_page(items: [_item('r-1', status: 'vanished')]), MyReservationsFailure.malformed));
+    test('#3884: an unknown status leaves that one booking out, counted and traced; the others stay', () async {
+      UnreadableRows.instance.reset();
+      final before = TraceLogger.instance.entries.length;
+      final host = _Host()
+        ..answer = _page(items: [
+          _item('r-1'),
+          _item('r-2', status: 'future_state'),
+          _item('r-3', status: 'cancelled'),
+          _item('r-4', status: 'future_state'),
+        ]);
+      final page = await _adapter(host).page(_source, _query);
+      expect(page.items.map((i) => (i.id, i.status)), [
+        ('r-1', ReservationStatus.reserved),
+        ('r-3', ReservationStatus.cancelled),
+      ], reason: 'never read as a known status it is not');
+      expect(UnreadableRows.instance.count(myReservationsArea), 2);
+      final traced = TraceLogger.instance.entries.length - before;
+      expect(traced, 1, reason: 'one entry per kind of unknown value, not per row');
+    });
 
     test('more pages announced without a cursor is malformed', () =>
         expectFailure(_page(hasMore: true), MyReservationsFailure.malformed));

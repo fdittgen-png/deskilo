@@ -45,6 +45,7 @@ class FakeStore implements TransmissionStore {
     status: "active",
   };
   permission = false;
+  voidedAt: string | null = null;
   wsEnv = "prod";
   provider = "generic";
   config: Record<string, string> = {
@@ -74,7 +75,9 @@ class FakeStore implements TransmissionStore {
   }
   invoice(id: string) {
     return Promise.resolve(
-      id === INV ? { id, number: "F-1", workspace_id: WS } : null,
+      id === INV
+        ? { id, number: "F-1", workspace_id: WS, voided_at: this.voidedAt }
+        : null,
     );
   }
   profileName() {
@@ -583,6 +586,48 @@ Deno.test("O12: nobody unauthorised reaches the provider or the record", async (
   s.member_ = { id: "m", is_admin: false, is_owner: false, status: "active" };
   s.permission = true;
   assertEquals((await call(s, provider(ok).fetchImpl, bodyOf())).status, 200);
+});
+
+Deno.test("an administrator sends only with the right to issue invoices; an owner always does", async () => {
+  const admin = new FakeStore();
+  admin.member_ = { id: "m", is_admin: true, is_owner: false, status: "active" };
+  const p = provider(ok);
+  const refused = await read(await call(admin, p.fetchImpl, bodyOf()));
+  assertEquals(refused.status, 403);
+  assertEquals(refused.body.error, "not allowed to issue invoices in this workspace");
+  assertEquals(p.posts.length, 0);
+  assertEquals(admin.rows.size, 0);
+
+  const granted = new FakeStore();
+  granted.member_ = { id: "m", is_admin: true, is_owner: false, status: "active" };
+  granted.permission = true;
+  assertEquals((await call(granted, provider(ok).fetchImpl, bodyOf())).status, 200);
+
+  const owner = new FakeStore();
+  owner.member_ = { id: "m", is_admin: false, is_owner: true, status: "active" };
+  assertEquals((await call(owner, provider(ok).fetchImpl, bodyOf())).status, 200);
+});
+
+Deno.test("a voided invoice is not sent", async () => {
+  const s = new FakeStore();
+  s.voidedAt = "2026-11-01T10:00:00Z";
+  const p = provider(ok);
+  const r = await read(await call(s, p.fetchImpl, bodyOf()));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "invoice_voided");
+  assertEquals(p.posts.length, 0);
+  assertEquals(s.rows.size, 0);
+});
+
+Deno.test("a document over the size bound is not sent", async () => {
+  const s = new FakeStore();
+  const p = provider(ok);
+  const r = await read(
+    await call(s, p.fetchImpl, bodyOf({ content_base64: "A".repeat(14_000_004) })),
+  );
+  assertEquals(r.status, 413);
+  assertEquals(r.body.error, "document_too_large");
+  assertEquals(p.posts.length, 0);
 });
 
 Deno.test("a development workspace sends nothing and records nothing", async () => {

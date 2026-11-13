@@ -8111,6 +8111,12 @@ abstract class AppLocalizations {
   /// **'Fixed assets (equipment)'**
   String get bookRoleFixedAssets;
 
+  /// #3884 Book chart sheet: a posting role is mapped to an account this app version cannot read; it is not unmapped, and cannot be changed here.
+  ///
+  /// In en, this message translates to:
+  /// **'Mapped to an account this version of the app cannot read.'**
+  String get bookRoleMappedUnreadable;
+
   /// #2573 posting role of a purchase line that is not an operating cost
   ///
   /// In en, this message translates to:
@@ -19023,6 +19029,30 @@ abstract class AppLocalizations {
   /// **'Workspace vocabulary'**
   String get featureWorkspaceVocabularyTitle;
 
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Depends on'**
+  String get featuresColDepends;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'What it does'**
+  String get featuresColDoes;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get featuresColFeature;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'On or off'**
+  String get featuresColState;
+
   /// #1190 filter chip: only the features this workspace moved off their default
   ///
   /// In en, this message translates to:
@@ -19544,6 +19574,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'no documents'**
   String get financesCoverageNoDocuments;
+
+  /// #3878 the coverage line when an answer left older settled documents out
+  ///
+  /// In en, this message translates to:
+  /// **'Older paid documents are not listed; everything still to pay is.'**
+  String get financesCoverageOlderSettled;
 
   /// #2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.
   ///
@@ -26556,6 +26592,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'These rate groups have no MWST code in the tax reference, so nothing was written; add their codes first: {keys}'**
   String journalSwissTaxCodes(String keys);
+
+  /// #3884 Accounting export refused: the books contain entries with a role, kind or journal this app version does not know; an export without them would be incomplete.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The books hold 1 entry this version of the app does not know, so nothing is exported. Update the app first.} other{The books hold {count} entries this version of the app does not know, so nothing is exported. Update the app first.}}'**
+  String journalUnreadableEntries(int count);
 
   /// Shown as a text in invoice journey view (money). Placeholders: {date} (String).
   ///
@@ -43680,6 +43722,12 @@ abstract class AppLocalizations {
   /// **'Recurring booking'**
   String get reservationRecurring;
 
+  /// #3884 A booking that exists but has a status this app version does not know: opened by a link, it cannot be shown (it is not gone).
+  ///
+  /// In en, this message translates to:
+  /// **'This booking exists, but this version of the app cannot show it. Update the app to see it.'**
+  String get reservationUnreadable;
+
   /// Snackbar after an own reservation's window was edited (0033)
   ///
   /// In en, this message translates to:
@@ -55373,6 +55421,12 @@ abstract class AppLocalizations {
   /// **'Unblock'**
   String get unblockAction;
 
+  /// #3884 One line under a list: entries the server sent with a value this app version does not know are left out of the list, not shown wrongly.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 entry could not be shown: this version of the app does not know it. Update the app to see it.} other{{count} entries could not be shown: this version of the app does not know them. Update the app to see them.}}'**
+  String unreadableRowsNotice(int count);
+
   /// #3072 body of the leave-with-unsaved-changes question
   ///
   /// In en, this message translates to:
@@ -58989,6 +59043,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'One ZIP: every dataset in a workbook (bookings, payments, invoices, members, the floor plan — a tab each), a manifest counting its rows, and the space\'s stored files.'**
   String get workspaceExcelExportSubtitle;
+
+  /// #3884 Note written on the Reservations sheet of the workspace export: bookings with a status this app version does not know are not in the file.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 booking could not be read by this version of the app and is not in this file.} other{{count} bookings could not be read by this version of the app and are not in this file.}}'**
+  String workspaceExportUnreadableBookings(int count);
 
   /// #1288 custom fields: workspaceFieldsOptional
   ///

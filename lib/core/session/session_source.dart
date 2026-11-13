@@ -6,6 +6,8 @@
 // feature. Unwired, the session is signed out: the safe answer.
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../data/unreadable_rows.dart';
+
 /// The session as core sees it.
 abstract interface class SessionSource {
   /// Emits the signed-in user id, or null when signed out; the current
@@ -35,5 +37,9 @@ final sessionSourceProvider = Provider<SessionSource>(
 /// The signed-in user id as a stream; what core providers watch to rebuild
 /// when the person signs in or out.
 final sessionStateProvider = StreamProvider<String?>(
-  (ref) => ref.watch(sessionSourceProvider).authStateChanges(),
+  (ref) => ref.watch(sessionSourceProvider).authStateChanges().map((id) {
+    // #3884 -- what a list left out belongs to the person who read it.
+    UnreadableRows.instance.account(id);
+    return id;
+  }),
 );

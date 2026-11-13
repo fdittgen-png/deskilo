@@ -11,6 +11,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/floor_plan.dart';
@@ -244,6 +245,9 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // #3884 — this sheet's conflict check cannot see a booking this
+        // version cannot read: it says so, and the server decides.
+        const UnreadableRowsNotice(areas: [reservationsArea]),
         if (mine != null) ...[
           const SizedBox(height: 8),
           Text(

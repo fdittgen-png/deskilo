@@ -3075,6 +3075,7 @@
   "bookRoleExpenses": "Costi",
   "bookRoleFees": "Commissioni del fornitore di pagamenti",
   "bookRoleFixedAssets": "Immobilizzazioni (attrezzature)",
+  "bookRoleMappedUnreadable": "Associato a un conto che questa versione dell'app non può leggere.",
   "bookRolePrepayments": "Risconti attivi",
   "bookRoleRevenue": "Ricavi",
   "bookRoleStock": "Rimanenze (merci)",
@@ -7418,6 +7419,10 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Dipende da",
+  "featuresColDoes": "Cosa fa",
+  "featuresColFeature": "Funzione",
+  "featuresColState": "Attiva o no",
   "featuresFilterChanged": "Modificate",
   "featuresNoMatch": "Nessuna funzionalità corrisponde.",
   "featuresSearchLabel": "Cerca funzionalità",
@@ -7668,6 +7673,7 @@
   "financesCoverageAnswered": "Letto da {host}",
   "financesCoverageHome": "la Sua installazione principale",
   "financesCoverageNoDocuments": "nessun documento",
+  "financesCoverageOlderSettled": "I documenti pagati più vecchi non sono elencati; tutto ciò che resta da pagare sì.",
   "financesCoverageReading": "Lettura di {host}…",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 documento} other{{count} documenti}}",
   "financesDevSection": "Spazi di sviluppo — dati di prova, non conteggiati sopra",
@@ -10461,6 +10467,7 @@
   "journalSafTRefused": "Il file SAF-T non è stato redatto: {gaps}",
   "journalSageRefused": "Il file Sage 50 non è stato scritto: {reasons}",
   "journalSwissTaxCodes": "Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{I libri contengono 1 registrazione che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.} other{I libri contengono {count} registrazioni che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.}}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16723,6 +16730,7 @@
   "reservationNoteOverNotCheckedIn": "Questo periodo è finito senza check-in.",
   "reservationNoteRecordedAfterEnd": "Registrata dopo la fine di questo periodo, quindi resta come visita passata.",
   "reservationRecurring": "Prenotazione ricorrente",
+  "reservationUnreadable": "Questa prenotazione esiste, ma questa versione dell'app non può mostrarla. Aggiorna l'app per vederla.",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
   "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprovi.",
   "reserveBackToNow": "Torna ad adesso",
@@ -20738,6 +20746,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unreadableRowsNotice": "{count, plural, one{1 voce non è stata mostrata: questa versione dell'app non la conosce. Aggiorna l'app per vederla.} other{{count} voci non sono state mostrate: questa versione dell'app non le conosce. Aggiorna l'app per vederle.}}",
   "unsavedChangesBody": "Le modifiche fatte in questa pagina non sono ancora salvate.",
   "unsavedChangesDiscard": "Scarta le modifiche",
   "unsavedChangesKeep": "Continua a modificare",
@@ -22346,6 +22355,7 @@
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
   "workspaceExcelExport": "Esporta i dati (Excel)",
   "workspaceExcelExportSubtitle": "Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 prenotazione non è stata letta da questa versione dell'app e non è in questo file.} other{{count} prenotazioni non sono state lette da questa versione dell'app e non sono in questo file.}}",
   "workspaceFieldsOptional": "facoltativo",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

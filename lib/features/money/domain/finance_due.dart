@@ -7,7 +7,7 @@
 // zone, or one that is not an IANA name) is never claimed late, and
 // [FinanceInvoiceDue.dueDayUnknownAt] says so instead.
 import '../../../core/time/business_day.dart';
-import 'finance_overview.dart';
+import 'finance_invoice.dart';
 import 'invoice_due.dart';
 
 /// Whether [FinanceInvoice] is late, on its business's day.
@@ -23,5 +23,5 @@ extension FinanceInvoiceDue on FinanceInvoice {
   bool dueDayUnknownAt(DateTime now) =>
       _dueApplies && businessTodayAt(now, timezone) is UnknownBusinessDay;
 
-  bool get _dueApplies => state.toPay && !isCreditNote && dueOn != null;
+  bool get _dueApplies => toPay && !isCreditNote && dueOn != null;
 }
