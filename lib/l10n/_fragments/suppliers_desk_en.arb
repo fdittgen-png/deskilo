@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "suppliersLastPurchase": "Last purchase",
+  "suppliersArchivedChip": "Archived",
+  "@suppliersLastPurchase": {
+    "description": "#3615 the suppliers table: the column of the last purchase from the supplier"
+  },
+  "@suppliersArchivedChip": {
+    "description": "#3615 the suppliers table: the chip of the archived suppliers"
+  }
+}

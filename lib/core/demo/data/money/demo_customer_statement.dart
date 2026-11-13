@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3673 — the Demo's customer statement: the same figures the customer page
-// shows, from the Demo's own rows, by the page's rules
-// (customerStatementOfPage) — the rules the parity test holds the server's
-// snapshot to. The Demo has no server, so it has no allocation detail.
+// #3673, #3840 — the Demo's answer to the customer statement snapshot the
+// customer page reads: the same figures, from the Demo's own rows
+// (customerStatementOfPage), one balance per currency. The Demo has no
+// server, so it has no allocation detail.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../../../features/money/application/customer_statement_of_page.dart';

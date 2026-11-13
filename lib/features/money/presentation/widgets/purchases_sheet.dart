@@ -47,26 +47,6 @@ Future<void> showPurchasesSheet(
   ),
 );
 
-/// Opens the same payable view with its supplier filter applied at the server.
-Future<void> showSupplierPayablesSheet(
-  BuildContext context,
-  String workspaceId,
-  String supplierId, {
-  required bool canCapture,
-  bool canPay = false,
-  bool canDecide = false,
-}) => showAppSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  builder: (_) => PurchasesView(
-    workspaceId: workspaceId,
-    supplierId: supplierId,
-    canCapture: canCapture,
-    canPay: canPay,
-    canDecide: canDecide,
-  ),
-);
-
 /// The list of documents, with the supplier-bill door for who may capture.
 @visibleForTesting
 class PurchasesView extends ConsumerStatefulWidget {
@@ -262,6 +242,49 @@ Future<void> showPurchaseDetail(
     canDecide: false,
   ),
 );
+
+/// #3615 — one document at its address, `/money/purchases/doc/<id>`:
+/// beside the purchases table on a large window, a page otherwise. Paying,
+/// capturing and deciding follow the person's permissions; the server
+/// decides again on every write.
+class PurchaseRecord extends ConsumerWidget {
+  const PurchaseRecord({
+    super.key,
+    required this.workspaceId,
+    required this.purchaseId,
+    required this.held,
+    this.onClose,
+  });
+
+  final String workspaceId;
+  final String purchaseId;
+
+  /// The wire names of the permissions the person holds.
+  final Set<String> held;
+
+  /// Set when the document stands beside the table: its close button.
+  final VoidCallback? onClose;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: onClose == null,
+        actions: [
+          if (onClose case final close?)
+            CloseButton(key: const ValueKey('purchase-close'), onPressed: close),
+        ],
+      ),
+      body: _PurchaseDetailView(
+        workspaceId: workspaceId,
+        purchaseId: purchaseId,
+        canPay: held.contains(purchasePayPermission),
+        canCapture: held.contains(purchaseManagePermission),
+        canDecide: held.contains(purchaseDecidePermission),
+      ),
+    );
+  }
+}
 
 /// #3070 — one document opened from the approvals queue: the decision bar is
 /// offered, paying and capturing stay on the purchases page; the server
