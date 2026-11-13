@@ -4,6 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../instance/schema_compatibility.dart';
+import '../lifecycle/app_foreground.dart';
 import '../trace/trace_logger.dart';
 
 part 'schema_version.g.dart';
@@ -75,6 +76,10 @@ SchemaVersionSource schemaVersionSource(Ref ref) =>
 ///
 /// Fails OPEN on silence: [SchemaCompatibility.unknown] never blocks, so
 /// an offline start behaves exactly as it did before the gate existed.
+///
+/// #3885 — silence is not a verdict: while it is [SchemaCompatibility.unknown]
+/// the question is asked once more each time the app comes back to the
+/// foreground (an event, never a timer). A known verdict is not asked again.
 @Riverpod(keepAlive: true)
 Future<SchemaCompatibility> schemaCompatibility(Ref ref) async {
   try {
@@ -95,6 +100,9 @@ Future<SchemaCompatibility> schemaCompatibility(Ref ref) async {
       error: e,
       stackTrace: st,
     );
+    // Listened to only while unknown: the rebuild ends it, and a verdict
+    // that is known sets none.
+    ref.onDispose(onReturnToForeground(ref.invalidateSelf));
     return SchemaCompatibility.unknown;
   }
 }

@@ -109,12 +109,16 @@ String _$placeFeedbackAvailableHash() =>
 
 /// Whether the directory can show a workspace's feedback: it lives on this
 /// installation (a workspace of another server has no feedback here).
+/// #3869 — "this installation" is the selected business's, so it is
+/// asked again when the selection moves to another server.
 
 @ProviderFor(directorySourceIsLocal)
 final directorySourceIsLocalProvider = DirectorySourceIsLocalProvider._();
 
 /// Whether the directory can show a workspace's feedback: it lives on this
 /// installation (a workspace of another server has no feedback here).
+/// #3869 — "this installation" is the selected business's, so it is
+/// asked again when the selection moves to another server.
 
 final class DirectorySourceIsLocalProvider
     extends
@@ -126,6 +130,8 @@ final class DirectorySourceIsLocalProvider
     with $Provider<bool Function(String source)> {
   /// Whether the directory can show a workspace's feedback: it lives on this
   /// installation (a workspace of another server has no feedback here).
+  /// #3869 — "this installation" is the selected business's, so it is
+  /// asked again when the selection moves to another server.
   DirectorySourceIsLocalProvider._()
     : super(
         from: null,
@@ -161,7 +167,7 @@ final class DirectorySourceIsLocalProvider
 }
 
 String _$directorySourceIsLocalHash() =>
-    r'3458f7aac1940833c5e5b27b06f178c8ff1fd4f5';
+    r'23397b696973d40e68717a93d1ab6e03368df7b9';
 
 @ProviderFor(placeFeedbackBatcher)
 final placeFeedbackBatcherProvider = PlaceFeedbackBatcherProvider._();

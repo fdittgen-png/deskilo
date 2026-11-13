@@ -26,6 +26,14 @@ bool _hasBinding() {
   return ready;
 }
 
+/// #3885 — calls [ask] each time the app comes back to the foreground (an
+/// event, never a timer) and returns what ends the listening. Without a
+/// widgets binding nothing can come back, so nothing is listened to.
+VoidCallback onReturnToForeground(VoidCallback ask) {
+  if (!_hasBinding()) return () {};
+  return AppLifecycleListener(onResume: ask).dispose;
+}
+
 @riverpod
 class AppForeground extends _$AppForeground {
   @override
