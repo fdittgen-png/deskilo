@@ -15,6 +15,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../core/l10n/context_l10n.dart';
+import '../core/navigation/list_detail_route.dart';
 import '../features/money/presentation/widgets/invoice_form_sheet.dart';
 import '../features/money/presentation/widgets/purchase_dialogs.dart';
 import '../features/money/providers/money_providers.dart';
@@ -47,8 +48,22 @@ Future<void> openSearch(
   context,
   offers: (context, ref) =>
       _searchOffers(context, ref, router, later: later, appRef: appRef),
-  openRoute: (route) => unawaited(router.push(route)),
+  openRoute: (route) => _openFound(context, router, route),
 );
+
+/// Opens the address the search found. On a large window a record's own
+/// page draws nothing — its list draws the record beside it — so a push
+/// from any other page would leave that page on screen with nothing new.
+/// There the address is gone to: its list and the record together. Below
+/// large the record is a page of its own and is pushed over where the
+/// person was.
+void _openFound(BuildContext context, GoRouter router, String route) {
+  if (context.mounted && recordBesideList(context)) {
+    router.go(route);
+  } else {
+    unawaited(router.push(route));
+  }
+}
 
 /// What [ref]'s person may find now.
 SearchOffers _searchOffers(
