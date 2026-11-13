@@ -5,8 +5,10 @@
 // while none is saved, the connector's documented test addresses
 // (`eInvoiceSandboxDefaults`). The credentials themselves are typed on the
 // e-invoicing platform screen, one tap away: they are secrets the server
-// never returns, and that screen is their one editor. The guide sends
-// nothing — a test send starts from an issued invoice. Beside it, what the
+// never returns, and that screen is their one editor. Where the country
+// routes every invoice through its national channel, the guide sends the
+// sandbox test document that opens issuing (#3883, `EInvoiceTestCard`): no
+// invoice can be issued before the channel accepts one. Beside it, what the
 // law asks in the space's country: the dated duties of the tax reference
 // data (`mandatesFor`), an unconfirmed date said to be unconfirmed, and a
 // country the server refuses to issue for said to be refused.
@@ -24,6 +26,7 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/einvoice_providers.dart';
@@ -31,6 +34,7 @@ import '../../providers/money_providers.dart';
 import '../invoice_actions.dart' show watchWorkspaceTaxReference;
 import 'e_invoice_sheet.dart';
 import 'einvoice_provider_section.dart';
+import 'einvoice_test_card.dart';
 
 class SetupEInvoicingStep extends ConsumerWidget {
   const SetupEInvoicingStep({super.key, required this.countryCode});
@@ -230,6 +234,10 @@ class _Obligations extends ConsumerWidget {
             icon: Icons.block,
             text: l10n.setupGrowEinvoicingChannel,
           ),
+          if (ref.watch(currentWorkspaceProvider).value?.id case final id?) ...[
+            const FormGap(),
+            EInvoiceTestCard(workspaceId: id),
+          ],
         ],
       ],
     );

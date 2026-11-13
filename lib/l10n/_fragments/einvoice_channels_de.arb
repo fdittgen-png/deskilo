@@ -271,5 +271,21 @@
         "type": "String"
       }
     }
-  }
+  },
+  "einvoiceTestTitle": "Die Ausstellung mit einem Testdokument öffnen",
+  "einvoiceTestIntro": "Die nationale Plattform muss ein Dokument dieses Bereichs annehmen, bevor er hier Rechnungen ausstellt. Senden Sie ihr ein Testdokument: die Proforma des laufenden Monats eines Mitglieds mit einer Testnummer, an die Testumgebung der Plattform. Nichts wird ausgestellt, nummeriert oder gebucht.",
+  "einvoiceTestNone": "Es wurde noch kein Testdokument gesendet.",
+  "einvoiceTestAwaiting": "Ein Testdokument wartet auf das Urteil der Plattform. Fragen Sie in einigen Minuten erneut nach.",
+  "einvoiceTestAccepted": "Die Plattform hat das Testdokument angenommen: Dieser Bereich stellt Rechnungen aus.",
+  "einvoiceTestRejected": "Die Plattform hat das Testdokument abgelehnt. Prüfen Sie die Angaben des Mitglieds und des Bereichs und senden Sie dann ein neues.",
+  "einvoiceTestMember": "Mitglied, dessen Proforma gesendet wird",
+  "einvoiceTestSend": "Testdokument senden",
+  "einvoiceTestSent": "Testdokument gesendet. Fragen Sie die Plattform in einigen Minuten nach ihrem Urteil.",
+  "einvoiceTestPending": "Ein Testdokument wartet noch auf das Urteil der Plattform. Fragen Sie danach, bevor Sie ein weiteres senden.",
+  "einvoiceTestSandboxMissing": "Die Zugangsdaten der Testumgebung sind unvollständig: {fields}. Ergänzen Sie sie auf dem Bildschirm der E-Rechnungs-Plattform.",
+  "einvoiceTestSandboxElsewhere": "Die Adressen der Testumgebung müssen die dokumentierten Testadressen der Plattform sein.",
+  "einvoiceTestUnavailable": "Die eingerichtete Plattform nimmt kein Testdokument an.",
+  "einvoiceTestNotAllowed": "Nur wer die Integrationen verwaltet, sendet ein Testdokument.",
+  "einvoiceTestFailed": "Die Plattform konnte das Testdokument nicht annehmen. Versuchen Sie es später erneut.",
+  "einvoiceTestNothingToInvoice": "Dieses Mitglied hat in diesem Monat nichts auf der Rechnung: Wählen Sie ein anderes Mitglied."
 }

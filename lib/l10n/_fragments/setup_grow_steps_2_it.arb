@@ -11,7 +11,7 @@
   "setupGrowEinvoicingLawTitle": "Ciò che la legge chiede nel Suo paese",
   "setupGrowEinvoicingNoMandate": "I dati fiscali di riferimento non registrano alcun obbligo di fatturazione elettronica per questo paese. Chieda al Suo commercialista se ne vale uno: l'operatore lo registra nei dati fiscali di riferimento.",
   "setupGrowEinvoicingUnconfirmed": "Non ancora confermato rispetto alla legge citata: l'operatore conferma queste date nei dati fiscali di riferimento, e il Suo commercialista Le dice quali valgono per lo spazio.",
-  "setupGrowEinvoicingChannel": "Qui ogni fattura deve passare per un canale nazionale che l'app non parla ancora, quindi il server rifiuta di emettere fatture.",
+  "setupGrowEinvoicingChannel": "Qui ogni fattura passa per la piattaforma nazionale del paese: il server emette fatture una volta che la piattaforma ha accettato un documento di questo spazio.",
   "setupGrowBooksPreviewNote": "Ciò che mostreranno i libri:",
   "setupGrowBooksPre": "DesKilo tiene i saldi dei membri e le fatture; nulla viene registrato in contabilità.",
   "setupGrowBooksLocal": "DesKilo tiene i libri: fatture e pagamenti vengono registrati nel piano dei conti.",

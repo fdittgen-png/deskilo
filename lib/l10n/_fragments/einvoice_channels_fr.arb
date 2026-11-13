@@ -271,5 +271,21 @@
         "type": "String"
       }
     }
-  }
+  },
+  "einvoiceTestTitle": "Ouvrir l'émission avec un document de test",
+  "einvoiceTestIntro": "La plateforme nationale doit accepter un document de cet espace avant qu'il émette des factures ici. Envoyez-lui un document de test : la facture pro forma du mois en cours d'un membre, avec un numéro de test, vers l'environnement de test de la plateforme. Rien n'est émis, numéroté ni comptabilisé.",
+  "einvoiceTestNone": "Aucun document de test n'a encore été envoyé.",
+  "einvoiceTestAwaiting": "Un document de test attend le verdict de la plateforme. Interrogez-la de nouveau dans quelques minutes.",
+  "einvoiceTestAccepted": "La plateforme a accepté le document de test : cet espace émet des factures.",
+  "einvoiceTestRejected": "La plateforme a refusé le document de test. Vérifiez les coordonnées du membre et de l'espace, puis envoyez-en un autre.",
+  "einvoiceTestMember": "Membre dont la pro forma est envoyée",
+  "einvoiceTestSend": "Envoyer un document de test",
+  "einvoiceTestSent": "Document de test envoyé. Demandez le verdict de la plateforme dans quelques minutes.",
+  "einvoiceTestPending": "Un document de test attend encore le verdict de la plateforme. Interrogez-la avant d'en envoyer un autre.",
+  "einvoiceTestSandboxMissing": "Les identifiants de l'environnement de test sont incomplets : {fields}. Renseignez-les sur l'écran de la plateforme de facturation électronique.",
+  "einvoiceTestSandboxElsewhere": "Les adresses de l'environnement de test doivent être les adresses de test documentées de la plateforme.",
+  "einvoiceTestUnavailable": "La plateforme configurée n'accepte pas de document de test.",
+  "einvoiceTestNotAllowed": "Seule une personne qui gère les intégrations envoie un document de test.",
+  "einvoiceTestFailed": "La plateforme n'a pas pu recevoir le document de test. Réessayez plus tard.",
+  "einvoiceTestNothingToInvoice": "Ce membre n'a rien sur sa facture ce mois-ci : choisissez un autre membre."
 }

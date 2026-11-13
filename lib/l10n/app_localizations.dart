@@ -14237,6 +14237,18 @@ abstract class AppLocalizations {
   /// **'UAT (test platform)'**
   String get einvoiceEnvUat;
 
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The platform accepted the test document: this workspace issues invoices.'**
+  String get einvoiceTestAccepted;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'A test document is waiting for the platform\'s verdict. Ask the platform again in a few minutes.'**
+  String get einvoiceTestAwaiting;
+
   /// Help text under the test-environments section.
   ///
   /// In en, this message translates to:
@@ -14248,6 +14260,90 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Test environments (UAT / Dev)'**
   String get einvoiceTestEnvsTitle;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The platform could not take the test document. Try again later.'**
+  String get einvoiceTestFailed;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The national platform must accept one document of this workspace before it issues invoices here. Send it a test document: the proforma of a member\'s current month with a test number, to the platform\'s test environment. Nothing is issued, numbered or booked.'**
+  String get einvoiceTestIntro;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'Member whose proforma is sent'**
+  String get einvoiceTestMember;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'No test document has been sent yet.'**
+  String get einvoiceTestNone;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'Only someone who manages the integrations sends a test document.'**
+  String get einvoiceTestNotAllowed;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'This member has nothing on their bill this month: choose another member.'**
+  String get einvoiceTestNothingToInvoice;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'A test document is still waiting for the platform\'s verdict. Ask the platform about it before sending another.'**
+  String get einvoiceTestPending;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The platform refused the test document. Check the member\'s and the workspace\'s details, then send another.'**
+  String get einvoiceTestRejected;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The test environment\'s addresses must be the platform\'s own documented test addresses.'**
+  String get einvoiceTestSandboxElsewhere;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The test environment\'s credentials are incomplete: {fields}. Fill them on the e-invoicing platform screen.'**
+  String einvoiceTestSandboxMissing(String fields);
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'Send a test document'**
+  String get einvoiceTestSend;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'Test document sent. Ask the platform for its verdict in a few minutes.'**
+  String get einvoiceTestSent;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'Open issuing with a test document'**
+  String get einvoiceTestTitle;
+
+  /// #3883 the sandbox test document that opens a national channel's issuing gate
+  ///
+  /// In en, this message translates to:
+  /// **'The configured platform takes no test document.'**
+  String get einvoiceTestUnavailable;
 
   /// Field label.
   ///
@@ -47935,7 +48031,7 @@ abstract class AppLocalizations {
   /// #2875 setup grow steps: setupGrowEinvoicingChannel
   ///
   /// In en, this message translates to:
-  /// **'Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.'**
+  /// **'Here every invoice goes through the country\'s national platform: the server issues invoices once the platform has accepted a document of this workspace.'**
   String get setupGrowEinvoicingChannel;
 
   /// #2875 setup grow steps: setupGrowEinvoicingIncomplete

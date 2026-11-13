@@ -271,5 +271,21 @@
         "type": "String"
       }
     }
-  }
+  },
+  "einvoiceTestTitle": "Abrir la emisión con un documento de prueba",
+  "einvoiceTestIntro": "La plataforma nacional debe aceptar un documento de este espacio antes de que emita facturas aquí. Envíele un documento de prueba: la proforma del mes en curso de un miembro, con un número de prueba, al entorno de pruebas de la plataforma. Nada se emite, numera ni contabiliza.",
+  "einvoiceTestNone": "Aún no se ha enviado ningún documento de prueba.",
+  "einvoiceTestAwaiting": "Un documento de prueba espera el veredicto de la plataforma. Vuelva a consultarla en unos minutos.",
+  "einvoiceTestAccepted": "La plataforma aceptó el documento de prueba: este espacio emite facturas.",
+  "einvoiceTestRejected": "La plataforma rechazó el documento de prueba. Compruebe los datos del miembro y del espacio y envíe otro.",
+  "einvoiceTestMember": "Miembro cuya proforma se envía",
+  "einvoiceTestSend": "Enviar un documento de prueba",
+  "einvoiceTestSent": "Documento de prueba enviado. Pida el veredicto de la plataforma en unos minutos.",
+  "einvoiceTestPending": "Un documento de prueba aún espera el veredicto de la plataforma. Consúltela antes de enviar otro.",
+  "einvoiceTestSandboxMissing": "Las credenciales del entorno de pruebas están incompletas: {fields}. Complételas en la pantalla de la plataforma de facturación electrónica.",
+  "einvoiceTestSandboxElsewhere": "Las direcciones del entorno de pruebas deben ser las direcciones de prueba documentadas de la plataforma.",
+  "einvoiceTestUnavailable": "La plataforma configurada no acepta documentos de prueba.",
+  "einvoiceTestNotAllowed": "Solo quien gestiona las integraciones envía un documento de prueba.",
+  "einvoiceTestFailed": "La plataforma no pudo recibir el documento de prueba. Inténtelo más tarde.",
+  "einvoiceTestNothingToInvoice": "Este miembro no tiene nada en su factura este mes: elija otro miembro."
 }

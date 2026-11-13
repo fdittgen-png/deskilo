@@ -96,10 +96,7 @@ enum EInvoiceTestRefusal {
 
 /// How sending a test document ended.
 class EInvoiceTestSent {
-  const EInvoiceTestSent({
-    required this.refusal,
-    this.missing = const [],
-  });
+  const EInvoiceTestSent({required this.refusal, this.missing = const []});
 
   final EInvoiceTestRefusal refusal;
 
