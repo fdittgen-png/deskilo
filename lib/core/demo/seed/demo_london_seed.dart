@@ -23,10 +23,12 @@ import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
+import '../demo_space_ids.dart';
 import 'demo_city_people_seed.dart';
 import 'demo_flags.dart';
 
-const demoLondonSpaceId = 'ws-3';
+export '../demo_space_ids.dart' show demoLondonSpaceId;
+
 const _spaceName = 'Camden Yard Cowork';
 const demoLondonSiteId = 'uk-site-camden';
 
