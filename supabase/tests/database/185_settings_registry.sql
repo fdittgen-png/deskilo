@@ -53,14 +53,14 @@ select throws_ok($$select public.setting_value('00000000-0000-4000-8000-00000024
 select throws_ok($$select public.set_setting('00000000-0000-4000-8000-0000002484b1', 'dunning.first_after_days', '30', '')$$,
   'P0001', 'not allowed to change this setting', 'a member without the permission cannot set a workspace value');
 select throws_ok($$select public.set_setting(null, 'dunning.first_after_days', '30', '')$$,
-  'P0001', 'platform owners only', 'nor the platform default');
+  'DKN01', 'platform owners only', 'nor the platform default');
 
 select pg_temp.act_as('00000000-0000-4000-8000-0000002484a2');
 select is(public.set_setting('00000000-0000-4000-8000-0000002484b1', 'dunning.first_after_days', '30', 'quarterly')->>'status', 'saved',
           'the workspace owner sets the workspace value');
 select is(public.setting_value('00000000-0000-4000-8000-0000002484b1', 'dunning.first_after_days')::text, '30', 'and it applies');
 select throws_ok($$select public.set_setting(null, 'dunning.first_after_days', '30', '')$$,
-  'P0001', 'platform owners only', 'a workspace owner cannot write the platform scope');
+  'DKN01', 'platform owners only', 'a workspace owner cannot write the platform scope');
 select throws_ok($$select public.set_setting('00000000-0000-4000-8000-0000002484b2', 'dunning.first_after_days', '30', '')$$,
   'P0001', null, 'nor another workspace''s value');
 

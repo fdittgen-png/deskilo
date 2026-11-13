@@ -28,6 +28,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../helpers/refusal_matchers.dart';
+
 const _ada = 'member-1', _bruno = 'member-2', _chiara = 'member-3';
 
 Matcher _refused(String message) => isA<PostgrestException>().having(
@@ -666,7 +668,7 @@ void main() {
       if (may) {
         await edit;
       } else {
-        await expectLater(edit, throwsStateError);
+        await expectLater(edit, throwsRefusal('DKN01'));
       }
 
       fixture.becomePersona(DemoPersona.member);
@@ -684,7 +686,7 @@ void main() {
           'viewFinances',
           enabled: false,
         ),
-        throwsStateError,
+        throwsRefusal('DKN01'),
       );
     });
   });

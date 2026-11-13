@@ -40,12 +40,12 @@ select is((select valid_to::text from public.tax_reference_history('rate', 'CH',
 -- ── nobody else, and nothing in force or confirmed ─────────────────────
 select pg_temp.act_as('00000000-0000-4000-8000-0000002565a2');
 select throws_ok($$select public.confirm_tax_reference(current_setting('t2565.planned')::uuid, 'x')$$,
-  'P0001', 'platform owners only', 'a member cannot confirm');
+  'DKN01', 'platform owners only', 'a member cannot confirm');
 select throws_ok($$select public.withdraw_tax_reference(current_setting('t2565.planned')::uuid, 'x')$$,
-  'P0001', 'platform owners only', 'a member cannot withdraw');
+  'DKN01', 'platform owners only', 'a member cannot withdraw');
 select pg_temp.act_as('00000000-0000-4000-8000-0000002565a1', 'assistant-2565');
 select throws_ok($$select public.withdraw_tax_reference(current_setting('t2565.planned')::uuid, 'x')$$,
-  'P0001', 'platform owners only', 'the owner''s delegated token cannot withdraw');
+  'DKN01', 'platform owners only', 'the owner''s delegated token cannot withdraw');
 select pg_temp.act_as('00000000-0000-4000-8000-0000002565a1');
 select throws_ok($$select public.withdraw_tax_reference(current_setting('t2565.inforce')::uuid, 'x')$$,
   'P0001', 'a confirmed version is history and is only superseded', 'a confirmed version is not withdrawn');
