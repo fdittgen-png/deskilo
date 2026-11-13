@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import '../l10n/context_l10n.dart';
 import '../motion/motion.dart';
 import '../theme/app_spacing.dart';
+import 'adaptive/window_class.dart';
 import 'edge_fade_scroll.dart';
 import 'kit/page_title.dart';
 import 'motion.dart';
@@ -85,7 +86,8 @@ class WizardScaffold extends StatelessWidget {
         ? WizardProgress(steps: steps, states: stepStates!, index: index,
             onStepTap: onStepTap)
         : LayoutBuilder(builder: (context, box) {
-      if (scrollForm && (box.maxWidth < WizardFormLayout.shortFormWidth ||
+      // #3619 — a phone's window class shows the step's name alone.
+      if (scrollForm && (WindowClass.ofWidth(box.maxWidth) == WindowClass.compact ||
           MediaQuery.textScalerOf(context).scale(1) > 1.3)) {
         return Padding(padding: AppSpacing.lgAll,
           child: Semantics(header: true, child: Text(steps[index].label,

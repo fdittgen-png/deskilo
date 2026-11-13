@@ -17,11 +17,18 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
 
-/// Workspace routes still on today's frame when #3604 landed.
-// #3609 the analysis page and the workspace overview are work pages (79 -> 77).
-// #3626 the calendar is a work page (69 -> 68).
-// #3616 the VAT return is a long task page (68 -> 67).
-const _framedWorkspaceRoutes = 67;
+/// #3619 — the routes still on today's frame, per class; none is a
+/// workspace route. The account's own pages keep the frame they are read
+/// in, the operator's and the public entry pages theirs. A count only falls.
+const _framedByClass = {
+  RouteClass.publicEntry: _framedPublicEntry,
+  RouteClass.nativeAccount: _framedNativeAccount,
+  RouteClass.operator: _framedOperator,
+  RouteClass.workspace: 0,
+};
+const _framedPublicEntry = 11;
+const _framedNativeAccount = 37;
+const _framedOperator = 2;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;
@@ -117,20 +124,21 @@ void main() {
     }
   });
 
-  test('the workspace routes still on today\'s frame only fall', () {
-    final framed = routeRules
-        .where(
-          (r) =>
-              r.kind == RouteClass.workspace && r.measure == PageMeasure.framed,
-        )
-        .length;
-    expect(
-      framed,
-      lessThanOrEqualTo(_framedWorkspaceRoutes),
-      reason: 'a route given its own measure is not given back the frame',
-    );
-    if (framed < _framedWorkspaceRoutes) {
-      fail('lower _framedWorkspaceRoutes to $framed');
+  test('no workspace route is on today\'s frame; the others only fall', () {
+    for (final MapEntry(key: kind, value: pinned) in _framedByClass.entries) {
+      final framed = [
+        for (final r in routeRules)
+          if (r.kind == kind && r.measure == PageMeasure.framed) r.pattern,
+      ];
+      expect(
+        framed.length,
+        lessThanOrEqualTo(pinned),
+        reason: '${kind.name}: a route given its own measure is not given '
+            'back the frame: $framed',
+      );
+      if (framed.length < pinned) {
+        fail('lower the framed ${kind.name} routes to ${framed.length}');
+      }
     }
   });
 

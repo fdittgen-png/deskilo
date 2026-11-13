@@ -7399,6 +7399,10 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Dépend de",
+  "featuresColDoes": "Ce qu'elle fait",
+  "featuresColFeature": "Fonction",
+  "featuresColState": "Activée ou non",
   "featuresFilterChanged": "Modifiées",
   "featuresNoMatch": "Aucune fonctionnalité ne correspond.",
   "featuresSearchLabel": "Rechercher une fonctionnalité",

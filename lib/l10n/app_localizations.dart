@@ -18993,6 +18993,30 @@ abstract class AppLocalizations {
   /// **'Workspace vocabulary'**
   String get featureWorkspaceVocabularyTitle;
 
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Depends on'**
+  String get featuresColDepends;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'What it does'**
+  String get featuresColDoes;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get featuresColFeature;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'On or off'**
+  String get featuresColState;
+
   /// #1190 filter chip: only the features this workspace moved off their default
   ///
   /// In en, this message translates to:
