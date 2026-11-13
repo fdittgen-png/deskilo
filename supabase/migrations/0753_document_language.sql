@@ -231,13 +231,17 @@ language plpgsql security definer set search_path = public as $fn$
 declare
   v_country text;
   v_subdivision text;
+  v_day date;
 begin
+  -- The rules in force on the invoice's own day of issue, in its business's
+  -- zone: a replay decides what the issue decided.
   select upper(coalesce(nullif(new.legal_snapshot ->> 'seller_country', ''), w.country_code)),
-         coalesce(nullif(new.parties #>> '{seller,subdivision}', ''), w.invoice_legal ->> 'subdivision', '')
-    into v_country, v_subdivision
+         coalesce(nullif(new.parties #>> '{seller,subdivision}', ''), w.invoice_legal ->> 'subdivision', ''),
+         (coalesce(new.issued_at, now()) at time zone w.timezone)::date
+    into v_country, v_subdivision, v_day
     from public.workspaces w where w.id = new.workspace_id;
   new.document_language := public.invoice_document_language(
-    new.workspace_id, new.member_id, v_country, v_subdivision, current_date);
+    new.workspace_id, new.member_id, v_country, v_subdivision, v_day);
   new.format_locale := new.document_language || '_' || v_country;
   return new;
 end;
@@ -257,23 +261,40 @@ alter table public.workspaces
 comment on column public.workspaces.document_language_confirmed is
   '#3850 -- false while the document language 0753 gave a business of a country with several shipped languages waits for an administrator to confirm it.';
 
--- A business of a country with several shipped languages and none of them
--- chosen: its owner's language when shipped, else the country's first.
-with several as (
-  select t.country, t.value -> 'languages' as languages
-    from public.tax_reference t
-   where t.domain = 'document_language' and t.key = 'document'
-     and t.valid_from <= current_date and (t.valid_to is null or t.valid_to > current_date)
-     and (select count(*) from jsonb_array_elements_text(t.value -> 'languages') l
-           where public.document_language_supported(l)) > 1
-)
+-- Whether a business of [p_country] chooses its document language: the
+-- country's row names more than one shipped language.
+create or replace function public.document_language_chosen(p_country text, p_on date)
+returns boolean
+language sql stable security definer set search_path = public as $fn$
+  select coalesce((select count(*) > 1
+                     from jsonb_array_elements_text(public.document_language_facts(p_country, p_on) -> 'languages') l
+                    where public.document_language_supported(l)), false);
+$fn$;
+
+revoke execute on function public.document_language_chosen(text, date) from public, anon, authenticated;
+
+-- The document language 0753 gives a business that has none: its owner's
+-- language when the app ships it, else its country's first shipped one.
+create or replace function public.workspace_document_language_default(p_workspace_id uuid, p_on date)
+returns text
+language sql stable security definer set search_path = public as $fn$
+  select coalesce(
+           (select p.preferred_locale from public.profiles p
+             where p.id = w.created_by and public.document_language_supported(p.preferred_locale)),
+           public.business_document_language('', w.country_code, p_on))
+    from public.workspaces w where w.id = p_workspace_id;
+$fn$;
+
+revoke execute on function public.workspace_document_language_default(uuid, date)
+  from public, anon, authenticated;
+
+-- Every business of a country with several shipped languages and none of
+-- them chosen gets its default once, waiting for confirmation. The rows are
+-- read as on the day this rule was decided, so a replay gives the same.
 update public.workspaces w
-   set default_locale = coalesce(
-         (select p.preferred_locale from public.profiles p
-           where p.id = w.created_by and public.document_language_supported(p.preferred_locale)),
-         public.business_document_language('', w.country_code, current_date)),
+   set default_locale = public.workspace_document_language_default(w.id, date '2026-11-13'),
        document_language_confirmed = false
- where w.country_code in (select s.country from several s)
+ where public.document_language_chosen(w.country_code, date '2026-11-13')
    and not public.document_language_supported(w.default_locale);
 
 -- Saving the language is the confirmation.
@@ -295,6 +316,24 @@ create trigger workspace_document_language_confirm
   when (old.document_language_confirmed is false
         and new.document_language_confirmed is not distinct from old.document_language_confirmed)
   execute function public.workspace_document_language_confirm();
+
+-- A delegated administrator saving the settings confirms the language too:
+-- the guard of the owner's columns (0361) lets the flag through with the
+-- settings it travels with, whatever order the triggers fire in.
+do $migration$
+declare
+  v_def text;
+begin
+  select pg_get_functiondef('public.workspaces_delegated_columns()'::regprocedure) into v_def;
+  v_def := pg_temp.anchor_replace(v_def,
+    $a$'address', 'whatsapp_group', 'desk_opacity'];$a$,
+    $a$'address', 'whatsapp_group', 'desk_opacity', 'document_language_confirmed'];$a$);
+  if v_def is null or position($a$'document_language_confirmed'];$a$ in v_def) = 0 then
+    raise exception '0753: workspaces_delegated_columns anchor missing' using errcode = 'P0001';
+  end if;
+  execute v_def;
+end
+$migration$;
 
 notify pgrst, 'reload schema';
 

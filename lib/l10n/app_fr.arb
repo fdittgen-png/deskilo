@@ -15406,10 +15406,6 @@
   "@reminderEmailNoAddress": {
     "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
   },
-  "reminderEmailNoLanguage": "La langue des documents du client n'est pas connue : la relance n'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la lettre.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailNoSender": "L'expéditeur e-mail de l'entreprise n'est pas encore configuré",
   "@reminderEmailNoSender": {
     "description": "#3673 reminders by e-mail: reminderEmailNoSender"

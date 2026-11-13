@@ -25556,10 +25556,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ce client n\'a pas d\'adresse e-mail enregistrée';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'La langue des documents du client n\'est pas connue : la relance n\'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la lettre.';
-
-  @override
   String get reminderEmailNoSender =>
       'L\'expéditeur e-mail de l\'entreprise n\'est pas encore configuré';
 

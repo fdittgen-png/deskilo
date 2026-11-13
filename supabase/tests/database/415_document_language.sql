@@ -9,7 +9,7 @@
 -- country. The caller never chooses either, and neither changes afterwards.
 -- Saving the business's language confirms the one 0753 gave it.
 begin;
-select plan(12);
+select plan(17);
 
 create or replace function pg_temp.invoice(p_ws uuid, p_member uuid, p_number text, p_language text default null)
 returns uuid language plpgsql as $f$
@@ -28,6 +28,7 @@ create or replace function pg_temp.seed() returns void language plpgsql as $seed
 declare
   owner uuid := '00000000-0000-4000-8000-000000000415';
   customer uuid := '00000000-0000-4000-8000-000000000416';
+  delegate uuid := '00000000-0000-4000-8000-000000000417';
   fr uuid; ch uuid; qc uuid; pl uuid;
   fr_owner uuid; fr_customer uuid; ch_owner uuid; ch_customer uuid;
   qc_owner uuid; qc_customer uuid; pl_owner uuid;
@@ -37,14 +38,18 @@ begin
   values (owner, '00000000-0000-0000-0000-000000000000', 'authenticated',
           'authenticated', 'doc-owner@deskilo.test', '', now(), now(), now()),
          (customer, '00000000-0000-0000-0000-000000000000', 'authenticated',
-          'authenticated', 'doc-customer@deskilo.test', '', now(), now(), now());
+          'authenticated', 'doc-customer@deskilo.test', '', now(), now(), now()),
+         (delegate, '00000000-0000-0000-0000-000000000000', 'authenticated',
+          'authenticated', 'doc-delegate@deskilo.test', '', now(), now(), now());
   -- The customer's document language is their own preference (0098).
   insert into public.profiles (id, preferred_locale) values (customer, 'de')
   on conflict (id) do update set preferred_locale = excluded.preferred_locale;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
   values ('DOC-FR', 'FR', 'EUR', 'Europe/Paris', owner) returning id into fr;
-  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, default_locale)
-  values ('DOC-CH', 'CH', 'CHF', 'Europe/Zurich', owner, 'it') returning id into ch;
+  -- Its administrators hold workspaceSettings: they save its settings.
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, default_locale, role_permissions)
+  values ('DOC-CH', 'CH', 'CHF', 'Europe/Zurich', owner, 'it',
+          jsonb_build_object('admin', jsonb_build_array('workspaceSettings'))) returning id into ch;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, default_locale, invoice_legal)
   values ('DOC-QC', 'CA', 'CAD', 'America/Toronto', owner, 'en', '{"subdivision": "CA-QC"}'::jsonb) returning id into qc;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
@@ -52,6 +57,7 @@ begin
   insert into public.members (workspace_id, user_id, is_owner, is_admin) values (fr, owner, true, true) returning id into fr_owner;
   insert into public.members (workspace_id, user_id) values (fr, customer) returning id into fr_customer;
   insert into public.members (workspace_id, user_id, is_owner, is_admin) values (ch, owner, true, true) returning id into ch_owner;
+  insert into public.members (workspace_id, user_id, is_admin) values (ch, delegate, true);
   insert into public.members (workspace_id, user_id) values (ch, customer) returning id into ch_customer;
   insert into public.members (workspace_id, user_id, is_owner, is_admin) values (qc, owner, true, true) returning id into qc_owner;
   insert into public.members (workspace_id, user_id) values (qc, customer) returning id into qc_customer;
@@ -62,6 +68,8 @@ begin
   perform set_config('deskilo.test.qc_customer', pg_temp.invoice(qc, qc_customer, 'F-4')::text, false);
   perform set_config('deskilo.test.pl_owner', pg_temp.invoice(pl, pl_owner, 'F-5')::text, false);
   perform set_config('deskilo.test.ch', ch::text, false);
+  perform set_config('deskilo.test.owner', owner::text, false);
+  perform set_config('deskilo.test.delegate', delegate::text, false);
 end;
 $seed$;
 select pg_temp.seed();
@@ -127,6 +135,44 @@ update public.workspaces set name = 'DOC-CH 2'
 select ok(not (select document_language_confirmed from public.workspaces
                 where id = current_setting('deskilo.test.ch')::uuid),
   'another change of the workspace confirms nothing');
+
+-- A delegated administrator (not the owner) saves the settings of a business
+-- whose language waits for confirmation: the save stands and confirms it.
+update public.workspaces set document_language_confirmed = false
+ where id = current_setting('deskilo.test.ch')::uuid;
+create or replace function pg_temp.save_as_delegate() returns text language plpgsql as $f$
+begin
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', current_setting('deskilo.test.delegate'), 'role', 'authenticated')::text, true);
+  set local role authenticated;
+  perform public.save_workspace_settings(current_setting('deskilo.test.ch')::uuid, null,
+    '{"timezone": "Europe/Paris", "default_locale": "it"}'::jsonb);
+  reset role;
+  return 'saved';
+exception when others then
+  reset role;
+  return sqlstate || ' ' || sqlerrm;
+end
+$f$;
+grant execute on function pg_temp.save_as_delegate() to authenticated;
+select is(pg_temp.save_as_delegate(), 'saved',
+  'a delegated administrator saves the settings of a business whose language waits');
+select ok((select document_language_confirmed from public.workspaces
+            where id = current_setting('deskilo.test.ch')::uuid),
+  'and the save confirms the language');
+
+-- The default 0753 gives a business with no language.
+select is(public.workspace_document_language_default(current_setting('deskilo.test.ch')::uuid, date '2026-11-13'),
+  'de', 'an owner whose language is unset: the country''s first shipped language');
+insert into public.profiles (id, preferred_locale) values (current_setting('deskilo.test.owner')::uuid, 'fr')
+on conflict (id) do update set preferred_locale = excluded.preferred_locale;
+select is(public.workspace_document_language_default(current_setting('deskilo.test.ch')::uuid, date '2026-11-13'),
+  'fr', 'an owner whose language is shipped: the owner''s');
+select ok(public.document_language_chosen('CH', date '2026-11-13')
+      and public.document_language_chosen('BE', date '2026-11-13')
+      and not public.document_language_chosen('FR', date '2026-11-13')
+      and not public.document_language_chosen('PL', date '2026-11-13'),
+  'the businesses that choose: several shipped languages (CH, BE), not one (FR) or none (PL)');
 
 select * from finish();
 rollback;

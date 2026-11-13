@@ -40968,12 +40968,6 @@ abstract class AppLocalizations {
   /// **'This customer has no e-mail address on file'**
   String get reminderEmailNoAddress;
 
-  /// #3673 reminders by e-mail: reminderEmailNoLanguage
-  ///
-  /// In en, this message translates to:
-  /// **'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.'**
-  String get reminderEmailNoLanguage;
-
   /// #3673 reminders by e-mail: reminderEmailNoSender
   ///
   /// In en, this message translates to:
