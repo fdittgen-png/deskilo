@@ -4,6 +4,7 @@
 // Held in memory only: the router takes it out of the address at once, so
 // the address left (`/accounting/connected`) can wait through a sign-in
 // like any other, and the page that completes it uses it once.
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/session/session_source.dart';
@@ -12,6 +13,7 @@ import '../domain/accounting_sign_in_return.dart';
 
 /// #3906 — how long a held return is worth completing: the server's state
 /// lifetime. An older one is dropped unread.
+@visibleForTesting
 const Duration signInReturnLifetime = Duration(minutes: 10);
 
 class ArrivedAccountingSignIn {
