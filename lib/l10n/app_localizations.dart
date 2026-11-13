@@ -11261,6 +11261,12 @@ abstract class AppLocalizations {
   /// **'Payment of {date}'**
   String customerStatementPart(String date);
 
+  /// no statement is printed for a period without balance or movement (#3876)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to state for this period: no balance and no movement.'**
+  String get customerStatementPeriodNothing;
+
   /// the period under the title (#3839)
   ///
   /// In en, this message translates to:
@@ -32022,6 +32028,12 @@ abstract class AppLocalizations {
   /// **'Badges'**
   String get memberBadgesTooltip;
 
+  /// #3618 members at the desk: bookings tab empty
+  ///
+  /// In en, this message translates to:
+  /// **'No booking since {date}'**
+  String memberBookingsNone(String date);
+
   /// Members-list chip for an active co-owner
   ///
   /// In en, this message translates to:
@@ -32250,6 +32262,12 @@ abstract class AppLocalizations {
   /// **'To all admins'**
   String get memberNoteToAllAdmins;
 
+  /// #3618 members at the desk: notes tab action
+  ///
+  /// In en, this message translates to:
+  /// **'Write a note'**
+  String get memberNotesWrite;
+
   /// Member notes (#456)
   ///
   /// In en, this message translates to:
@@ -32412,11 +32430,71 @@ abstract class AppLocalizations {
   /// **'Pause membership'**
   String get memberPause;
 
+  /// #3618 members at the desk: estimate part
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed credits'**
+  String get memberPlanEstCredits;
+
+  /// #3618 members at the desk: estimate part
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-days'**
+  String get memberPlanEstOverage;
+
+  /// #3618 members at the desk: estimate part
+  ///
+  /// In en, this message translates to:
+  /// **'Supplements'**
+  String get memberPlanEstSupplements;
+
+  /// #3618 members at the desk: plan tab: the statement's projection
+  ///
+  /// In en, this message translates to:
+  /// **'Estimated next invoice'**
+  String get memberPlanEstimate;
+
+  /// #3618 members at the desk: what the estimate covers
+  ///
+  /// In en, this message translates to:
+  /// **'For {period}, as of {date}: the statement so far'**
+  String memberPlanEstimateBasis(String period, String date);
+
+  /// #3618 members at the desk: the statement could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable: the statement could not be read'**
+  String get memberPlanEstimateUnavailable;
+
+  /// #3618 members at the desk: plan tab row: the joining date, the only date stored
+  ///
+  /// In en, this message translates to:
+  /// **'Joining date'**
+  String get memberPlanJoined;
+
+  /// #3618 members at the desk: joining date not stored
+  ///
+  /// In en, this message translates to:
+  /// **'Not recorded'**
+  String get memberPlanJoinedUnknown;
+
+  /// #3618 members at the desk: a pause has no stored dates
+  ///
+  /// In en, this message translates to:
+  /// **'Paused: no dates are recorded for a pause'**
+  String get memberPlanPausedNoDates;
+
   /// #704 - the contact section of a member profile
   ///
   /// In en, this message translates to:
   /// **'Plan {pct}%'**
   String memberPlanShare(String pct);
+
+  /// #3618 members at the desk: plan tab row
+  ///
+  /// In en, this message translates to:
+  /// **'Share'**
+  String get memberPlanShareLabel;
 
   /// Member sheet action: reactivate a paused membership
   ///
@@ -32592,17 +32670,191 @@ abstract class AppLocalizations {
   /// **'VAT treatment'**
   String get memberVatTreatmentLabel;
 
+  /// #3618 members at the desk: bulk action
+  ///
+  /// In en, this message translates to:
+  /// **'Pause {count, plural, one{1 member} other{{count} members}}'**
+  String membersBulkPause(int count);
+
+  /// #3618 members at the desk: bulk action
+  ///
+  /// In en, this message translates to:
+  /// **'Change the plan of {count, plural, one{1 member} other{{count} members}}'**
+  String membersBulkPlan(int count);
+
+  /// #3618 members at the desk: bulk action
+  ///
+  /// In en, this message translates to:
+  /// **'Resume {count, plural, one{1 member} other{{count} members}}'**
+  String membersBulkResume(int count);
+
+  /// #3618 members at the desk: bulk task button
+  ///
+  /// In en, this message translates to:
+  /// **'Apply'**
+  String get membersChangeApply;
+
+  /// #3618 members at the desk: bulk task result: members changed out of those selected
+  ///
+  /// In en, this message translates to:
+  /// **'{changed, plural, =0{None changed} one{1 changed} other{{changed} changed}} out of {count, plural, one{1 member} other{{count} members}}'**
+  String membersChangeDone(int changed, int count);
+
+  /// #3618 members at the desk: bulk task: the effective date
+  ///
+  /// In en, this message translates to:
+  /// **'Applies from today, {date}. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.'**
+  String membersChangeFromToday(String date);
+
+  /// #3618 members at the desk: chip
+  ///
+  /// In en, this message translates to:
+  /// **'With an open amount'**
+  String get membersChipOpen;
+
+  /// #3618 members at the desk: column, only for who may see e-mails
+  ///
+  /// In en, this message translates to:
+  /// **'E-mail'**
+  String get membersColEmail;
+
+  /// #3618 members at the desk: column: latest booking the member came to
+  ///
+  /// In en, this message translates to:
+  /// **'Last visit'**
+  String get membersColLastVisit;
+
+  /// #3618 members at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get membersColName;
+
+  /// #3618 members at the desk: column: the subscription share
+  ///
+  /// In en, this message translates to:
+  /// **'Plan and share'**
+  String get membersColPlan;
+
+  /// #3618 members at the desk: column: the fee band's monthly fee
+  ///
+  /// In en, this message translates to:
+  /// **'Plan fee'**
+  String get membersColPlanFee;
+
+  /// #3618 members at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Status'**
+  String get membersColStatus;
+
+  /// #3618 members at the desk: plan fee when no fee band covers the share
+  ///
+  /// In en, this message translates to:
+  /// **'Unavailable: no fee band covers this share'**
+  String get membersFeeUnavailable;
+
   /// App-bar action on the members screen linking to the workspace ID & QR invite surface (#195)
   ///
   /// In en, this message translates to:
   /// **'Invite a member'**
   String get membersInvite;
 
+  /// #3618 members at the desk: last visit cell when none was read
+  ///
+  /// In en, this message translates to:
+  /// **'None since {date}'**
+  String membersNoVisitSince(String date);
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Changed'**
+  String get membersOutcomeApplied;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Has left the space: not changed'**
+  String get membersOutcomeExited;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Not changed: the server refused or did not answer'**
+  String get membersOutcomeFailed;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'No longer a member of the space'**
+  String get membersOutcomeGone;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'A kiosk, not a paying member: not changed'**
+  String get membersOutcomeKiosk;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting to be accepted: not changed'**
+  String get membersOutcomePending;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'This share is not allowed for them: not changed'**
+  String get membersOutcomeRuleRefused;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Already so: nothing to change'**
+  String get membersOutcomeUnchanged;
+
+  /// #3618 members at the desk: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Not paused: not resumed'**
+  String get membersOutcomeWrongStatus;
+
   /// Plan dropdown option for members without a plan
   ///
   /// In en, this message translates to:
   /// **'No plan'**
   String get membersPlanNone;
+
+  /// #3618 members at the desk: plans page title and its door
+  ///
+  /// In en, this message translates to:
+  /// **'Subscriptions and plans'**
+  String get membersPlansTitle;
+
+  /// #3618 members at the desk: member tab
+  ///
+  /// In en, this message translates to:
+  /// **'Bookings'**
+  String get membersTabBookings;
+
+  /// #3618 members at the desk: member tab
+  ///
+  /// In en, this message translates to:
+  /// **'Notes'**
+  String get membersTabNotes;
+
+  /// #3618 members at the desk: member tab
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get membersTabPlan;
+
+  /// #3618 members at the desk: member tab
+  ///
+  /// In en, this message translates to:
+  /// **'Profile'**
+  String get membersTabProfile;
 
   /// Title of the owner-only member management screen + its settings entry
   ///
@@ -36662,6 +36914,24 @@ abstract class AppLocalizations {
   /// **'Your seat'**
   String get planYourSeat;
 
+  /// #3618 members at the desk: plans column
+  ///
+  /// In en, this message translates to:
+  /// **'What is included'**
+  String get plansColIncluded;
+
+  /// #3618 members at the desk: plans column: members on the plan
+  ///
+  /// In en, this message translates to:
+  /// **'Members on it'**
+  String get plansColMembers;
+
+  /// #3618 members at the desk: plans column: the share range
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get plansColPlan;
+
   /// Sheet title editing a plan
   ///
   /// In en, this message translates to:
@@ -36703,6 +36973,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'unlimited half-days'**
   String get plansEditorUnlimited;
+
+  /// #3618 members at the desk: plans table empty
+  ///
+  /// In en, this message translates to:
+  /// **'No fee bands yet: set them in Pricing & packages.'**
+  String get plansEmpty;
+
+  /// #3618 members at the desk: what a fee band includes
+  ///
+  /// In en, this message translates to:
+  /// **'The member\'s share of the month\'s open half-days; an extra half-day costs {overage}'**
+  String plansIncluded(String overage);
+
+  /// #3618 members at the desk: plan beside the table, no member on it
+  ///
+  /// In en, this message translates to:
+  /// **'No member is on this plan.'**
+  String get plansNoMembers;
+
+  /// #3618 members at the desk: a fee band's share range
+  ///
+  /// In en, this message translates to:
+  /// **'{from} to {to}'**
+  String plansShareRange(String from, String to);
+
+  /// #3618 members at the desk: plans page title (short: it stands in the desk's title bar)
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get plansTitle;
 
   /// Shown as the line under a title in availability policies (workspace).
   ///

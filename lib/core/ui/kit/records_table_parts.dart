@@ -352,10 +352,13 @@ class RecordsFooter extends StatelessWidget {
     required this.totals,
     required this.scope,
     required this.format,
+    this.totalOf,
     this.dropped = 0,
     super.key,
   });
 
+  /// The name of the column the totals add up, when the table names one.
+  final String? totalOf;
   final int shown;
   final int loaded;
   final bool complete;
@@ -393,6 +396,8 @@ class RecordsFooter extends StatelessWidget {
               key: const ValueKey('records-dropped'),
               style: muted,
             ),
+          if (currencies.isNotEmpty && totalOf != null)
+            Text(totalOf!, key: const ValueKey('records-total-of')),
           if (currencies.isNotEmpty)
             Text(
               scope == TotalScope.selection
