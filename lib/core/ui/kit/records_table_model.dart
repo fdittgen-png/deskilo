@@ -22,6 +22,7 @@ class RecordColumn<T> {
     this.numeric = false,
     this.sortKey,
     this.hideable = true,
+    this.staysBeside = true,
   });
 
   /// Stable, for the column choice kept on the device.
@@ -38,6 +39,32 @@ class RecordColumn<T> {
 
   /// Whether the person may hide it (the first column may not).
   final bool hideable;
+
+  /// #3860 — whether it stays while a record is open beside the table (the
+  /// table is then narrow). A page declares it for each of its columns: the
+  /// one that names the row and the one a person scans for stay; the rest
+  /// come back when the pane closes. A column that may not be hidden stays.
+  final bool staysBeside;
+}
+
+/// The columns drawn: those the person has not hidden, and while a record
+/// is open [beside] the table only those that stay. A table where none
+/// would stay keeps all of what the person left, never an empty table.
+List<RecordColumn<T>> columnsShown<T>(
+  List<RecordColumn<T>> columns,
+  Set<String> hidden, {
+  required bool beside,
+}) {
+  final chosen = [
+    for (final c in columns)
+      if (!c.hideable || !hidden.contains(c.id)) c,
+  ];
+  if (!beside) return chosen;
+  final staying = [
+    for (final c in chosen)
+      if (c.staysBeside || !c.hideable) c,
+  ];
+  return staying.isEmpty ? chosen : staying;
 }
 
 /// One action on a row, declared once: the ⋯ button, the secondary click
