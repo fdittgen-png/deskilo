@@ -15041,7 +15041,7 @@
   "@featureSubscriptionInvoicesTitle": {
     "description": "Shown as a text in feature names (workspace)."
   },
-  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.",
+  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.",
   "@featureSupplyClassificationDesc": {
     "description": "#2354 place of supply: featureSupplyClassificationDesc"
   },
@@ -41632,6 +41632,10 @@
   "@supplyClassGeneral": {
     "description": "#2354 place of supply: supplyClassGeneral"
   },
+  "supplyClassGeneralMeaning": "Taxed by the general rule: a business customer in another member state accounts for the VAT.",
+  "@supplyClassGeneralMeaning": {
+    "description": "#3864 place of supply: what the general-service choice means"
+  },
   "supplyClassHelper": "A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.",
   "@supplyClassHelper": {
     "description": "#2354 place of supply: supplyClassHelper"
@@ -41643,6 +41647,10 @@
   "supplyClassProperty": "Connected with the premises",
   "@supplyClassProperty": {
     "description": "#2354 place of supply: supplyClassProperty"
+  },
+  "supplyClassPropertyMeaning": "Taxed where the premises are.",
+  "@supplyClassPropertyMeaning": {
+    "description": "#3864 place of supply: what the premises choice means"
   },
   "supportChanged": "The context changed. Prepare a new preview.",
   "@supportChanged": {

@@ -11532,7 +11532,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get featureSupplyClassificationDesc =>
-      'Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden.';
+      'Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.';
 
   @override
   String get featureSupplyClassificationTitle => 'Leistungsort je Leistung';
@@ -32434,6 +32434,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)';
 
   @override
+  String get supplyClassGeneralMeaning =>
+      'Steuerbar nach der allgemeinen Regel: Ein Unternehmen als Kunde in einem anderen Mitgliedstaat schuldet die Mehrwertsteuer.';
+
+  @override
   String get supplyClassHelper =>
       'Ein Arbeitsplatz, ein Büro oder ein Raum wird dort besteuert, wo das Gebäude liegt – für jeden Kunden. Wählen Sie „Allgemeine Dienstleistung“ nur für Leistungen ohne Bezug zu den Räumlichkeiten, etwa Postbearbeitung oder ein virtuelles Büro: Ein Unternehmen in einem anderen EU-Land schuldet dann die Umsatzsteuer selbst.';
 
@@ -32442,6 +32446,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get supplyClassProperty => 'Mit den Räumlichkeiten verbunden';
+
+  @override
+  String get supplyClassPropertyMeaning =>
+      'Steuerbar dort, wo die Räumlichkeiten liegen.';
 
   @override
   String get supportChanged =>

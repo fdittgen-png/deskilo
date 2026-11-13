@@ -116,7 +116,8 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
     _active = service?.active ?? true;
     _public = service?.isPublic ?? false;
     _vatRateId = service?.vatRateId ?? '';
-    _supplyClass = service?.supplyClass ?? SupplyClass.property;
+    // #3864 — a new service starts from the business's own switches.
+    _supplyClass = service?.supplyClass ?? newServiceSupplyClassIn(ref);
   }
 
   @override
