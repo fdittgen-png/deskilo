@@ -302,3 +302,10 @@ Deno.test("#3905 a test-mode event settles nothing in the ledger", async () => {
   assertEquals((await call(fake, { ...paid(), livemode: false })).status, 200);
   assertEquals(fake.rpcCalls, []);
 });
+
+Deno.test("#3905 with test payments on, a test-mode event settles", async () => {
+  const fake = fakeAdmin({});
+  const on = { DESKILO_ALLOW_TEST_PAYMENTS: "true" };
+  assertEquals((await call(fake, { ...paid(), livemode: false }, on)).status, 200);
+  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+});

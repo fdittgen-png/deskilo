@@ -21,6 +21,7 @@
 // verified against a live account.
 import type { SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMajor } from "../_shared/money.ts";
+import { allowsTestPayments } from "../_shared/test_payments.ts";
 
 /** The reversal event types recorded, with the field naming the amount. */
 const REVERSALS: Record<string, string> = {
@@ -35,6 +36,11 @@ export interface ReversalDeps {
 }
 
 type Row = Record<string, unknown>;
+
+/** #3905 -- whether [event] is a test-mode event this installation ignores:
+ * it takes no test payments ([env]'s operator switch). */
+export const ignoresTestEvent = (event: Row, env: (name: string) => string | undefined): boolean =>
+  event.livemode === false && !allowsTestPayments(env);
 
 /** Whether [type] is a reversal event the books record. */
 export const isReversalEvent = (type: unknown): boolean =>
@@ -105,7 +111,7 @@ export async function handleReversal(
     console.log("stripe reversal: no workspace signed it, ignoring");
     return new Response("ok", { status: 200 });
   }
-  if (event.livemode === false) {
+  if (ignoresTestEvent(event, deps.env)) {
     console.log("stripe test event ignored");
     return new Response("ok", { status: 200 });
   }

@@ -3,7 +3,7 @@
 // #3905 -- a PayPal reversal names its order as a capture does; only a live
 // configuration's events reach a production ledger.
 import { assertEquals } from "jsr:@std/assert@1";
-import { captureIdOf, isReversalEvent, orderIdOf, reversalReason, takesRealMoney } from "./event_rules.ts";
+import { captureIdOf, isReversalEvent, orderIdOf, processesEvents, reversalReason, takesRealMoney } from "./event_rules.ts";
 
 Deno.test("a reversed or refunded capture names its order", () => {
   const capture = { id: "cap_1", supplementary_data: { related_ids: { order_id: "ORDER-1" } } };
@@ -43,4 +43,10 @@ Deno.test("a refund names the capture it refunds, and the reason its amount", ()
   assertEquals(captureIdOf({}), null);
   assertEquals(reversalReason("PAYMENT.CAPTURE.REFUNDED", refund), "PAYMENT.CAPTURE.REFUNDED 5.00 EUR");
   assertEquals(reversalReason("PAYMENT.CAPTURE.REVERSED", {}), "PAYMENT.CAPTURE.REVERSED");
+});
+
+Deno.test("a sandbox configuration's events are processed only with test payments on", () => {
+  assertEquals(processesEvents({ env: "sandbox" }, false), false);
+  assertEquals(processesEvents({ env: "sandbox" }, true), true);
+  assertEquals(processesEvents({ env: "live" }, false), true);
 });

@@ -25,6 +25,13 @@
 # The provider is a local stub on 127.0.0.1 (`STRIPE_API_BASE`): no
 # request leaves the runner and no key is real.
 #
+# #3905 -- a production workspace takes real money only: the handler first
+# runs as an installation that takes real payments, and the payer's order
+# under the stub's test key is refused (409 `test_keys`) before any intent or
+# provider request. The handler then runs with the operator's switch
+# DESKILO_ALLOW_TEST_PAYMENTS=true, as a rehearsal installation does, and the
+# rest of the check, the settlement scenarios included, runs on test keys.
+#
 # #1637 — `--settle <provider>` goes on from here: the same fixtures, the
 # stateful stub in scripts/payment_scenarios/, the REAL webhook handler
 # and a matrix of locally signed events, sourced from
@@ -81,22 +88,31 @@ python3 scripts/payment_scenarios/stripe_stub.py "$STUB_PORT" "$WORK/hits" "cs_t
 STUB_PID=$!
 
 # ── the real handler ─────────────────────────────────────────────────
-SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" \
-SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
-STRIPE_API_BASE="http://127.0.0.1:$STUB_PORT" \
-PAYPAL_API_BASE="http://127.0.0.1:18997" MOLLIE_API_BASE="http://127.0.0.1:18996" \
-  deno run --allow-net --allow-env --allow-read --allow-import \
-  supabase/functions/create-payment-order/index.ts > "$WORK/fn.log" 2>&1 &
-FN_PID=$!
-trap 'kill $STUB_PID $FN_PID 2>/dev/null; rm -rf "$WORK"' EXIT
-
+# start_handler <allow-test-payments: true|false>
 FN="http://127.0.0.1:$FN_PORT"
-for _ in $(seq 1 90); do
-  code=$(curl -s -o /dev/null -w '%{http_code}' "$FN" || true)
-  [ "$code" = "405" ] && break
-  sleep 1
-done
-[ "$code" = "405" ] || { cat "$WORK/fn.log"; fail "the handler did not start"; }
+FN_PID=""
+start_handler() {
+  if [ -n "$FN_PID" ]; then
+    kill "$FN_PID" 2>/dev/null; wait "$FN_PID" 2>/dev/null
+    for _ in $(seq 1 30); do port_free "$FN_PORT" && break; sleep 1; done
+  fi
+  SUPABASE_URL="$API_URL" SUPABASE_ANON_KEY="$ANON_KEY" \
+  SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
+  STRIPE_API_BASE="http://127.0.0.1:$STUB_PORT" \
+  PAYPAL_API_BASE="http://127.0.0.1:18997" MOLLIE_API_BASE="http://127.0.0.1:18996" \
+  DESKILO_ALLOW_TEST_PAYMENTS="$1" \
+    deno run --allow-net --allow-env --allow-read --allow-import \
+    supabase/functions/create-payment-order/index.ts > "$WORK/fn.log" 2>&1 &
+  FN_PID=$!
+  for _ in $(seq 1 90); do
+    code=$(curl -s -o /dev/null -w '%{http_code}' "$FN" || true)
+    [ "$code" = "405" ] && break
+    sleep 1
+  done
+  [ "$code" = "405" ] || { cat "$WORK/fn.log"; fail "the handler did not start"; }
+}
+trap 'kill $STUB_PID $FN_PID 2>/dev/null; rm -rf "$WORK"' EXIT
+start_handler false
 
 # ── two real users ───────────────────────────────────────────────────
 user() {
@@ -167,6 +183,18 @@ code=$(BODY="$(with_amount "$BODY" 25.5)" call -H "Authorization: Bearer $PAYER_
 [ "$(intents)" = "0" ] || fail "a refused body left an intent"
 [ ! -s "$WORK/hits" ] || fail "a refused body reached the provider"
 echo "another currency or a fractional amount: 400; no intent, no provider call"
+
+# 3c. #3905 -- an installation that takes real payments opens no order under
+#     test credentials.
+code=$(call -H "Authorization: Bearer $PAYER_JWT")
+[ "$code" = "409" ] && grep -q '"test_keys"' "$WORK/out" \
+  || fail "test credentials without the switch answered $code: $(cat "$WORK/out")"
+[ "$(intents)" = "0" ] || fail "a refused test order left an intent"
+[ ! -s "$WORK/hits" ] || fail "a refused test order reached the provider"
+echo "test credentials without the switch: 409 test_keys; no intent, no provider call"
+
+# From here the installation takes test payments, as a rehearsal one does.
+start_handler true
 
 # 4. The member paying their own bill.
 code=$(call -H "Authorization: Bearer $PAYER_JWT")

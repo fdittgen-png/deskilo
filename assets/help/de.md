@@ -4562,6 +4562,8 @@ Die Schlüssel stammen aus dem eigenen Dashboard des Anbieters: **Client-ID**, *
 
 Ein Produktionsbereich nimmt Zahlungen nur mit Live-Schlüsseln an: Mit Testschlüsseln wird die Online-Zahlung eines Mitglieds abgelehnt. Für Stripe hört der Webhook-Endpunkt auch auf **charge.dispute.created** und **charge.refunded**: Eine Zahlung, die der Anbieter rückgängig macht (eine Erstattung oder ein Widerspruch), wird dann als rückgängig gemacht markiert, und Sie berichtigen den Saldo des Mitglieds.
 
+Eine Installation, die Zahlungen nur probt, kann `DESKILO_ALLOW_TEST_PAYMENTS=true` in der Umgebung ihrer Funktionen setzen: Dann werden Bestellungen mit Testschlüsseln eröffnet und Ereignisse im Testmodus verarbeitet; auf einer Installation, die echte Zahlungen annimmt, darf diese Einstellung nie gesetzt sein.
+
 Geheimnisse werden auf dem Server gespeichert und nie wieder angezeigt. Ein gespeichertes zeigt **Gesetzt — leer lassen zum Behalten**; geben Sie einen neuen Wert ein, um es zu ersetzen.
 
 ### Geplante Ausgaben
