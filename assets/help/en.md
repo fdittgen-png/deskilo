@@ -4562,6 +4562,8 @@ The keys come from the provider's own dashboard: **Client ID**, **Secret**, **En
 
 A production workspace takes payments with live keys only: with test keys, a member's online payment is refused. For Stripe, the webhook endpoint also listens to **charge.dispute.created** and **charge.refunded**: a payment the provider reverses (a refund or a dispute) is then marked reversed, and you correct the member's balance.
 
+An installation that only rehearses payments can set `DESKILO_ALLOW_TEST_PAYMENTS=true` in the environment of its functions, so that orders open under test keys and test-mode events are processed; it must never be set on an installation that takes real payments.
+
 Secrets are stored on the server and never shown again. A saved one reads **Set — leave blank to keep**; type a new value to replace it.
 
 ### Scheduled expenses

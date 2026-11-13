@@ -15,7 +15,8 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
-import { captureIdOf, isReversalEvent, orderIdOf, reversalReason, takesRealMoney } from "./event_rules.ts";
+import { captureIdOf, isReversalEvent, orderIdOf, processesEvents, reversalReason } from "./event_rules.ts";
+import { allowsTestPayments } from "../_shared/test_payments.ts";
 import {
   configOf,
   redactedProviderLog,
@@ -174,8 +175,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.error("paypal webhook verification error", String(e));
     return respond("verification_error", 500);
   }
-  // #3905 -- a sandbox event settles nothing in a production ledger.
-  if (!takesRealMoney(cfg)) {
+  // #3905 -- a sandbox event settles nothing in a production ledger, unless
+  // the installation takes test payments.
+  if (!processesEvents(cfg, allowsTestPayments())) {
     console.log("paypal test event ignored");
     return respond("ok", 200);
   }

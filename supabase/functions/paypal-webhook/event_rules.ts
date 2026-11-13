@@ -39,3 +39,8 @@ export const isReversalEvent = (type: unknown): boolean =>
 
 /** #3905 -- only a live configuration's events reach a production ledger. */
 export const takesRealMoney = (cfg: Record<string, string>): boolean => cfg.env === "live";
+
+/** #3905 -- whether [cfg]'s events are processed: a live configuration's, or
+ * any when the installation takes test payments ([allowTest]). */
+export const processesEvents = (cfg: Record<string, string>, allowTest: boolean): boolean =>
+  allowTest || takesRealMoney(cfg);
