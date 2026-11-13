@@ -24,9 +24,9 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:106` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:113` | title | Printing and workspace guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:225` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:226` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:227` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:227` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:228` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:229` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:230` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:233` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:239` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
@@ -42,8 +42,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:188` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:195` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:283` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:329` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_second_space_seed.dart:336` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:330` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_second_space_seed.dart:337` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:48` | title | ${_probeEnglish(f[0] as DoctorProbe)} query failed | core/diagnostics | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:54` | title | Nobody has confirmed in seven days | core/diagnostics | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:61` | title | Schema has no version | core/diagnostics | KEEP_NON_UI_LITERAL |

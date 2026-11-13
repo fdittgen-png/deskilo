@@ -10,8 +10,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/demo/demo_link.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
+import '../../../../core/demo/presentation/demo_environment.dart';
 import '../../../../core/demo/presentation/demo_setup_card.dart';
-import '../../../../core/demo/presentation/demo_workspace.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
