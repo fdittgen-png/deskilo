@@ -2249,6 +2249,12 @@
       "capabilities": []
     },
     {
+      "key": "stockManagement",
+      "maturity": "unreviewed",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "subscriptionInvoices",
       "maturity": "beta",
       "lifecycle": "active",

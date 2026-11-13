@@ -239,6 +239,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.invoiceEmail: _legacy,
   WorkspaceFeature.kioskEnrolment: _legacy,
   WorkspaceFeature.quickSearch: _legacy,
+  WorkspaceFeature.stockManagement: _legacy,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

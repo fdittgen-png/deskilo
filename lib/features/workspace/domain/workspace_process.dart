@@ -141,6 +141,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.priceNegotiations,
       WorkspaceFeature.memberPaymentTerms,
       WorkspaceFeature.carnets,
+      // #3824 — the goods ledger, beside the catalogue whose rows it keeps.
+      WorkspaceFeature.stockManagement,
     ]),
   ]),
   WorkspaceProcess('billingPayments', [

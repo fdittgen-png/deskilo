@@ -88,5 +88,11 @@ String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permManageLease,
         WorkspacePermission.managePrivacy =>
           l10n.permManagePrivacy,
+        WorkspacePermission.viewStock =>
+          l10n.permViewStock,
+        WorkspacePermission.manageStock =>
+          l10n.permManageStock,
+        WorkspacePermission.approveStockAdjustments =>
+          l10n.permApproveStockAdjustments,
         _ => permission.name,
       };

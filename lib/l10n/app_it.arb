@@ -7209,6 +7209,8 @@
   },
   "featureSpaceQrCodes": "Codici QR degli spazi",
   "featureSpaceQrCodesDesc": "Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.",
+  "featureStockManagementDesc": "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.",
+  "featureStockManagementTitle": "Gestione delle scorte",
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
   "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali.",
@@ -13307,6 +13309,7 @@
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
   },
+  "permApproveStockAdjustments": "Approvare le rettifiche di magazzino",
   "permDeployToDev": "Distribuire in sviluppo",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -13377,6 +13380,7 @@
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
+  "permManageStock": "Movimentare la merce in entrata e in uscita",
   "permManageValidation": "Configurare le regole di convalida",
   "@permManageValidation": {
     "description": "Permission label (#513)"
@@ -13426,6 +13430,7 @@
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
   },
+  "permViewStock": "Vedere le scorte",
   "permWorkspaceSettings": "Modificare le impostazioni dello spazio",
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
@@ -15238,6 +15243,14 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "La sua sessione è scaduta. Acceda di nuovo, poi riprovi.",
+  "refusalStockHistory": "Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.",
+  "refusalStockItem": "Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.",
+  "refusalStockLocation": "Questo luogo non appartiene a questa attività, non è più in uso o è sia l'origine sia la destinazione del movimento. Non è stato spostato nulla.",
+  "refusalStockLot": "Questo lotto appartiene a un altro articolo, oppure l'articolo è gestito a lotti e non ne è stato indicato nessuno. Non è stato spostato nulla.",
+  "refusalStockMove": "Questo movimento non può essere registrato così: una quantità sopra zero, un motivo noto e da una a duecento righe, oppure la stessa richiesta inviata di nuovo invariata. Non è stato spostato nulla.",
+  "refusalStockNotEnough": "In questo luogo non ce n'è così tanto. Non è stato spostato nulla.",
+  "refusalStockOff": "La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.",
+  "refusalStockUnit": "Questo articolo non ha questa unità. Aggiungi l'unità all'articolo o inserisci la quantità in un'unità che ha.",
   "refusalVatRateVersioned": "Questa aliquota compare già su fatture emesse, quindi la sua percentuale resta invariata. Usi «Modifica per legge» per fissare il nuovo valore da una data. Non è stato salvato nulla.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -17700,6 +17713,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAllowNegative": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.",
   "settingHintVatViesEvidenceDays": "Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -17893,6 +17907,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAllowNegative": "Le scorte possono scendere sotto zero",
   "settingLabelVatViesEvidenceDays": "Validità del controllo della partita IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

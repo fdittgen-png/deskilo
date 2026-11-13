@@ -11177,6 +11177,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Printable QR cards per seat, desk, office and level — scan to reserve or check in.';
 
   @override
+  String get featureStockManagementDesc =>
+      'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.';
+
+  @override
+  String get featureStockManagementTitle => 'Stock management';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.';
 
@@ -21724,6 +21731,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permApproveExpenses => 'Approve expenses';
 
   @override
+  String get permApproveStockAdjustments => 'Approve stock adjustments';
+
+  @override
   String get permDeployToDev => 'Deploy to development';
 
   @override
@@ -21781,6 +21791,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permManageSites => 'Manage sites and edit the floor plan';
 
   @override
+  String get permManageStock => 'Move goods in and out of stock';
+
+  @override
   String get permManageValidation => 'Configure validation policies';
 
   @override
@@ -21818,6 +21831,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get permViewPersonalData => 'Read members\' personal data';
+
+  @override
+  String get permViewStock => 'See the stock';
 
   @override
   String get permWorkspaceSettings => 'Edit workspace settings';
@@ -24815,6 +24831,38 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalSession =>
       'Your session has ended. Sign in again, then retry.';
+
+  @override
+  String get refusalStockHistory =>
+      'This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.';
+
+  @override
+  String get refusalStockItem =>
+      'This is not an item this business keeps in stock. Nothing was moved.';
+
+  @override
+  String get refusalStockLocation =>
+      'This place is not one of this business\'s, is no longer in use, or is both the start and the end of the move. Nothing was moved.';
+
+  @override
+  String get refusalStockLot =>
+      'This lot belongs to another item, or the item is tracked by lot and none was given. Nothing was moved.';
+
+  @override
+  String get refusalStockMove =>
+      'This move cannot be recorded as given: a quantity above zero, a known reason and one to two hundred lines, or the same request sent again unchanged. Nothing was moved.';
+
+  @override
+  String get refusalStockNotEnough =>
+      'There is not that much at this place. Nothing was moved.';
+
+  @override
+  String get refusalStockOff =>
+      'Stock management is off in this business. Nothing was moved.';
+
+  @override
+  String get refusalStockUnit =>
+      'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -27840,6 +27888,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.';
 
   @override
+  String get settingHintStockAllowNegative =>
+      'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.';
 
@@ -28110,6 +28162,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelSecurityInvitationExpiryDays => 'Invitation validity';
+
+  @override
+  String get settingLabelStockAllowNegative => 'Stock may go below zero';
 
   @override
   String get settingLabelVatViesEvidenceDays => 'VAT-number check freshness';

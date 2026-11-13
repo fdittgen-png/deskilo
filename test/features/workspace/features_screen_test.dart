@@ -77,7 +77,8 @@ void main() {
     // #3307 — purchaseOrders: ordering from suppliers is asked for.
     // #3308 — guestPasses: selling passes at the desk is asked for.
     // #3673 — reminderEmail and invoiceEmail: both are asked for.
-    expect(onCount, featureManifest.length - 56);
+    // #3824 — stockManagement: keeping a goods ledger is asked for.
+    expect(onCount, featureManifest.length - 57);
   });
 
   testWidgets(

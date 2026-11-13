@@ -157,3 +157,4 @@ reminderEmail | everywhere | y y y y y y y y y y
 invoiceEmail | everywhere | y y y y y y y y y y
 kioskEnrolment | everywhere | y y y y y y y y y y
 quickSearch | everywhere | y y y y y y y y y y
+stockManagement | everywhere | y y y y y y y y y y

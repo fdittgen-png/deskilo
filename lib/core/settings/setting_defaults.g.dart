@@ -158,6 +158,8 @@ abstract final class SettingDefaults {
   static const int securityBadgeWorkspaceFailureLimit = 50;
   /// `security.invitation_expiry_days`
   static const int securityInvitationExpiryDays = 14;
+  /// `stock.allow_negative`
+  static const bool stockAllowNegative = false;
   /// `vat.vies_evidence_days`
   static const int vatViesEvidenceDays = 90;
 }

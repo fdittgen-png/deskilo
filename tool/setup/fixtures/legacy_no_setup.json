@@ -441,7 +441,10 @@
    "managePurchases",
    "recordOutgoingPayments",
    "manageLease",
-   "managePrivacy"
+   "managePrivacy",
+   "viewStock",
+   "manageStock",
+   "approveStockAdjustments"
   ],
   "member": [
    "useMessages",

@@ -760,6 +760,8 @@ window.SETUP_L10N={
    "retUsYears": "US state record retention",
    "retUsYearsHint": "For a space in the United States whose state asks to keep records longer than the federal rule: the years every kind of record is kept from its date. A shorter period changes nothing; the rule still applies. Set in the app's settings (Record retention, US state). Never legal advice: confirm the period of your state.",
    "retUsRule": "The retention rule applies",
+   "stockAllowNegative": "Stock may go below zero",
+   "stockAllowNegativeHint": "Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive. You can change it later in the workspace settings.",
    "badgeFailureLimit": "Badges failing sign-in per workspace",
    "badgeFailureLimitHint": "When this many different badges of the workspace fail their PIN within the lockout window, badge sign-in pauses for that window and owners receive an alert; one badge alone cannot pause it. Set a value from 1 to 50 in Workspace settings → Security; 50 is the default.",
    "badgeSigninWhere": "Badge sign-in works on",
@@ -1408,6 +1410,10 @@ window.SETUP_L10N={
    "quickSearch": [
     "Search and keys",
     "Ctrl+K (⌘K on a Mac) or the bar's search button finds a page, an action or a record — a member, a customer, an invoice by its number, a supplier — among what the person may open; recent items come first. ? lists the keys of the page. Off: no search button and no keys of the app; a page's own keys stay."
+   ],
+   "stockManagement": [
+    "Stock management",
+    "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count."
    ]
   },
   "process": {
@@ -1573,7 +1579,10 @@ window.SETUP_L10N={
    "managePurchases": "Capture supplier bills",
    "recordOutgoingPayments": "Record payments to members",
    "manageLease": "Record the premises lease",
-   "managePrivacy": "Handle personal data and rights requests"
+   "managePrivacy": "Handle personal data and rights requests",
+   "viewStock": "See the stock",
+   "manageStock": "Move goods in and out of stock",
+   "approveStockAdjustments": "Approve stock adjustments"
   },
   "domain": {
    "payment": "Payment",
@@ -2560,6 +2569,8 @@ window.SETUP_L10N={
    "retUsYears": "Conservation des pièces, État américain",
    "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
    "retUsRule": "La règle de conservation s'applique",
+   "stockAllowNegative": "Le stock peut passer sous zéro",
+   "stockAllowNegativeHint": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l’endroit affiche une quantité négative jusqu’à l’arrivée de marchandises. Modifiable ensuite dans les réglages de l’espace.",
    "badgeFailureLimit": "Badges en échec de connexion par espace",
    "badgeFailureLimitHint": "Quand ce nombre de badges différents de l’espace échouent à leur PIN pendant la fenêtre de blocage, la connexion par badge est suspendue pour cette fenêtre et les propriétaires reçoivent une alerte ; un seul badge ne peut pas la suspendre. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut.",
    "badgeSigninWhere": "La connexion par badge fonctionne sur",
@@ -3208,6 +3219,10 @@ window.SETUP_L10N={
    "quickSearch": [
     "Recherche et touches",
     "Ctrl+K (⌘K sur un Mac) ou le bouton de recherche de la barre trouve une page, une action ou une fiche — un membre, un client, une facture par son numéro, un fournisseur — parmi ce que la personne peut ouvrir ; les éléments récents d'abord. ? liste les touches de la page. Désactivé : ni bouton de recherche ni touches de l'application ; les touches propres d'une page restent."
+   ],
+   "stockManagement": [
+    "Gestion des stocks",
+    "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon."
    ]
   },
   "process": {
@@ -3373,7 +3388,10 @@ window.SETUP_L10N={
    "managePurchases": "Saisir les factures fournisseur",
    "recordOutgoingPayments": "Enregistrer les paiements aux membres",
    "manageLease": "Enregistrer le bail des locaux",
-   "managePrivacy": "Gérer les données personnelles et les demandes de droits"
+   "managePrivacy": "Gérer les données personnelles et les demandes de droits",
+   "viewStock": "Voir les stocks",
+   "manageStock": "Entrer et sortir des marchandises du stock",
+   "approveStockAdjustments": "Approuver les ajustements de stock"
   },
   "domain": {
    "payment": "Paiement",
@@ -4360,6 +4378,8 @@ window.SETUP_L10N={
    "retUsYears": "Aufbewahrung, US-Bundesstaat",
    "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
    "retUsRule": "Die Aufbewahrungsregel gilt",
+   "stockAllowNegative": "Bestand darf unter null fallen",
+   "stockAllowNegativeHint": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft. Später in den Workspace-Einstellungen änderbar.",
    "badgeFailureLimit": "Badges mit fehlgeschlagener Anmeldung pro Workspace",
    "badgeFailureLimitHint": "Wenn so viele verschiedene Badges des Workspace im Sperrfenster an ihrer PIN scheitern, pausiert die Badge-Anmeldung für dieses Fenster und Eigentümer erhalten eine Warnung; ein einzelnes Badge kann sie nicht pausieren. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich; Standard ist 50.",
    "badgeSigninWhere": "Anmeldung per Ausweis funktioniert auf",
@@ -5008,6 +5028,10 @@ window.SETUP_L10N={
    "quickSearch": [
     "Suche und Tasten",
     "Strg+K (⌘K auf einem Mac) oder die Suchschaltfläche der Leiste findet eine Seite, eine Aktion oder einen Eintrag — ein Mitglied, einen Kunden, eine Rechnung über ihre Nummer, einen Lieferanten — unter dem, was die Person öffnen darf; zuletzt Geöffnetes zuerst. ? zeigt die Tasten der Seite. Aus: keine Suchschaltfläche und keine Tasten der App; die eigenen Tasten einer Seite bleiben."
+   ],
+   "stockManagement": [
+    "Lagerverwaltung",
+    "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand."
    ]
   },
   "process": {
@@ -5173,7 +5197,10 @@ window.SETUP_L10N={
    "managePurchases": "Lieferantenrechnungen erfassen",
    "recordOutgoingPayments": "Zahlungen an Mitglieder erfassen",
    "manageLease": "Mietvertrag der Räume erfassen",
-   "managePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten"
+   "managePrivacy": "Personenbezogene Daten und Betroffenenanfragen bearbeiten",
+   "viewStock": "Lager einsehen",
+   "manageStock": "Waren ein- und auslagern",
+   "approveStockAdjustments": "Bestandskorrekturen genehmigen"
   },
   "domain": {
    "payment": "Zahlung",
@@ -6160,6 +6187,8 @@ window.SETUP_L10N={
    "retUsYears": "Conservación de registros, estado de EE. UU.",
    "retUsYearsHint": "Para un espacio en Estados Unidos cuyo estado pide conservar los registros más tiempo que la norma federal: los años que se conserva cada registro desde su fecha. Un plazo más corto no cambia nada; la regla sigue aplicándose. Se ajusta en la configuración de la aplicación (Conservación de registros, estado de EE. UU.). No es asesoramiento legal: confirme el plazo de su estado.",
    "retUsRule": "Se aplica la regla de conservación",
+   "stockAllowNegative": "Las existencias pueden bajar de cero",
+   "stockAllowNegativeHint": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía. Se puede cambiar después en los ajustes del espacio.",
    "badgeFailureLimit": "Credenciales con acceso fallido por espacio",
    "badgeFailureLimitHint": "Cuando este número de credenciales distintas del espacio fallan su PIN dentro de la ventana de bloqueo, el acceso con credencial se pausa durante esa ventana y los propietarios reciben una alerta; una sola credencial no puede pausarlo. Elija de 1 a 50 en los ajustes del espacio → Seguridad; 50 por defecto.",
    "badgeSigninWhere": "El acceso con credencial funciona en",
@@ -6808,6 +6837,10 @@ window.SETUP_L10N={
    "quickSearch": [
     "Búsqueda y teclas",
     "Ctrl+K (⌘K en un Mac) o el botón de búsqueda de la barra encuentra una página, una acción o un registro — un miembro, un cliente, una factura por su número, un proveedor — entre lo que la persona puede abrir; lo reciente primero. ? muestra las teclas de la página. Desactivado: sin botón de búsqueda ni teclas de la aplicación; las teclas propias de una página se mantienen."
+   ],
+   "stockManagement": [
+    "Gestión de existencias",
+    "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería."
    ]
   },
   "process": {
@@ -6973,7 +7006,10 @@ window.SETUP_L10N={
    "managePurchases": "Registrar facturas de proveedor",
    "recordOutgoingPayments": "Registrar pagos a miembros",
    "manageLease": "Registrar el contrato de alquiler",
-   "managePrivacy": "Gestionar los datos personales y las solicitudes de derechos"
+   "managePrivacy": "Gestionar los datos personales y las solicitudes de derechos",
+   "viewStock": "Ver las existencias",
+   "manageStock": "Entrar y sacar mercancías del almacén",
+   "approveStockAdjustments": "Aprobar ajustes de existencias"
   },
   "domain": {
    "payment": "Pago",
@@ -7960,6 +7996,8 @@ window.SETUP_L10N={
    "retUsYears": "Conservazione dei documenti, stato USA",
    "retUsYearsHint": "Per uno spazio negli Stati Uniti il cui stato chiede di conservare i documenti più a lungo della regola federale: gli anni per cui ogni documento è conservato dalla sua data. Un periodo più breve non cambia nulla; la regola continua a valere. Si imposta nelle impostazioni dell'app (Conservazione dei documenti, stato USA). Non è consulenza legale: verifichi il termine del Suo stato.",
    "retUsRule": "Vale la regola di conservazione",
+   "stockAllowNegative": "Le scorte possono scendere sotto zero",
+   "stockAllowNegativeHint": "Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce. Modificabile poi nelle impostazioni dello spazio.",
    "badgeFailureLimit": "Badge con accesso fallito per spazio",
    "badgeFailureLimitHint": "Quando questo numero di badge diversi dello spazio sbaglia il PIN nella finestra di blocco, l’accesso con badge si sospende per quella finestra e i proprietari ricevono un avviso; un solo badge non può sospenderlo. Scegliere da 1 a 50 nelle impostazioni dello spazio → Sicurezza; 50 è il valore predefinito.",
    "badgeSigninWhere": "L’accesso con badge funziona su",
@@ -8608,6 +8646,10 @@ window.SETUP_L10N={
    "quickSearch": [
     "Ricerca e tasti",
     "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina."
+   ],
+   "stockManagement": [
+    "Gestione delle scorte",
+    "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale."
    ]
   },
   "process": {
@@ -8773,7 +8815,10 @@ window.SETUP_L10N={
    "managePurchases": "Registrare le fatture dei fornitori",
    "recordOutgoingPayments": "Registrare i pagamenti ai soci",
    "manageLease": "Registrare il contratto di locazione",
-   "managePrivacy": "Gestire i dati personali e le richieste di diritti"
+   "managePrivacy": "Gestire i dati personali e le richieste di diritti",
+   "viewStock": "Vedere le scorte",
+   "manageStock": "Movimentare la merce in entrata e in uscita",
+   "approveStockAdjustments": "Approvare le rettifiche di magazzino"
   },
   "domain": {
    "payment": "Pagamento",
