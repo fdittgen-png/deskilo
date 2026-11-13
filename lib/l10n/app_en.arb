@@ -1889,9 +1889,14 @@
   "@authPasswordLabel": {
     "description": "Label of the password input field"
   },
-  "authPasswordTooShort": "At least 8 characters",
+  "authPasswordTooShort": "{length, plural, one{At least {length} character} other{At least {length} characters}}",
   "@authPasswordTooShort": {
-    "description": "Validation message for a too-short password"
+    "description": "Validation message for a too-short new password; {length} is the minimum length (#3904).",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
   },
   "authProviderDisabled": "This sign-in method is switched off on this server.",
   "@authProviderDisabled": {
@@ -18004,6 +18009,48 @@
   "@instanceDoctorAttention": {
     "description": "#1308 instance wizard doctor and token"
   },
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}",
+  "@instanceDoctorAuthBaselineDetail": {
+    "description": "#3904 Detail: {length} is the minimum password length.",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAuthBaselineTitle": "Sign-in baseline",
+  "@instanceDoctorAuthBaselineTitle": {
+    "description": "#3904 Doctor ok: the sign-in settings meet the baseline."
+  },
+  "instanceDoctorAuthCodesLongTitle": "Sign-in codes last longer than an hour",
+  "@instanceDoctorAuthCodesLongTitle": {
+    "description": "#3904 Doctor warning: e-mailed sign-in codes stay valid longer than an hour."
+  },
+  "instanceDoctorAuthFixDetail": "is  {value}\n        Fix: {command}",
+  "@instanceDoctorAuthFixDetail": {
+    "description": "#3904 Detail of a sign-in warning: {value} is the setting as the server reports it, {command} the command that sets the baseline (kept as written).",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "command": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}",
+  "@instanceDoctorAuthPasswordShortTitle": {
+    "description": "#3904 Doctor warning: {length} is the minimum password length the builder sets.",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAuthReauthOffTitle": "A password change does not ask to sign in again",
+  "@instanceDoctorAuthReauthOffTitle": {
+    "description": "#3904 Doctor warning: changing a password does not ask the person to sign in again."
+  },
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.",
   "@instanceDoctorGuardAnonViewDetail": {
     "description": "#3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.",
@@ -18157,6 +18204,10 @@
   "@instanceDoctorProbePolicies": {
     "description": "#3489 Doctor probe name: policies."
   },
+  "instanceDoctorProbePush": "Push configuration",
+  "@instanceDoctorProbePush": {
+    "description": "#3904 Name of the doctor question about the push configuration."
+  },
   "instanceDoctorProbeRoles": "Installation roles",
   "@instanceDoctorProbeRoles": {
     "description": "#3489 Doctor probe name: installation roles."
@@ -18180,6 +18231,32 @@
   "instanceDoctorProtected": "Protected",
   "@instanceDoctorProtected": {
     "description": "#1308 instance wizard doctor and token"
+  },
+  "instanceDoctorPushForeignDetail": "{host}\n        Fix: dart run tool/instance.dart push --ref <ref>, or set push_config to this project.",
+  "@instanceDoctorPushForeignDetail": {
+    "description": "#3904 Detail: {host} is the host the calls go to; the fix command stays as written.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorPushForeignTitle": "Push and settlement calls go to another project",
+  "@instanceDoctorPushForeignTitle": {
+    "description": "#3904 Doctor alarm: push and settlement calls name another project."
+  },
+  "instanceDoctorPushOwnDetail": "push and settlement calls go to this project ({host})",
+  "@instanceDoctorPushOwnDetail": {
+    "description": "#3904 Detail: {host} is the host the calls go to.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorPushOwnTitle": "Push configuration",
+  "@instanceDoctorPushOwnTitle": {
+    "description": "#3904 Doctor ok: the push configuration names this project."
   },
   "instanceDoctorRolesUndeclaredDetail": "the schema predates the roles column; the installation behaves as combined (personal home and workspace host) — {held}.\n        Fix: dart run tool/instance.dart install --ref <ref>",
   "@instanceDoctorRolesUndeclaredDetail": {

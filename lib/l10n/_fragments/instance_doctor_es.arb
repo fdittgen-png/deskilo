@@ -36,5 +36,16 @@
   "instanceDoctorRolesUndeclaredTitle": "Roles de la instalación sin declarar",
   "instanceDoctorRolesUndeclaredDetail": "el esquema es anterior a la columna de roles; la instalación se comporta como combinada (hogar personal y anfitrión de espacios) — {held}.\n        Solución: dart run tool/instance.dart install --ref <ref>",
   "instanceDoctorRolesUnknownTitle": "Los roles de la instalación no son un conjunto conocido",
-  "instanceDoctorRolesUnknownDetail": "{roles}\n        Solo existen personal_home y workspace_host; operator_set_installation_roles escribe un conjunto válido."
+  "instanceDoctorRolesUnknownDetail": "{roles}\n        Solo existen personal_home y workspace_host; operator_set_installation_roles escribe un conjunto válido.",
+  "instanceDoctorProbePush": "Configuración de notificaciones",
+  "instanceDoctorPushOwnTitle": "Configuración de notificaciones",
+  "instanceDoctorPushOwnDetail": "las llamadas de notificación y de liquidación van a este proyecto ({host})",
+  "instanceDoctorPushForeignTitle": "Las llamadas de notificación y de liquidación van a otro proyecto",
+  "instanceDoctorPushForeignDetail": "{host}\n        Solución: dart run tool/instance.dart push --ref <ref>, o apunte push_config a este proyecto.",
+  "instanceDoctorAuthBaselineTitle": "Base de inicio de sesión",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} carácter, un cambio de contraseña pide volver a iniciar sesión} other{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} caracteres, un cambio de contraseña pide volver a iniciar sesión}}",
+  "instanceDoctorAuthCodesLongTitle": "Los códigos de inicio de sesión duran más de una hora",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Las contraseñas pueden tener menos de {length} carácter} other{Las contraseñas pueden tener menos de {length} caracteres}}",
+  "instanceDoctorAuthReauthOffTitle": "Un cambio de contraseña no pide volver a iniciar sesión",
+  "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}"
 }

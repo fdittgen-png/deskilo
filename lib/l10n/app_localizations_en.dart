@@ -1445,7 +1445,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authPasswordLabel => 'Password';
 
   @override
-  String get authPasswordTooShort => 'At least 8 characters';
+  String authPasswordTooShort(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'At least $length characters',
+      one: 'At least $length character',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -13711,6 +13719,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceDoctorAttention => 'Attention required';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'codes last at most an hour, passwords have at least $length characters, a password change asks to sign in again',
+      one:
+          'codes last at most an hour, passwords have at least $length character, a password change asks to sign in again',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Sign-in baseline';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'Sign-in codes last longer than an hour';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'is  $value\n        Fix: $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Passwords may be shorter than $length characters',
+      one: 'Passwords may be shorter than $length character',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'A password change does not ask to sign in again';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Without security_invoker the view reads with the owner rights and bypasses the policies of the tables under it.';
   }
@@ -13841,6 +13889,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Policies';
 
   @override
+  String get instanceDoctorProbePush => 'Push configuration';
+
+  @override
   String get instanceDoctorProbeRoles => 'Installation roles';
 
   @override
@@ -13857,6 +13908,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Protected';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Fix: dart run tool/instance.dart push --ref <ref>, or set push_config to this project.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Push and settlement calls go to another project';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'push and settlement calls go to this project ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Push configuration';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {

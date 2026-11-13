@@ -6,6 +6,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show AuthException;
 import '../../../../app/entry_intent.dart';
 import '../../../../app/entry_intents.dart';
 import '../../../../core/demo/presentation/demo_entry_sheet.dart';
+import '../../../../core/instance/instance_builder.dart' show InstanceAuthConfig;
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -314,13 +315,13 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                 if (_isSignUp) AutofillHints.newPassword else AutofillHints.password,
               ],
               onFieldSubmitted: (_) => _submit(),
-              // The eight characters are a CREATION policy. An
-              // account made under an older one signs in with the
-              // password it has; refusing it here, before the
-              // server ever sees it, would lock that person out.
+              // The minimum length is a CREATION policy (#3904: the
+              // instance's own). An account made under an older one
+              // signs in with the password it has; refusing it here,
+              // before the server ever sees it, would lock that person out.
               validator: (v) => _isSignUp
-                  ? (v == null || v.length < 8)
-                      ? (l10n.authPasswordTooShort)
+                  ? (v == null || v.length < InstanceAuthConfig.minPasswordLength)
+                      ? (l10n.authPasswordTooShort(InstanceAuthConfig.minPasswordLength))
                       : null
                   : (v == null || v.isEmpty)
                       ? (l10n.taxRefRequired)

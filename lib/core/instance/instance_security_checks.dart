@@ -225,6 +225,25 @@ List<DoctorFinding> checkGuards(List<Map<String, Object?>> rows) {
   ];
 }
 
+/// #3904 — where the server's push and settlement calls go.
+const String pushConfigSql = 'select functions_url from public.push_config where id;';
+
+/// #3904 — the push configuration names this project's own functions.
+List<DoctorFinding> checkPushConfig(
+  List<Map<String, Object?>> rows, {
+  required String ref,
+}) {
+  final url = rows.isEmpty ? '' : '${rows.first['functions_url'] ?? ''}';
+  final host = Uri.tryParse(url)?.host ?? '';
+  if (host == '$ref.supabase.co') {
+    return [DoctorFinding.typed(DoctorLevel.ok, DoctorWords.pushOwn, facts: [host])];
+  }
+  return [
+    DoctorFinding.typed(DoctorLevel.alarm, DoctorWords.pushForeign,
+        facts: [if (host.isEmpty) '—' else host]),
+  ];
+}
+
 /// #2561 — what this installation is (`installation_identity.roles`)
 /// beside the operational rows it holds. `to_jsonb(i) -> 'roles'` answers
 /// null on a schema from before the column instead of failing the probe.

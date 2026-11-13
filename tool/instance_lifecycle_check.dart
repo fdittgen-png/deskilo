@@ -25,6 +25,7 @@ import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
 import 'package:deskilo/core/instance/instance_readiness.dart';
+import 'package:deskilo/core/instance/instance_security_checks.dart';
 
 import 'build_instance.dart';
 import 'instance_lifecycle/psql_management.dart';
@@ -193,6 +194,10 @@ Future<int> _run(List<String> argv) async {
       'after the install the verdict is ${after.verdict}, '
       'pending ${after.pending}',
     );
+
+    // #3904 — an install is complete with its push configuration: the same
+    // step the builder runs after the migrations, for this project.
+    await InstanceBuilder(a).configurePush(installDb);
 
     final findings = await doctor(a, installDb);
     final schema = InstanceDoctor.checkSchema(
@@ -373,6 +378,11 @@ Future<int> _run(List<String> argv) async {
       final point = await InstanceBuilder(b).resumePoint(resumeDb, bundle);
       _check(point == late, 'resumePoint $point, want $late');
 
+      // #3904 — an instance whose push configuration already names it.
+      await fixture.runSql(
+        resumeDb,
+        InstanceBuilder.pushConfigSql(resumeDb, 'sb_publishable_local'),
+      );
       final attempt = <String>[];
       await InstanceBuilder(b).installSchema(
         resumeDb,
@@ -410,6 +420,14 @@ Future<int> _run(List<String> argv) async {
       _check(
         now.verdict == InstanceReadinessVerdict.current,
         'after the upgrade the verdict is ${now.verdict}',
+      );
+      final push = checkPushConfig(
+        await b.query(resumeDb, pushConfigSql),
+        ref: resumeDb,
+      );
+      _check(
+        !hasProblem(push),
+        'after the upgrade the push configuration: ${problems(push)}',
       );
       return 'pending ${verdict.pending}, ran ${attempt.length}, every migration '
           'exactly once over three attempts, marker $latest';

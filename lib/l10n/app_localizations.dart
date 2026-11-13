@@ -2348,11 +2348,11 @@ abstract class AppLocalizations {
   /// **'Password'**
   String get authPasswordLabel;
 
-  /// Validation message for a too-short password
+  /// Validation message for a too-short new password; {length} is the minimum length (#3904).
   ///
   /// In en, this message translates to:
-  /// **'At least 8 characters'**
-  String get authPasswordTooShort;
+  /// **'{length, plural, one{At least {length} character} other{At least {length} characters}}'**
+  String authPasswordTooShort(int length);
 
   /// Inline refusal when e-mail sign-in, sign-ups or codes are disabled server-side
   ///
@@ -22375,6 +22375,42 @@ abstract class AppLocalizations {
   /// **'Attention required'**
   String get instanceDoctorAttention;
 
+  /// #3904 Detail: {length} is the minimum password length.
+  ///
+  /// In en, this message translates to:
+  /// **'{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}'**
+  String instanceDoctorAuthBaselineDetail(int length);
+
+  /// #3904 Doctor ok: the sign-in settings meet the baseline.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in baseline'**
+  String get instanceDoctorAuthBaselineTitle;
+
+  /// #3904 Doctor warning: e-mailed sign-in codes stay valid longer than an hour.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign-in codes last longer than an hour'**
+  String get instanceDoctorAuthCodesLongTitle;
+
+  /// #3904 Detail of a sign-in warning: {value} is the setting as the server reports it, {command} the command that sets the baseline (kept as written).
+  ///
+  /// In en, this message translates to:
+  /// **'is  {value}\n        Fix: {command}'**
+  String instanceDoctorAuthFixDetail(String value, String command);
+
+  /// #3904 Doctor warning: {length} is the minimum password length the builder sets.
+  ///
+  /// In en, this message translates to:
+  /// **'{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}'**
+  String instanceDoctorAuthPasswordShortTitle(int length);
+
+  /// #3904 Doctor warning: changing a password does not ask the person to sign in again.
+  ///
+  /// In en, this message translates to:
+  /// **'A password change does not ask to sign in again'**
+  String get instanceDoctorAuthReauthOffTitle;
+
   /// #3489 Detail of the alarm: a view readable by anon runs as its owner; {names} lists the objects.
   ///
   /// In en, this message translates to:
@@ -22513,6 +22549,12 @@ abstract class AppLocalizations {
   /// **'Policies'**
   String get instanceDoctorProbePolicies;
 
+  /// #3904 Name of the doctor question about the push configuration.
+  ///
+  /// In en, this message translates to:
+  /// **'Push configuration'**
+  String get instanceDoctorProbePush;
+
   /// #3489 Doctor probe name: installation roles.
   ///
   /// In en, this message translates to:
@@ -22548,6 +22590,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Protected'**
   String get instanceDoctorProtected;
+
+  /// #3904 Detail: {host} is the host the calls go to; the fix command stays as written.
+  ///
+  /// In en, this message translates to:
+  /// **'{host}\n        Fix: dart run tool/instance.dart push --ref <ref>, or set push_config to this project.'**
+  String instanceDoctorPushForeignDetail(String host);
+
+  /// #3904 Doctor alarm: push and settlement calls name another project.
+  ///
+  /// In en, this message translates to:
+  /// **'Push and settlement calls go to another project'**
+  String get instanceDoctorPushForeignTitle;
+
+  /// #3904 Detail: {host} is the host the calls go to.
+  ///
+  /// In en, this message translates to:
+  /// **'push and settlement calls go to this project ({host})'**
+  String instanceDoctorPushOwnDetail(String host);
+
+  /// #3904 Doctor ok: the push configuration names this project.
+  ///
+  /// In en, this message translates to:
+  /// **'Push configuration'**
+  String get instanceDoctorPushOwnTitle;
 
   /// #3489 Detail: roles column missing; {held} is the instanceDoctorHeld phrase.
   ///

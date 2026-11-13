@@ -88,28 +88,33 @@ void main() {
     await tester.pumpAndSettle();
     await _tap(tester, 'instance-create-project');
     expect(api.projects.single.name, 'Pézenas');
-    expect(find.textContaining('Project ready: ref1'), findsOneWidget);
+    expect(find.textContaining('Project ready: ref1xxxxxxxxxxxxxxxx'), findsOneWidget);
     await _tap(tester, 'wizard-next');
 
     await _tap(tester, 'instance-install-schema');
-    expect(api.recorded['ref1'], ['0001', '0002'],
+    expect(api.recorded['ref1xxxxxxxxxxxxxxxx'], ['0001', '0002'],
         reason: '#1314 — each migration is recorded as it installs');
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx']!.last,
+        allOf(contains('insert into public.push_config'),
+            contains("'https://ref1xxxxxxxxxxxxxxxx.supabase.co/functions/v1'"),
+            contains("'sb_publishable_ref1xxxxxxxxxxxxxxxx_key'")),
+        reason: '#3904 — after the schema, the server calls this project');
     await _tap(tester, 'wizard-next');
 
     await _tap(tester, 'instance-deploy-functions');
-    expect(api.deployed['ref1']!.single.slug, 'send-push');
+    expect(api.deployed['ref1xxxxxxxxxxxxxxxx']!.single.slug, 'send-push');
     await _tap(tester, 'wizard-next');
 
     await tester.enterText(
         find.byKey(const ValueKey('instance-owner-email')), ' Owner@Example.org ');
     await _tap(tester, 'instance-apply-signin');
-    expect(api.authPatches['ref1']!.single['mailer_autoconfirm'], false);
-    expect(api.authPatches['ref1']!.single['uri_allow_list'],
+    expect(api.authPatches['ref1xxxxxxxxxxxxxxxx']!.single['mailer_autoconfirm'], false);
+    expect(api.authPatches['ref1xxxxxxxxxxxxxxxx']!.single['uri_allow_list'],
         'deskilo://**,https://fdittgen-png.github.io/deskilo/**');
-    expect(api.sql['ref1'],
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx'],
         contains("select public.operator_record_instance_owner_claim('owner@example.org');"),
         reason: '#1829 — the creator\'s e-mail becomes the pending owner claim');
-    expect(api.sql['ref1']!.last,
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx']!.last,
         contains("select public.operator_set_personal_home('unset');"),
         reason: '#2561 L3 — combined by default, nothing declared: today\'s behaviour');
     await _tap(tester, 'wizard-next');
@@ -118,11 +123,11 @@ void main() {
         reason: 'no other project can be its personal home');
     await _tap(tester, 'wizard-next');
 
-    expect(find.textContaining('https://ref1.supabase.co'), findsOneWidget);
+    expect(find.textContaining('https://ref1xxxxxxxxxxxxxxxx.supabase.co'), findsOneWidget);
     await _tap(tester, 'instance-doctor-run');
     expect(find.byKey(const ValueKey('instance-doctor-protected')), findsOneWidget);
     await _tap(tester, 'instance-use-here');
-    expect(store.value?.url, 'https://ref1.supabase.co');
+    expect(store.value?.url, 'https://ref1xxxxxxxxxxxxxxxx.supabase.co');
     expect(store.value?.key, startsWith('sb_publishable_'));
   });
 
@@ -145,7 +150,7 @@ void main() {
         find.byKey(const ValueKey('instance-owner-email')), 'not-an-address');
     await _tap(tester, 'instance-apply-signin');
     expect(find.byKey(const ValueKey('instance-error')), findsOneWidget);
-    expect(api.sql['ref1']!.where((q) => q.contains('owner_claim')), isEmpty);
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx']!.where((q) => q.contains('owner_claim')), isEmpty);
     final next = tester.widget<ButtonStyleButton>(find.descendant(
         of: find.byKey(const ValueKey('wizard-next')),
         matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
@@ -175,12 +180,13 @@ void main() {
       ..failMessage = 'permission denied';
     await _tap(tester, 'instance-install-schema');
     expect(find.textContaining('Stopped at 0002_b.sql: permission denied'), findsOneWidget);
-    expect(api.sql['ref1'], hasLength(1));
-    expect(api.recorded['ref1'], ['0001']);
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx'], hasLength(1));
+    expect(api.recorded['ref1xxxxxxxxxxxxxxxx'], ['0001']);
 
     api.failSqlContaining = null;
     await _tap(tester, 'instance-install-schema');
-    expect(api.sql['ref1'], hasLength(2), reason: 'resumed after 0001, not from scratch');
+    expect(api.sql['ref1xxxxxxxxxxxxxxxx'], hasLength(3),
+        reason: 'resumed after 0001, not from scratch; then the push configuration');
     expect(find.byKey(const ValueKey('instance-error')), findsNothing);
   });
 
@@ -354,7 +360,7 @@ void main() {
         .where((s) => s.contains('operator_enrol_installation('))
         .single;
     expect(call, contains("'00000000-0000-4000-8000-0000002562b1'::uuid, "
-        "'https://ref2.supabase.co', 'sb_publishable_ref2_key'"));
+        "'https://ref2xxxxxxxxxxxxxxxx.supabase.co', 'sb_publishable_ref2xxxxxxxxxxxxxxxx_key'"));
     expect(find.byKey(const ValueKey('instance-enrol-done')), findsOneWidget);
     expect(find.text('Enrolled at Home project.'), findsOneWidget);
     await _tap(tester, 'wizard-next');
