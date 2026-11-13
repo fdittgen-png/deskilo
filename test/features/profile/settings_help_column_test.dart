@@ -43,32 +43,32 @@ void main() {
         await tester.pumpAndSettle();
         await tester.tap(find.byKey(const ValueKey('shell-settings-button')));
         await tester.pumpAndSettle();
+        // #3619 — at the desk one section is shown at a time: the column
+        // holds in each, and across them.
+        final xs = <double>[];
+        List<double> shownDots() => [
+              for (final e in find.byType(HelpDot).evaluate())
+                tester.getRect(find.byWidget(e.widget)).left,
+            ];
+        await openSettingsSection(tester, 'membership');
+        final status = find.byKey(const ValueKey('settings-profile-status-title'));
+        await tester.ensureVisible(status);
+        await tester.pump(const Duration(milliseconds: 300));
+        // A row with a value under its title is among them.
+        expect(find.descendant(of: status, matching: find.byType(HelpDot)), findsOneWidget);
+        xs.addAll(shownDots());
         await openSettingsSection(tester, 'advanced');
         final front = find.byKey(const ValueKey('settings-front-camera'));
         await tester.ensureVisible(front);
         await tester.pump(const Duration(milliseconds: 300));
+        // And a switch row.
+        expect(find.descendant(of: front, matching: find.byType(HelpDot)), findsOneWidget);
+        xs.addAll(shownDots());
 
-        final dots = find.byType(HelpDot).evaluate().length;
-        expect(dots, greaterThanOrEqualTo(4));
-        final xs = [
-          for (final e in find.byType(HelpDot).evaluate())
-            tester.getRect(find.byWidget(e.widget)).left,
-        ];
+        expect(xs.length, greaterThanOrEqualTo(4));
         for (final x in xs) {
           expect(x, closeTo(xs.first, 0.5));
         }
-        // A switch row and a row with a value under its title are among them.
-        expect(
-          find.descendant(of: front, matching: find.byType(HelpDot)),
-          findsOneWidget,
-        );
-        expect(
-          find.descendant(
-            of: find.byKey(const ValueKey('settings-profile-status-title')),
-            matching: find.byType(HelpDot),
-          ),
-          findsOneWidget,
-        );
         expect(tester.takeException(), isNull);
       });
     }

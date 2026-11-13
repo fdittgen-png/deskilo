@@ -6,18 +6,24 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/kit/sections_beside.dart';
 import '../../../../core/ui/section_in_view.dart';
 
 /// Mounted fields keep their drafts and validation while a task is closed.
 class WorkspaceFormGroup extends StatefulWidget {
   const WorkspaceFormGroup({required this.id, required this.title,
     required this.icon, required this.children, this.initiallyExpanded = false, this.destructive = false,
-    super.key});
+    this.flat = false, super.key});
   final String id, title;
   final IconData icon;
   final List<Widget> children;
   final bool initiallyExpanded, destructive;
+
+  /// #3619 — a section beside its list at the desk: no card to open, its
+  /// title over its fields.
+  final bool flat;
 
   static bool validate(FormState? form) {
     if (form == null) return false;
@@ -50,6 +56,8 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
       duration: motionDuration(context, MotionTokens.standard));
   }
   Future<void> reveal(FormFieldState<Object?> field, {required bool wasClosed}) async {
+    // #3619 — at the desk the section may not be the one shown: ask for it.
+    if (widget.flat) ShowSectionNotification(widget.id).dispatch(context);
     await WidgetsBinding.instance.endOfFrame;
     if (!mounted || !field.mounted) return;
     if (wasClosed) {
@@ -63,7 +71,14 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
   @override
   void dispose() { _controller.dispose(); _headingFocus.dispose(); super.dispose(); }
   @override
-  Widget build(BuildContext context) => Card(
+  Widget build(BuildContext context) => widget.flat
+      ? Column(key: ValueKey('workspace-group-${widget.id}'),
+          crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+          Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: AppSpacing.md),
+          ...widget.children,
+        ])
+      : Card(
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
     child: ExpansionTile(key: ValueKey('workspace-group-${widget.id}'),
       controller: _controller, maintainState: true,
@@ -125,6 +140,17 @@ class _WorkspaceFormSectionsState extends State<WorkspaceFormSections> {
     final groups = widget.children.whereType<WorkspaceFormGroup>().toList();
     for (final group in groups) {
       _groups.putIfAbsent(group.id, GlobalKey<_WorkspaceFormGroupState>.new);
+    }
+    // #3619 — at the desk the sections are listed beside the one shown.
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return AddressedSections(
+        id: 'workspace',
+        header: [for (final c in widget.children) if (c is! WorkspaceFormGroup) c],
+        sections: [for (final g in groups) BesideSection(id: g.id, title: g.title,
+          icon: g.icon, destructive: g.destructive,
+          child: WorkspaceFormGroup(key: _groups[g.id], id: g.id, title: g.title,
+            icon: g.icon, destructive: g.destructive, flat: true, children: g.children))],
+      );
     }
     final inView = _inView ?? (groups.isEmpty ? null : groups.first.id);
     return Column(children: [

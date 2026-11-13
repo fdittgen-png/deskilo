@@ -11694,6 +11694,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureWorkspaceVocabularyTitle => 'Vocabulario del espacio';
 
   @override
+  String get featuresColDepends => 'Depende de';
+
+  @override
+  String get featuresColDoes => 'Qué hace';
+
+  @override
+  String get featuresColFeature => 'Función';
+
+  @override
+  String get featuresColState => 'Activada o no';
+
+  @override
   String get featuresFilterChanged => 'Modificadas';
 
   @override

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 import '../theme/app_spacing.dart';
+import 'adaptive/page_measures.dart';
 
 /// A form and its actions share one scroll surface when height is scarce.
 /// Scaffold already removes keyboard insets; SafeArea handles system edges.
@@ -9,8 +10,8 @@ class WizardFormLayout extends StatelessWidget {
   const WizardFormLayout({super.key, required this.header, required this.footer,
     required this.child, this.maxWidth = shortFormWidth});
 
-  // content-fit: a short form's fields keep a readable width; below it the steps stack
-  static const double shortFormWidth = 560;
+  /// #3619 — a wizard's form is drawn in the form measure.
+  static const double shortFormWidth = kFormColumnWidth;
   static const double pinnedFooterMinHeight = 420;
   final Widget header;
   final Widget footer;

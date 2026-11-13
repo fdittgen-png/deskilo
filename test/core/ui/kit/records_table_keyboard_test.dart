@@ -19,9 +19,20 @@ typedef _Rec = ({String id, String name});
 
 final _rows = [for (var i = 0; i < 150; i++) (id: 'r$i', name: 'Row $i')];
 
-Widget _table() => RecordsTable<_Rec>(
+/// #3619 — a row has a minimum height, not a fixed one: every third row
+/// here runs on four lines, as a feature's description does at the desk
+/// (two lines of the test font still fit the minimum height).
+final _tallRows = [
+  for (var i = 0; i < 150; i++)
+    (
+      id: 'r$i',
+      name: i % 3 == 0 ? 'Row $i\nline 2\nline 3\nline 4' : 'Row $i',
+    ),
+];
+
+Widget _table({bool tall = false}) => RecordsTable<_Rec>(
   tableId: 'long',
-  rows: _rows,
+  rows: tall ? _tallRows : _rows,
   keyOf: (r) => r.id,
   onRetry: () {},
   columnStore: const PrefsStringStore('records_columns_long'),
@@ -81,6 +92,41 @@ void main() {
     }
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('records-row-r149')), findsOneWidget);
+  });
+
+  testWidgets('150 rows of different heights: each arrow step leaves the '
+      'row it stands on built and on screen, to the last', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await pumpApp(
+      tester,
+      Scaffold(body: _table(tall: true)),
+      size: const Size(1200, 800),
+    );
+    await connectMouse(tester);
+    await tester.tap(find.byKey(const ValueKey('records-row-r0')));
+    await tester.pumpAndSettle();
+    final list = tester.getRect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-rows')),
+        matching: find.byType(Scrollable),
+      ).first,
+    );
+    for (var i = 1; i < 150; i++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+      await tester.pumpAndSettle();
+      final row = find.byKey(ValueKey('records-row-r$i'));
+      expect(row, findsOneWidget, reason: 'row $i is built');
+      final r = tester.getRect(row);
+      expect(r.top, greaterThanOrEqualTo(list.top - 0.5), reason: 'row $i');
+      expect(r.bottom, lessThanOrEqualTo(list.bottom + 0.5), reason: 'row $i');
+    }
+    // And back up to the first.
+    for (var i = 148; i >= 0; i--) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowUp);
+      await tester.pumpAndSettle();
+      final r = tester.getRect(find.byKey(ValueKey('records-row-r$i')));
+      expect(r.top, greaterThanOrEqualTo(list.top - 0.5), reason: 'row $i');
+    }
   });
 
   testWidgets('150 rows: Tab leaves the table after a few stops, the context-menu key '
