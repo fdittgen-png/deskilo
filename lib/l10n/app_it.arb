@@ -15368,6 +15368,7 @@
   "recordedPaymentsMore": "Mostra altri pagamenti",
   "recordedPaymentsOff": "Il denaro è disattivato in questo spazio.",
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsReversalReviewFailed": "Lo storno non è stato segnato come esaminato. Riprovi.",
   "recordedPaymentsReversalReviewed": "Esaminato",
   "recordedPaymentsReversalsHint": "Un rimborso o una contestazione presso il fornitore. Corregga il saldo del membro, poi segni lo storno come esaminato.",
   "recordedPaymentsReversalsTitle": "Stornati dal fornitore",

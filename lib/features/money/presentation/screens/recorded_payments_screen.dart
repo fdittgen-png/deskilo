@@ -17,10 +17,10 @@ import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../application/payment_reversals.dart';
 import '../../domain/payment_intent.dart';
 import '../../domain/recorded_payments.dart';
 import '../../domain/register_period.dart';
-import '../../providers/money_queries_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../widgets/recorded_payments_table.dart';
 import 'money_view_data.dart';
@@ -288,22 +288,16 @@ class _Reversals extends ConsumerStatefulWidget {
 class _ReversalsState extends ConsumerState<_Reversals> {
   late Future<List<PaymentIntent>> _waiting = _read();
 
-  Future<List<PaymentIntent>> _read() async => [
-    for (final p in await ref
-        .read(paymentGatewayRepositoryProvider)
-        .fetchPaymentIntents(widget.workspaceId))
-      if (p.awaitsReview) p,
-  ];
+  Future<List<PaymentIntent>> _read() =>
+      reversalsAwaitingReview(ref, widget.workspaceId);
 
   Future<void> _review(PaymentIntent intent) async {
     await runGuarded(
       context,
       domain: 'money',
       message: 'payment reversal review failed',
-      errorText: context.l10n.workspaceGenericError,
-      action: () => ref
-          .read(paymentGatewayRepositoryProvider)
-          .reviewPaymentReversal(intent.id),
+      errorText: context.l10n.recordedPaymentsReversalReviewFailed,
+      action: () => markReversalReviewed(ref, intent.id),
     );
     if (!mounted) return;
     setState(() {
