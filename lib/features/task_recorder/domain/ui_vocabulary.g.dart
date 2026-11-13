@@ -2762,6 +2762,7 @@ const Set<String> uiKeys = {
   'records-retry',
   'records-rows',
   'records-select-shown',
+  'records-total-of',
   'records-total-scope',
   'regional-clock',
   'regional-device-zone',
