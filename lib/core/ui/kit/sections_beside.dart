@@ -5,7 +5,7 @@
 // section stays mounted, so one form keeps its drafts and its one Save; a
 // section that is not shown is not painted, not a Tab stop and not read by a
 // screen reader. The page that uses it names the shown section in its
-// address (`?section=<id>`, see [sectionInAddress]).
+// address (`?section=<id>`, see `AddressedSections`).
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -13,7 +13,7 @@ import '../../theme/app_spacing.dart';
 import '../adaptive/page_measure.dart';
 
 /// The width of the section list.
-const double kSectionListWidth = 280;
+const double _listWidth = 280;
 
 /// One section: its id (in the address), its title and what it holds.
 @immutable
@@ -35,9 +35,8 @@ class BesideSection {
 
 /// The sections listed beside the one shown. [selected] falls back to the
 /// first section when it names none of them.
-class SectionsBeside extends StatelessWidget {
-  const SectionsBeside({
-    super.key,
+class _SectionsBeside extends StatelessWidget {
+  const _SectionsBeside({
     required this.id,
     required this.sections,
     required this.selected,
@@ -70,7 +69,7 @@ class SectionsBeside extends StatelessWidget {
         // Tab walks the list, then the shown section and its footer.
         FocusTraversalGroup(
           child: SizedBox(
-            width: kSectionListWidth,
+            width: _listWidth,
             child: ListView(
               key: ValueKey('$id-sections'),
               padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
@@ -147,7 +146,7 @@ class _Hidden extends StatelessWidget {
 
 /// The section the address names (`?section=<id>`); null when it names none
 /// or the page is not under the app's router.
-String? sectionInAddress(BuildContext context) {
+String? _sectionInAddress(BuildContext context) {
   if (GoRouter.maybeOf(context) == null) return null;
   return GoRouterState.of(context).uri.queryParameters['section'];
 }
@@ -155,7 +154,7 @@ String? sectionInAddress(BuildContext context) {
 /// Shows section [id]: the address names it, without a new history entry.
 /// False when the page is not under the app's router (the caller keeps the
 /// choice itself).
-bool showSectionInAddress(BuildContext context, String id) {
+bool _showSectionInAddress(BuildContext context, String id) {
   if (GoRouter.maybeOf(context) == null) return false;
   final uri = GoRouterState.of(context).uri;
   context.replace(
@@ -166,14 +165,14 @@ bool showSectionInAddress(BuildContext context, String id) {
   return true;
 }
 
-/// Asks the [SectionsBeside] host to show section [id] (a field of it needs
+/// Asks the [_SectionsBeside] host to show section [id] (a field of it needs
 /// the reader: a validation problem).
 class ShowSectionNotification extends Notification {
   ShowSectionNotification(this.id);
   final String id;
 }
 
-/// [SectionsBeside] whose shown section is the one the address names, or
+/// [_SectionsBeside] whose shown section is the one the address names, or
 /// the one last chosen where the page is not under the router; a field that
 /// asks for the reader ([ShowSectionNotification]) brings its section.
 class AddressedSections extends StatefulWidget {
@@ -198,7 +197,7 @@ class _AddressedSectionsState extends State<AddressedSections> {
   String? _chosen;
 
   void _select(String id) {
-    if (!showSectionInAddress(context, id)) setState(() => _chosen = id);
+    if (!_showSectionInAddress(context, id)) setState(() => _chosen = id);
   }
 
   @override
@@ -208,10 +207,10 @@ class _AddressedSectionsState extends State<AddressedSections> {
           _select(note.id);
           return true;
         },
-        child: SectionsBeside(
+        child: _SectionsBeside(
           id: widget.id,
           sections: widget.sections,
-          selected: sectionInAddress(context) ?? _chosen,
+          selected: _sectionInAddress(context) ?? _chosen,
           onSelect: _select,
           header: widget.header,
           footer: widget.footer,

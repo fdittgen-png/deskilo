@@ -96,6 +96,7 @@ class FeaturesTable extends StatelessWidget {
       // The switch is the row's action: the table's keyboard reaches it.
       rowActions: (e) => [_action(l, e)],
       cardBuilder: (context, e) => ListTile(
+        key: ValueKey('features-card-${e.feature.name}'),
         title: Text(featureName(l, e.feature)),
         subtitle: Text(featureDescription(l, e.feature)),
         trailing: Text(

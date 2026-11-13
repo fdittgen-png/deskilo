@@ -4331,6 +4331,7 @@ const List<String> uiKeyPatterns = [
   'feature-surface-{}',
   'feature-tile-{}',
   'feature-{}',
+  'features-card-{}',
   'features-maturity-{}',
   'features-view-{}',
   'federation-failure-{}',
