@@ -11296,6 +11296,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.';
 
   @override
+  String get featureStockManagementDesc =>
+      'Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d\'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.';
+
+  @override
+  String get featureStockManagementTitle => 'Gestion des stocks';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cotisation est facturée avant le mois qu\'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.';
 
@@ -21899,6 +21906,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permApproveExpenses => 'Approuver les dépenses';
 
   @override
+  String get permApproveStockAdjustments =>
+      'Approuver les ajustements de stock';
+
+  @override
   String get permDeployToDev => 'Déployer en développement';
 
   @override
@@ -21958,6 +21969,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get permManageSites => 'Gérer les sites et modifier le plan';
 
   @override
+  String get permManageStock => 'Entrer et sortir des marchandises du stock';
+
+  @override
   String get permManageValidation => 'Configurer les règles de validation';
 
   @override
@@ -21998,6 +22012,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get permViewPersonalData =>
       'Consulter les données personnelles des membres';
+
+  @override
+  String get permViewStock => 'Voir les stocks';
 
   @override
   String get permWorkspaceSettings => 'Modifier les réglages de l\'espace';
@@ -25002,6 +25019,38 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get refusalSession =>
       'Votre session a expiré. Reconnectez-vous, puis réessayez.';
+
+  @override
+  String get refusalStockHistory =>
+      'Cet article a des mouvements de stock, qui sont conservés. Désactivez-le plutôt.';
+
+  @override
+  String get refusalStockItem =>
+      'Ce n\'est pas un article que cette entreprise garde en stock. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockLocation =>
+      'Cet endroit n\'appartient pas à cette entreprise, n\'est plus utilisé, ou est à la fois le départ et l\'arrivée du mouvement. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockLot =>
+      'Ce lot appartient à un autre article, ou l\'article est suivi par lot et aucun n\'a été indiqué. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockMove =>
+      'Ce mouvement ne peut pas être enregistré tel quel : une quantité au-dessus de zéro, un motif connu et une à deux cents lignes, ou la même demande renvoyée sans changement. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockNotEnough =>
+      'Il n\'y en a pas autant à cet endroit. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockOff =>
+      'La gestion des stocks est désactivée dans cette entreprise. Rien n\'a été déplacé.';
+
+  @override
+  String get refusalStockUnit =>
+      'Cet article n\'a pas cette unité. Ajoutez l\'unité à l\'article, ou saisissez la quantité dans une unité qu\'il connaît.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -28062,6 +28111,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Jours pendant lesquels une invitation personnelle peut être utilisée après sa création. Les invitations déjà envoyées gardent leur date. Peut seulement être raccourcie.';
 
   @override
+  String get settingHintStockAllowNegative =>
+      'Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l\'endroit affiche une quantité négative jusqu\'à l\'arrivée de marchandises.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.';
 
@@ -28356,6 +28409,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validité d\'une invitation';
+
+  @override
+  String get settingLabelStockAllowNegative => 'Le stock peut passer sous zéro';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

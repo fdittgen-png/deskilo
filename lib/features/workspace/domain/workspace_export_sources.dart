@@ -242,6 +242,9 @@ const List<ExportSource> workspaceExportSources = [
       'id', 'name', 'price_cents', 'active',
       // #3552 — what a service says about itself.
       'category', 'duration_minutes', 'description', 'is_public', 'sort_order',
+      // #3824 — what the item is to the goods ledger.
+      'purchasable', 'stockable', 'sellable', 'inventory_unit', 'tracking',
+      'shelf_life_days',
     },
   ),
   ExportSource(
@@ -317,6 +320,13 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('purchase_order_sends'),
   ExportSource.everyColumn('purchase_order_receipts'),
   ExportSource.everyColumn('purchase_order_receipt_lines'),
+  // #3824 — the goods ledger.
+  ExportSource.everyColumn('item_units'),
+  ExportSource.everyColumn('item_codes'),
+  ExportSource.everyColumn('stock_locations'),
+  ExportSource.everyColumn('stock_lots'),
+  ExportSource.everyColumn('stock_movements'),
+  ExportSource.everyColumn('stock_balances'),
   ExportSource.everyColumn('outgoing_payments'),
   ExportSource.everyColumn('expense_schedules'),
   ExportSource.everyColumn('expense_occurrences'),

@@ -755,6 +755,8 @@
  "retUsYears": "Aufbewahrung, US-Bundesstaat",
  "retUsYearsHint": "Für einen Space in den USA, dessen Bundesstaat eine längere Aufbewahrung als die bundesweite Regel verlangt: die Jahre, die jede Unterlage ab ihrem Datum aufbewahrt wird. Eine kürzere Frist ändert nichts; die Regel gilt weiter. Einzustellen in den Einstellungen der App (Aufbewahrung, US-Bundesstaat). Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.",
  "retUsRule": "Die Aufbewahrungsregel gilt",
+ "stockAllowNegative": "Bestand darf unter null fallen",
+ "stockAllowNegativeHint": "Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft. Später in den Workspace-Einstellungen änderbar.",
  "badgeFailureLimit": "Badges mit fehlgeschlagener Anmeldung pro Workspace",
  "badgeFailureLimitHint": "Wenn so viele verschiedene Badges des Workspace im Sperrfenster an ihrer PIN scheitern, pausiert die Badge-Anmeldung für dieses Fenster und Eigentümer erhalten eine Warnung; ein einzelnes Badge kann sie nicht pausieren. In den Workspace-Einstellungen → Sicherheit sind 1 bis 50 möglich; Standard ist 50.",
  "badgeSigninWhere": "Anmeldung per Ausweis funktioniert auf",

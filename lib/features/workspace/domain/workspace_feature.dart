@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'feature_countries.dart';
+import 'feature_manifest_stock.dart';
 
 export 'feature_countries.dart';
 export 'feature_resolution.dart';
@@ -416,7 +417,13 @@ enum WorkspaceFeature {
   reminderEmail,
   invoiceEmail,
   kioskEnrolment,
-  quickSearch;
+  quickSearch,
+
+  /// #3824 — the goods ledger (stock S1, epic #3823): locations, item units
+  /// with exact factors, codes, lots, movements and balances behind one move
+  /// command. Asked for, under the catalogue; the parent of every later stock
+  /// flag. Off: the shelf count works as before.
+  stockManagement;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -519,7 +526,7 @@ class FeatureManifestEntry {
 /// decisions (seat-blocking delegation #161, accessory billing #170,
 /// online payments, whole-space booking 0050 and its admin delegation).
 const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
-  ..._manifest1, ..._manifest2, ..._manifest3,
+  ..._manifest1, ..._manifest2, ..._manifest3, ...stockFeatureManifest,
 };
 
 /// #2566 — a flag nobody has chosen is what a NEW workspace stores for it:

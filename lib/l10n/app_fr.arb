@@ -7213,6 +7213,8 @@
   },
   "featureSpaceQrCodes": "Codes QR des espaces",
   "featureSpaceQrCodesDesc": "Cartes QR imprimables par poste, table, bureau et niveau — scanner pour réserver ou pointer.",
+  "featureStockManagementDesc": "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon.",
+  "featureStockManagementTitle": "Gestion des stocks",
   "featureSubscriptionInvoicesDesc": "La cotisation est facturée avant le mois qu'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.",
   "featureSubscriptionInvoicesTitle": "Factures d'abonnement",
   "featureSupplyClassificationDesc": "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.",
@@ -13299,6 +13301,7 @@
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
   },
+  "permApproveStockAdjustments": "Approuver les ajustements de stock",
   "permDeployToDev": "Déployer en développement",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -13369,6 +13372,7 @@
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
+  "permManageStock": "Entrer et sortir des marchandises du stock",
   "permManageValidation": "Configurer les règles de validation",
   "@permManageValidation": {
     "description": "Permission label (#513)"
@@ -13418,6 +13422,7 @@
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
   },
+  "permViewStock": "Voir les stocks",
   "permWorkspaceSettings": "Modifier les réglages de l'espace",
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
@@ -15225,6 +15230,14 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
+  "refusalStockHistory": "Cet article a des mouvements de stock, qui sont conservés. Désactivez-le plutôt.",
+  "refusalStockItem": "Ce n'est pas un article que cette entreprise garde en stock. Rien n'a été déplacé.",
+  "refusalStockLocation": "Cet endroit n'appartient pas à cette entreprise, n'est plus utilisé, ou est à la fois le départ et l'arrivée du mouvement. Rien n'a été déplacé.",
+  "refusalStockLot": "Ce lot appartient à un autre article, ou l'article est suivi par lot et aucun n'a été indiqué. Rien n'a été déplacé.",
+  "refusalStockMove": "Ce mouvement ne peut pas être enregistré tel quel : une quantité au-dessus de zéro, un motif connu et une à deux cents lignes, ou la même demande renvoyée sans changement. Rien n'a été déplacé.",
+  "refusalStockNotEnough": "Il n'y en a pas autant à cet endroit. Rien n'a été déplacé.",
+  "refusalStockOff": "La gestion des stocks est désactivée dans cette entreprise. Rien n'a été déplacé.",
+  "refusalStockUnit": "Cet article n'a pas cette unité. Ajoutez l'unité à l'article, ou saisissez la quantité dans une unité qu'il connaît.",
   "refusalVatRateVersioned": "Ce taux figure déjà sur des factures émises : son pourcentage reste tel quel. Utilisez « Changement par la loi » pour fixer la nouvelle valeur à partir d’une date. Rien n’a été enregistré.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -17686,6 +17699,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAllowNegative": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l'endroit affiche une quantité négative jusqu'à l'arrivée de marchandises.",
   "settingHintVatViesEvidenceDays": "Jours pendant lesquels un contrôle valide du numéro de TVA reste assez récent pour servir de preuve sur une nouvelle facture. Une valeur plus courte demande un nouveau contrôle plus tôt ; ce n’est pas la preuve qu’une opération est valable.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -17879,6 +17893,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAllowNegative": "Le stock peut passer sous zéro",
   "settingLabelVatViesEvidenceDays": "Fraîcheur du contrôle du numéro de TVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

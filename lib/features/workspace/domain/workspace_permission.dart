@@ -138,7 +138,19 @@ enum WorkspacePermission {
   /// (access, correction, deletion) and be told of a privacy incident. The
   /// founding owner and every owner hold it; a co-owner by default. Not an
   /// admin default: the "Personal Data Admin" role (or the matrix) gives it.
-  managePrivacy;
+  managePrivacy,
+
+  /// #3824 — read the stock: what is where, its lots and its movements.
+  /// Not an admin default.
+  viewStock,
+
+  /// #3824 — move goods: in, between places and out (the move command).
+  /// Not an admin default.
+  manageStock,
+
+  /// #3824 — approve the adjustment a count proposes (its screens come with
+  /// stock S7). Not an admin default.
+  approveStockAdjustments;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

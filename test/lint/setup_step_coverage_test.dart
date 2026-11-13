@@ -26,6 +26,10 @@ const _withoutStepBaseline = 0;
 const _switches = <WorkspaceFeature>{
   // #3610 — search and keys: how the app is driven, nothing to set up.
   WorkspaceFeature.quickSearch,
+  // #3824 — the goods ledger opens itself when switched on (its places and
+  // the opening of each count); its places and items are set up on the
+  // stock screens of #3823, not in the setup guide.
+  WorkspaceFeature.stockManagement,
   // Booking and the plan read what is already set up.
   WorkspaceFeature.seriesBooking,
   WorkspaceFeature.seatDayTimeline,

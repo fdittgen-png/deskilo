@@ -11260,6 +11260,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Druckbare QR-Karten je Platz, Tisch, Büro und Etage — scannen zum Reservieren oder Einchecken.';
 
   @override
+  String get featureStockManagementDesc =>
+      'Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.';
+
+  @override
+  String get featureStockManagementTitle => 'Lagerverwaltung';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.';
 
@@ -21855,6 +21862,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permApproveExpenses => 'Ausgaben genehmigen';
 
   @override
+  String get permApproveStockAdjustments => 'Bestandskorrekturen genehmigen';
+
+  @override
   String get permDeployToDev => 'In die Entwicklung ausrollen';
 
   @override
@@ -21914,6 +21924,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Standorte verwalten und den Grundriss bearbeiten';
 
   @override
+  String get permManageStock => 'Waren ein- und auslagern';
+
+  @override
   String get permManageValidation => 'Validierungsregeln konfigurieren';
 
   @override
@@ -21953,6 +21966,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permViewPersonalData => 'Persönliche Daten der Mitglieder lesen';
+
+  @override
+  String get permViewStock => 'Lager einsehen';
 
   @override
   String get permWorkspaceSettings => 'Workspace-Einstellungen bearbeiten';
@@ -24961,6 +24977,38 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalSession =>
       'Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.';
+
+  @override
+  String get refusalStockHistory =>
+      'Dieser Artikel hat Lagerbewegungen, die erhalten bleiben. Deaktivieren Sie ihn stattdessen.';
+
+  @override
+  String get refusalStockItem =>
+      'Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockLocation =>
+      'Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockLot =>
+      'Diese Charge gehört zu einem anderen Artikel, oder der Artikel wird chargenweise geführt und keine wurde angegeben. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockMove =>
+      'Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockNotEnough =>
+      'So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockOff =>
+      'Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.';
+
+  @override
+  String get refusalStockUnit =>
+      'Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -28011,6 +28059,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Tage, die eine persönliche Einladung nach dem Erstellen eingelöst werden kann. Bereits versendete Einladungen behalten ihr Datum. Kann nur verkürzt werden.';
 
   @override
+  String get settingHintStockAllowNegative =>
+      'Aus: eine Bewegung, die an einem Ort weniger als nichts übrig ließe, wird abgelehnt. An: sie wird gebucht, und der Ort zeigt eine negative Menge, bis Ware eintrifft.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Tage, die eine gültige Prüfung der USt-IdNr. aktuell genug bleibt, um auf einer neuen Rechnung als Nachweis zu dienen. Ein kürzerer Wert verlangt früher eine neue Prüfung; er beweist nicht, dass ein Geschäft gültig ist.';
 
@@ -28294,6 +28346,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Gültigkeit einer Einladung';
+
+  @override
+  String get settingLabelStockAllowNegative => 'Bestand darf unter null fallen';
 
   @override
   String get settingLabelVatViesEvidenceDays =>

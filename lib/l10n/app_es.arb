@@ -7213,6 +7213,8 @@
   },
   "featureSpaceQrCodes": "Códigos QR de espacios",
   "featureSpaceQrCodesDesc": "Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar.",
+  "featureStockManagementDesc": "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.",
+  "featureStockManagementTitle": "Gestión de existencias",
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
   "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales.",
@@ -13299,6 +13301,7 @@
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
   },
+  "permApproveStockAdjustments": "Aprobar ajustes de existencias",
   "permDeployToDev": "Desplegar en desarrollo",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -13369,6 +13372,7 @@
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
+  "permManageStock": "Entrar y sacar mercancías del almacén",
   "permManageValidation": "Configurar reglas de validación",
   "@permManageValidation": {
     "description": "Permission label (#513)"
@@ -13418,6 +13422,7 @@
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
   },
+  "permViewStock": "Ver las existencias",
   "permWorkspaceSettings": "Editar la configuración del espacio",
   "@permWorkspaceSettings": {
     "description": "Permission label (#513)"
@@ -15225,6 +15230,14 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.",
+  "refusalStockHistory": "Este artículo tiene movimientos de existencias, que se conservan. Desactívelo en su lugar.",
+  "refusalStockItem": "No es un artículo que este negocio tenga en existencias. No se ha movido nada.",
+  "refusalStockLocation": "Este lugar no es de este negocio, ya no se usa o es a la vez el origen y el destino del movimiento. No se ha movido nada.",
+  "refusalStockLot": "Este lote pertenece a otro artículo, o el artículo se sigue por lotes y no se indicó ninguno. No se ha movido nada.",
+  "refusalStockMove": "Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.",
+  "refusalStockNotEnough": "No hay tanto en este lugar. No se ha movido nada.",
+  "refusalStockOff": "La gestión de existencias está desactivada en este negocio. No se ha movido nada.",
+  "refusalStockUnit": "Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.",
   "refusalVatRateVersioned": "Este tipo ya figura en facturas emitidas, así que su porcentaje se mantiene. Use «Cambio por ley» para fijar el nuevo valor a partir de una fecha. No se ha guardado nada.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -17686,6 +17699,7 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAllowNegative": "Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.",
   "settingHintVatViesEvidenceDays": "Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -17879,6 +17893,7 @@
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
   },
+  "settingLabelStockAllowNegative": "Las existencias pueden bajar de cero",
   "settingLabelVatViesEvidenceDays": "Vigencia de la comprobación del NIF-IVA",
   "@settingLabelVatViesEvidenceDays": {
     "description": "#2487 retention settings"

@@ -11238,6 +11238,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Tarjetas QR imprimibles por puesto, mesa, oficina y planta — escanee para reservar o fichar.';
 
   @override
+  String get featureStockManagementDesc =>
+      'Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.';
+
+  @override
+  String get featureStockManagementTitle => 'Gestión de existencias';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.';
 
@@ -21797,6 +21804,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permApproveExpenses => 'Aprobar gastos';
 
   @override
+  String get permApproveStockAdjustments => 'Aprobar ajustes de existencias';
+
+  @override
   String get permDeployToDev => 'Desplegar en desarrollo';
 
   @override
@@ -21855,6 +21865,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageSites => 'Gestionar sedes y editar el plano';
 
   @override
+  String get permManageStock => 'Entrar y sacar mercancías del almacén';
+
+  @override
   String get permManageValidation => 'Configurar reglas de validación';
 
   @override
@@ -21893,6 +21906,9 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get permViewPersonalData =>
       'Consultar los datos personales de los miembros';
+
+  @override
+  String get permViewStock => 'Ver las existencias';
 
   @override
   String get permWorkspaceSettings => 'Editar la configuración del espacio';
@@ -24895,6 +24911,38 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalSession =>
       'Su sesión ha terminado. Vuelva a iniciar sesión e inténtelo de nuevo.';
+
+  @override
+  String get refusalStockHistory =>
+      'Este artículo tiene movimientos de existencias, que se conservan. Desactívelo en su lugar.';
+
+  @override
+  String get refusalStockItem =>
+      'No es un artículo que este negocio tenga en existencias. No se ha movido nada.';
+
+  @override
+  String get refusalStockLocation =>
+      'Este lugar no es de este negocio, ya no se usa o es a la vez el origen y el destino del movimiento. No se ha movido nada.';
+
+  @override
+  String get refusalStockLot =>
+      'Este lote pertenece a otro artículo, o el artículo se sigue por lotes y no se indicó ninguno. No se ha movido nada.';
+
+  @override
+  String get refusalStockMove =>
+      'Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.';
+
+  @override
+  String get refusalStockNotEnough =>
+      'No hay tanto en este lugar. No se ha movido nada.';
+
+  @override
+  String get refusalStockOff =>
+      'La gestión de existencias está desactivada en este negocio. No se ha movido nada.';
+
+  @override
+  String get refusalStockUnit =>
+      'Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -27939,6 +27987,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Días en que una invitación personal puede canjearse tras crearse. Las invitaciones ya enviadas conservan su fecha. Solo se puede acortar.';
 
   @override
+  String get settingHintStockAllowNegative =>
+      'Desactivado: se rechaza un movimiento que dejaría menos que nada en un lugar. Activado: se registra y el lugar muestra una cantidad negativa hasta que llegue mercancía.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Días que una comprobación válida del NIF-IVA sigue siendo lo bastante reciente para servir de prueba en una nueva factura. Un valor más corto pide una nueva comprobación antes; no prueba que una operación sea válida.';
 
@@ -28236,6 +28288,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validez de una invitación';
+
+  @override
+  String get settingLabelStockAllowNegative =>
+      'Las existencias pueden bajar de cero';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
