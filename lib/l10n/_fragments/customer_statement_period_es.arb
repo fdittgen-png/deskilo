@@ -18,5 +18,6 @@
   "customerStatementMoveMoved": "Crédito trasladado a otra cuenta",
   "customerStatementMoveApplied": "Crédito aplicado a una factura",
   "customerStatementMoveFreed": "Pago liberado",
-  "customerStatementMoveAllocated": "Pago imputado"
+  "customerStatementMoveAllocated": "Pago imputado",
+  "customerStatementPeriodNothing": "Nada que indicar para este período: ni saldo ni movimiento."
 }

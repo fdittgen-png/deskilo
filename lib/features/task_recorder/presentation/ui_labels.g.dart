@@ -4436,6 +4436,7 @@ Map<String, _Getter> _part12() => {
   'countryNameIE': (l) => l.countryNameIE,
   'customerStatementAwaiting': (l) => l.customerStatementAwaiting,
   'customerStatementBalanceDue': (l) => l.customerStatementBalanceDue,
+  'customerStatementPeriodNothing': (l) => l.customerStatementPeriodNothing,
   'datevDebtorBase': (l) => l.datevDebtorBase,
   'decorWc': (l) => l.decorWc,
   'demoSessionBadgeHint': (l) => l.demoSessionBadgeHint,

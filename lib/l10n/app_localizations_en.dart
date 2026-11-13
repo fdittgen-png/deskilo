@@ -7060,6 +7060,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get customerStatementPeriodNothing =>
+      'Nothing to state for this period: no balance and no movement.';
+
+  @override
   String customerStatementPeriodRange(String from, String to) {
     return 'From $from to $to';
   }

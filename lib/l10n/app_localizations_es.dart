@@ -7103,6 +7103,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get customerStatementPeriodNothing =>
+      'Nada que indicar para este período: ni saldo ni movimiento.';
+
+  @override
   String customerStatementPeriodRange(String from, String to) {
     return 'Del $from al $to';
   }

@@ -4381,6 +4381,7 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Niente da riportare per questo periodo: nessun saldo e nessun movimento.",
   "customerStatementPeriodRange": "Dal {from} al {to}",
   "customerStatementPickCurrency": "L'estratto conto in quale valuta?",
   "@customerStatementPickCurrency": {

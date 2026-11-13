@@ -4381,6 +4381,7 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Für diesen Zeitraum gibt es nichts darzustellen: weder ein Saldo noch eine Bewegung.",
   "customerStatementPeriodRange": "Vom {from} bis {to}",
   "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
   "@customerStatementPickCurrency": {
