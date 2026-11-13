@@ -165,8 +165,9 @@ class DemoLazySpaces {
         );
       }
       // Once a persona has been taken, every roles store knows its caller.
-      if (persona != initialDemoPersona)
+      if (persona != initialDemoPersona) {
         space.roles.callerMemberId = _home.actor.memberId;
+      }
       return space;
     });
     built.add(key);
