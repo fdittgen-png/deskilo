@@ -1,7 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
 --
--- 0757 (#3862) -- place booking switched off is refused by the server, not
+-- 0758 (#3862) -- place booking switched off is refused by the server, not
 -- only hidden by the app (the rule of 0640). With `placeBooking` off, a new
 -- booking (single, replayable or a series), an administrator's booking for a member, a kiosk's
 -- reservation or check-in, and a carnet sale are refused with 55000, the code
@@ -36,6 +36,8 @@ begin
   -- create_reservation_once (the app's and the assistant's booking).
   select pg_get_functiondef('public.create_reservation_once(uuid,uuid,uuid,uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,boolean)'::regprocedure)
     into v_def;
+  -- Applied once: a second run leaves the functions as they are.
+  if position('place booking is off in this workspace' in v_def) > 0 then return; end if;
   v_def := pg_temp.anchor_replace(v_def, v_member_check, v_member_check || v_gate);
   if v_def is null then
     raise exception 'an anchor of #3862 was not found in create_reservation_once' using errcode = 'P0001';
@@ -74,13 +76,12 @@ begin
   -- kiosk_act: reserving and checking in; checking out stays open.
   select pg_get_functiondef('public.kiosk_act(uuid,text,text,uuid,timestamp with time zone,timestamp with time zone,uuid)'::regprocedure)
     into v_def;
+  -- The check-out branch has returned above this line.
   v_def := pg_temp.anchor_replace(v_def,
-    $a$  if p_action not in ('reserve', 'check_in') then
-    raise exception 'unknown kiosk action';
-  end if;$a$,
-    $a$  if p_action not in ('reserve', 'check_in') then
-    raise exception 'unknown kiosk action';
-  end if;$a$ || v_gate);
+    $a$
+  if p_action not in ('reserve', 'check_in') then$a$,
+    v_gate || $a$
+  if p_action not in ('reserve', 'check_in') then$a$);
   if v_def is null then
     raise exception 'an anchor of #3862 was not found in kiosk_act' using errcode = 'P0001';
   end if;
@@ -89,10 +90,10 @@ begin
   -- sell_credit: a carnet is spent on places.
   select pg_get_functiondef('public.sell_credit(uuid,uuid,uuid)'::regprocedure) into v_def;
   v_def := pg_temp.anchor_replace(v_def,
-    $a$    raise exception 'carnets are off in this workspace';
-  end if;$a$,
-    $a$    raise exception 'carnets are off in this workspace';
-  end if;$a$ || v_gate);
+    $a$
+  if not public.feature_effective(p_workspace_id, 'carnets') then$a$,
+    v_gate || $a$
+  if not public.feature_effective(p_workspace_id, 'carnets') then$a$);
   if v_def is null then
     raise exception 'an anchor of #3862 was not found in sell_credit' using errcode = 'P0001';
   end if;
@@ -102,4 +103,4 @@ $migration$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(757);
+select public.set_deskilo_schema_version(758);

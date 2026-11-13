@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #3862 (0757) -- with place booking off, the server refuses every new place
+-- #3862 (0758) -- with place booking off, the server refuses every new place
 -- booking and a carnet sale with 55000, the code of a switched-off
 -- functionality: a booking, a replayable booking (the assistant's), a series,
 -- an administrator's booking for a member, a kiosk's reservation. A booking
