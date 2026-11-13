@@ -12308,9 +12308,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get guestPassProblemNoSeat => 'Elija un puesto.';
 
   @override
-  String get guestPassRevokeAction => 'Revocar';
-
-  @override
   String guestPassRevokeCancelled(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

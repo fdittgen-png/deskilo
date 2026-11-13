@@ -19963,12 +19963,6 @@ abstract class AppLocalizations {
   /// **'Choose a place.'**
   String get guestPassProblemNoSeat;
 
-  /// the confirmation's button (#3829)
-  ///
-  /// In en, this message translates to:
-  /// **'Revoke'**
-  String get guestPassRevokeAction;
-
   /// what a revoked pass cancelled (#3829)
   ///
   /// In en, this message translates to:

@@ -16076,10 +16076,6 @@
   "@guestPassProblemNoSeat": {
     "description": "#3308 guest passes sold at the desk"
   },
-  "guestPassRevokeAction": "Revoke",
-  "@guestPassRevokeAction": {
-    "description": "the confirmation's button (#3829)"
-  },
   "guestPassRevokeCancelled": "{count, plural, =0{No booking cancelled} one{{count} booking cancelled} other{{count} bookings cancelled}}",
   "@guestPassRevokeCancelled": {
     "description": "what a revoked pass cancelled (#3829)",

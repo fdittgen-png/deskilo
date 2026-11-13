@@ -40,7 +40,7 @@ Future<void> revokeGuestPasses(
         FilledButton(
           key: const ValueKey('guest-pass-revoke-confirm'),
           onPressed: () => Navigator.of(dialog).pop(true),
-          child: Text(l10n.guestPassRevokeAction),
+          child: Text(l10n.badgeRevoke),
         ),
       ],
     ),

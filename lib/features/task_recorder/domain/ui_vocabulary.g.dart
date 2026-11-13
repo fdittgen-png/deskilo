@@ -8486,7 +8486,6 @@ const Set<String> uiLabelKeys = {
   'guestPassProblemHourlyOneDay',
   'guestPassProblemNoOffer',
   'guestPassProblemNoSeat',
-  'guestPassRevokeAction',
   'guestPassRevokeConfirmBody',
   'guestPassRevokeFailed',
   'guestPassRevokeNotDone',

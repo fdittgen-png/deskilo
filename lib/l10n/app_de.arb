@@ -7888,7 +7888,6 @@
   "guestPassProblemHourlyOneDay": "Ein Stundenpass gilt für einen Tag.",
   "guestPassProblemNoOffer": "Wählen Sie einen Pass.",
   "guestPassProblemNoSeat": "Wählen Sie einen Platz.",
-  "guestPassRevokeAction": "Widerrufen",
   "guestPassRevokeCancelled": "{count, plural, =0{Keine Buchung storniert} one{{count} Buchung storniert} other{{count} Buchungen storniert}}",
   "guestPassRevokeConfirmBody": "Ihre noch nicht begonnenen Buchungen werden storniert; bereits begonnene Tage bleiben. Es fließt kein Geld: Korrigieren Sie die Rechnung auf ihrer Seite, per Gutschrift oder Storno.",
   "guestPassRevokeConfirmTitle": "{count, plural, one{{count} Pass widerrufen?} other{Diese {count} Pässe widerrufen?}}",

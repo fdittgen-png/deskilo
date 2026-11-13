@@ -22,10 +22,6 @@
   "@guestPassRevokeConfirmBody": {
     "description": "the confirmation's text (#3829)"
   },
-  "guestPassRevokeAction": "Revoke",
-  "@guestPassRevokeAction": {
-    "description": "the confirmation's button (#3829)"
-  },
   "guestPassRevoked": "Revoked",
   "@guestPassRevoked": {
     "description": "a revoked pass's state in the records table (#3829)"

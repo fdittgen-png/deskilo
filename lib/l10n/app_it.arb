@@ -7888,7 +7888,6 @@
   "guestPassProblemHourlyOneDay": "Un pass orario vale per un solo giorno.",
   "guestPassProblemNoOffer": "Scelga un pass.",
   "guestPassProblemNoSeat": "Scelga un posto.",
-  "guestPassRevokeAction": "Revoca",
   "guestPassRevokeCancelled": "{count, plural, =0{Nessuna prenotazione annullata} one{{count} prenotazione annullata} other{{count} prenotazioni annullate}}",
   "guestPassRevokeConfirmBody": "Le prenotazioni non ancora iniziate vengono annullate; i giorni già iniziati restano. Nessun denaro si muove: correggi la fattura nella sua pagina, con una nota di credito o un annullamento.",
   "guestPassRevokeConfirmTitle": "{count, plural, one{Revocare {count} pass?} other{Revocare questi {count} pass?}}",
