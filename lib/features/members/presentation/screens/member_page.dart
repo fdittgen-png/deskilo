@@ -41,9 +41,13 @@ import '../widgets/member_page_context.dart';
 /// read-only profile sheet of the directory and the flat seventeen-row
 /// action sheet of Members & plans.
 class MemberPage extends ConsumerWidget {
-  const MemberPage({super.key, required this.memberId});
+  const MemberPage({super.key, required this.memberId, this.framed = true});
 
   final String memberId;
+
+  /// #3618 — false when the page is a tab of the member beside the members'
+  /// table: its sections without their own app bar.
+  final bool framed;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,15 +66,20 @@ class MemberPage extends ConsumerWidget {
       );
     }
     final name = ref.watch(memberNamesProvider).value?[memberId] ?? '';
-    return _MemberPageBody(member: member, name: name);
+    return _MemberPageBody(member: member, name: name, framed: framed);
   }
 }
 
 class _MemberPageBody extends ConsumerWidget {
-  const _MemberPageBody({required this.member, required this.name});
+  const _MemberPageBody({
+    required this.member,
+    required this.name,
+    required this.framed,
+  });
 
   final Member member;
   final String name;
+  final bool framed;
 
   /// What the cards decide on, gathered once: who looks, what they may
   /// do, and which features are on.
@@ -235,22 +244,7 @@ class _MemberPageBody extends ConsumerWidget {
       (l10n.memberPageGroupAccess, access),
     ].where((g) => g.$2.isNotEmpty).toList();
 
-    return Scaffold(
-      key: const ValueKey('member-page'),
-      appBar: AppBar(
-        title: PageTitle(name, overflow: TextOverflow.ellipsis),
-        actions: [
-          if (canMessage)
-            IconButton(
-              key: const ValueKey('member-page-message'),
-              icon: const Icon(Icons.chat_bubble_outline),
-              tooltip: l10n.messagesTitle,
-              onPressed: () =>
-                  openDirectConversation(context, ref, memberId: member.id),
-            ),
-        ],
-      ),
-      body: _MemberSections(
+    final body = _MemberSections(
         sections: [
           _MemberSection(
             'profile',
@@ -282,7 +276,8 @@ class _MemberPageBody extends ConsumerWidget {
               ],
               // Role-gated INSIDE each card, as on the old sheet.
               MemberContactCard(member: member, isSelf: isSelf),
-              MemberMoneyCard(memberId: member.id, isSelf: isSelf),
+              // Beside the members' table the money is its own tab.
+              if (framed) MemberMoneyCard(memberId: member.id, isSelf: isSelf),
             ],
           ),
           // #2085 — the one place a member is given a role.
@@ -307,7 +302,24 @@ class _MemberPageBody extends ConsumerWidget {
               showHeading: false,
             ),
         ],
+      );
+    if (!framed) return body;
+    return Scaffold(
+      key: const ValueKey('member-page'),
+      appBar: AppBar(
+        title: PageTitle(name, overflow: TextOverflow.ellipsis),
+        actions: [
+          if (canMessage)
+            IconButton(
+              key: const ValueKey('member-page-message'),
+              icon: const Icon(Icons.chat_bubble_outline),
+              tooltip: l10n.messagesTitle,
+              onPressed: () =>
+                  openDirectConversation(context, ref, memberId: member.id),
+            ),
+        ],
       ),
+      body: body,
     );
   }
 
