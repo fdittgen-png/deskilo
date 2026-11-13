@@ -5446,8 +5446,6 @@ const Set<String> uiCommandMessages = {
   'e-invoice receipt request failed',
   'e-invoice resolution failed',
   'e-invoice submission failed',
-  'e-invoice test document failed',
-  'e-invoice test verdict request failed',
   'eligibility decision failed',
   'eligibility request failed',
   'equipment decision failed',
