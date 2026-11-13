@@ -241,4 +241,38 @@ void main() {
         d.split('|').where((p) => !p.startsWith('$id:')).join('|');
     expect(without(digest(a), 'ch'), without(before, 'ch'));
   });
+
+  test('the opening persona is in Germany, Zurich and Milan, each with data', () async {
+    final f = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
+    expect(f.activeMemberId, 'member-1', reason: 'Ada, the owner, opens the Demo');
+    final listed = f.workspaces.workspaces.map((w) => w.id).toSet();
+    expect(listed, containsAll(['ws-2', 'ws-5', 'ws-6']));
+    // Her memberships, as My places lists them: the owner of Zurich and of
+    // Milan (every Demo business names her its owner), a co-owner in
+    // Leipzig, where she works half-time.
+    final mine = {
+      for (final m in f.workspaces.extraMyMemberships) m.workspaceId: m,
+    };
+    expect(mine['ws-5']!.isOwner, isTrue);
+    expect(mine['ws-6']!.isOwner, isTrue);
+    expect(mine['ws-2']!.status, MemberStatus.active);
+    expect(mine['ws-2']!.coOwner, CoOwnerStatus.active);
+    final currencyOf = {'ws-2': 'EUR', 'ws-5': 'CHF', 'ws-6': 'EUR'};
+    final spaces = {
+      'ws-2': (f.secondSpace.floorPlan, f.secondSpace.reservations, f.secondSpace.money),
+      'ws-5': (f.zurich.floorPlan, f.zurich.reservations, f.zurich.money),
+      'ws-6': (f.milan.floorPlan, f.milan.reservations, f.milan.money),
+    };
+    for (final e in spaces.entries) {
+      final (plan, bookings, money) = e.value;
+      expect(plan.seats, isNotEmpty, reason: e.key);
+      expect(bookings.reservations.any((r) => r.memberId == 'member-1'), isTrue, reason: e.key);
+      final own = money.invoices.where((i) => i.memberId == 'member-1').toList();
+      expect(own, isNotEmpty, reason: e.key);
+      expect({for (final i in own) i.currency}, {currencyOf[e.key]});
+    }
+    // Her documents in francs and euros are two figures, never one.
+    final owed = demoFinanceOverview(f).owedByCurrency;
+    expect(owed.keys, containsAll(['EUR', 'CHF']));
+  });
 }
