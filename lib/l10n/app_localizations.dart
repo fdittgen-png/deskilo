@@ -33528,6 +33528,12 @@ abstract class AppLocalizations {
   /// **'Reminded ×{count}'**
   String moneyRemindedTimes(int count);
 
+  /// #3627 Caption above the report actions at the desk: the month they are made for.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports for {month}'**
+  String moneyReportsForMonth(String month);
+
   /// Finance/settings UX + workspace language (#486)
   ///
   /// In en, this message translates to:

@@ -21059,6 +21059,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String moneyReportsForMonth(String month) {
+    return 'Rapports de $month';
+  }
+
+  @override
   String get moneySectionDocuments => 'Documents';
 
   @override

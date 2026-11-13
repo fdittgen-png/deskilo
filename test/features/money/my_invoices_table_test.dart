@@ -56,4 +56,11 @@ void main() {
     await face(tester, MoneyFace.usage);
     expect(find.byType(UsageTable), findsOneWidget);
   });
+
+  testWidgets('at the desk the Documents face names the month its reports are '
+      'made for', (tester) async {
+    await pumpFaces(tester, size: const Size(1440, 1000));
+    await face(tester, MoneyFace.documents);
+    expect(find.byKey(const ValueKey('money-reports-month')), findsOneWidget);
+  });
 }

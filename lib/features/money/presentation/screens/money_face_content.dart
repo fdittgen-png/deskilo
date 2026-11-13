@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
@@ -283,7 +285,18 @@ class MoneyFaceContent {
       MoneyFace.invoices: [financesLink()],
       MoneyFace.usage: const [],
       MoneyFace.documents: [
+        // #3627 — at the desk the reports are a tool row that names the
+        // month they are made for (the month in the address).
+        if (_atDesk)
+          Text(
+            _l10n.moneyReportsForMonth(
+              appFormatOf(context).dates(DateShape.monthYear).format(ops.month),
+            ),
+            key: const ValueKey('money-reports-month'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
         DocumentsFaceActions(
+          inRow: _atDesk,
           onAgreement: reportsOn ? () => ops.memberDoc('agreement') : null,
           onPaymentsReport: reportsOn ? () => ops.memberDoc('payments') : null,
           onUsageReport: usageReportOn ? () => ops.memberDoc('usage') : null,

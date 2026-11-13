@@ -21013,6 +21013,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String moneyReportsForMonth(String month) {
+    return 'Berichte für $month';
+  }
+
+  @override
   String get moneySectionDocuments => 'Dokumente';
 
   @override

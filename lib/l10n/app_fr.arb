@@ -12694,6 +12694,7 @@
   "moneyPaymentPeriodLabel": "S’applique à",
   "moneyRecordPayment": "Enregistrer un paiement",
   "moneyRemindedTimes": "Relancée ×{count}",
+  "moneyReportsForMonth": "Rapports de {month}",
   "moneySectionDocuments": "Documents",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"

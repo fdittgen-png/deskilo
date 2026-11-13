@@ -12694,6 +12694,7 @@
   "moneyPaymentPeriodLabel": "Gilt für",
   "moneyRecordPayment": "Zahlung erfassen",
   "moneyRemindedTimes": "Gemahnt ×{count}",
+  "moneyReportsForMonth": "Berichte für {month}",
   "moneySectionDocuments": "Dokumente",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"

@@ -2,5 +2,6 @@
   "@@locale": "fr",
   "recordedPaymentsColMatched": "Rapproché le",
   "statementDeskColLine": "Ligne",
-  "usageColBilled": "Facturé"
+  "usageColBilled": "Facturé",
+  "moneyReportsForMonth": "Rapports de {month}"
 }

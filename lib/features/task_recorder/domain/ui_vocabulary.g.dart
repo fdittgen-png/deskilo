@@ -2298,6 +2298,7 @@ const Set<String> uiKeys = {
   'money-overdue-banner',
   'money-overdue-pay',
   'money-record-payment',
+  'money-reports-month',
   'money-submit-expense',
   'money-submit-payment',
   'money-submit-payment-2',
