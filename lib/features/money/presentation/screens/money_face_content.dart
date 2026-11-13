@@ -20,6 +20,7 @@ import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
 import '../widgets/my_finances_link_card.dart';
 import '../widgets/my_invoices_list.dart';
+import '../widgets/my_invoices_table.dart';
 import '../widgets/negotiation_card.dart';
 import '../widgets/statement_desk.dart';
 import '../widgets/usage_face.dart';
@@ -62,6 +63,15 @@ class MoneyFaceContent {
       MoneyFace.statement: StatementDesk(
         statement: statement,
         currencyCode: data.currencyCode,
+      ),
+    if (_atDesk && data.member != null)
+      MoneyFace.invoices: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (actions.hasWorkspaceTools)
+            MoneyWorkspaceTools(actions: actions.workspaceTools),
+          Expanded(child: MyInvoicesTable(memberId: data.member!.id)),
+        ],
       ),
   };
 

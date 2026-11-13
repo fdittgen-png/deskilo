@@ -65,11 +65,7 @@ class MyInvoicesList extends ConsumerWidget {
             ..invalidate(invoiceRemindersProvider),
         );
     if (standIn != null) return standIn;
-    final all = invoicesAsync.requireValue;
-    final invoices = all
-        .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
-        .toList()
-      ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+    final invoices = myInvoicesOf(invoicesAsync.requireValue, memberId, fold: fold);
     final matches = matchesAsync.requireValue;
     final reminders = remindersAsync.requireValue;
     final now = ref.watch(clockProvider).now();
@@ -136,7 +132,7 @@ class MyInvoicesList extends ConsumerWidget {
     final card = Card(
       child: ListTile(
         key: ValueKey('my-invoice-${invoice.id}'),
-        onTap: () => _open(context, ref, invoice, match),
+        onTap: () => openMyInvoice(context, ref, invoice, match),
         title: Wrap(
           spacing: AppSpacing.sm,
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -215,7 +211,17 @@ class MyInvoicesList extends ConsumerWidget {
           InvoiceJourneyBar(journey: journey),
         ];
 
-  Future<void> _open(
+}
+
+/// #3627 — my invoices as the Invoices face lists them: issued to [memberId],
+/// voided ones and (with [fold]) regrouped sources left out, newest first.
+List<Invoice> myInvoicesOf(List<Invoice> all, String memberId, {required bool fold}) => all
+    .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
+    .toList()
+  ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+
+/// Opens [invoice] in the detail sheet the register uses, as its payer.
+Future<void> openMyInvoice(
     BuildContext context,
     WidgetRef ref,
     Invoice invoice,
@@ -244,4 +250,3 @@ class MyInvoicesList extends ConsumerWidget {
       ),
     );
   }
-}
