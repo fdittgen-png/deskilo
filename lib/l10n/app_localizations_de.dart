@@ -11717,6 +11717,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureWorkspaceVocabularyTitle => 'Wortwahl des Arbeitsbereichs';
 
   @override
+  String get featuresColDepends => 'Hängt ab von';
+
+  @override
+  String get featuresColDoes => 'Was sie tut';
+
+  @override
+  String get featuresColFeature => 'Funktion';
+
+  @override
+  String get featuresColState => 'An oder aus';
+
+  @override
   String get featuresFilterChanged => 'Geändert';
 
   @override

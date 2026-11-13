@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_tab_bar.dart';
+import '../../../../core/ui/kit/sections_beside.dart';
 import '../../../../core/ui/section_in_view.dart';
 
 class SettingsTaskSection extends StatelessWidget {
@@ -78,6 +80,19 @@ class _SettingsTaskPaneState extends State<SettingsTaskPane> {
       _controllers.putIfAbsent(section.id, ExpansibleController.new);
       _targets.putIfAbsent(section.id, GlobalKey.new);
       _focus.putIfAbsent(section.id, () => FocusNode(skipTraversal: true));
+    }
+    // #3619 — at the desk the sections are listed beside the one shown.
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return AddressedSections(
+        id: 'settings-${widget.pane}',
+        header: [for (final c in widget.children) if (c is! SettingsTaskSection) c],
+        sections: [for (final s in sections) BesideSection(id: s.id, title: s.title,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+            Text(s.title, style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: AppSpacing.md),
+            ...s.children,
+          ]))],
+      );
     }
     return Column(children: [
       // #2313 — the shared section bar: one row, never wrapped.

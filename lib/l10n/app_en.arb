@@ -15256,6 +15256,22 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Depends on",
+  "@featuresColDepends": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColDoes": "What it does",
+  "@featuresColDoes": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColFeature": "Feature",
+  "@featuresColFeature": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColState": "On or off",
+  "@featuresColState": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
   "featuresFilterChanged": "Changed",
   "@featuresFilterChanged": {
     "description": "#1190 filter chip: only the features this workspace moved off their default"
