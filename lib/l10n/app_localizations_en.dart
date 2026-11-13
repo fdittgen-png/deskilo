@@ -20234,6 +20234,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberVatTreatmentLabel => 'VAT treatment';
 
   @override
+  String membersBulkGiveRole(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return 'Give a role to $_temp0';
+  }
+
+  @override
   String membersBulkPause(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20293,7 +20304,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get membersChipManaged => 'Managed profiles';
+
+  @override
   String get membersChipOpen => 'With an open amount';
+
+  @override
+  String get membersChipUsers => 'Can sign in';
 
   @override
   String get membersColEmail => 'E-mail';
@@ -20316,6 +20333,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get membersFeeUnavailable =>
       'Unavailable: no fee band covers this share';
+
+  @override
+  String get membersGiveRoleChoose =>
+      'Which role? Each member is checked on their own; one who cannot be given it is listed with the reason.';
 
   @override
   String get membersInvite => 'Invite a member';
@@ -20359,6 +20380,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get membersPlansTitle => 'Subscriptions and plans';
+
+  @override
+  String get membersRoleGiven => 'Role given';
+
+  @override
+  String get membersRoleHeld => 'Already holds this role';
 
   @override
   String get membersTabBookings => 'Bookings';

@@ -20431,6 +20431,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberVatTreatmentLabel => 'USt-Behandlung';
 
   @override
+  String membersBulkGiveRole(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitgliedern',
+      one: '1 Mitglied',
+    );
+    return '$_temp0 eine Rolle geben';
+  }
+
+  @override
   String membersBulkPause(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20490,7 +20501,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get membersChipManaged => 'Verwaltete Profile';
+
+  @override
   String get membersChipOpen => 'Mit offenem Betrag';
+
+  @override
+  String get membersChipUsers => 'Können sich anmelden';
 
   @override
   String get membersColEmail => 'E-Mail';
@@ -20513,6 +20530,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get membersFeeUnavailable =>
       'Nicht verfügbar: Kein Gebührenband deckt diesen Anteil ab';
+
+  @override
+  String get membersGiveRoleChoose =>
+      'Welche Rolle? Jedes Mitglied wird einzeln geprüft; wer sie nicht erhalten kann, wird mit dem Grund aufgeführt.';
 
   @override
   String get membersInvite => 'Mitglied einladen';
@@ -20557,6 +20578,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get membersPlansTitle => 'Abos und Tarife';
+
+  @override
+  String get membersRoleGiven => 'Rolle vergeben';
+
+  @override
+  String get membersRoleHeld => 'Hat diese Rolle bereits';
 
   @override
   String get membersTabBookings => 'Buchungen';

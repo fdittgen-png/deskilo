@@ -32670,6 +32670,12 @@ abstract class AppLocalizations {
   /// **'VAT treatment'**
   String get memberVatTreatmentLabel;
 
+  /// #3628 users on the members table: bulk action
+  ///
+  /// In en, this message translates to:
+  /// **'Give a role to {count, plural, one{1 member} other{{count} members}}'**
+  String membersBulkGiveRole(int count);
+
   /// #3618 members at the desk: bulk action
   ///
   /// In en, this message translates to:
@@ -32706,11 +32712,23 @@ abstract class AppLocalizations {
   /// **'Applies from today, {date}. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.'**
   String membersChangeFromToday(String date);
 
+  /// #3628 users on the members table: chip: profiles an administrator runs (no account yet)
+  ///
+  /// In en, this message translates to:
+  /// **'Managed profiles'**
+  String get membersChipManaged;
+
   /// #3618 members at the desk: chip
   ///
   /// In en, this message translates to:
   /// **'With an open amount'**
   String get membersChipOpen;
+
+  /// #3628 users on the members table: chip: people who can sign in (not a managed profile, kiosk or guest)
+  ///
+  /// In en, this message translates to:
+  /// **'Can sign in'**
+  String get membersChipUsers;
 
   /// #3618 members at the desk: column, only for who may see e-mails
   ///
@@ -32753,6 +32771,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unavailable: no fee band covers this share'**
   String get membersFeeUnavailable;
+
+  /// #3628 users on the members table: the task asks which role
+  ///
+  /// In en, this message translates to:
+  /// **'Which role? Each member is checked on their own; one who cannot be given it is listed with the reason.'**
+  String get membersGiveRoleChoose;
 
   /// App-bar action on the members screen linking to the workspace ID & QR invite surface (#195)
   ///
@@ -32831,6 +32855,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subscriptions and plans'**
   String get membersPlansTitle;
+
+  /// #3628 users on the members table: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Role given'**
+  String get membersRoleGiven;
+
+  /// #3628 users on the members table: one member's outcome
+  ///
+  /// In en, this message translates to:
+  /// **'Already holds this role'**
+  String get membersRoleHeld;
 
   /// #3618 members at the desk: member tab
   ///

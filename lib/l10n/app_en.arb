@@ -26624,6 +26624,15 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkGiveRole": "Give a role to {count, plural, one{1 member} other{{count} members}}",
+  "@membersBulkGiveRole": {
+    "description": "#3628 users on the members table: bulk action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "membersBulkPause": "Pause {count, plural, one{1 member} other{{count} members}}",
   "@membersBulkPause": {
     "description": "#3618 members at the desk: bulk action",
@@ -26676,9 +26685,17 @@
       }
     }
   },
+  "membersChipManaged": "Managed profiles",
+  "@membersChipManaged": {
+    "description": "#3628 users on the members table: chip: profiles an administrator runs (no account yet)"
+  },
   "membersChipOpen": "With an open amount",
   "@membersChipOpen": {
     "description": "#3618 members at the desk: chip"
+  },
+  "membersChipUsers": "Can sign in",
+  "@membersChipUsers": {
+    "description": "#3628 users on the members table: chip: people who can sign in (not a managed profile, kiosk or guest)"
   },
   "membersColEmail": "E-mail",
   "@membersColEmail": {
@@ -26707,6 +26724,10 @@
   "membersFeeUnavailable": "Unavailable: no fee band covers this share",
   "@membersFeeUnavailable": {
     "description": "#3618 members at the desk: plan fee when no fee band covers the share"
+  },
+  "membersGiveRoleChoose": "Which role? Each member is checked on their own; one who cannot be given it is listed with the reason.",
+  "@membersGiveRoleChoose": {
+    "description": "#3628 users on the members table: the task asks which role"
   },
   "membersInvite": "Invite a member",
   "@membersInvite": {
@@ -26764,6 +26785,14 @@
   "membersPlansTitle": "Subscriptions and plans",
   "@membersPlansTitle": {
     "description": "#3618 members at the desk: plans page title and its door"
+  },
+  "membersRoleGiven": "Role given",
+  "@membersRoleGiven": {
+    "description": "#3628 users on the members table: one member's outcome"
+  },
+  "membersRoleHeld": "Already holds this role",
+  "@membersRoleHeld": {
+    "description": "#3628 users on the members table: one member's outcome"
   },
   "membersTabBookings": "Bookings",
   "@membersTabBookings": {
