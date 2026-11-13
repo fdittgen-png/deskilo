@@ -1,0 +1,48 @@
+{
+  "workspace": "Test Space",
+  "workspace_address": "1 place du Marché\n69001 Lyon",
+  "client_name": "Ana Martin",
+  "client_address": "12 rue des Lilas\n75011 Paris",
+  "from": "1. Okt. 2026",
+  "to": "31. Okt. 2026",
+  "issued": "2. Nov. 2026",
+  "issued_by": "Camille Owner",
+  "currency": "JPY",
+  "reconstructed": true,
+  "history_from": "12. Okt. 2026",
+  "opening": "20 ¥",
+  "opening_owed_by": "customer",
+  "rows": [
+    {
+      "on": "3. Okt. 2026",
+      "what": "invoice",
+      "label": "F-2026-0110",
+      "own": "",
+      "amount": "100 ¥"
+    },
+    {
+      "on": "28. Okt. 2026",
+      "what": "payment",
+      "label": "Virement octobre",
+      "own": "",
+      "amount": "-100 ¥"
+    },
+    {
+      "on": "29. Okt. 2026",
+      "what": "allocated",
+      "label": "Virement octobre",
+      "own": "28. Okt. 2026",
+      "amount": "100 ¥"
+    },
+    {
+      "on": "30. Okt. 2026",
+      "what": "paid",
+      "label": "F-2026-0110",
+      "own": "28. Okt. 2026",
+      "amount": "-100 ¥"
+    }
+  ],
+  "no_movement": false,
+  "closing": "20 ¥",
+  "closing_owed_by": "customer"
+}

@@ -4307,6 +4307,8 @@
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
+  "customerStatementClosing": "Saldo final",
+  "customerStatementDatedApart": "con fecha {day}",
   "customerStatementDue": "vence el {date}",
   "@customerStatementDue": {
     "description": "#3673 customer statement: customerStatementDue",
@@ -4316,10 +4318,24 @@
       }
     }
   },
+  "customerStatementMoveAllocated": "Pago imputado",
+  "customerStatementMoveApplied": "Crédito aplicado a una factura",
+  "customerStatementMoveCredit": "Crédito",
+  "customerStatementMoveCreditNote": "Nota de abono",
+  "customerStatementMoveFreed": "Pago liberado",
+  "customerStatementMoveMoved": "Crédito trasladado a otra cuenta",
+  "customerStatementMovePaid": "Pagada",
+  "customerStatementMovePayment": "Pago recibido",
+  "customerStatementMoveReopened": "Abierta de nuevo",
+  "customerStatementMoveSettled": "Recogida en una factura posterior",
+  "customerStatementMoveVoided": "Anulada",
+  "customerStatementMoveWrittenOff": "Resto cancelado",
+  "customerStatementNoMovement": "Ningún movimiento en este periodo: el saldo no ha cambiado.",
   "customerStatementNothingOpen": "No hay nada abierto para este cliente: ningún estado de cuenta que imprimir.",
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
   },
+  "customerStatementOpening": "Saldo inicial",
   "customerStatementOwedToYou": "A su favor",
   "@customerStatementOwedToYou": {
     "description": "#3673 customer statement: customerStatementOwedToYou"
@@ -4333,10 +4349,12 @@
       }
     }
   },
+  "customerStatementPeriodRange": "Del {from} al {to}",
   "customerStatementPickCurrency": "¿El estado de cuenta en qué moneda?",
   "@customerStatementPickCurrency": {
     "description": "#3673 customer statement: customerStatementPickCurrency"
   },
+  "customerStatementReconstructed": "Los saldos anteriores al {day} se reconstruyen a partir de los registros actuales.",
   "customerStatementStillDue": "Pendiente",
   "@customerStatementStillDue": {
     "description": "#3673 customer statement: customerStatementStillDue"
@@ -15786,6 +15804,7 @@
   "@reportDocCustomerStatement": {
     "description": "#3673 customer statement: reportDocCustomerStatement"
   },
+  "reportDocCustomerStatementPeriod": "Extracto de un periodo",
   "reportDocGeneralLedger": "Libro mayor",
   "reportDocJournals": "Diarios",
   "reportDocPayments": "Informe de pagos",

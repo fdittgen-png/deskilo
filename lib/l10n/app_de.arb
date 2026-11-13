@@ -4307,6 +4307,8 @@
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
+  "customerStatementClosing": "Schlusssaldo",
+  "customerStatementDatedApart": "vom {day}",
   "customerStatementDue": "fällig {date}",
   "@customerStatementDue": {
     "description": "#3673 customer statement: customerStatementDue",
@@ -4316,10 +4318,24 @@
       }
     }
   },
+  "customerStatementMoveAllocated": "Zahlung zugeordnet",
+  "customerStatementMoveApplied": "Guthaben mit einer Rechnung verrechnet",
+  "customerStatementMoveCredit": "Guthaben",
+  "customerStatementMoveCreditNote": "Gutschrift",
+  "customerStatementMoveFreed": "Zahlung freigegeben",
+  "customerStatementMoveMoved": "Guthaben auf ein anderes Konto übertragen",
+  "customerStatementMovePaid": "Bezahlt",
+  "customerStatementMovePayment": "Zahlung erhalten",
+  "customerStatementMoveReopened": "Wieder offen",
+  "customerStatementMoveSettled": "In eine spätere Rechnung übernommen",
+  "customerStatementMoveVoided": "Storniert",
+  "customerStatementMoveWrittenOff": "Rest abgeschrieben",
+  "customerStatementNoMovement": "Keine Bewegung in diesem Zeitraum: Der Saldo blieb gleich.",
   "customerStatementNothingOpen": "Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.",
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
   },
+  "customerStatementOpening": "Anfangssaldo",
   "customerStatementOwedToYou": "Zu Ihren Gunsten",
   "@customerStatementOwedToYou": {
     "description": "#3673 customer statement: customerStatementOwedToYou"
@@ -4333,10 +4349,12 @@
       }
     }
   },
+  "customerStatementPeriodRange": "Vom {from} bis {to}",
   "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
   "@customerStatementPickCurrency": {
     "description": "#3673 customer statement: customerStatementPickCurrency"
   },
+  "customerStatementReconstructed": "Salden vor dem {day} sind aus den heutigen Aufzeichnungen rekonstruiert.",
   "customerStatementStillDue": "Noch offen",
   "@customerStatementStillDue": {
     "description": "#3673 customer statement: customerStatementStillDue"
@@ -15786,6 +15804,7 @@
   "@reportDocCustomerStatement": {
     "description": "#3673 customer statement: reportDocCustomerStatement"
   },
+  "reportDocCustomerStatementPeriod": "Kontoauszug für einen Zeitraum",
   "reportDocGeneralLedger": "Hauptbuch",
   "reportDocJournals": "Journale",
   "reportDocPayments": "Zahlungsbericht",

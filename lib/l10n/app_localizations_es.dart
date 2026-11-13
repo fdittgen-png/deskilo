@@ -6919,13 +6919,65 @@ class AppLocalizationsEs extends AppLocalizations {
   String get customerStatementBalanceOwed => 'Saldo a su favor';
 
   @override
+  String get customerStatementClosing => 'Saldo final';
+
+  @override
+  String customerStatementDatedApart(String day) {
+    return 'con fecha $day';
+  }
+
+  @override
   String customerStatementDue(String date) {
     return 'vence el $date';
   }
 
   @override
+  String get customerStatementMoveAllocated => 'Pago imputado';
+
+  @override
+  String get customerStatementMoveApplied => 'Crédito aplicado a una factura';
+
+  @override
+  String get customerStatementMoveCredit => 'Crédito';
+
+  @override
+  String get customerStatementMoveCreditNote => 'Nota de abono';
+
+  @override
+  String get customerStatementMoveFreed => 'Pago liberado';
+
+  @override
+  String get customerStatementMoveMoved => 'Crédito trasladado a otra cuenta';
+
+  @override
+  String get customerStatementMovePaid => 'Pagada';
+
+  @override
+  String get customerStatementMovePayment => 'Pago recibido';
+
+  @override
+  String get customerStatementMoveReopened => 'Abierta de nuevo';
+
+  @override
+  String get customerStatementMoveSettled =>
+      'Recogida en una factura posterior';
+
+  @override
+  String get customerStatementMoveVoided => 'Anulada';
+
+  @override
+  String get customerStatementMoveWrittenOff => 'Resto cancelado';
+
+  @override
+  String get customerStatementNoMovement =>
+      'Ningún movimiento en este periodo: el saldo no ha cambiado.';
+
+  @override
   String get customerStatementNothingOpen =>
       'No hay nada abierto para este cliente: ningún estado de cuenta que imprimir.';
+
+  @override
+  String get customerStatementOpening => 'Saldo inicial';
 
   @override
   String get customerStatementOwedToYou => 'A su favor';
@@ -6936,8 +6988,18 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String customerStatementPeriodRange(String from, String to) {
+    return 'Del $from al $to';
+  }
+
+  @override
   String get customerStatementPickCurrency =>
       '¿El estado de cuenta en qué moneda?';
+
+  @override
+  String customerStatementReconstructed(String day) {
+    return 'Los saldos anteriores al $day se reconstruyen a partir de los registros actuales.';
+  }
 
   @override
   String get customerStatementStillDue => 'Pendiente';
@@ -25857,6 +25919,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportDocCustomerStatement => 'Estado de cuenta';
+
+  @override
+  String get reportDocCustomerStatementPeriod => 'Extracto de un periodo';
 
   @override
   String get reportDocGeneralLedger => 'Libro mayor';

@@ -1,0 +1,22 @@
+{
+  "@@locale": "fr",
+  "reportDocCustomerStatementPeriod": "Relevé sur une période",
+  "customerStatementPeriodRange": "Du {from} au {to}",
+  "customerStatementOpening": "Solde d'ouverture",
+  "customerStatementClosing": "Solde de clôture",
+  "customerStatementNoMovement": "Aucun mouvement sur cette période : le solde est resté le même.",
+  "customerStatementReconstructed": "Les soldes antérieurs au {day} sont reconstitués à partir des enregistrements actuels.",
+  "customerStatementDatedApart": "daté du {day}",
+  "customerStatementMoveCreditNote": "Avoir",
+  "customerStatementMoveVoided": "Annulée",
+  "customerStatementMoveSettled": "Reprise dans une facture ultérieure",
+  "customerStatementMoveReopened": "De nouveau ouverte",
+  "customerStatementMoveWrittenOff": "Reste passé en perte",
+  "customerStatementMovePaid": "Payée",
+  "customerStatementMovePayment": "Paiement reçu",
+  "customerStatementMoveCredit": "Crédit",
+  "customerStatementMoveMoved": "Crédit transféré vers un autre compte",
+  "customerStatementMoveApplied": "Crédit imputé sur une facture",
+  "customerStatementMoveFreed": "Paiement libéré",
+  "customerStatementMoveAllocated": "Paiement imputé"
+}

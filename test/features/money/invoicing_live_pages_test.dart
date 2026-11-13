@@ -69,6 +69,15 @@ final _annaPaid = UnassignedMoney(
 class _Statements implements CustomerStatementReader {
   final asked = <DateTime>[];
 
+  // #3839 — the page reads the snapshot of a day, never a period.
+  @override
+  Future<CustomerStatementPeriod> period(
+    String workspaceId,
+    String memberId,
+    DateTime from,
+    DateTime to,
+  ) async => CustomerStatementPeriod(memberId: memberId, from: from, to: to);
+
   @override
   Future<CustomerStatement> read(
     String workspaceId,
