@@ -69,6 +69,7 @@ const Set<String> uiKeys = {
   'accounting-hub-vat',
   'accounting-hub-vat-declarations',
   'accounting-sign-in-back',
+  'accounting-sign-in-bar-back',
   'accounting-sign-in-completing',
   'accounting-status',
   'accounting-status-bank',

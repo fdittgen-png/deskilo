@@ -4,8 +4,8 @@
 // Held in memory only: the router takes it out of the address at once, so
 // the address left (`/accounting/connected`) can wait through a sign-in
 // like any other, and the page that completes it uses it once.
-import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meta/meta.dart';
 
 import '../../../core/session/session_source.dart';
 import '../../../core/time/clock.dart';
