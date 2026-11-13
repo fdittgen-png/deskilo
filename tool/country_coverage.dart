@@ -17,6 +17,8 @@
 //    when one of them has a count above zero. A literal on a continuation line
 //    has no record of its own; its executable span is the FIRST line of the
 //    statement, switch case or switch-expression arm that holds it.
+//    Inside a function, method or getter body with no statement above it (a
+//    multi-line `=>`), the span is the declaration's name line.
 //  * A literal with no record on either is not executable (a `const` set, an
 //    enum argument): it carries no coverage and is not reported.
 //  * A changed file with no `SF:` record at all was never loaded by a test:
@@ -39,7 +41,15 @@ Map<String, Set<int>> changedLines(String diff) {
   String? path;
   for (final line in diff.split('\n')) {
     if (line.startsWith('+++ ')) {
-      final name = line.substring(4).trim();
+      // git quotes a path with a control character or a quote; a space or a
+      // non-ASCII character comes through when core.quotePath is false.
+      var name = line.substring(4).trim();
+      if (name.length >= 2 && name.startsWith('"') && name.endsWith('"')) {
+        name = name.substring(1, name.length - 1).replaceAllMapped(
+          RegExp(r'\\(.)'),
+          (m) => m.group(1)!,
+        );
+      }
       path = name == '/dev/null' ? null : name.replaceFirst(RegExp(r'^b/'), '');
     } else if (line.startsWith('@@') && path != null) {
       final m = RegExp(r'\+(\d+)(?:,(\d+))?').firstMatch(line);
@@ -151,7 +161,7 @@ int run(List<String> args, {String? workingDirectory, StringSink? out}) {
     line('not measured: unusable coverage');
     return 1;
   }
-  final diff = git(['diff', '--no-ext-diff', '-M', '-U0', base, candidate, '--', 'lib']);
+  final diff = git(['-c', 'core.quotePath=false', 'diff', '--no-ext-diff', '-M', '-U0', base, candidate, '--', 'lib']);
   if (diff.exitCode != 0) {
     o.writeln('::error::the diff $base..$candidate cannot be read: ${diff.stderr}');
     line('not measured: no diff');

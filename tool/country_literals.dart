@@ -27,7 +27,9 @@ final Set<String> isoCountryCodes = _iso.split(' ').toSet();
 
 /// One country-code literal. [line] and [endLine] are its own lines (1-based);
 /// [anchorLine] is the first line of the statement (or switch case, or switch
-/// expression arm) that holds it: where the coverage tool records a hit for a
+/// expression arm) that holds it, or the declaration line of the function body
+/// that holds it; null for a field, top-level or default-value initializer:
+/// where the coverage tool records a hit for a
 /// literal on a continuation line that has no record of its own.
 class CountryLiteral {
   const CountryLiteral(this.line, this.endLine, this.anchorLine);
@@ -43,23 +45,37 @@ class _Collector extends RecursiveAstVisitor<void> {
 
   int _line(int offset) => unit.lineInfo.getLocation(offset).lineNumber;
 
+  /// The line coverage records for [node]: the first line of the statement,
+  /// switch case or switch-expression arm that holds it; else, inside a
+  /// function, method, getter or constructor BODY (a multi-line `=>`), the
+  /// declaration's name line. A field or top-level initializer and a default
+  /// parameter value have none: they run at load time or not at all, and stay
+  /// "not executable" for the coverage check.
+  int? _anchor(AstNode node) {
+    var sawBody = false;
+    for (AstNode? up = node.parent; up != null; up = up.parent) {
+      if (up is Statement || up is SwitchMember || up is SwitchExpressionCase) {
+        return _line(up.offset);
+      }
+      if (up is FunctionBody) sawBody = true;
+      if (sawBody) {
+        if (up is MethodDeclaration) return _line(up.name.offset);
+        if (up is FunctionDeclaration) return _line(up.name.offset);
+        if (up is ConstructorDeclaration) {
+          return _line(up.firstTokenAfterCommentAndMetadata.offset);
+        }
+      }
+      if (up is FieldDeclaration || up is TopLevelVariableDeclaration) {
+        return null;
+      }
+    }
+    return null;
+  }
+
   @override
   void visitSimpleStringLiteral(SimpleStringLiteral node) {
     if (isoCountryCodes.contains(node.value)) {
-      AstNode? up = node.parent;
-      while (up != null &&
-          up is! Statement &&
-          up is! SwitchMember &&
-          up is! SwitchExpressionCase) {
-        up = up.parent;
-      }
-      found.add(
-        CountryLiteral(
-          _line(node.offset),
-          _line(node.end),
-          up == null ? null : _line(up.offset),
-        ),
-      );
+      found.add(CountryLiteral(_line(node.offset), _line(node.end), _anchor(node)));
     }
     super.visitSimpleStringLiteral(node);
   }

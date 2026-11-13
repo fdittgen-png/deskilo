@@ -16,7 +16,8 @@ name: Status · Edge function drift
 #                 so this run ends RED without one and says why in its summary.
 #
 # Needs, set by the repository owner (nothing here creates them):
-#   secret    SUPABASE_ACCESS_TOKEN       a token that can read the dev project
+#   secret    SUPABASE_ACCESS_TOKEN       the Supabase access token (the one the deploy workflow
+#                                 uses; see the owner option in the docs)
 #   secret    SUPABASE_DEV_PROJECT_REF    the dev project's ref
 #   variable  EDGE_DRIFT_EXPECTED_REF     the same ref, as a repository variable:
 #             a ref typed into the dispatch input (a production ref pasted by
@@ -60,15 +61,20 @@ jobs:
           cache: true
       - run: flutter pub get
 
-      # The token reaches only this step, as an environment variable the tool
-      # reads and never prints; the log and the summary carry slugs and
-      # verify_jwt values, never a response body.
+      # Compiled in a step WITHOUT the token: building runs package code, and
+      # the token must not be in the environment while it does.
+      - name: Compile the comparison
+        run: dart compile exe tool/edge_deployment_drift.dart -o "$RUNNER_TEMP/edge_drift"
+
+      # The token reaches only this step, as an environment variable the
+      # compiled binary reads and never prints; the log and the summary carry
+      # slugs and verify_jwt values, never a response body.
       - name: Compare the dev project with the repository
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           REF: ${{ inputs.ref != '' && inputs.ref || secrets.SUPABASE_DEV_PROJECT_REF }}
           EXPECTED_REF: ${{ vars.EDGE_DRIFT_EXPECTED_REF }}
         run: >
-          dart run tool/edge_deployment_drift.dart
+          "$RUNNER_TEMP/edge_drift"
           --ref "$REF" --expected-ref "$EXPECTED_REF"
           --summary "$GITHUB_STEP_SUMMARY"

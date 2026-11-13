@@ -169,7 +169,7 @@ Future<int> run(
   if (token.isEmpty) {
     return notVerified(
       'SUPABASE_ACCESS_TOKEN is not set: nothing was compared. Set the '
-      'repository secret (a read-capable token) to run this check',
+      'repository secret to run this check',
     );
   }
   if (ref.isEmpty) {

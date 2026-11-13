@@ -186,7 +186,13 @@ void main() {
     final withToken = steps.where((s) => '$s'.contains('secrets.SUPABASE_ACCESS_TOKEN'));
     expect(withToken, hasLength(1));
     final run = '${withToken.single['run']}';
-    expect(run, contains('tool/edge_deployment_drift.dart'));
+    expect(run, contains('edge_drift'));
+    final all = steps.map((st) => '$st').toList();
+    final compile = steps.singleWhere((st) => '${st['run']}'.contains('dart compile exe'));
+    expect('$compile', isNot(contains('SUPABASE_ACCESS_TOKEN')),
+        reason: 'compiling runs package code: no token in that step');
+    expect(steps.indexOf(compile), lessThan(steps.indexOf(withToken.single)));
+    expect(all.where((t) => t.contains('dart run')), isEmpty);
     expect(run, contains(r'"$EXPECTED_REF"'));
     expect(text, isNot(contains('pull_request')));
     expect(text, isNot(contains('if: ')),

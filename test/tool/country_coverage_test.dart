@@ -127,6 +127,37 @@ void main() {
     expect(warm.code, 0, reason: warm.out);
   });
 
+  test('a literal in a multi-line => getter takes the declaration line', () {
+    const getter =
+        "bool get isItaly =>\n    _c ==\n        'IT';\nString _c = '';\n";
+    final base = _commit({'lib/a.dart': 'String _c = "";\n'});
+    _commit({'lib/a.dart': getter});
+    // the literal is on line 3, with no record; the declaration is line 1
+    final cold = _check(base, _lcov({'lib/a.dart': {1: 0, 4: 1}}));
+    expect(cold.code, 1, reason: cold.out);
+    expect(cold.out, contains('line=3'));
+    final warm = _check(base, _lcov({'lib/a.dart': {1: 7, 4: 1}}));
+    expect(warm.code, 0, reason: warm.out);
+  });
+
+  test('a top-level const map and a default value stay not executable', () {
+    final base = _commit({'lib/a.dart': before});
+    _commit({
+      'lib/a.dart':
+          "const _names = {\n  'IT': 'Italy',\n};\nvoid g({String c =\n    'FR'}) {}\n$before",
+    });
+    final r = _check(base, _lcov({'lib/a.dart': {6: 1, 7: 1}}));
+    expect(r.code, 0, reason: r.out);
+  });
+
+  test('a path with a space or a non-ASCII character is read, not skipped', () {
+    final base = _commit({'lib/my file é.dart': before});
+    _commit({'lib/my file é.dart': after});
+    final r = _check(base, _lcov({'lib/my file é.dart': {1: 1, 2: 0, 3: 1}}));
+    expect(r.code, 1, reason: r.out);
+    expect(r.out, contains('line=2'));
+  });
+
   test('a literal no record covers is not executable and is not reported', () {
     final base = _commit({'lib/a.dart': before});
     _commit({'lib/a.dart': "const _only = {'IT'};\n$before"});
