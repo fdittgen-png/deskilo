@@ -81,7 +81,7 @@ DemoSpaces<DemoSpaceStores> buildDemoSpaceStores(DemoFixture fixture) {
   }) => demoPurchaseOrders(fixture, buying, money, currency, seeded: seeded);
   DemoSpaceStores empty(
     DemoPurchasing buying,
-    DemoEmptySpaceStores books,
+    _EmptySpaceStores books,
     FakeMoneyRepository money,
   ) => DemoSpaceStores(
     buying: buying,
@@ -92,19 +92,19 @@ DemoSpaces<DemoSpaceStores> buildDemoSpaceStores(DemoFixture fixture) {
     accounting: books.accounting,
     figures: books.figures,
   );
-  final leipzigBuying = leipzigPurchasing(fixture);
+  final leipzigBuying = _leipzigPurchasing(fixture);
   return (
     home: _home(fixture, orders),
     leipzig: empty(
       leipzigBuying,
-      leipzigStores(fixture, leipzigBuying),
+      _leipzigStores(fixture, leipzigBuying),
       fixture.secondSpace.money,
     ),
     london: _london(fixture, orders),
     newYork: _newYork(fixture, orders),
     zurich: _trade(fixture, demoZurich, fixture.zurich),
     milan: _trade(fixture, demoMilan, fixture.milan),
-    twin: empty(fixture.twin.purchasing, twinStores(fixture), fixture.twin.money),
+    twin: empty(fixture.twin.purchasing, _twinStores(fixture), fixture.twin.money),
   );
 }
 
@@ -274,7 +274,7 @@ DemoSpaceStores _trade(
 
 /// One empty space's books: the profile over its own money, the periods and
 /// the accounting connection that closes them, and its contracts.
-typedef DemoEmptySpaceStores = ({
+typedef _EmptySpaceStores = ({
   FakeBookProfileRepository books,
   FakeBookPeriodRepository periods,
   FakeAccountingConnectionRepository accounting,
@@ -283,7 +283,7 @@ typedef DemoEmptySpaceStores = ({
 
 /// #3302 — the twin's books, lease, assets and rentals are its own, and
 /// empty: nothing of production answers for the development side.
-DemoEmptySpaceStores twinStores(DemoFixture fixture) => _emptyBooks(
+_EmptySpaceStores _twinStores(DemoFixture fixture) => _emptyBooks(
   fixture,
   FakeBookProfileRepository(
     money: fixture.twin.money,
@@ -293,7 +293,7 @@ DemoEmptySpaceStores twinStores(DemoFixture fixture) => _emptyBooks(
 
 /// #3797 — Leipzig's own purchases, empty: a space a few weeks old has
 /// bought nothing yet, and says so.
-DemoPurchasing leipzigPurchasing(DemoFixture fixture) => DemoPurchasing(
+DemoPurchasing _leipzigPurchasing(DemoFixture fixture) => DemoPurchasing(
   suppliers: FakeSupplierRepository(),
   inbox: FakeEInvoiceInboxRepository(),
   purchases: FakePurchaseRepository(
@@ -303,7 +303,7 @@ DemoPurchasing leipzigPurchasing(DemoFixture fixture) => DemoPurchasing(
 );
 
 /// #3866 — Leipzig's own books over its own money and purchases, empty.
-DemoEmptySpaceStores leipzigStores(
+_EmptySpaceStores _leipzigStores(
   DemoFixture fixture,
   DemoPurchasing purchasing,
 ) => _emptyBooks(
@@ -315,7 +315,7 @@ DemoEmptySpaceStores leipzigStores(
   ),
 );
 
-DemoEmptySpaceStores _emptyBooks(
+_EmptySpaceStores _emptyBooks(
   DemoFixture fixture,
   FakeBookProfileRepository profile,
 ) {
