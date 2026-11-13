@@ -18,7 +18,7 @@ const _ref = 'devref';
 
 class _Throwing extends FakeSupabaseManagement {
   _Throwing(this.error);
-  final Object error;
+  final Exception error;
   @override
   Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
     String ref,
@@ -137,7 +137,7 @@ void main() {
     });
 
     test('a pasted ref that is not the dev project is never read', () async {
-      final api = _Throwing(StateError('must not be called'));
+      final api = _Throwing(Exception('must not be called'));
       final (code, out, _) = await go({'SUPABASE_ACCESS_TOKEN': 't'}, api,
           args: ['--ref', 'prodref', '--expected-ref', _ref]);
       expect(code, 3, reason: out);
@@ -146,7 +146,7 @@ void main() {
 
     test('a refused token, a server error and garbage are NOT VERIFIED',
         () async {
-      for (final error in <Object>[
+      for (final error in <Exception>[
         const ManagementApiException(401, 'secret body text'),
         const ManagementApiException(500, 'secret body text'),
         const FormatException('malformed json'),
