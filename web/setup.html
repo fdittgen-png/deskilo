@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <title>DesKilo</title>
 <style>
 :root{--accent:#c1440e;--bg:#faf6f2;--card:#fff;--ink:#241a14;--muted:#7a6f66;--line:#e6ddd4;--ok:#276b2b;--warn:#8a5a00;--err:#a33}
@@ -268,7 +268,7 @@ const restore=stored=>normalize(merged(stored));
 // save runs normalize(), so the screen, the findings, the export and the
 // WebMCP tools always read the same, repaired answers. Drawing a step
 // never writes.
-function save(){S=normalize(S);localStorage.setItem(LS,JSON.stringify(S));document.getElementById('saved').textContent=T('setupSaved')+' '+new Date().toLocaleTimeString(LANG)}
+function save(){S=normalize(S);localStorage.setItem(LS,JSON.stringify(persistable(S)));document.getElementById('saved').textContent=T('setupSaved')+' '+new Date().toLocaleTimeString(LANG)}
 function setMany(changes){const fresh=new Set(),draft={...S};fresh.add(draft);
  for(const[path,val]of changes){const p=path.split('.');let o=draft;
   for(let i=0;i<p.length-1;i++){let c=o[p[i]];if(!fresh.has(c)){c=Array.isArray(c)?c.slice():{...c};o[p[i]]=c;fresh.add(c)}o=c}

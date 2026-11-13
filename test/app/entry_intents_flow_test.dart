@@ -56,7 +56,7 @@ Future<GoRouter> pumpApp(
 
 Future<void> signIn(WidgetTester tester) async {
   await tester.enterText(find.byType(TextFormField).at(0), 'flo@example.com');
-  await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+  await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
   await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
   await tester.pumpAndSettle();
 }

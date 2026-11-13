@@ -2675,7 +2675,7 @@
 <li>Créez un projet Firebase et compilez l'app avec lui. Sans cela, l'app reste limitée aux notifications locales, et un membre voit <strong>Cette version n'a pas de notifications push</strong>. La version préparée pour F-Droid n'a aucun push (<a href="https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status">état F-Droid</a>).</li>
 <li>Pour iPhone et Mac, ajoutez une clé push Apple au projet Firebase.</li>
 <li>Enregistrez la clé de compte de service Firebase comme secret du serveur et déployez la fonction push.</li>
-<li>Sur votre propre installation, faites pointer la ligne <code>push_config</code> de votre base de données vers l'adresse et la clé de votre propre fonction push. Elle est préremplie avec l'adresse de l'installation de référence.</li>
+<li>Sur votre propre installation, le constructeur règle la ligne <code>push_config</code> de votre base de données sur l'adresse et la clé de votre propre fonction push, et le docteur la vérifie. <code>dart run tool/instance.dart push --ref &lt;ref&gt;</code> la règle de nouveau.</li>
 <li>Testez avec deux comptes, comme décrit dans <a href="#setup.notify.test">le plan de test</a>.</li>
 </ol>
 <h4 class="lbl lbl-know">Bon à savoir</h4>

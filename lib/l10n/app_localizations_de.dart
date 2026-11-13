@@ -1431,7 +1431,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get authPasswordLabel => 'Passwort';
 
   @override
-  String get authPasswordTooShort => 'Mindestens 8 Zeichen';
+  String authPasswordTooShort(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Mindestens $length Zeichen',
+      one: 'Mindestens $length Zeichen',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -13817,6 +13825,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceDoctorAttention => 'Handlungsbedarf';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'Codes gelten höchstens eine Stunde, Passwörter haben mindestens $length Zeichen, eine Passwortänderung verlangt erneutes Anmelden',
+      one:
+          'Codes gelten höchstens eine Stunde, Passwörter haben mindestens $length Zeichen, eine Passwortänderung verlangt erneutes Anmelden',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Anmelde-Grundschutz';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'Anmeldecodes gelten länger als eine Stunde';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'Wert  $value\n        Abhilfe: $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Passwörter dürfen kürzer als $length Zeichen sein',
+      one: 'Passwörter dürfen kürzer als $length Zeichen sein',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'Eine Passwortänderung verlangt kein erneutes Anmelden';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Ohne security_invoker liest die View mit den Rechten des Eigentümers und umgeht die Richtlinien der darunterliegenden Tabellen.';
   }
@@ -13947,6 +13995,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Richtlinien';
 
   @override
+  String get instanceDoctorProbePush => 'Push-Konfiguration';
+
+  @override
   String get instanceDoctorProbeRoles => 'Installationsrollen';
 
   @override
@@ -13963,6 +14014,23 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Geschützt';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Abhilfe: dart run tool/instance.dart push --ref <ref>, oder push_config auf dieses Projekt setzen.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Push- und Abrechnungsaufrufe gehen an ein anderes Projekt';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'Push- und Abrechnungsaufrufe gehen an dieses Projekt ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Push-Konfiguration';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {

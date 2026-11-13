@@ -19,28 +19,28 @@ void main() {
   for (final command in ['create', 'install', 'auth']) {
     test('$command sends the explicit target to management', () async {
       final api = FakeSupabaseManagement();
-      final args = [command, ...options, if (command == 'create') ...['--org', 'org-1', '--name', 'test'] else ...['--ref', 'ref1']];
+      final args = [command, ...options, if (command == 'create') ...['--org', 'org-1', '--name', 'test'] else ...['--ref', 'ref1xxxxxxxxxxxxxxxx']];
       expect(await cli.run(args, apiOverride: api, bundleLoader: () => bundle), 0);
-      expect(api.authPatches['ref1']!.single, expected);
+      expect(api.authPatches['ref1xxxxxxxxxxxxxxxx']!.single, expected);
     });
   }
 
   test('doctor checks the same target and offers an exact safe repair command', () async {
     final api = FakeSupabaseManagement()..authConfigValue = InstanceAuthConfig.patch;
     List<DoctorFinding>? findings;
-    await cli.run(['doctor', ...options, '--ref', 'ref1'], apiOverride: api,
+    await cli.run(['doctor', ...options, '--ref', 'ref1xxxxxxxxxxxxxxxx'], apiOverride: api,
         bundleLoader: () => bundle, onDoctorFindings: (value) => findings = value);
     final site = findings!.firstWhere((f) => f.title == 'Site URL is not the app');
     expect(site.detail, contains("--site-url 'https://www.deskilo.org/app/'"));
     api.authConfigValue = expected;
-    await cli.run(['doctor', ...options, '--ref', 'ref1'], apiOverride: api,
+    await cli.run(['doctor', ...options, '--ref', 'ref1xxxxxxxxxxxxxxxx'], apiOverride: api,
         bundleLoader: () => bundle, onDoctorFindings: (value) => findings = value);
     expect(findings!.firstWhere((f) => f.title == 'Site URL').level, DoctorLevel.ok);
   });
 
   test('legacy auth default is retained', () async {
     final api = FakeSupabaseManagement();
-    expect(await cli.run(['auth', '--token', 'dummy', '--ref', 'ref1'], apiOverride: api), 0);
-    expect(api.authPatches['ref1']!.single, InstanceAuthConfig.patch);
+    expect(await cli.run(['auth', '--token', 'dummy', '--ref', 'ref1xxxxxxxxxxxxxxxx'], apiOverride: api), 0);
+    expect(api.authPatches['ref1xxxxxxxxxxxxxxxx']!.single, InstanceAuthConfig.patch);
   });
 }

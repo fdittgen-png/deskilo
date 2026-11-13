@@ -34,9 +34,13 @@ set -uo pipefail
 
 PREFIX="deskilo_lifecycle"
 EMPTY="${PREFIX}_empty"
-INSTALL="${PREFIX}_install"
-RESUME="${PREFIX}_resume"
-FOREIGN="${PREFIX}_foreign"
+# #3904 — the three the check installs into stand for projects: their names
+# have a project reference's shape (20 lower-case letters and digits), so the
+# builder's own steps, the push configuration among them, run on them as on
+# a hosted project.
+INSTALL="lifecycleinstall0000"
+RESUME="lifecycleresume00000"
+FOREIGN="lifecycleforeign0000"
 IN_CONTAINER_DUMP="/tmp/${PREFIX}.dump"
 IN_CONTAINER_LIST="/tmp/${PREFIX}.list"
 
