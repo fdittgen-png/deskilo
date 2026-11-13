@@ -78,8 +78,10 @@ class FeaturesTable extends StatelessWidget {
           id: 'state',
           label: l.featuresColState,
           flex: 2,
-          sortKey: (e) => effective.contains(e.feature) ? 0 : 1,
-          cell: (_, e) => _switch(l, e),
+          sortKey: (e) => raw.contains(e.feature) ? 0 : 1,
+          cell: (_, e) => Text(
+            raw.contains(e.feature) ? l.processFeatureOn : l.processFeatureOff,
+          ),
         ),
         RecordColumn(
           id: 'depends',
@@ -91,27 +93,34 @@ class FeaturesTable extends StatelessWidget {
           }),
         ),
       ],
+      // The switch is the row's action: the table's keyboard reaches it.
+      rowActions: (e) => [_action(l, e)],
       cardBuilder: (context, e) => ListTile(
         title: Text(featureName(l, e.feature)),
         subtitle: Text(featureDescription(l, e.feature)),
-        trailing: _switch(l, e),
+        trailing: Text(
+          raw.contains(e.feature) ? l.processFeatureOn : l.processFeatureOff,
+        ),
       ),
     );
   }
 
-  /// The feature's switch, named for a screen reader.
-  Widget _switch(AppLocalizations l, FeatureManifestEntry e) {
-    final available = featureAvailableIn(e.availableIn, country);
+  /// Switch on or off; a feature the country does not offer is never
+  /// switched on (a stored on can be switched off).
+  RecordAction<FeatureManifestEntry> _action(
+    AppLocalizations l,
+    FeatureManifestEntry e,
+  ) {
     final on = raw.contains(e.feature);
-    return Semantics(
-      label: featureName(l, e.feature),
-      child: Switch(
-        key: ValueKey('features-switch-${e.feature.name}'),
-        value: on,
-        onChanged: available || on
-            ? (value) => onChanged(e.feature, value: value)
-            : null,
-      ),
+    final available = featureAvailableIn(e.availableIn, country);
+    return RecordAction(
+      id: 'switch',
+      label: on ? l.processSwitchOff : l.processSwitchOn,
+      icon: on ? Icons.toggle_on_outlined : Icons.toggle_off_outlined,
+      unavailable: available || on
+          ? null
+          : featureAvailableNote(l, e.availableIn!),
+      onRun: (e) => onChanged(e.feature, value: !on),
     );
   }
 }

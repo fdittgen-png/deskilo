@@ -67,51 +67,56 @@ class SectionsBeside extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        SizedBox(
-          width: kSectionListWidth,
-          child: ListView(
-            key: ValueKey('$id-sections'),
-            padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-            children: [
-              for (final s in sections)
-                ListTile(
-                  key: ValueKey('$id-section-${s.id}'),
-                  leading: s.icon == null ? null : Icon(s.icon),
-                  title: Text(s.title),
-                  selected: s.id == shown,
-                  textColor: s.destructive ? theme.colorScheme.error : null,
-                  iconColor: s.destructive ? theme.colorScheme.error : null,
-                  onTap: () => onSelect(s.id),
-                ),
-            ],
+        // Tab walks the list, then the shown section and its footer.
+        FocusTraversalGroup(
+          child: SizedBox(
+            width: kSectionListWidth,
+            child: ListView(
+              key: ValueKey('$id-sections'),
+              padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
+              children: [
+                for (final s in sections)
+                  ListTile(
+                    key: ValueKey('$id-section-${s.id}'),
+                    leading: s.icon == null ? null : Icon(s.icon),
+                    title: Text(s.title),
+                    selected: s.id == shown,
+                    textColor: s.destructive ? theme.colorScheme.error : null,
+                    iconColor: s.destructive ? theme.colorScheme.error : null,
+                    onTap: () => onSelect(s.id),
+                  ),
+              ],
+            ),
           ),
         ),
         const VerticalDivider(width: 1),
         Expanded(
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  key: ValueKey('$id-shown'),
-                  padding: AppSpacing.gutterAll,
-                  child: FormColumn(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        ...header,
-                        for (final s in sections)
-                          _Hidden(
-                            key: ValueKey('$id-body-${s.id}'),
-                            hidden: s.id != shown,
-                            child: s.child,
-                          ),
-                      ],
+          child: FocusTraversalGroup(
+            child: Column(
+              children: [
+                Expanded(
+                  child: SingleChildScrollView(
+                    key: ValueKey('$id-shown'),
+                    padding: AppSpacing.gutterAll,
+                    child: FormColumn(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          ...header,
+                          for (final s in sections)
+                            _Hidden(
+                              key: ValueKey('$id-body-${s.id}'),
+                              hidden: s.id != shown,
+                              child: s.child,
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              ?footer,
-            ],
+                ?footer,
+              ],
+            ),
           ),
         ),
       ],

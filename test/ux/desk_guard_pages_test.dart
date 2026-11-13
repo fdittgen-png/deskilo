@@ -4,6 +4,7 @@
 // builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
+import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
@@ -170,7 +171,16 @@ const _pages = [
   ('/money/accounting', PageKind.dashboard, 'money', 'accounting'),
   ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
   ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
+  // #3619 — settings and setup at the desk.
+  ('/settings', PageKind.task, 'settings', 'account'),
+  ('/workspace-settings', PageKind.task, 'settings', 'workspace'),
+  ('/features', PageKind.records, 'settings', 'features'),
+  ('/setup/step/basics', PageKind.task, 'settings', 'setup-step'),
 ];
+
+/// #3619 — how many workspace routes the guards above hold; it only rises
+/// (the follow-up guards the rest, the most used modules first).
+const _guardedWorkspaceRoutes = 12;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -203,6 +213,23 @@ class _OnePassSold implements GuestPassRepository {
 }
 
 void main() {
+  test('the guarded workspace routes only rise', () {
+    final guarded = {
+      for (final (path, _, _, _) in _pages)
+        if (matchRoute(path) case final r? when r.kind == RouteClass.workspace)
+          r.pattern,
+    };
+    final all = routeRules.where((r) => r.kind == RouteClass.workspace);
+    expect(
+      guarded.length,
+      greaterThanOrEqualTo(_guardedWorkspaceRoutes),
+      reason: 'of ${all.length} workspace routes',
+    );
+    if (guarded.length > _guardedWorkspaceRoutes) {
+      fail('raise _guardedWorkspaceRoutes to ${guarded.length}');
+    }
+  });
+
   setUpAll(() => loadSheetFonts(always: true));
 
   for (final (path, kind, module, screen) in _pages) {
@@ -236,6 +263,8 @@ void main() {
               RecordsHeader<_PurchaseRow>,
               RecordRow<BookExport>,
               RecordsHeader<BookExport>,
+              RecordRow<FeatureManifestEntry>,
+              RecordsHeader<FeatureManifestEntry>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -247,16 +276,19 @@ void main() {
               RecordsHeader<Supplier>,
               RecordsHeader<_PurchaseRow>,
               RecordsHeader<BookExport>,
+              RecordsHeader<FeatureManifestEntry>,
             ],
           ),
           isEmpty,
           reason: details.join('\n'),
         );
         // A long task (#3608) is its own focus scope: Tab walks the page.
+        // #3619 — a settings form is a task page that is not one.
+        final longTask = find.byType(LongTaskPage);
         expect(
           await keyboardProblems(
             tester,
-            within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
+            within: longTask.evaluate().isNotEmpty ? longTask : null,
           ),
           isEmpty,
         );

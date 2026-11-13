@@ -40,7 +40,8 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
   final _search = TextEditingController();
   String _query = '';
   bool _changedOnly = false;
-  bool _switches = false;
+  /// Null until chosen: the desk opens on the table, a phone on the overview.
+  bool? _switches;
   var _maturity = FeatureMaturityFilter.all;
 
   /// A feature tapped on the overview, shown among the switches — the
@@ -89,6 +90,9 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
       ),
     );
 
+    final desk =
+        WindowClass.of(context).index >= WindowClass.expanded.index;
+    final switches = _switches ?? desk;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.featuresTitle),
@@ -100,10 +104,10 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
               children: [
                 FeaturesViewSwitch(
                   key: const ValueKey('features-features-view-switch'),
-                  switches: _switches,
+                  switches: switches,
                   onChanged: (value) => setState(() => _switches = value),
                 ),
-                if (!_switches)
+                if (!switches)
                   Expanded(
                     child: ProcessOverview(
                       raw: raw,
@@ -111,8 +115,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                     ),
                   )
                 // #3619 — at the desk the switches are a records table.
-                else if (WindowClass.of(context).index >=
-                    WindowClass.expanded.index)
+                else if (desk)
                   Expanded(
                     child: FeaturesTable(
                       raw: raw,

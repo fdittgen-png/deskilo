@@ -73,8 +73,7 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
   @override
   Widget build(BuildContext context) => widget.flat
       ? Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-          Focus(focusNode: _headingFocus, child: Text(widget.title,
-            style: Theme.of(context).textTheme.titleLarge)),
+          Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.md),
           ...widget.children,
         ])

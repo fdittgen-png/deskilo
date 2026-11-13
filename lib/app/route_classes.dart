@@ -297,7 +297,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work),
   RouteRule('/vat-declarations/:id', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
-  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat', measure: PageMeasure.form),
+  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat', measure: PageMeasure.work),
   RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories', measure: PageMeasure.work),
   RouteRule('/features', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),

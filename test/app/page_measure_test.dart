@@ -26,8 +26,8 @@ const _framedByClass = {
   RouteClass.operator: _framedOperator,
   RouteClass.workspace: 0,
 };
-const _framedPublicEntry = 11;
-const _framedNativeAccount = 37;
+const _framedPublicEntry = 12;
+const _framedNativeAccount = 38;
 const _framedOperator = 2;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
