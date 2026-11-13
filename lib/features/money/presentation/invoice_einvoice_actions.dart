@@ -25,9 +25,9 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/print_or_retry.dart';
 import '../../workspace/domain/workspace_feature.dart';
-import '../../workspace/domain/workspace_permission.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/channel_einvoice_xml.dart';
+import '../application/einvoice_send_authority.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_gateway.dart';
@@ -251,17 +251,13 @@ typedef _EInvoiceSubject = ({
   String workspaceId,
 });
 
-/// Who may fix the identity (the owner) and who may send (#2137:
-/// whoever holds issueInvoices).
+/// Who may fix the identity (the owner) and who may send
+/// ([maySendEInvoices], the send function's own rule).
 ({bool owner, bool issuer}) _eInvoiceRoles(WidgetRef ref) {
   final me = ref.read(myMemberProvider).value;
   return (
     owner: me?.actsAsOwner ?? false,
-    issuer: me?.actsAsOwner == true ||
-        me?.canAdminister == true ||
-        ref
-            .read(myPermissionsProvider)
-            .contains(WorkspacePermission.issueInvoices),
+    issuer: maySendEInvoices(me, ref.read(myPermissionsProvider)),
   );
 }
 
