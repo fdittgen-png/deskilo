@@ -11,6 +11,7 @@ import 'dart:io';
 import 'package:deskilo/app/webmcp_confirmations.dart';
 import 'package:deskilo/app/webmcp_reads.dart';
 import 'package:deskilo/app/webmcp_wiring.dart';
+import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/demo/data/event_repository.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/webmcp/webmcp_device_switch.dart';
@@ -34,6 +35,7 @@ import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_repository.dart' show ReservationUnreadable;
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -265,6 +267,28 @@ Set<String> _keys(Object? value) => switch (value) {
   _ => const {},
 };
 
+/// A reservation repository whose window holds two bookings this version
+/// cannot read, and whose booking r9 exists but cannot be read.
+class _UnreadableReservations extends FakeReservationRepository {
+  _UnreadableReservations(List<Reservation> known) {
+    reservations.addAll(known);
+  }
+
+  @override
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  }) async => (
+    rows: await fetchWindow(workspaceId, from: from, to: to),
+    unreadable: 2,
+  );
+
+  @override
+  Future<Reservation?> fetchById(String reservationId) async =>
+      reservationId == 'r9' ? throw const ReservationUnreadable('r9') : super.fetchById(reservationId);
+}
+
 void main() {
   late _Context context;
   late _Switch deviceSwitch;
@@ -475,6 +499,24 @@ void main() {
       jsonEncode(answers['list_pending_validations']),
       isNot(contains('free text')),
     );
+  });
+
+  test('#3884: bookings this version cannot read are not listed as if the list '
+      'were complete: the read is refused with the reason', () async {
+    reservations = _UnreadableReservations(reservations.reservations);
+    await armed();
+    final answer = await call('deskilo_list_my_reservations', {
+      'workspace_id': 'ws-1',
+      'from': '2026-10-01T00:00:00+02:00',
+      'to': '2026-10-31T00:00:00+01:00',
+    });
+    expect((answer['error']! as Map)['code'], 'unreadable');
+    expect(answer.containsKey('output'), isFalse);
+    final place = await call('deskilo_get_place', {
+      'workspace_id': 'ws-1',
+      'reservation_id': 'r9',
+    });
+    expect((place['error']! as Map)['code'], 'unreadable');
   });
 
   test(

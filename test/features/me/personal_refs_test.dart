@@ -99,6 +99,7 @@ void main() {
 
     test('#3884: a future status reads as none and a future freshness as '
         'unavailable, both traced; the other references stay', () {
+      resetTracedRefKinds();
       final before = TraceLogger.instance.entries.length;
       final refs = _refs([
         _ref(_home, freshness: 'local', status: 'active', label: 'One'),
@@ -106,9 +107,18 @@ void main() {
       ]);
       expect(refs.refs, hasLength(2));
       expect(refs.refs.last.status, isNull);
+      expect(refs.refs.last.statusUnknown, isTrue,
+          reason: 'unknown is kept apart from "no relationship"');
+      expect(refs.refs.first.statusUnknown, isFalse);
       expect(refs.refs.last.freshness, RefFreshness.unavailable);
       expect(refs.refs.first.status, RefStatus.active);
       expect(TraceLogger.instance.entries.length - before, 2);
+      // The same kinds decoded again (every refresh) are not traced again.
+      _refs([
+        {..._ref(_away), 'status': 'future_status', 'freshness': 'future_word'},
+      ]);
+      expect(TraceLogger.instance.entries.length - before, 2,
+          reason: 'one entry per kind, not per row on every decode');
     });
 
     test('C2: a verified or stale fact elsewhere keeps its status', () {

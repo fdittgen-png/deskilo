@@ -31,6 +31,7 @@ import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/loading_view.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
+import '../../features/reservations/presentation/widgets/unread_bookings_notice.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'bookings_csv.dart';
 import 'desk_booking_chip.dart';
@@ -227,6 +228,7 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
       },
       child: Column(
         children: [
+          const UnreadBookingsNotice(), // #3884
           DeskFilterRow(
             filter: _filter,
             levels: data.levels,

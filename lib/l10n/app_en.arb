@@ -6747,6 +6747,10 @@
   "@bookRoleFixedAssets": {
     "description": "#2573 posting role of a purchase line that is not an operating cost"
   },
+  "bookRoleMappedUnreadable": "Mapped to an account this version of the app cannot read.",
+  "@bookRoleMappedUnreadable": {
+    "description": "#3884 Book chart sheet: a posting role is mapped to an account this app version cannot read; it is not unmapped, and cannot be changed here."
+  },
   "bookRolePrepayments": "Prepaid expenses",
   "@bookRolePrepayments": {
     "description": "#2573 posting role of a purchase line that is not an operating cost"
@@ -35177,6 +35181,10 @@
   "@reservationRecurring": {
     "description": "Generic repetition label for series bookings whose pattern predates 0034"
   },
+  "reservationUnreadable": "This booking exists, but this version of the app cannot show it. Update the app to see it.",
+  "@reservationUnreadable": {
+    "description": "#3884 A booking that exists but has a status this app version does not know: opened by a link, it cannot be shown (it is not gone)."
+  },
   "reservationUpdatedSnack": "Reservation updated.",
   "@reservationUpdatedSnack": {
     "description": "Snackbar after an own reservation's window was edited (0033)"
@@ -47074,6 +47082,15 @@
   "workspaceExcelExportSubtitle": "One ZIP: every dataset in a workbook (bookings, payments, invoices, members, the floor plan — a tab each), a manifest counting its rows, and the space's stored files.",
   "@workspaceExcelExportSubtitle": {
     "description": "Subtitle under the Excel export tile (#395)."
+  },
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 booking could not be read by this version of the app and is not in this file.} other{{count} bookings could not be read by this version of the app and are not in this file.}}",
+  "@workspaceExportUnreadableBookings": {
+    "description": "#3884 Note written on the Reservations sheet of the workspace export: bookings with a status this app version does not know are not in the file.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "workspaceFieldsOptional": "optional",
   "@workspaceFieldsOptional": {

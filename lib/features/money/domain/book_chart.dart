@@ -267,18 +267,26 @@ List<SuggestedAccount> suggestedAccounts({
   return role == null ? null : (role, colon < 0 ? null : wire.substring(colon + 1));
 }
 
-/// #3884 -- the chart `book_chart` answers, with the ids of the accounts and
+/// #3884 -- the chart `book_chart` answers, with the accounts and the
 /// mappings this build could not read (a type, origin or role a newer server
-/// sends) left out of the lists instead of failing them.
-({List<BookAccount> accounts, List<BookMapping> mappings, List<String> unreadable})
+/// sends) left out of the lists instead of failing them: `id` -> the unknown
+/// value, per kind of row, so the caller can say how many and why.
+({
+  List<BookAccount> accounts,
+  List<BookMapping> mappings,
+  Map<String, String> unreadableAccounts,
+  Map<String, String> unreadableMappings,
+})
 bookChartFromJson(Map<String, Object?> map) {
-  final unreadable = <String>[];
+  final badAccounts = <String, String>{};
+  final badMappings = <String, String>{};
   final accounts = <BookAccount>[];
   for (final a in (map['accounts'] as List? ?? const [])) {
     final row = Map<String, Object?>.from(a as Map);
     final read = BookAccount.tryFromJson(row);
     if (read == null) {
-      unreadable.add('${row['id']}');
+      badAccounts['${row['id']}'] =
+          'account type ${row['account_type']} / origin ${row['origin']}';
     } else {
       accounts.add(read);
     }
@@ -288,14 +296,22 @@ bookChartFromJson(Map<String, Object?> map) {
     final row = Map<String, Object?>.from(m as Map);
     final read = BookMapping.tryFromJson(row);
     if (read == null) {
-      unreadable.add('${row['id']}');
+      badMappings['${row['id']}'] = 'book role ${row['role']}';
     } else {
       mappings.add(read);
     }
   }
-  return (accounts: accounts, mappings: mappings, unreadable: unreadable);
+  return (
+    accounts: accounts,
+    mappings: mappings,
+    unreadableAccounts: badAccounts,
+    unreadableMappings: badMappings,
+  );
 }
 
-/// #3884 -- the area under which a workspace's books count the entries,
-/// accounts and mappings this build could not read.
-String booksArea(String workspaceId) => 'books:$workspaceId';
+/// #3884 -- the areas under which a workspace's books count what this build
+/// could not read: accounts and role mappings of the chart, and the posted
+/// entries of a period. Separate, so one list never says another's count.
+String booksAccountsArea(String workspaceId) => 'books:$workspaceId:accounts';
+String booksMappingsArea(String workspaceId) => 'books:$workspaceId:mappings';
+String booksPostingsArea(String workspaceId) => 'books:$workspaceId:postings';

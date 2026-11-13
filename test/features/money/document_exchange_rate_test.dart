@@ -294,11 +294,19 @@ void main() {
       'before any role or rate is asked for', () async {
     final journal = await GenericJournalExport(
       _Books(
-        const PostingSet([], [
+        PostingSet(
+          [
+            _bill([
+              _l(BookRole.expenses, '606', 24000, 0),
+              _l(BookRole.suppliers, '401', 0, 24000),
+            ]),
+          ],
+          const [
           PostingBlocker(PostingBlock.unmappedRole, 'expenses'),
           PostingBlocker(PostingBlock.unreadable, 'doc-1'),
           PostingBlocker(PostingBlock.unreadable, 'doc-2'),
-        ]),
+          ],
+        ),
       ),
     ).read('ws', [_localBook], 2026);
     expect((journal as JournalUnreadable).count, 2);

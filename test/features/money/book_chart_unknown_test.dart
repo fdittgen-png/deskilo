@@ -40,7 +40,8 @@ void main() {
     });
     expect(chart.mappings.map((m) => m.id), ['m1', 'm3']);
     expect(chart.mappings.last.qualifier, 'standard');
-    expect(chart.unreadable, ['m2']);
+    expect(chart.unreadableMappings.keys, ['m2']);
+    expect(chart.unreadableAccounts, isEmpty);
   });
 
   test('an unknown role with a qualifier is unknown too, not read as its base', () {
@@ -49,7 +50,7 @@ void main() {
       'mappings': [_mapping('m1', 'future_role:x')],
     });
     expect(chart.mappings, isEmpty);
-    expect(chart.unreadable, ['m1']);
+    expect(chart.unreadableMappings.keys, ['m1']);
   });
 
   test('an account of a future type or origin is left out, the others stay', () {
@@ -66,7 +67,8 @@ void main() {
       ('a1', AccountType.asset),
       ('a4', AccountType.expense),
     ]);
-    expect(chart.unreadable, ['a2', 'a3']);
+    expect(chart.unreadableAccounts.keys, ['a2', 'a3']);
+    expect(chart.unreadableMappings, isEmpty);
   });
 
   test('a known chart has nothing unreadable', () {
@@ -74,7 +76,8 @@ void main() {
       'accounts': [_account('a1', 'asset')],
       'mappings': [_mapping('m1', 'bank')],
     });
-    expect(chart.unreadable, isEmpty);
+    expect(chart.unreadableAccounts, isEmpty);
+    expect(chart.unreadableMappings, isEmpty);
     expect(chart.accounts, hasLength(1));
     expect(chart.mappings, hasLength(1));
   });

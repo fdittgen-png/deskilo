@@ -5165,6 +5165,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookRoleFixedAssets => 'Immobilisations (équipements)';
 
   @override
+  String get bookRoleMappedUnreadable =>
+      'Associé à un compte que cette version de l\'application ne peut pas lire.';
+
+  @override
   String get bookRolePrepayments => 'Charges constatées d\'avance';
 
   @override
@@ -27222,6 +27226,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationRecurring => 'Réservation récurrente';
 
   @override
+  String get reservationUnreadable =>
+      'Cette réservation existe, mais cette version de l\'application ne peut pas l\'afficher. Mettez l\'application à jour pour la voir.';
+
+  @override
   String get reservationUpdatedSnack => 'Réservation mise à jour.';
 
   @override
@@ -36783,6 +36791,19 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Un ZIP : toutes les données dans un classeur (réservations, paiements, factures, membres, plan — un onglet chacun), un manifeste qui en compte les lignes, et les fichiers de l\'espace.';
+
+  @override
+  String workspaceExportUnreadableBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count réservations n\'ont pas pu être lues par cette version de l\'application et ne figurent pas dans ce fichier.',
+      one:
+          '$count réservation n\'a pas pu être lue par cette version de l\'application et ne figure pas dans ce fichier.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get workspaceFieldsOptional => 'facultatif';

@@ -3074,6 +3074,7 @@
   "bookRoleExpenses": "Gastos",
   "bookRoleFees": "Comisiones del proveedor de pagos",
   "bookRoleFixedAssets": "Inmovilizado (equipos)",
+  "bookRoleMappedUnreadable": "Asignado a una cuenta que esta versión de la aplicación no puede leer.",
   "bookRolePrepayments": "Gastos anticipados",
   "bookRoleRevenue": "Ingresos",
   "bookRoleStock": "Existencias (mercaderías)",
@@ -16735,6 +16736,7 @@
   "reservationNoteOverNotCheckedIn": "Este periodo terminó sin registro de llegada.",
   "reservationNoteRecordedAfterEnd": "Registrada después de que terminara este periodo, así que se conserva como una visita pasada.",
   "reservationRecurring": "Reserva recurrente",
+  "reservationUnreadable": "Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla.",
   "reservationUpdatedSnack": "Reserva actualizada.",
   "reserveAvailabilityUnavailable": "No se pudo cargar toda la disponibilidad, por eso no se muestra ningún puesto como libre. Reintente.",
   "reserveBackToNow": "Volver a ahora",
@@ -22353,6 +22355,7 @@
   "workspaceDeskTransparencyTitle": "Transparencia de mesas",
   "workspaceExcelExport": "Exportar datos (Excel)",
   "workspaceExcelExportSubtitle": "Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.} other{{count} reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.}}",
   "workspaceFieldsOptional": "opcional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

@@ -9,7 +9,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/backend/schema_version.dart';
-import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -22,6 +21,7 @@ import '../domain/datev_package.dart';
 import '../domain/gobd_package.dart';
 import '../domain/number_sequence.dart';
 import '../providers/book_period_providers.dart';
+import 'accounting_export_journal.dart' show refuseUnreadableBooks;
 import 'accounting_export_run.dart';
 import 'datev_profile.dart';
 import 'e_invoice_identity.dart';
@@ -63,14 +63,9 @@ extension GermanAccountingExports on AccountingExportRun {
             stackTrace: st,
           );
         }
-        // #3884 -- books with entries this build cannot read are refused
-        // before any file is built: a package without them is incomplete.
-        if (posted case JournalUnreadable(:final count)) {
-          if (context.mounted) {
-            AppSnack.error(context, context.l10n.journalUnreadableEntries(count));
-          }
-          return;
-        }
+        // #3884 -- books this build cannot read in full are refused before
+        // any file is built: a package without them is incomplete.
+        if (!context.mounted || refuseUnreadableBooks(context, posted)) return;
         final sequences = await repo.fetchNumberSequences(workspace.id);
         final numbers = await memberNumbers();
         final package = buildDatevPackage(

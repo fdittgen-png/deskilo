@@ -41,7 +41,8 @@ enum PostingBlock {
   /// #3884 -- entries (or a block) this build does not know: a role, a kind,
   /// a journal or a block a newer server sends. The subject names the
   /// document. The entry is left out of the postings and, because a total
-  /// without it would be wrong, every export and closing refuses.
+  /// without it would be wrong, every export refuses (a closing is the
+  /// server's and reads no client postings).
   unreadable,
 }
 
@@ -172,8 +173,8 @@ class PostingSet {
   /// #3884 -- an entry with a role, kind or journal this build does not know
   /// is not guessed and does not fail the answer: it is left out and
   /// replaced by one [PostingBlock.unreadable] blocker naming its document,
-  /// so the entries that can be read are returned while exports and
-  /// closings refuse. A malformed entry is still a shape error.
+  /// so the entries that can be read are returned while every export
+  /// refuses. A malformed entry is still a shape error.
   factory PostingSet.fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'compute_postings');
     final blockers = <PostingBlocker>[];

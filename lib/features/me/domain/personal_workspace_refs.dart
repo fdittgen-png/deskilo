@@ -16,6 +16,8 @@
 // is traced; the reference stays in the list.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'package:meta/meta.dart';
+
 import '../../../core/trace/trace_logger.dart';
 
 /// `installation-uuid:workspace-uuid`, lower-case, as 0559 stamps it.
@@ -73,11 +75,21 @@ enum RefStatus {
   }
 }
 
+/// The kinds of unknown value already traced: one entry per kind, not one
+/// per row on every decode (#3884).
+final Set<String> _tracedKinds = {};
+
+/// Forgets which kinds were traced (tests).
+@visibleForTesting
+void resetTracedRefKinds() => _tracedKinds.clear();
+
 T _traced<T>(JsonReader r, String field, String wire, T fallback) {
-  TraceLogger.instance.warn(
-    'me',
-    '${r.context}: unknown $field "$wire" -- read as ${fallback ?? 'none'}',
-  );
+  if (_tracedKinds.add('$field|$wire')) {
+    TraceLogger.instance.warn(
+      'me',
+      '${r.context}: unknown $field "$wire" -- read as ${fallback ?? 'none'}',
+    );
+  }
   return fallback;
 }
 
@@ -89,6 +101,7 @@ class PersonalWorkspaceRef {
     required this.freshness,
     this.label,
     this.status,
+    this.statusUnknown = false,
     this.isDefault = false,
     this.isFavorite = false,
     this.audienceFields = const [],
@@ -104,12 +117,16 @@ class PersonalWorkspaceRef {
         networkId,
       );
     }
+    final status = RefStatus.fromWire(r);
     return PersonalWorkspaceRef(
       networkId: networkId,
       hostedHere: r.boolOr('hosted_here', fallback: false),
       freshness: RefFreshness.fromWire(r),
       label: r.stringOrNull('label'),
-      status: RefStatus.fromWire(r),
+      status: status,
+      // #3884 -- a status was sent but is not one this build knows: that is
+      // "unknown", never "no relationship".
+      statusUnknown: status == null && r.stringOrNull('status') != null,
       isDefault: r.boolOr('is_default', fallback: false),
       isFavorite: r.boolOr('is_favorite', fallback: false),
       audienceFields: r.strings('audience_fields'),
@@ -125,8 +142,17 @@ class PersonalWorkspaceRef {
   /// The workspace's name, only where I may read it; null otherwise.
   final String? label;
 
-  /// Null when the answering installation holds no relationship.
+  /// Null when the answering installation holds no relationship, or when
+  /// it sent a status this build does not know ([statusUnknown]).
   final RefStatus? status;
+
+  /// #3884 -- the installation sent a status this build does not know. The
+  /// relationship exists: readers keep the reference (its bookings, its
+  /// own-data export) and grant nothing that "no status" would not.
+  final bool statusUnknown;
+
+  /// The answering installation holds no relationship with the workspace.
+  bool get holdsNoRelationshipHere => hostedHere && status == null && !statusUnknown;
   final bool isDefault;
   final bool isFavorite;
 

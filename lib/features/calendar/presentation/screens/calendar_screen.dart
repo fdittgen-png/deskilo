@@ -25,6 +25,7 @@ import '../../../events/providers/event_providers.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
+import '../../../reservations/presentation/widgets/unread_bookings_notice.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../task_recorder/application/booking_observation.dart';
 import '../../../task_recorder/application/calendar_observation.dart';
@@ -403,6 +404,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         // #606 — the calendar's contextual how-to; gated in the widget.
         // #611 — eased in/out at the call site instead of popping.
         const MotionReveal(child: HelpHint(HelpHintId.calendar)),
+        const UnreadBookingsNotice(), // #3884
         _monthNavigator(l10n),
         _whoseAndView(l10n),
         _monthCard(visible, myMember?.id),

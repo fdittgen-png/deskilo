@@ -27,6 +27,7 @@ import '../../providers/reservation_providers.dart';
 import '../booking_gate_scope.dart';
 import 'message_reserver.dart';
 import 'space_act_form.dart';
+import 'unread_bookings_notice.dart';
 
 /// #622 — the authenticated act sheet: scanning a seat's QR card (or
 /// tapping its chair's NFC tag, or picking it in a desk/office space
@@ -244,6 +245,9 @@ class _SpaceActSheetState extends ConsumerState<_SpaceActSheet> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // #3884 — this sheet's conflict check cannot see a booking this
+        // version cannot read: it says so, and the server decides.
+        const UnreadBookingsNotice(),
         if (mine != null) ...[
           const SizedBox(height: 8),
           Text(

@@ -11,6 +11,7 @@ import 'dart:typed_data';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/data/unreadable_rows.dart';
 import '../domain/accounting_format.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
@@ -46,9 +47,10 @@ final class JournalBlocked extends GenericJournal {
   final List<String> roles;
 }
 
-/// #3884 -- the books hold [count] entries this build does not know (a role,
-/// kind or journal a newer server sends): no export or closing is made,
-/// because a file without them would be incomplete.
+/// #3884 -- the books hold [count] entries (or chart accounts) this build
+/// does not know (a role, kind or journal a newer server sends): no export
+/// is made, because a file without them would be incomplete. (A closing is
+/// the server's and reads no client postings.)
 final class JournalUnreadable extends GenericJournal {
   const JournalUnreadable(this.count);
   final int count;
@@ -387,7 +389,12 @@ class GenericJournalExport {
     final chart = named && posted.isNotEmpty
         ? await _books.fetchBookChart(workspaceId)
         : null;
-    final parties = named && posted.isNotEmpty
+    // #3884 -- accounts the chart read left out: the names and types of
+    // the postings on them would be lost, so the export refuses instead.
+    final unreadableAccounts = chart == null
+        ? 0
+        : UnreadableRows.instance.count(booksAccountsArea(workspaceId));
+    final parties = named && posted.isNotEmpty && unreadableAccounts == 0
         ? await _books.fetchPostingParties(workspaceId, [
             ...{
               for (final set in posted)
@@ -403,6 +410,7 @@ class GenericJournalExport {
           local,
           chart: chart,
           parties: parties,
+          unreadableAccounts: unreadableAccounts,
         ),
     ];
   }
@@ -413,6 +421,7 @@ class GenericJournalExport {
     BookProfile local, {
     required ({List<BookAccount> accounts, List<BookMapping> mappings})? chart,
     required Map<String, PostingParty> parties,
+    int unreadableAccounts = 0,
   }) {
     if (set.unreadable > 0) return JournalUnreadable(set.unreadable);
     if (set.blockers.isNotEmpty) {
@@ -427,6 +436,7 @@ class GenericJournalExport {
     if (chart == null) {
       return JournalPosted(set.postings, year: period, book: local);
     }
+    if (unreadableAccounts > 0) return JournalUnreadable(unreadableAccounts);
     final documents = {for (final p in set.postings) p.documentId};
     return JournalPosted(
       set.postings,

@@ -40,6 +40,7 @@ import '../../../reservations/domain/reservation_repository.dart'
 import '../../../reservations/domain/space_act.dart';
 import '../../../reservations/presentation/booking_gate_scope.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
+import '../../../reservations/presentation/widgets/unread_bookings_notice.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
@@ -388,6 +389,8 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                   text: l10n.kioskClosedToday,
                 ),
               ),
+            // #3884 — bookings this version cannot read are not on the wall.
+            const UnreadBookingsNotice(),
             Expanded(
               child: switch (planAsync) {
                 AsyncData(value: final plan) =>

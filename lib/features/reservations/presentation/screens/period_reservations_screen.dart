@@ -19,6 +19,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
+import '../widgets/unread_bookings_notice.dart';
 
 class PeriodReservationsScreen extends ConsumerWidget {
   const PeriodReservationsScreen({
@@ -84,15 +85,23 @@ class PeriodReservationsScreen extends ConsumerWidget {
           icon: Icons.layers_clear_outlined,
           title: l10n.periodReservationsUnknownLevel,
         ),
-        AsyncData(:final value) when value.isEmpty => EmptyState(
-          key: const ValueKey('period-reservations-empty'),
-          icon: Icons.event_busy_outlined,
-          title: l10n.periodReservationsEmpty,
+        AsyncData(:final value) when value.isEmpty => Column(
+          children: [
+            const UnreadBookingsNotice(), // #3884 — empty is not unreadable
+            Expanded(
+              child: EmptyState(
+                key: const ValueKey('period-reservations-empty'),
+                icon: Icons.event_busy_outlined,
+                title: l10n.periodReservationsEmpty,
+              ),
+            ),
+          ],
         ),
         AsyncData(:final value) => ListView(
           key: const ValueKey('period-reservations'),
           padding: AppSpacing.gutterAll,
           children: [
+            const UnreadBookingsNotice(), // #3884
             for (final (i, r) in value.indexed) ...[
               if (i == 0 ||
                   WorkspaceTime.dateOf(value[i - 1].startsAt) !=

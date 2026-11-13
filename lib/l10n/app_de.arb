@@ -3074,6 +3074,7 @@
   "bookRoleExpenses": "Aufwand",
   "bookRoleFees": "Gebühren des Zahlungsdienstes",
   "bookRoleFixedAssets": "Anlagevermögen (Ausstattung)",
+  "bookRoleMappedUnreadable": "Einem Konto zugeordnet, das diese Version der App nicht lesen kann.",
   "bookRolePrepayments": "Aktive Rechnungsabgrenzung",
   "bookRoleRevenue": "Erlöse",
   "bookRoleStock": "Vorräte (Handelswaren)",
@@ -16735,6 +16736,7 @@
   "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei.",
   "reservationNoteRecordedAfterEnd": "Nach dem Ende dieses Zeitraums erfasst, daher als vergangener Besuch erhalten.",
   "reservationRecurring": "Wiederkehrende Reservierung",
+  "reservationUnreadable": "Diese Buchung gibt es, aber diese Version der App kann sie nicht anzeigen. Aktualisiere die App, um sie zu sehen.",
   "reservationUpdatedSnack": "Reservierung aktualisiert.",
   "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen.",
   "reserveBackToNow": "Zurück zu jetzt",
@@ -22353,6 +22355,7 @@
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceExcelExport": "Daten exportieren (Excel)",
   "workspaceExcelExportSubtitle": "Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 Buchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.} other{{count} Buchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.}}",
   "workspaceFieldsOptional": "optional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/unreadable_rows.dart';
 import 'booking_intent.dart';
 import 'reservation.dart';
 
@@ -28,6 +29,17 @@ class SeriesResult {
 /// receipt needs to show their profile photo (0038 avatars bucket).
 typedef KioskIdentity = ({String name, String userId, bool hasAvatar});
 
+/// #3884 -- the reservation exists, but a value of it (its status) is one
+/// this version of the app does not know, so it cannot be shown.
+class ReservationUnreadable implements Exception {
+  const ReservationUnreadable(this.reservationId);
+
+  final String reservationId;
+
+  @override
+  String toString() => 'ReservationUnreadable($reservationId)';
+}
+
 abstract class ReservationRepository {
   /// Active + recent reservations of the workspace intersecting
   /// [from, to). Includes all statuses so history views work.
@@ -37,13 +49,32 @@ abstract class ReservationRepository {
     required DateTime to,
   });
 
+  /// [fetchWindow] and how many reservations the window holds that this
+  /// build could not read (#3884: a status it does not know). A caller that
+  /// writes a file or decides availability reads the count too.
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  }) async => (
+    rows: await fetchWindow(workspaceId, from: from, to: to),
+    unreadable: 0,
+  );
+
+  /// [fetchAllForExport] and how many reservations could not be read.
+  Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
+    String workspaceId,
+  ) async => (rows: await fetchAllForExport(workspaceId), unreadable: 0);
+
   /// EVERY reservation of the workspace, oldest first — the reservations
   /// and check-ins tabs of the data export (#395). Not windowed: an
   /// export that silently clips history reads as complete when it is not.
   Future<List<Reservation>> fetchAllForExport(String workspaceId);
 
   /// One reservation by id, or null when it no longer exists — message
-  /// references (#523) resolve live and must survive deletions.
+  /// references (#523) resolve live and must survive deletions. Throws
+  /// [ReservationUnreadable] when it exists but this build cannot read it
+  /// (#3884): that is not "gone".
   Future<Reservation?> fetchById(String reservationId);
 
   /// Creates a reservation for the signed-in member. [checkIn] makes it an

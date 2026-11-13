@@ -10,6 +10,8 @@ import '../../../plan/domain/level.dart';
 import '../../../plan/domain/office.dart';
 import '../../../plan/domain/seat.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
+import '../../domain/reservation.dart';
+import '../../domain/reservation_repository.dart' show ReservationUnreadable;
 import '../../domain/space_bookability.dart';
 import '../../domain/space_code.dart';
 import '../../providers/reservation_providers.dart';
@@ -114,9 +116,16 @@ Future<void> openReservationById(
   String reservationId,
 ) async {
   final l10n = context.l10n;
-  final reservation = await ref
-      .read(reservationRepositoryProvider)
-      .fetchById(reservationId);
+  final Reservation? reservation;
+  try {
+    reservation = await ref
+        .read(reservationRepositoryProvider)
+        .fetchById(reservationId);
+  } on ReservationUnreadable {
+    // #3884 -- it exists; this version cannot show it. Not "gone".
+    if (context.mounted) AppSnack.error(context, l10n.reservationUnreadable);
+    return;
+  }
   if (!context.mounted) return;
   if (reservation == null) {
     AppSnack.error(

@@ -134,7 +134,7 @@ class ReserveHubHeader extends ConsumerWidget {
         const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
         // #3884 — bookings this version could not read: nothing unless some.
         if (workspace != null)
-          UnreadableRowsNotice(area: reservationsArea(workspace.id)),
+          UnreadableRowsNotice.area(reservationsArea(workspace.id)),
         HeaderControlRow(
             children: _viewControls(context, ref, l10n, guidanceKey, gateOn)),
         HeaderControlRow(children: _whenControls(ref, timeViews)),

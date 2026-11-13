@@ -308,7 +308,16 @@ class WorkspaceSettingsReports {
       message: 'workspace data report failed',
       errorText: l10n.dataReportFailed,
       action: () async {
-        final details = await readDataReportDetails(ref, workspace);
+        final read = await readDataReportDetails(ref, workspace);
+        final details = read.details;
+        // #3884 -- a report counting bookings without some of them looks
+        // complete and is not: refused, with the count.
+        if (read.unreadable > 0) {
+          if (context.mounted) {
+            AppSnack.error(context, l10n.unreadableRowsNotice(read.unreadable));
+          }
+          return;
+        }
         final buying = await readDataReportPurchasing(ref, workspace.id);
         final report = buildWorkspaceDataReport(details,
             purchases: buying.purchases, suppliers: buying.suppliers);

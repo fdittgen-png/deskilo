@@ -24,6 +24,7 @@ import '../../features/money/application/receivables.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/presentation/invoicing/invoicing_reads.dart';
 import '../../features/money/providers/money_providers.dart';
+import '../../features/reservations/presentation/widgets/unread_bookings_notice.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/member_labels.dart';
@@ -124,7 +125,7 @@ class _MembersTable extends ConsumerWidget {
       now: ref.watch(clockProvider).now(),
       visits: visits,
     );
-    return RecordsTable<Member>(
+    final table = RecordsTable<Member>(
       tableId: 'members',
       rows: view.rows,
       state: switch (read) {
@@ -150,6 +151,11 @@ class _MembersTable extends ConsumerWidget {
         title: Text(view.names[m.id] ?? '', overflow: TextOverflow.ellipsis),
         subtitle: Text(memberStatusLabel(context.l10n, m.status)),
       ),
+    );
+    // #3884 — the last visits are read from bookings; some this version
+    // cannot read are not counted, and the table says so.
+    return Column(
+      children: [const UnreadBookingsNotice(), Expanded(child: table)],
     );
   }
 

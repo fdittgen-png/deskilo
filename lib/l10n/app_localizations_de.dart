@@ -5151,6 +5151,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bookRoleFixedAssets => 'Anlagevermögen (Ausstattung)';
 
   @override
+  String get bookRoleMappedUnreadable =>
+      'Einem Konto zugeordnet, das diese Version der App nicht lesen kann.';
+
+  @override
   String get bookRolePrepayments => 'Aktive Rechnungsabgrenzung';
 
   @override
@@ -27177,6 +27181,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationRecurring => 'Wiederkehrende Reservierung';
 
   @override
+  String get reservationUnreadable =>
+      'Diese Buchung gibt es, aber diese Version der App kann sie nicht anzeigen. Aktualisiere die App, um sie zu sehen.';
+
+  @override
   String get reservationUpdatedSnack => 'Reservierung aktualisiert.';
 
   @override
@@ -36718,6 +36726,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.';
+
+  @override
+  String workspaceExportUnreadableBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Buchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.',
+      one: '1 Buchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get workspaceFieldsOptional => 'optional';

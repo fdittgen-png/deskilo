@@ -16,5 +16,22 @@
         "type": "int"
       }
     }
+  },
+  "bookRoleMappedUnreadable": "Mapped to an account this version of the app cannot read.",
+  "@bookRoleMappedUnreadable": {
+    "description": "#3884 Book chart sheet: a posting role is mapped to an account this app version cannot read; it is not unmapped, and cannot be changed here."
+  },
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 booking could not be read by this version of the app and is not in this file.} other{{count} bookings could not be read by this version of the app and are not in this file.}}",
+  "@workspaceExportUnreadableBookings": {
+    "description": "#3884 Note written on the Reservations sheet of the workspace export: bookings with a status this app version does not know are not in the file.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "reservationUnreadable": "This booking exists, but this version of the app cannot show it. Update the app to see it.",
+  "@reservationUnreadable": {
+    "description": "#3884 A booking that exists but has a status this app version does not know: opened by a link, it cannot be shown (it is not gone)."
   }
 }

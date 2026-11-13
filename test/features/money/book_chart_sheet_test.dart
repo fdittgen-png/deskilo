@@ -8,10 +8,12 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -153,6 +155,44 @@ void main() {
       2,
       reason: 'the same day corrects its version, never a second one',
     );
+  });
+
+  testWidgets('#3884: a role mapped to an account this version cannot read '
+      'is not shown as unmapped, cannot be changed, and the sheet says '
+      'entries could not be shown', (tester) async {
+    UnreadableRows.instance.reset();
+    addTearDown(UnreadableRows.instance.reset);
+    UnreadableRows.instance.record(
+      booksAccountsArea('ws-1'),
+      'chart',
+      {'acc-gone': 'account type future'},
+    );
+    final books = await _pump(
+      tester,
+      accounts: const [('706000', 'Prestations', AccountType.income)],
+    );
+    books.mappings.add(
+      BookMapping(
+        id: 'm-rev',
+        workspaceId: 'ws-1',
+        issuerSiteId: 's1',
+        role: BookRole.revenue,
+        accountId: 'acc-gone',
+        effectiveFrom: DateTime(2020),
+        revision: 1,
+      ),
+    );
+    await _tapKey(tester, 'book-chart-s1');
+    final l10n = lookupAppLocalizations(const Locale('en'));
+    expect(find.textContaining('1 entry could not be shown'), findsOneWidget);
+    final row = find.byKey(const ValueKey('book-role-revenue'));
+    expect(row, findsOneWidget);
+    expect(find.descendant(of: row, matching: find.text(l10n.bookRoleMappedUnreadable)),
+        findsOneWidget);
+    expect(tester.widget<ListTile>(row).enabled, isFalse);
+    // The other roles stay ordinary, unmapped, selectable rows.
+    expect(find.byKey(const ValueKey('book-role-customers')), findsOneWidget);
+    expect(find.byType(DropdownButtonFormField<String>), findsWidgets);
   });
 
   testWidgets('a local book waits for customers, revenue and bank', (

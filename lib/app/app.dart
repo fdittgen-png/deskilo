@@ -5,12 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../core/data/unreadable_rows.dart';
 import '../core/demo/demo_entry.dart';
 import '../core/demo/demo_loader.dart';
 import '../core/demo/presentation/demo_environment.dart';
 import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
+import '../core/session/session_source.dart';
 import '../core/shortcuts/shortcut_scope.dart';
 import '../core/ui/app_scroll_behavior.dart';
 import '../core/ui/kit/page_title.dart';
@@ -63,6 +65,8 @@ class DeskiloApp extends ConsumerWidget {
     // Fire-and-forget last-seen heartbeat (#223): runs while signed in
     // and foregrounded, pauses otherwise. Failures only hit the trace.
     ref
+      // #3884 — what a list left out belongs to the person who read it.
+      ..listen(sessionStateProvider, (_, _) => UnreadableRows.instance.clear())
       ..watch(presenceBootstrapProvider)
       // #2478 — the VAT functions run on the installation's reference data.
       ..watch(activeTaxReferenceProvider)

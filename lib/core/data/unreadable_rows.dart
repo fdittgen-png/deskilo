@@ -3,42 +3,72 @@ import 'package:flutter/foundation.dart';
 
 import '../trace/trace_logger.dart';
 
+/// What a list read answered: the rows it understood AND how many rows it
+/// left out because this build does not know a value of theirs (#3884).
+/// "Absent" and "present but unreadable" are never the same answer: a caller
+/// that shows a total, writes a file or decides on availability reads
+/// [unreadable] too.
+typedef ReadWithUnreadable<T> = ({T rows, int unreadable});
+
 /// #3884 -- the rows a list could not read, counted where the list is read
 /// and said where the list is shown.
 ///
 /// One row with a value this build does not know (a status, a role a newer
 /// server sends) used to fail the WHOLE list. Such a row is now left out --
 /// never read as a known value it is not -- and recorded here by its [area]
-/// (the list it belongs to, e.g. `reservations:<workspace id>`) and its id.
-/// The list's screen shows `UnreadableRowsNotice`'s line, and anything that
-/// would be wrong without the row (a book's export) refuses instead.
+/// (the list it belongs to, e.g. `reservations:<workspace id>`), the read it
+/// came from and its id. A read REPLACES what the previous read of the same
+/// area and window recorded, so the count describes what is on screen now,
+/// not everything ever seen. The screen of the list shows
+/// `UnreadableRowsNotice`'s line, and anything that would be wrong without
+/// the row (a book's export, a file) refuses or says so instead.
 ///
 /// The trace gets one entry per KIND of unknown value, not one per row.
-/// A row counts once however often the list is read again.
+/// Everything is cleared when the signed-in account changes: the next
+/// person on the device never sees the previous person's count.
 class UnreadableRows {
   UnreadableRows._();
 
   static final UnreadableRows instance = UnreadableRows._();
 
-  final Map<String, Set<String>> _ids = {};
+  /// area -> read key -> ids left out by that read.
+  final Map<String, Map<String, Set<String>>> _reads = {};
   final Map<String, ValueNotifier<int>> _counts = {};
   final Set<String> _tracedKinds = {};
 
-  /// Leaves [rowId] of [area] out of its list because of [what] (the
-  /// unknown value, e.g. `reservation status future_state`).
-  void skip(String area, String rowId, {required String what}) {
-    if (_tracedKinds.add('$area|$what')) {
-      TraceLogger.instance.warn(
-        area,
-        'row left out of its list: unknown $what',
-      );
+  /// Records what the read [read] of [area] left out: [ids] (with [what],
+  /// the unknown value, per id, for the trace). Replaces that read's
+  /// previous record, so an empty [ids] clears it. Returns how many rows
+  /// this read left out.
+  int record(
+    String area,
+    String read,
+    Map<String, String> ids,
+  ) {
+    for (final what in ids.values.toSet()) {
+      if (_tracedKinds.add('$area|$what')) {
+        TraceLogger.instance.warn(
+          area,
+          'row left out of its list: unknown $what',
+        );
+      }
     }
-    final ids = _ids.putIfAbsent(area, () => <String>{});
-    if (ids.add(rowId)) _notifier(area).value = ids.length;
+    final reads = _reads.putIfAbsent(area, () => {});
+    if (ids.isEmpty) {
+      reads.remove(read);
+    } else {
+      reads[read] = ids.keys.toSet();
+    }
+    _notifier(area).value = count(area);
+    return ids.length;
   }
 
-  /// How many distinct rows of [area] were left out so far.
-  int count(String area) => _ids[area]?.length ?? 0;
+  /// How many distinct rows of [area] the latest read of each of its
+  /// windows left out.
+  int count(String area) => {
+        for (final ids in (_reads[area] ?? const <String, Set<String>>{}).values)
+          ...ids,
+      }.length;
 
   /// The same count, to listen to.
   ValueListenable<int> watch(String area) => _notifier(area);
@@ -46,13 +76,16 @@ class UnreadableRows {
   ValueNotifier<int> _notifier(String area) =>
       _counts.putIfAbsent(area, () => ValueNotifier<int>(count(area)));
 
-  /// Forgets everything (tests).
-  @visibleForTesting
-  void reset() {
-    _ids.clear();
+  /// Forgets every count (the account changed or signed out).
+  void clear() {
+    _reads.clear();
     _tracedKinds.clear();
     for (final n in _counts.values) {
       n.value = 0;
     }
   }
+
+  /// Forgets everything (tests).
+  @visibleForTesting
+  void reset() => clear();
 }

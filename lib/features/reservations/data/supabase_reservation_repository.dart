@@ -68,8 +68,16 @@ class SupabaseReservationRepository implements ReservationRepository {
     String workspaceId, {
     required DateTime from,
     required DateTime to,
+  }) async =>
+      (await fetchWindowRead(workspaceId, from: from, to: to)).rows;
+
+  @override
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
   }) =>
-      cachedFetch<List<Reservation>>(
+      cachedFetch<ReadWithUnreadable<List<Reservation>>>(
         cache: _cache,
         key: 'resv:$workspaceId:${from.toUtc().toIso8601String()}'
             ':${to.toUtc().toIso8601String()}',
@@ -128,11 +136,18 @@ class SupabaseReservationRepository implements ReservationRepository {
         parse: (payload) => reservationsFromRows(
           payload as List,
           area: reservationsArea(workspaceId),
+          read: '${from.toUtc().toIso8601String()}|${to.toUtc().toIso8601String()}',
         ),
       );
 
   @override
-  Future<List<Reservation>> fetchAllForExport(String workspaceId) async {
+  Future<List<Reservation>> fetchAllForExport(String workspaceId) async =>
+      (await fetchAllForExportRead(workspaceId)).rows;
+
+  @override
+  Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
+    String workspaceId,
+  ) async {
     // #1310 S2 — paged: an unranged select returns at most the
     // project's max_rows and says nothing about the rest.
     final rows = await fetchAllPages(
@@ -144,7 +159,11 @@ class SupabaseReservationRepository implements ReservationRepository {
           .order('starts_at', ascending: true)
           .order('id', ascending: true),
     );
-    return reservationsFromRows(rows, area: reservationsArea(workspaceId));
+    return reservationsFromRows(
+      rows,
+      area: reservationsArea(workspaceId),
+      read: 'export',
+    );
   }
 
   @override
@@ -440,36 +459,45 @@ class SupabaseReservationRepository implements ReservationRepository {
         .select()
         .eq('id', reservationId)
         .maybeSingle();
-    return row == null
-        ? null
-        : _reservationFromRow(
-            Map<String, dynamic>.from(row),
-            area: reservationsArea(row['workspace_id'] as String),
-          );
+    if (row == null) return null;
+    final read = reservationsFromRows(
+      [row],
+      area: reservationsArea(row['workspace_id'] as String),
+      read: 'by-id:$reservationId',
+    );
+    // #3884 -- present but unreadable is not "gone": it says so.
+    if (read.unreadable > 0) throw ReservationUnreadable(reservationId);
+    return read.rows.single;
   }
 }
 
-/// The reservations of [rows] this build can read. A row whose status it
-/// does not know is left out, counted under [area] and traced, never read
-/// as a status it is not: one such row no longer fails the whole list.
+/// The reservations of [rows] this build can read, and how many it could
+/// not. A row whose status it does not know is left out, recorded under
+/// [area] for the read [read] (replacing that read's earlier record) and
+/// traced, never read as a status it is not: one such row no longer fails
+/// the whole list, and the caller is told how many were left out.
 @visibleForTesting
-List<Reservation> reservationsFromRows(Iterable<Object?> rows, {required String area}) => [
-      for (final row in rows)
-        ?_reservationFromRow(Map<String, dynamic>.from(row! as Map), area: area),
-    ];
-
-/// One reservation, or null when its status is unknown (see
-/// [reservationsFromRows]).
-Reservation? _reservationFromRow(Map<String, dynamic> row, {required String area}) {
-  final status = reservationStatusFromDb(row['status'] as String?);
-  if (status == null) {
-    UnreadableRows.instance.skip(
-      area,
-      row['id'] as String,
-      what: 'reservation status ${row['status']}',
-    );
-    return null;
+ReadWithUnreadable<List<Reservation>> reservationsFromRows(
+  Iterable<Object?> rows, {
+  required String area,
+  required String read,
+}) {
+  final left = <String, String>{};
+  final kept = <Reservation>[];
+  for (final raw in rows) {
+    final row = Map<String, dynamic>.from(raw! as Map);
+    final status = reservationStatusFromDb(row['status'] as String?);
+    if (status == null) {
+      left['${row['id']}'] = 'reservation status ${row['status']}';
+    } else {
+      kept.add(_reservationFromRow(row, status));
+    }
   }
+  final unreadable = UnreadableRows.instance.record(area, read, left);
+  return (rows: kept, unreadable: unreadable);
+}
+
+Reservation _reservationFromRow(Map<String, dynamic> row, ReservationStatus status) {
   return Reservation(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,

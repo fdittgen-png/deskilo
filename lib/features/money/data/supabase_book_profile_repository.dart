@@ -59,13 +59,9 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       params: {'p_workspace_id': workspaceId},
     );
     final read = bookChartFromJson(Map<String, Object?>.from(row as Map));
-    for (final id in read.unreadable) {
-      UnreadableRows.instance.skip(
-        booksArea(workspaceId),
-        id,
-        what: 'book account type, origin or role',
-      );
-    }
+    UnreadableRows.instance
+      ..record(booksAccountsArea(workspaceId), 'chart', read.unreadableAccounts)
+      ..record(booksMappingsArea(workspaceId), 'chart', read.unreadableMappings);
     return (accounts: read.accounts, mappings: read.mappings);
   }
 
@@ -143,15 +139,15 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       },
     );
     final set = PostingSet.fromJson(Map<String, Object?>.from(row! as Map));
-    for (final b in set.blockers) {
-      if (b.block == PostingBlock.unreadable) {
-        UnreadableRows.instance.skip(
-          booksArea(workspaceId),
-          b.subject,
-          what: 'posting role, kind, journal or block',
-        );
-      }
-    }
+    UnreadableRows.instance.record(
+      booksPostingsArea(workspaceId),
+      '${isoDay(from)}|${isoDay(to)}',
+      {
+        for (final b in set.blockers)
+          if (b.block == PostingBlock.unreadable)
+            b.subject: 'posting role, kind, journal or block',
+      },
+    );
     return set;
   }
 

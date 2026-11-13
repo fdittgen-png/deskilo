@@ -62,18 +62,18 @@ class MyReservationItem {
   });
 
   /// The item, or null when its status is one this build does not know
-  /// (#3884): the page keeps its other bookings and says that one was left
-  /// out, rather than drawing it as a status it is not.
-  static MyReservationItem? tryFromJson(Object? raw, {required String context}) {
+  /// (#3884): the id and the unknown value go into [left] and the page
+  /// keeps its other bookings, rather than drawing it as a status it is not.
+  static MyReservationItem? tryFromJson(
+    Object? raw, {
+    required String context,
+    required Map<String, String> left,
+  }) {
     final r = JsonReader.of(raw, context: context);
     final statusWire = r.string('status');
     final status = reservationStatusFromDb(statusWire);
     if (status == null) {
-      UnreadableRows.instance.skip(
-        myReservationsArea,
-        r.string('id'),
-        what: 'reservation status $statusWire',
-      );
+      left[r.string('id')] = 'reservation status $statusWire';
       return null;
     }
     return MyReservationItem(
@@ -203,6 +203,7 @@ class MyReservationsPage {
     required this.next,
     required this.hasMore,
     this.zones = const {},
+    this.unreadable = 0,
   });
 
   /// The strict read of the wire page. [source] is the installation the
@@ -229,14 +230,28 @@ class MyReservationsPage {
     if (hasMore && next == null) {
       throw const JsonShapeException(context, 'next', 'a cursor when has_more', 'null');
     }
+    final left = <String, String>{};
+    final items = List<MyReservationItem>.unmodifiable([
+      for (final item in itemsRaw)
+        ?MyReservationItem.tryFromJson(
+          item,
+          context: '$context.items',
+          left: left,
+        ),
+    ]);
+    // A page read again replaces what its earlier read left out.
+    final first = itemsRaw.isEmpty ? '' : JsonReader.of(itemsRaw.first, context: context).stringOrNull('id');
+    final unreadable = UnreadableRows.instance.record(
+      myReservationsArea,
+      '$source|$first',
+      left,
+    );
     return MyReservationsPage(
       source: source,
-      items: List.unmodifiable([
-        for (final item in itemsRaw)
-          ?MyReservationItem.tryFromJson(item, context: '$context.items'),
-      ]),
+      items: items,
       next: next == null ? null : MyReservationsCursor.fromJson(next),
       hasMore: hasMore,
+      unreadable: unreadable,
     );
   }
 
@@ -245,6 +260,10 @@ class MyReservationsPage {
   final List<MyReservationItem> items;
   final MyReservationsCursor? next;
   final bool hasMore;
+
+  /// #3884 -- how many bookings of this page were left out because their
+  /// status is one this build does not know.
+  final int unreadable;
 
   /// #2553 C2 -- the IANA zone of each workspace the items name, as the
   /// host's own workspace row holds it: a day is that workspace's day.
@@ -258,6 +277,7 @@ class MyReservationsPage {
         next: next,
         hasMore: hasMore,
         zones: Map.unmodifiable(zones),
+        unreadable: unreadable,
       );
 }
 
