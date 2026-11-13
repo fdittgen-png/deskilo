@@ -34,3 +34,14 @@ T demoPickSpace<T>(Ref ref, DemoSpaces<T> spaces) =>
       demoTwinSpaceId => spaces.twin,
       _ => spaces.home,
     };
+
+/// The value of every space, each made from the one it came from.
+DemoSpaces<R> demoMapSpaces<T, R>(DemoSpaces<T> spaces, R Function(T) f) => (
+  home: f(spaces.home),
+  leipzig: f(spaces.leipzig),
+  london: f(spaces.london),
+  newYork: f(spaces.newYork),
+  zurich: f(spaces.zurich),
+  milan: f(spaces.milan),
+  twin: f(spaces.twin),
+);

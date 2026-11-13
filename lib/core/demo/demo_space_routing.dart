@@ -39,7 +39,6 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
-import 'data/bank_statement_demo_seed.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/finance_kpi_repository.dart';
@@ -52,8 +51,8 @@ import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_fixture.dart';
 import 'demo_london_space.dart';
+import 'demo_space_pick.dart';
 import 'demo_trade_city_space.dart';
-import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
@@ -159,15 +158,9 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   final twinPayments = DemoRecordedPaymentsRepository(money: twin.money, workspaces: twin.workspaces);
   final twinActions = FakeInvoiceActionCommands(twin.money);
   final twinKpi = _cityKpi(fixture, twin.money);
-  final twinBank = FakeBankStatementRepository(money: twin.money, today: home.seededAt);
-  final newYorkBank = seedCityBankStatement(newYork.money, home.seededAt, 'ny', 'USD');
   final zs = _tradeStores(fixture, zurich), ms = _tradeStores(fixture, milan);
-  final homeBank = seedDemoBankStatements(home.money, home.seededAt);
-  final secondBank = FakeBankStatementRepository(
-    money: second.money,
-    today: home.seededAt,
-  );
-  final londonBank = seedCityBankStatement(london.money, home.seededAt, 'uk', 'GBP');
+  // #3865 — each space's last bank statement lives on the fixture.
+  final banks = demoMapSpaces(fixture.stores, (s) => s.bank);
   return [
     workspaceRepositoryProvider.overrideWith(
       (ref) => _pick(ref, [home.workspaces, second.workspaces, london.workspaces, newYork.workspaces, zurich.workspaces, milan.workspaces, twin.workspaces]),
@@ -228,7 +221,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     moneyRepositoryProvider.overrideWith(money),
     // #2380 — the main space's last bank statement; the second has none yet.
     bankStatementRepositoryProvider.overrideWith((ref) {
-      return _pick<FakeBankStatementRepository>(ref, [homeBank, secondBank, londonBank, newYorkBank, zs.bank, ms.bank, twinBank])
+      return demoPickSpace<FakeBankStatementRepository>(ref, banks)
         ..actingMemberId = (() => fixture.activeMemberId)
         ..mayUnmatch = (() => ref
             .read(myPermissionsProvider)
@@ -332,16 +325,14 @@ List<Override> _hmrcOverrides(DemoLondonData london) => [
 ];
 
 /// #3832 - what a trade city's money answers with: its invoice actions, its
-/// finance figures, its recorded payments and its last bank statement.
+/// finance figures and its recorded payments.
 ({
   FakeInvoiceActionCommands actions,
   DemoFinanceKpiRepository kpi,
   DemoRecordedPaymentsRepository payments,
-  FakeBankStatementRepository bank,
 })
 _tradeStores(DemoFixture fixture, DemoTradeCityData city) => (
   actions: FakeInvoiceActionCommands(city.money),
   kpi: _cityKpi(fixture, city.money),
   payments: DemoRecordedPaymentsRepository(money: city.money, workspaces: city.workspaces),
-  bank: seedCityBankStatement(city.money, fixture.seededAt, city.city.prefix, city.city.currency),
 );
