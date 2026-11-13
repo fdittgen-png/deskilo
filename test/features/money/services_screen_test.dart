@@ -242,7 +242,7 @@ void main() {
     }
     final save = find.byKey(const ValueKey('services-save'));
     await tester.ensureVisible(save);
-    await tester.pumpAndSettle();
+    await tester.pump();
     await tester.tap(save);
     await tester.pumpAndSettle();
     return money.services.singleWhere((s) => s.name == 'Day pass');

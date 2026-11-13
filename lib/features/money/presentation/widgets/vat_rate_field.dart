@@ -86,6 +86,14 @@ class VatRateField extends ConsumerWidget {
 String _vatRateOption(AppFormat format, VatRate rate) =>
     '${rate.label} (${format.ratePercent(rate.percent)})';
 
+/// #3864 — the class a new service starts from in this workspace
+/// ([newServiceSupplyClass]): read once, when the form opens.
+SupplyClass newServiceSupplyClassIn(WidgetRef ref) => newServiceSupplyClass(
+  booksPlaces: ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.placeBooking),
+);
+
 /// #2354 — where a catalogue service is supplied for VAT.
 ///
 /// Renders NOTHING unless the workspace charges VAT and either
@@ -108,9 +116,11 @@ class SupplyClassField extends ConsumerWidget {
     final regime = vatRegimeFromWire(
       ref.watch(currentWorkspaceProvider).value?.vatRegime,
     );
+    final enabled = ref.watch(enabledFeaturesSyncProvider);
     if (!asksSupplyClass(
       vatRegistered: regime == VatRegime.vatRegistered,
-      enabled: ref.watch(enabledFeaturesSyncProvider),
+      classifies: enabled.contains(WorkspaceFeature.supplyClassification),
+      booksPlaces: enabled.contains(WorkspaceFeature.placeBooking),
     )) {
       return const SizedBox.shrink();
     }
