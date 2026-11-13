@@ -77,8 +77,8 @@ begin
   if not exists (
     select 1 from public.members a
       join public.members b on b.user_id = a.user_id
-     where a.workspace_id = v_ws.id and a.is_owner
-       and b.workspace_id = v_twin.id and b.is_owner) then
+     where a.workspace_id = v_ws.id and a.is_owner and a.status = 'active'
+       and b.workspace_id = v_twin.id and b.is_owner and b.status = 'active') then
     return new;
   end if;
   if not exists (select 1 from public.members where workspace_id = v_twin.id and user_id = new.user_id) then
@@ -115,6 +115,8 @@ declare
   v_def text;
 begin
   select pg_get_functiondef('public.badge_auth_verify(text,text,text,uuid,text)'::regprocedure) into v_def;
+  -- Applied once: a second run leaves the function as it is.
+  if position('signs in with its password' in v_def) > 0 then return; end if;
   -- 3: the kiosk's own workspace first.
   v_def := pg_temp.anchor_replace(v_def,
     $a$   where token_hash = v_hash and revoked_at is null and auth_enabled
@@ -130,7 +132,9 @@ begin
   v_def := pg_temp.anchor_replace(v_def,
     $a$  if v_badge.id is null or v_member.id is null or not coalesce(v_enabled,false)$a$,
     $a$  -- A badge opens its own workspace. An account that owns or administers
-  -- another one signs in with its password.
+  -- another one signs in with its password. Answered like an unknown badge
+  -- and counted for the tag only, as the kiosks-only refusal is: it never
+  -- counts toward the business's pause or its owners' alert.
   if v_member.id is not null and exists (
        select 1 from public.members o
          join public.workspaces ow on ow.id = o.workspace_id
@@ -139,7 +143,8 @@ begin
           and o.workspace_id <> v_member.workspace_id
           and (ow.pair_id is null or ow.pair_id is distinct from bw.pair_id)
           and (o.is_owner or o.is_admin or o.co_owner = 'active')) then
-    v_member.id := null;
+    perform public.record_badge_auth_failure(v_hash, null, v_place, v_badge.workspace_id);
+    return jsonb_build_object('ok',false,'reason','refused');
   end if;
   if v_badge.id is null or v_member.id is null or not coalesce(v_enabled,false)$a$);
   if v_def is null or position('signs in with its password' in v_def) = 0 then
@@ -155,6 +160,8 @@ declare
   v_def text;
 begin
   select pg_get_functiondef('public.set_einvoice_credentials(uuid,jsonb)'::regprocedure) into v_def;
+  -- Applied once: a second run leaves the function as it is.
+  if position('keeps no secret it was not sent' in v_def) > 0 then return; end if;
   v_def := pg_temp.anchor_replace(v_def,
     $a$  v_entry record;
 begin$a$,
@@ -170,7 +177,7 @@ begin$a$);
     (workspace_id, provider, config, updated_at)$a$,
     $a$  -- A connection moved to another host keeps no secret it was not sent
   -- with: the secrets are entered again for the new host.
-  select config into v_old from public.einvoice_credentials where workspace_id = p_workspace_id;
+  select config into v_old from public.einvoice_credentials where workspace_id = p_workspace_id for update;
   if v_old is not null and exists (
        select 1 from jsonb_each(v_stored) n
         where n.key ~ '^(customer_)?(endpoint|base_url|token_url|login_url)(_uat|_dev)?$'
