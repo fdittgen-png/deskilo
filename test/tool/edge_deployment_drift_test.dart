@@ -38,7 +38,7 @@ void main() {
       expect(r.rows, hasLength(3));
     });
 
-    test('a missing function and an orphan are named', () {
+    test('a missing function is named, an orphan only counted', () {
       final r = compare([
         (slug: 'a', verifyJwt: true),
         (slug: 'b', verifyJwt: false),
@@ -46,7 +46,9 @@ void main() {
       ], _local);
       expect(r.status, DriftStatus.drift);
       expect(r.problems, contains(contains('c is in supabase/functions but not deployed')));
-      expect(r.problems, contains(contains('zombie is deployed but has no folder')));
+      expect(r.problems,
+          contains('1 deployed function is not in the repository \u2014 list them with the management console'));
+      expect('${r.problems}${r.rows}', isNot(contains('zombie')));
     });
 
     test('a verify_jwt flip names both values', () {
@@ -109,6 +111,15 @@ void main() {
       final (code, out, summary) = await go({'SUPABASE_ACCESS_TOKEN': 't'}, fake());
       expect(code, 0, reason: out);
       expect(summary, contains('verified: 3 functions match'));
+    });
+
+    test('an orphan\'s slug appears nowhere in the output, exit stays 1',
+        () async {
+      final api = fake()..deployed[_ref]!.add((slug: 'zombie', verifyJwt: true));
+      final (code, out, summary) = await go({'SUPABASE_ACCESS_TOKEN': 't'}, api);
+      expect(code, 1, reason: out);
+      expect(out + summary, isNot(contains('zombie')));
+      expect(summary, contains('1 deployed function is not in the repository'));
     });
 
     test('drift exits 1 and the summary names it', () async {

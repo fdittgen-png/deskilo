@@ -10,7 +10,7 @@
 // THREE RESULTS, never two:
 //   verified      every repository function is deployed, nothing else is, and
 //                 each one's `verify_jwt` is what the repository says  (exit 0)
-//   drift         a function missing, an orphan, or a flipped `verify_jwt`
+//   drift         a function missing, an orphan (counted, never named), or a flipped `verify_jwt`
 //                 (exit 1)
 //   not verified  the check could not look: no token, no ref, the ref is not the
 //                 expected one, the API refused (401/403), timed out or answered
@@ -57,6 +57,10 @@ DriftReport compare(
   final drift = <String>[];
   final unknown = <String>[];
   final rows = <String>[];
+  // #3520: this log and summary are public. A deployed function the
+  // repository does not hold is COUNTED, never named: its name was never
+  // shown by the repository.
+  var orphans = 0;
   for (final slug in {...local.keys, ...remote.keys}.toList()..sort()) {
     final inRepo = local.containsKey(slug);
     final onDev = remote.containsKey(slug);
@@ -65,8 +69,8 @@ DriftReport compare(
       verdict = 'MISSING on dev';
       drift.add('$slug is in supabase/functions but not deployed');
     } else if (!inRepo) {
-      verdict = 'ORPHAN on dev';
-      drift.add('$slug is deployed but has no folder in supabase/functions');
+      orphans++;
+      continue;
     } else if (remote[slug] == null) {
       verdict = 'not verified';
       unknown.add('$slug: the API did not say its verify_jwt');
@@ -82,6 +86,12 @@ DriftReport compare(
     rows.add(
       '$slug | ${inRepo ? _jwt(local[slug]) : '-'} | '
       '${onDev ? _jwt(remote[slug]) : '-'} | $verdict',
+    );
+  }
+  if (orphans > 0) {
+    drift.add(
+      '$orphans deployed function${orphans == 1 ? ' is' : 's are'} not in the '
+      'repository \u2014 list them with the management console',
     );
   }
   if (drift.isNotEmpty) {
