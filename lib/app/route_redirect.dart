@@ -4,8 +4,8 @@
 // route_policy.dart as a pure function over facts, and who may open which
 // workspace screen in route_access.dart; this file only collects the facts
 // and asks. Building them reads; nothing here writes except the two things
-// a redirect has always done (hold an invitation link, keep a signed-out
-// request).
+// a redirect has always done (hold an invitation link or an accounting
+// sign-in, keep a signed-out request).
 //
 // Navigation policy, not security: the backend stays authoritative.
 import 'package:go_router/go_router.dart';
@@ -15,6 +15,8 @@ import '../core/backend/schema_version.dart';
 import '../core/instance/schema_compatibility.dart';
 import '../features/auth/providers/auth_providers.dart';
 import '../features/kiosk/providers/kiosk_mode.dart';
+import '../features/money/application/arrived_accounting_sign_in.dart';
+import '../features/money/domain/accounting_sign_in_return.dart';
 import '../features/profile/providers/profile_providers.dart';
 import '../features/workspace/application/pending_invitation.dart';
 import '../features/workspace/domain/member.dart';
@@ -43,6 +45,13 @@ String? appRedirect(RouteEnv env, GoRouterState state) {
         .hold(Uri(scheme: 'deskilo', host: 'join', query: state.uri.query)
             .toString());
     return const EntryIntent.join('invitation-link').destination;
+  }
+  // #3906 — an accounting target's sign-in sent back: its code and state
+  // leave the address at once and are held in memory for the page that
+  // completes it, which can then wait through a sign-in like any page.
+  if (SignInReturn.fromUri(state.uri) case final back?) {
+    ref.read(arrivedAccountingSignInProvider).hold(back);
+    return accountingSignInReturnPath;
   }
   final intent = ref.read(entryIntentsProvider);
   final auth = ref.read(authStateProvider);

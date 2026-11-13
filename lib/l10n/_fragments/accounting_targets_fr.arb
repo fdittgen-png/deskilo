@@ -101,5 +101,12 @@
   "acctEntraTenant": "Locataire (ID d'annuaire ou domaine)",
   "acctEntraEnvironment": "Nom de l'environnement",
   "acctEntraCompany": "ID de la société",
-  "acctEntraInvalid": "Cette valeur n'a pas la forme attendue."
+  "acctEntraInvalid": "Cette valeur n'a pas la forme attendue.",
+  "accountingSignInCompleting": "Connexion en cours de finalisation…",
+  "accountingSignInConnected": "La connexion est établie. Son état est affiché dans Comptabilité.",
+  "accountingSignInRefused": "Vous ne pouvez pas gérer cette connexion : la connexion n'a pas été finalisée.",
+  "accountingSignInExpired": "Ce lien de connexion a expiré ou a déjà servi. Recommencez depuis Comptabilité.",
+  "accountingSignInFailed": "La connexion n'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.",
+  "accountingSignInBack": "Retour à Comptabilité",
+  "accountingSignInNotYours": "Cette connexion a été lancée par quelqu'un d'autre. Recommencez depuis Comptabilité."
 }
