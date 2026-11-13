@@ -267,23 +267,33 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
       approve_url: order.approveUrl,
     });
   } catch (e) {
-    // #2014 — a definitive refusal fails the intent (its number is not
-    // reused); a timeout, lost connection or provider 5xx is UNKNOWN: the
-    // order may exist, so the intent stays pending for reconciliation and
-    // a retry with the same key cannot create a second order. Provider
-    // bodies are neither returned nor logged.
-    const outcome = failureOutcome(e);
-    const status = e instanceof ProviderRefusal ? e.status : null;
-    console.error("payment order failed", { provider, outcome, status });
-    if (outcome === "failed") {
-      // Only an intent still in its first state is marked failed: an intent
-      // the provider already settled keeps its status.
-      await admin.from("payment_intents").update({ status: "failed" })
-        .eq("id", intent.id).eq("status", "created");
-      return json({ error: "provider_error", provider }, 502);
-    }
-    return json({ error: "outcome_unknown", provider }, 503);
+    return orderFailure(admin, String(intent.id), provider, e);
   }
+}
+
+/** #2014 — a definitive refusal fails the intent (its number is not
+ * reused); a timeout, lost connection or provider 5xx is UNKNOWN: the
+ * order may exist, so the intent stays pending for reconciliation and a
+ * retry with the same key cannot create a second order. Provider bodies
+ * are neither returned nor logged. */
+export async function orderFailure(
+  // deno-lint-ignore no-explicit-any
+  admin: any,
+  intentId: string,
+  provider: string,
+  e: unknown,
+): Promise<Response> {
+  const outcome = failureOutcome(e);
+  const status = e instanceof ProviderRefusal ? e.status : null;
+  console.error("payment order failed", { provider, outcome, status });
+  if (outcome === "failed") {
+    // Only an intent still in its first state is marked failed: an intent
+    // the provider already settled keeps its status.
+    await admin.from("payment_intents").update({ status: "failed" })
+      .eq("id", intentId).eq("status", "created");
+    return json({ error: "provider_error", provider }, 502);
+  }
+  return json({ error: "outcome_unknown", provider }, 503);
 }
 
 if (import.meta.main) Deno.serve(handle);
