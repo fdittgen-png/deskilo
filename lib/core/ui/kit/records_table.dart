@@ -20,9 +20,11 @@ import '../../l10n/context_l10n.dart';
 import '../../storage/prefs_stores.dart';
 import '../../theme/app_spacing.dart';
 import '../adaptive/window_class.dart';
+import '../mouse_presence.dart';
 import 'list_detail_open.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
+import 'row_menu.dart';
 
 export 'records_table_model.dart';
 
@@ -45,6 +47,7 @@ class RecordsTable<T> extends StatefulWidget {
     this.complete = true,
     this.chips = const [],
     this.amountOf,
+    this.amountColumn,
     this.formatAmount,
     this.rowActions,
     this.bulkActions = const [],
@@ -86,6 +89,12 @@ class RecordsTable<T> extends StatefulWidget {
 
   /// What a row adds to the totals, in its own currency.
   final RecordAmount? Function(T row)? amountOf;
+
+  /// The column whose amounts [amountOf] adds up. When given, the total
+  /// carries that column's name and is not shown while the column is not
+  /// (hidden by the person, or giving way to a record open beside the
+  /// table): a total never stands under another column's figures.
+  final String? amountColumn;
   final String Function(String currency, int minor)? formatAmount;
   final List<RecordAction<T>> Function(T row)? rowActions;
   final List<RecordBulkAction> bulkActions;
@@ -105,7 +114,11 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     chips: widget.chips,
     columns: widget.columns,
   )..rowsChanged(widget.rows, chips: widget.chips, columns: widget.columns);
-  bool _touch = false;
+  // #3895 — a finger's sizes until a mouse is connected (or a mouse click
+  // says so): the first tap of a tablet meets a 48 dp target.
+  bool _touch = !MousePresence.connected;
+  final _scroll = ScrollController();
+  final _menus = <String, GlobalKey<RowMenuState>>{};
   final _filter = TextEditingController();
   final _filterFocus = FocusNode();
   final _rowsFocus = FocusNode();
@@ -156,6 +169,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     _filter.dispose();
     _filterFocus.dispose();
     _rowsFocus.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -321,7 +335,15 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       child: Actions(
         actions: recordsActions(
           focusFilter: _filterFocus.requestFocus,
-          move: _c.move,
+          move: (by) {
+            _c.move(by);
+            _reveal(shown.length, rowHeight);
+          },
+          rowMenu: () {
+            if (focusedRow() case final r?) {
+              unawaited(_menus[widget.keyOf(r)]?.currentState?.open());
+            }
+          },
           open: () {
             if (focusedRow() case final r?) widget.onOpen(r);
           },
@@ -356,6 +378,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               const Divider(height: 1),
               Expanded(
                 child: ListView.separated(
+                  controller: _scroll,
                   itemCount: shown.length,
                   separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, i) {
@@ -377,6 +400,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                       focused: _rowsFocus.hasFocus && i == _c.focused,
                       minHeight: rowHeight,
                       selectable: _selectable,
+                      menuKey: _menus.putIfAbsent(key, GlobalKey.new),
                     );
                   },
                 ),
@@ -386,6 +410,19 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
         ),
       ),
     );
+  }
+
+  /// The row the arrows stand on stays in view: rows are a fixed height.
+  void _reveal(int count, double rowHeight) {
+    if (!_scroll.hasClients || count == 0) return;
+    final extent = rowHeight + 1; // content-fit: a row and its divider
+    final top = _c.focused.clamp(0, count - 1) * extent;
+    final p = _scroll.position;
+    if (top < p.pixels) {
+      _scroll.jumpTo(top);
+    } else if (top + extent > p.pixels + p.viewportDimension) {
+      _scroll.jumpTo(top + extent - p.viewportDimension);
+    }
   }
 
   Widget _cards(List<T> shown) => ListView.separated(
@@ -424,7 +461,17 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   );
 
   Widget _footer(List<T> shown) {
-    final amountOf = widget.amountOf;
+    final of = widget.columns
+        .where((c) => c.id == widget.amountColumn)
+        .firstOrNull;
+    final totalHidden =
+        of != null &&
+        !columnsShown(
+          widget.columns,
+          _c.hidden,
+          beside: ListDetailOpen.of(context),
+        ).contains(of);
+    final amountOf = totalHidden ? null : widget.amountOf;
     final selected = _c.selected;
     final selection = [
       for (final r in shown)
@@ -442,6 +489,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               amountOf,
             ),
       scope: scope,
+      totalOf: of?.label,
       format: widget.formatAmount ?? (c, m) => '$m $c',
       dropped: _c.dropped,
     );

@@ -11,8 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/context_l10n.dart';
 import '../../theme/app_spacing.dart';
-import '../seed/demo_second_space_seed.dart';
-import 'demo_workspace.dart';
+import '../demo_space_ids.dart';
+import 'demo_environment.dart';
 
 class DemoSetupCard extends ConsumerWidget {
   const DemoSetupCard({super.key});

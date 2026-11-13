@@ -62,6 +62,18 @@ void main() {
       );
     });
 
+    test('only a reserved flag stays unreviewed (AGENT_RULES, #2519)', () {
+      // A new shipped feature starts beta by owner decision; "unreviewed"
+      // is for a reserved flag nothing consumes, so it skips the
+      // experimental opt-in. The allow-list only shrinks.
+      const allowed = {'siteDocuments': 'reserved: no surface consumes it'};
+      final unreviewed = featureAssessments.entries
+          .where((e) => e.value.maturity == FeatureMaturity.unreviewed)
+          .map((e) => e.key.name)
+          .toSet();
+      expect(unreviewed.difference(allowed.keys.toSet()), isEmpty);
+    });
+
     test('claims nothing that the evidence ledger does not carry', () {
       // #1850 B: a feature leaves unreviewed only through a shipped,
       // evidenced capability that names it (feature_assessment_evidence_

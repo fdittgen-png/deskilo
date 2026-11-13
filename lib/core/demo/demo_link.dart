@@ -10,10 +10,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'demo_persona.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_trade_city_seed.dart';
+import 'demo_space_ids.dart';
 
 part 'demo_link.g.dart';
 

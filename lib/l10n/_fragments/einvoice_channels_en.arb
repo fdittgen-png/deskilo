@@ -254,5 +254,22 @@
   "memberEInvoiceAddressFailed": "The e-invoicing address could not be saved.",
   "@memberEInvoiceAddressFailed": {
     "description": "#2358 member dialog: the save was refused"
+  },
+  "eInvoiceTestFieldsTitle": "Test environment (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
+  "eInvoiceTestFieldsHelp": "Rehearsal keys for the test platform. They are kept apart from the production ones; a blank field keeps what is stored.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldLabel": "{field} (test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
   }
 }

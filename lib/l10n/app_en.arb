@@ -9258,6 +9258,10 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Nothing to state for this period: no balance and no movement.",
+  "@customerStatementPeriodNothing": {
+    "description": "no statement is printed for a period without balance or movement (#3876)"
+  },
   "customerStatementPeriodRange": "From {from} to {to}",
   "@customerStatementPeriodRange": {
     "description": "the period under the title (#3839)",
@@ -11026,6 +11030,23 @@
   "eInvoiceSubdivisionField": "County or province (e.g. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
+  },
+  "eInvoiceTestFieldLabel": "{field} (test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceTestFieldsHelp": "Rehearsal keys for the test platform. They are kept apart from the production ones; a blank field keeps what is stored.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldsTitle": "Test environment (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
   },
   "editorAddLevel": "Add level",
   "@editorAddLevel": {
@@ -26119,6 +26140,15 @@
   "@memberBadgesTooltip": {
     "description": "Tooltip of the badge-manager button on a member row"
   },
+  "memberBookingsNone": "No booking since {date}",
+  "@memberBookingsNone": {
+    "description": "#3618 members at the desk: bookings tab empty",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "memberCoOwnerChip": "Co-owner",
   "@memberCoOwnerChip": {
     "description": "Members-list chip for an active co-owner"
@@ -26296,6 +26326,10 @@
   "@memberNoteToAllAdmins": {
     "description": "Member-notes inbox on the Events screen (#460)"
   },
+  "memberNotesWrite": "Write a note",
+  "@memberNotesWrite": {
+    "description": "#3618 members at the desk: notes tab action"
+  },
   "memberNotifyAction": "Send notification",
   "@memberNotifyAction": {
     "description": "Member notes (#456)"
@@ -26440,6 +26474,50 @@
   "@memberPause": {
     "description": "Member sheet action: pause an active membership (formerly a hidden long-press)"
   },
+  "memberPlanEstCredits": "Confirmed credits",
+  "@memberPlanEstCredits": {
+    "description": "#3618 members at the desk: estimate part"
+  },
+  "memberPlanEstOverage": "Extra half-days",
+  "@memberPlanEstOverage": {
+    "description": "#3618 members at the desk: estimate part"
+  },
+  "memberPlanEstSupplements": "Supplements",
+  "@memberPlanEstSupplements": {
+    "description": "#3618 members at the desk: estimate part"
+  },
+  "memberPlanEstimate": "Estimated next invoice",
+  "@memberPlanEstimate": {
+    "description": "#3618 members at the desk: plan tab: the statement's projection"
+  },
+  "memberPlanEstimateBasis": "For {period}, as of {date}: the statement so far",
+  "@memberPlanEstimateBasis": {
+    "description": "#3618 members at the desk: what the estimate covers",
+    "placeholders": {
+      "period": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberPlanEstimateUnavailable": "Unavailable: the statement could not be read",
+  "@memberPlanEstimateUnavailable": {
+    "description": "#3618 members at the desk: the statement could not be read"
+  },
+  "memberPlanJoined": "Joining date",
+  "@memberPlanJoined": {
+    "description": "#3618 members at the desk: plan tab row: the joining date, the only date stored"
+  },
+  "memberPlanJoinedUnknown": "Not recorded",
+  "@memberPlanJoinedUnknown": {
+    "description": "#3618 members at the desk: joining date not stored"
+  },
+  "memberPlanPausedNoDates": "Paused: no dates are recorded for a pause",
+  "@memberPlanPausedNoDates": {
+    "description": "#3618 members at the desk: a pause has no stored dates"
+  },
   "memberPlanShare": "Plan {pct}%",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
@@ -26448,6 +26526,10 @@
         "type": "String"
       }
     }
+  },
+  "memberPlanShareLabel": "Share",
+  "@memberPlanShareLabel": {
+    "description": "#3618 members at the desk: plan tab row"
   },
   "memberReactivate": "Reactivate membership",
   "@memberReactivate": {
@@ -26575,13 +26657,162 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkPause": "Pause {count, plural, one{1 member} other{{count} members}}",
+  "@membersBulkPause": {
+    "description": "#3618 members at the desk: bulk action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersBulkPlan": "Change the plan of {count, plural, one{1 member} other{{count} members}}",
+  "@membersBulkPlan": {
+    "description": "#3618 members at the desk: bulk action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersBulkResume": "Resume {count, plural, one{1 member} other{{count} members}}",
+  "@membersBulkResume": {
+    "description": "#3618 members at the desk: bulk action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersChangeApply": "Apply",
+  "@membersChangeApply": {
+    "description": "#3618 members at the desk: bulk task button"
+  },
+  "membersChangeDone": "{changed, plural, =0{None changed} one{1 changed} other{{changed} changed}} out of {count, plural, one{1 member} other{{count} members}}",
+  "@membersChangeDone": {
+    "description": "#3618 members at the desk: bulk task result: members changed out of those selected",
+    "placeholders": {
+      "changed": {
+        "type": "int"
+      },
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersChangeFromToday": "Applies from today, {date}. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.",
+  "@membersChangeFromToday": {
+    "description": "#3618 members at the desk: bulk task: the effective date",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "membersChipOpen": "With an open amount",
+  "@membersChipOpen": {
+    "description": "#3618 members at the desk: chip"
+  },
+  "membersColEmail": "E-mail",
+  "@membersColEmail": {
+    "description": "#3618 members at the desk: column, only for who may see e-mails"
+  },
+  "membersColLastVisit": "Last visit",
+  "@membersColLastVisit": {
+    "description": "#3618 members at the desk: column: latest booking the member came to"
+  },
+  "membersColName": "Name",
+  "@membersColName": {
+    "description": "#3618 members at the desk: column"
+  },
+  "membersColPlan": "Plan and share",
+  "@membersColPlan": {
+    "description": "#3618 members at the desk: column: the subscription share"
+  },
+  "membersColPlanFee": "Plan fee",
+  "@membersColPlanFee": {
+    "description": "#3618 members at the desk: column: the fee band's monthly fee"
+  },
+  "membersColStatus": "Status",
+  "@membersColStatus": {
+    "description": "#3618 members at the desk: column"
+  },
+  "membersFeeUnavailable": "Unavailable: no fee band covers this share",
+  "@membersFeeUnavailable": {
+    "description": "#3618 members at the desk: plan fee when no fee band covers the share"
+  },
   "membersInvite": "Invite a member",
   "@membersInvite": {
     "description": "App-bar action on the members screen linking to the workspace ID & QR invite surface (#195)"
   },
+  "membersNoVisitSince": "None since {date}",
+  "@membersNoVisitSince": {
+    "description": "#3618 members at the desk: last visit cell when none was read",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "membersOutcomeApplied": "Changed",
+  "@membersOutcomeApplied": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeExited": "Has left the space: not changed",
+  "@membersOutcomeExited": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeFailed": "Not changed: the server refused or did not answer",
+  "@membersOutcomeFailed": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeGone": "No longer a member of the space",
+  "@membersOutcomeGone": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeKiosk": "A kiosk, not a paying member: not changed",
+  "@membersOutcomeKiosk": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomePending": "Waiting to be accepted: not changed",
+  "@membersOutcomePending": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeRuleRefused": "This share is not allowed for them: not changed",
+  "@membersOutcomeRuleRefused": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeUnchanged": "Already so: nothing to change",
+  "@membersOutcomeUnchanged": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersOutcomeWrongStatus": "Not paused: not resumed",
+  "@membersOutcomeWrongStatus": {
+    "description": "#3618 members at the desk: one member's outcome"
+  },
   "membersPlanNone": "No plan",
   "@membersPlanNone": {
     "description": "Plan dropdown option for members without a plan"
+  },
+  "membersPlansTitle": "Subscriptions and plans",
+  "@membersPlansTitle": {
+    "description": "#3618 members at the desk: plans page title and its door"
+  },
+  "membersTabBookings": "Bookings",
+  "@membersTabBookings": {
+    "description": "#3618 members at the desk: member tab"
+  },
+  "membersTabNotes": "Notes",
+  "@membersTabNotes": {
+    "description": "#3618 members at the desk: member tab"
+  },
+  "membersTabPlan": "Plan",
+  "@membersTabPlan": {
+    "description": "#3618 members at the desk: member tab"
+  },
+  "membersTabProfile": "Profile",
+  "@membersTabProfile": {
+    "description": "#3618 members at the desk: member tab"
   },
   "membersTitle": "Members & plans",
   "@membersTitle": {
@@ -29591,6 +29822,18 @@
   "@planYourSeat": {
     "description": "Fallback title of the my-seat sheet for unnamed seats"
   },
+  "plansColIncluded": "What is included",
+  "@plansColIncluded": {
+    "description": "#3618 members at the desk: plans column"
+  },
+  "plansColMembers": "Members on it",
+  "@plansColMembers": {
+    "description": "#3618 members at the desk: plans column: members on the plan"
+  },
+  "plansColPlan": "Plan",
+  "@plansColPlan": {
+    "description": "#3618 members at the desk: plans column: the share range"
+  },
   "plansEditorEdit": "Edit plan",
   "@plansEditorEdit": {
     "description": "Sheet title editing a plan"
@@ -29628,6 +29871,39 @@
   "plansEditorUnlimited": "unlimited half-days",
   "@plansEditorUnlimited": {
     "description": "Quota summary when included_half_days is null"
+  },
+  "plansEmpty": "No fee bands yet: set them in Pricing & packages.",
+  "@plansEmpty": {
+    "description": "#3618 members at the desk: plans table empty"
+  },
+  "plansIncluded": "The member's share of the month's open half-days; an extra half-day costs {overage}",
+  "@plansIncluded": {
+    "description": "#3618 members at the desk: what a fee band includes",
+    "placeholders": {
+      "overage": {
+        "type": "String"
+      }
+    }
+  },
+  "plansNoMembers": "No member is on this plan.",
+  "@plansNoMembers": {
+    "description": "#3618 members at the desk: plan beside the table, no member on it"
+  },
+  "plansShareRange": "{from} to {to}",
+  "@plansShareRange": {
+    "description": "#3618 members at the desk: a fee band's share range",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "plansTitle": "Plans",
+  "@plansTitle": {
+    "description": "#3618 members at the desk: plans page title (short: it stands in the desk's title bar)"
   },
   "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
   "@policyAdminCheckoutDesc": {

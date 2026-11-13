@@ -27,6 +27,8 @@ class EInvoiceProviderForm {
       for (final field in fields) {
         if (eInvoiceSecretFields.contains(field)) continue;
         controllerFor(field).text = status.fields[field] ?? '';
+        final test = eInvoiceTestKey(field);
+        controllerFor(test).text = status.fields[test] ?? '';
       }
     }
   }
@@ -38,13 +40,17 @@ class EInvoiceProviderForm {
   Map<String, String> values() => {
     'provider': provider,
     if (provider != 'generic')
-      for (final field in eInvoiceProviderFields[provider]!)
+      for (final field in eInvoiceProviderFields[provider]!) ...{
         field: controllerFor(field).text.trim(),
+        // #3882 — the test environment's twin, kept apart from production.
+        eInvoiceTestKey(field): controllerFor(eInvoiceTestKey(field)).text.trim(),
+      },
   };
 
   void clearSecrets() {
     for (final field in eInvoiceSecretFields) {
       _fields[field]?.clear();
+      _fields[eInvoiceTestKey(field)]?.clear();
     }
   }
 
@@ -132,27 +138,57 @@ class EInvoiceProviderSection extends StatelessWidget {
             color: theme.colorScheme.onSurfaceVariant,
           ),
         ),
-        if (provider != 'generic')
+        if (provider != 'generic') ...[
           for (final field in eInvoiceProviderFields[provider]!) ...[
             const SizedBox(height: AppSpacing.md),
-            AppTextField(
-              key: ValueKey('einvoice-provider-$field'),
-              controller: form.controllerFor(field),
-              label: eInvoiceFieldLabel(l10n, field),
-              obscureText: eInvoiceSecretFields.contains(field),
-              keyboardType: field.endsWith('_url')
-                  ? TextInputType.url
-                  : TextInputType.text,
-              // The documented sandbox address, so a first try does not
-              // start with looking it up; a stored secret says it is set.
-              helper:
-                  eInvoiceSecretFields.contains(field) &&
-                      secretsSet.contains(field)
-                  ? l10n.eInvoiceFieldSecretSet
-                  : eInvoiceSandboxDefaults[provider]?[field],
-            ),
+            _field(l10n, field, field),
           ],
+          const SizedBox(height: AppSpacing.lg),
+          Text(
+            l10n.eInvoiceTestFieldsTitle,
+            style: theme.textTheme.titleSmall,
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          Text(
+            l10n.eInvoiceTestFieldsHelp,
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          for (final field in eInvoiceProviderFields[provider]!) ...[
+            const SizedBox(height: AppSpacing.md),
+            _field(l10n, field, eInvoiceTestKey(field), test: true),
+          ],
+        ],
       ],
+    );
+  }
+
+  /// One connector field: [field] its base name, [key] the key it is saved
+  /// under. The test twin is obscured when its base is, and never logged.
+  Widget _field(
+    AppLocalizations l10n,
+    String field,
+    String key, {
+    bool test = false,
+  }) {
+    final secret = eInvoiceSecretFields.contains(field);
+    final label = eInvoiceFieldLabel(l10n, field);
+    final String? sandbox = eInvoiceSandboxDefaults[form.provider]?[field];
+    return AppTextField(
+      key: ValueKey('einvoice-provider-$key'),
+      controller: form.controllerFor(key),
+      label: test ? l10n.eInvoiceTestFieldLabel(label) : label,
+      obscureText: secret,
+      keyboardType: field.endsWith('_url')
+          ? TextInputType.url
+          : TextInputType.text,
+      // A stored secret says it is set. The documented sandbox address is
+      // offered on the test twin only: typed in the production field it was
+      // sent, and recorded, as production.
+      helper: secret && secretsSet.contains(key)
+          ? l10n.eInvoiceFieldSecretSet
+          : (test ? sandbox : null),
     );
   }
 }

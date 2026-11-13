@@ -7,6 +7,7 @@
 // reachable from it so the device can be pointed elsewhere.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/schema_gate.dart';
+import 'package:deskilo/core/backend/schema_version.dart';
 import 'package:deskilo/core/instance/schema_compatibility.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,7 +15,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
 
-Future<void> _boot(WidgetTester tester, FixedSchemaVersionSource source,
+Future<void> _boot(WidgetTester tester, SchemaVersionSource source,
     {bool signedIn = true}) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -92,4 +93,51 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('backend-status')), findsOneWidget);
   });
+
+  // #3885 — silence at start is asked again once, when the person returns.
+  testWidgets('a check that got no answer is asked again on return to the '
+      'foreground and then gates', (tester) async {
+    final source = _FlakySource(requiredSchemaVersion - 1);
+    await _boot(tester, source);
+    expect(find.byKey(_update), findsNothing, reason: 'silence never blocks');
+    expect(source.asked, 1);
+
+    _leaveAndReturn(tester);
+    await tester.pumpAndSettle();
+    expect(source.asked, 2, reason: 'one ask per return, no loop');
+    expect(find.byKey(_update), findsOneWidget);
+
+    // A verdict that is known is not asked again.
+    _leaveAndReturn(tester);
+    await tester.pumpAndSettle();
+    expect(source.asked, 2);
+  });
+}
+
+/// The app goes to the background and comes back, by the legal steps.
+void _leaveAndReturn(WidgetTester tester) {
+  for (final state in [
+    AppLifecycleState.inactive,
+    AppLifecycleState.hidden,
+    AppLifecycleState.paused,
+    AppLifecycleState.hidden,
+    AppLifecycleState.inactive,
+    AppLifecycleState.resumed,
+  ]) {
+    tester.binding.handleAppLifecycleStateChanged(state);
+  }
+}
+
+/// Fails once as if offline, then answers [version].
+class _FlakySource implements SchemaVersionSource {
+  _FlakySource(this.version);
+  final int version;
+  int asked = 0;
+
+  @override
+  Future<int?> read() async {
+    asked++;
+    if (asked == 1) throw const SchemaVersionUnavailable('offline in the test');
+    return version;
+  }
 }

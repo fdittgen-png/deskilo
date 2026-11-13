@@ -14,11 +14,11 @@ import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
+import '../demo_space_ids.dart';
 import 'demo_city_people_seed.dart';
 import 'demo_flags.dart';
 
-const demoZurichSpaceId = 'ws-5';
-const demoMilanSpaceId = 'ws-6';
+export '../demo_space_ids.dart' show demoMilanSpaceId, demoZurichSpaceId;
 
 /// One of the trade cities: everything that tells Zurich from Milan.
 class DemoTradeCity {
