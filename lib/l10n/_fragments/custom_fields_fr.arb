@@ -48,5 +48,5 @@
   "@featureCustomFieldsDesc": {
     "description": "#1288 custom fields: featureCustomFieldsDesc"
   },
-  "attentionReviewReversals": "{count, plural, one{Examiner 1 paiement annulé par le prestataire} other{Examiner {count} paiements annulés par le prestataire}}"
+  "attentionReviewReversals": "{count, plural, one{Examiner {count} paiement annulé par le prestataire} other{Examiner {count} paiements annulés par le prestataire}}"
 }
