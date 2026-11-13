@@ -1,0 +1,5 @@
+{
+  "reportSubjectLine": "Oggetto: {subject}",
+  "usageReportOverageLine": "Eccedenza riportata sulla prossima fattura: {amount}",
+  "reportExpectedDeliveryDate": "Consegna prevista il {date}"
+}

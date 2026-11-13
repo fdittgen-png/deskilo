@@ -150,6 +150,24 @@ void main() {
       }
     });
 
+    test('a line break ends the sentence; a space does not (#3768)', () {
+      for (final between in [r'\n', r'\n---\n', r' {{ number }}\n> ', r'\n\n']) {
+        expect(
+          sentenceJoins(_fn("  return '\${l10n.x}$between\${l10n.y}';")),
+          isEmpty,
+          reason: 'between "$between"',
+        );
+      }
+      expect(
+        sentenceJoins(_fn(r"  return '${l10n.x}: ${l10n.y}';")),
+        hasLength(1),
+      );
+      expect(
+        sentenceJoins(_fn(r"  return '${l10n.x}${l10n.y}';")),
+        hasLength(1),
+      );
+    });
+
     test('isIndependentJoin names the tags', () {
       expect(isIndependentJoin('{% if a %}'), isTrue);
       expect(isIndependentJoin('{%- endif -%}'), isTrue);

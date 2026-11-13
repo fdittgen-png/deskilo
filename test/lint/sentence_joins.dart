@@ -63,14 +63,17 @@ final Set<String> _spaceOnlyPatterns = () {
 /// is set and [text] is its source).
 typedef _Part = ({String text, Expression? expr});
 
-const _independentSeparators = {' · ', ' | ', '\n'};
+const _independentSeparators = {' · ', ' | '};
 
 /// What may stand between two values without the string being a sentence
 /// built from pieces: the join of independent facts (` · `), the cells of a
-/// table row (` | `), independent lines (a newline), and the control tags of
-/// a report template, which CHOOSE one message.
+/// table row (` | `), independent lines (any line break: a line ends the
+/// sentence, and a report template is a column of lines, so the text before a
+/// break and the value after it are two facts), and the control tags of a
+/// report template, which CHOOSE one message (#3768).
 bool isIndependentJoin(String between) {
   if (_independentSeparators.contains(between)) return true;
+  if (between.contains('\n')) return true;
   return _controlTag.hasMatch(between);
 }
 

@@ -422,7 +422,7 @@
   "reminderPdfOpeningFriendly": "este es un recordatorio amistoso: la factura de abajo sigue abierta. Seguramente un simple despiste — sin problema.",
   "reminderPdfOpeningFirm": "a pesar de nuestro recordatorio anterior, la factura de abajo sigue sin pagar. Por favor, liquida el importe sin demora.",
   "reminderPdfDaysOpen": "Abierta desde hace",
-  "reminderPdfDaysOpenLine": "Abierta desde hace {days} días",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Abierta desde hace {days} día} other{Abierta desde hace {days} días}}",
   "reminderPdfDays": "días",
   "reminderPdfLevelLabel": "Nivel de recordatorio",
   "reminderPdfClosing": "Si ya ha pagado, ignore esta carta.",

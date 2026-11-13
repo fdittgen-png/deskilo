@@ -22830,6 +22830,18 @@
       }
     }
   },
+  "leaseSettlementPeriod": "Settlement {from} to {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Since {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
@@ -32734,12 +32746,12 @@
   "@reminderPdfDaysOpen": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
-  "reminderPdfDaysOpenLine": "Open for {days} days",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Open for {days} day} other{Open for {days} days}}",
   "@reminderPdfDaysOpenLine": {
-    "description": "#3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.",
+    "description": "#3768 Reminder letter line: how long the invoice has been open, with the plural of the day count in the document's language.",
     "placeholders": {
       "days": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -33435,6 +33447,15 @@
   "reportExpectedDelivery": "Expected delivery",
   "@reportExpectedDelivery": {
     "description": "#3307 purchase orders"
+  },
+  "reportExpectedDeliveryDate": "Expected delivery {date}",
+  "@reportExpectedDeliveryDate": {
+    "description": "#3768 Purchase order header: the expected delivery date, e.g. \"Expected delivery 3 March 2026\". {date} is filled in when the order is printed.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "reportFieldGroupBank": "Bank details",
   "@reportFieldGroupBank": {
@@ -34136,6 +34157,15 @@
   "reportSubject": "Subject",
   "@reportSubject": {
     "description": "Report UX: presets, quick preview, download (#474)"
+  },
+  "reportSubjectLine": "Subject: {subject}",
+  "@reportSubjectLine": {
+    "description": "#3768 The subject line of a formal letter: the label and the subject as one message, so the language places the separator. {subject} is the title the report fills in.",
+    "placeholders": {
+      "subject": {
+        "type": "String"
+      }
+    }
   },
   "reportTemplateClearOverlay": "Use the default for this language",
   "@reportTemplateClearOverlay": {
@@ -35715,6 +35745,15 @@
     "description": "Shown as a text in server label (core). Placeholders: {host} (String).",
     "placeholders": {
       "host": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceChargeSettlementOf": "Service charge settlement — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
         "type": "String"
       }
     }
@@ -43385,6 +43424,15 @@
   "usageReportOverage": "Overage carried to the next invoice",
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
+  },
+  "usageReportOverageLine": "Overage carried to the next invoice: {amount}",
+  "@usageReportOverageLine": {
+    "description": "#3768 Consumption report line: the overage and its amount, one message so the language places the separator. {amount} is filled in when the report is printed.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
   },
   "usageReportPaid": "Paid ahead (participation)",
   "@usageReportPaid": {

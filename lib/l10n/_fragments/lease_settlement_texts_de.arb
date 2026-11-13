@@ -1,0 +1,24 @@
+{
+  "@@locale": "de",
+  "leaseSettlementPeriod": "Abrechnung {from} bis {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "serviceChargeSettlementOf": "Nebenkostenabrechnung — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  }
+}

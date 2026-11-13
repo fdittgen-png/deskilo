@@ -13,6 +13,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/premises_lease.dart';
 import '../../providers/premises_lease_providers.dart';
+import '../settlement_texts.dart';
 import 'lease_commitments_sheet.dart';
 import 'premises_lease_dialogs.dart';
 import 'premises_lease_notice_dialog.dart';
@@ -249,14 +250,14 @@ class _LeaseCard extends StatelessWidget {
                   t.effectiveTo == null
                       ? l10n.leaseTermLine(
                           t.kind == LeaseTermKind.other
-                              ? t.label
+                              ? leaseTermLabel(l10n, day, t)
                               : leaseTermKindLabel(l10n, t.kind),
                           money.formatMinor(t.amountCents),
                           day(t.effectiveFrom),
                         )
                       : l10n.leaseTermLineClosed(
                           t.kind == LeaseTermKind.other
-                              ? t.label
+                              ? leaseTermLabel(l10n, day, t)
                               : leaseTermKindLabel(l10n, t.kind),
                           money.formatMinor(t.amountCents),
                           day(t.effectiveFrom),
