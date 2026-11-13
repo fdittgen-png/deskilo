@@ -7,10 +7,12 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
+import '../demo_space_ids.dart';
 import 'demo_city_people_seed.dart';
 import 'demo_flags.dart';
 
-const demoNewYorkSpaceId = 'ws-4';
+export '../demo_space_ids.dart' show demoNewYorkSpaceId;
+
 
 Workspace demoNewYorkSpace() => Workspace(
   id: demoNewYorkSpaceId,

@@ -19,8 +19,8 @@ import '../../theme/app_spacing.dart';
 import '../../ui/app_sheet.dart';
 import '../demo_entry.dart';
 import '../demo_link.dart';
+import '../demo_loader.dart';
 import '../demo_reload_marker_provider.dart';
-import '../demo_session.dart';
 
 /// The button that offers the demonstration space.
 class DemoEntryButton extends ConsumerWidget {
@@ -136,17 +136,21 @@ Future<bool> _showDemoEntrySheet(
   try {
     // The fixture is built here, before anything is committed: a demo
     // that cannot start leaves the real workspace exactly as it was.
-    ref.read(demoSessionControllerProvider);
-    // #2872 — the link's viewpoint first, then its space and screen once
-    // the demo scope exists (DemoWorkspace applies them).
-    if (link?.persona case final persona?) {
-      ref.read(demoSessionControllerProvider.notifier).viewAs(persona);
-    }
+    // #3848 — the Demo's library is fetched first; a failed fetch is a
+    // Demo that cannot start. #2872 — the link's viewpoint is taken now, its
+    // space and screen once the demo scope exists (DemoWorkspace applies them).
+    await startDemoSession(ref, link?.persona);
   } on Object {
     visit.cancel();
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(content: Text(l10n.demoEntryFailed)),
-    );
+    if (context.mounted) {
+      ScaffoldMessenger.maybeOf(context)?.showSnackBar(
+        SnackBar(content: Text(l10n.demoEntryFailed)),
+      );
+    }
+    return false;
+  }
+  if (!context.mounted) {
+    visit.cancel();
     return false;
   }
   // #3235 — a later reload of this tab must reopen the Demo entry, never the
