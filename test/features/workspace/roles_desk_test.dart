@@ -9,7 +9,11 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/permission_modules.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/presentation/screens/roles_screen_labels.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/roles_desk.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -87,16 +91,23 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('roles-desk-role-admin')));
     await tester.pumpAndSettle();
     final tile = find.byKey(const ValueKey('perm-admin-issueInvoices'));
-    await tester.ensureVisible(tile);
-    await tester.pumpAndSettle();
     expect(tester.widget<CheckboxListTile>(tile).value, isFalse);
-    // Focus the switch, then Space: no pointer.
-    Focus.of(
-      tester.element(
-        find.descendant(of: tile, matching: find.byType(Checkbox)),
-      ),
-    ).requestFocus();
+    // From the filter, Tab walks the page in reading order until it stands
+    // on the switch; then Space turns it on: no pointer after the first
+    // focus.
+    await tester.tap(find.byKey(const ValueKey('roles-desk-filter')));
     await tester.pump();
+    var reached = false;
+    for (var i = 0; i < 120 && !reached; i++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      reached =
+          FocusManager.instance.primaryFocus?.context
+              ?.findAncestorWidgetOfExactType<CheckboxListTile>()
+              ?.key ==
+          const ValueKey('perm-admin-issueInvoices');
+    }
+    expect(reached, isTrue, reason: 'Tab reaches the switch');
     await tester.sendKeyEvent(LogicalKeyboardKey.space);
     await tester.pumpAndSettle();
     final stored = workspace.workspaces.single.rolePermissions['admin'] as List;
@@ -123,7 +134,36 @@ void main() {
 
   testWidgets('without the right to edit, the switches do not move; the '
       'owner\'s never do', (tester) async {
-    await _pump(tester, permissions: const {WorkspacePermission.viewDirectory});
+    // The route is for those who hold manageRoles, so the read-only desk is
+    // pumped as the widget the page builds.
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: standardTestOverrides(workspace: workspace),
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: RolesDesk(
+              workspace: workspace.workspaces.single,
+              canEdit: false,
+              myRole: PermissionRole.admin,
+              intro: '',
+              roles: [
+                for (final r in PermissionRole.values)
+                  (id: r.wireName, name: r.wireName, base: r, own: null),
+              ],
+              onToggle: (_, _, _) => fail('a read-only desk writes nothing'),
+              onEditOwn: (_) {},
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('roles-desk-role-admin')));
     await tester.pumpAndSettle();
     final admin = tester.widget<CheckboxListTile>(
@@ -136,6 +176,14 @@ void main() {
       find.byKey(const ValueKey('perm-owner-manageRoles')),
     );
     expect(owner.onChanged, isNull);
+  });
+
+  test('every permission has its line of what it allows', () {
+    // permissionAllows is a lookup: a permission with no entry would throw.
+    final l10n = AppLocalizationsEn();
+    for (final p in WorkspacePermission.values) {
+      expect(permissionAllows(l10n, p), isNotEmpty, reason: '$p');
+    }
   });
 
   testWidgets('the filter keeps the permissions whose name or line matches, '

@@ -340,7 +340,7 @@ class _MembersView {
     RecordColumn(
       id: 'status',
       label: _l.membersColStatus,
-      flex: 2,
+      flex: 3,
       sortKey: (m) => m.status.index,
       cell: (_, m) => Text(memberStatusLabel(_l, m.status)),
     ),

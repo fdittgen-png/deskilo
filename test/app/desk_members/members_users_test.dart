@@ -11,7 +11,6 @@ import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_role.dart';
 import 'package:deskilo/features/workspace/domain/workspace_roles_repository.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/features/workspace/providers/workspace_roles_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -82,11 +81,10 @@ Future<_Roles> _open(WidgetTester tester) async {
     '/members',
     size: const Size(1440, 900),
     overrides: [
-      ...standardTestOverrides(workspace: space),
+      ...standardTestOverrides(workspace: space, roles: roles),
       enabledFeaturesSyncProvider.overrideWithValue(
         WorkspaceFeature.values.toSet(),
       ),
-      workspaceRolesRepositoryProvider.overrideWithValue(roles),
     ],
   );
   return roles;

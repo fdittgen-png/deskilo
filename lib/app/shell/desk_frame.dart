@@ -259,7 +259,13 @@ class _DeskBreadcrumb extends StatelessWidget {
       children: [
         for (final (i, crumb) in crumbs.indexed) ...[
           if (i > 0) Icon(Icons.chevron_right, color: muted),
-          Flexible(child: part(crumb, last: i == crumbs.length - 1)),
+          // The room is shared by the length of the names: an equal share
+          // cut the page's long name while a short group name sat in room
+          // it did not use.
+          Flexible(
+            flex: crumb.label.length + 1,
+            child: part(crumb, last: i == crumbs.length - 1),
+          ),
         ],
       ],
     );

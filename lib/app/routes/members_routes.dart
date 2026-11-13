@@ -12,7 +12,6 @@ import '../../core/navigation/list_detail_route.dart';
 import '../../features/members/presentation/screens/managed_profile_screen.dart';
 import '../../features/members/presentation/screens/member_page.dart';
 import '../../features/members/presentation/screens/privacy_admin_screen.dart';
-import '../../features/members/presentation/screens/privacy_desk.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/screens/members_screen.dart';
@@ -20,6 +19,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../desk_members/member_record.dart';
 import '../desk_members/members_desk.dart';
 import '../desk_members/plans_desk.dart';
+import '../desk_members/privacy_desk.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 
@@ -59,7 +59,7 @@ List<RouteBase> membersRoutes(RouteEnv env) {
           to: '/settings',
         ),
       ),
-      builder: (context, state) => const PrivacyAdminScreen(),
+      builder: (context, state) => PrivacyAdminScreen(desk: (space) => PrivacyDesk(space: space)),
       // #3628 — a request's address: beside the table on a large window,
       // its card as a page otherwise.
       routes: [

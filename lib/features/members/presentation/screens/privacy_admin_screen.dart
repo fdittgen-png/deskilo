@@ -22,25 +22,45 @@ import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../profile/application/privacy_admin.dart';
 import '../widgets/privacy_admin_sheets.dart';
-import 'privacy_desk.dart';
 
 class PrivacyAdminScreen extends ConsumerWidget {
-  const PrivacyAdminScreen({super.key});
+  const PrivacyAdminScreen({super.key, this.desk});
+
+  /// The desk's requests table, composed by the route (it reads the
+  /// requests of the profile feature and is therefore app-layer
+  /// composition); without it the page is the phone's cards.
+  final Widget Function(PrivacyAdminSpace space)? desk;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final space = ref.watch(privacyAdminSpaceProvider);
     // #3628 — at the desk the requests are a records table, a request beside
-    // it; the page's two actions stand in its bar.
+    // it; the page's two actions stand over the table.
     if (space != null &&
+        desk != null &&
         WindowClass.of(context).index >= WindowClass.expanded.index) {
+      // The title keeps the bar to itself; the two actions stand in a row
+      // over the table, giving way before it (a title is never cut).
       return Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.privacyAdminTitle),
-          actions: [_RecordButton(space: space), _IncidentButton(space: space)],
+        appBar: AppBar(title: PageTitle(l10n.privacyAdminTitle)),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: AppSpacing.gutterAll,
+              child: Wrap(
+                spacing: AppSpacing.md,
+                runSpacing: AppSpacing.sm,
+                children: [
+                  _RecordButton(space: space),
+                  _IncidentButton(space: space),
+                ],
+              ),
+            ),
+            Expanded(child: desk!(space)),
+          ],
         ),
-        body: PrivacyDesk(space: space),
       );
     }
     return Scaffold(

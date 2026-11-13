@@ -35,6 +35,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/fake_money_repository.dart';
+import '../helpers/fake_profile_repository.dart';
 import '../helpers/mock_providers.dart';
 import 'experience_guards.dart';
 
@@ -88,6 +89,20 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
+        // #3628 — a request waiting, so the privacy page has a row.
+        profile: FakeProfileRepository()
+          ..rightsRequests.add(
+            RightsRequest(
+              id: 'rr-1',
+              workspaceId: 'ws-1',
+              memberId: 'member-1',
+              kind: 'access',
+              status: 'received',
+              receivedAt: DateTime(2026, 11, 9),
+              dueOn: DateTime(2026, 12, 9),
+              details: 'a copy of what you hold',
+            ),
+          ),
         workspace:
             FakeWorkspaceRepository.withWorkspace(
                 featureFlags: {for (final f in features) f.name: true},

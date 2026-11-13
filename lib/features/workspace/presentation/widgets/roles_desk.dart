@@ -14,8 +14,10 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/adaptive/task_choice.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/access_summary.dart';
@@ -242,72 +244,90 @@ class _Permissions extends StatelessWidget {
     // edited in their editor, with its rules.
     final editable =
         base != null && base != PermissionRole.owner && widget.canEdit;
-    return ListView(
+    // One scrolled column, built whole: a few dozen lines, and none is cut
+    // at a lazy list's build edge.
+    return SingleChildScrollView(
       padding: AppSpacing.gutterAll,
-      children: [
-        Row(
-          children: [
-            Expanded(child: Text(role.name, style: theme.textTheme.titleLarge)),
-            if (base != null && base == widget.myRole)
-              Chip(label: Text(l.rolesYourRole)),
-            if (role.own case final ownRole?)
-              OutlinedButton(
-                key: const ValueKey('roles-desk-edit-own'),
-                onPressed: () => widget.onEditOwn(ownRole),
-                child: Text(l.rolesOwnRoleEdit),
-              ),
-          ],
-        ),
-        const SizedBox(height: AppSpacing.sm),
-        Text(widget.intro, style: theme.textTheme.bodyMedium),
-        const SizedBox(height: AppSpacing.md),
-        TextField(
-          key: const ValueKey('roles-desk-filter'),
-          controller: filter,
-          decoration: InputDecoration(
-            labelText: l.rolesFilterPermissions,
-            prefixIcon: const Icon(Icons.filter_list),
-          ),
-        ),
-        ListenableBuilder(
-          listenable: filter,
-          builder: (context, _) => Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Row(
             children: [
-              for (final (module, all) in permissionsByModule())
-                if (_matching(l, all) case final permissions
-                    when permissions.isNotEmpty) ...[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      top: AppSpacing.lg,
-                      bottom: AppSpacing.xs,
-                    ),
-                    child: Text(
-                      _permissionModuleName(l, module),
-                      style: theme.textTheme.titleSmall,
-                    ),
-                  ),
-                  for (final p in permissions)
-                    CheckboxListTile(
-                      key: ValueKey('perm-${role.id}-${p.wireName}'),
-                      controlAffinity: ListTileControlAffinity.leading,
-                      value: granted.contains(p),
-                      onChanged: editable
-                          ? (_) => widget.onToggle(base, p, granted)
-                          : null,
-                      title: Text(permissionLabel(l, p)),
-                      subtitle: Text(permissionAllows(l, p)),
-                      secondary: TextButton(
-                        key: ValueKey('perm-who-${p.wireName}'),
-                        onPressed: () => _showHolders(context, p),
-                        child: Text(l.rolesPeopleCount(_holders(p).length)),
-                      ),
-                    ),
-                ],
+              Expanded(
+                child: Text(role.name, style: theme.textTheme.titleLarge),
+              ),
+              if (base != null && base == widget.myRole)
+                Chip(label: Text(l.rolesYourRole)),
+              if (role.own case final ownRole?)
+                OutlinedButton(
+                  key: const ValueKey('roles-desk-edit-own'),
+                  onPressed: () => widget.onEditOwn(ownRole),
+                  child: Text(l.rolesOwnRoleEdit),
+                ),
             ],
           ),
-        ),
-      ],
+          const SizedBox(height: AppSpacing.sm),
+          // A sentence to read, held to the reading column.
+          Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+              child: Text(widget.intro, style: theme.textTheme.bodyMedium),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.md),
+          AppTextField(
+            key: const ValueKey('roles-desk-filter'),
+            controller: filter,
+            label: l.rolesFilterPermissions,
+            prefixIcon: const Icon(Icons.filter_list),
+          ),
+          ListenableBuilder(
+            listenable: filter,
+            builder: (context, _) => Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                for (final (module, all) in permissionsByModule())
+                  if (_matching(l, all) case final permissions
+                      when permissions.isNotEmpty) ...[
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        top: AppSpacing.lg,
+                        bottom: AppSpacing.xs,
+                      ),
+                      child: Text(
+                        _permissionModuleName(l, module),
+                        style: theme.textTheme.titleSmall,
+                      ),
+                    ),
+                    for (final p in permissions)
+                      CheckboxListTile(
+                        key: ValueKey('perm-${role.id}-${p.wireName}'),
+                        controlAffinity: ListTileControlAffinity.leading,
+                        value: granted.contains(p),
+                        onChanged: editable
+                            ? (_) => widget.onToggle(base, p, granted)
+                            : null,
+                        title: Text(permissionLabel(l, p)),
+                        subtitle: Text(permissionAllows(l, p)),
+                        secondary: TextButton(
+                          key: ValueKey('perm-who-${p.wireName}'),
+                          style: TextButton.styleFrom(
+                            minimumSize: const Size(
+                              KitMetrics.minTarget,
+                              KitMetrics.minTarget,
+                            ),
+                          ),
+                          onPressed: () => _showHolders(context, p),
+                          child: Text(l.rolesPeopleCount(_holders(p).length)),
+                        ),
+                      ),
+                  ],
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 

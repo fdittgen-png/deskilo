@@ -9,19 +9,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/l10n/rights_labels.dart';
-import '../../../../core/navigation/list_detail_route.dart';
-import '../../../../core/storage/pane_width_store.dart';
-import '../../../../core/ui/kit/list_detail_scaffold.dart';
-import '../../../../core/ui/kit/records_table.dart';
-import '../../../profile/application/privacy_admin.dart';
-import 'privacy_admin_screen.dart';
+import '../../core/i18n/app_format.dart';
+import '../../core/i18n/format_controller.dart';
+import '../../core/l10n/context_l10n.dart';
+import '../../core/l10n/rights_labels.dart';
+import '../../core/navigation/list_detail_route.dart';
+import '../../core/storage/pane_width_store.dart';
+import '../../core/ui/kit/list_detail_scaffold.dart';
+import '../../core/ui/kit/records_table.dart';
+import '../../features/members/presentation/screens/privacy_admin_screen.dart';
+import '../../features/profile/application/privacy_admin.dart';
 
 /// The requests' address; a request is `/members/privacy/<id>`.
-const String privacyRequestsPath = '/members/privacy';
+const String _privacyRequestsPath = '/members/privacy';
 
 /// Whether [request] still waits for an answer.
 bool _open(RightsRequest request) =>
@@ -35,18 +35,18 @@ class PrivacyDesk extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => OpenRecord(
-    listPath: privacyRequestsPath,
+    listPath: _privacyRequestsPath,
     builder: (context, id) => ListDetailScaffold(
       id: 'privacy-requests',
       paneStore: ref.watch(paneWidthStoreProvider),
       list: _table(context, ref),
       selected: recordBesideList(context) ? id : null,
-      onClose: () => closeRecord(context, privacyRequestsPath),
-      onMove: (id) => moveToRecord(context, privacyRequestsPath, id),
+      onClose: () => closeRecord(context, _privacyRequestsPath),
+      onMove: (id) => moveToRecord(context, _privacyRequestsPath, id),
       detail: (context, id) => PrivacyRequestRecord(
         key: ValueKey('privacy-request-panel-$id'),
         requestId: id,
-        onClose: () => closeRecord(context, privacyRequestsPath),
+        onClose: () => closeRecord(context, _privacyRequestsPath),
       ),
     ),
   );
@@ -68,7 +68,7 @@ class PrivacyDesk extends ConsumerWidget {
       keyOf: (r) => r.id,
       searchText: (r) =>
           '${names[r.memberId] ?? ''} ${rightsKindLabel(l, r.kind)} ${r.details}',
-      onOpen: (r) => openRecord(context, privacyRequestsPath, r.id),
+      onOpen: (r) => openRecord(context, _privacyRequestsPath, r.id),
       empty: Center(
         child: Text(
           l.privacyAdminEmpty,
