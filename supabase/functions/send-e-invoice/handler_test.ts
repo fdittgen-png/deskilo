@@ -1388,8 +1388,8 @@ function sdiTestStore() {
     login_url: "https://live.login.test/login",
     username: "live",
     password: "live",
-    base_url_uat: "https://sandbox.sdi.test",
-    login_url_uat: "https://sandbox.login.test/login",
+    base_url_uat: "https://api-sandbox.acubeapi.com",
+    login_url_uat: "https://common-sandbox.api.acubeapi.com/login",
     username_uat: "u",
     password_uat: "p",
   };
@@ -1419,7 +1419,7 @@ Deno.test("#3883 whoever manages the integrations sends a test document to the s
   assertEquals([row.kind, row.environment, row.destination], ["test", "uat", "government"]);
   assertEquals(row.phase, "accepted");
   assertEquals(p.posts.filter((u) => u.endsWith("/invoices")), [
-    "https://sandbox.sdi.test/invoices",
+    "https://api-sandbox.acubeapi.com/invoices",
   ]);
   assertEquals(p.posts.some((u) => u.includes("live.")), false);
 });
@@ -1494,4 +1494,15 @@ Deno.test("#3883 whoever manages the integrations asks about a test, not about a
     await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: "inv-t" }),
   );
   assertEquals(refused.status, 403);
+});
+
+Deno.test("#3883 a test goes only to the connector's documented sandbox", async () => {
+  const s = sdiTestStore();
+  s.config.base_url_uat = "https://elsewhere.test";
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_not_documented");
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
 });

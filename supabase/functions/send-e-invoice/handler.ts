@@ -23,6 +23,7 @@ import {
   status as askStatus,
   type Submission,
   submit,
+  SANDBOX,
   takesTestDocument,
 } from "./connectors.ts";
 import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
@@ -664,6 +665,25 @@ async function dispatchPrepared(
   );
 }
 
+/** #3883 -- whether every address the connector documents for its sandbox
+ * is the one [scoped] (the sandbox credentials) points at, host for host. */
+function onDocumentedSandbox(scoped: Config, sandbox: Config): boolean {
+  const host = (url: string): string | null => {
+    try {
+      const u = new URL(url);
+      return u.protocol === "https:" ? u.host : null;
+    } catch {
+      return null;
+    }
+  };
+  const keys = Object.keys(sandbox);
+  return keys.length > 0 &&
+    keys.every((k) => {
+      const want = host(sandbox[k]);
+      return want !== null && host(scoped[k] ?? "") === want;
+    });
+}
+
 /** #3883 -- why a second test waits, in a sentence a person can act on. */
 const TEST_PENDING_DETAIL =
   "A test document is still waiting for the platform's verdict. Ask the " +
@@ -707,6 +727,11 @@ async function sendTestDocument(
   const missing = missingFor(cfg, "uat", provider);
   if (missing.length > 0) {
     return json({ error: "sandbox_credentials_missing", missing }, 409);
+  }
+  // Its verdict opens the gate, so a test goes only to the connector's
+  // documented sandbox: the platform's own answer, never another host's.
+  if (!onDocumentedSandbox(configFor(cfg, "uat", provider), SANDBOX[provider] ?? {})) {
+    return json({ error: "sandbox_not_documented", provider }, 409);
   }
   const content = payload.content_base64 ?? "";
   if (!content) return json({ error: "content_base64 required" }, 400);
