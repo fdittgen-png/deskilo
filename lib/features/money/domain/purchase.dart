@@ -279,6 +279,31 @@ class PurchaseDetail {
   bool get taxPartial => lines.any((l) => !l.taxStated);
 
   int get taxCents => lines.fold(0, (sum, l) => sum + (l.taxCents ?? 0));
+
+  /// #3615 — this document as the purchase list reads it: the lines' net
+  /// and VAT (null when a line does not state them) and its evidence.
+  PurchaseSummary get listed {
+    final s = summary;
+    final netStated = lines.every((l) => l.netCents != null);
+    return PurchaseSummary(
+      id: s.id,
+      kind: s.kind,
+      state: s.state,
+      category: s.category,
+      reference: s.reference,
+      currency: s.currency,
+      grossCents: grossCents,
+      receivedOn: s.receivedOn,
+      originalDate: s.originalDate,
+      legacy: s.legacy,
+      supplierId: s.supplierId,
+      netCents: netStated
+          ? lines.fold<int>(0, (a, l) => a + l.netCents!)
+          : null,
+      taxCents: taxPartial ? null : taxCents,
+      receipts: sources.length,
+    );
+  }
 }
 
 /// The purchase documents of a workspace and their commands.

@@ -32,7 +32,7 @@ import '../widgets/purchase_labels.dart';
 import '../widgets/purchases_sheet.dart';
 
 /// The purchases list's address; a document opens under [purchaseDocPath].
-const String purchasesPath = '/money/purchases';
+const String _purchasesPath = '/money/purchases';
 
 /// Where a document opens: `/money/purchases/doc/<id>`.
 const String purchaseDocPath = '/money/purchases/doc';
@@ -66,14 +66,14 @@ class PurchasesDesk extends ConsumerWidget {
       paneStore: ref.watch(paneWidthStoreProvider),
       list: _list(context, ref),
       selected: recordBesideList(context) ? id : null,
-      onClose: () => context.go(purchasesPath),
+      onClose: () => context.go(_purchasesPath),
       onMove: (id) => moveToRecord(context, purchaseDocPath, id),
       detail: (context, id) => PurchaseRecord(
         key: ValueKey('purchase-panel-$id'),
         workspaceId: workspaceId,
         purchaseId: id,
         held: held,
-        onClose: () => context.go(purchasesPath),
+        onClose: () => context.go(_purchasesPath),
       ),
     ),
   );
@@ -165,7 +165,7 @@ class _PurchasesTable extends StatelessWidget {
     final dates = format.dates(DateShape.numeric);
     // Net and VAT from a large window; below it the gross says the amount.
     final wide = WindowClass.of(context).index >= WindowClass.large.index;
-    String money(_Row r, int? minor) =>
+    String figure(_Row r, int? minor) =>
         minor == null ? '' : format.moneyIn(r.doc.currency).formatMinor(minor);
     return RecordsTable<_Row>(
       tableId: 'purchases',
@@ -240,7 +240,7 @@ class _PurchasesTable extends StatelessWidget {
             label: l.purchaseOrderSummaryNet,
             numeric: true,
             flex: 3,
-            cell: (_, r) => Text(money(r, r.doc.netCents)),
+            cell: (_, r) => Text(figure(r, r.doc.netCents)),
           ),
         if (wide)
           RecordColumn(
@@ -248,7 +248,7 @@ class _PurchasesTable extends StatelessWidget {
             label: l.vatTitle,
             numeric: true,
             flex: 3,
-            cell: (_, r) => Text(money(r, r.doc.taxCents)),
+            cell: (_, r) => Text(figure(r, r.doc.taxCents)),
           ),
         RecordColumn(
           id: 'gross',
@@ -256,7 +256,7 @@ class _PurchasesTable extends StatelessWidget {
           numeric: true,
           flex: 3,
           sortKey: (r) => r.doc.grossCents,
-          cell: (_, r) => Text(money(r, r.doc.grossCents)),
+          cell: (_, r) => Text(figure(r, r.doc.grossCents)),
         ),
         RecordColumn(
           id: 'open',
@@ -264,7 +264,7 @@ class _PurchasesTable extends StatelessWidget {
           numeric: true,
           flex: 3,
           sortKey: (r) => r.open ?? -1,
-          cell: (_, r) => Text(money(r, r.open)),
+          cell: (_, r) => Text(figure(r, r.open)),
         ),
         RecordColumn(
           id: 'receipt',
@@ -282,7 +282,7 @@ class _PurchasesTable extends StatelessWidget {
       cardBuilder: (context, r) => ListTile(
         title: Text(r.supplier, overflow: TextOverflow.ellipsis),
         subtitle: Text(r.doc.category),
-        trailing: Text(money(r, r.doc.grossCents)),
+        trailing: Text(figure(r, r.doc.grossCents)),
       ),
     );
   }

@@ -28,6 +28,14 @@ class _RetryApprovalReads implements PurchaseApprovalReads {
   }
 }
 
+
+/// #3615 — a document of the queue: a line on a phone, a row of the desk's
+/// records table.
+Finder _approval(String id) => find.byWidgetPredicate(
+  (w) =>
+      w.key == ValueKey('approval-$id') || w.key == ValueKey('records-row-$id'),
+);
+
 void main() {
   testWidgets('Demo foreign-currency bill displays its recorded rate before decision', (tester) async {
     tester.view.physicalSize = const Size(900, 1800);
@@ -47,7 +55,7 @@ void main() {
       ),
     ));
     await tester.pumpAndSettle();
-    final row = find.byKey(const ValueKey('approval-demo-bill-approval-fx'));
+    final row = _approval('demo-bill-approval-fx');
     expect(row, findsOneWidget);
     await tester.tap(row);
     await tester.pumpAndSettle();

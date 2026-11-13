@@ -53,7 +53,6 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
         ? null
         : (supplierId) => openRecord(context, suppliersPath, supplierId);
     if (workspace != null &&
-        canReadBalances &&
         WindowClass.of(context).index >= WindowClass.expanded.index) {
       final view = SuppliersView(workspaceId: workspace.id, lookupOn: lookupOn);
       return ShortcutScope(
@@ -91,7 +90,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
               ),
             ],
           ),
-          body: SuppliersDesk(view: view, held: held),
+          body: SuppliersDesk(view: view, held: held, canOpen: canReadBalances),
         ),
       );
     }

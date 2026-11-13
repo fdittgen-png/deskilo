@@ -205,11 +205,9 @@ class _OutcomesState extends State<_Outcomes> {
               key: ValueKey('approval-outcome-${i.id}'),
               contentPadding: EdgeInsets.zero,
               title: Text(name(i)),
+              // An item not decided yet says nothing; Close waits for all.
               trailing: _running && widget.batch.outcomes[i.id] == null
-                  ? const SizedBox.square(
-                      dimension: 20,
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    )
+                  ? null
                   : Text(_word(l, widget.batch.outcomes[i.id])),
             ),
         ],

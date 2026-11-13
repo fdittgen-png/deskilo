@@ -110,6 +110,38 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
           ],
         );
 
+  /// #3615 — the waiting documents as the desk's records table.
+  Widget _deskBills(
+    List<PurchaseSummary> docs,
+    PurchaseApprovalCursor? next,
+  ) {
+    final l10n = context.l10n;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: PurchaseApprovalsTable(
+              workspaceId: widget.workspaceId,
+              docs: docs,
+              onOpen: (id) async {
+                await showPurchaseForDecision(context, widget.workspaceId, id);
+                if (mounted) _restart();
+              },
+              onDecided: () {
+                if (mounted) _restart();
+              },
+            ),
+          ),
+          if (next != null)
+            TextButton(
+              key: const ValueKey('approval-load-more'),
+              onPressed: () => setState(() => _cursors.add(next)),
+              child: Text(l10n.suppliersLoadMore),
+            ),
+        ],
+      );
+  }
+
   Widget _billContent(BuildContext context) {
     final l10n = context.l10n;
     final pages = [
@@ -161,32 +193,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     }
     final docs = [for (final page in resolved) ...page.rows];
     final next = resolved.last.next;
-    if (_desk) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: PurchaseApprovalsTable(
-              workspaceId: widget.workspaceId,
-              docs: docs,
-              onOpen: (id) async {
-                await showPurchaseForDecision(context, widget.workspaceId, id);
-                if (mounted) _restart();
-              },
-              onDecided: () {
-                if (mounted) _restart();
-              },
-            ),
-          ),
-          if (next != null)
-            TextButton(
-              key: const ValueKey('approval-load-more'),
-              onPressed: () => setState(() => _cursors.add(next)),
-              child: Text(l10n.suppliersLoadMore),
-            ),
-        ],
-      );
-    }
+    if (_desk) return _deskBills(docs, next);
     return Column(
       children: [
         if (docs.isEmpty)

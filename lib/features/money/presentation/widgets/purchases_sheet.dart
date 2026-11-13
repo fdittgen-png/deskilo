@@ -47,26 +47,6 @@ Future<void> showPurchasesSheet(
   ),
 );
 
-/// Opens the same payable view with its supplier filter applied at the server.
-Future<void> showSupplierPayablesSheet(
-  BuildContext context,
-  String workspaceId,
-  String supplierId, {
-  required bool canCapture,
-  bool canPay = false,
-  bool canDecide = false,
-}) => showAppSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  builder: (_) => PurchasesView(
-    workspaceId: workspaceId,
-    supplierId: supplierId,
-    canCapture: canCapture,
-    canPay: canPay,
-    canDecide: canDecide,
-  ),
-);
-
 /// The list of documents, with the supplier-bill door for who may capture.
 @visibleForTesting
 class PurchasesView extends ConsumerStatefulWidget {

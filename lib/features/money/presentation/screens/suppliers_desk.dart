@@ -32,7 +32,16 @@ const String suppliersPath = '/money/suppliers';
 
 /// The suppliers table, with the open supplier's payables beside it.
 class SuppliersDesk extends ConsumerWidget {
-  const SuppliersDesk({super.key, required this.view, required this.held});
+  const SuppliersDesk({
+    super.key,
+    required this.view,
+    required this.held,
+    required this.canOpen,
+  });
+
+  /// Whether the reader may open a supplier's payables (viewFinances or
+  /// managePurchases): without, the rows open nothing.
+  final bool canOpen;
 
   /// The suppliers list of the phone: its add, edit, bank and archive.
   final SuppliersView view;
@@ -92,7 +101,9 @@ class SuppliersDesk extends ConsumerWidget {
       onRetry: () => ref.invalidate(suppliersProvider(workspaceId)),
       keyOf: (s) => s.id,
       searchText: (s) => '${s.number} ${s.name} ${s.taxIdEntered}',
-      onOpen: (s) => openRecord(context, suppliersPath, s.id),
+      onOpen: (s) {
+        if (canOpen) openRecord(context, suppliersPath, s.id);
+      },
       empty: Center(child: Text(l.suppliersEmpty)),
       initialQuery: const RecordsQuery(chip: 'active', sortColumn: 'name'),
       chips: [
