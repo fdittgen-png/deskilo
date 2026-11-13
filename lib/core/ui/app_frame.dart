@@ -18,10 +18,9 @@ const double kReadingColumnMaxWidth = 960;
 /// #3604 — a route that declares its own measure (`/invoices`, work) is
 /// not here: no route is in both.
 @visibleForTesting
-const List<String> kWideRoutePrefixes = [
-  '/discover', '/kiosk', '/report-editor', '/editor',
-  '/settings/sites', '/me', '/invoicing/wizard',
-];
+/// #3619 — every workspace route has its own measure: only the account's
+/// and the public canvases are left here.
+const List<String> kWideRoutePrefixes = ['/discover', '/me'];
 
 /// A prefix names a path or its children — never a longer word that merely
 /// starts with it (`/me` is Me, not `/messages` or `/members`).

@@ -5145,6 +5145,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bookRoleFixedAssets => 'Immobilizzazioni (attrezzature)';
 
   @override
+  String get bookRoleMappedUnreadable =>
+      'Associato a un conto che questa versione dell\'app non può leggere.';
+
+  @override
   String get bookRolePrepayments => 'Risconti attivi';
 
   @override
@@ -11702,6 +11706,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureWorkspaceVocabularyTitle => 'Lessico dello spazio';
 
   @override
+  String get featuresColDepends => 'Dipende da';
+
+  @override
+  String get featuresColDoes => 'Cosa fa';
+
+  @override
+  String get featuresColFeature => 'Funzione';
+
+  @override
+  String get featuresColState => 'Attiva o no';
+
+  @override
   String get featuresFilterChanged => 'Modificate';
 
   @override
@@ -16625,6 +16641,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String journalSwissTaxCodes(String keys) {
     return 'Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: $keys';
+  }
+
+  @override
+  String journalUnreadableEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'I libri contengono $count registrazioni che questa versione dell\'app non conosce, quindi non viene esportato nulla. Aggiorna prima l\'app.',
+      one: 'I libri contengono 1 registrazione che questa versione dell\'app non conosce, quindi non viene esportato nulla. Aggiorna prima l\'app.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -27136,6 +27164,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get reservationRecurring => 'Prenotazione ricorrente';
 
   @override
+  String get reservationUnreadable =>
+      'Questa prenotazione esiste, ma questa versione dell\'app non può mostrarla. Aggiorna l\'app per vederla.';
+
+  @override
   String get reservationUpdatedSnack => 'Prenotazione aggiornata.';
 
   @override
@@ -34458,6 +34490,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get unblockAction => 'Sblocca';
 
   @override
+  String unreadableRowsNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count voci non sono state mostrate: questa versione dell\'app non le conosce. Aggiorna l\'app per vederle.',
+      one: '1 voce non è stata mostrata: questa versione dell\'app non la conosce. Aggiorna l\'app per vederla.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get unsavedChangesBody =>
       'Le modifiche fatte in questa pagina non sono ancora salvate.';
 
@@ -36674,6 +36718,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.';
+
+  @override
+  String workspaceExportUnreadableBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count prenotazioni non sono state lette da questa versione dell\'app e non sono in questo file.',
+      one: '1 prenotazione non è stata letta da questa versione dell\'app e non è in questo file.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get workspaceFieldsOptional => 'facoltativo';

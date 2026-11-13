@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -84,15 +85,23 @@ class PeriodReservationsScreen extends ConsumerWidget {
           icon: Icons.layers_clear_outlined,
           title: l10n.periodReservationsUnknownLevel,
         ),
-        AsyncData(:final value) when value.isEmpty => EmptyState(
-          key: const ValueKey('period-reservations-empty'),
-          icon: Icons.event_busy_outlined,
-          title: l10n.periodReservationsEmpty,
+        AsyncData(:final value) when value.isEmpty => Column(
+          children: [
+            const UnreadableRowsNotice(areas: [reservationsArea]), // #3884 — empty is not unreadable
+            Expanded(
+              child: EmptyState(
+                key: const ValueKey('period-reservations-empty'),
+                icon: Icons.event_busy_outlined,
+                title: l10n.periodReservationsEmpty,
+              ),
+            ),
+          ],
         ),
         AsyncData(:final value) => ListView(
           key: const ValueKey('period-reservations'),
           padding: AppSpacing.gutterAll,
           children: [
+            const UnreadableRowsNotice(areas: [reservationsArea]), // #3884
             for (final (i, r) in value.indexed) ...[
               if (i == 0 ||
                   WorkspaceTime.dateOf(value[i - 1].startsAt) !=

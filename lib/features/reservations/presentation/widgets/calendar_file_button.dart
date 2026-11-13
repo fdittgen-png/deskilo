@@ -65,10 +65,12 @@ class CalendarFileButton extends ConsumerWidget {
     );
     if (!ok || !context.mounted) return;
     switch (outcome!) {
-      case CalendarFileRefused():
+      case CalendarFileRefused(:final reason):
         AppSnack.error(
           context,
-          l10n.reservationCalendarFileRefused,
+          reason == CalendarFileRefusal.unreadable
+              ? l10n.reservationUnreadable
+              : l10n.reservationCalendarFileRefused,
         );
       case CalendarFileReady(:final preview):
         await showDialog<void>(
@@ -132,11 +134,13 @@ class _CalendarFileDialogState extends State<_CalendarFileDialog> {
           _preview = fresh;
           _stale = true;
         });
-      case CalendarSaveRefused():
+      case CalendarSaveRefused(:final reason):
         Navigator.of(context).pop();
         AppSnack.error(
           context,
-          l10n.reservationCalendarFileRefused,
+          reason == CalendarFileRefusal.unreadable
+              ? l10n.reservationUnreadable
+              : l10n.reservationCalendarFileRefused,
         );
       case CalendarSaveFailed():
         // The dialog stays: the file is still right, only the platform

@@ -31,15 +31,7 @@ List<Override> demoPurchasingOverrides(
   DemoPurchasing purchasing, {
   DemoSpaces<DemoPurchasing>? spaces,
 }) {
-  final DemoSpaces<DemoPurchasing> all = spaces ?? (
-    home: purchasing,
-    leipzig: purchasing,
-    london: purchasing,
-    newYork: purchasing,
-    zurich: purchasing,
-    milan: purchasing,
-    twin: purchasing,
-  );
+  final DemoSpaces<DemoPurchasing> all = spaces ?? DemoSpaces((_) => purchasing);
   return [
     supplierRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, all).suppliers,

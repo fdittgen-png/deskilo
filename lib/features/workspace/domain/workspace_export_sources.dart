@@ -209,6 +209,9 @@ const List<ExportSource> workspaceExportSources = [
       'provider',
       'order_id',
       'status',
+      // #3905 — a reversal at the provider, when and why.
+      'reversed_at',
+      'reversal_reason',
     },
   ),
   ExportSource(

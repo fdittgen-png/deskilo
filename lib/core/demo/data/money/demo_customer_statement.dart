@@ -14,6 +14,7 @@ import '../../../../features/money/domain/ledger_entry.dart';
 import '../../../../features/money/presentation/invoicing/receivables_adapter.dart';
 import '../../../../features/money/providers/customer_statement_providers.dart';
 import '../../demo_fixture.dart';
+import '../../demo_space_pick.dart';
 
 class _DemoCustomerStatementReader implements CustomerStatementReader {
   const _DemoCustomerStatementReader({
@@ -119,18 +120,23 @@ class _DemoCustomerStatementReader implements CustomerStatementReader {
   }
 }
 
-/// #3673 — the Demo's statement reader over the session's [fixture]: the
-/// page's own rules, since the Demo has no server to ask.
+/// #3673 — the Demo's statement reader over one space's money: the page's own
+/// rules, since the Demo has no server to ask.
+CustomerStatementReader demoCustomerStatementReader(DemoSpaceParts space) =>
+    _DemoCustomerStatementReader(
+      invoices: space.money,
+      ledgerOf: space.money.fetchWorkspaceLedger,
+      currencyOf: (id) =>
+          space.workspaces.workspaces
+              .where((w) => w.id == id)
+              .firstOrNull
+              ?.currencyCode ??
+          '',
+    );
+
+/// #3846 — the statement of the space the scope is looking at, kept on that
+/// space's stores.
 Override demoCustomerStatementOverride(DemoFixture fixture) =>
-    customerStatementReaderProvider.overrideWithValue(
-      _DemoCustomerStatementReader(
-        invoices: fixture.money,
-        ledgerOf: fixture.money.fetchWorkspaceLedger,
-        currencyOf: (id) =>
-            fixture.workspaces.workspaces
-                .where((w) => w.id == id)
-                .firstOrNull
-                ?.currencyCode ??
-            '',
-      ),
+    customerStatementReaderProvider.overrideWith(
+      (ref) => fixture.stores.at(demoOpenSpace(ref)).statement,
     );

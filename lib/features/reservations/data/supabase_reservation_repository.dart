@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
@@ -7,11 +6,13 @@ import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
 import '../../../core/data/sweep_throttle.dart';
+import '../../../core/data/unreadable_rows.dart' show ReadWithUnreadable;
 import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/reservation.dart';
 import '../domain/reservation_repository.dart';
+import 'reservation_rows.dart';
 
 class SupabaseReservationRepository implements ReservationRepository {
   SupabaseReservationRepository(SupabaseClient client, CacheStore cache)
@@ -66,8 +67,16 @@ class SupabaseReservationRepository implements ReservationRepository {
     String workspaceId, {
     required DateTime from,
     required DateTime to,
+  }) async =>
+      (await fetchWindowRead(workspaceId, from: from, to: to)).rows;
+
+  @override
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
   }) =>
-      cachedFetch<List<Reservation>>(
+      cachedFetch<ReadWithUnreadable<List<Reservation>>>(
         cache: _cache,
         key: 'resv:$workspaceId:${from.toUtc().toIso8601String()}'
             ':${to.toUtc().toIso8601String()}',
@@ -123,14 +132,21 @@ class SupabaseReservationRepository implements ReservationRepository {
                 .count,
           );
         },
-        parse: (payload) => [
-          for (final row in payload as List)
-            _fromRow(Map<String, dynamic>.from(row as Map)),
-        ],
+        parse: (payload) => reservationsFromRows(
+          payload as List,
+          workspaceId: workspaceId,
+          read: '${from.toUtc().toIso8601String()}|${to.toUtc().toIso8601String()}',
+        ),
       );
 
   @override
-  Future<List<Reservation>> fetchAllForExport(String workspaceId) async {
+  Future<List<Reservation>> fetchAllForExport(String workspaceId) async =>
+      (await fetchAllForExportRead(workspaceId)).rows;
+
+  @override
+  Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
+    String workspaceId,
+  ) async {
     // #1310 S2 — paged: an unranged select returns at most the
     // project's max_rows and says nothing about the rest.
     final rows = await fetchAllPages(
@@ -142,9 +158,7 @@ class SupabaseReservationRepository implements ReservationRepository {
           .order('starts_at', ascending: true)
           .order('id', ascending: true),
     );
-    return [
-      for (final row in rows) _fromRow(Map<String, dynamic>.from(row)),
-    ];
+    return reservationsFromRows(rows, workspaceId: workspaceId, read: 'export');
   }
 
   @override
@@ -440,29 +454,11 @@ class SupabaseReservationRepository implements ReservationRepository {
         .select()
         .eq('id', reservationId)
         .maybeSingle();
-    return row == null ? null : _fromRow(Map<String, dynamic>.from(row));
+    if (row == null) return null;
+    final map = Map<String, dynamic>.from(row);
+    final status = reservationStatusFromDb(map['status'] as String?);
+    // #3884 -- present but unreadable is not "gone": it says so.
+    if (status == null) throw ReservationUnreadable(reservationId);
+    return reservationFromRow(map, status);
   }
-
-  Reservation _fromRow(Map<String, dynamic> row) => Reservation(
-        system: SystemColumns.fromRow(row),
-        id: row['id'] as String,
-        workspaceId: row['workspace_id'] as String,
-        seatId: row['seat_id'] as String?,
-        deskId: row['desk_id'] as String?,
-        officeId: row['office_id'] as String?,
-        levelId: row['level_id'] as String?,
-        memberId: row['member_id'] as String,
-        startsAt: DateTime.parse(row['starts_at'] as String),
-        endsAt: DateTime.parse(row['ends_at'] as String),
-        status: reservationStatusFromDb(row['status'] as String),
-        seriesId: row['series_id'] as String?,
-        seriesPattern: row['series_pattern'] as String?,
-        checkedInAt: row['checked_in_at'] == null
-            ? null
-            : DateTime.parse(row['checked_in_at'] as String),
-        checkedOutAt: row['checked_out_at'] == null
-            ? null
-            : DateTime.parse(row['checked_out_at'] as String),
-        spaceLabel: row['space_label'] as String?,
-      );
 }

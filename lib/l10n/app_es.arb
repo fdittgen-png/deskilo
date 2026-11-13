@@ -3075,6 +3075,7 @@
   "bookRoleExpenses": "Gastos",
   "bookRoleFees": "Comisiones del proveedor de pagos",
   "bookRoleFixedAssets": "Inmovilizado (equipos)",
+  "bookRoleMappedUnreadable": "Asignado a una cuenta que esta versión de la aplicación no puede leer.",
   "bookRolePrepayments": "Gastos anticipados",
   "bookRoleRevenue": "Ingresos",
   "bookRoleStock": "Existencias (mercaderías)",
@@ -7418,6 +7419,10 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Depende de",
+  "featuresColDoes": "Qué hace",
+  "featuresColFeature": "Función",
+  "featuresColState": "Activada o no",
   "featuresFilterChanged": "Modificadas",
   "featuresNoMatch": "Ninguna función coincide.",
   "featuresSearchLabel": "Buscar funciones",
@@ -10462,6 +10467,7 @@
   "journalSafTRefused": "El archivo SAF-T no se ha generado: {gaps}",
   "journalSageRefused": "El archivo de Sage 50 no se ha escrito: {reasons}",
   "journalSwissTaxCodes": "Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{Los libros contienen 1 asiento que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.} other{Los libros contienen {count} asientos que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.}}",
   "journeyClosedPaid": "Pagada el {date} — cerrada",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16727,6 +16733,7 @@
   "reservationNoteOverNotCheckedIn": "Este periodo terminó sin registro de llegada.",
   "reservationNoteRecordedAfterEnd": "Registrada después de que terminara este periodo, así que se conserva como una visita pasada.",
   "reservationRecurring": "Reserva recurrente",
+  "reservationUnreadable": "Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla.",
   "reservationUpdatedSnack": "Reserva actualizada.",
   "reserveAvailabilityUnavailable": "No se pudo cargar toda la disponibilidad, por eso no se muestra ningún puesto como libre. Reintente.",
   "reserveBackToNow": "Volver a ahora",
@@ -20742,6 +20749,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Desbloquear",
+  "unreadableRowsNotice": "{count, plural, one{No se pudo mostrar 1 entrada: esta versión de la aplicación no la conoce. Actualiza la aplicación para verla.} other{No se pudieron mostrar {count} entradas: esta versión de la aplicación no las conoce. Actualiza la aplicación para verlas.}}",
   "unsavedChangesBody": "Lo que ha cambiado en esta página todavía no está guardado.",
   "unsavedChangesDiscard": "Descartar los cambios",
   "unsavedChangesKeep": "Seguir editando",
@@ -22350,6 +22358,7 @@
   "workspaceDeskTransparencyTitle": "Transparencia de mesas",
   "workspaceExcelExport": "Exportar datos (Excel)",
   "workspaceExcelExportSubtitle": "Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.} other{{count} reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.}}",
   "workspaceFieldsOptional": "opcional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"
