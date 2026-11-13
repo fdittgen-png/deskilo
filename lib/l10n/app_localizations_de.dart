@@ -17126,6 +17126,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get kitActionBusy => 'Läuft …';
 
   @override
+  String get kitCopied => 'Kopiert';
+
+  @override
+  String get kitCopy => 'Kopieren';
+
+  @override
+  String kitCopyValue(String value) {
+    return '$value kopieren';
+  }
+
+  @override
   String get kitScrollBack => 'Zurück scrollen';
 
   @override
@@ -30506,7 +30517,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shellBarHiddenAnnounce => 'Navigationsleiste ausgeblendet';
 
   @override
+  String get shellBarHideAction => 'Navigationsleiste ausblenden';
+
+  @override
   String get shellBarHideHint => 'Lange drücken für die Vollbildansicht';
+
+  @override
+  String get shellBarShowAction => 'Navigationsleiste einblenden';
 
   @override
   String get shellBarShowHint =>

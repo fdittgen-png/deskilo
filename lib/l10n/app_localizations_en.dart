@@ -16964,6 +16964,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kitActionBusy => 'Working…';
 
   @override
+  String get kitCopied => 'Copied';
+
+  @override
+  String get kitCopy => 'Copy';
+
+  @override
+  String kitCopyValue(String value) {
+    return 'Copy $value';
+  }
+
+  @override
   String get kitScrollBack => 'Scroll back';
 
   @override
@@ -30178,7 +30189,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shellBarHiddenAnnounce => 'Navigation bar hidden';
 
   @override
+  String get shellBarHideAction => 'Hide the navigation bar';
+
+  @override
   String get shellBarHideHint => 'Long-press for a full-screen view';
+
+  @override
+  String get shellBarShowAction => 'Show the navigation bar';
 
   @override
   String get shellBarShowHint => 'Long-press to show the navigation bar';

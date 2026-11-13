@@ -138,7 +138,13 @@ class DeskScaffold extends ConsumerWidget {
                           // (#3604) as it is built (desk_page_frame.dart).
                           child: KeyedSubtree(
                             key: const ValueKey('desk-page'),
-                            child: DeskPageFrame(child: body),
+                            // #3611 — text on the desk can be selected and
+                            // copied; buttons, drags of strips and scrolling
+                            // are not affected (a mouse drag selects text
+                            // only, a page never pans with a mouse).
+                            child: SelectionArea(
+                              child: DeskPageFrame(child: body),
+                            ),
                           ),
                         ),
                       ),

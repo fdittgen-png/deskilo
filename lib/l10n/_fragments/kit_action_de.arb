@@ -1,5 +1,10 @@
 {
   "kitActionBusy": "Läuft …",
   "kitScrollBack": "Zurück scrollen",
-  "kitScrollForward": "Weiter scrollen"
+  "kitScrollForward": "Weiter scrollen",
+  "kitCopy": "Kopieren",
+  "kitCopyValue": "{value} kopieren",
+  "kitCopied": "Kopiert",
+  "shellBarHideAction": "Navigationsleiste ausblenden",
+  "shellBarShowAction": "Navigationsleiste einblenden"
 }
