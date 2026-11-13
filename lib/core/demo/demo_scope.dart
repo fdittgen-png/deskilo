@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
-import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
@@ -250,13 +249,6 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
 /// The purchase side -- suppliers, received supplier invoices, bills and
 /// receipts -- seeded for the session's day.
 
-/// #3832 - the persona's own history, derived from the spaces' records.
-FakeAccountActivityRepository _demoActivity(DemoFixture fixture) =>
-    FakeAccountActivityRepository(
-      derive: () => demoFinanceOverview(fixture),
-      deriveRows: (kind) => demoAccountActivity(fixture, kind),
-    );
-
 /// What only a server can answer: Demo offers nothing in its place.
 List<Override> _serverOnlyOverrides() => [
   // #3550 — the five kinds and their profiles.
@@ -356,7 +348,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           source.isEmpty || source == kDemoServerOrigin
               ? fixture.messenger
               : FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(_demoActivity(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(_demoActivity(fixture)), // #2327; no connected host in Demo
+      accountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), // #2327; no connected host in Demo
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),

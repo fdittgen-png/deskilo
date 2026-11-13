@@ -39,41 +39,37 @@ String _approvalCurrency(Ref ref) => switch (ref.watch(currentWorkspaceProvider)
 };
 
 /// Keep the supplier and purchase readers inside the same Demo fixture: each
-/// space reads its own (#3797), a space not given its own reads [purchasing].
+/// space reads its own (#3797), the main space's [purchasing] when [spaces]
+/// names none.
 List<Override> demoPurchasingOverrides(
   DemoPurchasing purchasing, {
-  DemoPurchasing? leipzig,
-  DemoPurchasing? london,
-  DemoPurchasing? newYork,
-  DemoPurchasing? zurich,
-  DemoPurchasing? milan,
-  DemoPurchasing? twin,
+  DemoSpaces<DemoPurchasing>? spaces,
 }) {
-  final DemoSpaces<DemoPurchasing> spaces = (
+  final DemoSpaces<DemoPurchasing> all = spaces ?? (
     home: purchasing,
-    leipzig: leipzig ?? purchasing,
-    london: london ?? purchasing,
-    newYork: newYork ?? purchasing,
-    zurich: zurich ?? purchasing,
-    milan: milan ?? purchasing,
-    twin: twin ?? purchasing,
+    leipzig: purchasing,
+    london: purchasing,
+    newYork: purchasing,
+    zurich: purchasing,
+    milan: purchasing,
+    twin: purchasing,
   );
   return [
     supplierRepositoryProvider.overrideWith(
-      (ref) => demoPickSpace(ref, spaces).suppliers,
+      (ref) => demoPickSpace(ref, all).suppliers,
     ),
     companyLookupRepositoryProvider.overrideWithValue(
       FakeCompanyLookupRepository(),
     ),
     purchaseRepositoryProvider.overrideWith((ref) {
-      final purchases = demoPickSpace(ref, spaces).purchases
+      final purchases = demoPickSpace(ref, all).purchases
         ..mayDecide = (workspaceId) =>
             ref.read(purchaseApprovalAccessProvider(workspaceId));
       return purchases;
     }),
     purchaseApprovalReadsProvider.overrideWith(
       (ref) => FakePurchaseApprovalReads(
-        demoPickSpace(ref, spaces).purchases,
+        demoPickSpace(ref, all).purchases,
         allowedWorkspaceId: _approvalSpace(ref),
         spaceCurrency: _approvalCurrency(ref),
         thresholdUnits: (workspaceId) async {
@@ -89,7 +85,7 @@ List<Override> demoPurchasingOverrides(
     supplierBalanceRepositoryProvider.overrideWith(
       (ref) => FakeSupplierBalanceRepository(
         workspaceId: ref.watch(currentWorkspaceProvider).value?.id ?? 'ws-1',
-        purchases: demoPickSpace(ref, spaces).purchases,
+        purchases: demoPickSpace(ref, all).purchases,
       ),
     ),
   ];

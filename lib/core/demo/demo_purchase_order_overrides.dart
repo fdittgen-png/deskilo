@@ -10,6 +10,7 @@ import '../../features/money/providers/purchase_order_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/purchase_order_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_pick.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_order_seed.dart';
@@ -30,13 +31,8 @@ typedef DemoPurchaseOrderSpaces = ({
 
 DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
   DemoFixture fixture,
-  DemoPurchasing home, {
-  required DemoPurchasing london,
-  required DemoPurchasing newYork,
-  required DemoPurchasing zurich,
-  required DemoPurchasing milan,
-  required DemoPurchasing leipzig,
-}) {
+  DemoSpaces<DemoPurchasing> buying,
+) {
   FakePurchaseOrderRepository space(
     DemoPurchasing purchasing,
     List<ServiceItem> Function() services,
@@ -54,14 +50,14 @@ DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
   }
 
   return (
-    home: space(home, () => fixture.money.services, 'EUR'),
-    london: space(london, () => fixture.london.money.services, 'GBP'),
-    newYork: space(newYork, () => fixture.newYork.money.services, 'USD'),
+    home: space(buying.home, () => fixture.money.services, 'EUR'),
+    london: space(buying.london, () => fixture.london.money.services, 'GBP'),
+    newYork: space(buying.newYork, () => fixture.newYork.money.services, 'USD'),
     // #3832 — the trade cities order nothing yet: bills only.
-    zurich: space(zurich, () => fixture.zurich.money.services, demoZurich.currency, seeded: false),
-    milan: space(milan, () => fixture.milan.money.services, demoMilan.currency, seeded: false),
+    zurich: space(buying.zurich, () => fixture.zurich.money.services, demoZurich.currency, seeded: false),
+    milan: space(buying.milan, () => fixture.milan.money.services, demoMilan.currency, seeded: false),
     leipzig: space(
-      leipzig,
+      buying.leipzig,
       () => fixture.secondSpace.money.services,
       'EUR',
       seeded: false,

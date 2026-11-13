@@ -17,6 +17,16 @@ import '../data/premises_lease_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/workspace_asset_repository.dart';
 
+/// What tells one city's book from another's.
+typedef CityBooksSpec = ({
+  String workspaceId,
+  String siteId,
+  bool external,
+  String country,
+  String currency,
+  int years,
+});
+
 FakeBookProfileRepository cityBooks(
   FakeMoneyRepository money,
   DateTime now, {
@@ -24,14 +34,34 @@ FakeBookProfileRepository cityBooks(
   required String siteId,
   required bool external,
   FakePurchaseRepository? purchases,
-  // #3832 — a city that is neither London nor New York names its own.
-  String? country,
-  String? currency,
-  int years = 4,
-}) =>
-    FakeBookProfileRepository(
+}) => cityBooksOf(money, now, (
+  workspaceId: workspaceId,
+  siteId: siteId,
+  external: external,
+  country: external ? 'GB' : 'US',
+  currency: external ? 'GBP' : 'USD',
+  years: 4,
+), purchases: purchases);
+
+/// #3832 - the book of any city: kept locally or by an external system, in
+/// its country and currency, from [CityBooksSpec.years] years back.
+FakeBookProfileRepository cityBooksOf(
+  FakeMoneyRepository money,
+  DateTime now,
+  CityBooksSpec spec, {
+  FakePurchaseRepository? purchases,
+}) {
+  final (
+    :workspaceId,
+    :siteId,
+    :external,
+    :country,
+    :currency,
+    :years,
+  ) = spec;
+  return FakeBookProfileRepository(
         money: money,
-        country: country ?? (external ? 'GB' : 'US'),
+        country: country,
         purchases: purchases,
       )
       ..profiles.add(
@@ -43,7 +73,7 @@ FakeBookProfileRepository cityBooks(
               ? BookAuthority.externalBook
               : BookAuthority.localBook,
           externalSystem: external ? 'Sage' : '',
-          functionalCurrency: currency ?? (external ? 'GBP' : 'USD'),
+          functionalCurrency: currency,
           fiscalYearStartMonth: 1,
           fiscalYearStartDay: 1,
           basis: AccountingBasis.accrual,
@@ -77,6 +107,7 @@ FakeBookProfileRepository cityBooks(
             revision: 1,
           ),
       ]);
+}
 
 FakeAccountingConnectionRepository cityAccounting(
   DateTime now, {

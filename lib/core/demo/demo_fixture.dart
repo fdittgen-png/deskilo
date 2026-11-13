@@ -217,8 +217,7 @@ class DemoFixture {
       ..viewAs(actor.memberId, workspaces);
     final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
     final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
-    final zurich = DemoTradeCityData.build(city: demoZurich, home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
-    final milan = DemoTradeCityData.build(city: demoMilan, home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+    final trade = _tradeCities(workspaces, () => actor.memberId, today);
     final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
       ..viewAs(actor.memberId, workspaces);
     // The wall tablet greets the member whose badge it read.
@@ -229,16 +228,7 @@ class DemoFixture {
     final problems = [
       ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
         reservations: reservations, money: money),
-      ...validateDemoFixture(
-        workspaces: secondSpace.workspaces,
-        plan: secondSpace.floorPlan,
-        reservations: secondSpace.reservations,
-        money: secondSpace.money,
-      ),
-      ..._validateCityFixtures(london, newYork),
-      for (final city in [zurich, milan])
-        ...validateDemoFixture(workspaces: city.workspaces, plan: city.floorPlan,
-          reservations: city.reservations, money: city.money),
+      ..._validateCityFixtures(secondSpace, london, newYork, trade),
     ];
     if (problems.isNotEmpty) {
       // Fails closed, and says what is wrong: a session that points at a
@@ -260,7 +250,7 @@ class DemoFixture {
       credits: credits,
       accessories: accessories,
       chargingStations: chargingStations,
-      profiles: _profilesForSpaces(london, newYork, [zurich, milan], today),
+      profiles: _profilesForSpaces(london, newYork, trade, today),
       deployments: deployments,
       directory: directory,
       guests: demoGuestVisits(today),
@@ -286,8 +276,7 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
-      zurich: zurich,
-      milan: milan,
+      zurich: trade[0], milan: trade[1],
       twin: twin,
     );
   }
@@ -391,7 +380,19 @@ class DemoFixture {
   }
 }
 
-List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) => [
+/// #3832 - Zurich and Milan, built beside the main space and seen as the
+/// acting member.
+List<DemoTradeCityData> _tradeCities(FakeWorkspaceRepository home, String Function() actor, DateTime now) => [
+  for (final c in [demoZurich, demoMilan])
+    DemoTradeCityData.build(city: c, home: home, actor: actor, now: now)..viewAs(actor(), home),
+];
+
+List<String> _validateCityFixtures(DemoSecondSpaceData second, DemoLondonData london, DemoNewYorkData ny, List<DemoTradeCityData> trade) => [
+  ...validateDemoFixture(workspaces: second.workspaces, plan: second.floorPlan,
+      reservations: second.reservations, money: second.money),
+  for (final city in trade)
+    ...validateDemoFixture(workspaces: city.workspaces, plan: city.floorPlan,
+        reservations: city.reservations, money: city.money),
   ...validateDemoFixture(workspaces: london.workspaces, plan: london.floorPlan,
       reservations: london.reservations, money: london.money),
   ...validateDemoFixture(workspaces: ny.workspaces, plan: ny.floorPlan,

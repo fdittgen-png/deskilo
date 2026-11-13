@@ -37,6 +37,7 @@ class DemoTradeCity {
     required this.siteNames,
     required this.vendorStem,
     required this.foreignCurrency,
+    required this.foreignCountry,
     required this.foreignRate,
     required this.nameOffset,
     required this.seedColor,
@@ -56,9 +57,9 @@ class DemoTradeCity {
   final String vendorStem;
 
   /// The currency of the supplier bill that is NOT in the space's currency,
-  /// and the demo rate it was entered at (units of [currency] per unit of
+  /// the country of the supplier abroad, and the demo rate it was entered at (units of [currency] per unit of
   /// [foreignCurrency]); a decimal string, never a double.
-  final String foreignCurrency, foreignRate;
+  final String foreignCurrency, foreignCountry, foreignRate;
 
   /// Where the locals' names start in the shared list of invented names.
   final int nameOffset;
@@ -177,6 +178,7 @@ const demoZurich = DemoTradeCity(
   siteNames: ['Limmat House', 'Oerlikon Studio'],
   vendorStem: 'Limmat',
   foreignCurrency: 'EUR',
+  foreignCountry: 'DE',
   foreignRate: '0.9383',
   nameOffset: 40,
   seedColor: '#B91C1C',
@@ -198,11 +200,9 @@ const demoMilan = DemoTradeCity(
   siteNames: ['Navigli Hall', 'Isola Studio'],
   vendorStem: 'Navigli',
   foreignCurrency: 'CHF',
+  foreignCountry: 'CH',
   foreignRate: '1.0657',
   nameOffset: 80,
   seedColor: '#15803D',
   symbol: 'NC',
 );
-
-/// The trade cities in the order the session builds them.
-const demoTradeCities = [demoZurich, demoMilan];

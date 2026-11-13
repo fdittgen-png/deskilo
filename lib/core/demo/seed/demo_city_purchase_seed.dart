@@ -104,7 +104,7 @@ DemoPurchasing tradeCityPurchasing(
     id: '$prefix-abroad',
     number: '6',
     name: '${city.vendorStem} Booking Software (Demo)',
-    countryCode: city.foreignCurrency == 'EUR' ? 'DE' : 'CH',
+    countryCode: city.foreignCountry,
     contact: 'billing@$prefix-abroad.example.test',
   );
   suppliers.suppliers.addAll([

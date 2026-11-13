@@ -10,6 +10,7 @@ import '../../features/money/domain/account_activity.dart';
 import '../../features/money/domain/billing_rules.dart';
 import '../../features/money/domain/finance_overview.dart';
 import '../../features/money/domain/ledger_entry.dart';
+import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
 import 'seed/demo_london_seed.dart';
@@ -102,6 +103,15 @@ FinanceOverview _overviewOf(
   );
 }
 
+/// #3832 - the persona's own history, derived from the spaces' records.
+FakeAccountActivityRepository demoActivityRepository(DemoFixture fixture) =>
+    FakeAccountActivityRepository(
+      derive: () => demoFinanceOverview(fixture),
+      deriveRows: (kind) => demoAccountActivity(fixture, kind),
+    );
+
+typedef _Space = ({String id, String name, String currency, FakeMoneyRepository money});
+
 /// #3832 - Me > Activity in the demonstration: the acting persona's own
 /// invoices, payments and usage, in every space they are in, as the server's
 /// my_financial_activity (0304) answers them. Each row keeps its own space's
@@ -111,72 +121,80 @@ List<AccountActivity> demoAccountActivity(
   AccountActivityKind kind,
 ) {
   final me = fixture.actor.memberId;
-  final names = {for (final w in fixture.workspaces.workspaces) w.id: w.name};
-  final currencies = {
-    for (final w in fixture.workspaces.workspaces) w.id: w.currencyCode,
-  };
-  final spaces = [
-    (id: demoFirstSpaceId, money: fixture.money),
-    (id: demoSecondSpaceId, money: fixture.secondSpace.money),
-    (id: demoLondonSpaceId, money: fixture.london.money),
-    (id: demoNewYorkSpaceId, money: fixture.newYork.money),
-    (id: demoZurichSpaceId, money: fixture.zurich.money),
-    (id: demoMilanSpaceId, money: fixture.milan.money),
-  ];
+  final rows = {for (final w in fixture.workspaces.workspaces) w.id: w};
+  _Space space(String id, FakeMoneyRepository money) => (
+    id: id,
+    name: rows[id]?.name ?? id,
+    currency: rows[id]?.currencyCode ?? '',
+    money: money,
+  );
   return [
-    for (final space in spaces)
+    for (final s in [
+      space(demoFirstSpaceId, fixture.money),
+      space(demoSecondSpaceId, fixture.secondSpace.money),
+      space(demoLondonSpaceId, fixture.london.money),
+      space(demoNewYorkSpaceId, fixture.newYork.money),
+      space(demoZurichSpaceId, fixture.zurich.money),
+      space(demoMilanSpaceId, fixture.milan.money),
+    ])
       ...switch (kind) {
-        AccountActivityKind.invoices => [
-          for (final i in space.money.invoices)
-            if (i.memberId == me)
-              AccountActivity(
-                id: i.id,
-                workspaceId: i.workspaceId,
-                workspaceName: names[i.workspaceId] ?? i.workspaceName,
-                occurredAt: i.issuedAt,
-                reference: i.number,
-                description: i.title,
-                currency: i.currency,
-                status: i.voidedAt != null
-                    ? 'voided'
-                    : i.settledByInvoiceId != null
-                    ? 'regrouped'
-                    : 'issued',
-                amountCents: i.totalCents,
-              ),
-        ],
-        AccountActivityKind.payments => [
-          for (final l in space.money.ledger)
-            if (l.memberId == me &&
-                l.category == LedgerCategory.payment &&
-                l.kind == LedgerKind.credit)
-              AccountActivity(
-                id: l.id,
-                workspaceId: space.id,
-                workspaceName: names[space.id] ?? space.id,
-                occurredAt: l.createdAt,
-                reference: '',
-                description: l.description,
-                currency: currencies[space.id] ?? '',
-                status: 'confirmed',
-                amountCents: l.amountCents,
-              ),
-        ],
-        AccountActivityKind.usage => [
-          for (final u in space.money.usageRecords)
-            if (u.memberId == me)
-              AccountActivity(
-                id: u.id,
-                workspaceId: space.id,
-                workspaceName: names[space.id] ?? space.id,
-                occurredAt: u.reservedFrom,
-                reference: '',
-                description: u.spaceLabel,
-                currency: currencies[space.id] ?? '',
-                status: u.basis.name,
-                minutes: u.countedMinutes,
-              ),
-        ],
+        AccountActivityKind.invoices => _invoiceRows(s, me),
+        AccountActivityKind.payments => _paymentRows(s, me),
+        AccountActivityKind.usage => _usageRows(s, me),
       },
   ];
 }
+
+List<AccountActivity> _invoiceRows(_Space s, String me) => [
+  for (final i in s.money.invoices)
+    if (i.memberId == me)
+      AccountActivity(
+        id: i.id,
+        workspaceId: i.workspaceId,
+        workspaceName: s.name,
+        occurredAt: i.issuedAt,
+        reference: i.number,
+        description: i.title,
+        currency: i.currency,
+        status: i.voidedAt != null
+            ? 'voided'
+            : i.settledByInvoiceId != null
+            ? 'regrouped'
+            : 'issued',
+        amountCents: i.totalCents,
+      ),
+];
+
+List<AccountActivity> _paymentRows(_Space s, String me) => [
+  for (final l in s.money.ledger)
+    if (l.memberId == me &&
+        l.category == LedgerCategory.payment &&
+        l.kind == LedgerKind.credit)
+      AccountActivity(
+        id: l.id,
+        workspaceId: s.id,
+        workspaceName: s.name,
+        occurredAt: l.createdAt,
+        reference: '',
+        description: l.description,
+        currency: s.currency,
+        status: 'confirmed',
+        amountCents: l.amountCents,
+      ),
+];
+
+List<AccountActivity> _usageRows(_Space s, String me) => [
+  for (final u in s.money.usageRecords)
+    if (u.memberId == me)
+      AccountActivity(
+        id: u.id,
+        workspaceId: s.id,
+        workspaceName: s.name,
+        occurredAt: u.reservedFrom,
+        reference: '',
+        description: u.spaceLabel,
+        currency: s.currency,
+        status: u.basis.name,
+        minutes: u.countedMinutes,
+      ),
+];
