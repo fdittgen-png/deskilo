@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:deskilo/features/workspace/domain/role_permission_repository.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import 'fake_workspace_state.dart';
 
@@ -24,7 +25,8 @@ mixin FakeRolePermissions on FakeWorkspaceState
       myMember,
       target(workspaceId),
     ).contains(WorkspacePermission.manageRoles)) {
-      throw StateError('only role managers may edit permissions');
+      throw const PostgrestException(
+          message: 'only role managers may edit permissions', code: 'DKN01');
     }
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
@@ -47,7 +49,8 @@ mixin FakeRolePermissions on FakeWorkspaceState
       myMember,
       target(workspaceId),
     ).contains(WorkspacePermission.manageRoles)) {
-      throw StateError('only role managers may edit permissions');
+      throw const PostgrestException(
+          message: 'only role managers may edit permissions', code: 'DKN01');
     }
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;

@@ -224,7 +224,7 @@ void main() {
         (tester) async {
       final workspace = _GatedIdentity()
         ..failWith = const PostgrestException(
-            message: 'not allowed to read this profile');
+            message: 'not allowed to read this profile', code: 'DKN01');
       await workspace.createManagedMember('ws-1', stored);
       await openEdit(tester, workspace, 'Anne DUPONT');
       workspace.gate.complete();
