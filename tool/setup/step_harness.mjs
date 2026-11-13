@@ -155,7 +155,7 @@ globalThis.__setMode=setMode; globalThis.__migrate=migrate; globalThis.__shown=s
   // after its own script (#2501).
   eval(webmcpSource);
   eval(setupWebmcpSource);
-  return { byId, chrome, exportXml: () => { globalThis.__exportXml(); return xml; } };
+  return { byId, chrome, store, exportXml: () => { globalThis.__exportXml(); return xml; } };
 }
 
 // `--export-xml=<mode>` prints ONE real page export on stdout and stops.
@@ -782,6 +782,33 @@ const fakeContext = () => {
   }
   if (shapes.length < 5) fail(`answers: ${shapes.length} legacy fixtures`);
   console.log(`answers: round-trip; ${shapes.length} legacy files load as before`);
+}
+// #3904 — the e-invoice tokens stay in the tab: the browser's storage never
+// holds one (nor keeps one an earlier page stored), the agent's export names
+// them masked, and the page's own download carries them.
+{
+  const c = fakeContext();
+  const page = load('en', { name: 'Token Space', features: { invoicing: true }, einvoice: { url: 'https://pa.example/api', token: 'T-OLD-STORED' } }, { modelContext: c });
+  const P = globalThis.window.__setup;
+  const kept = () => page.store['deskilo-setup-v1'] || '';
+  if (kept().includes('T-OLD-STORED')) fail('secrets: a token an earlier page stored is still in storage');
+  if (P.S.einvoice.token) fail('secrets: a stored token came back after a reload');
+  P.set('einvoice.token', 'T-TYPED-NOW');
+  P.set('einvoice.customerToken', 'T-CUSTOMER');
+  P.save();
+  if (P.S.einvoice.token !== 'T-TYPED-NOW') fail('secrets: the typed token is not kept for the session');
+  if (kept().includes('T-TYPED-NOW') || kept().includes('T-CUSTOMER')) fail('secrets: a typed token reached storage');
+  if (!kept().includes('pa.example')) fail('secrets: the answers around the token were not stored');
+  const r = await c.call('export_configuration', {});
+  if (!r.ok) fail('secrets: the agent export refused: ' + JSON.stringify(r.error));
+  else {
+    if (r.data.text.includes('T-TYPED-NOW') || r.data.text.includes('T-CUSTOMER')) fail('secrets: the agent export carries a token');
+    if (!r.data.text.includes('***')) fail('secrets: the agent export does not show the masked token');
+    if (JSON.stringify(r.data.masked) !== JSON.stringify(['einvoice.token', 'einvoice.customerToken'])) fail('secrets: masked lists ' + JSON.stringify(r.data.masked));
+  }
+  if (P.S.einvoice.token !== 'T-TYPED-NOW') fail('secrets: the agent export changed the answer');
+  if (!page.exportXml().includes('T-TYPED-NOW')) fail('secrets: the download lacks the token');
+  console.log('secrets: tokens stay in the tab; the agent export masks them');
 }
 // #3075 — a fresh page with only the name typed produces no blocker: a
 // default is not an answer, and blocks nothing until the owner changes it.

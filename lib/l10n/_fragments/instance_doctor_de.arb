@@ -36,5 +36,16 @@
   "instanceDoctorRolesUndeclaredTitle": "Installationsrollen nicht deklariert",
   "instanceDoctorRolesUndeclaredDetail": "das Schema ist älter als die Rollenspalte; die Installation verhält sich kombiniert (persönliche Heimat und Workspace-Host) — {held}.\n        Abhilfe: dart run tool/instance.dart install --ref <ref>",
   "instanceDoctorRolesUnknownTitle": "Installationsrollen sind keine bekannte Menge",
-  "instanceDoctorRolesUnknownDetail": "{roles}\n        Es gibt nur personal_home und workspace_host; operator_set_installation_roles schreibt eine gültige Menge."
+  "instanceDoctorRolesUnknownDetail": "{roles}\n        Es gibt nur personal_home und workspace_host; operator_set_installation_roles schreibt eine gültige Menge.",
+  "instanceDoctorProbePush": "Push-Konfiguration",
+  "instanceDoctorPushOwnTitle": "Push-Konfiguration",
+  "instanceDoctorPushOwnDetail": "Push- und Abrechnungsaufrufe gehen an dieses Projekt ({host})",
+  "instanceDoctorPushForeignTitle": "Push- und Abrechnungsaufrufe gehen an ein anderes Projekt",
+  "instanceDoctorPushForeignDetail": "{host}\n        Abhilfe: dart run tool/instance.dart push --ref <ref>, oder push_config auf dieses Projekt setzen.",
+  "instanceDoctorAuthBaselineTitle": "Anmelde-Grundschutz",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{Codes gelten höchstens eine Stunde, Passwörter haben mindestens {length} Zeichen, eine Passwortänderung verlangt erneutes Anmelden} other{Codes gelten höchstens eine Stunde, Passwörter haben mindestens {length} Zeichen, eine Passwortänderung verlangt erneutes Anmelden}}",
+  "instanceDoctorAuthCodesLongTitle": "Anmeldecodes gelten länger als eine Stunde",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwörter dürfen kürzer als {length} Zeichen sein} other{Passwörter dürfen kürzer als {length} Zeichen sein}}",
+  "instanceDoctorAuthReauthOffTitle": "Eine Passwortänderung verlangt kein erneutes Anmelden",
+  "instanceDoctorAuthFixDetail": "Wert  {value}\n        Abhilfe: {command}"
 }

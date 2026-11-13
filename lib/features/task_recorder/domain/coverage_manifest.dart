@@ -392,6 +392,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/money/cash', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/accounting', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/accounting/exports', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/accounting/connected', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/money/repartition-wizard',
     CoverageStatus.excluded,
@@ -446,6 +447,7 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/members/managed', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/members/privacy', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/privacy/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/payment-methods',
     CoverageStatus.excluded,

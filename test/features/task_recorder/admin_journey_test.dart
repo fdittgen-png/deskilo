@@ -95,10 +95,19 @@ RecordedStep _outcomeOf(TaskRecording r, RecordedStep attempt) =>
 
 Future<void> _tapPermission(WidgetTester tester, String key) async {
   final tile = find.byKey(ValueKey(key));
+  // At the desk the roles stand beside the chosen role's permissions: the
+  // role is chosen first, and the switch is reached in its own pane.
+  final role = find.byKey(ValueKey('roles-desk-role-${key.split('-')[1]}'));
+  if (role.evaluate().isNotEmpty) {
+    await tester.tap(role);
+    await tester.pump();
+  }
   await tester.scrollUntilVisible(
     tile,
     300,
-    scrollable: pageScrollable(),
+    scrollable: tile.evaluate().isNotEmpty
+        ? find.ancestor(of: tile, matching: find.byType(Scrollable)).first
+        : pageScrollable(),
   );
   await tester.ensureVisible(tile);
   await tester.pumpAndSettle();

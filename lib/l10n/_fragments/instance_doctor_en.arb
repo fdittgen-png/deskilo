@@ -239,5 +239,77 @@
         "type": "String"
       }
     }
+  },
+  "instanceDoctorProbePush": "Push configuration",
+  "@instanceDoctorProbePush": {
+    "description": "#3904 Name of the doctor question about the push configuration."
+  },
+  "instanceDoctorPushOwnTitle": "Push configuration",
+  "@instanceDoctorPushOwnTitle": {
+    "description": "#3904 Doctor ok: the push configuration names this project."
+  },
+  "instanceDoctorPushOwnDetail": "push and settlement calls go to this project ({host})",
+  "@instanceDoctorPushOwnDetail": {
+    "description": "#3904 Detail: {host} is the host the calls go to.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorPushForeignTitle": "Push and settlement calls go to another project",
+  "@instanceDoctorPushForeignTitle": {
+    "description": "#3904 Doctor alarm: push and settlement calls name another project."
+  },
+  "instanceDoctorPushForeignDetail": "{host}\n        Fix: dart run tool/instance.dart push --ref <ref>, or set push_config to this project.",
+  "@instanceDoctorPushForeignDetail": {
+    "description": "#3904 Detail: {host} is the host the calls go to; the fix command stays as written.",
+    "placeholders": {
+      "host": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorAuthBaselineTitle": "Sign-in baseline",
+  "@instanceDoctorAuthBaselineTitle": {
+    "description": "#3904 Doctor ok: the sign-in settings meet the baseline."
+  },
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{codes last at most an hour, passwords have at least {length} character, a password change asks to sign in again} other{codes last at most an hour, passwords have at least {length} characters, a password change asks to sign in again}}",
+  "@instanceDoctorAuthBaselineDetail": {
+    "description": "#3904 Detail: {length} is the minimum password length.",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAuthCodesLongTitle": "Sign-in codes last longer than an hour",
+  "@instanceDoctorAuthCodesLongTitle": {
+    "description": "#3904 Doctor warning: e-mailed sign-in codes stay valid longer than an hour."
+  },
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwords may be shorter than {length} character} other{Passwords may be shorter than {length} characters}}",
+  "@instanceDoctorAuthPasswordShortTitle": {
+    "description": "#3904 Doctor warning: {length} is the minimum password length the builder sets.",
+    "placeholders": {
+      "length": {
+        "type": "int"
+      }
+    }
+  },
+  "instanceDoctorAuthReauthOffTitle": "A password change does not ask to sign in again",
+  "@instanceDoctorAuthReauthOffTitle": {
+    "description": "#3904 Doctor warning: changing a password does not ask the person to sign in again."
+  },
+  "instanceDoctorAuthFixDetail": "is  {value}\n        Fix: {command}",
+  "@instanceDoctorAuthFixDetail": {
+    "description": "#3904 Detail of a sign-in warning: {value} is the setting as the server reports it, {command} the command that sets the baseline (kept as written).",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      },
+      "command": {
+        "type": "String"
+      }
+    }
   }
 }

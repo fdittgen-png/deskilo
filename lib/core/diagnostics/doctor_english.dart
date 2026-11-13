@@ -32,11 +32,16 @@ String _probeEnglish(DoctorProbe probe) => switch (probe) {
   DoctorProbe.storage => 'Storage scoping',
   DoctorProbe.hardening => 'Hardening',
   DoctorProbe.roles => 'Installation roles',
+  DoctorProbe.push => 'Push configuration',
 };
 
 const String _install =
     '        Fix: dart run tool/instance.dart install --ref <ref>';
 const String _pad = '\n        ';
+
+/// #3904 — a sign-in warning's detail: the value as reported, and the fix.
+String _authFix(List<Object> facts) =>
+    'is  ${facts[0]}${_pad}Fix: ${facts[1]}';
 
 /// The title and detail of a typed [finding].
 ({String title, String detail}) doctorEnglish(DoctorFinding finding) {
@@ -125,6 +130,34 @@ const String _pad = '\n        ';
       detail:
           '${s(0)}${_pad}Only personal_home and workspace_host exist; '
           'operator_set_installation_roles writes a valid set.',
+    ),
+    DoctorWords.pushOwn => (
+      title: 'Push configuration',
+      detail: 'push and settlement calls go to this project (${s(0)})',
+    ),
+    DoctorWords.pushForeign => (
+      title: 'Push and settlement calls go to another project',
+      detail:
+          '${s(0)}${_pad}Fix: dart run tool/instance.dart push --ref <ref>, '
+          'or set push_config to this project.',
+    ),
+    DoctorWords.authBaseline => (
+      title: 'Sign-in baseline',
+      detail:
+          'codes last at most an hour, passwords have at least ${n(0)} '
+          'characters, a password change asks to sign in again',
+    ),
+    DoctorWords.authCodesLong => (
+      title: 'Sign-in codes last longer than an hour',
+      detail: _authFix(f),
+    ),
+    DoctorWords.authPasswordShort => (
+      title: 'Passwords may be shorter than ${n(2)} characters',
+      detail: _authFix(f),
+    ),
+    DoctorWords.authReauthOff => (
+      title: 'A password change does not ask to sign in again',
+      detail: _authFix(f),
     ),
     DoctorWords.stuckAccounts || DoctorWords.installationHeld => (
       title: '',

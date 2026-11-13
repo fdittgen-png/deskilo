@@ -1,0 +1,15 @@
+{
+  "@@locale": "es",
+  "permModuleEveryday": "Día a día",
+  "permModulePeople": "Personas y sus datos",
+  "permModulePlaces": "Espacios y reservas",
+  "permModuleMoney": "Dinero",
+  "permModuleStock": "Existencias",
+  "permModuleDocuments": "Documentos e informes",
+  "permModuleConfiguration": "Configuración",
+  "permModuleEnvironments": "Entornos",
+  "rolesPeopleCount": "{count, plural, =0{Nadie} one{1 persona} other{{count} personas}}",
+  "rolesWhoHasTitle": "Quién tiene «{permission}»",
+  "rolesWhoHasExplain": "Todas las personas activas que lo tienen, por su rol base o por un rol propio del espacio.",
+  "rolesOwnRoleEdit": "Editar este rol"
+}

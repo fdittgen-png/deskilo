@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "privacyRequestsOpen": "In attesa di risposta",
+  "privacyRequestsAnswered": "Evase",
+  "privacyRequestsColWho": "Membro",
+  "privacyRequestsColKind": "Richiesta",
+  "privacyRequestsColReceived": "Ricevuta",
+  "privacyRequestsColStatus": "A che punto è"
+}

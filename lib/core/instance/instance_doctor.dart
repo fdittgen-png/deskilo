@@ -82,6 +82,8 @@ class InstanceDoctor {
             () async => checkGuards(await api.query(ref, guardHealthSql))),
         ...await _probe(DoctorProbe.roles,
             () async => checkInstallationRoles(await api.query(ref, installationRolesSql))),
+        ...await _probe(DoctorProbe.push,
+            () async => checkPushConfig(await api.query(ref, pushConfigSql), ref: ref)),
       ];
 
   Future<List<DoctorFinding>> _probe(

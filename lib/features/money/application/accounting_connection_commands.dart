@@ -131,6 +131,10 @@ class AccountingConnectionCommands {
     connectionId: connectionId,
   );
 
+  /// #3906 — completes a target's sign-in the app was handed back.
+  Future<SignInCompletion> completeSignIn(SignInReturn back) =>
+      _repository.completeSignIn(back);
+
   Future<void> refresh(String connectionId) =>
       _repository.refresh(connectionId);
 

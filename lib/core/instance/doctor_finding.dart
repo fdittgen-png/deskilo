@@ -22,6 +22,12 @@ enum DoctorWords {
   guardPublicBucket,
   rolesUndeclared,
   rolesUnknown,
+  pushOwn,
+  pushForeign,
+  authBaseline,
+  authCodesLong,
+  authPasswordShort,
+  authReauthOff,
 }
 
 /// The questions the doctor asks, each named once: a failed one is worded in
@@ -35,6 +41,7 @@ enum DoctorProbe {
   storage,
   hardening,
   roles,
+  push,
 }
 
 /// How serious a finding is. [alarm] means people are affected right now.
