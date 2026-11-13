@@ -5660,6 +5660,83 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDayEmpty => 'Nichts an diesem Tag.';
 
   @override
+  String get calendarDeskAll => 'Alle';
+
+  @override
+  String get calendarDeskBooking => 'Buchungsdetails';
+
+  @override
+  String get calendarDeskBookingActions =>
+      'Ändern, stornieren oder im Plan zeigen';
+
+  @override
+  String get calendarDeskColumnFrom => 'Von';
+
+  @override
+  String get calendarDeskColumnMember => 'Mitglied';
+
+  @override
+  String get calendarDeskColumnPlace => 'Platz';
+
+  @override
+  String get calendarDeskColumnState => 'Status';
+
+  @override
+  String get calendarDeskColumnTo => 'Bis';
+
+  @override
+  String get calendarDeskExport => 'Exportieren';
+
+  @override
+  String get calendarDeskFilterKind => 'Art des Platzes';
+
+  @override
+  String get calendarDeskFilterLevel => 'Ebene';
+
+  @override
+  String calendarDeskFreeDay(String place, String day) {
+    return '$place: frei am $day, neue Buchung';
+  }
+
+  @override
+  String calendarDeskFreeSlot(String place, String from, String to) {
+    return '$place: frei von $from bis $to, neue Buchung';
+  }
+
+  @override
+  String calendarDeskMissingHour(String from, String to) {
+    return 'Die Uhren werden vorgestellt: $from bis $to gibt es an diesem Tag nicht';
+  }
+
+  @override
+  String get calendarDeskModeTable => 'Alle Buchungen';
+
+  @override
+  String calendarDeskMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count weitere',
+      one: '$count weitere',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get calendarDeskNew => 'Neue Buchung';
+
+  @override
+  String calendarDeskRepeatedHour(String time) {
+    return '$time, zum zweiten Mal: die Uhren wurden zurückgestellt';
+  }
+
+  @override
+  String get calendarDeskZoomIn => 'Vergrößern';
+
+  @override
+  String get calendarDeskZoomOut => 'Verkleinern';
+
+  @override
   String calendarDueTitle(String number) {
     return 'Zahlung fällig · $number';
   }
@@ -30691,7 +30768,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shortcutNew => 'Neu';
 
   @override
+  String get shortcutNextPeriod =>
+      'Nächster Tag, nächste Woche oder nächster Monat';
+
+  @override
   String get shortcutOpenCalendar => 'Kalender eines Datumsfelds öffnen';
+
+  @override
+  String get shortcutPreviousPeriod =>
+      'Voriger Tag, vorige Woche oder voriger Monat';
 
   @override
   String get shortcutPrint => 'Das Dokument dieser Seite';
@@ -30709,7 +30794,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shortcutSubmit => 'Speichern oder senden';
 
   @override
+  String get shortcutToday => 'Zu heute springen';
+
+  @override
   String get shortcutUndo => 'Rückgängig';
+
+  @override
+  String get shortcutViewDay => 'Einen Tag zeigen';
+
+  @override
+  String get shortcutViewMonth => 'Einen Monat zeigen';
+
+  @override
+  String get shortcutViewWeek => 'Eine Woche zeigen';
 
   @override
   String get siteCity => 'Ort';

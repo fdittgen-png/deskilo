@@ -1,0 +1,22 @@
+{
+  "calendarDeskNew": "Nouvelle réservation",
+  "calendarDeskAll": "Tous",
+  "calendarDeskFilterLevel": "Niveau",
+  "calendarDeskFilterKind": "Type de place",
+  "calendarDeskColumnMember": "Membre",
+  "calendarDeskColumnPlace": "Place",
+  "calendarDeskColumnFrom": "Du",
+  "calendarDeskColumnTo": "Au",
+  "calendarDeskColumnState": "État",
+  "calendarDeskExport": "Exporter",
+  "calendarDeskBooking": "Détails de la réservation",
+  "calendarDeskBookingActions": "Modifier, annuler ou voir sur le plan",
+  "calendarDeskModeTable": "Toutes les réservations",
+  "calendarDeskZoomIn": "Agrandir",
+  "calendarDeskZoomOut": "Réduire",
+  "calendarDeskMore": "{count, plural, one{{count} de plus} other{{count} de plus}}",
+  "calendarDeskFreeSlot": "{place} : libre de {from} à {to}, nouvelle réservation",
+  "calendarDeskFreeDay": "{place} : libre le {day}, nouvelle réservation",
+  "calendarDeskRepeatedHour": "{time}, une seconde fois : les horloges ont reculé",
+  "calendarDeskMissingHour": "Les horloges avancent : de {from} à {to} n’existe pas ce jour-là"
+}

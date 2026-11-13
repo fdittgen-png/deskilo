@@ -46,5 +46,29 @@
   "shortcutKeysTitle": "Keyboard keys",
   "@shortcutKeysTitle": {
     "description": "#3610 the title of the overlay listing the keys of the page"
+  },
+  "shortcutToday": "Go to today",
+  "@shortcutToday": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutPreviousPeriod": "Previous day, week or month",
+  "@shortcutPreviousPeriod": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutNextPeriod": "Next day, week or month",
+  "@shortcutNextPeriod": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutViewDay": "Show a day",
+  "@shortcutViewDay": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutViewWeek": "Show a week",
+  "@shortcutViewWeek": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutViewMonth": "Show a month",
+  "@shortcutViewMonth": {
+    "description": "#3626 a line of the keys overlay: what the calendar key does"
   }
 }
