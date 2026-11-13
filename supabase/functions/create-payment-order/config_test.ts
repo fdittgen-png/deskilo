@@ -3,7 +3,7 @@
 // #3905 -- the test credentials of each provider are recognised by their
 // shape, so a production workspace opens no order on them.
 import { assertEquals } from "jsr:@std/assert@1";
-import { usesTestCredentials } from "./config.ts";
+import { refusesTestCredentials, usesTestCredentials } from "./config.ts";
 
 Deno.test("a Stripe test key is a test credential; a live key is not", () => {
   assertEquals(usesTestCredentials({ secret_key: "sk_test_abc" }, "stripe"), true);
@@ -23,4 +23,11 @@ Deno.test("a PayPal configuration outside live is a test credential", () => {
   assertEquals(usesTestCredentials({ env: "sandbox" }, "paypal"), true);
   assertEquals(usesTestCredentials({}, "paypal"), true);
   assertEquals(usesTestCredentials({ env: "live" }, "paypal"), false);
+});
+
+Deno.test("test credentials are refused only while test payments are off", () => {
+  assertEquals(refusesTestCredentials({ secret_key: "sk_test_abc" }, "stripe", false), true);
+  assertEquals(refusesTestCredentials({ secret_key: "sk_test_abc" }, "stripe", true), false);
+  assertEquals(refusesTestCredentials({ secret_key: "sk_live_abc" }, "stripe", false), false);
+  assertEquals(refusesTestCredentials({ env: "sandbox" }, "paypal", true), false);
 });

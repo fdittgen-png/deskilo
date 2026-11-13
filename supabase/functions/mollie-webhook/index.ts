@@ -24,6 +24,7 @@ import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { mollieApi } from "../_shared/providers.ts";
 import { type Intent, mismatch, reversalOf } from "./payment_rules.ts";
+import { allowsTestPayments } from "../_shared/test_payments.ts";
 
 // The key of the provider the intent was created with — Wero is offered
 // through Mollie but stores its own credentials.
@@ -118,7 +119,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
   const status = payment.status as string;
   if (status === "paid") {
-    const why = mismatch(intent, payment, key);
+    const why = mismatch(intent, payment, key, allowsTestPayments());
     if (why) {
       console.error("mollie payment does not match the intent", { paymentId, why });
       return respond(`mismatch_${why}`, 409);

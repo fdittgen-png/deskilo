@@ -98,3 +98,12 @@ export function usesTestCredentials(config: ProviderConfig, provider: Provider):
       return (config.env ?? "") !== "live";
   }
 }
+
+/** #3905 -- whether an order on [config] is refused: it holds test
+ * credentials and the installation takes no test payments ([allowTest], the
+ * operator's switch, `_shared/test_payments.ts`). */
+export const refusesTestCredentials = (
+  config: ProviderConfig,
+  provider: Provider,
+  allowTest: boolean,
+): boolean => !allowTest && usesTestCredentials(config, provider);

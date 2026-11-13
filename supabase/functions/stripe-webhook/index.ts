@@ -8,7 +8,7 @@
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 import { handlePayout, isPayoutEvent } from "./payout.ts";
-import { handleReversal, isReversalEvent } from "./reversal.ts";
+import { handleReversal, ignoresTestEvent, isReversalEvent } from "./reversal.ts";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -175,8 +175,8 @@ export async function handle(
   // #2380 -- a payout event names no checkout session: the workspace is the
   // one whose own webhook secret signed it (payout.ts).
   if (isPayoutEvent(event.type)) {
-    // #3905 -- a test-mode payout reaches no books.
-    if (event.livemode === false) {
+    // #3905 -- a test-mode payout reaches no books (unless test payments are on).
+    if (ignoresTestEvent(event, deps.env)) {
       console.log("stripe test event ignored");
       return new Response("ok", { status: 200 });
     }
@@ -246,8 +246,9 @@ export async function handle(
     console.error("stripe webhook signature verification FAILED");
     return new Response("verification_failed", { status: 400 });
   }
-  // #3905 -- a test-mode event settles nothing in a production ledger.
-  if (event.livemode === false) {
+  // #3905 -- a test-mode event settles nothing in a production ledger,
+  // unless the installation takes test payments.
+  if (ignoresTestEvent(event, deps.env)) {
     console.log("stripe test event ignored");
     return new Response("ok", { status: 200 });
   }
