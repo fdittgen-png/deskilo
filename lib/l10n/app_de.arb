@@ -5145,6 +5145,7 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "Die Plattform hat dieses Dokument noch nicht bestätigt. Fragen Sie später erneut nach.",
   "eInvoiceEndpointIdField": "Elektronische Adresse",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"

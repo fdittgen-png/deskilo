@@ -2317,6 +2317,7 @@ Map<String, _Getter> _part6() => {
   'developerEmpty': (l) => l.developerEmpty,
   'discoverySavedFilter': (l) => l.discoverySavedFilter,
   'discoveryShowAllLoaded': (l) => l.discoveryShowAllLoaded,
+  'eInvoiceDocumentUnconfirmed': (l) => l.eInvoiceDocumentUnconfirmed,
   'eInvoiceFieldApiKey': (l) => l.eInvoiceFieldApiKey,
   'editorHintDecor': (l) => l.editorHintDecor,
   'editorHintImage': (l) => l.editorHintImage,

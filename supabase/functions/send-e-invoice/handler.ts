@@ -340,6 +340,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     // A document verdict is something the connector READ from a successful
     // answer; a refused or failed query is a query error, never a verdict.
     const isVerdict = asked.httpStatus === undefined &&
+      !asked.pending &&
       (asked.status === "accepted" || asked.status === "rejected") &&
       Object.keys(asked.receipt).length > 0;
     if (isVerdict) {
@@ -352,6 +353,19 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
           status: asked.status,
           detail: clientDetail(asked.status, asked.detail),
         },
+        "",
+      );
+    } else if (asked.httpStatus === undefined && asked.pending) {
+      // #3881 -- a readable answer with no verdict yet: the provider holds
+      // the upload (an uncertain upload settles accepted) and what it said
+      // is kept; the document has no verdict and no query error.
+      console.log("send-e-invoice: no document verdict yet");
+      await store.lookup(
+        sent.id,
+        sent.phase === "uncertain" ? "accepted" : null,
+        sent.external_id,
+        Object.keys(asked.receipt).length > 0 ? asked.receipt : null,
+        null,
         "",
       );
     } else {

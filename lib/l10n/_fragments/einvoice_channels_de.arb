@@ -116,6 +116,7 @@
     }
   },
   "eInvoiceReceiptNothingYet": "Die Plattform meldet zu diesem Dokument noch nichts Neues.",
+  "eInvoiceDocumentUnconfirmed": "Die Plattform hat dieses Dokument noch nicht bestätigt. Fragen Sie später erneut nach.",
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
   },

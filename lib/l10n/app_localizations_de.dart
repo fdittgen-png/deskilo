@@ -8223,6 +8223,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eInvoiceContactPhoneField => 'Kontakttelefon für Rechnungen';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'Die Plattform hat dieses Dokument noch nicht bestätigt. Fragen Sie später erneut nach.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Elektronische Adresse';
 
   @override

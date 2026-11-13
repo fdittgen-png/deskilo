@@ -75,6 +75,17 @@ class EInvoiceReceiptLine extends ConsumerWidget {
               ),
             ),
           ),
+        // #3881 — taken but not confirmed: the person knows why nothing
+        // moved, and what to do (ask again later).
+        if (transmission.awaitsDocumentVerdict)
+          Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.xs),
+            child: Text(
+              l10n.eInvoiceDocumentUnconfirmed,
+              key: const ValueKey('einvoice-document-unconfirmed'),
+              style: theme.textTheme.bodySmall,
+            ),
+          ),
         // #3335 — an unsettled submission is settled by a person with the
         // send authority; Send is not offered meanwhile.
         if (canAsk &&

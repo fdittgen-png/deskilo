@@ -17,6 +17,7 @@ import {
   ConnectorDocument,
   Fetch,
   join,
+  noVerdictYet,
   parseJson,
   refused,
   Submission,
@@ -117,9 +118,10 @@ export async function statusPeppol(
     },
   );
   if (!res.ok) return refused(res);
+  // #3881 -- the evidence's outcome fields are not named from a real access
+  // point's answer yet: a readable answer is stored, and is no verdict.
   const text = await res.text();
-  const body = parseJson(text);
-  return accepted(guid, text, { guid, evidence: body });
+  return noVerdictYet(guid, text, { guid, evidence: parseJson(text) });
 }
 
 /** The peppol connector record (#3337). */

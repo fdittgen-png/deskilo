@@ -797,6 +797,90 @@ Deno.test("O10: a later document rejection is a verdict beside the upload; the p
   assertEquals(p.posts.length, 0); // asking never uploads
 });
 
+// #3881 -- an SdI status gives a verdict only on the SdI's outcome
+// notification: NS refuses, RC delivers, MC and AT count the invoice as
+// issued. Before the SdI has answered, the status writes no verdict.
+async function sdiStatus(notifications: unknown[]) {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://sdi.test",
+    login_url: "https://login.test/login",
+    username: "u@x.it",
+    password: "p",
+  };
+  s.rows.set("t81", {
+    id: "t81",
+    key: "k",
+    binding: "b",
+    workspace_id: WS,
+    provider: "it_sdi",
+    phase: "accepted",
+    external_id: "u-1",
+    detail: "",
+    environment: "prod",
+    destination: "government",
+    format: "fatturaPa",
+    receipt: { uuid: "u-1" },
+    owner: "o",
+    generation: 1,
+    deadline: 0,
+    verdict: {},
+    queryError: "",
+    resolvedBy: "",
+    artifact: {
+      bytes: new Uint8Array() as Uint8Array<ArrayBuffer>,
+      sha256: "",
+      fileName: "",
+      mimeType: "",
+      receiverScheme: "",
+      receiverId: "",
+    },
+  });
+  const answers: Record<string, unknown> = {
+    "https://login.test/login": { token: "jwt" },
+    "https://sdi.test/invoices/u-1": { marking: "sent" },
+    "https://sdi.test/invoices/u-1/notifications": notifications,
+  };
+  const fetchImpl = ((input: string | URL | Request) => {
+    const url = String(input instanceof Request ? input.url : input);
+    return Promise.resolve(
+      new Response(JSON.stringify(answers[url] ?? {}), { status: 200 }),
+    );
+  }) as typeof fetch;
+  const r = await read(
+    await call(s, fetchImpl, {
+      workspace_id: WS,
+      action: "status",
+      transmission_id: "t81",
+    }),
+  );
+  return { r, row: s.rows.get("t81")! };
+}
+
+Deno.test("#3881 an SdI status before the SdI has answered writes no verdict", async () => {
+  const { r, row } = await sdiStatus([]);
+  assertEquals(r.body.document_status, "unknown");
+  assertEquals(row.verdict, {});
+  assertEquals(row.queryError, "");
+  assertEquals(row.phase, "accepted");
+  assertEquals(row.receipt, { uuid: "u-1" });
+});
+
+Deno.test("#3881 an SdI notification that is no outcome writes no verdict", async () => {
+  const { r, row } = await sdiStatus([{ type: "MT", message: "metadata" }]);
+  assertEquals(r.body.document_status, "unknown");
+  assertEquals(row.verdict, {});
+});
+
+Deno.test("#3881 a delivery receipt is the SdI's acceptance, whatever follows it", async () => {
+  for (const notes of [[{ type: "RC" }], [{ type: "RC" }, { type: "DT" }], [{ type: "MC" }], [{ type: "AT" }]]) {
+    const { r, row } = await sdiStatus(notes);
+    assertEquals(r.body.document_status, "accepted", JSON.stringify(notes));
+    assertEquals((row.verdict as { status?: string }).status, "accepted");
+  }
+});
+
 Deno.test("O3/O4: a send on a record whose dispatch window passed answers uncertain and uploads nothing", async () => {
   const s = new FakeStore();
   const p = provider(ok);
@@ -1026,7 +1110,9 @@ Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, 
   };
   assertEquals(doc.rawDocumentData.parseStrategy, "ubl");
 
-  // the message-level response is read back and stored beside the upload
+  // the message-level response is read back and stored beside the upload;
+  // until its outcome fields are named from a real answer it is no verdict
+  // (#3881)
   const row = [...s.rows.values()][0];
   const status = await read(
     await call(s, fetchImpl, {
@@ -1035,11 +1121,12 @@ Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, 
       transmission_id: row.id,
     }),
   );
-  assertEquals(status.body.document_status, "accepted");
+  assertEquals(status.body.document_status, "unknown");
   assertEquals(asked, [
     "https://ap.test/api/v2/document_submissions/G-7/evidence/sending",
   ]);
-  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  assertEquals(row.verdict, {});
+  assertEquals(row.queryError, "");
   assertEquals(row.phase, "accepted");
 
   // a second delivery of the same invoice sends nothing
@@ -1134,16 +1221,16 @@ const expectedUatGet = [
   { url: UAT_EVIDENCE_URL, method: "GET", auth: "Bearer uat-key" },
 ];
 
-Deno.test("R1 retained-ID recovery: an uncertain row with its id settles accepted on a successful status, keeping row, binding and artifact", async () => {
+Deno.test("R1 retained-ID recovery: an uncertain row with its id settles accepted on a successful status, keeping row, binding and artifact; the document has no verdict yet (#3881)", async () => {
   const { s, id } = await retainedUat();
   const before = structuredClone(s.rows.get(id)!);
   const net = recorder(acknowledged);
   const r = await read(await call(s, net.fetchImpl, statusBody(id)));
   const row = s.rows.get(id)!;
   assertEquals(r.body.phase, "accepted");
-  assertEquals(r.body.document_status, "accepted");
+  assertEquals(r.body.document_status, "unknown");
   assertEquals(row.phase, "accepted");
-  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  assertEquals(row.verdict, {});
   // the correlated evidence REPLACES the partial prior receipt
   assertEquals(row.receipt, {
     guid: "G-UAT",
