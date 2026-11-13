@@ -247,7 +247,7 @@ class _OrderTile extends ConsumerWidget {
                     onPressed: () => PurchaseOrderSheet(
                       context,
                       ref,
-                    ).open(workspaceId: workspaceId, order: order),
+                    ).open(workspaceId: workspaceId, orderId: order.id),
                     icon: const Icon(Icons.edit_outlined),
                     label: Text(l10n.purchaseOrderEdit),
                   ),

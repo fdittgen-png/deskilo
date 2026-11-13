@@ -36,5 +36,9 @@
   "purchaseOrderRefused": "El pedido no se modificó. Revise los datos e inténtelo de nuevo.",
   "reportDocPurchaseOrder": "Pedido de compra",
   "reportDocPurchaseOrderTitle": "Pedido de compra {reference}",
-  "reportExpectedDelivery": "Entrega prevista"
+  "reportExpectedDelivery": "Entrega prevista",
+  "purchaseOrderSummaryTitle": "Resumen del pedido",
+  "purchaseOrderSummaryLines": "{count, plural, =0{Ninguna línea} one{Una línea} other{{count} líneas}}",
+  "purchaseOrderSummaryNet": "Neto",
+  "purchaseOrderSummaryVat": "IVA"
 }

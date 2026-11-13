@@ -38208,6 +38208,30 @@ abstract class AppLocalizations {
   /// **'{supplier} · {total}'**
   String purchaseOrderSummary(String supplier, String total);
 
+  /// #3608 the number of lines in the order
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No line} one{One line} other{{count} lines}}'**
+  String purchaseOrderSummaryLines(int count);
+
+  /// #3608 the order's total before VAT
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get purchaseOrderSummaryNet;
+
+  /// #3608 the summary beside the order's form
+  ///
+  /// In en, this message translates to:
+  /// **'Order summary'**
+  String get purchaseOrderSummaryTitle;
+
+  /// #3608 the order's VAT
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get purchaseOrderSummaryVat;
+
   /// #3307 purchase orders
   ///
   /// In en, this message translates to:
