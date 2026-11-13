@@ -17,6 +17,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -54,6 +55,9 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
   /// A match is running: every candidate waits, so a double tap or a second
   /// card never matches twice.
   final ValueNotifier<bool> _working = ValueNotifier(false);
+
+  /// #3614 — the payment open in the right pane at the desk.
+  String? _selected;
 
   @override
   void dispose() {
@@ -205,30 +209,81 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
         ),
       );
     }
+    Widget card(PaymentToMatch row) => ValueListenableBuilder(
+      valueListenable: _working,
+      builder: (context, working, _) => _PaymentCard(
+        row: row,
+        currency: widget.currency,
+        onMatch: working ? null : (c) => _match(row, c),
+        onAssign: working
+            ? null
+            : () => showAssignPayment(
+                context,
+                paymentId: row.payment.id,
+                customerId: row.customerId,
+                customerName: row.customerName,
+                currency: widget.currency,
+              ),
+      ),
+    );
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return _panes(context, rows, card);
+    }
     return ListView(
       padding: AppSpacing.mdAll,
       children: [
         QuietLine(l10n.paymentMatchIntro, icon: Icons.info_outline),
         for (final row in rows) ...[
           const SizedBox(height: AppSpacing.md),
-          ValueListenableBuilder(
-            valueListenable: _working,
-            builder: (context, working, _) => _PaymentCard(
-              row: row,
-              currency: widget.currency,
-              onMatch: working ? null : (c) => _match(row, c),
-              onAssign: working
-                  ? null
-                  : () => showAssignPayment(
-                      context,
-                      paymentId: row.payment.id,
-                      customerId: row.customerId,
-                      customerName: row.customerName,
-                      currency: widget.currency,
-                    ),
-            ),
-          ),
+          card(row),
         ],
+      ],
+    );
+  }
+
+  /// #3614 — at the desk, two panes: the payments received on the left, and
+  /// the open invoices of the chosen one's customer and currency on the
+  /// right, where it is matched.
+  Widget _panes(
+    BuildContext context,
+    List<PaymentToMatch> rows,
+    Widget Function(PaymentToMatch row) card,
+  ) {
+    final format = ref.watch(appFormatProvider);
+    final money = format.moneyIn(widget.currency);
+    final open =
+        rows.where((r) => r.payment.id == _selected).firstOrNull ?? rows.first;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(
+          flex: 2,
+          child: ListView(
+            key: const ValueKey('payment-match-payments'),
+            padding: AppSpacing.mdAll,
+            children: [
+              QuietLine(context.l10n.paymentMatchIntro, icon: Icons.info_outline),
+              for (final row in rows)
+                ListTile(
+                  key: ValueKey('payment-match-pick-${row.payment.id}'),
+                  selected: row.payment.id == open.payment.id,
+                  title: Text(row.customerName, overflow: TextOverflow.ellipsis),
+                  subtitle: Text(format.date(row.payment.entry.on)),
+                  trailing: Text(money.formatMinor(row.payment.leftCents)),
+                  onTap: () => setState(() => _selected = row.payment.id),
+                ),
+            ],
+          ),
+        ),
+        const VerticalDivider(width: 1),
+        Expanded(
+          flex: 3,
+          child: ListView(
+            key: const ValueKey('payment-match-invoices'),
+            padding: AppSpacing.mdAll,
+            children: [card(open)],
+          ),
+        ),
       ],
     );
   }

@@ -1,0 +1,4 @@
+{
+  "@@locale": "it",
+  "invoicingShareRemindersSelected": "{count, plural, one{Condividi {count} sollecito} other{Condividi {count} solleciti}}"
+}

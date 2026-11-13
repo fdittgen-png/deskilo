@@ -90,7 +90,7 @@
 21 test/features/money/invoice_register_test.dart
 11 test/features/money/invoice_template_test.dart
 80 test/features/money/invoices_test.dart
-16 test/features/money/invoicing_list_detail_test.dart
+15 test/features/money/invoicing_list_detail_test.dart
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart
@@ -127,7 +127,7 @@
 55 test/features/reservations/reserve_hub_test.dart
 11 test/features/reservations/seat_list_booking_actions_test.dart
 30 test/features/reservations/space_scan_test.dart
-17 test/features/search/search_palette_test.dart
+16 test/features/search/search_palette_test.dart
 10 test/features/task_recorder/admin_journey_test.dart
 10 test/features/task_recorder/booking_journey_test.dart
 18 test/features/task_recorder/calendar_journey_test.dart

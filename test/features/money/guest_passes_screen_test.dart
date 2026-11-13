@@ -31,6 +31,9 @@ class _Passes implements GuestPassRepository {
       ];
 
   @override
+  Future<List<GuestPassRecord>> passesSold(String workspaceId) async => const [];
+
+  @override
   Future<List<GuestPassPlace>> places(String workspaceId) async => const [(seatId: 'seat-1', label: 'Ground · A1')];
 
   @override

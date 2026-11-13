@@ -246,8 +246,8 @@ class _InvoiceSource implements SearchSource {
   ];
 }
 
-/// A customer is a member invoiced: opened on the invoicing page, as its
-/// row opens it (#3614 gives customers an address of their own).
+/// A customer is a member invoiced: opened at their own address (#3614),
+/// beside the invoice list on a large window.
 class _CustomerSource implements SearchSource {
   _CustomerSource(this._ref, this._what);
 
@@ -269,10 +269,8 @@ class _CustomerSource implements SearchSource {
             source: id,
             title: i.clientName,
             where: _what,
-            route: Uri(
-              path: '/invoices',
-              queryParameters: {'customer': i.memberId},
-            ).toString(),
+            // #3614 — the customer's own address.
+            route: '/invoices/customer/${Uri.encodeComponent(i.memberId)}',
           ),
     ];
   }

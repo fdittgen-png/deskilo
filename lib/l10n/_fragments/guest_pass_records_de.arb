@@ -1,0 +1,7 @@
+{
+  "@@locale": "de",
+  "guestPassHolder": "Gast",
+  "guestPassUsed": "Genutzt",
+  "guestPassesSoldTitle": "Verkaufte Pässe",
+  "guestPassesSoldEmpty": "Noch kein Pass verkauft."
+}

@@ -16,7 +16,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../application/save_service.dart';
@@ -36,9 +36,10 @@ abstract final class ServiceEditor {
     Iterable<String> categories = const [],
   }) async {
     final l10n = context.l10n;
-    final draft = await showAppSheet<ServiceDraft>(
-      context: context,
-      isScrollControlled: true,
+    // #3614 — a standard task: a side panel beside the table at the desk.
+    final draft = await showTask<ServiceDraft>(
+      context,
+      size: TaskSize.standard,
       builder: (context) => _ServiceSheet(
         service: service,
         categories: {

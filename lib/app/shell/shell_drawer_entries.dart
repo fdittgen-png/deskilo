@@ -186,19 +186,32 @@ class DrawerEntries {
     ];
   }
 
-  /// The sales, purchases, cash and accounting pages of #2577, each one
-  /// door for whoever holds what its page asks.
+  /// #3614 — the sales hub's links, as entries of the Sales group: the
+  /// guest passes and the register.
+  List<DrawerEntry> salesPages() {
+    final sales = features.contains(WorkspaceFeature.invoicing);
+    return <DrawerEntry>[
+      if (features.contains(WorkspaceFeature.guestPasses) &&
+          (may(WorkspacePermission.issueInvoices) ||
+              may(WorkspacePermission.manageServices)))
+        DrawerEntry('drawer-guest-passes', Icons.confirmation_number_outlined,
+            l10n.guestPassesTitle, () => go('/money/guest-passes'),
+            route: '/money/guest-passes'),
+      if (sales &&
+          (may(WorkspacePermission.viewFinances) ||
+              may(WorkspacePermission.issueInvoices)))
+        DrawerEntry('drawer-invoice-register', Icons.table_rows_outlined,
+            l10n.invoiceRegisterTitle, () => go('/invoice-register'),
+            route: '/invoice-register'),
+    ];
+  }
+
+  /// The purchases, cash and accounting pages of #2577, each one door for
+  /// whoever holds what its page asks (the sales page is the Sales group
+  /// since #3614).
   List<DrawerEntry> money() {
     final money = features.contains(WorkspaceFeature.moneyTab);
-    final sales = features.contains(WorkspaceFeature.invoicing) &&
-        (may(WorkspacePermission.viewFinances) ||
-            may(WorkspacePermission.issueInvoices) ||
-            may(WorkspacePermission.manageBilling));
     return <DrawerEntry>[
-      if (sales)
-        DrawerEntry('drawer-sales', Icons.sell_outlined, l10n.bookReportJournalSales,
-            () => go('/money/sales'),
-            route: '/money/sales'),
       if (features.contains(WorkspaceFeature.purchases) &&
           (may(WorkspacePermission.viewMyMoney) ||
               may(WorkspacePermission.viewFinances) ||

@@ -208,6 +208,10 @@ class RowMenuState extends State<RowMenu> {
   @override
   Widget build(BuildContext context) {
     final row = GestureDetector(
+      // #3614 — a secondary-only tap recognizer still announces a tap that
+      // does nothing, an unnamed control; the menu reaches a screen reader
+      // through its custom actions below.
+      excludeFromSemantics: true,
       onSecondaryTapUp: (details) =>
           unawaited(open(at: details.globalPosition)),
       // parity: ${widget.keyPrefix}-more

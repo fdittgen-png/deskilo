@@ -19873,6 +19873,12 @@ abstract class AppLocalizations {
   /// **'From'**
   String get guestPassFrom;
 
+  /// Column of the guest passes sold: who holds the pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get guestPassHolder;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20005,6 +20011,12 @@ abstract class AppLocalizations {
   /// **'Per hour'**
   String get guestPassUnitHour;
 
+  /// Column of the guest passes sold: how many of its days or hours have begun.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get guestPassUsed;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20016,6 +20028,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.'**
   String get guestPassesIntro;
+
+  /// The table of guest passes sold when none was sold.
+  ///
+  /// In en, this message translates to:
+  /// **'No pass sold yet.'**
+  String get guestPassesSoldEmpty;
+
+  /// Heading of the table of guest passes sold.
+  ///
+  /// In en, this message translates to:
+  /// **'Passes sold'**
+  String get guestPassesSoldTitle;
 
   /// #3308 guest passes sold at the desk
   ///
@@ -25812,6 +25836,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'A customer or a number'**
   String get invoicingSearchHint;
+
+  /// #3614 the invoicing table at the desk: share the reminders of the selected invoices, one after the other
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Share {count} reminder} other{Share {count} reminders}}'**
+  String invoicingShareRemindersSelected(int count);
 
   /// #3587 a source name: what customers paid that no invoice has taken
   ///

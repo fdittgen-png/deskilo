@@ -51,7 +51,7 @@ Future<FakeMoneyRepository> _pump(
 }
 
 Future<void> _openNew(WidgetTester tester) async {
-  await tester.tap(find.byType(FloatingActionButton));
+  await tester.tap(find.byKey(const ValueKey('services-new')));
   await tester.pumpAndSettle();
 }
 

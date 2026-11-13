@@ -143,6 +143,92 @@ final class GuestPassOffersFamily extends $Family
   String toString() => r'guestPassOffersProvider';
 }
 
+/// #3614 — the passes sold in [workspaceId], the latest first.
+
+@ProviderFor(guestPassesSold)
+final guestPassesSoldProvider = GuestPassesSoldFamily._();
+
+/// #3614 — the passes sold in [workspaceId], the latest first.
+
+final class GuestPassesSoldProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<GuestPassRecord>>,
+          List<GuestPassRecord>,
+          FutureOr<List<GuestPassRecord>>
+        >
+    with
+        $FutureModifier<List<GuestPassRecord>>,
+        $FutureProvider<List<GuestPassRecord>> {
+  /// #3614 — the passes sold in [workspaceId], the latest first.
+  GuestPassesSoldProvider._({
+    required GuestPassesSoldFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'guestPassesSoldProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$guestPassesSoldHash();
+
+  @override
+  String toString() {
+    return r'guestPassesSoldProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<List<GuestPassRecord>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<GuestPassRecord>> create(Ref ref) {
+    final argument = this.argument as String;
+    return guestPassesSold(ref, argument);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GuestPassesSoldProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$guestPassesSoldHash() => r'df5a5ac130b1eb892d49456ebced1493e899b61b';
+
+/// #3614 — the passes sold in [workspaceId], the latest first.
+
+final class GuestPassesSoldFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<List<GuestPassRecord>>, String> {
+  GuestPassesSoldFamily._()
+    : super(
+        retry: null,
+        name: r'guestPassesSoldProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #3614 — the passes sold in [workspaceId], the latest first.
+
+  GuestPassesSoldProvider call(String workspaceId) =>
+      GuestPassesSoldProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'guestPassesSoldProvider';
+}
+
 /// The places a pass can book in [workspaceId].
 
 @ProviderFor(guestPassPlaces)

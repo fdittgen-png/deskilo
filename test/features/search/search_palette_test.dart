@@ -223,19 +223,22 @@ void main() {
     expect(app.c.read(searchRecentsProvider), isEmpty);
   });
 
-  testWidgets('a customer named by the address opens as its row opens it; '
-      'one the reader has no invoice of is said in words', (tester) async {
+  testWidgets('#3614 — a customer has an address of their own, and the '
+      'search opens it; one the reader has no invoice of is said in words', (
+    tester,
+  ) async {
     final app = await _pump(tester);
-    unawaited(app.router.push('/invoices?customer=member-1'));
+    final invoice = (await app.c.read(invoicesProvider.future)).single;
+    await _ctrlK(tester);
+    await _type(tester, invoice.clientName);
+    await tester.tap(_k('search-result-customer:${invoice.memberId}'));
     await tester.pumpAndSettle();
+    expect(_at(app.router), '/invoices/customer/${invoice.memberId}');
     expect(_k('customer-page-statement'), findsOneWidget);
-    Navigator.of(tester.element(_k('customer-page-statement'))).pop();
-    await tester.pumpAndSettle();
 
-    unawaited(app.router.push('/invoices?customer=nobody'));
+    app.router.go('/invoices/customer/nobody');
     await tester.pumpAndSettle();
     expect(_k('search-record-unreadable'), findsOneWidget);
-    expect(_k('invoicing-search'), findsOneWidget, reason: 'the list stays');
   });
 
   testWidgets('a supplier named by the address opens as its row opens it; '
