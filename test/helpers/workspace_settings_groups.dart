@@ -16,6 +16,14 @@ Future<void> toggleWorkspaceSettingsGroup(WidgetTester tester, String id, {bool 
 }
 
 Future<void> openWorkspaceSettingsGroups(WidgetTester tester, {List<String> ids = const ['payments', 'community', 'appearance', 'membership', 'tools', 'danger']}) async {
+  // #3619 — at the desk the sections are listed beside the one shown and
+  // none is a card to open: the first asked for is shown.
+  final desk = find.byKey(const ValueKey('workspace-sections'));
+  if (desk.evaluate().isNotEmpty) {
+    await tester.tap(find.byKey(ValueKey('workspace-section-${ids.first}')));
+    await tester.pumpAndSettle();
+    return;
+  }
   for (final id in ids) {
     await toggleWorkspaceSettingsGroup(tester, id, settle: false);
   }

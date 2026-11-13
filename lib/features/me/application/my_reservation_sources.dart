@@ -15,7 +15,8 @@ List<MyReservationsSource> myReservationSourcesOf(PersonalWorkspaceRefs refs) {
   final labels = <String, List<String>>{};
   final here = <String, bool>{};
   for (final ref in refs.refs) {
-    if (ref.hostedHere && ref.status == null) continue;
+    // #3884 -- an unknown status is not "no relationship": kept.
+    if (ref.holdsNoRelationshipHere) continue;
     final installation = ref.installationId;
     if (!workspaces.containsKey(installation)) {
       order.add(installation);

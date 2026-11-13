@@ -42,8 +42,12 @@ enum BookRole {
   /// The only account type this role may book to.
   final AccountType type;
 
-  static BookRole fromWire(String? wire) => values.firstWhere(
-    (v) => v.wire == wire,
-    orElse: () => throw FormatException('unknown role $wire'),
-  );
+  /// The role of [wire], or null when this build does not know it (#3884):
+  /// a newer server's role is never read as another one.
+  static BookRole? tryFromWire(String? wire) {
+    for (final v in values) {
+      if (v.wire == wire) return v;
+    }
+    return null;
+  }
 }

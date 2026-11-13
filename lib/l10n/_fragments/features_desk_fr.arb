@@ -1,0 +1,7 @@
+{
+  "@@locale": "fr",
+  "featuresColFeature": "Fonction",
+  "featuresColDoes": "Ce qu'elle fait",
+  "featuresColState": "Activée ou non",
+  "featuresColDepends": "Dépend de"
+}

@@ -156,6 +156,7 @@ class FecExportActions {
     for (final journal in years) {
       final said = switch (journal) {
         JournalBlocked(:final roles) => l10n.journalBlocked(roles.join(', ')),
+        JournalUnreadable(:final count) => l10n.journalUnreadableEntries(count),
         JournalNeedsRates(:final documents) => l10n.journalNeedsRates(
           documents.join(', '),
         ),

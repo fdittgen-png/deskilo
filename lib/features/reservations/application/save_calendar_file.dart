@@ -71,6 +71,9 @@ enum CalendarFileRefusal {
   /// Not found, not the member's, or not answered by the repository —
   /// deliberately one word for all three.
   notYours,
+
+  /// #3884 -- the booking exists but this version cannot read it.
+  unreadable,
 }
 
 /// What asking for a preview did.
@@ -146,7 +149,12 @@ class CalendarFiles {
     required String reservationId,
     required String memberId,
   }) async {
-    final reservation = await _reservations.fetchById(reservationId);
+    final Reservation? reservation;
+    try {
+      reservation = await _reservations.fetchById(reservationId);
+    } on ReservationUnreadable {
+      return const CalendarFileRefused(CalendarFileRefusal.unreadable);
+    }
     if (reservation == null || reservation.memberId != memberId) {
       return const CalendarFileRefused(CalendarFileRefusal.notYours);
     }
@@ -163,7 +171,12 @@ class CalendarFiles {
     CalendarFilePreview preview, {
     required String memberId,
   }) async {
-    final reservation = await _reservations.fetchById(preview.reservationId);
+    final Reservation? reservation;
+    try {
+      reservation = await _reservations.fetchById(preview.reservationId);
+    } on ReservationUnreadable {
+      return const CalendarSaveRefused(CalendarFileRefusal.unreadable);
+    }
     if (reservation == null || reservation.memberId != memberId) {
       return const CalendarSaveRefused(CalendarFileRefusal.notYours);
     }

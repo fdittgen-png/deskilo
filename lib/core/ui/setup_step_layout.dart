@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The setup guide's step page: what the owner does on one side, "what your
-// members will see" on the other. Below [SetupStepLayout.wideWidth] the
-// two panes become one column, the form first, so a phone reads the step
+// members will see" on the other. #3619 — below the expanded window class
+// (of the room the page is given) the two panes become one column, the form first, so a phone reads the step
 // top to bottom and never squeezes two panes side by side.
 import 'package:flutter/material.dart';
 
 import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
+import 'adaptive/window_class.dart';
 
 class SetupStepLayout extends StatelessWidget {
   const SetupStepLayout({
@@ -17,10 +18,6 @@ class SetupStepLayout extends StatelessWidget {
     this.previewTitle,
   });
 
-  /// The width from which the panes stand side by side.
-  // content-fit: the form and its member preview need this room side by side
-  static const double wideWidth = 720;
-
   final Widget form;
   final Widget preview;
   final String? previewTitle;
@@ -29,7 +26,8 @@ class SetupStepLayout extends StatelessWidget {
   Widget build(BuildContext context) => LayoutBuilder(
     builder: (context, box) {
       final pane = _PreviewPane(title: previewTitle, child: preview);
-      if (box.maxWidth < wideWidth) {
+      if (WindowClass.ofWidth(box.maxWidth).index <
+          WindowClass.expanded.index) {
         return ListView(
           key: const ValueKey('setup-step-one-column'),
           padding: AppSpacing.lgAll,
