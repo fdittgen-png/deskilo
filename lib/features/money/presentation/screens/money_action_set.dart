@@ -127,7 +127,7 @@ class MoneyActionSet {
         icon: Icons.sell_outlined,
         title: l10n.bookReportJournalSales,
         subtitle: l10n.hubSalesSubtitle,
-        onTap: () => context.push('/money/sales'),
+        onTap: () => context.push('/invoices'),
       ),
       wizard: managementTile(
         on: data.repartitionWizardOn,
@@ -230,41 +230,6 @@ class MoneyActionSet {
     WidgetRef ref,
     MoneyViewData data,
   ) => _purchaseButtons(context, ref, context.l10n, data);
-
-  /// #2577 — the sales side's doors, for the sales page; each keeps the gate
-  /// of the screen it opens.
-  static List<Widget> salesDoors(
-    BuildContext context,
-    WidgetRef ref,
-    MoneyViewData data,
-  ) {
-    final l10n = context.l10n;
-    final held = {for (final p in ref.watch(myPermissionsProvider)) p.wireName};
-    Widget door(String key, IconData icon, String title, String route) =>
-        ListTile(
-          key: ValueKey(key),
-          leading: Icon(icon),
-          title: Text(title),
-          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () => context.push(route),
-        );
-    return [
-      if (data.servicesOn && held.contains('manageServices'))
-        door('sales-hub-services', Icons.room_service_outlined,
-            l10n.servicesTitle, '/services'),
-      door('sales-hub-invoices', Icons.receipt_long_outlined,
-          l10n.featureInvoicing, '/invoices'),
-      // #3308 — passes sold at the desk, for who sells or prices them.
-      if (data.guestPassesOn &&
-          (held.contains('issueInvoices') || held.contains('manageServices')))
-        door('sales-hub-guest-passes', Icons.confirmation_number_outlined,
-            l10n.guestPassesTitle, '/money/guest-passes'),
-      door('sales-hub-register', Icons.table_rows_outlined,
-          l10n.invoiceRegisterTitle, '/invoice-register'),
-      if (held.contains('manageBilling'))
-        door('sales-hub-billing', Icons.tune, l10n.billingTitle, '/billing'),
-    ];
-  }
 
   static Widget _buyPackage(
     AppLocalizations l10n,

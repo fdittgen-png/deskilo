@@ -130,6 +130,10 @@ class _InvoiceRegisterScreenState
       appBar: AppBar(
         title: PageTitle(l10n.invoiceRegisterTitle),
         actions: [
+          // #3614 — the year in the bar, beside the export.
+          if (invoicesAsync.value case final invoices?)
+            if (_yearsOf(invoices) case final years when years.length > 1)
+              _yearPicker(l10n, years),
           // #1310 S0 — an accounting export (and the archive bundle
           // behind it) is a bulk export: exportData governs it, beside
           // the issuing right that decides whose invoices are visible.
@@ -172,8 +176,6 @@ class _InvoiceRegisterScreenState
                 _table(
               context,
               invoices: _visible(invoices, canIssue),
-              years: {for (final i in invoices) i.issuedAt.year}.toList()
-                ..sort((a, b) => b.compareTo(a)),
               view: (
                 matches: matches,
                 reminders: reminders,
@@ -236,7 +238,6 @@ class _InvoiceRegisterScreenState
   Widget _table(
     BuildContext context, {
     required List<Invoice> invoices,
-    required List<int> years,
     required _RegisterView view,
   }) {
     final l10n = context.l10n;
@@ -248,12 +249,9 @@ class _InvoiceRegisterScreenState
       canIssue: view.canIssue,
       showMemberName: view.showMemberNames,
     );
-    return Column(children: [
-      if (years.length > 1) _yearPicker(l10n, years),
-      // #3606 — the register is a records table: sorted, filtered,
-      // selected; one total per currency, never one sum across them.
-      Expanded(
-        child: RecordsTable<Invoice>(
+    // #3606 — the register is a records table: sorted, filtered, selected;
+    // one total per currency, never one sum across them.
+    return RecordsTable<Invoice>(
           tableId: 'invoice-register',
           rows: invoices,
           keyOf: (i) => i.id,
@@ -271,6 +269,16 @@ class _InvoiceRegisterScreenState
           amountOf: (i) => (currency: i.currency, minor: i.totalCents),
           formatAmount: (c, m) => format.moneyIn(c).formatMinor(m),
           columns: _columns(context, view),
+          // #3614 — the statuses as chips, with their counts.
+          chips: [
+            for (final status in InvoiceLifecycle.values)
+              RecordChip(
+                id: status.name,
+                label: invoiceLifecycleLabel(l10n, status),
+                keeps: (i) =>
+                    invoiceLifecycleOf(i, view.matches[i.id]) == status,
+              ),
+          ],
           bulkActions: [
             // #3606 — the selection as a CSV of the register's columns,
             // behind the register's export permission. Not an accounting
@@ -291,23 +299,22 @@ class _InvoiceRegisterScreenState
               ),
           ],
           cardBuilder: (context, i) => _card(context, i, view),
-        ),
-      ),
-    ]);
+        );
   }
+
+  /// The years the register spans, the latest first.
+  static List<int> _yearsOf(List<Invoice> invoices) =>
+      {for (final i in invoices) i.issuedAt.year}.toList()
+        ..sort((a, b) => b.compareTo(a));
 
   /// The year's narrowing, when the register spans more than one.
   Widget _yearPicker(AppLocalizations l10n, List<int> years) => Padding(
-    padding: const EdgeInsets.fromLTRB(
-      AppSpacing.lg,
-      AppSpacing.md,
-      AppSpacing.lg,
-      0,
-    ),
-    child: DropdownButtonFormField<int?>(
+    padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+    child: DropdownButton<int?>(
       key: const ValueKey('invoice-register-year'),
-      initialValue: _year,
-      isExpanded: true,
+      value: _year,
+      hint: Text(l10n.numberSequenceDateYear),
+      underline: const SizedBox.shrink(),
       items: [
         DropdownMenuItem(child: Text(l10n.invoiceRegisterAllYears)),
         for (final year in years)
@@ -316,7 +323,6 @@ class _InvoiceRegisterScreenState
           DropdownMenuItem(value: year, child: Text(year.toString())),
       ],
       onChanged: (value) => setState(() => _year = value),
-      decoration: InputDecoration(labelText: l10n.numberSequenceDateYear),
     ),
   );
 

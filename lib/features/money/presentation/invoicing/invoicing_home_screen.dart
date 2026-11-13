@@ -40,12 +40,11 @@ import '../invoice_actions.dart';
 import '../widgets/invoice_form_sheet.dart';
 import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
-import 'invoicing_customer_link.dart';
+import 'invoicing_customer_actions.dart';
 import 'invoicing_home.dart';
 import 'invoicing_list.dart';
 import 'invoicing_live_pages.dart';
 import 'invoicing_reads.dart';
-import 'payments_to_match_screen.dart';
 
 /// #3773 — the narrowest the invoice list keeps its table (number, customer,
 /// amount, state) without cutting a word, in the five languages: measured on
@@ -53,18 +52,9 @@ import 'payments_to_match_screen.dart';
 @visibleForTesting
 const double kInvoicingListMinWidth = 640;
 
-/// The address of the invoice list; an open invoice is `/invoices/<id>`.
-const String _invoicesPath = '/invoices';
-
-/// What the screen read: the receivables, the invoices by id, their matches.
-typedef _Read = ({
-  List<Receivable> receivables,
-  Map<String, Invoice> byId,
-  Map<String, InvoiceMatch> matches,
-  Set<String> holdsUnassigned,
-  bool creditsKnown,
-  ReminderMode mode,
-});
+/// #3614 — what the pane shows for an open customer: `customer:<id>`, so
+/// it is never taken for an invoice's id.
+const String _customerKey = 'customer:';
 
 /// One entry of the More menu: its key, icon, words and action.
 typedef MoreEntry = (String key, IconData icon, String label, VoidCallback run);
@@ -76,7 +66,6 @@ class InvoicingHomeScreen extends ConsumerStatefulWidget {
     required this.isEu,
     required this.showMemberNames,
     this.legalNotes,
-    this.openCustomer,
   });
 
   /// The More menu's entries after "Paid and closed invoices".
@@ -84,9 +73,6 @@ class InvoicingHomeScreen extends ConsumerStatefulWidget {
   final bool isEu;
   final bool showMemberNames;
   final List<Widget>? legalNotes;
-
-  /// #3610 — the customer the address names, opened once.
-  final String? openCustomer;
 
   @override
   ConsumerState<InvoicingHomeScreen> createState() =>
@@ -98,41 +84,14 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
 
   /// Names the list, for the order the arrow keys move along.
   final _listKey = GlobalKey();
-  var _searchOpen = false;
 
-  /// What the home read at its last build: the actions act on it.
-  _Read _read = (
-    receivables: const [],
-    byId: const {},
-    matches: const {},
-    holdsUnassigned: const {},
-    creditsKnown: false,
-    mode: ReminderMode.byHand,
-  );
+  /// #3614 — the invoices the desk table shows, in their order.
+  List<String> _deskOrder = const [];
+  var _searchOpen = false;
 
   /// The screen's width is a wide window's: the cards side by side, the
   /// lists as tables.
   bool _wide = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _linked();
-  }
-
-  @override
-  void didUpdateWidget(InvoicingHomeScreen old) {
-    super.didUpdateWidget(old);
-    if (widget.openCustomer != old.openCustomer) _linked();
-  }
-
-  /// #3610 — the customer the address names, once its frame is drawn.
-  void _linked() => openLinkedCustomerAfterFrame(
-    this,
-    widget.openCustomer,
-    () => ref.read(invoicesProvider.future),
-    _openCustomer,
-  );
 
   @override
   void dispose() {
@@ -181,21 +140,39 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           // #3607 — the open invoice is in the address. A large window keeps
           // it beside the list, which stays the same widget, so its view,
           // filter and search survive; a smaller one opens it as a page.
+          // #3614 — and so is an open customer.
           return OpenRecord(
-            listPath: _invoicesPath,
-            builder: (context, id) => ListDetailScaffold(
-              id: 'invoices',
-              paneStore: ref.watch(paneWidthStoreProvider),
-              listMin: kInvoicingListMinWidth,
-              list: home,
-              selected: recordBesideList(context) ? id : null,
-              onClose: () => closeRecord(context, _invoicesPath),
-              order: () => InvoicingList.orderUnder(_listKey),
-              onMove: (id) => moveToRecord(context, _invoicesPath, id),
-              detail: (context, id) => InvoicePage(
-                key: ValueKey('invoicing-panel-$id'),
-                invoiceId: id,
-                onClose: () => closeRecord(context, _invoicesPath),
+            listPath: invoicesPath,
+            builder: (context, invoiceId) => OpenRecord(
+              listPath: customersPath,
+              builder: (context, customerId) => ListDetailScaffold(
+                id: 'invoices',
+                paneStore: ref.watch(paneWidthStoreProvider),
+                listMin: kInvoicingListMinWidth,
+                list: home,
+                selected: !recordBesideList(context)
+                    ? null
+                    : customerId != null
+                    ? '$_customerKey$customerId'
+                    : invoiceId,
+                onClose: () => closeRecord(context, invoicesPath),
+                // The list's order; at the desk by invoice, the table's.
+                order: () => switch (InvoicingList.orderUnder(_listKey)) {
+                  final List<String> o when o.isEmpty => _deskOrder,
+                  final o => o,
+                },
+                onMove: (id) => moveToRecord(context, invoicesPath, id),
+                detail: (context, id) => id.startsWith(_customerKey)
+                    ? CustomerRecord(
+                        key: ValueKey('invoicing-customer-panel-$id'),
+                        customerId: id.substring(_customerKey.length),
+                        onClose: () => closeRecord(context, invoicesPath),
+                      )
+                    : InvoicePage(
+                        key: ValueKey('invoicing-panel-$id'),
+                        invoiceId: id,
+                        onClose: () => closeRecord(context, invoicesPath),
+                      ),
               ),
             ),
           );
@@ -269,7 +246,8 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
         (DateTime d) => DateTime(d.year, d.month, d.day);
     final today = dayOf(now);
     final rules = ref.watch(dunningRulesProvider).value ?? DunningRules.defaults; // empty-ok: the home waits for the statuses, the rules among them, and names a failed read
-    final matches = ref.watch(invoiceMatchesProvider).value ?? const {}; // empty-ok: a failed read is a named source whose figures are withheld; a running one waits below
+    // #3680 — the matches are read before anything is counted.
+    ref.watch(invoiceMatchesProvider);
     final overview = ref.watch(invoicingOverviewProvider);
     final window = (
       workspaceId: workspace?.id ?? '',
@@ -317,17 +295,6 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       creditsKnown: creditsKnown,
     );
     final byId = {for (final i in invoices) i.id: i};
-    final _Read read = (
-      receivables: receivables,
-      byId: byId,
-      matches: matches,
-      holdsUnassigned: holdsUnassigned,
-      creditsKnown: creditsKnown,
-      mode: data.mode,
-    );
-    // The actions of the pages opened over the home act on what is read
-    // now, not on what was read when they opened.
-    _read = read;
     return InvoicingHome(
       listKey: _listKey,
       data: data,
@@ -336,9 +303,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       legalNotes: widget.legalNotes,
       wide: _wide,
       actions: InvoicingHomeActions(
-        onOpenInvoice: (id) => _open(byId[id], matches),
-        onOpenCustomer: _openCustomer,
-        onCustomerAction: _customerAction,
+        onOpenInvoice: (id) => _open(byId[id]),
+        onOpenCustomer: (id) => openRecord(context, customersPath, id),
+        onCustomerAction: (id, action) =>
+            CustomerActions(context, ref).run(id, action),
         onTodo: (kind) => _todo(kind, period),
         onRetry: (source) => switch (source) {
           InvoicingSource.payments => ref.invalidate(
@@ -350,7 +318,23 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
           _ => retryInvoicingSource(ref, source),
         },
         onNewInvoice: () => showInvoiceIssueSheet(context, ref),
+        onRemind: (id) {
+          if (byId[id] case final invoice?) {
+            unawaited(remindInvoice(context, ref, invoice));
+          }
+        },
+        // #3614 — a selection's reminders, one after the other, on the
+        // reminder queue and its states.
+        onShareReminders: (ids) => unawaited(
+          _fullScreen(
+            LiveReminderQueue(
+              only: ids,
+              onMatch: CustomerActions(context, ref).paymentsToMatch,
+            ),
+          ),
+        ),
       ),
+      onDeskOrder: (order) => _deskOrder = order,
     );
   }
 
@@ -359,70 +343,19 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     return DateTime(int.parse(parts[0]), int.parse(parts[1]));
   }
 
-  /// The id of [customerId]'s oldest receivable that [holds], or ''.
-  static String _oldestOf(
-    List<Receivable> receivables,
-    String customerId,
-    bool Function(Receivable) holds,
-  ) {
-    final theirs = [
-      for (final r in receivables)
-        if (r.customerId == customerId && holds(r)) r,
-    ]..sort((a, b) => (a.dueOn ?? a.issuedOn).compareTo(b.dueOn ?? b.issuedOn));
-    return theirs.isEmpty ? '' : theirs.first.invoiceId;
-  }
-
   /// Opens [invoice] at its address: beside the list on a large window, as
   /// a page otherwise.
-  Future<void> _open(Invoice? invoice, Map<String, InvoiceMatch> _) async {
-    if (invoice == null) return;
-    openRecord(context, _invoicesPath, invoice.id);
-  }
-
-  Future<void> _customerAction(
-    String customerId,
-    InvoiceAction action,
-  ) async {
-    final (
-      :receivables,
-      :byId,
-      :matches,
-      :mode,
-      :holdsUnassigned,
-      :creditsKnown,
-    ) = _read;
-    // Nobody is reminded while who holds money is not known.
-    if (action == InvoiceAction.shareReminder && !creditsKnown) return;
-    // Money held unassigned is matched from the payments, never by
-    // reminding the customer.
-    if (action == InvoiceAction.match && holdsUnassigned.contains(customerId)) {
-      await _openPaymentsToMatch(customerId);
-      return;
-    }
-    final bool Function(Receivable) holds = switch (action) {
-      InvoiceAction.shareReminder => (r) => reminderToShare(r, mode),
-      InvoiceAction.confirmPayment => (r) => r.paymentDeclared,
-      _ => (r) => r.paymentToMatch,
-    };
-    final invoice = byId[_oldestOf(receivables, customerId, holds)];
-    if (invoice == null) return;
-    switch (action) {
-      case InvoiceAction.shareReminder:
-        await remindInvoice(context, ref, invoice);
-      case InvoiceAction.match:
-        await matchInvoiceToPayment(context, ref, invoice);
-      case _:
-        // Confirm or Not received is decided on the invoice (R1-f brings
-        // the payments to confirm as their own flow).
-        await _open(invoice, matches);
-    }
+  void _open(Invoice? invoice) {
+    if (invoice != null) openRecord(context, invoicesPath, invoice.id);
   }
 
   /// The home opens every other "To do" entry as its own list; the month's
   /// entry opens its flow, the reminders by hand their queue.
   Future<void> _todo(TodoKind kind, String? period) async {
     if (kind == TodoKind.invoiceTheMonth) await _invoiceTheMonth(period);
-    if (kind == TodoKind.shareReminders && _read.creditsKnown) {
+    final creditsKnown =
+        unassignedMoneyKnown(ref.read(unassignedMoneyProvider)) != null;
+    if (kind == TodoKind.shareReminders && creditsKnown) {
       await _openQueue();
     }
   }
@@ -433,28 +366,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     builder: (_) => Dialog.fullscreen(child: ScaffoldMessenger(child: child)),
   );
 
-  /// The customer's page: what they owe per currency, their credit, their
-  /// invoices and their one action, on the current reads.
-  Future<void> _openCustomer(String customerId) => _fullScreen(
-    LiveCustomerPage(
-      customerId: customerId,
-      onOpenInvoice: (id) => openInvoicePage(context, id),
-      onAction: (action) => _customerAction(customerId, action),
-    ),
-  );
-
   /// The reminders shared by hand, the customers holding money we have not
   /// assigned listed first to match; drawn again as the reads change.
-  Future<void> _openQueue() =>
-      _fullScreen(LiveReminderQueue(onMatch: _openPaymentsToMatch));
-
-  /// The payments [customerId] made that no invoice has taken, each with the
-  /// open invoices of the business's currency it could settle.
-  Future<void> _openPaymentsToMatch(String customerId) => _fullScreen(
-    PaymentsToMatchScreen(
-      currency: ref.read(invoicingBusinessProvider).currency,
-      customerId: customerId,
-    ),
+  Future<void> _openQueue() => _fullScreen(
+    LiveReminderQueue(onMatch: CustomerActions(context, ref).paymentsToMatch),
   );
 
   /// The month to invoice, full screen with the list the app has today,

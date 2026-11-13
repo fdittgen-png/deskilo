@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "guestPassHolder": "Guest",
+  "@guestPassHolder": {
+    "description": "Column of the guest passes sold: who holds the pass."
+  },
+  "guestPassUsed": "Used",
+  "@guestPassUsed": {
+    "description": "Column of the guest passes sold: how many of its days or hours have begun."
+  },
+  "guestPassesSoldTitle": "Passes sold",
+  "@guestPassesSoldTitle": {
+    "description": "Heading of the table of guest passes sold."
+  },
+  "guestPassesSoldEmpty": "No pass sold yet.",
+  "@guestPassesSoldEmpty": {
+    "description": "The table of guest passes sold when none was sold."
+  }
+}

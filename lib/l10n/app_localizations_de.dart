@@ -12279,6 +12279,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassFrom => 'Von';
 
   @override
+  String get guestPassHolder => 'Gast';
+
+  @override
   String get guestPassName => 'Name';
 
   @override
@@ -12356,12 +12359,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassUnitHour => 'Pro Stunde';
 
   @override
+  String get guestPassUsed => 'Genutzt';
+
+  @override
   String get guestPassesEmpty =>
       'Noch kein Pass. Fügen Sie die Pässe hinzu, die der Raum verkauft.';
 
   @override
   String get guestPassesIntro =>
       'Am Empfang an Gäste verkaufte Pässe, die keine Mitglieder sind: Der Platz wird für sie gebucht, der Pass wird ihnen in Rechnung gestellt und das eingenommene Geld als Zahlung erfasst.';
+
+  @override
+  String get guestPassesSoldEmpty => 'Noch kein Pass verkauft.';
+
+  @override
+  String get guestPassesSoldTitle => 'Verkaufte Pässe';
 
   @override
   String get guestPassesTitle => 'Gästepässe';
@@ -16141,6 +16153,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingSearchHint => 'Ein Kunde oder eine Nummer';
+
+  @override
+  String invoicingShareRemindersSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen teilen',
+      one: '$count Mahnung teilen',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingSourceCredits => 'Guthaben der Kunden';

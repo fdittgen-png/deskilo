@@ -27,10 +27,7 @@ import '../widgets/wizard_context.dart';
 /// their own invoices in the archive. The actions live in
 /// invoice_actions.dart.
 class InvoicesScreen extends ConsumerWidget {
-  const InvoicesScreen({super.key, this.customer});
-
-  /// #3610 — the customer the address names (search), opened once.
-  final String? customer;
+  const InvoicesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -82,7 +79,6 @@ class InvoicesScreen extends ConsumerWidget {
     );
     final exempt = workspace?.vatRegime == 'exempt';
     return InvoicingHomeScreen(
-      openCustomer: customer,
       more: more,
       isEu: isEu,
       showMemberNames: showMemberNames,

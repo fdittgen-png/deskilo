@@ -6,6 +6,7 @@
 // partly paid invoice whatever the reminder mode; Cancel and Correct follow
 // THIS invoice's own match; one write-off at a time; no proforma on a
 // part-paid invoice; and Details shows the settlement trail the old sheet did.
+import 'package:deskilo/core/ui/adaptive/task_choice.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_details_section.dart';
@@ -233,7 +234,8 @@ void main() {
     // list holds now.
     await tester.tap(_entry('invoice-more-hold'));
     await tester.pumpAndSettle();
-    expect(find.byType(AlertDialog), findsOneWidget);
+    // #3614 — a short task: its words, in a dialog at the desk.
+    expect(find.byType(TaskChoice), findsOneWidget);
   });
 
   testWidgets('Details shows the settlement trail the old sheet did', (

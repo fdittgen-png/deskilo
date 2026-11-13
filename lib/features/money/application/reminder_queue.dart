@@ -97,6 +97,23 @@ class ReminderQueue {
   QueuedEmail emailOf(QueuedReminder line) =>
       email[line.invoiceId] ?? QueuedEmail.none;
 
+  /// #3614 — this queue narrowed to the invoices [ids] a person selected:
+  /// their lines, and "check first" only for the customers they name
+  /// ([customers]). The selection stays the scope while the reads change.
+  ReminderQueue only(Set<String> ids, {required Set<String> customers}) =>
+      ReminderQueue(
+        [
+          for (final l in lines)
+            if (ids.contains(l.invoiceId)) l,
+        ],
+        handled,
+        [
+          for (final c in checkFirst)
+            if (customers.contains(c.customerId)) c,
+        ],
+        email,
+      );
+
   /// This queue with the server's e-mail rows read again.
   ReminderQueue withEmail(Map<String, QueuedEmail> email) =>
       ReminderQueue(lines, handled, checkFirst, email);
