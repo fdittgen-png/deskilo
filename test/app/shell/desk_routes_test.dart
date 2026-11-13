@@ -225,8 +225,9 @@ void main() {
     expect(tester.element(_key('shell-sidebar')), same(sidebar));
     expect(tester.getTopLeft(_key('desk-navigation')), at);
     await tester.pumpAndSettle();
-    expect(router.state.uri.path, '/money/sales');
-    expect(_selected(tester, 'drawer-sales'), isTrue);
+    // #3614 — Sales opens on the invoicing home.
+    expect(router.state.uri.path, '/invoices');
+    expect(_selected(tester, 'drawer-invoices'), isTrue);
   });
 
   testWidgets('a page pushed from the desk that its guard sends to another '

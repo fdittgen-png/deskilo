@@ -1,11 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3587 R1-c -- the owner's invoicing home (the final design): how much is
-// owed and in which state, the month's two figures, "To do", then the list,
-// by customer or by invoice, under a pinned row of filters. Phone first: one
-// column at 390 px; from the wide-navigation width the owed card and "To do"
-// sit side by side and the customer list is a table. It draws what it is
-// given; the screen reads the data and wires the existing flows.
+// #3587 R1-c -- the owner's invoicing home: how much is owed and in which
+// state, the month's two figures, "To do", then the list by customer or by
+// invoice under a pinned row of filters, phone first; from the wide-navigation
+// width it is the desk (#3614). It draws what it is given; the screen wires.
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
@@ -22,6 +20,7 @@ import '../../../../core/ui/kit/todo_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_desk_table.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
 import 'invoicing_words.dart';
@@ -113,6 +112,8 @@ class InvoicingHomeActions {
     required this.onTodo,
     required this.onRetry,
     required this.onNewInvoice,
+    this.onRemind,
+    this.onShareReminders,
   });
 
   final ValueChanged<String> onOpenInvoice;
@@ -121,6 +122,10 @@ class InvoicingHomeActions {
   final ValueChanged<TodoKind> onTodo;
   final ValueChanged<InvoicingSource> onRetry;
   final VoidCallback onNewInvoice;
+
+  /// #3614 — a desk row's reminder; a selection's, one after the other.
+  final ValueChanged<String>? onRemind;
+  final ValueChanged<Set<String>>? onShareReminders;
 }
 
 /// At most this many "To do" entries show; the badge counts them all.
@@ -136,7 +141,11 @@ class InvoicingHome extends StatefulWidget {
     this.legalNotes,
     this.wide,
     this.listKey,
+    this.onDeskOrder,
   });
+
+  /// #3614 — told the invoices the desk table shows, in their order.
+  final ValueChanged<List<String>>? onDeskOrder;
 
   /// #3607 — names the list, so the page beside it reads the order of its
   /// invoices ([InvoicingList.orderUnder]).
@@ -232,6 +241,22 @@ class _InvoicingHomeState extends State<InvoicingHome> {
           if (statusesFailed) return _failedOnly(data.failed);
           final owed = _owedCard(context, filter);
           final todo = _todoCard(context);
+          if (wide) {
+            return InvoicingDeskHome(
+              data: data,
+              actions: widget.actions,
+              filter: filter,
+              cards: (owed: owed, todo: todo, legalNotes: widget.legalNotes),
+              todo: _todoEntry(l),
+              onClearTodo: _clearTodo,
+              onShown: widget.onDeskOrder,
+              customers: _view == InvoicingView.customers &&
+                      filter != InvoicingFilter.paid
+                  ? _list(filter, wide: true)
+                  : null,
+              onView: (v) => setState(() => _view = v),
+            );
+          }
           return CustomScrollView(
             key: const ValueKey('invoicing-home'),
             slivers: [
@@ -251,20 +276,9 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                       ),
                       const SizedBox(height: AppSpacing.sm),
                     ],
-                    if (wide)
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: AppSpacing.md,
-                        children: [
-                          Expanded(child: owed),
-                          Expanded(child: todo),
-                        ],
-                      )
-                    else ...[
-                      owed,
-                      const SizedBox(height: AppSpacing.md),
-                      todo,
-                    ],
+                    owed,
+                    const SizedBox(height: AppSpacing.md),
+                    todo,
                     if (widget.legalNotes case final notes?) ...[
                       const SizedBox(height: AppSpacing.sm),
                       ExpansionTile(
@@ -277,38 +291,39 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                   ],
                 ),
               ),
-              KeyedSubtree(
-                key: widget.listKey,
-                child: InvoicingList(
-                  key: const ValueKey('invoicing-list'),
-                  receivables: data.receivables,
-                  today: data.today,
-                  mode: data.mode,
-                  holdsUnassigned: data.holdsUnassigned,
-                  remindersKnown: data.creditsKnown,
-                  filter: filter,
-                  view: _view,
-                  query: _query,
-                  searchOpen: widget.searchOpen,
-                  wide: wide,
-                  onFilter: _choose,
-                  onView: (v) => setState(() => _view = v),
-                  onOpenInvoice: widget.actions.onOpenInvoice,
-                  onOpenCustomer: widget.actions.onOpenCustomer,
-                  onCustomerAction: widget.actions.onCustomerAction,
-                  todo: switch (_todo) {
-                    final kind? => (kind: kind, title: _todoTitle(l, kind)),
-                    null => null,
-                  },
-                  onClearTodo: () => setState(() => _todo = null),
-                ),
-              ),
+              _list(filter, wide: wide),
             ],
           );
         },
       ),
     );
   }
+
+  /// The list under its pinned filters, named by [InvoicingHome.listKey].
+  Widget _list(InvoicingFilter filter, {required bool wide}) =>
+      KeyedSubtree(
+        key: widget.listKey,
+        child: InvoicingList(
+          key: const ValueKey('invoicing-list'),
+          receivables: widget.data.receivables,
+          today: widget.data.today,
+          mode: widget.data.mode,
+          holdsUnassigned: widget.data.holdsUnassigned,
+          remindersKnown: widget.data.creditsKnown,
+          filter: filter,
+          view: _view,
+          query: _query,
+          searchOpen: widget.searchOpen,
+          wide: wide,
+          onFilter: _choose,
+          onView: (v) => setState(() => _view = v),
+          onOpenInvoice: widget.actions.onOpenInvoice,
+          onOpenCustomer: widget.actions.onOpenCustomer,
+          onCustomerAction: widget.actions.onCustomerAction,
+          todo: _todoEntry(context.l10n),
+          onClearTodo: () => setState(() => _todo = null),
+        ),
+      );
 
   Widget _owedCard(BuildContext context, InvoicingFilter filter) {
     final l = context.l10n;
@@ -448,6 +463,13 @@ class _InvoicingHomeState extends State<InvoicingHome> {
           : () => _openTodo(t.kind),
     );
   }
+
+  /// The "To do" entry the list shows, with its title; null: the filter's.
+  ({TodoKind kind, String title})? _todoEntry(AppLocalizations l) =>
+      switch (_todo) {
+        final kind? => (kind: kind, title: _todoTitle(l, kind)),
+        null => null,
+      };
 
   /// The title of the "To do" entry [kind], as its row says it now.
   String _todoTitle(AppLocalizations l, TodoKind kind) {

@@ -9,6 +9,7 @@ import '../../core/navigation/list_detail_route.dart';
 
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
+import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -22,6 +23,7 @@ import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
 import '../../features/money/presentation/screens/payment_config_screen.dart';
 import '../../features/money/presentation/screens/purchase_approvals_screen.dart';
+import '../../features/money/presentation/screens/purchase_order_page.dart';
 import '../../features/money/presentation/screens/purchase_orders_screen.dart';
 import '../../features/money/presentation/screens/recorded_payments_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
@@ -76,11 +78,19 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
       redirect: env.guard(
         const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
       ),
-      builder: (context, state) =>
-          InvoicesScreen(customer: state.uri.queryParameters['customer']),
+      builder: (context, state) => const InvoicesScreen(),
       // #3607 — an open invoice's address: beside the list on a large
       // window, a page of its own otherwise.
       routes: [
+        // #3614 — a customer's address, the same way.
+        GoRoute(
+          path: 'customer/:id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => CustomerRecord(customerId: id),
+          ),
+        ),
         GoRoute(
           path: ':id',
           pageBuilder: (context, state) => recordPage(
@@ -172,6 +182,13 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
 }
 
 /// The purchase side: the hub, the approvals queue and the suppliers.
+/// Who writes a purchase order: a buyer, in a space that has the orders.
+const _orderWriteAccess = RouteAccess(
+  permission: WorkspacePermission.managePurchases,
+  features: [WorkspaceFeature.purchases, WorkspaceFeature.purchaseOrders],
+  to: '/money/purchase-orders',
+);
+
 List<RouteBase> _purchaseRoutes(RouteEnv env) {
   return [
     // #2577 — the purchase side on its own page.
@@ -237,19 +254,31 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const PurchaseOrdersScreen(),
+      // #3608 — the order's form is a long task: a page with an address.
+      // Writing it is a buyer's (managePurchases); the list is read by
+      // finance too.
+      routes: [
+        GoRoute(
+          path: 'new',
+          redirect: env.guard(_orderWriteAccess),
+          builder: (context, state) => const PurchaseOrderPage(),
+        ),
+        GoRoute(
+          path: ':id/edit',
+          redirect: env.guard(_orderWriteAccess),
+          builder: (context, state) =>
+              PurchaseOrderPage(orderId: state.pathParameters['id']),
+        ),
+      ],
     ),
   ];
 }
 
 List<RouteBase> _financeRoutes(RouteEnv env) {
   return [
-    GoRoute(
-      path: '/money/sales',
-      redirect: env.guard(
-        const RouteAccess(features: [WorkspaceFeature.invoicing], to: '/money'),
-      ),
-      builder: (context, state) => const SalesHubScreen(),
-    ),
+    // #3614 — Sales opens on the invoicing home; the hub's links are the
+    // Sales group of the menu. The address stays for the links to it.
+    GoRoute(path: '/money/sales', redirect: (context, state) => '/invoices'),
     GoRoute(
       path: '/money/accounting',
       redirect: env.guard(

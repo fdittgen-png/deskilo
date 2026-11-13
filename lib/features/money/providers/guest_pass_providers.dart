@@ -24,6 +24,11 @@ GuestPassRepository guestPassRepository(Ref ref) =>
 Future<List<GuestPassOffer>> guestPassOffers(Ref ref, String workspaceId) =>
     ref.watch(guestPassRepositoryProvider).offers(workspaceId);
 
+/// #3614 — the passes sold in [workspaceId], the latest first.
+@riverpod
+Future<List<GuestPassRecord>> guestPassesSold(Ref ref, String workspaceId) =>
+    ref.watch(guestPassRepositoryProvider).passesSold(workspaceId);
+
 /// The places a pass can book in [workspaceId].
 @riverpod
 Future<List<GuestPassPlace>> guestPassPlaces(Ref ref, String workspaceId) =>

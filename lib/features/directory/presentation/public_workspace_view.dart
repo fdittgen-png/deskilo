@@ -16,6 +16,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/kit/copy_value.dart';
 import '../../../core/ui/personal_kit/me_card.dart';
 import '../../../core/ui/server_label.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -394,11 +395,14 @@ class PublicWorkspaceView extends ConsumerWidget {
             style: Theme.of(context).textTheme.headlineSmall,
           ),
           if (workspace.text('address').isNotEmpty)
-            Text(
-              workspace.text('address'),
-              key: const ValueKey('public-workspace-address'),
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+            CopyValue(
+              value: workspace.text('address'),
+              child: Text(
+                workspace.text('address'),
+                key: const ValueKey('public-workspace-address'),
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
               ),
             ),
           if (workspace.source.isNotEmpty)

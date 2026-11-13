@@ -250,4 +250,38 @@ void main() {
       );
     },
   );
+
+  test('a draft comes to its lines before VAT, its VAT and both (#3608)', () {
+    const draft = PurchaseOrderDraft(
+      supplierId: 's',
+      lines: [
+        PurchaseOrderLineDraft(
+          quantity: 5,
+          unitPriceCents: 1250,
+          vatRatePercent: 5.5,
+        ),
+        PurchaseOrderLineDraft(quantity: 2, unitPriceCents: 100),
+        // Entries the form refuses count for nothing, never a negative.
+        PurchaseOrderLineDraft(
+          quantity: 0,
+          unitPriceCents: 500,
+          vatRatePercent: 20,
+        ),
+        PurchaseOrderLineDraft(
+          quantity: 1,
+          unitPriceCents: -1,
+          vatRatePercent: 20,
+        ),
+        PurchaseOrderLineDraft(
+          quantity: 1,
+          unitPriceCents: 1000,
+          vatRatePercent: 120,
+        ),
+      ],
+    );
+    expect(
+      (draft.netCents, draft.vatCents, draft.totalCents),
+      (6250 + 200 + 1000, 344, 6250 + 200 + 1000 + 344),
+    );
+  });
 }

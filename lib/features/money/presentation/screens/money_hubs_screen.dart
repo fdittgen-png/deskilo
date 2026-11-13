@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #2577 C1 — what the space buys and what it sells, each on a page of its
-// own: the purchase side (a member's own expense, the documents to review,
-// suppliers, the lease, equipment, rented rooms, the books' periods) and the
-// sales side (services and prices, invoices, the register, billing). Both
-// open the EXISTING sheets and screens with the gates the Money tab uses;
-// nothing here decides money, and a door the person may not use is absent.
+// #2577 C1 — what the space buys, on a page of its own: the purchase side
+// (a member's own expense, the documents to review, suppliers, the lease,
+// equipment, rented rooms, the books' periods). The sales side is the Sales
+// group of the menu since #3614. It opens the EXISTING sheets and screens
+// with the gates the Money tab uses; nothing here decides money, and a door
+// the person may not use is absent.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -52,34 +52,6 @@ class PurchasesHubScreen extends ConsumerWidget {
             door,
           ],
         ],
-      ),
-    );
-  }
-}
-
-/// `/money/sales` — what the space sells and invoices, for those who
-/// manage it.
-class SalesHubScreen extends ConsumerWidget {
-  const SalesHubScreen({super.key});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final doors = MoneyActionSet.salesDoors(
-      context,
-      ref,
-      MoneyViewData.gates(ref),
-    );
-    return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(context.l10n.bookReportJournalSales),
-        actions: [
-          HelpDot(context.l10n.bookReportJournalSales, anchor: HelpAnchor.moneySales),
-        ],
-      ),
-      body: ListView(
-        key: const ValueKey('sales-hub'),
-        padding: AppSpacing.mdAll,
-        children: doors,
       ),
     );
   }

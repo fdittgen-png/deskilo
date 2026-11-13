@@ -10,6 +10,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/ui/kit/kit_card.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
@@ -175,6 +176,33 @@ void main() {
       lessThan(tester.getTopLeft(_key('payment-match-p1-older')).dy),
     );
     expect(repo.matched, isEmpty, reason: 'nothing happens until a tap');
+  });
+
+  testWidgets('#3614 — at the desk, two panes: the payments on the left, '
+      'the open invoices of the chosen one on the right', (tester) async {
+    repo
+      ..open = [older, exact]
+      ..ledger.add(_payment('p1', 12000))
+      ..ledger.add(_payment('p2', 5000));
+    await pump(tester, size: const Size(1440, 900));
+    expect(_key('payment-match-payments'), findsOneWidget);
+    expect(_key('payment-match-pick-p1'), findsOneWidget);
+    expect(_key('payment-match-pick-p2'), findsOneWidget);
+    // One payment open on the right, with its invoices.
+    expect(
+      find.descendant(
+        of: _key('payment-match-invoices'),
+        matching: find.byType(KitCard),
+      ),
+      findsOneWidget,
+    );
+    final first = _key('payment-match-p1').evaluate().isNotEmpty ? 'p1' : 'p2';
+    final second = first == 'p1' ? 'p2' : 'p1';
+    await tester.tap(_key('payment-match-pick-$second'));
+    await tester.pumpAndSettle();
+    expect(_key('payment-match-$second'), findsOneWidget);
+    expect(_key('payment-match-$first'), findsNothing);
+    expect(repo.matched, isEmpty, reason: 'choosing a payment matches nothing');
   });
 
   testWidgets('a payment partly used shows what is left of it, and that '

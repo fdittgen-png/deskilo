@@ -56,29 +56,6 @@ void main() {
     expect(find.byKey(const ValueKey('purchases-button')), findsOneWidget);
   });
 
-  testWidgets('the sales page shows a door only to whoever may open it', (
-    tester,
-  ) async {
-    await _pump(tester, const SalesHubScreen());
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('sales-hub-invoices')), findsOneWidget);
-    expect(find.byKey(const ValueKey('sales-hub-billing')), findsNothing);
-    expect(find.byKey(const ValueKey('sales-hub-services')), findsNothing);
-
-    await _pump(
-      tester,
-      const SalesHubScreen(),
-      features: {WorkspaceFeature.services},
-      rights: {
-        WorkspacePermission.manageBilling,
-        WorkspacePermission.manageServices,
-      },
-    );
-    await tester.pumpAndSettle();
-    expect(find.byKey(const ValueKey('sales-hub-billing')), findsOneWidget);
-    expect(find.byKey(const ValueKey('sales-hub-services')), findsOneWidget);
-  });
-
   testWidgets('add purchase / expense: a member goes straight to their own '
       'expense', (tester) async {
     await _pump(tester, const PurchasesHubScreen());

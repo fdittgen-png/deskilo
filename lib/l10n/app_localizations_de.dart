@@ -12286,6 +12286,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassFrom => 'Von';
 
   @override
+  String get guestPassHolder => 'Gast';
+
+  @override
   String get guestPassName => 'Name';
 
   @override
@@ -12363,12 +12366,21 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassUnitHour => 'Pro Stunde';
 
   @override
+  String get guestPassUsed => 'Genutzt';
+
+  @override
   String get guestPassesEmpty =>
       'Noch kein Pass. Fügen Sie die Pässe hinzu, die der Raum verkauft.';
 
   @override
   String get guestPassesIntro =>
       'Am Empfang an Gäste verkaufte Pässe, die keine Mitglieder sind: Der Platz wird für sie gebucht, der Pass wird ihnen in Rechnung gestellt und das eingenommene Geld als Zahlung erfasst.';
+
+  @override
+  String get guestPassesSoldEmpty => 'Noch kein Pass verkauft.';
+
+  @override
+  String get guestPassesSoldTitle => 'Verkaufte Pässe';
 
   @override
   String get guestPassesTitle => 'Gästepässe';
@@ -16150,6 +16162,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingSearchHint => 'Ein Kunde oder eine Nummer';
 
   @override
+  String invoicingShareRemindersSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mahnungen teilen',
+      one: '$count Mahnung teilen',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicingSourceCredits => 'Guthaben der Kunden';
 
   @override
@@ -17131,6 +17154,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get kitActionBusy => 'Läuft …';
+
+  @override
+  String get kitCopied => 'In die Zwischenablage kopiert';
+
+  @override
+  String get kitCopy => 'Kopieren';
+
+  @override
+  String kitCopyValue(String value) {
+    return '$value kopieren';
+  }
 
   @override
   String get kitScrollBack => 'Zurück scrollen';
@@ -23821,6 +23855,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String purchaseOrderSummary(String supplier, String total) {
     return '$supplier · $total';
   }
+
+  @override
+  String purchaseOrderSummaryLines(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Positionen',
+      one: 'Eine Position',
+      zero: 'Keine Position',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purchaseOrderSummaryNet => 'Netto';
+
+  @override
+  String get purchaseOrderSummaryTitle => 'Zusammenfassung der Bestellung';
+
+  @override
+  String get purchaseOrderSummaryVat => 'MwSt.';
 
   @override
   String get purchaseOrderSupplier => 'Lieferant';
@@ -30587,7 +30642,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shellBarHiddenAnnounce => 'Navigationsleiste ausgeblendet';
 
   @override
+  String get shellBarHideAction => 'Navigationsleiste ausblenden';
+
+  @override
   String get shellBarHideHint => 'Lange drücken für die Vollbildansicht';
+
+  @override
+  String get shellBarShowAction => 'Navigationsleiste einblenden';
 
   @override
   String get shellBarShowHint =>
