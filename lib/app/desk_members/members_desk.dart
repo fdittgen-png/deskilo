@@ -255,6 +255,7 @@ class _MembersView {
     if (rights.seesEmail)
       RecordColumn(
         id: 'email',
+        staysBeside: false,
         label: _l.membersColEmail,
         flex: 3,
         sortKey: (m) => emails[m.id] ?? '',
@@ -263,6 +264,7 @@ class _MembersView {
       ),
     RecordColumn(
       id: 'plan',
+      staysBeside: false,
       label: _l.membersColPlan,
       flex: 2,
       sortKey: (m) => m.subscriptionPct,
@@ -275,6 +277,7 @@ class _MembersView {
     if (rights.seesFees)
       RecordColumn(
         id: 'fee',
+        staysBeside: false,
         label: _l.membersColPlanFee,
         flex: 2,
         numeric: true,
@@ -304,6 +307,7 @@ class _MembersView {
       ),
     RecordColumn(
       id: 'visit',
+      staysBeside: false,
       label: _l.membersColLastVisit,
       flex: 2,
       sortKey: (m) =>
