@@ -20,6 +20,7 @@ import '../../l10n/context_l10n.dart';
 import '../../storage/prefs_stores.dart';
 import '../../theme/app_spacing.dart';
 import '../adaptive/window_class.dart';
+import '../mouse_presence.dart';
 import 'list_detail_open.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
@@ -113,7 +114,9 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     chips: widget.chips,
     columns: widget.columns,
   )..rowsChanged(widget.rows, chips: widget.chips, columns: widget.columns);
-  bool _touch = false;
+  // #3895 — a finger's sizes until a mouse is connected (or a mouse click
+  // says so): the first tap of a tablet meets a 48 dp target.
+  bool _touch = !MousePresence.connected;
   final _scroll = ScrollController();
   final _menus = <String, GlobalKey<RowMenuState>>{};
   final _filter = TextEditingController();
