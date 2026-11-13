@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../providers/book_period_providers.dart';
@@ -34,7 +35,7 @@ class AccountingExportsScreen extends ConsumerWidget {
     for (final i in invoices)
       if (!i.isVoided &&
           !i.issuedAt.isBefore(from) &&
-          !i.issuedAt.isAfter(to.add(const Duration(days: 1))))
+          i.issuedAt.isBefore(addCalendarDays(to, 1)))
         i,
   ];
 

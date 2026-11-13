@@ -31,8 +31,8 @@ import '../widgets/book_periods_sheet.dart';
 
 /// The figures of the status page, each as its page reads it.
 @immutable
-class AccountingStatus {
-  const AccountingStatus({
+class _AccountingStatus {
+  const _AccountingStatus({
     required this.closedUpTo,
     required this.lastExport,
     required this.vatToFile,
@@ -57,6 +57,7 @@ class AccountingStatus {
 }
 
 /// The last day of the latest closed period of [overview], or null.
+@visibleForTesting
 DateTime? closedUpToOf(BookPeriodsOverview overview) {
   DateTime? last;
   for (final p in overview.periods) {
@@ -66,7 +67,7 @@ DateTime? closedUpToOf(BookPeriodsOverview overview) {
 }
 
 /// The latest export of [overview], or null.
-BookExport? lastExportOf(BookPeriodsOverview overview) {
+BookExport? _lastExportOf(BookPeriodsOverview overview) {
   BookExport? last;
   for (final e in overview.exports) {
     if (last == null || e.exportedAt.isAfter(last.exportedAt)) last = e;
@@ -76,15 +77,15 @@ BookExport? lastExportOf(BookPeriodsOverview overview) {
 
 /// The status of [workspaceId]'s books, read from the same providers as
 /// the pages its tiles open.
-AccountingStatus accountingStatusOf(WidgetRef ref, String workspaceId) {
+_AccountingStatus _accountingStatusOf(WidgetRef ref, String workspaceId) {
   final periods = ref.watch(bookPeriodsProvider(workspaceId));
   final declarations = ref.watch(vatDeclarationsProvider);
   final statements = ref.watch(bankStatementsProvider(workspaceId));
   final sequences = ref.watch(numberSequencesProvider);
   final now = ref.watch(clockProvider).now();
-  return AccountingStatus(
+  return _AccountingStatus(
     closedUpTo: periods.whenData(closedUpToOf),
-    lastExport: periods.whenData(lastExportOf),
+    lastExport: periods.whenData(_lastExportOf),
     vatToFile: declarations.whenData((all) {
       final open = [
         for (final d in all)
@@ -132,7 +133,7 @@ class AccountingStatusGrid extends ConsumerWidget {
     final l = context.l10n;
     final format = appFormatOf(context);
     final dates = format.dates(DateShape.numeric);
-    final status = accountingStatusOf(ref, workspaceId);
+    final status = _accountingStatusOf(ref, workspaceId);
     String figure<T>(AsyncValue<T> v, String Function(T) say) => switch (v) {
       AsyncData(:final value) => say(value),
       AsyncError() => l.accountingStatusNotRead,
@@ -165,7 +166,7 @@ class AccountingStatusGrid extends ConsumerWidget {
               (e) => e == null ? l.memberPageNone : dates.format(e.exportedAt),
             ),
             note: export == null ? null : _exportLine(l, dates, export),
-            onTap: () => context.push(accountingExportsPath),
+            onTap: () => context.push(_accountingExportsPath),
           ),
         if (shown.vat)
           KpiTile(
@@ -213,7 +214,7 @@ class AccountingStatusGrid extends ConsumerWidget {
 }
 
 /// The export history's address.
-const String accountingExportsPath = '/money/accounting/exports';
+const String _accountingExportsPath = '/money/accounting/exports';
 
 /// Opens the bank statements of [workspaceId] in their sheet.
 VoidCallback bankStatementsDoor(

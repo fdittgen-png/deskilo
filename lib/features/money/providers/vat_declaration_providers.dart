@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -78,6 +79,7 @@ VatRegisterFiles vatRegisterFiles(Ref ref) => VatRegisterFiles(
 /// on the space's basis and with the payments the return used (the same
 /// engine as the VAT report): what a return's boxes are compared with.
 /// Every invoice's points; a return keeps the ones of its period.
+@visibleForTesting
 final vatTaxPointsTodayProvider =
     FutureProvider.autoDispose<List<VatTaxPointAmount>>((ref) async {
       final workspace = await ref.watch(currentWorkspaceProvider.future);
