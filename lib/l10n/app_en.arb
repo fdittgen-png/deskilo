@@ -11027,6 +11027,23 @@
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
   },
+  "eInvoiceTestFieldLabel": "{field} (test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceTestFieldsHelp": "Rehearsal keys for the test platform. They are kept apart from the production ones; a blank field keeps what is stored.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldsTitle": "Test environment (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
   "editorAddLevel": "Add level",
   "@editorAddLevel": {
     "description": "FAB label / dialog title for creating a level (floor)"

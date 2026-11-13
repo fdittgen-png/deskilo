@@ -5433,6 +5433,23 @@
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
   },
+  "eInvoiceTestFieldLabel": "{field} (prueba)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceTestFieldsHelp": "Claves de ensayo para la plataforma de pruebas. Se guardan aparte de las de producción; un campo vacío conserva lo guardado.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldsTitle": "Entorno de prueba (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
   "editorAddLevel": "Añadir planta",
   "editorAmenitiesLabel": "Equipamiento",
   "editorAreaKindTitle": "¿Qué tipo de zona?",

@@ -5433,6 +5433,23 @@
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
   },
+  "eInvoiceTestFieldLabel": "{field} (Test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceTestFieldsHelp": "Zugangsdaten für die Testplattform. Sie werden getrennt von den Produktivdaten gespeichert; ein leeres Feld behält den gespeicherten Wert.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldsTitle": "Testumgebung (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
   "editorAddLevel": "Etage hinzufügen",
   "editorAmenitiesLabel": "Ausstattung",
   "editorAreaKindTitle": "Welche Art von Bereich?",

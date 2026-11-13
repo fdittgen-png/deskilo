@@ -8426,6 +8426,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Provincia o distrito (p. ej. RO-B, MI)';
 
   @override
+  String eInvoiceTestFieldLabel(String field) {
+    return '$field (prueba)';
+  }
+
+  @override
+  String get eInvoiceTestFieldsHelp =>
+      'Claves de ensayo para la plataforma de pruebas. Se guardan aparte de las de producción; un campo vacío conserva lo guardado.';
+
+  @override
+  String get eInvoiceTestFieldsTitle => 'Entorno de prueba (UAT)';
+
+  @override
   String get editorAddLevel => 'Añadir planta';
 
   @override

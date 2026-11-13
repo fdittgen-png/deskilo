@@ -14,6 +14,12 @@ const Map<String, List<String>> eInvoiceProviderFields = {
   'ro_efactura': ['base_url', 'cif', 'access_token'],
 };
 
+/// #3882 — the key a connector field has in the test environment: the
+/// function reads `<field>_uat` for a sandbox send and never falls back to
+/// the production key, and the server classifies the suffixed key like its
+/// base (a secret stays a secret).
+String eInvoiceTestKey(String field) => '${field}_uat';
+
 /// The fields that are secrets: typed, stored in Vault (0414), never shown
 /// again — the screen only says that one is set.
 const eInvoiceSecretFields = {
