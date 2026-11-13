@@ -25174,8 +25174,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Offen seit';
 
   @override
-  String reminderPdfDaysOpenLine(String days) {
-    return 'Offen seit $days Tagen';
+  String reminderPdfDaysOpenLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Offen seit $days Tagen',
+      one: 'Offen seit $days Tag',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -25766,6 +25772,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportExpectedDelivery => 'Erwartete Lieferung';
 
   @override
+  String reportExpectedDeliveryDate(String date) {
+    return 'Erwartete Lieferung am $date';
+  }
+
+  @override
   String get reportFieldGroupBank => 'Bankverbindung';
 
   @override
@@ -26331,6 +26342,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportSubject => 'Betreff';
+
+  @override
+  String reportSubjectLine(String subject) {
+    return 'Betreff: $subject';
+  }
 
   @override
   String get reportTemplateClearOverlay =>
@@ -33860,6 +33876,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get usageReportOverage =>
       'Überziehung, auf die nächste Rechnung übertragen';
+
+  @override
+  String usageReportOverageLine(String amount) {
+    return 'Überziehung, auf die nächste Rechnung übertragen: $amount';
+  }
 
   @override
   String get usageReportPaid => 'Vorausbezahlt (Teilnahme)';

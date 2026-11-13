@@ -56,6 +56,7 @@ class ReportStrings {
     this.subscriptionMonth = _subscriptionMonth,
     this.nameDashLabel = '{name} — {label}',
     this.cancelledLine = _cancelledLine,
+    this.daysOpen = _daysOpen,
   });
 
   /// #3652 -- the label of a whole-bookable place on a statement ("Desk 4 —
@@ -133,6 +134,12 @@ class ReportStrings {
   /// #3809 — a charge taken back, printed from its frozen facts.
   final String Function(String what) cancelledLine;
   static String _cancelledLine(String what) => 'Cancelled: $what';
+
+  /// #3768 -- how long a reminded invoice has been open, with the plural of
+  /// the day count in the document's language (`days_open_text`).
+  final String Function(int days) daysOpen;
+  static String _daysOpen(int days) =>
+      days == 1 ? 'Open for 1 day' : 'Open for $days days';
   static String _participation(String pct) => 'Participation $pct';
   static String _subscription(String pct) => 'Subscription $pct';
   static String _participationMonth(String month, String pct) => '$month $pct';

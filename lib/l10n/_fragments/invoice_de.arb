@@ -422,7 +422,7 @@
   "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
   "reminderPdfOpeningFirm": "trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.",
   "reminderPdfDaysOpen": "Offen seit",
-  "reminderPdfDaysOpenLine": "Offen seit {days} Tagen",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Offen seit {days} Tag} other{Offen seit {days} Tagen}}",
   "reminderPdfDays": "Tagen",
   "reminderPdfLevelLabel": "Mahnstufe",
   "reminderPdfClosing": "Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.",

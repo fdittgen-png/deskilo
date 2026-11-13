@@ -1058,12 +1058,12 @@
   "@reminderPdfDaysOpen": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
-  "reminderPdfDaysOpenLine": "Open for {days} days",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Open for {days} day} other{Open for {days} days}}",
   "@reminderPdfDaysOpenLine": {
-    "description": "#3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.",
+    "description": "#3768 Reminder letter line: how long the invoice has been open, with the plural of the day count in the document's language.",
     "placeholders": {
       "days": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
