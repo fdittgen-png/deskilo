@@ -18654,7 +18654,7 @@ abstract class AppLocalizations {
   /// #2354 place of supply: featureSupplyClassificationDesc
   ///
   /// In en, this message translates to:
-  /// **'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.'**
+  /// **'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.'**
   String get featureSupplyClassificationDesc;
 
   /// #2354 place of supply: featureSupplyClassificationTitle
@@ -51809,6 +51809,12 @@ abstract class AppLocalizations {
   /// **'General service (not connected with the premises)'**
   String get supplyClassGeneral;
 
+  /// #3864 place of supply: what the general-service choice means
+  ///
+  /// In en, this message translates to:
+  /// **'Taxed by the general rule: a business customer in another member state accounts for the VAT.'**
+  String get supplyClassGeneralMeaning;
+
   /// #2354 place of supply: supplyClassHelper
   ///
   /// In en, this message translates to:
@@ -51826,6 +51832,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connected with the premises'**
   String get supplyClassProperty;
+
+  /// #3864 place of supply: what the premises choice means
+  ///
+  /// In en, this message translates to:
+  /// **'Taxed where the premises are.'**
+  String get supplyClassPropertyMeaning;
 
   /// Shown as the text in support bundle screen (help).
   ///

@@ -19,7 +19,9 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_service.dart';
+import '../../domain/new_service_supply.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
 import 'vat_rate_field.dart';
@@ -116,7 +118,9 @@ class _ServiceSheetState extends ConsumerState<_ServiceSheet> {
     _active = service?.active ?? true;
     _public = service?.isPublic ?? false;
     _vatRateId = service?.vatRateId ?? '';
-    _supplyClass = service?.supplyClass ?? SupplyClass.property;
+    // #3864 — a new service starts from the business's own switches.
+    _supplyClass = service?.supplyClass ??
+        newServiceSupplyClass(ref.read(enabledFeaturesSyncProvider));
   }
 
   @override
