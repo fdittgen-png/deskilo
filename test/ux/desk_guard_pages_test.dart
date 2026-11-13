@@ -12,6 +12,7 @@ import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -56,6 +57,10 @@ const _pages = [
   // #3614 — sales at the desk.
   ('/services', PageKind.records, 'money', 'services'),
   ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
+  // #3617 — reports and analysis at the desk.
+  ('/reports', PageKind.records, 'reports', 'reports'),
+  ('/money/status', PageKind.dashboard, 'money', 'status'),
+  ('/bi', PageKind.dashboard, 'reports', 'analysis'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -116,6 +121,8 @@ void main() {
               RecordsHeader<ServiceItem>,
               RecordRow<GuestPassRecord>,
               RecordsHeader<GuestPassRecord>,
+              RecordRow<ReportPage>,
+              RecordsHeader<ReportPage>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -124,6 +131,7 @@ void main() {
               RecordsHeader<Receivable>,
               RecordsHeader<ServiceItem>,
               RecordsHeader<GuestPassRecord>,
+              RecordsHeader<ReportPage>,
             ],
           ),
           isEmpty,

@@ -14,6 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/print_or_retry.dart';
@@ -113,10 +114,22 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
             ),
         ],
       ),
-      body: ListView(
-        padding: AppSpacing.lgAll,
-        children: [
-          Row(
+      // #3617 — the dashboard page: the months in one bar that stays, the
+      // figures as tiles on the grid, the members below.
+      body: DashboardScrollView(
+        key: const ValueKey('status-page'),
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          0,
+          AppSpacing.md,
+          AppSpacing.md,
+        ),
+        filterBar: FilterBar(
+          key: const ValueKey('status-filter-bar'),
+          // Room above the fields for their floating labels.
+          filters: Padding(
+            padding: const EdgeInsets.only(top: AppSpacing.sm),
+            child: Row(
             children: [
               Expanded(
                 child: DropdownButtonFormField<String>(
@@ -153,7 +166,10 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
               ),
             ],
           ),
-          const SizedBox(height: AppSpacing.lg),
+          ),
+        ),
+        children: [
+          const SizedBox(height: AppSpacing.md),
           switch (status) {
             AsyncData(value: final s) => _StatusBody(status: s),
             AsyncError(:final error) => Text(error.toString()),
@@ -174,53 +190,39 @@ class _StatusBody extends StatelessWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final currency = appFormatOf(context).moneyIn(status.currency);
-    Widget row(String label, int cents, {bool negative = false, Key? key}) =>
-        ListTile(
+    Widget tile(String label, int cents, {bool negative = false, Key? key}) =>
+        KpiTile(
           key: key,
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          title: Text(label),
-          trailing: Text(
-            currency.formatMinor(negative ? -cents : cents),
-            style: theme.textTheme.bodyLarge?.copyWith(
-              fontFeatures: const [FontFeature.tabularFigures()],
-            ),
-          ),
+          label: label,
+          figure: currency.formatMinor(negative ? -cents : cents),
         );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Card(
-          child: Padding(
-            padding: AppSpacing.mdAll,
-            child: Column(
-              children: [
-                row(l10n.statusInvoiced, status.invoicedCents, key: const ValueKey('status-invoiced')),
-                row(l10n.statusCreditNotes, status.creditNotesCents, negative: true),
-                row(l10n.statusPaymentsMatched, status.paymentsMatchedCents),
-                row(l10n.statusPaymentsReceived, status.paymentsReceivedCents),
-                row(l10n.statusReimbursed, status.reimbursedCents, negative: true),
-                row(l10n.statusRepartitioned, status.repartitionedCents),
-                if (status.awaitingCents > 0)
-                  row(l10n.statusAwaiting, status.awaitingCents),
-                row(l10n.statusCredits, status.creditsGrantedCents, negative: true),
-                const Divider(),
-                ListTile(
-                  key: const ValueKey('status-net'),
-                  dense: true,
-                  contentPadding: EdgeInsets.zero,
-                  title: Text(l10n.statusNet, style: theme.textTheme.titleMedium),
-                  subtitle: Text(l10n.statusNetExplanation),
-                  trailing: Text(
-                    currency.formatMinor(status.netCents),
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontFeatures: const [FontFeature.tabularFigures()],
-                    ),
-                  ),
-                ),
-              ],
+        DashboardGrid(
+          key: const ValueKey('status-grid'),
+          minTileWidth: kpiTileMinWidth,
+          children: [
+            tile(l10n.statusInvoiced, status.invoicedCents, key: const ValueKey('status-invoiced')),
+            tile(l10n.statusCreditNotes, status.creditNotesCents, negative: true),
+            tile(l10n.statusPaymentsMatched, status.paymentsMatchedCents),
+            tile(l10n.statusPaymentsReceived, status.paymentsReceivedCents),
+            tile(l10n.statusReimbursed, status.reimbursedCents, negative: true),
+            tile(l10n.statusRepartitioned, status.repartitionedCents),
+            if (status.awaitingCents > 0)
+              tile(l10n.statusAwaiting, status.awaitingCents),
+            tile(l10n.statusCredits, status.creditsGrantedCents, negative: true),
+            DashboardTile(
+              span: 2,
+              child: tile(l10n.statusNet, status.netCents,
+                  key: const ValueKey('status-net')),
             ),
-          ),
+          ],
+        ),
+        // What the net is, whole, under the figures.
+        Padding(
+          padding: const EdgeInsets.only(top: AppSpacing.sm),
+          child: Text(l10n.statusNetExplanation, style: theme.textTheme.bodySmall),
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(l10n.statusMembers, style: theme.textTheme.titleSmall),

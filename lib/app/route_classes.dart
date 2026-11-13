@@ -246,7 +246,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),
-  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
+  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3617
   RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases'),
   RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-guest-passes', measure: PageMeasure.work), // #3614
   RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals'),
@@ -290,7 +290,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories'),
   RouteRule('/features', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/workspace-settings', RouteClass.workspace, place: 'drawer-setup-guide'),
-  RouteRule('/reports', RouteClass.workspace, place: 'reporting'),
+  RouteRule('/reports', RouteClass.workspace, place: 'reporting', measure: PageMeasure.work), // #3617
   RouteRule('/validation', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability'),
   RouteRule(
