@@ -175,6 +175,11 @@ export async function handle(
   // #2380 -- a payout event names no checkout session: the workspace is the
   // one whose own webhook secret signed it (payout.ts).
   if (isPayoutEvent(event.type)) {
+    // #3905 -- a test-mode payout reaches no books.
+    if (event.livemode === false) {
+      console.log("stripe test event ignored");
+      return new Response("ok", { status: 200 });
+    }
     return await handlePayout(
       event,
       (secret) =>
@@ -190,7 +195,7 @@ export async function handle(
       event,
       (secret) =>
         validSignature(payload, req.headers.get("stripe-signature") ?? "", secret, deps.nowS()),
-      { admin: deps.admin, fetch: deps.fetch ?? fetch },
+      { admin: deps.admin, env: deps.env, fetch: deps.fetch ?? fetch },
     );
   }
 

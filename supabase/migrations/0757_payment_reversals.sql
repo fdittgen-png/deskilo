@@ -19,12 +19,24 @@ comment on column public.payment_intents.reversal_reason is
   '#3905 -- the provider''s kind of reversal, as it named it.';
 
 -- The provider reports a captured payment reversed. Idempotent, and it never
--- touches a payment that was not captured.
+-- touches a payment that was not captured. It answers the payment's state
+-- after the call (null: no such payment), so a reversal reported before the
+-- capture is asked again by the provider instead of being lost.
 create or replace function public.mark_payment_reversed(p_provider text, p_order_id text, p_reason text)
-returns void language sql security definer set search_path = public as $fn$
+returns text language plpgsql security definer set search_path = public as $fn$
+declare
+  v_status text;
+begin
   update public.payment_intents
      set status = 'reversed', reversed_at = now(), reversal_reason = left(coalesce(p_reason, ''), 200)
-   where provider = p_provider and order_id = p_order_id and status = 'captured';
+   where provider = p_provider and order_id = p_order_id and status = 'captured'
+  returning status into v_status;
+  if v_status is null then
+    select status into v_status from public.payment_intents
+     where provider = p_provider and order_id = p_order_id;
+  end if;
+  return v_status;
+end;
 $fn$;
 
 revoke execute on function public.mark_payment_reversed(text, text, text) from public, anon, authenticated;
@@ -60,6 +72,28 @@ begin
     raise exception 'an anchor of #3905 was not found in settle_online_payment' using errcode = 'P0001';
   end if;
   execute v_def;
+end
+$migration$;
+
+-- The books keep a reversed payment as they kept it captured: its receipt
+-- stays on the provider's clearing account and its fee stays posted (0698),
+-- so the postings of a past period never change; a person corrects the ledger.
+do $migration$
+declare
+  v_def text;
+  v_fn text;
+begin
+  foreach v_fn in array array['provider_receipt_split', 'provider_settlement_postings'] loop
+    select pg_get_functiondef(p.oid) into v_def
+      from pg_proc p join pg_namespace n on n.oid = p.pronamespace
+     where n.nspname = 'public' and p.proname = v_fn;
+    if position($a$pi.status in ('captured', 'reversed')$a$ in v_def) > 0 then continue; end if;
+    v_def := pg_temp.anchor_replace(v_def, $a$pi.status = 'captured'$a$, $a$pi.status in ('captured', 'reversed')$a$);
+    if v_def is null then
+      raise exception 'an anchor of #3905 was not found in %', v_fn using errcode = 'P0001';
+    end if;
+    execute v_def;
+  end loop;
 end
 $migration$;
 
