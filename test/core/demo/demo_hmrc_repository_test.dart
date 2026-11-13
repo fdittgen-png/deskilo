@@ -14,6 +14,8 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
@@ -284,5 +286,9 @@ void _unknownSpace() {
     await container.read(currentWorkspaceProvider.future);
     expect(() => container.read(moneyRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
     expect(() => container.read(kpiRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    // #3867 — the purchase and analysis routers fail closed too, never to the main space.
+    expect(() => container.read(purchaseRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    expect(() => container.read(supplierRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    expect(() => container.read(costKpiRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
   });
 }

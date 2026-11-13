@@ -139,7 +139,11 @@ mixin FakeWorkspaceIdentity on FakeWorkspaceState
   Future<void> setWorkspaceLanguage(String workspaceId, String locale) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
-    workspaces[i] = workspaces[i].copyWith(defaultLocale: locale.trim());
+    // #3850 — saving the language confirms it, as the server's trigger does.
+    workspaces[i] = workspaces[i].copyWith(
+      defaultLocale: locale.trim(),
+      documentLanguageConfirmed: true,
+    );
   }
 
   @override

@@ -140,8 +140,14 @@ sealed class Workspace with _$Workspace implements SystemStamped, SpaceSide {
     @Default(<String, dynamic>{}) Map<String, dynamic> invoiceLegal,
 
     /// The workspace's own language (0096, e.g. 'fr'); '' = unset →
-    /// the sender's app language. Invitations default to it.
+    /// the sender's app language. Invitations default to it, and it is the
+    /// business's document language (#3850).
     @Default('') String defaultLocale,
+
+    /// #3850 (0753) -- false while the document language the server gave a
+    /// business of a country with several shipped languages waits for an
+    /// administrator to confirm it; saving the language confirms it.
+    @Default(true) bool documentLanguageConfirmed,
 
     /// Per-locale CUSTOM invitation templates (0096): language code →
     /// template. Absent key → legacy [invitationTemplate] → built-in.

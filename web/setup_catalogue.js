@@ -942,6 +942,12 @@ window.SETUP_REGISTRY={
   "SK",
   "US"
  ],
+ "documentLanguageCountries": [
+  "BE",
+  "CA",
+  "CH",
+  "LU"
+ ],
  "countries": [
   [
    "AT",

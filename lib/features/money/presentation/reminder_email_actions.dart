@@ -154,12 +154,7 @@ class ReminderEmailFlow {
     required int owedCents,
     required ReminderLetterPdf pdf,
   }) async {
-    // No language, no e-mail: the server never chooses one, and neither does
-    // the app on the sender's behalf.
-    if (pdf.language.isEmpty) {
-      AppSnack.error(context, context.l10n.reminderEmailNoLanguage);
-      return;
-    }
+    // #3850 — the language of the invoice it reminds of, never the sender's.
     final letter = _commands.letter(
       l10n: l10nForLanguage(pdf.language),
       document: (

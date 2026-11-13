@@ -13,8 +13,6 @@ import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/locale/report_language.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/print_or_retry.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/providers/event_providers.dart';
@@ -64,26 +62,16 @@ class MoneyMemberDocuments {
   Future<void> _memberDoc(String docId, String period) async {
     await readDocumentPolicies(_ref); // #3742
     if (!_context.mounted) return;
-    final l10n = _context.l10n;
     await warmLetterDocProviders(_ref, docId);
     if (!_context.mounted) return;
     final me = _ref.read(myMemberProvider).value;
     final names = await _ref.read(memberNamesProvider.future);
     if (me == null || !_context.mounted) return;
     // #496 — MY documents print in MY language chain.
-    final String language;
-    try {
-      language = resolveMemberReportLanguage(_ref,
-          memberLocale:
-              _ref.read(myMemberProvider).value?.preferredLocaleOverride ??
-              _ref.read(myProfileProvider).value?.preferredLocale ?? '');
-    } on AmbiguousReportLanguage {
-      AppSnack.error(
-        _context,
-        l10n.reportLanguageAmbiguous,
-      );
-      return;
-    }
+    final language = resolveMemberReportLanguage(_ref,
+        memberLocale:
+            _ref.read(myMemberProvider).value?.preferredLocaleOverride ??
+            _ref.read(myProfileProvider).value?.preferredLocale ?? '');
     final docL10n = l10nForLanguage(language);
     if (docId == 'usage') {
       // #873 — the figures come from the statement and the records.

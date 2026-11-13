@@ -28,6 +28,7 @@ String taxValueSummary(TaxValue v, String? locale) => switch (v) {
   RateComponentValue() => rateComponentsText(v).replaceAll('\n', ' + '),
   RetentionValue() => '${v.years} (${v.from})',
   CountryValue() => '${v.currency} · ${v.timeZone}',
+  DocumentLanguageValue() => v.languages.join(', '),
 };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -48,6 +49,7 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
   TaxDomain.rateComponent => context.l10n.taxRefDomainRateComponent,
   TaxDomain.retention => context.l10n.taxRefDomainRetention,
   TaxDomain.country => context.l10n.taxRefDomainCountry,
+  TaxDomain.documentLanguage => context.l10n.taxRefDomainDocumentLanguage,
 };
 
 /// The lists of a return box as the version form edits them, comma

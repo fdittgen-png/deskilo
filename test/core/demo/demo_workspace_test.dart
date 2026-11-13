@@ -8,10 +8,19 @@
 // the canonical dataset again without anyone telling it to refresh.
 import 'dart:async';
 
+import 'package:deskilo/core/demo/data/bank_statement_repository.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_workspace.dart';
+import 'package:deskilo/features/money/domain/bank/bank_records.dart';
+import 'package:deskilo/features/money/domain/purchase_draft.dart';
+import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
+import 'package:deskilo/features/money/providers/book_period_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
+    show SupplierDraft;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -123,6 +132,122 @@ void main() {
       reason: 'a viewpoint changed, not the dataset',
     );
     expect(find.text('A member'), findsOneWidget);
+  });
+
+  testWidgets('a visitor\'s purchase, supplier, book period and bank match '
+      'survive a switch of persona, and a Reset gives the seeded state '
+      'again (#3865)', (tester) async {
+    final root = ProviderContainer();
+    addTearDown(root.dispose);
+    late WidgetRef scope;
+    await tester.pumpWidget(
+      UncontrolledProviderScope(
+        container: root,
+        child: DemoWorkspace(
+          child: MaterialApp(
+            home: Consumer(
+              builder: (context, ref, _) {
+                scope = ref;
+                return const SizedBox();
+              },
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final controller = root.read(demoSessionControllerProvider.notifier);
+
+    Future<void> settle() async {
+      await tester.pumpAndSettle();
+      await scope.read(currentWorkspaceProvider.future);
+    }
+
+    await settle();
+    // The visitor records: a supplier bill, a supplier, a reopened book
+    // period and a matched bank line.
+    final billId = await scope.read(purchaseRepositoryProvider).saveDraft(
+      'ws-1',
+      'req-3865',
+      const PurchaseBillDraft(grossCents: 4242, reference: 'SWITCH-3865'),
+    );
+    final supplierId = await scope
+        .read(supplierRepositoryProvider)
+        .save('ws-1', const SupplierDraft(name: 'Switch Supplies'));
+    final period = (await scope.read(bookPeriodRepositoryProvider).fetch('ws-1'))
+        .periods
+        .firstWhere((p) => p.closed);
+    await scope
+        .read(bookPeriodRepositoryProvider)
+        .reopen('ws-1', period.id, 'a visitor reopens it');
+    final bank = scope.read(bankStatementRepositoryProvider)
+        as FakeBankStatementRepository;
+    final statement = (await bank.fetchStatements('ws-1')).first;
+    final money = root.read(demoSessionControllerProvider).fixture.money;
+    // One of the movements that pays an open invoice to the cent.
+    final (line, invoice) = [
+      for (final l in await bank.fetchLines(statement.id))
+        if (l.isMoneyIn && l.status == BankLineStatus.open)
+          for (final i in money.invoices)
+            if (i.workspaceId == 'ws-1' &&
+                i.currency == l.currency &&
+                i.totalCents == l.amountCents &&
+                !money.invoiceMatchesStore.containsKey(i.id))
+              (l, i),
+    ].first;
+    await bank.matchLine(
+      line.id,
+      invoiceId: invoice.id,
+      resolution: 'exact',
+      note: '',
+    );
+
+    Future<void> expectKept() async {
+      final purchases =
+          await scope.read(purchaseRepositoryProvider).fetchPurchases('ws-1');
+      expect(purchases.map((p) => p.id), contains(billId));
+      final suppliers =
+          await scope.read(supplierRepositoryProvider).fetchSuppliers('ws-1');
+      expect(suppliers.map((s) => s.id), contains(supplierId));
+      final periods =
+          (await scope.read(bookPeriodRepositoryProvider).fetch('ws-1')).periods;
+      expect(periods.firstWhere((p) => p.id == period.id).closed, isFalse);
+      final again = scope.read(bankStatementRepositoryProvider)
+          as FakeBankStatementRepository;
+      final lines = await again.fetchLines(statement.id);
+      expect(
+        lines.firstWhere((l) => l.id == line.id).status,
+        isNot(BankLineStatus.open),
+        reason: 'the matched bank line is still matched',
+      );
+    }
+
+    await expectKept();
+    controller.viewAs(DemoPersona.member);
+    await settle();
+    controller.viewAs(DemoPersona.owner);
+    await settle();
+    await expectKept();
+
+    // A Reset is a new dataset: the seeded state, not the visitor's.
+    controller.reset();
+    await settle();
+    expect(
+      (await scope.read(purchaseRepositoryProvider).fetchPurchases('ws-1'))
+          .map((p) => p.id),
+      isNot(contains(billId)),
+    );
+    expect(
+      (await scope.read(supplierRepositoryProvider).fetchSuppliers('ws-1'))
+          .map((s) => s.id),
+      isNot(contains(supplierId)),
+    );
+    expect(
+      (await scope.read(bookPeriodRepositoryProvider).fetch('ws-1')).periods
+          .firstWhere((p) => p.id == period.id)
+          .closed,
+      isTrue,
+    );
   });
 
   testWidgets('the bar says what this space is, for a screen reader too', (

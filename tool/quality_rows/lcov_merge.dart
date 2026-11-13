@@ -34,60 +34,74 @@ String normalizeSourcePath(String path, {String? root}) {
   return p;
 }
 
+/// The hit count of every line of every source file of ONE report ([number]
+/// names it in an error), by normalised path. The merge below and the checks
+/// that read a merged report (tool/country_coverage.dart) share this parse, so
+/// there is one reading of the format. A record that is not closed, a line
+/// that is not `number,hits` or a report with no record at all throws.
+Map<String, Map<int, int>> lcovHits(
+  String report, {
+  String? root,
+  int number = 1,
+}) {
+  final lines = <String, Map<int, int>>{};
+  String? sf;
+  Map<int, int>? hits;
+  var seen = 0;
+  var row = 0;
+  for (final raw in report.split('\n')) {
+    row++;
+    final line = raw.trimRight();
+    if (line.isEmpty) continue;
+    if (line.startsWith('SF:')) {
+      if (sf != null) {
+        throw LcovFormatException(
+          'report $number line $row: SF: inside the open record of $sf',
+        );
+      }
+      sf = normalizeSourcePath(line.substring(3), root: root);
+      hits = lines.putIfAbsent(sf, () => {});
+    } else if (line.startsWith('DA:')) {
+      if (sf == null) {
+        throw LcovFormatException('report $number line $row: DA outside a record');
+      }
+      final parts = line.substring(3).split(',');
+      final no = parts.isEmpty ? null : int.tryParse(parts[0]);
+      final count = parts.length < 2 ? null : int.tryParse(parts[1]);
+      if (no == null || count == null || no < 0 || count < 0) {
+        throw LcovFormatException(
+          'report $number line $row: bad DA record "$line"',
+        );
+      }
+      hits![no] = (hits[no] ?? 0) + count;
+    } else if (line == 'end_of_record') {
+      if (sf == null) {
+        throw LcovFormatException(
+          'report $number line $row: end_of_record without SF',
+        );
+      }
+      sf = null;
+      hits = null;
+      seen++;
+    }
+    // LF, LH and any other tag are recomputed or irrelevant.
+  }
+  if (sf != null) {
+    throw LcovFormatException('report $number ends inside the record of $sf');
+  }
+  if (seen == 0) throw LcovFormatException('report $number holds no record');
+  return lines;
+}
+
 /// Merges [reports] (LCOV text, one per run) into one report.
 String mergeLcov(List<String> reports, {String? root}) {
   if (reports.isEmpty) throw LcovFormatException('nothing to merge');
   final lines = <String, Map<int, int>>{};
   for (var n = 0; n < reports.length; n++) {
-    String? sf;
-    Map<int, int>? hits;
-    var seen = 0;
-    var row = 0;
-    for (final raw in reports[n].split('\n')) {
-      row++;
-      final line = raw.trimRight();
-      if (line.isEmpty) continue;
-      if (line.startsWith('SF:')) {
-        if (sf != null) {
-          throw LcovFormatException(
-            'report ${n + 1} line $row: SF: inside the open record of $sf',
-          );
-        }
-        sf = normalizeSourcePath(line.substring(3), root: root);
-        hits = lines.putIfAbsent(sf, () => {});
-      } else if (line.startsWith('DA:')) {
-        if (sf == null) {
-          throw LcovFormatException(
-            'report ${n + 1} line $row: DA outside a record',
-          );
-        }
-        final parts = line.substring(3).split(',');
-        final no = parts.isEmpty ? null : int.tryParse(parts[0]);
-        final count = parts.length < 2 ? null : int.tryParse(parts[1]);
-        if (no == null || count == null || no < 0 || count < 0) {
-          throw LcovFormatException(
-            'report ${n + 1} line $row: bad DA record "$line"',
-          );
-        }
-        hits![no] = (hits[no] ?? 0) + count;
-      } else if (line == 'end_of_record') {
-        if (sf == null) {
-          throw LcovFormatException(
-            'report ${n + 1} line $row: end_of_record without SF',
-          );
-        }
-        sf = null;
-        hits = null;
-        seen++;
-      }
-      // LF, LH and any other tag are recomputed or irrelevant.
-    }
-    if (sf != null) {
-      throw LcovFormatException(
-        'report ${n + 1} ends inside the record of $sf',
-      );
-    }
-    if (seen == 0) throw LcovFormatException('report ${n + 1} holds no record');
+    lcovHits(reports[n], root: root, number: n + 1).forEach((path, hits) {
+      final into = lines.putIfAbsent(path, () => {});
+      hits.forEach((no, count) => into[no] = (into[no] ?? 0) + count);
+    });
   }
   final b = StringBuffer();
   for (final path in lines.keys.toList()..sort()) {

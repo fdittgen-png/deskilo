@@ -2,11 +2,29 @@
 // Invariant: every city booking and invoice refers to its own people and
 // space, no person or seat is double-booked, and invoice lines and VAT add up.
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
+  test('the fixture holds exactly the spaces of the one list, each in its '
+      'currency, and an id the list does not know fails closed (#3867)', () {
+    final fixture = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
+    expect(
+      {for (final w in fixture.workspaces.workspaces) w.id},
+      {for (final key in DemoSpaceKey.values) key.id},
+      reason: 'a space in the fixture but not in DemoSpaceKey (or the reverse)',
+    );
+    for (final key in DemoSpaceKey.values) {
+      final row = fixture.spaceWorkspaces.at(key).workspaces.singleWhere((w) => w.id == key.id);
+      expect(row.currencyCode, key.currency, reason: key.label);
+      expect(DemoSpaceKey.of(key.id), key);
+    }
+    expect(DemoSpaceKey.of(null), DemoSpaceKey.home);
+    expect(() => DemoSpaceKey.of('ws-unknown'), throwsStateError);
+  });
+
   test('the complete city histories reconcile', () {
     final fixture = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
     for (final city in [

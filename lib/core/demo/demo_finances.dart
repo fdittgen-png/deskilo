@@ -14,10 +14,7 @@ import '../../features/money/domain/ledger_entry.dart';
 import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_trade_city_seed.dart';
+import 'demo_spaces.dart';
 
 /// The overview the server's `my_finance_overview` (0380) would answer for
 /// the persona [fixture] is acting as.
@@ -132,12 +129,8 @@ List<AccountActivity> _accountActivity(
   );
   return [
     for (final s in [
-      space(demoFirstSpaceId, fixture.money),
-      space(demoSecondSpaceId, fixture.secondSpace.money),
-      space(demoLondonSpaceId, fixture.london.money),
-      space(demoNewYorkSpaceId, fixture.newYork.money),
-      space(demoZurichSpaceId, fixture.zurich.money),
-      space(demoMilanSpaceId, fixture.milan.money),
+      for (final key in DemoSpaceKey.values)
+        space(key.id, fixture.spaceMoney.at(key)),
     ])
       ...switch (kind) {
         AccountActivityKind.invoices => _invoiceRows(s, me),

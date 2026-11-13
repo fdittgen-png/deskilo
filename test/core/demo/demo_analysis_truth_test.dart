@@ -16,6 +16,7 @@
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
@@ -27,8 +28,11 @@ import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/room_rental.dart';
 import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
+import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
 import 'package:deskilo/features/money/providers/asset_providers.dart';
 import 'package:deskilo/features/money/providers/asset_valuation_providers.dart';
+import 'package:deskilo/features/money/providers/book_period_providers.dart';
+import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/premises_lease_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -56,14 +60,8 @@ import '../../helpers/demo_analyses.dart';
 /// since they were issued, and the one other unpaid invoice (#3785).
 const _londonDueItems = 5;
 
-/// The Demo's five spaces: their name and id.
-const _spaces = [
-  ('Pézenas', 'ws-1'),
-  ('Leipzig', 'ws-2'),
-  ('London', 'ws-3'),
-  ('New York', 'ws-4'),
-  ('the development twin', 'ws-1-dev'),
-];
+/// Every space of the Demo's one list: their name and id (#3867).
+final _spaces = [for (final key in DemoSpaceKey.values) (key.label, key.id)];
 
 /// A container on the Demo looking at space [id], its overview on.
 Future<(ProviderContainer, Workspace)> _open(
@@ -183,6 +181,68 @@ Future<Set<String>> _recordIds(ProviderContainer container, String id) async =>
 
 void main() {
   final fixture = DemoFixture.build();
+
+  test('Leipzig keeps its own books: a period closed there, its book profile '
+      'and its accounting connection never reach the main space (#3866)', () async {
+    final fix = DemoFixture.build();
+    var space = fix.workspaces.workspaces.firstWhere((w) => w.id == 'ws-1');
+    final container = ProviderContainer(
+      overrides: [
+        ...demoOverrides(fix),
+        currentWorkspaceProvider.overrideWith((ref) async => space),
+      ],
+    );
+    addTearDown(container.dispose);
+    Future<void> look(String id) async {
+      space = fix.workspaces.workspaces.firstWhere((w) => w.id == id);
+      container.invalidate(currentWorkspaceProvider);
+      await container.read(currentWorkspaceProvider.future);
+    }
+
+    await look('ws-1');
+    final mainPeriods = (await container
+            .read(bookPeriodRepositoryProvider)
+            .fetch('ws-1'))
+        .periods
+        .length;
+    final mainBook = container.read(bookProfileRepositoryProvider);
+    expect(
+      await container
+          .read(accountingConnectionRepositoryProvider)
+          .fetchConnections('ws-1'),
+      isNotEmpty,
+      reason: 'the main space is connected',
+    );
+
+    await look('ws-2');
+    final books = container.read(bookPeriodRepositoryProvider);
+    expect((await books.fetch('ws-2')).periods, isEmpty);
+    expect(
+      await container
+          .read(accountingConnectionRepositoryProvider)
+          .fetchConnections('ws-2'),
+      isEmpty,
+    );
+    final day = fix.seededAt;
+    await books.close(
+      'ws-2',
+      DateTime(day.year - 1),
+      DateTime(day.year - 1, 1, 31),
+    );
+    expect((await books.fetch('ws-2')).periods, hasLength(1));
+    expect(
+      identical(container.read(bookProfileRepositoryProvider), mainBook),
+      isFalse,
+      reason: "Leipzig's book profile is its own",
+    );
+
+    await look('ws-1');
+    expect(
+      (await container.read(bookPeriodRepositoryProvider).fetch('ws-1')).periods,
+      hasLength(mainPeriods),
+      reason: 'a period closed in Leipzig is not closed in the main space',
+    );
+  });
 
   group('every analysis of the catalogue has a Demo answer', () {
     for (final (name, id) in _spaces) {
