@@ -1390,7 +1390,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Examiner $count paiements annulés par le prestataire',
-      one: 'Examiner 1 paiement annulé par le prestataire',
+      one: 'Examiner $count paiement annulé par le prestataire',
     );
     return '$_temp0';
   }
