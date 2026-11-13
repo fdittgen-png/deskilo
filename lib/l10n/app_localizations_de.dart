@@ -20053,6 +20053,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberBadgesTooltip => 'Badges';
 
   @override
+  String memberBookingsNone(String date) {
+    return 'Keine Buchung seit $date';
+  }
+
+  @override
   String get memberCoOwnerChip => 'Mitinhaber';
 
   @override
@@ -20192,6 +20197,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberNoteToAllAdmins => 'An alle Admins';
 
   @override
+  String get memberNotesWrite => 'Notiz schreiben';
+
+  @override
   String get memberNotifyAction => 'Benachrichtigung senden';
 
   @override
@@ -20285,9 +20293,43 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberPause => 'Mitgliedschaft pausieren';
 
   @override
+  String get memberPlanEstCredits => 'Bestätigte Gutschriften';
+
+  @override
+  String get memberPlanEstOverage => 'Zusätzliche Halbtage';
+
+  @override
+  String get memberPlanEstSupplements => 'Zuschläge';
+
+  @override
+  String get memberPlanEstimate => 'Voraussichtliche nächste Rechnung';
+
+  @override
+  String memberPlanEstimateBasis(String period, String date) {
+    return 'Für $period, Stand $date: die Abrechnung bisher';
+  }
+
+  @override
+  String get memberPlanEstimateUnavailable =>
+      'Nicht verfügbar: Die Abrechnung konnte nicht gelesen werden';
+
+  @override
+  String get memberPlanJoined => 'Beitrittsdatum';
+
+  @override
+  String get memberPlanJoinedUnknown => 'Nicht erfasst';
+
+  @override
+  String get memberPlanPausedNoDates =>
+      'Pausiert: Für eine Pause werden keine Daten erfasst';
+
+  @override
   String memberPlanShare(String pct) {
     return 'Tarif $pct %';
   }
+
+  @override
+  String get memberPlanShareLabel => 'Anteil';
 
   @override
   String get memberReactivate => 'Mitgliedschaft reaktivieren';
@@ -20385,10 +20427,144 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberVatTreatmentLabel => 'USt-Behandlung';
 
   @override
+  String membersBulkPause(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitglieder',
+      one: '1 Mitglied',
+    );
+    return '$_temp0 pausieren';
+  }
+
+  @override
+  String membersBulkPlan(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitgliedern',
+      one: '1 Mitglied',
+    );
+    return 'Tarif von $_temp0 ändern';
+  }
+
+  @override
+  String membersBulkResume(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitglieder',
+      one: '1 Mitglied',
+    );
+    return '$_temp0 reaktivieren';
+  }
+
+  @override
+  String get membersChangeApply => 'Anwenden';
+
+  @override
+  String membersChangeDone(int changed, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      changed,
+      locale: localeName,
+      other: '$changed geändert',
+      one: '1 geändert',
+      zero: 'Keines geändert',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitgliedern',
+      one: '1 Mitglied',
+    );
+    return '$_temp0 von $_temp1';
+  }
+
+  @override
+  String membersChangeFromToday(String date) {
+    return 'Gilt ab heute, $date. Jedes Mitglied wird einzeln geändert; wer nicht geändert werden kann, wird mit dem Grund aufgeführt und bleibt unverändert.';
+  }
+
+  @override
+  String get membersChipOpen => 'Mit offenem Betrag';
+
+  @override
+  String get membersColEmail => 'E-Mail';
+
+  @override
+  String get membersColLastVisit => 'Letzter Besuch';
+
+  @override
+  String get membersColName => 'Name';
+
+  @override
+  String get membersColPlan => 'Tarif und Anteil';
+
+  @override
+  String get membersColPlanFee => 'Tarifgebühr';
+
+  @override
+  String get membersColStatus => 'Status';
+
+  @override
+  String get membersFeeUnavailable =>
+      'Nicht verfügbar: Kein Gebührenband deckt diesen Anteil ab';
+
+  @override
   String get membersInvite => 'Mitglied einladen';
 
   @override
+  String membersNoVisitSince(String date) {
+    return 'Keiner seit $date';
+  }
+
+  @override
+  String get membersOutcomeApplied => 'Geändert';
+
+  @override
+  String get membersOutcomeExited => 'Hat den Space verlassen: nicht geändert';
+
+  @override
+  String get membersOutcomeFailed =>
+      'Nicht geändert: Der Server hat abgelehnt oder nicht geantwortet';
+
+  @override
+  String get membersOutcomeGone => 'Nicht mehr Mitglied des Space';
+
+  @override
+  String get membersOutcomeKiosk =>
+      'Ein Kiosk, kein zahlendes Mitglied: nicht geändert';
+
+  @override
+  String get membersOutcomePending => 'Wartet auf Annahme: nicht geändert';
+
+  @override
+  String get membersOutcomeRuleRefused =>
+      'Dieser Anteil ist für sie nicht erlaubt: nicht geändert';
+
+  @override
+  String get membersOutcomeUnchanged => 'Bereits so: nichts zu ändern';
+
+  @override
+  String get membersOutcomeWrongStatus => 'Nicht pausiert: nicht reaktiviert';
+
+  @override
   String get membersPlanNone => 'Kein Tarif';
+
+  @override
+  String get membersPlansTitle => 'Abos und Tarife';
+
+  @override
+  String get membersTabBookings => 'Buchungen';
+
+  @override
+  String get membersTabNotes => 'Notizen';
+
+  @override
+  String get membersTabPlan => 'Tarif';
+
+  @override
+  String get membersTabProfile => 'Profil';
 
   @override
   String get membersTitle => 'Mitglieder & Tarife';
@@ -22680,6 +22856,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get planYourSeat => 'Ihr Platz';
 
   @override
+  String get plansColIncluded => 'Was enthalten ist';
+
+  @override
+  String get plansColMembers => 'Mitglieder darauf';
+
+  @override
+  String get plansColPlan => 'Tarif';
+
+  @override
   String get plansEditorEdit => 'Tarif bearbeiten';
 
   @override
@@ -22709,6 +22894,26 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get plansEditorUnlimited => 'unbegrenzte Halbtage';
+
+  @override
+  String get plansEmpty =>
+      'Noch keine Gebührenbänder: Legen Sie sie unter Tarife und Pakete fest.';
+
+  @override
+  String plansIncluded(String overage) {
+    return 'Der Anteil des Mitglieds an den offenen Halbtagen des Monats; ein zusätzlicher Halbtag kostet $overage';
+  }
+
+  @override
+  String get plansNoMembers => 'Kein Mitglied hat diesen Tarif.';
+
+  @override
+  String plansShareRange(String from, String to) {
+    return '$from bis $to';
+  }
+
+  @override
+  String get plansTitle => 'Tarife';
 
   @override
   String get policyAdminCheckoutDesc =>

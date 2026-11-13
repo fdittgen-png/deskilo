@@ -15,8 +15,10 @@
 // an axis that is neither, and `matrix_coverage_test.dart` re-checks
 // that from outside and ratchets the count. The axes are the six #1339
 // scoped and did not deliver.
+import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
 import '../helpers/screens/calendar_hub.dart' as calendar;
@@ -117,6 +119,17 @@ const _all = {
   MatrixAxis.reducedMotion,
 };
 
+/// A records table starts with a mouse's sizes and takes a finger's once it
+/// has seen a touch (#3895 makes the finger's the start). The tap-target
+/// rule is about touch, so the table is touched once, on its footer, where
+/// a tap does nothing.
+Future<void> _touchTheTable(WidgetTester tester) async {
+  final footer = find.byType(RecordsFooter);
+  if (footer.evaluate().isEmpty) return;
+  await tester.tap(footer.first, warnIfMissed: false);
+  await tester.pumpAndSettle();
+}
+
 /// Nothing measured, for one stated reason.
 Map<MatrixAxis, String> _unmeasured(String why) =>
     {
@@ -198,7 +211,13 @@ final List<MatrixRow> kMatrix = [
   // viewport. The redesigned settings distinguish personal and workspace
   // tasks; both scopes and the reports destination need their own row.
   MatrixRow('Members',
-      pump: (t, size) async { await pumpMembers(t, size: size); }, axes: _all),
+      pump: (t, size) async {
+        // A records table reads its saved columns from the preferences.
+        SharedPreferences.setMockInitialValues({});
+        await pumpMembers(t, size: size);
+        await _touchTheTable(t);
+      },
+      axes: _all),
   MatrixRow('Settings',
       pump: (t, size) => pumpSettingsAs(t, isAdmin: true, isOwner: true, size: size), axes: _all),
   MatrixRow('Workspace administration',

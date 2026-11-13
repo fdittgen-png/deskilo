@@ -122,6 +122,7 @@ class SuppliersDesk extends ConsumerWidget {
         RecordColumn(
           id: 'number',
           label: l.suppliersFieldNumber,
+          staysBeside: false,
           flex: 2,
           sortKey: (s) => s.number,
           cell: (_, s) => Text(s.number),
@@ -152,6 +153,7 @@ class SuppliersDesk extends ConsumerWidget {
         RecordColumn(
           id: 'last',
           label: l.suppliersLastPurchase,
+          staysBeside: false,
           flex: 2,
           sortKey: (s) => standings[s.id]?.lastBillOn ?? DateTime(0),
           cell: (_, s) => Text(switch (standings[s.id]?.lastBillOn) {

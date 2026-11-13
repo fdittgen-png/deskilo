@@ -20,6 +20,7 @@ import '../../l10n/context_l10n.dart';
 import '../../storage/prefs_stores.dart';
 import '../../theme/app_spacing.dart';
 import '../adaptive/window_class.dart';
+import 'list_detail_open.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
 
@@ -44,6 +45,7 @@ class RecordsTable<T> extends StatefulWidget {
     this.complete = true,
     this.chips = const [],
     this.amountOf,
+    this.amountColumn,
     this.formatAmount,
     this.rowActions,
     this.bulkActions = const [],
@@ -85,6 +87,12 @@ class RecordsTable<T> extends StatefulWidget {
 
   /// What a row adds to the totals, in its own currency.
   final RecordAmount? Function(T row)? amountOf;
+
+  /// The column whose amounts [amountOf] adds up. When given, the total
+  /// carries that column's name and is not shown while the column is not
+  /// (hidden by the person, or giving way to a record open beside the
+  /// table): a total never stands under another column's figures.
+  final String? amountColumn;
   final String Function(String currency, int minor)? formatAmount;
   final List<RecordAction<T>> Function(T row)? rowActions;
   final List<RecordBulkAction> bulkActions;
@@ -157,11 +165,6 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     _rowsFocus.dispose();
     super.dispose();
   }
-
-  List<RecordColumn<T>> get _columns => [
-    for (final c in widget.columns)
-      if (!c.hideable || !_c.hidden.contains(c.id)) c,
-  ];
 
   void _toggleColumn(String id) {
     _c.toggleColumn(id);
@@ -307,7 +310,12 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   }
 
   Widget _table(BuildContext context, List<T> shown) {
-    final columns = _columns;
+    // #3860 — a record open beside the table: its staying columns.
+    final columns = columnsShown(
+      widget.columns,
+      _c.hidden,
+      beside: ListDetailOpen.of(context),
+    );
     final selected = _c.selected;
     final selectedShown = shown
         .where((r) => selected.contains(widget.keyOf(r)))
@@ -423,7 +431,17 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   );
 
   Widget _footer(List<T> shown) {
-    final amountOf = widget.amountOf;
+    final of = widget.columns
+        .where((c) => c.id == widget.amountColumn)
+        .firstOrNull;
+    final totalHidden =
+        of != null &&
+        !columnsShown(
+          widget.columns,
+          _c.hidden,
+          beside: ListDetailOpen.of(context),
+        ).contains(of);
+    final amountOf = totalHidden ? null : widget.amountOf;
     final selected = _c.selected;
     final selection = [
       for (final r in shown)
@@ -441,6 +459,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               amountOf,
             ),
       scope: scope,
+      totalOf: of?.label,
       format: widget.formatAmount ?? (c, m) => '$m $c',
       dropped: _c.dropped,
     );
