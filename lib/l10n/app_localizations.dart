@@ -19963,6 +19963,72 @@ abstract class AppLocalizations {
   /// **'Choose a place.'**
   String get guestPassProblemNoSeat;
 
+  /// the confirmation's button (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'Revoke'**
+  String get guestPassRevokeAction;
+
+  /// what a revoked pass cancelled (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No booking cancelled} one{{count} booking cancelled} other{{count} bookings cancelled}}'**
+  String guestPassRevokeCancelled(int count);
+
+  /// the confirmation's text (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'Their bookings not started yet are cancelled; the days already started stay. No money moves: correct the invoice on its page, by a credit note or a cancellation.'**
+  String get guestPassRevokeConfirmBody;
+
+  /// the confirmation's title (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Revoke {count} pass?} other{Revoke these {count} passes?}}'**
+  String guestPassRevokeConfirmTitle(int count);
+
+  /// a refusal without words of its own (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'The server did not revoke it.'**
+  String get guestPassRevokeFailed;
+
+  /// the heading of the passes the server refused (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'Not revoked'**
+  String get guestPassRevokeNotDone;
+
+  /// the result's subtitle (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'If a guest is owed money back, correct their invoice on its page.'**
+  String get guestPassRevokeResultSubtitle;
+
+  /// the result's title (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No pass revoked} one{{count} pass revoked} other{{count} passes revoked}}'**
+  String guestPassRevokeResultTitle(int count);
+
+  /// the bulk action on the selected guest passes (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Revoke {count} pass} other{Revoke {count} passes}}'**
+  String guestPassRevokeSelected(int count);
+
+  /// where the refused passes stay (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'These passes stand as they were, with their bookings.'**
+  String get guestPassRevokeStays;
+
+  /// a revoked pass's state in the records table (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked'**
+  String get guestPassRevoked;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -19998,6 +20064,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pass sold: {total}, invoiced to {name}.'**
   String guestPassSold(String total, String name);
+
+  /// the records table's state column (#3829)
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get guestPassState;
 
   /// #3308 guest passes sold at the desk
   ///

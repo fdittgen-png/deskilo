@@ -176,6 +176,8 @@ class GuestPassRecord {
     required this.amountCents,
     required this.startsAt,
     required this.endsAt,
+    this.revokedAt,
+    this.cancelledBookings = 0,
   });
 
   factory GuestPassRecord.fromJson(Map<String, Object?> json) {
@@ -189,6 +191,11 @@ class GuestPassRecord {
       amountCents: r.integer('amount_cents'),
       startsAt: DateTime.parse(r.string('starts_at')),
       endsAt: DateTime.parse(r.string('ends_at')),
+      revokedAt: r.dateTimeOrNull('revoked_at'),
+      cancelledBookings: switch (r.raw('revoked_reservation_ids')) {
+        final List<Object?> ids => ids.length,
+        _ => 0,
+      },
     );
   }
 
@@ -205,6 +212,15 @@ class GuestPassRecord {
   final DateTime startsAt;
   final DateTime endsAt;
 
+  /// #3829 — when the pass was revoked; null while it stands.
+  final DateTime? revokedAt;
+
+  bool get revoked => revokedAt != null;
+
+  /// #3829 — the bookings the revocation cancelled (one per day of a day
+  /// pass; an hourly pass has one).
+  final int cancelledBookings;
+
   /// The last calendar day the pass covers ([dayOf] is the business's
   /// calendar): a window that ends at midnight ends with the day before.
   DateTime lastDay(DateTime Function(DateTime instant) dayOf) =>
@@ -212,8 +228,14 @@ class GuestPassRecord {
 
   /// The units already started at [now]: the days begun of a day pass,
   /// counted on the business's calendar ([dayOf]); an hourly pass is one
-  /// window, all of it once it began.
+  /// window, all of it once it began. A revoked pass (#3829) used what its
+  /// revocation did not cancel.
   int usedAt(DateTime now, DateTime Function(DateTime instant) dayOf) {
+    if (revoked) {
+      return unit == GuestPassUnit.hour
+          ? (cancelledBookings > 0 ? 0 : units)
+          : (units - cancelledBookings).clamp(0, units);
+    }
     if (now.isBefore(startsAt)) return 0;
     if (unit == GuestPassUnit.hour) return units;
     // Whole days between two calendar days, a summer-time day included.
@@ -251,6 +273,17 @@ abstract interface class GuestPassRepository {
     String workspaceId, {
     required GuestPassDraft draft,
     required Map<String, Object?> guest,
+    required String requestId,
+  });
+
+  /// #3829 — revokes the pass [passId]: its bookings not started yet are
+  /// cancelled, those already started stay, and no money moves (the
+  /// invoice is corrected on its page). The same [requestId] never acts
+  /// twice; a pass revoked by another request is refused (DKD01). Returns
+  /// how many bookings were cancelled.
+  Future<int> revoke(
+    String workspaceId, {
+    required String passId,
     required String requestId,
   });
 }

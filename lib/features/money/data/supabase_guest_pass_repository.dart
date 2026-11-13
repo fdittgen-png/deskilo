@@ -2,7 +2,7 @@
 //
 // #3308 — the space's guest passes and their sale, over this server
 // (guest_pass_offers under its select policy; save_guest_pass_offer and
-// sell_guest_pass, 0685).
+// sell_guest_pass, 0685; revoke_guest_pass, 0749).
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -28,7 +28,8 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
     final rows = await _client
         .from('guest_passes')
         .select(
-          'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at',
+          'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at, '
+          'revoked_at, revoked_reservation_ids',
         )
         .eq('workspace_id', workspaceId)
         .order('sold_at', ascending: false);
@@ -96,5 +97,20 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
       'p_days': draft.days,
     });
     return GuestPassSale.fromJson(Map<String, Object?>.from(row! as Map));
+  }
+
+  @override
+  Future<int> revoke(
+    String workspaceId, {
+    required String passId,
+    required String requestId,
+  }) async {
+    final row = await _client.rpc<Object?>('revoke_guest_pass', params: {
+      'p_workspace_id': workspaceId,
+      'p_pass_id': passId,
+      'p_request_id': requestId,
+    });
+    final cancelled = (row! as Map)['cancelled_reservation_ids'];
+    return cancelled is List ? cancelled.length : 0;
   }
 }

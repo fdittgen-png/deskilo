@@ -12371,6 +12371,76 @@ class AppLocalizationsFr extends AppLocalizations {
   String get guestPassProblemNoSeat => 'Choisissez une place.';
 
   @override
+  String get guestPassRevokeAction => 'Révoquer';
+
+  @override
+  String guestPassRevokeCancelled(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count réservations annulées',
+      one: '$count réservation annulée',
+      zero: 'Aucune réservation annulée',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeConfirmBody =>
+      'Leurs réservations pas encore commencées sont annulées ; les jours déjà commencés restent. Aucun argent ne bouge : corrigez la facture sur sa page, par un avoir ou une annulation.';
+
+  @override
+  String guestPassRevokeConfirmTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Révoquer ces $count pass ?',
+      one: 'Révoquer $count pass ?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeFailed => 'Le serveur ne l\'a pas révoqué.';
+
+  @override
+  String get guestPassRevokeNotDone => 'Non révoqués';
+
+  @override
+  String get guestPassRevokeResultSubtitle =>
+      'Si un invité doit être remboursé, corrigez sa facture sur sa page.';
+
+  @override
+  String guestPassRevokeResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pass révoqués',
+      one: '$count pass révoqué',
+      zero: 'Aucun pass révoqué',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String guestPassRevokeSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Révoquer $count pass',
+      one: 'Révoquer $count pass',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeStays =>
+      'Ces pass restent tels quels, avec leurs réservations.';
+
+  @override
+  String get guestPassRevoked => 'Révoqué';
+
+  @override
   String get guestPassSaleFailed =>
       'Le pass n\'a pas pu être vendu. La place est peut-être prise, ou le créneau hors des heures d\'ouverture.';
 
@@ -12391,6 +12461,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String guestPassSold(String total, String name) {
     return 'Pass vendu : $total, facturé à $name.';
   }
+
+  @override
+  String get guestPassState => 'État';
 
   @override
   String get guestPassTo => 'À';
