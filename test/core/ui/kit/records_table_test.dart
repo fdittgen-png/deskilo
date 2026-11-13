@@ -17,6 +17,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../helpers/mouse.dart';
 import '../../../helpers/pump_app.dart';
 
 typedef _Rec = ({
@@ -351,6 +352,7 @@ void main() {
   testWidgets('the row\'s own ⋯ opens the kit\'s RowMenu, the one every '
       'other way opens; the row stays 36 high', (tester) async {
     _Rec? reminded;
+    await connectMouse(tester);
     await _pump(
       tester,
       _Host(rows: const [_a, _b], onAction: (r) => reminded = r),
@@ -406,11 +408,29 @@ void main() {
   });
 
   testWidgets('rows are 36 with a mouse and 48 once touched', (tester) async {
+    await connectMouse(tester);
     await _pump(tester, const _Host(rows: [_a]));
     double height() => tester.getSize(_k('records-row-a')).height;
     expect(height(), lessThan(kMinInteractiveDimension));
     await tester.tap(_k('records-row-a'));
     await tester.pumpAndSettle();
     expect(height(), greaterThanOrEqualTo(kMinInteractiveDimension));
+  });
+
+  testWidgets('#3895: with no mouse connected and no touch yet, a row and '
+      'its tick are already a finger\'s 48', (tester) async {
+    await _pump(tester, const _Host(rows: [_a]));
+    expect(
+      tester.getSize(_k('records-row-a')).height,
+      greaterThanOrEqualTo(kMinInteractiveDimension),
+    );
+    final tick = find.descendant(
+      of: _k('records-row-a'),
+      matching: find.byType(Checkbox),
+    );
+    expect(
+      tester.getSize(tick.first).shortestSide,
+      greaterThanOrEqualTo(kMinInteractiveDimension),
+    );
   });
 }
