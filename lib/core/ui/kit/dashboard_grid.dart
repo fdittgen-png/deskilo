@@ -271,15 +271,28 @@ class DashboardScrollView extends StatelessWidget {
   final List<Widget> children;
   final EdgeInsetsGeometry padding;
 
+  // Tab walks the header, then the bar that stays, then the content. By
+  // position alone the order would change while the content scrolls under
+  // the pinned bar, and a second round of Tab would not start where the
+  // first did.
+  static Widget _part(double order, Widget child) =>
+      FocusTraversalOrder(order: NumericFocusOrder(order), child: child);
+
   @override
-  Widget build(BuildContext context) => CustomScrollView(
-    slivers: [
-      SliverList.list(children: header),
-      if (filterBar case final bar?) PinnedHeaderSliver(child: bar),
-      SliverPadding(
-        padding: padding,
-        sliver: SliverList.list(children: children),
-      ),
-    ],
+  Widget build(BuildContext context) => FocusTraversalGroup(
+    policy: OrderedTraversalPolicy(),
+    child: CustomScrollView(
+      slivers: [
+        SliverList.list(children: [for (final h in header) _part(0, h)]),
+        if (filterBar case final bar?)
+          PinnedHeaderSliver(child: _part(1, bar)),
+        SliverPadding(
+          padding: padding,
+          sliver: SliverList.list(
+            children: [for (final c in children) _part(2, c)],
+          ),
+        ),
+      ],
+    ),
   );
 }

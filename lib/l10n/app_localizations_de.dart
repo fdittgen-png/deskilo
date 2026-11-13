@@ -26007,6 +26007,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportColUnitPrice => 'Einzelpreis';
 
   @override
+  String get reportCoversAnalysis =>
+      'Auslastung, Umsatz, Einkäufe und Kasse über einen Zeitraum, verglichen und gruppiert.';
+
+  @override
+  String get reportCoversOverview =>
+      'Was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.';
+
+  @override
+  String get reportCoversRegister =>
+      'Jede Rechnung in einer Zeile: Datum, Name, Betrag und Status.';
+
+  @override
+  String get reportCoversVat =>
+      'Die Umsatzsteuererklärungen jedes Zeitraums, aus den ausgestellten Rechnungen erstellt.';
+
+  @override
   String get reportDesignEmpty =>
       'Leeres Band — fügen Sie unten ein Element hinzu.';
 
@@ -26293,6 +26309,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
+
+  @override
+  String get reportFieldMeaningCurrency =>
+      'Der ISO-Code der Währung, etwa EUR oder CAD';
 
   @override
   String get reportFieldMeaningDeclarationNote =>
@@ -26805,6 +26825,15 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportVisualAddLine => 'Zeile hinzufügen';
+
+  @override
+  String get reportsColumnCovers => 'Was er umfasst';
+
+  @override
+  String get reportsColumnName => 'Bericht';
+
+  @override
+  String get reportsTools => 'Werkzeuge';
 
   @override
   String get requestAccept => 'Annehmen';

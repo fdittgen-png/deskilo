@@ -20,7 +20,9 @@ import 'package:deskilo/features/search/presentation/search_palette.dart';
 import 'package:deskilo/features/search/providers/search_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -257,5 +259,33 @@ void main() {
     app.router.go('/money/suppliers/nobody');
     await tester.pumpAndSettle();
     expect(_k('search-record-unreadable'), findsOneWidget);
+  });
+
+  testWidgets('#3617 — the search finds every report the person may open, '
+      'from the same declaration as the reports page', (tester) async {
+    final app = await _pump(tester);
+    final member = await app.c.read(myMemberProvider.future);
+    final reports = reportPagesFor(
+      features: app.c.read(enabledFeaturesSyncProvider),
+      permissions: app.c.read(myPermissionsProvider),
+      isAdmin: member?.isAdmin ?? false,
+      actsAsOwner: member?.actsAsOwner ?? false,
+    );
+    expect(reports, isNotEmpty);
+    final l = lookupAppLocalizations(const Locale('en'));
+    for (final r in reports) {
+      await _ctrlK(tester);
+      await _type(tester, r.name(l));
+      expect(
+        find.descendant(
+          of: _k('search-palette'),
+          matching: find.text(r.name(l)),
+        ),
+        findsWidgets,
+        reason: r.id,
+      );
+      await tester.sendKeyEvent(LogicalKeyboardKey.escape);
+      await tester.pumpAndSettle();
+    }
   });
 }
