@@ -32,6 +32,9 @@ import 'package:flutter_test/flutter_test.dart';
 /// the orchestrator; a webhook is still its one `index.ts`.
 const _modules = {
   'create-payment-order': ['index.ts', 'paypal.ts', 'mollie.ts', 'stripe.ts'],
+  // #3905 — mollie-webhook's rules on a fetched payment (its amount among
+  // them) moved to a module of their own.
+  'mollie-webhook': ['index.ts', 'payment_rules.ts'],
 };
 
 String _src(String slug) => [

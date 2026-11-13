@@ -22329,6 +22329,22 @@ class AppLocalizationsFr extends AppLocalizations {
   String get payOnlinePendingTitle => 'Paiement en ligne en attente';
 
   @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Le paiement $reference ($amount via $provider) a été annulé par le prestataire (un remboursement ou une contestation). L\'entreprise corrige votre solde.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Paiement en ligne annulé';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Le paiement en ligne n\'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L\'entreprise doit saisir ses clés de production.';
+
+  @override
   String get paymentAccountNumberLabel => 'Numéro de compte';
 
   @override

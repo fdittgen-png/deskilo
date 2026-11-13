@@ -50,6 +50,7 @@ echo "provider record equals the intent: $recorded"
 # ── the real webhook handler takes the port over ─────────────────────
 kill "$FN_PID" 2>/dev/null; wait "$FN_PID" 2>/dev/null
 SUPABASE_URL="$API_URL" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" \
+DESKILO_ALLOW_TEST_PAYMENTS=true \
   deno run --allow-net --allow-env --allow-read --allow-import \
   supabase/functions/stripe-webhook/index.ts > "$WORK/wh.log" 2>&1 &
 FN_PID=$!
