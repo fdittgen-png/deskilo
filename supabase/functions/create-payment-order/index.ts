@@ -24,7 +24,7 @@ import { refuseDelegated } from "../_shared/delegated.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import { ORDER_ADAPTERS } from "./adapters.ts";
-import { effectiveConfig, missingFields, REQUIRED } from "./config.ts";
+import { effectiveConfig, missingFields, REQUIRED, usesTestCredentials } from "./config.ts";
 import { failureOutcome, idempotencyKey, ProviderRefusal, reuseVerdict } from "./outcome.ts";
 import { parsePaymentOrderRequest } from "./request.ts";
 import { runtimeDeps } from "./types.ts";
@@ -181,6 +181,12 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   if (gap.length > 0) {
     console.log("payment provider not configured", { provider, gap });
     return json({ status: "not_configured", provider, missing: gap });
+  }
+  // #3905 -- a production workspace takes real money only: test credentials
+  // open no order.
+  if (usesTestCredentials(cfg, provider)) {
+    console.log("payment provider holds test credentials", { provider });
+    return json({ error: "test_keys", provider }, 409);
   }
 
   // The order is for the member checked above, whatever the parse read.

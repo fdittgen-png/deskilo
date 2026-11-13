@@ -35504,6 +35504,28 @@ abstract class AppLocalizations {
   /// **'Online payment pending'**
   String get payOnlinePendingTitle;
 
+  /// #3905 reversed line: same placeholders as payOnlinePendingDetail
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) was reversed by the provider (a refund or a dispute). The business corrects your balance.'**
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
+
+  /// #3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment reversed'**
+  String get payOnlineReversedTitle;
+
+  /// #3905 an online payment refused because the provider holds test credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available: the payment provider is set up with test credentials. The business needs to enter its live keys.'**
+  String get payOnlineTestKeys;
+
   /// #711 - globalization
   ///
   /// In en, this message translates to:

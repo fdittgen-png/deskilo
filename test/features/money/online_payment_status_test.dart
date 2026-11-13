@@ -5,7 +5,8 @@
 // reference and the balance stays outstanding; a refused one reads
 // FAILED and never becomes paid; only the settled statement — the
 // webhook's ledger credit — reads paid, and then no attempt card shows.
-// Switching member drops the previous account's attempts.
+// Switching member drops the previous account's attempts. #3905 — one the
+// provider reversed is said too.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
@@ -72,6 +73,17 @@ void main() {
     expect(find.text('Online payment failed'), findsOneWidget);
     expect(find.textContaining('nothing was credited'), findsOneWidget);
     expect(find.text('Outstanding'), findsOneWidget);
+    expect(find.text('Online payment pending'), findsNothing);
+  });
+
+  // #3905 — a payment the provider reversed (a refund or a dispute) is said,
+  // and the business corrects the balance.
+  testWidgets('a payment the provider reversed says so', (tester) async {
+    final money = FakeMoneyRepository()..paymentIntents.add(attempt('0005', 'reversed'));
+    await pumpMoney(tester, money);
+
+    expect(find.text('Online payment reversed'), findsOneWidget);
+    expect(find.textContaining('PAY-2026-0005'), findsOneWidget);
     expect(find.text('Online payment pending'), findsNothing);
   });
 

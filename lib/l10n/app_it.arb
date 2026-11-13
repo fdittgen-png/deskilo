@@ -13280,6 +13280,9 @@
   "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chieda al proprietario dello spazio.",
   "payOnlinePendingDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Citi questo riferimento se non va a buon fine.",
   "payOnlinePendingTitle": "Pagamento online in sospeso",
+  "payOnlineReversedDetail": "Il pagamento {reference} ({amount} tramite {provider}) è stato stornato dal fornitore (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
+  "payOnlineReversedTitle": "Pagamento online stornato",
+  "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali.",
   "paymentAccountNumberLabel": "Numero di conto",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

@@ -22021,6 +22021,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payOnlinePendingTitle => 'Online payment pending';
 
   @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) was reversed by the provider (a refund or a dispute). The business corrects your balance.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Online payment reversed';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Online payment isn\'t available: the payment provider is set up with test credentials. The business needs to enter its live keys.';
+
+  @override
   String get paymentAccountNumberLabel => 'Account number';
 
   @override

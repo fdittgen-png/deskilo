@@ -15,21 +15,15 @@
 // #1639 — the callback's id is a notification, not proof. The fetched
 // payment must be the intent's: its metadata reference, its currency and
 // amount, the method the intent was opened for (a Wero intent settles
-// only a Wero payment), and the key's mode (a test key never settles a
-// live payment). Anything else is refused and nothing is credited.
+// only a Wero payment), and a live payment under a live key (#3905: a
+// test-mode payment never credits a ledger). Anything else is refused and
+// nothing is credited (payment_rules.ts). A paid payment shown charged back
+// or refunded is recorded as reversed instead.
 
 import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
-import { toMinor } from "../_shared/money.ts";
-import { mollieApi, mollieKeyMode } from "../_shared/providers.ts";
-
-type Intent = {
-  workspace_id: string;
-  provider: string;
-  amount_cents: number;
-  currency: string;
-  reference: string;
-};
+import { mollieApi } from "../_shared/providers.ts";
+import { type Intent, mismatch, reversalOf } from "./payment_rules.ts";
 
 // The key of the provider the intent was created with — Wero is offered
 // through Mollie but stores its own credentials.
@@ -49,25 +43,6 @@ async function apiKey(
       .maybeSingle(),
   );
   return stored.api_key ?? Deno.env.get("MOLLIE_API_KEY") ?? "";
-}
-
-/** Why the fetched [payment] is not the intent's, or null when it is. */
-export function mismatch(
-  intent: Intent,
-  payment: Record<string, unknown>,
-  key: string,
-): string | null {
-  const metadata = (payment.metadata ?? {}) as Record<string, unknown>;
-  if (metadata.reference !== intent.reference) return "reference";
-  const amount = (payment.amount ?? {}) as Record<string, unknown>;
-  const currency = String(amount.currency ?? "").toUpperCase();
-  if (currency !== intent.currency.toUpperCase()) return "currency";
-  const cents = toMinor(amount.value as string | undefined, currency);
-  if (cents === null || cents !== intent.amount_cents) return "amount";
-  if (intent.provider === "wero" && payment.method !== "wero") return "method";
-  const mode = mollieKeyMode(key);
-  if (mode === null || payment.mode !== mode) return "mode";
-  return null;
 }
 
 const respond = (body: string, status: number) => new Response(body, { status });
@@ -147,6 +122,21 @@ Deno.serve(async (req: Request): Promise<Response> => {
     if (why) {
       console.error("mollie payment does not match the intent", { paymentId, why });
       return respond(`mismatch_${why}`, 409);
+    }
+    // #3905 -- charged back or refunded: recorded as reversed, never settled.
+    const reversal = reversalOf(payment);
+    if (reversal) {
+      const { error: markError } = await admin.rpc("mark_payment_reversed", {
+        p_provider: settleProvider,
+        p_order_id: paymentId,
+        p_reason: reversal,
+      });
+      if (markError) {
+        console.error("mollie reversal record failed", markError.message);
+        return respond("reversal_record_failed", 500);
+      }
+      console.log("mollie payment reversed", { paymentId, reversal });
+      return respond("ok", 200);
     }
     const { error } = await admin.rpc("settle_online_payment", {
       p_provider: settleProvider,

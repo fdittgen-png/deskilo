@@ -22230,6 +22230,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get payOnlinePendingTitle => 'Online-Zahlung ausstehend';
 
   @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Die Zahlung $reference ($amount über $provider) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Online-Zahlung rückgängig gemacht';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.';
+
+  @override
   String get paymentAccountNumberLabel => 'Kontonummer';
 
   @override
