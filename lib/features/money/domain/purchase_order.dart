@@ -191,6 +191,18 @@ class PurchaseOrderLineDraft {
   final int unitPriceCents;
   final double? vatRatePercent;
 
+  /// The line before VAT, rounded to the minor unit; 0 while its quantity
+  /// or price is not a valid entry (the form says so under the field).
+  int get netCents => quantity > 0 && unitPriceCents >= 0
+      ? (quantity * unitPriceCents).round()
+      : 0;
+
+  /// Its VAT at the stated rate; 0 when none, or an invalid one, is stated.
+  int get vatCents => switch (vatRatePercent) {
+    final r? when r >= 0 && r < 100 => ((netCents * r) / 100).round(),
+    _ => 0,
+  };
+
   Map<String, Object?> toJson() => {
     'service_id': ?serviceId,
     'description': description.trim(),
@@ -231,6 +243,12 @@ class PurchaseOrderDraft {
   final DateTime? expectedOn;
   final String note;
   final String recipientEmail;
+
+  /// What the lines come to before VAT, its VAT and both together: the
+  /// summary beside the form, which the server recomputes on save.
+  int get netCents => lines.fold(0, (s, l) => s + l.netCents);
+  int get vatCents => lines.fold(0, (s, l) => s + l.vatCents);
+  int get totalCents => netCents + vatCents;
 
   /// What the server would refuse, checked first so the form can say it
   /// under the field.
