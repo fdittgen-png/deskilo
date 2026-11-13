@@ -13263,6 +13263,9 @@
   "payOnlineNotConfigured": "Les paiements en ligne ne sont pas encore configurés. Demandez au propriétaire de l'espace.",
   "payOnlinePendingDetail": "Le paiement {reference} ({amount} via {provider}) n'a pas encore été confirmé par le prestataire : le solde affiche donc toujours ce qui est dû. Citez cette référence s'il n'aboutit pas.",
   "payOnlinePendingTitle": "Paiement en ligne en attente",
+  "payOnlineReversedDetail": "Le paiement {reference} ({amount} via {provider}) a été annulé par le prestataire (un remboursement ou une contestation). L'entreprise corrige votre solde.",
+  "payOnlineReversedTitle": "Paiement en ligne annulé",
+  "payOnlineTestKeys": "Le paiement en ligne n'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L'entreprise doit saisir ses clés de production.",
   "paymentAccountNumberLabel": "Numéro de compte",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

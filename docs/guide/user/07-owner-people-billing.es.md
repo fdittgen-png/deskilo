@@ -593,6 +593,8 @@ Quiere que los miembros paguen en línea una factura pendiente, en su propia cue
 
 Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, **Entorno**, **ID de webhook** y **URL de retorno** para PayPal; **Clave secreta**, **Secreto de firma del webhook** y **URL de retorno** para Stripe; **Clave API** y **URL de retorno** para Mollie y Wero. Mantenga separadas las claves de prueba y las reales: todas las claves que introduzca deben pertenecer al mismo modo.
 
+Un espacio de producción cobra solo con claves reales: con claves de prueba, el pago en línea de un miembro se rechaza. Para Stripe, el punto de conexión del webhook también escucha **charge.dispute.created** y **charge.refunded**: un pago que el proveedor revierte (un reembolso o una disputa) queda marcado como revertido, y usted corrige el saldo del miembro.
+
 Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — déjelo en blanco para conservarlo**; escriba un valor nuevo para sustituirlo.
 
 <!-- anchor: user.money.expenses.schedule -->

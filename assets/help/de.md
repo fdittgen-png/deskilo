@@ -4560,6 +4560,8 @@ Sie möchten, dass Mitglieder eine offene Rechnung online auf Ihr eigenes Anbiet
 
 Die Schlüssel stammen aus dem eigenen Dashboard des Anbieters: **Client-ID**, **Secret**, **Umgebung**, **Webhook-ID** und **Rückkehr-URL** für PayPal; **Secret Key**, **Webhook-Signaturgeheimnis** und **Rückkehr-URL** für Stripe; **API-Schlüssel** und **Rückkehr-URL** für Mollie und Wero. Halten Sie Test- und Live-Schlüssel getrennt: Alle Schlüssel, die Sie eingeben, müssen zum selben Modus gehören.
 
+Ein Produktionsbereich nimmt Zahlungen nur mit Live-Schlüsseln an: Mit Testschlüsseln wird die Online-Zahlung eines Mitglieds abgelehnt. Für Stripe hört der Webhook-Endpunkt auch auf **charge.dispute.created** und **charge.refunded**: Eine Zahlung, die der Anbieter rückgängig macht (eine Erstattung oder ein Widerspruch), wird dann als rückgängig gemacht markiert, und Sie berichtigen den Saldo des Mitglieds.
+
 Geheimnisse werden auf dem Server gespeichert und nie wieder angezeigt. Ein gespeichertes zeigt **Gesetzt — leer lassen zum Behalten**; geben Sie einen neuen Wert ein, um es zu ersetzen.
 
 ### Geplante Ausgaben

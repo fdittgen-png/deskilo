@@ -22077,6 +22077,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payOnlinePendingTitle => 'Pago en línea pendiente';
 
   @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount con $provider) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Pago en línea revertido';
+
+  @override
+  String get payOnlineTestKeys =>
+      'El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.';
+
+  @override
   String get paymentAccountNumberLabel => 'Número de cuenta';
 
   @override

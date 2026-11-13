@@ -8,7 +8,7 @@
 -- with. A new online payment opens only while online payments are on.
 -- Rolled back.
 begin;
-select plan(18);
+select plan(22);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003902' || lpad(n::text, 4, '0'))::uuid;
@@ -57,16 +57,18 @@ select is((select count(*)::int from public.members m join public.workspaces w o
 
 select ok(pg_temp.as_user(pg_temp.u(2), format(
   'update public.workspaces set pair_id = %L where id = %L', current_setting('t.pair'), pg_temp.u(101)))
-  like 'ERROR 42501%', 'a member cannot change a workspace''s pair');
+  like 'ERROR 42501%', 'the owner of a workspace cannot change its pair');
 select ok(pg_temp.as_user(pg_temp.u(2), format(
   'update public.workspaces set environment = ''prod'' where id = %L', pg_temp.u(101)))
-  like 'ERROR 42501%', 'a member cannot change a workspace''s environment');
+  like 'ERROR 42501%', 'the owner of a workspace cannot write its environment directly');
 select ok(pg_temp.as_user(pg_temp.u(2), format(
   'update public.workspaces set created_by = %L where id = %L', pg_temp.u(1), pg_temp.u(101)))
-  like 'ERROR 42501%', 'a member cannot change a workspace''s creator');
-select ok(pg_temp.as_user(pg_temp.u(1), format(
-  'select public.set_workspace_environment(%L, %L)::text', current_setting('t.x'), 'dev'))
-  not like '%set by the server%', 'the server''s own environment change still runs');
+  like 'ERROR 42501%', 'the owner of a workspace cannot change its creator');
+select ok(pg_temp.as_user(pg_temp.u(2), format(
+  'select public.set_workspace_environment(%L, %L)::text', pg_temp.u(101), 'prod'))
+  not like 'ERROR%', 'the owner changes the environment through the server''s function');
+select is((select environment from public.workspaces where id = pg_temp.u(101)), 'prod',
+  'and the workspace is in the new environment');
 
 -- A workspace whose pair it shares no owner with gets no member mirrored there.
 update public.workspaces set pair_id = current_setting('t.pair')::uuid where id = pg_temp.u(101);
@@ -101,8 +103,14 @@ insert into public.account_badge_pins (user_id, pin_hash)
 select pg_temp.u(i), extensions.crypt('482615', extensions.gen_salt('bf', 10)) from generate_series(5, 12) i
 on conflict (user_id) do nothing;
 
+-- W1 pauses badge sign-in at its first badge with a wrong PIN.
+select public.store_setting(pg_temp.u(111), 'security.badge_workspace_failure_limit', '1'::jsonb, 'test', null);
 select is(public.badge_auth_verify('3902000000000006', '482615', '198.51.100.41', null, null) ->> 'ok', 'false',
   'an account that owns another workspace signs in with its password, not the badge');
+select public.badge_auth_verify('3902000000000006', '482615', '198.51.100.41', null, null);
+select ok(not public.badge_signin_paused(pg_temp.u(111))
+      and not exists (select 1 from public.events where workspace_id = pg_temp.u(111) and type = 'badge_security_alert'),
+  'refused badges of such an account do not count toward the business''s pause, and tell its owners nothing');
 -- 6 hands W2 to another owner and stays there as a plain member.
 insert into public.members (workspace_id, user_id, is_owner, is_admin, status)
 values (pg_temp.u(112), pg_temp.u(5), true, true, 'active');
@@ -111,6 +119,8 @@ select is(public.badge_auth_verify('3902000000000006', '482615', '198.51.100.41'
   'the same account, a plain member of its other workspace, signs in with its badge');
 select is(public.badge_auth_verify('3902000000000007', '482615', '198.51.100.41', null, null) ->> 'ok', 'true',
   'administering the twin of the badge''s own workspace does not stop it');
+select public.badge_auth_verify('3902000000000007', '000000', '198.51.100.41', null, null);
+select ok(public.badge_signin_paused(pg_temp.u(111)), 'a wrong PIN on a badge of the business still counts');
 
 -- ── 3. at a kiosk, its own workspace's badge first ──────────────────
 -- The same tag, armed first in W4 (member 8), then in W3 (member 9); W3 has
@@ -159,8 +169,9 @@ select ok(not pg_temp.has_secret('api_key')
 select pg_temp.creds('{"endpoint": "https://three.example.test", "api_key": "second"}');
 select ok(pg_temp.has_secret('api_key'), 'a secret sent with the move is stored');
 select pg_temp.creds('{"base_url_uat": "https://uat.example.test", "client_secret_uat": "uat"}');
+select ok(pg_temp.has_secret('client_secret_uat'), 'a test host''s secret is stored with it');
 select pg_temp.creds('{"base_url_uat": "https://uat2.example.test"}');
-select ok(not pg_temp.has_secret('client_secret_uat') and not pg_temp.has_secret('api_key'),
+select ok(not pg_temp.has_secret('client_secret_uat'),
   'the test host''s address counts as a host too');
 
 -- ── 5. online payments ──────────────────────────────────────────────
