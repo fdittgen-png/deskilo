@@ -6873,6 +6873,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'La condición del cliente no se ha guardado.';
 
   @override
+  String customerPageBalance(String amount) {
+    return 'Saldo: $amount';
+  }
+
+  @override
   String customerPageCredit(String amount) {
     return 'Saldo a favor: $amount';
   }

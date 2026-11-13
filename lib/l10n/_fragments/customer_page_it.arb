@@ -2,6 +2,7 @@
   "customerPageOwes": "Deve",
   "customerPageNothingOwed": "Niente da pagare",
   "customerPageCredit": "Credito: {amount}",
+  "customerPageBalance": "Saldo: {amount}",
   "customerPageCreditHint": "Pagamenti che nessuna fattura ha ancora preso.",
   "customerPageInvoices": "Fatture",
   "customerPageStory": "Storia",

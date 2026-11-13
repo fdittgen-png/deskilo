@@ -4,6 +4,7 @@
 // currency (never one sum), their credit only when it was read, their invoices
 // in the words of the home's lines, their story, and the one next action in the
 // bottom bar; no rule of the experience breaks at 320, 390 and 1280 px.
+import 'package:deskilo/features/money/application/customer_statement_of_page.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -46,13 +47,44 @@ Receivable _inv(
   paymentDeclared: declared,
 );
 
+/// The statement the server would answer for [all] on [_today]: the open
+/// documents, and [credit] per currency as not yet applied (#3840).
+CustomerStatement _statementOf(
+  List<Receivable> all,
+  Map<String, int> credit,
+) {
+  final lines = {
+    for (final c in customerStatementOfPage(
+      customerId: 'kalo',
+      asOf: _today,
+      receivables: all,
+      unassigned: const [],
+      ledgerCurrency: 'EUR',
+    ).currencies)
+      c.currency: c.lines,
+  };
+  return CustomerStatement(
+    memberId: 'kalo',
+    asOf: _today,
+    currencies: statementCurrencies(
+      lines: lines,
+      credits: {
+        for (final e in credit.entries)
+          if (e.value > 0)
+            e.key: [StatementCredit(ledgerId: 'c-${e.key}', leftCents: e.value)],
+      },
+    ),
+  );
+}
+
 Finder _key(String k) => find.byKey(ValueKey(k));
 
 Future<void> _pump(
   WidgetTester tester,
   List<Receivable> all, {
   ReminderMode mode = ReminderMode.byHand,
-  Map<String, int>? credit,
+  Map<String, int> credit = const {},
+  bool read = true,
   Size size = const Size(390, 844),
   void Function(String)? onInvoice,
   void Function(InvoiceAction)? onAction,
@@ -66,7 +98,7 @@ Future<void> _pump(
       receivables: all,
       today: _today,
       mode: mode,
-      credit: credit,
+      statement: read ? _statementOf(all, credit) : null,
       payments: payments,
       onAssign: onAssign,
       onOpenInvoice: onInvoice ?? (_) {},
@@ -103,6 +135,27 @@ void main() {
     expect(find.textContaining('€120.00'), findsWidgets);
     expect(find.textContaining('CHF'), findsWidgets);
     expect(find.text('€200.00'), findsNothing);
+  });
+
+  testWidgets('the figures are the statement\'s for the same cutoff: still '
+      'due, not yet applied and balance, per currency (#3840)', (tester) async {
+    final statement = _statementOf(invoices, {'EUR': 5000});
+    final eur = statement.currencies.firstWhere((c) => c.currency == 'EUR');
+    final chf = statement.currencies.firstWhere((c) => c.currency == 'CHF');
+    expect(statement.asOf, _today);
+    expect(eur.stillDueCents, 12000);
+    expect(eur.unappliedCents, 5000);
+    expect(eur.balanceCents, 7000);
+    await _pump(tester, invoices, credit: {'EUR': 5000});
+    String owed(String code) => tester
+        .widget<Text>(_key('customer-page-owed-$code'))
+        .data!;
+    expect(owed('EUR'), '€120.00');
+    expect(owed('CHF'), 'CHF\u00a080.00');
+    expect(chf.stillDueCents, 8000);
+    expect(find.text('Credit: €50.00'), findsOneWidget);
+    expect(find.text('Balance: €70.00'), findsOneWidget);
+    expect(_key('customer-page-balance-CHF'), findsNothing);
   });
 
   testWidgets('only this customer\'s invoices are listed, in the words of the '
@@ -185,8 +238,9 @@ void main() {
   testWidgets('while the credit is not read, no Remind is offered', (
     tester,
   ) async {
-    await _pump(tester, invoices);
+    await _pump(tester, invoices, read: false);
     expect(find.text('Remind'), findsNothing);
+    expect(_key('customer-page-owed-EUR'), findsNothing);
   });
 
   testWidgets('money held unassigned in a currency with an open invoice: the '

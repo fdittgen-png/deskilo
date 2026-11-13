@@ -6834,6 +6834,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'The customer capacity was not saved.';
 
   @override
+  String customerPageBalance(String amount) {
+    return 'Balance: $amount';
+  }
+
+  @override
   String customerPageCredit(String amount) {
     return 'Credit: $amount';
   }

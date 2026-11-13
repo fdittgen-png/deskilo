@@ -4140,6 +4140,7 @@ const List<String> uiKeyPatterns = [
   'create-group-chip-{}',
   'create-host-{}',
   'credit-{}',
+  'customer-page-balance-{}',
   'customer-page-credit-assign-{}',
   'customer-page-invoice-{}',
   'customer-page-owed-{}',

@@ -10871,6 +10871,12 @@ abstract class AppLocalizations {
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
 
+  /// #3840: the customer page, one currency's balance = still due minus not yet applied (the statement's)
+  ///
+  /// In en, this message translates to:
+  /// **'Balance: {amount}'**
+  String customerPageBalance(String amount);
+
   /// #3587 R1-g: the customer page (customerPageCredit)
   ///
   /// In en, this message translates to:

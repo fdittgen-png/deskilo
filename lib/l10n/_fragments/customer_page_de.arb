@@ -2,6 +2,7 @@
   "customerPageOwes": "Schuldet",
   "customerPageNothingOwed": "Nichts offen",
   "customerPageCredit": "Guthaben: {amount}",
+  "customerPageBalance": "Saldo: {amount}",
   "customerPageCreditHint": "Zahlungen, die noch keine Rechnung beglichen haben.",
   "customerPageInvoices": "Rechnungen",
   "customerPageStory": "Verlauf",

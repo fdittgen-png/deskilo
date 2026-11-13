@@ -6911,6 +6911,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'La qualité du client n\'a pas été enregistrée.';
 
   @override
+  String customerPageBalance(String amount) {
+    return 'Solde : $amount';
+  }
+
+  @override
   String customerPageCredit(String amount) {
     return 'Avoir : $amount';
   }
