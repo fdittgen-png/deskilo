@@ -1,0 +1,22 @@
+{
+  "calendarDeskNew": "Nuova prenotazione",
+  "calendarDeskAll": "Tutti",
+  "calendarDeskFilterLevel": "Livello",
+  "calendarDeskFilterKind": "Tipo di posto",
+  "calendarDeskColumnMember": "Membro",
+  "calendarDeskColumnPlace": "Posto",
+  "calendarDeskColumnFrom": "Dal",
+  "calendarDeskColumnTo": "Al",
+  "calendarDeskColumnState": "Stato",
+  "calendarDeskExport": "Esporta",
+  "calendarDeskBooking": "Dettagli della prenotazione",
+  "calendarDeskBookingActions": "Modifica, annulla o mostra sulla pianta",
+  "calendarDeskModeTable": "Tutte le prenotazioni",
+  "calendarDeskZoomIn": "Ingrandisci",
+  "calendarDeskZoomOut": "Riduci",
+  "calendarDeskMore": "{count, plural, one{altra {count}} other{altre {count}}}",
+  "calendarDeskFreeSlot": "{place}: libero dalle {from} alle {to}, nuova prenotazione",
+  "calendarDeskFreeDay": "{place}: libero il {day}, nuova prenotazione",
+  "calendarDeskRepeatedHour": "{time}, per la seconda volta: gli orologi sono tornati indietro",
+  "calendarDeskMissingHour": "Gli orologi vanno avanti: dalle {from} alle {to} non esiste in questo giorno"
+}

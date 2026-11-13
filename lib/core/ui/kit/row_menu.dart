@@ -208,6 +208,10 @@ class RowMenuState extends State<RowMenu> {
   @override
   Widget build(BuildContext context) {
     final row = GestureDetector(
+      // The menu's entries reach assistive technology as the row's custom
+      // actions (below); the gestures themselves are pointer gestures. Left in
+      // the tree they add an unnamed "tap" node over the whole row (#3626).
+      excludeFromSemantics: true,
       onSecondaryTapUp: (details) =>
           unawaited(open(at: details.globalPosition)),
       // parity: ${widget.keyPrefix}-more

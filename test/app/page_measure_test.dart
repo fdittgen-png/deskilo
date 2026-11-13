@@ -19,7 +19,8 @@ import '../helpers/mock_providers.dart';
 
 /// Workspace routes still on today's frame when #3604 landed.
 // #3609 the analysis page and the workspace overview are work pages (79 -> 77).
-const _framedWorkspaceRoutes = 76;
+// #3626 the calendar is a work page (76 -> 75).
+const _framedWorkspaceRoutes = 75;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;
