@@ -20,6 +20,14 @@ import 'package:go_router/go_router.dart';
 import '../../helpers/demo_journey.dart';
 import '../../helpers/page_name.dart';
 
+
+/// #3615 — a document of the queue: a line on a phone, a row of the desk's
+/// records table.
+Finder _approval(String id) => find.byWidgetPredicate(
+  (w) =>
+      w.key == ValueKey('approval-$id') || w.key == ValueKey('records-row-$id'),
+);
+
 void main() {
   testWidgets('Demo bill opens, is decided, and leaves the queue', (
     tester,
@@ -46,7 +54,7 @@ void main() {
     );
     await tester.pumpAndSettle();
     expect(
-      find.byKey(const ValueKey('approval-demo-bill-approval')),
+      _approval('demo-bill-approval'),
       findsOneWidget,
     );
     expect(
@@ -59,14 +67,14 @@ void main() {
     final first = await container.read(
       purchaseApprovalPageProvider((workspaceId: 'ws-1', after: null)).future,
     );
-    await tester.tap(find.byKey(const ValueKey('approval-demo-bill-approval')));
+    await tester.tap(_approval('demo-bill-approval'));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('purchase-line-1')), findsOneWidget);
     expect(find.text('The bill is in the workspace currency.'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('purchase-approve')));
     await tester.pumpAndSettle();
     expect(
-      find.byKey(const ValueKey('approval-demo-bill-approval')),
+      _approval('demo-bill-approval'),
       findsNothing,
     );
     final after = await container.read(
@@ -127,7 +135,7 @@ void main() {
       final before = await container.read(
         purchaseApprovalPageProvider((workspaceId: 'ws-1', after: null)).future,
       );
-      final row = find.byKey(const ValueKey('approval-demo-bill-approval'));
+      final row = _approval('demo-bill-approval');
       await tester.ensureVisible(row);
       await tester.tap(row);
       await tester.pumpAndSettle();
@@ -139,7 +147,7 @@ void main() {
       );
       expect(after.count, before.count - 1);
       expect(
-        find.byKey(const ValueKey('approval-demo-bill-approval')),
+        _approval('demo-bill-approval'),
         findsNothing,
       );
     },

@@ -12,9 +12,11 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
+import 'package:deskilo/features/money/domain/customer_statement.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_live_pages.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
+import 'package:deskilo/features/money/providers/customer_statement_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -62,8 +64,46 @@ final _annaPaid = UnassignedMoney(
   },
 );
 
+/// The server's snapshot (#3840): both customers owe 120.00 on one document;
+/// Anna holds 120.00 not yet applied. It records the cutoffs it was asked.
+class _Statements implements CustomerStatementReader {
+  final asked = <DateTime>[];
+
+  @override
+  Future<CustomerStatement> read(
+    String workspaceId,
+    String memberId,
+    DateTime asOf,
+  ) async {
+    asked.add(asOf);
+    return CustomerStatement(
+      memberId: memberId,
+      asOf: asOf,
+      currencies: statementCurrencies(
+        lines: {
+          'EUR': [
+            StatementLine(
+              invoiceId: memberId == 'Anna' ? 'a' : 'b',
+              number: 'INV-x',
+              totalCents: 12000,
+              stillDueCents: 12000,
+              state: StatementLineState.open,
+              dueOn: kTestNow.subtract(const Duration(days: 10)),
+            ),
+          ],
+        },
+        credits: {
+          if (memberId == 'Anna')
+            'EUR': [const StatementCredit(ledgerId: 'p1', leftCents: 12000)],
+        },
+      ),
+    );
+  }
+}
+
 void main() {
   late Completer<UnassignedMoney> money;
+  late _Statements statements;
 
   Future<void> pump(WidgetTester tester, Widget page) async {
     await pumpApp(
@@ -85,10 +125,13 @@ void main() {
           (ref) => [_late('a', 'Anna'), _late('b', 'Ben')],
         ),
         unassignedMoneyProvider.overrideWith((ref) => money.future),
+        customerStatementReaderProvider.overrideWithValue(statements),
       ],
     );
     await tester.pumpAndSettle();
   }
+
+  setUp(() => statements = _Statements());
 
   bool enabled(WidgetTester tester, String key) =>
       tester.widget<ButtonStyleButton>(_key(key)).onPressed != null;
@@ -152,5 +195,27 @@ void main() {
       ),
     );
     expect(find.text('Remind'), findsOneWidget);
+  });
+
+  testWidgets('the page shows the snapshot\'s figures for today\'s cutoff '
+      '(#3840)', (tester) async {
+    money = Completer<UnassignedMoney>()..complete(_annaPaid);
+    await pump(
+      tester,
+      LiveCustomerPage(
+        customerId: 'Anna',
+        onOpenInvoice: (_) {},
+        onAction: (_) {},
+      ),
+    );
+    final statement = await statements.read('w', 'Anna', kTestNow);
+    final eur = statement.currencies.single;
+    expect(eur.balanceCents, 0);
+    expect(find.text('€120.00'), findsWidgets);
+    expect(find.text('Credit: €120.00'), findsOneWidget);
+    expect(find.text('Balance: €0.00'), findsOneWidget);
+    // The cutoff is the business's calendar day, never an instant.
+    expect(statements.asked.first.hour, 0);
+    expect(statements.asked.first.day, kTestNow.day);
   });
 }

@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3673 — the customer statement as the customer page reads its figures:
-// the customer's receivables (receivables_adapter.dart: what is still due
-// on each document, after its parts) and the payments no invoice has taken
-// (unassigned_money.dart). It is what the server's snapshot
-// (customer_statement_v1) must equal for the same rows: the parity test
-// holds the two together, in both directions. The Demo prints its
-// statements from it. Allocation detail is the server's; this side names
-// the documents and the credits, not the parts.
+// #3673, #3840 — the customer statement from the receivables and the
+// unassigned payments of one customer, for the Demo, which has no server to
+// answer customer_statement_v1. The customer page does not use it: the page
+// reads the server's snapshot (customerStatementProvider), the Demo answers
+// the same snapshot from here. Allocation detail is the server's; this side
+// names the documents and the credits, not the parts.
 import '../domain/customer_statement.dart';
 import 'payment_candidates.dart';
 import 'receivables.dart';

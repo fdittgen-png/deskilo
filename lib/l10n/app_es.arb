@@ -4274,6 +4274,7 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageBalance": "Saldo: {amount}",
   "customerPageCredit": "Saldo a favor: {amount}",
   "customerPageCreditHint": "Pagos que ninguna factura ha tomado todavía.",
   "customerPageInvoices": "Facturas",
@@ -14243,10 +14244,15 @@
   "publicProfilePublishBody": "Cualquier persona en Internet, con sesión o sin ella, podrá leer su nombre, su profesión y su presentación en su enlace. Sus datos de contacto, su presencia y sus lugares siguen siendo privados.",
   "publicProfilePublishTitle": "¿Publicar un perfil público?",
   "publicProfileTitle": "Perfil público",
+  "purchaseApprovalApplied": "Aprobado",
+  "purchaseApprovalChanged": "Cambiado entretanto, no enviado",
   "purchaseApprovalEvidenceUnavailable": "Los justificantes no están disponibles en esta vista. Para revisarlos, contacte con una persona autorizada a acceder a los detalles de la compra.",
   "purchaseApprovalFxSame": "La factura está en la moneda del espacio.",
   "purchaseApprovalFxUnavailable": "El tipo de cambio no está disponible en esta vista.",
+  "purchaseApprovalOutcomesTitle": "Aprobaciones de la selección",
   "purchaseApprovalReceiptsUnavailable": "No se pudieron cargar los comprobantes pendientes.",
+  "purchaseApprovalRefusedItem": "No le corresponde aprobarlo",
+  "purchaseApprovalUnknown": "Aún sin respuesta",
   "purchaseApprovalVisibleReceipts": "Comprobantes pendientes de miembros que puede consultar",
   "purchaseApprovalsEmpty": "Ninguna factura de proveedor espera su aprobación.",
   "@purchaseApprovalsEmpty": {
@@ -14260,6 +14266,7 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseApproveSelected": "{count, plural, one{Aprobar {count} documento} other{Aprobar {count} documentos}}",
   "purchaseBillForOrder": "Pedido de compra {reference}",
   "purchaseBillNoOrder": "Ningún pedido",
   "purchaseBillOrder": "Pedido de compra",
@@ -14686,6 +14693,7 @@
     "description": "#2576 equipment register: what a purchase line is for"
   },
   "purchasesQuantity": "Cantidad",
+  "purchasesReceiptColumn": "Justificante",
   "purchasesReference": "Número de factura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -14830,6 +14838,7 @@
     "description": "#2573 purchases"
   },
   "purchasesUnit": "Unidad (p. ej. caja, resma)",
+  "purchasesWithoutReceipt": "Sin justificante",
   "pushAllowAction": "Permitir",
   "pushCancelledBody": "Un admin eliminó una reserva.",
   "pushCancelledTitle": "Reserva eliminada",
@@ -19246,6 +19255,7 @@
   "@suppliersArchive": {
     "description": "#2567 suppliers"
   },
+  "suppliersArchivedChip": "Archivados",
   "suppliersArchivedTag": "archivado",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
@@ -19368,6 +19378,7 @@
   "@suppliersIntro": {
     "description": "#2567 suppliers"
   },
+  "suppliersLastPurchase": "Última compra",
   "suppliersLoadMore": "Cargar más",
   "@suppliersLoadMore": {
     "description": "#3070 supplier outstanding balance"

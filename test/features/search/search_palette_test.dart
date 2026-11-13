@@ -6,14 +6,13 @@
 // with the window open); another workspace's answers never show; a
 // customer or a supplier named by an address opens as its row opens it, and
 // one the reader cannot read is said in words.
-import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_page.dart';
-import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
+import 'package:deskilo/features/money/presentation/screens/suppliers_desk.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/search/domain/search_result.dart';
@@ -243,7 +242,7 @@ void main() {
     expect(_k('search-record-unreadable'), findsOneWidget);
   });
 
-  testWidgets('a supplier named by the address opens as its row opens it; '
+  testWidgets('#3615 — the search opens a supplier at its own address; '
       'an unknown one is said in words', (tester) async {
     final suppliers = FakeSupplierRepository();
     final id = await suppliers.save('ws-1', const SupplierDraft(name: 'ACME'));
@@ -252,11 +251,12 @@ void main() {
     await _type(tester, 'acme');
     await tester.tap(_k('search-result-supplier:$id'));
     await tester.pumpAndSettle();
-    expect(_at(app.router), '/money/suppliers?supplier=$id');
+    // #3615 — the supplier's own address, its payables beside the table.
+    expect(_at(app.router), '/money/suppliers/$id');
     expect(_k('search-record-unreadable'), findsNothing);
-    expect(find.byType(PurchasesView), findsOneWidget, reason: 'its payables');
+    expect(find.byType(SupplierRecord), findsOneWidget, reason: 'its payables');
 
-    unawaited(app.router.push('/money/suppliers?supplier=nobody'));
+    app.router.go('/money/suppliers/nobody');
     await tester.pumpAndSettle();
     expect(_k('search-record-unreadable'), findsOneWidget);
   });

@@ -10,6 +10,8 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/task_choice.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
@@ -29,8 +31,10 @@ import 'purchase_place_field.dart';
 Future<bool?> showPurchaseBillDialog(
   BuildContext context,
   String workspaceId,
-) => showDialog<bool>(
-  context: context,
+) => showTask<bool>(
+  // #3615 — a standard task: a side panel beside the purchases at the desk.
+  context,
+  size: TaskSize.standard,
   builder: (_) => _BillDialog(workspaceId: workspaceId),
 );
 
@@ -208,10 +212,9 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               const <Supplier>[])
         if (s.isActive) s,
     ];
-    return AlertDialog(
-      title: Text(l10n.purchasesAddBill),
-      content: SingleChildScrollView(
-        child: Column(
+    return TaskChoice(
+      title: l10n.purchasesAddBill,
+      content: Column(
           // #3782 — the form kit's gap between every field.
           spacing: AppSpacing.md,
           mainAxisSize: MainAxisSize.min,
@@ -315,7 +318,6 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               ),
           ],
         ),
-      ),
       actions: [
         TextButton(
           key: const ValueKey('purchase-cancel'),

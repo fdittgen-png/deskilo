@@ -12,11 +12,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/add_purchase_button.dart';
 import 'money_action_set.dart';
 import 'money_view_data.dart';
+import 'purchases_desk.dart';
 
 /// `/money/purchases` — the purchase side, for the person's own expenses
 /// and, for those who manage them, the space's.
@@ -28,6 +32,38 @@ class PurchasesHubScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final data = MoneyViewData.gates(ref);
     final doors = MoneyActionSet.purchaseDoors(context, ref, data);
+    final add = AddPurchaseButton(
+      key: const ValueKey('purchases-hub-own-expense'),
+      currency: data.currency,
+      workspaceId: data.workspace?.id,
+      bills: MoneyActionSet.canCaptureBills(ref, data),
+    );
+    // #3615 — at the desk the page opens on the purchases table, the
+    // document beside it; the other doors stand above it.
+    if (data.workspace case final workspace?
+        when data.purchasesOn &&
+            WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return ShortcutScope(
+        handlers: {AppShortcutId.newRecord: () => add.open(context, ref)},
+        child: Scaffold(
+          appBar: AppBar(
+            title: PageTitle(l10n.hubPurchasesTitle),
+            actions: [
+              add,
+              HelpDot(l10n.hubPurchasesTitle, anchor: HelpAnchor.moneyPurchases),
+            ],
+          ),
+          body: PurchasesDesk(
+            workspaceId: workspace.id,
+            held: MoneyViewData.purchasePermissionNames(ref),
+            doors: [
+              for (final d in doors)
+                if (d.key != const ValueKey('purchases-button')) d,
+            ],
+          ),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.hubPurchasesTitle),
@@ -41,12 +77,7 @@ class PurchasesHubScreen extends ConsumerWidget {
         children: [
           // A member's own outlay, whatever else they may manage.
           // #2577 C2 — one way in: who paid decides the form.
-          AddPurchaseButton(
-            key: const ValueKey('purchases-hub-own-expense'),
-            currency: data.currency,
-            workspaceId: data.workspace?.id,
-            bills: MoneyActionSet.canCaptureBills(ref, data),
-          ),
+          add,
           for (final door in doors) ...[
             const SizedBox(height: AppSpacing.sm),
             door,

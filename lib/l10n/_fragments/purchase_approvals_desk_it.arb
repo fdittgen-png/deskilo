@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "purchaseApproveSelected": "{count, plural, one{Approva {count} documento} other{Approva {count} documenti}}",
+  "purchaseApprovalOutcomesTitle": "Approvazioni della selezione",
+  "purchaseApprovalApplied": "Approvato",
+  "purchaseApprovalRefusedItem": "Non spetta a lei approvarlo",
+  "purchaseApprovalChanged": "Modificato nel frattempo, non inviato",
+  "purchaseApprovalUnknown": "Ancora nessuna risposta"
+}

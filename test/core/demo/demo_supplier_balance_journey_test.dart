@@ -51,15 +51,17 @@ void main() {
       (b) => b.supplierId == 'demo-supplier-cleaning' && b.currency == 'EUR',
     );
     expect(cleaning.remainingCents, 4400);
+    // #3615 — at the desk the supplier is a row whose open column says it,
+    // and the row opens its payables.
+    final row = find.byKey(
+      const ValueKey('records-row-demo-supplier-cleaning'),
+    );
+    expect(row, findsOneWidget);
     expect(
-      find.byKey(const ValueKey('supplier-balance-demo-supplier-cleaning')),
+      find.descendant(of: row, matching: find.textContaining('44')),
       findsOneWidget,
     );
-    final door = find.byKey(
-      const ValueKey('supplier-payables-demo-supplier-cleaning'),
-    );
-    await tester.ensureVisible(door);
-    await tester.tap(door);
+    await tester.tap(row);
     await tester.pumpAndSettle();
     expect(
       find.byKey(const ValueKey('payable-demo-payable-demo-bill-cleaning')),

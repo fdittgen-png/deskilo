@@ -4,6 +4,7 @@
 // asks, and its buttons at the end. It is the words of a dialog without the
 // dialog's own frame, because the task chooses the frame (a sheet on a
 // phone, a dialog at the desk) and keeps the same body across a resize.
+// The buttons stay in sight under a long content (#3615).
 import 'package:flutter/material.dart';
 
 import '../../theme/app_spacing.dart';
@@ -23,26 +24,40 @@ class TaskChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => SafeArea(
-    child: SingleChildScrollView(
-      padding: EdgeInsets.only(
-        left: AppSpacing.lg,
-        right: AppSpacing.lg,
-        top: AppSpacing.lg,
-        bottom: AppSpacing.md + MediaQuery.viewInsetsOf(context).bottom,
-      ),
+    child: Padding(
+      padding: EdgeInsets.only(bottom: MediaQuery.viewInsetsOf(context).bottom),
+      // The buttons stay in sight under a long content, which scrolls.
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text(title, style: Theme.of(context).textTheme.titleLarge),
-          const SizedBox(height: AppSpacing.md),
-          content,
-          const SizedBox(height: AppSpacing.md),
-          Wrap(
-            alignment: WrapAlignment.end,
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: actions,
+          Flexible(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.fromLTRB(
+                AppSpacing.lg,
+                AppSpacing.lg,
+                AppSpacing.lg,
+                0,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text(title, style: Theme.of(context).textTheme.titleLarge),
+                  const SizedBox(height: AppSpacing.md),
+                  content,
+                ],
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(AppSpacing.md),
+            child: Wrap(
+              alignment: WrapAlignment.end,
+              spacing: AppSpacing.sm,
+              runSpacing: AppSpacing.sm,
+              children: actions,
+            ),
           ),
         ],
       ),

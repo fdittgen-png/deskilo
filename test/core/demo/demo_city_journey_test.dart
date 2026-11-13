@@ -189,7 +189,12 @@ void main() {
       expect(router.routeInformationProvider.value.uri.queryParameters, isNot(contains('workspace')));
       router.go('/money/purchases/approvals');
       final prefix = name == 'london' ? 'uk' : 'ny';
-      final approval = find.byKey(ValueKey('approval-$prefix-bill-pending'));
+      // #3615 — a line of the queue, or a row of the desk's records table.
+      final approval = find.byWidgetPredicate(
+        (w) =>
+            w.key == ValueKey('approval-$prefix-bill-pending') ||
+            w.key == ValueKey('records-row-$prefix-bill-pending'),
+      );
       await _waitFor(tester, approval);
       expect(
         approval,

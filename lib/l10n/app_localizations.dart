@@ -10871,6 +10871,12 @@ abstract class AppLocalizations {
   /// **'The customer capacity was not saved.'**
   String get customerCapacitySaveError;
 
+  /// #3840: the customer page, one currency's balance = still due minus not yet applied (the statement's)
+  ///
+  /// In en, this message translates to:
+  /// **'Balance: {amount}'**
+  String customerPageBalance(String amount);
+
   /// #3587 R1-g: the customer page (customerPageCredit)
   ///
   /// In en, this message translates to:
@@ -37868,6 +37874,18 @@ abstract class AppLocalizations {
   /// **'Public profile'**
   String get publicProfileTitle;
 
+  /// #3615 outcome: the document was approved
+  ///
+  /// In en, this message translates to:
+  /// **'Approved'**
+  String get purchaseApprovalApplied;
+
+  /// #3615 outcome: the document changed since it was shown; nothing was sent
+  ///
+  /// In en, this message translates to:
+  /// **'Changed meanwhile, not sent'**
+  String get purchaseApprovalChanged;
+
   /// Shown as the text in purchases sheet (money).
   ///
   /// In en, this message translates to:
@@ -37886,11 +37904,29 @@ abstract class AppLocalizations {
   /// **'The exchange rate is unavailable in this approval view.'**
   String get purchaseApprovalFxUnavailable;
 
+  /// #3615 title of the per-item outcomes of approving a selection
+  ///
+  /// In en, this message translates to:
+  /// **'Approvals of the selection'**
+  String get purchaseApprovalOutcomesTitle;
+
   /// Shown as the text in purchase approvals screen (money).
   ///
   /// In en, this message translates to:
   /// **'Pending receipts could not be loaded.'**
   String get purchaseApprovalReceiptsUnavailable;
+
+  /// #3615 outcome: the person may not approve this document; nothing was sent
+  ///
+  /// In en, this message translates to:
+  /// **'Not yours to approve'**
+  String get purchaseApprovalRefusedItem;
+
+  /// #3615 outcome: the read or the decision did not answer; Retry sends the same request
+  ///
+  /// In en, this message translates to:
+  /// **'No answer yet'**
+  String get purchaseApprovalUnknown;
 
   /// Shown as the text in purchase approvals screen (money).
   ///
@@ -37915,6 +37951,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier bills to approve'**
   String get purchaseApprovalsTitle;
+
+  /// #3615 approve the selected purchase documents, each on its own
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Approve {count} document} other{Approve {count} documents}}'**
+  String purchaseApproveSelected(int count);
 
   /// #3307 goods receipts
   ///
@@ -39000,6 +39042,12 @@ abstract class AppLocalizations {
   /// **'Quantity'**
   String get purchasesQuantity;
 
+  /// #3615 the purchases table: the column marking a document with a receipt filed
+  ///
+  /// In en, this message translates to:
+  /// **'Receipt'**
+  String get purchasesReceiptColumn;
+
   /// #2573 purchases
   ///
   /// In en, this message translates to:
@@ -39209,6 +39257,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unit (e.g. box, ream)'**
   String get purchasesUnit;
+
+  /// #3615 the purchases table: the chip of the documents with no receipt filed
+  ///
+  /// In en, this message translates to:
+  /// **'Without a receipt'**
+  String get purchasesWithoutReceipt;
 
   /// #2559 Settings button: the deliberate action that raises the system notification prompt
   ///
@@ -50279,6 +50333,12 @@ abstract class AppLocalizations {
   /// **'Archive'**
   String get suppliersArchive;
 
+  /// #3615 the suppliers table: the chip of the archived suppliers
+  ///
+  /// In en, this message translates to:
+  /// **'Archived'**
+  String get suppliersArchivedChip;
+
   /// #2567 suppliers
   ///
   /// In en, this message translates to:
@@ -50434,6 +50494,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.'**
   String get suppliersIntro;
+
+  /// #3615 the suppliers table: the column of the last purchase from the supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Last purchase'**
+  String get suppliersLastPurchase;
 
   /// #3070 supplier outstanding balance
   ///

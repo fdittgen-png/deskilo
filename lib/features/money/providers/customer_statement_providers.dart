@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3673 — the customer statement's reader (overridable in tests and the
-// demonstration, which computes it from its own rows by the page's rules).
+// demonstration, which answers it from its own rows).
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/supabase_customer_statement.dart';
