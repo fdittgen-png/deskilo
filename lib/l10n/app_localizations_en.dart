@@ -25263,10 +25263,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'This customer has no e-mail address on file';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'The customer\'s document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.';
-
-  @override
   String get reminderEmailNoSender =>
       'The business\'s e-mail sender is not set up yet';
 

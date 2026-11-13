@@ -3166,7 +3166,6 @@ Map<String, _Getter> _part8() => {
   'refusalStockOff': (l) => l.refusalStockOff,
   'regionalClock24h': (l) => l.regionalClock24h,
   'registerPaymentMember': (l) => l.registerPaymentMember,
-  'reminderEmailNoLanguage': (l) => l.reminderEmailNoLanguage,
   'reminderQueueIntro': (l) => l.reminderQueueIntro,
   'repartitionReverse': (l) => l.repartitionReverse,
   'repartitionRuleNotSaved': (l) => l.repartitionRuleNotSaved,

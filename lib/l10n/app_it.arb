@@ -15407,10 +15407,6 @@
   "@reminderEmailNoAddress": {
     "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
   },
-  "reminderEmailNoLanguage": "La lingua dei documenti del cliente non è nota, quindi il sollecito non è stato inviato via e-mail. Scegli la sua lingua o condividi la lettera.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailNoSender": "Il mittente e-mail dell'azienda non è ancora configurato",
   "@reminderEmailNoSender": {
     "description": "#3673 reminders by e-mail: reminderEmailNoSender"

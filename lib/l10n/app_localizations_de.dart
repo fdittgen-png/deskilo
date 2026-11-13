@@ -25519,10 +25519,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Für diesen Kunden ist keine E-Mail-Adresse hinterlegt';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Mahnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie den Brief.';
-
-  @override
   String get reminderEmailNoSender =>
       'Der E-Mail-Absender des Unternehmens ist noch nicht eingerichtet';
 

@@ -11536,7 +11536,6 @@ const Set<String> uiLabelKeys = {
   'reminderEmailFailed',
   'reminderEmailLevelChanged',
   'reminderEmailNoAddress',
-  'reminderEmailNoLanguage',
   'reminderEmailNoSender',
   'reminderEmailOff',
   'reminderEmailRetry',

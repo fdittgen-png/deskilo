@@ -25479,10 +25479,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questo cliente non ha un indirizzo e-mail registrato';
 
   @override
-  String get reminderEmailNoLanguage =>
-      'La lingua dei documenti del cliente non è nota, quindi il sollecito non è stato inviato via e-mail. Scegli la sua lingua o condividi la lettera.';
-
-  @override
   String get reminderEmailNoSender =>
       'Il mittente e-mail dell\'azienda non è ancora configurato';
 
