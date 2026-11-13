@@ -234,12 +234,12 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.mtdSubmission: taxHmrcMtdAssessment,
   WorkspaceFeature.purchaseOrders: purchasesOrdersAssessment,
   WorkspaceFeature.guestPasses: guestsPassesAssessment,
-  WorkspaceFeature.placeBooking: _legacy,
-  WorkspaceFeature.reminderEmail: _legacy,
-  WorkspaceFeature.invoiceEmail: _legacy,
-  WorkspaceFeature.kioskEnrolment: _legacy,
-  WorkspaceFeature.quickSearch: _legacy,
-  WorkspaceFeature.stockManagement: _legacy,
+  WorkspaceFeature.placeBooking: _ownerBeta,
+  WorkspaceFeature.reminderEmail: _ownerBeta,
+  WorkspaceFeature.invoiceEmail: _ownerBeta,
+  WorkspaceFeature.kioskEnrolment: _ownerBeta,
+  WorkspaceFeature.quickSearch: _ownerBeta,
+  WorkspaceFeature.stockManagement: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a
