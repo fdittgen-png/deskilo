@@ -211,7 +211,7 @@ void main() {
       route: '/services',
     );
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(const ValueKey('services-new')));
     await tester.pumpAndSettle();
     await tester.enterText(find.widgetWithText(TextField, 'Name'), 'Lunch');
     await tester.enterText(find.widgetWithText(TextField, 'Price'), '12.00');
@@ -233,7 +233,7 @@ void main() {
       'at all', (tester) async {
     await pumpVat(tester, route: '/services');
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(const ValueKey('services-new')));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('vat-rate-field')), findsNothing);
@@ -252,7 +252,7 @@ void main() {
       route: '/services',
     );
 
-    await tester.tap(find.byType(FloatingActionButton));
+    await tester.tap(find.byKey(const ValueKey('services-new')));
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('vat-rate-field')), findsNothing);
