@@ -91,7 +91,8 @@ const demoMainSpaceMarkedDone = {'new_members', 'notifications', 'limits'};
 class DemoSetupRepository extends FakeLocalSetupRepository {
   DemoSetupRepository({
     required this.rows,
-    required this.spaces,
+    this.spaces = const {},
+    this.sourcesOf,
     Map<String, Set<String>> acknowledged = const {},
   }) : _acknowledged = {
          for (final e in acknowledged.entries) e.key: {...e.value},
@@ -99,12 +100,16 @@ class DemoSetupRepository extends FakeLocalSetupRepository {
 
   final FakeWorkspaceRepository rows;
   final Map<String, DemoSetupSources> spaces;
+
+  /// #3846 — the sources of a space, made when the guide of that space is
+  /// read, for the spaces [spaces] does not list.
+  final DemoSetupSources? Function(String workspaceId)? sourcesOf;
   final Map<String, Set<String>> _acknowledged;
 
   @override
   Future<SetupStatus> setupStatus(String workspaceId) async {
     final row = rows.workspaces.where((w) => w.id == workspaceId).firstOrNull;
-    final sources = spaces[workspaceId];
+    final sources = spaces[workspaceId] ?? sourcesOf?.call(workspaceId);
     if (row == null || sources == null) return const SetupStatus();
     return demoSetupStatus(
       row.featureFlags,

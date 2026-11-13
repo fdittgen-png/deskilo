@@ -9,15 +9,18 @@ import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
+import 'package:deskilo/core/demo/demo_space_routing.dart' show kDemoInstallationId;
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/me/domain/workspace_export.dart';
+import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/hmrc_submission.dart';
 import 'package:deskilo/features/money/domain/mtd_boxes.dart';
+import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
-import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -290,5 +293,13 @@ void _unknownSpace() {
     expect(() => container.read(purchaseRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
     expect(() => container.read(supplierRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
     expect(() => container.read(costKpiRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    // #3846 — the guest passes and the own-data export fail closed as well.
+    expect(() => container.read(guestPassRepositoryProvider), throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))));
+    await expectLater(
+      container.read(workspaceExportRepositoryProvider).export(
+        const WorkspaceExportSource(installationId: kDemoInstallationId, workspaceId: 'ws-unknown'),
+      ),
+      throwsA(predicate((e) => e.toString().contains('unknown demo space: ws-unknown'))),
+    );
   });
 }

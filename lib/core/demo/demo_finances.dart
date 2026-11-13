@@ -27,15 +27,9 @@ FinanceOverview demoFinanceOverview(DemoFixture fixture) {
   // #3659 — each invoice carries its business's zone, as 0736 answers it.
   final zones = {for (final w in fixture.workspaces.workspaces) w.id: w.timezone};
   final parts = [
-    for (final money in [
-      fixture.money,
-      fixture.secondSpace.money,
-      fixture.london.money,
-      fixture.newYork.money,
-      fixture.zurich.money,
-      fixture.milan.money,
-    ])
-      _overviewOf(money, fixture.actor.memberId, names, zones),
+    for (final key in DemoSpaceKey.values)
+      if (key != DemoSpaceKey.twin)
+        _overviewOf(fixture.space(key).money, fixture.actor.memberId, names, zones),
   ];
   return FinanceOverview(
     invoices: [for (final p in parts) ...p.invoices],
@@ -130,7 +124,7 @@ List<AccountActivity> _accountActivity(
   return [
     for (final s in [
       for (final key in DemoSpaceKey.values)
-        space(key.id, fixture.spaceMoney.at(key)),
+        space(key.id, fixture.space(key).money),
     ])
       ...switch (kind) {
         AccountActivityKind.invoices => _invoiceRows(s, me),
