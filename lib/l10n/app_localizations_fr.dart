@@ -8247,6 +8247,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eInvoiceContactPhoneField => 'Téléphone du contact facturation';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'La plateforme n\'a pas encore confirmé ce document. Interrogez-la de nouveau plus tard.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Adresse électronique';
 
   @override
@@ -11568,7 +11572,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get featureSupplyClassificationDesc =>
-      'Chaque service du catalogue indique s\'il est rattaché aux locaux (par défaut : imposé là où se trouve l\'immeuble, pour tout client) ou s\'il s\'agit d\'une prestation générale, comme le traitement du courrier ou la domiciliation, qu\'une entreprise d\'un autre État de l\'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux.';
+      'Chaque service du catalogue indique s\'il est rattaché aux locaux (par défaut : imposé là où se trouve l\'immeuble, pour tout client) ou s\'il s\'agit d\'une prestation générale, comme le traitement du courrier ou la domiciliation, qu\'une entreprise d\'un autre État de l\'UE autoliquide. Désactivé : le choix disparaît, sauf dans une activité qui ne réserve aucun espace, dont les nouveaux services commencent comme prestations générales.';
 
   @override
   String get featureSupplyClassificationTitle =>
@@ -32537,6 +32541,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Prestation générale (non rattachée aux locaux)';
 
   @override
+  String get supplyClassGeneralMeaning =>
+      'Imposé selon la règle générale : un client professionnel d\'un autre État membre acquitte la TVA.';
+
+  @override
   String get supplyClassHelper =>
       'Un poste, un bureau ou une salle est imposé là où se trouve l\'immeuble, pour tout client. Choisissez « prestation générale » uniquement pour ce qui n\'est pas lié aux locaux, comme le courrier ou la domiciliation : une entreprise d\'un autre pays de l\'UE autoliquide alors la TVA.';
 
@@ -32545,6 +32553,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get supplyClassProperty => 'Rattaché aux locaux';
+
+  @override
+  String get supplyClassPropertyMeaning =>
+      'Imposé là où se trouvent les locaux.';
 
   @override
   String get supportChanged =>

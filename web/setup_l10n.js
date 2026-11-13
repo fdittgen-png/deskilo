@@ -1286,7 +1286,7 @@ window.SETUP_L10N={
    ],
    "supplyClassification": [
     "Place of supply per service",
-    "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises."
+    "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services."
    ],
    "viesVerification": [
     "VAT number check (VIES)",
@@ -3096,7 +3096,7 @@ window.SETUP_L10N={
    ],
    "supplyClassification": [
     "Lieu de prestation par service",
-    "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît et toute nouvelle prestation est rattachée aux locaux."
+    "Chaque service du catalogue indique s'il est rattaché aux locaux (par défaut : imposé là où se trouve l'immeuble, pour tout client) ou s'il s'agit d'une prestation générale, comme le traitement du courrier ou la domiciliation, qu'une entreprise d'un autre État de l'UE autoliquide. Désactivé : le choix disparaît, sauf dans une activité qui ne réserve aucun espace, dont les nouveaux services commencent comme prestations générales."
    ],
    "viesVerification": [
     "Vérification du numéro de TVA (VIES)",
@@ -4906,7 +4906,7 @@ window.SETUP_L10N={
    ],
    "supplyClassification": [
     "Leistungsort je Leistung",
-    "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, und jede neue Leistung gilt als mit den Räumlichkeiten verbunden."
+    "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen."
    ],
    "viesVerification": [
     "USt-IdNr.-Prüfung (VIES)",
@@ -6716,7 +6716,7 @@ window.SETUP_L10N={
    ],
    "supplyClassification": [
     "Lugar de prestación por servicio",
-    "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece y todo cargo nuevo queda vinculado a los locales."
+    "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece, salvo en un negocio que no reserva espacios, cuyos servicios nuevos empiezan como servicios generales."
    ],
    "viesVerification": [
     "Comprobación del número de IVA (VIES)",
@@ -8526,7 +8526,7 @@ window.SETUP_L10N={
    ],
    "supplyClassification": [
     "Luogo della prestazione per servizio",
-    "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali."
+    "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare, tranne in un'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici."
    ],
    "viesVerification": [
     "Verifica della partita IVA (VIES)",

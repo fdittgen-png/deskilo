@@ -145,6 +145,7 @@ class InvoiceTransmission {
     this.byName = '',
     this.environment = 'prod',
     this.destination = 'government',
+    this.documentVerdict = '',
   });
 
   final String invoiceId;
@@ -162,6 +163,17 @@ class InvoiceTransmission {
   /// the KSeF number, the ANAF state). Empty until it is asked.
   final Map<String, Object?> receipt;
   final DateTime? receiptAt;
+
+  /// #3881 — the platform's own verdict on the document: 'accepted',
+  /// 'rejected', or '' while it has given none (`verdict.status`).
+  final String documentVerdict;
+
+  /// #3881 — an upload the platform took whose document it has not confirmed
+  /// yet: a national channel that waits for the confirmation stays closed.
+  bool get awaitsDocumentVerdict =>
+      status == EInvoiceSubmissionStatus.accepted &&
+      provider != 'generic' &&
+      documentVerdict.isEmpty;
 
   /// The one fact a reader wants from [receipt]: the number the network
   /// gave the document, or the state it reports — '' when it said nothing.
@@ -199,6 +211,7 @@ class InvoiceTransmission {
         byName: byName,
         environment: environment,
         destination: destination,
+        documentVerdict: documentVerdict,
       );
 
   InvoiceTransmission copyWithReceipt(Map<String, Object?> value) =>
@@ -217,6 +230,7 @@ class InvoiceTransmission {
         byName: byName,
         environment: environment,
         destination: destination,
+        documentVerdict: documentVerdict,
       );
   final String provider;
   final String externalId;
@@ -260,6 +274,7 @@ class InvoiceTransmission {
         format: JsonReader.of(row).stringOr('format'),
         receipt: JsonReader.of(row).objectOrEmpty('receipt'),
         receiptAt: JsonReader.of(row).dateTimeOrNull('receipt_at')?.toLocal(),
+        documentVerdict: _documentVerdictOf(row['verdict']),
       );
 }
 
@@ -281,4 +296,13 @@ class EInvoiceProviderStatus {
   final String provider;
   final Map<String, String> fields;
   final List<String> secretsSet;
+}
+
+/// #3881 — the platform's verdict as the row stores it: a person's record of a
+/// rejection (`document`) or the platform's own answer (`status`).
+String _documentVerdictOf(Object? verdict) {
+  if (verdict is! Map) return '';
+  if (verdict['document'] == 'rejected') return 'rejected';
+  final status = verdict['status'];
+  return status == 'accepted' || status == 'rejected' ? status as String : '';
 }

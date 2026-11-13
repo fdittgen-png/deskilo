@@ -6,8 +6,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/new_service_supply.dart';
 
 /// Which VAT rate a catalogue entry is taxed at (0072).
 ///
@@ -84,13 +86,21 @@ class VatRateField extends ConsumerWidget {
 String _vatRateOption(AppFormat format, VatRate rate) =>
     '${rate.label} (${format.ratePercent(rate.percent)})';
 
+/// #3864 — the class a new service starts from in this workspace
+/// ([newServiceSupplyClass]): read once, when the form opens.
+SupplyClass newServiceSupplyClassIn(WidgetRef ref) => newServiceSupplyClass(
+  booksPlaces: ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.placeBooking),
+);
+
 /// #2354 — where a catalogue service is supplied for VAT.
 ///
-/// Renders NOTHING unless the workspace charges VAT and
-/// `supplyClassification` is on: a seller that charges no VAT has no
-/// place of supply to choose, and with the feature off every new charge
-/// is connected with the premises (the server's default). The server
-/// freezes the choice on each charge; this field only edits the service.
+/// Renders NOTHING unless the workspace charges VAT and either
+/// `supplyClassification` is on or the business books no places
+/// ([asksSupplyClass], #3864): a seller that charges no VAT has no place of
+/// supply to choose. Each choice says how it is taxed. The server freezes
+/// the choice on each charge; this field only edits the service.
 class SupplyClassField extends ConsumerWidget {
   const SupplyClassField({
     super.key,
@@ -106,10 +116,12 @@ class SupplyClassField extends ConsumerWidget {
     final regime = vatRegimeFromWire(
       ref.watch(currentWorkspaceProvider).value?.vatRegime,
     );
-    if (regime != VatRegime.vatRegistered ||
-        !ref
-            .watch(enabledFeaturesSyncProvider)
-            .contains(WorkspaceFeature.supplyClassification)) {
+    final enabled = ref.watch(enabledFeaturesSyncProvider);
+    if (!asksSupplyClass(
+      vatRegistered: regime == VatRegime.vatRegistered,
+      classifies: enabled.contains(WorkspaceFeature.supplyClassification),
+      booksPlaces: enabled.contains(WorkspaceFeature.placeBooking),
+    )) {
       return const SizedBox.shrink();
     }
     final l10n =
@@ -118,6 +130,10 @@ class SupplyClassField extends ConsumerWidget {
       key: const ValueKey('supply-class-field'),
       initialValue: value,
       isExpanded: true,
+      selectedItemBuilder: (context) => [
+        for (final supply in SupplyClass.values)
+          Text(_label(l10n, supply), overflow: TextOverflow.ellipsis),
+      ],
       decoration: InputDecoration(
         labelText: l10n.supplyClassLabel,
         helperText: l10n.supplyClassHelper,
@@ -127,13 +143,30 @@ class SupplyClassField extends ConsumerWidget {
         for (final supply in SupplyClass.values)
           DropdownMenuItem(
             value: supply,
-            child: Text(switch (supply) {
-              SupplyClass.property => l10n.supplyClassProperty,
-              SupplyClass.general => l10n.supplyClassGeneral,
-            }, overflow: TextOverflow.ellipsis),
+            child: Column(
+              key: ValueKey('supply-class-${supply.wire}'),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(_label(l10n, supply)),
+                Text(
+                  switch (supply) {
+                    SupplyClass.property => l10n.supplyClassPropertyMeaning,
+                    SupplyClass.general => l10n.supplyClassGeneralMeaning,
+                  },
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
+              ],
+            ),
           ),
       ],
-      onChanged: (picked) => onChanged(picked ?? SupplyClass.property),
+      onChanged: (picked) => onChanged(picked ?? value),
     );
   }
+
+  static String _label(AppLocalizations l10n, SupplyClass supply) =>
+      switch (supply) {
+        SupplyClass.property => l10n.supplyClassProperty,
+        SupplyClass.general => l10n.supplyClassGeneral,
+      };
 }

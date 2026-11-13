@@ -503,6 +503,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     'resolved_reason',
     'resolved_evidence',
     'resolved_at',
+    // #3883 — a sandbox test document is no invoice's: the export writes
+    // each invoice's sending time and leaves the tests out.
+    'kind',
   },
   'payment_intents': {
     // #2380 — the provider's settlement facts of a payment (its fee, net,

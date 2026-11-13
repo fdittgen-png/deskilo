@@ -14,6 +14,8 @@ import type {
   Phase,
   PrepareInput,
   PrepareResult,
+  PrepareTestInput,
+  PrepareTestResult,
   TransmissionRow,
   TransmissionStore,
 } from "./store.ts";
@@ -45,6 +47,8 @@ class FakeStore implements TransmissionStore {
     status: "active",
   };
   permission = false;
+  /** #3883 -- the permissions granted one by one (beside [permission]). */
+  grants = new Set<string>();
   voidedAt: string | null = null;
   wsEnv = "prod";
   provider = "generic";
@@ -64,8 +68,8 @@ class FakeStore implements TransmissionStore {
   member() {
     return Promise.resolve(this.member_);
   }
-  hasPermission() {
-    return Promise.resolve(this.permission);
+  hasPermission(_member: string, name: string) {
+    return Promise.resolve(this.permission || this.grants.has(name));
   }
   credentials() {
     return Promise.resolve({ provider: this.provider, config: this.config });
@@ -145,6 +149,56 @@ class FakeStore implements TransmissionStore {
         mimeType: i.mimeType,
         receiverScheme: i.receiverScheme,
         receiverId: i.receiverId,
+      },
+      declared: i.declared,
+    });
+    return Promise.resolve({ outcome: "prepared", id, phase: "prepared" });
+  }
+  /** 0762: one test at a time; a rejected or failed one is sent again. */
+  prepareTest(i: PrepareTestInput): Promise<PrepareTestResult> {
+    const pending = [...this.rows.values()].find((r) =>
+      r.kind === "test" &&
+      (["prepared", "sent", "uncertain"].includes(r.phase) ||
+        (r.phase === "accepted" &&
+          !["accepted", "rejected"].includes(
+            String((r.verdict as { status?: string }).status ?? ""),
+          )))
+    );
+    if (pending) {
+      return Promise.resolve({
+        outcome: "test_pending",
+        id: pending.id,
+        phase: pending.phase,
+      });
+    }
+    const id = `t${++this.n}`;
+    this.rows.set(id, {
+      id,
+      key: `${i.workspaceId}|test|${id}`,
+      binding: `${i.hash}|${i.format}`,
+      kind: "test",
+      workspace_id: i.workspaceId,
+      provider: i.provider,
+      phase: "prepared",
+      external_id: "",
+      detail: "",
+      environment: "uat",
+      destination: "government",
+      format: i.format,
+      receipt: {},
+      owner: "",
+      generation: 0,
+      deadline: 0,
+      verdict: {},
+      queryError: "",
+      resolvedBy: "",
+      artifact: {
+        bytes: i.bytes,
+        sha256: i.hash,
+        fileName: i.fileName,
+        mimeType: i.mimeType,
+        receiverScheme: "",
+        receiverId: "",
       },
       declared: i.declared,
     });
@@ -798,6 +852,90 @@ Deno.test("O10: a later document rejection is a verdict beside the upload; the p
   assertEquals(p.posts.length, 0); // asking never uploads
 });
 
+// #3881 -- an SdI status gives a verdict only on the SdI's outcome
+// notification: NS refuses, RC delivers, MC and AT count the invoice as
+// issued. Before the SdI has answered, the status writes no verdict.
+async function sdiStatus(notifications: unknown[]) {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://sdi.test",
+    login_url: "https://login.test/login",
+    username: "u@x.it",
+    password: "p",
+  };
+  s.rows.set("t81", {
+    id: "t81",
+    key: "k",
+    binding: "b",
+    workspace_id: WS,
+    provider: "it_sdi",
+    phase: "accepted",
+    external_id: "u-1",
+    detail: "",
+    environment: "prod",
+    destination: "government",
+    format: "fatturaPa",
+    receipt: { uuid: "u-1" },
+    owner: "o",
+    generation: 1,
+    deadline: 0,
+    verdict: {},
+    queryError: "",
+    resolvedBy: "",
+    artifact: {
+      bytes: new Uint8Array() as Uint8Array<ArrayBuffer>,
+      sha256: "",
+      fileName: "",
+      mimeType: "",
+      receiverScheme: "",
+      receiverId: "",
+    },
+  });
+  const answers: Record<string, unknown> = {
+    "https://login.test/login": { token: "jwt" },
+    "https://sdi.test/invoices/u-1": { marking: "sent" },
+    "https://sdi.test/invoices/u-1/notifications": notifications,
+  };
+  const fetchImpl = ((input: string | URL | Request) => {
+    const url = String(input instanceof Request ? input.url : input);
+    return Promise.resolve(
+      new Response(JSON.stringify(answers[url] ?? {}), { status: 200 }),
+    );
+  }) as typeof fetch;
+  const r = await read(
+    await call(s, fetchImpl, {
+      workspace_id: WS,
+      action: "status",
+      transmission_id: "t81",
+    }),
+  );
+  return { r, row: s.rows.get("t81")! };
+}
+
+Deno.test("#3881 an SdI status before the SdI has answered writes no verdict", async () => {
+  const { r, row } = await sdiStatus([]);
+  assertEquals(r.body.document_status, "unknown");
+  assertEquals(row.verdict, {});
+  assertEquals(row.queryError, "");
+  assertEquals(row.phase, "accepted");
+  assertEquals(row.receipt, { uuid: "u-1" });
+});
+
+Deno.test("#3881 an SdI notification that is no outcome writes no verdict", async () => {
+  const { r, row } = await sdiStatus([{ type: "MT", message: "metadata" }]);
+  assertEquals(r.body.document_status, "unknown");
+  assertEquals(row.verdict, {});
+});
+
+Deno.test("#3881 a delivery receipt is the SdI's acceptance, whatever follows it", async () => {
+  for (const notes of [[{ type: "RC" }], [{ type: "RC" }, { type: "DT" }], [{ type: "MC" }], [{ type: "AT" }]]) {
+    const { r, row } = await sdiStatus(notes);
+    assertEquals(r.body.document_status, "accepted", JSON.stringify(notes));
+    assertEquals((row.verdict as { status?: string }).status, "accepted");
+  }
+});
+
 Deno.test("O3/O4: a send on a record whose dispatch window passed answers uncertain and uploads nothing", async () => {
   const s = new FakeStore();
   const p = provider(ok);
@@ -1027,7 +1165,9 @@ Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, 
   };
   assertEquals(doc.rawDocumentData.parseStrategy, "ubl");
 
-  // the message-level response is read back and stored beside the upload
+  // the message-level response is read back and stored beside the upload;
+  // until its outcome fields are named from a real answer it is no verdict
+  // (#3881)
   const row = [...s.rows.values()][0];
   const status = await read(
     await call(s, fetchImpl, {
@@ -1036,11 +1176,12 @@ Deno.test("Peppol mock: one BIS document to the participant id, the MLR stored, 
       transmission_id: row.id,
     }),
   );
-  assertEquals(status.body.document_status, "accepted");
+  assertEquals(status.body.document_status, "unknown");
   assertEquals(asked, [
     "https://ap.test/api/v2/document_submissions/G-7/evidence/sending",
   ]);
-  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  assertEquals(row.verdict, {});
+  assertEquals(row.queryError, "");
   assertEquals(row.phase, "accepted");
 
   // a second delivery of the same invoice sends nothing
@@ -1135,16 +1276,16 @@ const expectedUatGet = [
   { url: UAT_EVIDENCE_URL, method: "GET", auth: "Bearer uat-key" },
 ];
 
-Deno.test("R1 retained-ID recovery: an uncertain row with its id settles accepted on a successful status, keeping row, binding and artifact", async () => {
+Deno.test("R1 retained-ID recovery: an uncertain row with its id settles accepted on a successful status, keeping row, binding and artifact; the document has no verdict yet (#3881)", async () => {
   const { s, id } = await retainedUat();
   const before = structuredClone(s.rows.get(id)!);
   const net = recorder(acknowledged);
   const r = await read(await call(s, net.fetchImpl, statusBody(id)));
   const row = s.rows.get(id)!;
   assertEquals(r.body.phase, "accepted");
-  assertEquals(r.body.document_status, "accepted");
+  assertEquals(r.body.document_status, "unknown");
   assertEquals(row.phase, "accepted");
-  assertEquals((row.verdict as { status?: string }).status, "accepted");
+  assertEquals(row.verdict, {});
   // the correlated evidence REPLACES the partial prior receipt
   assertEquals(row.receipt, {
     guid: "G-UAT",
@@ -1322,4 +1463,148 @@ Deno.test("R7 retained-ID recovery: after the lookup settles the row, sending th
   assertEquals(sendNet.seen.length, 0);
   assertEquals(s.rows.size, 1);
   assertEquals(s.rows.get(id), settled);
+});
+
+// #3883 -- a sandbox test document of the national channel: sent by whoever
+// manages the integrations, to the sandbox only, one at a time.
+function sdiTestStore() {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://live.sdi.test",
+    login_url: "https://live.login.test/login",
+    username: "live",
+    password: "live",
+    base_url_uat: "https://api-sandbox.acubeapi.com",
+    login_url_uat: "https://common-sandbox.api.acubeapi.com/login",
+    username_uat: "u",
+    password_uat: "p",
+  };
+  s.member_ = { id: "m2", is_admin: false, is_owner: false, status: "active" };
+  s.grants.add("manageIntegrations");
+  return s;
+}
+const sdiAnswer = () =>
+  new Response(JSON.stringify({ token: "jwt", uuid: "u-test" }), {
+    status: 200,
+  });
+const testBody = {
+  workspace_id: WS,
+  action: "test",
+  content_base64: btoa("<FatturaElettronica>TEST</FatturaElettronica>"),
+  file_name: "TEST-1.xml",
+  mime_type: "application/xml",
+  format: "fatturaPa",
+};
+
+Deno.test("#3883 whoever manages the integrations sends a test document to the sandbox, with no invoice", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 200);
+  const row = [...s.rows.values()][0];
+  assertEquals([row.kind, row.environment, row.destination], ["test", "uat", "government"]);
+  assertEquals(row.phase, "accepted");
+  assertEquals(p.posts.filter((u) => u.endsWith("/invoices")), [
+    "https://api-sandbox.acubeapi.com/invoices",
+  ]);
+  assertEquals(p.posts.some((u) => u.includes("live.")), false);
+});
+
+Deno.test("#3883 the right to issue invoices does not send a test document", async () => {
+  const s = sdiTestStore();
+  s.grants.clear();
+  s.grants.add("issueInvoices");
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 403);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a missing sandbox field refuses the test; the live one is never used instead", async () => {
+  const s = sdiTestStore();
+  delete s.config.password_uat;
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_credentials_missing");
+  assertEquals(r.body.missing, ["password"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a connector whose verdict opens no gate takes no test document", async () => {
+  const s = sdiTestStore();
+  s.provider = "peppol";
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "test_unavailable");
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a second test waits for the first one's verdict, with a sentence", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const second = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(second.status, 409);
+  assertEquals(second.body.error, "test_pending");
+  assertEquals(typeof second.body.detail, "string");
+  assertEquals(p.posts.filter((u) => u.endsWith("/invoices")).length, 1);
+});
+
+Deno.test("#3883 a rejected test is sent again", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const first = [...s.rows.values()][0];
+  first.verdict = { status: "rejected" };
+  const again = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(again.status, 200);
+  assertEquals(s.rows.size, 2);
+});
+
+Deno.test("#3883 whoever manages the integrations asks about a test, not about an invoice's transmission", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  test.external_id = "u-test";
+  const asked = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: test.id }),
+  );
+  assertEquals(asked.status, 200);
+  s.rows.set("inv-t", { ...test, id: "inv-t", kind: "invoice" });
+  const refused = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: "inv-t" }),
+  );
+  assertEquals(refused.status, 403);
+});
+
+Deno.test("#3883 a test goes only to the connector's documented sandbox", async () => {
+  const s = sdiTestStore();
+  s.config.base_url_uat = "https://elsewhere.test";
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_not_documented");
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a test's verdict is read from the documented sandbox only", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  test.external_id = "u-test";
+  s.config.base_url_uat = "https://elsewhere.test";
+  const asked = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: test.id }),
+  );
+  assertEquals(asked.status, 409);
+  assertEquals(asked.body.error, "sandbox_not_documented");
+  assertEquals(test.verdict, {});
 });

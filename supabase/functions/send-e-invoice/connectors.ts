@@ -52,6 +52,8 @@ export function buildRegistry(list: readonly Connector[]) {
     connectorOf(provider).requiredFields;
   const acceptedFormats = (provider: string): string[] =>
     connectorOf(provider).acceptedFormats;
+  const takesTestDocument = (provider: string): boolean =>
+    list.some((c) => c.id === provider && c.testDocument === true);
 
   /** Sends [doc] through [provider]. A document in a syntax the provider
    * does not take is refused before anything leaves — a network that
@@ -134,7 +136,14 @@ export function buildRegistry(list: readonly Connector[]) {
     }
   }
 
-  return { providers, requiredFields, acceptedFormats, submit, status };
+  return {
+    providers,
+    requiredFields,
+    acceptedFormats,
+    takesTestDocument,
+    submit,
+    status,
+  };
 }
 
 const installed = buildRegistry(CONNECTORS);
@@ -156,6 +165,10 @@ export const requiredFields = installed.requiredFields;
 /** The syntaxes a provider accepts, by the app's format names. Empty =
  * anything (the generic upload decides for itself). */
 export const acceptedFormats = installed.acceptedFormats;
+
+/** #3883 -- whether a sandbox test document through [provider] opens its
+ * national channel's issuing gate. */
+export const takesTestDocument = installed.takesTestDocument;
 
 export const submit = installed.submit;
 export const status = installed.status;

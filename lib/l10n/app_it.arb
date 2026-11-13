@@ -5145,6 +5145,7 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "La piattaforma non ha ancora confermato questo documento. Lo chieda di nuovo più tardi.",
   "eInvoiceEndpointIdField": "Indirizzo elettronico",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"
@@ -7291,7 +7292,7 @@
   "featureStockManagementTitle": "Gestione delle scorte",
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
-  "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare e ogni nuovo addebito è connesso ai locali.",
+  "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare, tranne in un'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici.",
   "featureSupplyClassificationTitle": "Luogo della prestazione per servizio",
   "featureSupplyExpensesDesc": "Una spesa può essere una scorta per lo spazio (capsule di caffè, sacchetti per aspirapolvere…): convalidata, rifornisce o crea un servizio consumabile con prezzo unitario, e i consumi scalano la scorta.",
   "featureSupplyExpensesTitle": "Scorte dalle spese",
@@ -19705,9 +19706,11 @@
     "description": "#3070 supplier outstanding balance"
   },
   "supplyClassGeneral": "Servizio generico (non connesso ai locali)",
+  "supplyClassGeneralMeaning": "Tassato secondo la regola generale: un cliente impresa di un altro Stato membro assolve l'IVA.",
   "supplyClassHelper": "Una postazione, un ufficio o una sala è tassato dove si trova l'immobile, per qualsiasi cliente. Scelga «servizio generico» solo per ciò che non è legato ai locali, come la gestione della posta o un ufficio virtuale: un'impresa di un altro Paese UE assolve allora l'IVA con l'inversione contabile.",
   "supplyClassLabel": "Luogo della prestazione",
   "supplyClassProperty": "Connesso ai locali",
+  "supplyClassPropertyMeaning": "Tassato dove si trovano i locali.",
   "supportChanged": "Il contesto è cambiato. Prepari una nuova anteprima.",
   "supportDay": "Ultime 24 ore",
   "supportDemo": "Demo: contesto locale simulato",
