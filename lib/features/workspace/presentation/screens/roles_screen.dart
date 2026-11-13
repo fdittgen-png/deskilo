@@ -256,10 +256,12 @@ class RolesScreen extends ConsumerWidget {
             ),
           for (final role in PermissionRole.values) ...[
             _roleCard(context, ref, role,
-                workspace: workspace,
-                canEdit: canEdit,
-                myRole: myRole,
-                administrator: administrator,
+                granted: permissionsForRole(role, workspace),
+                state: (
+                  locked: role == PermissionRole.owner || !canEdit,
+                  mine: role == myRole,
+                ),
+                label: _roleLabel(l10n, role, administrator: administrator),
                 renameable: renameable),
             const SizedBox(height: AppSpacing.sm),
           ],
@@ -273,16 +275,13 @@ class RolesScreen extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     PermissionRole role, {
-    required Workspace? workspace,
-    required bool canEdit,
-    required PermissionRole? myRole,
-    required String administrator,
+    required Set<WorkspacePermission> granted,
+    required ({bool locked, bool mine}) state,
+    required String label,
     required WorkspaceRole? renameable,
   }) {
     final l10n = context.l10n;
-    final granted = permissionsForRole(role, workspace);
-    final locked = role == PermissionRole.owner || !canEdit;
-    final mine = role == myRole;
+    final (:locked, :mine) = state;
     return Card(
       key: ValueKey('role-card-${role.wireName}'),
       shape: mine
@@ -305,8 +304,7 @@ class RolesScreen extends ConsumerWidget {
                 children: [
                   Expanded(
                     child: Text(
-                      _roleLabel(l10n, role,
-                          administrator: administrator),
+                      label,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall
