@@ -180,10 +180,21 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingExportsAgain": "Exportar de nuevo este periodo",
+  "accountingExportsBy": "Hecho por",
+  "accountingExportsFingerprint": "Huella",
+  "accountingExportsRows": "Filas",
+  "accountingExportsTitle": "Exportaciones",
   "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "accountingStatusAllBooks": "Toda la contabilidad",
+  "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
+  "accountingStatusClosedUpTo": "Libros cerrados hasta",
+  "accountingStatusLastExport": "Última exportación",
+  "accountingStatusNotRead": "No se pudo leer",
+  "accountingStatusVatToFile": "Declaración de IVA por presentar",
   "acctConnConnectToken": "Conectar con un token de API",
   "acctConnDetail": "Respuesta del sistema: {detail}",
   "acctConnRefresh": "Comprobar la conexión",
@@ -881,6 +892,7 @@
   "bankBasisCreditorReference": "referencia RF",
   "bankBasisInvoiceNumber": "número de factura en el concepto",
   "bankBasisQrReference": "referencia QR",
+  "bankChooseMovement": "Elija a la izquierda un movimiento de entrada: aquí se listan sus facturas abiertas.",
   "bankConfirmReferences": "{count, plural, one{Confirmar 1 conciliación por referencia} other{Confirmar {count} conciliaciones por referencia}}",
   "bankConfirmedReferences": "{count, plural, one{1 pago conciliado.} other{{count} pagos conciliados.}}",
   "bankCsvAccount": "Cuenta (IBAN)",
@@ -21712,6 +21724,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Elija una casilla: sus documentos se listan aquí.",
+  "vatReturnDocumentsDiffer": "Declarado {declared} · documentos hoy {today} · {difference} {direction, select, more{más} other{menos}} desde la declaración",
+  "vatReturnDocumentsTitle": "Documentos de este periodo a este tipo",
+  "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
+  "vatReturnOpen": "Abrir la declaración",
   "vatSaved": "Tipos de IVA guardados.",
   "vatSeed": "Usar los tipos habituales",
   "vatSeedWithRates": "Usar los tipos habituales ({rates})",

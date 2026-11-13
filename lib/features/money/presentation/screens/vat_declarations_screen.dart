@@ -19,6 +19,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/calendar_days.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/long_task_page.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -328,6 +329,12 @@ class _VatDeclarationsScreenState
   spacing: 8,
   runSpacing: 4,
   children: [
+    // #3616 — the return with the documents behind each box.
+    FilledButton.tonalIcon(
+      key: ValueKey('vat-decl-open-${declaration.id}'),
+      icon: const Icon(Icons.fact_check_outlined, size: 18), label: Text(l10n.vatReturnOpen),
+      onPressed: () => showLongTask<void>(context, address: '/vat-declarations/${declaration.id}'),
+    ),
     OutlinedButton.icon(
       key: ValueKey(
           'vat-decl-pdf-${declaration.id}'),

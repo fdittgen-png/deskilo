@@ -488,11 +488,77 @@ abstract class AppLocalizations {
   /// **'Development workspace: the file is marked DEV and is not the real books.'**
   String get accountingExportDevelopment;
 
+  /// #3616 export history row action: a NEW export of the same period, with its own log entry; the original file is not kept
+  ///
+  /// In en, this message translates to:
+  /// **'Export this period again'**
+  String get accountingExportsAgain;
+
+  /// #3616 export history column: the member who made the file
+  ///
+  /// In en, this message translates to:
+  /// **'Made by'**
+  String get accountingExportsBy;
+
+  /// #3616 export history column: the start of the file's sha256
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint'**
+  String get accountingExportsFingerprint;
+
+  /// #3616 export history column: the rows in the file
+  ///
+  /// In en, this message translates to:
+  /// **'Rows'**
+  String get accountingExportsRows;
+
+  /// #3616 the export history page title (short: the top bar holds it)
+  ///
+  /// In en, this message translates to:
+  /// **'Exports'**
+  String get accountingExportsTitle;
+
   /// #2365 accounting export refused: the fiscal source changed or is over budget
   ///
   /// In en, this message translates to:
   /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
   String get accountingSourceRefused;
+
+  /// #3616 heading of the doors to every part of the books, under the status tiles
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in the books'**
+  String get accountingStatusAllBooks;
+
+  /// #3616 books status tile: bank movements waiting for a match
+  ///
+  /// In en, this message translates to:
+  /// **'Bank lines to match'**
+  String get accountingStatusBankToMatch;
+
+  /// #3616 books status tile: the last day of the latest closed period
+  ///
+  /// In en, this message translates to:
+  /// **'Books closed up to'**
+  String get accountingStatusClosedUpTo;
+
+  /// #3616 books status tile: the latest file handed to the accountant
+  ///
+  /// In en, this message translates to:
+  /// **'Last export'**
+  String get accountingStatusLastExport;
+
+  /// #3616 books status tile whose read failed: never shown as nothing to do
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be read'**
+  String get accountingStatusNotRead;
+
+  /// #3616 books status tile: the period of the oldest VAT return not filed
+  ///
+  /// In en, this message translates to:
+  /// **'VAT return to file'**
+  String get accountingStatusVatToFile;
 
   /// #2370 Button: connect with a pasted API token.
   ///
@@ -3336,6 +3402,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'QR reference'**
   String get bankBasisQrReference;
+
+  /// #3616 the bank statement's right pane at the desk before a movement is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a movement of money in on the left: its open invoices are listed here.'**
+  String get bankChooseMovement;
 
   /// #2380 Lines sheet: confirm every match by structured reference.
   ///
@@ -56902,6 +56974,41 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Period totals'**
   String get vatReportTotals;
+
+  /// #3616 the VAT return page before a box is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a box: its documents are listed here.'**
+  String get vatReturnChooseBox;
+
+  /// #3616 a VAT box whose documents today differ from what was declared: both figures and the difference
+  ///
+  /// In en, this message translates to:
+  /// **'Declared {declared} · documents today {today} · {difference} {direction, select, more{more} other{less}} since the return'**
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  );
+
+  /// #3616 heading of the documents behind a VAT box
+  ///
+  /// In en, this message translates to:
+  /// **'Documents of this period at this rate'**
+  String get vatReturnDocumentsTitle;
+
+  /// #3616 a VAT box the issued invoices alone do not make: no sum is shown
+  ///
+  /// In en, this message translates to:
+  /// **'This box is made of purchases, a category or a correction: its documents are not added up here.'**
+  String get vatReturnNotCompared;
+
+  /// #3616 opens a VAT return with the documents behind each box
+  ///
+  /// In en, this message translates to:
+  /// **'Open the return'**
+  String get vatReturnOpen;
 
   /// Confirmation after saving the rates
   ///

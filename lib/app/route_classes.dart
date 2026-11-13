@@ -267,7 +267,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
   RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-invoices'),
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
-  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting'),
+  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
+  RouteRule('/money/accounting/exports', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
   RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings'),
@@ -293,6 +294,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations'),
+  RouteRule('/vat-declarations/:id', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
   RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat'),
   RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories'),

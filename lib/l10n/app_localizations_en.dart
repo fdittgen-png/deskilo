@@ -235,8 +235,41 @@ class AppLocalizationsEn extends AppLocalizations {
       'Development workspace: the file is marked DEV and is not the real books.';
 
   @override
+  String get accountingExportsAgain => 'Export this period again';
+
+  @override
+  String get accountingExportsBy => 'Made by';
+
+  @override
+  String get accountingExportsFingerprint => 'Fingerprint';
+
+  @override
+  String get accountingExportsRows => 'Rows';
+
+  @override
+  String get accountingExportsTitle => 'Exports';
+
+  @override
   String get accountingSourceRefused =>
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
+
+  @override
+  String get accountingStatusAllBooks => 'Everything in the books';
+
+  @override
+  String get accountingStatusBankToMatch => 'Bank lines to match';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Books closed up to';
+
+  @override
+  String get accountingStatusLastExport => 'Last export';
+
+  @override
+  String get accountingStatusNotRead => 'Could not be read';
+
+  @override
+  String get accountingStatusVatToFile => 'VAT return to file';
 
   @override
   String get acctConnConnectToken => 'Connect with an API token';
@@ -2025,6 +2058,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get bankBasisQrReference => 'QR reference';
+
+  @override
+  String get bankChooseMovement =>
+      'Choose a movement of money in on the left: its open invoices are listed here.';
 
   @override
   String bankConfirmReferences(int count) {
@@ -35017,6 +35054,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Period totals';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Choose a box: its documents are listed here.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'more',
+      'other': 'less',
+    });
+    return 'Declared $declared · documents today $today · $difference $_temp0 since the return';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle => 'Documents of this period at this rate';
+
+  @override
+  String get vatReturnNotCompared =>
+      'This box is made of purchases, a category or a correction: its documents are not added up here.';
+
+  @override
+  String get vatReturnOpen => 'Open the return';
 
   @override
   String get vatSaved => 'VAT rates saved.';

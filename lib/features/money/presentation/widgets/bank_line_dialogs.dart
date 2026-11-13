@@ -30,11 +30,17 @@ class BankMatchDialog extends StatefulWidget {
     required this.line,
     required this.suggestions,
     required this.others,
+    this.proposed,
     super.key,
   });
 
   final StoredBankLine line;
   final List<BankMatchSuggestion> suggestions;
+
+  /// #3616 — the invoice chosen beside the movement at the desk: a
+  /// proposal the person still confirms here, with the difference's note
+  /// when the amounts differ.
+  final String? proposed;
 
   /// The other open invoices in the movement's currency.
   final List<OpenInvoice> others;
@@ -45,7 +51,8 @@ class BankMatchDialog extends StatefulWidget {
 
 class _BankMatchDialogState extends State<BankMatchDialog> {
   final _note = TextEditingController();
-  late String? _invoiceId = widget.suggestions.firstOrNull?.invoice.id;
+  late String? _invoiceId =
+      widget.proposed ?? widget.suggestions.firstOrNull?.invoice.id;
   String _over = 'over_credit_note';
   String? _error;
 
