@@ -8,7 +8,7 @@
 -- due. A period with no movement has two equal balances. A period before
 -- the match history says it is reconstructed. Rolled back.
 begin;
-select plan(12);
+select plan(13);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -152,6 +152,15 @@ select is(public.invoice_match_history_function_of(
           'match_invoice', 'a call through the API layer, its identifiers quoted, is named');
 select is(public.invoice_match_history_function_of('select public.release_invoice_payment(''x'')'),
           'release_invoice_payment', 'and a call written plainly');
+
+-- A period is read once per change: more than a thousand changes is refused.
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, created_at)
+select current_setting('pe.ws')::uuid, current_setting('pe.m1')::uuid, 'credit', 'payment', 1, 'many ' || n, '2026-09',
+       now() - interval '30 days' + make_interval(secs => n)
+  from generate_series(1, 1001) n;
+select is(pg_temp.as_owner(format('select public.customer_statement_period_v1(%L, %L, %L, %L)::text',
+            current_setting('pe.ws'), current_setting('pe.m1'), current_date - 31, current_date - 29)),
+  'ERROR 54000', 'a period with more than a thousand changes is refused: a shorter one is asked for');
 
 select * from finish();
 rollback;

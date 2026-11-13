@@ -31,6 +31,49 @@
 --   * The match history (0750) names the function that acted also when the
 --     API layer quotes it ("public"."match_invoice").
 
+-- ── one customer's share of the match history ───────────────────────────
+-- The state at a cutoff of the matches and parts that concern one customer:
+-- their invoices, or their payments. A statement reads only these, so a
+-- long period does not read the whole business's history at every step.
+create index if not exists invoice_match_history_invoice
+  on public.invoice_match_history (workspace_id, invoice_id, at);
+
+create or replace function public.invoice_member_matches_at(
+  p_workspace_id uuid, p_member_id uuid, p_cutoff timestamptz)
+returns setof public.invoice_matches language sql stable security definer set search_path = public as $fn$
+  select (jsonb_populate_record(null::public.invoice_matches, h.image)).*
+    from (select distinct on (x.invoice_id) x.*
+            from (select distinct on (s.subject_id) s.*
+                    from public.invoice_match_history s
+                   where s.workspace_id = p_workspace_id and s.subject = 'match' and s.at < p_cutoff
+                     and s.invoice_id in (select i.id from public.invoices i
+                                           where i.workspace_id = p_workspace_id and i.member_id = p_member_id)
+                   order by s.subject_id, s.at desc, s.seq desc) x
+           where x.op <> 'delete'
+           order by x.invoice_id, x.at desc, x.seq desc) h;
+$fn$;
+revoke execute on function public.invoice_member_matches_at(uuid, uuid, timestamptz) from public, anon, authenticated;
+
+create or replace function public.invoice_member_match_payments_at(
+  p_workspace_id uuid, p_member_id uuid, p_cutoff timestamptz)
+returns setof public.invoice_match_payments language sql stable security definer set search_path = public as $fn$
+  select (jsonb_populate_record(null::public.invoice_match_payments, h.image)).*
+    from (select distinct on (s.subject_id) s.*
+            from public.invoice_match_history s
+           where s.workspace_id = p_workspace_id and s.subject = 'part' and s.at < p_cutoff
+             and (s.invoice_id in (select i.id from public.invoices i
+                                    where i.workspace_id = p_workspace_id and i.member_id = p_member_id)
+                  or s.subject_id in (select h2.subject_id from public.invoice_match_history h2
+                                       where h2.workspace_id = p_workspace_id and h2.subject = 'part'
+                                         and (h2.image ->> 'payment_ledger_id')::uuid in (
+                                           select le.id from public.ledger_entries le
+                                            where le.workspace_id = p_workspace_id and le.member_id = p_member_id
+                                              and le.kind = 'credit')))
+           order by s.subject_id, s.at desc, s.seq desc) h
+   where h.op <> 'delete';
+$fn$;
+revoke execute on function public.invoice_member_match_payments_at(uuid, uuid, timestamptz) from public, anon, authenticated;
+
 -- ── one customer's open items at a cutoff ───────────────────────────────
 -- The rules of 0731/0750, item by item: each open document with what it
 -- still owes (positive) and each unapplied credit (negative), so the
@@ -55,7 +98,7 @@ language sql stable security definer set search_path = public as $fn$
     parts as (
       select p.invoice_id, p.payment_ledger_id, p.amount_cents, p.matched_at,
              coalesce(public.invoice_match_event_status_at(p.event_id, p_cutoff) = 'pending', false) as waiting
-        from public.invoice_match_payments_at(p_workspace_id, p_cutoff) p
+        from public.invoice_member_match_payments_at(p_workspace_id, p_member_id, p_cutoff) p
     ),
     due as (
       select d.*,
@@ -77,7 +120,7 @@ language sql stable security definer set search_path = public as $fn$
                else 'open'
              end as state
         from docs d
-        left join public.invoice_matches_at(p_workspace_id, p_cutoff) m on m.invoice_id = d.id
+        left join public.invoice_member_matches_at(p_workspace_id, p_member_id, p_cutoff) m on m.invoice_id = d.id
     ),
     credits as (
       select le.id, le.category, le.description, le.occurred_on, le.created_at,
@@ -197,9 +240,9 @@ returns jsonb language sql stable security definer set search_path = public as $
             when m.na = 0 and exists (select 1 from public.invoices s
                                        where s.id = i.settled_by_invoice_id and s.issued_at = p_at) then 'settled'
             when abs(m.na) > abs(m.pa) then 'reopened'
-            when exists (select 1 from public.invoice_matches_at(p_workspace_id, p_at + interval '1 microsecond') x
+            when exists (select 1 from public.invoice_member_matches_at(p_workspace_id, p_member_id, p_at + interval '1 microsecond') x
                           where x.invoice_id = m.id and x.writeoff_at is not null)
-             and not exists (select 1 from public.invoice_matches_at(p_workspace_id, p_at) x
+             and not exists (select 1 from public.invoice_member_matches_at(p_workspace_id, p_member_id, p_at) x
                               where x.invoice_id = m.id and x.writeoff_at is not null) then 'written_off'
             else 'paid'
           end
@@ -219,7 +262,7 @@ returns jsonb language sql stable security definer set search_path = public as $
         when 'invoice' then
           coalesce(case when m.na < m.pa and i.total_cents > 0 then (
                      select max(coalesce(pl.occurred_on, (pl.created_at at time zone p_tz)::date))
-                       from public.invoice_match_payments_at(p_workspace_id, p_at + interval '1 microsecond') pt
+                       from public.invoice_member_match_payments_at(p_workspace_id, p_member_id, p_at + interval '1 microsecond') pt
                        join public.ledger_entries pl on pl.id = pt.payment_ledger_id
                       where pt.invoice_id = m.id) end,
                    (i.issued_at at time zone p_tz)::date)
@@ -265,6 +308,7 @@ declare
   v_close jsonb;
   v_moves jsonb := '[]'::jsonb;
   v_history timestamptz;
+  v_instants timestamptz[];
   t timestamptz;
 begin
   if auth.uid() is null or public.mcp_is_delegated() then
@@ -285,8 +329,9 @@ begin
   v_b := (p_to + 1)::timestamp at time zone v_tz;
   v_open := public.customer_statement_items_keyed(p_workspace_id, p_member_id, v_a);
   v_prev := v_open;
-  -- Every instant at which something of this customer changed.
-  for t in
+  -- Every instant at which something of this customer changed; each one
+  -- is a reading of their open items, so a period holds at most a thousand.
+  select array_agg(x order by x) into v_instants from (
     select distinct x from (
       select i.issued_at from public.invoices i
        where i.workspace_id = p_workspace_id and i.member_id = p_member_id
@@ -307,6 +352,11 @@ begin
     ) s(x)
     where x >= v_a and x < v_b
     order by 1
+  ) q;
+  if coalesce(cardinality(v_instants), 0) > 1000 then
+    raise exception 'too many changes in this period: choose a shorter one' using errcode = '54000';
+  end if;
+  foreach t in array coalesce(v_instants, '{}')
   loop
     v_next := public.customer_statement_items_keyed(p_workspace_id, p_member_id, t + interval '1 microsecond');
     v_moves := v_moves || public.customer_statement_moves(p_workspace_id, p_member_id, v_prev, v_next, t, v_tz);
