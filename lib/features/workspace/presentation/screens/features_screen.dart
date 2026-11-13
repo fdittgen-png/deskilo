@@ -118,6 +118,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                 else if (desk)
                   Expanded(
                     child: FeaturesTable(
+                      key: const ValueKey('features-table'),
                       raw: raw,
                       country: workspace.countryCode,
                       onChanged: (feature, {required value}) =>

@@ -1311,6 +1311,7 @@ const Set<String> uiKeys = {
   'features-no-match',
   'features-search',
   'features-search-clear',
+  'features-table',
   'fec-account-bank',
   'fec-account-customers',
   'fec-account-expenses',
