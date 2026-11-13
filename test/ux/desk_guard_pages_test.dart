@@ -248,13 +248,6 @@ class _OnePassSold implements GuestPassRepository {
   Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-/// Records whose page of its own (below a large window) is not guarded yet,
-/// with the issue that removes the line. The list only shrinks.
-const _ownPageNotGuarded = {
-  '/members/member-2':
-      '#3891 — the member page as a page of its own fails the keyboard guard',
-};
-
 void main() {
   setUpAll(() => loadSheetFonts(always: true));
   // A sheet runs on the real clock, where the records table's read of its
@@ -273,10 +266,6 @@ void main() {
       testWidgets('$path at ${size.width.toInt()}: the desk guards hold', (
         tester,
       ) async {
-        if (kind != pageKind && _ownPageNotGuarded.containsKey(path)) {
-          markTestSkipped(_ownPageNotGuarded[path]!);
-          return;
-        }
         final semantics = tester.ensureSemantics();
         await _open(tester, path, size);
         final details = <String>[];
@@ -331,18 +320,15 @@ void main() {
           isEmpty,
           reason: details.join('\n'),
         );
-        // A long task (#3608) is its own focus scope: Tab walks the page.
-        // A record beside its table is two Tab groups; the cycle's wrap
-        // through the shell is its own follow-up, not this row's rule.
-        if (kind != PageKind.recordBesideTable) {
-          expect(
-            await keyboardProblems(
-              tester,
-              within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
-            ),
-            isEmpty,
-          );
-        }
+        // A long task (#3608) is its own focus scope: Tab walks the page. A
+        // record beside its table is walked with the shell around it (#3891).
+        expect(
+          await keyboardProblems(
+            tester,
+            within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
+          ),
+          isEmpty,
+        );
         semantics.dispose();
       });
     }

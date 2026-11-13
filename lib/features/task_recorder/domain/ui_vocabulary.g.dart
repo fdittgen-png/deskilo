@@ -7643,6 +7643,8 @@ const Set<String> uiLabelKeys = {
   'eInvoiceResolveSubmit',
   'eInvoiceResolveTitle',
   'eInvoiceSubdivisionField',
+  'eInvoiceTestFieldsHelp',
+  'eInvoiceTestFieldsTitle',
   'editorAddLevel',
   'editorAmenitiesLabel',
   'editorAreaKindTitle',
