@@ -12010,6 +12010,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get financesCoverageNoDocuments => 'ningún documento';
 
   @override
+  String get financesCoverageOlderSettled =>
+      'Los documentos pagados más antiguos no se listan; todo lo que queda por pagar, sí.';
+
+  @override
   String financesCoverageReading(String host) {
     return 'Leyendo $host…';
   }

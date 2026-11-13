@@ -23,5 +23,5 @@ extension FinanceInvoiceDue on FinanceInvoice {
   bool dueDayUnknownAt(DateTime now) =>
       _dueApplies && businessTodayAt(now, timezone) is UnknownBusinessDay;
 
-  bool get _dueApplies => state.toPay && !isCreditNote && dueOn != null;
+  bool get _dueApplies => toPay && !isCreditNote && dueOn != null;
 }

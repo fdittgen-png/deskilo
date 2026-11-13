@@ -54,6 +54,8 @@ class FinanceInvoice {
     this.reminderCount = 0,
     this.lastReminderAt,
     this.timezone,
+    this.stillDueCents,
+    this.awaitingCents,
   });
 
   final String id, workspaceId, workspaceName, number, currency;
@@ -65,13 +67,30 @@ class FinanceInvoice {
   final int totalCents, paidCents, reminderCount;
   final FinanceState state;
 
-  /// What remains to pay: the whole face value until a payment is matched,
-  /// the rest after a partial one, nothing once settled.
-  int get remainingCents => switch (state) {
-        FinanceState.open || FinanceState.awaitingValidation => totalCents,
-        FinanceState.partiallyPaid => totalCents - paidCents,
-        _ => 0,
-      };
+  /// #3877 (0755) — the server's own still-due and the parts of a payment
+  /// that wait for approval; null from a host that does not answer them.
+  final int? stillDueCents, awaitingCents;
+
+  /// What remains to pay: the server's still-due while the invoice is open
+  /// (#3877); from a host without it, the whole face value until a payment
+  /// is matched and the rest after a partial one. Nothing once settled.
+  int get remainingCents => !state.owed
+      ? 0
+      : stillDueCents ??
+          switch (state) {
+            FinanceState.partiallyPaid => totalCents - paidCents,
+            _ => totalCents,
+          };
+
+  /// What I paid that the business has not confirmed yet: the parts awaiting
+  /// approval (#3877); from a host without them, the whole open amount of an
+  /// invoice awaiting validation.
+  int get beingValidatedCents =>
+      awaitingCents ?? (state == FinanceState.awaitingValidation ? remainingCents : 0);
+
+  /// Still to pay (#3682): what remains once the parts being validated are
+  /// counted as paid; a host without the figures says it by the state.
+  bool get toPay => stillDueCents == null ? state.toPay : state.owed && stillDueCents! > 0;
 
   /// A credit note gives money back: its face value is negative, the same
   /// rule the workspace's own documents follow (`Invoice.isCreditNote`).
@@ -95,6 +114,8 @@ class FinanceInvoice {
       reminderCount: r.intOrNull('reminder_count') ?? 0,
       lastReminderAt: r.dateTimeOrNull('last_reminder_at'),
       timezone: r.stringOrNull('workspace_timezone'),
+      stillDueCents: r.intOrNull('still_due_cents'),
+      awaitingCents: r.intOrNull('awaiting_cents'),
     );
   }
 }
@@ -169,9 +190,15 @@ class FinanceOverview {
     this.answered = const [],
     this.hosts = const [],
     this.payments = const [],
+    this.olderSettledLeftOut = false,
   });
 
   final List<FinanceInvoice> invoices;
+
+  /// #3878 (0755) — an answer carries every document still owed or in my
+  /// favour, and the settled ones by their newest page: true when older
+  /// settled ones were left out of it.
+  final bool olderSettledLeftOut;
   final List<FinanceReminder> reminders;
 
   /// My payments read on the connected hosts (`my_financial_activity`,
@@ -234,6 +261,7 @@ class FinanceOverview {
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
       answered: [...answered, ...other.answered],
       hosts: [...hosts, ...other.hosts],
+      olderSettledLeftOut: olderSettledLeftOut || other.olderSettledLeftOut,
     );
   }
 
@@ -276,6 +304,7 @@ class FinanceOverview {
         unavailableSources: unavailableSources ?? this.unavailableSources,
         answered: answered ?? this.answered,
         hosts: hosts ?? this.hosts,
+        olderSettledLeftOut: olderSettledLeftOut,
       );
 
   /// The same documents, with [payments] among them.
@@ -343,6 +372,7 @@ class FinanceOverview {
               invoices: answer.invoices,
               reminders: answer.reminders,
               payments: answer.payments,
+              olderSettledLeftOut: answer.olderSettledLeftOut,
             ),
           );
   }
@@ -433,20 +463,21 @@ class FinanceOverview {
       ];
 
   /// What I still have to pay: never a credit note not used yet (money due
-  /// TO me, #3599) nor an invoice whose payment is being validated (#3682).
+  /// TO me, #3599) nor what I paid that is being validated (#3682, #3877).
   List<FinanceInvoice> get payable => [
         for (final i in outstanding)
-          if (!i.isCreditNote && i.state.toPay) i,
+          if (!i.isCreditNote && i.toPay) i,
       ];
 
-  /// #3682 — invoices I paid whose payment the business has not confirmed.
-  bool _validating(FinanceInvoice i) =>
-      !i.isCreditNote && i.state == FinanceState.awaitingValidation;
+  /// #3682 — from a host without the server's figures, an invoice awaiting
+  /// validation is paid whole on my side and owed nowhere.
+  bool _validatingWhole(FinanceInvoice i) =>
+      i.stillDueCents == null && !i.isCreditNote && i.state == FinanceState.awaitingValidation;
 
   /// What I paid that waits for confirmation, per currency: not owed.
   Map<String, int> get beingValidatedByCurrency => _byCode([
         for (final i in outstanding)
-          if (_validating(i)) (i.currency, i.remainingCents),
+          if (!i.isCreditNote && i.beingValidatedCents > 0) (i.currency, i.beingValidatedCents),
       ]);
 
   /// What remains open with each business, per currency: its invoices to
@@ -454,7 +485,7 @@ class FinanceOverview {
   /// the business that issued it, never another one's — one payee.
   Map<(String, String), int> get _openByPayee {
     final out = <(String, String), int>{};
-    for (final i in outstanding.where((i) => !_validating(i))) {
+    for (final i in outstanding.where((i) => !_validatingWhole(i))) {
       final payee = (i.workspaceId, i.currency);
       out[payee] = (out[payee] ?? 0) + i.remainingCents;
     }
@@ -495,6 +526,7 @@ class FinanceOverview {
       invoices: r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json)),
       reminders:
           r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)),
+      olderSettledLeftOut: r.boolOr('settled_cut', fallback: false),
     ).qualified();
   }
 }

@@ -15683,6 +15683,10 @@
   "@financesCoverageNoDocuments": {
     "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
   },
+  "financesCoverageOlderSettled": "Older paid documents are not listed; everything still to pay is.",
+  "@financesCoverageOlderSettled": {
+    "description": "#3878 the coverage line when an answer left older settled documents out"
+  },
   "financesCoverageReading": "Reading {host}…",
   "@financesCoverageReading": {
     "description": "#2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.",
