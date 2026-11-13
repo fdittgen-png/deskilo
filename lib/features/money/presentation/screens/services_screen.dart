@@ -6,10 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/service_item.dart';
 import '../../providers/money_providers.dart';
@@ -51,47 +56,95 @@ class ServicesScreen extends ConsumerWidget {
     final vatRates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate names no VAT suffix, never a wrong one
     final currency = appFormatOf(context).moneyIn(ref.watch(currentWorkspaceProvider).value?.currencyCode);
     final inactiveColor = Theme.of(context).disabledColor;
+    final look = (
+      chargesVat: chargesVat,
+      vatRates: vatRates,
+      currency: currency,
+      inactiveColor: inactiveColor,
+    );
 
-    return Scaffold(
+    // #3614 — N: a new service, beside the table at the desk.
+    return ShortcutScope(
+      handlers: {
+        AppShortcutId.newRecord: () => _editSheet(context, ref),
+      },
+      child: Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.servicesTitle),
-      ),
-      floatingActionButton: FloatingActionButton(
-        key: const ValueKey('services-new'),
-        tooltip: l10n.servicesNew,
-        onPressed: () => _editSheet(context, ref),
-        child: const Icon(Icons.add),
+        actions: [
+          // #3614 — worded in the bar: a new service opens beside the table.
+          OutlinedButton.icon(
+            key: const ValueKey('services-new'),
+            onPressed: () => _editSheet(context, ref),
+            icon: const Icon(Icons.add),
+            label: Text(l10n.servicesNew),
+          ),
+          const SizedBox(width: AppSpacing.sm),
+        ],
       ),
       body: switch (servicesAsync) {
-        AsyncData(value: final services) when services.isEmpty => Center(
-            child: Text(l10n.servicesEmpty),
-          ),
-        AsyncData(value: final services) => ListView(
-            // #1181 — the add button overlays this list; it ends above it.
-            padding: const EdgeInsets.only(bottom: kFabSafeBottom),
+        AsyncData(value: final services)
+            when services.isEmpty => Center(child: Text(l10n.servicesEmpty)),
+        // #3552 — on a phone, grouped by category, the uncategorised last.
+        AsyncData(value: final services)
+            when WindowClass.of(context) == WindowClass.compact =>
+          ListView(
             children: [
-              // #3552 — grouped by category, the uncategorised last.
-              for (final group in groupServicesByCategory(services)) ...[
+              for (final group in groupServicesByCategory(services))
                 FormSection(
                   title: group.category.isEmpty
                       ? l10n.servicesOtherCategory
                       : group.category,
                   children: [
                     for (final service in group.services)
-                      _ServiceTile(
+                      InkWell(
                         key: ValueKey('services-tile-${service.id}'),
-                        service: service,
-                        chargesVat: chargesVat,
-                        vatRates: vatRates,
-                        currency: currency,
-                        inactiveColor: inactiveColor,
-                        onTap: () => _editSheet(context, ref, service: service),
+                        onTap: () =>
+                            _editSheet(context, ref, service: service),
+                        child: _ServiceTile(
+                          service: service,
+                          chargesVat: chargesVat,
+                          vatRates: vatRates,
+                          currency: currency,
+                          inactiveColor: inactiveColor,
+                        ),
                       ),
                   ],
                 ),
-              ],
             ],
           ),
+        // #3614 — a records table from a medium window; a service opens
+        // in a side panel beside it.
+        AsyncData(value: final services) => RecordsTable<ServiceItem>(
+              tableId: 'services',
+              rows: services,
+              keyOf: (s) => s.id,
+              searchText: (s) => '${s.name} ${s.category}',
+              onOpen: (s) => _editSheet(context, ref, service: s),
+              empty: Center(child: Text(l10n.servicesEmpty)),
+              initialQuery: const RecordsQuery(sortColumn: 'name'),
+              chips: [
+                RecordChip(
+                  id: 'active',
+                  label: l10n.servicesActive,
+                  keeps: (s) => s.active,
+                ),
+                RecordChip(
+                  id: 'inactive',
+                  label: l10n.servicesInactive,
+                  keeps: (s) => !s.active,
+                ),
+              ],
+              columns: _columns(context, look),
+              cardBuilder: (context, s) => _ServiceTile(
+                key: ValueKey('services-tile-${s.id}'),
+                service: s,
+                chargesVat: chargesVat,
+                vatRates: vatRates,
+                currency: currency,
+                inactiveColor: inactiveColor,
+              ),
+            ),
         AsyncError() => Center(
             child: Text(
               l10n.workspaceGenericError,
@@ -99,9 +152,100 @@ class ServicesScreen extends ConsumerWidget {
           ),
         _ => const LoadingView(),
       },
+    ),
     );
   }
+
+  /// The table's columns: service, kind, unit, price, VAT and active.
+  List<RecordColumn<ServiceItem>> _columns(BuildContext context, _Look look) {
+    final l10n = context.l10n;
+    Text muted(ServiceItem s, String text) => Text(
+      text,
+      overflow: TextOverflow.ellipsis,
+      style: s.active ? null : TextStyle(color: look.inactiveColor),
+    );
+    return [
+      RecordColumn(
+        id: 'name',
+        label: l10n.eventTypeServiceCharge,
+        flex: 3,
+        hideable: false,
+        sortKey: (s) => s.name.toLowerCase(),
+        cell: (_, s) => muted(s, s.name),
+      ),
+      RecordColumn(
+        id: 'category',
+        label: l10n.servicesCategory,
+        flex: 2,
+        sortKey: (s) => s.category.toLowerCase(),
+        cell: (_, s) => muted(
+          s,
+          s.category.isEmpty ? l10n.servicesOtherCategory : s.category,
+        ),
+      ),
+      RecordColumn(
+        id: 'unit',
+        label: l10n.scheduleUnitLabel,
+        flex: 2,
+        cell: (_, s) => muted(s, _unitOf(l10n, s)),
+      ),
+      RecordColumn(
+        id: 'price',
+        label: l10n.servicesPrice,
+        numeric: true,
+        flex: 2,
+        sortKey: (s) => s.priceCents,
+        cell: (_, s) => muted(s, look.currency.formatMinor(s.priceCents)),
+      ),
+      RecordColumn(
+        id: 'vat',
+        label: l10n.vatTitle,
+        flex: 2,
+        cell: (context, s) {
+          final rate = vatRateSuffix(
+            chargesVat: look.chargesVat,
+            rates: look.vatRates,
+            vatRateId: s.vatRateId,
+            format: appFormatOf(context),
+          );
+          // #537 — a gross price under a VAT-charging regime NAMES its tax.
+          return muted(s, rate == null ? '' : l10n.priceVatIncluded(rate));
+        },
+      ),
+      RecordColumn(
+        id: 'active',
+        label: l10n.servicesActive,
+        flex: 2,
+        sortKey: (s) => s.active ? 0 : 1,
+        cell: (_, s) => s.active
+            ? const Icon(Icons.check, size: 18)
+            : muted(s, l10n.servicesInactive),
+      ),
+    ];
+  }
+
+  /// What a service is counted in: its duration, its shelf, or nothing.
+  static String _unitOf(AppLocalizations l10n, ServiceItem s) {
+    if (s.durationMinutes case final minutes?) {
+      return l10n.servicesDurationShort(minutes);
+    }
+    // #731 — the shelf count for a supply.
+    return switch (s.stock) {
+      null => '',
+      0 => l10n.serviceOutOfStock,
+      final n => l10n.serviceStockCount(n),
+    };
+  }
 }
+
+/// How the services are drawn: the VAT regime and rates, the currency and
+/// the colour of an inactive one.
+typedef _Look = ({
+  bool chargesVat,
+  List<VatRate> vatRates,
+  MoneyFormat currency,
+  Color inactiveColor,
+});
 
 /// One service: its price (with the VAT it includes), its duration, its
 /// stock, and whether it is inactive.
@@ -113,7 +257,6 @@ class _ServiceTile extends StatelessWidget {
     required this.vatRates,
     required this.currency,
     required this.inactiveColor,
-    required this.onTap,
   });
 
   final ServiceItem service;
@@ -121,7 +264,6 @@ class _ServiceTile extends StatelessWidget {
   final List<VatRate> vatRates;
   final MoneyFormat currency;
   final Color inactiveColor;
-  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +303,6 @@ class _ServiceTile extends StatelessWidget {
         ].join(' · '),
       ),
       trailing: service.active ? null : Text(l10n.servicesInactive),
-      onTap: onTap,
     );
   }
 }

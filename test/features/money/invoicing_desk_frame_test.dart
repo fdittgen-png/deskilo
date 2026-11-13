@@ -68,7 +68,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.byKey(ValueKey('invoicing-row-$id')));
+      await tester.tap(find.byKey(ValueKey('records-row-$id')));
       await tester.pumpAndSettle();
       final router = GoRouter.of(tester.element(find.byType(Scaffold).first));
       expect(router.routeInformationProvider.value.uri.path, '/invoices/$id');
@@ -97,7 +97,7 @@ void main() {
       await tester.pumpAndSettle();
       expect(router.routeInformationProvider.value.uri.path, '/invoices');
       expect(panel, findsNothing);
-      expect(find.byKey(ValueKey('invoicing-row-$id')), findsOneWidget);
+      expect(find.byKey(ValueKey('records-row-$id')), findsOneWidget);
     });
   }
 

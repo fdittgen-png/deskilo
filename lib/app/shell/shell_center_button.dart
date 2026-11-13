@@ -40,6 +40,10 @@ class ShellCenterButton extends ConsumerWidget {
     this.selectedIcon = Icons.event_seat,
   });
 
+  /// #3611 — the key of the visible button that does what this button's
+  /// long press does (`ShellBarToggle`); the parity lint names it.
+  static const barToggleKey = 'shell-bar-toggle';
+
   /// #3551 — the action's icon: the booking's seat, or a new invoice for a
   /// business without places.
   final IconData icon;
@@ -154,6 +158,7 @@ class ShellCenterButton extends ConsumerWidget {
             // exact report Sparkilo's #4103 came from. One recognizer
             // set, disambiguated by Flutter, and the ripple matches the
             // gesture.
+            // parity: shell-bar-toggle
             onLongPress: () => unawaited(toggleBar()),
             child: SizedBox(
               width: ShellBarMetrics.buttonDiameter,

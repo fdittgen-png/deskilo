@@ -36,5 +36,9 @@
   "purchaseOrderRefused": "L’ordine non è stato modificato. Controlla i dati e riprova.",
   "reportDocPurchaseOrder": "Ordine di acquisto",
   "reportDocPurchaseOrderTitle": "Ordine di acquisto {reference}",
-  "reportExpectedDelivery": "Consegna prevista"
+  "reportExpectedDelivery": "Consegna prevista",
+  "purchaseOrderSummaryTitle": "Riepilogo dell’ordine",
+  "purchaseOrderSummaryLines": "{count, plural, =0{Nessuna riga} one{Una riga} other{{count} righe}}",
+  "purchaseOrderSummaryNet": "Netto",
+  "purchaseOrderSummaryVat": "IVA"
 }

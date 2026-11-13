@@ -19873,6 +19873,12 @@ abstract class AppLocalizations {
   /// **'From'**
   String get guestPassFrom;
 
+  /// Column of the guest passes sold: who holds the pass.
+  ///
+  /// In en, this message translates to:
+  /// **'Guest'**
+  String get guestPassHolder;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20005,6 +20011,12 @@ abstract class AppLocalizations {
   /// **'Per hour'**
   String get guestPassUnitHour;
 
+  /// Column of the guest passes sold: how many of its days or hours have begun.
+  ///
+  /// In en, this message translates to:
+  /// **'Used'**
+  String get guestPassUsed;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20016,6 +20028,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.'**
   String get guestPassesIntro;
+
+  /// The table of guest passes sold when none was sold.
+  ///
+  /// In en, this message translates to:
+  /// **'No pass sold yet.'**
+  String get guestPassesSoldEmpty;
+
+  /// Heading of the table of guest passes sold.
+  ///
+  /// In en, this message translates to:
+  /// **'Passes sold'**
+  String get guestPassesSoldTitle;
 
   /// #3308 guest passes sold at the desk
   ///
@@ -25813,6 +25837,12 @@ abstract class AppLocalizations {
   /// **'A customer or a number'**
   String get invoicingSearchHint;
 
+  /// #3614 the invoicing table at the desk: share the reminders of the selected invoices, one after the other
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Share {count} reminder} other{Share {count} reminders}}'**
+  String invoicingShareRemindersSelected(int count);
+
   /// #3587 a source name: what customers paid that no invoice has taken
   ///
   /// In en, this message translates to:
@@ -27282,6 +27312,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Working…'**
   String get kitActionBusy;
+
+  /// Confirmation shown after a value was copied to the clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to the clipboard'**
+  String get kitCopied;
+
+  /// Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get kitCopy;
+
+  /// Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy {value}'**
+  String kitCopyValue(String value);
 
   /// Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer.
   ///
@@ -38190,6 +38238,30 @@ abstract class AppLocalizations {
   /// **'{supplier} · {total}'**
   String purchaseOrderSummary(String supplier, String total);
 
+  /// #3608 the number of lines in the order
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No line} one{One line} other{{count} lines}}'**
+  String purchaseOrderSummaryLines(int count);
+
+  /// #3608 the order's total before VAT
+  ///
+  /// In en, this message translates to:
+  /// **'Net'**
+  String get purchaseOrderSummaryNet;
+
+  /// #3608 the summary beside the order's form
+  ///
+  /// In en, this message translates to:
+  /// **'Order summary'**
+  String get purchaseOrderSummaryTitle;
+
+  /// #3608 the order's VAT
+  ///
+  /// In en, this message translates to:
+  /// **'VAT'**
+  String get purchaseOrderSummaryVat;
+
   /// #3307 purchase orders
   ///
   /// In en, this message translates to:
@@ -48905,11 +48977,23 @@ abstract class AppLocalizations {
   /// **'Navigation bar hidden'**
   String get shellBarHiddenAnnounce;
 
+  /// Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the navigation bar'**
+  String get shellBarHideAction;
+
   /// Semantics hint on the Reserve button while the bar shows (#1173)
   ///
   /// In en, this message translates to:
   /// **'Long-press for a full-screen view'**
   String get shellBarHideHint;
+
+  /// Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Show the navigation bar'**
+  String get shellBarShowAction;
 
   /// Semantics hint on the Reserve button while the bar is hidden (#1173)
   ///

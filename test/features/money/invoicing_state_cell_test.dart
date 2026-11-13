@@ -118,12 +118,12 @@ void main() {
 
   testWidgets('a two-line state keeps the other cells level with its first '
       'line, and the whole row opens the invoice', (tester) async {
-    // Narrow enough that the two parts cannot share a line.
+    // #3614 — at the list's minimum the desk table's state column is
+    // narrow enough that the two parts cannot share a line.
     final opened = await _opened(
       tester,
       locale: const Locale('de'),
       wide: true,
-      width: 420,
     );
     final cell = find.byKey(const ValueKey('invoicing-state-inv-1'));
     final chips = find.descendant(of: cell, matching: find.byType(StatusChip));
@@ -132,17 +132,20 @@ void main() {
     expect(second.top, greaterThan(first.top), reason: 'two lines');
     final name = tester.getRect(find.text('Bruno Kessler'));
     final number = tester.getRect(find.text('F-2026-0402'));
-    // Level with the first line, not centred on the grown row.
-    expect(name.top, closeTo(first.top, 4));
-    expect(number.top, closeTo(first.top, 4));
+    // On the first line, not centred on the grown row (#3614: the desk
+    // table centres every cell in the row's first line).
+    for (final cell in [name, number]) {
+      expect(cell.center.dy, inInclusiveRange(first.top, first.bottom));
+      expect(cell.center.dy, lessThan(second.top));
+    }
     // A tap under the name, on the row's second line, still opens it.
     final row = tester.getRect(
-      find.byKey(const ValueKey('invoicing-row-inv-1')),
+      find.byKey(const ValueKey('records-row-inv-1')),
     );
     await tester.tapAt(Offset(name.left, second.center.dy));
     await tester.pumpAndSettle();
     expect(opened, ['inv-1']);
-    expect(row.height, greaterThan(second.bottom - first.top));
+    expect(row.height, greaterThanOrEqualTo(second.bottom - first.top));
   });
 
   testWidgets('the phone list is unchanged: one chip with the whole state', (

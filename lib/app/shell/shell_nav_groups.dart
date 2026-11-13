@@ -39,7 +39,11 @@ List<NavGroup> navGroupsOf(
 }) {
   final labels = entries.l10n;
   final accounting = entries.accounting();
-  final all = [...entries.money(), ...administration];
+  final all = [
+    ...entries.money(),
+    ...entries.salesPages(),
+    ...administration,
+  ];
   NavGroup pick(
     String id,
     String title,
@@ -64,9 +68,10 @@ List<NavGroup> navGroupsOf(
       'drawer-nfc-config',
     }),
     pick('sales', labels.uxNavSales, Icons.sell_outlined, all, {
-      'drawer-sales',
       'drawer-invoices',
+      'drawer-invoice-register',
       'drawer-services',
+      'drawer-guest-passes',
       'drawer-accessories',
       'drawer-billing',
       'drawer-payment-methods',

@@ -28,6 +28,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../theme/app_spacing.dart';
+import 'adaptive/long_task_page.dart' show LongTaskLayout;
 import 'adaptive/task_surface.dart';
 import 'form_error_summary.dart';
 import 'form_submit_keys.dart';
@@ -272,9 +273,14 @@ class AppFormSheet extends StatefulWidget {
     this.submitKey,
     this.errorKey = const ValueKey('form-sheet-error'),
     this.onDispose,
+    this.summary,
   });
 
   final String title;
+
+  /// What a long task's form comes to: drawn after the fields when the
+  /// page has no room beside them; never in a sheet, dialog or panel.
+  final Widget? summary;
 
   /// The fields. [refresh] rebuilds the sheet after a choice changes what
   /// it shows (a toggle revealing more fields).
@@ -373,17 +379,19 @@ class _AppFormSheetState extends State<AppFormSheet> {
 
   Widget _body(BuildContext context) {
     final media = MediaQuery.of(context);
+    // A long task is a page: its bar names it, its scaffold clears the keyboard.
+    final page = LongTaskLayout.maybeOf(context);
     // The keyboard when it is up, otherwise the system navigation bar.
-    final bottom = media.viewInsets.bottom > 0
-        ? media.viewInsets.bottom
-        : media.viewPadding.bottom;
+    final bottom = page != null ? 0.0 : media.viewInsets.bottom > 0
+        ? media.viewInsets.bottom : media.viewPadding.bottom;
     return Padding(
       padding: EdgeInsets.only(bottom: bottom),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: page != null ? MainAxisSize.max : MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Flexible(
+            fit: page != null ? FlexFit.tight : FlexFit.loose,
             child: SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.xl,
@@ -395,11 +403,13 @@ class _AppFormSheetState extends State<AppFormSheet> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Text(
-                    widget.title,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  const FormGap(),
+                  if (page == null) ...[
+                    Text(
+                      widget.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    const FormGap(),
+                  ],
                   FormErrorSummary(
                     count: _fieldErrors.length,
                     onGoToFirst: _focusFirstProblem,
@@ -416,6 +426,8 @@ class _AppFormSheetState extends State<AppFormSheet> {
                       children: widget.builder(context, _refresh),
                     ),
                   ),
+                  if (widget.summary case final s? when page?.summaryBeside == false)
+                    ...[const FormGap.large(), s],
                 ],
               ),
             ),
@@ -439,8 +451,13 @@ class _AppFormSheetState extends State<AppFormSheet> {
                   ),
                   const FormGap(),
                 ],
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                // Side by side while they fit; stacked when they do not.
+                OverflowBar(
+                  alignment: MainAxisAlignment.end,
+                  spacing: AppSpacing.sm,
+                  overflowSpacing: AppSpacing.sm,
+                  overflowAlignment: OverflowBarAlignment.end,
+                  overflowDirection: VerticalDirection.up,
                   children: [
                     TextButton(
                       key: const ValueKey('form-sheet-cancel'),
@@ -451,7 +468,6 @@ class _AppFormSheetState extends State<AppFormSheet> {
                         MaterialLocalizations.of(context).cancelButtonLabel,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.sm),
                     FilledButton(
                       key: widget.submitKey,
                       onPressed: _saving ? null : _submit,

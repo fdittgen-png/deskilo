@@ -36,5 +36,9 @@
   "purchaseOrderRefused": "Die Bestellung wurde nicht geändert. Prüfen Sie die Angaben und versuchen Sie es erneut.",
   "reportDocPurchaseOrder": "Bestellung",
   "reportDocPurchaseOrderTitle": "Bestellung {reference}",
-  "reportExpectedDelivery": "Erwartete Lieferung"
+  "reportExpectedDelivery": "Erwartete Lieferung",
+  "purchaseOrderSummaryTitle": "Zusammenfassung der Bestellung",
+  "purchaseOrderSummaryLines": "{count, plural, =0{Keine Position} one{Eine Position} other{{count} Positionen}}",
+  "purchaseOrderSummaryNet": "Netto",
+  "purchaseOrderSummaryVat": "MwSt."
 }

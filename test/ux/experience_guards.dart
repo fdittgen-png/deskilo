@@ -543,15 +543,18 @@ Future<Set<String>> escapeProblems(
   return after < before ? {} : {'Escape did not close the top surface'};
 }
 
-/// With SHEET=1, the page on screen at [width] in [brightness] is written
-/// to `build/sheets/<module>/<screen>--<width>--<light|dark>.png`.
+/// With SHEET=1, the window at [width] in [brightness] is written to
+/// `build/sheets/<module>/<screen>--<width>--<light|dark>.png`.
+///
+/// The whole window by default: at the desk the first repaint boundary on
+/// screen is the navigation column's header, not the page.
 Future<void> writeDeskSheet(
   WidgetTester tester, {
   required String module,
   required String screen,
   required double width,
   required Brightness brightness,
-  bool whole = false,
+  bool whole = true,
 }) => writeSheet(
   tester,
   sheet: module,

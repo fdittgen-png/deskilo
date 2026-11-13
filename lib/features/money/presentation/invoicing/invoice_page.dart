@@ -47,8 +47,9 @@ typedef _StoryFacts = ({
   String? replacedBy,
 });
 
-/// Opens [invoiceId]'s page over the current one (a phone, a narrow
-/// window), full screen.
+/// Opens [invoiceId]'s page over the current one, full screen; the app
+/// opens an invoice at its address (#3607, #3614).
+@visibleForTesting
 Future<void> openInvoicePage(BuildContext context, String invoiceId) =>
     showDialog<void>(
       context: context,

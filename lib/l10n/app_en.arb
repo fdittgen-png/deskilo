@@ -16006,6 +16006,10 @@
   "@guestPassFrom": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassHolder": "Guest",
+  "@guestPassHolder": {
+    "description": "Column of the guest passes sold: who holds the pass."
+  },
   "guestPassName": "Name",
   "@guestPassName": {
     "description": "#3308 guest passes sold at the desk"
@@ -16123,6 +16127,10 @@
   "@guestPassUnitHour": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassUsed": "Used",
+  "@guestPassUsed": {
+    "description": "Column of the guest passes sold: how many of its days or hours have begun."
+  },
   "guestPassesEmpty": "No pass yet. Add the passes the space sells.",
   "@guestPassesEmpty": {
     "description": "#3308 guest passes sold at the desk"
@@ -16130,6 +16138,14 @@
   "guestPassesIntro": "Passes sold at the desk to guests who are not members: the place is booked for them, the pass is invoiced to them, and the money taken is recorded as a payment.",
   "@guestPassesIntro": {
     "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassesSoldEmpty": "No pass sold yet.",
+  "@guestPassesSoldEmpty": {
+    "description": "The table of guest passes sold when none was sold."
+  },
+  "guestPassesSoldTitle": "Passes sold",
+  "@guestPassesSoldTitle": {
+    "description": "Heading of the table of guest passes sold."
   },
   "guestPassesTitle": "Guest passes",
   "@guestPassesTitle": {
@@ -20890,6 +20906,15 @@
   "@invoicingSearchHint": {
     "description": "#3587 search field hint"
   },
+  "invoicingShareRemindersSelected": "{count, plural, one{Share {count} reminder} other{Share {count} reminders}}",
+  "@invoicingShareRemindersSelected": {
+    "description": "#3614 the invoicing table at the desk: share the reminders of the selected invoices, one after the other",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "invoicingSourceCredits": "Customer credits",
   "@invoicingSourceCredits": {
     "description": "#3587 a source name: what customers paid that no invoice has taken"
@@ -22313,6 +22338,23 @@
   "kitActionBusy": "Working…",
   "@kitActionBusy": {
     "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
+  },
+  "kitCopied": "Copied to the clipboard",
+  "@kitCopied": {
+    "description": "Confirmation shown after a value was copied to the clipboard."
+  },
+  "kitCopy": "Copy",
+  "@kitCopy": {
+    "description": "Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer."
+  },
+  "kitCopyValue": "Copy {value}",
+  "@kitCopyValue": {
+    "description": "Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
   },
   "kitScrollBack": "Scroll back",
   "@kitScrollBack": {
@@ -30983,6 +31025,27 @@
       }
     }
   },
+  "purchaseOrderSummaryLines": "{count, plural, =0{No line} one{One line} other{{count} lines}}",
+  "@purchaseOrderSummaryLines": {
+    "description": "#3608 the number of lines in the order",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseOrderSummaryNet": "Net",
+  "@purchaseOrderSummaryNet": {
+    "description": "#3608 the order's total before VAT"
+  },
+  "purchaseOrderSummaryTitle": "Order summary",
+  "@purchaseOrderSummaryTitle": {
+    "description": "#3608 the summary beside the order's form"
+  },
+  "purchaseOrderSummaryVat": "VAT",
+  "@purchaseOrderSummaryVat": {
+    "description": "#3608 the order's VAT"
+  },
   "purchaseOrderSupplier": "Supplier",
   "@purchaseOrderSupplier": {
     "description": "#3307 purchase orders"
@@ -39264,9 +39327,17 @@
   "@shellBarHiddenAnnounce": {
     "description": "Screen-reader announcement when the bar is swiped away (#1173)"
   },
+  "shellBarHideAction": "Hide the navigation bar",
+  "@shellBarHideAction": {
+    "description": "Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611)."
+  },
   "shellBarHideHint": "Long-press for a full-screen view",
   "@shellBarHideHint": {
     "description": "Semantics hint on the Reserve button while the bar shows (#1173)"
+  },
+  "shellBarShowAction": "Show the navigation bar",
+  "@shellBarShowAction": {
+    "description": "Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611)."
   },
   "shellBarShowHint": "Long-press to show the navigation bar",
   "@shellBarShowHint": {

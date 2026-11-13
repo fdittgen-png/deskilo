@@ -131,7 +131,11 @@ Future<void> showInvoicesByInvoice(WidgetTester tester) async {
 /// #3587 — the invoicing home's paid and closed invoices (the archive the
 /// old hub had as a tab): the Paid filter chip.
 Future<void> showPaidInvoices(WidgetTester tester) async {
-  final chip = find.byKey(const ValueKey('invoicing-filter-paid'));
+  // #3614 — at the desk, by invoice, the records table's chip.
+  final listChip = find.byKey(const ValueKey('invoicing-filter-paid'));
+  final chip = listChip.evaluate().isNotEmpty
+      ? listChip
+      : find.byKey(const ValueKey('records-chip-paid'));
   // A search for a line may have scrolled the chips out of view.
   await tester.ensureVisible(chip);
   await tester.pumpAndSettle();
@@ -142,8 +146,14 @@ Future<void> showPaidInvoices(WidgetTester tester) async {
 /// The home's line of [invoiceId] brought into view, from whichever list
 /// holds it: the open invoices by invoice, else the paid and closed ones.
 Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
-  final row = find.byKey(ValueKey('invoicing-row-$invoiceId'));
+  // #3614 — a line of the list, or a row of the desk's records table.
+  final row = find.byWidgetPredicate(
+    (w) =>
+        w.key == ValueKey('invoicing-row-$invoiceId') ||
+        w.key == ValueKey('records-row-$invoiceId'),
+  );
   final home = find.byKey(const ValueKey('invoicing-home'));
+  final table = find.byKey(const ValueKey('records-rows'));
   Future<bool> reach() async {
     if (row.evaluate().isNotEmpty) return true;
     try {
@@ -151,7 +161,10 @@ Future<Finder> invoicingRow(WidgetTester tester, String invoiceId) async {
         row,
         200,
         scrollable: find
-            .descendant(of: home, matching: find.byType(Scrollable))
+            .descendant(
+              of: table.evaluate().isNotEmpty ? table : home,
+              matching: find.byType(Scrollable),
+            )
             .first,
         maxScrolls: 30,
       );

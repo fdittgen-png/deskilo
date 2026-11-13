@@ -7,6 +7,10 @@
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
+import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/domain/guest_pass.dart';
+import 'package:deskilo/features/money/domain/service_item.dart';
+import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -38,6 +42,7 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
         ),
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
+      guestPassRepositoryProvider.overrideWithValue(_OnePassSold()),
     ],
   );
 }
@@ -48,7 +53,40 @@ const _pages = [
   ('/me', PageKind.dashboard, 'me', 'overview'),
   // #3606 — the first records table.
   ('/invoice-register', PageKind.records, 'money', 'invoice-register'),
+  // #3614 — sales at the desk.
+  ('/services', PageKind.records, 'money', 'services'),
+  ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
 ];
+
+/// One pass sold, so the guest passes page is guarded with a record on it.
+class _OnePassSold implements GuestPassRepository {
+  @override
+  Future<List<GuestPassOffer>> offers(String workspaceId) async => const [
+    GuestPassOffer(
+      id: 'day',
+      name: 'Day pass',
+      unit: GuestPassUnit.day,
+      priceCents: 2400,
+    ),
+  ];
+
+  @override
+  Future<List<GuestPassRecord>> passesSold(String workspaceId) async => [
+    GuestPassRecord(
+      id: 'p1',
+      memberId: 'member-1',
+      offerId: 'day',
+      unit: GuestPassUnit.day,
+      units: 2,
+      amountCents: 4800,
+      startsAt: DateTime(2026, 11, 2, 9),
+      endsAt: DateTime(2026, 11, 3, 18),
+    ),
+  ];
+
+  @override
+  Object? noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
 
 void main() {
   setUpAll(() => loadSheetFonts(always: true));
@@ -72,11 +110,20 @@ void main() {
               CustomerRow,
               RecordRow<Invoice>,
               RecordsHeader<Invoice>,
+              RecordRow<Receivable>,
+              RecordsHeader<Receivable>,
+              RecordRow<ServiceItem>,
+              RecordsHeader<ServiceItem>,
+              RecordRow<GuestPassRecord>,
+              RecordsHeader<GuestPassRecord>,
             ],
             tableTypes: const [
               KitTableHeader,
               CustomerHeader,
               RecordsHeader<Invoice>,
+              RecordsHeader<Receivable>,
+              RecordsHeader<ServiceItem>,
+              RecordsHeader<GuestPassRecord>,
             ],
           ),
           isEmpty,

@@ -156,6 +156,8 @@ class MoneyViewData {
   /// who manage the money.
   bool get statusToolOn =>
       _on(WorkspaceFeature.workspaceStatus) && (member?.isAdmin ?? false);
+  /// #828, #3597 — the shared-expense distribution.
+  bool get expenseRepartitionOn => _on(WorkspaceFeature.expenseRepartition);
   bool get repartitionWizardOn =>
       _on(WorkspaceFeature.expenseRepartitionWizard) &&
       (member?.isAdmin ?? false);

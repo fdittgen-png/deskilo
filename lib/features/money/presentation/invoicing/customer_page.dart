@@ -39,6 +39,7 @@ class CustomerPage extends StatelessWidget {
     this.payments = const [],
     this.onAssign,
     this.onStatement,
+    this.onClose,
   });
 
   final String customerId;
@@ -62,6 +63,9 @@ class CustomerPage extends StatelessWidget {
   final ValueChanged<PaymentLeft>? onAssign;
 
   /// #3673 — prints the customer's statement of account; null, no button.
+  /// #3614 — set when the page stands beside the list: its close button.
+  final VoidCallback? onClose;
+
   final VoidCallback? onStatement;
 
   List<Receivable> get _mine => [
@@ -94,6 +98,7 @@ class CustomerPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(name),
+        automaticallyImplyLeading: onClose == null,
         actions: [
           if (onStatement case final print?)
             IconButton(
@@ -101,6 +106,11 @@ class CustomerPage extends StatelessWidget {
               tooltip: l.reportDocCustomerStatement,
               icon: const Icon(Icons.receipt_long_outlined),
               onPressed: print,
+            ),
+          if (onClose case final close?)
+            CloseButton(
+              key: const ValueKey('customer-page-close'),
+              onPressed: close,
             ),
         ],
       ),

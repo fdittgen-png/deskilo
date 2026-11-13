@@ -329,17 +329,11 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
-  RouteCoverage(
-    '/invoices',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.payment,
-  ),
-  // #3607 — an open invoice's address: the same payment surface.
-  RouteCoverage(
-    '/invoices/:id',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.payment,
-  ),
+  RouteCoverage('/invoices', CoverageStatus.excluded, category: ProtectedSurface.payment),
+  // #3607, #3614 — an open invoice's and a customer's address: the same
+  // payment surface.
+  RouteCoverage('/invoices/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
+  RouteCoverage('/invoices/customer/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage(
     '/invoice-register',
     CoverageStatus.excluded,
@@ -388,6 +382,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/money/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/guest-passes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchase-orders', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/purchase-orders/new', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/purchase-orders/:id/edit', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/payments', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/sales', CoverageStatus.planned, owner: '#1884'),

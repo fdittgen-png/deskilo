@@ -165,9 +165,70 @@ class GuestPassSale {
 /// A place a pass can book, named the way the desk reads it.
 typedef GuestPassPlace = ({String seatId, String label});
 
+/// #3614 — a pass sold: who holds it, which pass, its window and price.
+class GuestPassRecord {
+  const GuestPassRecord({
+    required this.id,
+    required this.memberId,
+    required this.offerId,
+    required this.unit,
+    required this.units,
+    required this.amountCents,
+    required this.startsAt,
+    required this.endsAt,
+  });
+
+  factory GuestPassRecord.fromJson(Map<String, Object?> json) {
+    final r = JsonReader(json, context: 'guest_passes');
+    return GuestPassRecord(
+      id: r.string('id'),
+      memberId: r.string('member_id'),
+      offerId: r.string('offer_id'),
+      unit: GuestPassUnit.fromWire(r.string('unit')) ?? GuestPassUnit.day,
+      units: r.integer('units'),
+      amountCents: r.integer('amount_cents'),
+      startsAt: DateTime.parse(r.string('starts_at')),
+      endsAt: DateTime.parse(r.string('ends_at')),
+    );
+  }
+
+  final String id;
+
+  /// The guest's customer record.
+  final String memberId;
+  final String offerId;
+  final GuestPassUnit unit;
+  final int units;
+  final int amountCents;
+
+  /// The first day's start and the last day's end, as instants.
+  final DateTime startsAt;
+  final DateTime endsAt;
+
+  /// The last calendar day the pass covers ([dayOf] is the business's
+  /// calendar): a window that ends at midnight ends with the day before.
+  DateTime lastDay(DateTime Function(DateTime instant) dayOf) =>
+      dayOf(endsAt.subtract(const Duration(milliseconds: 1)));
+
+  /// The units already started at [now]: the days begun of a day pass,
+  /// counted on the business's calendar ([dayOf]); an hourly pass is one
+  /// window, all of it once it began.
+  int usedAt(DateTime now, DateTime Function(DateTime instant) dayOf) {
+    if (now.isBefore(startsAt)) return 0;
+    if (unit == GuestPassUnit.hour) return units;
+    // Whole days between two calendar days, a summer-time day included.
+    final days = dayOf(now).difference(dayOf(startsAt)).inHours / 24;
+    return (days.round() + 1).clamp(0, units);
+  }
+}
+
 /// The space's passes and their sale.
 abstract interface class GuestPassRepository {
   Future<List<GuestPassOffer>> offers(String workspaceId);
+
+  /// #3614 — the passes sold in the space, the latest first. Read by who
+  /// holds viewFinances or issueInvoices, or the owner (0685's policy).
+  Future<List<GuestPassRecord>> passesSold(String workspaceId);
 
   /// Every seat of the space, level by level: the places a pass can book.
   /// The server checks the place is free and the window open.

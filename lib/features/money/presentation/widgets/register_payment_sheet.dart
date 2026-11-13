@@ -7,7 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -28,9 +28,10 @@ Future<bool> showRegisterPaymentSheet(
   WidgetRef ref, {
   String? memberId,
 }) async {
-  final done = await showAppSheet<bool>(
-    context: context,
-    isScrollControlled: true,
+  // #3614 — a standard task: a sheet on a phone, a side panel at the desk.
+  final done = await showTask<bool>(
+    context,
+    size: TaskSize.standard,
     builder: (_) => _RegisterPaymentSheet(initialMemberId: memberId),
   );
   return done ?? false;
