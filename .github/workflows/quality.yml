@@ -52,6 +52,8 @@ jobs:
   # finds nothing or fails (the output stays empty, never `true`). The jobs
   # below are skipped, and a skipped context counts as passing; the summary
   # names the run that proved the tree.
+  # #3873 -- only a run whose head contains the pushed commit's first parent
+  # counts: the branch really was up to date (scripts/tree_candidates.sh).
   tested:
     name: tree already tested
     if: github.event_name == 'push'
