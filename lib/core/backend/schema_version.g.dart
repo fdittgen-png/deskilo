@@ -62,6 +62,10 @@ String _$schemaVersionSourceHash() =>
 ///
 /// Fails OPEN on silence: [SchemaCompatibility.unknown] never blocks, so
 /// an offline start behaves exactly as it did before the gate existed.
+///
+/// #3885 — silence is not a verdict: while it is [SchemaCompatibility.unknown]
+/// the question is asked once more each time the app comes back to the
+/// foreground (an event, never a timer). A known verdict is not asked again.
 
 @ProviderFor(schemaCompatibility)
 final schemaCompatibilityProvider = SchemaCompatibilityProvider._();
@@ -71,6 +75,10 @@ final schemaCompatibilityProvider = SchemaCompatibilityProvider._();
 ///
 /// Fails OPEN on silence: [SchemaCompatibility.unknown] never blocks, so
 /// an offline start behaves exactly as it did before the gate existed.
+///
+/// #3885 — silence is not a verdict: while it is [SchemaCompatibility.unknown]
+/// the question is asked once more each time the app comes back to the
+/// foreground (an event, never a timer). A known verdict is not asked again.
 
 final class SchemaCompatibilityProvider
     extends
@@ -87,6 +95,10 @@ final class SchemaCompatibilityProvider
   ///
   /// Fails OPEN on silence: [SchemaCompatibility.unknown] never blocks, so
   /// an offline start behaves exactly as it did before the gate existed.
+  ///
+  /// #3885 — silence is not a verdict: while it is [SchemaCompatibility.unknown]
+  /// the question is asked once more each time the app comes back to the
+  /// foreground (an event, never a timer). A known verdict is not asked again.
   SchemaCompatibilityProvider._()
     : super(
         from: null,
@@ -114,4 +126,4 @@ final class SchemaCompatibilityProvider
 }
 
 String _$schemaCompatibilityHash() =>
-    r'30fc7450d2f301c2c1476679f1fd60c540e92f22';
+    r'b25618f97d2ea7425ee1f521dd7d2c4a5943aa49';
