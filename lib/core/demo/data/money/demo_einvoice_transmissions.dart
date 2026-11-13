@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
-import 'package:deskilo/features/money/domain/einvoice_test_document.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
 
 import '../money_repository.dart';
@@ -12,6 +11,11 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
   DemoEInvoiceTransmissions(this._m);
 
   final FakeMoneyRepository _m;
+
+  /// #3883 — the demo's latest sandbox test document.
+  EInvoiceTestVerdict testVerdict = EInvoiceTestVerdict.none;
+  String testId = '';
+  int tests = 0;
 
   @override
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(
@@ -149,8 +153,8 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
       _m.einvoiceGateway.provider == 'it_sdi'
       ? EInvoiceTestState(
           available: true,
-          transmissionId: _m.einvoiceTestId,
-          verdict: _m.einvoiceTestVerdict,
+          transmissionId: testId,
+          verdict: testVerdict,
         )
       : EInvoiceTestState.unavailable;
 
@@ -163,11 +167,11 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
     if (_m.einvoiceGateway.provider != 'it_sdi') {
       return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.unavailable);
     }
-    if (_m.einvoiceTestVerdict == EInvoiceTestVerdict.awaiting) {
+    if (testVerdict == EInvoiceTestVerdict.awaiting) {
       return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.pending);
     }
-    _m.einvoiceTestId = 'demo-test-${++_m.einvoiceTests}';
-    _m.einvoiceTestVerdict = EInvoiceTestVerdict.awaiting;
+    testId = 'demo-test-${++tests}';
+    testVerdict = EInvoiceTestVerdict.awaiting;
     return const EInvoiceTestSent(refusal: EInvoiceTestRefusal.none);
   }
 }

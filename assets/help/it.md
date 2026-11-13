@@ -5247,7 +5247,7 @@ Indica a DesKilo dove inviare le Sue fatture come file leggibili dalle macchine.
 - Il token è conservato sul server e non viene mai più mostrato.
 - Il file valido è una fattura EN 16931. Se il Suo Paese richieda una piattaforma, e quale, lo confermi con il Suo commercialista.
 - Inviare il file è il secondo di tre passi: veda [Che cosa emette l'app e che cosa resta al Suo commercialista](help:user.invoicing.scope).
-- In Italia nessuna fattura viene emessa prima che la piattaforma nazionale (lo SdI) abbia accettato un documento dello spazio. **Inviare un documento di prova** nel passo fatturazione elettronica della guida di configurazione: la proforma del mese in corso di un membro, con un numero di prova, va all'ambiente di prova della piattaforma con le sue credenziali di prova. Nulla viene emesso, numerato o registrato. Quando la piattaforma lo accetta, lo spazio emette; nuove credenziali o un'altra identità del venditore richiedono una nuova prova (#3883).
+- In Italia nessuna fattura viene emessa prima che la piattaforma nazionale (lo SdI) abbia accettato un documento dello spazio. **Inviare un documento di prova** nel passo fatturazione elettronica della guida di configurazione: la proforma del mese in corso di un membro, con un numero di prova, va all'ambiente di prova della piattaforma con le sue credenziali di prova. Nulla viene emesso, numerato o registrato. Quando la piattaforma lo accetta, lo spazio emette; nuove credenziali o un'altra identità del venditore richiedono una nuova prova.
 
 **Vedi anche:** [Inviare una fattura elettronica](help:user.money.einvoice.send) · [Identità legale](help:user.money.legal.identity)
 

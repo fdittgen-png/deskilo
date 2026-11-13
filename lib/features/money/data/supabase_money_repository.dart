@@ -11,7 +11,6 @@ import '../domain/document_numbering.dart';
 import '../domain/dunning.dart';
 import '../domain/dunning_repository.dart';
 import '../domain/einvoice_gateway.dart';
-import '../domain/einvoice_test_document.dart';
 import '../domain/einvoice_transmissions.dart';
 import '../domain/expense_repartition.dart';
 import '../domain/expense_repository.dart';

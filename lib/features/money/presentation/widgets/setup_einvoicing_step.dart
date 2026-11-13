@@ -26,7 +26,6 @@ import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/setup_step_layout.dart';
 import '../../../../l10n/dictionary_labels.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/einvoice_gateway.dart';
 import '../../domain/einvoice_mandates.dart';
 import '../../domain/einvoice_providers.dart';
@@ -234,10 +233,8 @@ class _Obligations extends ConsumerWidget {
             icon: Icons.block,
             text: l10n.setupGrowEinvoicingChannel,
           ),
-          if (ref.watch(currentWorkspaceProvider).value?.id case final id?) ...[
-            const FormGap(),
-            EInvoiceTestCard(workspaceId: id),
-          ],
+          const FormGap(),
+          const EInvoiceTestCard(),
         ],
       ],
     );

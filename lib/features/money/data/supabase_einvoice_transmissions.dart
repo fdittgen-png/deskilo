@@ -6,7 +6,6 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
 import '../domain/einvoice_gateway.dart';
-import '../domain/einvoice_test_document.dart';
 import '../domain/einvoice_transmissions.dart';
 import '../domain/payment_provider.dart';
 import '../domain/renderer_declaration.dart';

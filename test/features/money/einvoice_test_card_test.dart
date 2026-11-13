@@ -5,7 +5,6 @@
 // test stands, offers to ask the platform while one awaits its verdict, and
 // offers a new test only when none awaits.
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
-import 'package:deskilo/features/money/domain/einvoice_test_document.dart';
 import 'package:deskilo/features/money/presentation/widgets/einvoice_test_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -24,13 +23,14 @@ FakeMoneyRepository _money({String provider = 'it_sdi'}) =>
 Future<void> _pump(WidgetTester tester, FakeMoneyRepository money) async {
   await pumpApp(
     tester,
-    const Scaffold(
-      body: SingleChildScrollView(child: EInvoiceTestCard(workspaceId: 'ws-1')),
+    const Scaffold(body: SingleChildScrollView(child: EInvoiceTestCard())),
+    overrides: standardTestOverrides(
+      workspace: FakeWorkspaceRepository.withWorkspace(),
+      money: money,
     ),
-    overrides: standardTestOverrides(money: money),
     size: const Size(800, 1400),
   );
-  await tester.pump();
+  await tester.pumpAndSettle();
 }
 
 void main() {
@@ -52,8 +52,8 @@ void main() {
     tester,
   ) async {
     final money = _money()
-      ..einvoiceTestId = 'demo-test-1'
-      ..einvoiceTestVerdict = EInvoiceTestVerdict.awaiting;
+      ..eInvoices.testId = 'demo-test-1'
+      ..eInvoices.testVerdict = EInvoiceTestVerdict.awaiting;
     await _pump(tester, money);
     expect(
       find.byKey(const ValueKey('einvoice-test-awaiting')),
@@ -65,8 +65,8 @@ void main() {
 
   testWidgets('an accepted test says the workspace issues', (tester) async {
     final money = _money()
-      ..einvoiceTestId = 'demo-test-1'
-      ..einvoiceTestVerdict = EInvoiceTestVerdict.accepted;
+      ..eInvoices.testId = 'demo-test-1'
+      ..eInvoices.testVerdict = EInvoiceTestVerdict.accepted;
     await _pump(tester, money);
     expect(
       find.byKey(const ValueKey('einvoice-test-accepted')),
@@ -76,8 +76,8 @@ void main() {
 
   testWidgets('a refused test can be sent again', (tester) async {
     final money = _money()
-      ..einvoiceTestId = 'demo-test-1'
-      ..einvoiceTestVerdict = EInvoiceTestVerdict.rejected;
+      ..eInvoices.testId = 'demo-test-1'
+      ..eInvoices.testVerdict = EInvoiceTestVerdict.rejected;
     await _pump(tester, money);
     expect(
       find.byKey(const ValueKey('einvoice-test-rejected')),

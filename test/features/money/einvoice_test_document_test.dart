@@ -3,14 +3,14 @@
 // #3883 — the sandbox test document: its number is outside the invoice
 // sequence and its own; the function's answers read as where the latest test
 // stands and why a send did not leave.
-import 'package:deskilo/features/money/domain/einvoice_test_document.dart';
+import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/presentation/einvoice_test_document.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   test('a test number carries the test mark and the time it was built', () {
     final number = einvoiceTestNumber(DateTime(2026, 11, 13, 23, 30, 5));
-    expect(number, '${einvoiceTestNumberPrefix}20261113233005');
+    expect(number, 'TEST-20261113233005');
     expect(
       einvoiceTestNumber(DateTime(2026, 11, 13, 23, 30, 6)),
       isNot(number),

@@ -5247,7 +5247,7 @@ Vous indiquez à DesKilo où déposer vos factures sous forme de fichiers lisibl
 - Le jeton est stocké sur le serveur et n'est plus jamais affiché.
 - Le fichier valide est une facture EN 16931. Savoir si votre pays impose une plateforme, et laquelle, est à confirmer avec votre comptable.
 - Déposer le fichier est la deuxième de trois étapes : voir [Ce que l'application émet, et ce qui reste chez votre comptable](help:user.invoicing.scope).
-- En Italie, aucune facture n'est émise avant que la plateforme nationale (le SdI) ait accepté un document de l'espace. **Envoyer un document de test** dans l'étape facturation électronique du guide de configuration : la facture pro forma du mois en cours d'un membre, avec un numéro de test, part vers l'environnement de test de la plateforme avec ses identifiants de test. Rien n'est émis, numéroté ni comptabilisé. Une fois la plateforme d'accord, l'espace émet ; de nouveaux identifiants ou une autre identité du vendeur demandent un nouveau test (#3883).
+- En Italie, aucune facture n'est émise avant que la plateforme nationale (le SdI) ait accepté un document de l'espace. **Envoyer un document de test** dans l'étape facturation électronique du guide de configuration : la facture pro forma du mois en cours d'un membre, avec un numéro de test, part vers l'environnement de test de la plateforme avec ses identifiants de test. Rien n'est émis, numéroté ni comptabilisé. Une fois la plateforme d'accord, l'espace émet ; de nouveaux identifiants ou une autre identité du vendeur demandent un nouveau test.
 
 **Voir aussi:** [Envoyer une facture électronique](help:user.money.einvoice.send) · [Identité légale](help:user.money.legal.identity)
 

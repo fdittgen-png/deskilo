@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'einvoice_gateway.dart';
-import 'einvoice_test_document.dart';
 
 /// #2591 — sending an issued invoice through an e-invoicing channel, its
 /// receipts, and the owner's channel credentials.

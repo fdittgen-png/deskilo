@@ -6,7 +6,6 @@ import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
-import 'package:deskilo/features/money/domain/einvoice_test_document.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
@@ -237,11 +236,6 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   final transmissions = <String, InvoiceTransmission>{};
   final einvoiceConfig = <String, String>{};
 
-  /// #3883 — the demo's latest sandbox test document.
-  EInvoiceTestVerdict einvoiceTestVerdict = EInvoiceTestVerdict.none;
-  String einvoiceTestId = '';
-  int einvoiceTests = 0;
-
   /// Mirrors the migration's default seed: (0,25] Flex-like, (25,50]
   /// Half-like, (50,100] Full-like (#128).
   final feeBands = <FeeBand>[
@@ -469,9 +463,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<EInvoiceResolveResult> resolveEInvoiceTransmission({required String workspaceId, required String transmissionId, required EInvoiceResolution resolution, required String reason, required String evidence, bool documentRejected = false}) => eInvoices.resolveEInvoiceTransmission(workspaceId: workspaceId, transmissionId: transmissionId, resolution: resolution, reason: reason, evidence: evidence, documentRejected: documentRejected);
   @override Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(String workspaceId) => eInvoices.fetchInvoiceTransmissions(workspaceId);
   @override Future<void> setEInvoiceCredentials(String workspaceId, Map<String, String> config) => eInvoices.setEInvoiceCredentials(workspaceId, config);  @override Future<void> clearEInvoiceCredentials(String workspaceId) => eInvoices.clearEInvoiceCredentials(workspaceId);
-  @override Future<EInvoiceProviderStatus> fetchEInvoiceStatus(String workspaceId) => eInvoices.fetchEInvoiceStatus(workspaceId);
-  @override Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) => eInvoices.fetchEInvoiceTest(workspaceId);
-  @override Future<EInvoiceTestSent> sendEInvoiceTest({required String workspaceId, required String fileName, required List<int> bytes}) => eInvoices.sendEInvoiceTest(workspaceId: workspaceId, fileName: fileName, bytes: bytes);
+  @override Future<EInvoiceProviderStatus> fetchEInvoiceStatus(String workspaceId) => eInvoices.fetchEInvoiceStatus(workspaceId);  @override Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) => eInvoices.fetchEInvoiceTest(workspaceId);  @override Future<EInvoiceTestSent> sendEInvoiceTest({required String workspaceId, required String fileName, required List<int> bytes}) => eInvoices.sendEInvoiceTest(workspaceId: workspaceId, fileName: fileName, bytes: bytes);
   @override Future<List<FeeBand>> fetchFeeBands(String workspaceId) => commercialTerms.fetchFeeBands(workspaceId);
   @override Future<void> replaceFeeBands(String workspaceId, List<FeeBand> bands) => commercialTerms.replaceFeeBands(workspaceId, bands);
   @override Future<SubscriptionLevels> fetchSubscriptionLevels(String workspaceId) => commercialTerms.fetchSubscriptionLevels(workspaceId);
