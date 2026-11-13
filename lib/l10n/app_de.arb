@@ -15773,6 +15773,10 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "reportCoversAnalysis": "Auslastung, Umsatz, Einkäufe und Kasse über einen Zeitraum, verglichen und gruppiert.",
+  "reportCoversOverview": "Was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.",
+  "reportCoversRegister": "Jede Rechnung in einer Zeile: Datum, Name, Betrag und Status.",
+  "reportCoversVat": "Die Umsatzsteuererklärungen jedes Zeitraums, aus den ausgestellten Rechnungen erstellt.",
   "reportDesignEmpty": "Leeres Band — fügen Sie unten ein Element hinzu.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
@@ -15985,6 +15989,10 @@
   "reportFieldMeaningCreditNote": "Wahr auf einer Gutschrift",
   "@reportFieldMeaningCreditNote": {
     "description": "#966 report guide: meaning of credit_note"
+  },
+  "reportFieldMeaningCurrency": "Der ISO-Code der Währung, etwa EUR oder CAD",
+  "@reportFieldMeaningCurrency": {
+    "description": "#3851 report guide: meaning of currency"
   },
   "reportFieldMeaningDeclarationNote": "Der Hinweis der Erklärung: vor der Abgabe prüfen",
   "reportFieldMeaningDueDate": "Das Fälligkeitsdatum",
@@ -16558,6 +16566,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportsColumnCovers": "Was er umfasst",
+  "reportsColumnName": "Bericht",
+  "reportsTools": "Werkzeuge",
   "requestAccept": "Annehmen",
   "requestBlock": "Blockieren",
   "requestIgnore": "Ignorieren",

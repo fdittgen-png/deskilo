@@ -24,7 +24,7 @@ import '../demo_entry.dart';
 import '../demo_link.dart';
 import '../demo_reload_marker_provider.dart';
 import 'demo_entry_sheet.dart';
-import 'demo_workspace.dart';
+import 'demo_environment.dart';
 
 class DemoEntryScreen extends ConsumerStatefulWidget {
   const DemoEntryScreen({super.key, required this.link});

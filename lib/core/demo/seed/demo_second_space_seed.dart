@@ -31,11 +31,12 @@ import '../data/reservation_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_clock.dart';
 import '../demo_dataset.dart';
+import '../demo_space_ids.dart';
 import 'demo_flags.dart';
 
+export '../demo_space_ids.dart' show demoFirstSpaceId, demoSecondSpaceId;
+
 /// The demo's complete space (Pézenas) and its half-way twin (Leipzig).
-const demoFirstSpaceId = 'ws-1';
-const demoSecondSpaceId = 'ws-2';
 const demoSecondSpaceName = 'Kontorhaus Plagwitz';
 const demoSecondSpaceAddress = 'Am Kanal 7\n04229 Leipzig';
 

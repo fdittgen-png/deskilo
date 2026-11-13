@@ -82,6 +82,7 @@ ReportFieldGroup reportFieldGroup(String field) => switch (field) {
       'vat_exigibility_mention' =>
         ReportFieldGroup.seller,
       'total' ||
+      'currency' ||
       'charges' ||
       'payments' ||
       'has_vat' ||
@@ -254,9 +255,11 @@ String reportFieldGroupName(ReportFieldGroup group, AppLocalizations l10n) =>
         l10n.reportFieldGroupStatus,
     };
 
-/// #2376 — the book reports' fields; any other field reads as itself.
+/// #2376 — the book reports' fields, and #3851 the currency code; any other
+/// field reads as itself.
 String _bookFieldMeaning(String field, AppLocalizations l10n) =>
     switch (field) {
+      'currency' => l10n.reportFieldMeaningCurrency,
       'book_period' => l10n.reportFieldMeaningBookPeriod,
       'book_rows' => l10n.reportFieldMeaningBookRows,
       'book_total_debit' => l10n.reportFieldMeaningBookTotalDebit,

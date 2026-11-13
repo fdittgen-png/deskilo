@@ -289,7 +289,7 @@ Map<String, Object?> invoiceReportData(
   /// #1916 — the member's stated capacity, for an unissued document.
   String? memberCapacity,
 }) {
-  final currency = moneyFormat(invoice.currency, locale: strings.formatLocale);
+  final currency = documentMoneyFormat(invoice.currency, locale: strings.formatLocale);
   final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
@@ -334,7 +334,7 @@ Map<String, Object?> invoiceReportData(
     'buyer_reference': invoice.buyerParty?.reference ?? '',
     'issued_by': invoice.issuerName,
     'replaces': invoice.replacesNumber,
-    'total': currency.formatMinor(invoice.totalCents),
+    ...documentTotalData(invoice.currency, currency, invoice.totalCents),
     'charges': currency.formatMinor(invoice.chargesCents),
     'payments': currency.formatMinor(
       invoice.lines

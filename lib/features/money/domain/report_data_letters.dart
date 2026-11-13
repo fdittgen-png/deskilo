@@ -37,7 +37,7 @@ Map<String, Object?> statementReportData(
   required TaxReferenceSet reference,
   Workspace? workspace,
 }) {
-  final currency = moneyFormat(currencyCode, locale: strings.formatLocale);
+  final currency = documentMoneyFormat(currencyCode, locale: strings.formatLocale);
   // #870 — the seller kind decides what the recurring position is
   // called; it must read the same here as on the invoice itself.
   final association = InvoiceLegal.fromJson(
@@ -100,7 +100,7 @@ Map<String, Object?> statementReportData(
     'issued': periodLabel,
     'issued_by': workspaceName,
     'replaces': '',
-    'total': currency.formatMinor(statement.balanceCents.abs()),
+    ...documentTotalData(currencyCode, currency, statement.balanceCents.abs()),
     'net_total': currency.formatMinor(statement.feeCents + statement.overageCents),
     'vat_total': currency.formatMinor(0),
     'charges': currency.formatMinor(statement.feeCents + statement.overageCents),
@@ -363,7 +363,7 @@ Map<String, Object?> reminderReportData(
   required int level,
   required TaxReferenceSet reference,
 }) {
-  final currency = moneyFormat(invoice.currency, locale: strings.formatLocale);
+  final currency = documentMoneyFormat(invoice.currency, locale: strings.formatLocale);
   final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   final now = facts.now;
   final workspace = facts.workspace;
@@ -379,7 +379,7 @@ Map<String, Object?> reminderReportData(
     'member': invoice.clientName,
     'number': invoice.number,
     'issued': dateFormat.format(invoice.issuedAt),
-    'total': currency.formatMinor(invoice.totalCents),
+    ...documentTotalData(invoice.currency, currency, invoice.totalCents),
     'reminder_level': level,
     'reminder_date': dateFormat.format(now),
     'days_open': daysOpen,

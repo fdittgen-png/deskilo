@@ -141,6 +141,10 @@
   "@reportFieldMeaningTotal": {
     "description": "#966 report guide: meaning of total"
   },
+  "reportFieldMeaningCurrency": "El código ISO de la moneda, por ejemplo EUR o CAD",
+  "@reportFieldMeaningCurrency": {
+    "description": "#3851 report guide: meaning of currency"
+  },
   "reportFieldMeaningCharges": "Los cargos antes de los pagos",
   "@reportFieldMeaningCharges": {
     "description": "#966 report guide: meaning of charges"
