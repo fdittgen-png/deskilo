@@ -23568,6 +23568,27 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String purchaseOrderSummaryLines(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count lines',
+      one: 'One line',
+      zero: 'No line',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get purchaseOrderSummaryNet => 'Net';
+
+  @override
+  String get purchaseOrderSummaryTitle => 'Order summary';
+
+  @override
+  String get purchaseOrderSummaryVat => 'VAT';
+
+  @override
   String get purchaseOrderSupplier => 'Supplier';
 
   @override

@@ -30983,6 +30983,27 @@
       }
     }
   },
+  "purchaseOrderSummaryLines": "{count, plural, =0{No line} one{One line} other{{count} lines}}",
+  "@purchaseOrderSummaryLines": {
+    "description": "#3608 the number of lines in the order",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseOrderSummaryNet": "Net",
+  "@purchaseOrderSummaryNet": {
+    "description": "#3608 the order's total before VAT"
+  },
+  "purchaseOrderSummaryTitle": "Order summary",
+  "@purchaseOrderSummaryTitle": {
+    "description": "#3608 the summary beside the order's form"
+  },
+  "purchaseOrderSummaryVat": "VAT",
+  "@purchaseOrderSummaryVat": {
+    "description": "#3608 the order's VAT"
+  },
   "purchaseOrderSupplier": "Supplier",
   "@purchaseOrderSupplier": {
     "description": "#3307 purchase orders"

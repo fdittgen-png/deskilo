@@ -22,6 +22,7 @@ import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
 import '../../features/money/presentation/screens/payment_config_screen.dart';
 import '../../features/money/presentation/screens/purchase_approvals_screen.dart';
+import '../../features/money/presentation/screens/purchase_order_page.dart';
 import '../../features/money/presentation/screens/purchase_orders_screen.dart';
 import '../../features/money/presentation/screens/recorded_payments_screen.dart';
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
@@ -172,6 +173,13 @@ List<RouteBase> _invoicingRoutes(RouteEnv env) {
 }
 
 /// The purchase side: the hub, the approvals queue and the suppliers.
+/// Who writes a purchase order: a buyer, in a space that has the orders.
+const _orderWriteAccess = RouteAccess(
+  permission: WorkspacePermission.managePurchases,
+  features: [WorkspaceFeature.purchases, WorkspaceFeature.purchaseOrders],
+  to: '/money/purchase-orders',
+);
+
 List<RouteBase> _purchaseRoutes(RouteEnv env) {
   return [
     // #2577 — the purchase side on its own page.
@@ -237,6 +245,22 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const PurchaseOrdersScreen(),
+      // #3608 — the order's form is a long task: a page with an address.
+      // Writing it is a buyer's (managePurchases); the list is read by
+      // finance too.
+      routes: [
+        GoRoute(
+          path: 'new',
+          redirect: env.guard(_orderWriteAccess),
+          builder: (context, state) => const PurchaseOrderPage(),
+        ),
+        GoRoute(
+          path: ':id/edit',
+          redirect: env.guard(_orderWriteAccess),
+          builder: (context, state) =>
+              PurchaseOrderPage(orderId: state.pathParameters['id']),
+        ),
+      ],
     ),
   ];
 }
