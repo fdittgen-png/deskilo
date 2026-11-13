@@ -94,7 +94,6 @@ void main() {
         screen: 'window',
         width: 1440,
         brightness: brightness,
-        whole: true,
       );
       expect(tester.takeException(), isNull);
     });
