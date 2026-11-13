@@ -11261,6 +11261,12 @@ abstract class AppLocalizations {
   /// **'Payment of {date}'**
   String customerStatementPart(String date);
 
+  /// no statement is printed for a period without balance or movement (#3876)
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to state for this period: no balance and no movement.'**
+  String get customerStatementPeriodNothing;
+
   /// the period under the title (#3839)
   ///
   /// In en, this message translates to:

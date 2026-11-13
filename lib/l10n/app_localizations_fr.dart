@@ -7141,6 +7141,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get customerStatementPeriodNothing =>
+      'Rien à relever pour cette période : ni solde ni mouvement.';
+
+  @override
   String customerStatementPeriodRange(String from, String to) {
     return 'Du $from au $to';
   }

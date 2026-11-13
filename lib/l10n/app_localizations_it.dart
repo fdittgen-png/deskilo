@@ -7107,6 +7107,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get customerStatementPeriodNothing =>
+      'Niente da riportare per questo periodo: nessun saldo e nessun movimento.';
+
+  @override
   String customerStatementPeriodRange(String from, String to) {
     return 'Dal $from al $to';
   }

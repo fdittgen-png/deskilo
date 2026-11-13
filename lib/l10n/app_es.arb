@@ -4381,6 +4381,7 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Nada que indicar para este período: ni saldo ni movimiento.",
   "customerStatementPeriodRange": "Del {from} al {to}",
   "customerStatementPickCurrency": "¿El estado de cuenta en qué moneda?",
   "@customerStatementPickCurrency": {

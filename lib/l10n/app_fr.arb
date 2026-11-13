@@ -4381,6 +4381,7 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Rien à relever pour cette période : ni solde ni mouvement.",
   "customerStatementPeriodRange": "Du {from} au {to}",
   "customerStatementPickCurrency": "Le relevé dans quelle devise ?",
   "@customerStatementPickCurrency": {
