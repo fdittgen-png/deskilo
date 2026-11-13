@@ -82,3 +82,28 @@ export async function effectiveConfig(
 
 export const missingFields = (config: ProviderConfig, provider: Provider) =>
   REQUIRED[provider].filter((f) => !config[f]);
+
+/** #3905 -- whether [config] holds a provider's test credentials: a Stripe
+ * test key (`sk_test_`, `rk_test_`), a Mollie test key (`test_`, Wero rides
+ * Mollie), a PayPal configuration outside `live`. A production workspace opens
+ * no order on them: a test payment never credits a production ledger. */
+export function usesTestCredentials(config: ProviderConfig, provider: Provider): boolean {
+  switch (provider) {
+    case "stripe":
+      return /^(sk|rk)_test_/.test(config.secret_key ?? "");
+    case "mollie":
+    case "wero":
+      return (config.api_key ?? "").startsWith("test_");
+    case "paypal":
+      return (config.env ?? "") !== "live";
+  }
+}
+
+/** #3905 -- whether an order on [config] is refused: it holds test
+ * credentials and the installation takes no test payments ([allowTest], the
+ * operator's switch, `_shared/test_payments.ts`). */
+export const refusesTestCredentials = (
+  config: ProviderConfig,
+  provider: Provider,
+  allowTest: boolean,
+): boolean => !allowTest && usesTestCredentials(config, provider);

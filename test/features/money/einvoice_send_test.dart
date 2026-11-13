@@ -221,6 +221,20 @@ void main() {
   });
 
   testWidgets(
+      'a voided invoice is not offered Send (#3903): the server would refuse '
+      'it', (tester) async {
+    final money = await _seeded()
+      ..einvoiceGateway = const EInvoiceGatewayConfig(configured: true);
+    money.invoices[0] =
+        money.invoices.single.copyWith(voidedAt: DateTime(2026, 7, 2));
+    await _pumpArchive(tester, money: money);
+
+    await _openEInvoiceSheet(tester, money.invoices.single.id);
+
+    expect(find.byKey(const ValueKey('invoice-einvoice-send')), findsNothing);
+  });
+
+  testWidgets(
       'a prepared or in-flight submission still offers Send (#3335): the '
       'server claims the first and answers "in progress" to the second, so '
       'an invoice whose function died is never stranded', (tester) async {

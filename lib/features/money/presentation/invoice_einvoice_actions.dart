@@ -353,16 +353,22 @@ class _EInvoiceExportRun {
       canFixIdentity: roles.owner,
       identityFixedSince: identityFixedSince,
       // Only an issuer sends, and only when a platform is configured — and
-      // not while an earlier submission's outcome is unknown (#3335): the
-      // server would refuse it anyway, so the button is not offered.
+      // not while an earlier submission's outcome is unknown (#3335), nor
+      // for a voided invoice (#3903): the server would refuse it anyway, so
+      // the button is not offered.
       canSend:
-          gateway.configured && roles.issuer && sendGaps.isEmpty && !unsettled,
+          gateway.configured &&
+          roles.issuer &&
+          sendGaps.isEmpty &&
+          !unsettled &&
+          !s.invoice.isVoided,
       // The customer leg (#568): its own endpoint, its own flag, the same
       // issuer gate.
       canSendCustomer:
           gateway.customerConfigured &&
           roles.issuer &&
           !unsettled &&
+          !s.invoice.isVoided &&
           ref
               .read(enabledFeaturesSyncProvider)
               .contains(WorkspaceFeature.einvoiceCustomerDelivery),

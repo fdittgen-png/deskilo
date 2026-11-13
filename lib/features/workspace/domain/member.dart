@@ -212,14 +212,13 @@ sealed class Member with _$Member implements SystemStamped {
       (isOwner || coOwner == CoOwnerStatus.active) &&
       status == MemberStatus.active;
 
-  /// #3903 — who may send an e-invoice, as the send function decides it:
-  /// the owner, or an active member who holds issueInvoices through the
-  /// permission matrix ([held]), an administrator like anyone given it by
-  /// a role.
+  /// #3903 — who may send an e-invoice, exactly as the send function decides
+  /// it: an active member who is the owner, or who holds issueInvoices
+  /// through the permission matrix ([held]) — an administrator or a
+  /// co-owner like anyone given it by a role.
   bool maySendEInvoices(Set<WorkspacePermission> held) =>
-      actsAsOwner ||
-      (status == MemberStatus.active &&
-          held.contains(WorkspacePermission.issueInvoices));
+      status == MemberStatus.active &&
+      (isOwner || held.contains(WorkspacePermission.issueInvoices));
 }
 
 /// The user ids that HAVE a profile to fetch (#962): managed members

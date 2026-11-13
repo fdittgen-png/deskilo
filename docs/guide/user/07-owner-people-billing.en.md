@@ -593,6 +593,10 @@ You want members to pay an outstanding bill online, into your own provider accou
 
 The keys come from the provider's own dashboard: **Client ID**, **Secret**, **Environment**, **Webhook ID** and **Return URL** for PayPal; **Secret key**, **Webhook signing secret** and **Return URL** for Stripe; **API key** and **Return URL** for Mollie and Wero. Keep test and live keys apart: all keys you enter must belong to the same mode.
 
+A production workspace takes payments with live keys only: with test keys, a member's online payment is refused. For Stripe, the webhook endpoint also listens to **charge.dispute.created** and **charge.refunded**: a payment the provider reverses (a refund or a dispute) is then marked reversed, and you correct the member's balance.
+
+An installation that only rehearses payments can set `DESKILO_ALLOW_TEST_PAYMENTS=true` in the environment of its functions, so that orders open under test keys and test-mode events are processed; it must never be set on an installation that takes real payments.
+
 Secrets are stored on the server and never shown again. A saved one reads **Set — leave blank to keep**; type a new value to replace it.
 
 <!-- anchor: user.money.expenses.schedule -->

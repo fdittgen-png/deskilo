@@ -10,6 +10,7 @@ import {
   effectiveConfig,
   failureOutcome,
   handleWith,
+  orderFailure,
   idempotencyKey,
   isProvider,
   missingFields,
@@ -201,4 +202,44 @@ Deno.test("the member themself, in a development workspace, is told it takes no 
   assertEquals(res.status, 409);
   assertEquals((await res.json()).error, "development_workspace");
   assertEquals(read, ["members", "workspaces"]);
+});
+
+/** A service client that records each update and the filters on it. */
+function filterRecordingAdmin(writes: { table: string; patch: unknown; eq: [string, unknown][] }[]) {
+  return {
+    from: (table: string) => ({
+      update: (patch: unknown) => {
+        const write = { table, patch, eq: [] as [string, unknown][] };
+        writes.push(write);
+        const chain = {
+          eq: (column: string, value: unknown) => {
+            write.eq.push([column, value]);
+            return chain;
+          },
+          then: (resolve: (v: unknown) => void) => resolve({ error: null }),
+        };
+        return chain;
+      },
+    }),
+  };
+}
+
+Deno.test("a definitive refusal marks the intent failed only while it is still created", async () => {
+  const writes: { table: string; patch: unknown; eq: [string, unknown][] }[] = [];
+  const res = await orderFailure(filterRecordingAdmin(writes), "intent-1", "stripe", new ProviderRefusal(400));
+  assertEquals(res.status, 502);
+  assertEquals(writes, [{
+    table: "payment_intents",
+    patch: { status: "failed" },
+    eq: [["id", "intent-1"], ["status", "created"]],
+  }]);
+});
+
+Deno.test("an outcome that is not definitive writes nothing: the intent stays pending", async () => {
+  for (const e of [new ProviderRefusal(409), new ProviderRefusal(503), new Error("socket reset")]) {
+    const writes: { table: string; patch: unknown; eq: [string, unknown][] }[] = [];
+    const res = await orderFailure(filterRecordingAdmin(writes), "intent-1", "stripe", e);
+    assertEquals(res.status, 503);
+    assertEquals(writes, []);
+  }
 });

@@ -17,6 +17,8 @@ class PaymentIntent implements SystemStamped {
     required this.createdAt,
     this.captureId = '',
     this.reference = '',
+    this.reversedAt,
+    this.reversalReason = '',
     this.system = SystemColumns.none,
   });
 
@@ -39,9 +41,14 @@ class PaymentIntent implements SystemStamped {
   final String period;
   final int amountCents;
 
-  /// 'created' | 'captured' | 'failed'.
+  /// 'created' | 'captured' | 'failed' | 'reversed' (#3905).
   final String status;
   final DateTime createdAt;
+
+  /// #3905 — when the provider reported the payment reversed, and why (the
+  /// kind of reversal with its amount); null and empty otherwise.
+  final DateTime? reversedAt;
+  final String reversalReason;
 
   factory PaymentIntent.fromRow(Map<String, dynamic> row) => PaymentIntent(
         system: SystemColumns.fromRow(row),
@@ -55,5 +62,7 @@ class PaymentIntent implements SystemStamped {
         amountCents: row['amount_cents'] as int,
         status: row['status'] as String,
         createdAt: DateTime.parse(row['created_at'] as String),
+        reversedAt: row['reversed_at'] == null ? null : DateTime.parse(row['reversed_at'] as String),
+        reversalReason: row['reversal_reason'] as String? ?? '',
       );
 }
