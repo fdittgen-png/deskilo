@@ -2687,6 +2687,7 @@ Map<String, _Getter> _part7() => {
   'fileDropBusy': (l) => l.fileDropBusy,
   'fileSaveFailureShare': (l) => l.fileSaveFailureShare,
   'financesCoverageHome': (l) => l.financesCoverageHome,
+  'financesCoverageOlderSettled': (l) => l.financesCoverageOlderSettled,
   'groupPeople': (l) => l.groupPeople,
   'guestPassProblemNoSeat': (l) => l.guestPassProblemNoSeat,
   'guestPassUsed': (l) => l.guestPassUsed,

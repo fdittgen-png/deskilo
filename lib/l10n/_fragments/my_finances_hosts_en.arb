@@ -29,5 +29,9 @@
   "financesHideAmount": "Hide amount",
   "@financesHideAmount": {
     "description": "#2557 C5 Me › Finances: hides one compact card's amount again."
+  },
+  "financesCoverageOlderSettled": "Older paid documents are not listed; everything still to pay is.",
+  "@financesCoverageOlderSettled": {
+    "description": "#3878 the coverage line when an answer left older settled documents out"
   }
 }

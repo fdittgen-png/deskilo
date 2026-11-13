@@ -11,93 +11,10 @@ import '../../../core/text/collation.dart';
 import 'account_activity.dart';
 import 'finance_due.dart';
 import 'finance_hosts.dart';
+import 'finance_invoice.dart';
 
 export 'finance_due.dart';
-
-/// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
-/// derives it).
-enum FinanceState {
-  open('open'),
-  awaitingValidation('awaiting_validation'),
-  partiallyPaid('partially_paid'),
-  paid('paid'),
-  refunded('refunded'),
-  closed('closed');
-
-  const FinanceState(this.wire);
-  final String wire;
-
-  static FinanceState fromWire(Object? wire) =>
-      values.where((s) => s.wire == wire).firstOrNull ?? FinanceState.open;
-
-  /// Still open: not settled yet (fully or in part).
-  bool get owed => this == open || this == awaitingValidation || this == partiallyPaid;
-
-  /// #3682 — still to pay. A payment being validated (0380: the business
-  /// matched my payment, its validators have not confirmed it yet) is paid
-  /// on my side: open, but neither to pay nor ever late.
-  bool get toPay => this == open || this == partiallyPaid;
-}
-
-class FinanceInvoice {
-  const FinanceInvoice({
-    required this.id,
-    required this.workspaceId,
-    required this.workspaceName,
-    required this.number,
-    required this.issuedAt,
-    required this.totalCents,
-    required this.paidCents,
-    required this.currency,
-    required this.state,
-    this.dueOn,
-    this.reminderCount = 0,
-    this.lastReminderAt,
-    this.timezone,
-  });
-
-  final String id, workspaceId, workspaceName, number, currency;
-
-  /// #3659 — the issuing business's IANA zone (0736); null when unnamed.
-  final String? timezone;
-  final DateTime issuedAt;
-  final DateTime? dueOn, lastReminderAt;
-  final int totalCents, paidCents, reminderCount;
-  final FinanceState state;
-
-  /// What remains to pay: the whole face value until a payment is matched,
-  /// the rest after a partial one, nothing once settled.
-  int get remainingCents => switch (state) {
-        FinanceState.open || FinanceState.awaitingValidation => totalCents,
-        FinanceState.partiallyPaid => totalCents - paidCents,
-        _ => 0,
-      };
-
-  /// A credit note gives money back: its face value is negative, the same
-  /// rule the workspace's own documents follow (`Invoice.isCreditNote`).
-  bool get isCreditNote => totalCents < 0;
-
-  factory FinanceInvoice.fromJson(Map<String, dynamic> j) {
-    final r = JsonReader(j, context: 'finance_invoice');
-    return FinanceInvoice(
-      id: r.string('id'),
-      workspaceId: r.string('workspace_id'),
-      workspaceName: r.stringOr('workspace_name'),
-      number: r.stringOr('number'),
-      issuedAt: r.dateTime('issued_at'),
-      dueOn: r.dateTimeOrNull('due_on'),
-      totalCents: r.intOrNull('total_cents') ?? 0,
-      paidCents: r.intOrNull('paid_cents') ?? 0,
-      // Required (#3599): the column is not null, and an amount whose
-      // currency is unknown must fail to read, never read as another one.
-      currency: r.string('currency'),
-      state: FinanceState.fromWire(r.json['state']),
-      reminderCount: r.intOrNull('reminder_count') ?? 0,
-      lastReminderAt: r.dateTimeOrNull('last_reminder_at'),
-      timezone: r.stringOrNull('workspace_timezone'),
-    );
-  }
-}
+export 'finance_invoice.dart';
 
 class FinanceReminder {
   const FinanceReminder({
@@ -169,9 +86,15 @@ class FinanceOverview {
     this.answered = const [],
     this.hosts = const [],
     this.payments = const [],
+    this.olderSettledLeftOut = false,
   });
 
   final List<FinanceInvoice> invoices;
+
+  /// #3878 (0755) — an answer carries every document still owed or in my
+  /// favour, and the settled ones by their newest page: true when older
+  /// settled ones were left out of it.
+  final bool olderSettledLeftOut;
   final List<FinanceReminder> reminders;
 
   /// My payments read on the connected hosts (`my_financial_activity`,
@@ -234,6 +157,7 @@ class FinanceOverview {
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
       answered: [...answered, ...other.answered],
       hosts: [...hosts, ...other.hosts],
+      olderSettledLeftOut: olderSettledLeftOut || other.olderSettledLeftOut,
     );
   }
 
@@ -276,6 +200,7 @@ class FinanceOverview {
         unavailableSources: unavailableSources ?? this.unavailableSources,
         answered: answered ?? this.answered,
         hosts: hosts ?? this.hosts,
+        olderSettledLeftOut: olderSettledLeftOut,
       );
 
   /// The same documents, with [payments] among them.
@@ -343,6 +268,7 @@ class FinanceOverview {
               invoices: answer.invoices,
               reminders: answer.reminders,
               payments: answer.payments,
+              olderSettledLeftOut: answer.olderSettledLeftOut,
             ),
           );
   }
@@ -433,20 +359,21 @@ class FinanceOverview {
       ];
 
   /// What I still have to pay: never a credit note not used yet (money due
-  /// TO me, #3599) nor an invoice whose payment is being validated (#3682).
+  /// TO me, #3599) nor what I paid that is being validated (#3682, #3877).
   List<FinanceInvoice> get payable => [
         for (final i in outstanding)
-          if (!i.isCreditNote && i.state.toPay) i,
+          if (!i.isCreditNote && i.toPay) i,
       ];
 
-  /// #3682 — invoices I paid whose payment the business has not confirmed.
-  bool _validating(FinanceInvoice i) =>
-      !i.isCreditNote && i.state == FinanceState.awaitingValidation;
+  /// #3682 — from a host without the server's figures, an invoice awaiting
+  /// validation is paid whole on my side and owed nowhere.
+  bool _validatingWhole(FinanceInvoice i) =>
+      i.stillDueCents == null && !i.isCreditNote && i.state == FinanceState.awaitingValidation;
 
   /// What I paid that waits for confirmation, per currency: not owed.
   Map<String, int> get beingValidatedByCurrency => _byCode([
         for (final i in outstanding)
-          if (_validating(i)) (i.currency, i.remainingCents),
+          if (!i.isCreditNote && i.beingValidatedCents > 0) (i.currency, i.beingValidatedCents),
       ]);
 
   /// What remains open with each business, per currency: its invoices to
@@ -454,7 +381,7 @@ class FinanceOverview {
   /// the business that issued it, never another one's — one payee.
   Map<(String, String), int> get _openByPayee {
     final out = <(String, String), int>{};
-    for (final i in outstanding.where((i) => !_validating(i))) {
+    for (final i in outstanding.where((i) => !_validatingWhole(i))) {
       final payee = (i.workspaceId, i.currency);
       out[payee] = (out[payee] ?? 0) + i.remainingCents;
     }
@@ -495,6 +422,7 @@ class FinanceOverview {
       invoices: r.objects('invoices', (row) => FinanceInvoice.fromJson(row.json)),
       reminders:
           r.objects('reminders', (row) => FinanceReminder.fromJson(row.json)),
+      olderSettledLeftOut: r.boolOr('settled_cut', fallback: false),
     ).qualified();
   }
 }

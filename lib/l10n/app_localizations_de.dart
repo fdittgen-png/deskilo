@@ -12049,6 +12049,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesCoverageNoDocuments => 'keine Dokumente';
 
   @override
+  String get financesCoverageOlderSettled =>
+      'Ältere bezahlte Dokumente sind nicht aufgeführt; alles, was noch zu zahlen ist, schon.';
+
+  @override
   String financesCoverageReading(String host) {
     return '$host wird gelesen …';
   }
