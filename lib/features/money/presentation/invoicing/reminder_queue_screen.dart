@@ -73,9 +73,9 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
   )?
   previewOf;
 
-  /// Builds a line's e-mail (#3673); null when the customer's language is
-  /// not known. A test hands in a plain one.
-  final Future<ReminderMailLetter?> Function(
+  /// Builds a line's e-mail (#3673) in the language of the invoice it
+  /// reminds of (#3850). A test hands in a plain one.
+  final Future<ReminderMailLetter> Function(
     QueuedReminder line,
     Invoice invoice,
   )?

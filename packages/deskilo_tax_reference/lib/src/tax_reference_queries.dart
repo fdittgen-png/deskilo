@@ -90,6 +90,14 @@ extension TaxReferenceQueries on TaxReferenceSet {
     return row == null || row.country != code ? null : row.value as IssuingGateValue;
   }
 
+  /// #3850 -- the document languages of a seller in [country]; null where
+  /// the data holds no row.
+  DocumentLanguageValue? documentLanguagesOf(String country, {String? asOf}) {
+    final code = country.trim().toUpperCase();
+    final row = resolved(asOf).lookup(TaxDomain.documentLanguage, code, 'document');
+    return row == null || row.country != code ? null : row.value as DocumentLanguageValue;
+  }
+
   /// Whether the app issues for a seller in [country].
   bool issuesFor(String country, {String? asOf}) =>
       gateOf(country, asOf: asOf)?.issues ?? false;

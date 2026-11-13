@@ -25,10 +25,6 @@
   "@reminderEmailOff": {
     "description": "#3673 reminders by e-mail: reminderEmailOff"
   },
-  "reminderEmailNoLanguage": "The customer's document language is not known, so the reminder was not e-mailed. Choose their language, or share the letter.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailRefused": "The e-mail was refused: {reason}. No reminder was recorded.",
   "@reminderEmailRefused": {
     "description": "#3673 reminders by e-mail: reminderEmailRefused",
