@@ -25510,6 +25510,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportColUnitPrice => 'Unit price';
 
   @override
+  String get reportCoversAnalysis =>
+      'Occupancy, sales, purchases and cash over a period, compared and grouped.';
+
+  @override
+  String get reportCoversOverview =>
+      'What needs you, then the figures you may read.';
+
+  @override
+  String get reportCoversRegister =>
+      'Every invoice on one line: date, name, amount and status.';
+
+  @override
+  String get reportCoversVat =>
+      'The VAT returns of each period, prepared from the issued invoices.';
+
+  @override
   String get reportDesignEmpty => 'Empty band — add an element below.';
 
   @override
@@ -26293,6 +26309,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportVisualAddLine => 'Add line';
+
+  @override
+  String get reportsColumnCovers => 'What it covers';
+
+  @override
+  String get reportsColumnName => 'Report';
+
+  @override
+  String get reportsTools => 'Tools';
 
   @override
   String get requestAccept => 'Accept';

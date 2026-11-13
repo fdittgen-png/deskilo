@@ -1,0 +1,10 @@
+{
+  "@@locale": "de",
+  "reportCoversRegister": "Jede Rechnung in einer Zeile: Datum, Name, Betrag und Status.",
+  "reportCoversVat": "Die Umsatzsteuererklärungen jedes Zeitraums, aus den ausgestellten Rechnungen erstellt.",
+  "reportCoversOverview": "Was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.",
+  "reportCoversAnalysis": "Auslastung, Umsatz, Einkäufe und Kasse über einen Zeitraum, verglichen und gruppiert.",
+  "reportsColumnName": "Bericht",
+  "reportsColumnCovers": "Was er umfasst",
+  "reportsTools": "Werkzeuge"
+}

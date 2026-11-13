@@ -41310,6 +41310,30 @@ abstract class AppLocalizations {
   /// **'Unit price'**
   String get reportColUnitPrice;
 
+  /// #3617 the reports declared once: reportCoversAnalysis
+  ///
+  /// In en, this message translates to:
+  /// **'Occupancy, sales, purchases and cash over a period, compared and grouped.'**
+  String get reportCoversAnalysis;
+
+  /// #3617 the reports declared once: reportCoversOverview
+  ///
+  /// In en, this message translates to:
+  /// **'What needs you, then the figures you may read.'**
+  String get reportCoversOverview;
+
+  /// #3617 the reports declared once: reportCoversRegister
+  ///
+  /// In en, this message translates to:
+  /// **'Every invoice on one line: date, name, amount and status.'**
+  String get reportCoversRegister;
+
+  /// #3617 the reports declared once: reportCoversVat
+  ///
+  /// In en, this message translates to:
+  /// **'The VAT returns of each period, prepared from the issued invoices.'**
+  String get reportCoversVat;
+
   /// True WYSIWYG design surface (#498)
   ///
   /// In en, this message translates to:
@@ -42737,6 +42761,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add line'**
   String get reportVisualAddLine;
+
+  /// #3617 the reports declared once: reportsColumnCovers
+  ///
+  /// In en, this message translates to:
+  /// **'What it covers'**
+  String get reportsColumnCovers;
+
+  /// #3617 the reports declared once: reportsColumnName
+  ///
+  /// In en, this message translates to:
+  /// **'Report'**
+  String get reportsColumnName;
+
+  /// #3617 the reports declared once: reportsTools
+  ///
+  /// In en, this message translates to:
+  /// **'Tools'**
+  String get reportsTools;
 
   /// Shown as a text in message requests card (directory).
   ///

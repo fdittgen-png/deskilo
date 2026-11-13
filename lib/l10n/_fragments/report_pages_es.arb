@@ -1,0 +1,10 @@
+{
+  "@@locale": "es",
+  "reportCoversRegister": "Cada factura en una línea: fecha, nombre, importe y estado.",
+  "reportCoversVat": "Las declaraciones de IVA de cada periodo, preparadas a partir de las facturas emitidas.",
+  "reportCoversOverview": "Lo que le espera y luego las cifras que puede leer.",
+  "reportCoversAnalysis": "Ocupación, ventas, compras y tesorería en un periodo, comparadas y agrupadas.",
+  "reportsColumnName": "Informe",
+  "reportsColumnCovers": "Qué abarca",
+  "reportsTools": "Herramientas"
+}

@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "reportCoversRegister": "Ogni fattura su una riga: data, nome, importo e stato.",
+  "reportCoversVat": "Le dichiarazioni IVA di ogni periodo, preparate dalle fatture emesse.",
+  "reportCoversOverview": "Ciò che la attende, poi le cifre che può leggere.",
+  "reportCoversAnalysis": "Occupazione, vendite, acquisti e cassa in un periodo, confrontati e raggruppati.",
+  "reportsColumnName": "Rapporto",
+  "reportsColumnCovers": "Cosa copre",
+  "reportsTools": "Strumenti"
+}

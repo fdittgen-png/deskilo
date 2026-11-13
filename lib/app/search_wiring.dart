@@ -26,6 +26,7 @@ import '../features/workspace/domain/invite_uri.dart';
 import '../features/workspace/domain/workspace_feature.dart';
 import '../features/workspace/domain/workspace_permission.dart';
 import '../features/workspace/presentation/widgets/invite_sheet.dart';
+import '../features/workspace/presentation/widgets/report_pages.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 import 'shell/desk_frame.dart';
 import 'shell/shell_drawer_entries.dart';
@@ -109,6 +110,37 @@ List<SearchOffer> _pages(BuildContext context, WidgetRef ref, GoRouter router) {
   menu.groups.forEach(group);
   for (final e in menu.account) {
     page(e, null);
+  }
+  // #3617 — the reports that are pages, from their one declaration; one
+  // the menu already offers at the same address is not offered twice.
+  final routes = {
+    for (final g in menu.groups) ...[
+      for (final e in g.entries) ?e.route,
+      for (final sub in g.sub)
+        for (final e in sub.entries) ?e.route,
+    ],
+    for (final e in menu.navigation) ?e.route,
+  };
+  final member = ref.watch(myMemberProvider).value;
+  for (final r in reportPagesFor(
+    features: ref.watch(enabledFeaturesSyncProvider),
+    permissions: ref.watch(myPermissionsProvider),
+    isAdmin: member?.isAdmin ?? false,
+    actsAsOwner: member?.actsAsOwner ?? false,
+  )) {
+    if (routes.contains(r.route)) continue;
+    fixed.add(
+      SearchOffer(
+        SearchResult(
+          id: 'report:${r.id}',
+          kind: SearchKind.page,
+          source: 'pages',
+          title: r.name(l10n),
+          where: '${l10n.searchKindPage} · ${l10n.uxReportsTitle}',
+        ),
+        () => unawaited(router.push(r.route)),
+      ),
+    );
   }
   return fixed;
 }

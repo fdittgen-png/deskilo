@@ -5,12 +5,15 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../money/presentation/widgets/invoice_template_sheet.dart';
 import '../../domain/bi_modules.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
+import 'report_pages.dart';
+import 'reports_table.dart';
 
 /// Existing destinations keep their own feature and permission checks.
 bool workspaceReportsAvailable(Set<WorkspaceFeature> features,
@@ -34,21 +37,21 @@ List<String> reportingSections({
   bool isAdmin = false,
   bool actsAsOwner = false,
 }) {
-  bool on(WorkspaceFeature f) => features.contains(f);
-  bool may(WorkspacePermission p) => permissions.contains(p);
-  final finance = (on(WorkspaceFeature.invoicing) &&
-          (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.issueInvoices))) ||
-      (on(WorkspaceFeature.workspaceStatus) && isAdmin &&
-          permissions.any({WorkspacePermission.viewMyMoney, WorkspacePermission.viewFinances,
-            WorkspacePermission.issueInvoices, WorkspacePermission.manageBilling}.contains)) ||
-      (on(WorkspaceFeature.invoicing) && on(WorkspaceFeature.vatDeclarations) && actsAsOwner &&
-          (may(WorkspacePermission.manageBilling) || may(WorkspacePermission.viewFinances)));
+  // #3617 — the sections of the report pages come from their one list.
+  final pages = reportPagesFor(
+    features: features,
+    permissions: permissions,
+    isAdmin: isAdmin,
+    actsAsOwner: actsAsOwner,
+  );
+  bool has(ReportSection s) => pages.any((p) => p.section == s);
   return [
-    if (finance) 'finance',
-    if (may(WorkspacePermission.workspaceSettings)) 'documents',
-    if (biAvailable(features: features, permissions: permissions)) 'analytics',
-    if (on(WorkspaceFeature.invoicePdfTemplate) &&
-        (may(WorkspacePermission.designDocuments) || may(WorkspacePermission.manageDocuments)))
+    if (has(ReportSection.finance)) 'finance',
+    if (permissions.contains(WorkspacePermission.workspaceSettings)) 'documents',
+    if (has(ReportSection.analytics)) 'analytics',
+    if (features.contains(WorkspaceFeature.invoicePdfTemplate) &&
+        (permissions.contains(WorkspacePermission.designDocuments) ||
+            permissions.contains(WorkspacePermission.manageDocuments)))
       'templates',
   ];
 }
@@ -66,39 +69,34 @@ class WorkspaceReports extends ConsumerWidget {
     final features = ref.watch(enabledFeaturesSyncProvider);
     final permissions = ref.watch(myPermissionsProvider);
     final member = ref.watch(myMemberProvider).value;
-    bool on(WorkspaceFeature feature) => features.contains(feature);
-    bool may(WorkspacePermission permission) => permissions.contains(permission);
-    Widget link(String id, IconData icon, String title, String route, {String? subtitle}) =>
-      ListTile(key: ValueKey(id), leading: Icon(icon), title: Text(title),
-        subtitle: subtitle == null ? null : Text(subtitle), trailing: const Icon(Icons.chevron_right),
-        onTap: () => context.push(route));
-    final finance = <Widget>[
-      if (on(WorkspaceFeature.invoicing) && (may(WorkspacePermission.viewFinances) || may(WorkspacePermission.issueInvoices)))
-        link('reports-register', Icons.table_rows_outlined, l.invoiceRegisterTitle, '/invoice-register',
-          subtitle: may(WorkspacePermission.issueInvoices) && may(WorkspacePermission.exportData) ? l.invoiceAccountingExport : null),
-      if (on(WorkspaceFeature.workspaceStatus) && (member?.isAdmin ?? false) &&
-          permissions.any({WorkspacePermission.viewMyMoney, WorkspacePermission.viewFinances, WorkspacePermission.issueInvoices, WorkspacePermission.manageBilling}.contains))
-        link('reports-status', Icons.account_balance_outlined, l.statusTitle, '/money/status', subtitle: l.statusSubtitle),
-      if (on(WorkspaceFeature.invoicing) && on(WorkspaceFeature.vatDeclarations) && (member?.actsAsOwner ?? false) &&
-          (may(WorkspacePermission.manageBilling) || may(WorkspacePermission.viewFinances)))
-        link('reports-vat', Icons.receipt_long_outlined, l.vatDeclTitle, '/vat-declarations'),
-    ];
-    final templates = on(WorkspaceFeature.invoicePdfTemplate) &&
-      (may(WorkspacePermission.designDocuments) || may(WorkspacePermission.manageDocuments));
+    final pages = reportPagesFor(
+      features: features,
+      permissions: permissions,
+      isAdmin: member?.isAdmin ?? false,
+      actsAsOwner: member?.actsAsOwner ?? false,
+    );
+    final templates = features.contains(WorkspaceFeature.invoicePdfTemplate) &&
+      permissions.any({WorkspacePermission.designDocuments, WorkspacePermission.manageDocuments}.contains);
+    final templateTile = ListTile(key: const ValueKey('reports-templates'), leading: const Icon(Icons.edit_note_outlined),
+      title: Text(features.contains(WorkspaceFeature.reportDesigner) ? l.reportEditorTitle : l.invoiceTemplateTitle),
+      subtitle: Text(l.invoiceTemplateHint), trailing: const Icon(Icons.chevron_right),
+      onTap: () => showInvoiceTemplateSheet(context, ref));
+    final tools = [...documents, if (templates) templateTile];
+    // #3617 — at the desk the reports are one records table.
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return ReportsTable(pages: pages, tools: tools);
+    }
+    Widget link(ReportPage p) => ListTile(key: ValueKey('reports-${p.id}'), leading: Icon(p.icon),
+      title: Text(p.name(l)), subtitle: Text(p.covers(l)), trailing: const Icon(Icons.chevron_right),
+      onTap: () => context.push(p.route));
+    List<Widget> of(ReportSection s) => [for (final p in pages) if (p.section == s) link(p)];
     final sections = <(String, String, List<Widget>)>[
       // #2583 — the overview: what needs the person, then the figures.
-      if (on(WorkspaceFeature.workspaceOverview))
-        ('overview', l.overviewTitle, [link('reports-overview', Icons.dashboard_outlined, l.overviewTitle, '/workspace-overview')]),
-      if (finance.isNotEmpty) ('finance', l.uxReportsFinance, finance),
+      if (of(ReportSection.overview).isNotEmpty) ('overview', l.overviewTitle, of(ReportSection.overview)),
+      if (of(ReportSection.finance).isNotEmpty) ('finance', l.uxReportsFinance, of(ReportSection.finance)),
       if (documents.isNotEmpty) ('documents', l.uxReportsWorkspace, documents),
-      if (biAvailable(features: features, permissions: permissions))
-        ('analytics', l.biTitle, [link('reports-analytics', Icons.insights_outlined, l.biTitle, '/bi')]),
-      if (templates) ('templates', l.uxReportsTemplates, [
-        ListTile(key: const ValueKey('reports-templates'), leading: const Icon(Icons.edit_note_outlined),
-          title: Text(on(WorkspaceFeature.reportDesigner) ? l.reportEditorTitle : l.invoiceTemplateTitle),
-          subtitle: Text(l.invoiceTemplateHint), trailing: const Icon(Icons.chevron_right),
-          onTap: () => showInvoiceTemplateSheet(context, ref)),
-      ]),
+      if (of(ReportSection.analytics).isNotEmpty) ('analytics', l.biTitle, of(ReportSection.analytics)),
+      if (templates) ('templates', l.uxReportsTemplates, [templateTile]),
     ];
     final initial = sections.indexWhere((s) => s.$1 == initialSection);
     return DefaultTabController(length: sections.length, initialIndex: initial < 0 ? 0 : initial,
