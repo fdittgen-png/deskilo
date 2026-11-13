@@ -42,12 +42,12 @@ import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
 import 'demo_clock.dart';
 import 'demo_dataset.dart';
+import 'demo_lazy_spaces.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
-import 'demo_space_listing.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_stores.dart';
 import 'demo_trade_city_space.dart';
@@ -72,8 +72,6 @@ import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_year_seed.dart';
 
-part 'demo_fixture_spaces.dart';
-
 /// #1565 — who the visitor is acting AS, for the repositories whose
 /// subject is implicit.
 ///
@@ -91,7 +89,7 @@ class DemoActor {
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
 /// cleanup of the old one.
-class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
+class DemoFixture implements DemoSpaceParts {
   DemoFixture._({
     required this.actor,
     required this.prefs,
@@ -270,7 +268,6 @@ class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
   }
 
   /// #1565 — the member every implicit-subject write is attributed to.
-  @override
   final DemoActor actor;
 
   /// #1564 — the per-device preferences this session owns, so nothing a
@@ -328,16 +325,54 @@ class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
   final DemoOutwardEdges outward;
 
   /// The instant this session believes it is.
-  @override
   final DateTime seededAt;
 
-  @override
-  final _DemoListings _listings;
-  List<DemoSpaceListing> get _everyListing => [
-    _listings.leipzig, _listings.london, _listings.newYork, _listings.zurich, _listings.milan, _twinSource.listing,
-  ];
-  @override
+  final DemoListings _listings;
   final DemoTwinSource _twinSource;
+  late final DemoLazySpaces _spaces = DemoLazySpaces(this, _listings, _twinSource);
+
+  /// #3846 — the spaces beside this one are built when first read, each on
+  /// its own, seeded as at the start (see [DemoLazySpaces]).
+  ///
+  /// The second space (Leipzig), with repositories of its own.
+  DemoSecondSpaceData get secondSpace => _spaces.secondSpace;
+  DemoLondonData get london => _spaces.london;
+  DemoNewYorkData get newYork => _spaces.newYork;
+
+  /// #3832 — the trade cities: Zurich (francs) and Milan (euros).
+  DemoTradeCityData get zurich => _spaces.zurich;
+  DemoTradeCityData get milan => _spaces.milan;
+
+  /// #3302 — the main space's development twin, with stores of its own.
+  DemoTwinData get twin => _spaces.twin;
+
+  /// #3865 — what each space keeps for the whole session (purchases,
+  /// suppliers, bank, books, lease, register, rooms, guest passes, cost
+  /// rules): built when first read, once per space.
+  DemoSpaces<DemoSpaceStores> get stores => _spaces.stores;
+
+  /// The space [key] names, built now if it was not yet.
+  DemoSpaceParts space(DemoSpaceKey key) => _spaces.space(key);
+
+  /// The spaces built so far: the main space, and each other from its first read.
+  Set<DemoSpaceKey> get builtSpaces => _spaces.builtSpaces;
+
+  /// Every space's coherence problems (builds the spaces not yet built).
+  List<String> validateAllSpaces() => _spaces.validateAllSpaces();
+
+  /// Runs [build], which seeds the space [key] (or its stores), as the session
+  /// started (see [DemoLazySpaces.seeded]).
+  T seeded<T>(DemoSpaceKey key, T Function() build) => _spaces.seeded(key, build);
+
+  late final FakePlanResourceRepository _homeResources = FakePlanResourceRepository(floorPlan);
+
+  @override
+  FakePlanResourceRepository get planResources => _homeResources;
+
+  /// Who the session is currently acting as (#1565); while a space is being
+  /// seeded, the persona the session started as.
+  String get activeMemberId => _spaces.activeMemberId;
+
   /// Looks at the same space through [persona] (#1376).
   ///
   /// The DATA is untouched: only who the fixture answers `fetchMyMember`
@@ -354,15 +389,15 @@ class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
   /// whose id the repositories had captured at build time.
   void becomePersona(DemoPersona persona) {
     viewDemoPeopleAs(workspaces, persona.person);
-    _persona = persona;
+    _spaces.persona = persona;
     actor.memberId = persona.memberId;
     // #3293 — a self-assignment is refused for whoever the persona is.
     roles.callerMemberId = persona.memberId;
     // A space not built yet takes the caller when it is (demo_fixture `_space`).
-    for (final key in _built) {
+    for (final key in _spaces.built) {
       if (key != DemoSpaceKey.home) space(key).roles.callerMemberId = persona.memberId;
     }
-    for (final listing in _everyListing) {
+    for (final listing in _spaces.everyListing) {
       listing.viewAs(persona.memberId);
     }
     // The profile rows stay; the "mine" pointer moves with the persona,
@@ -375,7 +410,7 @@ class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
 
 /// #3846 — the spaces beside the main one are listed now (the switcher and
 /// the profiles need their rows and people) and built when first read.
-(_DemoListings, DemoTwinSource) _listSpaces(
+(DemoListings, DemoTwinSource) _listSpaces(
   FakeWorkspaceRepository home,
   FakeFloorPlanRepository floorPlan,
   FakeWorkspaceRoles roles,
@@ -396,16 +431,8 @@ class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
   return (listings, twin);
 }
 
-/// #3846 — the listings of the spaces beside the main one.
-typedef _DemoListings = ({
-  DemoSpaceListing leipzig,
-  DemoSpaceListing london,
-  DemoSpaceListing newYork,
-  DemoSpaceListing zurich,
-  DemoSpaceListing milan,
-});
 
-FakeProfileRepository _profilesForSpaces(_DemoListings spaces, DateTime today) =>
+FakeProfileRepository _profilesForSpaces(DemoListings spaces, DateTime today) =>
     demoProfiles(today: today)..profiles.addAll([
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
