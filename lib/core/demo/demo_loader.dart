@@ -12,23 +12,27 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../app/theme.dart';
-import '../../features/profile/providers/personal_appearance_providers.dart';
 import '../../l10n/app_localizations.dart';
 import '../l10n/context_l10n.dart';
 import 'demo_persona.dart';
 import 'demo_runtime.dart' deferred as runtime;
 
+bool _loaded = false;
 Future<void>? _loading;
 
 /// Fetches the deferred library (once; a failed fetch is asked for again).
 @visibleForTesting
-Future<void> loadDemoLibrary() {
-  final pending = _loading ??= runtime.loadLibrary();
-  // A failed fetch is not remembered: the next attempt asks again.
-  return pending.catchError((Object error, StackTrace stack) {
+Future<void> loadDemoLibrary() async {
+  // A flag, not the finished future: a future keeps the zone it completed
+  // in, and a test's zone is gone by the next test.
+  if (_loaded) return;
+  try {
+    await (_loading ??= runtime.loadLibrary());
+    _loaded = true;
+  } on Object {
     _loading = null;
-    Error.throwWithStackTrace(error, stack);
-  });
+    rethrow;
+  }
 }
 
 /// How the Demo's library is fetched. Tests override it to hold or fail the
@@ -116,15 +120,17 @@ class _DemoGateState extends ConsumerState<DemoGate> {
   );
 }
 
-/// The app's frame while the Demo's library is not there yet: the live
-/// app's theme and language, nothing of the Demo.
-class _GateFrame extends ConsumerWidget {
+/// The app's frame while the Demo's library is not there yet: the app's theme
+/// and the device's language, nothing of the Demo. It reads no provider: the
+/// container below the entry flag is the live app's, and a read here would
+/// start its repositories for a visitor who is leaving them.
+class _GateFrame extends StatelessWidget {
   const _GateFrame({required this.child});
 
   final Widget child;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) => MaterialApp(
+  Widget build(BuildContext context) => MaterialApp(
     debugShowCheckedModeBanner: false,
     localizationsDelegates: const [
       AppLocalizations.delegate,
@@ -133,10 +139,8 @@ class _GateFrame extends ConsumerWidget {
       GlobalCupertinoLocalizations.delegate,
     ],
     supportedLocales: AppLocalizations.supportedLocales,
-    locale: ref.watch(personalLocaleProvider),
     theme: DeskiloTheme.light(),
     darkTheme: DeskiloTheme.dark(),
-    themeMode: ref.watch(personalThemeProvider) ?? ThemeMode.system,
     home: Scaffold(body: child),
   );
 }
