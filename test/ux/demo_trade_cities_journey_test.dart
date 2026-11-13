@@ -42,8 +42,8 @@ void main() {
   testWidgets('the Demo user enters Leipzig, Zurich and Milan from My spaces',
       (tester) async {
     await pumpDemo(tester);
-    final router = GoRouter.of(tester.element(find.byType(Scaffold).first));
-    router.go('/me');
+    final router = GoRouter.of(tester.element(find.byType(Scaffold).first))
+      ..go('/me');
     await _settle(tester);
 
     const spaces = [
