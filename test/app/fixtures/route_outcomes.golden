@@ -67,6 +67,7 @@ signed-out on  /members/managed -> /auth
 signed-out on  /members/plans -> /auth
 signed-out on  /members/plans/:id -> /auth
 signed-out on  /members/privacy -> /auth
+signed-out on  /members/privacy/:id -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
@@ -212,6 +213,7 @@ signed-out off /members/managed -> /auth
 signed-out off /members/plans -> /auth
 signed-out off /members/plans/:id -> /auth
 signed-out off /members/privacy -> /auth
+signed-out off /members/privacy/:id -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
@@ -357,6 +359,7 @@ no-space on  /members/managed -> /me
 no-space on  /members/plans -> /me
 no-space on  /members/plans/:id -> /me
 no-space on  /members/privacy -> /me
+no-space on  /members/privacy/:id -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
@@ -502,6 +505,7 @@ no-space off /members/managed -> /me
 no-space off /members/plans -> /me
 no-space off /members/plans/:id -> /me
 no-space off /members/privacy -> /me
+no-space off /members/privacy/:id -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
@@ -647,6 +651,7 @@ member on  /members/managed -> /calendar
 member on  /members/plans -> /calendar
 member on  /members/plans/:id -> /calendar
 member on  /members/privacy -> /calendar
+member on  /members/privacy/:id -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
@@ -792,6 +797,7 @@ member off /members/managed -> /messages
 member off /members/plans -> /messages
 member off /members/plans/:id -> /messages
 member off /members/privacy -> /messages
+member off /members/privacy/:id -> /messages
 member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
@@ -937,6 +943,7 @@ admin on  /members/managed -> (open)
 admin on  /members/plans -> (open)
 admin on  /members/plans/:id -> (open)
 admin on  /members/privacy -> (open)
+admin on  /members/privacy/:id -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
@@ -1082,6 +1089,7 @@ admin off /members/managed -> /members
 admin off /members/plans -> /members
 admin off /members/plans/:id -> /members
 admin off /members/privacy -> /settings
+admin off /members/privacy/:id -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
@@ -1227,6 +1235,7 @@ owner on  /members/managed -> (open)
 owner on  /members/plans -> (open)
 owner on  /members/plans/:id -> (open)
 owner on  /members/privacy -> (open)
+owner on  /members/privacy/:id -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
@@ -1372,6 +1381,7 @@ owner off /members/managed -> /members
 owner off /members/plans -> /members
 owner off /members/plans/:id -> /members
 owner off /members/privacy -> /settings
+owner off /members/privacy/:id -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages
