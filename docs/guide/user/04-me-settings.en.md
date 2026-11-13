@@ -283,6 +283,7 @@ You want to sign in by scanning your badge instead of typing your e-mail.
 - The row reads **No PIN yet** or **PIN set**.
 - Only you can set it, and nobody, not even an owner, can read it back.
 - **Change PIN** replaces it; **Remove PIN** switches off badge sign-in for all your badges.
+- A badge signs you in to its own workspace. An owner or administrator of another workspace signs in with the password, not the badge.
 
 **See also:** [Your badge](help:user.profile.settings.badge)
 

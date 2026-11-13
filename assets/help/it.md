@@ -1859,6 +1859,7 @@ Vuole accedere scansionando il suo badge invece di digitare la sua e-mail.
 - La riga indica **Nessun PIN** o **PIN impostato**.
 - Solo Lei può impostarlo, e nessuno, nemmeno un proprietario, può rileggerlo.
 - **Cambia PIN** lo sostituisce; **Rimuovi PIN** disattiva l'accesso con badge per tutti i suoi badge.
+- Un badge la fa accedere al proprio spazio. Il proprietario o l'amministratore di un altro spazio accede con la password, non con il badge.
 
 **Vedi anche:** [Il suo badge](help:user.profile.settings.badge)
 

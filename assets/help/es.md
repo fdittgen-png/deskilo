@@ -1859,6 +1859,7 @@ Usted quiere iniciar sesión escaneando su credencial en lugar de escribir su co
 - La fila dice **Sin PIN todavía** o **PIN definido**.
 - Solo usted puede definirlo, y nadie, ni siquiera un propietario, puede volver a leerlo.
 - **Cambiar el PIN** lo sustituye; **Eliminar el PIN** desactiva el inicio de sesión con credencial en todas sus credenciales.
+- Una credencial le da acceso a su propio espacio. El propietario o administrador de otro espacio inicia sesión con la contraseña, no con la credencial.
 
 **Véase también:** [Su credencial](help:user.profile.settings.badge)
 

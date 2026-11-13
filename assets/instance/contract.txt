@@ -2357,7 +2357,7 @@ routine public.asset_actor(p_workspace_id uuid, p_review boolean) -> uuid | func
 routine public.asset_candidate_lines_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:882cf98c43dd
 routine public.asset_valuations_page_v1(p_workspace_id uuid, p_filters jsonb, p_cursor uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:661410992b9b
 routine public.assign_workspace_role(p_member_id uuid, p_role_id uuid, p_assign boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:ead38db4d788
-routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:98d272ecf850
+routine public.badge_auth_verify(p_uid text, p_pin text, p_source text, p_device_id uuid, p_device_secret text) -> jsonb | function | definer | volatile | exec:service_role | body:7b533e2ca3b2
 routine public.badge_pin_needs_review(p_workspace_id uuid, p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f757e49c3c30
 routine public.badge_signin_kiosks_only(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2cf5709d1972
 routine public.badge_signin_paused(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:2085392eadcd
@@ -2943,7 +2943,7 @@ routine public.member_vies_verified(p_member_id uuid, p_vat_id text) -> boolean 
 routine public.members_administrator_holding() -> trigger | function | definer | volatile | exec:service_role | body:c7f82b3888a8
 routine public.members_invitation_roles() -> trigger | function | definer | volatile | exec:service_role | body:bd2f17c947c3
 routine public.members_mcp_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:780fabdcf82f
-routine public.members_mirror_to_twin() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e541f96166dd
+routine public.members_mirror_to_twin() -> trigger | function | definer | volatile | exec:service_role | body:8de2272104f1
 routine public.members_prod_access_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:508694403539
 routine public.members_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:d6752f083c11
 routine public.members_vies_guard() -> trigger | function | definer | volatile | exec:service_role | body:9a473e9c6b36
@@ -3397,7 +3397,7 @@ routine public.set_conversation_prefs(p_conversation_id uuid, p_pinned boolean, 
 routine public.set_deskilo_schema_version(p_version integer) -> void | function | invoker | volatile | exec:service_role | body:264366161abe
 routine public.set_dev_mode(p_workspace_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:b2692f35910c
 routine public.set_dunning_rules(p_workspace_id uuid, p_rules jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:af1c88f3202e
-routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:97bae82445fa
+routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:daf065118111
 routine public.set_expense_schedule_supplier(p_schedule_id uuid, p_supplier_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:73819586b316
 routine public.set_expense_schedule_vat(p_schedule_id uuid, p_vat jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e2971cdc5ddb
 routine public.set_favorite(p_workspace uuid, p_kind text, p_resource uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:de88f8ec85e3
@@ -3654,6 +3654,7 @@ routine public.workspaces_money_feature_guard() -> trigger | function | invoker 
 routine public.workspaces_money_locale_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:e93c2718d56e
 routine public.workspaces_network_id_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:09c693249fe1
 routine public.workspaces_network_id_stamp() -> trigger | function | definer | volatile | exec:service_role | body:7859aca20bbd
+routine public.workspaces_pair_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:979827c05d63
 routine public.workspaces_permitting(p_perms text[]) -> SETOF uuid | function | definer | stable | exec:authenticated,service_role | body:ec6bb1c27b83
 routine public.workspaces_personal_data_admin_role() -> trigger | function | definer | volatile | exec:service_role | body:e730e8b4af0a
 routine public.workspaces_sample_data_stays_test() -> trigger | function | definer | volatile | exec:service_role | body:d260749b5b84
@@ -4096,6 +4097,7 @@ trigger workspaces.workspaces_money_feature_guard CREATE TRIGGER workspaces_mone
 trigger workspaces.workspaces_money_locale_guard CREATE TRIGGER workspaces_money_locale_guard BEFORE UPDATE OF currency_code, country_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_money_locale_guard()
 trigger workspaces.workspaces_network_id_immutable CREATE TRIGGER workspaces_network_id_immutable BEFORE UPDATE OF network_id ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_network_id_immutable()
 trigger workspaces.workspaces_network_id_stamp CREATE TRIGGER workspaces_network_id_stamp BEFORE INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_network_id_stamp()
+trigger workspaces.workspaces_pair_immutable CREATE TRIGGER workspaces_pair_immutable BEFORE UPDATE OF pair_id, environment, created_by ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_pair_immutable()
 trigger workspaces.workspaces_personal_data_admin_role CREATE TRIGGER workspaces_personal_data_admin_role AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_personal_data_admin_role()
 trigger workspaces.workspaces_sample_data_stays_test CREATE TRIGGER workspaces_sample_data_stays_test BEFORE UPDATE OF environment ON public.workspaces FOR EACH ROW EXECUTE FUNCTION workspaces_sample_data_stays_test()
 trigger workspaces.workspaces_seed_plans CREATE TRIGGER workspaces_seed_plans AFTER INSERT ON public.workspaces FOR EACH ROW EXECUTE FUNCTION seed_default_plans()
