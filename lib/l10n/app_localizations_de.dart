@@ -268,6 +268,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.';
 
   @override
+  String get accountingSignInNotYours =>
+      'Diese Anmeldung hat jemand anderes begonnen. Beginnen Sie erneut unter Buchhaltung.';
+
+  @override
   String get accountingSignInRefused =>
       'Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.';
 

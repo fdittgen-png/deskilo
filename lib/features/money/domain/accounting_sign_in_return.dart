@@ -51,6 +51,9 @@ enum SignInCompletion {
   /// The signed-in person may not manage this connection.
   refused,
 
+  /// Someone else started this sign-in: only they complete it.
+  startedBySomeoneElse,
+
   /// The sign-in link was used already, or is too old.
   expired,
 

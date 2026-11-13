@@ -268,6 +268,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The sign-in was not completed. The reason is shown on the connection in Accounting.';
 
   @override
+  String get accountingSignInNotYours =>
+      'This sign-in was started by someone else. Start again from Accounting.';
+
+  @override
   String get accountingSignInRefused =>
       'You may not manage this connection, so the sign-in was not completed.';
 

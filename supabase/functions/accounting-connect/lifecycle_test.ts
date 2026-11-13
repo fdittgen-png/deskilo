@@ -64,6 +64,8 @@ function world(opts: {
     },
   });
   const deps: Deps = {
+    userOf: (authorization: string) =>
+      Promise.resolve(authorization === "Bearer someone-else" ? "user-2" : "user-1"),
     caller: () => ({ ...answer("caller"), from: () => ({ select: () => ({ in: () => Promise.resolve({ data: null, error: null }) }) }) }),
     service: () => answer("service"),
     env: (name) =>

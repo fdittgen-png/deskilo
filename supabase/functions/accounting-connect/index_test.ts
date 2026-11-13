@@ -106,6 +106,8 @@ function world(
     },
   });
   const deps: Deps = {
+    userOf: (authorization: string) =>
+      Promise.resolve(authorization === "Bearer someone-else" ? "user-2" : "user-1"),
     caller: () => ({
       ...answer("caller"),
       // The sign-in reads no table.
@@ -190,6 +192,17 @@ async function redirect(
   );
 }
 
+/** Counts the code exchanges the target is asked for. */
+function countExchanges(deps: Deps): () => number {
+  const base = deps.fetcher!;
+  let n = 0;
+  deps.fetcher = ((url: string | URL | Request, init?: RequestInit) => {
+    if (String(init?.body ?? "").includes("authorization_code")) n++;
+    return base(url, init);
+  }) as typeof fetch;
+  return () => n;
+}
+
 async function signIn(w: ReturnType<typeof world>): Promise<string> {
   const res = await handle(post(start), w.deps);
   assertEquals(res.status, 200);
@@ -225,8 +238,10 @@ Deno.test("a caller the database refuses opens nothing and learns nothing", asyn
 Deno.test("the redirect exchanges the code, stores the tokens in Vault and answers no token", async () => {
   const w = world();
   const state = await signIn(w);
+  const exchanges = countExchanges(w.deps);
   const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`, w.deps);
   assertEquals(res.status, 200);
+  assertEquals(exchanges(), 1);
   const text = await res.text();
   assert(!text.includes("secret"));
   assertEquals(w.vault, {
@@ -245,10 +260,15 @@ Deno.test("a redirect with another state is refused before any exchange", async 
     exchanged = true;
     return Promise.resolve(new Response("{}"));
   }) as typeof fetch;
-  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${CONN}.forged`, w.deps);
+  const res = await handle(
+    post({ action: "complete", code: "C", state: `${CONN}.forged` }),
+    w.deps,
+  );
   assertEquals(res.status, 400);
+  assertEquals(await res.json(), { error: "state_invalid" });
   assert(!exchanged);
   assertEquals(w.state().status, "pending");
+  assertEquals(w.vault.oauth_state, undefined, "a wrong state from the person who may manage it spends the sign-in");
 });
 
 Deno.test("a stale state is refused before any exchange, and spent", async () => {
@@ -260,9 +280,9 @@ Deno.test("a stale state is refused before any exchange, and spent", async () =>
     return Promise.resolve(new Response("{}"));
   }) as typeof fetch;
   w.deps.now = () => new Date("2026-10-25T10:11:00Z");
-  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
+  const res = await handle(post({ action: "complete", code: "C", state }), w.deps);
   assertEquals(res.status, 400);
-  assert((await res.text()).includes("expired"));
+  assertEquals(await res.json(), { error: "state_expired" });
   assert(!exchanged);
   assertEquals(w.vault, {});
   assertEquals(w.state().status, "pending");
@@ -837,3 +857,68 @@ Deno.test("a sign-in the person declined at the target leaves the connection in 
   assertEquals(w.state(), { status: "error", status_detail: "access_denied" });
   assertEquals(w.vault.oauth_state, undefined);
 });
+
+Deno.test("an assistant's delegated token completes nothing", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const exchanges = countExchanges(w.deps);
+  const claims = btoa(JSON.stringify({ client_id: "assistant" }));
+  const res = await handle(
+    post({ action: "complete", code: "C", state }, `Bearer x.${claims}.y`),
+    w.deps,
+  );
+  assertEquals(res.status, 403);
+  assertEquals(exchanges(), 0);
+  assertEquals(w.state().status, "pending");
+});
+
+Deno.test("a connection whose sign-in was never started completes nothing", async () => {
+  const w = world();
+  const exchanges = countExchanges(w.deps);
+  const res = await handle(
+    post({ action: "complete", code: "C", state: `${CONN}.anything` }),
+    w.deps,
+  );
+  assertEquals(res.status, 400);
+  assertEquals(await res.json(), { error: "state_invalid" });
+  assertEquals(exchanges(), 0);
+});
+
+Deno.test("two completions with the same state reach the target once", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const exchanges = countExchanges(w.deps);
+  const [a, b] = await Promise.all([
+    handle(post({ action: "complete", code: "C", state }), w.deps),
+    handle(post({ action: "complete", code: "C", state }), w.deps),
+  ]);
+  assertEquals([a.status, b.status].sort(), [200, 409]);
+  assertEquals(exchanges(), 1);
+  assertEquals(w.state().status, "connected");
+  const again = await handle(post({ action: "complete", code: "C", state }), w.deps);
+  assertEquals(again.status, 400);
+  assertEquals(exchanges(), 1);
+  assertEquals(w.state().status, "connected", "a later completion does not touch a made connection");
+});
+
+Deno.test("a colleague who may manage the connection does not complete another's sign-in", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const exchanges = countExchanges(w.deps);
+  const res = await handle(
+    post({ action: "complete", code: "C", state }, "Bearer someone-else"),
+    w.deps,
+  );
+  assertEquals(res.status, 403);
+  assertEquals(await res.json(), { error: "started_by_someone_else" });
+  assertEquals(exchanges(), 0);
+  assertEquals(w.vault.oauth_state, undefined);
+  assertEquals(w.state().status, "pending");
+});
+
+Deno.test("the sign-in records who started it", async () => {
+  const w = world();
+  await signIn(w);
+  assertEquals(w.vault.oauth_state_by, "user-1");
+});
+

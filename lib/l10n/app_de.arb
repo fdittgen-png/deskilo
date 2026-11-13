@@ -190,6 +190,7 @@
   "accountingSignInConnected": "Die Verbindung ist hergestellt. Ihr Status steht unter Buchhaltung.",
   "accountingSignInExpired": "Dieser Anmeldelink ist abgelaufen oder wurde schon verwendet. Beginnen Sie erneut unter Buchhaltung.",
   "accountingSignInFailed": "Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.",
+  "accountingSignInNotYours": "Diese Anmeldung hat jemand anderes begonnen. Beginnen Sie erneut unter Buchhaltung.",
   "accountingSignInRefused": "Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.",
   "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
   "@accountingSourceRefused": {

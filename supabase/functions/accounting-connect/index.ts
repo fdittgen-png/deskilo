@@ -65,6 +65,7 @@ import {
   resolved,
   STATUS_DETAIL_LENGTH,
   store,
+  storeLeased,
   targetIdOf,
   targetOf,
   UUID,
@@ -141,11 +142,18 @@ async function authorize(
     return json({ error: "not allowed to connect this issuer" }, 403);
   }
   const connectionId = String(row.id);
+  // #3906 — the sign-in is completed by the person who starts it.
+  const startedBy = await deps.userOf(authorization);
+  if (!startedBy) return json({ error: "not signed in" }, 401);
   const state = newState();
   const issuedAt = (deps.now ?? (() => new Date()))().toISOString();
   if (
     !await store(deps, connectionId, {
-      secrets: { oauth_state: state, oauth_state_at: issuedAt },
+      secrets: {
+        oauth_state: state,
+        oauth_state_at: issuedAt,
+        oauth_state_by: startedBy,
+      },
       patch: {},
     })
   ) {
@@ -168,6 +176,10 @@ function returnRoute(deps: Deps): string | null {
   // The web app routes by fragment.
   return base ? `${base}/#/accounting/connected` : null;
 }
+
+/** How long one completion holds the connection's lease: the exchange and
+ * the company checks, with room. A protocol bound, not a choice. */
+const SIGN_IN_LEASE_SECONDS = 60;
 
 /** The longest value passed on from the target's redirect. */
 const FORWARDED_LENGTH = 2048;
@@ -214,10 +226,15 @@ function callback(deps: Deps, url: URL): Response {
 const field = (body: Record<string, unknown>, key: string) =>
   typeof body[key] === "string" ? (body[key] as string) : "";
 
-/** #3906 — the sign-in completed by the person who may manage the
- * connection, with their own session: the state must be the one this
- * connection holds and still fresh; then the code is exchanged. The state
- * is spent on every outcome past its check. */
+/** The state's three secrets, emptied: a sign-in completes once. */
+const SPENT = { oauth_state: "", oauth_state_at: "", oauth_state_by: "" };
+
+/** #3906 — the sign-in completed by the person who started it, with their
+ * own session, while they may still manage the connection: one completion at
+ * a time per connection (the connection's lease), the state checked against
+ * Vault, its age and its starter, and spent BEFORE the target is called — so
+ * a second completion finds nothing to complete. Every outcome past the
+ * lease leaves the state spent. */
 async function complete(
   deps: Deps,
   authorization: string,
@@ -227,93 +244,125 @@ async function complete(
   if (!UUID.test(connectionId ?? "") || !secret) {
     return json({ error: "state_invalid" }, 400);
   }
+  const caller = await deps.userOf(authorization);
+  if (!caller) return json({ error: "not signed in" }, 401);
   const allowed = await deps.caller(authorization).rpc(
     manageableRpc(await targetIdOf(deps, connectionId)),
     { p_connection_id: connectionId },
   );
-  const held = await resolved(deps, connectionId);
-  const matches = !!held && !held.revoked &&
-    sameSecret(held.secrets.oauth_state ?? "", secret);
-  const spend = (patch: Record<string, unknown> = {}) =>
-    store(deps, connectionId, {
-      secrets: { oauth_state: "", oauth_state_at: "" },
-      patch,
+  const holder = crypto.randomUUID();
+  const claimed = await deps.service().rpc("claim_accounting_refresh_lease", {
+    p_connection_id: connectionId,
+    p_holder: holder,
+    p_seconds: SIGN_IN_LEASE_SECONDS,
+  });
+  if (claimed.error || claimed.data !== true) {
+    return json({ error: "sign_in_in_progress" }, 409);
+  }
+  const write = (patch: Record<string, unknown> = {}) =>
+    storeLeased(deps, connectionId, holder, { secrets: SPENT, patch });
+  let spent = false;
+  let keep = false;
+  try {
+    const held = await resolved(deps, connectionId);
+    if (!held || !(held.secrets.oauth_state ?? "")) {
+      return json({ error: "state_invalid" }, 400);
+    }
+    const matches = sameSecret(held.secrets.oauth_state ?? "", secret);
+    if (allowed.error || !allowed.data) {
+      // Someone who may not manage the connection spends it only with the
+      // state itself: without it they cannot cancel another's sign-in.
+      keep = !matches;
+      return json({ error: "not allowed to manage this connection" }, 403);
+    }
+    if (held.revoked || !matches) {
+      return json({ error: "state_invalid" }, 400);
+    }
+    if ((held.secrets.oauth_state_by ?? "") !== caller) {
+      return json({ error: "started_by_someone_else" }, 403);
+    }
+    const target = targetOf(deps, held.target_id);
+    const client = target ? clientOf(deps, held.target_id) : null;
+    if (!target || !client) return json({ error: "oauth_not_configured" }, 503);
+    const now = (deps.now ?? (() => new Date()))();
+    const issuedAt = Date.parse(held.secrets.oauth_state_at ?? "");
+    if (
+      !Number.isFinite(issuedAt) ||
+      now.getTime() - issuedAt > target.stateLifetimeMs
+    ) {
+      return json({ error: "state_expired" }, 400);
+    }
+    // Spent before the target is called: nothing is left to complete twice.
+    if (!await write()) {
+      return json({ error: "the connection could not be saved" }, 500);
+    }
+    spent = true;
+    const code = field(body, "code");
+    if (!code) {
+      await write({
+        status: "error",
+        status_detail: (field(body, "error") || "access_denied").slice(0, 100),
+      });
+      return json({ error: "sign_in_not_completed" }, 400);
+    }
+    const tokens = await exchangeCode(
+      deps.fetcher ?? fetch,
+      target,
+      client,
+      code,
+      deps.redirectUri,
+      now,
+    );
+    if (isFailure(tokens)) {
+      await write({ status: "error", status_detail: tokens.detail });
+      return json({ error: "sign_in_refused" }, 502);
+    }
+    const adapterOf = deliveryAdapters[held.target_id];
+    let tenant = target.tenantParam
+      ? field(body, "tenant") || undefined
+      : undefined;
+    let refused: string | null = null;
+    // A target whose redirect names no company (Xero): the one the sign-in
+    // authorised, read with the new token.
+    const signedIn = !target.tenantParam
+      ? await adapterOf?.(
+        adapterContext(deps, held.target_id, tokens.accessToken, ""),
+      ).signedInTenant?.()
+      : undefined;
+    if (signedIn && "refused" in signedIn) refused = signedIn.refused;
+    if (signedIn && "tenant" in signedIn) tenant = signedIn.tenant;
+    // A connection signed in again stays the company it was made for.
+    if (
+      !refused && tenant && held.remote_tenant_id &&
+      tenant !== held.remote_tenant_id
+    ) {
+      refused =
+        "this sign-in reached another company than the one this connection was made for";
+    }
+    refused ??= await adapterOf?.(
+      adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? ""),
+    ).prepare() ?? null;
+    if (refused) {
+      await write({
+        status: "error",
+        status_detail: refused.slice(0, STATUS_DETAIL_LENGTH),
+      });
+      return json({ error: "company_refused" }, 409);
+    }
+    if (
+      !await storeLeased(deps, connectionId, holder, connectedWrite(tokens, tenant))
+    ) {
+      return json({ error: "the connection could not be saved" }, 500);
+    }
+    return json({ status: "connected", connection_id: connectionId });
+  } finally {
+    // Every outcome leaves the state spent, whatever threw.
+    if (!spent && !keep) await write().catch(() => false);
+    await deps.service().rpc("release_accounting_refresh_lease", {
+      p_connection_id: connectionId,
+      p_holder: holder,
     });
-  if (allowed.error || !allowed.data) {
-    if (matches) await spend();
-    return json({ error: "not allowed to manage this connection" }, 403);
   }
-  if (!held || !matches) return json({ error: "state_invalid" }, 400);
-  const target = targetOf(deps, held.target_id);
-  const client = target ? clientOf(deps, held.target_id) : null;
-  if (!target || !client) {
-    await spend();
-    return json({ error: "oauth_not_configured" }, 503);
-  }
-  const now = (deps.now ?? (() => new Date()))();
-  const issuedAt = Date.parse(held.secrets.oauth_state_at ?? "");
-  if (
-    !Number.isFinite(issuedAt) ||
-    now.getTime() - issuedAt > target.stateLifetimeMs
-  ) {
-    await spend();
-    return json({ error: "state_expired" }, 400);
-  }
-  const code = field(body, "code");
-  if (!code) {
-    await spend({
-      status: "error",
-      status_detail: (field(body, "error") || "access_denied").slice(0, 100),
-    });
-    return json({ error: "sign_in_not_completed" }, 400);
-  }
-  const tokens = await exchangeCode(
-    deps.fetcher ?? fetch,
-    target,
-    client,
-    code,
-    deps.redirectUri,
-    now,
-  );
-  if (isFailure(tokens)) {
-    await spend({ status: "error", status_detail: tokens.detail });
-    return json({ error: "sign_in_refused" }, 502);
-  }
-  const adapterOf = deliveryAdapters[held.target_id];
-  let tenant = target.tenantParam ? field(body, "tenant") || undefined : undefined;
-  let refused: string | null = null;
-  // A target whose redirect names no company (Xero): the one the sign-in
-  // authorised, read with the new token.
-  const signedIn = !target.tenantParam
-    ? await adapterOf?.(
-      adapterContext(deps, held.target_id, tokens.accessToken, ""),
-    ).signedInTenant?.()
-    : undefined;
-  if (signedIn && "refused" in signedIn) refused = signedIn.refused;
-  if (signedIn && "tenant" in signedIn) tenant = signedIn.tenant;
-  // A connection signed in again stays the company it was made for.
-  if (
-    !refused && tenant && held.remote_tenant_id &&
-    tenant !== held.remote_tenant_id
-  ) {
-    refused =
-      "this sign-in reached another company than the one this connection was made for";
-  }
-  refused ??= await adapterOf?.(
-    adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? ""),
-  ).prepare() ?? null;
-  if (refused) {
-    await spend({
-      status: "error",
-      status_detail: refused.slice(0, STATUS_DETAIL_LENGTH),
-    });
-    return json({ error: "company_refused" }, 409);
-  }
-  if (!await store(deps, connectionId, connectedWrite(tokens, tenant))) {
-    await spend();
-    return json({ error: "the connection could not be saved" }, 500);
-  }
-  return json({ status: "connected", connection_id: connectionId });
 }
 
 async function refresh(
@@ -433,6 +482,14 @@ if (import.meta.main) {
     },
     service: () =>
       createClient(url, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!),
+    userOf: async (authorization) => {
+      const token = authorization.replace(/^Bearer\s+/i, "");
+      const { data, error } = await createClient(
+        url,
+        Deno.env.get("SUPABASE_ANON_KEY")!,
+      ).auth.getUser(token);
+      return error ? null : data.user?.id ?? null;
+    },
     env: (name) => Deno.env.get(name),
     redirectUri: `${url}/functions/v1/accounting-connect`,
   };

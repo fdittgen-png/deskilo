@@ -548,6 +548,12 @@ abstract class AppLocalizations {
   /// **'The sign-in was not completed. The reason is shown on the connection in Accounting.'**
   String get accountingSignInFailed;
 
+  /// #3906 The accounting sign-in was started by another person; only they complete it.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in was started by someone else. Start again from Accounting.'**
+  String get accountingSignInNotYours;
+
   /// #3906 The signed-in person may not manage the accounting connection; nothing was connected.
   ///
   /// In en, this message translates to:

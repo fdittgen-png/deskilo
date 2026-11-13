@@ -127,6 +127,11 @@ class _AccountingSignInReturnScreenState
         Icons.block_outlined,
         InlineBannerSeverity.error,
       ),
+      SignInCompletion.startedBySomeoneElse => (
+        l10n.accountingSignInNotYours,
+        Icons.person_off_outlined,
+        InlineBannerSeverity.error,
+      ),
       SignInCompletion.expired => (
         l10n.accountingSignInExpired,
         Icons.timer_off_outlined,

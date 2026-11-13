@@ -268,6 +268,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'L\'accesso non è stato completato. Il motivo è mostrato sulla connessione, in Contabilità.';
 
   @override
+  String get accountingSignInNotYours =>
+      'Questo accesso è stato avviato da un\'altra persona. Ricominci da Contabilità.';
+
+  @override
   String get accountingSignInRefused =>
       'Non può gestire questa connessione, quindi l\'accesso non è stato completato.';
 

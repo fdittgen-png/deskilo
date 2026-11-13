@@ -345,6 +345,10 @@
   "@accountingSignInFailed": {
     "description": "#3906 The target refused or the person did not complete the sign-in there."
   },
+  "accountingSignInNotYours": "This sign-in was started by someone else. Start again from Accounting.",
+  "@accountingSignInNotYours": {
+    "description": "#3906 The accounting sign-in was started by another person; only they complete it."
+  },
   "accountingSignInRefused": "You may not manage this connection, so the sign-in was not completed.",
   "@accountingSignInRefused": {
     "description": "#3906 The signed-in person may not manage the accounting connection; nothing was connected."

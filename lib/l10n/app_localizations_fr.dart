@@ -270,6 +270,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La connexion n\'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.';
 
   @override
+  String get accountingSignInNotYours =>
+      'Cette connexion a été lancée par quelqu\'un d\'autre. Recommencez depuis Comptabilité.';
+
+  @override
   String get accountingSignInRefused =>
       'Vous ne pouvez pas gérer cette connexion : la connexion n\'a pas été finalisée.';
 

@@ -5828,6 +5828,7 @@ const Set<String> uiLabelKeys = {
   'accountingSignInConnected',
   'accountingSignInExpired',
   'accountingSignInFailed',
+  'accountingSignInNotYours',
   'accountingSignInRefused',
   'accountingSourceRefused',
   'accountingStatusAllBooks',

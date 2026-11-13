@@ -269,6 +269,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El inicio de sesión no se completó. El motivo se muestra en la conexión, en Contabilidad.';
 
   @override
+  String get accountingSignInNotYours =>
+      'Este inicio de sesión lo empezó otra persona. Vuelva a empezar desde Contabilidad.';
+
+  @override
   String get accountingSignInRefused =>
       'No puede gestionar esta conexión, así que el inicio de sesión no se completó.';
 

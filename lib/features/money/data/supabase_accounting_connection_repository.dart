@@ -192,6 +192,8 @@ class SupabaseAccountingConnectionRepository
         'accounting sign-in not completed: ${e.status} $key\n$st',
       );
       return switch (e.status) {
+        403 when key == 'started_by_someone_else' =>
+          SignInCompletion.startedBySomeoneElse,
         403 => SignInCompletion.refused,
         400 when key == 'state_invalid' || key == 'state_expired' =>
           SignInCompletion.expired,

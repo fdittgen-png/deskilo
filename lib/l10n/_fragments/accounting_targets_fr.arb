@@ -107,5 +107,6 @@
   "accountingSignInRefused": "Vous ne pouvez pas gérer cette connexion : la connexion n'a pas été finalisée.",
   "accountingSignInExpired": "Ce lien de connexion a expiré ou a déjà servi. Recommencez depuis Comptabilité.",
   "accountingSignInFailed": "La connexion n'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.",
-  "accountingSignInBack": "Retour à Comptabilité"
+  "accountingSignInBack": "Retour à Comptabilité",
+  "accountingSignInNotYours": "Cette connexion a été lancée par quelqu'un d'autre. Recommencez depuis Comptabilité."
 }

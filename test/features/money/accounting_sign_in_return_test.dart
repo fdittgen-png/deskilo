@@ -74,6 +74,10 @@ void main() {
   for (final (outcome, key) in [
     (SignInCompletion.connected, 'accounting-sign-in-connected'),
     (SignInCompletion.refused, 'accounting-sign-in-refused'),
+    (
+      SignInCompletion.startedBySomeoneElse,
+      'accounting-sign-in-startedBySomeoneElse',
+    ),
     (SignInCompletion.expired, 'accounting-sign-in-expired'),
     (SignInCompletion.failed, 'accounting-sign-in-failed'),
   ]) {
