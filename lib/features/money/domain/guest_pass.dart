@@ -205,6 +205,11 @@ class GuestPassRecord {
   final DateTime startsAt;
   final DateTime endsAt;
 
+  /// The last calendar day the pass covers ([dayOf] is the business's
+  /// calendar): a window that ends at midnight ends with the day before.
+  DateTime lastDay(DateTime Function(DateTime instant) dayOf) =>
+      dayOf(endsAt.subtract(const Duration(milliseconds: 1)));
+
   /// The units already started at [now]: the days begun of a day pass,
   /// counted on the business's calendar ([dayOf]); an hourly pass is one
   /// window, all of it once it began.

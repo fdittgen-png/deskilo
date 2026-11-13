@@ -451,8 +451,13 @@ class _AppFormSheetState extends State<AppFormSheet> {
                   ),
                   const FormGap(),
                 ],
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                // Side by side while they fit; stacked when they do not.
+                OverflowBar(
+                  alignment: MainAxisAlignment.end,
+                  spacing: AppSpacing.sm,
+                  overflowSpacing: AppSpacing.sm,
+                  overflowAlignment: OverflowBarAlignment.end,
+                  overflowDirection: VerticalDirection.up,
                   children: [
                     TextButton(
                       key: const ValueKey('form-sheet-cancel'),
@@ -463,7 +468,6 @@ class _AppFormSheetState extends State<AppFormSheet> {
                         MaterialLocalizations.of(context).cancelButtonLabel,
                       ),
                     ),
-                    const SizedBox(width: AppSpacing.sm),
                     FilledButton(
                       key: widget.submitKey,
                       onPressed: _saving ? null : _submit,

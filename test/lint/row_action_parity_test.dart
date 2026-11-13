@@ -12,7 +12,6 @@
 //
 // A `Semantics(onLongPress: …)` is an accessibility action, not a
 // gesture, and is not counted.
-import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,15 +19,6 @@ import 'lint_sources.dart';
 
 /// How many lines above a gesture its `// parity:` comment may sit.
 const _markerReach = 4;
-
-/// Gestures whose action has no place on a desk with a mouse, with the
-/// reason. The list starts and stays as short as it can.
-const _exempt = <String, String>{
-  'lib/app/shell/shell_center_button.dart':
-      "the phone bar's centre button hides and shows the bottom bar; "
-      'the desk has no bottom bar to hide (its navigation is the '
-      'column beside the page)',
-};
 
 final _gesture = RegExp(r'\bDismissible\(|\bonLongPress\w*:');
 final _marker = RegExp(r'//\s*parity:\s*(\S+)');
@@ -85,25 +75,12 @@ List<String> parityOffenders(String path, String src) {
 }
 
 void main() {
-  test('the exemptions only fall, and each still holds its gesture', () {
-    // One today (the centre button's long press); it goes with the visible
-    // control that the second part of #3611 gives it. Never raise this.
-    expect(_exempt.length, lessThanOrEqualTo(1));
-    for (final path in _exempt.keys) {
-      expect(
-        _gesture.hasMatch(File(path).readAsStringSync()),
-        isTrue,
-        reason: '$path no longer holds a swipe or a long press: '
-            'remove its exemption',
-      );
-    }
-  });
-
   test('every swipe and long press in lib/ has a visible twin', () {
+    // No exemption: the list is empty since #3611 closed (the centre
+    // button's long press names the bar's visible toggle).
     final offenders = <String>[];
     for (final file in handWrittenDartFiles('lib')) {
       final path = file.path;
-      if (_exempt.containsKey(path)) continue;
       offenders.addAll(parityOffenders(path, file.readAsStringSync()));
     }
     expect(

@@ -14,7 +14,6 @@ import '../invoice_actions.dart' show watchWorkspaceIsEu;
 import '../invoicing/invoicing_home_screen.dart';
 import '../my_finances_route.dart';
 import '../widgets/dunning_rules_dialog.dart';
-import '../widgets/expense_repartition_sheet.dart';
 import '../widgets/invoice_archive_tab.dart';
 import '../widgets/invoice_process_sheet.dart';
 import '../widgets/invoice_template_sheet.dart';
@@ -120,10 +119,6 @@ List<MoreEntry> _moreEntries(
   // #812 — the process, explained: the same sheet a member opens from
   // their Invoices face.
   final processOn = features.contains(WorkspaceFeature.invoiceJourney);
-  // #828 — a shared expense split over the members: reachable only from
-  // here, so it stays in the menu.
-  final repartitionOn =
-      canIssue && features.contains(WorkspaceFeature.expenseRepartition);
   // #804 — regrouping a customer's open invoices into one they pay.
   final settlementOn =
       canIssue && features.contains(WorkspaceFeature.invoiceSettlement);
@@ -177,13 +172,6 @@ List<MoreEntry> _moreEntries(
         Icons.merge_outlined,
         l10n.invoicingMoreRegroup,
         () => showSettlementSheet(context, ref),
-      ),
-    if (repartitionOn)
-      (
-        'invoice-distribute-button',
-        Icons.call_split,
-        l10n.repartitionAction,
-        () => showExpenseRepartitionSheet(context, ref),
       ),
     // #827 — the month-close wizard: its card sat on the old month list,
     // so it keeps a door here.

@@ -9,6 +9,8 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/copy_value.dart';
+import '../../../../core/ui/kit/desk_selection.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
 import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -255,7 +257,8 @@ class _InvoiceDetailBody extends ConsumerWidget {
             AppSpacing.xl,
             AppSpacing.xl,
           ),
-          child: Column(
+          // #3611 — the record's text can be selected with a mouse.
+          child: DeskSelection(child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               ..._header(context, status, facts, sections),
@@ -286,7 +289,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
               // otherwise the PDF keeps its historical place.
               ..._actions(context, status, _expected, heldReason, isEu),
             ],
-          ),
+          )),
         ),
       ),
     );
@@ -300,13 +303,20 @@ class _InvoiceDetailBody extends ConsumerWidget {
       // Header — number, month, status.
       Row(children: [
         Expanded(
-          child: Text(
-            invoice.number,
-            key: const ValueKey('invoice-detail-number'),
-            style: theme.textTheme.titleMedium?.copyWith(
-              decoration: invoice.isVoided
-                  ? TextDecoration.lineThrough
-                  : null,
+          // #3611 — the number copies with a visible button (a mouse).
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: CopyValue(
+              value: invoice.number,
+              child: Text(
+                invoice.number,
+                key: const ValueKey('invoice-detail-number'),
+                style: theme.textTheme.titleMedium?.copyWith(
+                  decoration: invoice.isVoided
+                      ? TextDecoration.lineThrough
+                      : null,
+                ),
+              ),
             ),
           ),
         ),

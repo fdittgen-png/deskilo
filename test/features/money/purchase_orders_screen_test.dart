@@ -282,10 +282,9 @@ void main() {
       await _settle(tester);
       await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
       await _settle(tester);
-      // The test font (Ahem) is wider than any real one: the footer's two
-      // buttons overflow by a few pixels at 342; that is the font, not
-      // the layout, and is taken here.
-      expect(tester.takeException(), isA<FlutterError>());
+      // The footer's two buttons do not fit side by side in the test
+      // font at this width: they stack, and nothing overflows.
+      expect(tester.takeException(), isNull);
       expect(find.byKey(const ValueKey('long-task-summary')), findsNothing);
       expect(tester.getBottomLeft(save).dy, lessThanOrEqualTo(844));
       expect(tester.getTopLeft(save).dy, greaterThanOrEqualTo(0));

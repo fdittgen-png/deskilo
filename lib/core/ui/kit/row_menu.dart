@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter/services.dart';
 
+import '../../trace/trace_logger.dart';
 import '../mouse_presence.dart';
 
 /// One entry of a row's menu.
@@ -137,7 +138,22 @@ class RowMenuState extends State<RowMenu> {
       items: [for (final action in widget.actions) _entry(action)],
     );
     if (chosen == null || !chosen.enabled) return;
-    await chosen.onSelected();
+    await _run(chosen);
+  }
+
+  /// Runs [action]. A gesture starts it and nobody awaits it, so what it
+  /// throws is recorded here and never becomes an uncaught error.
+  Future<void> _run(RowAction action) async {
+    try {
+      await action.onSelected();
+    } on Object catch (error, stackTrace) {
+      TraceLogger.instance.error(
+        'ui',
+        'the row action ${action.id} failed',
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
   }
 
   PopupMenuItem<RowAction> _entry(RowAction action) {
@@ -224,7 +240,7 @@ class RowMenuState extends State<RowMenu> {
         for (final action in widget.actions)
           if (action.enabled)
             CustomSemanticsAction(label: action.label): () =>
-                unawaited(Future.sync(action.onSelected)),
+                unawaited(_run(action)),
       },
       child: row,
     );

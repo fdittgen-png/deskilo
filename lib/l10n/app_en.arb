@@ -14699,6 +14699,14 @@
   "@featureSpaceQrCodesDesc": {
     "description": "Subtitle of the space-QR feature toggle"
   },
+  "featureStockManagementDesc": "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.",
+  "@featureStockManagementDesc": {
+    "description": "the feature's description on the Features screen (#3824)"
+  },
+  "featureStockManagementTitle": "Stock management",
+  "@featureStockManagementTitle": {
+    "description": "the feature's name (#3824)"
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "@featureSubscriptionInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."
@@ -22339,6 +22347,23 @@
   "@kitActionBusy": {
     "description": "Spoken by a screen reader on a button whose action is running; the button cannot be pressed again until it completes."
   },
+  "kitCopied": "Copied to the clipboard",
+  "@kitCopied": {
+    "description": "Confirmation shown after a value was copied to the clipboard."
+  },
+  "kitCopy": "Copy",
+  "@kitCopy": {
+    "description": "Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer."
+  },
+  "kitCopyValue": "Copy {value}",
+  "@kitCopyValue": {
+    "description": "Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "kitScrollBack": "Scroll back",
   "@kitScrollBack": {
     "description": "Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer."
@@ -28581,6 +28606,10 @@
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
   },
+  "permApproveStockAdjustments": "Approve stock adjustments",
+  "@permApproveStockAdjustments": {
+    "description": "a permission in the role matrix (#3824)"
+  },
   "permDeployToDev": "Deploy to development",
   "@permDeployToDev": {
     "description": "#987/#989 environment pairs: permDeployToDev"
@@ -28657,6 +28686,10 @@
   "@permManageSites": {
     "description": "#982 permission catalog: permManageSites"
   },
+  "permManageStock": "Move goods in and out of stock",
+  "@permManageStock": {
+    "description": "a permission in the role matrix (#3824)"
+  },
   "permManageValidation": "Configure validation policies",
   "@permManageValidation": {
     "description": "Permission label (#513)"
@@ -28708,6 +28741,10 @@
   "permViewPersonalData": "Read members' personal data",
   "@permViewPersonalData": {
     "description": "#982 permission catalog: permViewPersonalData"
+  },
+  "permViewStock": "See the stock",
+  "@permViewStock": {
+    "description": "a permission in the role matrix (#3824)"
   },
   "permWorkspaceSettings": "Edit workspace settings",
   "@permWorkspaceSettings": {
@@ -32615,6 +32652,38 @@
   "@refusalSession": {
     "description": "#1305 Shown when the session expired during an action"
   },
+  "refusalStockHistory": "This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.",
+  "@refusalStockHistory": {
+    "description": "refusal DKG08 (#3824): deleting an item or a movement the ledger keeps"
+  },
+  "refusalStockItem": "This is not an item this business keeps in stock. Nothing was moved.",
+  "@refusalStockItem": {
+    "description": "refusal DKG04 (#3824)"
+  },
+  "refusalStockLocation": "This place is not one of this business's, is no longer in use, or is both the start and the end of the move. Nothing was moved.",
+  "@refusalStockLocation": {
+    "description": "refusal DKG05 (#3824)"
+  },
+  "refusalStockLot": "This lot belongs to another item, or the item is tracked by lot and none was given. Nothing was moved.",
+  "@refusalStockLot": {
+    "description": "refusal DKG06 (#3824)"
+  },
+  "refusalStockMove": "This move cannot be recorded as given: a quantity above zero, a known reason and one to two hundred lines, or the same request sent again unchanged. Nothing was moved.",
+  "@refusalStockMove": {
+    "description": "refusal DKG07 (#3824)"
+  },
+  "refusalStockNotEnough": "There is not that much at this place. Nothing was moved.",
+  "@refusalStockNotEnough": {
+    "description": "refusal DKG03 (#3824)"
+  },
+  "refusalStockOff": "Stock management is off in this business. Nothing was moved.",
+  "@refusalStockOff": {
+    "description": "refusal DKG01 (#3824)"
+  },
+  "refusalStockUnit": "This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.",
+  "@refusalStockUnit": {
+    "description": "refusal DKG02 (#3824)"
+  },
   "refusalVatRateVersioned": "This rate is already on issued invoices, so its percentage stays as it is. Use “Change by law” to set the new value from a date. Nothing was saved.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -36335,6 +36404,10 @@
   "@settingHintSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting hint."
   },
+  "settingHintStockAllowNegative": "Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.",
+  "@settingHintStockAllowNegative": {
+    "description": "a workspace setting's hint (#3824)"
+  },
   "settingHintVatViesEvidenceDays": "Days a valid VAT-number check stays recent enough to stand as evidence on a new invoice. A shorter value asks for a fresh check sooner; it is not proof that a transaction is valid.",
   "@settingHintVatViesEvidenceDays": {
     "description": "#2487 retention settings"
@@ -36650,6 +36723,10 @@
   "settingLabelSecurityInvitationExpiryDays": "Invitation validity",
   "@settingLabelSecurityInvitationExpiryDays": {
     "description": "#2485 settings: Setting label."
+  },
+  "settingLabelStockAllowNegative": "Stock may go below zero",
+  "@settingLabelStockAllowNegative": {
+    "description": "a workspace setting's label (#3824)"
   },
   "settingLabelVatViesEvidenceDays": "VAT-number check freshness",
   "@settingLabelVatViesEvidenceDays": {
@@ -39347,9 +39424,17 @@
   "@shellBarHiddenAnnounce": {
     "description": "Screen-reader announcement when the bar is swiped away (#1173)"
   },
+  "shellBarHideAction": "Hide the navigation bar",
+  "@shellBarHideAction": {
+    "description": "Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611)."
+  },
   "shellBarHideHint": "Long-press for a full-screen view",
   "@shellBarHideHint": {
     "description": "Semantics hint on the Reserve button while the bar shows (#1173)"
+  },
+  "shellBarShowAction": "Show the navigation bar",
+  "@shellBarShowAction": {
+    "description": "Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611)."
   },
   "shellBarShowHint": "Long-press to show the navigation bar",
   "@shellBarShowHint": {

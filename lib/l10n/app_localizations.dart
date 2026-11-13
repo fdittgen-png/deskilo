@@ -18285,6 +18285,18 @@ abstract class AppLocalizations {
   /// **'Printable QR cards per seat, desk, office and level — scan to reserve or check in.'**
   String get featureSpaceQrCodesDesc;
 
+  /// the feature's description on the Features screen (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count.'**
+  String get featureStockManagementDesc;
+
+  /// the feature's name (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock management'**
+  String get featureStockManagementTitle;
+
   /// Shown as a text in feature copy (workspace).
   ///
   /// In en, this message translates to:
@@ -27313,6 +27325,24 @@ abstract class AppLocalizations {
   /// **'Working…'**
   String get kitActionBusy;
 
+  /// Confirmation shown after a value was copied to the clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to the clipboard'**
+  String get kitCopied;
+
+  /// Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get kitCopy;
+
+  /// Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy {value}'**
+  String kitCopyValue(String value);
+
   /// Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer.
   ///
   /// In en, this message translates to:
@@ -35174,6 +35204,12 @@ abstract class AppLocalizations {
   /// **'Approve expenses'**
   String get permApproveExpenses;
 
+  /// a permission in the role matrix (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Approve stock adjustments'**
+  String get permApproveStockAdjustments;
+
   /// #987/#989 environment pairs: permDeployToDev
   ///
   /// In en, this message translates to:
@@ -35288,6 +35324,12 @@ abstract class AppLocalizations {
   /// **'Manage sites and edit the floor plan'**
   String get permManageSites;
 
+  /// a permission in the role matrix (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Move goods in and out of stock'**
+  String get permManageStock;
+
   /// Permission label (#513)
   ///
   /// In en, this message translates to:
@@ -35365,6 +35407,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Read members\' personal data'**
   String get permViewPersonalData;
+
+  /// a permission in the role matrix (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'See the stock'**
+  String get permViewStock;
 
   /// Permission label (#513)
   ///
@@ -40308,6 +40356,54 @@ abstract class AppLocalizations {
   /// **'Your session has ended. Sign in again, then retry.'**
   String get refusalSession;
 
+  /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
+  ///
+  /// In en, this message translates to:
+  /// **'This item has stock movements, which are kept: it cannot be deleted, and its stock unit and tracking stay as they are. Deactivate it, or create a new item.'**
+  String get refusalStockHistory;
+
+  /// refusal DKG04 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'This is not an item this business keeps in stock. Nothing was moved.'**
+  String get refusalStockItem;
+
+  /// refusal DKG05 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'This place is not one of this business\'s, is no longer in use, or is both the start and the end of the move. Nothing was moved.'**
+  String get refusalStockLocation;
+
+  /// refusal DKG06 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'This lot belongs to another item, or the item is tracked by lot and none was given. Nothing was moved.'**
+  String get refusalStockLot;
+
+  /// refusal DKG07 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'This move cannot be recorded as given: a quantity above zero, a known reason and one to two hundred lines, or the same request sent again unchanged. Nothing was moved.'**
+  String get refusalStockMove;
+
+  /// refusal DKG03 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'There is not that much at this place. Nothing was moved.'**
+  String get refusalStockNotEnough;
+
+  /// refusal DKG01 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock management is off in this business. Nothing was moved.'**
+  String get refusalStockOff;
+
+  /// refusal DKG02 (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
+  String get refusalStockUnit;
+
   /// #2356: refusalVatRateVersioned
   ///
   /// In en, this message translates to:
@@ -45198,6 +45294,12 @@ abstract class AppLocalizations {
   /// **'Days a personal invitation can be redeemed after it is created. Invitations already sent keep their date. Can only be shortened.'**
   String get settingHintSecurityInvitationExpiryDays;
 
+  /// a workspace setting's hint (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Off: a move that would leave less than nothing at a place is refused. On: it is recorded, and the place shows a negative quantity until goods arrive.'**
+  String get settingHintStockAllowNegative;
+
   /// #2487 retention settings
   ///
   /// In en, this message translates to:
@@ -45671,6 +45773,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invitation validity'**
   String get settingLabelSecurityInvitationExpiryDays;
+
+  /// a workspace setting's label (#3824)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock may go below zero'**
+  String get settingLabelStockAllowNegative;
 
   /// #2487 retention settings
   ///
@@ -49007,11 +49115,23 @@ abstract class AppLocalizations {
   /// **'Navigation bar hidden'**
   String get shellBarHiddenAnnounce;
 
+  /// Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the navigation bar'**
+  String get shellBarHideAction;
+
   /// Semantics hint on the Reserve button while the bar shows (#1173)
   ///
   /// In en, this message translates to:
   /// **'Long-press for a full-screen view'**
   String get shellBarHideHint;
+
+  /// Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Show the navigation bar'**
+  String get shellBarShowAction;
 
   /// Semantics hint on the Reserve button while the bar is hidden (#1173)
   ///

@@ -329,17 +329,10 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
-  RouteCoverage(
-    '/invoices',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.payment,
-  ),
-  // #3607 — an open invoice's address: the same payment surface.
-  RouteCoverage(
-    '/invoices/:id',
-    CoverageStatus.excluded,
-    category: ProtectedSurface.payment,
-  ),
+  RouteCoverage('/invoices', CoverageStatus.excluded, category: ProtectedSurface.payment),
+  // #3607, #3614 — an open invoice's and a customer's address: the same
+  // payment surface.
+  RouteCoverage('/invoices/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage('/invoices/customer/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage(
     '/invoice-register',

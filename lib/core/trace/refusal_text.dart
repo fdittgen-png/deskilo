@@ -79,6 +79,22 @@ enum KnownRefusal {
   /// #3811 — DKR01: this installation is a personal home and hosts no
   /// workspace.
   personalHomeHostsNoWorkspace,
+
+  /// #3824 (0747) — the goods ledger's refusals, DKG01-DKG07: stock
+  /// management off, a unit the item does not list, not that much on hand,
+  /// not a stock item, a place that is not the business's or not in use, a
+  /// lot of another item, a move not recordable as given.
+  stockOff,
+  stockUnit,
+  stockNotEnough,
+  stockItem,
+  stockLocation,
+  stockLot,
+  stockMove,
+
+  /// #3824 (0747) — DKG08: an item with stock movements, or a movement,
+  /// is kept: the item is deactivated instead.
+  stockHistory,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -127,6 +143,15 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKR01': KnownRefusal.personalHomeHostsNoWorkspace,
   // #3821 — a business refusal: this person may not do this (0745).
   'DKN01': KnownRefusal.permission,
+  // #3824 — the goods ledger (0747).
+  'DKG01': KnownRefusal.stockOff,
+  'DKG02': KnownRefusal.stockUnit,
+  'DKG03': KnownRefusal.stockNotEnough,
+  'DKG04': KnownRefusal.stockItem,
+  'DKG05': KnownRefusal.stockLocation,
+  'DKG06': KnownRefusal.stockLot,
+  'DKG07': KnownRefusal.stockMove,
+  'DKG08': KnownRefusal.stockHistory,
 };
 
 /// #3811 — the server's refusal code and its DETAIL, for a screen that reads
@@ -197,5 +222,21 @@ String? knownRefusalText(AppLocalizations l10n, Object error) =>
       KnownRefusal.privacySelfServiceOff => l10n.privacySelfServiceOff,
       KnownRefusal.personalHomeHostsNoWorkspace =>
         l10n.refusalPersonalHomeHostsNoWorkspace,
+      final KnownRefusal stock => _stockRefusalText(l10n, stock),
       null => null,
+    };
+
+/// #3824 — the goods ledger's words (DKG01-DKG08), apart from the other
+/// families; null for a refusal of another family.
+String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
+    switch (refusal) {
+      KnownRefusal.stockOff => l10n.refusalStockOff,
+      KnownRefusal.stockUnit => l10n.refusalStockUnit,
+      KnownRefusal.stockNotEnough => l10n.refusalStockNotEnough,
+      KnownRefusal.stockItem => l10n.refusalStockItem,
+      KnownRefusal.stockLocation => l10n.refusalStockLocation,
+      KnownRefusal.stockLot => l10n.refusalStockLot,
+      KnownRefusal.stockMove => l10n.refusalStockMove,
+      KnownRefusal.stockHistory => l10n.refusalStockHistory,
+      _ => null,
     };

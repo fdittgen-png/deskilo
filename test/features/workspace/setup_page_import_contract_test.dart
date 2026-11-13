@@ -461,6 +461,8 @@ void main() {
         'region': 'app',
         'bi': 'app',
         'members': 'app',
+        // #3824 — the stock answers are set in the app, with its screens.
+        'stock': 'app',
         'einvoice': 'file',
       });
     });

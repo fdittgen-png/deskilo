@@ -755,6 +755,8 @@
  "retUsYears": "Conservation des pièces, État américain",
  "retUsYearsHint": "Pour un espace aux États-Unis dont l'État demande de conserver les pièces plus longtemps que la règle fédérale : le nombre d'années pendant lesquelles chaque pièce est conservée à partir de sa date. Une durée plus courte ne change rien ; la règle s'applique toujours. Se règle dans les réglages de l'application (Conservation des pièces, État américain). Pas un conseil juridique : vérifiez le délai de votre État.",
  "retUsRule": "La règle de conservation s'applique",
+ "stockAllowNegative": "Le stock peut passer sous zéro",
+ "stockAllowNegativeHint": "Désactivé : un mouvement qui laisserait moins que rien à un endroit est refusé. Activé : il est enregistré, et l’endroit affiche une quantité négative jusqu’à l’arrivée de marchandises. Modifiable ensuite dans les réglages de l’espace.",
  "badgeFailureLimit": "Badges en échec de connexion par espace",
  "badgeFailureLimitHint": "Quand ce nombre de badges différents de l’espace échouent à leur PIN pendant la fenêtre de blocage, la connexion par badge est suspendue pour cette fenêtre et les propriétaires reçoivent une alerte ; un seul badge ne peut pas la suspendre. Choisissez de 1 à 50 dans les paramètres de l’espace → Sécurité ; 50 par défaut.",
  "badgeSigninWhere": "La connexion par badge fonctionne sur",

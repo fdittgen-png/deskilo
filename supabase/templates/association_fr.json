@@ -200,6 +200,7 @@
         "siteDocuments": false,
         "spaceInquiries": true,
         "spaceQrCodes": true,
+        "stockManagement": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,
         "supplyExpenses": false,

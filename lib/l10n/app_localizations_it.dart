@@ -11259,6 +11259,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Schede QR stampabili per postazione, tavolo, ufficio e piano — da scansionare per prenotare o fare check-in.';
 
   @override
+  String get featureStockManagementDesc =>
+      'Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.';
+
+  @override
+  String get featureStockManagementTitle => 'Gestione delle scorte';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.';
 
@@ -17124,6 +17131,17 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kitActionBusy => 'In corso…';
 
   @override
+  String get kitCopied => 'Copiato negli appunti';
+
+  @override
+  String get kitCopy => 'Copia';
+
+  @override
+  String kitCopyValue(String value) {
+    return 'Copia $value';
+  }
+
+  @override
   String get kitScrollBack => 'Scorri indietro';
 
   @override
@@ -21898,6 +21916,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permApproveExpenses => 'Approvare le spese';
 
   @override
+  String get permApproveStockAdjustments =>
+      'Approvare le rettifiche di magazzino';
+
+  @override
   String get permDeployToDev => 'Distribuire in sviluppo';
 
   @override
@@ -21956,6 +21978,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get permManageSites => 'Gestire sedi e modificare la planimetria';
 
   @override
+  String get permManageStock => 'Movimentare la merce in entrata e in uscita';
+
+  @override
   String get permManageValidation => 'Configurare le regole di convalida';
 
   @override
@@ -21994,6 +22019,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get permViewPersonalData => 'Consultare i dati personali dei membri';
+
+  @override
+  String get permViewStock => 'Vedere le scorte';
 
   @override
   String get permWorkspaceSettings => 'Modificare le impostazioni dello spazio';
@@ -25048,6 +25076,38 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalSession =>
       'La sua sessione è scaduta. Acceda di nuovo, poi riprovi.';
+
+  @override
+  String get refusalStockHistory =>
+      'Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.';
+
+  @override
+  String get refusalStockItem =>
+      'Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockLocation =>
+      'Questo luogo non appartiene a questa attività, non è più in uso o è sia l\'origine sia la destinazione del movimento. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockLot =>
+      'Questo lotto appartiene a un altro articolo, oppure l\'articolo è gestito a lotti e non ne è stato indicato nessuno. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockMove =>
+      'Questo movimento non può essere registrato così: una quantità sopra zero, un motivo noto e da una a duecento righe, oppure la stessa richiesta inviata di nuovo invariata. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockNotEnough =>
+      'In questo luogo non ce n\'è così tanto. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockOff =>
+      'La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.';
+
+  @override
+  String get refusalStockUnit =>
+      'Questo articolo non ha questa unità. Aggiungi l\'unità all\'articolo o inserisci la quantità in un\'unità che ha.';
 
   @override
   String get refusalVatRateVersioned =>
@@ -28107,6 +28167,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Giorni in cui un invito personale può essere utilizzato dopo la creazione. Gli inviti già inviati mantengono la loro data. Può solo essere accorciata.';
 
   @override
+  String get settingHintStockAllowNegative =>
+      'Disattivato: un movimento che lascerebbe meno di niente in un luogo è rifiutato. Attivato: viene registrato e il luogo mostra una quantità negativa finché arriva merce.';
+
+  @override
   String get settingHintVatViesEvidenceDays =>
       'Giorni in cui un controllo valido della partita IVA resta abbastanza recente da fungere da prova su una nuova fattura. Un valore più breve richiede prima un nuovo controllo; non prova che un’operazione sia valida.';
 
@@ -28404,6 +28468,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelSecurityInvitationExpiryDays =>
       'Validità di un invito';
+
+  @override
+  String get settingLabelStockAllowNegative =>
+      'Le scorte possono scendere sotto zero';
 
   @override
   String get settingLabelVatViesEvidenceDays =>
@@ -30568,7 +30636,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shellBarHiddenAnnounce => 'Barra di navigazione nascosta';
 
   @override
+  String get shellBarHideAction => 'Nascondi la barra di navigazione';
+
+  @override
   String get shellBarHideHint => 'Tenga premuto per la vista a schermo intero';
+
+  @override
+  String get shellBarShowAction => 'Mostra la barra di navigazione';
 
   @override
   String get shellBarShowHint =>

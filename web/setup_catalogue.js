@@ -634,6 +634,10 @@ window.SETUP_REGISTRY={
   [
    "quickSearch",
    true
+  ],
+  [
+   "stockManagement",
+   false
   ]
  ],
  "requires": {
@@ -742,7 +746,8 @@ window.SETUP_REGISTRY={
   "guestPasses": "invoicing",
   "reminderEmail": "dunning",
   "invoiceEmail": "invoicing",
-  "kioskEnrolment": "kioskMode"
+  "kioskEnrolment": "kioskMode",
+  "stockManagement": "services"
  },
  "availableIn": {
   "recapitulativeStatement": [
@@ -787,7 +792,10 @@ window.SETUP_REGISTRY={
   "managePurchases",
   "recordOutgoingPayments",
   "manageLease",
-  "managePrivacy"
+  "managePrivacy",
+  "viewStock",
+  "manageStock",
+  "approveStockAdjustments"
  ],
  "defaultMatrix": {
   "co_owner": [
@@ -825,7 +833,10 @@ window.SETUP_REGISTRY={
    "managePurchases",
    "recordOutgoingPayments",
    "manageLease",
-   "managePrivacy"
+   "managePrivacy",
+   "viewStock",
+   "manageStock",
+   "approveStockAdjustments"
   ],
   "admin": [
    "manageMembers",
@@ -1274,7 +1285,8 @@ window.SETUP_PROCESSES=[
      "accessorySupplements",
      "priceNegotiations",
      "memberPaymentTerms",
-     "carnets"
+     "carnets",
+     "stockManagement"
     ]
    }
   ]
@@ -1749,7 +1761,8 @@ window.SETUP_LEVELS={
       "assetRegister",
       "purchaseAnalytics",
       "foreignCurrencyPurchases",
-      "purchaseOrders"
+      "purchaseOrders",
+      "stockManagement"
      ],
      "needs": {
       "money": "invoices"
