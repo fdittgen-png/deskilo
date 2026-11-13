@@ -17489,6 +17489,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String leaseSettlementPeriod(String from, String to) {
+    return 'Abrechnung $from bis $to';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Seit $date';
   }
@@ -27603,6 +27608,11 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String serverReferenceLabel(String host) {
     return 'Referenzserver ($host)';
+  }
+
+  @override
+  String serviceChargeSettlementOf(String supplier) {
+    return 'Nebenkostenabrechnung — $supplier';
   }
 
   @override
