@@ -9,6 +9,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -19,6 +20,10 @@ import '../../providers/purchase_providers.dart';
 import '../widgets/purchase_labels.dart';
 import '../widgets/purchases_sheet.dart';
 import 'money_view_data.dart';
+import 'purchase_approvals_desk.dart';
+
+/// The most of the page the receipts waiting below the table take.
+const double _receiptsShare = 0.35;
 
 /// `/money/purchases/approvals`.
 class PurchaseApprovalsScreen extends ConsumerWidget {
@@ -71,14 +76,71 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     }
   }
 
+  /// #3615 — at the desk the waiting documents are a records table, the
+  /// receipts waiting below it.
+  bool get _desk =>
+      WindowClass.of(context).index >= WindowClass.expanded.index;
+
   @override
-  Widget build(BuildContext context) => ListView(
-    padding: AppSpacing.mdAll,
-    children: [
-      _billContent(context),
-      _VisiblePendingReceipts(workspaceId: widget.workspaceId),
-    ],
-  );
+  Widget build(BuildContext context) => _desk
+      ? LayoutBuilder(
+          builder: (context, box) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(child: _billContent(context)),
+              ConstrainedBox(
+                constraints: BoxConstraints(
+                  maxHeight: box.maxHeight * _receiptsShare,
+                ),
+                child: SingleChildScrollView(
+                  padding: AppSpacing.mdAll,
+                  child: _VisiblePendingReceipts(
+                    workspaceId: widget.workspaceId,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      : ListView(
+          padding: AppSpacing.mdAll,
+          children: [
+            _billContent(context),
+            _VisiblePendingReceipts(workspaceId: widget.workspaceId),
+          ],
+        );
+
+  /// #3615 — the waiting documents as the desk's records table.
+  Widget _deskBills(
+    List<PurchaseSummary> docs,
+    PurchaseApprovalCursor? next,
+  ) {
+    final l10n = context.l10n;
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: PurchaseApprovalsTable(
+              workspaceId: widget.workspaceId,
+              docs: docs,
+              onOpen: (id) async {
+                await showPurchaseForDecision(context, widget.workspaceId, id);
+                if (mounted) _restart();
+              },
+              onDecided: () {
+                if (mounted) _restart();
+              },
+            ),
+          ),
+          if (next != null)
+            TextButton(
+              key: const ValueKey('approval-load-more'),
+              onPressed: () => setState(() => _cursors.add(next)),
+              child: Text(l10n.suppliersLoadMore),
+            ),
+        ],
+      );
+  }
 
   Widget _billContent(BuildContext context) {
     final l10n = context.l10n;
@@ -131,6 +193,7 @@ class _PurchaseApprovalsViewState extends ConsumerState<PurchaseApprovalsView> {
     }
     final docs = [for (final page in resolved) ...page.rows];
     final next = resolved.last.next;
+    if (_desk) return _deskBills(docs, next);
     return Column(
       children: [
         if (docs.isEmpty)

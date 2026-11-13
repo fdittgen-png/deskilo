@@ -1,0 +1,5 @@
+{
+  "@@locale": "es",
+  "purchasesWithoutReceipt": "Sin justificante",
+  "purchasesReceiptColumn": "Justificante"
+}

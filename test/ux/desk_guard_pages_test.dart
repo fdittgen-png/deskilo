@@ -4,15 +4,21 @@
 // builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
+import 'package:deskilo/core/demo/data/purchase_repository.dart';
+import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
+import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_providers.dart';
+import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -30,11 +36,45 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     memberId: 'member-1',
     period: kTestPeriod,
   );
+  // #3615 — one supplier, owed one approved bill.
+  final suppliers = FakeSupplierRepository();
+  final supplier = await suppliers.save(
+    'ws-1',
+    const SupplierDraft(name: 'ACME Office'),
+  );
+  final purchases = FakePurchaseRepository()
+    ..payables.add(
+      PayableRow(
+        obligation: PurchaseObligation(
+          id: 'o1',
+          purchaseId: 'p1',
+          creditorKind: CreditorKind.supplier,
+          creditorId: supplier,
+          amountCents: 12000,
+          currency: 'EUR',
+          appliedCents: 0,
+          remainingCents: 12000,
+        ),
+        purchase: PurchaseSummary(
+          id: 'p1',
+          kind: PurchaseKind.bill,
+          state: PurchaseState.approved,
+          category: 'Office',
+          reference: 'F-2026-11',
+          currency: 'EUR',
+          grossCents: 12000,
+          supplierId: supplier,
+          receivedOn: DateTime(2026, 11, 3),
+        ),
+      ),
+    );
   await pumpRoute(
     tester,
     path,
     size: size,
     overrides: [
+      supplierRepositoryProvider.overrideWithValue(suppliers),
+      purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
         workspace: FakeWorkspaceRepository.withWorkspace(
@@ -47,6 +87,9 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
   );
 }
 
+/// A row of the purchases table (purchases_desk.dart), by its shape.
+typedef _PurchaseRow = ({PurchaseSummary doc, String supplier, int? open});
+
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
   ('/invoices', PageKind.records, 'money', 'invoices'),
@@ -56,6 +99,9 @@ const _pages = [
   // #3614 — sales at the desk.
   ('/services', PageKind.records, 'money', 'services'),
   ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
+  // #3615 — purchases at the desk.
+  ('/money/purchases', PageKind.records, 'money', 'purchases'),
+  ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -116,6 +162,10 @@ void main() {
               RecordsHeader<ServiceItem>,
               RecordRow<GuestPassRecord>,
               RecordsHeader<GuestPassRecord>,
+              RecordRow<Supplier>,
+              RecordsHeader<Supplier>,
+              RecordRow<_PurchaseRow>,
+              RecordsHeader<_PurchaseRow>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -124,6 +174,8 @@ void main() {
               RecordsHeader<Receivable>,
               RecordsHeader<ServiceItem>,
               RecordsHeader<GuestPassRecord>,
+              RecordsHeader<Supplier>,
+              RecordsHeader<_PurchaseRow>,
             ],
           ),
           isEmpty,

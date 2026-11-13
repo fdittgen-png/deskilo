@@ -26,8 +26,9 @@ class SupabasePurchaseRepository implements PurchaseRepository {
           .from('purchase_documents')
           .select(
             'id, kind, state, category, original_reference, currency, '
-            'received_on, legacy_qualification, supplier_id, '
-            'purchase_lines(gross_cents)',
+            'received_on, original_date, legacy_qualification, supplier_id, '
+            'purchase_lines(gross_cents, net_cents, tax_cents), '
+            'purchase_sources(id)',
           )
           .eq('workspace_id', workspaceId)
           .order('created_datetime', ascending: false)

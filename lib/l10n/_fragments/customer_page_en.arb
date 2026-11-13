@@ -16,6 +16,15 @@
       }
     }
   },
+  "customerPageBalance": "Balance: {amount}",
+  "@customerPageBalance": {
+    "description": "#3840: the customer page, one currency's balance = still due minus not yet applied (the statement's)",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "customerPageCreditHint": "Payments no invoice has taken yet.",
   "@customerPageCreditHint": {
     "description": "#3587 R1-g: the customer page (customerPageCreditHint)"

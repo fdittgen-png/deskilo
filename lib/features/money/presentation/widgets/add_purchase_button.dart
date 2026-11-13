@@ -40,30 +40,32 @@ class AddPurchaseButton extends ConsumerWidget {
   /// managePurchases): the caller knows the gates.
   final bool bills;
 
+  /// Asks who paid (when bills may be captured) and opens that form: the
+  /// button's tap, and N on the purchases table (#3615).
+  Future<void> open(BuildContext context, WidgetRef ref) async {
+    final workspace = workspaceId;
+    final payer = bills
+        ? await showAppSheet<PurchasePayer>(
+            context: context,
+            builder: (_) => const _WhoPaid(),
+          )
+        : PurchasePayer.me;
+    if (payer == null || !context.mounted) return;
+    switch (payer) {
+      case PurchasePayer.me:
+        await showExpenseSheet(context, ref, currency);
+      case PurchasePayer.unpaid || PurchasePayer.space:
+        if (workspace == null) return;
+        await showPurchaseBillDialog(context, workspace);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final workspace = workspaceId;
-    Future<void> open() async {
-      final payer = bills
-          ? await showAppSheet<PurchasePayer>(
-              context: context,
-              builder: (_) => const _WhoPaid(),
-            )
-          : PurchasePayer.me;
-      if (payer == null || !context.mounted) return;
-      switch (payer) {
-        case PurchasePayer.me:
-          await showExpenseSheet(context, ref, currency);
-        case PurchasePayer.unpaid || PurchasePayer.space:
-          if (workspace == null) return;
-          await showPurchaseBillDialog(context, workspace);
-      }
-    }
-
     return FilledButton.icon(
       key: const ValueKey('add-purchase'),
-      onPressed: open,
+      onPressed: () => open(context, ref),
       icon: const Icon(Icons.add_shopping_cart_outlined),
       label: Text(l10n.purchaseEntryAdd),
     );

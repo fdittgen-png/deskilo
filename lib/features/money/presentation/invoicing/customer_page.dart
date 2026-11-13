@@ -2,7 +2,9 @@
 //
 // #3587 R1-g -- one customer: what they owe per currency (never summed), their
 // credit (the payments no invoice has taken), their invoices in the words of the
-// home's lines, and their story; the customer's one next action sits in the
+// home's lines, and their story. #3840 -- the figures (still due, not yet applied,
+// balance, the open documents) are the statement's snapshot, read once by the
+// server (customer_statement_v1); the page computes none of them; the customer's one next action sits in the
 // bottom bar. Everything comes in as data, and nothing here is decided by a
 // window width: the same page is a screen on a phone and, later, a panel beside
 // the list.
@@ -13,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/personal_theme.dart';
+import '../../../../core/time/calendar_days.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -23,6 +26,7 @@ import '../../../../core/ui/kit/two_line_row.dart';
 import '../../application/payment_candidates.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import '../../domain/customer_statement.dart';
 import 'invoicing_dates.dart';
 import 'invoicing_words.dart';
 
@@ -35,7 +39,7 @@ class CustomerPage extends StatelessWidget {
     required this.mode,
     required this.onOpenInvoice,
     required this.onAction,
-    this.credit,
+    this.statement,
     this.payments = const [],
     this.onAssign,
     this.onStatement,
@@ -53,9 +57,18 @@ class CustomerPage extends StatelessWidget {
   /// The customer's one next action (Share reminder, Confirm, Match).
   final ValueChanged<InvoiceAction> onAction;
 
-  /// The credit per currency in minor units; null while it was not read: no
-  /// figure is shown that was not read.
-  final Map<String, int>? credit;
+  /// #3840 — the customer's statement as of [today] (the server's snapshot);
+  /// null while it was not read: no figure is shown that was not read.
+  final CustomerStatement? statement;
+
+  /// The credit per currency in minor units, from [statement]; null while it
+  /// was not read.
+  Map<String, int>? get credit => statement == null
+      ? null
+      : {
+          for (final c in statement!.currencies)
+            if (c.unappliedCents > 0) c.currency: c.unappliedCents,
+        };
 
   /// The payments no invoice has taken, newest first (#3671): each has its
   /// "Assign to invoices" on the credit line; with [onAssign] null, none.
@@ -179,7 +192,10 @@ class CustomerPage extends StatelessWidget {
       OwedBucket.toConfirm: l.journeyStageConfirm,
       OwedBucket.overdue: l.invoicingOwedOverdue,
     };
-    final owed = owedOf(mine, today);
+    final owed = [
+      for (final c in statement?.currencies ?? const <StatementCurrency>[])
+        if (c.lines.isNotEmpty) (c, _bucketsOf(c, mine)),
+    ];
     return KitCard(
       key: const ValueKey('customer-page-owed'),
       child: Column(
@@ -187,15 +203,15 @@ class CustomerPage extends StatelessWidget {
         spacing: AppSpacing.sm,
         children: [
           KitLabel(l.customerPageOwes),
-          if (owed.isEmpty)
+          if (owed.isEmpty && statement != null)
             Text(
               l.customerPageNothingOwed,
               key: const ValueKey('customer-page-nothing-owed'),
               style: theme.textTheme.titleMedium,
             ),
-          for (final o in owed) ...[
+          for (final (o, buckets) in owed) ...[
             Text(
-              format.moneyIn(o.currency).formatMinor(o.totalMinor),
+              format.moneyIn(o.currency).formatMinor(o.stillDueCents),
               key: ValueKey('customer-page-owed-${o.currency}'),
               style: theme.textTheme.headlineMedium?.emphasised.copyWith(
                 fontFeatures: const [FontFeature.tabularFigures()],
@@ -204,11 +220,11 @@ class CustomerPage extends StatelessWidget {
             SplitBar(
               parts: [
                 for (final b in OwedBucket.values)
-                  (weight: o.buckets[b]?.minor ?? 0, color: colours[b]!),
+                  (weight: buckets[b]?.minor ?? 0, color: colours[b]!),
               ],
             ),
             for (final b in OwedBucket.values)
-              if (o.buckets[b] case final share?)
+              if (buckets[b] case final share?)
                 Row(
                   children: [
                     Expanded(
@@ -220,10 +236,44 @@ class CustomerPage extends StatelessWidget {
                     Text(format.moneyIn(o.currency).formatMinor(share.minor)),
                   ],
                 ),
+            if (o.unappliedCents > 0)
+              Text(
+                l.customerPageBalance(
+                  format.moneyIn(o.currency).formatMinor(o.balanceCents),
+                ),
+                key: ValueKey('customer-page-balance-${o.currency}'),
+                style: theme.textTheme.bodySmall,
+              ),
           ],
         ],
       ),
     );
+  }
+
+  /// Where each open document of [c] stands: money on its way (the invoice
+  /// is declared or to match, or its match waits for a second approval) is
+  /// to confirm whatever the due date; the rest is late from its due day or
+  /// not yet due. A credit note is not owed by the customer: no bucket.
+  Map<OwedBucket, ({int count, int minor})> _bucketsOf(
+    StatementCurrency c,
+    List<Receivable> mine,
+  ) {
+    final byId = {for (final r in mine) r.invoiceId: r};
+    final buckets = <OwedBucket, ({int count, int minor})>{};
+    for (final line in c.lines) {
+      if (line.state == StatementLineState.creditNote) continue;
+      final due = line.dueOn;
+      final bucket =
+          line.state == StatementLineState.awaitingApproval ||
+              (byId[line.invoiceId]?.paymentPending ?? false)
+          ? OwedBucket.toConfirm
+          : due != null && calendarDaysBetween(today, due) <= 0
+          ? OwedBucket.overdue
+          : OwedBucket.notYetDue;
+      final b = buckets[bucket] ?? (count: 0, minor: 0);
+      buckets[bucket] = (count: b.count + 1, minor: b.minor + line.stillDueCents);
+    }
+    return buckets;
   }
 
   /// "Credit: …" per currency, with what it is.

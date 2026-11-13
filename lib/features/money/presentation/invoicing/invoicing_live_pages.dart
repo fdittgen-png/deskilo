@@ -81,7 +81,11 @@ class LiveCustomerPage extends ConsumerWidget {
       receivables: now.receivables ?? const [],
       today: now.today,
       mode: now.mode,
-      credit: now.money?.creditOf(customerId),
+      // #3840 — the figures are the server's snapshot; while the unassigned
+      // money is not known either, nothing is offered on them.
+      statement: now.money == null
+          ? null
+          : ref.watch(customerStatementProvider(customerId)).value,
       payments: payments,
       onAssign: (payment) => showAssignPayment(
         context,

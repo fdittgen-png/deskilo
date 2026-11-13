@@ -271,7 +271,7 @@ void main() {
     testWidgets('at ${width.toInt()} the window is the desk\'s and the reading '
         'column the page\'s', (tester) async {
       final router = await _pump(tester, size: Size(width, 900));
-      await _go(tester, router, '/money/purchases');
+      await _go(tester, router, '/money/cash');
       final nav = tester.getRect(_key('desk-navigation'));
       expect(nav.left, 0);
       expect(
@@ -282,7 +282,7 @@ void main() {
       expect(top.right, width);
       final area = Rect.fromLTRB(top.left, top.bottom, width, 900);
       final page = pageRect(tester);
-      expect(page.width, lessThanOrEqualTo(frameWidthFor('/money/purchases')));
+      expect(page.width, lessThanOrEqualTo(frameWidthFor('/money/cash')));
       expect(
         page.width,
         area.width < kReadingColumnMaxWidth

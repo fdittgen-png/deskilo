@@ -39,7 +39,6 @@ Future<void> showSuppliersSheet(
 
 /// The supplier list with what waits for review, add, edit, archive and the
 /// bank-detail door.
-@visibleForTesting
 class SuppliersView extends ConsumerWidget {
   const SuppliersView({
     required this.workspaceId,
@@ -70,7 +69,8 @@ class SuppliersView extends ConsumerWidget {
       ..invalidate(supplierReviewsProvider(workspaceId));
   }
 
-  Future<void> _edit(
+  /// Adds a supplier ([supplier] null) or edits one.
+  Future<void> edit(
     BuildContext context,
     WidgetRef ref,
     Supplier? supplier,
@@ -96,7 +96,7 @@ class SuppliersView extends ConsumerWidget {
       // The lookup or the form met a supplier already there: edit that
       // one, create none.
       case SupplierDialogOpenExisting(:final supplier):
-        return _edit(context, ref, supplier);
+        return edit(context, ref, supplier);
       case SupplierDialogSaved(:final id):
         _refresh(ref);
         final l10n = context.l10n;
@@ -121,11 +121,12 @@ class SuppliersView extends ConsumerWidget {
     final suppliers = await ref.read(suppliersProvider(workspaceId).future);
     if (!context.mounted) return;
     for (final s in suppliers) {
-      if (s.id == id) return _edit(context, ref, s);
+      if (s.id == id) return edit(context, ref, s);
     }
   }
 
-  Future<void> _archive(BuildContext context, WidgetRef ref, Supplier s) async {
+  /// Archives [s], or restores it when archived.
+  Future<void> archive(BuildContext context, WidgetRef ref, Supplier s) async {
     final command = ref.read(supplierCommandProvider);
     final ok = await runGuarded(
       context,
@@ -137,7 +138,8 @@ class SuppliersView extends ConsumerWidget {
     if (ok) _refresh(ref);
   }
 
-  Future<void> _bank(BuildContext context, WidgetRef ref, Supplier s) async {
+  /// Changes [s]'s bank account.
+  Future<void> bank(BuildContext context, WidgetRef ref, Supplier s) async {
     final result = await showSupplierBankDialog(context, workspaceId, s);
     if (result == null || !context.mounted) return;
     final l10n = context.l10n;
@@ -226,7 +228,7 @@ class SuppliersView extends ConsumerWidget {
         const SizedBox(height: AppSpacing.sm),
         FilledButton.icon(
           key: const ValueKey('supplier-add'),
-          onPressed: () => _edit(context, ref, null),
+          onPressed: () => edit(context, ref, null),
           icon: const Icon(Icons.add),
           label: Text(l10n.suppliersAdd),
         ),
@@ -281,13 +283,13 @@ class SuppliersView extends ConsumerWidget {
                   key: ValueKey('supplier-edit-${s.id}'),
                   tooltip: l10n.suppliersEdit,
                   icon: const Icon(Icons.edit_outlined),
-                  onPressed: () => _edit(context, ref, s),
+                  onPressed: () => edit(context, ref, s),
                 ),
                 IconButton(
                   key: ValueKey('supplier-bank-${s.id}'),
                   tooltip: l10n.suppliersBank,
                   icon: const Icon(Icons.account_balance_outlined),
-                  onPressed: () => _bank(context, ref, s),
+                  onPressed: () => bank(context, ref, s),
                 ),
                 IconButton(
                   key: ValueKey('supplier-archive-${s.id}'),
@@ -299,7 +301,7 @@ class SuppliersView extends ConsumerWidget {
                         ? Icons.archive_outlined
                         : Icons.unarchive_outlined,
                   ),
-                  onPressed: () => _archive(context, ref, s),
+                  onPressed: () => archive(context, ref, s),
                 ),
               ],
             ),

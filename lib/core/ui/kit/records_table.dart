@@ -246,7 +246,9 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       searchText: widget.searchText,
       chips: widget.chips,
     );
-    return Padding(
+    // #3615 — the filter and the chips start the row, never centred in it.
+    return Container(
+      alignment: AlignmentDirectional.centerStart,
       padding: const EdgeInsets.fromLTRB(
         AppSpacing.md,
         AppSpacing.sm,
