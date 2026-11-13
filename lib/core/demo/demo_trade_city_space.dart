@@ -57,7 +57,7 @@ class DemoTradeCityData {
       workspaceId: city.id,
       prefix: city.prefix,
       sites: city.siteIds,
-      mainFloorOffices: [2, 2],
+      mainFloorOffices: [2],
     );
     final reservations = RightsCheckedReservationRepository(actor: actor)
       ..granularity = BookingGranularity.minutes60;

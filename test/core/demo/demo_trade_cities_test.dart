@@ -55,8 +55,8 @@ const _milan = (
 
 /// The people of a trade city in the order the seed lists them, with the
 /// membership percentage each pays on: the cast first (Ada, Bruno, Chiara,
-/// Dov, Elise), then eight locals of whom every third pays half.
-const _percent = [100, 50, 100, 50, 100, 100, 100, 50, 100, 100, 50, 100, 100];
+/// Dov, Elise: Bruno and Dov pay half), then sixteen full-time locals.
+final _percent = [100, 50, 100, 50, 100, ...[for (var i = 0; i < 16; i++) 100]];
 
 /// What a member's invoice of [month] (1..12) comes to, in minor units: the
 /// membership (18000 half-time, 36000 full), plus the nine catalogue items
@@ -104,9 +104,9 @@ void main() {
         expect(row.countryCode, facts.country);
         expect(row.currencyCode, facts.currency);
         expect(row.timezone, facts.zone);
-        // Thirteen people: the five of the cast and eight locals.
+        // Twenty-one people: the five of the cast and sixteen locals.
         final members = [data.workspaces.myMember, ...data.workspaces.otherMembers];
-        expect(members, hasLength(13));
+        expect(members, hasLength(21));
         expect(
           members.take(5).map((m) => m.id),
           ['member-1', 'member-2', 'member-3', 'member-4', 'member-5'],
@@ -125,13 +125,13 @@ void main() {
           members.every((m) => m.status.name == 'active'),
           isTrue,
         );
-        expect(members.map((m) => m.id).toSet(), hasLength(13));
+        expect(members.map((m) => m.id).toSet(), hasLength(21));
         for (final m in members) {
           expect(m.workspaceId, facts.id);
         }
         expect(
           members.skip(5).map((m) => m.userId),
-          [for (var i = 1; i <= 8; i++) '${facts.prefix}-user-$i'],
+          [for (var i = 1; i <= 16; i++) '${facts.prefix}-user-$i'],
         );
         expect(
           [for (final m in members) m.subscriptionPct],
@@ -148,8 +148,8 @@ void main() {
 
       test('its sales: every invoice is its issuer\'s currency, lines plus tax', () {
         final money = data.money;
-        // 13 people x 24 months, nothing else.
-        expect(money.invoices, hasLength(13 * 24));
+        // 21 people x 24 months, nothing else.
+        expect(money.invoices, hasLength(21 * 24));
         var billed = 0;
         for (final (index, member) in [
           data.workspaces.myMember,
@@ -196,12 +196,12 @@ void main() {
         final money = data.money;
         // On 2 November the October invoices (issued 31 October, paid after 5
         // days) are not paid yet, and Bruno's September one stays overdue:
-        // 13 + 1 open, every other invoice matched in full.
+        // 21 + 1 open, every other invoice matched in full.
         final open = [
           for (final i in money.invoices)
             if (!money.invoiceMatchesStore.containsKey(i.id)) i,
         ];
-        expect(open, hasLength(14));
+        expect(open, hasLength(22));
         expect(
           {for (final i in open) i.issuedAt.month},
           {9, 10},

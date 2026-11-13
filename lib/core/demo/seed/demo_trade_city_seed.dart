@@ -75,8 +75,10 @@ class DemoTradeCity {
   /// The members of the demo's cast who work here, besides its locals.
   static const castHere = 5;
 
-  /// How many people of this city are not in the cast.
-  static const locals = 8;
+  /// How many people of this city are not in the cast. The daily booking
+  /// history gives each seat of a day to a different person, so a city holds
+  /// more full-time people than its plan holds seat entries.
+  static const locals = 16;
 
   Workspace workspace() => Workspace(
     id: id,
@@ -140,7 +142,6 @@ class DemoTradeCity {
           isOwner: false,
           status: MemberStatus.active,
           homeSiteId: ids[i % ids.length],
-          subscriptionPct: i % 3 == 2 ? 50 : 100,
         ),
       );
       space.memberNames[memberId] = demoCityPersonName(nameOffset + i);
