@@ -1,4 +1,5 @@
 {
   "@@locale": "es",
-  "recordedPaymentsColMatched": "Conciliado el"
+  "recordedPaymentsColMatched": "Conciliado el",
+  "statementDeskColLine": "Línea"
 }

@@ -19104,6 +19104,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "statementDeskColLine": "Posten",
   "statusAwaiting": "Offen",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

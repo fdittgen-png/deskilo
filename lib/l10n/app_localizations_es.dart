@@ -31460,6 +31460,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceYoursNow => 'Reservado por usted para esta franja.';
 
   @override
+  String get statementDeskColLine => 'Línea';
+
+  @override
   String get statusAwaiting => 'Pendiente';
 
   @override

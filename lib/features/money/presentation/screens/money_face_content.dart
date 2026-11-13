@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/expense_schedule.dart';
 import '../../domain/money_face.dart';
@@ -20,6 +21,7 @@ import '../widgets/money_faces_view.dart';
 import '../widgets/my_finances_link_card.dart';
 import '../widgets/my_invoices_list.dart';
 import '../widgets/negotiation_card.dart';
+import '../widgets/statement_desk.dart';
 import '../widgets/usage_face.dart';
 import 'money_action_set.dart';
 import 'money_screen_ops.dart';
@@ -51,6 +53,9 @@ class MoneyFaceContent {
 
   /// #720 — one bill builder: the whole bill (face null) for the classic
   /// column and the PDF, one face at a time for the faces.
+  bool get _atDesk =>
+      WindowClass.of(context).index >= WindowClass.expanded.index;
+
   Widget bill(MoneyFace? face) => BillView(
         statement: data.statement!,
         ledger: data.ledger,
@@ -154,7 +159,11 @@ class MoneyFaceContent {
     return {
       MoneyFace.statement: [
         ...data.attemptsCard,
-        if (statement != null) bill(MoneyFace.statement),
+        // #3627 — at the desk the month is a dashboard over its lines.
+        if (statement != null && _atDesk)
+          StatementDesk(statement: statement, currencyCode: data.currencyCode)
+        else if (statement != null)
+          bill(MoneyFace.statement),
         if (account != null && account.isNotable) ...[
           const SizedBox(height: 8),
           AccountCard(

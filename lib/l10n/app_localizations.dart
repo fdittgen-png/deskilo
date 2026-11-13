@@ -50465,6 +50465,12 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #3627 Column header of the month's statement lines at the desk.
+  ///
+  /// In en, this message translates to:
+  /// **'Line'**
+  String get statementDeskColLine;
+
   /// #934 workspace status / repartition wizard: statusAwaiting
   ///
   /// In en, this message translates to:

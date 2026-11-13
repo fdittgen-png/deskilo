@@ -31489,6 +31489,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spaceYoursNow => 'Riservato da Lei per questa fascia.';
 
   @override
+  String get statementDeskColLine => 'Voce';
+
+  @override
   String get statusAwaiting => 'In attesa';
 
   @override

@@ -1,4 +1,5 @@
 {
   "@@locale": "de",
-  "recordedPaymentsColMatched": "Zugeordnet am"
+  "recordedPaymentsColMatched": "Zugeordnet am",
+  "statementDeskColLine": "Posten"
 }

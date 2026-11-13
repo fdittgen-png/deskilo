@@ -31190,6 +31190,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceYoursNow => 'Reserved by you for this slot.';
 
   @override
+  String get statementDeskColLine => 'Line';
+
+  @override
   String get statusAwaiting => 'Awaiting';
 
   @override

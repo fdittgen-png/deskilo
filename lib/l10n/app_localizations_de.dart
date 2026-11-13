@@ -31530,6 +31530,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceYoursNow => 'Von Ihnen für dieses Zeitfenster reserviert.';
 
   @override
+  String get statementDeskColLine => 'Posten';
+
+  @override
   String get statusAwaiting => 'Offen';
 
   @override

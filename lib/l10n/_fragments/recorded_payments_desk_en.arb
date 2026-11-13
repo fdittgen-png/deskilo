@@ -3,5 +3,9 @@
   "recordedPaymentsColMatched": "Matched on",
   "@recordedPaymentsColMatched": {
     "description": "#3627 payments table column: the day the payment was matched to its invoice"
+  },
+  "statementDeskColLine": "Line",
+  "@statementDeskColLine": {
+    "description": "#3627 Column header of the month's statement lines at the desk."
   }
 }

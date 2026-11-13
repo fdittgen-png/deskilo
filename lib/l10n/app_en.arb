@@ -40525,6 +40525,10 @@
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
+  "statementDeskColLine": "Line",
+  "@statementDeskColLine": {
+    "description": "#3627 Column header of the month's statement lines at the desk."
+  },
   "statusAwaiting": "Awaiting",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

@@ -31600,6 +31600,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get spaceYoursNow => 'Réservé par vous pour ce créneau.';
 
   @override
+  String get statementDeskColLine => 'Ligne';
+
+  @override
   String get statusAwaiting => 'En attente';
 
   @override

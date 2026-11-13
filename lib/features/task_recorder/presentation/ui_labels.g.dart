@@ -2172,6 +2172,7 @@ Map<String, _Getter> _part5() => {
   'siteSaved': (l) => l.siteSaved,
   'spaceFavoriteRemove': (l) => l.spaceFavoriteRemove,
   'spaceYoursNow': (l) => l.spaceYoursNow,
+  'statementDeskColLine': (l) => l.statementDeskColLine,
   'subprocessAvailability': (l) => l.subprocessAvailability,
   'subprocessCalendarDesc': (l) => l.subprocessCalendarDesc,
   'subprocessDocumentsDesc': (l) => l.subprocessDocumentsDesc,
