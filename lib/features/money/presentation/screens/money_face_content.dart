@@ -71,15 +71,13 @@ class MoneyFaceContent {
       MoneyFace.payments: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Wrap(
-            spacing: AppSpacing.md,
-            runSpacing: AppSpacing.md,
-            children: [
-              for (final action in faceActions()[MoneyFace.payments] ?? const <Widget>[])
-                if (action is! SizedBox) action,
-            ],
-          ),
-          const SizedBox(height: AppSpacing.lg),
+          _compactTools([
+            actions.recordPayment,
+            ?actions.buyPackage,
+            ...actions.requestButtons,
+            ...actions.purchaseButtons,
+          ]),
+          const SizedBox(height: AppSpacing.md),
           Expanded(
             child: MyCreditsTable(
               ledger: data.ledger,
@@ -101,6 +99,24 @@ class MoneyFaceContent {
         ],
       ),
   };
+
+  /// The face's tools as one compact row: the buttons keep their meaning,
+  /// not the phone's 56 dp height, and wrap rather than push the table.
+  Widget _compactTools(List<Widget> tools) => Theme(
+    data: Theme.of(context).copyWith(
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(minimumSize: const Size(0, 48)),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(minimumSize: const Size(0, 48)),
+      ),
+    ),
+    child: Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: tools,
+    ),
+  );
 
   Widget bill(MoneyFace? face) => BillView(
         statement: data.statement!,

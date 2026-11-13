@@ -9,6 +9,7 @@ import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../fake_money_repository.dart';
 import '../mock_providers.dart';
 import '../navigation.dart';
@@ -23,6 +24,8 @@ Future<FakeMoneyRepository> pumpFaces(
   // nothing existing changes.
   Size size = const Size(800, 1400),
 }) async {
+  // A desk table reads its saved columns from the device's preferences.
+  SharedPreferences.setMockInitialValues({});
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);

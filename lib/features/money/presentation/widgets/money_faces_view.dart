@@ -16,6 +16,9 @@ import '../../providers/money_face_controller.dart';
 // content-fit: two face cards side by side keep their figures readable
 const double _twoColumnsMinWidth = 480;
 
+// content-fit: the month chooser's band beside the face's title at the desk
+const double _periodBandMaxWidth = 360;
+
 /// The label of a face, as the tab and the help hint call it.
 String _moneyFaceLabel(AppLocalizations l10n, MoneyFace face) => switch (face) {
       MoneyFace.statement => l10n.invoiceTemplateDocStatement,
@@ -212,7 +215,7 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
     };
     final scopeHeader = Padding(
       key: ValueKey('money-scope-${face.name}'),
-      padding: const EdgeInsets.only(bottom: AppSpacing.lg),
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text(_moneyFaceLabel(l10n, face), style: theme.textTheme.headlineSmall?.strong),
         const SizedBox(height: AppSpacing.xs),
@@ -256,9 +259,21 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  scopeHeader,
-                  if (monthly) Padding(padding: const EdgeInsets.only(bottom: AppSpacing.lg),
-                      child: Card(child: widget.periodHeader)),
+                  // The scope and the month share one band, so the table
+                  // keeps the height: what is above it gives way first.
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Expanded(child: scopeHeader),
+                      if (monthly)
+                        Flexible(
+                          child: ConstrainedBox(
+                            constraints: const BoxConstraints(maxWidth: _periodBandMaxWidth),
+                            child: Card(margin: EdgeInsets.zero, child: widget.periodHeader),
+                          ),
+                        ),
+                    ],
+                  ),
                   Expanded(child: page),
                 ],
               ),

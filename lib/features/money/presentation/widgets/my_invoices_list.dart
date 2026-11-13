@@ -66,7 +66,7 @@ class MyInvoicesList extends ConsumerWidget {
             ..invalidate(invoiceRemindersProvider),
         );
     if (standIn != null) return standIn;
-    final invoices = myInvoicesOf(invoicesAsync.requireValue, memberId, fold: fold);
+    final invoices = _myInvoicesOf(invoicesAsync.requireValue, memberId, fold: fold);
     final matches = matchesAsync.requireValue;
     final reminders = remindersAsync.requireValue;
     final now = ref.watch(clockProvider).now();
@@ -247,7 +247,7 @@ class MyInvoicesList extends ConsumerWidget {
 
 /// #3627 — my invoices as the Invoices face lists them: issued to [memberId],
 /// voided ones and (with [fold]) regrouped sources left out, newest first.
-List<Invoice> myInvoicesOf(List<Invoice> all, String memberId, {required bool fold}) => all
+List<Invoice> _myInvoicesOf(List<Invoice> all, String memberId, {required bool fold}) => all
     .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
     .toList()
   ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
@@ -274,7 +274,7 @@ class MyInvoicesTable extends ConsumerWidget {
     final fold = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.settlementFold);
-    final invoices = myInvoicesOf(
+    final invoices = _myInvoicesOf(
       invoicesAsync.requireValue,
       memberId,
       fold: fold,
