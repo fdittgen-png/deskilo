@@ -7071,13 +7071,66 @@ class AppLocalizationsFr extends AppLocalizations {
   String get customerStatementBalanceOwed => 'Solde en votre faveur';
 
   @override
+  String get customerStatementClosing => 'Solde de clôture';
+
+  @override
+  String customerStatementDatedApart(String day) {
+    return 'daté du $day';
+  }
+
+  @override
   String customerStatementDue(String date) {
     return 'échéance $date';
   }
 
   @override
+  String get customerStatementMoveAllocated => 'Paiement imputé';
+
+  @override
+  String get customerStatementMoveApplied => 'Crédit imputé sur une facture';
+
+  @override
+  String get customerStatementMoveCredit => 'Crédit';
+
+  @override
+  String get customerStatementMoveCreditNote => 'Avoir';
+
+  @override
+  String get customerStatementMoveFreed => 'Paiement libéré';
+
+  @override
+  String get customerStatementMoveMoved =>
+      'Crédit transféré vers un autre compte';
+
+  @override
+  String get customerStatementMovePaid => 'Payée';
+
+  @override
+  String get customerStatementMovePayment => 'Paiement reçu';
+
+  @override
+  String get customerStatementMoveReopened => 'De nouveau ouverte';
+
+  @override
+  String get customerStatementMoveSettled =>
+      'Reprise dans une facture ultérieure';
+
+  @override
+  String get customerStatementMoveVoided => 'Annulée';
+
+  @override
+  String get customerStatementMoveWrittenOff => 'Reste passé en perte';
+
+  @override
+  String get customerStatementNoMovement =>
+      'Aucun mouvement sur cette période : le solde est resté le même.';
+
+  @override
   String get customerStatementNothingOpen =>
       'Rien n\'est ouvert pour ce client : aucun relevé à imprimer.';
+
+  @override
+  String get customerStatementOpening => 'Solde d\'ouverture';
 
   @override
   String get customerStatementOwedToYou => 'Dû en votre faveur';
@@ -7088,7 +7141,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String customerStatementPeriodRange(String from, String to) {
+    return 'Du $from au $to';
+  }
+
+  @override
   String get customerStatementPickCurrency => 'Le relevé dans quelle devise ?';
+
+  @override
+  String customerStatementReconstructed(String day) {
+    return 'Les soldes antérieurs au $day sont reconstitués à partir des enregistrements actuels.';
+  }
 
   @override
   String get customerStatementStillDue => 'Reste dû';
@@ -26084,6 +26147,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get reportDocCustomerStatement => 'Relevé de compte';
+
+  @override
+  String get reportDocCustomerStatementPeriod => 'Relevé sur une période';
 
   @override
   String get reportDocGeneralLedger => 'Grand-livre';

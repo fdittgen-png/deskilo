@@ -9163,6 +9163,19 @@
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
+  "customerStatementClosing": "Closing balance",
+  "@customerStatementClosing": {
+    "description": "(#3839)"
+  },
+  "customerStatementDatedApart": "dated {day}",
+  "@customerStatementDatedApart": {
+    "description": "a movement's own date when it counted on another day (#3839)",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "customerStatementDue": "due {date}",
   "@customerStatementDue": {
     "description": "#3673 customer statement: customerStatementDue",
@@ -9172,9 +9185,65 @@
       }
     }
   },
+  "customerStatementMoveAllocated": "Payment allocated",
+  "@customerStatementMoveAllocated": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveApplied": "Credit applied to an invoice",
+  "@customerStatementMoveApplied": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveCredit": "Credit",
+  "@customerStatementMoveCredit": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveCreditNote": "Credit note",
+  "@customerStatementMoveCreditNote": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveFreed": "Payment released",
+  "@customerStatementMoveFreed": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveMoved": "Credit moved to another account",
+  "@customerStatementMoveMoved": {
+    "description": "(#3839)"
+  },
+  "customerStatementMovePaid": "Paid",
+  "@customerStatementMovePaid": {
+    "description": "(#3839)"
+  },
+  "customerStatementMovePayment": "Payment received",
+  "@customerStatementMovePayment": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveReopened": "Open again",
+  "@customerStatementMoveReopened": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveSettled": "Taken over by a later invoice",
+  "@customerStatementMoveSettled": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveVoided": "Cancelled",
+  "@customerStatementMoveVoided": {
+    "description": "(#3839)"
+  },
+  "customerStatementMoveWrittenOff": "Remainder written off",
+  "@customerStatementMoveWrittenOff": {
+    "description": "(#3839)"
+  },
+  "customerStatementNoMovement": "No movement in this period: the balance stayed the same.",
+  "@customerStatementNoMovement": {
+    "description": "(#3839)"
+  },
   "customerStatementNothingOpen": "Nothing is open for this customer: no statement to print.",
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
+  },
+  "customerStatementOpening": "Opening balance",
+  "@customerStatementOpening": {
+    "description": "(#3839)"
   },
   "customerStatementOwedToYou": "Owed to you",
   "@customerStatementOwedToYou": {
@@ -9189,9 +9258,30 @@
       }
     }
   },
+  "customerStatementPeriodRange": "From {from} to {to}",
+  "@customerStatementPeriodRange": {
+    "description": "the period under the title (#3839)",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "customerStatementPickCurrency": "The statement in which currency?",
   "@customerStatementPickCurrency": {
     "description": "#3673 customer statement: customerStatementPickCurrency"
+  },
+  "customerStatementReconstructed": "Balances before {day} are reconstructed from today's records.",
+  "@customerStatementReconstructed": {
+    "description": "the line for a period before the match history (#3839)",
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
   },
   "customerStatementStillDue": "Still due",
   "@customerStatementStillDue": {
@@ -33768,6 +33858,10 @@
   "reportDocCustomerStatement": "Statement of account",
   "@reportDocCustomerStatement": {
     "description": "#3673 customer statement: reportDocCustomerStatement"
+  },
+  "reportDocCustomerStatementPeriod": "Statement for a period",
+  "@reportDocCustomerStatementPeriod": {
+    "description": "the document kind (#3839)"
   },
   "reportDocGeneralLedger": "General ledger",
   "@reportDocGeneralLedger": {

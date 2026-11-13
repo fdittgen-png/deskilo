@@ -6,6 +6,7 @@
 // exist without a name or be named twice differently.
 import '../../../l10n/app_localizations.dart';
 import '../domain/report_kind.dart';
+import 'report_defaults_customer_statement.dart';
 
 String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
   if (kind.slot case ReportReminderSlot(:final level)) {
@@ -18,7 +19,8 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'agreement' => l10n.reportDocAgreement,
     'payments' => l10n.reportDocPayments,
     'purchase_order' => l10n.reportDocPurchaseOrder,
-    'customer_statement' => l10n.reportDocCustomerStatement,
+    'customer_statement' || 'customer_statement_period' =>
+      customerStatementKindLabel(l10n, kind.id),
     'usage' => l10n.reportDocUsage,
     'workspace' => l10n.reportDocWorkspace,
     'status' => l10n.reportDocStatus,

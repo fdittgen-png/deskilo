@@ -13,6 +13,7 @@ import '../../application/payment_candidates.dart';
 import '../../application/receivables.dart';
 import '../../application/reminder_queue.dart';
 import '../../providers/money_providers.dart';
+import '../customer_statement_period_print.dart';
 import '../customer_statement_print.dart';
 import 'assign_payment_sheet.dart';
 import 'customer_page.dart';
@@ -98,6 +99,10 @@ class LiveCustomerPage extends ConsumerWidget {
       onAction: onAction,
       onClose: onClose,
       onStatement: () => CustomerStatementPrint(context, ref).show(
+        workspaceId: ref.read(invoicingBusinessProvider).id,
+        customerId: customerId,
+      ),
+      onStatementPeriod: () => CustomerStatementPeriodPrint(context, ref).show(
         workspaceId: ref.read(invoicingBusinessProvider).id,
         customerId: customerId,
       ),

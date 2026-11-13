@@ -7049,13 +7049,67 @@ class AppLocalizationsDe extends AppLocalizations {
   String get customerStatementBalanceOwed => 'Saldo zu Ihren Gunsten';
 
   @override
+  String get customerStatementClosing => 'Schlusssaldo';
+
+  @override
+  String customerStatementDatedApart(String day) {
+    return 'vom $day';
+  }
+
+  @override
   String customerStatementDue(String date) {
     return 'fällig $date';
   }
 
   @override
+  String get customerStatementMoveAllocated => 'Zahlung zugeordnet';
+
+  @override
+  String get customerStatementMoveApplied =>
+      'Guthaben mit einer Rechnung verrechnet';
+
+  @override
+  String get customerStatementMoveCredit => 'Guthaben';
+
+  @override
+  String get customerStatementMoveCreditNote => 'Gutschrift';
+
+  @override
+  String get customerStatementMoveFreed => 'Zahlung freigegeben';
+
+  @override
+  String get customerStatementMoveMoved =>
+      'Guthaben auf ein anderes Konto übertragen';
+
+  @override
+  String get customerStatementMovePaid => 'Bezahlt';
+
+  @override
+  String get customerStatementMovePayment => 'Zahlung erhalten';
+
+  @override
+  String get customerStatementMoveReopened => 'Wieder offen';
+
+  @override
+  String get customerStatementMoveSettled =>
+      'In eine spätere Rechnung übernommen';
+
+  @override
+  String get customerStatementMoveVoided => 'Storniert';
+
+  @override
+  String get customerStatementMoveWrittenOff => 'Rest abgeschrieben';
+
+  @override
+  String get customerStatementNoMovement =>
+      'Keine Bewegung in diesem Zeitraum: Der Saldo blieb gleich.';
+
+  @override
   String get customerStatementNothingOpen =>
       'Für diesen Kunden ist nichts offen: keine Kontoübersicht zu drucken.';
+
+  @override
+  String get customerStatementOpening => 'Anfangssaldo';
 
   @override
   String get customerStatementOwedToYou => 'Zu Ihren Gunsten';
@@ -7066,8 +7120,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String customerStatementPeriodRange(String from, String to) {
+    return 'Vom $from bis $to';
+  }
+
+  @override
   String get customerStatementPickCurrency =>
       'Die Kontoübersicht in welcher Währung?';
+
+  @override
+  String customerStatementReconstructed(String day) {
+    return 'Salden vor dem $day sind aus den heutigen Aufzeichnungen rekonstruiert.';
+  }
 
   @override
   String get customerStatementStillDue => 'Noch offen';
@@ -26043,6 +26107,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get reportDocCustomerStatement => 'Kontoübersicht';
+
+  @override
+  String get reportDocCustomerStatementPeriod =>
+      'Kontoauszug für einen Zeitraum';
 
   @override
   String get reportDocGeneralLedger => 'Hauptbuch';
