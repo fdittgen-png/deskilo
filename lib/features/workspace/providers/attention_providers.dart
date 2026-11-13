@@ -16,8 +16,10 @@
 // sources are already providers, and the ranking lives in
 // `domain/attention.dart` so the ORDER can be argued with in a unit
 // test rather than read off a screen.
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/locale/report_language.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../events/domain/workspace_event.dart';
@@ -27,6 +29,7 @@ import '../application/process_status.dart';
 import '../domain/attention.dart';
 import '../domain/member.dart';
 import '../domain/setup_status.dart';
+import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_readiness.dart';
@@ -62,6 +65,8 @@ bool _isMoneyEvent(EventType type) => const {
 Future<List<Attention>> attention(Ref ref) async {
   final items = <Attention>[];
   final now = ref.watch(clockProvider).now();
+  // #3850 — the workspace's own reference, watched before the first await.
+  final reference = ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
 
   // Events awaiting MY decision. `myPendingEventsProvider` already
   // applies the validation policy and the caller's own permissions, so
@@ -146,11 +151,31 @@ Future<List<Attention>> attention(Ref ref) async {
         .watch(myPermissionsProvider)
         .contains(WorkspacePermission.manageConfiguration)) {
       items.addAll(await _setupLines(ref, workspace.id, now));
+      if (_documentLanguageToConfirm(workspace, reference)) {
+        items.add(
+          Attention(
+            kind: AttentionKind.configuration,
+            subject: 'documentLanguage',
+            action: AttentionAction.confirmLanguage,
+            waitingSince: now,
+          ),
+        );
+      }
     }
   }
 
   return rankAttention(items);
 }
+
+/// #3850 — whether [workspace]'s document language waits for a configurer:
+/// its country has several shipped languages, and the language is missing or
+/// was given by the server and not yet confirmed. Never a blocking screen.
+bool _documentLanguageToConfirm(Workspace workspace, TaxReferenceSet? reference) =>
+    choosesDocumentLanguage(
+      reference?.documentLanguagesOf(workspace.countryCode)?.languages ?? const [],
+    ) &&
+    (!workspace.documentLanguageConfirmed ||
+        !documentLanguagesShipped.contains(workspace.defaultLocale));
 
 /// The setup a configurer still owes the space. #2867 — with the setup
 /// guide on, the steps its next milestone can take now, by the guide's

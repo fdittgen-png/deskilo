@@ -14,7 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../core/files/file_names.dart';
-import '../../../core/i18n/format_controller.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
 import '../../../core/l10n/context_l10n.dart';
@@ -38,9 +37,9 @@ import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_actions.dart'
     show requireWorkspaceTaxReference, workspaceTaxReference;
+import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart';
-import 'report_strings_l10n.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/einvoice_environment_picker.dart';
 /// SENDS the invoice: builds the document in the syntax the channel
@@ -86,8 +85,8 @@ Future<void> sendEInvoice(
         );
       } else {
         // #2358 — the network's own syntax, from the inputs the
-        // download uses.
-        final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
+        // download uses; #3850 — in the invoice's own language.
+        final words = documentStringsOf(invoiceDocumentLocale(ref, invoice));
         final association = ref.read(sellerIsAssociationProvider);
         // Every input is read BEFORE the first await.
         final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
@@ -445,7 +444,7 @@ class _EInvoiceExportRun {
   Future<void> ublXml({required bool share}) {
     final association = ref.read(sellerIsAssociationProvider);
     final l10n = context.l10n;
-    final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
+    final words = documentStringsOf(invoiceDocumentLocale(ref, s.invoice)); // #3850
     return runGuarded(
       context,
       domain: 'money',

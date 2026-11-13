@@ -265,29 +265,6 @@ void main() {
     },
   );
 
-  testWidgets('without the customer\'s language nothing is e-mailed', (
-    tester,
-  ) async {
-    final mail = _Mail();
-    await _pump(
-      tester,
-      mail,
-      onTap: (c, r) => ReminderEmailFlow(c, r).email(
-        _invoice,
-        level: 2,
-        owedCents: 4500,
-        pdf: (
-          bytes: _pdf.bytes,
-          fileName: _pdf.fileName,
-          title: _pdf.title,
-          language: '',
-        ),
-      ),
-    );
-    expect(mail.sent, isEmpty);
-    expect(find.text(l10n.reminderEmailNoLanguage), findsOneWidget);
-  });
-
   testWidgets('a retry of the same press reuses its attempt id', (
     tester,
   ) async {

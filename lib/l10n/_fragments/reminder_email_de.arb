@@ -25,10 +25,6 @@
   "@reminderEmailOff": {
     "description": "#3673 reminders by e-mail: reminderEmailOff"
   },
-  "reminderEmailNoLanguage": "Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Mahnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie den Brief.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailRefused": "Die E-Mail wurde abgelehnt: {reason}. Es wurde keine Mahnung erfasst.",
   "@reminderEmailRefused": {
     "description": "#3673 reminders by e-mail: reminderEmailRefused",

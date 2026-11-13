@@ -24,11 +24,11 @@ import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show workspaceTaxReference;
+import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
-import 'report_strings_l10n.dart';
 
 /// Renders the month as a PROFORMA and hands it to the share sheet — the
 /// quote an issuer sends before invoicing, and the payment request they
@@ -64,14 +64,16 @@ Future<void> shareProforma(
       keyPrefix: 'proforma',
       logMessage: 'proforma share failed',
       render: () {
-        final template = invoicePdfTemplateFor(ref);
+        // #3850 — a proforma has no frozen language: the business's.
+        final locale = businessDocumentLocale(ref);
+        final template = invoicePdfTemplateFor(ref).forLocale(locale.language);
         var bands = template.proformaBands ?? template.invoiceBands;
-        if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10n);
+        if (!bands.hasBands) bands = defaultBandsForDoc('proforma', l10nForLanguage(locale.language));
         return renderReportBands(
           bands: bands,
           data: withOwnerTexts(
             invoiceReportData(
-              reportStringsFor(context),
+              documentStringsOf(locale),
               invoice,
               memberTerms: memberTermsFor(ref, invoice.memberId),
               memberCapacity: memberCapacityFor(ref, invoice.memberId),

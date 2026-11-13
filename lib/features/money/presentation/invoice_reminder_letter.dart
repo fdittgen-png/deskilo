@@ -13,58 +13,49 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
-import '../../../core/l10n/context_l10n.dart';
-import '../../../core/locale/report_language.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data_letters.dart';
+import 'invoice_document_locale.dart';
 import 'invoice_documents.dart'
     show
         developmentMark,
+        invoiceDocumentLocale,
         invoicePdfTemplateFor,
         l10nForLanguage,
         resolveMemberReportLanguage;
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
 import 'report_image_resolve.dart';
-import 'report_strings_l10n.dart';
 
 /// The document language of [invoice]'s customer (#496): their preference
-/// → workspace language → country language; '' when it cannot be decided,
-/// and nothing is e-mailed on that guess (#3673). The reminder letter and
-/// the invoice by e-mail resolve it here, the same way.
+/// → the business's document language → its country's (#3850). The reminder
+/// letter resolves it here.
 Future<String> customerDocumentLanguage(WidgetRef ref, Invoice invoice) async {
-  try {
-    // #3680 — the language comes from the members as read; a read that did
-    // not answer fails the document instead of choosing a language blindly.
-    // #3742 — awaited: a read still running is not a failure.
-    final members = await ref.read(workspaceMembersProvider.future);
-    final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
-    final userId = member?.userId;
-    final profile = userId == null
-        ? null
-        : ref.read(memberProfilesProvider).value?[userId];
-    return resolveMemberReportLanguage(
-      ref,
-      memberLocale:
-          member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
-    );
-  } on AmbiguousReportLanguage {
-    return '';
-  }
+  // #3680 — the language comes from the members as read; a read that did
+  // not answer fails the document instead of choosing a language blindly.
+  // #3742 — awaited: a read still running is not a failure.
+  final members = await ref.read(workspaceMembersProvider.future);
+  final member = members.where((m) => m.id == invoice.memberId).firstOrNull;
+  final userId = member?.userId;
+  final profile = userId == null
+      ? null
+      : ref.read(memberProfilesProvider).value?[userId];
+  return resolveMemberReportLanguage(
+    ref,
+    memberLocale:
+        member?.preferredLocaleOverride ?? profile?.preferredLocale ?? '',
+  );
 }
 
 /// The reminder letter of [invoice] at [level], rendered (#472): the owner's
 /// band set for that level, else the shipped localized default, in the
-/// member's language (#496). A broken custom band set falls back to the
-/// default: a reminder must never fail on a template.
-///
-/// [language] is the member's resolved language, empty when it could not be
-/// decided (the letter then prints in the sender's): an e-mail is never sent
-/// on that guess (#3673).
+/// language of the invoice it reminds of (#3850). A broken custom band set
+/// falls back to the default: a reminder must never fail on a template.
+/// [language] is that language: the e-mail's text is written in it too.
 Future<({InvoiceReport report, String title, AppLocalizations l10n, String language})>
 reminderLetterReport(
   WidgetRef ref,
@@ -74,19 +65,17 @@ reminderLetterReport(
   required TaxReferenceSet reference,
   ReportBands? draftBands,
 }) async {
-  // #496 — the reminder letter prints in the MEMBER's language.
-  final language = await customerDocumentLanguage(ref, invoice);
-  if (!context.mounted) throw StateError('the letter was left');
-  final l10n = language.isEmpty ? context.l10n : l10nForLanguage(language);
+  // #3850 — a reminder follows the invoice it reminds of: its frozen
+  // language and conventions (a legacy invoice: the business's), so the
+  // jurisdiction's rule (French in Quebec) holds for its reminders too.
+  final locale = invoiceDocumentLocale(ref, invoice);
+  final language = locale.language;
+  final l10n = l10nForLanguage(language);
   final title = level <= 1
       ? (l10n.reminderPdfTitleFriendly)
       : l10n.reminderPdfTitleLevel(level);
   final data = reminderReportData(
-    reportStringsFor(
-      context,
-      l10n: l10n,
-      localeName: language.isEmpty ? null : language,
-    ),
+    documentStringsOf(locale),
     reminderFactsOf(ref, invoice),
     invoice,
     level: level,

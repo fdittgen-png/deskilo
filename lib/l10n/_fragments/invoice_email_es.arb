@@ -91,9 +91,5 @@
   "invoiceEmailFailed": "No se pudo enviar la factura por correo. No se envió nada.",
   "@invoiceEmailFailed": {
     "description": "#3673 invoices by e-mail: invoiceEmailFailed"
-  },
-  "invoiceEmailNoLanguage": "No se conoce el idioma de documentos del cliente, así que la factura no se envió por correo. Elija su idioma o comparta la factura.",
-  "@invoiceEmailNoLanguage": {
-    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
   }
 }
