@@ -19,7 +19,7 @@ enum PermissionModule {
 }
 
 /// The module [permission] belongs to.
-PermissionModule moduleOf(WorkspacePermission permission) =>
+PermissionModule _moduleOf(WorkspacePermission permission) =>
     switch (permission) {
       WorkspacePermission.useMessages ||
       WorkspacePermission.makeReservations ||
@@ -68,7 +68,7 @@ List<(PermissionModule, List<WorkspacePermission>)> permissionsByModule() => [
       module,
       [
         for (final p in WorkspacePermission.values)
-          if (moduleOf(p) == module) p,
+          if (_moduleOf(p) == module) p,
       ],
     ),
 ];

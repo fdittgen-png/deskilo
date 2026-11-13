@@ -16,6 +16,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../domain/role_assignment.dart';
+import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_role.dart';
@@ -134,6 +135,61 @@ class RolesScreen extends ConsumerWidget {
     ref.invalidate(workspaceRolesProvider);
   }
 
+  /// #3628 — the roles the desk lists: the base roles, then the space's own.
+  List<DeskRole> _deskRoles(
+    AppLocalizations l10n,
+    List<WorkspaceRole> roles,
+    String locale, {
+    required String administrator,
+    required bool ownRolesLink,
+  }) =>
+      [
+      for (final role in PermissionRole.values)
+        (
+          id: role.wireName,
+          name: _roleLabel(l10n, role, administrator: administrator),
+          base: role,
+          own: null,
+        ),
+      if (ownRolesLink)
+        for (final own in roles)
+          if (!own.builtin)
+            (id: 'own-${own.key}', name: own.nameIn(locale), base: null, own: own),
+    ];
+
+  /// #3628 — the roles beside the chosen role's permissions.
+  Widget _desk(
+    BuildContext context,
+    WidgetRef ref, {
+    required Workspace? workspace,
+    required bool canEdit,
+    required PermissionRole? myRole,
+    required List<DeskRole> roles,
+  }) {
+    final l10n = context.l10n;
+    return Scaffold(
+      appBar: AppBar(
+        title: PageTitle(l10n.rolesTitle),
+        actions: [
+          HelpDot(
+            l10n.helpHintMembersTip4Topic,
+            anchor: HelpAnchor.rolesMatrix,
+          ),
+        ],
+      ),
+      body: RolesDesk(
+        workspace: workspace,
+        canEdit: canEdit,
+        myRole: myRole,
+        intro: canEdit ? l10n.rolesIntroEditor : l10n.rolesIntroReadOnly,
+        roles: roles,
+        onToggle: (role, permission, current) => _toggle(context, ref,
+            role: role, permission: permission, current: current),
+        onEditOwn: (_) => context.push('/settings/roles-of-this-space'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -161,39 +217,12 @@ class RolesScreen extends ConsumerWidget {
     // #3628 — at the desk the roles stand beside the chosen role's
     // permissions; a phone keeps the cards below.
     if (WindowClass.of(context).index >= WindowClass.expanded.index) {
-      return Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.rolesTitle),
-          actions: [
-            HelpDot(
-              l10n.helpHintMembersTip4Topic,
-              anchor: HelpAnchor.rolesMatrix,
-            ),
-          ],
-        ),
-        body: RolesDesk(
+      return _desk(context, ref,
           workspace: workspace,
           canEdit: canEdit,
           myRole: myRole,
-          intro: canEdit ? l10n.rolesIntroEditor : l10n.rolesIntroReadOnly,
-          roles: [
-            for (final role in PermissionRole.values)
-              (
-                id: role.wireName,
-                name: _roleLabel(l10n, role, administrator: administrator),
-                base: role,
-                own: null,
-              ),
-            if (ownRolesLink)
-              for (final own in roles)
-                if (!own.builtin)
-                  (id: 'own-${own.key}', name: own.nameIn(locale), base: null, own: own),
-          ],
-          onToggle: (role, permission, current) => _toggle(context, ref,
-              role: role, permission: permission, current: current),
-          onEditOwn: (_) => context.push('/settings/roles-of-this-space'),
-        ),
-      );
+          roles: _deskRoles(l10n, roles, locale,
+              administrator: administrator, ownRolesLink: ownRolesLink));
     }
     return Scaffold(
       appBar: AppBar(

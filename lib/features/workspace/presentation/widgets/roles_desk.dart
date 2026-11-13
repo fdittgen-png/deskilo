@@ -37,7 +37,7 @@ typedef DeskRole = ({
 });
 
 /// The heading of [module].
-String permissionModuleName(AppLocalizations l, PermissionModule module) =>
+String _permissionModuleName(AppLocalizations l, PermissionModule module) =>
     switch (module) {
       PermissionModule.everyday => l.permModuleEveryday,
       PermissionModule.people => l.permModulePeople,
@@ -283,7 +283,7 @@ class _Permissions extends StatelessWidget {
                       bottom: AppSpacing.xs,
                     ),
                     child: Text(
-                      permissionModuleName(l, module),
+                      _permissionModuleName(l, module),
                       style: theme.textTheme.titleSmall,
                     ),
                   ),

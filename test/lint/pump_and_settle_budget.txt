@@ -29,6 +29,7 @@
 # review {"path":"test/features/money/guest_passes_screen_test.dart","before":0,"after":12,"invariant":"#3829 a selection revoked from the records table: the tick, the bulk action, the confirmation and the result page each settle once before the outcome or the table is read","cost":"two tests, about 1 s locally"}
 # review {"path":"test/features/profile/whatsapp_edit_test.dart","before":0,"after":13,"invariant":"#3650 the WhatsApp number in the phone field: the dialog opens, a national number in the owner's country is saved, one with no country is refused in words, a legacy number asks to be confirmed; each step settles once before the stored number or the words are read","cost":"six tests, about 3 s locally"}
 # review {"path":"test/features/workspace/invitation_test.dart","before":14,"after":16,"invariant":"#3650 a number that cannot be validated is refused before any code is minted, and an extension cannot receive a text: the send settles once before nothing launched is read","cost":"three tests, under 1 s each locally"}
+# review {"path":"test/features/workspace/roles_desk_test.dart","before":0,"after":12,"invariant":"#3628 the roles page at the desk: a role is chosen in the list, the permission filter typed, and the holders task opened and closed; each settle waits for a selection, a filter or the task's animation","cost":"5 widget tests, one settle per selection, filter or task step"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -163,6 +164,7 @@
 16 test/features/workspace/onboarding_handoff_test.dart
 25 test/features/workspace/process_overview_test.dart
 11 test/features/workspace/ref_picker_sheet_filters_test.dart
+12 test/features/workspace/roles_desk_test.dart
 17 test/features/workspace/template_capability_search_test.dart
 11 test/features/workspace/template_discovery_journey_test.dart
 10 test/features/workspace/template_results_export_test.dart
