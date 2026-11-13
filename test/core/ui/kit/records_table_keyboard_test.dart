@@ -20,10 +20,14 @@ typedef _Rec = ({String id, String name});
 final _rows = [for (var i = 0; i < 150; i++) (id: 'r$i', name: 'Row $i')];
 
 /// #3619 — a row has a minimum height, not a fixed one: every third row
-/// here runs on two lines, as a long name or description does.
+/// here runs on four lines, as a feature's description does at the desk
+/// (two lines of the test font still fit the minimum height).
 final _tallRows = [
   for (var i = 0; i < 150; i++)
-    (id: 'r$i', name: i % 3 == 0 ? 'Row $i\nits second line' : 'Row $i'),
+    (
+      id: 'r$i',
+      name: i % 3 == 0 ? 'Row $i\nline 2\nline 3\nline 4' : 'Row $i',
+    ),
 ];
 
 Widget _table({bool tall = false}) => RecordsTable<_Rec>(
