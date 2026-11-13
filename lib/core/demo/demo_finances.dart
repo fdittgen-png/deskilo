@@ -5,6 +5,7 @@
 // workspace's Money pages read, so the two never disagree (the demo used to answer an empty
 // overview while Money showed the member's invoices and payments).
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:meta/meta.dart';
 
 import '../../features/money/domain/account_activity.dart';
 import '../../features/money/domain/billing_rules.dart';
@@ -20,6 +21,7 @@ import 'seed/demo_trade_city_seed.dart';
 
 /// The overview the server's `my_finance_overview` (0380) would answer for
 /// the persona [fixture] is acting as.
+@visibleForTesting
 FinanceOverview demoFinanceOverview(DemoFixture fixture) {
   // Me reads every space the person is in: the main space, Leipzig, London,
   // New York, Zurich and Milan. Each keeps its own currency (euros, pounds,
@@ -107,7 +109,7 @@ FinanceOverview _overviewOf(
 FakeAccountActivityRepository demoActivityRepository(DemoFixture fixture) =>
     FakeAccountActivityRepository(
       derive: () => demoFinanceOverview(fixture),
-      deriveRows: (kind) => demoAccountActivity(fixture, kind),
+      deriveRows: (kind) => _accountActivity(fixture, kind),
     );
 
 typedef _Space = ({String id, String name, String currency, FakeMoneyRepository money});
@@ -116,7 +118,7 @@ typedef _Space = ({String id, String name, String currency, FakeMoneyRepository 
 /// invoices, payments and usage, in every space they are in, as the server's
 /// my_financial_activity (0304) answers them. Each row keeps its own space's
 /// currency; nothing is added across currencies or across people.
-List<AccountActivity> demoAccountActivity(
+List<AccountActivity> _accountActivity(
   DemoFixture fixture,
   AccountActivityKind kind,
 ) {
