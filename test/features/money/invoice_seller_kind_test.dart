@@ -27,7 +27,7 @@ Workspace _business(String kind) => Workspace(
   invoiceLegal: {'seller_kind': kind},
 );
 
-Invoice _invoice({String? frozenKind}) => Invoice(
+Invoice _invoice({String? frozenKind, int cents = 12000}) => Invoice(
   id: 'inv-1',
   workspaceId: 'ws-1',
   memberId: 'm1',
@@ -36,7 +36,7 @@ Invoice _invoice({String? frozenKind}) => Invoice(
   title: '2026-09',
   period: '2026-09',
   // Not const: each invoice owns its line objects, as a parsed row does.
-  lines: [InvoiceLine(kind: 'subscription', label: '100', amountCents: 12000)],
+  lines: [InvoiceLine(kind: 'subscription', label: '100', amountCents: cents)],
   totalCents: 12000,
   currency: 'EUR',
   memberName: 'Ana Martin',

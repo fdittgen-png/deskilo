@@ -88,14 +88,12 @@ Future<void> sendEInvoice(
         // #2358 — the network's own syntax, from the inputs the
         // download uses.
         final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
-        final association = invoice.sellerIsAssociationOr(
-          ref.read(sellerIsAssociationProvider),
-        );
+        final association = ref.read(sellerIsAssociationProvider);
         // Every input is read BEFORE the first await.
         final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
-          lineText: (line) => invoiceLineText(words, line,
-              association: association, period: invoice.period),
+          lineText: (line) => invoiceLineTextFor(words, invoice, line,
+              liveAssociation: association),
           dueDate: invoiceDueAt(ref, invoice),
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
@@ -445,9 +443,7 @@ class _EInvoiceExportRun {
 
   /// The UBL 2.1 XML to the share sheet or Downloads.
   Future<void> ublXml({required bool share}) {
-    final association = s.invoice.sellerIsAssociationOr(
-      ref.read(sellerIsAssociationProvider),
-    );
+    final association = ref.read(sellerIsAssociationProvider);
     final l10n = context.l10n;
     final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
     return runGuarded(
@@ -461,8 +457,8 @@ class _EInvoiceExportRun {
           seller: s.seller,
           buyer: s.buyer,
           iban: s.iban,
-          lineText: (line) => invoiceLineText(words, line,
-              association: association, period: s.invoice.period),
+          lineText: (line) => invoiceLineTextFor(words, s.invoice, line,
+              liveAssociation: association),
           reference: requireWorkspaceTaxReference(ref),
         ));
         final bytes = Uint8List.fromList(utf8.encode(xml));

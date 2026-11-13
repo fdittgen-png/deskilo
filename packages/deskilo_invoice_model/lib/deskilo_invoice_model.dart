@@ -10,6 +10,7 @@ export 'src/einvoice_format.dart';
 export 'src/einvoice_input.dart';
 export 'src/invoice.dart';
 export 'src/invoice_cii.dart';
+export 'src/invoice_seller_kind.dart';
 export 'src/invoice_clauses.dart';
 export 'src/invoice_kind.dart';
 export 'src/invoice_legal.dart';
