@@ -147,8 +147,8 @@ void main() {
   testWidgets('#3869 — "this installation" follows the selected business: '
       'after a switch the stars of the new server are shown and written there',
       (tester) async {
-    final h1 = SupabaseClient('https://h1.example', 'k');
-    final h2 = SupabaseClient('https://h2.example', 'k');
+    final h1 = _client('https://h1.example');
+    final h2 = _client('https://h2.example');
     final repos = {
       'h1.example': FakePlaceFeedbackRepository(),
       'h2.example': FakePlaceFeedbackRepository(),
@@ -190,12 +190,12 @@ void main() {
     await tester.pumpAndSettle();
     expect((await repos['h2.example']!.fetch('w2', PlaceKind.workspace, 'w2')).mine, 4);
     expect((await repos['h1.example']!.fetch('w1', PlaceKind.workspace, 'w1')).mine, isNull);
-    // The clients end their own timers before the test ends.
-    await tester.pumpWidget(const SizedBox());
-    await h1.dispose();
-    await h2.dispose();
   });
 }
+
+/// A client that only knows its address: no refresh timer, no network.
+SupabaseClient _client(String url) => SupabaseClient(url, 'k',
+    authOptions: const AuthClientOptions(autoRefreshToken: false));
 
 class _Selected extends Notifier<SupabaseClient> {
   _Selected(this._first);
