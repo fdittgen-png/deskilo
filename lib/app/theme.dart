@@ -100,7 +100,15 @@ ThemeData _finish(ThemeData base, {required bool animations}) {
         ),
       ),
     ),
-    listTileTheme: ListTileThemeData(iconColor: ink),
+    // #3611 — hover and focus come from the theme, not from each widget:
+    // every InkWell, row and button shows them, and what can be clicked
+    // shows the pointer (ListTile cursor; buttons and InkWells already).
+    hoverColor: scheme.primary.withValues(alpha: dark ? 0.12 : 0.08),
+    focusColor: scheme.primary.withValues(alpha: dark ? 0.2 : 0.14),
+    listTileTheme: ListTileThemeData(
+      iconColor: ink,
+      mouseCursor: WidgetStateMouseCursor.clickable,
+    ),
     badgeTheme: BadgeThemeData(
       backgroundColor: blue,
       textColor: Colors.white,

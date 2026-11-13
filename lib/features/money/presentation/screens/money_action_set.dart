@@ -26,6 +26,7 @@ import '../widgets/bank_statements_sheet.dart';
 import '../widgets/book_periods_sheet.dart';
 import '../widgets/consumption_sheet.dart';
 import '../widgets/equipment_sheet.dart';
+import '../widgets/expense_repartition_sheet.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/expense_sheet.dart';
 import '../widgets/management_tile.dart';
@@ -364,6 +365,18 @@ class MoneyActionSet {
           ),
           icon: const Icon(Icons.shopping_cart_outlined),
           label: fitted(l10n.purchasesTitle),
+        ),
+      // #828, #3597 — a shared expense split over the members: it lives
+      // with the expenses, for who issues the invoices its shares land on.
+      if (data.expenseRepartitionOn &&
+          ref
+              .read(myPermissionsProvider)
+              .any((p) => p.wireName == 'issueInvoices'))
+        OutlinedButton.icon(
+          key: const ValueKey('invoice-distribute-button'),
+          onPressed: () => showExpenseRepartitionSheet(context, ref),
+          icon: const Icon(Icons.call_split),
+          label: fitted(l10n.repartitionAction),
         ),
       // #2569 — the lease the space holds as tenant, with its rent terms.
       if (data.premisesLeaseOn && data.workspace != null)
