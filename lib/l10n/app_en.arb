@@ -9258,6 +9258,10 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Nothing to state for this period: no balance and no movement.",
+  "@customerStatementPeriodNothing": {
+    "description": "no statement is printed for a period without balance or movement (#3876)"
+  },
   "customerStatementPeriodRange": "From {from} to {to}",
   "@customerStatementPeriodRange": {
     "description": "the period under the title (#3839)",
