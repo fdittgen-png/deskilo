@@ -15,7 +15,7 @@
   "setupNewMembersEditQuestions": "Rédiger les questions",
   "setupNewMembersPreviewNoQuestions": "Une personne qui demande à rejoindre donne son nom et son adresse e-mail, rien de plus.",
   "setupNewMembersPreviewJoin": "En demandant à rejoindre, la personne répond à :",
-  "setupNewMembersPreviewStart": "Un nouveau membre commence avec un abonnement à {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nouveau membre commence avec un abonnement à {pct} ({policy}).",
   "setupKioskNone": "Aucun compte borne pour l’instant.",
   "setupKioskCurrent": "{name} fait tourner la borne.",
   "setupKioskNoCandidate": "Invitez d’abord le compte de la tablette : il rejoint comme un membre, puis devient la borne ici.",

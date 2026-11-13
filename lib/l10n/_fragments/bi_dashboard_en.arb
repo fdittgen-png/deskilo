@@ -57,14 +57,6 @@
   "@biKindYearAgo": {
     "description": "Business analytics dashboard: biKindYearAgo"
   },
-  "biVsPrevious": "vs previous period",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs last year",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "biCompositionTitle": "What it is made of",
   "@biCompositionTitle": {
     "description": "Business analytics dashboard: biCompositionTitle"
@@ -208,5 +200,23 @@
   "biOnPace": "on pace",
   "@biOnPace": {
     "description": "Business analytics dashboard: biOnPace"
+  },
+  "biChangeVsPrevious": "{change} vs previous period",
+  "@biChangeVsPrevious": {
+    "description": "#3767 A chip on a dashboard figure: the change against the previous period, e.g. \"+12 % vs previous period\". The change arrives already formatted.",
+    "placeholders": {
+      "change": {
+        "type": "String"
+      }
+    }
+  },
+  "biChangeVsYearAgo": "{change} vs last year",
+  "@biChangeVsYearAgo": {
+    "description": "#3767 A chip on a dashboard figure: the change against the same period last year, e.g. \"+12 % vs last year\". The change arrives already formatted.",
+    "placeholders": {
+      "change": {
+        "type": "String"
+      }
+    }
   }
 }

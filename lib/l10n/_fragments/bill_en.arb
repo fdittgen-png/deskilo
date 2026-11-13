@@ -1,11 +1,11 @@
 {
   "@@locale": "en",
-  "billSubscription": "Subscription {pct}%",
+  "billSubscription": "Subscription {pct}",
   "@billSubscription": {
-    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

@@ -47,8 +47,5 @@
       }
     }
   },
-  "smallBusinessCheckFigure": "Questo limite è l'ultimo verificato: confermi l'importo vigente con l'ufficio delle imposte.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  }
+  "smallBusinessMessageUnconfirmed": "{message} Questo limite è l'ultimo verificato: confermi l'importo vigente con l'ufficio delle imposte."
 }

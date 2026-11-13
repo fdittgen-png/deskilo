@@ -46,7 +46,7 @@ void main() {
   test('the consent text is pinned to kPrivacyPolicyVersion — a changed '
       'text needs a new version so every account is asked again', () {
     final text = privacySections(englishL10n)
-        .map((s) => '${s.title}\n${s.body}')
+        .map((s) => '${s.title}\n${s.more.isEmpty ? s.body : '${s.body} ${s.more}'}')
         .join('\n\n');
     final hash = _fnv1a(text);
     expect(

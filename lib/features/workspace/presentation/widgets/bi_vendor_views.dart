@@ -66,17 +66,17 @@ final vendorModuleViews = <String, BiModuleView>{
             null => '',
           },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biVendorSpendDefinition,
         if (!m.unknown && k.creditNotes > 0)
           l10n.biVendorCredited(
-            biMoneyCell(k.creditedMinor, locale, k.currency),
+            biMoneyCell(k.creditedMinor, format.locale, k.currency),
             '${k.creditNotes}',
           ),
         if (!m.unknown && (k.unassignedMinor ?? 0) != 0)
           l10n.biVendorUnassigned(
-            biMoneyCell(k.unassignedMinor, locale, k.currency),
+            biMoneyCell(k.unassignedMinor, format.locale, k.currency),
           ),
       ],
       null => const [],
@@ -90,7 +90,7 @@ final vendorModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biVendorSpendDefinition],
+    details: (m, l10n, format) => [l10n.biVendorSpendDefinition],
     rowLabel: (row, l10n, locale) =>
         row.key == 'category-' ? l10n.biVendorNoCategory : null,
   ),
@@ -105,7 +105,7 @@ final vendorModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biVendorPunctualityDefinition,
         if (k.medianDays != null)
@@ -113,7 +113,7 @@ final vendorModuleViews = <String, BiModuleView>{
             '${k.medianDays}',
             '${k.p90Days}',
             switch (k.weightedDays) {
-              final w? => NumberFormat.decimalPattern(locale).format(w),
+              final w? => NumberFormat.decimalPattern(format.locale).format(w),
               null => '—',
             },
           ),
@@ -122,7 +122,7 @@ final vendorModuleViews = <String, BiModuleView>{
             l10n.biVendorCohortLine(
               _cohortName(c, l10n),
               f.count,
-              biMoneyCell(f.minor, locale, k.currency),
+              biMoneyCell(f.minor, format.locale, k.currency),
             ),
         for (final v in k.punctuality)
           l10n.biVendorPunctualityLine(
@@ -157,7 +157,7 @@ final vendorModuleViews = <String, BiModuleView>{
       if (_kpi(m) case final k? when k.lagUndated > 0)
         l10n.biVendorLagUndated(k.lagUndated),
     ],
-    details: (m, l10n, locale) => [l10n.biVendorLagDefinition],
+    details: (m, l10n, format) => [l10n.biVendorLagDefinition],
   ),
   'vendors.delivery': BiModuleView(
     title: (l10n) => l10n.biVendorDeliveryTitle,
@@ -173,7 +173,7 @@ final vendorModuleViews = <String, BiModuleView>{
       ..._notes(m, l10n),
       if (m.reasons.contains('purchase_orders_off')) l10n.biVendorDeliveryOff,
     ],
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biVendorDeliveryDefinition,
         if (k.deliveryMedianLeadDays != null)

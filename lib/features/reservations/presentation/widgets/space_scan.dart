@@ -358,9 +358,10 @@ class _SpaceSheetState extends ConsumerState<_SpaceSheet> {
     final wholeTarget = space.wholeTarget;
 
     final priceLine = wholeTarget != null && wholeTarget.priceCents > 0
-        ? '${centsToMajor(wholeTarget.priceCents)} '
-            '${workspace?.currencyCode ?? ''} / '
-            '${l10n.levelPriceLabel}'
+        ? l10n.levelPriceLine(
+            '${centsToMajor(wholeTarget.priceCents)} '
+            '${workspace?.currencyCode ?? ''}',
+          )
         : null;
 
     return SheetShell(

@@ -34,7 +34,7 @@ final itemModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biItemPricesDefinition],
+    details: (m, l10n, format) => [l10n.biItemPricesDefinition],
   ),
   'items.product_margin': BiModuleView(
     title: (l10n) => l10n.biItemProductTitle,
@@ -54,7 +54,7 @@ final itemModuleViews = <String, BiModuleView>{
       if (_kpi(m) case final k? when k.uncosted > 0)
         l10n.biItemUncosted(k.uncosted),
     ],
-    details: (m, l10n, locale) => [l10n.biItemProductDefinition],
+    details: (m, l10n, format) => [l10n.biItemProductDefinition],
   ),
   'items.vendor_margin': BiModuleView(
     title: (l10n) => l10n.biItemVendorTitle,
@@ -64,6 +64,6 @@ final itemModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biItemVendorDefinition],
+    details: (m, l10n, format) => [l10n.biItemVendorDefinition],
   ),
 };

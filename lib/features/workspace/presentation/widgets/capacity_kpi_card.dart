@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -162,7 +163,7 @@ class _Figure extends StatelessWidget {
             decimalDigits: 1,
           ).format(ratio);
     final notes = capacityKpiNotes(kpi, l10n, locale);
-    final details = capacityKpiDetails(kpi, l10n, locale);
+    final details = capacityKpiDetails(kpi, l10n, appFormatOf(context));
     final ratioLine = capacityKpiRatioLine(kpi, l10n, locale);
 
     return Column(
@@ -252,15 +253,18 @@ List<String> capacityKpiNotes(
 List<String> capacityKpiDetails(
   SeatCapacityKpi kpi,
   AppLocalizations l10n,
-  String locale,
+  AppFormat format,
 ) {
+  final locale = format.locale;
   if (!kpi.hasValue) return capacityKpiNotes(kpi, l10n, locale);
   final hours = _hours(locale);
   final since = kpi.historySince;
   final sinceLabel = _since(kpi, locale);
-  final computed = DateFormat.yMd(locale)
-      .add_jm()
-      .format(WorkspaceTime.wall(kpi.computedAt));
+  // The day in the locale's form, the time on the person's own clock.
+  final computedWall = WorkspaceTime.wall(kpi.computedAt);
+  final computed =
+      '${DateFormat.yMd(locale).format(computedWall)}, '
+      '${format.wallTime(computedWall)}';
   return <String>[
     l10n.capacityKpiDefinition,
     l10n.capacityKpiPhysical(hours.format(kpi.physicalSeatHours)),

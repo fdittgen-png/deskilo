@@ -168,8 +168,11 @@ class UsageRecordCard extends ConsumerWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 2),
                 child: Text(
-                  '${l10n.usageCorrected} — '
-                  '${l10n.usageWas(usageDuration(record.correctedFromMinutes ?? record.reservedMinutes))}',
+                  l10n.titleDashDetail(
+                    l10n.usageCorrected,
+                    l10n.usageWas(usageDuration(
+                        record.correctedFromMinutes ?? record.reservedMinutes)),
+                  ),
                   key: ValueKey('usage-corrected-${record.id}'),
                   style: theme.textTheme.bodySmall?.copyWith(
                       color: AppStatusColors.successTextOf(theme.brightness)),

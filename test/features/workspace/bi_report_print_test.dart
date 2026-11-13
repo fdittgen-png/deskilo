@@ -12,6 +12,8 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/core/i18n/app_format.dart';
+import 'package:deskilo/core/i18n/format_prefs.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_pdf.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_print.dart';
@@ -26,7 +28,7 @@ import '../../helpers/bi_report_fixture.dart';
 import '../../helpers/pdf_text.dart';
 
 final _en = AppLocalizationsEn();
-final _words = biPrintStringsOf(_en, 'en', wall: (at) => at);
+final _words = biPrintStringsOf(_en, 'en', wall: (at) => at, format: const AppFormat(locale: 'en', currencyCode: 'EUR', clock: ClockPref.h24));
 
 pw.Font _font(String name) => pw.Font.ttf(
   ByteData.sublistView(File('assets/fonts/Roboto-$name.ttf').readAsBytesSync()),
@@ -233,7 +235,7 @@ void main() {
   });
 
   test('print words come from the catalogue in every value', () {
-    final fr = biPrintStringsOf(_en, 'fr', wall: (at) => at);
+    final fr = biPrintStringsOf(_en, 'fr', wall: (at) => at, format: const AppFormat(locale: 'fr', currencyCode: 'EUR', clock: ClockPref.h24));
     final figure = fixtureSnapshot().figures.first;
     expect(
       fr.formats.value(figure),

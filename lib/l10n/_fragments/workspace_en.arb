@@ -354,12 +354,12 @@
   "@workspaceDeskTransparencyHelper": {
     "description": "Helper under the desk-transparency slider explaining its effect."
   },
-  "workspaceDeskOpacityValue": "Opacity: {percent}%",
+  "workspaceDeskOpacityValue": "Opacity: {percent}",
   "@workspaceDeskOpacityValue": {
-    "description": "Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]",
+    "description": "Live value label of the desk-opacity slider. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

@@ -24,6 +24,8 @@ import 'package:deskilo/features/money/domain/workspace_asset.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+import '../../helpers/refusal_matchers.dart';
 
 typedef _Space = ({
   String name,
@@ -288,7 +290,10 @@ void main() {
         expect(after.openTotalCents, before.openTotalCents - unpaid.totalCents);
         final paid = money.invoices.firstWhere(
             (i) => money.invoiceMatchesStore[i.id]?.resolution == 'exact');
-        await expectLater(money.voidInvoice(paid.id), throwsStateError);
+        await expectLater(
+          money.voidInvoice(paid.id),
+          throwsRefusal('DKI04'),
+        );
       });
 
       test('Pézenas issues an invoice on the Demo\'s day, numbered by its '
@@ -304,7 +309,9 @@ void main() {
                 period: period,
               );
               return money.invoices.singleWhere((i) => i.id == id);
-            } on StateError {
+            } on PostgrestException catch (e) {
+              // DKI07: this member's period is already invoiced.
+              if (e.code != 'DKI07') rethrow;
               continue;
             }
           }

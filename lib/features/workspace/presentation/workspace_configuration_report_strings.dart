@@ -27,9 +27,10 @@ WorkspaceConfigPdfStrings workspaceConfigurationStrings(
   emptyLevel: l10n.workspaceConfigEmptyLevel,
   levelBookable: (price) => price.isEmpty
       ? (l10n.levelBookableToggle)
-      : '${l10n.levelBookableToggle}'
-            ' — $price / '
-            '${l10n.levelPriceLabel}',
+      : l10n.titleDashDetail(
+            l10n.levelBookableToggle,
+            l10n.levelPriceLine(price),
+          ),
   invitations: l10n.workspaceConfigInvitations,
   invitationCustomTemplate:
       l10n.workspaceConfigInvitationCustom,

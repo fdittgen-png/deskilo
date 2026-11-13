@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
@@ -152,9 +153,11 @@ class BookPeriodsView extends ConsumerWidget {
                     ),
                   ),
                   subtitle: Text(
-                    '${material.formatMediumDate(e.exportedAt)} · '
-                    '${e.sha256.substring(0, 12)}…'
-                    '${e.closedPeriod ? ' · ${l10n.bookPeriodsExportClosed}' : ''}',
+                    factLine(l10n, [
+                      material.formatMediumDate(e.exportedAt),
+                      '${e.sha256.substring(0, 12)}…',
+                      if (e.closedPeriod) l10n.bookPeriodsExportClosed,
+                    ]),
                   ),
                 ),
             ],

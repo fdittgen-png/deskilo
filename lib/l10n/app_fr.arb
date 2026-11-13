@@ -214,9 +214,9 @@
   "acctDeliverMissing": "Renseignez d'abord ces correspondances : {keys}",
   "acctDeliverNotConnected": "Cette connexion est déconnectée : reconnectez-la, puis envoyez.",
   "acctDeliverNothing": "Rien à envoyer sur cette période.",
-  "acctDeliverNothingSent": "Rien n'a été envoyé.",
+  "acctDeliverReasonNothingSent": "{reason} Rien n'a été envoyé.",
+  "acctDeliverReasonStoppedAt": "{reason} Arrêté à {month}. Envoyées avant : {count}.",
   "acctDeliverRefused": "Le logiciel comptable a refusé cette société : {detail}.",
-  "acctDeliverStoppedAt": "Arrêté à {month}. Envoyées avant : {count}.",
   "acctDeliverYear": "Envoyer {year} à {target}",
   "acctDeliveryAcknowledged": "Reçu par le système",
   "acctDeliveryAttempts": "{count, plural, =0{{count} tentatives} one{une tentative} other{{count} tentatives}}",
@@ -1203,6 +1203,8 @@
     "description": "#2582 purchase analytics"
   },
   "biChangePoints": "{value} pts",
+  "biChangeVsPrevious": "{change} vs période précédente",
+  "biChangeVsYearAgo": "{change} vs l'an dernier",
   "biCollectionCentre": "de ce qui a été facturé",
   "@biCollectionCentre": {
     "description": "Business analytics dashboard: biCollectionCentre"
@@ -2747,14 +2749,6 @@
   "biViews": "Vues",
   "biViewsMine": "Mes vues",
   "biViewsTeam": "Vues de l’équipe",
-  "biVsPrevious": "vs période précédente",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs l'an dernier",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "billAccessorySupplements": "Suppléments d'accessoires",
   "billCreditNoteCard": "Avoir {number}",
   "@billCreditNoteCard": {
@@ -2799,24 +2793,24 @@
   "billOutstanding": "À régler",
   "billOverage": "{extra, plural, one{{extra} demi-journée supplémentaire} other{{extra} demi-journées supplémentaires}}",
   "billPackages": "Forfaits de jours",
-  "billParticipation": "Participation {pct} %",
+  "billParticipation": "Participation {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2822,16 @@
   "billServices": "Services consommés",
   "billServicesTotal": "Total des services",
   "billSettled": "Réglé",
-  "billSubscription": "Abonnement {pct} %",
-  "billSubscriptionMonth": "Abonnement {month} {pct} %",
+  "billSubscription": "Abonnement {pct}",
+  "billSubscriptionMonth": "Abonnement {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2841,7 @@
   "billingAdvanceDays": "Jours avant le début du mois",
   "billingAllowCustom": "Autoriser une valeur libre négociée",
   "billingBandFee": "Tarif mensuel",
-  "billingBandFrom": "dès {from} %",
+  "billingBandFrom": "dès {from}",
   "billingBandOverage": "Dépassement",
   "billingBandTo": "Jusqu'à %",
   "billingBandsInvalid": "Les paliers doivent croître et se terminer à 100 %.",
@@ -5028,6 +5022,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
+  "dotPair": "{first} · {second}",
   "dunningAutomatic": "Relances automatiques",
   "dunningAutomaticHint": "Une fois par jour, les factures dont l'échéance enregistrée est dépassée passent d'elles-mêmes au niveau de relance suivant — pour le montant restant dû, jamais pendant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée restent à votre main. Désactivé : vous envoyez chaque relance vous-même.",
   "dunningBetweenDays": "Jours entre les relances",
@@ -5716,6 +5711,7 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "environmentsPair": "{dev} + {prod}",
   "equipmentCost": "Coût {amount}",
   "@equipmentCost": {
     "description": "#2576 equipment register",
@@ -5980,7 +5976,6 @@
   },
   "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent",
   "eventExpenseSubmitted": "{actor} a soumis une dépense de {amount}",
-  "eventForSubject": "pour {name}",
   "eventInvoiceIssuedLine": "Nouvelle facture {number}",
   "eventInvoicePaid": "Facture {number} payée — {amount}",
   "@eventInvoicePaid": {
@@ -6044,6 +6039,8 @@
       }
     }
   },
+  "eventLineForSubject": "{line} pour {name}",
+  "eventLineRepeated": "{line} ×{count}",
   "eventOpenSource": "Ouvrir le document d'achat",
   "eventOutcomeApplied": "Fait",
   "eventOutcomeConfirmed": "Confirmé",
@@ -6079,7 +6076,6 @@
   "eventQuotaRequested": "{actor} demande {halfDays, plural, one{{halfDays} demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
-  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} a annulé la réservation de {target}",
   "eventReservationCreated": "{actor} a réservé {target}",
   "eventReservationDeleteCheckedIn": "pointée",
@@ -7806,7 +7802,8 @@
   "gobdProcedureHandoverHeading": "Remise des données (Z3)",
   "gobdProcedureImmutableBody": "Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.",
   "gobdProcedureImmutableHeading": "Inaltérabilité",
-  "gobdProcedureRetentionUntil": "un document daté de la fin de cette période peut être effacé à partir du {date}",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date} (pas encore confirmée). {source}",
   "gobdProcedureSchemaApp": "Version de schéma pour laquelle cette application est construite : {version}",
   "gobdProcedureSchemaLive": "Version du schéma de base de données de cette installation : {version}",
   "gobdProcedureSchemaUnknown": "Version du schéma de base de données de cette installation : illisible au moment de l'établissement",
@@ -9673,6 +9670,7 @@
   "invoicePdfPage": "Page",
   "invoicePdfPayments": "Paiements",
   "invoicePdfProforma": "Proforma",
+  "invoicePdfProformaNamed": "Proforma {name}",
   "invoicePdfPurchaseOrder": "N° d'engagement",
   "@invoicePdfPurchaseOrder": {
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
@@ -11440,6 +11438,7 @@
   "levelPermissionAllowed": "Peut réserver une table, un bureau ou un niveau entier",
   "levelPermissionDenied": "Ne peut pas réserver une table, un bureau ou un niveau entier",
   "levelPriceLabel": "Prix par demi-journée",
+  "levelPriceLine": "{price} / Prix par demi-journée",
   "levelReorderStale": "Les niveaux ont changé entre-temps. Rien n'a été enregistré ; l'ordre actuel est affiché.",
   "levelReserveButton": "Réserver le niveau",
   "levelSupplementLabel": "Réservations de niveau",
@@ -11914,6 +11913,7 @@
   "mcpPolicyTitle": "Accès des assistants",
   "mcpPolicyUnavailable": "Les réglages des assistants n'ont pas pu être chargés. Réessayez plus tard.",
   "mcpRefusalClientNotApproved": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant.",
+  "mcpRefusalClientNotApprovedNamed": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant. En attente de l'opérateur du serveur : {names}.",
   "mcpRefusalNoIdentity": "Confirmez d’abord votre identité dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.",
   "mcpRefusalNotEligible": "Votre accès aux assistants n’est pas encore approuvé. Demandez-le dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.",
   "mcpRefusalOfferChanged": "Ce que propose cet espace de travail a changé pendant votre choix. Reconnectez-vous depuis l’assistant pour voir l’offre actuelle.",
@@ -12567,7 +12567,7 @@
   "moneyStatementSettled": "Réglé",
   "moneySubmitExpense": "Soumettre une dépense",
   "moneySubmitPayment": "Soumettre pour confirmation",
-  "moneySubscriptionPct": "Abonnement {pct} %",
+  "moneySubscriptionPct": "Abonnement {pct}",
   "moneyUsage": "{used} sur {included, plural, one{{included} demi-journée utilisée} other{{included} demi-journées utilisées}}",
   "moneyUsageUnlimited": "{used, plural, one{{used} demi-journée utilisée} other{{used} demi-journées utilisées}}",
   "monthFreeCount": "{free}/{total}",
@@ -12692,7 +12692,6 @@
   "negotiationOverage": "Dépassement par demi-journée",
   "negotiationPending": "Des conditions attendent validation.",
   "negotiationPendingBadge": "en attente de validation",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Laissez un champ vide pour garder le tarif. Les conditions passent par la validation avant de s'appliquer.",
   "negotiationProposeTitle": "Négociation tarifaire",
   "negotiationProposed": "Conditions proposées — en attente de validation.",
@@ -12763,12 +12762,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13274,7 +13273,6 @@
   "pendingLastChecked": "Dernière vérification {time}",
   "pendingNotUpdated": "Statut non mis à jour — le serveur est injoignable. Votre demande reste inchangée.",
   "pendingStillWaiting": "Toujours en attente d’approbation.",
-  "percentValue": "{value} %",
   "periodReservationsEmpty": "Aucune réservation ces mois-ci.",
   "periodReservationsFailed": "Les réservations n'ont pas pu être lues.",
   "periodReservationsLevel": "Sur {level} seulement",
@@ -13562,6 +13560,7 @@
   },
   "planEndBeforeStart": "La fin doit être après le début.",
   "planFromLabel": "De",
+  "planFromTermTime": "{term} {time}",
   "planFullDayChip": "Journée",
   "planFullDayError": "Ici, les réservations couvrent la journée entière.",
   "planHalfDayError": "Ici, les réservations se font par demi-journée.",
@@ -15210,6 +15209,10 @@
     "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "Vous n'avez pas l'autorisation pour cela. Un propriétaire de l'espace peut l'accorder dans Gestion des rôles.",
+  "refusalPersonalHomeHostsNoWorkspace": "Cette installation est un espace personnel : elle n'héberge aucun espace de travail. Créez l'espace de travail sur une installation qui en héberge.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  },
   "refusalSession": "Votre session a expiré. Reconnectez-vous, puis réessayez.",
   "refusalVatRateVersioned": "Ce taux figure déjà sur des factures émises : son pourcentage reste tel quel. Utilisez « Changement par la loi » pour fixer la nouvelle valeur à partir d’une date. Rien n’a été enregistré.",
   "@refusalVatRateVersioned": {
@@ -17358,7 +17361,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, one{{count} réservation créée} other{{count} réservations créées}}",
   "seriesPreviewBookOthers": "{count, plural, =0{Réserver les {count} autres dates} one{Réserver l'autre date} other{Réserver les {count} autres dates}}",
   "seriesPreviewFailing": "Ces dates ne peuvent pas être réservées :",
@@ -18477,7 +18479,7 @@
   "setupNewMembersNoQuestions": "Aucune question : on rejoint avec son nom et son adresse e-mail.",
   "setupNewMembersPreviewJoin": "En demandant à rejoindre, la personne répond à :",
   "setupNewMembersPreviewNoQuestions": "Une personne qui demande à rejoindre donne son nom et son adresse e-mail, rien de plus.",
-  "setupNewMembersPreviewStart": "Un nouveau membre commence avec un abonnement à {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nouveau membre commence avec un abonnement à {pct} ({policy}).",
   "setupNewMembersQuestions": "Questions posées à l’adhésion",
   "setupNewMembersSaveFailed": "Les réglages des nouveaux membres n’ont pas pu être enregistrés. Réessayez.",
   "setupNextIndependent": "Vous pouvez avancer sur cette tâche pendant que l’étape précédente est en attente.",
@@ -18545,8 +18547,8 @@
   "setupPresetNameComplet": "Complet",
   "setupPresetNameEssentiel": "Essentiel",
   "setupPresetNameStandard": "Standard",
-  "setupPricingBand": "{from}–{to} % : {fee} par mois, {extra} par demi-journée en plus",
-  "setupPricingLevel": "Abonnement à {pct} %",
+  "setupPricingBand": "{from}–{to} : {fee} par mois, {extra} par demi-journée en plus",
+  "setupPricingLevel": "Abonnement à {pct}",
   "setupPricingLevelIncludes": "{level} : {count, plural, one{{count} demi-journée incluse} other{{count} demi-journées incluses}}",
   "setupPricingLevelsBasis": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes, et une demi-journée au-delà de la part d'un membre est facturée au tarif supplémentaire de sa tranche. Ce mois-ci, votre espace est ouvert {days, plural, one{{days} jour} other{{days} jours}} :",
   "setupPricingLevelsBasisUnknown": "Un niveau est la part des demi-journées où votre espace est ouvert dans le mois : 100 % les comprend toutes. Vos jours d'ouverture n'ont pas pu être lus, aucun exemple n'est donc affiché.",
@@ -18786,10 +18788,7 @@
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
   },
-  "smallBusinessCheckFigure": "Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  },
+  "smallBusinessMessageUnconfirmed": "{message} Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
   "smallBusinessNearImmediate": "Votre chiffre d'affaires net de l'année ({turnover}) approche le seuil de {limit}. Le dépasser met fin à la franchise dès l'opération qui le dépasse.",
   "@smallBusinessNearImmediate": {
     "description": "#2440 small-business threshold: smallBusinessNearImmediate",
@@ -21194,6 +21193,7 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
+  "vatDeclDisclaimerWithBasis": "{basis} Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.",
   "vatDeclEdiTva": "Fichier EDI-TVA (CA3)",
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
@@ -21322,6 +21322,7 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclNetAmount": "Base HT {amount}",
   "vatDeclPayable": "TVA à payer",
   "@vatDeclPayable": {
     "description": "#2357 input VAT: vatDeclPayable"
@@ -21399,10 +21400,12 @@
   "@vatDeclTotals": {
     "description": "Totals row"
   },
+  "vatDeclTotalsLine": "Totaux : {net} · TVA {vat} · {count, plural, one{{count} facture} other{{count} factures}}",
   "vatDeclVat": "TVA",
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
+  "vatDeclVatAmount": "TVA {amount}",
   "vatDeclVatId": "N° TVA",
   "@vatDeclVatId": {
     "description": "VAT identifier label"
@@ -21585,6 +21588,7 @@
   },
   "vatSaved": "Taux de TVA enregistrés.",
   "vatSeed": "Utiliser les taux usuels",
+  "vatSeedWithRates": "Utiliser les taux usuels ({rates})",
   "vatServiceRate": "Taux de TVA",
   "vatServiceRateDefault": "Taux par défaut de l'espace",
   "vatShareAmount": "dont TVA {amount}",
@@ -22121,7 +22125,7 @@
   "workspaceCountryLabel": "Pays",
   "workspaceCurrencyLabel": "Devise",
   "workspaceDangerZone": "Zone de danger",
-  "workspaceDeskOpacityValue": "Opacité : {percent} %",
+  "workspaceDeskOpacityValue": "Opacité : {percent}",
   "workspaceDeskTransparencyHelper": "Réduisez l'opacité des tables pour laisser transparaître la photo de fond de l'étage.",
   "workspaceDeskTransparencyTitle": "Transparence des tables",
   "workspaceExcelExport": "Exporter les données (Excel)",

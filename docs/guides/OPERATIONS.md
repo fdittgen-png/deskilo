@@ -277,6 +277,28 @@ and plan objects can go; those come back from a restore.
 **"The project is gone."** Restore, above. This is the scenario your
 off-account dump exists for, and the only one you cannot improvise.
 
+## The recovery e-mail's language (#3812)
+
+The recovery e-mail reads in the account's language. The server writes the
+language into the account's Auth metadata (`locale`, migration 0743), and the
+template `supabase/templates/auth/recovery.html` branches on it. A local stack
+reads both from `supabase/config.toml`. A hosted project does not: its Auth
+e-mail settings are the operator's to deploy.
+
+1. In the project's Auth settings, open the "Reset password" template.
+   Replace its body with the whole of `supabase/templates/auth/recovery.html`.
+   Set its subject to `DesKilo`, the product name only: a subject cannot
+   follow the account's language.
+2. Check one account per language: English, French, German, Spanish and
+   Italian.
+   - Set the app's language in Me › Settings.
+   - Sign out, and ask for a new password.
+   - The e-mail reads in that language.
+   - Its code sets a new password once, and is refused a second time.
+3. Check an account with no language set. Its e-mail reads in English.
+
+The language decides nothing but the words: no authorization reads it.
+
 ## What is deliberately not here
 
 **No Docker Compose.** DesKilo is a Supabase application, not a

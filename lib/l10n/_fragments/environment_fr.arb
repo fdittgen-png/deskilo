@@ -39,5 +39,6 @@
   "environmentProdConfirmAction": "Déclarer en production",
   "@environmentProdConfirmAction": {
     "description": "#917 workspace environment: environmentProdConfirmAction"
-  }
+  },
+  "environmentsPair": "{dev} + {prod}"
 }

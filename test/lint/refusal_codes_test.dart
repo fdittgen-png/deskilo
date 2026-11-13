@@ -21,10 +21,15 @@ const _bookingSentenceBudget = 4;
 final _fileName = RegExp(r'^(\d{4})_[a-z0-9_]+\.sql$');
 final _raise = RegExp(r'raise\s+exception\b[^;]*;', caseSensitive: false);
 
+/// The text a migration quotes as an anchor to patch (`\$r\$…\$r\$`): the
+/// statement as it stood, not a refusal this migration raises.
+final _anchorQuote = RegExp(r'\$r\$.*?\$r\$', dotAll: true);
+
 /// The `raise exception` statements of [sql] without an errcode, comments
-/// left out.
+/// and anchor quotes left out.
 List<String> uncodedRaises(String sql) {
   final code = sql
+      .replaceAll(_anchorQuote, '')
       .split('\n')
       .map((l) => l.contains('--') ? l.substring(0, l.indexOf('--')) : l)
       .join('\n');
@@ -51,6 +56,10 @@ void main() {
         isEmpty,
       );
       expect(uncodedRaises("-- raise exception 'old';"), isEmpty);
+    expect(
+      uncodedRaises(r"anchor_replace(v_def, $r$raise exception 'old';$r$,"),
+      isEmpty,
+    );
     },
   );
 

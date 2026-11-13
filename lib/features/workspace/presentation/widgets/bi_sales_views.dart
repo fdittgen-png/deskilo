@@ -50,7 +50,7 @@ final salesModuleViews = <String, BiModuleView>{
             null => '',
           },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biSalesKindDefinition],
+    details: (m, l10n, format) => [l10n.biSalesKindDefinition],
     rowLabel: (row, l10n, locale) => _salesKindName(row.key, l10n),
   ),
   'sales.revenue_by_service': BiModuleView(
@@ -61,7 +61,7 @@ final salesModuleViews = <String, BiModuleView>{
       null => '',
     },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => [l10n.biSalesServiceDefinition],
+    details: (m, l10n, format) => [l10n.biSalesServiceDefinition],
     rowLabel: (row, l10n, locale) =>
         row.label == null ? l10n.biSalesNoDescription : null,
   ),
@@ -80,15 +80,15 @@ final salesModuleViews = <String, BiModuleView>{
             null => '',
           },
     notes: (m, l10n, locale) => _notes(m, l10n),
-    details: (m, l10n, locale) => switch (_kpi(m)) {
+    details: (m, l10n, format) => switch (_kpi(m)) {
       final k? => [
         l10n.biSalesRoomDefinition,
         if (!m.unknown)
           for (final room in k.rooms?.rows ?? const <RoomMargin>[])
             l10n.biSalesRoomLine(
               room.name,
-              biMoneyCell(room.chargesMinor, locale, k.currency),
-              biMoneyCell(room.costMinor, locale, k.currency),
+              biMoneyCell(room.chargesMinor, format.locale, k.currency),
+              biMoneyCell(room.costMinor, format.locale, k.currency),
               '${room.uses}',
             ),
       ],

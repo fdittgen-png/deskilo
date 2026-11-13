@@ -15,7 +15,7 @@
   "setupNewMembersEditQuestions": "Redactar las preguntas",
   "setupNewMembersPreviewNoQuestions": "Quien pide unirse indica su nombre y su dirección de correo, nada más.",
   "setupNewMembersPreviewJoin": "Al pedir unirse, la persona responde a:",
-  "setupNewMembersPreviewStart": "Un nuevo miembro empieza con una suscripción al {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Un nuevo miembro empieza con una suscripción al {pct} ({policy}).",
   "setupKioskNone": "Todavía no hay ninguna cuenta de quiosco.",
   "setupKioskCurrent": "{name} es el quiosco.",
   "setupKioskNoCandidate": "Invite primero la cuenta de la tableta: se une como un miembro y aquí se convierte en el quiosco.",

@@ -3,6 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -257,17 +258,24 @@ class InvoiceDetailSections {
         line(standingMatch.note),
       if (reminder != null)
         line(
-          '${l10n.invoiceRemindedBadge(reminder!.count)} · '
-          '${l10n.invoiceRemindedLast(dateFormat.format(reminder!.last))}',
+          factLine(l10n, [
+            l10n.invoiceRemindedBadge(reminder!.count),
+            l10n.invoiceRemindedLast(dateFormat.format(reminder!.last)),
+          ]),
         ),
       // Did it LEAVE, and what came back (0073). A rehearsal
       // names its environment so it never reads as the real
       // submission (#393).
       if (sent != null)
         line(
-          '${l10n.invoiceSentOn(dateFormat.format(sent.sentAt), sentStatus)}${sent.isTestSend ? ' · '
-                    '${sent.environment.toUpperCase()} '
-                    '(${l10n.invoiceSentTestChip})' : ''}',
+          factLine(l10n, [
+            l10n.invoiceSentOn(dateFormat.format(sent.sentAt), sentStatus),
+            if (sent.isTestSend)
+              l10n.valueInParens(
+                sent.environment.toUpperCase(),
+                l10n.invoiceSentTestChip,
+              ),
+          ]),
         ),
       if (sent != null && sent.externalId.isNotEmpty) line(sent.externalId),
       // #2358 — what the national channel said afterwards.

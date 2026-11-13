@@ -10,6 +10,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/kit/result_page.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_month.dart';
@@ -38,8 +39,6 @@ class MonthResultView extends ConsumerWidget {
   final Future<void> Function(String memberId) onFixCustomer;
   final Future<void> Function() onFixBusiness;
 
-  static final RegExp _keyShape = RegExp(r'[a-z]+(?:_[a-z0-9]+)+');
-
   static bool _isEssentialKey(String key) =>
       key.startsWith('seller_') ||
       key.startsWith('buyer_') ||
@@ -47,10 +46,11 @@ class MonthResultView extends ConsumerWidget {
       key == 'exemption_reason' ||
       key == 'vies_unverified';
 
-  /// The missing essentials a refusal names (none when it names none).
+  /// The missing essentials DKI01's DETAIL names, a comma-separated list
+  /// (none when it names none).
   List<String> _missingIn(Object error) => [
-    for (final m in _keyShape.allMatches(error.toString()))
-      if (_isEssentialKey(m.group(0)!)) m.group(0)!,
+    for (final key in (refusalCodeOf(error).details ?? '').split(','))
+      if (_isEssentialKey(key.trim())) key.trim(),
   ];
 
   /// What to say of a refused customer, in the issue form's own words, and
@@ -68,7 +68,8 @@ class MonthResultView extends ConsumerWidget {
       error,
       fallback: l10n.invoiceMonthNotIssued,
     );
-    final missing = error.toString().contains('invoice_essentials_missing')
+    // #3811 — DKI01 is the essentials refusal; its DETAIL names them.
+    final missing = refusalCodeOf(error).code == 'DKI01'
         ? _missingIn(error)
         : const <String>[];
     return (

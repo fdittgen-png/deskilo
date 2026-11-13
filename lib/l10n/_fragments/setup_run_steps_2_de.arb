@@ -15,7 +15,7 @@
   "setupNewMembersEditQuestions": "Fragen verfassen",
   "setupNewMembersPreviewNoQuestions": "Wer beitreten möchte, gibt Name und E-Mail-Adresse an, sonst nichts.",
   "setupNewMembersPreviewJoin": "Bei der Beitrittsanfrage beantwortet die Person:",
-  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} ({policy}).",
   "setupKioskNone": "Noch kein Kiosk-Konto.",
   "setupKioskCurrent": "{name} betreibt den Kiosk.",
   "setupKioskNoCandidate": "Laden Sie zuerst das Konto des Tablets ein: Es tritt wie ein Mitglied bei und wird dann hier zum Kiosk.",
