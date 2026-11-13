@@ -67,6 +67,7 @@ signed-out on  /members/privacy -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
+signed-out on  /money/accounting/exports -> /auth
 signed-out on  /money/cash -> /auth
 signed-out on  /money/guest-passes -> /auth
 signed-out on  /money/payments -> /auth
@@ -135,6 +136,7 @@ signed-out on  /templates/detail -> /auth
 signed-out on  /validation -> /auth
 signed-out on  /vat -> /auth
 signed-out on  /vat-declarations -> /auth
+signed-out on  /vat-declarations/:id -> /auth
 signed-out on  /workspace-code -> /auth
 signed-out on  /workspace-overview -> /auth
 signed-out on  /workspace-settings -> /auth
@@ -207,6 +209,7 @@ signed-out off /members/privacy -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
+signed-out off /money/accounting/exports -> /auth
 signed-out off /money/cash -> /auth
 signed-out off /money/guest-passes -> /auth
 signed-out off /money/payments -> /auth
@@ -275,6 +278,7 @@ signed-out off /templates/detail -> /auth
 signed-out off /validation -> /auth
 signed-out off /vat -> /auth
 signed-out off /vat-declarations -> /auth
+signed-out off /vat-declarations/:id -> /auth
 signed-out off /workspace-code -> /auth
 signed-out off /workspace-overview -> /auth
 signed-out off /workspace-settings -> /auth
@@ -347,6 +351,7 @@ no-space on  /members/privacy -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
+no-space on  /money/accounting/exports -> /me
 no-space on  /money/cash -> /me
 no-space on  /money/guest-passes -> /me
 no-space on  /money/payments -> /me
@@ -415,6 +420,7 @@ no-space on  /templates/detail -> /onboarding
 no-space on  /validation -> /me
 no-space on  /vat -> /me
 no-space on  /vat-declarations -> /me
+no-space on  /vat-declarations/:id -> /me
 no-space on  /workspace-code -> /me
 no-space on  /workspace-overview -> /me
 no-space on  /workspace-settings -> /me
@@ -487,6 +493,7 @@ no-space off /members/privacy -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
+no-space off /money/accounting/exports -> /me
 no-space off /money/cash -> /me
 no-space off /money/guest-passes -> /me
 no-space off /money/payments -> /me
@@ -555,6 +562,7 @@ no-space off /templates/detail -> /onboarding
 no-space off /validation -> /me
 no-space off /vat -> /me
 no-space off /vat-declarations -> /me
+no-space off /vat-declarations/:id -> /me
 no-space off /workspace-code -> /me
 no-space off /workspace-overview -> /me
 no-space off /workspace-settings -> /me
@@ -627,6 +635,7 @@ member on  /members/privacy -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
+member on  /money/accounting/exports -> /calendar
 member on  /money/cash -> /calendar
 member on  /money/guest-passes -> /calendar
 member on  /money/payments -> /calendar
@@ -695,6 +704,7 @@ member on  /templates/detail -> /onboarding
 member on  /validation -> /calendar
 member on  /vat -> /calendar
 member on  /vat-declarations -> /calendar
+member on  /vat-declarations/:id -> /calendar
 member on  /workspace-code -> /calendar
 member on  /workspace-overview -> /calendar
 member on  /workspace-settings -> /calendar
@@ -767,6 +777,7 @@ member off /members/privacy -> /messages
 member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
+member off /money/accounting/exports -> /messages
 member off /money/cash -> /messages
 member off /money/guest-passes -> /messages
 member off /money/payments -> /messages
@@ -835,6 +846,7 @@ member off /templates/detail -> /onboarding
 member off /validation -> /messages
 member off /vat -> /messages
 member off /vat-declarations -> /messages
+member off /vat-declarations/:id -> /messages
 member off /workspace-code -> /messages
 member off /workspace-overview -> /messages
 member off /workspace-settings -> /messages
@@ -907,6 +919,7 @@ admin on  /members/privacy -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
+admin on  /money/accounting/exports -> /money
 admin on  /money/cash -> (open)
 admin on  /money/guest-passes -> /money
 admin on  /money/payments -> (open)
@@ -975,6 +988,7 @@ admin on  /templates/detail -> /onboarding
 admin on  /validation -> /calendar
 admin on  /vat -> /calendar
 admin on  /vat-declarations -> /money
+admin on  /vat-declarations/:id -> /money
 admin on  /workspace-code -> /calendar
 admin on  /workspace-overview -> /calendar
 admin on  /workspace-settings -> /calendar
@@ -1047,6 +1061,7 @@ admin off /members/privacy -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
+admin off /money/accounting/exports -> /messages
 admin off /money/cash -> /messages
 admin off /money/guest-passes -> /messages
 admin off /money/payments -> /messages
@@ -1115,6 +1130,7 @@ admin off /templates/detail -> /onboarding
 admin off /validation -> /messages
 admin off /vat -> /messages
 admin off /vat-declarations -> /messages
+admin off /vat-declarations/:id -> /messages
 admin off /workspace-code -> /messages
 admin off /workspace-overview -> /messages
 admin off /workspace-settings -> /messages
@@ -1187,6 +1203,7 @@ owner on  /members/privacy -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
+owner on  /money/accounting/exports -> /money
 owner on  /money/cash -> (open)
 owner on  /money/guest-passes -> /money
 owner on  /money/payments -> (open)
@@ -1255,6 +1272,7 @@ owner on  /templates/detail -> /onboarding
 owner on  /validation -> (open)
 owner on  /vat -> (open)
 owner on  /vat-declarations -> (open)
+owner on  /vat-declarations/:id -> (open)
 owner on  /workspace-code -> (open)
 owner on  /workspace-overview -> /calendar
 owner on  /workspace-settings -> (open)
@@ -1327,6 +1345,7 @@ owner off /members/privacy -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages
+owner off /money/accounting/exports -> /messages
 owner off /money/cash -> /messages
 owner off /money/guest-passes -> /messages
 owner off /money/payments -> /messages
@@ -1395,6 +1414,7 @@ owner off /templates/detail -> /onboarding
 owner off /validation -> (open)
 owner off /vat -> /messages
 owner off /vat-declarations -> /messages
+owner off /vat-declarations/:id -> /messages
 owner off /workspace-code -> (open)
 owner off /workspace-overview -> /messages
 owner off /workspace-settings -> (open)

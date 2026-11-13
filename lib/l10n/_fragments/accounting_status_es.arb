@@ -1,0 +1,20 @@
+{
+  "@@locale": "es",
+  "accountingStatusClosedUpTo": "Libros cerrados hasta",
+  "accountingStatusLastExport": "Última exportación",
+  "accountingStatusVatToFile": "Declaración de IVA por presentar",
+  "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
+  "accountingStatusNotRead": "No se pudo leer",
+  "accountingStatusAllBooks": "Toda la contabilidad",
+  "accountingExportsBy": "Hecho por",
+  "accountingExportsRows": "Filas",
+  "accountingExportsFingerprint": "Huella",
+  "accountingExportsAgain": "Exportar de nuevo este periodo",
+  "bankChooseMovement": "Elija a la izquierda un movimiento de entrada: aquí se listan sus facturas abiertas.",
+  "vatReturnChooseBox": "Elija una casilla: sus documentos se listan aquí.",
+  "vatReturnDocumentsTitle": "Documentos de este periodo a este tipo",
+  "vatReturnDocumentsDiffer": "Declarado {declared} · documentos hoy {today} · {difference} {direction, select, more{más} other{menos}} desde la declaración",
+  "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
+  "vatReturnOpen": "Abrir la declaración",
+  "accountingExportsTitle": "Exportaciones"
+}

@@ -10,6 +10,7 @@ import '../../core/navigation/list_detail_route.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
+import '../../features/money/presentation/screens/accounting_exports_screen.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -33,6 +34,7 @@ import '../../features/money/presentation/screens/services_screen.dart';
 import '../../features/money/presentation/screens/suppliers_desk.dart';
 import '../../features/money/presentation/screens/suppliers_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
+import '../../features/money/presentation/screens/vat_return_page.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
@@ -325,6 +327,17 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
       ),
       builder: (context, state) => const AccountingHubScreen(),
     ),
+    // #3616 — the files handed to the accountant, as records.
+    GoRoute(
+      path: '/money/accounting/exports',
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.moneyTab, WorkspaceFeature.accountingPeriods],
+          to: '/money',
+        ),
+      ),
+      builder: (context, state) => const AccountingExportsScreen(),
+    ),
     GoRoute(
       path: '/money/cash',
       redirect: env.guard(
@@ -400,6 +413,14 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const VatDeclarationsScreen(),
+      // #3616 — a return as a long task at its address.
+      routes: [
+        GoRoute(
+          path: ':id',
+          builder: (context, state) =>
+              VatReturnPage(declarationId: state.pathParameters['id'] ?? ''),
+        ),
+      ],
     ),
     GoRoute(
       path: '/vat',
