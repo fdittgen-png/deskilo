@@ -162,7 +162,7 @@ $mentions''',
 > {{ issued }}
 :::''',
         body: '''
-## ${l10n.reportSubject}: $title {{ number }} — {{ period }}
+## ${l10n.reportSubjectLine('$title {{ number }} — {{ period }}')}
 
 {{ member }},
 
@@ -213,7 +213,7 @@ ReportBands _reminderPresetBands(
   final invoiceRecap = '''
 ## ${l10n.invoicePdfTitle}
 {{ number }} · ${l10n.invoicePdfIssuedOn} {{ issued }} | {{ total }}
-> ${l10n.reminderPdfDaysOpenLine('{{ days_open }}')} · ${l10n.reminderPdfLevelLabel} {{ reminder_level }}''';
+> {{ days_open_text }} · ${l10n.reminderPdfLevelLabel} {{ reminder_level }}''';
   final closing =
       '> ${l10n.reminderPdfClosing}';
   // A reminder cites the statutory late-payment clauses (#480) — on the
@@ -228,7 +228,7 @@ ReportBands _reminderPresetBands(
         header: '# $title',
         body: '''
 {{ member }} — {{ number }} ({{ issued }})
-> ${l10n.reminderPdfDaysOpenLine('{{ days_open }}')}
+> {{ days_open_text }}
 = ${l10n.invoiceBalance} | {{ total }}''',
         footer: '$clauses\n$closing',
       );
@@ -262,7 +262,7 @@ ${_sellerBlock(l10n)}
 
 > {{ reminder_date }}''',
         body: '''
-## ${l10n.reportSubject}: $title — ${l10n.invoicePdfTitle} {{ number }}
+## ${l10n.reportSubjectLine(l10n.titleDashDetail(title, '${l10n.invoicePdfTitle} {{ number }}'))}
 
 {{ member }},
 
@@ -312,7 +312,7 @@ ReportBands _statementPresetBands(AppLocalizations l10n, String id) {
     case 'simple':
       return ReportBands(
         header: '# {{ member }} — {{ period }}',
-        body: '$lines$balance',
+        body: [lines, balance].join(),
       );
     case 'verbose':
       return ReportBands(
@@ -337,7 +337,7 @@ ${_sellerBlock(l10n)}
 
 > {{ period }}''',
         body: '''
-## ${l10n.reportSubject}: ${l10n.billPdfTitle} — {{ period }}
+## ${l10n.reportSubjectLine('${l10n.billPdfTitle} — {{ period }}')}
 
 {{ member }},
 
@@ -414,7 +414,7 @@ ReportBands defaultUsageBands(AppLocalizations l10n) => ReportBands(
       body: '''
 {% for line in lines %}{{ line.label }} | {{ line.amount }}
 {% endfor %}
-{% if usage_overage != "" %}> ${l10n.usageReportOverage} : {{ usage_overage }}{% endif %}
+{% if usage_overage != "" %}> ${l10n.usageReportOverageLine('{{ usage_overage }}')}{% endif %}
 
 ## ${l10n.usageReportRecordsHeading}
 {% for r in usage_records %}{{ r.date }} | {{ r.space }} | {{ r.counted }}
@@ -486,7 +486,7 @@ ReportBands _simpleDocPresetBands(
     case 'simple':
       return ReportBands(
         header: '# $title\n$subtitle',
-        body: '$lines$totals',
+        body: [lines, totals].join(),
       );
     case 'verbose':
       return ReportBands(
@@ -507,7 +507,7 @@ ${_sellerBlock(l10n)}
 
 > {{ issued }}''',
         body: '''
-## ${l10n.reportSubject}: $title
+## ${l10n.reportSubjectLine(title)}
 
 {{ member }},
 

@@ -46,6 +46,7 @@ class LeaseTerm {
     this.everyMonths = 1,
     this.effectiveTo,
     this.occurrencesDone = 0,
+    this.textFacts,
   });
 
   factory LeaseTerm.fromJson(Object? raw) {
@@ -59,6 +60,7 @@ class LeaseTerm {
       effectiveFrom: DateTime.parse(r.string('effective_from')),
       effectiveTo: DateTime.tryParse(r.stringOr('effective_to')),
       occurrencesDone: r.intOrNull('occurrences_done') ?? 0,
+      textFacts: r.objectOrNull('text')?.json,
     );
   }
 
@@ -72,6 +74,10 @@ class LeaseTerm {
   /// Null while the term is the one in force.
   final DateTime? effectiveTo;
   final int occurrencesDone;
+
+  /// #3813 — what [label] says, as facts frozen with the term (0744), or
+  /// null; the app prints them in the reader's language, [label] otherwise.
+  final Map<String, Object?>? textFacts;
 
   bool get inForce => effectiveTo == null;
 }

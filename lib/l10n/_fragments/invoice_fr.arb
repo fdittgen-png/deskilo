@@ -422,7 +422,7 @@
   "reminderPdfOpeningFriendly": "petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d'inquiétude.",
   "reminderPdfOpeningFirm": "malgré notre relance précédente, la facture ci-dessous reste impayée. Merci de régler le montant sans délai.",
   "reminderPdfDaysOpen": "Ouverte depuis",
-  "reminderPdfDaysOpenLine": "Ouverte depuis {days} jours",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Ouverte depuis {days} jour} other{Ouverte depuis {days} jours}}",
   "reminderPdfDays": "jours",
   "reminderPdfLevelLabel": "Niveau de relance",
   "reminderPdfClosing": "Si vous avez déjà payé, veuillez ne pas tenir compte de ce courrier.",

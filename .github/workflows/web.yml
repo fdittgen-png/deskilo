@@ -201,6 +201,18 @@ jobs:
           fi
           node tool/web/task_offline_probe.mjs
 
+      - name: Web size budget (first load trace)
+        # #3622 -- reuses the build above (no second build) and the browser
+        # the probe just found. The ceilings live in tool/web/size_budget.json.
+        if: env.WEB_REQUIRED == 'true'
+        run: |
+          if [ -z "${BROWSER_EXECUTABLE:-}" ]; then
+            browser="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser || true)"
+            if [ -n "$browser" ]; then export BROWSER_EXECUTABLE="$browser"; fi
+          fi
+          node tool/web/first_load_trace.mjs --json "$RUNNER_TEMP/web_trace.json"
+          node tool/web/size_budget_check.mjs --trace "$RUNNER_TEMP/web_trace.json"
+
       - uses: actions/upload-artifact@v4
         if: env.WEB_REQUIRED == 'true'
         with:

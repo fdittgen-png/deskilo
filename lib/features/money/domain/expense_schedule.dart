@@ -62,6 +62,7 @@ class ExpenseSchedule implements SystemStamped {
     this.nextDue,
     this.supplierId,
     this.system = SystemColumns.none,
+    this.textFacts,
   });
 
   /// #992 — the server's stamp on this row.
@@ -90,6 +91,11 @@ class ExpenseSchedule implements SystemStamped {
   /// outlay to no one in particular.
   final String? supplierId;
 
+  /// #3813 — what [title] says, as facts frozen with the schedule (0744), or
+  /// null (none written, or the owner's own title); the app prints them in
+  /// the reader's language, [title] otherwise.
+  final Map<String, Object?>? textFacts;
+
   factory ExpenseSchedule.fromDb(Map<String, dynamic> row) => ExpenseSchedule(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
@@ -111,6 +117,10 @@ class ExpenseSchedule implements SystemStamped {
             ? null
             : DateTime.parse(row['next_due'] as String),
         supplierId: row['supplier_id'] as String?,
+        textFacts: switch (row['text_facts']) {
+          final Map<String, Object?> facts => facts,
+          _ => null,
+        },
       );
 }
 

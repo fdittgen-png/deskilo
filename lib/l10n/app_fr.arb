@@ -11267,6 +11267,18 @@
       }
     }
   },
+  "leaseSettlementPeriod": "Régularisation du {from} au {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Depuis le {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
@@ -15375,7 +15387,7 @@
   "reminderPdfClosing": "Si vous avez déjà payé, veuillez ne pas tenir compte de ce courrier.",
   "reminderPdfDays": "jours",
   "reminderPdfDaysOpen": "Ouverte depuis",
-  "reminderPdfDaysOpenLine": "Ouverte depuis {days} jours",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Ouverte depuis {days} jour} other{Ouverte depuis {days} jours}}",
   "reminderPdfLevelLabel": "Niveau de relance",
   "reminderPdfOpeningFirm": "malgré notre relance précédente, la facture ci-dessous reste impayée. Merci de régler le montant sans délai.",
   "reminderPdfOpeningFriendly": "petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d'inquiétude.",
@@ -15769,6 +15781,7 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportExpectedDelivery": "Livraison prévue",
+  "reportExpectedDeliveryDate": "Livraison prévue le {date}",
   "reportFieldGroupBank": "Coordonnées bancaires",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -16398,6 +16411,7 @@
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
   "reportSubject": "Objet",
+  "reportSubjectLine": "Objet : {subject}",
   "reportTemplateClearOverlay": "Utiliser le défaut pour cette langue",
   "reportTemplateLangDefault": "Par défaut (toutes langues)",
   "@reportTemplateLangDefault": {
@@ -17381,6 +17395,15 @@
   "serverConnectReference": "Serveur de référence",
   "serverConnectUseHere": "Utiliser sur cet appareil",
   "serverReferenceLabel": "serveur de référence ({host})",
+  "serviceChargeSettlementOf": "Régularisation des charges — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "serviceOutOfStock": "Épuisé",
   "serviceStockCount": "{count} en stock",
   "servicesActive": "Actif",
@@ -20590,6 +20613,7 @@
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
   },
+  "usageReportOverageLine": "Dépassement reporté sur la prochaine facture : {amount}",
   "usageReportPaid": "Payé d'avance (participation)",
   "@usageReportPaid": {
     "description": "#873 consumption report: usageReportPaid"

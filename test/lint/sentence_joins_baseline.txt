@@ -2,11 +2,8 @@
 # A count that may only fall; never add or raise a line. Found by the scan that
 # reads string expressions (adjacent literals, +, translated locals) and calls
 # to a shared message that has only a space between its placeholders.
-# Total 26: the report-template lines. The 43 other sentences became one
-# message each in #3767.
-
-# Report templates: a translated piece stands beside a print-time token. They
-# belong to issue #3660 (print-time values), not to this ratchet's own work.
-lib/features/money/presentation/report_defaults.dart 24
-lib/features/money/presentation/report_defaults_batch.dart 1
-lib/features/money/presentation/report_defaults_purchase_order.dart 1
+# Total 0: the 43 sentences in the app became one message each in #3767, and
+# the 26 report-template lines in #3768 (a subject, an overage and an expected
+# delivery line are one message each; the reminder's day count is formed with
+# its plural by the report's own strings; a line break between two template
+# values is two lines, not one sentence).

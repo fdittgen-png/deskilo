@@ -27895,6 +27895,12 @@ abstract class AppLocalizations {
   /// **'Settled {from} to {to}: {amount} owed, due {due}'**
   String leaseSettlementOwed(String from, String to, String amount, String due);
 
+  /// #3813 a lease settlement term: the period it settles, both dates already formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement {from} to {to}'**
+  String leaseSettlementPeriod(String from, String to);
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -40470,11 +40476,11 @@ abstract class AppLocalizations {
   /// **'Open for'**
   String get reminderPdfDaysOpen;
 
-  /// #3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.
+  /// #3768 Reminder letter line: how long the invoice has been open, with the plural of the day count in the document's language.
   ///
   /// In en, this message translates to:
-  /// **'Open for {days} days'**
-  String reminderPdfDaysOpenLine(String days);
+  /// **'{days, plural, one{Open for {days} day} other{Open for {days} days}}'**
+  String reminderPdfDaysOpenLine(int days);
 
   /// Mahnwesen / reminder letters (#472)
   ///
@@ -41393,6 +41399,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expected delivery'**
   String get reportExpectedDelivery;
+
+  /// #3768 Purchase order header: the expected delivery date, e.g. "Expected delivery 3 March 2026". {date} is filled in when the order is printed.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery {date}'**
+  String reportExpectedDeliveryDate(String date);
 
   /// #966 report guide: reportFieldGroupBank
   ///
@@ -42425,6 +42437,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subject'**
   String get reportSubject;
+
+  /// #3768 The subject line of a formal letter: the label and the subject as one message, so the language places the separator. {subject} is the title the report fills in.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject: {subject}'**
+  String reportSubjectLine(String subject);
 
   /// Shown as a button or chip label in report template toolbar (money).
   ///
@@ -44381,6 +44399,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'reference server ({host})'**
   String serverReferenceLabel(String host);
+
+  /// #3813 the expense schedule of a service charge settlement, named after its supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Service charge settlement — {supplier}'**
+  String serviceChargeSettlementOf(String supplier);
 
   /// Shown as a text in services screen (money), and 1 other place.
   ///
@@ -54442,6 +54466,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Overage carried to the next invoice'**
   String get usageReportOverage;
+
+  /// #3768 Consumption report line: the overage and its amount, one message so the language places the separator. {amount} is filled in when the report is printed.
+  ///
+  /// In en, this message translates to:
+  /// **'Overage carried to the next invoice: {amount}'**
+  String usageReportOverageLine(String amount);
 
   /// #873 consumption report: usageReportPaid
   ///
