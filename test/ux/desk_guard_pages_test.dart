@@ -20,6 +20,7 @@ import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
+import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -170,6 +171,10 @@ const _pages = [
   ('/money/accounting', PageKind.dashboard, 'money', 'accounting'),
   ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
   ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
+  // #3617 — reports and analysis at the desk.
+  ('/reports', PageKind.records, 'reports', 'reports'),
+  ('/money/status', PageKind.dashboard, 'money', 'status'),
+  ('/bi', PageKind.dashboard, 'reports', 'analysis'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -236,6 +241,8 @@ void main() {
               RecordsHeader<_PurchaseRow>,
               RecordRow<BookExport>,
               RecordsHeader<BookExport>,
+              RecordRow<ReportPage>,
+              RecordsHeader<ReportPage>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -247,6 +254,7 @@ void main() {
               RecordsHeader<Supplier>,
               RecordsHeader<_PurchaseRow>,
               RecordsHeader<BookExport>,
+              RecordsHeader<ReportPage>,
             ],
           ),
           isEmpty,

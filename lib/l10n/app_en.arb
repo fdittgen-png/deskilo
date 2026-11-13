@@ -33709,6 +33709,22 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "reportCoversAnalysis": "Occupancy, sales, purchases and cash over a period, compared and grouped.",
+  "@reportCoversAnalysis": {
+    "description": "#3617 the reports declared once: reportCoversAnalysis"
+  },
+  "reportCoversOverview": "What needs you, then the figures you may read.",
+  "@reportCoversOverview": {
+    "description": "#3617 the reports declared once: reportCoversOverview"
+  },
+  "reportCoversRegister": "Every invoice on one line: date, name, amount and status.",
+  "@reportCoversRegister": {
+    "description": "#3617 the reports declared once: reportCoversRegister"
+  },
+  "reportCoversVat": "The VAT returns of each period, prepared from the issued invoices.",
+  "@reportCoversVat": {
+    "description": "#3617 the reports declared once: reportCoversVat"
+  },
   "reportDesignEmpty": "Empty band — add an element below.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
@@ -34702,6 +34718,18 @@
   "reportVisualAddLine": "Add line",
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
+  },
+  "reportsColumnCovers": "What it covers",
+  "@reportsColumnCovers": {
+    "description": "#3617 the reports declared once: reportsColumnCovers"
+  },
+  "reportsColumnName": "Report",
+  "@reportsColumnName": {
+    "description": "#3617 the reports declared once: reportsColumnName"
+  },
+  "reportsTools": "Tools",
+  "@reportsTools": {
+    "description": "#3617 the reports declared once: reportsTools"
   },
   "requestAccept": "Accept",
   "@requestAccept": {

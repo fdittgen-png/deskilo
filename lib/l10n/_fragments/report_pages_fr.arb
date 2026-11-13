@@ -1,0 +1,10 @@
+{
+  "@@locale": "fr",
+  "reportCoversRegister": "Chaque facture sur une ligne : date, nom, montant et statut.",
+  "reportCoversVat": "Les déclarations de TVA de chaque période, préparées à partir des factures émises.",
+  "reportCoversOverview": "Ce qui vous attend, puis les chiffres que vous pouvez lire.",
+  "reportCoversAnalysis": "Occupation, ventes, achats et trésorerie sur une période, comparés et regroupés.",
+  "reportsColumnName": "Rapport",
+  "reportsColumnCovers": "Ce qu’il couvre",
+  "reportsTools": "Outils"
+}

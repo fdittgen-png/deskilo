@@ -15766,6 +15766,10 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "reportCoversAnalysis": "Auslastung, Umsatz, Einkäufe und Kasse über einen Zeitraum, verglichen und gruppiert.",
+  "reportCoversOverview": "Was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.",
+  "reportCoversRegister": "Jede Rechnung in einer Zeile: Datum, Name, Betrag und Status.",
+  "reportCoversVat": "Die Umsatzsteuererklärungen jedes Zeitraums, aus den ausgestellten Rechnungen erstellt.",
   "reportDesignEmpty": "Leeres Band — fügen Sie unten ein Element hinzu.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
@@ -16551,6 +16555,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportsColumnCovers": "Was er umfasst",
+  "reportsColumnName": "Bericht",
+  "reportsTools": "Werkzeuge",
   "requestAccept": "Annehmen",
   "requestBlock": "Blockieren",
   "requestIgnore": "Ignorieren",

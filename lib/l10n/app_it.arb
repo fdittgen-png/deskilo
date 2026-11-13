@@ -15766,6 +15766,10 @@
   "@reportColUnitPrice": {
     "description": "French facture layout: line-table column headers (#482)"
   },
+  "reportCoversAnalysis": "Occupazione, vendite, acquisti e cassa in un periodo, confrontati e raggruppati.",
+  "reportCoversOverview": "Ciò che la attende, poi le cifre che può leggere.",
+  "reportCoversRegister": "Ogni fattura su una riga: data, nome, importo e stato.",
+  "reportCoversVat": "Le dichiarazioni IVA di ogni periodo, preparate dalle fatture emesse.",
   "reportDesignEmpty": "Banda vuota — aggiunga un elemento sotto.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"
@@ -16551,6 +16555,9 @@
   "@reportVisualAddLine": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportsColumnCovers": "Cosa copre",
+  "reportsColumnName": "Rapporto",
+  "reportsTools": "Strumenti",
   "requestAccept": "Accetta",
   "requestBlock": "Blocca",
   "requestIgnore": "Ignora",
