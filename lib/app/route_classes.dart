@@ -248,7 +248,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/invoicing/wizard', RouteClass.workspace, place: 'drawer-invoices'),
   RouteRule('/member/:memberId', RouteClass.workspace, place: 'drawer-members'),
   RouteRule('/report-editor', RouteClass.workspace, place: 'drawer-reports-templates'),
-  RouteRule('/roles', RouteClass.workspace, place: 'drawer-roles'),
+  RouteRule('/roles', RouteClass.workspace, place: 'drawer-roles', measure: PageMeasure.work), // #3628
   RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),

@@ -13447,6 +13447,14 @@
   "@permManageValidation": {
     "description": "Permission label (#513)"
   },
+  "permModuleConfiguration": "Konfiguration",
+  "permModuleDocuments": "Dokumente und Berichte",
+  "permModuleEnvironments": "Umgebungen",
+  "permModuleEveryday": "Alltag",
+  "permModuleMoney": "Geld",
+  "permModulePeople": "Personen und ihre Daten",
+  "permModulePlaces": "Plätze und Buchungen",
+  "permModuleStock": "Lager",
   "permOperateKiosk": "Kiosk und Badges bedienen",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
@@ -17105,14 +17113,18 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
+  "rolesOwnRoleEdit": "Diese Rolle bearbeiten",
   "rolesOwnRolesLink": "Die Rollen dieses Bereichs",
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
+  "rolesPeopleCount": "{count, plural, =0{Niemand} one{1 Person} other{{count} Personen}}",
   "rolesTitle": "Rollen",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
+  "rolesWhoHasExplain": "Alle aktiven Personen, die sie haben, über ihre Grundrolle oder eine eigene Rolle des Space.",
+  "rolesWhoHasTitle": "Wer „{permission}“ hat",
   "rolesYourRole": "Ihre Rolle",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"

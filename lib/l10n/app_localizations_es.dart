@@ -22203,6 +22203,30 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permManageValidation => 'Configurar reglas de validación';
 
   @override
+  String get permModuleConfiguration => 'Configuración';
+
+  @override
+  String get permModuleDocuments => 'Documentos e informes';
+
+  @override
+  String get permModuleEnvironments => 'Entornos';
+
+  @override
+  String get permModuleEveryday => 'Día a día';
+
+  @override
+  String get permModuleMoney => 'Dinero';
+
+  @override
+  String get permModulePeople => 'Personas y sus datos';
+
+  @override
+  String get permModulePlaces => 'Espacios y reservas';
+
+  @override
+  String get permModuleStock => 'Existencias';
+
+  @override
   String get permOperateKiosk => 'Operar el quiosco y las tarjetas';
 
   @override
@@ -27338,10 +27362,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rolesOfSpaceTitle => 'Los roles de este espacio';
 
   @override
+  String get rolesOwnRoleEdit => 'Editar este rol';
+
+  @override
   String get rolesOwnRolesLink => 'Los roles de este espacio';
 
   @override
+  String rolesPeopleCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count personas',
+      one: '1 persona',
+      zero: 'Nadie',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get rolesTitle => 'Roles';
+
+  @override
+  String get rolesWhoHasExplain =>
+      'Todas las personas activas que lo tienen, por su rol base o por un rol propio del espacio.';
+
+  @override
+  String rolesWhoHasTitle(String permission) {
+    return 'Quién tiene «$permission»';
+  }
 
   @override
   String get rolesYourRole => 'Su rol';

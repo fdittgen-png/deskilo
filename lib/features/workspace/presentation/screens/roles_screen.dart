@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -21,6 +22,7 @@ import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
 import '../widgets/role_editor_sheet.dart';
+import '../widgets/roles_desk.dart';
 import 'roles_screen_labels.dart';
 
 /// #513 — the CENTRAL role management: one matrix, roles × permissions.
@@ -156,6 +158,43 @@ class RolesScreen extends ConsumerWidget {
         features.contains(WorkspaceFeature.customRoles) &&
         ((me?.actsAsOwner ?? false) || canEdit);
 
+    // #3628 — at the desk the roles stand beside the chosen role's
+    // permissions; a phone keeps the cards below.
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return Scaffold(
+        appBar: AppBar(
+          title: PageTitle(l10n.rolesTitle),
+          actions: [
+            HelpDot(
+              l10n.helpHintMembersTip4Topic,
+              anchor: HelpAnchor.rolesMatrix,
+            ),
+          ],
+        ),
+        body: RolesDesk(
+          workspace: workspace,
+          canEdit: canEdit,
+          myRole: myRole,
+          intro: canEdit ? l10n.rolesIntroEditor : l10n.rolesIntroReadOnly,
+          roles: [
+            for (final role in PermissionRole.values)
+              (
+                id: role.wireName,
+                name: _roleLabel(l10n, role, administrator: administrator),
+                base: role,
+                own: null,
+              ),
+            if (ownRolesLink)
+              for (final own in roles)
+                if (!own.builtin)
+                  (id: 'own-${own.key}', name: own.nameIn(locale), base: null, own: own),
+          ],
+          onToggle: (role, permission, current) => _toggle(context, ref,
+              role: role, permission: permission, current: current),
+          onEditOwn: (_) => context.push('/settings/roles-of-this-space'),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.rolesTitle),

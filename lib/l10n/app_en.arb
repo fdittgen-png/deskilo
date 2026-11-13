@@ -29022,6 +29022,38 @@
   "@permManageValidation": {
     "description": "Permission label (#513)"
   },
+  "permModuleConfiguration": "Configuration",
+  "@permModuleConfiguration": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModuleDocuments": "Documents and reports",
+  "@permModuleDocuments": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModuleEnvironments": "Environments",
+  "@permModuleEnvironments": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModuleEveryday": "Everyday",
+  "@permModuleEveryday": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModuleMoney": "Money",
+  "@permModuleMoney": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModulePeople": "People and their data",
+  "@permModulePeople": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModulePlaces": "Places and bookings",
+  "@permModulePlaces": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
+  "permModuleStock": "Stock",
+  "@permModuleStock": {
+    "description": "#3628 roles at the desk: permission group heading"
+  },
   "permOperateKiosk": "Operate the kiosk and badges",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
@@ -35499,13 +35531,39 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
+  "rolesOwnRoleEdit": "Edit this role",
+  "@rolesOwnRoleEdit": {
+    "description": "#3628 roles at the desk: button: edit one of the space's own roles"
+  },
   "rolesOwnRolesLink": "The roles this space defines",
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
+  "rolesPeopleCount": "{count, plural, =0{Nobody} one{1 person} other{{count} people}}",
+  "@rolesPeopleCount": {
+    "description": "#3628 roles at the desk: how many people hold a role or a permission",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
+  },
+  "rolesWhoHasExplain": "Everyone active who holds it, from their base or from one of the space's own roles.",
+  "@rolesWhoHasExplain": {
+    "description": "#3628 roles at the desk: what the list counts"
+  },
+  "rolesWhoHasTitle": "Who has “{permission}”",
+  "@rolesWhoHasTitle": {
+    "description": "#3628 roles at the desk: short task: the people who hold a permission",
+    "placeholders": {
+      "permission": {
+        "type": "String"
+      }
+    }
   },
   "rolesYourRole": "Your role",
   "@rolesYourRole": {

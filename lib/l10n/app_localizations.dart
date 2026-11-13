@@ -35708,6 +35708,54 @@ abstract class AppLocalizations {
   /// **'Configure validation policies'**
   String get permManageValidation;
 
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Configuration'**
+  String get permModuleConfiguration;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Documents and reports'**
+  String get permModuleDocuments;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Environments'**
+  String get permModuleEnvironments;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Everyday'**
+  String get permModuleEveryday;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Money'**
+  String get permModuleMoney;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'People and their data'**
+  String get permModulePeople;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Places and bookings'**
+  String get permModulePlaces;
+
+  /// #3628 roles at the desk: permission group heading
+  ///
+  /// In en, this message translates to:
+  /// **'Stock'**
+  String get permModuleStock;
+
   /// #982 permission catalog: permOperateKiosk
   ///
   /// In en, this message translates to:
@@ -44082,17 +44130,41 @@ abstract class AppLocalizations {
   /// **'Roles this space defines'**
   String get rolesOfSpaceTitle;
 
+  /// #3628 roles at the desk: button: edit one of the space's own roles
+  ///
+  /// In en, this message translates to:
+  /// **'Edit this role'**
+  String get rolesOwnRoleEdit;
+
   /// #2085 giving roles: rolesOwnRolesLink
   ///
   /// In en, this message translates to:
   /// **'The roles this space defines'**
   String get rolesOwnRolesLink;
 
+  /// #3628 roles at the desk: how many people hold a role or a permission
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Nobody} one{1 person} other{{count} people}}'**
+  String rolesPeopleCount(int count);
+
   /// Roles screen title (#513)
   ///
   /// In en, this message translates to:
   /// **'Roles'**
   String get rolesTitle;
+
+  /// #3628 roles at the desk: what the list counts
+  ///
+  /// In en, this message translates to:
+  /// **'Everyone active who holds it, from their base or from one of the space\'s own roles.'**
+  String get rolesWhoHasExplain;
+
+  /// #3628 roles at the desk: short task: the people who hold a permission
+  ///
+  /// In en, this message translates to:
+  /// **'Who has “{permission}”'**
+  String rolesWhoHasTitle(String permission);
 
   /// Chip on the reader's own role card (#513)
   ///

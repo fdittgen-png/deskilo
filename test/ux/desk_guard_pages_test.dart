@@ -175,6 +175,8 @@ const _pages = [
   ('/reports', PageKind.records, 'reports', 'reports'),
   ('/money/status', PageKind.dashboard, 'money', 'status'),
   ('/bi', PageKind.dashboard, 'reports', 'analysis'),
+  // #3628 — the roles beside the chosen role's permissions.
+  ('/roles', PageKind.document, 'people', 'roles'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
