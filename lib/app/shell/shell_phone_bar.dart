@@ -15,7 +15,7 @@ import 'shell_title_bar.dart';
 import 'space_chip.dart';
 
 /// The room one control of the bar takes: an icon button's tap target.
-const double _controlExtent = kMinInteractiveDimension;
+const double shellControlExtent = kMinInteractiveDimension;
 
 /// The phone's top bar for the branch at [currentIndex], titled [tabTitle].
 class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
@@ -41,12 +41,12 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final slots = _slots(context, constraints.maxWidth);
-        var fit = _fit(controls, slots: slots);
+        var fit = fitShellControls(controls, slots: slots);
         // #3610 — search has a button only where every control still fits
         // beside it; a narrower bar keeps its controls (the drawer's first
         // entry and Ctrl/⌘+K open search there).
         if (fit.overflow.isNotEmpty) {
-          fit = _fit([
+          fit = fitShellControls([
             for (final c in controls)
               if (c.id != shellSearchButtonId) c,
           ], slots: slots);
@@ -61,7 +61,7 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
                 ? shown
                 : [
                     ...shown.take(shown.length - 1),
-                    _ShellOverflow(
+                    ShellOverflow(
                       entries: [for (final c in fit.overflow) c.entry!],
                     ),
                     shown.last,
@@ -95,13 +95,14 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
     final spacing = theme.titleSpacing ?? NavigationToolbar.kMiddleSpacing;
     final padding = theme.actionsPadding?.horizontal ?? 0;
     final room = width - leading - 2 * spacing - padding - title.ceil();
-    return room <= 0 ? 0 : (room / _controlExtent).floor();
+    return room <= 0 ? 0 : (room / shellControlExtent).floor();
   }
 }
 
 /// The controls [slots] buttons wide: every one when they fit; else the
 /// most needed, one slot kept for the overflow button holding the rest.
-({List<ShellBarControl> shown, List<ShellBarControl> overflow}) _fit(
+({List<ShellBarControl> shown, List<ShellBarControl> overflow})
+fitShellControls(
   List<ShellBarControl> controls, {
   required int slots,
 }) {
@@ -127,16 +128,16 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
 
 /// The one overflow button: the kit's row menu, opened from a toolbar-sized
 /// button. A screen reader reaches each entry as an action of the button.
-class _ShellOverflow extends StatefulWidget {
-  const _ShellOverflow({required this.entries});
+class ShellOverflow extends StatefulWidget {
+  const ShellOverflow({super.key, required this.entries});
 
   final List<RowAction> entries;
 
   @override
-  State<_ShellOverflow> createState() => _ShellOverflowState();
+  State<ShellOverflow> createState() => ShellOverflowState();
 }
 
-class _ShellOverflowState extends State<_ShellOverflow> {
+class ShellOverflowState extends State<ShellOverflow> {
   final _menu = GlobalKey<RowMenuState>();
 
   @override
