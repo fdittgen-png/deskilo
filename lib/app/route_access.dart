@@ -35,7 +35,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/calendar': {_P.viewCalendar},
   '/directory': {_P.viewDirectory},
   '/money': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
-  '/money/status': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
+  // #3627 — what the server's workspace_status asks (MoneyToolRights.status).
+  '/money/status': {_P.viewFinances},
   '/money/purchases': {_P.viewMyMoney, _P.viewFinances, _P.managePurchases},
   '/money/purchases/doc/:id': {_P.viewMyMoney, _P.viewFinances, _P.managePurchases},
   '/money/purchases/approvals': {_P.approveExpenses},

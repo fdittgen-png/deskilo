@@ -205,6 +205,11 @@ const _pages = [
   ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
   // #3627 — the payments received at the desk.
   ('/money/payments', PageKind.records, 'money', 'payments'),
+  // #3627 — my money at the desk: the month a dashboard, the faces tables.
+  ('/money?face=statement', PageKind.dashboard, 'money', 'money-month'),
+  ('/money?face=invoices', PageKind.records, 'money', 'money-invoices'),
+  ('/money?face=payments', PageKind.records, 'money', 'money-payments'),
+  ('/money?face=usage', PageKind.records, 'money', 'money-usage'),
   ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
   // #3619 — settings and setup at the desk.
   ('/settings', PageKind.task, 'settings', 'account'),
