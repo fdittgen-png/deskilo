@@ -759,6 +759,8 @@ constraint invoice_transmissions.invoice_transmissions_destination_check CHECK (
 constraint invoice_transmissions.invoice_transmissions_environment_check CHECK ((environment = ANY (ARRAY['prod'::text, 'uat'::text, 'dev'::text])))
 constraint invoice_transmissions.invoice_transmissions_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
 constraint invoice_transmissions.invoice_transmissions_invoice_id_same_workspace FOREIGN KEY (workspace_id, invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE CASCADE
+constraint invoice_transmissions.invoice_transmissions_kind_check CHECK ((kind = ANY (ARRAY['invoice'::text, 'test'::text])))
+constraint invoice_transmissions.invoice_transmissions_kind_invoice_check CHECK ((((kind = 'invoice'::text) = (invoice_id IS NOT NULL)) AND ((kind = 'invoice'::text) OR ((environment = 'uat'::text) AND (destination = 'government'::text)))))
 constraint invoice_transmissions.invoice_transmissions_phase_check CHECK ((phase = ANY (ARRAY['prepared'::text, 'sent'::text, 'accepted'::text, 'rejected'::text, 'failed'::text, 'uncertain'::text])))
 constraint invoice_transmissions.invoice_transmissions_pkey PRIMARY KEY (id)
 constraint invoice_transmissions.invoice_transmissions_status_check CHECK ((status = ANY (ARRAY['accepted'::text, 'rejected'::text, 'failed'::text])))
@@ -2535,6 +2537,7 @@ routine public.einvoice_match_candidates(p_inbox_id uuid) -> TABLE(event_id uuid
 routine public.einvoice_secret_name(p_workspace_id uuid, p_key text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:45f8d16fc252
 routine public.einvoice_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c4dc793a01e2
 routine public.einvoice_store_secret(p_workspace_id uuid, p_key text, p_value text) -> jsonb | function | definer | volatile | exec:service_role | body:2634c7338831
+routine public.einvoice_test_pending(p_phase text, p_verdict jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:a10c00592fd7
 routine public.end_tax_exemption_certificate(p_id uuid, p_on date) -> void | function | definer | volatile | exec:authenticated,service_role | body:78807893a3d2
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean) -> void | function | definer | stable | exec:service_role | body:7e6d1de2b0ae
 routine public.enforce_booking_rules(p_workspace_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_walk_up boolean, p_seat_id uuid) -> void | function | definer | stable | exec:service_role | body:1fec2279936b
@@ -3088,6 +3091,7 @@ routine public.posting_parties(p_workspace_id uuid, p_document_ids uuid[]) -> js
 routine public.posting_rate_group(p_country text, p_percent numeric, p_category text, p_day date) -> text | function | definer | stable | exec:service_role | body:851fb12021ea
 routine public.premises_lease_json(l premises_leases) -> jsonb | function | definer | stable | exec:service_role | body:46bdf4c532bf
 routine public.premises_leases_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bffbb07cafb1
+routine public.prepare_einvoice_test_v1(p_workspace_id uuid, p_provider text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_bytes bytea, p_declared jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:15e2568b2c89
 routine public.prepare_einvoice_v1(p_workspace_id uuid, p_invoice_id uuid, p_provider text, p_destination text, p_environment text, p_actor uuid, p_by_name text, p_format text, p_hash text, p_file_name text, p_mime_type text, p_receiver_scheme text, p_receiver_id text, p_bytes bytea, p_declared jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e515fbc2c686
 routine public.prepare_usage_period_v1(p_workspace_id uuid, p_period text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f8125fde2440
 routine public.preview_deployment(p_from uuid, p_to uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:704ad1f8deb8

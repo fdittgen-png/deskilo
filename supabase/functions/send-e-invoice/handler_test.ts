@@ -14,6 +14,8 @@ import type {
   Phase,
   PrepareInput,
   PrepareResult,
+  PrepareTestInput,
+  PrepareTestResult,
   TransmissionRow,
   TransmissionStore,
 } from "./store.ts";
@@ -45,6 +47,8 @@ class FakeStore implements TransmissionStore {
     status: "active",
   };
   permission = false;
+  /** #3883 -- the permissions granted one by one (beside [permission]). */
+  grants = new Set<string>();
   voidedAt: string | null = null;
   wsEnv = "prod";
   provider = "generic";
@@ -64,8 +68,8 @@ class FakeStore implements TransmissionStore {
   member() {
     return Promise.resolve(this.member_);
   }
-  hasPermission() {
-    return Promise.resolve(this.permission);
+  hasPermission(_member: string, name: string) {
+    return Promise.resolve(this.permission || this.grants.has(name));
   }
   credentials() {
     return Promise.resolve({ provider: this.provider, config: this.config });
@@ -145,6 +149,56 @@ class FakeStore implements TransmissionStore {
         mimeType: i.mimeType,
         receiverScheme: i.receiverScheme,
         receiverId: i.receiverId,
+      },
+      declared: i.declared,
+    });
+    return Promise.resolve({ outcome: "prepared", id, phase: "prepared" });
+  }
+  /** 0762: one test at a time; a rejected or failed one is sent again. */
+  prepareTest(i: PrepareTestInput): Promise<PrepareTestResult> {
+    const pending = [...this.rows.values()].find((r) =>
+      r.kind === "test" &&
+      (["prepared", "sent", "uncertain"].includes(r.phase) ||
+        (r.phase === "accepted" &&
+          !["accepted", "rejected"].includes(
+            String((r.verdict as { status?: string }).status ?? ""),
+          )))
+    );
+    if (pending) {
+      return Promise.resolve({
+        outcome: "test_pending",
+        id: pending.id,
+        phase: pending.phase,
+      });
+    }
+    const id = `t${++this.n}`;
+    this.rows.set(id, {
+      id,
+      key: `${i.workspaceId}|test|${id}`,
+      binding: `${i.hash}|${i.format}`,
+      kind: "test",
+      workspace_id: i.workspaceId,
+      provider: i.provider,
+      phase: "prepared",
+      external_id: "",
+      detail: "",
+      environment: "uat",
+      destination: "government",
+      format: i.format,
+      receipt: {},
+      owner: "",
+      generation: 0,
+      deadline: 0,
+      verdict: {},
+      queryError: "",
+      resolvedBy: "",
+      artifact: {
+        bytes: i.bytes,
+        sha256: i.hash,
+        fileName: i.fileName,
+        mimeType: i.mimeType,
+        receiverScheme: "",
+        receiverId: "",
       },
       declared: i.declared,
     });
@@ -1409,4 +1463,148 @@ Deno.test("R7 retained-ID recovery: after the lookup settles the row, sending th
   assertEquals(sendNet.seen.length, 0);
   assertEquals(s.rows.size, 1);
   assertEquals(s.rows.get(id), settled);
+});
+
+// #3883 -- a sandbox test document of the national channel: sent by whoever
+// manages the integrations, to the sandbox only, one at a time.
+function sdiTestStore() {
+  const s = new FakeStore();
+  s.provider = "it_sdi";
+  s.config = {
+    base_url: "https://live.sdi.test",
+    login_url: "https://live.login.test/login",
+    username: "live",
+    password: "live",
+    base_url_uat: "https://api-sandbox.acubeapi.com",
+    login_url_uat: "https://common-sandbox.api.acubeapi.com/login",
+    username_uat: "u",
+    password_uat: "p",
+  };
+  s.member_ = { id: "m2", is_admin: false, is_owner: false, status: "active" };
+  s.grants.add("manageIntegrations");
+  return s;
+}
+const sdiAnswer = () =>
+  new Response(JSON.stringify({ token: "jwt", uuid: "u-test" }), {
+    status: 200,
+  });
+const testBody = {
+  workspace_id: WS,
+  action: "test",
+  content_base64: btoa("<FatturaElettronica>TEST</FatturaElettronica>"),
+  file_name: "TEST-1.xml",
+  mime_type: "application/xml",
+  format: "fatturaPa",
+};
+
+Deno.test("#3883 whoever manages the integrations sends a test document to the sandbox, with no invoice", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 200);
+  const row = [...s.rows.values()][0];
+  assertEquals([row.kind, row.environment, row.destination], ["test", "uat", "government"]);
+  assertEquals(row.phase, "accepted");
+  assertEquals(p.posts.filter((u) => u.endsWith("/invoices")), [
+    "https://api-sandbox.acubeapi.com/invoices",
+  ]);
+  assertEquals(p.posts.some((u) => u.includes("live.")), false);
+});
+
+Deno.test("#3883 the right to issue invoices does not send a test document", async () => {
+  const s = sdiTestStore();
+  s.grants.clear();
+  s.grants.add("issueInvoices");
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 403);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a missing sandbox field refuses the test; the live one is never used instead", async () => {
+  const s = sdiTestStore();
+  delete s.config.password_uat;
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_credentials_missing");
+  assertEquals(r.body.missing, ["password"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a connector whose verdict opens no gate takes no test document", async () => {
+  const s = sdiTestStore();
+  s.provider = "peppol";
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "test_unavailable");
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a second test waits for the first one's verdict, with a sentence", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const second = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(second.status, 409);
+  assertEquals(second.body.error, "test_pending");
+  assertEquals(typeof second.body.detail, "string");
+  assertEquals(p.posts.filter((u) => u.endsWith("/invoices")).length, 1);
+});
+
+Deno.test("#3883 a rejected test is sent again", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const first = [...s.rows.values()][0];
+  first.verdict = { status: "rejected" };
+  const again = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(again.status, 200);
+  assertEquals(s.rows.size, 2);
+});
+
+Deno.test("#3883 whoever manages the integrations asks about a test, not about an invoice's transmission", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  test.external_id = "u-test";
+  const asked = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: test.id }),
+  );
+  assertEquals(asked.status, 200);
+  s.rows.set("inv-t", { ...test, id: "inv-t", kind: "invoice" });
+  const refused = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: "inv-t" }),
+  );
+  assertEquals(refused.status, 403);
+});
+
+Deno.test("#3883 a test goes only to the connector's documented sandbox", async () => {
+  const s = sdiTestStore();
+  s.config.base_url_uat = "https://elsewhere.test";
+  const p = provider(sdiAnswer);
+  const r = await read(await call(s, p.fetchImpl, testBody));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_not_documented");
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3883 a test's verdict is read from the documented sandbox only", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  test.external_id = "u-test";
+  s.config.base_url_uat = "https://elsewhere.test";
+  const asked = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: test.id }),
+  );
+  assertEquals(asked.status, 409);
+  assertEquals(asked.body.error, "sandbox_not_documented");
+  assertEquals(test.verdict, {});
 });

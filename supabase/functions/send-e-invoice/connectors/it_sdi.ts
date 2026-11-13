@@ -147,4 +147,5 @@ export const itSdiConnector: Connector = {
   },
   submit: submitItSdi,
   status: statusItSdi,
+  testDocument: true,
 };

@@ -39,6 +39,9 @@ export interface Connector {
   acceptedFormats: string[];
   /** The documented test environment the owner starts from. */
   sandbox: Config;
+  /** #3883 -- a sandbox test document opens the national channel's issuing
+   * gate: the connector reads the platform's own verdict on a document. */
+  testDocument?: boolean;
   submit(
     cfg: Config,
     doc: ConnectorDocument,
