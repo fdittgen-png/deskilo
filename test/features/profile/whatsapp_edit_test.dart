@@ -78,7 +78,7 @@ void main() {
     await tester.pumpAndSettle();
     // The dialog prefills the current number.
     expect(
-      tester.widget<TextField>(find.byKey(const ValueKey('whatsapp-number'))).controller?.text,
+      tester.widget<TextField>(find.descendant(of: find.byKey(const ValueKey('whatsapp-number')), matching: find.byType(TextField))).controller?.text,
       '+33612345678',
     );
     await tester.enterText(find.byKey(const ValueKey('whatsapp-number')), '');
