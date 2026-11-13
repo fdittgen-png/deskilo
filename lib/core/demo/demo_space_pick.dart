@@ -2,46 +2,20 @@
 //
 // #3797 — one store per Demo space, and the one the scope is looking at:
 // a space never reads another's records.
+// #3867 — one resolver for the open space, shared by every router; an id no
+// space owns fails closed.
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import '../../features/workspace/providers/workspace_providers.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_trade_city_seed.dart';
-import 'seed/demo_twin_seed.dart';
+import 'demo_spaces.dart';
 
-/// One value for each of the Demo's seven spaces.
-typedef DemoSpaces<T> = ({
-  T home,
-  T leipzig,
-  T london,
-  T newYork,
-  T zurich,
-  T milan,
-  T twin,
-});
+export 'demo_spaces.dart';
 
-/// The one of [spaces] that belongs to the space being looked at: the main
-/// space's while no space is open yet.
+/// The Demo space the scope is looking at: the main space's while no space is
+/// open yet; an id no space owns throws.
+DemoSpaceKey demoOpenSpace(Ref ref) =>
+    DemoSpaceKey.of(ref.watch(currentWorkspaceProvider).value?.id);
+
+/// The one of [spaces] that belongs to the space being looked at.
 T demoPickSpace<T>(Ref ref, DemoSpaces<T> spaces) =>
-    switch (ref.watch(currentWorkspaceProvider).value?.id) {
-      demoSecondSpaceId => spaces.leipzig,
-      demoLondonSpaceId => spaces.london,
-      demoNewYorkSpaceId => spaces.newYork,
-      demoZurichSpaceId => spaces.zurich,
-      demoMilanSpaceId => spaces.milan,
-      demoTwinSpaceId => spaces.twin,
-      _ => spaces.home,
-    };
-
-/// The value of every space, each made from the one it came from.
-DemoSpaces<R> demoMapSpaces<T, R>(DemoSpaces<T> spaces, R Function(T) f) => (
-  home: f(spaces.home),
-  leipzig: f(spaces.leipzig),
-  london: f(spaces.london),
-  newYork: f(spaces.newYork),
-  zurich: f(spaces.zurich),
-  milan: f(spaces.milan),
-  twin: f(spaces.twin),
-);
+    spaces.at(demoOpenSpace(ref));

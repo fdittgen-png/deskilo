@@ -14,29 +14,15 @@ import 'data/company_lookup_repository.dart';
 import 'data/purchase_approval_reads.dart';
 import 'data/supplier_balance_repository.dart';
 import 'demo_space_pick.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
-import 'seed/demo_trade_city_seed.dart';
-import 'seed/demo_twin_seed.dart';
 
-String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
-  null || '' || 'ws-1' => 'ws-1',
-  demoTwinSpaceId => demoTwinSpaceId,
-  demoLondonSpaceId => demoLondonSpaceId,
-  demoNewYorkSpaceId => demoNewYorkSpaceId,
-  demoZurichSpaceId => demoZurichSpaceId,
-  demoMilanSpaceId => demoMilanSpaceId,
-  _ => '__unavailable__',
+/// The space whose approvals are asked for; Leipzig has none to give.
+String _approvalSpace(Ref ref) => switch (demoOpenSpace(ref)) {
+  DemoSpaceKey.leipzig => '__unavailable__',
+  final key => key.id,
 };
 
-String _approvalCurrency(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
-  demoLondonSpaceId => 'GBP',
-  demoNewYorkSpaceId => 'USD',
-  demoZurichSpaceId => demoZurich.currency,
-  demoMilanSpaceId => demoMilan.currency,
-  _ => 'EUR',
-};
+String _approvalCurrency(Ref ref) => demoOpenSpace(ref).currency;
 
 /// Keep the supplier and purchase readers inside the same Demo fixture: each
 /// space reads its own (#3797), the main space's [purchasing] when [spaces]

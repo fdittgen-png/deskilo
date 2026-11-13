@@ -16,6 +16,7 @@
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
@@ -59,14 +60,8 @@ import '../../helpers/demo_analyses.dart';
 /// since they were issued, and the one other unpaid invoice (#3785).
 const _londonDueItems = 5;
 
-/// The Demo's five spaces: their name and id.
-const _spaces = [
-  ('Pézenas', 'ws-1'),
-  ('Leipzig', 'ws-2'),
-  ('London', 'ws-3'),
-  ('New York', 'ws-4'),
-  ('the development twin', 'ws-1-dev'),
-];
+/// Every space of the Demo's one list: their name and id (#3867).
+final _spaces = [for (final key in DemoSpaceKey.values) (key.label, key.id)];
 
 /// A container on the Demo looking at space [id], its overview on.
 Future<(ProviderContainer, Workspace)> _open(
