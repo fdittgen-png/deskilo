@@ -7,10 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/list_detail_route.dart';
+import '../../features/money/domain/accounting_sign_in_return.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
 import '../../features/money/presentation/screens/accounting_exports_screen.dart';
+import '../../features/money/presentation/screens/accounting_sign_in_return_screen.dart';
 import '../../features/money/presentation/screens/billing_screen.dart';
 import '../../features/money/presentation/screens/einvoice_config_screen.dart';
 import '../../features/money/presentation/screens/guest_passes_screen.dart';
@@ -326,6 +328,18 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
         const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),
       ),
       builder: (context, state) => const AccountingHubScreen(),
+    ),
+    // #3906 — an accounting target's sign-in, completed by the signed-in
+    // person; the router took its code and state out of the address.
+    GoRoute(
+      path: accountingSignInReturnPath,
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.accountingConnectors],
+          to: '/money/accounting',
+        ),
+      ),
+      builder: (context, state) => const AccountingSignInReturnScreen(),
     ),
     // #3616 — the files handed to the accountant, as records.
     GoRoute(

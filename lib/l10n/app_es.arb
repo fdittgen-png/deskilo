@@ -185,6 +185,12 @@
   "accountingExportsFingerprint": "Huella",
   "accountingExportsRows": "Filas",
   "accountingExportsTitle": "Exportaciones",
+  "accountingSignInBack": "Volver a Contabilidad",
+  "accountingSignInCompleting": "Completando el inicio de sesión…",
+  "accountingSignInConnected": "La conexión está hecha. Su estado se muestra en Contabilidad.",
+  "accountingSignInExpired": "Este enlace de inicio de sesión ha caducado o ya se usó. Vuelva a empezar desde Contabilidad.",
+  "accountingSignInFailed": "El inicio de sesión no se completó. El motivo se muestra en la conexión, en Contabilidad.",
+  "accountingSignInRefused": "No puede gestionar esta conexión, así que el inicio de sesión no se completó.",
   "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"

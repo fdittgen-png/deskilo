@@ -325,6 +325,30 @@
   "@accountingExportsTitle": {
     "description": "#3616 the export history page title (short: the top bar holds it)"
   },
+  "accountingSignInBack": "Back to Accounting",
+  "@accountingSignInBack": {
+    "description": "#3906 Button back to the accounting page."
+  },
+  "accountingSignInCompleting": "Completing the sign-in…",
+  "@accountingSignInCompleting": {
+    "description": "#3906 Shown while the app completes an accounting target's sign-in."
+  },
+  "accountingSignInConnected": "The connection is made. Its state is shown in Accounting.",
+  "@accountingSignInConnected": {
+    "description": "#3906 The accounting target's sign-in completed; the connection is made."
+  },
+  "accountingSignInExpired": "This sign-in link has expired or was already used. Start again from Accounting.",
+  "@accountingSignInExpired": {
+    "description": "#3906 The accounting sign-in link is too old, was used, or was lost on a reload."
+  },
+  "accountingSignInFailed": "The sign-in was not completed. The reason is shown on the connection in Accounting.",
+  "@accountingSignInFailed": {
+    "description": "#3906 The target refused or the person did not complete the sign-in there."
+  },
+  "accountingSignInRefused": "You may not manage this connection, so the sign-in was not completed.",
+  "@accountingSignInRefused": {
+    "description": "#3906 The signed-in person may not manage the accounting connection; nothing was connected."
+  },
   "accountingSourceRefused": "The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"

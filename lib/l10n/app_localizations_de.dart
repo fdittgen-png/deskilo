@@ -250,6 +250,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingExportsTitle => 'Exporte';
 
   @override
+  String get accountingSignInBack => 'Zurück zur Buchhaltung';
+
+  @override
+  String get accountingSignInCompleting => 'Die Anmeldung wird abgeschlossen …';
+
+  @override
+  String get accountingSignInConnected =>
+      'Die Verbindung ist hergestellt. Ihr Status steht unter Buchhaltung.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Dieser Anmeldelink ist abgelaufen oder wurde schon verwendet. Beginnen Sie erneut unter Buchhaltung.';
+
+  @override
+  String get accountingSignInFailed =>
+      'Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.';
+
+  @override
+  String get accountingSignInRefused =>
+      'Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.';
+
+  @override
   String get accountingSourceRefused =>
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 

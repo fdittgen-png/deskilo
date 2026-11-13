@@ -101,5 +101,11 @@
   "acctEntraTenant": "Tenant (ID directory o dominio)",
   "acctEntraEnvironment": "Nome dell'ambiente",
   "acctEntraCompany": "ID della società",
-  "acctEntraInvalid": "Questo valore non ha la forma prevista."
+  "acctEntraInvalid": "Questo valore non ha la forma prevista.",
+  "accountingSignInCompleting": "Completamento dell'accesso…",
+  "accountingSignInConnected": "La connessione è stabilita. Il suo stato è mostrato in Contabilità.",
+  "accountingSignInRefused": "Non può gestire questa connessione, quindi l'accesso non è stato completato.",
+  "accountingSignInExpired": "Questo link di accesso è scaduto o è già stato usato. Ricominci da Contabilità.",
+  "accountingSignInFailed": "L'accesso non è stato completato. Il motivo è mostrato sulla connessione, in Contabilità.",
+  "accountingSignInBack": "Torna a Contabilità"
 }

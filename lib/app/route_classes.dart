@@ -269,6 +269,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
   RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
   RouteRule('/money/accounting/exports', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
+  RouteRule('/accounting/connected', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.reading), // #3906: a target's sign-in, completed
   RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings'),

@@ -101,5 +101,11 @@
   "acctEntraTenant": "Mandant (Verzeichnis-ID oder Domäne)",
   "acctEntraEnvironment": "Name der Umgebung",
   "acctEntraCompany": "Unternehmens-ID",
-  "acctEntraInvalid": "Dieser Wert hat nicht die erwartete Form."
+  "acctEntraInvalid": "Dieser Wert hat nicht die erwartete Form.",
+  "accountingSignInCompleting": "Die Anmeldung wird abgeschlossen …",
+  "accountingSignInConnected": "Die Verbindung ist hergestellt. Ihr Status steht unter Buchhaltung.",
+  "accountingSignInRefused": "Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.",
+  "accountingSignInExpired": "Dieser Anmeldelink ist abgelaufen oder wurde schon verwendet. Beginnen Sie erneut unter Buchhaltung.",
+  "accountingSignInFailed": "Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.",
+  "accountingSignInBack": "Zurück zur Buchhaltung"
 }

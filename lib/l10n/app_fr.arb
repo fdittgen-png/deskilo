@@ -185,6 +185,12 @@
   "accountingExportsFingerprint": "Empreinte",
   "accountingExportsRows": "Lignes",
   "accountingExportsTitle": "Exports",
+  "accountingSignInBack": "Retour à Comptabilité",
+  "accountingSignInCompleting": "Connexion en cours de finalisation…",
+  "accountingSignInConnected": "La connexion est établie. Son état est affiché dans Comptabilité.",
+  "accountingSignInExpired": "Ce lien de connexion a expiré ou a déjà servi. Recommencez depuis Comptabilité.",
+  "accountingSignInFailed": "La connexion n'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.",
+  "accountingSignInRefused": "Vous ne pouvez pas gérer cette connexion : la connexion n'a pas été finalisée.",
   "accountingSourceRefused": "Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"

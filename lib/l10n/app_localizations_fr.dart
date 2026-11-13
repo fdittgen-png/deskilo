@@ -251,6 +251,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingSignInBack => 'Retour à Comptabilité';
+
+  @override
+  String get accountingSignInCompleting =>
+      'Connexion en cours de finalisation…';
+
+  @override
+  String get accountingSignInConnected =>
+      'La connexion est établie. Son état est affiché dans Comptabilité.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Ce lien de connexion a expiré ou a déjà servi. Recommencez depuis Comptabilité.';
+
+  @override
+  String get accountingSignInFailed =>
+      'La connexion n\'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.';
+
+  @override
+  String get accountingSignInRefused =>
+      'Vous ne pouvez pas gérer cette connexion : la connexion n\'a pas été finalisée.';
+
+  @override
   String get accountingSourceRefused =>
       'Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.';
 

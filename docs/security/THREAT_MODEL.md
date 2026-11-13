@@ -68,6 +68,7 @@ cannot write the ledger, the invoices or the reservations directly.
 | T17 | SSRF through an endpoint an administrator configures | https-only, private ranges refused | **open** (#3090) |
 | T18 | Badge PIN brute force, badge enumeration on the kiosk | per-badge lockout | **margins too thin** (#3091) |
 | T19 | CI supply chain: an unpinned action or CLI in a job holding secrets | pinning, checksums, secret scanning | **open** (#3094) |
+| T20 | An accounting connection's sign-in completed by someone who may not manage that connection | the target's redirect stores nothing: it passes the code and the state to the app, where the signed-in person completes the sign-in (`complete`); the server checks that they may manage the connection, and the state is single-use and expires after 10 minutes | `deno test` in `accounting-connect` (#3906) |
 
 ## Residual risk, stated plainly
 
