@@ -88,7 +88,9 @@ Future<void> sendEInvoice(
         // #2358 — the network's own syntax, from the inputs the
         // download uses.
         final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
-        final association = ref.read(sellerIsAssociationProvider);
+        final association = invoice.sellerIsAssociationOr(
+          ref.read(sellerIsAssociationProvider),
+        );
         // Every input is read BEFORE the first await.
         final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
@@ -443,7 +445,9 @@ class _EInvoiceExportRun {
 
   /// The UBL 2.1 XML to the share sheet or Downloads.
   Future<void> ublXml({required bool share}) {
-    final association = ref.read(sellerIsAssociationProvider);
+    final association = s.invoice.sellerIsAssociationOr(
+      ref.read(sellerIsAssociationProvider),
+    );
     final l10n = context.l10n;
     final words = reportStringsOf(l10n, formatLocale: appFormatOf(context).locale);
     return runGuarded(

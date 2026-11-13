@@ -358,9 +358,9 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   }
   final report = renderReportBands(bands: bands, data: withOwnerTexts(reportData, template.texts));
   final reportImages = await reportImagesOf(report, options.reportImage);
-  final association = InvoiceLegal.fromJson(
-    workspace?.invoiceLegal ?? const {},
-  ).isAssociation;
+  final association = invoice.sellerIsAssociationOr(
+    InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {}).isAssociation,
+  );
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
@@ -403,7 +403,9 @@ String facturXmlOf(
   required String iban,
   required TaxReferenceSet reference,
 }) {
-  final association = ref.read(sellerIsAssociationProvider);
+  final association = invoice.sellerIsAssociationOr(
+    ref.read(sellerIsAssociationProvider),
+  );
   final words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale);
   return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: seller,

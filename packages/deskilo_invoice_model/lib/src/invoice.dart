@@ -408,6 +408,18 @@ sealed class Invoice with _$Invoice implements SystemStamped {
         _ => null,
       };
 
+  /// #3875 — the seller kind this invoice was ISSUED under: the snapshot's
+  /// when the invoice has one, else [live] (an older invoice, a preview).
+  /// It decides the word of the recurring line, which has tax consequences,
+  /// so a later change of the business's kind never rewords an issued one.
+  String sellerKindOr(String live) => legalClauses?.sellerKind ?? live;
+
+  /// [sellerKindOr] as the question the wording asks.
+  bool sellerIsAssociationOr(bool live) => switch (legalClauses) {
+        final LegalClauseSnapshot frozen => frozen.sellerKind == 'association',
+        _ => live,
+      };
+
   /// #831 — regrouped into a settlement and not voided: documentation
   /// only, every operation happens on the settlement.
   bool get isFolded => settledByInvoiceId != null && !isVoided;

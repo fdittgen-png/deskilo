@@ -293,9 +293,11 @@ Map<String, Object?> invoiceReportData(
   final dateFormat = DateFormat.yMMMd(strings.documentDateLocale);
   // #870 — an association's positions are participations, not
   // subscriptions; the same word everywhere the document is produced.
-  final association = InvoiceLegal.fromJson(
-    workspace?.invoiceLegal ?? const {},
-  ).isAssociation;
+  // #3875 — the kind the invoice was issued under, the business's only
+  // for an invoice that froze none.
+  final association = invoice.sellerIsAssociationOr(
+    InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {}).isAssociation,
+  );
   final legalData = _invoiceLegalMentionData(strings, invoice, workspace,
       reference: reference,
       memberTerms: memberTerms, memberCapacity: memberCapacity);
