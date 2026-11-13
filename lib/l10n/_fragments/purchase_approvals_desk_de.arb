@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "purchaseApproveSelected": "{count, plural, one{{count} Beleg freigeben} other{{count} Belege freigeben}}",
+  "purchaseApprovalOutcomesTitle": "Freigaben der Auswahl",
+  "purchaseApprovalApplied": "Freigegeben",
+  "purchaseApprovalRefusedItem": "Nicht Ihre Freigabe",
+  "purchaseApprovalChanged": "Inzwischen geändert, nicht gesendet",
+  "purchaseApprovalUnknown": "Noch keine Antwort"
+}

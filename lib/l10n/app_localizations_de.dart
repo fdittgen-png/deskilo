@@ -23649,6 +23649,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicProfileTitle => 'Öffentliches Profil';
 
   @override
+  String get purchaseApprovalApplied => 'Freigegeben';
+
+  @override
+  String get purchaseApprovalChanged => 'Inzwischen geändert, nicht gesendet';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'Belege sind in dieser Ansicht nicht verfügbar. Bitten Sie eine Person mit Zugriff auf die Kaufdetails, diese zur Prüfung bereitzustellen.';
 
@@ -23661,8 +23667,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Wechselkurs ist in dieser Ansicht nicht verfügbar.';
 
   @override
+  String get purchaseApprovalOutcomesTitle => 'Freigaben der Auswahl';
+
+  @override
   String get purchaseApprovalReceiptsUnavailable =>
       'Ausstehende Belege konnten nicht geladen werden.';
+
+  @override
+  String get purchaseApprovalRefusedItem => 'Nicht Ihre Freigabe';
+
+  @override
+  String get purchaseApprovalUnknown => 'Noch keine Antwort';
 
   @override
   String get purchaseApprovalVisibleReceipts =>
@@ -23678,6 +23693,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchaseApprovalsTitle => 'Lieferantenrechnungen zur Genehmigung';
+
+  @override
+  String purchaseApproveSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Belege freigeben',
+      one: '$count Beleg freigeben',
+    );
+    return '$_temp0';
+  }
 
   @override
   String purchaseBillForOrder(String reference) {
@@ -24317,6 +24343,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchasesQuantity => 'Menge';
 
   @override
+  String get purchasesReceiptColumn => 'Beleg';
+
+  @override
   String get purchasesReference => 'Rechnungsnummer';
 
   @override
@@ -24430,6 +24459,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesUnit => 'Einheit (z. B. Karton, Ries)';
+
+  @override
+  String get purchasesWithoutReceipt => 'Ohne Beleg';
 
   @override
   String get pushAllowAction => 'Erlauben';
@@ -31357,6 +31389,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get suppliersArchive => 'Archivieren';
 
   @override
+  String get suppliersArchivedChip => 'Archiviert';
+
+  @override
   String get suppliersArchivedTag => 'archiviert';
 
   @override
@@ -31441,6 +31476,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get suppliersIntro =>
       'Die Zahlungsempfänger Ihrer Einkäufe. Ein Lieferant wird an einer geprüften Steuernummer erkannt, nie allein am Namen.';
+
+  @override
+  String get suppliersLastPurchase => 'Letzter Einkauf';
 
   @override
   String get suppliersLoadMore => 'Mehr laden';

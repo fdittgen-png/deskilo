@@ -1,0 +1,11 @@
+{
+  "@@locale": "en",
+  "purchasesWithoutReceipt": "Without a receipt",
+  "purchasesReceiptColumn": "Receipt",
+  "@purchasesWithoutReceipt": {
+    "description": "#3615 the purchases table: the chip of the documents with no receipt filed"
+  },
+  "@purchasesReceiptColumn": {
+    "description": "#3615 the purchases table: the column marking a document with a receipt filed"
+  }
+}

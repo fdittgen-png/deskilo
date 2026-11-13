@@ -23413,6 +23413,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get publicProfileTitle => 'Public profile';
 
   @override
+  String get purchaseApprovalApplied => 'Approved';
+
+  @override
+  String get purchaseApprovalChanged => 'Changed meanwhile, not sent';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.';
 
@@ -23424,8 +23430,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'The exchange rate is unavailable in this approval view.';
 
   @override
+  String get purchaseApprovalOutcomesTitle => 'Approvals of the selection';
+
+  @override
   String get purchaseApprovalReceiptsUnavailable =>
       'Pending receipts could not be loaded.';
+
+  @override
+  String get purchaseApprovalRefusedItem => 'Not yours to approve';
+
+  @override
+  String get purchaseApprovalUnknown => 'No answer yet';
 
   @override
   String get purchaseApprovalVisibleReceipts =>
@@ -23440,6 +23455,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchaseApprovalsTitle => 'Supplier bills to approve';
+
+  @override
+  String purchaseApproveSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Approve $count documents',
+      one: 'Approve $count document',
+    );
+    return '$_temp0';
+  }
 
   @override
   String purchaseBillForOrder(String reference) {
@@ -24077,6 +24103,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesQuantity => 'Quantity';
 
   @override
+  String get purchasesReceiptColumn => 'Receipt';
+
+  @override
   String get purchasesReference => 'Invoice number';
 
   @override
@@ -24189,6 +24218,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesUnit => 'Unit (e.g. box, ream)';
+
+  @override
+  String get purchasesWithoutReceipt => 'Without a receipt';
 
   @override
   String get pushAllowAction => 'Allow';
@@ -31023,6 +31055,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get suppliersArchive => 'Archive';
 
   @override
+  String get suppliersArchivedChip => 'Archived';
+
+  @override
   String get suppliersArchivedTag => 'archived';
 
   @override
@@ -31108,6 +31143,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get suppliersIntro =>
       'The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.';
+
+  @override
+  String get suppliersLastPurchase => 'Last purchase';
 
   @override
   String get suppliersLoadMore => 'Load more';

@@ -30736,6 +30736,14 @@
   "@publicProfileTitle": {
     "description": "Shown as the title in public profile tile (me), and 1 other place."
   },
+  "purchaseApprovalApplied": "Approved",
+  "@purchaseApprovalApplied": {
+    "description": "#3615 outcome: the document was approved"
+  },
+  "purchaseApprovalChanged": "Changed meanwhile, not sent",
+  "@purchaseApprovalChanged": {
+    "description": "#3615 outcome: the document changed since it was shown; nothing was sent"
+  },
   "purchaseApprovalEvidenceUnavailable": "Source evidence is unavailable in this approval view. To review it, ask someone authorized to access the purchase details.",
   "@purchaseApprovalEvidenceUnavailable": {
     "description": "Shown as the text in purchases sheet (money)."
@@ -30748,9 +30756,21 @@
   "@purchaseApprovalFxUnavailable": {
     "description": "Shown as the text in purchase exchange rate (money)."
   },
+  "purchaseApprovalOutcomesTitle": "Approvals of the selection",
+  "@purchaseApprovalOutcomesTitle": {
+    "description": "#3615 title of the per-item outcomes of approving a selection"
+  },
   "purchaseApprovalReceiptsUnavailable": "Pending receipts could not be loaded.",
   "@purchaseApprovalReceiptsUnavailable": {
     "description": "Shown as the text in purchase approvals screen (money)."
+  },
+  "purchaseApprovalRefusedItem": "Not yours to approve",
+  "@purchaseApprovalRefusedItem": {
+    "description": "#3615 outcome: the person may not approve this document; nothing was sent"
+  },
+  "purchaseApprovalUnknown": "No answer yet",
+  "@purchaseApprovalUnknown": {
+    "description": "#3615 outcome: the read or the decision did not answer; Retry sends the same request"
   },
   "purchaseApprovalVisibleReceipts": "Pending member receipts you can view",
   "@purchaseApprovalVisibleReceipts": {
@@ -30767,6 +30787,15 @@
   "purchaseApprovalsTitle": "Supplier bills to approve",
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
+  },
+  "purchaseApproveSelected": "{count, plural, one{Approve {count} document} other{Approve {count} documents}}",
+  "@purchaseApproveSelected": {
+    "description": "#3615 approve the selected purchase documents, each on its own",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "purchaseBillForOrder": "Purchase order {reference}",
   "@purchaseBillForOrder": {
@@ -31641,6 +31670,10 @@
   "@purchasesQuantity": {
     "description": "#3294 step 4 items on purchase lines"
   },
+  "purchasesReceiptColumn": "Receipt",
+  "@purchasesReceiptColumn": {
+    "description": "#3615 the purchases table: the column marking a document with a receipt filed"
+  },
   "purchasesReference": "Invoice number",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -31790,6 +31823,10 @@
   "purchasesUnit": "Unit (e.g. box, ream)",
   "@purchasesUnit": {
     "description": "#3294 step 4 items on purchase lines"
+  },
+  "purchasesWithoutReceipt": "Without a receipt",
+  "@purchasesWithoutReceipt": {
+    "description": "#3615 the purchases table: the chip of the documents with no receipt filed"
   },
   "pushAllowAction": "Allow",
   "@pushAllowAction": {
@@ -40277,6 +40314,10 @@
   "@suppliersArchive": {
     "description": "#2567 suppliers"
   },
+  "suppliersArchivedChip": "Archived",
+  "@suppliersArchivedChip": {
+    "description": "#3615 the suppliers table: the chip of the archived suppliers"
+  },
   "suppliersArchivedTag": "archived",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
@@ -40398,6 +40439,10 @@
   "suppliersIntro": "The payees of your purchases. A supplier is recognised by a verified tax identifier, never by its name alone.",
   "@suppliersIntro": {
     "description": "#2567 suppliers"
+  },
+  "suppliersLastPurchase": "Last purchase",
+  "@suppliersLastPurchase": {
+    "description": "#3615 the suppliers table: the column of the last purchase from the supplier"
   },
   "suppliersLoadMore": "Load more",
   "@suppliersLoadMore": {
