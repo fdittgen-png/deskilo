@@ -14,7 +14,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../domain/ledger_entry.dart';
 
 /// What a credit line is, as the bill names it when it has no description.
-String creditLabel(AppLocalizations l, LedgerEntry e) =>
+String _creditLabel(AppLocalizations l, LedgerEntry e) =>
     e.description.isNotEmpty
     ? e.description
     : switch (e.category) {
@@ -49,10 +49,10 @@ class MyCreditsTable extends StatelessWidget {
       tableId: 'my-credits',
       rows: credits,
       keyOf: (e) => e.id,
-      searchText: (e) => '${creditLabel(l, e)} ${e.period}',
+      searchText: (e) => '${_creditLabel(l, e)} ${e.period}',
       onOpen: (_) {},
       cardBuilder: (context, e) => ListTile(
-        title: Text(creditLabel(l, e)),
+        title: Text(_creditLabel(l, e)),
         trailing: Text(money.formatMinor(e.amountCents)),
       ),
       empty: Center(child: Text(l.billPaymentsCredits)),
@@ -73,9 +73,9 @@ class MyCreditsTable extends StatelessWidget {
           id: 'what',
           label: l.statementDeskColLine,
           flex: 4,
-          sortKey: (e) => creditLabel(l, e).toLowerCase(),
+          sortKey: (e) => _creditLabel(l, e).toLowerCase(),
           cell: (_, e) =>
-              Text(creditLabel(l, e), overflow: TextOverflow.ellipsis),
+              Text(_creditLabel(l, e), overflow: TextOverflow.ellipsis),
         ),
         RecordColumn(
           id: 'period',

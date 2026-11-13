@@ -4,7 +4,7 @@
 // total per currency under it; the phone keeps its list.
 import 'package:deskilo/features/money/domain/money_face.dart';
 import 'package:deskilo/features/money/presentation/widgets/my_credits_table.dart';
-import 'package:deskilo/features/money/presentation/widgets/usage_table.dart';
+import 'package:deskilo/features/money/presentation/widgets/usage_face.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

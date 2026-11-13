@@ -27,6 +27,7 @@ typedef StatementLine = ({
 });
 
 /// The month's lines, from the statement alone: their sum is its balance.
+@visibleForTesting
 List<StatementLine> statementLines(AppLocalizations l, Statement s) => [
   (
     id: 'fee',
