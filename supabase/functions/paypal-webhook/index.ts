@@ -15,7 +15,7 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
-import { isReversalEvent, orderIdOf, takesRealMoney } from "./event_rules.ts";
+import { captureIdOf, isReversalEvent, orderIdOf, reversalReason, takesRealMoney } from "./event_rules.ts";
 import {
   configOf,
   redactedProviderLog,
@@ -26,6 +26,7 @@ import { paypalApi } from "../_shared/providers.ts";
 import { paypalFeeOf } from "../_shared/provider_settlement.ts";
 
 type Intent = {
+  order_id: string;
   workspace_id: string;
   amount_cents: number;
   currency: string;
@@ -106,19 +107,23 @@ Deno.serve(async (req: Request): Promise<Response> => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
   const resource = (event.resource ?? {}) as Record<string, unknown>;
-  const orderId = orderIdOf(resource);
+  // #3905 -- a refund-shaped reversal names its capture (its `up` link), not
+  // its order: the payment is found by the capture it recorded.
+  const reversalCapture = isReversalEvent(event.event_type) ? captureIdOf(resource) : null;
 
   // Resolve the workspace from the intent, then load ITS PayPal config.
-  const { data: intent } = await admin
+  const lookup = admin
     .from("payment_intents")
-    .select("workspace_id, amount_cents, currency, reference, status")
-    .eq("provider", "paypal")
-    .eq("order_id", orderId)
-    .maybeSingle<Intent>();
+    .select("order_id, workspace_id, amount_cents, currency, reference, status")
+    .eq("provider", "paypal");
+  const { data: intent } = await (reversalCapture
+    ? lookup.eq("capture_id", reversalCapture)
+    : lookup.eq("order_id", orderIdOf(resource))).maybeSingle<Intent>();
   if (!intent) {
-    console.log("paypal webhook: unknown order, ignoring", orderId);
+    console.log("paypal webhook: unknown order, ignoring", reversalCapture ?? orderIdOf(resource));
     return respond("ok", 200);
   }
+  const orderId = intent.order_id;
   // #3093 E6 — a failed credential read is an error the provider retries,
   // never a quiet fall back to the installation's key.
   let cfg: Record<string, string>;
@@ -224,14 +229,19 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // #3905 -- a capture reversed or refunded at PayPal: recorded on the
   // payment, never posted on its own.
   if (isReversalEvent(type)) {
-    const { error } = await admin.rpc("mark_payment_reversed", {
+    const { data: state, error } = await admin.rpc("mark_payment_reversed", {
       p_provider: "paypal",
       p_order_id: orderId,
-      p_reason: type,
+      p_reason: reversalReason(type, resource),
     });
     if (error) {
       console.error("paypal reversal record failed", error.message);
       return respond("reversal_record_failed", 500);
+    }
+    if (state === "created") {
+      // The capture is not recorded yet: PayPal delivers this again.
+      console.log("paypal reversal before its capture, retry", orderId);
+      return respond("not_ready", 503);
     }
     console.log("paypal payment reversed", { orderId, type });
     return respond("ok", 200);

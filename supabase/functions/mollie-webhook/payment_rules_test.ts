@@ -39,8 +39,8 @@ Deno.test("the other checks still hold", () => {
 });
 
 Deno.test("a charged-back or refunded payment is a reversal; an untouched one is not", () => {
-  assertEquals(reversalOf(payment({ amountChargedBack: { value: "12.00", currency: "EUR" } })), "chargeback");
-  assertEquals(reversalOf(payment({ amountRefunded: { value: "5.00", currency: "EUR" } })), "refund");
+  assertEquals(reversalOf(payment({ amountChargedBack: { value: "12.00", currency: "EUR" } })), "chargeback 12.00 EUR");
+  assertEquals(reversalOf(payment({ amountRefunded: { value: "5.00", currency: "EUR" } })), "refund 5.00 EUR");
   assertEquals(reversalOf(payment({ amountRefunded: { value: "0.00", currency: "EUR" } })), null);
   assertEquals(reversalOf(payment()), null);
 });

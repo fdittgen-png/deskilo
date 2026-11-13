@@ -261,7 +261,7 @@ class _ExcelExport {
       XlsxSheet(name: 'Payments', totals: 'total', rows: [
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
-      'recorded_at', 'description', 'provider', 'order_id',
+      'recorded_at', 'description', 'provider', 'order_id', 'reversed_at', 'reversal_reason',
     ],
     for (final entry in ledger)
       if (isExportedPayment(entry))
@@ -269,7 +269,7 @@ class _ExcelExport {
           'confirmed', memberName[entry.memberId],
           major(entry.amountCents), workspace.currencyCode, entry.period,
           _day(entry.occurredOn), _at(entry.createdAt), entry.description, null,
-          null,
+          null, null, null,
         ],
     for (final event in pendingEvents)
       if (event.type == EventType.payment)
@@ -278,13 +278,13 @@ class _ExcelExport {
           if (event.payload['amount_cents'] is int) major(event.payload['amount_cents'] as int) else null,
           workspace.currencyCode,
           event.payload['period'], null, _at(event.createdAt),
-          event.payload['note'], null, null,
+          event.payload['note'], null, null, null, null,
         ],
     for (final intent in paymentIntents)
       [
         'online (${intent.status})', memberName[intent.memberId],
         major(intent.amountCents), workspace.currencyCode, intent.period,
-        null, _at(intent.createdAt), null, intent.provider, intent.orderId,
+        null, _at(intent.createdAt), null, intent.provider, intent.orderId, _at(intent.reversedAt), intent.reversalReason,
       ],
   ]);
 

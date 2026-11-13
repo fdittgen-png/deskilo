@@ -84,6 +84,19 @@ void main() {
           status: 'captured',
           createdAt: kTestNow,
         ),
+        // #3905 — a payment the provider reversed carries when and why.
+        PaymentIntent(
+          id: 'pi-2',
+          memberId: 'member-1',
+          provider: 'stripe',
+          orderId: 'cs_2',
+          period: kTestPeriod,
+          amountCents: 1200,
+          status: 'reversed',
+          createdAt: kTestNow,
+          reversedAt: kTestNow,
+          reversalReason: 'charge.dispute.created 12.00 EUR',
+        ),
       ],
       services: const [],
       invoices: const [],
@@ -127,6 +140,10 @@ void main() {
     expect((row('Payments', 1)['amount']! as XlsxAmount).value, 42.5);
     expect(row('Payments', 2)['state'], 'online (captured)');
     expect(row('Payments', 2)['provider'], 'paypal');
+    expect(row('Payments', 2)['reversal_reason'], anyOf(isNull, ''));
+    expect(row('Payments', 3)['state'], 'online (reversed)');
+    expect(row('Payments', 3)['reversal_reason'], 'charge.dispute.created 12.00 EUR');
+    expect(row('Payments', 3)['reversed_at'], isNotNull);
 
     // #2861 — the workspace is an Overview of fields, and every feature is
     // a row of the Features sheet, by process, with whether it is on.
@@ -155,7 +172,7 @@ void main() {
       'members': (rowsOf('Users'), 1),
       'reservations': (rowsOf('Reservations'), 1),
       'payment_intents':
-          (rowsOf('Payments', (r) => '${r.first}'.startsWith('online')), 1),
+          (rowsOf('Payments', (r) => '${r.first}'.startsWith('online')), 2),
       'ledger_entries': (rowsOf('Ledger'), ledger.length),
       'offices': (rowsOf('Offices'), plan.offices.length),
       'events': (rowsOf('Events'), 0),

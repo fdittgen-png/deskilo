@@ -14,6 +14,23 @@ export function orderIdOf(resource: Record<string, unknown>): string {
   );
 }
 
+/** #3905 -- the capture a refund-shaped resource belongs to: its `up` link
+ * (`…/v2/payments/captures/<id>`); null when the resource names none. */
+export function captureIdOf(resource: Record<string, unknown>): string | null {
+  for (const link of (resource.links ?? []) as Array<Record<string, unknown>>) {
+    const match = /\/v2\/payments\/captures\/([^/?#]+)/.exec(String(link.href ?? ""));
+    if (link.rel === "up" && match) return decodeURIComponent(match[1]);
+  }
+  return null;
+}
+
+/** #3905 -- why a reversal event reverses its payment, with the amount and
+ * its currency. */
+export function reversalReason(type: string, resource: Record<string, unknown>): string {
+  const amount = (resource.amount ?? {}) as Record<string, unknown>;
+  return [type, amount.value, amount.currency_code].filter((p) => typeof p === "string" && p).join(" ");
+}
+
 /** #3905 -- the events that reverse a captured payment. */
 const REVERSALS = new Set(["PAYMENT.CAPTURE.REVERSED", "PAYMENT.CAPTURE.REFUNDED"]);
 

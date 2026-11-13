@@ -40,14 +40,16 @@ export function mismatch(
   return null;
 }
 
-/** The reversal a fetched [payment] shows (`chargeback` before `refund`), or
- * null when nothing of it was charged back or refunded. */
+/** The reversal a fetched [payment] shows (`chargeback` before `refund`),
+ * with the amount reversed and its currency, or null when nothing of it was
+ * charged back or refunded. */
 export function reversalOf(payment: Record<string, unknown>): string | null {
-  const above = (field: string) => {
-    const value = Number(((payment[field] ?? {}) as Record<string, unknown>).value ?? 0);
-    return Number.isFinite(value) && value > 0;
-  };
-  if (above("amountChargedBack")) return "chargeback";
-  if (above("amountRefunded")) return "refund";
+  for (const [field, kind] of [["amountChargedBack", "chargeback"], ["amountRefunded", "refund"]]) {
+    const amount = (payment[field] ?? {}) as Record<string, unknown>;
+    const value = Number(amount.value ?? 0);
+    if (Number.isFinite(value) && value > 0) {
+      return `${kind} ${String(amount.value)} ${String(amount.currency ?? "").toUpperCase()}`.trim();
+    }
+  }
   return null;
 }
