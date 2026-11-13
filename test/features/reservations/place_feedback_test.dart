@@ -8,8 +8,11 @@ import 'package:deskilo/features/directory/presentation/workspace_feedback.dart'
 import 'package:deskilo/features/reservations/domain/place_feedback.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/place_feedback_bar.dart';
 import 'package:deskilo/features/reservations/providers/place_feedback_providers.dart';
+import 'package:deskilo/features/workspace/providers/operation_context_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
@@ -140,4 +143,101 @@ void main() {
     await tester.pumpAndSettle();
     expect((await repo.fetch('w1', PlaceKind.workspace, 'w1')).mine, 5);
   });
+
+  testWidgets('#3869 — "this installation" follows the selected business: '
+      'after a switch the stars of the new server are shown and written there',
+      (tester) async {
+    final h1 = _client('https://h1.example');
+    final h2 = _client('https://h2.example');
+    final repos = {
+      'h1.example': FakePlaceFeedbackRepository(),
+      'h2.example': FakePlaceFeedbackRepository(),
+    };
+    final routed = _ByServer(repos['h1.example']!);
+    final selected = NotifierProvider<_Selected, SupabaseClient>(
+        () => _Selected(h1));
+    const a = PublicWorkspace('w1', 'https://h1.example', '', {'name': 'A'});
+    const b = PublicWorkspace('w2', 'https://h2.example', '', {'name': 'B'});
+    await pumpApp(
+      tester,
+      const Scaffold(
+        body: Column(children: [
+          WorkspaceFeedback(workspace: a),
+          WorkspaceFeedback(workspace: b),
+        ]),
+      ),
+      overrides: [
+        ...standardTestOverrides(placeFeedback: routed),
+        selectedWorkspaceClientProvider
+            .overrideWith((ref) => ref.watch(selected)),
+      ],
+    );
+    await _settle(tester);
+    expect(find.byKey(PlaceFeedbackChip.heartKey('w1')), findsOneWidget);
+    expect(find.byKey(PlaceFeedbackChip.heartKey('w2')), findsNothing);
+
+    ProviderScope.containerOf(tester.element(find.byType(Column).first))
+        .read(selected.notifier)
+        .use(h2);
+    routed.current = repos['h2.example']!;
+    await _settle(tester);
+    expect(find.byKey(PlaceFeedbackChip.heartKey('w1')), findsNothing);
+    expect(find.byKey(PlaceFeedbackChip.heartKey('w2')), findsOneWidget);
+
+    await tester.tap(find.byKey(PlaceFeedbackChip.rateKey('w2')));
+    await _settle(tester);
+    await tester.tap(find.byKey(PlaceFeedbackBar.starKey('w2', 4)));
+    await _settle(tester);
+    expect((await repos['h2.example']!.fetch('w2', PlaceKind.workspace, 'w2')).mine, 4);
+    expect((await repos['h1.example']!.fetch('w1', PlaceKind.workspace, 'w1')).mine, isNull);
+  });
+}
+
+/// A client that only knows its address: no refresh timer, no network.
+SupabaseClient _client(String url) => SupabaseClient(url, 'k',
+    authOptions: const AuthClientOptions(autoRefreshToken: false));
+
+/// Lets the futures and the sheet's animation finish, in bounded steps.
+Future<void> _settle(WidgetTester tester) async {
+  await tester.pump();
+  await tester.pump();
+  await tester.pump(const Duration(seconds: 1));
+}
+
+class _Selected extends Notifier<SupabaseClient> {
+  _Selected(this._first);
+  final SupabaseClient _first;
+
+  @override
+  SupabaseClient build() => _first;
+
+  void use(SupabaseClient client) => state = client;
+}
+
+/// The feedback of whichever server the selected business lives on.
+class _ByServer implements PlaceFeedbackRepository {
+  _ByServer(this.current);
+
+  PlaceFeedbackRepository current;
+
+  @override
+  Future<PlaceFeedback> fetch(String w, PlaceKind k, String id) =>
+      current.fetch(w, k, id);
+
+  @override
+  Future<Map<String, PlaceFeedback>> fetchMany(
+          String w, PlaceKind k, List<String> ids) =>
+      current.fetchMany(w, k, ids);
+
+  @override
+  Future<PlaceFeedback> setFavorite(String w, PlaceKind k, String id,
+          {required bool on}) =>
+      current.setFavorite(w, k, id, on: on);
+
+  @override
+  Future<PlaceFeedback> setRating(String w, PlaceKind k, String id, int? stars) =>
+      current.setRating(w, k, id, stars);
+
+  @override
+  Future<List<FavoritePlace>> favorites(String w) => current.favorites(w);
 }

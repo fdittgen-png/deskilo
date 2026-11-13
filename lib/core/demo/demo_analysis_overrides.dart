@@ -30,10 +30,7 @@ import 'data/workspace_asset_repository.dart';
 import 'data/workspace_repository.dart';
 import 'demo_fixture.dart';
 import 'demo_space_pick.dart';
-import 'seed/demo_city_books_seed.dart';
-import 'seed/demo_lease_seed.dart';
 import 'seed/demo_purchase_seed.dart';
-import 'seed/demo_valuation_seed.dart';
 
 /// A field of the space's workspace record, by its id.
 String Function(String) _recordOf(
@@ -167,28 +164,11 @@ typedef DemoSpaceBooks = ({
 List<Override> demoBookFigureOverrides(
   DemoFixture fixture,
   DemoSpaces<DemoPurchasing> purchasing,
-  DemoSpaces<DemoSpaceContracts> spaces, {
-  required DemoSpaceBooks leipzig,
-  required DemoSpaceBooks twin,
-}) {
-  final DemoSpaces<FakeAssetValuationRepository> valuations = (
-    home: seedDemoBookValues(fixture.seededAt),
-    leipzig: leipzig.valuations,
-    london: FakeAssetValuationRepository(),
-    newYork: FakeAssetValuationRepository(),
-    zurich: FakeAssetValuationRepository(),
-    milan: FakeAssetValuationRepository(),
-    twin: twin.valuations,
-  );
-  final DemoSpaces<FakeLeaseCommitmentRepository> commitments = (
-    home: seedDemoCommitments(fixture.seededAt),
-    leipzig: leipzig.commitments,
-    london: FakeLeaseCommitmentRepository(),
-    newYork: newYorkCommitments(fixture.seededAt),
-    zurich: FakeLeaseCommitmentRepository(),
-    milan: FakeLeaseCommitmentRepository(),
-    twin: twin.commitments,
-  );
+  DemoSpaces<DemoSpaceBooks> figures,
+) {
+  final DemoSpaces<DemoSpaceContracts> spaces = demoMapSpaces(figures, (f) => f.contracts);
+  final DemoSpaces<FakeAssetValuationRepository> valuations = demoMapSpaces(figures, (f) => f.valuations);
+  final DemoSpaces<FakeLeaseCommitmentRepository> commitments = demoMapSpaces(figures, (f) => f.commitments);
   DemoCostSources sources(
     DemoPurchasing p,
     List<Invoice> Function() invoices,

@@ -4,6 +4,7 @@
 // purchase and cost figures. Never the euro of the older spaces.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -50,6 +51,30 @@ void main() {
       expect(cost.netSalesMinor, greaterThan(0), reason: 'the invoices are net sales');
       expect(cost.operatingCostsMinor, greaterThan(0), reason: 'the approved bills are operating costs');
       expect(cost.contributionMinor, cost.netSalesMinor! - cost.operatingCostsMinor!);
+    });
+  }
+
+  // #3867 - every space of the one list reads in its own currency: its
+  // workspace row, its invoices, its purchase and cost figures.
+  for (final key in DemoSpaceKey.values) {
+    test('${key.label} reads in ${key.currency}', () async {
+      final workspace = fixture.spaceWorkspaces.at(key).workspaces.firstWhere((w) => w.id == key.id);
+      expect(workspace.currencyCode, key.currency);
+      expect({for (final i in fixture.spaceMoney.at(key).invoices) i.currency}.difference({key.currency}), isEmpty);
+      final container = ProviderContainer(
+        overrides: [
+          ...demoOverrides(fixture),
+          currentWorkspaceProvider.overrideWith((ref) async => workspace),
+        ],
+      );
+      addTearDown(container.dispose);
+      await container.read(currentWorkspaceProvider.future);
+      final from = _month(DateTime.utc(fixture.seededAt.year - 3, fixture.seededAt.month));
+      final to = _month(fixture.seededAt);
+      final purchase = await container.read(purchaseKpiRepositoryProvider).summary(key.id, fromMonth: from, toMonth: to);
+      expect(purchase.currency, key.currency);
+      final cost = await container.read(costKpiRepositoryProvider).summary(key.id, fromMonth: from, toMonth: to);
+      expect(cost.currency, key.currency);
     });
   }
 }

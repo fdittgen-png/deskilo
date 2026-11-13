@@ -154,8 +154,13 @@ class RecordRow<T> extends StatefulWidget {
     required this.focused,
     required this.minHeight,
     required this.selectable,
+    this.menuKey,
     super.key,
   });
+
+  /// The table's handle on this row's menu: its context-menu key opens the
+  /// menu of the row the arrows stand on.
+  final GlobalKey<RowMenuState>? menuKey;
 
   final T row;
   final List<RecordColumn<T>> columns;
@@ -172,7 +177,8 @@ class RecordRow<T> extends StatefulWidget {
 }
 
 class _RecordRowState<T> extends State<RecordRow<T>> {
-  final _menu = GlobalKey<RowMenuState>();
+  final _ownMenu = GlobalKey<RowMenuState>();
+  GlobalKey<RowMenuState> get _menu => widget.menuKey ?? _ownMenu;
   bool _hover = false;
 
   /// The row's actions in the kit's one menu (#3611): the ⋯ button, a
@@ -215,7 +221,12 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
         actions: _rowActions,
         keyPrefix: 'records-action',
         button: RowMenuButton.none,
-        child: Material(
+        // #3891 — the table is one Tab stop and the arrows walk its rows
+        // (a long table is not hundreds of stops): what is in a row takes
+        // no focus of its own; Enter opens, Space ticks, the context-menu
+        // key opens the row's actions.
+        child: ExcludeFocus(
+          child: Material(
           color: widget.selected
               ? theme.colorScheme.secondaryContainer
               : widget.focused
@@ -271,6 +282,7 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
               ),
             ),
           ),
+        ),
         ),
       ),
     );
@@ -352,10 +364,13 @@ class RecordsFooter extends StatelessWidget {
     required this.totals,
     required this.scope,
     required this.format,
+    this.totalOf,
     this.dropped = 0,
     super.key,
   });
 
+  /// The name of the column the totals add up, when the table names one.
+  final String? totalOf;
   final int shown;
   final int loaded;
   final bool complete;
@@ -393,6 +408,8 @@ class RecordsFooter extends StatelessWidget {
               key: const ValueKey('records-dropped'),
               style: muted,
             ),
+          if (currencies.isNotEmpty && totalOf != null)
+            Text(totalOf!, key: const ValueKey('records-total-of')),
           if (currencies.isNotEmpty)
             Text(
               scope == TotalScope.selection
@@ -427,6 +444,10 @@ final Map<ShortcutActivator, Intent> recordsShortcuts = {
       const _SelectShown(),
   const SingleActivator(LogicalKeyboardKey.keyA, meta: true):
       const _SelectShown(),
+  // #3891 — the row's actions, as in every row of the kit (RowMenu).
+  const SingleActivator(LogicalKeyboardKey.contextMenu): const _RowMenu(),
+  const SingleActivator(LogicalKeyboardKey.f10, shift: true):
+      const _RowMenu(),
 };
 
 /// The table's keyboard actions, wired by the table.
@@ -436,13 +457,19 @@ Map<Type, Action<Intent>> recordsActions({
   required VoidCallback open,
   required VoidCallback tick,
   required VoidCallback selectShown,
+  required VoidCallback rowMenu,
 }) => {
   _FocusFilter: CallbackAction<_FocusFilter>(onInvoke: (_) => focusFilter()),
   _Move: CallbackAction<_Move>(onInvoke: (i) => move(i.by)),
   _Open: CallbackAction<_Open>(onInvoke: (_) => open()),
   _Tick: CallbackAction<_Tick>(onInvoke: (_) => tick()),
   _SelectShown: CallbackAction<_SelectShown>(onInvoke: (_) => selectShown()),
+  _RowMenu: CallbackAction<_RowMenu>(onInvoke: (_) => rowMenu()),
 };
+
+class _RowMenu extends Intent {
+  const _RowMenu();
+}
 
 class _FocusFilter extends Intent {
   const _FocusFilter();

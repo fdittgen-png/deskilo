@@ -4382,6 +4382,7 @@
       }
     }
   },
+  "customerStatementPeriodNothing": "Für diesen Zeitraum gibt es nichts darzustellen: weder ein Saldo noch eine Bewegung.",
   "customerStatementPeriodRange": "Vom {from} bis {to}",
   "customerStatementPickCurrency": "Die Kontoübersicht in welcher Währung?",
   "@customerStatementPickCurrency": {
@@ -5433,6 +5434,23 @@
   "eInvoiceSubdivisionField": "Kreis oder Provinz (z. B. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
+  },
+  "eInvoiceTestFieldLabel": "{field} (Test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "eInvoiceTestFieldsHelp": "Zugangsdaten für die Testplattform. Sie werden getrennt von den Produktivdaten gespeichert; ein leeres Feld behält den gespeicherten Wert.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldsTitle": "Testumgebung (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
   },
   "editorAddLevel": "Etage hinzufügen",
   "editorAmenitiesLabel": "Ausstattung",
@@ -12226,6 +12244,7 @@
   "memberApprove": "Mitgliedschaft bestätigen",
   "memberBadgesTitle": "Badges — {name}",
   "memberBadgesTooltip": "Badges",
+  "memberBookingsNone": "Keine Buchung seit {date}",
   "memberCoOwnerChip": "Mitinhaber",
   "memberCoOwnerPassiveChip": "Nachfolge",
   "memberContactHeading": "Kontakt",
@@ -12328,6 +12347,7 @@
   "memberNoteTitle": "{name} benachrichtigen",
   "memberNoteTo": "An {name}",
   "memberNoteToAllAdmins": "An alle Admins",
+  "memberNotesWrite": "Notiz schreiben",
   "memberNotifyAction": "Benachrichtigung senden",
   "memberNotifyAllAdmins": "Alle Admins benachrichtigen",
   "memberNumberLabel": "Mitgliedsnummer",
@@ -12406,6 +12426,15 @@
     }
   },
   "memberPause": "Mitgliedschaft pausieren",
+  "memberPlanEstCredits": "Bestätigte Gutschriften",
+  "memberPlanEstOverage": "Zusätzliche Halbtage",
+  "memberPlanEstSupplements": "Zuschläge",
+  "memberPlanEstimate": "Voraussichtliche nächste Rechnung",
+  "memberPlanEstimateBasis": "Für {period}, Stand {date}: die Abrechnung bisher",
+  "memberPlanEstimateUnavailable": "Nicht verfügbar: Die Abrechnung konnte nicht gelesen werden",
+  "memberPlanJoined": "Beitrittsdatum",
+  "memberPlanJoinedUnknown": "Nicht erfasst",
+  "memberPlanPausedNoDates": "Pausiert: Für eine Pause werden keine Daten erfasst",
   "memberPlanShare": "Tarif {pct} %",
   "@memberPlanShare": {
     "description": "#704 - the contact section of a member profile",
@@ -12415,6 +12444,7 @@
       }
     }
   },
+  "memberPlanShareLabel": "Anteil",
   "memberReactivate": "Mitgliedschaft reaktivieren",
   "memberRejectJoin": "Mitgliedschaft ablehnen",
   "memberReservationLimitChip": "max. {n}",
@@ -12462,8 +12492,37 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkPause": "{count, plural, one{1 Mitglied} other{{count} Mitglieder}} pausieren",
+  "membersBulkPlan": "Tarif von {count, plural, one{1 Mitglied} other{{count} Mitgliedern}} ändern",
+  "membersBulkResume": "{count, plural, one{1 Mitglied} other{{count} Mitglieder}} reaktivieren",
+  "membersChangeApply": "Anwenden",
+  "membersChangeDone": "{changed, plural, =0{Keines geändert} one{1 geändert} other{{changed} geändert}} von {count, plural, one{1 Mitglied} other{{count} Mitgliedern}}",
+  "membersChangeFromToday": "Gilt ab heute, {date}. Jedes Mitglied wird einzeln geändert; wer nicht geändert werden kann, wird mit dem Grund aufgeführt und bleibt unverändert.",
+  "membersChipOpen": "Mit offenem Betrag",
+  "membersColEmail": "E-Mail",
+  "membersColLastVisit": "Letzter Besuch",
+  "membersColName": "Name",
+  "membersColPlan": "Tarif und Anteil",
+  "membersColPlanFee": "Tarifgebühr",
+  "membersColStatus": "Status",
+  "membersFeeUnavailable": "Nicht verfügbar: Kein Gebührenband deckt diesen Anteil ab",
   "membersInvite": "Mitglied einladen",
+  "membersNoVisitSince": "Keiner seit {date}",
+  "membersOutcomeApplied": "Geändert",
+  "membersOutcomeExited": "Hat den Space verlassen: nicht geändert",
+  "membersOutcomeFailed": "Nicht geändert: Der Server hat abgelehnt oder nicht geantwortet",
+  "membersOutcomeGone": "Nicht mehr Mitglied des Space",
+  "membersOutcomeKiosk": "Ein Kiosk, kein zahlendes Mitglied: nicht geändert",
+  "membersOutcomePending": "Wartet auf Annahme: nicht geändert",
+  "membersOutcomeRuleRefused": "Dieser Anteil ist für sie nicht erlaubt: nicht geändert",
+  "membersOutcomeUnchanged": "Bereits so: nichts zu ändern",
+  "membersOutcomeWrongStatus": "Nicht pausiert: nicht reaktiviert",
   "membersPlanNone": "Kein Tarif",
+  "membersPlansTitle": "Abos und Tarife",
+  "membersTabBookings": "Buchungen",
+  "membersTabNotes": "Notizen",
+  "membersTabPlan": "Tarif",
+  "membersTabProfile": "Profil",
   "membersTitle": "Mitglieder & Tarife",
   "messageInfo": "Nachrichteninfo",
   "@messageInfo": {
@@ -13690,6 +13749,9 @@
   "planUntilDateLabel": "Wiederholen bis",
   "planUntilLabel": "Bis",
   "planYourSeat": "Ihr Platz",
+  "plansColIncluded": "Was enthalten ist",
+  "plansColMembers": "Mitglieder darauf",
+  "plansColPlan": "Tarif",
   "plansEditorEdit": "Tarif bearbeiten",
   "plansEditorInactive": "Inaktiv",
   "plansEditorNew": "Neuer Tarif",
@@ -13697,6 +13759,11 @@
   "plansEditorQuota": "{count, plural, one{1 Halbtag} other{{count} Halbtage}}",
   "plansEditorTitle": "Tarife",
   "plansEditorUnlimited": "unbegrenzte Halbtage",
+  "plansEmpty": "Noch keine Gebührenbänder: Legen Sie sie unter Tarife und Pakete fest.",
+  "plansIncluded": "Der Anteil des Mitglieds an den offenen Halbtagen des Monats; ein zusätzlicher Halbtag kostet {overage}",
+  "plansNoMembers": "Kein Mitglied hat diesen Tarif.",
+  "plansShareRange": "{from} bis {to}",
+  "plansTitle": "Tarife",
   "policyAdminCheckoutDesc": "Ein Admin kann den laufenden Check-in eines Mitglieds beenden.",
   "policyAdminCheckoutTitle": "Admins dürfen Mitglieder auschecken",
   "policyAllowPastDesc": "Mitglieder können eine bereits beendete Buchung nachtragen.",

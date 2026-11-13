@@ -195,8 +195,10 @@ class _Desk extends ConsumerWidget {
           pendingEvents: pendingEvents,
           onBranch: onBranch,
         ),
-        title: _DeskBreadcrumb(crumbs: shown, router: router),
-        actions: shellBarActions(context, ref, currentIndex: branch),
+        title: ({required wraps}) =>
+            _DeskBreadcrumb(crumbs: shown, router: router, wraps: wraps),
+        titleWidth: _crumbsWidth(context, shown),
+        controls: shellBarControls(context, ref, currentIndex: branch),
         path: path,
         scrim: scrim,
         // #3789 — the selected entry's name, so a page's own bar does not
@@ -211,10 +213,17 @@ class _Desk extends ConsumerWidget {
 /// The last part is the page's place; the record shown (a member's name)
 /// comes with the page's own leaf, not here.
 class _DeskBreadcrumb extends StatelessWidget {
-  const _DeskBreadcrumb({required this.crumbs, required this.router});
+  const _DeskBreadcrumb({
+    required this.crumbs,
+    required this.router,
+    required this.wraps,
+  });
 
   final List<DeskCrumb> crumbs;
   final GoRouter router;
+
+  /// The page's name takes a second line (#3893).
+  final bool wraps;
 
   @override
   Widget build(BuildContext context) {
@@ -223,7 +232,7 @@ class _DeskBreadcrumb extends StatelessWidget {
     Widget part(DeskCrumb crumb, {required bool last}) {
       final text = Text(
         crumb.label,
-        maxLines: 1,
+        maxLines: last && wraps ? 2 : 1,
         overflow: TextOverflow.ellipsis,
         style: last
             ? null
@@ -256,3 +265,35 @@ class _DeskBreadcrumb extends StatelessWidget {
     );
   }
 }
+
+/// How wide the crumbs are on one line: each part in its style, a crumb that
+/// is a button with the padding of its button, a chevron between.
+double _crumbsWidth(BuildContext context, List<DeskCrumb> crumbs) {
+  final theme = Theme.of(context);
+  final scaler = MediaQuery.textScalerOf(context);
+  final direction = Directionality.of(context);
+  var width = 0.0;
+  for (final (i, crumb) in crumbs.indexed) {
+    final last = i == crumbs.length - 1;
+    final style = last
+        ? theme.textTheme.titleLarge
+        : theme.textTheme.titleMedium;
+    final painter = TextPainter(
+      text: TextSpan(text: crumb.label, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    width += painter.width.ceilToDouble();
+    painter.dispose();
+    if (crumb.entry != null) width += _crumbButtonPadding;
+    if (i > 0) width += _chevronWidth;
+  }
+  return width;
+}
+
+/// The horizontal padding of a crumb's text button, both sides.
+const double _crumbButtonPadding = 24;
+
+/// The chevron between two crumbs: an icon's width.
+const double _chevronWidth = 24;

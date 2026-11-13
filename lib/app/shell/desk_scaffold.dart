@@ -17,6 +17,8 @@ import '../../core/ui/adaptive/window_class.dart';
 import '../route_classes.dart';
 import 'desk_navigation.dart';
 import 'desk_page_frame.dart';
+import 'desk_top_bar.dart';
+import 'shell_app_bar.dart';
 
 /// Whether [context]'s window shows the desk: the expanded class or wider,
 /// at a text size the sidebar still holds on one line.
@@ -42,8 +44,8 @@ class DeskScaffold extends ConsumerWidget {
     required this.navigation,
     required this.title,
     required this.body,
-    this.actions = const [],
-    this.search,
+    this.titleWidth = 0,
+    this.controls = const [],
     this.path = '',
     this.scrim,
     super.key,
@@ -59,14 +61,15 @@ class DeskScaffold extends ConsumerWidget {
   /// The business's navigation: the rail when [rail], else the sidebar.
   final Widget Function({required bool rail}) navigation;
 
-  /// The page's title in the top bar.
-  final Widget title;
+  /// The page's title in the top bar: its crumbs, given whether they wrap.
+  final Widget Function({required bool wraps}) title;
 
-  /// The top bar's alerts, help and account.
-  final List<Widget> actions;
+  /// How wide the title is on one line (#3893).
+  final double titleWidth;
 
-  /// The top bar's search (#3610); nothing until then.
-  final Widget? search;
+  /// The top bar's search, alerts, help and account; they leave the bar, in
+  /// the order of their priority, before the title is cut.
+  final List<ShellBarControl> controls;
 
   final Widget body;
 
@@ -114,11 +117,10 @@ class DeskScaffold extends ConsumerWidget {
                     child: FocusTraversalGroup(
                       child: _Chrome(
                         scrim: scrim,
-                        child: AppBar(
-                          key: const ValueKey('desk-top-bar'),
-                          automaticallyImplyLeading: false,
+                        child: DeskTopBar(
                           title: title,
-                          actions: [?search, ...actions],
+                          titleWidth: titleWidth,
+                          controls: controls,
                         ),
                       ),
                     ),

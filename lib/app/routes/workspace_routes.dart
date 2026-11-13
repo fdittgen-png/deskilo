@@ -21,7 +21,6 @@ import '../../features/workspace/presentation/screens/deployment_screen.dart';
 import '../../features/workspace/presentation/screens/documents_screen.dart';
 import '../../features/workspace/presentation/screens/features_screen.dart';
 import '../../features/workspace/presentation/screens/kiosk_devices_screen.dart';
-import '../../features/workspace/presentation/screens/members_screen.dart';
 import '../../features/workspace/presentation/screens/nfc_config_screen.dart';
 import '../../features/workspace/presentation/screens/onboarding_screen.dart';
 import '../../features/workspace/presentation/screens/payment_methods_screen.dart';
@@ -403,18 +402,8 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         ),
       ],
     ),
-    GoRoute(
-      path: '/members',
-      // Admins reach member management too (0044: they set reservation
-      // limits and issue badges); owner-only controls gate inside.
-      redirect: env.guard(
-        const RouteAccess(
-          permission: WorkspacePermission.manageMembers,
-          bypass: RoleBypass.administrator,
-        ),
-      ),
-      builder: (context, state) => const MembersScreen(),
-    ),
+    // #3618 — '/members' and its records are in members_routes.dart, after
+    // '/members/managed' and '/members/privacy', so ':id' never takes them.
     // #2085 — what my roles give me here (or, for whoever administers
     // members or roles, what someone else's give them).
     GoRoute(

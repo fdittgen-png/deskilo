@@ -7064,6 +7064,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get customerStatementPeriodNothing =>
+      'Nothing to state for this period: no balance and no movement.';
+
+  @override
   String customerStatementPeriodRange(String from, String to) {
     return 'From $from to $to';
   }
@@ -8376,6 +8380,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eInvoiceSubdivisionField => 'County or province (e.g. RO-B, MI)';
+
+  @override
+  String eInvoiceTestFieldLabel(String field) {
+    return '$field (test)';
+  }
+
+  @override
+  String get eInvoiceTestFieldsHelp =>
+      'Rehearsal keys for the test platform. They are kept apart from the production ones; a blank field keeps what is stored.';
+
+  @override
+  String get eInvoiceTestFieldsTitle => 'Test environment (UAT)';
 
   @override
   String get editorAddLevel => 'Add level';
@@ -19861,6 +19877,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberBadgesTooltip => 'Badges';
 
   @override
+  String memberBookingsNone(String date) {
+    return 'No booking since $date';
+  }
+
+  @override
   String get memberCoOwnerChip => 'Co-owner';
 
   @override
@@ -20000,6 +20021,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberNoteToAllAdmins => 'To all admins';
 
   @override
+  String get memberNotesWrite => 'Write a note';
+
+  @override
   String get memberNotifyAction => 'Send notification';
 
   @override
@@ -20093,9 +20117,43 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberPause => 'Pause membership';
 
   @override
+  String get memberPlanEstCredits => 'Confirmed credits';
+
+  @override
+  String get memberPlanEstOverage => 'Extra half-days';
+
+  @override
+  String get memberPlanEstSupplements => 'Supplements';
+
+  @override
+  String get memberPlanEstimate => 'Estimated next invoice';
+
+  @override
+  String memberPlanEstimateBasis(String period, String date) {
+    return 'For $period, as of $date: the statement so far';
+  }
+
+  @override
+  String get memberPlanEstimateUnavailable =>
+      'Unavailable: the statement could not be read';
+
+  @override
+  String get memberPlanJoined => 'Joining date';
+
+  @override
+  String get memberPlanJoinedUnknown => 'Not recorded';
+
+  @override
+  String get memberPlanPausedNoDates =>
+      'Paused: no dates are recorded for a pause';
+
+  @override
   String memberPlanShare(String pct) {
     return 'Plan $pct%';
   }
+
+  @override
+  String get memberPlanShareLabel => 'Share';
 
   @override
   String get memberReactivate => 'Reactivate membership';
@@ -20192,10 +20250,143 @@ class AppLocalizationsEn extends AppLocalizations {
   String get memberVatTreatmentLabel => 'VAT treatment';
 
   @override
+  String membersBulkPause(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return 'Pause $_temp0';
+  }
+
+  @override
+  String membersBulkPlan(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return 'Change the plan of $_temp0';
+  }
+
+  @override
+  String membersBulkResume(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return 'Resume $_temp0';
+  }
+
+  @override
+  String get membersChangeApply => 'Apply';
+
+  @override
+  String membersChangeDone(int changed, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      changed,
+      locale: localeName,
+      other: '$changed changed',
+      one: '1 changed',
+      zero: 'None changed',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count members',
+      one: '1 member',
+    );
+    return '$_temp0 out of $_temp1';
+  }
+
+  @override
+  String membersChangeFromToday(String date) {
+    return 'Applies from today, $date. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.';
+  }
+
+  @override
+  String get membersChipOpen => 'With an open amount';
+
+  @override
+  String get membersColEmail => 'E-mail';
+
+  @override
+  String get membersColLastVisit => 'Last visit';
+
+  @override
+  String get membersColName => 'Name';
+
+  @override
+  String get membersColPlan => 'Plan and share';
+
+  @override
+  String get membersColPlanFee => 'Plan fee';
+
+  @override
+  String get membersColStatus => 'Status';
+
+  @override
+  String get membersFeeUnavailable =>
+      'Unavailable: no fee band covers this share';
+
+  @override
   String get membersInvite => 'Invite a member';
 
   @override
+  String membersNoVisitSince(String date) {
+    return 'None since $date';
+  }
+
+  @override
+  String get membersOutcomeApplied => 'Changed';
+
+  @override
+  String get membersOutcomeExited => 'Has left the space: not changed';
+
+  @override
+  String get membersOutcomeFailed =>
+      'Not changed: the server refused or did not answer';
+
+  @override
+  String get membersOutcomeGone => 'No longer a member of the space';
+
+  @override
+  String get membersOutcomeKiosk => 'A kiosk, not a paying member: not changed';
+
+  @override
+  String get membersOutcomePending => 'Waiting to be accepted: not changed';
+
+  @override
+  String get membersOutcomeRuleRefused =>
+      'This share is not allowed for them: not changed';
+
+  @override
+  String get membersOutcomeUnchanged => 'Already so: nothing to change';
+
+  @override
+  String get membersOutcomeWrongStatus => 'Not paused: not resumed';
+
+  @override
   String get membersPlanNone => 'No plan';
+
+  @override
+  String get membersPlansTitle => 'Subscriptions and plans';
+
+  @override
+  String get membersTabBookings => 'Bookings';
+
+  @override
+  String get membersTabNotes => 'Notes';
+
+  @override
+  String get membersTabPlan => 'Plan';
+
+  @override
+  String get membersTabProfile => 'Profile';
 
   @override
   String get membersTitle => 'Members & plans';
@@ -22463,6 +22654,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planYourSeat => 'Your seat';
 
   @override
+  String get plansColIncluded => 'What is included';
+
+  @override
+  String get plansColMembers => 'Members on it';
+
+  @override
+  String get plansColPlan => 'Plan';
+
+  @override
   String get plansEditorEdit => 'Edit plan';
 
   @override
@@ -22492,6 +22692,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get plansEditorUnlimited => 'unlimited half-days';
+
+  @override
+  String get plansEmpty => 'No fee bands yet: set them in Pricing & packages.';
+
+  @override
+  String plansIncluded(String overage) {
+    return 'The member\'s share of the month\'s open half-days; an extra half-day costs $overage';
+  }
+
+  @override
+  String get plansNoMembers => 'No member is on this plan.';
+
+  @override
+  String plansShareRange(String from, String to) {
+    return '$from to $to';
+  }
+
+  @override
+  String get plansTitle => 'Plans';
 
   @override
   String get policyAdminCheckoutDesc =>

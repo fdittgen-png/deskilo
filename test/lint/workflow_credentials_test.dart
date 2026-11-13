@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 
+import 'lint_sources.dart';
+
 YamlMap _workflow(String name) =>
     loadYaml(File('.github/workflows/$name.yml').readAsStringSync()) as YamlMap;
 
@@ -95,6 +97,52 @@ void main() {
             as String;
     expect(run, contains('--public > doctor.txt'));
     expect(run, isNot(contains('2>&1')));
+  });
+
+  test('an unconfigured instance doctor cannot end a scheduled run green', () {
+    // #3871 -- run the gate step's own script with the secrets empty.
+    final run =
+        _step('instance-doctor', 'doctor', 'Are the secrets there')['run']
+            as String;
+    final dir = Directory.systemTemp.createTempSync('doctor_gate');
+    try {
+      ProcessResult gate(String event, {String token = '', String ref = ''}) {
+        File('${dir.path}/out').writeAsStringSync('');
+        File('${dir.path}/summary').writeAsStringSync('');
+        return Process.runSync(
+          'bash',
+          ['-c', run],
+          environment: {
+            'TOKEN': token,
+            'REF': ref,
+            'GITHUB_EVENT_NAME': event,
+            'GITHUB_OUTPUT': '${dir.path}/out',
+            'GITHUB_STEP_SUMMARY': '${dir.path}/summary',
+          },
+        );
+      }
+
+      final scheduled = gate('schedule');
+      expect(
+        scheduled.exitCode,
+        isNot(0),
+        reason: 'a schedule that examined nothing',
+      );
+      expect('${scheduled.stdout}', contains('::error::'));
+      // A manual run may still explain and stop.
+      final manual = gate('workflow_dispatch');
+      expect(manual.exitCode, 0);
+      expect(
+        File('${dir.path}/summary').readAsStringSync(),
+        contains('not configured'),
+      );
+      // Configured: ready, whatever the event.
+      final configured = gate('schedule', token: 't', ref: 'r');
+      expect(configured.exitCode, 0);
+      expect(File('${dir.path}/out').readAsStringSync(), contains('ready=true'));
+    } finally {
+      dir.deleteSync(recursive: true);
+    }
   });
 
   test('the Edge deployment CLI is the replay\'s: one pinned, cached install', () {
@@ -224,5 +272,74 @@ void main() {
     expect(job['permissions'], isNull);
     final checkout = _steps('workflow-security', 'audit').first;
     expect(_mapAt(checkout, 'with')['persist-credentials'], isFalse);
+  });
+
+  test('every Gradle build takes the digest-pinned Gradle, with a stated '
+      'dependency-cache policy', () {
+    // #3473 -- a cache inside a composite escapes the cache lint, so it is
+    // pinned here: what it may carry, and which job may save it.
+    final action = File('.github/actions/gradle-cache/action.yml')
+        .readAsStringSync();
+    final doc = loadYaml(action) as YamlMap;
+    final steps = ((doc['runs'] as YamlMap)['steps'] as YamlList).cast<YamlMap>();
+    final caches = steps.where((s) => '${s['uses']}'.startsWith('actions/cache'));
+    expect(caches, hasLength(3));
+    final paths = caches.map((s) => (s['with'] as YamlMap)['path']).toSet();
+    expect(paths, {
+      '~/.cache/deskilo-toolchain/gradle',
+      '~/.gradle/caches',
+    }, reason: 'the verified archive and the dependency cache, separate '
+        'entries; never a build tree');
+    for (final s in caches) {
+      final key = '${(s['with'] as YamlMap)['key']}';
+      expect(key, contains('runner.arch'));
+      expect(key, contains('gradle-wrapper.properties'));
+      expect(key, isNot(matches('head_ref|pull_request|run_id|run_number|run_attempt')));
+    }
+    expect(
+      steps.singleWhere((s) => s['name'].toString().startsWith('Verify the Gradle'))['run'],
+      contains('scripts/install_gradle.sh'),
+    );
+    // the policy per caller; every workflow that builds an apk or a bundle
+    const policy = {
+      'android-boot': "\${{ github.ref == 'refs/heads/master' && 'save' || 'restore' }}",
+      'dev-apk': 'none',
+      'fdroid-foss': 'restore',
+      'fdroid-release': 'none',
+      'play-internal': 'none',
+    };
+    for (final f in filesWithExtension('.github/workflows', '.yml')) {
+      final text = f.readAsStringSync();
+      if (!RegExp(r'flutter build (apk|appbundle)').hasMatch(text)) continue;
+      final stem = f.uri.pathSegments.last.replaceAll('.yml', '');
+      expect(policy.containsKey(stem), isTrue,
+          reason: '$stem builds with Gradle: give it a policy here');
+      final jobs = _workflow(stem)['jobs'] as YamlMap;
+      final uses = [
+        for (final j in jobs.values)
+          for (final s in ((j as YamlMap)['steps'] as YamlList).cast<YamlMap>())
+            if (s['uses'] == './.github/actions/gradle-cache') s,
+      ];
+      expect(uses, hasLength(1), reason: '$stem: one pinned Gradle step');
+      expect(_mapAt(uses.single, 'with')['dependencies'], policy[stem]);
+      // the action exists only in a ref that holds it: the step is guarded by
+      // an output set from the checked-out tree, and warns when it is absent
+      expect(uses.single['if'], 'steps.gradle_pin.outputs.present == \'true\'');
+      final all = [
+        for (final j in jobs.values)
+          for (final st in ((j as YamlMap)['steps'] as YamlList).cast<YamlMap>()) st,
+      ];
+      final probe = all.singleWhere((st) => st['id'] == 'gradle_pin');
+      expect(all.indexOf(probe), lessThan(all.indexOf(uses.single)));
+      expect('${probe['run']}', contains('.github/actions/gradle-cache/action.yml'));
+      expect('${probe['run']}', contains('::warning::'));
+    }
+    // no workflow whose output is installed or signed restores dependency state
+    for (final stem in ['dev-apk', 'play-internal', 'fdroid-release']) {
+      expect(policy[stem], 'none');
+    }
+    expect(action, isNot(contains('steps.pin.')),
+        reason: 'the composite has no fallback of its own: it cannot run in '
+            'a ref that lacks it');
   });
 }

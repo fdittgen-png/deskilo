@@ -219,6 +219,7 @@ class _PurchasesTable extends StatelessWidget {
         RecordColumn(
           id: 'category',
           label: l.servicesCategory,
+          staysBeside: false,
           flex: 3,
           sortKey: (r) => r.doc.category.toLowerCase(),
           cell: (_, r) => Text(r.doc.category, overflow: TextOverflow.ellipsis),
@@ -226,6 +227,7 @@ class _PurchasesTable extends StatelessWidget {
         RecordColumn(
           id: 'number',
           label: l.invoiceRegisterNumber,
+          staysBeside: false,
           flex: 3,
           cell: (_, r) => Text(
             r.doc.reference.isEmpty
@@ -238,6 +240,7 @@ class _PurchasesTable extends StatelessWidget {
           RecordColumn(
             id: 'net',
             label: l.purchaseOrderSummaryNet,
+            staysBeside: false,
             numeric: true,
             flex: 3,
             cell: (_, r) => Text(figure(r, r.doc.netCents)),
@@ -246,6 +249,7 @@ class _PurchasesTable extends StatelessWidget {
           RecordColumn(
             id: 'vat',
             label: l.vatTitle,
+            staysBeside: false,
             numeric: true,
             flex: 3,
             cell: (_, r) => Text(figure(r, r.doc.taxCents)),
@@ -269,6 +273,7 @@ class _PurchasesTable extends StatelessWidget {
         RecordColumn(
           id: 'receipt',
           label: l.purchasesReceiptColumn,
+          staysBeside: false,
           flex: 3,
           cell: (_, r) => r.doc.receipts == 0
               ? const SizedBox.shrink()

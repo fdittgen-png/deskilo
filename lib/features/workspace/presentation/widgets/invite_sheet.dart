@@ -10,6 +10,7 @@ import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -90,15 +91,22 @@ String buildInvitationMessage({
 
 /// Opens the invite sheet for the current invite tab (member or admin).
 /// Every send mints its own personal, single-use invitation code (#319)
-/// — the workspace ID is never what an invitation carries.
+/// — the workspace ID is never what an invitation carries. [asTask]
+/// (#3618): the same form as a short task, a dialog at the desk.
 Future<void> showInviteSheet(
   BuildContext context, {
   required Workspace workspace,
   required InviteRole role,
   String? memberId,
   PersonalInfo? identity,
-}) =>
-    showAppSheet<void>(
+  bool asTask = false,
+}) => asTask
+    ? showTask<void>(
+        context,
+        size: TaskSize.short,
+        builder: (_) => _InviteSheet(workspace: workspace, role: role),
+      )
+    : showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _InviteSheet(

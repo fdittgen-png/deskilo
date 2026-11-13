@@ -360,17 +360,16 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   }
   final report = renderReportBands(bands: bands, data: withOwnerTexts(reportData, template.texts));
   final reportImages = await reportImagesOf(report, options.reportImage);
-  final association = InvoiceLegal.fromJson(
-    workspace?.invoiceLegal ?? const {},
-  ).isAssociation;
+  final association =
+      InvoiceLegal.fromJson(workspace?.invoiceLegal ?? const {}).isAssociation;
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
     addressWindow: invoiceAddressWindowOf(options, features),
     invoice: invoice,
     reportImages: reportImages,
-    lineText: (line) => invoiceLineText(words, line,
-        association: association, period: invoice.period),
+    lineText: (line) => invoiceLineTextFor(words, invoice, line,
+        liveAssociation: association),
     activityText: (entry) => annexEntryText(words, entry),
     strings: strings,
     money: moneyFormat(invoice.currency, locale: formatLocale).formatMinor,
@@ -411,8 +410,8 @@ String facturXmlOf(
     seller: seller,
     buyer: buyer,
     iban: iban,
-    lineText: (line) => invoiceLineText(words, line,
-        association: association, period: invoice.period),
+    lineText: (line) => invoiceLineTextFor(words, invoice, line,
+        liveAssociation: association),
     // #941 — the same due date and terms the PDF prints.
     dueDate: invoiceDueAt(ref, invoice),
     // #1916 — an issued invoice states the terms frozen with it.

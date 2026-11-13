@@ -11,6 +11,8 @@ import 'dart:ui' as ui;
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
+import 'package:deskilo/core/ui/kit/list_detail_scaffold.dart';
+import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -40,14 +42,33 @@ bool _isFilled(Element element) {
 int visibleFilledButtons() =>
     find.byType(FilledButton).hitTestable().evaluate().where(_isFilled).length;
 
+/// #3860 — a switch, a checkbox or a radio inside a tile that is itself the
+/// tap target (a SwitchListTile: the whole row toggles, and the tile carries
+/// the name) is measured by the tile. Flutter keeps the control's own node as
+/// a child of the tile's, 60 x 40, unnamed; it is the same action as the
+/// tile's, not a second target.
+bool _stateControl(SemanticsData data) =>
+    data.flagsCollection.isToggled != ui.Tristate.none ||
+    data.flagsCollection.isChecked != ui.CheckedState.none;
+
+/// Whether [data] with [size] is a tile that can stand for the controls in it:
+/// tappable, named, and at least 48 x 48 itself.
+bool _tileTarget(SemanticsData data, Size size) =>
+    data.hasAction(SemanticsAction.tap) &&
+    data.label.trim().isNotEmpty &&
+    size.width >= 48 - 0.5 &&
+    size.height >= 48 - 0.5;
+
 /// Every tappable semantics node with its size and whether it is named.
 List<({Size size, bool named})> tappableNodes(WidgetTester tester) {
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
   final out = <({Size size, bool named})>[];
-  void walk(SemanticsNode node) {
+  void walk(SemanticsNode node, {bool inTile = false}) {
     final data = node.getSemanticsData();
+    final inside = inTile || _tileTarget(data, node.rect.size);
     if (data.hasAction(SemanticsAction.tap) &&
+        !(inTile && _stateControl(data)) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible) {
       out.add((
@@ -59,7 +80,7 @@ List<({Size size, bool named})> tappableNodes(WidgetTester tester) {
       ));
     }
     node.visitChildren((child) {
-      walk(child);
+      walk(child, inTile: inside);
       return true;
     });
   }
@@ -176,7 +197,13 @@ const List<Size> deskGuardSizes = [
 
 /// What a page is, for the rules that depend on it (the four page kinds of
 /// the desk epic).
-enum PageKind { records, task, dashboard, document }
+///
+/// [recordBesideTable] (#3860): a record open in the pane beside its table.
+/// The table keeps its row height and cuts no word; the pane has the reading
+/// measure; together they fill the work area. The 60 % share is for
+/// [records], a table alone: a table beside a record cannot and should not
+/// take it.
+enum PageKind { records, task, dashboard, document, recordBesideTable }
 
 /// Who a target is measured for. At the desk a table ROW may be 36 px high,
 /// because every row action is also reached by the keyboard and the row
@@ -313,6 +340,9 @@ Set<String> deskGuardProblems(
       note('table ${widest.toInt()} of ${size.width.toInt()}');
     }
   }
+  if (kind == PageKind.recordBesideTable) {
+    problems.addAll(besideTableProblems(tester, details: details));
+  }
   // Targets: hit regions, by the policy.
   // A control a list has scrolled half out of view is cut at the list's
   // edge: it is measured where it is whole, not here.
@@ -341,6 +371,58 @@ Set<String> deskGuardProblems(
       note('target ${node.rect.size} at ${node.rect.topLeft}: ${node.label}');
     }
     if (!node.named) problems.add('unnamed control');
+  }
+  return problems;
+}
+
+// ---------------------------------------------------------------------------
+// #3860 — a record open beside its table.
+// ---------------------------------------------------------------------------
+
+/// The widest a record pane may be: the reading measure of its body.
+const double besidePaneMaxWidth = 640;
+
+/// The narrowest the table beside a record may be.
+const double besideTableMinWidth = 400;
+
+/// What a record beside its table breaks: no record open beside it, a list
+/// narrower than [besideTableMinWidth], a pane wider than
+/// [besidePaneMaxWidth], or the two not filling the work area (a gap or an
+/// overlap between the table, the grip and the pane).
+Set<String> besideTableProblems(WidgetTester tester, {List<String>? details}) {
+  final problems = <String>{};
+  final list = find.byKey(const ValueKey('list-detail-list'));
+  final pane = find.byKey(const ValueKey('list-detail-pane'));
+  final area = find.byType(ListDetailScaffold);
+  if (list.evaluate().isEmpty ||
+      pane.evaluate().isEmpty ||
+      area.evaluate().isEmpty) {
+    return {'no record beside the table'};
+  }
+  Rect rect(Finder f) {
+    final box = f.evaluate().first.renderObject! as RenderBox;
+    return box.localToGlobal(Offset.zero) & box.size;
+  }
+
+  final l = rect(list);
+  final p = rect(pane);
+  final a = rect(area);
+  if (l.width < besideTableMinWidth - 0.5) {
+    problems.add('table beside a record under ${besideTableMinWidth.toInt()}');
+    details?.add('table ${l.width.toInt()}');
+  }
+  if (p.width > besidePaneMaxWidth + 0.5) {
+    problems.add('pane wider than ${besidePaneMaxWidth.toInt()}');
+    details?.add('pane ${p.width.toInt()}');
+  }
+  // The list, the grip and the pane are the work area: no gap, no overlap.
+  final grip = find.byKey(const ValueKey('list-detail-grip'));
+  final gripWidth = grip.evaluate().isEmpty ? 0.0 : rect(grip).width;
+  final filled = l.width + gripWidth + p.width;
+  if ((filled - a.width).abs() > 1 || (l.left - a.left).abs() > 1) {
+    problems.add('table and pane do not fill the work area');
+    details?.add('table ${l.width} + grip $gripWidth + pane ${p.width} of '
+        '${a.width}');
   }
   return problems;
 }
@@ -421,12 +503,19 @@ List<({Rect rect, bool named, String label})> tappableRects(WidgetTester tester)
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
   final out = <({Rect rect, bool named, String label})>[];
-  void walk(SemanticsNode node, Matrix4 parent) {
+  void walk(SemanticsNode node, Matrix4 parent, {bool inTile = false}) {
     final transform = node.transform == null
         ? parent
         : (parent.clone()..multiply(node.transform!));
     final data = node.getSemanticsData();
+    final inside =
+        inTile ||
+        _tileTarget(
+          data,
+          MatrixUtils.transformRect(transform, node.rect).size,
+        );
     if (data.hasAction(SemanticsAction.tap) &&
+        !(inTile && _stateControl(data)) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible) {
       out.add((
@@ -439,7 +528,7 @@ List<({Rect rect, bool named, String label})> tappableRects(WidgetTester tester)
       ));
     }
     node.visitChildren((child) {
-      walk(child, transform);
+      walk(child, transform, inTile: inside);
       return true;
     });
   }
@@ -464,9 +553,18 @@ List<FocusNode> _focusables({
         n is! FocusScopeNode &&
         // A container whose controls are inside it is not one itself.
         !n.descendants.any((d) => d.canRequestFocus) &&
+        // #3891 — a read-only selectable text is skipped by Tab by design
+        // (Flutter's own); a person selects it with the pointer.
+        (tabStops || !_isReadOnlyText(n)) &&
         _onScreen(n))
       n,
 ];
+
+bool _isReadOnlyText(FocusNode n) {
+  final editable = n.context
+      ?.findAncestorWidgetOfExactType<EditableText>();
+  return editable != null && editable.readOnly;
+}
 
 bool _onScreen(FocusNode n) {
   final box = n.context!.findRenderObject();
@@ -521,6 +619,45 @@ Future<Set<String>> keyboardProblems(
   }
   if (skipped.difference(byArrow).isNotEmpty) {
     problems.add('unreachable by any key');
+  }
+  problems.addAll(await _tableRowsProblems(tester, seen));
+  return problems;
+}
+
+/// #3891 — a records table is one Tab stop and the arrows walk its rows,
+/// however many and however lazily built: from that stop the arrows reach
+/// the last row, and the row they stand on is on screen each time.
+Future<Set<String>> _tableRowsProblems(
+  WidgetTester tester,
+  List<FocusNode> stops,
+) async {
+  final problems = <String>{};
+  final window =
+      Offset.zero & (tester.view.physicalSize / tester.view.devicePixelRatio);
+  final rowsFinder = find.byWidgetPredicate((w) => w is RecordRow && w.focused);
+  for (final stop in stops) {
+    final c = stop.context;
+    if (c == null || !c.mounted) continue;
+    if (c.widget.key != const ValueKey('records-rows')) continue;
+    stop.requestFocus();
+    await tester.pump();
+    Key? last;
+    for (var i = 0; i < 1000; i++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+      await tester.pump();
+      final row = rowsFinder.evaluate().firstOrNull;
+      if (row == null) {
+        problems.add('the row the arrows stand on is not built');
+        break;
+      }
+      final rect = tester.getRect(rowsFinder.first);
+      if (rect.intersect(window).height < rect.height - 0.5) {
+        problems.add('the row the arrows stand on is off screen');
+        break;
+      }
+      if (row.widget.key == last) break; // the last row
+      last = row.widget.key;
+    }
   }
   return problems;
 }

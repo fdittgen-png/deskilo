@@ -253,4 +253,4 @@ final class FinanceNowProvider
   }
 }
 
-String _$financeNowHash() => r'e4cd9f5fb8a32d2cf27ac36e37706198dd124033';
+String _$financeNowHash() => r'19bcdbd0276a1415f2f8802aae126461d6400843';

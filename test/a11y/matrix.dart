@@ -17,6 +17,7 @@
 // scoped and did not deliver.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
 import '../helpers/screens/calendar_hub.dart' as calendar;
@@ -198,7 +199,12 @@ final List<MatrixRow> kMatrix = [
   // viewport. The redesigned settings distinguish personal and workspace
   // tasks; both scopes and the reports destination need their own row.
   MatrixRow('Members',
-      pump: (t, size) async { await pumpMembers(t, size: size); }, axes: _all),
+      pump: (t, size) async {
+        // A records table reads its saved columns from the preferences.
+        SharedPreferences.setMockInitialValues({});
+        await pumpMembers(t, size: size);
+      },
+      axes: _all),
   MatrixRow('Settings',
       pump: (t, size) => pumpSettingsAs(t, isAdmin: true, isOwner: true, size: size), axes: _all),
   MatrixRow('Workspace administration',

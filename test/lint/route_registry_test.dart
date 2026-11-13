@@ -35,11 +35,15 @@ const Map<String, String> _structural = {
   '/workspace-settings': 'the identity every money and date rule reads',
   '/reports': 'its documents section is part of workspace settings (#2301)',
   '/members': 'admission and roles cannot be managed without it',
+  '/members/:id': 'one member of /members, beside its table (#3618)',
   '/validation': 'admission and every pending request run through it',
   '/settings/assistants':
       'narrows assistant exposure; not behind mcpAccess (#1826)',
   '/settings/assistant-setup':
       'turns assistants on; not behind mcpAccess (#1827)',
+  '/settings/public-page':
+      'owner only: withdrawing the page switches publicListings off, and '
+      'its editor is where the next publication is prepared (#3870)',
 };
 
 /// The structural routes a deep link never stays on: the alias resolves

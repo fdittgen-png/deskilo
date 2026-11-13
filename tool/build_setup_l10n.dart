@@ -30,6 +30,7 @@ import 'dart:io';
 import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/locale/report_language.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/setup_obligations.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -411,7 +412,9 @@ TaxReferenceSet _bundledTaxReference() => TaxReferenceSet.parse(
 ///  * `domains`, `domainGates`, `domainEventTypes` — [setupValidationDomains];
 ///  * `invoicingCountries` — the catalogue countries the bundled reference
 ///    lets the app issue for (the same `issuesFor` `legalProfileOf` asks);
-///  * `countries` — [CountryCatalog]: code, currency, time zone, scheme.
+///  * `countries` — [CountryCatalog]: code, currency, time zone, scheme;
+///  * `reminders` — [DunningRules.defaults] (#3888): what an owner who never
+///    opens the reminders step starts with, the app's and the server's.
 Map<String, Object?> setupRegistryData() {
   final defaults = defaultFeatureFlagsForNewWorkspace();
   final permissions = [for (final p in WorkspacePermission.values) p.wireName];
@@ -460,6 +463,12 @@ Map<String, Object?> setupRegistryData() {
       for (final c in CountryCatalog.countries)
         [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
     ],
+    'reminders': {
+      'levels': DunningRules.defaults.levels,
+      'firstDays': DunningRules.defaults.firstAfterDays,
+      'betweenDays': DunningRules.defaults.betweenDays,
+      'automatic': DunningRules.defaults.automatic,
+    },
   };
 }
 

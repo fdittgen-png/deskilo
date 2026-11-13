@@ -47,6 +47,8 @@ import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_second_space.dart';
+import 'demo_space_pick.dart';
+import 'demo_space_stores.dart';
 import 'demo_trade_city_space.dart';
 import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
@@ -341,6 +343,12 @@ class DemoFixture {
 
   /// #3302 — the main space's development twin, with stores of its own.
   final DemoTwinData twin;
+
+  /// #3865 — what each space keeps for the whole session (purchases,
+  /// suppliers, bank, books, lease, register, rooms): built when first read,
+  /// once, so a switch of persona reaches the same stores and a Reset (a new
+  /// fixture) the seeded ones.
+  late final DemoSpaces<DemoSpaceStores> stores = buildDemoSpaceStores(this);
 
   /// Who the session is currently acting as (#1565).
   String get activeMemberId => actor.memberId;
