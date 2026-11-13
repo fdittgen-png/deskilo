@@ -20,6 +20,7 @@ import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/navigation/navigation_style.dart';
+import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/privacy/recording_banner.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';

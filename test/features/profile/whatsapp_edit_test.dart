@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // The WhatsApp editor on the settings surface (#223): entering a number
-// pins the normalization rule (+ + digits) on the exact repository call
-// the UI makes; emptying the field clears the share again.
+// pins what the repository receives (#3650: the validated international
+// form, and what was typed beside it); emptying the field clears the share
+// again; a number that cannot be validated is refused in words, and one
+// stored before numbers were checked asks to be confirmed.
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -44,7 +47,7 @@ void main() {
     await tester.tap(find.text('WhatsApp'));
     await tester.pumpAndSettle();
     await tester.enterText(
-      find.byType(TextField),
+      find.byKey(const ValueKey('whatsapp-number')),
       '+33 6 12-34 56 78',
     );
     await tester.tap(find.text('Save'));
@@ -53,7 +56,7 @@ void main() {
     // Normalization pinned on the exact value the repository received.
     expect(profile.profiles.single.whatsapp, '+33612345678');
     // The tile now shows the shared number; save is confirmed.
-    expect(find.text('+33612345678'), findsOneWidget);
+    expect(find.text('+33 6 12 34 56 78'), findsOneWidget);
     expect(find.text('Not shared'), findsNothing);
     expect(find.text('WhatsApp number saved'), findsOneWidget);
   });
@@ -69,16 +72,16 @@ void main() {
     ]);
     await pumpSettings(tester, profile);
 
-    expect(find.text('+33612345678'), findsOneWidget);
+    expect(find.text('+33 6 12 34 56 78'), findsOneWidget);
 
     await tester.tap(find.text('WhatsApp'));
     await tester.pumpAndSettle();
     // The dialog prefills the current number.
     expect(
-      tester.widget<TextField>(find.byType(TextField)).controller?.text,
+      tester.widget<TextField>(find.byKey(const ValueKey('whatsapp-number'))).controller?.text,
       '+33612345678',
     );
-    await tester.enterText(find.byType(TextField), '');
+    await tester.enterText(find.byKey(const ValueKey('whatsapp-number')), '');
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
@@ -93,7 +96,7 @@ void main() {
 
     await tester.tap(find.text('WhatsApp'));
     await tester.pumpAndSettle();
-    await tester.enterText(find.byType(TextField), '+33612345678');
+    await tester.enterText(find.byKey(const ValueKey('whatsapp-number')), '+33612345678');
     await tester.tap(find.text('Save'));
     await tester.pumpAndSettle();
 
@@ -101,6 +104,46 @@ void main() {
       find.text('Could not save the WhatsApp number'),
       findsOneWidget,
     );
-    expect(find.byType(TextField), findsOneWidget);
+    expect(find.byKey(const ValueKey('whatsapp-number')), findsOneWidget);
+  });
+
+  testWidgets('a national number is read in the owner\'s country and kept as typed',
+      (tester) async {
+    final profile = FakeProfileRepository();
+    profile.profiles[0] = profile.profiles[0].copyWith(
+      identity: const PersonalInfo(countryCode: 'FR'),
+    );
+    await pumpSettings(tester, profile);
+    await tester.tap(find.text('WhatsApp'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('whatsapp-number')), '06 12 34 56 78');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(profile.profiles.single.whatsapp, '+33612345678');
+    expect(profile.profiles.single.whatsappTyped, '06 12 34 56 78');
+  });
+
+  testWidgets('a number that cannot be validated is refused in words, not saved',
+      (tester) async {
+    final profile = FakeProfileRepository();
+    await pumpSettings(tester, profile);
+    await tester.tap(find.text('WhatsApp'));
+    await tester.pumpAndSettle();
+    await tester.enterText(find.byKey(const ValueKey('whatsapp-number')), '06 12 34 56 78');
+    await tester.tap(find.text('Save'));
+    await tester.pumpAndSettle();
+    expect(find.text('Choose the country of this number, or type it with its + code.'), findsOneWidget);
+    expect(profile.profiles.single.whatsapp, '');
+  });
+
+  testWidgets('a number stored before numbers were checked asks to be confirmed',
+      (tester) async {
+    final profile = FakeProfileRepository();
+    profile.profiles[0] = profile.profiles[0].copyWith(whatsapp: '+0612345678');
+    await pumpSettings(tester, profile);
+    await tester.tap(find.text('WhatsApp'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('whatsapp-needs-correction')), findsOneWidget);
+    expect(find.text('+0612345678'), findsWidgets);
   });
 }

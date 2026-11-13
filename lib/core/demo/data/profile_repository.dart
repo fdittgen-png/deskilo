@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:deskilo/core/i18n/format_prefs.dart';
+import 'package:deskilo/core/phone/phone_entry.dart';
 import 'package:deskilo/core/privacy/privacy_policy.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
 import 'package:deskilo/features/profile/domain/privacy_notice.dart';
@@ -357,10 +358,16 @@ class FakeProfileRepository implements ProfileRepository {
   }
 
   @override
-  Future<void> updateWhatsapp(String whatsapp) async {
+  Future<void> updateWhatsapp(PhoneEntry number) async {
     if (failing) throw StateError('updateWhatsapp failing (test)');
+    if (!number.isEmpty && !number.isValidated) {
+      throw StateError('a WhatsApp number is saved validated or not at all');
+    }
     final mine = _mine ?? Profile(id: myUserId);
-    _replaceMine(mine.copyWith(whatsapp: whatsapp));
+    _replaceMine(mine.withWhatsapp(
+      whatsapp: number.e164 ?? '',
+      typed: number.isEmpty ? '' : number.typed.trim(),
+    ));
   }
 
 

@@ -22224,6 +22224,29 @@ class AppLocalizationsIt extends AppLocalizations {
   String get personalInfoVatId => 'Partita IVA (facoltativo)';
 
   @override
+  String get phoneCountryLabel => 'Paese del numero';
+
+  @override
+  String get phoneExtensionNoMessage =>
+      'Un numero con interno non può ricevere messaggi: togli l\'interno.';
+
+  @override
+  String get phoneNeedsCorrection =>
+      'Questo numero è stato salvato prima del controllo dei numeri: confermalo o correggilo e riaprirà chiamate e messaggi.';
+
+  @override
+  String get phoneNoCountry =>
+      'Scegli il paese di questo numero o scrivilo con il suo prefisso +.';
+
+  @override
+  String get phoneNotANumber =>
+      'Scrivi solo cifre, con un interno alla fine se c\'è.';
+
+  @override
+  String get phoneNotValidForCountry =>
+      'Questo non può essere un numero di telefono del paese scelto.';
+
+  @override
   String placeFeedbackAverage(String average, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

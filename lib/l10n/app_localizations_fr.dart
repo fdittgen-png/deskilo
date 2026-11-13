@@ -22297,6 +22297,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get personalInfoVatId => 'N° de TVA (facultatif)';
 
   @override
+  String get phoneCountryLabel => 'Pays du numéro';
+
+  @override
+  String get phoneExtensionNoMessage =>
+      'Un numéro avec un poste ne peut pas recevoir de messages : retirez le poste.';
+
+  @override
+  String get phoneNeedsCorrection =>
+      'Ce numéro a été enregistré avant la vérification des numéros : confirmez-le ou corrigez-le, et il ouvrira de nouveau appels et messages.';
+
+  @override
+  String get phoneNoCountry =>
+      'Choisissez le pays de ce numéro, ou saisissez-le avec son indicatif +.';
+
+  @override
+  String get phoneNotANumber =>
+      'Saisissez uniquement des chiffres, avec un poste à la fin s\'il y en a un.';
+
+  @override
+  String get phoneNotValidForCountry =>
+      'Ce ne peut pas être un numéro de téléphone du pays choisi.';
+
+  @override
   String placeFeedbackAverage(String average, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
