@@ -44,3 +44,10 @@ Deno.test("a charged-back or refunded payment is a reversal; an untouched one is
   assertEquals(reversalOf(payment({ amountRefunded: { value: "0.00", currency: "EUR" } })), null);
   assertEquals(reversalOf(payment()), null);
 });
+
+Deno.test("with test payments on, a test-mode payment under a test key is the intent's", () => {
+  assertEquals(mismatch(intent, payment({ mode: "test" }), "test_abc", true), null);
+  assertEquals(mismatch(intent, payment(), "live_abc", true), null);
+  assertEquals(mismatch(intent, payment(), "test_abc", true), "mode");
+  assertEquals(mismatch(intent, payment({ mode: "test" }), "live_abc", true), "mode");
+});

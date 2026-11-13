@@ -6,7 +6,7 @@
 // ours, an event no workspace signed and a test-mode event record nothing and
 // are acknowledged; a transient read failure asks for a redelivery.
 import { assertEquals } from "jsr:@std/assert@1";
-import { handleReversal, isReversalEvent } from "./reversal.ts";
+import { handleReversal, ignoresTestEvent, isReversalEvent } from "./reversal.ts";
 
 const SECRET = "whsec_ws1";
 
@@ -160,4 +160,18 @@ Deno.test("a transient session read failure asks for a redelivery", async () => 
   const fake = fakeAdmin();
   assertEquals((await run(fake, dispute(), sessions([], 503) as unknown as typeof fetch)).status, 500);
   assertEquals(fake.calls, []);
+});
+
+Deno.test("with test payments on, a test-mode reversal is recorded", async () => {
+  const fake = fakeAdmin();
+  const on = { DESKILO_ALLOW_TEST_PAYMENTS: "true" };
+  const res = await run(fake, dispute({ livemode: false }), sessions(["cs_1"]) as unknown as typeof fetch, SECRET, on);
+  assertEquals(res.status, 200);
+  assertEquals(fake.calls.length, 1);
+});
+
+Deno.test("a test-mode event is ignored only while test payments are off", () => {
+  assertEquals(ignoresTestEvent({ livemode: false }, () => undefined), true);
+  assertEquals(ignoresTestEvent({ livemode: false }, (n) => n === "DESKILO_ALLOW_TEST_PAYMENTS" ? "true" : undefined), false);
+  assertEquals(ignoresTestEvent({ livemode: true }, () => undefined), false);
 });

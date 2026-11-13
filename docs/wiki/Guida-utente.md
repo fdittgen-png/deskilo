@@ -4780,6 +4780,8 @@ Le chiavi provengono dalla dashboard del fornitore: **Client ID**, **Secret**, *
 
 Uno spazio di produzione incassa solo con chiavi reali: con chiavi di prova, il pagamento online di un membro viene rifiutato. Per Stripe, l'endpoint del webhook ascolta anche **charge.dispute.created** e **charge.refunded**: un pagamento che il fornitore storna (un rimborso o una contestazione) viene allora segnato come stornato, e lei corregge il saldo del membro.
 
+Un'installazione che si limita a provare i pagamenti può impostare `DESKILO_ALLOW_TEST_PAYMENTS=true` nell'ambiente delle sue funzioni: gli ordini si aprono allora con chiavi di prova e gli eventi in modalità di prova vengono elaborati; non deve mai essere impostato su un'installazione che incassa pagamenti reali.
+
 I segreti sono conservati sul server e non vengono mai più mostrati. Un segreto salvato riporta **Impostato — lasci vuoto per mantenere**; digiti un nuovo valore per sostituirlo.
 
 <!-- anchor: user.money.expenses.schedule -->

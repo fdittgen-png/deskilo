@@ -4562,6 +4562,8 @@ Las claves proceden del propio panel del proveedor: **Client ID**, **Secreto**, 
 
 Un espacio de producción cobra solo con claves reales: con claves de prueba, el pago en línea de un miembro se rechaza. Para Stripe, el punto de conexión del webhook también escucha **charge.dispute.created** y **charge.refunded**: un pago que el proveedor revierte (un reembolso o una disputa) queda marcado como revertido, y usted corrige el saldo del miembro.
 
+Una instalación que solo ensaya los pagos puede definir `DESKILO_ALLOW_TEST_PAYMENTS=true` en el entorno de sus funciones: los pedidos se abren entonces con claves de prueba y se procesan los eventos en modo de prueba; nunca debe definirse en una instalación que cobra pagos reales.
+
 Los secretos se guardan en el servidor y no vuelven a mostrarse. Uno ya guardado dice **Definido — déjelo en blanco para conservarlo**; escriba un valor nuevo para sustituirlo.
 
 ### Gastos programados

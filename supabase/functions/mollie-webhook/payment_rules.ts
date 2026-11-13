@@ -6,7 +6,8 @@
 // #1639 -- the fetched payment must be the intent's: its metadata reference,
 // its currency and amount, the method the intent was opened for (a Wero intent
 // settles only a Wero payment). #3905 -- and a live payment under a live key:
-// a test-mode payment never credits a ledger.
+// a test-mode payment never credits a ledger, unless the installation takes
+// test payments; then the payment's mode is the key's.
 //
 // #3905 -- a paid payment Mollie shows charged back or refunded is reversed:
 // recorded on its online payment, never settled.
@@ -27,6 +28,7 @@ export function mismatch(
   intent: Intent,
   payment: Record<string, unknown>,
   key: string,
+  allowTest = false,
 ): string | null {
   const metadata = (payment.metadata ?? {}) as Record<string, unknown>;
   if (metadata.reference !== intent.reference) return "reference";
@@ -36,7 +38,8 @@ export function mismatch(
   const cents = toMinor(amount.value as string | undefined, currency);
   if (cents === null || cents !== intent.amount_cents) return "amount";
   if (intent.provider === "wero" && payment.method !== "wero") return "method";
-  if (mollieKeyMode(key) !== "live" || payment.mode !== "live") return "mode";
+  const mode = mollieKeyMode(key);
+  if (allowTest ? payment.mode !== mode : mode !== "live" || payment.mode !== "live") return "mode";
   return null;
 }
 
