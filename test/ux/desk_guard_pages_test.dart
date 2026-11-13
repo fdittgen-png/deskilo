@@ -236,7 +236,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 17;
+const _guardedWorkspaceRoutes = 19;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
