@@ -10,7 +10,7 @@
 -- step command itself still refuses a delegated token: only the confirmed
 -- operation acknowledges for an assistant.
 begin;
-select plan(34);
+select plan(39);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -193,6 +193,38 @@ select is(current_setting('t.k4')::jsonb->'data'->>'state', 'ready', 'and reads 
 -- A member.
 select is(current_setting('t.m1')::jsonb->'error'->>'code', 'forbidden', 'a member does not read the setup status');
 select is(current_setting('t.m2')::jsonb->'error'->>'code', 'forbidden', 'nor changes the levels');
+
+-- #3886: the levels follow the country, as the app reads them. A feature
+-- the country does not offer neither holds a level back nor is planned.
+reset role;
+create function pg_temp.tax_flags(p_country text, p_level text) returns jsonb language sql as $$
+  select '{"recapitulativeStatement": false, "mtdSubmission": false}'::jsonb
+         || coalesce(jsonb_object_agg(f, true), '{}'::jsonb)
+    from jsonb_array_elements(public.setup_level_catalogue()->'processes') p,
+         jsonb_array_elements(p->'levels') with ordinality y(l, o),
+         jsonb_array_elements_text(l->'features') f
+   where p->>'process' = 'tax'
+     and o <= (select z.o from jsonb_array_elements(p->'levels') with ordinality z(l, o) where z.l->>'level' = p_level)
+     and public.feature_available_in(p_country, f);
+$$;
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, environment, feature_flags)
+select ('00000000-0000-4000-8000-0000003886b' || n)::uuid, 'Levels ' || c, c, cur, tz,
+       '00000000-0000-4000-8000-0000002873a1', 'dev', pg_temp.tax_flags(c, lvl)
+  from (values ('1', 'US', 'USD', 'America/New_York', 'vat'), ('2', 'FR', 'EUR', 'Europe/Paris', 'books'),
+               ('3', 'FR', 'EUR', 'Europe/Paris', 'vat'), ('4', 'US', 'USD', 'America/New_York', 'none'))
+       v(n, c, cur, tz, lvl);
+select ok(public.setup_levels_plan('00000000-0000-4000-8000-0000003886b1', '{}')->'current' @> '[{"process": "tax", "level": "vat"}]',
+  'a United States business at VAT by the app''s rule reads VAT');
+select ok(public.setup_levels_plan('00000000-0000-4000-8000-0000003886b2', '{}')->'current' @> '[{"process": "tax", "level": "books"}]',
+  'a French business at books by the app''s rule reads books');
+select ok(not (public.setup_levels_plan('00000000-0000-4000-8000-0000003886b3', '{"tax": "books"}')->'switch_on' ? 'mtdSubmission')
+          and public.setup_levels_plan('00000000-0000-4000-8000-0000003886b3', '{"tax": "books"}')->'switch_on' ? 'accountingBook',
+  'a plan to books in France switches the books on and not MTD submission');
+select ok(not (public.setup_levels_plan('00000000-0000-4000-8000-0000003886b1', '{"tax": "books"}')->'switch_on' ? 'mtdSubmission'),
+  'nor in the United States');
+select ok(not (public.setup_levels_plan('00000000-0000-4000-8000-0000003886b4', '{"tax": "vat"}')->'switch_on' ? 'recapitulativeStatement')
+          and public.setup_levels_plan('00000000-0000-4000-8000-0000003886b4', '{"tax": "vat"}')->'switch_on' ? 'vatManagement',
+  'a plan to VAT in the United States switches VAT on and not the recapitulative statement');
 
 select * from finish();
 rollback;
