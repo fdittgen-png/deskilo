@@ -32,9 +32,13 @@ function world(
   const vault: Record<string, string> = {};
   let leaseHolder = "";
   let state: Record<string, unknown> = { status: "pending" };
+  let manages = true;
   const answer = (as: string) => ({
     rpc: (fn: string, args: Record<string, unknown>) => {
       calls.push({ as, fn, args });
+      if (!manages && fn.endsWith("_manageable_v1")) {
+        return Promise.resolve({ data: null, error: { code: "42501" } });
+      }
       if (
         fn === "open_accounting_connection_v1" ||
         fn === "accounting_connection_manageable_v1" ||
@@ -117,6 +121,7 @@ function world(
         [`ACCOUNTING_${target.toUpperCase()}_CLIENT_ID`]: "app-id",
         [`ACCOUNTING_${target.toUpperCase()}_CLIENT_SECRET`]: "app-secret",
         HMRC_ENVIRONMENT: "sandbox",
+        DESKILO_APP_URL: "https://app.test/deskilo/",
       } as Record<string, string>)[name],
     redirectUri: "https://x.test/functions/v1/accounting-connect",
     fetcher:
@@ -139,7 +144,16 @@ function world(
         )) as typeof fetch,
     now: () => new Date("2026-10-25T10:00:00Z"),
   };
-  return { deps, calls, vault, state: () => state };
+  return {
+    deps,
+    calls,
+    vault,
+    state: () => state,
+    /** Another signed-in person: one who may not manage the connection. */
+    stranger: () => {
+      manages = false;
+    },
+  };
 }
 
 const post = (body: unknown, auth = "Bearer user-token") =>
@@ -156,6 +170,25 @@ const start = {
   target_id: "pennylane_api",
   display_name: "Pennylane",
 };
+
+/** #3906 — the target's redirect, as the browser follows it: on to the
+ * app's page, which completes the sign-in with the person's session. */
+async function redirect(
+  url: string,
+  deps: Deps,
+  auth = "Bearer user-token",
+): Promise<Response> {
+  const res = await handle(new Request(url), deps);
+  if (res.status !== 302) return res;
+  const location = res.headers.get("Location")!;
+  const prefix = "https://app.test/deskilo/#/accounting/connected?";
+  assert(location.startsWith(prefix), location);
+  const query = new URLSearchParams(location.slice(prefix.length));
+  return handle(
+    post({ action: "complete", ...Object.fromEntries(query) }, auth),
+    deps,
+  );
+}
 
 async function signIn(w: ReturnType<typeof world>): Promise<string> {
   const res = await handle(post(start), w.deps);
@@ -192,12 +225,7 @@ Deno.test("a caller the database refuses opens nothing and learns nothing", asyn
 Deno.test("the redirect exchanges the code, stores the tokens in Vault and answers no token", async () => {
   const w = world();
   const state = await signIn(w);
-  const res = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`,
-    ),
-    w.deps,
-  );
+  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`, w.deps);
   assertEquals(res.status, 200);
   const text = await res.text();
   assert(!text.includes("secret"));
@@ -217,12 +245,7 @@ Deno.test("a redirect with another state is refused before any exchange", async 
     exchanged = true;
     return Promise.resolve(new Response("{}"));
   }) as typeof fetch;
-  const res = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${CONN}.forged`,
-    ),
-    w.deps,
-  );
+  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${CONN}.forged`, w.deps);
   assertEquals(res.status, 400);
   assert(!exchanged);
   assertEquals(w.state().status, "pending");
@@ -237,12 +260,7 @@ Deno.test("a stale state is refused before any exchange, and spent", async () =>
     return Promise.resolve(new Response("{}"));
   }) as typeof fetch;
   w.deps.now = () => new Date("2026-10-25T10:11:00Z");
-  const res = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   assertEquals(res.status, 400);
   assert((await res.text()).includes("expired"));
   assert(!exchanged);
@@ -256,12 +274,7 @@ Deno.test("a refused exchange leaves the connection in error, said, and spends t
       new Response(JSON.stringify({ error: "invalid_grant" }), { status: 400 }),
   });
   const state = await signIn(w);
-  const res = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   assertEquals(res.status, 502);
   assertEquals(w.state(), { status: "error", status_detail: "invalid_grant" });
   assertEquals(w.vault.oauth_state, undefined);
@@ -279,12 +292,7 @@ Deno.test("a refused refresh expires the connection and forgets its tokens", asy
         ),
   });
   const state = await signIn(w);
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   const res = await handle(
     post({ action: "refresh", connection_id: CONN }),
     w.deps,
@@ -319,12 +327,7 @@ Deno.test("a refused refresh after a concurrent rotation keeps the connection (s
     w.vault.refresh_token = "RT-NEWER";
   };
   const state = await signIn(w);
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   const res = await handle(
     post({ action: "refresh", connection_id: CONN }),
     w.deps,
@@ -363,12 +366,7 @@ Deno.test("two concurrent refreshes call the provider once; the loser takes the 
   });
   w.deps.sleep = () => new Promise((r) => setTimeout(r, 0));
   const state = await signIn(w);
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   const [a, b] = await Promise.all([
     handle(post({ action: "refresh", connection_id: CONN }), w.deps),
     handle(post({ action: "refresh", connection_id: CONN }), w.deps),
@@ -393,12 +391,7 @@ Deno.test("a lease that is never free is busy, not expired, and nothing is spent
   });
   w.deps.sleep = () => Promise.resolve();
   const state = await signIn(w);
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   const real = w.deps.service;
   w.deps.service = () => ({
     rpc: (fn, args) =>
@@ -458,12 +451,7 @@ Deno.test("HMRC connects and refreshes through its own doors, on its own hosts, 
     ["caller:open_hmrc_connection_v1"],
   );
   const state = new URL(out.authorize_url).searchParams.get("state")!;
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   assertEquals(bodies[0].get("client_secret"), "app-secret");
   const refreshed = await handle(
     post({ action: "refresh", connection_id: CONN }),
@@ -493,12 +481,7 @@ Deno.test("a refresh that outlived its lease writes nothing and is busy, not exp
         ),
   });
   const state = await signIn(w);
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
-    ),
-    w.deps,
-  );
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`, w.deps);
   const real = w.deps.service;
   w.deps.service = () => ({
     rpc: (fn, args) =>
@@ -562,12 +545,7 @@ Deno.test("a QuickBooks company without custom transaction numbers is refused at
   const state = new URL((await res.json()).authorize_url).searchParams.get(
     "state",
   )!;
-  const back = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}&realmId=9130350000000001`,
-    ),
-    w.deps,
-  );
+  const back = await redirect(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}&realmId=9130350000000001`, w.deps);
   assertEquals(back.status, 409);
   assertEquals(realmCalls, [
     "/v3/company/9130350000000001/companyinfo/9130350000000001",
@@ -633,12 +611,7 @@ const xeroCallback = async (
   const state = new URL((await res.json()).authorize_url).searchParams.get(
     "state",
   )!;
-  return handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`,
-    ),
-    w.deps,
-  );
+  return redirect(`https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}`, w.deps);
 };
 
 Deno.test("a Xero sign-in binds the one organisation it authorised and checks it before connecting", async () => {
@@ -752,24 +725,115 @@ Deno.test("a Sage sign-in reaching several businesses, or one in another country
 
 Deno.test("a Pennylane sign-in records the company its token reaches, and one signed in again to another is refused", async () => {
   const w = world({ pennylaneCompany: 7 });
-  await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(
+  await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(
         w,
-      )}`,
+      )}`, w.deps);
+  assertEquals(w.state().remote_tenant_id, "7");
+  const again = world({ pennylaneCompany: 8, heldTenant: "7" });
+  const res = await redirect(`https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(
+        again,
+      )}`, again.deps);
+  assertEquals(res.status, 409);
+  assertEquals(again.state().status, "error");
+});
+
+// #3906 — the sign-in is completed inside the signed-in app.
+
+Deno.test("the target's redirect goes on to the app's page with the code and the state, and stores and calls nothing", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const before = w.calls.length;
+  let called = false;
+  w.deps.fetcher = (() => {
+    called = true;
+    return Promise.resolve(new Response("{}"));
+  }) as typeof fetch;
+  const res = await handle(
+    new Request(
+      `https://x.test/functions/v1/accounting-connect?code=C0DE&state=${state}&realmId=42&other=x`,
     ),
     w.deps,
   );
-  assertEquals(w.state().remote_tenant_id, "7");
-  const again = world({ pennylaneCompany: 8, heldTenant: "7" });
+  assertEquals(res.status, 302);
+  const location = new URL(res.headers.get("Location")!.replace("#/", ""));
+  assertEquals(location.origin + location.pathname, "https://app.test/deskilo/accounting/connected");
+  assertEquals(Object.fromEntries(location.searchParams), {
+    code: "C0DE",
+    state,
+    tenant: "42",
+  });
+  assertEquals(res.headers.get("Referrer-Policy"), "no-referrer");
+  assertEquals(w.calls.length, before);
+  assert(!called);
+  assertEquals(w.state().status, "pending");
+});
+
+Deno.test("a server with no app address does not pass a sign-in on", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const env = w.deps.env;
+  w.deps.env = (name) => name === "DESKILO_APP_URL" ? undefined : env(name);
   const res = await handle(
-    new Request(
-      `https://x.test/functions/v1/accounting-connect?code=C&state=${await signIn(
-        again,
-      )}`,
-    ),
-    again.deps,
+    new Request(`https://x.test/functions/v1/accounting-connect?code=C&state=${state}`),
+    w.deps,
   );
-  assertEquals(res.status, 409);
-  assertEquals(again.state().status, "error");
+  assertEquals(res.status, 503);
+});
+
+Deno.test("only a person who may manage the connection completes its sign-in; the state is spent", async () => {
+  const w = world();
+  const state = await signIn(w);
+  let exchanged = false;
+  w.deps.fetcher = (() => {
+    exchanged = true;
+    return Promise.resolve(new Response("{}"));
+  }) as typeof fetch;
+  w.stranger();
+  const res = await redirect(
+    `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`,
+    w.deps,
+    "Bearer someone-else",
+  );
+  assertEquals(res.status, 403);
+  assert(!exchanged);
+  assertEquals(w.vault.oauth_state, undefined);
+  assertEquals(w.state().status, "pending");
+});
+
+Deno.test("a completed sign-in cannot be completed again", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const url = `https://x.test/functions/v1/accounting-connect?code=C&state=${state}`;
+  assertEquals((await redirect(url, w.deps)).status, 200);
+  assertEquals(w.state().status, "connected");
+  const again = await redirect(url, w.deps);
+  assertEquals(again.status, 400);
+  assertEquals(await again.json(), { error: "state_invalid" });
+});
+
+Deno.test("completing needs a session and a well-formed state", async () => {
+  const w = world();
+  await signIn(w);
+  const none = await handle(
+    new Request("https://x.test/functions/v1/accounting-connect", {
+      method: "POST",
+      body: JSON.stringify({ action: "complete", code: "C", state: `${CONN}.x` }),
+    }),
+    w.deps,
+  );
+  assertEquals(none.status, 401);
+  const bad = await handle(post({ action: "complete", code: "C", state: "nope" }), w.deps);
+  assertEquals(bad.status, 400);
+});
+
+Deno.test("a sign-in the person declined at the target leaves the connection in error, said", async () => {
+  const w = world();
+  const state = await signIn(w);
+  const res = await redirect(
+    `https://x.test/functions/v1/accounting-connect?error=access_denied&state=${state}`,
+    w.deps,
+  );
+  assertEquals(res.status, 400);
+  assertEquals(w.state(), { status: "error", status_detail: "access_denied" });
+  assertEquals(w.vault.oauth_state, undefined);
 });

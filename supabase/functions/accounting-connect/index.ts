@@ -14,13 +14,19 @@
 //        target's sign-in page; its `state` names the connection and a
 //        random value kept in Vault.
 //   GET  ?code&state  (the target's redirect, no bearer token)
-//        The state is checked against Vault before the code is exchanged;
-//        the tokens are stored, the state is spent, the connection is
-//        connected. A refused exchange leaves it in `error`, said.
-//        A target that checks the company first (QuickBooks: its country
-//        and its own numbering; Xero: the one organisation the sign-in
-//        authorised, and its country) refuses it before it is connected,
-//        and a connection signed in again keeps its company.
+//        #3906 — stores nothing and calls no target: the browser is sent
+//        on to the app's page (`DESKILO_APP_URL`/#/accounting/connected)
+//        with the code and the state.
+//   POST {action: "complete", code, state, error?, tenant?}
+//        The signed-in person who may manage the connection completes the
+//        sign-in: the state is checked against Vault (and its age) before
+//        the code is exchanged; the tokens are stored, the state is spent,
+//        the connection is connected. A refused exchange leaves it in
+//        `error`, said. A target that checks the company first
+//        (QuickBooks: its country and its own numbering; Xero: the one
+//        organisation the sign-in authorised, and its country) refuses it
+//        before it is connected, and a connection signed in again keeps
+//        its company.
 //   POST {action: "refresh", connection_id}
 //        A billing manager asks for a fresh token; a refused refresh marks
 //        the connection expired, which the screen shows.
@@ -39,6 +45,7 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 import { CORS, preflight } from "../_shared/cors.ts";
 import {
   type OAuthTarget,
+  oauthTargets,
 } from "../_shared/accounting_targets.ts";
 import {
   authorizeUrl,
@@ -155,24 +162,93 @@ async function authorize(
   });
 }
 
-async function callback(deps: Deps, url: URL): Promise<Response> {
-  const [connectionId, state] = (url.searchParams.get("state") ?? "").split(
+/** #3906 — the app's page that completes a target's sign-in. */
+function returnRoute(deps: Deps): string | null {
+  const base = (deps.env("DESKILO_APP_URL") ?? "").replace(/\/+$/, "");
+  // The web app routes by fragment.
+  return base ? `${base}/#/accounting/connected` : null;
+}
+
+/** The longest value passed on from the target's redirect. */
+const FORWARDED_LENGTH = 2048;
+
+/** The names a target's redirect gives the company it signed in to. */
+const TENANT_PARAMS = [
+  ...new Set(
+    Object.values(oauthTargets).flatMap((t) => t.tenantParam ? [t.tenantParam] : []),
+  ),
+];
+
+/** #3906 — the target's redirect stores nothing and calls no target: it
+ * passes the code and the state on to the app's page, where the signed-in
+ * person completes the sign-in (`complete`). */
+function callback(deps: Deps, url: URL): Response {
+  const [connectionId, secret] = (url.searchParams.get("state") ?? "").split(
     ".",
   );
-  const code = url.searchParams.get("code") ?? "";
-  if (!UUID.test(connectionId ?? "") || !state) {
+  if (!UUID.test(connectionId ?? "") || !secret) {
     return page("This sign-in link is not valid.", 400);
   }
-  const held = await resolved(deps, connectionId);
-  if (
-    !held || held.revoked || !sameSecret(held.secrets.oauth_state ?? "", state)
-  ) {
-    return page("This sign-in link is not valid any more.", 400);
+  const back = returnRoute(deps);
+  if (!back) return page("This server cannot sign in to this target.", 503);
+  const query = new URLSearchParams();
+  const pass = (from: string, to = from) => {
+    const value = url.searchParams.get(from);
+    if (value) query.set(to, value.slice(0, FORWARDED_LENGTH));
+  };
+  pass("code");
+  pass("state");
+  pass("error");
+  for (const name of TENANT_PARAMS) pass(name, "tenant");
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: `${back}?${query}`,
+      "Cache-Control": "no-store",
+      "Referrer-Policy": "no-referrer",
+    },
+  });
+}
+
+/** Text of a body field, or empty. */
+const field = (body: Record<string, unknown>, key: string) =>
+  typeof body[key] === "string" ? (body[key] as string) : "";
+
+/** #3906 — the sign-in completed by the person who may manage the
+ * connection, with their own session: the state must be the one this
+ * connection holds and still fresh; then the code is exchanged. The state
+ * is spent on every outcome past its check. */
+async function complete(
+  deps: Deps,
+  authorization: string,
+  body: Record<string, unknown>,
+): Promise<Response> {
+  const [connectionId, secret] = field(body, "state").split(".");
+  if (!UUID.test(connectionId ?? "") || !secret) {
+    return json({ error: "state_invalid" }, 400);
   }
+  const allowed = await deps.caller(authorization).rpc(
+    manageableRpc(await targetIdOf(deps, connectionId)),
+    { p_connection_id: connectionId },
+  );
+  const held = await resolved(deps, connectionId);
+  const matches = !!held && !held.revoked &&
+    sameSecret(held.secrets.oauth_state ?? "", secret);
+  const spend = (patch: Record<string, unknown> = {}) =>
+    store(deps, connectionId, {
+      secrets: { oauth_state: "", oauth_state_at: "" },
+      patch,
+    });
+  if (allowed.error || !allowed.data) {
+    if (matches) await spend();
+    return json({ error: "not allowed to manage this connection" }, 403);
+  }
+  if (!held || !matches) return json({ error: "state_invalid" }, 400);
   const target = targetOf(deps, held.target_id);
   const client = target ? clientOf(deps, held.target_id) : null;
   if (!target || !client) {
-    return page("This server cannot sign in to this target.", 503);
+    await spend();
+    return json({ error: "oauth_not_configured" }, 503);
   }
   const now = (deps.now ?? (() => new Date()))();
   const issuedAt = Date.parse(held.secrets.oauth_state_at ?? "");
@@ -180,25 +256,16 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
     !Number.isFinite(issuedAt) ||
     now.getTime() - issuedAt > target.stateLifetimeMs
   ) {
-    await store(deps, connectionId, {
-      secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: {},
-    });
-    return page(
-      "This sign-in link has expired. Start again from DesKilo.",
-      400,
-    );
+    await spend();
+    return json({ error: "state_expired" }, 400);
   }
+  const code = field(body, "code");
   if (!code) {
-    const denied = (url.searchParams.get("error") ?? "access_denied").slice(
-      0,
-      100,
-    );
-    await store(deps, connectionId, {
-      secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: { status: "error", status_detail: denied },
+    await spend({
+      status: "error",
+      status_detail: (field(body, "error") || "access_denied").slice(0, 100),
     });
-    return page("The sign-in was not completed. You can close this page.", 400);
+    return json({ error: "sign_in_not_completed" }, 400);
   }
   const tokens = await exchangeCode(
     deps.fetcher ?? fetch,
@@ -209,19 +276,11 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
     now,
   );
   if (isFailure(tokens)) {
-    await store(deps, connectionId, {
-      secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: { status: "error", status_detail: tokens.detail },
-    });
-    return page(
-      "The target refused the sign-in. You can close this page and try again.",
-      502,
-    );
+    await spend({ status: "error", status_detail: tokens.detail });
+    return json({ error: "sign_in_refused" }, 502);
   }
   const adapterOf = deliveryAdapters[held.target_id];
-  let tenant = target.tenantParam
-    ? url.searchParams.get(target.tenantParam) ?? undefined
-    : undefined;
+  let tenant = target.tenantParam ? field(body, "tenant") || undefined : undefined;
   let refused: string | null = null;
   // A target whose redirect names no company (Xero): the one the sign-in
   // authorised, read with the new token.
@@ -244,27 +303,17 @@ async function callback(deps: Deps, url: URL): Promise<Response> {
     adapterContext(deps, held.target_id, tokens.accessToken, tenant ?? ""),
   ).prepare() ?? null;
   if (refused) {
-    await store(deps, connectionId, {
-      secrets: { oauth_state: "", oauth_state_at: "" },
-      patch: {
-        status: "error",
-        status_detail: refused.slice(0, STATUS_DETAIL_LENGTH),
-      },
+    await spend({
+      status: "error",
+      status_detail: refused.slice(0, STATUS_DETAIL_LENGTH),
     });
-    return page(
-      "The target refused this company. The reason is shown in DesKilo.",
-      409,
-    );
+    return json({ error: "company_refused" }, 409);
   }
   if (!await store(deps, connectionId, connectedWrite(tokens, tenant))) {
-    return page(
-      "The connection could not be saved. You can close this page and try again.",
-      500,
-    );
+    await spend();
+    return json({ error: "the connection could not be saved" }, 500);
   }
-  return page(
-    "The connection is made. You can close this page and return to DesKilo.",
-  );
+  return json({ status: "connected", connection_id: connectionId });
 }
 
 async function refresh(
@@ -319,7 +368,7 @@ async function refresh(
 
 export async function handle(req: Request, deps: Deps): Promise<Response> {
   if (req.method === "OPTIONS") return preflight();
-  // The target's redirect carries no bearer: the state is its authority.
+  // The target's redirect carries no bearer: it is passed on to the app.
   if (req.method === "GET") return callback(deps, new URL(req.url));
   if (req.method !== "POST") return json({ error: "method not allowed" }, 405);
   // #1614 — an assistant's delegated token never connects the books.
@@ -344,6 +393,8 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   switch (body.action) {
     case "authorize":
       return authorize(deps, authorization, body);
+    case "complete":
+      return complete(deps, authorization, body);
     case "refresh":
       return refresh(deps, authorization, body);
     case "deliver":
