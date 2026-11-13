@@ -303,7 +303,7 @@ void main() {
     // the policy per caller; every workflow that builds an apk or a bundle
     const policy = {
       'android-boot': "\${{ github.ref == 'refs/heads/master' && 'save' || 'restore' }}",
-      'dev-apk': 'restore',
+      'dev-apk': 'none',
       'fdroid-foss': 'restore',
       'fdroid-release': 'none',
       'play-internal': 'none',
@@ -322,9 +322,24 @@ void main() {
       ];
       expect(uses, hasLength(1), reason: '$stem: one pinned Gradle step');
       expect(_mapAt(uses.single, 'with')['dependencies'], policy[stem]);
+      // the action exists only in a ref that holds it: the step is guarded by
+      // an output set from the checked-out tree, and warns when it is absent
+      expect(uses.single['if'], 'steps.gradle_pin.outputs.present == \'true\'');
+      final all = [
+        for (final j in jobs.values)
+          for (final st in ((j as YamlMap)['steps'] as YamlList).cast<YamlMap>()) st,
+      ];
+      final probe = all.singleWhere((st) => st['id'] == 'gradle_pin');
+      expect(all.indexOf(probe), lessThan(all.indexOf(uses.single)));
+      expect('${probe['run']}', contains('.github/actions/gradle-cache/action.yml'));
+      expect('${probe['run']}', contains('::warning::'));
     }
-    // the signing jobs never restore dependency state
-    expect(policy['play-internal'], 'none');
-    expect(policy['fdroid-release'], 'none');
+    // no workflow whose output is installed or signed restores dependency state
+    for (final stem in ['dev-apk', 'play-internal', 'fdroid-release']) {
+      expect(policy[stem], 'none');
+    }
+    expect(action, isNot(contains('steps.pin.')),
+        reason: 'the composite has no fallback of its own: it cannot run in '
+            'a ref that lacks it');
   });
 }

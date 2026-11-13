@@ -70,7 +70,16 @@ jobs:
 
       # #3473 -- the digest-pinned Gradle distribution (and, per the policy in
       # the composite, the dependency cache)
+      - name: Does this ref hold the Gradle cache action
+        id: gradle_pin
+        run: |
+          if [ -f .github/actions/gradle-cache/action.yml ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::This ref has no .github/actions/gradle-cache: it builds without the Gradle cache, as before"
+          fi
       - uses: ./.github/actions/gradle-cache
+        if: steps.gradle_pin.outputs.present == 'true'
         with:
           dependencies: none
 

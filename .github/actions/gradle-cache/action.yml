@@ -11,21 +11,17 @@
 #      downloads), and rebuilds the wrapper's directory from the verified
 #      archive. A bad cached archive is replaced by a fresh download.
 #   2. the DEPENDENCY cache (~/.gradle/caches: Maven and Kotlin compiler
-#      artifacts). This is an availability optimisation, NOT an integrity
-#      control: Gradle's own cache metadata is what trusts it, and the build
-#      resolves anything missing from the network as it did before. The policy,
-#      per caller (input `dependencies`):
-#        save    restore, and save at the job's end. Only the Android boot
-#                check on master does this, so the shared entry is written by
-#                a run of the default branch, never by a branch or a pull request.
-#        restore restore only (dev-apk builds a ref somebody typed).
-#        none    nothing: the jobs that sign what they build (Play, F-Droid)
-#                take the verified distribution only, and keep a clean
-#                Gradle state like the F-Droid builder has.
+#      artifacts). An availability optimisation, NOT an integrity control: the
+#      build resolves anything missing from the network as it did before. Per
+#      caller (input `dependencies`):
+#        save    restore, and save at the job's end (android-boot on master).
+#        restore restore only (fdroid-foss).
+#        none    the verified distribution only: dev-apk, play-internal and
+#                fdroid-release, whose output is installed or signed, restore
+#                no dependency cache.
 #
-# The caller checks the repository out and sets up Java first. A ref that
-# predates the pin (no scripts/install_gradle.sh) is built as it always was,
-# with a warning, never as a silent success.
+# The caller checks the repository out and sets up Java first, and calls this
+# action only when the checked-out tree holds it (see the callers).
 name: pinned Gradle
 description: Restore the digest-pinned Gradle distribution (and optionally the dependency cache)
 
@@ -37,37 +33,25 @@ inputs:
 runs:
   using: composite
   steps:
-    - name: Does this ref pin Gradle
-      id: pin
-      shell: bash
-      run: |
-        if [ -f scripts/install_gradle.sh ]; then
-          echo "pinned=true" >> "$GITHUB_OUTPUT"
-        else
-          echo "::warning::This ref has no scripts/install_gradle.sh: Gradle is downloaded by the wrapper, unverified and uncached"
-          echo "pinned=false" >> "$GITHUB_OUTPUT"
-        fi
     - name: Restore the pinned Gradle distribution
-      if: steps.pin.outputs.pinned == 'true'
       uses: actions/cache@v4
       with:
         path: ~/.cache/deskilo-toolchain/gradle
         key: toolchain-gradle-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}
     - name: Verify the Gradle distribution and place it where the wrapper looks
-      if: steps.pin.outputs.pinned == 'true'
       shell: bash
       run: >
         bash scripts/install_gradle.sh android/gradle/wrapper/gradle-wrapper.properties
         "$HOME/.gradle" "$HOME/.cache/deskilo-toolchain/gradle"
     - name: Restore and save the Gradle dependency cache
-      if: steps.pin.outputs.pinned == 'true' && inputs.dependencies == 'save'
+      if: inputs.dependencies == 'save'
       uses: actions/cache@v4
       with:
         path: ~/.gradle/caches
         key: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('pubspec.lock') }}
         restore-keys: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-
     - name: Restore the Gradle dependency cache
-      if: steps.pin.outputs.pinned == 'true' && inputs.dependencies == 'restore'
+      if: inputs.dependencies == 'restore'
       uses: actions/cache/restore@v4
       with:
         path: ~/.gradle/caches
