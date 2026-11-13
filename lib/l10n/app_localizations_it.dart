@@ -11702,6 +11702,18 @@ class AppLocalizationsIt extends AppLocalizations {
   String get featureWorkspaceVocabularyTitle => 'Lessico dello spazio';
 
   @override
+  String get featuresColDepends => 'Dipende da';
+
+  @override
+  String get featuresColDoes => 'Cosa fa';
+
+  @override
+  String get featuresColFeature => 'Funzione';
+
+  @override
+  String get featuresColState => 'Attiva o no';
+
+  @override
   String get featuresFilterChanged => 'Modificate';
 
   @override
@@ -12033,6 +12045,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesCoverageNoDocuments => 'nessun documento';
+
+  @override
+  String get financesCoverageOlderSettled =>
+      'I documenti pagati più vecchi non sono elencati; tutto ciò che resta da pagare sì.';
 
   @override
   String financesCoverageReading(String host) {

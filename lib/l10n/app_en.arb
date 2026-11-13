@@ -15256,6 +15256,22 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Depends on",
+  "@featuresColDepends": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColDoes": "What it does",
+  "@featuresColDoes": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColFeature": "Feature",
+  "@featuresColFeature": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
+  "featuresColState": "On or off",
+  "@featuresColState": {
+    "description": "#3619 features at the desk: column of the features table"
+  },
   "featuresFilterChanged": "Changed",
   "@featuresFilterChanged": {
     "description": "#1190 filter chip: only the features this workspace moved off their default"
@@ -15703,6 +15719,10 @@
   "financesCoverageNoDocuments": "no documents",
   "@financesCoverageNoDocuments": {
     "description": "#2557 C4 Me › Finances: coverage, a host that answered with no document of yours."
+  },
+  "financesCoverageOlderSettled": "Older paid documents are not listed; everything still to pay is.",
+  "@financesCoverageOlderSettled": {
+    "description": "#3878 the coverage line when an answer left older settled documents out"
   },
   "financesCoverageReading": "Reading {host}…",
   "@financesCoverageReading": {

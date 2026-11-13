@@ -7418,6 +7418,10 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Dipende da",
+  "featuresColDoes": "Cosa fa",
+  "featuresColFeature": "Funzione",
+  "featuresColState": "Attiva o no",
   "featuresFilterChanged": "Modificate",
   "featuresNoMatch": "Nessuna funzionalità corrisponde.",
   "featuresSearchLabel": "Cerca funzionalità",
@@ -7668,6 +7672,7 @@
   "financesCoverageAnswered": "Letto da {host}",
   "financesCoverageHome": "la Sua installazione principale",
   "financesCoverageNoDocuments": "nessun documento",
+  "financesCoverageOlderSettled": "I documenti pagati più vecchi non sono elencati; tutto ciò che resta da pagare sì.",
   "financesCoverageReading": "Lettura di {host}…",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 documento} other{{count} documenti}}",
   "financesDevSection": "Spazi di sviluppo — dati di prova, non conteggiati sopra",

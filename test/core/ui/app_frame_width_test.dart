@@ -15,8 +15,10 @@ void main() {
     }
   });
 
-  test('canvas screens and Me keep the wide frame, children included', () {
-    for (final path in ['/me', '/me/privacy', '/editor', '/kiosk', '/discover']) {
+  // #3619 — the workspace's canvases (/editor, /kiosk) are work pages now:
+  // the wide frame is left to the account's and the public pages.
+  test('Me and the public canvas keep the wide frame, children included', () {
+    for (final path in ['/me', '/me/privacy', '/discover']) {
       expect(frameWidthFor(path), kAppFrameMaxWidth, reason: path);
     }
   });

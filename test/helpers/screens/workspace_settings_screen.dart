@@ -65,6 +65,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   await tapShellBarControl(tester, 'shell-settings-button');
   await tester.pumpAndSettle();
   await showWorkspaceSettings(tester);
+  await revealInSettings(tester, find.text('Workspace'));
   await tester.ensureVisible(find.text('Workspace'));
   await tester.pumpAndSettle();
   await tester.tap(find.text('Workspace'));

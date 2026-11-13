@@ -19023,6 +19023,30 @@ abstract class AppLocalizations {
   /// **'Workspace vocabulary'**
   String get featureWorkspaceVocabularyTitle;
 
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Depends on'**
+  String get featuresColDepends;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'What it does'**
+  String get featuresColDoes;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'Feature'**
+  String get featuresColFeature;
+
+  /// #3619 features at the desk: column of the features table
+  ///
+  /// In en, this message translates to:
+  /// **'On or off'**
+  String get featuresColState;
+
   /// #1190 filter chip: only the features this workspace moved off their default
   ///
   /// In en, this message translates to:
@@ -19544,6 +19568,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'no documents'**
   String get financesCoverageNoDocuments;
+
+  /// #3878 the coverage line when an answer left older settled documents out
+  ///
+  /// In en, this message translates to:
+  /// **'Older paid documents are not listed; everything still to pay is.'**
+  String get financesCoverageOlderSettled;
 
   /// #2557 C5 Me › Finances: coverage, a connected host my account names whose documents are still being read.
   ///

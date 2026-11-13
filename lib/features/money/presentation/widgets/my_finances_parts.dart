@@ -223,6 +223,14 @@ class FinancesCoverage extends ConsumerWidget {
                       .retry(read.host.installationId),
                 ),
             },
+          // #3878 — settled documents older than an answer's page are not
+          // listed; what is owed is complete.
+          if (overview.olderSettledLeftOut)
+            line(
+              'finances-coverage-older-settled',
+              Icons.history_outlined,
+              l10n.financesCoverageOlderSettled,
+            ),
           FinancesSourceBanners(sources: overview.unavailableSources),
         ],
       ),
