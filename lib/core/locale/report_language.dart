@@ -1,74 +1,64 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-/// Report-language resolution (#496): which language a DOCUMENT is
-/// printed in for a given reader.
+/// Report-language resolution (#496, #3850): which language a DOCUMENT is
+/// printed in.
 ///
 /// The chain, in order:
-///  1. the MEMBER's own preferred language (profiles.preferred_locale,
-///     0098) — when the app supports it;
-///  2. the WORKSPACE language (workspaces.default_locale, 0096);
-///  3. the COUNTRY's language — unambiguous countries only. A
-///     multi-language country (Belgium, Switzerland, Luxembourg,
-///     Canada) with nothing configured RAISES
-///     [AmbiguousReportLanguage]: the app must not guess between an
-///     invoice in French and one in German.
+///  1. the reader's own language (a member's `preferred_locale`, 0098), when
+///     the app ships it -- for letters to a person; an INVOICE carries the
+///     language the server froze at issue instead (`invoices.document_language`);
+///  2. the business's document language (`workspaces.default_locale`, 0096);
+///  3. the country's first shipped language, from its `document_language`
+///     row of the tax reference store (#3850);
+///  4. English, where the country's languages are none the app ships.
 ///
-/// Per-language template OVERLAYS (the owner's "specialized languages")
-/// are resolved by the template model itself; this file only decides
-/// WHICH language a document targets.
+/// It never throws: a country with several shipped languages and none chosen
+/// takes its first (the server gave every such business a language, 0753).
+/// Per-language template OVERLAYS are resolved by the template model itself;
+/// this file only decides WHICH language a document targets.
 library;
 
-/// The languages the app ships documents in.
-const Set<String> _supportedReportLanguages = {'en', 'fr', 'de', 'es', 'it'};
+/// The languages the app ships documents in (the server's
+/// `document_language_supported`, 0753).
+const Set<String> documentLanguagesShipped = {'en', 'fr', 'de', 'es', 'it'};
 
-/// Countries whose national language is ambiguous — the workspace must
-/// declare its own language before language-resolved documents render.
-const Set<String> _multiLanguageCountries = {'BE', 'CH', 'LU', 'CA'};
+/// The language a document falls back to when nothing else applies.
+const String _fallback = 'en';
 
-/// The single app-supported language of [countryCode], null when the
-/// country is multi-language, 'en' when its language is one the app
-/// does not ship (an English document beats a guessed one).
-String? _countryLanguage(String countryCode) {
-  final code = countryCode.toUpperCase();
-  if (_multiLanguageCountries.contains(code)) return null;
-  const byCountry = {
-    'FR': 'fr', 'MC': 'fr',
-    'DE': 'de', 'AT': 'de', 'LI': 'de',
-    'ES': 'es', 'MX': 'es', 'AR': 'es', 'CL': 'es', 'CO': 'es',
-    'IT': 'it', 'SM': 'it',
-    'GB': 'en', 'IE': 'en', 'US': 'en', 'AU': 'en', 'NZ': 'en',
-  };
-  return byCountry[code] ?? 'en';
-}
+/// The shipped languages among a country's official [languages], in order.
+List<String> _shipped(List<String> languages) => [
+      for (final l in languages)
+        if (documentLanguagesShipped.contains(l)) l,
+    ];
 
-/// Thrown when the chain bottoms out on a multi-language country with
-/// no member and no workspace language configured.
-class AmbiguousReportLanguage implements Exception {
-  const AmbiguousReportLanguage(this.countryCode);
+/// Whether a business of a country with these [languages] must choose its
+/// document language (more than one shipped).
+bool choosesDocumentLanguage(List<String> languages) =>
+    _shipped(languages).length > 1;
 
-  final String countryCode;
-
-  @override
-  String toString() =>
-      'AmbiguousReportLanguage: $countryCode has several languages — '
-      'set the workspace language.';
+/// The business's document language: its own [workspaceLocale] when shipped,
+/// else the first shipped of its country's [countryLanguages], else English.
+String businessDocumentLanguage({
+  String workspaceLocale = '',
+  required List<String> countryLanguages,
+}) {
+  if (documentLanguagesShipped.contains(workspaceLocale)) return workspaceLocale;
+  return _shipped(countryLanguages).firstOrNull ?? _fallback;
 }
 
 /// Resolves the document language for a reader.
 ///
-/// [memberLocale] — the member's preferred language ('' = unset);
-/// [workspaceLocale] — the workspace's own language ('' = unset);
-/// [countryCode] — the workspace's country, the last resort.
+/// [memberLocale] -- the reader's preferred language ('' = unset);
+/// [workspaceLocale] -- the business's document language ('' = unset);
+/// [countryLanguages] -- its country's official languages, usual one first.
 String resolveReportLanguage({
   String memberLocale = '',
   String workspaceLocale = '',
-  required String countryCode,
+  required List<String> countryLanguages,
 }) {
-  if (_supportedReportLanguages.contains(memberLocale)) return memberLocale;
-  if (_supportedReportLanguages.contains(workspaceLocale)) {
-    return workspaceLocale;
-  }
-  final country = _countryLanguage(countryCode);
-  if (country == null) throw AmbiguousReportLanguage(countryCode);
-  return country;
+  if (documentLanguagesShipped.contains(memberLocale)) return memberLocale;
+  return businessDocumentLanguage(
+    workspaceLocale: workspaceLocale,
+    countryLanguages: countryLanguages,
+  );
 }

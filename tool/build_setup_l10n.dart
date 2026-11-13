@@ -28,6 +28,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/locale/report_language.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
@@ -450,6 +451,13 @@ Map<String, Object?> setupRegistryData() {
     'invoicingCountries': [
       for (final c in CountryCatalog.countries)
         if (reference.issuesFor(c.code)) c.code,
+    ]..sort(),
+    // #3850 — where the business must choose its document language: the
+    // countries with more than one shipped language, from the reference rows.
+    'documentLanguageCountries': [
+      for (final c in CountryCatalog.countries)
+        if (choosesDocumentLanguage(reference.documentLanguagesOf(c.code)?.languages ?? const []))
+          c.code,
     ]..sort(),
     'countries': [
       for (final c in CountryCatalog.countries)

@@ -344,6 +344,9 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// Null on an invoice issued before 0349: legacy, evidence unknown.
     /// Read it through [legalClauses].
     Map<String, Object?>? legalSnapshot,
+    /// #3850 (0753) -- the language and its `fr_CH` pair frozen at issue; null before 0753 or on a draft.
+    String? documentLanguage,
+    String? formatLocale,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
@@ -437,6 +440,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
     },
+    documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?,
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',
@@ -445,9 +449,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     workspaceAddress: row['workspace_address'] as String? ?? '',
     issuerName: row['issuer_name'] as String? ?? '',
     signature: row['signature'] as String,
-    voidedAt: row['voided_at'] == null
-        ? null
-        : DateTime.parse(row['voided_at'] as String).toLocal(),
+    voidedAt: row['voided_at'] == null ? null : DateTime.parse(row['voided_at'] as String).toLocal(),
     voidedByName: row['voided_by_name'] as String? ?? '',
     replacesInvoiceId: row['replaces_invoice_id'] as String?,
     replacesNumber: row['replaces_number'] as String? ?? '',

@@ -255,6 +255,9 @@ const List<ExportSource> workspaceExportSources = [
     columns: {
       'id',
       'number',
+      // #3850 — the language and conventions frozen at issue.
+      'document_language',
+      'format_locale',
       'member_id',
       'period',
       'issued_at',

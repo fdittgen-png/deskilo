@@ -61,6 +61,7 @@ configuration.
 | invoice_legal, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account | `workspaces.*` | A | **no** — legal identity is the space's own | replace | — | `vat_regime_test` |
 | address, street, city, postal_code | `workspaces.*` | A | no — identity | replace | — | — |
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
+| document_language_confirmed | `workspaces.document_language_confirmed` | E | never — whether this space's administrator has confirmed the document language 0753 gave it; saving the language sets it | — | #3850 | `415_document_language` |
 | invitation_template, invitation_templates | `workspaces.*` | B | yes | replace | — | — |
 | lexicon | `workspaces.lexicon` jsonb | B | yes | **merge** — keyed on (locale, key) (0223) | #1277 | `26_workspace_lexicon` |
 | branding | `workspaces.branding` jsonb | B | yes | **merge** — keyed on `seed_color` / `office_palette` / `seat_palette` (0246); colours only, the emblem is a storage file | #1289 | `50_workspace_branding` |

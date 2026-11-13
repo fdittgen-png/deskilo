@@ -544,6 +544,7 @@
   "@attentionAdmit": {
     "description": "#2326: attentionAdmit"
   },
+  "attentionConfirmDocumentLanguage": "Confirmer la langue des documents",
   "attentionDecide": "À décider : {subject}",
   "@attentionDecide": {
     "description": "#2326: attentionDecide"
@@ -8880,10 +8881,6 @@
   "@invoiceEmailHeading": {
     "description": "#3673 invoices by e-mail: invoiceEmailHeading"
   },
-  "invoiceEmailNoLanguage": "La langue des documents du client n'est pas connue : la facture n'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la facture.",
-  "@invoiceEmailNoLanguage": {
-    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
-  },
   "invoiceEmailRefused": "L'e-mail a été refusé : {reason}. Rien n'a été envoyé.",
   "@invoiceEmailRefused": {
     "description": "#3673 invoices by e-mail: invoiceEmailRefused",
@@ -15476,10 +15473,6 @@
   "@reminderEmailNoAddress": {
     "description": "#3673 reminders by e-mail: reminderEmailNoAddress"
   },
-  "reminderEmailNoLanguage": "La langue des documents du client n'est pas connue : la relance n'a pas été envoyée par e-mail. Choisissez sa langue ou partagez la lettre.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailNoSender": "L'expéditeur e-mail de l'entreprise n'est pas encore configuré",
   "@reminderEmailNoSender": {
     "description": "#3673 reminders by e-mail: reminderEmailNoSender"
@@ -16417,10 +16410,6 @@
   "reportInsertImage": "Insérer une image",
   "@reportInsertImage": {
     "description": "Report WYSIWYG editor + image library (#488)"
-  },
-  "reportLanguageAmbiguous": "Ce pays a plusieurs langues — définissez d'abord la langue de l'espace dans les Réglages de l'espace.",
-  "@reportLanguageAmbiguous": {
-    "description": "Report language resolution + per-language templates (#496)"
   },
   "reportLayoutActive": "Maquette active",
   "@reportLayoutActive": {
@@ -20293,6 +20282,7 @@
   "@taxRefCurrency": {
     "description": "#2479 tax reference: Field: ISO currency code."
   },
+  "taxRefCustomerLanguage": "Une facture peut être dans la langue de son client",
   "taxRefDomainAccountMap": "Comptes et codes d'export",
   "@taxRefDomainAccountMap": {
     "description": "#2481 tax reference: Tab: the accounts and tax codes accounting exports propose."
@@ -20302,6 +20292,7 @@
     "description": "#2478 tax reference: Domain filter: the caveats shown beside a country's rate catalogue."
   },
   "taxRefDomainCountry": "Pays (catalogue de création)",
+  "taxRefDomainDocumentLanguage": "Langues des documents",
   "taxRefDomainEuMember": "Membres de l'UE",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -20418,6 +20409,7 @@
   "@taxRefInvalidGroups": {
     "description": "#2480 tax reference: Error: the group lists of a return box are invalid."
   },
+  "taxRefInvalidLanguages": "Des codes de langue à deux lettres séparés par des virgules, par exemple fr, de",
   "taxRefInvalidNumber": "Saisissez un nombre de 0 à 99,999",
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
@@ -20426,6 +20418,7 @@
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
   },
+  "taxRefInvalidRequiredLanguages": "Un code de région, un signe égal et un code de langue, par exemple QC=fr",
   "taxRefInvalidState": "Saisissez le code de l'État sur deux lettres",
   "@taxRefInvalidState": {
     "description": "#2362 sales tax: taxRefInvalidState"
@@ -20439,6 +20432,7 @@
   "@taxRefLabel": {
     "description": "#2477 tax reference: Field: label of a rate."
   },
+  "taxRefLanguages": "Langues officielles (ISO 639-1, l'usuelle en premier)",
   "taxRefLoadFailed": "Les données de référence n'ont pas pu être chargées.",
   "@taxRefLoadFailed": {
     "description": "#2477 tax reference: error text when the list cannot load."
@@ -20491,6 +20485,7 @@
   "@taxRefRequired": {
     "description": "#2477 tax reference: Validation: a required field is empty."
   },
+  "taxRefRequiredLanguages": "Langue qu'une région impose (QC=fr, séparées par des virgules)",
   "taxRefRequiresTaxNumber": "Numéro fiscal obligatoire",
   "@taxRefRequiresTaxNumber": {
     "description": "#2479 tax reference: Switch: the seller must state a VAT or tax number."

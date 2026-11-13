@@ -26,7 +26,6 @@ lib/core/instance/instance_builder.dart :: 24 :: the instance wizard's hosting-r
 lib/core/instance/mcp_auth_checks.dart :: 1 :: a check on the MCP auth setup, not a country rule (a two-letter literal that is not a country decision)
 lib/core/jurisdiction/jurisdiction_resolver.dart :: 2 :: the registry spelling of a country code (UK is GB) and the contract's own examples: normalisation, not a rule
 lib/core/locale/device_locale.dart :: 7 :: the device language to default-country mapping: locale data
-lib/core/locale/report_language.dart :: 21 :: the country to report-language mapping: locale data
 lib/features/money/domain/accounting_format.dart :: 9 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
 lib/features/money/domain/accounting_targets_business_central.dart :: 6 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
 lib/features/money/domain/accounting_targets_ch.dart :: 8 :: the accounting-software offerings per country: already format contributions (a registry of what each software supports)
