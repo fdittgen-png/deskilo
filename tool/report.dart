@@ -229,6 +229,7 @@ Map<String, Object?> _sampleData(String kind) {
     'issued': '30 sept. 2026',
     'issued_by': 'Mathieu',
     'total': '100,00 €',
+    'currency': 'EUR',
     'charges': '100,00 €',
     'payments': '0,00 €',
     'net_total': '100,00 €',

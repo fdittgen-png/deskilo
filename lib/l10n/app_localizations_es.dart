@@ -26018,6 +26018,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Verdadero en una nota de crédito';
 
   @override
+  String get reportFieldMeaningCurrency =>
+      'El código ISO de la moneda, por ejemplo EUR o CAD';
+
+  @override
   String get reportFieldMeaningDeclarationNote =>
       'La advertencia de la declaración: verificar antes de presentar';
 

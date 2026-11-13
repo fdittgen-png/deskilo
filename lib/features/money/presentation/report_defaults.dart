@@ -103,7 +103,7 @@ ${l10n.invoicePdfBilledTo}
 |||
 ${l10n.vatPdfNet} | {{ net_total }}
 {% if has_vat %}{% for v in vat %}${l10n.vatPdfVat} {{ v.rate }} | {{ v.amount }}
-{% endfor %}{% endif %}= ${l10n.invoiceBalance} | {{ total }}
+{% endfor %}{% endif %}= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}
 :::''';
   const mentions = '''
 {% if exemption_reason != "" %}> {{ exemption_reason }}
@@ -140,7 +140,7 @@ ${l10n.invoicePdfPayments} | {{ payments }}
 ${l10n.vatPdfNet} | {{ net_total }}
 {% if has_vat %}{% for v in vat %}${l10n.vatPdfVat} {{ v.rate }} | {{ v.amount }}
 {% endfor %}${l10n.vatPdfVat} | {{ vat_total }}
-{% endif %}= ${l10n.invoiceBalance} | {{ total }}
+{% endif %}= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}
 :::
 $mentions''',
         footer: _legalFooter(l10n),
@@ -229,7 +229,7 @@ ReportBands _reminderPresetBands(
         body: '''
 {{ member }} — {{ number }} ({{ issued }})
 > {{ days_open_text }}
-= ${l10n.invoiceBalance} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}''',
         footer: '$clauses\n$closing',
       );
     case 'verbose':
@@ -249,7 +249,7 @@ $invoiceRecap
 ---
 > {{ payment_terms }}
 $clauses
-= ${l10n.invoiceBalance} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}''',
         footer: closing,
       );
     case 'formal':
@@ -271,7 +271,7 @@ $opening
 {{ number }} · {{ issued }} | {{ total }}
 ---
 $clauses
-= ${l10n.invoiceBalance} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}''',
         footer: '''
 $closing
 
@@ -293,7 +293,7 @@ $opening
 $invoiceRecap
 ---
 $clauses
-= ${l10n.invoiceBalance} | {{ total }}''',
+= ${l10n.invoiceBalance} | {{ total }}{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}''',
         footer: closing,
       );
   }

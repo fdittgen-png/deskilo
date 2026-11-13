@@ -25828,6 +25828,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'True on a credit note';
 
   @override
+  String get reportFieldMeaningCurrency =>
+      'The ISO code of the currency, such as EUR or CAD';
+
+  @override
   String get reportFieldMeaningDeclarationNote =>
       'The declaration\'s caution to verify before filing';
 

@@ -16,6 +16,7 @@
   "issued_by": "Flo",
   "replaces": "INV-2026-0003",
   "total": "€139.50",
+  "currency": "EUR",
   "charges": "€281.50",
   "payments": "-€142.00",
   "net_total": "€281.50",

@@ -26090,6 +26090,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Wahr auf einer Gutschrift';
 
   @override
+  String get reportFieldMeaningCurrency =>
+      'Der ISO-Code der Währung, etwa EUR oder CAD';
+
+  @override
   String get reportFieldMeaningDeclarationNote =>
       'Der Hinweis der Erklärung: vor der Abgabe prüfen';
 

@@ -8466,6 +8466,7 @@ Map<String, _Getter> _part23() => {
   'reportDesignFileTypeLabel': (l) => l.reportDesignFileTypeLabel,
   'reportDocBadges': (l) => l.reportDocBadges,
   'reportFieldMeaningBankCode': (l) => l.reportFieldMeaningBankCode,
+  'reportFieldMeaningCurrency': (l) => l.reportFieldMeaningCurrency,
   'reportFieldMeaningLines': (l) => l.reportFieldMeaningLines,
   'reportFieldMeaningPaymentReference': (l) => l.reportFieldMeaningPaymentReference,
   'reportFieldMeaningWorkspaceAddress': (l) => l.reportFieldMeaningWorkspaceAddress,

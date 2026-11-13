@@ -41868,6 +41868,12 @@ abstract class AppLocalizations {
   /// **'True on a credit note'**
   String get reportFieldMeaningCreditNote;
 
+  /// #3851 report guide: meaning of currency
+  ///
+  /// In en, this message translates to:
+  /// **'The ISO code of the currency, such as EUR or CAD'**
+  String get reportFieldMeaningCurrency;
+
   /// #2388 report guide: meaning of declaration_note
   ///
   /// In en, this message translates to:

@@ -26131,6 +26131,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportFieldMeaningCreditNote => 'Vrai sur un avoir';
 
   @override
+  String get reportFieldMeaningCurrency =>
+      'Le code ISO de la devise, par exemple EUR ou CAD';
+
+  @override
   String get reportFieldMeaningDeclarationNote =>
       'La mise en garde de la déclaration : vérifier avant de déposer';
 

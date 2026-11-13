@@ -30,6 +30,7 @@ Map<String, Object?> sampleReportData(AppLocalizations l10n) => {
       'issued_by': 'Demo Owner',
       'replaces': '',
       'total': '145,00 €',
+      'currency': '',
       'charges': '165,00 €',
       'payments': '-20,00 €',
       'net_total': '120,83 €',
