@@ -180,10 +180,20 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingExportsAgain": "Diesen Zeitraum erneut exportieren",
+  "accountingExportsBy": "Erstellt von",
+  "accountingExportsFingerprint": "Prüfsumme",
+  "accountingExportsRows": "Zeilen",
   "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "accountingStatusAllBooks": "Alles in der Buchhaltung",
+  "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
+  "accountingStatusClosedUpTo": "Bücher abgeschlossen bis",
+  "accountingStatusLastExport": "Letzter Export",
+  "accountingStatusNotRead": "Konnte nicht gelesen werden",
+  "accountingStatusVatToFile": "Abzugebende Umsatzsteuererklärung",
   "acctConnConnectToken": "Mit API-Token verbinden",
   "acctConnDetail": "Antwort des Systems: {detail}",
   "acctConnRefresh": "Verbindung prüfen",

@@ -1,0 +1,13 @@
+{
+  "@@locale": "it",
+  "accountingStatusClosedUpTo": "Contabilità chiusa fino al",
+  "accountingStatusLastExport": "Ultima esportazione",
+  "accountingStatusVatToFile": "Dichiarazione IVA da presentare",
+  "accountingStatusBankToMatch": "Movimenti bancari da abbinare",
+  "accountingStatusNotRead": "Non è stato possibile leggerlo",
+  "accountingStatusAllBooks": "Tutta la contabilità",
+  "accountingExportsBy": "Fatto da",
+  "accountingExportsRows": "Righe",
+  "accountingExportsFingerprint": "Impronta",
+  "accountingExportsAgain": "Esporta di nuovo questo periodo"
+}

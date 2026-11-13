@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+  "accountingStatusClosedUpTo": "Libros cerrados hasta",
+  "accountingStatusLastExport": "Última exportación",
+  "accountingStatusVatToFile": "Declaración de IVA por presentar",
+  "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
+  "accountingStatusNotRead": "No se pudo leer",
+  "accountingStatusAllBooks": "Toda la contabilidad",
+  "accountingExportsBy": "Hecho por",
+  "accountingExportsRows": "Filas",
+  "accountingExportsFingerprint": "Huella",
+  "accountingExportsAgain": "Exportar de nuevo este periodo"
+}

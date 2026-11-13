@@ -236,8 +236,38 @@ class AppLocalizationsFr extends AppLocalizations {
       'Espace de développement : le fichier est marqué DEV et n\'est pas la comptabilité réelle.';
 
   @override
+  String get accountingExportsAgain => 'Exporter de nouveau cette période';
+
+  @override
+  String get accountingExportsBy => 'Fait par';
+
+  @override
+  String get accountingExportsFingerprint => 'Empreinte';
+
+  @override
+  String get accountingExportsRows => 'Lignes';
+
+  @override
   String get accountingSourceRefused =>
       'Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.';
+
+  @override
+  String get accountingStatusAllBooks => 'Toute la comptabilité';
+
+  @override
+  String get accountingStatusBankToMatch => 'Lignes bancaires à rapprocher';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Comptes clôturés jusqu’au';
+
+  @override
+  String get accountingStatusLastExport => 'Dernier export';
+
+  @override
+  String get accountingStatusNotRead => 'N’a pas pu être lu';
+
+  @override
+  String get accountingStatusVatToFile => 'Déclaration de TVA à déposer';
 
   @override
   String get acctConnConnectToken => 'Connecter avec un jeton d\'API';

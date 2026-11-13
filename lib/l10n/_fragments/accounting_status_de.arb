@@ -1,0 +1,13 @@
+{
+  "@@locale": "de",
+  "accountingStatusClosedUpTo": "Bücher abgeschlossen bis",
+  "accountingStatusLastExport": "Letzter Export",
+  "accountingStatusVatToFile": "Abzugebende Umsatzsteuererklärung",
+  "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
+  "accountingStatusNotRead": "Konnte nicht gelesen werden",
+  "accountingStatusAllBooks": "Alles in der Buchhaltung",
+  "accountingExportsBy": "Erstellt von",
+  "accountingExportsRows": "Zeilen",
+  "accountingExportsFingerprint": "Prüfsumme",
+  "accountingExportsAgain": "Diesen Zeitraum erneut exportieren"
+}

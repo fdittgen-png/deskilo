@@ -1,0 +1,43 @@
+{
+  "@@locale": "en",
+  "accountingStatusClosedUpTo": "Books closed up to",
+  "@accountingStatusClosedUpTo": {
+    "description": "#3616 books status tile: the last day of the latest closed period"
+  },
+  "accountingStatusLastExport": "Last export",
+  "@accountingStatusLastExport": {
+    "description": "#3616 books status tile: the latest file handed to the accountant"
+  },
+  "accountingStatusVatToFile": "VAT return to file",
+  "@accountingStatusVatToFile": {
+    "description": "#3616 books status tile: the period of the oldest VAT return not filed"
+  },
+  "accountingStatusBankToMatch": "Bank lines to match",
+  "@accountingStatusBankToMatch": {
+    "description": "#3616 books status tile: bank movements waiting for a match"
+  },
+  "accountingStatusNotRead": "Could not be read",
+  "@accountingStatusNotRead": {
+    "description": "#3616 books status tile whose read failed: never shown as nothing to do"
+  },
+  "accountingStatusAllBooks": "Everything in the books",
+  "@accountingStatusAllBooks": {
+    "description": "#3616 heading of the doors to every part of the books, under the status tiles"
+  },
+  "accountingExportsBy": "Made by",
+  "@accountingExportsBy": {
+    "description": "#3616 export history column: the member who made the file"
+  },
+  "accountingExportsRows": "Rows",
+  "@accountingExportsRows": {
+    "description": "#3616 export history column: the rows in the file"
+  },
+  "accountingExportsFingerprint": "Fingerprint",
+  "@accountingExportsFingerprint": {
+    "description": "#3616 export history column: the start of the file's sha256"
+  },
+  "accountingExportsAgain": "Export this period again",
+  "@accountingExportsAgain": {
+    "description": "#3616 export history row action: a NEW export of the same period, with its own log entry; the original file is not kept"
+  }
+}

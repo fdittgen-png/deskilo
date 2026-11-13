@@ -15,6 +15,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/add_purchase_button.dart';
+import 'accounting_status.dart';
 import 'money_action_set.dart';
 import 'money_view_data.dart';
 
@@ -101,11 +102,8 @@ class AccountingHubScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final doors = MoneyActionSet.accountingDoors(
-      context,
-      ref,
-      MoneyViewData.gates(ref),
-    );
+    final data = MoneyViewData.gates(ref);
+    final doors = MoneyActionSet.accountingDoors(context, ref, data);
     return Scaffold(
       appBar: AppBar(title: PageTitle(context.l10n.hubAccountingTitle)),
       body: ListView(
@@ -117,6 +115,25 @@ class AccountingHubScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.sm),
+          // #3616 — the books open on their status; each tile opens its page.
+          if (data.workspace case final workspace?) ...[
+            AccountingStatusGrid(
+              workspaceId: workspace.id,
+              isOwner: data.member?.isOwner ?? false,
+              bankDoor: MoneyActionSet.bankDoor(context, ref, data),
+              shown: (
+                periods: data.accountingPeriodsOn,
+                vat: data.invoicingOn && data.vatDeclarationsOn,
+                numbers: data.numberSequencesOn,
+              ),
+            ),
+            const SizedBox(height: AppSpacing.lg),
+            Text(
+              context.l10n.accountingStatusAllBooks,
+              style: Theme.of(context).textTheme.titleSmall,
+            ),
+            const SizedBox(height: AppSpacing.sm),
+          ],
           for (final door in doors) ...[
             door,
             const SizedBox(height: AppSpacing.sm),

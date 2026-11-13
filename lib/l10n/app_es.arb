@@ -180,10 +180,20 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingExportsAgain": "Exportar de nuevo este periodo",
+  "accountingExportsBy": "Hecho por",
+  "accountingExportsFingerprint": "Huella",
+  "accountingExportsRows": "Filas",
   "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "accountingStatusAllBooks": "Toda la contabilidad",
+  "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
+  "accountingStatusClosedUpTo": "Libros cerrados hasta",
+  "accountingStatusLastExport": "Última exportación",
+  "accountingStatusNotRead": "No se pudo leer",
+  "accountingStatusVatToFile": "Declaración de IVA por presentar",
   "acctConnConnectToken": "Conectar con un token de API",
   "acctConnDetail": "Respuesta del sistema: {detail}",
   "acctConnRefresh": "Comprobar la conexión",

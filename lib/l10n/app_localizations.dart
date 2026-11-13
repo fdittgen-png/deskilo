@@ -488,11 +488,71 @@ abstract class AppLocalizations {
   /// **'Development workspace: the file is marked DEV and is not the real books.'**
   String get accountingExportDevelopment;
 
+  /// #3616 export history row action: a NEW export of the same period, with its own log entry; the original file is not kept
+  ///
+  /// In en, this message translates to:
+  /// **'Export this period again'**
+  String get accountingExportsAgain;
+
+  /// #3616 export history column: the member who made the file
+  ///
+  /// In en, this message translates to:
+  /// **'Made by'**
+  String get accountingExportsBy;
+
+  /// #3616 export history column: the start of the file's sha256
+  ///
+  /// In en, this message translates to:
+  /// **'Fingerprint'**
+  String get accountingExportsFingerprint;
+
+  /// #3616 export history column: the rows in the file
+  ///
+  /// In en, this message translates to:
+  /// **'Rows'**
+  String get accountingExportsRows;
+
   /// #2365 accounting export refused: the fiscal source changed or is over budget
   ///
   /// In en, this message translates to:
   /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
   String get accountingSourceRefused;
+
+  /// #3616 heading of the doors to every part of the books, under the status tiles
+  ///
+  /// In en, this message translates to:
+  /// **'Everything in the books'**
+  String get accountingStatusAllBooks;
+
+  /// #3616 books status tile: bank movements waiting for a match
+  ///
+  /// In en, this message translates to:
+  /// **'Bank lines to match'**
+  String get accountingStatusBankToMatch;
+
+  /// #3616 books status tile: the last day of the latest closed period
+  ///
+  /// In en, this message translates to:
+  /// **'Books closed up to'**
+  String get accountingStatusClosedUpTo;
+
+  /// #3616 books status tile: the latest file handed to the accountant
+  ///
+  /// In en, this message translates to:
+  /// **'Last export'**
+  String get accountingStatusLastExport;
+
+  /// #3616 books status tile whose read failed: never shown as nothing to do
+  ///
+  /// In en, this message translates to:
+  /// **'Could not be read'**
+  String get accountingStatusNotRead;
+
+  /// #3616 books status tile: the period of the oldest VAT return not filed
+  ///
+  /// In en, this message translates to:
+  /// **'VAT return to file'**
+  String get accountingStatusVatToFile;
 
   /// #2370 Button: connect with a pasted API token.
   ///

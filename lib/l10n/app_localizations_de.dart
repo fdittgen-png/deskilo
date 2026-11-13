@@ -235,8 +235,38 @@ class AppLocalizationsDe extends AppLocalizations {
       'Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.';
 
   @override
+  String get accountingExportsAgain => 'Diesen Zeitraum erneut exportieren';
+
+  @override
+  String get accountingExportsBy => 'Erstellt von';
+
+  @override
+  String get accountingExportsFingerprint => 'Prüfsumme';
+
+  @override
+  String get accountingExportsRows => 'Zeilen';
+
+  @override
   String get accountingSourceRefused =>
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
+
+  @override
+  String get accountingStatusAllBooks => 'Alles in der Buchhaltung';
+
+  @override
+  String get accountingStatusBankToMatch => 'Zuzuordnende Bankbuchungen';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Bücher abgeschlossen bis';
+
+  @override
+  String get accountingStatusLastExport => 'Letzter Export';
+
+  @override
+  String get accountingStatusNotRead => 'Konnte nicht gelesen werden';
+
+  @override
+  String get accountingStatusVatToFile => 'Abzugebende Umsatzsteuererklärung';
 
   @override
   String get acctConnConnectToken => 'Mit API-Token verbinden';

@@ -235,8 +235,38 @@ class AppLocalizationsEn extends AppLocalizations {
       'Development workspace: the file is marked DEV and is not the real books.';
 
   @override
+  String get accountingExportsAgain => 'Export this period again';
+
+  @override
+  String get accountingExportsBy => 'Made by';
+
+  @override
+  String get accountingExportsFingerprint => 'Fingerprint';
+
+  @override
+  String get accountingExportsRows => 'Rows';
+
+  @override
   String get accountingSourceRefused =>
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
+
+  @override
+  String get accountingStatusAllBooks => 'Everything in the books';
+
+  @override
+  String get accountingStatusBankToMatch => 'Bank lines to match';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Books closed up to';
+
+  @override
+  String get accountingStatusLastExport => 'Last export';
+
+  @override
+  String get accountingStatusNotRead => 'Could not be read';
+
+  @override
+  String get accountingStatusVatToFile => 'VAT return to file';
 
   @override
   String get acctConnConnectToken => 'Connect with an API token';

@@ -180,10 +180,20 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingExportsAgain": "Exporter de nouveau cette période",
+  "accountingExportsBy": "Fait par",
+  "accountingExportsFingerprint": "Empreinte",
+  "accountingExportsRows": "Lignes",
   "accountingSourceRefused": "Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "accountingStatusAllBooks": "Toute la comptabilité",
+  "accountingStatusBankToMatch": "Lignes bancaires à rapprocher",
+  "accountingStatusClosedUpTo": "Comptes clôturés jusqu’au",
+  "accountingStatusLastExport": "Dernier export",
+  "accountingStatusNotRead": "N’a pas pu être lu",
+  "accountingStatusVatToFile": "Déclaration de TVA à déposer",
   "acctConnConnectToken": "Connecter avec un jeton d'API",
   "acctConnDetail": "Réponse du système : {detail}",
   "acctConnRefresh": "Vérifier la connexion",

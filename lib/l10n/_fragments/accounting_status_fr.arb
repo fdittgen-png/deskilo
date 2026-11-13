@@ -1,0 +1,13 @@
+{
+  "@@locale": "fr",
+  "accountingStatusClosedUpTo": "Comptes clôturés jusqu’au",
+  "accountingStatusLastExport": "Dernier export",
+  "accountingStatusVatToFile": "Déclaration de TVA à déposer",
+  "accountingStatusBankToMatch": "Lignes bancaires à rapprocher",
+  "accountingStatusNotRead": "N’a pas pu être lu",
+  "accountingStatusAllBooks": "Toute la comptabilité",
+  "accountingExportsBy": "Fait par",
+  "accountingExportsRows": "Lignes",
+  "accountingExportsFingerprint": "Empreinte",
+  "accountingExportsAgain": "Exporter de nouveau cette période"
+}

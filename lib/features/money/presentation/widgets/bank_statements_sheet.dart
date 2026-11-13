@@ -20,6 +20,25 @@ import '../invoice_actions.dart' show savePdfToDownloads;
 import 'bank_import_flow.dart';
 import 'bank_lines_sheet.dart';
 
+/// #3616 — the bank statements in their sheet: the button's door and the
+/// status page's tile.
+Future<void> showBankStatementsSheet(
+  BuildContext context, {
+  required String workspaceId,
+  required String currency,
+  required bool canMatch,
+  required bool canReconcile,
+}) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => BankStatementsView(
+    workspaceId: workspaceId,
+    currency: currency,
+    canMatch: canMatch,
+    canReconcile: canReconcile,
+  ),
+);
+
 /// The door to the bank statements, for those who match payments.
 class BankStatementsButton extends StatelessWidget {
   const BankStatementsButton({
@@ -44,15 +63,12 @@ class BankStatementsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
     key: const ValueKey('bank-statements-button'),
-    onPressed: () => showAppSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => BankStatementsView(
-        workspaceId: workspaceId,
-        currency: currency,
-        canMatch: canMatch,
-        canReconcile: canReconcile,
-      ),
+    onPressed: () => showBankStatementsSheet(
+      context,
+      workspaceId: workspaceId,
+      currency: currency,
+      canMatch: canMatch,
+      canReconcile: canReconcile,
     ),
     icon: const Icon(Icons.account_balance_outlined),
     label: Text(context.l10n.bankStatementsTitle),
