@@ -76,42 +76,48 @@ class SetupStepsPane extends ConsumerWidget {
     return Material(
       key: const ValueKey('setup-desk-steps'),
       color: Theme.of(context).colorScheme.surfaceContainerLow,
-      child: ListView(
+      // Built whole (a guide has some thirty steps): Tab walks entries that
+      // stay, not ones a lazy list builds and drops as it scrolls.
+      child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-        children: [
-          _PageEntry(
-            id: 'guide',
-            icon: Icons.checklist_outlined,
-            label: l10n.setupGuideTitle,
-            detail: l10n.setupDeskProgress(done, steps.length),
-            rail: rail,
-            selected: open == null,
-            // recorder-key-exempt: handed to its keyed tile
-            onTap: () => onOpen(null),
-          ),
-          _PageEntry(
-            id: 'levels',
-            icon: Icons.tune_outlined,
-            label: l10n.setupLevelsTitle,
-            rail: rail,
-            selected: open == 'levels',
-            // recorder-key-exempt: handed to its keyed tile
-            onTap: () => onOpen('levels'),
-          ),
-          for (final g in groups) ...[
-            if (!rail) _GroupHeader(text: l10n.setupLaunchGroup(g.group.name)),
-            for (final s in g.steps) step(s),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            _PageEntry(
+              id: 'guide',
+              icon: Icons.checklist_outlined,
+              label: l10n.setupGuideTitle,
+              detail: l10n.setupDeskProgress(done, steps.length),
+              rail: rail,
+              selected: open == null,
+              // recorder-key-exempt: handed to its keyed tile
+              onTap: () => onOpen(null),
+            ),
+            _PageEntry(
+              id: 'levels',
+              icon: Icons.tune_outlined,
+              label: l10n.setupLevelsTitle,
+              rail: rail,
+              selected: open == 'levels',
+              // recorder-key-exempt: handed to its keyed tile
+              onTap: () => onOpen('levels'),
+            ),
+            for (final g in groups) ...[
+              if (!rail)
+                _GroupHeader(text: l10n.setupLaunchGroup(g.group.name)),
+              for (final s in g.steps) step(s),
+            ],
+            _PageEntry(
+              id: 'launch',
+              icon: Icons.fact_check_outlined,
+              label: l10n.setupLaunchLink,
+              rail: rail,
+              selected: open == 'launch',
+              // recorder-key-exempt: handed to its keyed tile
+              onTap: () => onOpen('launch'),
+            ),
           ],
-          _PageEntry(
-            id: 'launch',
-            icon: Icons.fact_check_outlined,
-            label: l10n.setupLaunchLink,
-            rail: rail,
-            selected: open == 'launch',
-            // recorder-key-exempt: handed to its keyed tile
-            onTap: () => onOpen('launch'),
-          ),
-        ],
+        ),
       ),
     );
   }

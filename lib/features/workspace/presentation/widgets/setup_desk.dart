@@ -22,6 +22,8 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/navigation/list_detail_route.dart';
 import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/route_tab_reach.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/setup_guide_screen.dart';
@@ -68,21 +70,54 @@ String? _addressIn(String path) {
   return rest.isEmpty ? null : rest;
 }
 
-class _SetupDesk extends ConsumerWidget {
+class _SetupDesk extends ConsumerStatefulWidget {
   const _SetupDesk({required this.pageFor});
 
   final SetupPageFor pageFor;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<_SetupDesk> createState() => _SetupDeskState();
+}
+
+class _SetupDeskState extends ConsumerState<_SetupDesk> {
+  /// The desk's own place for the keyboard: a page under the guide is an
+  /// entry that draws nothing, so no page on top takes the keyboard; the
+  /// desk takes it when it is nowhere inside, as a list beside its record
+  /// does (ListDetailScaffold).
+  final _own = FocusNode(debugLabel: 'setup desk', skipTraversal: true);
+
+  /// The page the keyboard was last offered for: offered once per page
+  /// opened, never while a dialog or another page is on top.
+  Object? _keysFor = const Object();
+
+  @override
+  void dispose() {
+    _own.dispose();
+    super.dispose();
+  }
+
+  void _takeKeys() => WidgetsBinding.instance.addPostFrameCallback((_) {
+    final now = FocusManager.instance.primaryFocus;
+    final inside = now != null && (now == _own || now.ancestors.contains(_own));
+    if (mounted && !inside) _own.requestFocus();
+  });
+
+  @override
+  Widget build(BuildContext context) {
     // The router's own configuration, not the reported address: a way out
     // a step refused (`onExit`) leaves the configuration where it was.
     final delegate = GoRouter.of(context).routerDelegate;
     return ListenableBuilder(
       listenable: delegate,
       builder: (context, _) {
-        final open = _addressIn(delegate.currentConfiguration.uri.path);
-        final page = open == null ? null : pageFor(open);
+        final path = delegate.currentConfiguration.uri.path;
+        final open = _addressIn(path);
+        final page = open == null ? null : widget.pageFor(open);
+        final shown = path == _setupPath || open != null;
+        if (shown && open != _keysFor) {
+          _keysFor = open;
+          _takeKeys();
+        }
         return LayoutBuilder(
           builder: (context, box) {
             // content-fit: the list where a step's form and its preview
@@ -93,36 +128,61 @@ class _SetupDesk extends ConsumerWidget {
                 SetupStepsPane.listWidth + WindowClass.expandedMinWidth;
             // The keys work wherever the focus is on the desk: in the
             // steps beside the page or in the page itself.
-            return CallbackShortcuts(
-              bindings: shortcutBindings({
-                AppShortcutId.submit: () => _step(context, ref, open, 1),
-                AppShortcutId.previousStep: () => _step(context, ref, open, -1),
-              }),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  FocusTraversalGroup(
-                    child: SizedBox(
-                      width: list
-                          ? SetupStepsPane.listWidth
-                          : SetupStepsPane.railWidth,
-                      child: SetupStepsPane(
-                        open: page == null ? null : open,
-                        rail: !list,
-                        onOpen: (to) => _go(context, to),
-                      ),
+            // The page's route is under an entry that draws nothing: it
+            // stays in the Tab cycle while a page under the guide is shown.
+            return RouteTabReach(
+              active: shown && open != null,
+              child: Focus(
+                focusNode: _own,
+                child: CallbackShortcuts(
+                  bindings: shortcutBindings({
+                    AppShortcutId.submit: () => _step(context, ref, open, 1),
+                    AppShortcutId.previousStep: () =>
+                        _step(context, ref, open, -1),
+                  }),
+                  // The steps, then the page: stated, so a list scrolled by
+                  // Tab keeps its place in the cycle (#3891).
+                  child: FocusTraversalGroup(
+                    policy: OrderedTraversalPolicy(),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        FocusTraversalOrder(
+                          order: const NumericFocusOrder(1),
+                          child: FocusTraversalGroup(
+                            child: SizedBox(
+                              width: list
+                                  ? SetupStepsPane.listWidth
+                                  : SetupStepsPane.railWidth,
+                              child: SetupStepsPane(
+                                open: page == null ? null : open,
+                                rail: !list,
+                                onOpen: (to) => _go(context, to),
+                              ),
+                            ),
+                          ),
+                        ),
+                        const VerticalDivider(width: 1),
+                        Expanded(
+                          child: FocusTraversalOrder(
+                            order: const NumericFocusOrder(2),
+                            child: FocusTraversalGroup(
+                              child: KeyedSubtree(
+                                key: ValueKey('setup-desk-page|${open ?? ''}'),
+                                child: BesidePageTitle(
+                                  shown: shown && page != null,
+                                  child:
+                                      page ??
+                                      const SetupGuideScreen(listBeside: true),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const VerticalDivider(width: 1),
-                  Expanded(
-                    child: FocusTraversalGroup(
-                      child: KeyedSubtree(
-                        key: ValueKey('setup-desk-page|${open ?? ''}'),
-                        child: page ?? const SetupGuideScreen(listBeside: true),
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             );
           },

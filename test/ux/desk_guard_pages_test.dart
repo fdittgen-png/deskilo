@@ -5,8 +5,10 @@
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
+import 'package:deskilo/core/demo/seed/demo_setup_status.dart';
 import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
 import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
@@ -131,6 +133,16 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
+        // #3629 — the guide's pages with the Demo's setup state: every
+        // feature on, the basics and the hours done.
+        localSetup: path.startsWith('/setup')
+            ? FakeLocalSetupRepository(
+                status: demoSetupStatus(
+                  {for (final f in features) f.name: true},
+                  ready: {'basics', 'hours'},
+                ),
+              )
+            : null,
         // #3628 — a request waiting, so the privacy page has a row.
         profile: FakeProfileRepository()
           ..rightsRequests.add(
