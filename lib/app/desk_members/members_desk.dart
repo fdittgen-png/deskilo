@@ -141,6 +141,7 @@ class _MembersTable extends ConsumerWidget {
       chips: view.chips(),
       // The plan fees add up per currency, with the table's own totals.
       amountOf: view.bands == null ? null : view.feeAmount,
+      amountColumn: 'fee',
       formatAmount: (code, minor) => format.moneyIn(code).formatMinor(minor),
       columns: view.columns(),
       rowActions: rights.changes ? view.rowActions : null,

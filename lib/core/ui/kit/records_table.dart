@@ -45,6 +45,7 @@ class RecordsTable<T> extends StatefulWidget {
     this.complete = true,
     this.chips = const [],
     this.amountOf,
+    this.amountColumn,
     this.formatAmount,
     this.rowActions,
     this.bulkActions = const [],
@@ -86,6 +87,12 @@ class RecordsTable<T> extends StatefulWidget {
 
   /// What a row adds to the totals, in its own currency.
   final RecordAmount? Function(T row)? amountOf;
+
+  /// The column whose amounts [amountOf] adds up. When given, the total
+  /// carries that column's name and is not shown while the column is not
+  /// (hidden by the person, or giving way to a record open beside the
+  /// table): a total never stands under another column's figures.
+  final String? amountColumn;
   final String Function(String currency, int minor)? formatAmount;
   final List<RecordAction<T>> Function(T row)? rowActions;
   final List<RecordBulkAction> bulkActions;
@@ -424,7 +431,17 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   );
 
   Widget _footer(List<T> shown) {
-    final amountOf = widget.amountOf;
+    final of = widget.columns
+        .where((c) => c.id == widget.amountColumn)
+        .firstOrNull;
+    final totalHidden =
+        of != null &&
+        !columnsShown(
+          widget.columns,
+          _c.hidden,
+          beside: ListDetailOpen.of(context),
+        ).contains(of);
+    final amountOf = totalHidden ? null : widget.amountOf;
     final selected = _c.selected;
     final selection = [
       for (final r in shown)
@@ -442,6 +459,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               amountOf,
             ),
       scope: scope,
+      totalOf: of?.label,
       format: widget.formatAmount ?? (c, m) => '$m $c',
       dropped: _c.dropped,
     );
