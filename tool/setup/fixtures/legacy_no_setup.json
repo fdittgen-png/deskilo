@@ -469,7 +469,7 @@
   "automatic": false,
   "betweenDays": 14,
   "firstDays": 14,
-  "levels": 2
+  "levels": 3
  },
  "services": [],
  "sites": [],

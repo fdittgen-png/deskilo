@@ -18,6 +18,7 @@ import '../../shortcuts/app_shortcuts.dart';
 import '../../storage/pane_width_store.dart';
 import '../../trace/trace_logger.dart';
 import 'list_detail_open.dart';
+import 'route_tab_reach.dart';
 
 /// The pane's widths.
 abstract final class ListDetailMetrics {
@@ -202,7 +203,9 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
           box.maxWidth - widget.listMin - ListDetailMetrics.grip,
         );
         final beside = room >= ListDetailMetrics.paneMin; // content-fit: the list and the narrowest pane side by side
-        return CallbackShortcuts(
+        return RouteTabReach(
+          active: selected != null,
+          child: CallbackShortcuts(
           // Escape closes the record wherever the keyboard is, in the list
           // (on the row it moves with) or in the pane. The wrapper is always
           // there, so the list's place in the tree never changes.
@@ -289,7 +292,7 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
               },
             ),
           ),
-        );
+        ));
       },
     );
   }

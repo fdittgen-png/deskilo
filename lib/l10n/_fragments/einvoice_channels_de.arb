@@ -254,5 +254,22 @@
   "memberEInvoiceAddressFailed": "Die E-Rechnungsadresse konnte nicht gespeichert werden.",
   "@memberEInvoiceAddressFailed": {
     "description": "#2358 member dialog: the save was refused"
+  },
+  "eInvoiceTestFieldsTitle": "Testumgebung (UAT)",
+  "@eInvoiceTestFieldsTitle": {
+    "description": "#3882 e-invoice config: the test-environment fields of the chosen connector"
+  },
+  "eInvoiceTestFieldsHelp": "Zugangsdaten für die Testplattform. Sie werden getrennt von den Produktivdaten gespeichert; ein leeres Feld behält den gespeicherten Wert.",
+  "@eInvoiceTestFieldsHelp": {
+    "description": "#3882 e-invoice config: what the test-environment fields are for"
+  },
+  "eInvoiceTestFieldLabel": "{field} (Test)",
+  "@eInvoiceTestFieldLabel": {
+    "description": "#3882 e-invoice config: a connector field's test-environment twin",
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
   }
 }
