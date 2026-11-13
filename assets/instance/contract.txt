@@ -2540,7 +2540,7 @@ routine public.ensure_personal_data_admin_role(p_workspace_id uuid) -> uuid | fu
 routine public.ensure_system_columns(p_table text) -> void | function | invoker | volatile | exec:service_role | body:b82cfcf514ba
 routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integer | function | definer | volatile | exec:service_role | body:b8c745441adc
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
-routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:c8909f7334c8
+routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:dce8db716541
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:70e8dbf78578
