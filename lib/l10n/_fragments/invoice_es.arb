@@ -671,10 +671,6 @@
   "@reportTemplateLangDefault": {
     "description": "Report language resolution + per-language templates (#496)"
   },
-  "reportLanguageAmbiguous": "Este país tiene varios idiomas — defina primero el idioma del espacio en los Ajustes del espacio.",
-  "@reportLanguageAmbiguous": {
-    "description": "Report language resolution + per-language templates (#496)"
-  },
   "reportDesignEmpty": "Banda vacía — añada un elemento abajo.",
   "@reportDesignEmpty": {
     "description": "True WYSIWYG design surface (#498)"

@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 
+import 'lint_sources.dart';
+
 YamlMap _workflow(String name) =>
     loadYaml(File('.github/workflows/$name.yml').readAsStringSync()) as YamlMap;
 
@@ -270,5 +272,74 @@ void main() {
     expect(job['permissions'], isNull);
     final checkout = _steps('workflow-security', 'audit').first;
     expect(_mapAt(checkout, 'with')['persist-credentials'], isFalse);
+  });
+
+  test('every Gradle build takes the digest-pinned Gradle, with a stated '
+      'dependency-cache policy', () {
+    // #3473 -- a cache inside a composite escapes the cache lint, so it is
+    // pinned here: what it may carry, and which job may save it.
+    final action = File('.github/actions/gradle-cache/action.yml')
+        .readAsStringSync();
+    final doc = loadYaml(action) as YamlMap;
+    final steps = ((doc['runs'] as YamlMap)['steps'] as YamlList).cast<YamlMap>();
+    final caches = steps.where((s) => '${s['uses']}'.startsWith('actions/cache'));
+    expect(caches, hasLength(3));
+    final paths = caches.map((s) => (s['with'] as YamlMap)['path']).toSet();
+    expect(paths, {
+      '~/.cache/deskilo-toolchain/gradle',
+      '~/.gradle/caches',
+    }, reason: 'the verified archive and the dependency cache, separate '
+        'entries; never a build tree');
+    for (final s in caches) {
+      final key = '${(s['with'] as YamlMap)['key']}';
+      expect(key, contains('runner.arch'));
+      expect(key, contains('gradle-wrapper.properties'));
+      expect(key, isNot(matches('head_ref|pull_request|run_id|run_number|run_attempt')));
+    }
+    expect(
+      steps.singleWhere((s) => s['name'].toString().startsWith('Verify the Gradle'))['run'],
+      contains('scripts/install_gradle.sh'),
+    );
+    // the policy per caller; every workflow that builds an apk or a bundle
+    const policy = {
+      'android-boot': "\${{ github.ref == 'refs/heads/master' && 'save' || 'restore' }}",
+      'dev-apk': 'none',
+      'fdroid-foss': 'restore',
+      'fdroid-release': 'none',
+      'play-internal': 'none',
+    };
+    for (final f in filesWithExtension('.github/workflows', '.yml')) {
+      final text = f.readAsStringSync();
+      if (!RegExp(r'flutter build (apk|appbundle)').hasMatch(text)) continue;
+      final stem = f.uri.pathSegments.last.replaceAll('.yml', '');
+      expect(policy.containsKey(stem), isTrue,
+          reason: '$stem builds with Gradle: give it a policy here');
+      final jobs = _workflow(stem)['jobs'] as YamlMap;
+      final uses = [
+        for (final j in jobs.values)
+          for (final s in ((j as YamlMap)['steps'] as YamlList).cast<YamlMap>())
+            if (s['uses'] == './.github/actions/gradle-cache') s,
+      ];
+      expect(uses, hasLength(1), reason: '$stem: one pinned Gradle step');
+      expect(_mapAt(uses.single, 'with')['dependencies'], policy[stem]);
+      // the action exists only in a ref that holds it: the step is guarded by
+      // an output set from the checked-out tree, and warns when it is absent
+      expect(uses.single['if'], 'steps.gradle_pin.outputs.present == \'true\'');
+      final all = [
+        for (final j in jobs.values)
+          for (final st in ((j as YamlMap)['steps'] as YamlList).cast<YamlMap>()) st,
+      ];
+      final probe = all.singleWhere((st) => st['id'] == 'gradle_pin');
+      expect(all.indexOf(probe), lessThan(all.indexOf(uses.single)));
+      expect('${probe['run']}', contains('.github/actions/gradle-cache/action.yml'));
+      expect('${probe['run']}', contains('::warning::'));
+    }
+    // no workflow whose output is installed or signed restores dependency state
+    for (final stem in ['dev-apk', 'play-internal', 'fdroid-release']) {
+      expect(policy[stem], 'none');
+    }
+    expect(action, isNot(contains('steps.pin.')),
+        reason: 'the composite has no fallback of its own: it cannot run in '
+            'a ref that lacks it');
   });
 }

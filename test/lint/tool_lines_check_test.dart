@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:yaml/yaml.dart';
 
 void main() {
   late Directory repo;
@@ -113,6 +114,43 @@ void main() {
     final text = File('.github/workflows/tool-lines.yml').readAsStringSync();
     expect(text, contains('edited'));
     expect(text, contains('scripts/tool_lines_check.sh'));
+  });
+
+  test('an edit of a merged pull request reads a head that is on no branch',
+      () {
+    // #3763 -- the head of a squash-merged, deleted branch is on no branch,
+    // and the checkout of an `edited` event holds only the base branch. The
+    // host keeps refs/pull/<n>/head: it is fetched BEFORE the script runs,
+    // the number comes through env, and the group is per pull request.
+    final doc = loadYaml(
+      File('.github/workflows/tool-lines.yml').readAsStringSync(),
+    ) as YamlMap;
+    final steps =
+        ((doc['jobs'] as YamlMap)['tool-lines'] as YamlMap)['steps'] as YamlList;
+    final fetch = steps.indexWhere(
+      (s) => '${(s as YamlMap)['run']}'.contains(r'refs/pull/${PR_NUMBER}/head'),
+    );
+    final script = steps.indexWhere(
+      (s) => '${(s as YamlMap)['run']}'.contains('scripts/tool_lines_check.sh'),
+    );
+    expect(fetch, isNonNegative, reason: 'no step fetches the pull head ref');
+    expect(fetch, lessThan(script));
+    final step = steps[fetch] as YamlMap;
+    expect(
+      (step['env'] as YamlMap)['PR_NUMBER'],
+      r'${{ github.event.pull_request.number }}',
+    );
+    expect('${step['run']}', isNot(contains(r'${{')),
+        reason: 'no expression inside the shell');
+    expect(
+      ((steps.first as YamlMap)['with'] as YamlMap)['fetch-depth'],
+      0,
+    );
+    final group = '${(doc['concurrency'] as YamlMap)['group']}';
+    expect(group, contains(r'${{ github.ref }}'));
+    expect(group, contains(r'${{ github.event.pull_request.number }}'),
+        reason: 'one group per pull request: two merged pull requests '
+            'edited within a minute must not cancel each other');
   });
 
   test('a commit authored before the rule passes, the same after it fails', () {

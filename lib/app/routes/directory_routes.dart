@@ -10,7 +10,6 @@ import '../../features/directory/presentation/connections_screen.dart';
 import '../../features/directory/presentation/directory_screen.dart'
     as discovery;
 import '../../features/directory/presentation/public_page_editor.dart';
-import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'me_adapters.dart';
@@ -41,8 +40,9 @@ List<RouteBase> directoryRoutes(RouteEnv env) {
     GoRoute(
       path: '/settings/public-page',
       redirect: env.guard(
+        // #3870 — the owner reaches the editor whatever the flag says: a
+        // withdrawn page is prepared here for its next publication.
         const RouteAccess(
-          features: [WorkspaceFeature.publicListings],
           bypass: RoleBypass.owner,
           to: '/profiles',
         ),

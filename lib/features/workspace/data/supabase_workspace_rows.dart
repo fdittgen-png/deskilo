@@ -75,6 +75,7 @@ mixin SupabaseWorkspaceRows {
     subscriptionVatRateId: row['subscription_vat_rate_id'] as String? ?? '',
     invoiceLegal: row['invoice_legal'] as Map<String, dynamic>? ?? const {},
     defaultLocale: row['default_locale'] as String? ?? '',
+    documentLanguageConfirmed: row['document_language_confirmed'] != false,
     invitationTemplates:
         row['invitation_templates'] as Map<String, dynamic>? ?? const {},
   );

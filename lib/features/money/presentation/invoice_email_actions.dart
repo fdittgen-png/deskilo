@@ -5,9 +5,9 @@
 // decision on an e-mail nobody confirmed, a refusal in words, why the
 // customer cannot be e-mailed, or "Send by e-mail" to the address shown.
 // The invoice is the one share and download print — one builder, one set
-// of options — in the customer's document language, and so are the subject
-// and the text; without that language nothing is e-mailed. One attempt id
-// per press, reused when the person retries it.
+// of options — in the invoice's document language, frozen at issue (#3850),
+// and so are the subject and the text. One attempt id per press, reused when
+// the person retries it.
 import 'dart:convert';
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -56,24 +56,21 @@ class InvoiceEmailFlow {
   /// A test hands in its own builder; the app uses [_document].
   final InvoiceMailDocumentBuilder? documentOf;
 
-  /// A test hands in the customer's language; the app resolves it as the
-  /// reminder letter does ([customerDocumentLanguage]).
+  /// A test hands in the document's language; the app reads the invoice's
+  /// own ([invoiceDocumentLocale], #3850).
   final Future<String> Function(Invoice invoice)? languageOf;
 
   InvoiceMailCommands get _commands => ref.read(invoiceMailCommandsProvider);
 
-  /// The document share and download give, in [language]. The annexes are
-  /// asked as they ask them; null when the person cancelled.
-  Future<({List<int> bytes, String fileName})?> _document(
-    Invoice invoice,
-    String language,
-  ) async {
+  /// The document share and download give. The annexes are asked as they
+  /// ask them; null when the person cancelled.
+  Future<({List<int> bytes, String fileName})?> _document(Invoice invoice) async {
     final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return null;
     return buildInvoicePdfFile(
       context,
       invoice,
-      invoiceShareOptions(context, ref, invoice, annexes, language: language),
+      invoiceShareOptions(context, ref, invoice, annexes),
     );
   }
 
@@ -90,13 +87,10 @@ class InvoiceEmailFlow {
         !context.mounted) {
       return;
     }
-    final language =
-        await (languageOf ?? (i) => customerDocumentLanguage(ref, i))(invoice);
+    final language = languageOf == null
+        ? invoiceDocumentLocale(ref, invoice).language
+        : await languageOf!(invoice);
     if (!context.mounted) return;
-    if (language.isEmpty) {
-      AppSnack.error(context, context.l10n.invoiceEmailNoLanguage);
-      return;
-    }
     ({List<int> bytes, String fileName})? pdf;
     if (!await runGuarded(
           context,
@@ -104,7 +98,7 @@ class InvoiceEmailFlow {
           message: 'invoice e-mail document failed',
           errorText: context.l10n.invoiceEmailFailed,
           action: () async => pdf = documentOf == null
-              ? await _document(invoice, language)
+              ? await _document(invoice)
               : await documentOf!(invoice, language),
         ) ||
         !context.mounted ||

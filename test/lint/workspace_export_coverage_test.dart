@@ -539,6 +539,10 @@ const Map<String, Set<String>> _notExportedColumns = {
     'week_start',
   },
   'workspaces': {
+    // #3850 — whether the document language 0753 gave the business still
+    // waits for an administrator: a to-do of this space, recomputed when the
+    // language is saved; the language itself is exported.
+    'document_language_confirmed',
     // The birth record `installation id:local id` (#2561): stamped by the
     // host the row was born on and recomputable from it; a workbook that
     // moves between installations must not carry it as data.

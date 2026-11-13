@@ -91,9 +91,5 @@
   "invoiceEmailFailed": "Die Rechnung konnte nicht per E-Mail gesendet werden. Nichts wurde gesendet.",
   "@invoiceEmailFailed": {
     "description": "#3673 invoices by e-mail: invoiceEmailFailed"
-  },
-  "invoiceEmailNoLanguage": "Die Dokumentsprache des Kunden ist unbekannt, daher wurde die Rechnung nicht per E-Mail gesendet. Wählen Sie seine Sprache oder teilen Sie die Rechnung.",
-  "@invoiceEmailNoLanguage": {
-    "description": "#3673 invoices by e-mail: invoiceEmailNoLanguage"
   }
 }

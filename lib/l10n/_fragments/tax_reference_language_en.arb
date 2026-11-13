@@ -1,0 +1,31 @@
+{
+  "@@locale": "en",
+  "taxRefDomainDocumentLanguage": "Document languages",
+  "@taxRefDomainDocumentLanguage": {
+    "description": "#3850 document languages: taxRefDomainDocumentLanguage"
+  },
+  "taxRefLanguages": "Official languages (ISO 639-1, usual one first)",
+  "@taxRefLanguages": {
+    "description": "#3850 document languages: taxRefLanguages"
+  },
+  "taxRefCustomerLanguage": "An invoice may be in its customer's language",
+  "@taxRefCustomerLanguage": {
+    "description": "#3850 document languages: taxRefCustomerLanguage"
+  },
+  "taxRefRequiredLanguages": "Language a region requires (QC=fr, comma separated)",
+  "@taxRefRequiredLanguages": {
+    "description": "#3850 document languages: taxRefRequiredLanguages"
+  },
+  "taxRefInvalidLanguages": "Two-letter language codes separated by commas, such as fr, de",
+  "@taxRefInvalidLanguages": {
+    "description": "#3850 document languages: taxRefInvalidLanguages"
+  },
+  "taxRefInvalidRequiredLanguages": "A region code, an equals sign and a language code, such as QC=fr",
+  "@taxRefInvalidRequiredLanguages": {
+    "description": "#3850 document languages: taxRefInvalidRequiredLanguages"
+  },
+  "attentionConfirmDocumentLanguage": "Confirm the language of the documents",
+  "@attentionConfirmDocumentLanguage": {
+    "description": "#3850 the to-do of a business whose document language waits for confirmation"
+  }
+}

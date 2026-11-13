@@ -12,7 +12,10 @@ on:
     types: [edited]
 
 concurrency:
-  group: tool-lines-${{ github.ref }}
+  # #3763 -- for a MERGED pull request the run's ref is the base branch, so
+  # the ref alone is one group for every merged pull request: the number keeps
+  # two corrected descriptions from cancelling each other.
+  group: tool-lines-${{ github.ref }}-${{ github.event.pull_request.number }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 permissions:
@@ -27,6 +30,14 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      # #3763 -- an edit of a MERGED pull request checks out the base branch,
+      # and the head of a squash-merged, deleted branch is on no branch: the
+      # range BASE..HEAD would not resolve and the script would refuse. The
+      # host keeps refs/pull/<n>/head after the branch is gone.
+      - name: Fetch the pull request head
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: git fetch --no-tags origin "refs/pull/${PR_NUMBER}/head"
       - env:
           BASE: ${{ github.event.pull_request.base.sha }}
           HEAD: ${{ github.event.pull_request.head.sha }}

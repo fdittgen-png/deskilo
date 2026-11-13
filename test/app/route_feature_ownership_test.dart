@@ -6,6 +6,7 @@
 // the route disappears with the flag.
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/shell/shell_drawer_entries.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/help/help_tips.dart';
 import 'package:deskilo/features/profile/presentation/widgets/settings_task_section.dart';
 import 'package:deskilo/features/profile/presentation/widgets/settings_workspace_sections.dart';
@@ -27,7 +28,6 @@ import '../helpers/screens/workspace_settings_screen.dart';
 const _owned = <(String, WorkspaceFeature)>[
   ('/money/repartition', WorkspaceFeature.expenseRepartition),
   ('/money/settlement', WorkspaceFeature.invoiceSettlement),
-  ('/settings/public-page', WorkspaceFeature.publicListings),
   ('/payment-methods', WorkspaceFeature.moneyTab),
   ('/billing', WorkspaceFeature.moneyTab),
 ];
@@ -216,5 +216,31 @@ void main() {
         );
       });
     }
+
+    // #3870 — and the tile opens the editor with what was stored.
+    testWidgets('the owner of a withdrawn public page opens the editor from '
+        'Settings and finds the stored draft', (tester) async {
+      final directory = FakeDirectoryRepository();
+      await directory.savePage('ws-1', {
+        'address': 'Desk 9, Public Row',
+      }, published: false);
+      await pumpWorkspaceSettings(
+        tester,
+        repository: FakeWorkspaceRepository.withWorkspace(
+          featureFlags: {'publicListings': false},
+        ),
+        directory: directory,
+      );
+      final tile = find.byKey(
+        const ValueKey('workspace-settings-portal-publication'),
+      );
+      await tester.ensureVisible(tile);
+      await tester.tap(tile);
+      await tester.pumpAndSettle();
+      final address = find.widgetWithText(TextField, 'Public address');
+      expect(address, findsOneWidget);
+      expect(tester.widget<TextField>(address).controller!.text,
+          'Desk 9, Public Row');
+    });
   });
 }
