@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic accounting authority and landlord for the city demos.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show vatSplit;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/accounting_connection.dart';
@@ -20,26 +21,25 @@ import '../data/workspace_asset_repository.dart';
 FakeBookProfileRepository cityBooks(
   FakeMoneyRepository money,
   DateTime now, {
-  required String workspaceId,
-  required String siteId,
+  required ({String workspaceId, String siteId, String country, String currency}) spec,
   required bool external,
   FakePurchaseRepository? purchases,
 }) =>
     FakeBookProfileRepository(
         money: money,
-        country: external ? 'GB' : 'US',
+        country: spec.country,
         purchases: purchases,
       )
       ..profiles.add(
         BookProfile(
-          id: '$workspaceId-book',
-          workspaceId: workspaceId,
-          issuerSiteId: siteId,
+          id: '${spec.workspaceId}-book',
+          workspaceId: spec.workspaceId,
+          issuerSiteId: spec.siteId,
           authority: external
               ? BookAuthority.externalBook
               : BookAuthority.localBook,
           externalSystem: external ? 'Sage' : '',
-          functionalCurrency: external ? 'GBP' : 'USD',
+          functionalCurrency: spec.currency,
           fiscalYearStartMonth: 1,
           fiscalYearStartDay: 1,
           basis: AccountingBasis.accrual,
@@ -50,9 +50,9 @@ FakeBookProfileRepository cityBooks(
       ..accounts.addAll([
         for (final (index, role) in BookRole.values.indexed)
           BookAccount(
-            id: '$workspaceId-account-${role.wire}',
-            workspaceId: workspaceId,
-            issuerSiteId: siteId,
+            id: '${spec.workspaceId}-account-${role.wire}',
+            workspaceId: spec.workspaceId,
+            issuerSiteId: spec.siteId,
             code: '${1000 + index * 100}',
             name: role.wire,
             type: role.type,
@@ -64,11 +64,11 @@ FakeBookProfileRepository cityBooks(
       ..mappings.addAll([
         for (final role in BookRole.values)
           BookMapping(
-            id: '$workspaceId-mapping-${role.wire}',
-            workspaceId: workspaceId,
-            issuerSiteId: siteId,
+            id: '${spec.workspaceId}-mapping-${role.wire}',
+            workspaceId: spec.workspaceId,
+            issuerSiteId: spec.siteId,
             role: role,
-            accountId: '$workspaceId-account-${role.wire}',
+            accountId: '${spec.workspaceId}-account-${role.wire}',
             effectiveFrom: DateTime(now.year - 4),
             revision: 1,
           ),
@@ -186,11 +186,13 @@ FakeLeaseCommitmentRepository newYorkCommitments(DateTime now) {
 
 FakeWorkspaceAssetRepository cityAssets(
   DateTime now, {
-  required bool tenant,
+  required String prefix,
+  required String currency,
+  required int years,
+  required double vatPercent,
   required List<String> sites,
 }) {
-  final prefix = tenant ? 'ny' : 'uk';
-  final installed = DateTime(now.year - (tenant ? 4 : 3), now.month);
+  final installed = DateTime(now.year - years, now.month);
   final period = yearMonth(installed.year, installed.month);
   return FakeWorkspaceAssetRepository(
     assets: [
@@ -200,8 +202,8 @@ FakeWorkspaceAssetRepository cityAssets(
           revision: 1,
           assetNumber: index + 1,
           description: '$site: colour and mono printers, copier and 3D printer',
-          currency: tenant ? 'USD' : 'GBP',
-          acquisitionCostCents: 220000,
+          currency: currency,
+          acquisitionCostCents: vatSplit(220000, vatPercent).netCents,
           supplierName: 'Amazon Business (Demo)',
           originalReference: 'equipment-$period-$index',
           decision: AssetDecision.capitalise,

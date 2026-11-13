@@ -7199,6 +7199,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'The demo could not be opened. Your workspace is unchanged.';
 
   @override
+  String get demoEntryMilan => 'Milan · purchases and sales (EUR)';
+
+  @override
   String get demoEntrySignIn => 'Sign in';
 
   @override
@@ -7210,6 +7213,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get demoEntryUnavailable =>
       'The demo is not available in this workspace.';
+
+  @override
+  String get demoEntryZurich => 'Zurich · purchases and sales (CHF)';
 
   @override
   String get demoPersonaAdmin => 'An administrator';

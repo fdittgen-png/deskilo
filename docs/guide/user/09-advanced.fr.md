@@ -451,7 +451,11 @@ Vous voulez savoir exactement ce qui ne laisse aucune trace.
 
 **Public:** Tout le monde
 
-Vous voulez regarder autour de vous avant de vous engager. La démo est un espace inventé, ouvert à tous, sans compte.
+Vous voulez regarder autour de vous avant de vous engager. La démo contient plusieurs entreprises fictives, ouvertes à tous, sans compte.
+
+Pour explorer les achats et les ventes, choisissez **Zurich · achats et ventes (CHF)** ou **Milan · achats et ventes (EUR)** dans la note d’accueil. Zurich ouvre les achats en CHF ; Milan ouvre la facturation en EUR. Les deux proposent des fournisseurs, des commandes, des factures à approuver, des paiements et des factures clients.
+
+Chaque membre humain retrouve ses propres factures dans au moins deux devises dans ses finances personnelles ; les montants restent séparés par devise. Changer de point de vue conserve vos commandes et vos factures approuvées. La réinitialisation rétablit les données de départ.
 
 **Étapes**
 

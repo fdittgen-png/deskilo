@@ -15,9 +15,12 @@ import 'data/money_repository.dart';
 import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_pick.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_twin_seed.dart';
 
 const _pezenasPasses = [
   GuestPassOffer(id: 'demo-pass-pezenas-day', name: 'Pass journée', unit: GuestPassUnit.day, priceCents: 1800),
@@ -67,15 +70,20 @@ List<Override> demoGuestPassOverrides(DemoFixture fixture) {
   final newYork = space(demoNewYorkSpaceId, 'USD',
       (reservations: fixture.newYork.reservations, workspaces: fixture.newYork.workspaces,
        money: fixture.newYork.money, seats: () => fixture.newYork.floorPlan.seats), _newYorkPasses);
+  final zurich = space(demoZurichSpaceId, 'CHF',
+      (reservations: fixture.zurich.reservations, workspaces: fixture.zurich.workspaces,
+       money: fixture.zurich.money, seats: () => fixture.zurich.floorPlan.seats), const []);
+  final milan = space(demoMilanSpaceId, 'EUR',
+      (reservations: fixture.milan.reservations, workspaces: fixture.milan.workspaces,
+       money: fixture.milan.money, seats: () => fixture.milan.floorPlan.seats), const []);
+  final twin = space(demoTwinSpaceId, 'EUR',
+      (reservations: fixture.twin.reservations, workspaces: fixture.twin.workspaces,
+       money: fixture.twin.money, seats: () => fixture.twin.floorPlan.seats), const []);
   return [
     guestPassRepositoryProvider.overrideWith((ref) {
       rights.held = () => ref.read(myPermissionsProvider).toSet();
-      return switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoSecondSpaceId => leipzig,
-        demoLondonSpaceId => london,
-        demoNewYorkSpaceId => newYork,
-        _ => home,
-      };
+      return demoPickSpace(ref, (home: home, leipzig: leipzig, london: london,
+        newYork: newYork, zurich: zurich, milan: milan, twin: twin));
     }),
   ];
 }

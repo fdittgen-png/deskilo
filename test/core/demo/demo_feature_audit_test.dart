@@ -31,6 +31,8 @@ List<_Space> _spaces(DemoFixture f) => [
   (id: 'ws-2', rows: f.secondSpace.workspaces, money: f.secondSpace.money),
   (id: 'ws-3', rows: f.london.workspaces, money: f.london.money),
   (id: 'ws-4', rows: f.newYork.workspaces, money: f.newYork.money),
+  (id: 'ws-5', rows: f.zurich.workspaces, money: f.zurich.money),
+  (id: 'ws-6', rows: f.milan.workspaces, money: f.milan.money),
 ];
 
 Workspace _row(_Space s) => s.rows.workspaces.singleWhere((w) => w.id == s.id);
@@ -99,6 +101,8 @@ void main() {
           'DE': ('EUR', 'Europe/Berlin'),
           'GB': ('GBP', 'Europe/London'),
           'US': ('USD', 'America/New_York'),
+          'CH': ('CHF', 'Europe/Zurich'),
+          'IT': ('EUR', 'Europe/Rome'),
         }[w.countryCode];
         expect((w.currencyCode, w.timezone), expected);
         expect(

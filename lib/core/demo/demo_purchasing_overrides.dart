@@ -14,9 +14,11 @@ import 'data/company_lookup_repository.dart';
 import 'data/purchase_approval_reads.dart';
 import 'data/supplier_balance_repository.dart';
 import 'demo_space_pick.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_purchase_seed.dart';
+import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
 String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
@@ -24,31 +26,21 @@ String _approvalSpace(Ref ref) => switch (ref.watch(currentWorkspaceProvider).va
   demoTwinSpaceId => demoTwinSpaceId,
   demoLondonSpaceId => demoLondonSpaceId,
   demoNewYorkSpaceId => demoNewYorkSpaceId,
+  demoZurichSpaceId => demoZurichSpaceId,
+  demoMilanSpaceId => demoMilanSpaceId,
+  demoSecondSpaceId => demoSecondSpaceId,
   _ => '__unavailable__',
 };
 
 String _approvalCurrency(Ref ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
   demoLondonSpaceId => 'GBP',
   demoNewYorkSpaceId => 'USD',
+  demoZurichSpaceId => 'CHF',
   _ => 'EUR',
 };
 
-/// Keep the supplier and purchase readers inside the same Demo fixture: each
-/// space reads its own (#3797), a space not given its own reads [purchasing].
-List<Override> demoPurchasingOverrides(
-  DemoPurchasing purchasing, {
-  DemoPurchasing? leipzig,
-  DemoPurchasing? london,
-  DemoPurchasing? newYork,
-  DemoPurchasing? twin,
-}) {
-  final DemoSpaces<DemoPurchasing> spaces = (
-    home: purchasing,
-    leipzig: leipzig ?? purchasing,
-    london: london ?? purchasing,
-    newYork: newYork ?? purchasing,
-    twin: twin ?? purchasing,
-  );
+/// Keep supplier and purchase readers on each space's own fixture (#3797).
+List<Override> demoPurchasingOverrides(DemoSpaces<DemoPurchasing> spaces) {
   return [
     supplierRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, spaces).suppliers,

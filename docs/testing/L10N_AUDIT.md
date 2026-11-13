@@ -6,19 +6,18 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, document lines, bullet list, paragraphs, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-74 literal(s) in 15 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+73 literal(s) in 16 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
+| `lib/core/demo/demo_commerce_space.dart:63` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:57` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:154` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:147` | title | Coworking · $period | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:150` | label | Workspace membership | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:156` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:164` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_purchase_seed.dart:111` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:169` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:177` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_purchase_seed.dart:125` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:32` | title | Internet service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:89` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:97` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
@@ -96,7 +95,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_network_seed.dart`** (2) — demo records: the page titles of a saved report as a space stores them
 - **`lib/core/demo/seed/demo_money_seed.dart`** (5) — demo records: VAT rate labels and an expense title as a space stores them
 - **`lib/core/demo/seed/demo_london_seed.dart`** (3) — Demo records: the London space's VAT rate labels as the space stores them (#3290)
-- **`lib/core/demo/seed/demo_city_money_seed.dart`** (4) — Demo records: English invoice descriptions as the London and New York businesses would store them, not application labels
+- **`lib/core/demo/seed/demo_city_money_seed.dart`** (2) — Demo records: English invoice descriptions as the London and New York businesses would store them, not application labels
+- **`lib/core/demo/demo_commerce_space.dart`** (1) — Demo record: the VAT rate name stored by the fictional commerce businesses, not an application interface label
 - **`lib/core/demo/seed/demo_city_purchase_seed.dart`** (1) — Demo records: an English supplier invoice title as the fictional business stores it, not an application label
 - **`lib/core/demo/seed/demo_city_workflow_seed.dart`** (5) — Demo records: fictional expense, badge and document titles stored by the English-speaking spaces, not application interface labels
 - **`lib/core/diagnostics/doctor_english.dart`** (13) — the operator's English: what the command line and the support bundle print for a typed doctor finding; the panel words the same findings from the ARB catalogue (instanceDoctor*) in the member's language (#3489).

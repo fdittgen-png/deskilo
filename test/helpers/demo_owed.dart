@@ -1,31 +1,38 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// What the Demo person still owes, per currency, read straight from the four
-// spaces' money (the invoices addressed to them, less what was matched), so a
-// test of Me's overview does not derive its expectation from the overview.
+// Independent accounting oracle: account-owned source invoices, payment
+// decisions and credit notes, grouped by their issuing business and currency.
 import 'package:deskilo/core/demo/demo_fixture.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
 
 Map<String, int> demoOwedFromTheSpaces(DemoFixture f) {
-  final me = f.actor.memberId;
-  final out = <String, int>{};
-  for (final money in [
-    f.money,
-    f.secondSpace.money,
-    f.london.money,
-    f.newYork.money,
-  ]) {
-    for (final i in money.invoices) {
-      if (i.memberId != me ||
-          i.voidedAt != null ||
-          i.kind == InvoiceKind.settlement ||
-          i.totalCents <= 0 ||
+  final balances = <(String, String), int>{};
+  for (final space in f.personalSpaces) {
+    final memberIds = {
+      for (final m in [space.workspaces.myMember, ...space.workspaces.otherMembers])
+        if (m.userId == f.auth.currentUserId && !m.isKiosk) m.id,
+    };
+    for (final i in space.money.invoices) {
+      if (!memberIds.contains(i.memberId) || i.isVoided ||
           i.settledByInvoiceId != null) {
         continue;
       }
-      final paid = money.invoiceMatchesStore[i.id]?.paidCents ?? 0;
-      final left = i.totalCents - paid;
-      if (left > 0) out[i.currency] = (out[i.currency] ?? 0) + left;
+      final match = space.money.invoiceMatchesStore[i.id];
+      var open = i.totalCents;
+      if (match != null) {
+        if (match.status == 'pending' || match.resolution != 'under_accepted' ||
+            match.writeoffAt != null) {
+          continue;
+        }
+        open -= match.paidCents;
+      }
+      final payee = (i.workspaceId, i.currency);
+      balances[payee] = (balances[payee] ?? 0) + open;
+    }
+  }
+  final out = <String, int>{};
+  for (final entry in balances.entries) {
+    if (entry.value > 0) {
+      out[entry.key.$2] = (out[entry.key.$2] ?? 0) + entry.value;
     }
   }
   return out;

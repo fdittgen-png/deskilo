@@ -39,7 +39,6 @@ import '../../features/workspace/providers/workspace_fields_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
-import 'data/bank_statement_demo_seed.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/finance_kpi_repository.dart';
@@ -52,32 +51,11 @@ import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_fixture.dart';
 import 'demo_london_space.dart';
-import 'seed/demo_city_bank_seed.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_twin_seed.dart';
+import 'demo_space_pick.dart';
 
 /// Demo's one fictional installation: nothing is verified against a
 /// server, and every client borrows the fakes (#1625).
 const kDemoInstallationId = '00000000-0000-4000-8000-00000000de30';
-
-/// Which of the demo's spaces the scope is looking at. An id no space
-/// owns fails closed: it never borrows another space's data.
-enum _Space { home, leipzig, london, newYork, twin }
-
-_Space _space(Ref ref) {
-  final id = ref.watch(currentWorkspaceProvider).value?.id;
-  return switch (id) {
-    null || '' || demoFirstSpaceId => _Space.home,
-    demoSecondSpaceId => _Space.leipzig,
-    demoLondonSpaceId => _Space.london,
-    demoNewYorkSpaceId => _Space.newYork,
-    // #3302 — the main space's development twin, with stores of its own.
-    demoTwinSpaceId => _Space.twin,
-    _ => throw StateError('unknown demo space: $id'),
-  };
-}
 
 /// #2553 — the spaces as the own-reservations read sees them: one
 /// installation, read the way a workspace host answers. A space's name is
@@ -95,6 +73,8 @@ DemoMyReservationsRepository _myReservations(DemoFixture fixture) =>
         (floorPlan: fixture.london.floorPlan, reservations: fixture.london.reservations),
         (floorPlan: fixture.newYork.floorPlan, reservations: fixture.newYork.reservations),
         (floorPlan: fixture.twin.floorPlan, reservations: fixture.twin.reservations),
+        (floorPlan: fixture.zurich.floorPlan, reservations: fixture.zurich.reservations),
+        (floorPlan: fixture.milan.floorPlan, reservations: fixture.milan.reservations),
       ],
       workspaceName: (id) =>
           fixture.workspaces.workspaces.where((w) => w.id == id).firstOrNull?.name ?? id,
@@ -119,20 +99,15 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   final london = fixture.london;
   final newYork = fixture.newYork;
   final twin = fixture.twin;
-  T pick<T>(Ref ref, T main, T leipzig, T london, T newYork, T devTwin) => switch (_space(ref)) {
-    _Space.home => main,
-    _Space.leipzig => leipzig,
-    _Space.london => london,
-    _Space.newYork => newYork,
-    _Space.twin => devTwin,
-  };
+  final zurich = fixture.zurich;
+  final milan = fixture.milan;
   final homeResources = FakePlanResourceRepository(home.floorPlan);
   final homeActions = FakeInvoiceActionCommands(home.money);
   final secondActions = FakeInvoiceActionCommands(second.money);
   final londonActions = FakeInvoiceActionCommands(london.money);
   final newYorkActions = FakeInvoiceActionCommands(newYork.money);
   FakeMoneyRepository money(Ref ref) =>
-      pick(ref, home.money, second.money, london.money, newYork.money, twin.money);
+      demoPickSpace(ref, (home: home.money, leipzig: second.money, london: london.money, newYork: newYork.money, zurich: zurich.money, milan: milan.money, twin: twin.money));
   final homeKpi = _cityKpi(fixture, home.money);
   final myReservations = _myReservations(fixture);
   final secondKpi = _cityKpi(fixture, second.money);
@@ -152,32 +127,30 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   );
   final newYorkPayments = DemoRecordedPaymentsRepository(money: newYork.money, workspaces: newYork.workspaces);
   final twinPayments = DemoRecordedPaymentsRepository(money: twin.money, workspaces: twin.workspaces);
+  final zurichPayments = DemoRecordedPaymentsRepository(money: zurich.money, workspaces: zurich.workspaces);
+  final milanPayments = DemoRecordedPaymentsRepository(money: milan.money, workspaces: milan.workspaces);
   final twinActions = FakeInvoiceActionCommands(twin.money);
+  final zurichActions = FakeInvoiceActionCommands(zurich.money);
+  final milanActions = FakeInvoiceActionCommands(milan.money);
   final twinKpi = _cityKpi(fixture, twin.money);
-  final twinBank = FakeBankStatementRepository(money: twin.money, today: home.seededAt);
-  final newYorkBank = seedCityBankStatement(newYork.money, home.seededAt, 'ny', 'USD');
-  final homeBank = seedDemoBankStatements(home.money, home.seededAt);
-  final secondBank = FakeBankStatementRepository(
-    money: second.money,
-    today: home.seededAt,
-  );
-  final londonBank = seedCityBankStatement(london.money, home.seededAt, 'uk', 'GBP');
+  final zurichKpi = _cityKpi(fixture, zurich.money);
+  final milanKpi = _cityKpi(fixture, milan.money);
   return [
     workspaceRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.workspaces, second.workspaces, london.workspaces, newYork.workspaces, twin.workspaces),
+      (ref) => demoPickSpace(ref, (home: home.workspaces, leipzig: second.workspaces, london: london.workspaces, newYork: newYork.workspaces, zurich: zurich.workspaces, milan: milan.workspaces, twin: twin.workspaces)),
     ),
     floorPlanRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.floorPlan, second.floorPlan, london.floorPlan, newYork.floorPlan, twin.floorPlan),
+      (ref) => demoPickSpace(ref, (home: home.floorPlan, leipzig: second.floorPlan, london: london.floorPlan, newYork: newYork.floorPlan, zurich: zurich.floorPlan, milan: milan.floorPlan, twin: twin.floorPlan)),
     ),
     // #2631 — rooms, parking areas and chargers live in memory.
     planResourceRepositoryProvider.overrideWith(
-      (ref) => pick(ref, homeResources, second.planResources, london.planResources, newYork.planResources, twin.planResources),
+      (ref) => demoPickSpace(ref, (home: homeResources, leipzig: second.planResources, london: london.planResources, newYork: newYork.planResources, zurich: zurich.planResources, milan: milan.planResources, twin: twin.planResources)),
     ),
     chargingStationRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.chargingStations, second.chargingStations, london.chargingStations, newYork.chargingStations, twin.chargingStations),
+      (ref) => demoPickSpace(ref, (home: home.chargingStations, leipzig: second.chargingStations, london: london.chargingStations, newYork: newYork.chargingStations, zurich: zurich.chargingStations, milan: milan.chargingStations, twin: twin.chargingStations)),
     ),
     reservationRepositoryProvider.overrideWith(
-      (ref) => pick<RightsCheckedReservationRepository>(ref, home.reservations, second.reservations, london.reservations, newYork.reservations, twin.reservations)
+      (ref) => demoPickSpace<RightsCheckedReservationRepository>(ref, (home: home.reservations, leipzig: second.reservations, london: london.reservations, newYork: newYork.reservations, zurich: zurich.reservations, milan: milan.reservations, twin: twin.reservations))
         // #3269 -- as on the server, a booking needs makeReservations.
         ..mayBook = (() => ref
             .read(myPermissionsProvider)
@@ -185,7 +158,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         // #3293 -- another member's booking is an administrator's act.
         ..mayActForOthers = (() => _administers(ref.read(myMemberProvider).value))
         ..isActiveMember = ((id) =>
-            pick(ref, home.workspaces, second.workspaces, london.workspaces, newYork.workspaces, twin.workspaces)
+            demoPickSpace(ref, (home: home.workspaces, leipzig: second.workspaces, london: london.workspaces, newYork: newYork.workspaces, zurich: zurich.workspaces, milan: milan.workspaces, twin: twin.workspaces))
                 .memberOf(id)
                 ?.status ==
             MemberStatus.active),
@@ -208,26 +181,19 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     // #2575
     seriesPreviewerProvider.overrideWith(
       (ref) => FakeSeriesPreviewer(
-        pick(ref, home.reservations, second.reservations, london.reservations, newYork.reservations, twin.reservations),
+        demoPickSpace(ref, (home: home.reservations, leipzig: second.reservations, london: london.reservations, newYork: newYork.reservations, zurich: zurich.reservations, milan: milan.reservations, twin: twin.reservations)),
       ),
     ),
     eventRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.events, second.events, london.events, newYork.events, twin.events),
+      (ref) => demoPickSpace(ref, (home: home.events, leipzig: second.events, london: london.events, newYork: newYork.events, zurich: zurich.events, milan: milan.events, twin: twin.events)),
     ),
     calendarRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.calendar, second.calendar, london.calendar, newYork.calendar, twin.calendar),
+      (ref) => demoPickSpace(ref, (home: home.calendar, leipzig: second.calendar, london: london.calendar, newYork: newYork.calendar, zurich: zurich.calendar, milan: milan.calendar, twin: twin.calendar)),
     ),
     // #2591 — each money port has its own demo adapter over the space's
     // one in-memory store; the facade stays for the tests that read it.
     moneyRepositoryProvider.overrideWith(money),
-    // #2380 — the main space's last bank statement; the second has none yet.
-    bankStatementRepositoryProvider.overrideWith((ref) {
-      return pick<FakeBankStatementRepository>(ref, homeBank, secondBank, londonBank, newYorkBank, twinBank)
-        ..actingMemberId = (() => fixture.activeMemberId)
-        ..mayUnmatch = (() => ref
-            .read(myPermissionsProvider)
-            .contains(WorkspacePermission.issueInvoices));
-    }),
+    _bankStatementOverride(fixture),
     // #3060 F5 — the register a plain member reads is their own invoices,
     // as on the server.
     invoiceQueriesProvider.overrideWith((ref) {
@@ -244,32 +210,42 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     ..._moneyPortOverrides(money),
     // #2585
     invoiceActionCommandsProvider.overrideWith(
-      (ref) => pick(ref, homeActions, secondActions, londonActions, newYorkActions, twinActions),
+      (ref) => demoPickSpace(ref, (home: homeActions, leipzig: secondActions, london: londonActions, newYork: newYorkActions, zurich: zurichActions, milan: milanActions, twin: twinActions)),
     ),
     creditRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.credits, second.credits, london.credits, newYork.credits, twin.credits),
+      (ref) => demoPickSpace(ref, (home: home.credits, leipzig: second.credits, london: london.credits, newYork: newYork.credits, zurich: zurich.credits, milan: milan.credits, twin: twin.credits)),
     ),
     accessoryRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.accessories, second.accessories, london.accessories, newYork.accessories, twin.accessories),
+      (ref) => demoPickSpace(ref, (home: home.accessories, leipzig: second.accessories, london: london.accessories, newYork: newYork.accessories, zurich: zurich.accessories, milan: milan.accessories, twin: twin.accessories)),
     ),
     workspaceFieldsRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.fields, second.fields, london.fields, newYork.fields, twin.fields),
+      (ref) => demoPickSpace(ref, (home: home.fields, leipzig: second.fields, london: london.fields, newYork: newYork.fields, zurich: zurich.fields, milan: milan.fields, twin: twin.fields)),
     ),
     workspaceRolesRepositoryProvider.overrideWith(
-      (ref) => pick(ref, home.roles, second.roles, london.roles, newYork.roles, twin.roles),
+      (ref) => demoPickSpace(ref, (home: home.roles, leipzig: second.roles, london: london.roles, newYork: newYork.roles, zurich: zurich.roles, milan: milan.roles, twin: twin.roles)),
     ),
     // #1924 — the finance cards sum the space's own invoices and matches,
     // with the server's predicates.
     financeKpiRepositoryProvider.overrideWith(
-      (ref) => pick(ref, homeKpi, secondKpi, londonKpi, newYorkKpi, twinKpi),
+      (ref) => demoPickSpace(ref, (home: homeKpi, leipzig: secondKpi, london: londonKpi, newYork: newYorkKpi, zurich: zurichKpi, milan: milanKpi, twin: twinKpi)),
     ),
     ..._hmrcOverrides(london),
     // #2578 — the payments behind the collected figure, from the same
     // matches the finance cards sum.
     recordedPaymentsRepositoryProvider.overrideWith(
-      (ref) => pick(ref, homePayments, secondPayments, londonPayments, newYorkPayments, twinPayments),
+      (ref) => demoPickSpace(ref, (home: homePayments, leipzig: secondPayments, london: londonPayments, newYork: newYorkPayments, zurich: zurichPayments, milan: milanPayments, twin: twinPayments)),
     ),
   ];
+}
+
+/// Bank reconciliation reads the selected business's statement and checks
+/// the current persona when an existing invoice match is undone (#2380).
+Override _bankStatementOverride(DemoFixture fixture) {
+  return bankStatementRepositoryProvider.overrideWith((ref) =>
+    demoPickSpace<FakeBankStatementRepository>(ref, fixture.commerce.bankStatements)
+      ..actingMemberId = (() => fixture.activeMemberId)
+      ..mayUnmatch = (() => ref.read(myPermissionsProvider)
+        .contains(WorkspacePermission.issueInvoices)));
 }
 
 /// The money ports of the space the scope is looking at: each has its own

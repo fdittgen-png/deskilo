@@ -6,6 +6,7 @@ import '../../features/reservations/domain/reservation.dart'
     show reservationStatusToDb;
 import 'data/workspace_export_repository.dart';
 import 'demo_fixture.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
@@ -22,6 +23,8 @@ FakeWorkspaceExportRepository demoWorkspaceExports(DemoFixture fixture) =>
           demoSecondSpaceId => fixture.secondSpace.reservations,
           demoLondonSpaceId => fixture.london.reservations,
           demoNewYorkSpaceId => fixture.newYork.reservations,
+          demoZurichSpaceId => fixture.zurich.reservations,
+          demoMilanSpaceId => fixture.milan.reservations,
           demoTwinSpaceId => fixture.twin.reservations,
           _ => fixture.reservations,
         };

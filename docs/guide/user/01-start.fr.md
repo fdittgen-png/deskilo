@@ -150,7 +150,7 @@ Vous ne vous souvenez plus de votre mot de passe. Vous recevez un code à usage 
 
 **Public:** Tout le monde
 
-Vous voulez jeter un coup d'œil avant de vous engager. La démo est un espace fictif, Atelier du Marché : les personnes, les réservations et les factures sont inventées, rien de ce que vous faites n'atteint un espace réel, et aucun compte n'est nécessaire.
+Vous voulez jeter un coup d'œil avant de vous engager. La démo contient plusieurs entreprises fictives, dont Atelier du Marché : les personnes, les réservations et les factures sont inventées, rien de ce que vous faites n'atteint un espace réel, et aucun compte n'est nécessaire.
 
 <p><img src="images/user-start-demo.fr.jpg" width="280"></p>
 

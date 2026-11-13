@@ -10,6 +10,7 @@ import 'package:meta/meta.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'demo_persona.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
@@ -30,6 +31,7 @@ const demoLinkRoutes = {
   '/members',
   '/events',
   '/money',
+  '/invoices',
   '/editor',
   '/billing',
   '/reports',
@@ -75,9 +77,15 @@ class DemoLink {
       'leipzig' => demoSecondSpaceId,
       'london' => demoLondonSpaceId,
       'new-york' => demoNewYorkSpaceId,
+      'zurich' => demoZurichSpaceId,
+      'milan' => demoMilanSpaceId,
       _ => null,
     },
-    to: _demoLinkAllows(query['to']) ? query['to'] : null,
+    to: _demoLinkAllows(query['to']) ? query['to'] : switch (query['space']) {
+      'zurich' => '/money/purchases',
+      'milan' => '/invoices',
+      _ => null,
+    },
   );
 
   /// The link a setup step's example uses from inside the app (#3235): the
@@ -102,6 +110,8 @@ class DemoLink {
       demoSecondSpaceId => 'leipzig',
       demoLondonSpaceId => 'london',
       demoNewYorkSpaceId => 'new-york',
+      demoZurichSpaceId => 'zurich',
+      demoMilanSpaceId => 'milan',
       _ => 'pezenas',
     },
     'persona': ?persona?.name,

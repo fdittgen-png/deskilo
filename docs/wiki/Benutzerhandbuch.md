@@ -211,7 +211,7 @@ Sie wissen Ihr Passwort nicht mehr. Sie erhalten per E-Mail einen Einmalcode und
 
 **Zielgruppe:** Alle
 
-Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo ist ein erfundener Space, Atelier du Marché: Die Personen, Buchungen und Rechnungen sind ausgedacht, nichts, was Sie tun, erreicht einen echten Space, und ein Konto brauchen Sie nicht.
+Sie möchten sich umsehen, bevor Sie sich festlegen. Die Demo besteht aus mehreren erfundenen Betrieben, darunter Atelier du Marché: Die Personen, Buchungen und Rechnungen sind ausgedacht, nichts, was Sie tun, erreicht einen echten Space, und ein Konto brauchen Sie nicht.
 
 <p><img src="images/user-start-demo.de.b8fa17aa9.jpg" width="280"></p>
 
@@ -6562,7 +6562,11 @@ Sie möchten genau wissen, was nichts zurücklässt.
 
 **Zielgruppe:** Alle
 
-Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo ist ein erfundener Space, offen für alle, ohne Konto.
+Sie möchten sich umsehen, bevor Sie sich entscheiden. Die Demo besteht aus mehreren erfundenen Betrieben, offen für alle, ohne Konto.
+
+Für Einkauf und Verkauf wählen Sie im Begrüßungshinweis **Zürich · Einkauf und Verkauf (CHF)** oder **Mailand · Einkauf und Verkauf (EUR)**. Zürich öffnet den Einkauf in CHF, Mailand die Rechnungsstellung in EUR. Beide Beispiele enthalten Lieferanten, Bestellungen, Rechnungen zur Freigabe, Zahlungen und Kundenrechnungen.
+
+Jedes menschliche Mitglied sieht in seinen persönlichen Finanzen eigene Rechnungen in mindestens zwei Währungen; die Beträge bleiben nach Währung getrennt. Beim Wechsel der Perspektive bleiben Ihre Bestellungen und freigegebenen Rechnungen erhalten. Das Zurücksetzen stellt die Ausgangsdaten wieder her.
 
 **Schritte**
 

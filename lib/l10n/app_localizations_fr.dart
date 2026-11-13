@@ -7278,6 +7278,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'La démo n\'a pas pu s\'ouvrir. Votre espace n\'a pas changé.';
 
   @override
+  String get demoEntryMilan => 'Milan · achats et ventes (EUR)';
+
+  @override
   String get demoEntrySignIn => 'Se connecter';
 
   @override
@@ -7289,6 +7292,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get demoEntryUnavailable =>
       'La démo n\'est pas disponible dans cet espace.';
+
+  @override
+  String get demoEntryZurich => 'Zurich · achats et ventes (CHF)';
 
   @override
   String get demoPersonaAdmin => 'Un administrateur';

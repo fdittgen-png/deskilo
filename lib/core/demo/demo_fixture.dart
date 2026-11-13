@@ -41,16 +41,22 @@ import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
 import 'demo_clock.dart';
+import 'demo_commerce_space.dart';
+import 'demo_commerce_stores.dart';
 import 'demo_dataset.dart';
+import 'demo_invoice_wiring.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
+import 'demo_personal_repositories.dart';
+import 'demo_personal_space.dart';
 import 'demo_second_space.dart';
 import 'demo_twin_space.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_flags.dart';
@@ -59,6 +65,7 @@ import 'seed/demo_money_finish.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_personal_currency_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
@@ -117,6 +124,8 @@ class DemoFixture {
     required this.secondSpace,
     required this.london,
     required this.newYork,
+    required this.zurich,
+    required this.milan,
     required this.twin,
   });
 
@@ -208,37 +217,14 @@ class DemoFixture {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
-    // The second space, in Leipzig: Ada and Bruno are members there too.
-    final secondSpace = DemoSecondSpaceData.build(home: workspaces, actor: () => actor.memberId, now: today)
-      ..viewAs(actor.memberId, workspaces);
-    final london = DemoLondonData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
-    final newYork = DemoNewYorkData.build(home: workspaces, actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
-    final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan, productionRoles: roles, actor: () => actor.memberId, now: today)
-      ..viewAs(actor.memberId, workspaces);
+    final (:secondSpace, :london, :newYork, :zurich, :milan, :twin) =
+        _seedAdditionalSpaces(workspaces, money, actor, floorPlan, roles, today);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
       ..kioskMemberId = demoCast[1].memberId // #3293: their own booking is no conflict
       ..kioskName = demoCast[1].name;
-    final problems = [
-      ...validateDemoFixture(workspaces: workspaces, plan: floorPlan,
-        reservations: reservations, money: money),
-      ...validateDemoFixture(
-        workspaces: secondSpace.workspaces,
-        plan: secondSpace.floorPlan,
-        reservations: secondSpace.reservations,
-        money: secondSpace.money,
-      ),
-      ..._validateCityFixtures(london, newYork),
-    ];
-    if (problems.isNotEmpty) {
-      // Fails closed, and says what is wrong: a session that points at a
-      // member or a seat that does not exist looks fine until a screen
-      // opens it (#1373's "missing context fails closed").
-      throw StateError('the demo session is not coherent: '
-          '${problems.join('; ')}');
-    }
-    return DemoFixture._(
+    final fixture = DemoFixture._(
       actor: actor,
       prefs: DemoDevicePrefs(),
       auth: FakeAuthRepository(userId: initialDemoPersona.userId),
@@ -277,8 +263,15 @@ class DemoFixture {
       secondSpace: secondSpace,
       london: london,
       newYork: newYork,
+      zurich: zurich,
+      milan: milan,
       twin: twin,
     );
+    _validateSession(fixture);
+    wireDemoInvoiceIdentities([...fixture.personalSpaces,
+      (workspaces: twin.workspaces, money: twin.money)],
+      fixture.profiles, () => actor.memberId);
+    return fixture;
   }
 
   /// #1565 — the member every implicit-subject write is attributed to.
@@ -334,6 +327,23 @@ class DemoFixture {
   final DemoSecondSpaceData secondSpace;
   final DemoLondonData london;
   final DemoNewYorkData newYork;
+  final DemoCommerceSpaceData zurich;
+  final DemoCommerceSpaceData milan;
+  late final commerce = seedDemoCommerce(this);
+  late final personalMe = demoPersonalMe(
+    spaces: () => [...personalSpaces,
+      (workspaces: twin.workspaces, money: twin.money)],
+    currentUser: () => auth.currentUserId,
+  );
+
+  List<DemoPersonalSpace> get personalSpaces => [
+    (workspaces: workspaces, money: money),
+    (workspaces: secondSpace.workspaces, money: secondSpace.money),
+    (workspaces: london.workspaces, money: london.money),
+    (workspaces: newYork.workspaces, money: newYork.money),
+    (workspaces: zurich.workspaces, money: zurich.money),
+    (workspaces: milan.workspaces, money: milan.money),
+  ];
 
   /// #3302 — the main space's development twin, with stores of its own.
   final DemoTwinData twin;
@@ -359,12 +369,14 @@ class DemoFixture {
     viewDemoPeopleAs(workspaces, persona.person);
     actor.memberId = persona.memberId;
     // #3293 — a self-assignment is refused for whoever the persona is.
-    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, twin.roles]) {
+    for (final r in [roles, secondSpace.roles, london.roles, newYork.roles, zurich.roles, milan.roles, twin.roles]) {
       r.callerMemberId = persona.memberId;
     }
     secondSpace.viewAs(persona.memberId, workspaces);
     london.viewAs(persona.memberId, workspaces);
     newYork.viewAs(persona.memberId, workspaces);
+    zurich.viewAs(persona.memberId, workspaces);
+    milan.viewAs(persona.memberId, workspaces);
     twin.viewAs(persona.memberId, workspaces);
     // The profile rows stay; the "mine" pointer moves with the persona,
     // so Settings shows that person's own name and contact block
@@ -374,11 +386,82 @@ class DemoFixture {
   }
 }
 
-List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny) => [
+typedef _AdditionalDemoSpaces = ({
+  DemoSecondSpaceData secondSpace,
+  DemoLondonData london,
+  DemoNewYorkData newYork,
+  DemoCommerceSpaceData zurich,
+  DemoCommerceSpaceData milan,
+  DemoTwinData twin,
+});
+
+/// Build the independent businesses, then complete their shared customers'
+/// currency coverage before profile collection and fixture validation.
+_AdditionalDemoSpaces _seedAdditionalSpaces(
+  FakeWorkspaceRepository workspaces,
+  FakeMoneyRepository money,
+  DemoActor actor,
+  FakeFloorPlanRepository floorPlan,
+  FakeWorkspaceRoles roles,
+  DateTime today,
+) {
+  final secondSpace = DemoSecondSpaceData.build(home: workspaces,
+    actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+  final london = DemoLondonData.build(home: workspaces,
+    actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+  final newYork = DemoNewYorkData.build(home: workspaces,
+    actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+  final zurich = DemoCommerceSpaceData.build(spec: demoZurichSpec, home: workspaces,
+    actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+  final milan = DemoCommerceSpaceData.build(spec: demoMilanSpec, home: workspaces,
+    actor: () => actor.memberId, now: today)..viewAs(actor.memberId, workspaces);
+  completeDemoPersonalCurrencies([
+    (workspaces: workspaces, money: money),
+    (workspaces: secondSpace.workspaces, money: secondSpace.money),
+    (workspaces: london.workspaces, money: london.money),
+    (workspaces: newYork.workspaces, money: newYork.money),
+    (workspaces: zurich.workspaces, money: zurich.money),
+    (workspaces: milan.workspaces, money: milan.money),
+  ], now: today, companionSpaces: [
+    (workspaces: zurich.workspaces, money: zurich.money),
+    (workspaces: milan.workspaces, money: milan.money),
+  ]);
+  final twin = DemoTwinData.build(home: workspaces, productionPlan: floorPlan,
+    productionRoles: roles, actor: () => actor.memberId, now: today)
+    ..viewAs(actor.memberId, workspaces);
+  return (secondSpace: secondSpace, london: london, newYork: newYork,
+    zurich: zurich, milan: milan, twin: twin);
+}
+
+void _validateSession(DemoFixture fixture) {
+  final problems = [
+    ...validateDemoFixture(workspaces: fixture.workspaces, plan: fixture.floorPlan,
+      reservations: fixture.reservations, money: fixture.money),
+    ...validateDemoFixture(
+      workspaces: fixture.secondSpace.workspaces,
+      plan: fixture.secondSpace.floorPlan,
+      reservations: fixture.secondSpace.reservations,
+      money: fixture.secondSpace.money,
+    ),
+    ..._validateCityFixtures(fixture.london, fixture.newYork,
+      [fixture.zurich, fixture.milan]),
+  ];
+  if (problems.isNotEmpty) {
+    // Fails closed: a session with a missing member or seat never escapes
+    // into a screen that cannot open it (#1373).
+    throw StateError('the demo session is not coherent: '
+      '${problems.join('; ')}');
+  }
+}
+
+List<String> _validateCityFixtures(DemoLondonData london, DemoNewYorkData ny, List<DemoCommerceSpaceData> commerce) => [
   ...validateDemoFixture(workspaces: london.workspaces, plan: london.floorPlan,
       reservations: london.reservations, money: london.money),
   ...validateDemoFixture(workspaces: ny.workspaces, plan: ny.floorPlan,
       reservations: ny.reservations, money: ny.money),
+  for (final city in commerce)
+    ...validateDemoFixture(workspaces: city.workspaces, plan: city.floorPlan,
+      reservations: city.reservations, money: city.money),
 ];
 
 FakeProfileRepository _profilesForSpaces(
@@ -387,6 +470,6 @@ FakeProfileRepository _profilesForSpaces(
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
           Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
-      ...demoCityProfiles(london.workspaces, 'uk'),
-      ...demoCityProfiles(ny.workspaces, 'ny'),
+      ...demoCityProfiles(london.workspaces, 'uk', country: 'GB', city: 'London'),
+      ...demoCityProfiles(ny.workspaces, 'ny', country: 'US', city: 'New York'),
     ]);

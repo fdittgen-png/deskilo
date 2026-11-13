@@ -4,7 +4,7 @@
 // French one, where the visitor is a member too — so Me has two spaces to
 // show, and each space answers with its own rows.
 import 'package:deskilo/core/demo/demo_dataset.dart';
-import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_finance_projection.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
@@ -104,12 +104,14 @@ void main() {
 
   test("Me › Finances spans every space: Ada's open bill is in Leipzig", () {
     final fixture = DemoFixture.build();
-    final overview = demoFinanceOverview(fixture);
+    final overview = demoFinanceForUser(fixture.personalSpaces, fixture.auth.currentUserId);
     expect(overview.invoices.map((i) => i.workspaceId).toSet(), {
       'ws-1',
       demoSecondSpaceId,
       demoLondonSpaceId,
       demoNewYorkSpaceId,
+      fixture.zurich.workspaces.myMember.workspaceId,
+      fixture.milan.workspaces.myMember.workspaceId,
     });
     expect(
       overview.outstanding.map((i) => i.workspaceName),

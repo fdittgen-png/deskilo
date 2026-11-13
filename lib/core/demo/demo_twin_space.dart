@@ -72,7 +72,7 @@ class DemoTwinData {
       clock: () => now,
       decider: () => space.memberOf(actor()),
     );
-    final money = FakeMoneyRepository(events: events);
+    final money = FakeMoneyRepository(events: events, clock: () => now);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(calendar, reservations: reservations, money: money, events: events);
     wireDecisionEffects(events, reservations: reservations, workspaces: space, money: money, now: () => now);

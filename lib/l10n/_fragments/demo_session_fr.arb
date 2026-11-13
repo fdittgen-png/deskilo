@@ -126,6 +126,8 @@
   "@demoEntrySignIn": {
     "description": "#3235 demo visit: demoEntrySignIn"
   },
+  "demoEntryZurich": "Zurich · achats et ventes (CHF)",
+  "demoEntryMilan": "Milan · achats et ventes (EUR)",
   "demoEntryFailed": "La démo n'a pas pu s'ouvrir. Votre espace n'a pas changé.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"

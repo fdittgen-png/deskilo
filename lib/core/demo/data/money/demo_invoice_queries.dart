@@ -7,6 +7,8 @@ import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../money_repository.dart';
+import 'demo_invoice_tax.dart';
+import 'demo_member_statement.dart';
 
 /// #2591 — the demo's invoice reads, answered from one space's in-memory
 /// money store ([FakeMoneyRepository]); every other port of that space reads
@@ -118,13 +120,18 @@ class DemoInvoiceQueries implements InvoiceQueries {
   /// from the period's statement + confirmed ledger charges — nothing
   /// is accepted from the caller.
   List<InvoiceLine> derivedLines(String memberId, String period) {
-    final s = _m.statements[period] ?? _m.statement.copyWith(period: period);
+    final source = _m.accountQueries.statementSource;
+    final s = source == null
+        ? _m.statements[period] ?? _m.statement.copyWith(period: period)
+        : demoMemberStatement(_m, source, memberId, period);
+    final tax = demoInvoiceLineTax(_m, period);
     return [
       if (s.feeCents > 0)
         InvoiceLine(
           kind: 'subscription',
           label: '${s.subscriptionPct}',
           amountCents: s.feeCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       if (s.overageCents > 0)
         InvoiceLine(
@@ -132,30 +139,35 @@ class DemoInvoiceQueries implements InvoiceQueries {
           label: '',
           quantity: s.extraHalfDays,
           amountCents: s.overageCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       if (s.accessorySupplementCents > 0)
         InvoiceLine(
           kind: 'accessories',
           label: '',
           amountCents: s.accessorySupplementCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       if (s.levelSupplementCents > 0)
         InvoiceLine(
           kind: 'level',
           label: '',
           amountCents: s.levelSupplementCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       if (s.officeSupplementCents > 0)
         InvoiceLine(
           kind: 'office',
           label: '',
           amountCents: s.officeSupplementCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       if (s.deskSupplementCents > 0)
         InvoiceLine(
           kind: 'desk',
           label: '',
           amountCents: s.deskSupplementCents,
+          vatPercent: tax.percent, vatCategory: tax.category,
         ),
       for (final entry in _m.ledger)
         if (entry.memberId == memberId &&
@@ -165,18 +177,23 @@ class DemoInvoiceQueries implements InvoiceQueries {
                         entry.category == LedgerCategory.package ||
                         entry.category == LedgerCategory.adjustment)) ||
                 (entry.kind == LedgerKind.credit &&
+                    (source == null || _m.remainingOf(entry) > 0) &&
                     (entry.category == LedgerCategory.payment ||
                         entry.category == LedgerCategory.expense ||
                         entry.category == LedgerCategory.adjustment))))
-          InvoiceLine(
-            kind: entry.category.name,
-            label: entry.description,
-            // 0063 — credits net against the charges: the total IS
-            // the solde.
-            amountCents: entry.kind == LedgerKind.credit
-                ? -entry.amountCents
-                : entry.amountCents,
-          ),
+          _ledgerLine(entry, period, unconsumed: source != null),
     ];
+  }
+
+  InvoiceLine _ledgerLine(LedgerEntry entry, String period,
+      {required bool unconsumed}) {
+    final credit = entry.kind == LedgerKind.credit;
+    final tax = demoInvoiceLineTax(_m, period,
+        frozenPercent: _m.ledgerVatPercents[entry.id], credit: credit);
+    return InvoiceLine(kind: entry.category.name, label: entry.description,
+      amountCents: credit
+          ? -(unconsumed ? _m.remainingOf(entry) : entry.amountCents)
+          : entry.amountCents,
+      vatPercent: tax.percent, vatCategory: tax.category);
   }
 }

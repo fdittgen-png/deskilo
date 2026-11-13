@@ -1,34 +1,48 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic purchases; no vendor is contacted.
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart' show vatSplit;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/purchase.dart';
 import '../data/einvoice_inbox_repository.dart';
 import '../data/purchase_repository.dart';
 import '../data/supplier_repository.dart';
-import 'demo_london_seed.dart';
-import 'demo_new_york_seed.dart';
 import 'demo_purchase_seed.dart';
+
+typedef DemoCityPurchaseSpec = ({String workspaceId, String prefix,
+  String country, String currency, int years, double vatPercent});
+
+typedef DemoCityPurchaseLabels = ({String rentalSupplier, String materialsSupplier, String materialsContact,
+  String rental, String stock, String materials, String pending});
+
+const DemoCityPurchaseLabels _demoCityPurchaseLabels = (
+  rentalSupplier: 'Metro Vending Rentals (Demo)',
+  materialsSupplier: 'City Drinks Wholesale (Demo)',
+  materialsContact: 'orders@citydrinks.example.test',
+  rental: 'Vending machine rental', stock: 'Sweets and snacks restock',
+  materials: 'Water and beer restock', pending: 'Snacks and drinks',
+);
 
 DemoPurchasing cityPurchasing(
   DateTime now, {
-  required bool tenant,
+  required DemoCityPurchaseSpec spec,
+  bool tenant = false,
   required String Function() actor,
   required List<String> siteIds,
+  DemoCityPurchaseLabels labels = _demoCityPurchaseLabels,
 }) {
+  final (:workspaceId, :prefix, :country, :currency, :years, :vatPercent) = spec;
   final suppliers = FakeSupplierRepository();
   final purchases = FakePurchaseRepository(
     actor: actor,
-    functionalCurrency: tenant ? 'USD' : 'GBP',
-    workspaceId: tenant ? demoNewYorkSpaceId : demoLondonSpaceId,
+    functionalCurrency: currency,
+    workspaceId: workspaceId,
   );
-  final prefix = tenant ? 'ny' : 'uk';
-  final country = tenant ? 'US' : 'GB';
   final vending = Supplier(
     id: '$prefix-vending',
     number: '2',
-    name: 'Metro Vending Rentals (Demo)',
+    name: labels.rentalSupplier,
     countryCode: country,
   );
   final stock = Supplier(
@@ -41,9 +55,9 @@ DemoPurchasing cityPurchasing(
   final drinks = Supplier(
     id: '$prefix-drinks',
     number: '4',
-    name: 'City Drinks Wholesale (Demo)',
+    name: labels.materialsSupplier,
     countryCode: country,
-    contact: 'orders@citydrinks.example.test',
+    contact: labels.materialsContact,
   );
   final amazon = Supplier(
     id: '$prefix-amazon',
@@ -54,13 +68,13 @@ DemoPurchasing cityPurchasing(
   );
   suppliers.suppliers.addAll([vending, stock, drinks, amazon]);
   if (tenant) _landlordBills(now, suppliers, purchases);
-  _siteBills(now, tenant, siteIds, purchases, (
+  _siteBills(now, (prefix: prefix, currency: currency, years: years, vatPercent: vatPercent, labels: labels), siteIds, purchases, (
     vending: vending,
     stock: stock,
     drinks: drinks,
     amazon: amazon,
   ));
-  _pendingBill(now, prefix, tenant ? 'USD' : 'GBP', stock, purchases);
+  _pendingBill(now, spec, stock, purchases, labels.pending);
   return DemoPurchasing(
     suppliers: suppliers,
     inbox: FakeEInvoiceInboxRepository(),
@@ -124,13 +138,13 @@ void _landlordBills(
 
 void _siteBills(
   DateTime now,
-  bool tenant,
+  ({String prefix, String currency, int years, double vatPercent, DemoCityPurchaseLabels labels}) spec,
   List<String> siteIds,
   FakePurchaseRepository purchases,
   _VendorSet vendors,
 ) {
-  final prefix = tenant ? 'ny' : 'uk', currency = tenant ? 'USD' : 'GBP';
-  final start = DateTime(now.year - (tenant ? 4 : 3), now.month);
+  final prefix = spec.prefix, currency = spec.currency;
+  final start = DateTime(now.year - spec.years, now.month);
   for (
     var month = start;
     month.isBefore(DateTime(now.year, now.month));
@@ -139,18 +153,18 @@ void _siteBills(
     final period = yearMonth(month.year, month.month);
     for (final (index, siteId) in siteIds.indexed) {
       for (final (kind, supplier, cents, title) in [
-        ('machine', vendors.vending, 4500, 'Vending machine rental'),
+        ('machine', vendors.vending, 4500, spec.labels.rental),
         (
           'stock',
           vendors.stock,
           3500 + index * 200,
-          'Sweets and snacks restock',
+          spec.labels.stock,
         ),
         (
           'drinks',
           vendors.drinks,
           3500 + index * 300,
-          'Water and beer restock',
+          spec.labels.materials,
         ),
         (
           'print',
@@ -179,6 +193,10 @@ void _siteBills(
               lineNo: 1,
               description: title,
               grossCents: cents,
+              netCents: vatSplit(cents, spec.vatPercent).netCents,
+              taxCents: vatSplit(cents, spec.vatPercent).vatCents,
+              taxRatePercent: spec.vatPercent,
+              recoverableTaxCents: vatSplit(cents, spec.vatPercent).vatCents,
               costSiteId: siteId,
               // #3294 step 4 — the restocks name the catalogue item they buy.
               serviceId: _restock(prefix, kind)?.item,
@@ -259,18 +277,22 @@ void _recordBill(FakePurchaseRepository purchases, _Bill bill, DateTime now) {
     ..payables.add(PayableRow(obligation: obligation, purchase: summary));
 }
 
-void _pendingBill(DateTime now, String prefix, String currency,
-    Supplier supplier, FakePurchaseRepository purchases) {
+void _pendingBill(DateTime now, DemoCityPurchaseSpec spec,
+    Supplier supplier, FakePurchaseRepository purchases, String label) {
+  final prefix = spec.prefix, currency = spec.currency, vatPercent = spec.vatPercent;
   purchases.add(PurchaseDetail(
     summary: PurchaseSummary(
       id: '$prefix-bill-pending', supplierId: supplier.id,
       kind: PurchaseKind.bill, state: PurchaseState.pending,
-      category: 'Refreshments', reference: '$prefix-pending-supplies',
+      category: label, reference: '$prefix-pending-supplies',
       currency: currency, grossCents: 6400, receivedOn: now,
     ),
     revision: 1, sources: const [], supplierName: supplier.name,
     supplierNumber: supplier.number,
-    lines: const [PurchaseLine(lineNo: 1, description: 'Snacks and drinks', grossCents: 6400)],
+    lines: [PurchaseLine(lineNo: 1, description: label, grossCents: 6400,
+      netCents: vatSplit(6400, vatPercent).netCents, taxCents: vatSplit(6400, vatPercent).vatCents, taxRatePercent: vatPercent,
+      recoverableTaxCents: vatSplit(6400, vatPercent).vatCents,
+      recognitionKind: 'stock', serviceId: '$prefix-service-3', quantity: 32)],
   ));
 }
 

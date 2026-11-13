@@ -102,7 +102,7 @@ class DemoLondonData {
       decider: () => space.memberOf(actor()),
     );
     seedCityDecisions(events, 'uk', now);
-    final money = FakeMoneyRepository(events: events)
+    final money = FakeMoneyRepository(events: events, clock: () => now)
       ..invoiceCommands.currency = 'GBP';
     seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
     seedLondonMoney(money, now);

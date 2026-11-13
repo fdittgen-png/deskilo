@@ -135,6 +135,10 @@
   "@demoEntrySignIn": {
     "description": "#3235 demo visit: demoEntrySignIn"
   },
+  "demoEntryZurich": "Zurich · purchases and sales (CHF)",
+  "@demoEntryZurich": {"description": "Direct entry to the Swiss purchasing and sales demonstration"},
+  "demoEntryMilan": "Milan · purchases and sales (EUR)",
+  "@demoEntryMilan": {"description": "Direct entry to the Italian purchasing and sales demonstration"},
   "demoEntryFailed": "The demo could not be opened. Your workspace is unchanged.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"

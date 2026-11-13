@@ -340,12 +340,22 @@ void main() {
 const _leipzigNew = 'Leipzig carries exactly what a new workspace starts with '
     '(defaultFeatureFlagsForNewWorkspace, pinned by demo_second_space_test): the '
     'space shows the Demo a fresh, basic space, so these steps are off there by design.';
+const _commerceAccess = 'Zurich and Milan demonstrate purchases and sales for '
+    'print/design businesses. They admit no visitors to bookable places, so '
+    'placeBooking and its kiosk, badge and QR access dependencies are off.';
+const _commerceStructure = 'Zurich and Milan retain one studio site for purchase '
+    'and asset cost allocation. They offer no reservable places, so placeBooking '
+    'and its dependent plan/site management capabilities are off.';
 const _offOnPurpose = <String, String>{
   'ws-2/billingPayments/collection': _leipzigNew,
   'ws-2/billingPayments/expenses': _leipzigNew,
   'ws-2/billingPayments/tax': _leipzigNew,
   'ws-2/documentsInformation/reportDesign': _leipzigNew,
   'ws-2/reservationsUsage/attendance': _leipzigNew,
+  'ws-5/workspaceAccess/physicalAccess': _commerceAccess,
+  'ws-5/spaceManagement/structure': _commerceStructure,
+  'ws-6/workspaceAccess/physicalAccess': _commerceAccess,
+  'ws-6/spaceManagement/structure': _commerceStructure,
 };
 
 /// A morning, a week or more ahead, whose morning AND afternoon neither

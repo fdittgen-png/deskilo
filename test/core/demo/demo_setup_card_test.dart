@@ -72,6 +72,8 @@ void main() {
     for (final (id, name) in [
       ('ws-3', 'Camden Yard Cowork'),
       ('ws-4', 'Hudson Cooperative Workspaces'),
+      ('ws-5', 'Limmat Print & Supply (Demo)'),
+      ('ws-6', 'Navigli Design & Supply (Demo)'),
     ]) {
       await demo.read(activeWorkspaceIdProvider.notifier).select(id);
       await tester.pumpAndSettle();

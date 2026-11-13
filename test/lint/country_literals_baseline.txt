@@ -5,13 +5,14 @@
 lib/core/country/country_catalog.dart :: 2 :: the catalogue of the countries the app knows (name, currency, default locale): data the registry serves, not a rule
 lib/core/demo/data/book_profile_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/data/company_lookup_repository.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/data/workspace_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/data/fake_workspace_members.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/data/workspace_repository.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/demo_commerce_stores.dart :: 5 :: explicit countries of the London, New York and Leipzig fixture stores; seed configuration, not jurisdiction rules
 lib/core/demo/demo_dataset.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/demo_fixture.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/seed/demo_city_books_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/seed/demo_city_people_seed.dart :: 4 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
-lib/core/demo/seed/demo_city_purchase_seed.dart :: 3 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/demo_fixture.dart :: 3 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_city_purchase_seed.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_commerce_country_seed.dart :: 2 :: the fictional Zurich and Milan businesses' countries; fixture data, not jurisdiction rules
+lib/core/demo/seed/demo_commerce_fx_seed.dart :: 3 :: paired Swiss and Italian supplier examples with invented exchange rates; transaction fixtures, not tax or currency rules
 lib/core/demo/seed/demo_commerce_seed.dart :: 1 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_london_seed.dart :: 5 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_new_york_seed.dart :: 6 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule

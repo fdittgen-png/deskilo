@@ -62,6 +62,8 @@ const _spaces = [
   ('Leipzig', 'ws-2'),
   ('London', 'ws-3'),
   ('New York', 'ws-4'),
+  ('Zurich', 'ws-5'),
+  ('Milan', 'ws-6'),
   ('the development twin', 'ws-1-dev'),
 ];
 

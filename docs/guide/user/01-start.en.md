@@ -150,7 +150,7 @@ You cannot remember your password. You get a one-time code by e-mail and use it 
 
 **Audience:** Everyone
 
-You want to look around before you commit to anything. The demo is a made-up space, Atelier du Marché: the people, bookings and bills are invented, nothing you do reaches a real space, and no account is needed.
+You want to look around before you commit to anything. The demo contains several invented businesses, including Atelier du Marché: the people, bookings and bills are invented, nothing you do reaches a real space, and no account is needed.
 
 <p><img src="images/user-start-demo.en.jpg" width="280"></p>
 

@@ -148,9 +148,14 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'space stores them (#3290)',
   ),
   'lib/core/demo/seed/demo_city_money_seed.dart': (
-    allowed: 4,
+    allowed: 2,
     reason: 'Demo records: English invoice descriptions as the London and '
         'New York businesses would store them, not application labels',
+  ),
+  'lib/core/demo/demo_commerce_space.dart': (
+    allowed: 1,
+    reason: 'Demo record: the VAT rate name stored by the fictional commerce '
+        'businesses, not an application interface label',
   ),
   'lib/core/demo/seed/demo_city_purchase_seed.dart': (
     allowed: 1,

@@ -21,6 +21,7 @@ import '../demo_entry.dart';
 import '../demo_link.dart';
 import '../demo_reload_marker_provider.dart';
 import '../demo_session.dart';
+import '../seed/demo_commerce_country_seed.dart';
 
 /// The button that offers the demonstration space.
 class DemoEntryButton extends ConsumerWidget {
@@ -87,6 +88,7 @@ Future<bool> _showDemoEntrySheet(
   final before = await _identityOrNull(visit);
   if (!context.mounted) return false;
   final route = before == null ? null : visit.currentRoute();
+  var destination = link;
   final start = await showAppSheet<bool>(
     context: context,
     showDragHandle: true,
@@ -112,6 +114,11 @@ Future<bool> _showDemoEntrySheet(
               before == null ? l10n.demoEntryBody : l10n.demoEntryBodySignedIn,
             ),
             const SizedBox(height: AppSpacing.xl),
+            if (link?.workspaceId == null)
+              _CommerceChoices(onSelect: (choice) {
+                destination = choice;
+                Navigator.of(context).pop(true);
+              }),
             Align(
               alignment: AlignmentDirectional.centerEnd,
               child: FilledButton(
@@ -139,7 +146,7 @@ Future<bool> _showDemoEntrySheet(
     ref.read(demoSessionControllerProvider);
     // #2872 — the link's viewpoint first, then its space and screen once
     // the demo scope exists (DemoWorkspace applies them).
-    if (link?.persona case final persona?) {
+    if (destination?.persona case final persona?) {
       ref.read(demoSessionControllerProvider.notifier).viewAs(persona);
     }
   } on Object {
@@ -162,7 +169,7 @@ Future<bool> _showDemoEntrySheet(
     return false;
   }
   beforeEnter?.call();
-  if (link != null) ref.read(pendingDemoLinkProvider.notifier).hold(link);
+  if (destination != null) ref.read(pendingDemoLinkProvider.notifier).hold(destination!);
   ref.read(demoEntryProvider.notifier).enter();
   return true;
 }
@@ -213,4 +220,31 @@ Future<DemoIdentity?> _identityOrNull(DemoVisit visit) async {
   } on Object {
     return null;
   }
+}
+
+/// Direct entries make the two commercial examples discoverable before a
+/// visitor learns the workspace switcher.
+class _CommerceChoices extends StatelessWidget {
+  const _CommerceChoices({required this.onSelect});
+  final ValueChanged<DemoLink> onSelect;
+
+  @override
+  Widget build(BuildContext context) => Wrap(
+    spacing: AppSpacing.sm,
+    runSpacing: AppSpacing.sm,
+    children: [
+      OutlinedButton(
+        key: const Key('demo-entry-zurich'),
+        onPressed: () => onSelect(const DemoLink(
+          workspaceId: demoZurichSpaceId, to: '/money/purchases')),
+        child: Text(context.l10n.demoEntryZurich),
+      ),
+      OutlinedButton(
+        key: const Key('demo-entry-milan'),
+        onPressed: () => onSelect(const DemoLink(
+          workspaceId: demoMilanSpaceId, to: '/invoices')),
+        child: Text(context.l10n.demoEntryMilan),
+      ),
+    ],
+  );
 }

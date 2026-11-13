@@ -211,7 +211,7 @@ You cannot remember your password. You get a one-time code by e-mail and use it 
 
 **Audience:** Everyone
 
-You want to look around before you commit to anything. The demo is a made-up space, Atelier du Marché: the people, bookings and bills are invented, nothing you do reaches a real space, and no account is needed.
+You want to look around before you commit to anything. The demo contains several invented businesses, including Atelier du Marché: the people, bookings and bills are invented, nothing you do reaches a real space, and no account is needed.
 
 <p><img src="images/user-start-demo.en.b8fa17aa9.jpg" width="280"></p>
 
@@ -6562,7 +6562,11 @@ You want to know exactly what leaves nothing behind.
 
 **Audience:** Everyone
 
-You want to look around before you commit. The demo is an invented space, open to anybody, without an account.
+You want to look around before you commit. The demo contains several invented businesses, open to anybody, without an account.
+
+For purchasing and sales, choose **Zurich · purchases and sales (CHF)** or **Milan · purchases and sales (EUR)** in the opening note. Zurich opens purchasing in CHF; Milan opens invoicing in EUR. Both include suppliers, purchase orders, bills awaiting approval, payments and customer invoices.
+
+Every human member has their own invoices in at least two currencies in their personal finances; the amounts stay separated by currency. Changing viewpoint keeps your purchase orders and approved bills. Reset restores the starting records.
 
 **Steps**
 

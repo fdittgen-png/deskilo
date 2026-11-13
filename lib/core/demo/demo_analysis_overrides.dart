@@ -72,6 +72,8 @@ List<Override> _analysisOverrides(
     leipzig: allocation(costs.leipzig, fixture.secondSpace.floorPlan),
     london: allocation(costs.london, fixture.london.floorPlan),
     newYork: allocation(costs.newYork, fixture.newYork.floorPlan),
+    zurich: allocation(costs.zurich, fixture.zurich.floorPlan),
+    milan: allocation(costs.milan, fixture.milan.floorPlan),
     twin: allocation(costs.twin, fixture.twin.floorPlan),
   );
   return [
@@ -125,6 +127,8 @@ Override _overviewOverride(
       fixture.newYork.events,
       fixture.newYork.money,
     ),
+    zurich: space(fixture.zurich.workspaces, fixture.zurich.events, fixture.zurich.money),
+    milan: space(fixture.milan.workspaces, fixture.milan.events, fixture.milan.money),
     twin: space(fixture.twin.workspaces, fixture.twin.events, fixture.twin.money),
   );
   return overviewKpiRepositoryProvider.overrideWith(
@@ -164,6 +168,8 @@ List<Override> demoBookFigureOverrides(
     leipzig: leipzig.valuations,
     london: FakeAssetValuationRepository(),
     newYork: FakeAssetValuationRepository(),
+    zurich: FakeAssetValuationRepository(),
+    milan: FakeAssetValuationRepository(),
     twin: twin.valuations,
   );
   final DemoSpaces<FakeLeaseCommitmentRepository> commitments = (
@@ -171,6 +177,8 @@ List<Override> demoBookFigureOverrides(
     leipzig: leipzig.commitments,
     london: FakeLeaseCommitmentRepository(),
     newYork: newYorkCommitments(fixture.seededAt),
+    zurich: FakeLeaseCommitmentRepository(),
+    milan: FakeLeaseCommitmentRepository(),
     twin: twin.commitments,
   );
   DemoCostSources sources(
@@ -223,6 +231,20 @@ List<Override> demoBookFigureOverrides(
         spaces.newYork,
         valuations.newYork,
         commitments.newYork,
+      ),
+      zurich: sources(
+        purchasing.zurich,
+        () => fixture.zurich.money.invoices,
+        spaces.zurich,
+        valuations.zurich,
+        commitments.zurich,
+      ),
+      milan: sources(
+        purchasing.milan,
+        () => fixture.milan.money.invoices,
+        spaces.milan,
+        valuations.milan,
+        commitments.milan,
       ),
       twin: sources(
         purchasing.twin,

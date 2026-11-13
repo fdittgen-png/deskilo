@@ -5,9 +5,10 @@ import '../../../features/money/domain/finance_overview.dart';
 class FakeAccountActivityRepository implements AccountActivityRepository {
   /// [derive], when given, answers the overview from live data (#2327:
   /// the demonstration reads its persona's invoices from the shared money).
-  FakeAccountActivityRepository({this.derive});
+  FakeAccountActivityRepository({this.derive, this.deriveRecords});
 
   final FinanceOverview Function()? derive;
+  final Iterable<AccountActivity> Function(AccountActivityKind)? deriveRecords;
   final records = <AccountActivityKind, List<AccountActivity>>{};
   bool unavailable = false;
   FinanceOverview financeOverview = const FinanceOverview();
@@ -24,7 +25,7 @@ class FakeAccountActivityRepository implements AccountActivityRepository {
     ActivityCursor? before,
   }) async {
     if (unavailable) throw StateError('financial history unavailable');
-    final rows = [...?records[kind]]
+    final rows = [...?deriveRecords?.call(kind) ?? records[kind]]
       ..sort((a, b) {
         final time = b.occurredAt.compareTo(a.occurredAt);
         return time != 0 ? time : b.id.compareTo(a.id);
@@ -36,7 +37,7 @@ class FakeAccountActivityRepository implements AccountActivityRepository {
               row.occurredAt.isBefore(before.at) ||
               (row.occurredAt == before.at && row.id.compareTo(before.id) < 0),
         )
-        .take(50)
+        .take(activityPageSize)
         .toList();
   }
 }

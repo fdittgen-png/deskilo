@@ -12,6 +12,13 @@ none: it is read as reassurance.
 
 | what it protects | file |
 |---|---|
+| Commercial writes survive actual persona scope rebuilds and reset only with a new fixture | `test/core/demo/demo_commerce_persistence_test.dart` |
+| Country-specific orders, separate twin and Leipzig accounting stores | `test/core/demo/demo_commerce_consistency_test.dart` |
+| Zurich/Milan purchase approval and payment; service, invoice, payment and collection through routed providers | `test/core/demo/demo_commerce_journey_test.dart` |
+| Personal invoices follow payment validation, refunds, write-offs and regrouping; one account may hold different membership IDs across businesses | `test/core/demo/demo_finance_lifecycle_test.dart` |
+| New invoices freeze the buyer, business, issuer and clock; sales use the member's statement, configured VAT and the rate recorded on an approved charge | `test/core/demo/demo_invoice_identity_test.dart` |
+| Every human account owns outstanding documents in two currencies; companion statuses and roles stay intact, and personal favorites and twin access survive persona scopes | `test/core/demo/demo_personal_accounts_test.dart` |
+| Personal history pages equal-time invoices across businesses without loss, reads new payments and follows the signed-in account | `test/core/demo/demo_personal_history_test.dart` |
 | The Activity analysis invoiced and collected figures come from the demo's own invoices and matches, with the server's predicates: void and settlement invoices left out, credit notes apart, collected by the month of the match (#2339) | `test/core/demo/demo_finance_kpi_test.dart` |
 | The personal data admin's screen in the Demo: a request recorded, extended, completed or refused, a refusal by the server shown in its own words with the sheet left open and then accepted (recovery), a privacy incident that says how many were told, and the screen offered only to someone who may decide requests (#3278). Simulated Demo behaviour; the server's rules are pgTAP 349, 350 and 351. | `test/features/profile/privacy_admin_screen_test.dart` |
 | The birthday on the personal information form: who can read it, a day chosen on the bounded calendar, saved with the rest, removed, and the rest saved when only the birthday fails (#3278) | `test/features/profile/birthday_form_test.dart` |

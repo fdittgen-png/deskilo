@@ -11465,6 +11465,12 @@ abstract class AppLocalizations {
   /// **'The demo could not be opened. Your workspace is unchanged.'**
   String get demoEntryFailed;
 
+  /// Direct entry to the Italian purchasing and sales demonstration
+  ///
+  /// In en, this message translates to:
+  /// **'Milan · purchases and sales (EUR)'**
+  String get demoEntryMilan;
+
   /// #3235 demo visit: demoEntrySignIn
   ///
   /// In en, this message translates to:
@@ -11488,6 +11494,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The demo is not available in this workspace.'**
   String get demoEntryUnavailable;
+
+  /// Direct entry to the Swiss purchasing and sales demonstration
+  ///
+  /// In en, this message translates to:
+  /// **'Zurich · purchases and sales (CHF)'**
+  String get demoEntryZurich;
 
   /// #1376 demo personas: demoPersonaAdmin
   ///

@@ -211,7 +211,7 @@ Vous ne vous souvenez plus de votre mot de passe. Vous recevez un code à usage 
 
 **Public:** Tout le monde
 
-Vous voulez jeter un coup d'œil avant de vous engager. La démo est un espace fictif, Atelier du Marché : les personnes, les réservations et les factures sont inventées, rien de ce que vous faites n'atteint un espace réel, et aucun compte n'est nécessaire.
+Vous voulez jeter un coup d'œil avant de vous engager. La démo contient plusieurs entreprises fictives, dont Atelier du Marché : les personnes, les réservations et les factures sont inventées, rien de ce que vous faites n'atteint un espace réel, et aucun compte n'est nécessaire.
 
 <p><img src="images/user-start-demo.fr.b8fa17aa9.jpg" width="280"></p>
 
@@ -6562,7 +6562,11 @@ Vous voulez savoir exactement ce qui ne laisse aucune trace.
 
 **Public:** Tout le monde
 
-Vous voulez regarder autour de vous avant de vous engager. La démo est un espace inventé, ouvert à tous, sans compte.
+Vous voulez regarder autour de vous avant de vous engager. La démo contient plusieurs entreprises fictives, ouvertes à tous, sans compte.
+
+Pour explorer les achats et les ventes, choisissez **Zurich · achats et ventes (CHF)** ou **Milan · achats et ventes (EUR)** dans la note d’accueil. Zurich ouvre les achats en CHF ; Milan ouvre la facturation en EUR. Les deux proposent des fournisseurs, des commandes, des factures à approuver, des paiements et des factures clients.
+
+Chaque membre humain retrouve ses propres factures dans au moins deux devises dans ses finances personnelles ; les montants restent séparés par devise. Changer de point de vue conserve vos commandes et vos factures approuvées. La réinitialisation rétablit les données de départ.
 
 **Étapes**
 

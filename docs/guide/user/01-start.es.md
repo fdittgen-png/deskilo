@@ -150,7 +150,7 @@ Usted no recuerda su contraseña. Recibe por correo un código de un solo uso y 
 
 **Público:** Todos
 
-Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espacio inventado, Atelier du Marché: las personas, las reservas y las facturas son ficticias, nada de lo que haga llega a un espacio real y no hace falta ninguna cuenta.
+Usted quiere echar un vistazo antes de comprometerse a nada. La demo contiene varios negocios ficticios, entre ellos Atelier du Marché: las personas, las reservas y las facturas son ficticias, nada de lo que haga llega a un espacio real y no hace falta ninguna cuenta.
 
 <p><img src="images/user-start-demo.es.jpg" width="280"></p>
 

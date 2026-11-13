@@ -451,7 +451,11 @@ Vuole sapere esattamente che cosa non lascia traccia.
 
 **Destinatari:** Tutti
 
-Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, aperto a chiunque, senza account.
+Vuole dare un'occhiata prima di impegnarsi. La demo comprende più attività fittizie, aperte a chiunque, senza account.
+
+Per esplorare acquisti e vendite, scelga **Zurigo · acquisti e vendite (CHF)** o **Milano · acquisti e vendite (EUR)** nella nota iniziale. Zurigo apre gli acquisti in CHF; Milano apre la fatturazione in EUR. Entrambi gli esempi includono fornitori, ordini, fatture da approvare, pagamenti e fatture clienti.
+
+Ogni membro che rappresenta una persona trova nelle proprie finanze personali fatture a suo nome in almeno due valute; gli importi restano separati per valuta. Cambiare punto di vista conserva gli ordini e le fatture approvate. Il ripristino riporta i dati alla situazione iniziale.
 
 **Passaggi**
 

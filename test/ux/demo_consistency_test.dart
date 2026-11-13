@@ -8,15 +8,15 @@ import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/demo_clock.dart';
-import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_finance_projection.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/core/ui/loading_view.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/kiosk/presentation/screens/kiosk_screen.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/visits/domain/guest_participation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -57,27 +57,19 @@ void main() {
     final journey = await pumpDemo(tester);
     await _go(tester, '/account-activity');
 
-    final overview = demoFinanceOverview(journey.fixture);
+    final overview = demoFinanceForUser(journey.fixture.personalSpaces, journey.fixture.auth.currentUserId);
     expect(
       overview.invoices,
       isNotEmpty,
       reason: 'the member has invoices on the workspace Money page',
     );
-    // Me spans every space the person is in: the main one and Leipzig
-    // (euros), London (pounds) and New York (dollars).
-    final mine =
-        [
-          ...journey.fixture.money.invoices,
-          ...journey.fixture.secondSpace.money.invoices,
-          ...journey.fixture.london.money.invoices,
-          ...journey.fixture.newYork.money.invoices,
-        ].where(
-          (i) =>
-              i.memberId == journey.fixture.actor.memberId &&
-              i.voidedAt == null &&
-              i.kind != InvoiceKind.settlement &&
-              i.totalCents > 0,
-        );
+    final mine = [
+      for (final space in journey.fixture.personalSpaces)
+        for (final member in [space.workspaces.myMember, ...space.workspaces.otherMembers])
+          if (member.userId == journey.fixture.auth.currentUserId && !member.isKiosk)
+            for (final i in space.money.invoices)
+              if (i.memberId == member.id && !i.isVoided && i.settledByInvoiceId == null) i,
+    ];
     expect(
       overview.invoices.map((i) => i.id).toSet(),
       mine.map((i) => i.id).toSet(),
@@ -88,13 +80,13 @@ void main() {
     );
   });
 
-  testWidgets('Me shows one amount to pay per currency: euros, pounds and '
-      'dollars apart, on Me › Finances and on the Me home glance', (
+  testWidgets('Me shows one amount to pay per currency on Finances and '
+      'the home glance', (
     tester,
   ) async {
     final journey = await pumpDemo(tester, persona: DemoPersona.member);
     final owed = demoOwedFromTheSpaces(journey.fixture);
-    expect(owed.keys.toSet(), {'EUR', 'GBP', 'USD'});
+    expect(owed.keys.toSet(), {'EUR', 'CHF', 'GBP', 'USD'});
 
     await _go(tester, '/account-activity');
     final summary = find.byKey(const ValueKey('finances-summary'));
@@ -238,15 +230,28 @@ void main() {
     await _go(tester, '/me');
 
     final listed = {for (final c in journey.fixture.directory.cards) c.id};
+    const labels = {
+      GuestVisitStatus.confirmed: 'Confirmed',
+      GuestVisitStatus.requested: 'Requested',
+    };
+    expect(journey.fixture.guests.visits.map((v) => v.status).toSet(),
+        labels.keys.toSet());
+    final scrollable = find.descendant(
+      of: find.byKey(const ValueKey('me-home-list')),
+      matching: find.byType(Scrollable),
+    ).first;
     for (final visit in journey.fixture.guests.visits) {
       expect(listed, contains(visit.workspaceId), reason: visit.id);
-      expect(
-        find.byKey(ValueKey('me-visit-${visit.id}'), skipOffstage: false),
-        findsOneWidget,
-      );
+      final card = find.byKey(ValueKey('me-visit-${visit.id}'));
+      // The finance and space sections can put visits below the fold.
+      await tester.scrollUntilVisible(card, 300, scrollable: scrollable);
+      await tester.pump();
+      expect(card.hitTestable(), findsOneWidget, reason: visit.id);
+      expect(find.descendant(of: card,
+        matching: find.text(visit.workspaceName)).hitTestable(), findsOneWidget);
+      expect(find.descendant(of: card,
+        matching: find.text(labels[visit.status]!)).hitTestable(), findsOneWidget);
     }
-    expect(_shows('Confirmed'), isTrue);
-    expect(_shows('Requested'), isTrue);
   });
 
   testWidgets('Business analytics offers the team\'s saved views', (

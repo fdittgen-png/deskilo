@@ -4519,6 +4519,7 @@
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
   },
+  "demoEntryMilan": "Mailand · Einkauf und Verkauf (EUR)",
   "demoEntrySignIn": "Anmelden",
   "@demoEntrySignIn": {
     "description": "#3235 demo visit: demoEntrySignIn"
@@ -4535,6 +4536,7 @@
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
   },
+  "demoEntryZurich": "Zürich · Einkauf und Verkauf (CHF)",
   "demoPersonaAdmin": "Administrator:in",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"

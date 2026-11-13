@@ -53,6 +53,8 @@ void main() {
           .where((r) => r.memberId == fixture.secondSpace.reservations.myMemberId),
       ...fixture.london.reservations.reservations,
       ...fixture.newYork.reservations.reservations,
+      ...fixture.zurich.reservations.reservations,
+      ...fixture.milan.reservations.reservations,
     ], fixture.activeMemberId, query);
     expect(page.items, isNotEmpty, reason: 'the demo persona has bookings');
     expect(page.items.map((i) => i.id).toList(), expected.take(50).map((r) => r.id).toList(),
@@ -115,7 +117,7 @@ void main() {
     final sources = await container.read(myReservationsSourcesProvider.future);
     expect(sources.map((s) => s.installationId), [kDemoInstallationId],
         reason: 'both spaces live on the one fictional installation');
-    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId]));
+    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId, 'ws-5', 'ws-6']));
 
     final page = await container
         .read(myReservationsRepositoryProvider)

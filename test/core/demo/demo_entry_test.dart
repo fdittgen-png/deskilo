@@ -9,6 +9,7 @@
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/demo_entry.dart';
+import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/demo/presentation/demo_entry_sheet.dart';
@@ -79,6 +80,28 @@ void main() {
     await tester.pumpAndSettle();
     expect(container.read(demoEntryProvider), isTrue);
   });
+
+  for (final (city, id, route) in [
+    ('zurich', 'ws-5', '/money/purchases'),
+    ('milan', 'ws-6', '/invoices'),
+  ]) {
+    testWidgets('the $city entry opens its commercial demonstration', (tester) async {
+      final container = ProviderContainer(overrides: [
+        authRepositoryProvider.overrideWithValue(FakeAuthRepository()),
+      ]);
+      addTearDown(container.dispose);
+      await tester.pumpWidget(UncontrolledProviderScope(container: container,
+        child: const MaterialApp(home: Scaffold(body: DemoEntryButton()))));
+      await tester.tap(find.byKey(DemoEntryButton.buttonKey));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(Key('demo-entry-$city')));
+      await tester.pumpAndSettle();
+      expect(container.read(demoEntryProvider), isTrue);
+      final link = container.read(pendingDemoLinkProvider);
+      expect(link?.workspaceId, id);
+      expect(link?.to, route);
+    });
+  }
 
   testWidgets('leaving forgets the session, so the next visit is canonical', (
     tester,

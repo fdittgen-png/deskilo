@@ -3,6 +3,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../features/money/domain/fee_band.dart';
 import '../../../features/money/domain/invoice_pdf_template.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
@@ -23,34 +24,46 @@ typedef CityMoneySpec = ({
   List<({String siteId, String memberId, DateTime month})> siteRentals,
 });
 
+const _demoCityCatalogue = <(String, int, bool)>[
+  ('Coffee', 250, true),
+  ('Tea', 200, true),
+  ('Bottled water', 150, true),
+  ('Sweets and snacks', 200, true),
+  ('Beer', 400, true),
+  ('Black and white pages', 15, false),
+  ('Colour pages', 50, false),
+  ('Copies', 20, false),
+  ('3D print jobs', 500, false),
+];
+
 void seedCityMoney(
   FakeMoneyRepository money,
   FakeWorkspaceRepository workspace,
-  CityMoneySpec spec,
-) => _CityMoney(money, workspace, spec).seed();
+  CityMoneySpec spec, {
+  String subscriptionLabel = 'Workspace membership',
+  String invoiceTitle = 'Coworking',
+  List<(String, int, bool)> catalogue = _demoCityCatalogue,
+}) => _CityMoney(money, workspace, spec, subscriptionLabel, invoiceTitle, catalogue).seed();
 
 class _CityMoney {
-  _CityMoney(this.money, this.workspace, this.spec);
+  _CityMoney(this.money, this.workspace, this.spec, this.subscriptionLabel, this.invoiceTitle, this.catalogue);
+  final String subscriptionLabel, invoiceTitle;
   final FakeMoneyRepository money;
   final FakeWorkspaceRepository workspace;
   final CityMoneySpec spec;
-  static const catalogue = <(String, int, bool)>[
-    ('Coffee', 250, true),
-    ('Tea', 200, true),
-    ('Bottled water', 150, true),
-    ('Sweets and snacks', 200, true),
-    ('Beer', 400, true),
-    ('Black and white pages', 15, false),
-    ('Colour pages', 50, false),
-    ('Copies', 20, false),
-    ('3D print jobs', 500, false),
-  ];
+  final List<(String, int, bool)> catalogue;
+  static const _halfFee = 18000, _fullFee = 36000;
 
   void seed() {
     final workspaceId = spec.workspaceId, prefix = spec.prefix;
     final now = spec.now;
     final years = spec.years;
     final hourlyBookings = spec.hourlyBookings;
+    money.feeBands..clear()..addAll([
+      for (final (from, to, cents) in [(0, 50, _halfFee), (50, 100, _fullFee)])
+        FeeBand(id: '$prefix-fee-$to', workspaceId: workspaceId,
+          fromPct: from, toPct: to, feeCents: cents, overageFeeCents: 0),
+    ]);
     money.services
       ..clear()
       ..addAll([
@@ -95,7 +108,7 @@ class _CityMoney {
     final siteRentals = spec.siteRentals;
     final period = yearMonth(month.year, month.month);
     final id = '$prefix-invoice-$period-$index';
-    final charge = member.subscriptionPct < 100 ? 18000 : 36000;
+    final charge = member.subscriptionPct <= 50 ? _halfFee : _fullFee;
     final quantities = [
       (index + month.month) % 5,
       (index + month.month) % 3,
@@ -144,10 +157,10 @@ class _CityMoney {
         number: '${prefix.toUpperCase()}-$period-$index',
         issuedAt: issued,
         period: period,
-        title: 'Coworking · $period',
+        title: '$invoiceTitle · $period',
         lines: [
           InvoiceLine(
-            label: 'Workspace membership',
+            label: subscriptionLabel,
             amountCents: charge,
             vatPercent: vatPercent,
           ),
@@ -197,9 +210,7 @@ class _CityMoney {
               ],
         currency: currency,
         memberName: workspace.memberNames[member.id] ?? 'Demo member',
-        memberAddress: currency == 'GBP'
-            ? 'Example Street, London'
-            : 'Example Avenue, New York',
+        memberAddress: 'Example Street, ${workspace.workspaces.firstWhere((w) => w.id == workspaceId).city}',
         workspaceName: name,
         workspaceAddress: workspace.workspaces
             .firstWhere((w) => w.id == workspaceId)
@@ -254,7 +265,7 @@ class _CityMoney {
         kind: LedgerKind.charge,
         category: LedgerCategory.subscription,
         amountCents: charge,
-        description: 'Workspace membership',
+        description: subscriptionLabel,
         period: period,
         createdAt: issued,
       ),

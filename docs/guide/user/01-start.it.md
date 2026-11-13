@@ -150,7 +150,7 @@ Non ricorda più la password. Riceve un codice monouso per e-mail e lo usa per i
 
 **Destinatari:** Tutti
 
-Vuole dare un'occhiata prima di impegnarsi. La demo è uno spazio inventato, Atelier du Marché: persone, prenotazioni e fatture sono fittizie, nulla di ciò che fa raggiunge uno spazio reale e non serve alcun account.
+Vuole dare un'occhiata prima di impegnarsi. La demo comprende più attività fittizie, tra cui Atelier du Marché: persone, prenotazioni e fatture sono fittizie, nulla di ciò che fa raggiunge uno spazio reale e non serve alcun account.
 
 <p><img src="images/user-start-demo.it.jpg" width="280"></p>
 

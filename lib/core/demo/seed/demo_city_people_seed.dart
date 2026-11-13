@@ -4,21 +4,19 @@ import '../../../features/profile/domain/personal_info.dart';
 import '../../../features/profile/domain/profile.dart';
 import '../data/workspace_repository.dart';
 
-List<Profile> demoCityProfiles(FakeWorkspaceRepository space, String prefix) =>
+List<Profile> demoCityProfiles(FakeWorkspaceRepository space, String prefix, {required String country, required String city}) =>
     [
       for (final member in [space.myMember, ...space.otherMembers])
         if (member.userId.startsWith('$prefix-user-'))
           Profile(
             id: member.userId,
             displayName: space.memberNames[member.id] ?? '',
-            countryCode: prefix == 'uk' ? 'GB' : 'US',
-            address: prefix == 'uk'
-                ? 'Example Street, London'
-                : 'Example Avenue, New York',
+            countryCode: country,
+            address: 'Example Street, $city',
             identity: PersonalInfo(
               firstName: space.memberNames[member.id] ?? '',
-              city: prefix == 'uk' ? 'London' : 'New York',
-              countryCode: prefix == 'uk' ? 'GB' : 'US',
+              city: city,
+              countryCode: country,
               email: space.memberEmails[member.id] ?? '',
             ),
           ),

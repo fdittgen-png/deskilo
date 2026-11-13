@@ -10,7 +10,9 @@ import 'package:deskilo/app/shell/shell_center_button.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/core/navigation/navigation_style.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -38,6 +40,18 @@ void main() {
     addTearDown(tester.view.reset);
     final journey = DemoJourney.start();
     addTearDown(journey.dispose);
+    final practice = journey.fixture.secondSpace;
+    const clientId = 'member-2';
+    final now = journey.fixture.seededAt;
+    final period = yearMonth(now.year, now.month);
+    final service = practice.money.services.first;
+    // This pay-per-use client has a confirmed session to invoice this month.
+    practice.money.ledger.add(LedgerEntry(
+      id: 'practice-confirmed-session', memberId: clientId,
+      kind: LedgerKind.charge, category: LedgerCategory.service,
+      amountCents: service.priceCents, description: service.name,
+      period: period, createdAt: now,
+    ));
     journey.fixture.prefs.navigationStyle.style = NavigationStyle.classic.wire;
     final spaces = journey.fixture.workspaces.workspaces;
     final i = spaces.indexWhere((w) => w.id == demoSecondSpaceId);
@@ -76,17 +90,23 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('invoice-member-dropdown')), findsOneWidget);
     expect(_placeWordsShown(tester), isEmpty);
-    // Issue it for a client and the month the form proposes.
-    final issued = journey.fixture.secondSpace.money.invoices.length;
+    final before = {for (final invoice in practice.money.invoices) invoice.id};
+    final issued = practice.money.invoices.length;
     await tester.tap(find.byKey(const ValueKey('invoice-member-dropdown')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byType(DropdownMenuItem<String>).last);
+    final client = find.text(practice.workspaces.memberNames[clientId]!).hitTestable();
+    expect(client, findsOneWidget);
+    await tester.tap(client);
     await tester.pumpAndSettle();
     // Last month is invoiced already in the Demo: this month (a client who
     // leaves mid-month is invoiced so too).
     await tester.tap(find.byKey(const ValueKey('invoice-period-next')));
     await tester.pumpAndSettle();
-    await tester.tap(find.byKey(const ValueKey('invoice-submit')));
+    final submit = find.byKey(const ValueKey('invoice-submit'));
+    await tester.ensureVisible(submit);
+    await tester.pumpAndSettle();
+    expect(tester.widget<FilledButton>(submit).onPressed, isNotNull);
+    await tester.tap(submit);
     await tester.pumpAndSettle();
     expect(
       journey.fixture.secondSpace.money.invoices.length,
@@ -94,11 +114,24 @@ void main() {
       reason: 'the practice issued an invoice from its centre action',
     );
     // It is under Invoices, and still no place word.
-    final mine = journey.fixture.secondSpace.money.invoices.last;
+    final mine = practice.money.invoices.singleWhere((invoice) => !before.contains(invoice.id));
+    expect(mine.memberId, clientId);
+    expect(mine.workspaceId, demoSecondSpaceId);
+    expect(mine.period, period);
+    expect(mine.totalCents, service.priceCents);
     router.go('/invoice-register');
     await tester.pumpAndSettle();
     expect(find.text(mine.memberName), findsWidgets);
     expect(find.text('13/05/2026'), findsWidgets);
     expect(_placeWordsShown(tester), isEmpty);
+    final record = find.byKey(ValueKey('records-row-${mine.id}'));
+    expect(record, findsOneWidget);
+    await tester.ensureVisible(record);
+    await tester.tap(record);
+    await tester.pumpAndSettle();
+    expect(
+      tester.widget<Text>(find.byKey(const ValueKey('invoice-detail-number'))).data,
+      mine.number,
+    );
   });
 }

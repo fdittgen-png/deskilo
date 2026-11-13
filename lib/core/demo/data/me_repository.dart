@@ -52,6 +52,7 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
     Map<String, FakeAccount>? accounts,
     this.homeInstallationId = _fakeHomeInstallationId,
     Map<String, String>? spaceLabels,
+    this.deriveWorkspaceRefs,
   })  : _currentUser = currentUser ?? (() => 'user-1'),
         spaceLabels = spaceLabels ?? {},
         accounts = accounts ??
@@ -66,6 +67,7 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
 
   final String Function() _currentUser;
   final Map<String, FakeAccount> accounts;
+  final PersonalWorkspaceRefs Function()? deriveWorkspaceRefs;
 
   /// Spaces left through [leaveSpace], in call order.
   final List<String> left = [];
@@ -124,7 +126,9 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
   /// network reference; a reference not written keeps what it says. A
   /// space is marked only when [myWorkspaceRefs] names it, as the home
   /// marks only a space the person is related to.
-  final Map<String, bool> accountFavorites = {};
+  final _favoritesByAccount = <String, Map<String, bool>>{};
+  Map<String, bool> get accountFavorites =>
+      _favoritesByAccount.putIfAbsent(_currentUser(), () => {});
 
   /// When set, [setAccountFavorite] throws it and keeps nothing.
   Exception? favoriteFailure;
@@ -167,6 +171,7 @@ class FakeMeRepository implements MeRepository, WorkspaceAccessRepository {
 
   PersonalWorkspaceRefs _named() =>
       workspaceRefs ??
+      deriveWorkspaceRefs?.call() ??
         PersonalWorkspaceRefs(
           homeInstallationId: homeInstallationId,
           refs: [

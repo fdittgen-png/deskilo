@@ -33,6 +33,12 @@ void main() {
     final bank = container.read(
       bankStatementRepositoryProvider,
     ) as FakeBankStatementRepository;
+    expect(bank.money, same(journey.fixture.money));
+    // The report invoice belongs to an existing demo customer, so matching
+    // it can stamp the acting member without inventing a missing buyer.
+    final buyer = journey.fixture.workspaces.otherMembers
+        .firstWhere((member) => member.id == 'member-2');
+    expect(buyer.workspaceId, 'ws-1');
     // A synthetic EUR invoice and two consecutive source files: the first
     // closes at 150.00 after a 50.00 receipt; the second opens at 150.00
     // and closes at 140.00 after the named 10.00 movement.
@@ -42,14 +48,14 @@ void main() {
         Invoice(
           id: 'demo-report-invoice',
           workspaceId: 'ws-1',
-          memberId: 'demo-report-member',
+          memberId: buyer.id,
           number: 'DEMO-REPORT-INVOICE',
           issuedAt: DateTime.utc(2026),
           title: 'Demo',
           lines: const [InvoiceLine(label: 'Demo', amountCents: 5000)],
           totalCents: 5000,
           currency: 'EUR',
-          memberName: 'Demo member',
+          memberName: journey.fixture.workspaces.memberNames[buyer.id]!,
           memberAddress: '',
           workspaceName: 'Demo',
           workspaceAddress: '',

@@ -4519,6 +4519,7 @@
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
   },
+  "demoEntryMilan": "Milan · achats et ventes (EUR)",
   "demoEntrySignIn": "Se connecter",
   "@demoEntrySignIn": {
     "description": "#3235 demo visit: demoEntrySignIn"
@@ -4535,6 +4536,7 @@
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
   },
+  "demoEntryZurich": "Zurich · achats et ventes (CHF)",
   "demoPersonaAdmin": "Un administrateur",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"

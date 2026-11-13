@@ -5,13 +5,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Ref;
 
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
 /// One value for each of the Demo's five spaces.
-typedef DemoSpaces<T> = ({T home, T leipzig, T london, T newYork, T twin});
+typedef DemoSpaces<T> = ({T home, T leipzig, T london, T newYork, T zurich, T milan, T twin});
 
 /// The one of [spaces] that belongs to the space being looked at: the main
 /// space's while no space is open yet.
@@ -21,5 +22,8 @@ T demoPickSpace<T>(Ref ref, DemoSpaces<T> spaces) =>
       demoLondonSpaceId => spaces.london,
       demoNewYorkSpaceId => spaces.newYork,
       demoTwinSpaceId => spaces.twin,
-      _ => spaces.home,
+      demoZurichSpaceId => spaces.zurich,
+      demoMilanSpaceId => spaces.milan,
+      null || '' || demoFirstSpaceId => spaces.home,
+      final id => throw StateError('unknown demo space: $id'),
     };

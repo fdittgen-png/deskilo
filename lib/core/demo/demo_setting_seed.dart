@@ -5,9 +5,14 @@
 // show in the Demo; every other space keeps the registry default.
 import '../../features/workspace/domain/business_profile.dart';
 import '../settings/settings.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
 const List<SettingVersion> demoSettingSeed = [
+  SettingVersion(scope: SettingScope.workspace, workspaceId: demoZurichSpaceId,
+    key: businessKindKey, value: 'service', validFrom: 'v1'),
+  SettingVersion(scope: SettingScope.workspace, workspaceId: demoMilanSpaceId,
+    key: businessKindKey, value: 'studio', validFrom: 'v1'),
   SettingVersion(
     scope: SettingScope.workspace,
     workspaceId: demoSecondSpaceId,

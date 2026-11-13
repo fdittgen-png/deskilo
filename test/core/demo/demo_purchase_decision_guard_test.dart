@@ -19,7 +19,8 @@ void main() {
       final demo = seedDemoPurchasing(DateTime(2026, 11, 2));
       final container = ProviderContainer(
         overrides: [
-          ...demoPurchasingOverrides(demo),
+          ...demoPurchasingOverrides((home: demo, leipzig: demo, london: demo,
+            newYork: demo, zurich: demo, milan: demo, twin: demo)),
           purchaseApprovalAccessProvider.overrideWith(
             (ref, id) => ref.watch(_access),
           ),

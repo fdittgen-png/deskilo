@@ -13,6 +13,7 @@ import '../../../../features/money/domain/invoice_queries.dart';
 import '../../../../features/money/domain/ledger_entry.dart';
 import '../../../../features/money/presentation/invoicing/receivables_adapter.dart';
 import '../../../../features/money/providers/customer_statement_providers.dart';
+import '../../../../features/money/providers/money_providers.dart';
 import '../../demo_fixture.dart';
 
 class _DemoCustomerStatementReader implements CustomerStatementReader {
@@ -65,10 +66,10 @@ class _DemoCustomerStatementReader implements CustomerStatementReader {
 /// #3673 — the Demo's statement reader over the session's [fixture]: the
 /// page's own rules, since the Demo has no server to ask.
 Override demoCustomerStatementOverride(DemoFixture fixture) =>
-    customerStatementReaderProvider.overrideWithValue(
+    customerStatementReaderProvider.overrideWith((ref) =>
       _DemoCustomerStatementReader(
-        invoices: fixture.money,
-        ledgerOf: fixture.money.fetchWorkspaceLedger,
+        invoices: ref.watch(invoiceQueriesProvider),
+        ledgerOf: ref.watch(memberAccountQueriesProvider).fetchWorkspaceLedger,
         currencyOf: (id) =>
             fixture.workspaces.workspaces
                 .where((w) => w.id == id)

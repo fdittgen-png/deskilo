@@ -1,75 +1,47 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//
-// #3307 — the purchase orders of each purchasing space of the Demo, in its
-// own currency, to its own suppliers, with its own catalogue; Leipzig
-// orders nothing yet. Nothing is sent from the Demo.
+// Orders and receipts use the same suppliers, catalogue and currency as the
+// purchasing graph. A new space or a development twin starts with no orders.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/domain/service_item.dart';
 import '../../features/money/providers/purchase_order_providers.dart';
-import '../../features/workspace/providers/workspace_providers.dart';
 import 'data/purchase_order_repository.dart';
 import 'demo_fixture.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
+import 'demo_space_pick.dart';
 import 'seed/demo_purchase_order_seed.dart';
 import 'seed/demo_purchase_seed.dart';
-import 'seed/demo_second_space_seed.dart';
 
-/// The purchase orders of each Demo space (#3307), kept so the vendor figures
-/// (#3294 step 5) read the same orders and receipts the screens show.
-typedef DemoPurchaseOrderSpaces = ({
-  FakePurchaseOrderRepository home,
-  FakePurchaseOrderRepository london,
-  FakePurchaseOrderRepository newYork,
-  FakePurchaseOrderRepository leipzig,
-});
+typedef DemoPurchaseOrderSpaces = DemoSpaces<FakePurchaseOrderRepository>;
 
 DemoPurchaseOrderSpaces demoPurchaseOrderSpaces(
-  DemoFixture fixture,
-  DemoPurchasing home, {
-  required DemoPurchasing london,
-  required DemoPurchasing newYork,
-  required DemoPurchasing leipzig,
-}) {
+  DemoFixture fixture, DemoSpaces<DemoPurchasing> purchasing,
+) {
   FakePurchaseOrderRepository space(
-    DemoPurchasing purchasing,
-    List<ServiceItem> Function() services,
-    String currency, {
-    bool seeded = true,
-  }) {
+    DemoPurchasing buying, List<ServiceItem> Function() services,
+    String currency, double vatPercent, {bool seeded = true}
+  ) {
     final repo = FakePurchaseOrderRepository(
-      suppliers: () => purchasing.suppliers.suppliers,
-      services: services,
-      now: () => fixture.seededAt,
-      currency: currency,
+      suppliers: () => buying.suppliers.suppliers, services: services,
+      now: () => fixture.seededAt, currency: currency,
     );
-    if (seeded) seedDemoPurchaseOrders(repo, fixture.seededAt);
+    if (seeded) seedDemoPurchaseOrders(repo, fixture.seededAt, vatPercent: vatPercent);
     return repo;
   }
-
   return (
-    home: space(home, () => fixture.money.services, 'EUR'),
-    london: space(london, () => fixture.london.money.services, 'GBP'),
-    newYork: space(newYork, () => fixture.newYork.money.services, 'USD'),
-    leipzig: space(
-      leipzig,
-      () => fixture.secondSpace.money.services,
-      'EUR',
-      seeded: false,
-    ),
+    home: space(purchasing.home, () => fixture.money.services, 'EUR', 20),
+    london: space(purchasing.london, () => fixture.london.money.services, 'GBP', 20),
+    newYork: space(purchasing.newYork, () => fixture.newYork.money.services, 'USD', 0),
+    zurich: space(purchasing.zurich, () => fixture.zurich.money.services,
+      fixture.zurich.spec.currency, fixture.zurich.spec.vatPercent),
+    milan: space(purchasing.milan, () => fixture.milan.money.services,
+      fixture.milan.spec.currency, fixture.milan.spec.vatPercent),
+    leipzig: space(purchasing.leipzig, () => fixture.secondSpace.money.services,
+      'EUR', 0, seeded: false),
+    twin: space(purchasing.twin, () => fixture.twin.money.services,
+      'EUR', 20, seeded: false),
   );
 }
 
-List<Override> demoPurchaseOrderOverrides(DemoPurchaseOrderSpaces spaces) {
-  return [
-    purchaseOrderRepositoryProvider.overrideWith(
-      (ref) => switch (ref.watch(currentWorkspaceProvider).value?.id) {
-        demoLondonSpaceId => spaces.london,
-        demoNewYorkSpaceId => spaces.newYork,
-        demoSecondSpaceId => spaces.leipzig,
-        _ => spaces.home,
-      },
-    ),
-  ];
-}
+List<Override> demoPurchaseOrderOverrides(DemoPurchaseOrderSpaces spaces) => [
+  purchaseOrderRepositoryProvider.overrideWith((ref) => demoPickSpace(ref, spaces)),
+];

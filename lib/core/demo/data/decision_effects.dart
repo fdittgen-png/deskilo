@@ -43,8 +43,9 @@ void wireDecisionEffects(
   void ledger(WorkspaceEvent e, LedgerKind kind, LedgerCategory category, int cents, String text,
       {DateTime? occurredOn}) {
     final at = now();
+    final id = 'decided-${e.id}-${next++}';
     money.ledger.add(LedgerEntry(
-      id: 'decided-${e.id}-${next++}',
+      id: id,
       memberId: e.subjectMemberId,
       kind: kind,
       category: category,
@@ -54,6 +55,9 @@ void wireDecisionEffects(
       createdAt: at,
       occurredOn: occurredOn,
     ));
+    if (e.payload['vat_percent'] case final num percent) {
+      money.ledgerVatPercents[id] = percent.toDouble();
+    }
   }
 
   int intOf(Object? v) => (v as num?)?.toInt() ?? 0;

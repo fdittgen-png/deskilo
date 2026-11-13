@@ -451,7 +451,11 @@ Quiere saber exactamente qué no deja rastro.
 
 **Público:** Todos
 
-Quiere echar un vistazo antes de comprometerse. La demo es un espacio inventado, abierto a cualquiera, sin cuenta.
+Quiere echar un vistazo antes de comprometerse. La demo contiene varios negocios ficticios, abiertos a cualquiera, sin cuenta.
+
+Para explorar compras y ventas, elija **Zúrich · compras y ventas (CHF)** o **Milán · compras y ventas (EUR)** en la nota inicial. Zúrich abre las compras en CHF; Milán abre la facturación en EUR. Ambos ejemplos incluyen proveedores, pedidos, facturas pendientes de aprobación, pagos y facturas de clientes.
+
+Cada miembro que representa a una persona tiene sus propias facturas en al menos dos monedas en sus finanzas personales; los importes se mantienen separados por moneda. Al cambiar de perspectiva se conservan sus pedidos y facturas aprobadas. Reiniciar restaura los datos iniciales.
 
 **Pasos**
 

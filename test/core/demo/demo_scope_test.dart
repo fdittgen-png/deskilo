@@ -25,6 +25,7 @@ import 'package:deskilo/core/push/push_providers.dart';
 import 'package:deskilo/core/share/text_sharer.dart';
 import 'package:deskilo/core/theme/theme_controller.dart';
 import 'package:deskilo/core/time/clock.dart';
+import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart' show Locale, ThemeMode;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -163,21 +164,19 @@ void main() {
     final container = ProviderContainer(overrides: demoOverrides(fixture));
     addTearDown(container.dispose);
 
-    // What a Demo START actually reads. `DefaultWorkspaceId.build` is
-    // the destructive one: auth comes from the OVERRIDDEN fixture, so
-    // it answers "signed in", reads the fixture's (absent) server
-    // default and writes null through — and a null write on a
-    // `PrefsStringStore` is `prefs.remove`.
-    //
-    // The listener matters: the fake's auth stream is `async*`, so the
-    // FIRST build still reads "signed out" and only the rebuild after
-    // the first emission takes the destructive branch. A test that read
-    // the future once and walked away saw the preference intact.
+    // Listen before the async auth stream emits: the first default build
+    // reads "signed out", and the signed-in rebuild writes the fixture's
+    // server default through its cache. Settle that rebuild before
+    // awaiting its result, rather than awaiting the initial loading future.
     container.listen(defaultWorkspaceIdProvider, (_, _) {});
-    await container.read(defaultWorkspaceIdProvider.future);
-    for (var i = 0; i < 10; i++) {
-      await Future<void>.delayed(Duration.zero);
-    }
+    expect(await container.read(authStateProvider.future),
+        fixture.auth.currentUserId);
+    await container.pump();
+    expect(await container.read(defaultWorkspaceIdProvider.future),
+        fixture.workspaces.serverDefaultWorkspaceId);
+    expect(await fixture.prefs.defaultWorkspace.read(fixture.auth.currentUserId!),
+        fixture.workspaces.serverDefaultWorkspaceId,
+        reason: 'the signed-in cache write must land in Demo memory');
     await container.read(activeWorkspaceIdProvider.future);
     await container.read(localeControllerProvider.future);
     await container.read(themeControllerProvider.future);

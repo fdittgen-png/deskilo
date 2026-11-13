@@ -9,7 +9,7 @@ import '../../../features/money/domain/purchase_order.dart';
 import '../../../features/money/domain/purchase_order_receipt.dart';
 import '../data/purchase_order_repository.dart';
 
-void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
+void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now, {double vatPercent = 20}) {
   final suppliers = [
     for (final s in orders.suppliers())
       if (s.isActive) s,
@@ -61,7 +61,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
           quantity: 40,
           unit: 'unit',
           unitPriceCents: 90,
-          vatRatePercent: 20,
+          vatRatePercent: vatPercent,
           receivedQuantity: received[1] ?? 0,
         ),
         PurchaseOrderLine(
@@ -70,7 +70,7 @@ void seedDemoPurchaseOrders(FakePurchaseOrderRepository orders, DateTime now) {
           quantity: 12,
           unit: 'roll',
           unitPriceCents: 150,
-          vatRatePercent: 20,
+          vatRatePercent: vatPercent,
           receivedQuantity: received[2] ?? 0,
         ),
       ],

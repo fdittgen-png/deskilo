@@ -11,6 +11,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../money_repository.dart';
 import 'demo_document_numbering.dart';
+import 'demo_invoice_identity.dart';
+import 'demo_invoice_tax.dart';
 import 'demo_payment_apply.dart';
 
 /// #2591 — what a person does to an invoice, in the demo: answered from one
@@ -25,6 +27,9 @@ class DemoInvoiceCommands implements InvoiceCommands {
   /// space issues invoices in and the only one a payment settles (#3671).
   String currency = 'EUR';
 
+  String _issuerOf(Invoice invoice) => _m.invoiceIdentity
+      ?.call(invoice.workspaceId, invoice.memberId).issuerName ?? 'Flo';
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
@@ -37,23 +42,14 @@ class DemoInvoiceCommands implements InvoiceCommands {
     String purchaseOrder = '',
     String correctionReason = '',
   }) async {
+    final identity = _m.invoiceIdentity?.call(workspaceId, memberId) ??
+        demoDefaultInvoiceIdentity(memberId);
     _m.lastCorrectionReason = correctionReason;
     _m.lastBuyerReference = buyerReference;
     _m.lastPurchaseOrder = purchaseOrder;
     // Server contract (0067/0142): one ACTIVE invoice per member, month
     // and KIND — a full invoice blocks both kinds.
-    if (_m.invoices.any(
-      (i) =>
-          i.memberId == memberId &&
-          i.period == period &&
-          !i.isVoided &&
-          i.id != replacesId &&
-          (i.kind == kind ||
-              i.kind == InvoiceKind.full ||
-              kind == InvoiceKind.full),
-    )) {
-      throw const PostgrestException(message: 'period already invoiced for this member', code: 'DKI07');
-    }
+    _checkPeriod(memberId, period, kind, replacesId);
     // #827 — the kind narrows the lines the way invoice_lines_for does.
     final lines = [
       for (final l in _m.derivedLines(memberId, period))
@@ -73,7 +69,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       if (!_m.invoices[i].isVoided) {
         _m.invoices[i] = _m.invoices[i].copyWith(
           voidedAt: _m.clock(),
-          voidedByName: 'Flo',
+          voidedByName: identity.issuerName,
         );
       }
       replacesNumber = _m.invoices[i].number;
@@ -83,7 +79,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     final series = demoSeriesOf(_m, 'invoice');
     final counter = series.nextValue;
     final invoice = Invoice(
-      id: 'inv-${_m.nextInvoiceNumber}',
+      id: '${_m.invoiceIdentity == null ? '' : '$workspaceId-'}inv-${_m.nextInvoiceNumber}',
       workspaceId: workspaceId,
       memberId: memberId,
       number: series.format(counter, _m.clock()),
@@ -92,32 +88,23 @@ class DemoInvoiceCommands implements InvoiceCommands {
       title: period,
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
+      vatTotals: _m.invoiceIdentity == null ? const [] : demoInvoiceTaxTotals(lines),
       currency: currency,
       // Distinguishable snapshots for the archive filters.
-      memberName: memberId == 'member-1' ? 'Flo' : 'Ana',
-      memberAddress: '1 Rue Test, 34120 Pézenas',
-      workspaceName: 'Test Space',
-      workspaceAddress: '2 Place du Marché, 34120 Pézenas',
-      issuerName: 'Flo',
+      memberName: identity.memberName,
+      memberAddress: identity.memberAddress,
+      workspaceName: identity.workspaceName,
+      workspaceAddress: identity.workspaceAddress,
+      issuerName: identity.issuerName,
+      sellerParty: identity.seller,
+      buyerParty: identity.buyer?.copyWith(
+          reference: buyerReference, orderReference: purchaseOrder),
       signature: 'f' * 64,
       replacesInvoiceId: replacesId,
       replacesNumber: replacesNumber,
       detailed: detailed,
       kind: kind,
-      detailLedger: detailed
-          ? [
-              for (final entry in _m.ledger)
-                if (entry.memberId == memberId && entry.period == period)
-                  InvoiceDetailEntry(
-                    on: entry.createdAt.toIso8601String().split('T').first,
-                    category: entry.category.name,
-                    label: entry.description,
-                    amountCents: entry.kind == LedgerKind.credit
-                        ? -entry.amountCents
-                        : entry.amountCents,
-                  ),
-            ]
-          : const [],
+      detailLedger: detailed ? _details(memberId, period) : const [],
       attendance: detailed ? List.of(_m.attendanceSeed) : const [],
     );
     // The counter moves past the number just issued (a series that already
@@ -131,6 +118,23 @@ class DemoInvoiceCommands implements InvoiceCommands {
     _m.invoices.insert(0, invoice);
     return invoice.id;
   }
+
+  void _checkPeriod(String memberId, String period, InvoiceKind kind, String? replacesId) {
+    if (_m.invoices.any((i) => i.memberId == memberId && i.period == period &&
+        !i.isVoided && i.id != replacesId &&
+        (i.kind == kind || i.kind == InvoiceKind.full || kind == InvoiceKind.full))) {
+      throw const PostgrestException(message: 'period already invoiced for this member', code: 'DKI07');
+    }
+  }
+
+  List<InvoiceDetailEntry> _details(String memberId, String period) => [
+    for (final entry in _m.ledger)
+      if (entry.memberId == memberId && entry.period == period)
+        InvoiceDetailEntry(
+          on: entry.createdAt.toIso8601String().split('T').first,
+          category: entry.category.name, label: entry.description,
+          amountCents: entry.kind == LedgerKind.credit ? -entry.amountCents : entry.amountCents),
+  ];
 
   @override
   Future<String> issueInvoiceWithReceipt(InvoiceIssueCommand c) async {
@@ -162,7 +166,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     if (_m.invoices[i].isVoided) throw StateError('invoice already voided');
     _m.invoices[i] = _m.invoices[i].copyWith(
       voidedAt: _m.clock(),
-      voidedByName: 'Flo',
+      voidedByName: _issuerOf(_m.invoices[i]),
     );
   }
 
@@ -208,7 +212,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       note: trimmed,
       status: _m.matchPolicyConfigured ? 'pending' : 'confirmed',
       matchedAt: _m.clock(),
-      byName: 'Flo',
+      byName: _issuerOf(invoice),
     );
   }
 
@@ -231,7 +235,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
     // Older tests settle ids the fake never issued: they only observe
     // the call, so build nothing for them.
     if (sources.length != invoiceIds.length) return _m.nextSettlementId;
-    final settlementId = 'inv-settle-${_m.settlements.length}';
+    final scope = _m.invoiceIdentity == null ? '' : '$workspaceId-';
+    final settlementId = '${scope}inv-settle-${_m.settlements.length}';
     final settlement = Invoice(
       id: settlementId,
       workspaceId: workspaceId,
@@ -249,7 +254,9 @@ class DemoInvoiceCommands implements InvoiceCommands {
       memberAddress: sources.first.memberAddress,
       workspaceName: sources.first.workspaceName,
       workspaceAddress: sources.first.workspaceAddress,
-      issuerName: 'Flo',
+      issuerName: _issuerOf(sources.first),
+      sellerParty: sources.first.sellerParty,
+      buyerParty: sources.first.buyerParty,
       signature: 's' * 64,
       kind: InvoiceKind.settlement,
       settles: [
@@ -394,7 +401,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
         note: trimmed.isEmpty ? existing.note : trimmed,
         paymentLedgerId: paymentLedgerId,
         matchedAt: _m.clock(),
-        byName: 'Flo',
+        byName: _issuerOf(invoice),
       );
       return;
     }
@@ -407,7 +414,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       status: _m.matchPolicyConfigured ? 'pending' : 'confirmed',
       paymentLedgerId: paymentLedgerId,
       matchedAt: _m.clock(),
-      byName: 'Flo',
+      byName: _issuerOf(invoice),
       eventId: eventId,
     );
   }

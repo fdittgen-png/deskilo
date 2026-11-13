@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
-import 'package:deskilo/core/demo/data/account_activity_repository.dart';
-import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
@@ -43,7 +41,6 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
-import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
@@ -140,50 +137,27 @@ import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
-import 'data/premises_lease_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
-import 'data/workspace_asset_repository.dart';
 import 'demo_city_commerce_overrides.dart';
+import 'demo_commerce_stores.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
+import 'demo_personal_repositories.dart';
 import 'demo_space_routing.dart';
-import 'seed/demo_asset_seed.dart';
-import 'seed/demo_lease_seed.dart';
+import 'seed/demo_commerce_country_seed.dart';
 import 'seed/demo_london_seed.dart';
-import 'seed/demo_main_books_seed.dart';
 import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
 /// The main space's purchase side, seeded once for the session: its
 /// providers and the setup guide's evidence read the same repositories.
-typedef _MainBooks = ({
-  DemoPurchasing purchasing,
-  FakeBookProfileRepository books,
-  FakePremisesLeaseRepository lease,
-  FakeWorkspaceAssetRepository assets,
-});
-
-_MainBooks _seedMainBooks(DemoFixture fixture) {
-  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money, plan: (fixture.workspaces, fixture.floorPlan), actor: () => fixture.activeMemberId, workspaceId: demoFirstSpaceId);
-  return (
-    purchasing: purchasing,
-    // #1869 in memory; #2365 posts the demo money and its supplier bills.
-    books: demoMainBooks(fixture, purchasing),
-    // #2569 — the lease the demo space holds as tenant.
-    lease: seedDemoLease(fixture.seededAt),
-    // #2576 — the equipment the demo space bought.
-    assets: seedDemoAssets(fixture.seededAt),
-  );
-}
-
 /// The setup guide over each space's own fixture: Pézenas holds what
 /// every step names, Leipzig what a space a few weeks old holds.
-DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
+DemoSetupRepository _setupGuide(DemoFixture fixture, DemoMainBooks main) {
   final second = fixture.secondSpace;
   return DemoSetupRepository(
     rows: fixture.workspaces,
@@ -216,6 +190,10 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         reservations: fixture.london.reservations,
         money: fixture.london.money,
         events: fixture.london.events,
+        books: DemoSetupBooks(suppliers: fixture.commerce.buying.london.suppliers,
+          leases: fixture.commerce.contracts.london.lease,
+          assets: fixture.commerce.contracts.london.assets,
+          books: fixture.commerce.books.london, directory: fixture.directory),
       ),
       demoNewYorkSpaceId: DemoSetupSources(
         space: fixture.newYork.workspaces,
@@ -223,6 +201,26 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         reservations: fixture.newYork.reservations,
         money: fixture.newYork.money,
         events: fixture.newYork.events,
+        books: DemoSetupBooks(suppliers: fixture.commerce.buying.newYork.suppliers,
+          leases: fixture.commerce.contracts.newYork.lease,
+          assets: fixture.commerce.contracts.newYork.assets,
+          books: fixture.commerce.books.newYork, directory: fixture.directory),
+      ),
+      demoZurichSpaceId: DemoSetupSources(
+        space: fixture.zurich.workspaces, plan: fixture.zurich.floorPlan,
+        reservations: fixture.zurich.reservations, money: fixture.zurich.money,
+        events: fixture.zurich.events,
+        books: DemoSetupBooks(suppliers: fixture.zurich.purchasing.suppliers,
+          leases: fixture.zurich.lease, assets: fixture.zurich.assets,
+          books: fixture.zurich.books, directory: fixture.directory),
+      ),
+      demoMilanSpaceId: DemoSetupSources(
+        space: fixture.milan.workspaces, plan: fixture.milan.floorPlan,
+        reservations: fixture.milan.reservations, money: fixture.milan.money,
+        events: fixture.milan.events,
+        books: DemoSetupBooks(suppliers: fixture.milan.purchasing.suppliers,
+          leases: fixture.milan.lease, assets: fixture.milan.assets,
+          books: fixture.milan.books, directory: fixture.directory),
       ),
       // #3302 — the twin's guide reads its own (copied) plan and its own,
       // empty activity: what a development side holds before a rehearsal.
@@ -265,7 +263,8 @@ List<Override> _serverOnlyOverrides() => [
 List<Override> demoOverrides(DemoFixture fixture) {
   // #1847 — the one in-memory directory behind its three interfaces.
   final directory = fixture.directory;
-  final main = _seedMainBooks(fixture);
+  final main = fixture.commerce.main;
+  final personalMe = fixture.personalMe;
   return [
       // The clock first: everything the fixture seeded is relative to it,
       // and it stands still on one fixed day, which the Demo bar names.
@@ -315,7 +314,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      ...demoCityCommerceOverrides(fixture, main.purchasing, main.books, main.lease, main.assets), // #2358, #2567, #2573
+      ...demoCityCommerceOverrides(fixture, fixture.commerce), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider), seed: demoSettingSeed)), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]), ...demoNoBackendOverrides(), // #3235
@@ -327,7 +326,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
+      meRepositoryProvider.overrideWithValue(personalMe), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWithValue(personalMe), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider.overrideWithValue(fixture.guests),
       ..._demoContacts(fixture), // #2472
@@ -340,7 +339,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           source.isEmpty || source == kDemoServerOrigin
               ? fixture.messenger
               : FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(FakeAccountActivityRepository(derive: () => demoFinanceOverview(fixture))), // #2327; no connected host in Demo
+      accountActivityRepositoryProvider.overrideWithValue(demoPersonalActivity(spaces: () => fixture.personalSpaces, currentUser: () => fixture.auth.currentUserId)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(demoPersonalActivity(spaces: () => fixture.personalSpaces, currentUser: () => fixture.auth.currentUserId)), // #2327; no connected host in Demo
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),
@@ -382,65 +381,56 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // the server-update screen.
       schemaVersionSourceProvider.overrideWithValue(fixture.outward.schema),
 
-      // #1564 — every per-device preference, owned by the session.
-      //
-      // A separate root container does not replace SharedPreferences:
-      // each of these resolved to its `Prefs…Store` and wrote to the real
-      // app's memory. `DefaultWorkspaceId` was the sharpest — it reads
-      // "signed in" from the overridden auth repository, asks the fixture
-      // for a server default, gets null and writes it through, and a null
-      // write is `prefs.remove`. Entering Demo deleted the member's real
-      // default profile.
-      localeStoreProvider.overrideWithValue(fixture.prefs.locale),
-      themeStoreProvider.overrideWithValue(fixture.prefs.theme),
-      navigationStyleStoreProvider
-          .overrideWithValue(fixture.prefs.navigationStyle),
-      ..._shellPrefOverrides(fixture.prefs),
-      pushOptOutStoreProvider.overrideWithValue(fixture.prefs.pushOptOut),
-      webMcpSwitchStoreProvider.overrideWithValue(fixture.prefs.webMcpSwitch),
-      frontCameraStoreProvider.overrideWithValue(fixture.prefs.frontCamera),
-      activeWorkspaceStoreProvider
-          .overrideWithValue(fixture.prefs.activeWorkspace),
-      defaultWorkspaceStoreProvider
-          .overrideWithValue(fixture.prefs.defaultWorkspace),
-      defaultLevelStoreProvider.overrideWithValue(fixture.prefs.defaultLevel),
-      defaultPeriodStoreProvider.overrideWithValue(fixture.prefs.defaultPeriod),
-      notificationFilterStoreProvider
-          .overrideWithValue(fixture.prefs.notificationFilters),
-      helpHintStoreProvider.overrideWithValue(fixture.prefs.helpHints),
-      spacePrefsStoreProvider.overrideWithValue(fixture.prefs.spacePrefs),
-      noteSeenStoreProvider.overrideWithValue(fixture.prefs.noteSeen),
-      backendSettingsStoreProvider.overrideWithValue(fixture.prefs.backend),
-      // #1650 — the resumable errand is device state too.
-      entryIntentStoreProvider.overrideWithValue(fixture.prefs.entryIntent),
-      creationDraftStoreProvider.overrideWithValue(fixture.prefs.creationDraft),
-      // #1855 — a visitor's interrupted booking stays inside the
-      // demonstration, scoped to its own synthetic account and server.
-      bookingIntentStoreProvider.overrideWithValue(fixture.prefs.bookingIntents),
-      bookingIntentScopeProvider.overrideWithValue(
-        const BookingIntentScope(account: 'demo-visitor', origin: 'demo://'),
-      ),
-      // The file cache is device state too: the real one writes the
-      // demonstration's synthetic rows to the device filesystem.
-      cacheStoreProvider.overrideWithValue(fixture.prefs.cache),
+      ..._devicePreferenceOverrides(fixture.prefs),
     ];
 }
 
+List<Override> _devicePreferenceOverrides(DemoDevicePrefs prefs) => [
+  // #1564 — every per-device preference, owned by the session.
+  //
+  // A separate root container does not replace SharedPreferences:
+  // each of these resolved to its `Prefs…Store` and wrote to the real
+  // app's memory. `DefaultWorkspaceId` was the sharpest — it reads
+  // "signed in" from the overridden auth repository, asks the fixture
+  // for a server default, gets null and writes it through, and a null
+  // write is `prefs.remove`. Entering Demo deleted the member's real
+  // default profile.
+  localeStoreProvider.overrideWithValue(prefs.locale),
+  themeStoreProvider.overrideWithValue(prefs.theme),
+  navigationStyleStoreProvider
+      .overrideWithValue(prefs.navigationStyle),
+  ..._shellPrefOverrides(prefs),
+  pushOptOutStoreProvider.overrideWithValue(prefs.pushOptOut),
+  webMcpSwitchStoreProvider.overrideWithValue(prefs.webMcpSwitch),
+  frontCameraStoreProvider.overrideWithValue(prefs.frontCamera),
+  activeWorkspaceStoreProvider
+      .overrideWithValue(prefs.activeWorkspace),
+  defaultWorkspaceStoreProvider
+      .overrideWithValue(prefs.defaultWorkspace),
+  defaultLevelStoreProvider.overrideWithValue(prefs.defaultLevel),
+  defaultPeriodStoreProvider.overrideWithValue(prefs.defaultPeriod),
+  notificationFilterStoreProvider
+      .overrideWithValue(prefs.notificationFilters),
+  helpHintStoreProvider.overrideWithValue(prefs.helpHints),
+  spacePrefsStoreProvider.overrideWithValue(prefs.spacePrefs),
+  noteSeenStoreProvider.overrideWithValue(prefs.noteSeen),
+  backendSettingsStoreProvider.overrideWithValue(prefs.backend),
+  // #1650 — the resumable errand is device state too.
+  entryIntentStoreProvider.overrideWithValue(prefs.entryIntent),
+  creationDraftStoreProvider.overrideWithValue(prefs.creationDraft),
+  // #1855 — a visitor's interrupted booking stays inside the
+  // demonstration, scoped to its own synthetic account and server.
+  bookingIntentStoreProvider.overrideWithValue(prefs.bookingIntents),
+  bookingIntentScopeProvider.overrideWithValue(
+    const BookingIntentScope(account: 'demo-visitor', origin: 'demo://'),
+  ),
+  // The file cache is device state too: the real one writes the
+  // demonstration's synthetic rows to the device filesystem.
+  cacheStoreProvider.overrideWithValue(prefs.cache),
+];
+
 /// #1625 — Demo's fictional installation id (never a real server's).
 const _kDemoInstallationId = kDemoInstallationId;
-
-/// #2558 — the persona's personal home at the fictional installation: its
-/// chosen spaces are named by network reference, the two demo spaces.
-FakeMeRepository _demoMe(DemoFixture fixture) => FakeMeRepository(
-      homeInstallationId: _kDemoInstallationId,
-      spaceLabels: {
-        for (final w in [
-          ...fixture.workspaces.workspaces,
-          ...fixture.secondSpace.workspaces.workspaces,
-        ])
-          w.id: w.name,
-      },
-    );
 
 /// #2472 — this server's directory is both spaces' cast, read at each
 /// call so a persona switch is followed; any other server's is empty.

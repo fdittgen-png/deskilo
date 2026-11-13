@@ -40,7 +40,9 @@ import 'money/demo_dunning_repository.dart';
 import 'money/demo_einvoice_transmissions.dart';
 import 'money/demo_expense_repository.dart';
 import 'money/demo_invoice_commands.dart';
+import 'money/demo_invoice_identity.dart';
 import 'money/demo_invoice_queries.dart';
+import 'money/demo_invoice_tax.dart';
 import 'money/demo_member_account_commands.dart';
 import 'money/demo_member_account_queries.dart';
 import 'money/demo_money_seeds.dart';
@@ -158,6 +160,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   FakeMoneyRepository({FakeEventRepository? events, DateTime Function()? clock})
       : eventRepository = events, clock = clock ?? (() => kTestNow);
   final DateTime Function() clock; // #3292: the Demo's now, for filed returns.
+  DemoInvoiceIdentity Function(String workspaceId, String memberId)? invoiceIdentity;
 
   /// When wired, [recordServiceCharge] also files the pending
   /// service_charge event the real RPC creates (#134), so tests can drive
@@ -190,6 +193,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   final fetchedPeriods = <String>[];
 
   final ledger = <LedgerEntry>[];
+  final ledgerVatPercents = <String, double>{};
   final recordedPayments = <({
     int amountCents,
     String note,
@@ -366,11 +370,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
 
   /// What [recordServiceCharge] and [buyPackage] stamp when the item has no
   /// rate of its own — the fake's `workspace_default_vat_percent`.
-  double get defaultVatPercent => vatRates
-      .where((r) => r.active && r.isDefault)
-      .map((r) => r.percent)
-      .firstOrNull ??
-      0;
+  double get defaultVatPercent => demoDefaultVatRate(vatRates)?.percent ?? 0;
 
   /// #2585 C2 — the demo's receipts: `workspaceId|requestId` → invoice id,
   /// written with the invoice like the server's same-transaction receipt.

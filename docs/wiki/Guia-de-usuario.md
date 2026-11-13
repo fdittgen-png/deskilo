@@ -211,7 +211,7 @@ Usted no recuerda su contraseña. Recibe por correo un código de un solo uso y 
 
 **Público:** Todos
 
-Usted quiere echar un vistazo antes de comprometerse a nada. La demo es un espacio inventado, Atelier du Marché: las personas, las reservas y las facturas son ficticias, nada de lo que haga llega a un espacio real y no hace falta ninguna cuenta.
+Usted quiere echar un vistazo antes de comprometerse a nada. La demo contiene varios negocios ficticios, entre ellos Atelier du Marché: las personas, las reservas y las facturas son ficticias, nada de lo que haga llega a un espacio real y no hace falta ninguna cuenta.
 
 <p><img src="images/user-start-demo.es.b8fa17aa9.jpg" width="280"></p>
 
@@ -6562,7 +6562,11 @@ Quiere saber exactamente qué no deja rastro.
 
 **Público:** Todos
 
-Quiere echar un vistazo antes de comprometerse. La demo es un espacio inventado, abierto a cualquiera, sin cuenta.
+Quiere echar un vistazo antes de comprometerse. La demo contiene varios negocios ficticios, abiertos a cualquiera, sin cuenta.
+
+Para explorar compras y ventas, elija **Zúrich · compras y ventas (CHF)** o **Milán · compras y ventas (EUR)** en la nota inicial. Zúrich abre las compras en CHF; Milán abre la facturación en EUR. Ambos ejemplos incluyen proveedores, pedidos, facturas pendientes de aprobación, pagos y facturas de clientes.
+
+Cada miembro que representa a una persona tiene sus propias facturas en al menos dos monedas en sus finanzas personales; los importes se mantienen separados por moneda. Al cambiar de perspectiva se conservan sus pedidos y facturas aprobadas. Reiniciar restaura los datos iniciales.
 
 **Pasos**
 
