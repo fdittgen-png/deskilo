@@ -1,0 +1,9 @@
+{
+  "@@locale": "es",
+  "membersChipUsers": "Pueden iniciar sesión",
+  "membersChipManaged": "Perfiles gestionados",
+  "membersBulkGiveRole": "Dar un rol a {count, plural, one{1 miembro} other{{count} miembros}}",
+  "membersRoleGiven": "Rol asignado",
+  "membersRoleHeld": "Ya tiene este rol",
+  "membersGiveRoleChoose": "¿Qué rol? Cada miembro se comprueba por separado; quien no pueda recibirlo aparece con el motivo."
+}

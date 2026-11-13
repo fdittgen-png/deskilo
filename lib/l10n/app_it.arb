@@ -12509,13 +12509,16 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkGiveRole": "Assegna un ruolo a {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkPause": "Sospendi {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkPlan": "Cambia il piano di {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkResume": "Riattiva {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeApply": "Applica",
   "membersChangeDone": "{changed, plural, =0{Nessuno modificato} one{1 modificato} other{{changed} modificati}} su {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeFromToday": "Si applica da oggi, {date}. Ogni membro viene modificato singolarmente; chi non può esserlo è elencato con il motivo e resta invariato.",
+  "membersChipManaged": "Profili gestiti",
   "membersChipOpen": "Con importo aperto",
+  "membersChipUsers": "Possono accedere",
   "membersColEmail": "E-mail",
   "membersColLastVisit": "Ultima visita",
   "membersColName": "Nome",
@@ -12523,6 +12526,7 @@
   "membersColPlanFee": "Costo del piano",
   "membersColStatus": "Stato",
   "membersFeeUnavailable": "Non disponibile: nessuna fascia tariffaria copre questa quota",
+  "membersGiveRoleChoose": "Quale ruolo? Ogni membro è verificato singolarmente; chi non può riceverlo è elencato con il motivo.",
   "membersInvite": "Invita un membro",
   "membersNoVisitSince": "Nessuna dal {date}",
   "membersOutcomeApplied": "Modificato",
@@ -12536,6 +12540,8 @@
   "membersOutcomeWrongStatus": "Non sospeso: non riattivato",
   "membersPlanNone": "Nessun piano",
   "membersPlansTitle": "Abbonamenti e piani",
+  "membersRoleGiven": "Ruolo assegnato",
+  "membersRoleHeld": "Ha già questo ruolo",
   "membersTabBookings": "Prenotazioni",
   "membersTabNotes": "Note",
   "membersTabPlan": "Piano",
@@ -13441,6 +13447,44 @@
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
   },
+  "permAllowsAccessProd": "Entrare nella produzione di una coppia sviluppo e produzione.",
+  "permAllowsApproveExpenses": "Approvare le spese presentate dai membri.",
+  "permAllowsApproveStockAdjustments": "Approvare la rettifica proposta da un inventario.",
+  "permAllowsDeployToDev": "Aggiornare lo spazio di sviluppo dalla produzione.",
+  "permAllowsDeployToProd": "Portare configurazione e dati anagrafici dallo sviluppo alla produzione.",
+  "permAllowsDesignDocuments": "Progettare modelli, testi e impaginazione dei documenti.",
+  "permAllowsExportData": "Esportare la contabilità, l'archivio, Excel e la configurazione.",
+  "permAllowsIssueInvoices": "Emettere fatture, abbinare i pagamenti e inviare solleciti.",
+  "permAllowsMakeReservations": "Prenotare, vedere le proprie prenotazioni e registrare ingressi e uscite.",
+  "permAllowsManageBilling": "Gestire fasce tariffarie, aliquote IVA, numerazioni e regole di fatturazione.",
+  "permAllowsManageConfiguration": "Modificare funzioni, ambiente, codice dello spazio, importazioni e ripristino.",
+  "permAllowsManageDocuments": "Gestire i link della biblioteca dei documenti.",
+  "permAllowsManageIntegrations": "Configurare i fornitori di pagamento, le credenziali di fatturazione elettronica e WhatsApp.",
+  "permAllowsManageLease": "Registrare la locazione dei locali: condizioni, storico e cessazione.",
+  "permAllowsManageMembers": "Invitare, sospendere e rimuovere membri e cambiare i loro abbonamenti.",
+  "permAllowsManageNegotiations": "Proporre o modificare l'accordo commerciale di un membro.",
+  "permAllowsManagePrivacy": "Decidere le richieste sui dati dei membri ed essere avvisati di un incidente.",
+  "permAllowsManagePurchases": "Registrare e collegare le fatture dei fornitori dello spazio.",
+  "permAllowsManageReservations": "Prenotare per altri, annullare, registrare ingressi e uscite e bloccare posti.",
+  "permAllowsManageRoles": "Cambiare i permessi di ogni ruolo e i ruoli propri dello spazio.",
+  "permAllowsManageServices": "Gestire servizi, pacchetti e fasce tariffarie.",
+  "permAllowsManageSites": "Gestire le sedi, la sede dei membri e la planimetria.",
+  "permAllowsManageStock": "Caricare, spostare e scaricare merci.",
+  "permAllowsManageValidation": "Stabilire quali richieste vanno approvate e da chi.",
+  "permAllowsOperateKiosk": "Configurare il chiosco e assegnare i badge.",
+  "permAllowsPaymentTermsEdit": "Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.",
+  "permAllowsRecordOutgoingPayments": "Registrare e annullare il pagamento a un membro per una richiesta approvata.",
+  "permAllowsUseMessages": "Usare conversazioni, il flusso degli avvisi e le notifiche.",
+  "permAllowsViewAnalytics": "Consultare i dati operativi dello spazio, come l'occupazione; né persone né denaro.",
+  "permAllowsViewCalendar": "Vedere il calendario.",
+  "permAllowsViewDirectory": "Vedere chi sono i membri.",
+  "permAllowsViewDocuments": "Vedere i documenti condivisi con il membro.",
+  "permAllowsViewFinances": "Consultare le finanze dello spazio: il libro mastro e la fatturazione.",
+  "permAllowsViewMyMoney": "Vedere il proprio conto, l'estratto e le fatture.",
+  "permAllowsViewNegotiations": "Consultare l'accordo commerciale di un membro.",
+  "permAllowsViewPersonalData": "Consultare e-mail, identità gestite e dati postali dei membri.",
+  "permAllowsViewStock": "Vedere il magazzino: cosa è dove, i lotti e i movimenti.",
+  "permAllowsWorkspaceSettings": "Modificare l'identità dello spazio, le regole di prenotazione e le funzioni.",
   "permApproveExpenses": "Approvare le spese",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
@@ -13521,6 +13565,14 @@
   "@permManageValidation": {
     "description": "Permission label (#513)"
   },
+  "permModuleConfiguration": "Configurazione",
+  "permModuleDocuments": "Documenti e rapporti",
+  "permModuleEnvironments": "Ambienti",
+  "permModuleEveryday": "Uso quotidiano",
+  "permModuleMoney": "Denaro",
+  "permModulePeople": "Persone e i loro dati",
+  "permModulePlaces": "Spazi e prenotazioni",
+  "permModuleStock": "Magazzino",
   "permOperateKiosk": "Operare il chiosco e i badge",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
@@ -14145,6 +14197,12 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacyRequestsAnswered": "Evase",
+  "privacyRequestsColKind": "Richiesta",
+  "privacyRequestsColReceived": "Ricevuta",
+  "privacyRequestsColStatus": "A che punto è",
+  "privacyRequestsColWho": "Membro",
+  "privacyRequestsOpen": "In attesa di risposta",
   "privacySelfServiceOff": "Questo spazio gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
   "privacySpaceNotice": "L'informativa privacy di questo spazio",
   "@privacySpaceNotice": {
@@ -17152,6 +17210,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
+  "rolesFilterPermissions": "Filtra i permessi",
   "rolesIntroEditor": "Ognuno ha esattamente un ruolo di base — Utente, Amministratore, Co-proprietario o Proprietario. Ogni altro ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario ha sempre tutti i permessi; un co-proprietario può averne meno.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
@@ -17180,14 +17239,18 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
+  "rolesOwnRoleEdit": "Modifica questo ruolo",
   "rolesOwnRolesLink": "I ruoli di questo spazio",
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
+  "rolesPeopleCount": "{count, plural, =0{Nessuno} one{1 persona} other{{count} persone}}",
   "rolesTitle": "Ruoli",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
+  "rolesWhoHasExplain": "Tutte le persone attive che lo hanno, dal loro ruolo base o da un ruolo proprio dello spazio.",
+  "rolesWhoHasTitle": "Chi ha «{permission}»",
   "rolesYourRole": "Il suo ruolo",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"

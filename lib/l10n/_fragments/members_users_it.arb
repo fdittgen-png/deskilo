@@ -1,0 +1,9 @@
+{
+  "@@locale": "it",
+  "membersChipUsers": "Possono accedere",
+  "membersChipManaged": "Profili gestiti",
+  "membersBulkGiveRole": "Assegna un ruolo a {count, plural, one{1 membro} other{{count} membri}}",
+  "membersRoleGiven": "Ruolo assegnato",
+  "membersRoleHeld": "Ha già questo ruolo",
+  "membersGiveRoleChoose": "Quale ruolo? Ogni membro è verificato singolarmente; chi non può riceverlo è elencato con il motivo."
+}

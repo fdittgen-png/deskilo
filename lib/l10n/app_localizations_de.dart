@@ -20543,6 +20543,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get memberVatTreatmentLabel => 'USt-Behandlung';
 
   @override
+  String membersBulkGiveRole(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Mitgliedern',
+      one: '1 Mitglied',
+    );
+    return '$_temp0 eine Rolle geben';
+  }
+
+  @override
   String membersBulkPause(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20602,7 +20613,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get membersChipManaged => 'Verwaltete Profile';
+
+  @override
   String get membersChipOpen => 'Mit offenem Betrag';
+
+  @override
+  String get membersChipUsers => 'Können sich anmelden';
 
   @override
   String get membersColEmail => 'E-Mail';
@@ -20625,6 +20642,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get membersFeeUnavailable =>
       'Nicht verfügbar: Kein Gebührenband deckt diesen Anteil ab';
+
+  @override
+  String get membersGiveRoleChoose =>
+      'Welche Rolle? Jedes Mitglied wird einzeln geprüft; wer sie nicht erhalten kann, wird mit dem Grund aufgeführt.';
 
   @override
   String get membersInvite => 'Mitglied einladen';
@@ -20669,6 +20690,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get membersPlansTitle => 'Abos und Tarife';
+
+  @override
+  String get membersRoleGiven => 'Rolle vergeben';
+
+  @override
+  String get membersRoleHeld => 'Hat diese Rolle bereits';
 
   @override
   String get membersTabBookings => 'Buchungen';
@@ -22484,6 +22511,156 @@ class AppLocalizationsDe extends AppLocalizations {
   String get permAccessProd => 'Den Produktionsraum betreten';
 
   @override
+  String get permAllowsAccessProd =>
+      'Die Produktionsseite eines Entwicklungs- und Produktionspaars betreten.';
+
+  @override
+  String get permAllowsApproveExpenses =>
+      'Von Mitgliedern eingereichte Ausgaben genehmigen.';
+
+  @override
+  String get permAllowsApproveStockAdjustments =>
+      'Die von einer Inventur vorgeschlagene Korrektur genehmigen.';
+
+  @override
+  String get permAllowsDeployToDev =>
+      'Den Entwicklungs-Space aus der Produktion auffrischen.';
+
+  @override
+  String get permAllowsDeployToProd =>
+      'Konfiguration und Stammdaten von der Entwicklung in die Produktion übertragen.';
+
+  @override
+  String get permAllowsDesignDocuments =>
+      'Vorlagen, Texte und Layouts der Dokumente gestalten.';
+
+  @override
+  String get permAllowsExportData =>
+      'Buchhaltung, Archivpaket, Excel und Konfiguration exportieren.';
+
+  @override
+  String get permAllowsIssueInvoices =>
+      'Rechnungen ausstellen, Zahlungen zuordnen und Mahnungen senden.';
+
+  @override
+  String get permAllowsMakeReservations =>
+      'Buchen, die eigenen Buchungen sehen und ein- und auschecken.';
+
+  @override
+  String get permAllowsManageBilling =>
+      'Gebührenbänder, Steuersätze, Nummernkreise und Abrechnungsregeln verwalten.';
+
+  @override
+  String get permAllowsManageConfiguration =>
+      'Funktionen, Umgebung, Space-Code, Importe und Zurücksetzen ändern.';
+
+  @override
+  String get permAllowsManageDocuments =>
+      'Die Links der Dokumentenbibliothek verwalten.';
+
+  @override
+  String get permAllowsManageIntegrations =>
+      'Zahlungsanbieter, E-Rechnungs-Zugänge und WhatsApp einrichten.';
+
+  @override
+  String get permAllowsManageLease =>
+      'Den Mietvertrag der Räume erfassen: Bedingungen, ihre Geschichte und das Ende.';
+
+  @override
+  String get permAllowsManageMembers =>
+      'Mitglieder einladen, pausieren und entfernen und ihre Abos ändern.';
+
+  @override
+  String get permAllowsManageNegotiations =>
+      'Die kaufmännische Vereinbarung eines Mitglieds vorschlagen oder ändern.';
+
+  @override
+  String get permAllowsManagePrivacy =>
+      'Über Datenschutzanfragen der Mitglieder entscheiden und bei einem Vorfall benachrichtigt werden.';
+
+  @override
+  String get permAllowsManagePurchases =>
+      'Lieferantenrechnungen des Space erfassen und verknüpfen.';
+
+  @override
+  String get permAllowsManageReservations =>
+      'Für andere buchen, stornieren, ein- und auschecken und Plätze sperren.';
+
+  @override
+  String get permAllowsManageRoles =>
+      'Ändern, welche Berechtigungen jede Rolle gibt, und die eigenen Rollen des Space.';
+
+  @override
+  String get permAllowsManageServices =>
+      'Leistungen, Pakete und Gebührenbänder verwalten.';
+
+  @override
+  String get permAllowsManageSites =>
+      'Standorte, Heimatstandorte der Mitglieder und den Grundriss verwalten.';
+
+  @override
+  String get permAllowsManageStock =>
+      'Waren einlagern, umlagern und auslagern.';
+
+  @override
+  String get permAllowsManageValidation =>
+      'Festlegen, welche Anfragen genehmigt werden müssen und von wem.';
+
+  @override
+  String get permAllowsOperateKiosk =>
+      'Den Kiosk einrichten und Badges ausgeben.';
+
+  @override
+  String get permAllowsPaymentTermsEdit =>
+      'Eine Änderung der Zahlungsbedingungen eines Mitglieds beantragen; die Genehmigung entscheidet.';
+
+  @override
+  String get permAllowsRecordOutgoingPayments =>
+      'Die an ein Mitglied für eine genehmigte Forderung gezahlte Summe erfassen und stornieren.';
+
+  @override
+  String get permAllowsUseMessages =>
+      'Unterhaltungen, den Hinweis-Feed und Benachrichtigungen nutzen.';
+
+  @override
+  String get permAllowsViewAnalytics =>
+      'Die Betriebszahlen des Space lesen, etwa die Platzauslastung; keine Personen, kein Geld.';
+
+  @override
+  String get permAllowsViewCalendar => 'Den Kalender sehen.';
+
+  @override
+  String get permAllowsViewDirectory => 'Sehen, wer die Mitglieder sind.';
+
+  @override
+  String get permAllowsViewDocuments =>
+      'Die mit dem Mitglied geteilten Dokumente sehen.';
+
+  @override
+  String get permAllowsViewFinances =>
+      'Die Finanzen des Space lesen: Hauptbuch und Rechnungsstellung.';
+
+  @override
+  String get permAllowsViewMyMoney =>
+      'Das eigene Konto, die Abrechnung und die Rechnungen sehen.';
+
+  @override
+  String get permAllowsViewNegotiations =>
+      'Die kaufmännische Vereinbarung eines Mitglieds lesen.';
+
+  @override
+  String get permAllowsViewPersonalData =>
+      'E-Mails, verwaltete Identitäten und Postdaten der Mitglieder lesen.';
+
+  @override
+  String get permAllowsViewStock =>
+      'Das Lager sehen: was wo ist, Chargen und Bewegungen.';
+
+  @override
+  String get permAllowsWorkspaceSettings =>
+      'Identität, Buchungsregeln und Funktionen des Space bearbeiten.';
+
+  @override
   String get permApproveExpenses => 'Ausgaben genehmigen';
 
   @override
@@ -22553,6 +22730,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get permManageValidation => 'Validierungsregeln konfigurieren';
+
+  @override
+  String get permModuleConfiguration => 'Konfiguration';
+
+  @override
+  String get permModuleDocuments => 'Dokumente und Berichte';
+
+  @override
+  String get permModuleEnvironments => 'Umgebungen';
+
+  @override
+  String get permModuleEveryday => 'Alltag';
+
+  @override
+  String get permModuleMoney => 'Geld';
+
+  @override
+  String get permModulePeople => 'Personen und ihre Daten';
+
+  @override
+  String get permModulePlaces => 'Plätze und Buchungen';
+
+  @override
+  String get permModuleStock => 'Lager';
 
   @override
   String get permOperateKiosk => 'Kiosk und Badges bedienen';
@@ -23659,6 +23860,24 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Optional. Ein: Die Adresse dieses Geräts und jede Benachrichtigung gehen an den Push-Dienst; aus: Die App funktioniert weiter und an dieses Gerät wird nichts gesendet.';
+
+  @override
+  String get privacyRequestsAnswered => 'Beantwortet';
+
+  @override
+  String get privacyRequestsColKind => 'Anfrage';
+
+  @override
+  String get privacyRequestsColReceived => 'Eingegangen';
+
+  @override
+  String get privacyRequestsColStatus => 'Stand';
+
+  @override
+  String get privacyRequestsColWho => 'Mitglied';
+
+  @override
+  String get privacyRequestsOpen => 'Wartet auf Antwort';
 
   @override
   String get privacySelfServiceOff =>
@@ -27701,6 +27920,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get roleTakenBack => 'Rolle entzogen.';
 
   @override
+  String get rolesFilterPermissions => 'Berechtigungen filtern';
+
+  @override
   String get rolesIntroEditor =>
       'Jede Person hat genau eine Basisrolle — Benutzer, Administrator, Mit-Eigentümer oder Eigentümer. Jede weitere Rolle fügt hinzu, was ihre Inhaber dürfen, und nimmt nie etwas weg. Der Eigentümer hat immer alle Berechtigungen; ein Mit-Eigentümer kann weniger haben.';
 
@@ -27725,10 +27947,34 @@ class AppLocalizationsDe extends AppLocalizations {
   String get rolesOfSpaceTitle => 'Rollen dieses Bereichs';
 
   @override
+  String get rolesOwnRoleEdit => 'Diese Rolle bearbeiten';
+
+  @override
   String get rolesOwnRolesLink => 'Die Rollen dieses Bereichs';
 
   @override
+  String rolesPeopleCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Personen',
+      one: '1 Person',
+      zero: 'Niemand',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get rolesTitle => 'Rollen';
+
+  @override
+  String get rolesWhoHasExplain =>
+      'Alle aktiven Personen, die sie haben, über ihre Grundrolle oder eine eigene Rolle des Space.';
+
+  @override
+  String rolesWhoHasTitle(String permission) {
+    return 'Wer „$permission“ hat';
+  }
 
   @override
   String get rolesYourRole => 'Ihre Rolle';
