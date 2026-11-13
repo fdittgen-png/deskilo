@@ -8,12 +8,12 @@
   "@billingFeeBands": {
     "description": "Section header of the fee-band editor"
   },
-  "billingBandFrom": "from {from}%",
+  "billingBandFrom": "from {from}",
   "@billingBandFrom": {
-    "description": "Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]",
+    "description": "Derived lower boundary of a band row (exclusive). The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "from": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -77,21 +77,12 @@
   "@memberSubscriptionCustom": {
     "description": "Label of the owner-override custom percentage field"
   },
-  "moneySubscriptionPct": "Subscription {pct}%",
+  "moneySubscriptionPct": "Subscription {pct}",
   "@moneySubscriptionPct": {
-    "description": "Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "Statement line for the band fee of the member's percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
-      }
-    }
-  },
-  "percentValue": "{value}%",
-  "@percentValue": {
-    "description": "A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]",
-    "placeholders": {
-      "value": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

@@ -14,6 +14,7 @@
 // them changes when the product default changes.
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
@@ -114,7 +115,8 @@ class NewMemberDefaultsTiles extends StatelessWidget {
                 : null,
           ),
           Text(
-            l10n.newMemberSubscriptionValue(defaults.subscriptionPct),
+            l10n.newMemberSubscriptionValue(
+                appFormatOf(context).ratePercent(defaults.subscriptionPct)),
             style: theme.textTheme.titleMedium,
           ),
           IconButton(

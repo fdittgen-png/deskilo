@@ -309,7 +309,6 @@
   "negotiationKeepCurrent": "Garder l'actuelle",
   "negotiationItems": "Services et forfaits",
   "negotiationItemsHint": "Un prix unitaire pour ce membre ; vide garde le catalogue.",
-  "negotiationPercent": "{value} %",
   "negotiationReadOnly": "Lecture seule",
   "scheduledExpensesTitle": "Dépenses programmées",
   "scheduledExpensesIntro": "Les abonnements que l'espace paie — internet, téléphone, électricité. La programmation est validée une fois ; chaque échéance vous est présentée avant de compter.",
@@ -368,5 +367,9 @@
   "cashHubInOut": "Entrées et sorties par mois",
   "cashHubToPay": "À payer",
   "hubAccountingTitle": "Comptabilité et TVA",
-  "hubAccountingSubtitle": "Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit"
+  "hubAccountingSubtitle": "Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit",
+  "vatDeclDisclaimerWithBasis": "{basis} Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.",
+  "vatDeclNetAmount": "Base HT {amount}",
+  "vatDeclVatAmount": "TVA {amount}",
+  "vatDeclTotalsLine": "Totaux : {net} · TVA {vat} · {count, plural, one{{count} facture} other{{count} factures}}"
 }

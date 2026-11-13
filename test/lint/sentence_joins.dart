@@ -19,8 +19,11 @@ import 'package:analyzer/source/line_info.dart';
 import 'lint_sources.dart';
 
 /// A translated read: `l10n.key`, `l10n?.key`, `strings.key`,
-/// `context.l10n.key`.
-final RegExp _read = RegExp(r'\b(?:l10n|strings|labels)\??\.\w+');
+/// `context.l10n.key`. `localeName` is the name of the language, not a
+/// message: reading it beside a value builds no sentence.
+final RegExp _read = RegExp(
+  r'\b(?:l10n|strings|labels)\??\.(?!localeName\b)\w+',
+);
 
 /// A control tag of the report engine (Liquid): the tags a template uses to
 /// CHOOSE between messages — `if`, `elsif`, `else`, `endif`, the loop pair,
@@ -42,6 +45,11 @@ final Set<String> _spaceOnlyPatterns = () {
     final json = jsonDecode(f.readAsStringSync()) as Map<String, dynamic>;
     for (final MapEntry(:key, :value) in json.entries) {
       if (key.startsWith('@') || value is! String) continue;
+      final meta = json['@$key'];
+      final description = meta is Map ? '${meta['description']}' : '';
+      // A message whose first placeholder is the workspace's own word (a
+      // renamed term) is a value beside a value, not a sentence in pieces.
+      if (description.contains('[workspace term:')) continue;
       if (placeholder.allMatches(value).length >= 2 &&
           value.replaceAll(placeholder, '').trim().isEmpty) {
         out.add(key);
@@ -55,14 +63,17 @@ final Set<String> _spaceOnlyPatterns = () {
 /// is set and [text] is its source).
 typedef _Part = ({String text, Expression? expr});
 
-const _independentSeparators = {' · ', ' | ', '\n'};
+const _independentSeparators = {' · ', ' | '};
 
 /// What may stand between two values without the string being a sentence
 /// built from pieces: the join of independent facts (` · `), the cells of a
-/// table row (` | `), independent lines (a newline), and the control tags of
-/// a report template, which CHOOSE one message.
+/// table row (` | `), independent lines (any line break: a line ends the
+/// sentence, and a report template is a column of lines, so the text before a
+/// break and the value after it are two facts), and the control tags of a
+/// report template, which CHOOSE one message (#3768).
 bool isIndependentJoin(String between) {
   if (_independentSeparators.contains(between)) return true;
+  if (between.contains('\n')) return true;
   return _controlTag.hasMatch(between);
 }
 
@@ -133,9 +144,10 @@ bool _isPartOfLarger(AstNode node) {
 }
 
 class _JoinFinder extends RecursiveAstVisitor<void> {
-  _JoinFinder(this.lineInfo);
+  _JoinFinder(this.lineInfo, this.spaceOnly);
 
   final LineInfo lineInfo;
+  final Set<String> spaceOnly;
   final out = <String>[];
 
   void _check(Expression node) {
@@ -168,7 +180,7 @@ class _JoinFinder extends RecursiveAstVisitor<void> {
 
   @override
   void visitMethodInvocation(MethodInvocation node) {
-    if (_spaceOnlyPatterns.contains(node.methodName.name)) {
+    if (spaceOnly.contains(node.methodName.name)) {
       final locals = _translatedLocals(node);
       final translated = node.argumentList.arguments.any((a) {
         final src = a.toSource();
@@ -204,9 +216,12 @@ class _JoinFinder extends RecursiveAstVisitor<void> {
 }
 
 /// The places of [source] holding a joined sentence, as `line: text`.
-List<String> sentenceJoins(String source) {
+/// [spaceOnly] names the shared messages that put only a space between their
+/// placeholders; it defaults to the ones the English fragments hold (none,
+/// since #3767 removed the last), a test passes its own to plant one.
+List<String> sentenceJoins(String source, {Set<String>? spaceOnly}) {
   final result = parseString(content: source, throwIfDiagnostics: false);
-  final finder = _JoinFinder(result.lineInfo);
+  final finder = _JoinFinder(result.lineInfo, spaceOnly ?? _spaceOnlyPatterns);
   result.unit.accept(finder);
   return finder.out;
 }

@@ -37,14 +37,6 @@
   "@biKindYearAgo": {
     "description": "Business analytics dashboard: biKindYearAgo"
   },
-  "biVsPrevious": "vs période précédente",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs l'an dernier",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "biCompositionTitle": "Ce qui la compose",
   "@biCompositionTitle": {
     "description": "Business analytics dashboard: biCompositionTitle"
@@ -188,5 +180,7 @@
   "biOnPace": "au rythme actuel",
   "@biOnPace": {
     "description": "Business analytics dashboard: biOnPace"
-  }
+  },
+  "biChangeVsPrevious": "{change} vs période précédente",
+  "biChangeVsYearAgo": "{change} vs l'an dernier"
 }

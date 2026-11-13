@@ -214,9 +214,9 @@
   "acctDeliverMissing": "Ordnen Sie zuerst zu: {keys}",
   "acctDeliverNotConnected": "Diese Verbindung ist abgemeldet: Verbinden Sie sie erneut und übertragen Sie dann.",
   "acctDeliverNothing": "In diesem Zeitraum gibt es nichts zu übertragen.",
-  "acctDeliverNothingSent": "Es wurde nichts übertragen.",
+  "acctDeliverReasonNothingSent": "{reason} Es wurde nichts übertragen.",
+  "acctDeliverReasonStoppedAt": "{reason} Angehalten bei {month}. Davor übertragen: {count}.",
   "acctDeliverRefused": "Das Buchhaltungssystem hat diese Firma abgelehnt: {detail}.",
-  "acctDeliverStoppedAt": "Angehalten bei {month}. Davor übertragen: {count}.",
   "acctDeliverYear": "{year} an {target} übertragen",
   "acctDeliveryAcknowledged": "Vom System empfangen",
   "acctDeliveryAttempts": "{count, plural, one{ein Versuch} other{{count} Versuche}}",
@@ -1203,6 +1203,8 @@
     "description": "#2582 purchase analytics"
   },
   "biChangePoints": "{value} Pp.",
+  "biChangeVsPrevious": "{change} gg. Vorperiode",
+  "biChangeVsYearAgo": "{change} gg. Vorjahr",
   "biCollectionCentre": "des Fakturierten",
   "@biCollectionCentre": {
     "description": "Business analytics dashboard: biCollectionCentre"
@@ -2747,14 +2749,6 @@
   "biViews": "Ansichten",
   "biViewsMine": "Meine Ansichten",
   "biViewsTeam": "Team-Ansichten",
-  "biVsPrevious": "gg. Vorperiode",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "gg. Vorjahr",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "billAccessorySupplements": "Zubehör-Aufpreise",
   "billCreditNoteCard": "Gutschrift {number}",
   "@billCreditNoteCard": {
@@ -2799,24 +2793,24 @@
   "billOutstanding": "Offen",
   "billOverage": "{extra, plural, one{{extra} zusätzlicher halber Tag} other{{extra} zusätzliche halbe Tage}}",
   "billPackages": "Tagespakete",
-  "billParticipation": "Beitrag {pct} %",
+  "billParticipation": "Beitrag {pct}",
   "@billParticipation": {
-    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind.",
+    "description": "The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2828,16 +2822,16 @@
   "billServices": "Bezogene Leistungen",
   "billServicesTotal": "Summe Leistungen",
   "billSettled": "Beglichen",
-  "billSubscription": "Abo {pct} %",
-  "billSubscriptionMonth": "Abonnement {month} {pct} %",
+  "billSubscription": "Abo {pct}",
+  "billSubscriptionMonth": "Abonnement {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -2847,7 +2841,7 @@
   "billingAdvanceDays": "Tage vor Monatsbeginn",
   "billingAllowCustom": "Individuell verhandelten Wert erlauben",
   "billingBandFee": "Monatsgebühr",
-  "billingBandFrom": "ab {from} %",
+  "billingBandFrom": "ab {from}",
   "billingBandOverage": "Mehrverbrauch",
   "billingBandTo": "Bis %",
   "billingBandsInvalid": "Die Bänder müssen ansteigen und bei 100 % enden.",
@@ -5028,6 +5022,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
+  "dotPair": "{first} · {second}",
   "dunningAutomatic": "Automatische Mahnungen",
   "dunningAutomaticHint": "Einmal täglich erhalten Rechnungen, deren erfasste Zahlungsfrist abgelaufen ist, von selbst die nächste Mahnstufe — für den noch offenen Betrag, nie während eine Zahlung geprüft wird oder die Rechnung angehalten ist. Rechnungen ohne erfasste Frist bleiben Ihnen überlassen. Aus: Sie versenden jede Mahnung selbst.",
   "dunningBetweenDays": "Tage zwischen den Mahnungen",
@@ -5716,6 +5711,7 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "environmentsPair": "{dev} + {prod}",
   "equipmentCost": "Anschaffungskosten {amount}",
   "@equipmentCost": {
     "description": "#2576 equipment register",
@@ -5980,7 +5976,6 @@
   },
   "eventExpenseScheduleLine": "{actor} plant „{title}“ — {amount} wiederkehrend",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
-  "eventForSubject": "für {name}",
   "eventInvoiceIssuedLine": "Neue Rechnung {number}",
   "eventInvoicePaid": "Rechnung {number} bezahlt — {amount}",
   "@eventInvoicePaid": {
@@ -6044,6 +6039,8 @@
       }
     }
   },
+  "eventLineForSubject": "{line} für {name}",
+  "eventLineRepeated": "{line} ×{count}",
   "eventOpenSource": "Einkaufsbeleg öffnen",
   "eventOutcomeApplied": "Erledigt",
   "eventOutcomeConfirmed": "Bestätigt",
@@ -6079,7 +6076,6 @@
   "eventQuotaRequested": "{actor} beantragt {halfDays, plural, one{1 zusätzlichen halben Tag} other{{halfDays} zusätzliche halbe Tage}} für {period}",
   "eventReject": "Ablehnen",
   "eventRejectedBy": "Abgelehnt von {name} · {when}",
-  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} hat die Reservierung von {target} storniert",
   "eventReservationCreated": "{actor} hat {target} reserviert",
   "eventReservationDeleteCheckedIn": "eingecheckt",
@@ -7806,7 +7802,8 @@
   "gobdProcedureHandoverHeading": "Datenüberlassung (Z3)",
   "gobdProcedureImmutableBody": "Eine ausgestellte Rechnung oder Gutschrift kann weder geändert noch gelöscht werden: die Datenbank verweigert es. Jeder Beleg wird mit seinem Vorgänger in eine Kette signiert. Eine Korrektur ist ein neuer Beleg (Gutschrift oder Ersatzrechnung), der den korrigierten nennt. Ein abgeschlossener Zeitraum verweigert Stornierungen und Zahlungen, die in ihm datiert sind.",
   "gobdProcedureImmutableHeading": "Unveränderbarkeit",
-  "gobdProcedureRetentionUntil": "ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden (noch nicht bestätigt). {source}",
   "gobdProcedureSchemaApp": "Schemaversion, für die diese App gebaut ist: {version}",
   "gobdProcedureSchemaLive": "Datenbankschema dieser Installation: Version {version}",
   "gobdProcedureSchemaUnknown": "Datenbankschema dieser Installation: bei der Erstellung nicht lesbar",
@@ -9677,6 +9674,7 @@
   "invoicePdfPage": "Seite",
   "invoicePdfPayments": "Zahlungen",
   "invoicePdfProforma": "Proforma",
+  "invoicePdfProformaNamed": "Proforma {name}",
   "invoicePdfPurchaseOrder": "Auftragsreferenz",
   "@invoicePdfPurchaseOrder": {
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
@@ -11274,6 +11272,18 @@
       }
     }
   },
+  "leaseSettlementPeriod": "Abrechnung {from} bis {to}",
+  "@leaseSettlementPeriod": {
+    "description": "#3813 a lease settlement term: the period it settles, both dates already formatted",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "leaseStarted": "Seit {date}",
   "@leaseStarted": {
     "description": "#2569 premises lease",
@@ -11445,6 +11455,7 @@
   "levelPermissionAllowed": "Darf einen ganzen Tisch, ein Büro oder eine Etage reservieren",
   "levelPermissionDenied": "Darf keinen ganzen Tisch, kein Büro und keine Etage reservieren",
   "levelPriceLabel": "Preis je Halbtag",
+  "levelPriceLine": "{price} / Preis je Halbtag",
   "levelReorderStale": "Die Ebenen wurden inzwischen geändert. Nichts wurde gespeichert; die aktuelle Reihenfolge wird angezeigt.",
   "levelReserveButton": "Etage reservieren",
   "levelSupplementLabel": "Etagen-Reservierungen",
@@ -11919,6 +11930,7 @@
   "mcpPolicyTitle": "Zugriff für Assistenten",
   "mcpPolicyUnavailable": "Die Assistenten-Einstellungen konnten nicht geladen werden. Versuchen Sie es später erneut.",
   "mcpRefusalClientNotApproved": "Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten.",
+  "mcpRefusalClientNotApprovedNamed": "Dieser Assistent ist auf diesem Server noch nicht freigegeben. Der Betreiber gibt jeden Assistenten einmal frei; fragen Sie ihn und verbinden Sie dann erneut aus dem Assistenten. Wartet auf den Betreiber des Servers: {names}.",
   "mcpRefusalNoIdentity": "Bestätigen Sie zuerst Ihre Identität in DesKilo unter Assistenten und verbinden Sie dann erneut aus dem Assistenten.",
   "mcpRefusalNotEligible": "Ihr Zugang zu Assistenten ist noch nicht freigegeben. Beantragen Sie ihn in DesKilo unter Assistenten und verbinden Sie dann erneut aus dem Assistenten.",
   "mcpRefusalOfferChanged": "Das Angebot dieses Arbeitsbereichs hat sich während Ihrer Auswahl geändert. Verbinden Sie erneut aus dem Assistenten, um das aktuelle Angebot zu sehen.",
@@ -12572,7 +12584,7 @@
   "moneyStatementSettled": "Beglichen",
   "moneySubmitExpense": "Ausgabe einreichen",
   "moneySubmitPayment": "Zur Bestätigung einreichen",
-  "moneySubscriptionPct": "Abo {pct} %",
+  "moneySubscriptionPct": "Abo {pct}",
   "moneyUsage": "{used} von {included, plural, one{1 halben Tag} other{{included} halben Tagen}} genutzt",
   "moneyUsageUnlimited": "{used, plural, one{{used} halber Tag genutzt} other{{used} halbe Tage genutzt}}",
   "monthFreeCount": "{free}/{total}",
@@ -12697,7 +12709,6 @@
   "negotiationOverage": "Überschreitung je halben Tag",
   "negotiationPending": "Konditionen warten auf Prüfung.",
   "negotiationPendingBadge": "wartet auf Prüfung",
-  "negotiationPercent": "{value} %",
   "negotiationProposeHint": "Ein leeres Feld behält den Tarif. Die Konditionen durchlaufen die Prüfung, bevor sie gelten.",
   "negotiationProposeTitle": "Preisverhandlung",
   "negotiationProposed": "Konditionen vorgeschlagen — warten auf Prüfung.",
@@ -12768,12 +12779,12 @@
   "@newMemberSubscriptionMore": {
     "description": "#1294 tooltip: increase the default subscription"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
@@ -13279,7 +13290,6 @@
   "pendingLastChecked": "Zuletzt geprüft {time}",
   "pendingNotUpdated": "Status nicht aktualisiert — der Server ist nicht erreichbar. Ihre Anfrage bleibt unverändert.",
   "pendingStillWaiting": "Wartet weiter auf Freigabe.",
-  "percentValue": "{value} %",
   "periodReservationsEmpty": "Keine Buchung in diesen Monaten.",
   "periodReservationsFailed": "Die Buchungen konnten nicht gelesen werden.",
   "periodReservationsLevel": "Nur auf {level}",
@@ -13567,6 +13577,7 @@
   },
   "planEndBeforeStart": "Das Ende muss nach dem Beginn liegen.",
   "planFromLabel": "Von",
+  "planFromTermTime": "{term} {time}",
   "planFullDayChip": "Ganzer Tag",
   "planFullDayError": "Buchungen umfassen hier den ganzen Tag.",
   "planHalfDayError": "Buchungen erfolgen hier pro halbem Tag.",
@@ -15215,6 +15226,10 @@
     "description": "#2332: refusalMoneyLocaleLocked"
   },
   "refusalPermission": "Dafür haben Sie keine Berechtigung. Ein Inhaber des Space kann sie in der Rollenverwaltung erteilen.",
+  "refusalPersonalHomeHostsNoWorkspace": "Diese Installation ist ein persönliches Zuhause und beherbergt keinen Arbeitsbereich. Legen Sie den Arbeitsbereich auf einer Installation an, die Arbeitsbereiche beherbergt.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
@@ -15377,7 +15392,7 @@
   "reminderPdfClosing": "Sollten Sie bereits gezahlt haben, betrachten Sie dieses Schreiben bitte als gegenstandslos.",
   "reminderPdfDays": "Tagen",
   "reminderPdfDaysOpen": "Offen seit",
-  "reminderPdfDaysOpenLine": "Offen seit {days} Tagen",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Offen seit {days} Tag} other{Offen seit {days} Tagen}}",
   "reminderPdfLevelLabel": "Mahnstufe",
   "reminderPdfOpeningFirm": "trotz unserer vorherigen Mahnung ist die untenstehende Rechnung weiterhin unbezahlt. Bitte begleichen Sie den Betrag umgehend.",
   "reminderPdfOpeningFriendly": "dies ist eine freundliche Erinnerung: die untenstehende Rechnung ist noch offen. Sicher nur übersehen — kein Problem.",
@@ -15771,6 +15786,7 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportExpectedDelivery": "Erwartete Lieferung",
+  "reportExpectedDeliveryDate": "Erwartete Lieferung am {date}",
   "reportFieldGroupBank": "Bankverbindung",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -16400,6 +16416,7 @@
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
   "reportSubject": "Betreff",
+  "reportSubjectLine": "Betreff: {subject}",
   "reportTemplateClearOverlay": "Für diese Sprache den Standard verwenden",
   "reportTemplateLangDefault": "Standard (alle Sprachen)",
   "@reportTemplateLangDefault": {
@@ -17363,7 +17380,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, one{1 Reservierung erstellt} other{{count} Reservierungen erstellt}}",
   "seriesPreviewBookOthers": "{count, plural, one{Den anderen Termin buchen} other{Die anderen {count} Termine buchen}}",
   "seriesPreviewFailing": "Diese Termine können nicht gebucht werden:",
@@ -17384,6 +17400,15 @@
   "serverConnectReference": "Referenzserver",
   "serverConnectUseHere": "Auf diesem Gerät verwenden",
   "serverReferenceLabel": "Referenzserver ({host})",
+  "serviceChargeSettlementOf": "Nebenkostenabrechnung — {supplier}",
+  "@serviceChargeSettlementOf": {
+    "description": "#3813 the expense schedule of a service charge settlement, named after its supplier",
+    "placeholders": {
+      "supplier": {
+        "type": "String"
+      }
+    }
+  },
   "serviceOutOfStock": "Ausverkauft",
   "serviceStockCount": "{count} auf Lager",
   "servicesActive": "Aktiv",
@@ -18482,7 +18507,7 @@
   "setupNewMembersNoQuestions": "Keine Fragen: Man tritt mit Name und E-Mail-Adresse bei.",
   "setupNewMembersPreviewJoin": "Bei der Beitrittsanfrage beantwortet die Person:",
   "setupNewMembersPreviewNoQuestions": "Wer beitreten möchte, gibt Name und E-Mail-Adresse an, sonst nichts.",
-  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} % ({policy}).",
+  "setupNewMembersPreviewStart": "Ein neues Mitglied beginnt mit einem Abonnement zu {pct} ({policy}).",
   "setupNewMembersQuestions": "Fragen beim Beitritt",
   "setupNewMembersSaveFailed": "Die Vorgaben für neue Mitglieder konnten nicht gespeichert werden. Versuchen Sie es erneut.",
   "setupNextIndependent": "Sie können dies erledigen, während der frühere Meilenstein wartet.",
@@ -18550,8 +18575,8 @@
   "setupPresetNameComplet": "Komplett",
   "setupPresetNameEssentiel": "Basis",
   "setupPresetNameStandard": "Standard",
-  "setupPricingBand": "{from}–{to} %: {fee} im Monat, {extra} je zusätzlichem Halbtag",
-  "setupPricingLevel": "Mitgliedschaft zu {pct} %",
+  "setupPricingBand": "{from}–{to}: {fee} im Monat, {extra} je zusätzlichem Halbtag",
+  "setupPricingLevel": "Mitgliedschaft zu {pct}",
   "setupPricingLevelIncludes": "{level}: {count, plural, one{1 Halbtag} other{{count} Halbtage}} inklusive",
   "setupPricingLevelsBasis": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle, und ein Halbtag über den Anteil eines Mitglieds hinaus wird zum Zusatzpreis seiner Preisstufe berechnet. Diesen Monat ist Ihr Bereich {days, plural, one{1 Tag} other{{days} Tage}} geöffnet:",
   "setupPricingLevelsBasisUnknown": "Eine Stufe ist der Anteil der Halbtage, an denen Ihr Bereich im Monat geöffnet ist: 100 % sind alle. Ihre Öffnungstage konnten nicht gelesen werden, daher wird kein Beispiel gezeigt.",
@@ -18791,10 +18816,7 @@
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
   },
-  "smallBusinessCheckFigure": "Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  },
+  "smallBusinessMessageUnconfirmed": "{message} Diese Grenze ist die zuletzt geprüfte: Bitte den geltenden Betrag beim Finanzamt bestätigen lassen.",
   "smallBusinessNearImmediate": "Ihr Nettoumsatz in diesem Jahr ({turnover}) nähert sich der Grenze von {limit}. Mit dem Umsatz, der sie überschreitet, endet die Befreiung sofort.",
   "@smallBusinessNearImmediate": {
     "description": "#2440 small-business threshold: smallBusinessNearImmediate",
@@ -20596,6 +20618,7 @@
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
   },
+  "usageReportOverageLine": "Überziehung, auf die nächste Rechnung übertragen: {amount}",
   "usageReportPaid": "Vorausbezahlt (Teilnahme)",
   "@usageReportPaid": {
     "description": "#873 consumption report: usageReportPaid"
@@ -21199,6 +21222,7 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
+  "vatDeclDisclaimerWithBasis": "{basis} Aus den ausgestellten Rechnungen des Zeitraums erzeugt. Vor der Abgabe mit der Buchhaltung abgleichen — eine Abgabehilfe, keine Steuerberatung.",
   "vatDeclEdiTva": "EDI-TVA-Datei (CA3)",
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
@@ -21327,6 +21351,7 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclNetAmount": "Bemessungsgrundlage {amount}",
   "vatDeclPayable": "Zahllast",
   "@vatDeclPayable": {
     "description": "#2357 input VAT: vatDeclPayable"
@@ -21404,10 +21429,12 @@
   "@vatDeclTotals": {
     "description": "Totals row"
   },
+  "vatDeclTotalsLine": "Summen: {net} · USt {vat} · {count, plural, one{1 Rechnung} other{{count} Rechnungen}}",
   "vatDeclVat": "USt",
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
+  "vatDeclVatAmount": "USt {amount}",
   "vatDeclVatId": "USt-IdNr.",
   "@vatDeclVatId": {
     "description": "VAT identifier label"
@@ -21590,6 +21617,7 @@
   },
   "vatSaved": "Steuersätze gespeichert.",
   "vatSeed": "Übliche Sätze übernehmen",
+  "vatSeedWithRates": "Übliche Sätze übernehmen ({rates})",
   "vatServiceRate": "Steuersatz",
   "vatServiceRateDefault": "Standard des Spaces",
   "vatShareAmount": "inkl. USt {amount}",
@@ -22126,7 +22154,7 @@
   "workspaceCountryLabel": "Land",
   "workspaceCurrencyLabel": "Währung",
   "workspaceDangerZone": "Gefahrenzone",
-  "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
+  "workspaceDeskOpacityValue": "Deckkraft: {percent}",
   "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceExcelExport": "Daten exportieren (Excel)",

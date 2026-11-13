@@ -12,7 +12,6 @@
   "eventReservationCreated": "{actor} hat {target} reserviert",
   "eventReservationModified": "{actor} hat die Reservierung von {target} geändert",
   "eventReservationCancelled": "{actor} hat die Reservierung von {target} storniert",
-  "eventForSubject": "für {name}",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventExpenseSubmitted": "{actor} hat eine Ausgabe von {amount} eingereicht",
   "pushPendingTitle": "DesKilo",
@@ -122,9 +121,10 @@
   "eventActionApproved": "genehmigt",
   "eventActionRejected": "abgelehnt",
   "eventActionUnknown": "aktualisiert",
-  "eventRepeatedMarker": "×{count}",
   "eventOutcomeApplied": "Erledigt",
   "eventOutcomeConfirmed": "Bestätigt",
   "eventOutcomePending": "Wartet auf eine Entscheidung",
-  "eventOutcomeRejected": "Abgelehnt"
+  "eventOutcomeRejected": "Abgelehnt",
+  "eventLineForSubject": "{line} für {name}",
+  "eventLineRepeated": "{line} ×{count}"
 }

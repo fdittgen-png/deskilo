@@ -4,6 +4,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/i18n/format_controller.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/member_billing_tiles.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
@@ -239,7 +240,7 @@ List<Widget> memberBillingTiles(MemberPageContext c) {
         tileKey: const ValueKey('member-page-subscription'),
         icon: Icons.percent,
         title: l10n.memberSubscriptionLabel,
-        subtitle: subscriptionText(l10n, member.subscriptionPct),
+        subtitle: subscriptionText(l10n, appFormatOf(context), member.subscriptionPct),
         onTap: () => pickMemberSubscription(context, ref, member),
       ),
     if (isOwner && !member.isKiosk && active)

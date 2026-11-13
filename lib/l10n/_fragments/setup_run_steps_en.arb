@@ -15,15 +15,15 @@
   "@setupPricingNoBands": {
     "description": "#2871 setup run steps: setupPricingNoBands"
   },
-  "setupPricingBand": "{from}–{to} %: {fee} a month, {extra} per extra half-day",
+  "setupPricingBand": "{from}–{to}: {fee} a month, {extra} per extra half-day",
   "@setupPricingBand": {
-    "description": "#2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]",
+    "description": "#2871 setup run steps: setupPricingBand. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "from": {
-        "type": "int"
+        "type": "String"
       },
       "to": {
-        "type": "int"
+        "type": "String"
       },
       "fee": {
         "type": "String"
@@ -45,12 +45,12 @@
   "@setupPricingNoLevels": {
     "description": "#2871 setup run steps: setupPricingNoLevels"
   },
-  "setupPricingLevel": "Membership at {pct} %",
+  "setupPricingLevel": "Membership at {pct}",
   "@setupPricingLevel": {
-    "description": "#2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]",
+    "description": "#2871 setup run steps: setupPricingLevel. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

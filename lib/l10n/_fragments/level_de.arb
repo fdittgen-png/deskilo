@@ -32,5 +32,6 @@
   "bookingOutsideWalkUpError": "Außerhalb der Öffnungszeiten ist nur ein spontaner Check-in möglich — keine Vorausbuchung.",
   "bookingSameDayError": "Eine Buchung endet an dem Tag, an dem sie beginnt — den nächsten Tag separat buchen.",
   "bookingMembershipPaused": "Ihre Mitgliedschaft ist pausiert — ein Admin reaktiviert sie unter Mitglieder.",
-  "bookingNotAMember": "Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung."
+  "bookingNotAMember": "Sie sind kein Mitglied dieses Raums mehr — bitten Sie einen Admin um eine Einladung.",
+  "levelPriceLine": "{price} / Preis je Halbtag"
 }

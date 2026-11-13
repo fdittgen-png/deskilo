@@ -302,7 +302,7 @@ Future<void> showPriceNegotiationSheet(
               for (final v in options)
                 DropdownMenuItem<int?>(
                     value: v,
-                    child: Text(l10n.negotiationPercent(v))),
+                    child: Text(appFormatOf(context).ratePercent(v))),
             ],
             onChanged: readOnly ? null : (v) => setSheetState(() => pct = v),
           ),

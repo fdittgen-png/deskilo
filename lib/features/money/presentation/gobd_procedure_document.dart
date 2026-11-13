@@ -99,14 +99,27 @@ List<String> procedureSections(
     '## ${l10n.retentionTitle}',
     '',
     for (final r in retentionRules(f.country, reference: f.reference))
-      '- ${retentionClassName(l10n, r.docClass)}: '
-          '${retentionRuleText(l10n, r)}; '
-          '${l10n.gobdProcedureRetentionUntil(day.format(retentionRuleUntil(r, f.to, fiscalYearStart: f.fiscalYearStart)))}'
-          '${r.confirmed ? '' : ' (${l10n.retentionUnconfirmed})'}. '
-          '${r.source}',
+      '- ${_retentionLine(l10n, r, day.format(retentionRuleUntil(r, f.to, fiscalYearStart: f.fiscalYearStart)))}',
     '',
   ];
 }
+
+/// One retention rule as one message: its class, its rule, the date from
+/// which a document dated at the end of the period may be erased, the source.
+String _retentionLine(AppLocalizations l10n, RetentionRule r, String until) =>
+    r.confirmed
+        ? l10n.gobdProcedureRetentionLine(
+            retentionClassName(l10n, r.docClass),
+            retentionRuleText(l10n, r),
+            until,
+            r.source,
+          )
+        : l10n.gobdProcedureRetentionLineUnconfirmed(
+            retentionClassName(l10n, r.docClass),
+            retentionRuleText(l10n, r),
+            until,
+            r.source,
+          );
 
 String _sequence(AppLocalizations l10n, NumberSequence s) {
   final journal = switch (s.journal) {

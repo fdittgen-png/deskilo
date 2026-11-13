@@ -116,8 +116,7 @@ class _VatDeclarationsScreenState
       workspaceName: workspace?.name ?? '',
       vatId: workspace?.vatId ?? '',
       countryCode: workspace?.countryCode ?? '',
-      disclaimer: '${_basisNote(l10n, reference)} '
-          '${l10n.vatDeclDisclaimer}',
+      disclaimer: l10n.vatDeclDisclaimerWithBasis(_basisNote(l10n, reference)),
       statusLabel: _statusLabel(l10n, declaration),
       rate: appFormatOf(context).ratePercent,
       lineNote: (line) => _lineNote(l10n, line),

@@ -12,11 +12,14 @@ const kPrivacyPolicyVersion = '2026-10-10';
 const kPrivacyGuideUrl =
     'https://fdittgen-png.github.io/deskilo/guide/en.html#user.privacy.consent';
 
-/// One section of the consent text: a heading and its paragraph.
+/// One section of the consent text: a heading and its paragraph, and, when
+/// the text runs on, a second paragraph of its own (#3767: two messages shown
+/// one after the other, not two pieces glued into one sentence).
 class PrivacySection {
-  const PrivacySection(this.title, this.body);
+  const PrivacySection(this.title, this.body, [this.more = '']);
   final String title;
   final String body;
+  final String more;
 }
 
 /// The consent text, localized, in reading order. The English fallback
@@ -32,7 +35,8 @@ List<PrivacySection> privacySections(AppLocalizations l10n) => [
       ),
       PrivacySection(
         l10n.consentWhoTitle,
-        l10n.sentencePair(l10n.consentWhoBody, l10n.consentWhoBodyPublic),
+        l10n.consentWhoBody,
+        l10n.consentWhoBodyPublic,
       ),
       PrivacySection(
         l10n.messagesTitle,

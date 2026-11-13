@@ -674,23 +674,23 @@ abstract class AppLocalizations {
   /// **'Nothing to deliver in this period.'**
   String get acctDeliverNothing;
 
-  /// #2370 Snack: a refusal before any document of the run was delivered.
+  /// #3767 Why a delivery run was refused, followed by the statement that nothing was delivered.
   ///
   /// In en, this message translates to:
-  /// **'Nothing was delivered.'**
-  String get acctDeliverNothingSent;
+  /// **'{reason} Nothing was delivered.'**
+  String acctDeliverReasonNothingSent(String reason);
+
+  /// #3767 Snack: why a delivery run stopped, followed by the month it stopped at and what the months before it delivered. The number is not a count: it is a figure after a label and a colon, read as a value; the sentence has no noun to agree with. [not a count: count]
+  ///
+  /// In en, this message translates to:
+  /// **'{reason} Stopped at {month}. Delivered before it: {count}.'**
+  String acctDeliverReasonStoppedAt(String reason, String month, int count);
 
   /// #2370 Snack: the target refused the company before any document.
   ///
   /// In en, this message translates to:
   /// **'The accounting system refused this company: {detail}.'**
   String acctDeliverRefused(String detail);
-
-  /// #2370 Snack: a run of several months stopped at one; what the months before it delivered stays. The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: count]
-  ///
-  /// In en, this message translates to:
-  /// **'Stopped at {month}. Delivered before it: {count}.'**
-  String acctDeliverStoppedAt(String month, int count);
 
   /// #2370 Transfers list: the button that delivers a year's postings to one connection.
   ///
@@ -4249,6 +4249,18 @@ abstract class AppLocalizations {
   /// **'{value} pp'**
   String biChangePoints(String value);
 
+  /// #3767 A chip on a dashboard figure: the change against the previous period, e.g. "+12 % vs previous period". The change arrives already formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{change} vs previous period'**
+  String biChangeVsPrevious(String change);
+
+  /// #3767 A chip on a dashboard figure: the change against the same period last year, e.g. "+12 % vs last year". The change arrives already formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{change} vs last year'**
+  String biChangeVsYearAgo(String change);
+
   /// Business analytics dashboard: biCollectionCentre
   ///
   /// In en, this message translates to:
@@ -7212,18 +7224,6 @@ abstract class AppLocalizations {
   /// **'Team views'**
   String get biViewsTeam;
 
-  /// Business analytics dashboard: biVsPrevious
-  ///
-  /// In en, this message translates to:
-  /// **'vs previous period'**
-  String get biVsPrevious;
-
-  /// Business analytics dashboard: biVsYearAgo
-  ///
-  /// In en, this message translates to:
-  /// **'vs last year'**
-  String get biVsYearAgo;
-
   /// Bill line for priced seat accessories charged per booked half-day (#170), shown only when the amount is non-zero; the amount renders trailing
   ///
   /// In en, this message translates to:
@@ -7302,17 +7302,17 @@ abstract class AppLocalizations {
   /// **'Day packages'**
   String get billPackages;
 
-  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The number is not a count: it is a percentage. [not a count: pct]
+  /// The recurring position on an ASSOCIATION's bill and invoice (#870). A non-profit collects a member participation, not a subscription: 'abonnement' reads as a commercial supply and can pull the association into the VAT-liable trading sector, so the wording follows the seller kind. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Participation {pct}%'**
-  String billParticipation(int pct);
+  /// **'Participation {pct}'**
+  String billParticipation(String pct);
 
-  /// #1000 the recurring position names its month: billParticipationMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billParticipationMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{month} {pct}%'**
-  String billParticipationMonth(String month, int pct);
+  /// **'{month} {pct}'**
+  String billParticipationMonth(String month, String pct);
 
   /// Bill section header for confirmed credits of the period
   ///
@@ -7367,17 +7367,17 @@ abstract class AppLocalizations {
   /// **'Settled'**
   String get billSettled;
 
-  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The number is not a count: it is a percentage. [not a count: pct]
+  /// Bill section header (#132): the member's percentage; the band fee renders as the trailing amount. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String billSubscription(int pct);
+  /// **'Subscription {pct}'**
+  String billSubscription(String pct);
 
-  /// #1000 the recurring position names its month: billSubscriptionMonth. The number is not a count: it is a percentage. [not a count: pct]
+  /// #1000 the recurring position names its month: billSubscriptionMonth. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {month} {pct}%'**
-  String billSubscriptionMonth(String month, int pct);
+  /// **'Subscription {month} {pct}'**
+  String billSubscriptionMonth(String month, String pct);
 
   /// Button splitting the last band into two
   ///
@@ -7415,11 +7415,11 @@ abstract class AppLocalizations {
   /// **'Monthly fee'**
   String get billingBandFee;
 
-  /// Derived lower boundary of a band row (exclusive). The number is not a count: it is a percentage. [not a count: from]
+  /// Derived lower boundary of a band row (exclusive). The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'from {from}%'**
-  String billingBandFrom(int from);
+  /// **'from {from}'**
+  String billingBandFrom(String from);
 
   /// Label of a band's price-per-extra-half-day field
   ///
@@ -12533,6 +12533,12 @@ abstract class AppLocalizations {
   /// **'Link (https://…)'**
   String get documentsUrlLabel;
 
+  /// #3767 Two independent facts on one line, e.g. "Sent 3 May · test". One message so the language places the separator.
+  ///
+  /// In en, this message translates to:
+  /// **'{first} · {second}'**
+  String dotPair(String first, String second);
+
   /// Shown as a title in dunning rules dialog (money).
   ///
   /// In en, this message translates to:
@@ -14039,6 +14045,12 @@ abstract class AppLocalizations {
   /// **'Workspace type saved.'**
   String get environmentSaved;
 
+  /// #3767 The two sides of a twin pair named side by side, e.g. "Development — for trying things out + Production — the invoices are owed".
+  ///
+  /// In en, this message translates to:
+  /// **'{dev} + {prod}'**
+  String environmentsPair(String dev, String prod);
+
   /// #2576 equipment register
   ///
   /// In en, this message translates to:
@@ -14428,12 +14440,6 @@ abstract class AppLocalizations {
   /// **'{actor} submitted an expense of {amount}'**
   String eventExpenseSubmitted(String actor, String amount);
 
-  /// Suffix when an admin acted on someone else's behalf
-  ///
-  /// In en, this message translates to:
-  /// **'for {name}'**
-  String eventForSubject(String name);
-
   /// #3672 a new invoice told to its customer
   ///
   /// In en, this message translates to:
@@ -14486,6 +14492,18 @@ abstract class AppLocalizations {
     String amount,
     String date,
   );
+
+  /// #3767 An event line followed by whose bill or account it lands on, e.g. "Service charge booked for Ana". {line} is the whole event sentence.
+  ///
+  /// In en, this message translates to:
+  /// **'{line} for {name}'**
+  String eventLineForSubject(String line, String name);
+
+  /// #3767 An event line with how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
+  ///
+  /// In en, this message translates to:
+  /// **'{line} ×{count}'**
+  String eventLineRepeated(String line, int count);
 
   /// #2573 open the purchase an expense request was filed as
   ///
@@ -14570,12 +14588,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Declined by {name} · {when}'**
   String eventRejectedBy(String name, String when);
-
-  /// #3067 how many identical events a collapsed row stands for. The number is not a count: it is a multiplier written with the times sign, which has no plural. [not a count: count]
-  ///
-  /// In en, this message translates to:
-  /// **'×{count}'**
-  String eventRepeatedMarker(int count);
 
   /// Feed line for a cancelled reservation
   ///
@@ -19677,11 +19689,27 @@ abstract class AppLocalizations {
   /// **'Unalterability'**
   String get gobdProcedureImmutableHeading;
 
-  /// Procedure documentation (#2375): the first day a document of the period may be erased
+  /// #3767 One line of the procedure document: a class of document, its retention rule, the date from which a document dated at the end of the period may be erased, and the legal source. The date arrives already formatted.
   ///
   /// In en, this message translates to:
-  /// **'a document dated at the end of this period may be erased from {date}'**
-  String gobdProcedureRetentionUntil(String date);
+  /// **'{docClass}: {rule}; a document dated at the end of this period may be erased from {date}. {source}'**
+  String gobdProcedureRetentionLine(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  );
+
+  /// #3767 The same line when the retention rule is not confirmed yet. The date arrives already formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{docClass}: {rule}; a document dated at the end of this period may be erased from {date} (not yet confirmed). {source}'**
+  String gobdProcedureRetentionLineUnconfirmed(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  );
 
   /// Procedure documentation (#2375): the schema version the app was built for
   ///
@@ -24921,6 +24949,12 @@ abstract class AppLocalizations {
   /// **'Proforma'**
   String get invoicePdfProforma;
 
+  /// #3767 The file name stem of a proforma: the word Proforma and what it covers (the invoice number, or the client and period).
+  ///
+  /// In en, this message translates to:
+  /// **'Proforma {name}'**
+  String invoicePdfProformaNamed(String name);
+
   /// #922 chorus pro: invoicePdfPurchaseOrder
   ///
   /// In en, this message translates to:
@@ -27891,6 +27925,12 @@ abstract class AppLocalizations {
   /// **'Settled {from} to {to}: {amount} owed, due {due}'**
   String leaseSettlementOwed(String from, String to, String amount, String due);
 
+  /// #3813 a lease settlement term: the period it settles, both dates already formatted
+  ///
+  /// In en, this message translates to:
+  /// **'Settlement {from} to {to}'**
+  String leaseSettlementPeriod(String from, String to);
+
   /// #2569 premises lease
   ///
   /// In en, this message translates to:
@@ -28291,6 +28331,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Price per half-day'**
   String get levelPriceLabel;
+
+  /// #3767 The price of a whole level as one line, e.g. "12.00 EUR / Price per half-day". The price arrives already formatted.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} / Price per half-day'**
+  String levelPriceLine(String price);
 
   /// #2010 Level reorder: levelReorderStale
   ///
@@ -30337,6 +30383,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.'**
   String get mcpRefusalClientNotApproved;
+
+  /// #3767 The refusal "this assistant is not approved yet" followed by the people who can approve it. {names} is a list of people, already joined.
+  ///
+  /// In en, this message translates to:
+  /// **'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant. Waiting for the server\'s operator: {names}.'**
+  String mcpRefusalClientNotApprovedNamed(String names);
 
   /// #2145 Connect an assistant: mcpRefusalNoIdentity
   ///
@@ -32828,11 +32880,11 @@ abstract class AppLocalizations {
   /// **'Submit for confirmation'**
   String get moneySubmitPayment;
 
-  /// Statement line for the band fee of the member's percentage. The number is not a count: it is a percentage. [not a count: pct]
+  /// Statement line for the band fee of the member's percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Subscription {pct}%'**
-  String moneySubscriptionPct(int pct);
+  /// **'Subscription {pct}'**
+  String moneySubscriptionPct(String pct);
 
   /// Statement usage line for quota plans The number used is the figure before of or a slash, read as a value of a ratio. [not a count: used]
   ///
@@ -33434,12 +33486,6 @@ abstract class AppLocalizations {
   /// **'awaiting validation'**
   String get negotiationPendingBadge;
 
-  /// Shown as a text in negotiation card (money). Placeholders: {value} (int). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value} %'**
-  String negotiationPercent(int value);
-
   /// Shown as a text in negotiation card (money).
   ///
   /// In en, this message translates to:
@@ -33572,11 +33618,11 @@ abstract class AppLocalizations {
   /// **'A larger subscription'**
   String get newMemberSubscriptionMore;
 
-  /// #1294 a subscription percentage. The number is not a count: it is a percentage. [not a count: percent]
+  /// #1294 a subscription percentage. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{percent}%'**
-  String newMemberSubscriptionValue(int percent);
+  /// **'{percent}'**
+  String newMemberSubscriptionValue(String percent);
 
   /// While the device NFC status is being read
   ///
@@ -35080,12 +35126,6 @@ abstract class AppLocalizations {
   /// **'Still awaiting approval.'**
   String get pendingStillWaiting;
 
-  /// A plain percentage value (level chips, member rows). The number is not a count: it is a percentage. [not a count: value]
-  ///
-  /// In en, this message translates to:
-  /// **'{value}%'**
-  String percentValue(int value);
-
   /// #2578 the bookings behind the capacity figure
   ///
   /// In en, this message translates to:
@@ -35655,6 +35695,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'From'**
   String get planFromLabel;
+
+  /// The start time of a booking period on its button, e.g. "From 09:00". {term} is the workspace's own word for the start (already translated or renamed in the vocabulary editor), {time} the formatted time. [workspace term: term]
+  ///
+  /// In en, this message translates to:
+  /// **'{term} {time}'**
+  String planFromTermTime(String term, String time);
 
   /// Header chip browsing the full 00:00–24:00 window under half-day granularity (#201)
   ///
@@ -40178,6 +40224,12 @@ abstract class AppLocalizations {
   /// **'You do not have the permission for this. An owner of the space can grant it in Role management.'**
   String get refusalPermission;
 
+  /// #3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home
+  ///
+  /// In en, this message translates to:
+  /// **'This installation is a personal home: it hosts no workspace. Create the workspace on an installation that hosts workspaces.'**
+  String get refusalPersonalHomeHostsNoWorkspace;
+
   /// #1305 Shown when the session expired during an action
   ///
   /// In en, this message translates to:
@@ -40454,11 +40506,11 @@ abstract class AppLocalizations {
   /// **'Open for'**
   String get reminderPdfDaysOpen;
 
-  /// #3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.
+  /// #3768 Reminder letter line: how long the invoice has been open, with the plural of the day count in the document's language.
   ///
   /// In en, this message translates to:
-  /// **'Open for {days} days'**
-  String reminderPdfDaysOpenLine(String days);
+  /// **'{days, plural, one{Open for {days} day} other{Open for {days} days}}'**
+  String reminderPdfDaysOpenLine(int days);
 
   /// Mahnwesen / reminder letters (#472)
   ///
@@ -41377,6 +41429,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Expected delivery'**
   String get reportExpectedDelivery;
+
+  /// #3768 Purchase order header: the expected delivery date, e.g. "Expected delivery 3 March 2026". {date} is filled in when the order is printed.
+  ///
+  /// In en, this message translates to:
+  /// **'Expected delivery {date}'**
+  String reportExpectedDeliveryDate(String date);
 
   /// #966 report guide: reportFieldGroupBank
   ///
@@ -42409,6 +42467,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Subject'**
   String get reportSubject;
+
+  /// #3768 The subject line of a formal letter: the label and the subject as one message, so the language places the separator. {subject} is the title the report fills in.
+  ///
+  /// In en, this message translates to:
+  /// **'Subject: {subject}'**
+  String reportSubjectLine(String subject);
 
   /// Shown as a button or chip label in report template toolbar (money).
   ///
@@ -44246,12 +44310,6 @@ abstract class AppLocalizations {
   /// **'Seat {seat} today'**
   String seatDayTitle(String seat);
 
-  /// #3652 Two sentences read as one text, separated by a space.
-  ///
-  /// In en, this message translates to:
-  /// **'{first} {second}'**
-  String sentencePair(String first, String second);
-
   /// Title of the series result dialog
   ///
   /// In en, this message translates to:
@@ -44371,6 +44429,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'reference server ({host})'**
   String serverReferenceLabel(String host);
+
+  /// #3813 the expense schedule of a service charge settlement, named after its supplier
+  ///
+  /// In en, this message translates to:
+  /// **'Service charge settlement — {supplier}'**
+  String serviceChargeSettlementOf(String supplier);
 
   /// Shown as a text in services screen (money), and 1 other place.
   ///
@@ -47569,11 +47633,11 @@ abstract class AppLocalizations {
   /// **'Someone asking to join gives their name and e-mail address, nothing more.'**
   String get setupNewMembersPreviewNoQuestions;
 
-  /// #2871 setup run steps: setupNewMembersPreviewStart. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupNewMembersPreviewStart. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'A new member starts on a {pct} % subscription ({policy}).'**
-  String setupNewMembersPreviewStart(int pct, String policy);
+  /// **'A new member starts on a {pct} subscription ({policy}).'**
+  String setupNewMembersPreviewStart(String pct, String policy);
 
   /// #2871 setup run steps: setupNewMembersQuestions
   ///
@@ -47977,17 +48041,17 @@ abstract class AppLocalizations {
   /// **'Standard'**
   String get setupPresetNameStandard;
 
-  /// #2871 setup run steps: setupPricingBand. The number is not a count: it is a percentage. [not a count: from, to]
+  /// #2871 setup run steps: setupPricingBand. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'{from}–{to} %: {fee} a month, {extra} per extra half-day'**
-  String setupPricingBand(int from, int to, String fee, String extra);
+  /// **'{from}–{to}: {fee} a month, {extra} per extra half-day'**
+  String setupPricingBand(String from, String to, String fee, String extra);
 
-  /// #2871 setup run steps: setupPricingLevel. The number is not a count: it is a percentage. [not a count: pct]
+  /// #2871 setup run steps: setupPricingLevel. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Membership at {pct} %'**
-  String setupPricingLevel(int pct);
+  /// **'Membership at {pct}'**
+  String setupPricingLevel(String pct);
 
   /// #3283 setup pricing: the half-days a level includes this month.
   ///
@@ -49081,11 +49145,11 @@ abstract class AppLocalizations {
   /// **'Addresses, the levels at each, and who calls which home'**
   String get sitesSubtitle;
 
-  /// #2440 small-business threshold: smallBusinessCheckFigure
+  /// #3767 The small-business threshold notice, followed by the advice to check the figure when the limit is not the confirmed one.
   ///
   /// In en, this message translates to:
-  /// **'This limit is the last one verified: check the current figure with your tax office.'**
-  String get smallBusinessCheckFigure;
+  /// **'{message} This limit is the last one verified: check the current figure with your tax office.'**
+  String smallBusinessMessageUnconfirmed(String message);
 
   /// #2440 small-business threshold: smallBusinessNearImmediate
   ///
@@ -54433,6 +54497,12 @@ abstract class AppLocalizations {
   /// **'Overage carried to the next invoice'**
   String get usageReportOverage;
 
+  /// #3768 Consumption report line: the overage and its amount, one message so the language places the separator. {amount} is filled in when the report is printed.
+  ///
+  /// In en, this message translates to:
+  /// **'Overage carried to the next invoice: {amount}'**
+  String usageReportOverageLine(String amount);
+
   /// #873 consumption report: usageReportPaid
   ///
   /// In en, this message translates to:
@@ -55603,6 +55673,12 @@ abstract class AppLocalizations {
   /// **'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.'**
   String get vatDeclDisclaimer;
 
+  /// #3767 The disclaimer printed on a VAT declaration, after the sentence that names the basis of its figures.
+  ///
+  /// In en, this message translates to:
+  /// **'{basis} Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.'**
+  String vatDeclDisclaimerWithBasis(String basis);
+
   /// #2357 VAT filing files: vatDeclEdiTva
   ///
   /// In en, this message translates to:
@@ -55795,6 +55871,12 @@ abstract class AppLocalizations {
   /// **'Net base'**
   String get vatDeclNet;
 
+  /// #3767 The net base of a VAT declaration line, e.g. "Net base 100.00 EUR". The amount arrives with its currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Net base {amount}'**
+  String vatDeclNetAmount(String amount);
+
   /// #2357 input VAT: vatDeclPayable
   ///
   /// In en, this message translates to:
@@ -55903,11 +55985,23 @@ abstract class AppLocalizations {
   /// **'Totals'**
   String get vatDeclTotals;
 
+  /// #3767 The totals line of a VAT declaration: net, VAT and how many invoices it covers (a count, with plural forms). The amounts arrive with their currency.
+  ///
+  /// In en, this message translates to:
+  /// **'Totals: {net} · VAT {vat} · {count, plural, one{1 invoice} other{{count} invoices}}'**
+  String vatDeclTotalsLine(String net, String vat, int count);
+
   /// Tax amount column
   ///
   /// In en, this message translates to:
   /// **'VAT'**
   String get vatDeclVat;
+
+  /// #3767 The VAT of a VAT declaration line, e.g. "VAT 19.00 EUR". The amount arrives with its currency.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT {amount}'**
+  String vatDeclVatAmount(String amount);
 
   /// VAT identifier label
   ///
@@ -56238,6 +56332,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Use the usual rates'**
   String get vatSeed;
+
+  /// #3767 The button that fills the VAT rates with the country's usual ones, naming them, e.g. "Use the usual rates (19 %, 7 %)".
+  ///
+  /// In en, this message translates to:
+  /// **'Use the usual rates ({rates})'**
+  String vatSeedWithRates(String rates);
 
   /// VAT rate picker in the service and package editors
   ///
@@ -57781,11 +57881,11 @@ abstract class AppLocalizations {
   /// **'Danger zone'**
   String get workspaceDangerZone;
 
-  /// Live value label of the desk-opacity slider. The number is not a count: it is a percentage. [not a count: percent]
+  /// Live value label of the desk-opacity slider. The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).
   ///
   /// In en, this message translates to:
-  /// **'Opacity: {percent}%'**
-  String workspaceDeskOpacityValue(int percent);
+  /// **'Opacity: {percent}'**
+  String workspaceDeskOpacityValue(String percent);
 
   /// Helper under the desk-transparency slider explaining its effect.
   ///

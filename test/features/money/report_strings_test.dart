@@ -6,6 +6,7 @@
 // the app renders), and `reportStringsOf` reads every field from the
 // bundle it is given (so a localized document does not silently fall
 // back to English for one field).
+import 'package:deskilo/core/i18n/rate_format.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
@@ -40,12 +41,12 @@ void main() {
     expect(d.eventTypePayment, en.eventTypePayment);
     expect(d.paymentsPendingTag, en.paymentsPendingTag);
     expect(d.overage(3), en.overage(3));
-    expect(d.participation(50), en.participation(50));
-    expect(d.subscription(100), en.subscription(100));
-    expect(d.participationMonth('September', 50),
-        en.participationMonth('September', 50));
-    expect(d.subscriptionMonth('September', 100),
-        en.subscriptionMonth('September', 100));
+    expect(d.participation('50%'), en.participation('50%'));
+    expect(d.subscription('100%'), en.subscription('100%'));
+    expect(d.participationMonth('September', '50%'),
+        en.participationMonth('September', '50%'));
+    expect(d.subscriptionMonth('September', '100%'),
+        en.subscriptionMonth('September', '100%'));
     // No bundle means no locale: intl's default, as before the seam.
     expect(d.localeName, isNull);
     expect(en.localeName, 'en');
@@ -76,8 +77,8 @@ void main() {
       (fr.agreementExtraHalfDay, d.agreementExtraHalfDay),
       (fr.paymentsPendingTag, d.paymentsPendingTag),
       (fr.overage(3), d.overage(3)),
-      (fr.participation(50), d.participation(50)),
-      (fr.subscription(100), d.subscription(100)),
+      // participation is the same word in both languages — not listed.
+      (fr.subscription('100 %'), d.subscription('100 %')),
     ]) {
       expect(a, isNot(b), reason: 'French should differ from English: $a');
     }
@@ -90,7 +91,9 @@ void main() {
     const line = InvoiceLine(
         kind: 'subscription', label: '100', amountCents: 10000);
     expect(invoiceLineText(const ReportStrings(), line), 'Subscription 100%');
-    expect(invoiceLineText(reportStringsOf(AppLocalizationsFr(), formatLocale: null), line),
-        AppLocalizationsFr().billSubscription(100));
+    // The rate is formatted in the document's format locale, not by the
+    // message: `100 %` in French (#3819).
+    expect(invoiceLineText(reportStringsOf(AppLocalizationsFr(), formatLocale: 'fr'), line),
+        AppLocalizationsFr().billSubscription(ratePercentText(100, locale: 'fr')));
   });
 }

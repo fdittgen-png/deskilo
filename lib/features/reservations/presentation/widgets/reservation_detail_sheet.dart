@@ -205,8 +205,12 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .watch(targetNamesProvider)
                                   .value?[r.deskId];
                               return Text(
-                                '${lexiconText(context, key: 'deskDetail', fallback: l10n.deskDetail)}'
-                                '${name == null ? '' : ' — $name'}',
+                                name == null
+                                    ? lexiconText(context, key: 'deskDetail', fallback: l10n.deskDetail)
+                                    : l10n.titleDashDetail(
+                                        lexiconText(context, key: 'deskDetail', fallback: l10n.deskDetail),
+                                        name,
+                                      ),
                                 key: const ValueKey('reservation-desk'),
                               );
                             },
@@ -222,8 +226,12 @@ class ReservationDetailSheet extends ConsumerWidget {
                                   .firstOrNull
                                   ?.name;
                               return Text(
-                                '${lexiconText(context, key: 'levelDetail', fallback: l10n.levelDetail)}'
-                                '${name == null ? '' : ' — $name'}',
+                                name == null
+                                    ? lexiconText(context, key: 'levelDetail', fallback: l10n.levelDetail)
+                                    : l10n.titleDashDetail(
+                                        lexiconText(context, key: 'levelDetail', fallback: l10n.levelDetail),
+                                        name,
+                                      ),
                                 key: const ValueKey('reservation-level'),
                               );
                             },

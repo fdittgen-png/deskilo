@@ -247,7 +247,7 @@ $simpleLines
     </table>''',
     _ => '''
     <text style="heading">$title — {{ number }}</text>
-    <text style="small">{{ reminder_date }} · {{ days_open }}</text>
+    <text style="small">{{ reminder_date }} · {{ days_open_text }}</text>
     <spacer size="4mm"/>
 $linesTable
     <rule/>

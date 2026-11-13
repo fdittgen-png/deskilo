@@ -1,26 +1,26 @@
 {
   "@@locale": "es",
-  "billParticipationMonth": "{month} {pct} %",
+  "billParticipationMonth": "{month} {pct}",
   "@billParticipationMonth": {
-    "description": "#1000 the recurring position names its month: billParticipationMonth",
+    "description": "#1000 the recurring position names its month: billParticipationMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   },
-  "billSubscriptionMonth": "Suscripción {month} {pct} %",
+  "billSubscriptionMonth": "Suscripción {month} {pct}",
   "@billSubscriptionMonth": {
-    "description": "#1000 the recurring position names its month: billSubscriptionMonth",
+    "description": "#1000 the recurring position names its month: billSubscriptionMonth The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "month": {
         "type": "String"
       },
       "pct": {
-        "type": "int"
+        "type": "String"
       }
     }
   }

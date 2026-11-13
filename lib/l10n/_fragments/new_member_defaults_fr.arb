@@ -15,12 +15,12 @@
   "@newMemberSubscription": {
     "description": "#1294 the subscription percentage label"
   },
-  "newMemberSubscriptionValue": "{percent} %",
+  "newMemberSubscriptionValue": "{percent}",
   "@newMemberSubscriptionValue": {
-    "description": "#1294 a subscription percentage",
+    "description": "#1294 a subscription percentage The percentage arrives already formatted by the formatting boundary (AppFormat.ratePercent).",
     "placeholders": {
       "percent": {
-        "type": "int"
+        "type": "String"
       }
     }
   },

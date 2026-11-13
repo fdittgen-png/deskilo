@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "refusalPersonalHomeHostsNoWorkspace": "Questa installazione è uno spazio personale: non ospita alcuno spazio di lavoro. Crei lo spazio di lavoro su un'installazione che ne ospita.",
+  "@refusalPersonalHomeHostsNoWorkspace": {
+    "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
+  }
+}

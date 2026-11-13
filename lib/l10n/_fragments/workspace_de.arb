@@ -98,7 +98,7 @@
   "workspaceResetDone": "Workspace zurückgesetzt.",
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceDeskTransparencyHelper": "Verringere die Deckkraft der Tische, damit das Hintergrundfoto der Etage durchscheint.",
-  "workspaceDeskOpacityValue": "Deckkraft: {percent} %",
+  "workspaceDeskOpacityValue": "Deckkraft: {percent}",
   "workspaceExcelExport": "Daten exportieren (Excel)",
   "workspaceExcelExportSubtitle": "Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.",
   "workspaceLanguageLabel": "Sprache des Arbeitsbereichs",

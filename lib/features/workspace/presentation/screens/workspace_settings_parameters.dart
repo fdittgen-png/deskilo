@@ -7,6 +7,7 @@ import '../../../../core/country/country_catalog.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/country_names.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
@@ -343,13 +344,15 @@ class WorkspaceParameterTiles {
                     max: 100,
                     divisions: 16,
                     value: form.deskOpacity.toDouble(),
-                    label: l10n.workspaceDeskOpacityValue(form.deskOpacity),
+                    label: l10n.workspaceDeskOpacityValue(
+                        appFormatOf(context).ratePercent(form.deskOpacity)),
                     onChanged: busy
                         ? null
                         : (v) => _update(() => form.deskOpacity = v.round()),
                   ),
                   Text(
-                    l10n.workspaceDeskOpacityValue(form.deskOpacity),
+                    l10n.workspaceDeskOpacityValue(
+                        appFormatOf(context).ratePercent(form.deskOpacity)),
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   const SizedBox(height: 24),

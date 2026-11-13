@@ -7,6 +7,7 @@ import '../../../../core/format/cents.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -24,6 +25,7 @@ import '../../application/schedule_expense.dart';
 import '../../domain/expense_schedule.dart';
 import '../../providers/expense_schedule_providers.dart';
 import '../../providers/money_providers.dart';
+import '../settlement_texts.dart';
 import 'expense_vat_fields.dart';
 import 'schedule_supplier_field.dart';
 
@@ -117,13 +119,10 @@ Future<void> showExpenseSchedulesSheet(
               ListTile(
                 key: ValueKey('schedule-${s.id}'),
                 contentPadding: EdgeInsets.zero,
-                title: Text(s.title),
+                title: Text(scheduleTitle(l10n, dates.format, s)),
                 subtitle: Text(
-                  '${currency.formatMinor(s.amountCents)} · '
-                  '${_scheduleRuleText(l10n, s, dates)}'
-                  '${_pays(l10n, scheduleSupplierName(ref, workspace.id, s.supplierId))}\n'
-                  '${_statusText(l10n, s.status)}'
-                  '${s.nextDue != null ? ' · ${l10n.scheduleNextDue(dates.format(s.nextDue!))}' : ''}',
+                  '${factLine(l10n, [currency.formatMinor(s.amountCents), _scheduleRuleText(l10n, s, dates), _pays(l10n, scheduleSupplierName(ref, workspace.id, s.supplierId))])}\n'
+                  '${factLine(l10n, [_statusText(l10n, s.status), if (s.nextDue != null) l10n.scheduleNextDue(dates.format(s.nextDue!))])}',
                 ),
                 isThreeLine: true,
                 trailing: canEndSchedule(s.status)
@@ -175,7 +174,7 @@ Future<void> showExpenseSchedulesSheet(
                     ListTile(
                       key: ValueKey('schedule-${s.id}'),
                       contentPadding: EdgeInsets.zero,
-                      title: Text(s.title),
+                      title: Text(scheduleTitle(l10n, dates.format, s)),
                       subtitle: Text(
                         '${currency.formatMinor(s.amountCents)} · '
                         '${_scheduleRuleText(l10n, s, dates)}\n'
@@ -194,7 +193,7 @@ Future<void> showExpenseSchedulesSheet(
 
 /// ' · pays ACME' when the schedule names a supplier.
 String _pays(AppLocalizations l10n, String? supplier) =>
-    supplier == null ? '' : ' · ${l10n.schedulePaysSupplier(supplier)}';
+    supplier == null ? '' : l10n.schedulePaysSupplier(supplier);
 
 /// Whether [s] can still produce a due date.
 ///

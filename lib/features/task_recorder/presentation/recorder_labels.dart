@@ -337,7 +337,7 @@ String recordingTranscript(AppLocalizations l10n, TaskRecording recording) {
         on: l10n.taskExportValueOn,
         off: l10n.taskExportValueOff,
       );
-      out.writeln('   ${e.key}: $shown');
+      out.writeln('   ${l10n.labelWithValue(e.key, shown)}');
     }
   }
   out

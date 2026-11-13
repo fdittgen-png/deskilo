@@ -422,7 +422,7 @@
   "reminderPdfOpeningFriendly": "questo è un promemoria amichevole: la fattura qui sotto è ancora aperta. Probabilmente una semplice svista — nessun problema.",
   "reminderPdfOpeningFirm": "nonostante il nostro sollecito precedente, la fattura qui sotto risulta ancora non pagata. La preghiamo di saldare l'importo senza indugio.",
   "reminderPdfDaysOpen": "Aperta da",
-  "reminderPdfDaysOpenLine": "Aperta da {days} giorni",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Aperta da {days} giorno} other{Aperta da {days} giorni}}",
   "reminderPdfDays": "giorni",
   "reminderPdfLevelLabel": "Livello di sollecito",
   "reminderPdfClosing": "Se ha già pagato, ignori questa lettera.",
@@ -1358,5 +1358,6 @@
   "eventTypeInvoicePaymentReversed": "Abbinamento del pagamento annullato",
   "@eventTypeInvoicePaymentReversed": {
     "description": "#2380 event type: a match of money in was undone (0650)."
-  }
+  },
+  "invoicePdfProformaNamed": "Proforma {name}"
 }

@@ -19,7 +19,6 @@
   "gobdProcedureSchemaApp": "Schemaversion, für die diese App gebaut ist: {version}",
   "gobdProcedureImmutableHeading": "Unveränderbarkeit",
   "gobdProcedureImmutableBody": "Eine ausgestellte Rechnung oder Gutschrift kann weder geändert noch gelöscht werden: die Datenbank verweigert es. Jeder Beleg wird mit seinem Vorgänger in eine Kette signiert. Eine Korrektur ist ein neuer Beleg (Gutschrift oder Ersatzrechnung), der den korrigierten nennt. Ein abgeschlossener Zeitraum verweigert Stornierungen und Zahlungen, die in ihm datiert sind.",
-  "gobdProcedureRetentionUntil": "ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden",
   "gobdProcedureHandoverHeading": "Datenüberlassung (Z3)",
   "gobdProcedureHandoverBody": "Dieses Paket folgt dem Beschreibungsstandard: index.xml beschreibt jede Tabelle, ihre Spalten, Schlüssel und Verknüpfungen und nennt die mitgelieferte DTD gdpdu-01-08-2002.dtd. Jede Tabelle ist eine UTF-8-CSV-Datei ohne Kopfzeile. Der Ordner belege enthält zu jeder Rechnung die strukturierte E-Rechnung und, wo sie erzeugt wurde, das PDF/A-3 mit eingebettetem XML.",
   "gobdProcedureExportsHeading": "Exporte",
@@ -31,5 +30,7 @@
   "datevProblemSachkontenlaenge": "die Sachkontenlänge {length} liegt nicht zwischen 4 und 8",
   "datevProblemCurrency": "die Beträge lauten auf {currency}; die DATEV-Datei wird in Euro geschrieben",
   "datevProblemReferenceTooLong": "{field} „{value}“ ist länger, als DATEV übernimmt, und würde gekürzt",
-  "datevProblemFiscalYearStarts": "die Buchungsprofile der Standorte beginnen das Wirtschaftsjahr an verschiedenen Tagen"
+  "datevProblemFiscalYearStarts": "die Buchungsprofile der Standorte beginnen das Wirtschaftsjahr an verschiedenen Tagen",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; ein Beleg vom Ende dieses Zeitraums darf ab {date} gelöscht werden (noch nicht bestätigt). {source}"
 }

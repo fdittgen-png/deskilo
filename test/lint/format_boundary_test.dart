@@ -113,6 +113,12 @@ const _allowed = <String, Map<String, Allowed>>{
       'machine stamps: file names and the raw developer log line, never a member-facing time',
     ),
   },
+  'a clock by the locale convention': {
+    'lib/core/i18n/reference_when.dart': (
+      1,
+      'a label baked into a message for OTHER readers (`referenceWhen` without a reader): the reference language\'s own convention, never the sender\'s clock preference, so every participant reads the same line',
+    ),
+  },
   'a capital from the first code unit': {
     'lib/features/workspace/domain/workspace_export_labels.dart': (
       1,
@@ -148,6 +154,10 @@ final _kinds = <LiteralKind>[
   LiteralKind(
     'a forced 24-hour clock',
     RegExp(r'''\.add_Hm\(\)|DateFormat\.Hm\(|DateFormat\(\s*['"][^'"]*HH'''),
+  ),
+  LiteralKind(
+    'a clock by the locale convention',
+    RegExp(r'\.add_jms?\(\)|DateFormat\.jms?\('),
   ),
   LiteralKind(
     'a capital from the first code unit',
@@ -216,6 +226,16 @@ void main() {
         hits('a forced 24-hour clock', 'DateFormat.yMd().add_jm()'),
         isFalse,
       );
+      // #3819 — the locale's own clock ignores the person's preference.
+      expect(
+        hits('a clock by the locale convention', 'DateFormat.MMMd(l).add_jm()'),
+        isTrue,
+      );
+      expect(hits('a clock by the locale convention', 'DateFormat.jm(l)'), isTrue);
+      expect(
+        hits('a clock by the locale convention', 'format.wallTime(at)'),
+        isFalse,
+      );
       expect(
         hits(
           'a capital from the first code unit',
@@ -251,7 +271,7 @@ void main() {
           problems.add(
             '$key: $n, pinned at $pinned. A new one goes through the '
             'boundary (AppFormat.ratePercent / fractionPercent / isoDay / '
-            'calendarDay / time, capitalizeFirst); a removed one lowers '
+            'calendarDay / time / wallTime, capitalizeFirst); a removed one lowers '
             'the pin.',
           );
         }

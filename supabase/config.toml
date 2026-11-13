@@ -40,7 +40,9 @@ enable_signup = true
 enable_confirmations = true
 
 [auth.email.template.recovery]
-subject = "Your DesKilo recovery code"
+# #3812 — the subject cannot follow the account's language: it names the
+# product only, so it reads in none of them; the body does (0743).
+subject = "DesKilo"
 content_path = "./supabase/templates/auth/recovery.html"
 
 [storage]

@@ -361,16 +361,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeliverNothing => 'Nothing to deliver in this period.';
 
   @override
-  String get acctDeliverNothingSent => 'Nothing was delivered.';
+  String acctDeliverReasonNothingSent(String reason) {
+    return '$reason Nothing was delivered.';
+  }
+
+  @override
+  String acctDeliverReasonStoppedAt(String reason, String month, int count) {
+    return '$reason Stopped at $month. Delivered before it: $count.';
+  }
 
   @override
   String acctDeliverRefused(String detail) {
     return 'The accounting system refused this company: $detail.';
-  }
-
-  @override
-  String acctDeliverStoppedAt(String month, int count) {
-    return 'Stopped at $month. Delivered before it: $count.';
   }
 
   @override
@@ -2642,6 +2644,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String biChangeVsPrevious(String change) {
+    return '$change vs previous period';
+  }
+
+  @override
+  String biChangeVsYearAgo(String change) {
+    return '$change vs last year';
+  }
+
+  @override
   String get biCollectionCentre => 'of what was invoiced';
 
   @override
@@ -4568,12 +4580,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get biViewsTeam => 'Team views';
 
   @override
-  String get biVsPrevious => 'vs previous period';
-
-  @override
-  String get biVsYearAgo => 'vs last year';
-
-  @override
   String get billAccessorySupplements => 'Accessory supplements';
 
   @override
@@ -4641,13 +4647,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billPackages => 'Day packages';
 
   @override
-  String billParticipation(int pct) {
-    return 'Participation $pct%';
+  String billParticipation(String pct) {
+    return 'Participation $pct';
   }
 
   @override
-  String billParticipationMonth(String month, int pct) {
-    return '$month $pct%';
+  String billParticipationMonth(String month, String pct) {
+    return '$month $pct';
   }
 
   @override
@@ -4682,13 +4688,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billSettled => 'Settled';
 
   @override
-  String billSubscription(int pct) {
-    return 'Subscription $pct%';
+  String billSubscription(String pct) {
+    return 'Subscription $pct';
   }
 
   @override
-  String billSubscriptionMonth(String month, int pct) {
-    return 'Subscription $month $pct%';
+  String billSubscriptionMonth(String month, String pct) {
+    return 'Subscription $month $pct';
   }
 
   @override
@@ -4710,8 +4716,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get billingBandFee => 'Monthly fee';
 
   @override
-  String billingBandFrom(int from) {
-    return 'from $from%';
+  String billingBandFrom(String from) {
+    return 'from $from';
   }
 
   @override
@@ -7847,6 +7853,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsUrlLabel => 'Link (https://…)';
 
   @override
+  String dotPair(String first, String second) {
+    return '$first · $second';
+  }
+
+  @override
   String get dunningAutomatic => 'Automatic reminders';
 
   @override
@@ -8686,6 +8697,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get environmentSaved => 'Workspace type saved.';
 
   @override
+  String environmentsPair(String dev, String prod) {
+    return '$dev + $prod';
+  }
+
+  @override
   String equipmentCost(String amount) {
     return 'Cost $amount';
   }
@@ -8943,11 +8959,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String eventForSubject(String name) {
-    return 'for $name';
-  }
-
-  @override
   String eventInvoiceIssuedLine(String number) {
     return 'New invoice $number';
   }
@@ -8990,6 +9001,16 @@ class AppLocalizationsEn extends AppLocalizations {
     String date,
   ) {
     return '$actor asks to change the rent of $premises to $amount from $date';
+  }
+
+  @override
+  String eventLineForSubject(String line, String name) {
+    return '$line for $name';
+  }
+
+  @override
+  String eventLineRepeated(String line, int count) {
+    return '$line ×$count';
   }
 
   @override
@@ -9065,11 +9086,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String eventRejectedBy(String name, String when) {
     return 'Declined by $name · $when';
-  }
-
-  @override
-  String eventRepeatedMarker(int count) {
-    return '×$count';
   }
 
   @override
@@ -12049,8 +12065,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gobdProcedureImmutableHeading => 'Unalterability';
 
   @override
-  String gobdProcedureRetentionUntil(String date) {
-    return 'a document dated at the end of this period may be erased from $date';
+  String gobdProcedureRetentionLine(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  ) {
+    return '$docClass: $rule; a document dated at the end of this period may be erased from $date. $source';
+  }
+
+  @override
+  String gobdProcedureRetentionLineUnconfirmed(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  ) {
+    return '$docClass: $rule; a document dated at the end of this period may be erased from $date (not yet confirmed). $source';
   }
 
   @override
@@ -15411,6 +15442,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePdfProforma => 'Proforma';
 
   @override
+  String invoicePdfProformaNamed(String name) {
+    return 'Proforma $name';
+  }
+
+  @override
   String get invoicePdfPurchaseOrder => 'Order reference';
 
   @override
@@ -17313,6 +17349,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String leaseSettlementPeriod(String from, String to) {
+    return 'Settlement $from to $to';
+  }
+
+  @override
   String leaseStarted(String date) {
     return 'Since $date';
   }
@@ -17540,6 +17581,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get levelPriceLabel => 'Price per half-day';
+
+  @override
+  String levelPriceLine(String price) {
+    return '$price / Price per half-day';
+  }
 
   @override
   String get levelReorderStale =>
@@ -18805,6 +18851,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpRefusalClientNotApproved =>
       'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.';
+
+  @override
+  String mcpRefusalClientNotApprovedNamed(String names) {
+    return 'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant. Waiting for the server\'s operator: $names.';
+  }
 
   @override
   String get mcpRefusalNoIdentity =>
@@ -20312,8 +20363,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get moneySubmitPayment => 'Submit for confirmation';
 
   @override
-  String moneySubscriptionPct(int pct) {
-    return 'Subscription $pct%';
+  String moneySubscriptionPct(String pct) {
+    return 'Subscription $pct';
   }
 
   @override
@@ -20684,11 +20735,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get negotiationPendingBadge => 'awaiting validation';
 
   @override
-  String negotiationPercent(int value) {
-    return '$value %';
-  }
-
-  @override
   String get negotiationProposeHint =>
       'Leave a field empty to keep the tariff. The deal goes through validation before it applies.';
 
@@ -20760,8 +20806,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get newMemberSubscriptionMore => 'A larger subscription';
 
   @override
-  String newMemberSubscriptionValue(int percent) {
-    return '$percent%';
+  String newMemberSubscriptionValue(String percent) {
+    return '$percent';
   }
 
   @override
@@ -21638,11 +21684,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get pendingStillWaiting => 'Still awaiting approval.';
 
   @override
-  String percentValue(int value) {
-    return '$value%';
-  }
-
-  @override
   String get periodReservationsEmpty => 'No booking in these months.';
 
   @override
@@ -21976,6 +22017,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get planFromLabel => 'From';
+
+  @override
+  String planFromTermTime(String term, String time) {
+    return '$term $time';
+  }
 
   @override
   String get planFullDayChip => 'Day';
@@ -24731,6 +24777,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'You do not have the permission for this. An owner of the space can grant it in Role management.';
 
   @override
+  String get refusalPersonalHomeHostsNoWorkspace =>
+      'This installation is a personal home: it hosts no workspace. Create the workspace on an installation that hosts workspaces.';
+
+  @override
   String get refusalSession =>
       'Your session has ended. Sign in again, then retry.';
 
@@ -24894,8 +24944,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Open for';
 
   @override
-  String reminderPdfDaysOpenLine(String days) {
-    return 'Open for $days days';
+  String reminderPdfDaysOpenLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Open for $days days',
+      one: 'Open for $days day',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -25477,6 +25533,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportExpectedDelivery => 'Expected delivery';
 
   @override
+  String reportExpectedDeliveryDate(String date) {
+    return 'Expected delivery $date';
+  }
+
+  @override
   String get reportFieldGroupBank => 'Bank details';
 
   @override
@@ -26035,6 +26096,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportSubject => 'Subject';
+
+  @override
+  String reportSubjectLine(String subject) {
+    return 'Subject: $subject';
+  }
 
   @override
   String get reportTemplateClearOverlay => 'Use the default for this language';
@@ -27216,11 +27282,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String sentencePair(String first, String second) {
-    return '$first $second';
-  }
-
-  @override
   String seriesBookedCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -27301,6 +27362,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String serverReferenceLabel(String host) {
     return 'reference server ($host)';
+  }
+
+  @override
+  String serviceChargeSettlementOf(String supplier) {
+    return 'Service charge settlement — $supplier';
   }
 
   @override
@@ -29350,8 +29416,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Someone asking to join gives their name and e-mail address, nothing more.';
 
   @override
-  String setupNewMembersPreviewStart(int pct, String policy) {
-    return 'A new member starts on a $pct % subscription ($policy).';
+  String setupNewMembersPreviewStart(String pct, String policy) {
+    return 'A new member starts on a $pct subscription ($policy).';
   }
 
   @override
@@ -29636,13 +29702,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupPresetNameStandard => 'Standard';
 
   @override
-  String setupPricingBand(int from, int to, String fee, String extra) {
-    return '$from–$to %: $fee a month, $extra per extra half-day';
+  String setupPricingBand(String from, String to, String fee, String extra) {
+    return '$from–$to: $fee a month, $extra per extra half-day';
   }
 
   @override
-  String setupPricingLevel(int pct) {
-    return 'Membership at $pct %';
+  String setupPricingLevel(String pct) {
+    return 'Membership at $pct';
   }
 
   @override
@@ -30279,8 +30345,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Addresses, the levels at each, and who calls which home';
 
   @override
-  String get smallBusinessCheckFigure =>
-      'This limit is the last one verified: check the current figure with your tax office.';
+  String smallBusinessMessageUnconfirmed(String message) {
+    return '$message This limit is the last one verified: check the current figure with your tax office.';
+  }
 
   @override
   String smallBusinessNearImmediate(String turnover, String limit) {
@@ -33455,6 +33522,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usageReportOverage => 'Overage carried to the next invoice';
 
   @override
+  String usageReportOverageLine(String amount) {
+    return 'Overage carried to the next invoice: $amount';
+  }
+
+  @override
   String get usageReportPaid => 'Paid ahead (participation)';
 
   @override
@@ -34178,6 +34250,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
 
   @override
+  String vatDeclDisclaimerWithBasis(String basis) {
+    return '$basis Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
+  }
+
+  @override
   String get vatDeclEdiTva => 'EDI-TVA file (CA3)';
 
   @override
@@ -34294,6 +34371,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclNet => 'Net base';
 
   @override
+  String vatDeclNetAmount(String amount) {
+    return 'Net base $amount';
+  }
+
+  @override
   String get vatDeclPayable => 'VAT payable';
 
   @override
@@ -34352,7 +34434,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclTotals => 'Totals';
 
   @override
+  String vatDeclTotalsLine(String net, String vat, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices',
+      one: '1 invoice',
+    );
+    return 'Totals: $net · VAT $vat · $_temp0';
+  }
+
+  @override
   String get vatDeclVat => 'VAT';
+
+  @override
+  String vatDeclVatAmount(String amount) {
+    return 'VAT $amount';
+  }
 
   @override
   String get vatDeclVatId => 'VAT ID';
@@ -34538,6 +34636,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatSeed => 'Use the usual rates';
+
+  @override
+  String vatSeedWithRates(String rates) {
+    return 'Use the usual rates ($rates)';
+  }
 
   @override
   String get vatServiceRate => 'VAT rate';
@@ -35460,8 +35563,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get workspaceDangerZone => 'Danger zone';
 
   @override
-  String workspaceDeskOpacityValue(int percent) {
-    return 'Opacity: $percent%';
+  String workspaceDeskOpacityValue(String percent) {
+    return 'Opacity: $percent';
   }
 
   @override
