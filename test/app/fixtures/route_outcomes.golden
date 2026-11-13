@@ -664,7 +664,7 @@ member on  /money/repartition -> (open)
 member on  /money/repartition-wizard -> /calendar
 member on  /money/sales -> /calendar
 member on  /money/settlement -> (open)
-member on  /money/status -> /money
+member on  /money/status -> /calendar
 member on  /money/suppliers -> /calendar
 member on  /money/suppliers/:id -> /calendar
 member on  /nfc-config -> /calendar
