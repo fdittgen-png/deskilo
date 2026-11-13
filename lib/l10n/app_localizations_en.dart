@@ -8156,6 +8156,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eInvoiceContactPhoneField => 'Invoicing contact telephone';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'The platform has not confirmed this document yet. Ask it again later.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Electronic address';
 
   @override

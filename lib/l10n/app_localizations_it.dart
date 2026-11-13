@@ -8208,6 +8208,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Telefono del contatto per la fatturazione';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'La piattaforma non ha ancora confermato questo documento. Lo chieda di nuovo più tardi.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Indirizzo elettronico';
 
   @override

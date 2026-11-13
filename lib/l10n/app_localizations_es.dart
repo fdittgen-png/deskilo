@@ -8204,6 +8204,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Teléfono del contacto de facturación';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'La plataforma aún no ha confirmado este documento. Vuelva a consultarla más tarde.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Dirección electrónica';
 
   @override

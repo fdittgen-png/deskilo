@@ -8247,6 +8247,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eInvoiceContactPhoneField => 'Téléphone du contact facturation';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'La plateforme n\'a pas encore confirmé ce document. Interrogez-la de nouveau plus tard.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Adresse électronique';
 
   @override

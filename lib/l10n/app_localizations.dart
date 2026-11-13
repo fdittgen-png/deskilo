@@ -13025,6 +13025,12 @@ abstract class AppLocalizations {
   /// **'Invoicing contact telephone'**
   String get eInvoiceContactPhoneField;
 
+  /// #3881 under a document the national platform took but has not confirmed yet
+  ///
+  /// In en, this message translates to:
+  /// **'The platform has not confirmed this document yet. Ask it again later.'**
+  String get eInvoiceDocumentUnconfirmed;
+
   /// #2358 field: the electronic address
   ///
   /// In en, this message translates to:

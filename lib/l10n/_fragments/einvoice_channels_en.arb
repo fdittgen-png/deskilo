@@ -119,6 +119,10 @@
   "@eInvoiceReceiptNothingYet": {
     "description": "#2358 invoice detail: the channel has no answer yet"
   },
+  "eInvoiceDocumentUnconfirmed": "The platform has not confirmed this document yet. Ask it again later.",
+  "@eInvoiceDocumentUnconfirmed": {
+    "description": "#3881 under a document the national platform took but has not confirmed yet"
+  },
   "eInvoiceProviderLabel": "Channel",
   "@eInvoiceProviderLabel": {
     "description": "#2358 e-invoice config: the connector picker"

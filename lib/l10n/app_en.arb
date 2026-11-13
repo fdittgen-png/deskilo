@@ -10729,6 +10729,10 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "The platform has not confirmed this document yet. Ask it again later.",
+  "@eInvoiceDocumentUnconfirmed": {
+    "description": "#3881 under a document the national platform took but has not confirmed yet"
+  },
   "eInvoiceEndpointIdField": "Electronic address",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"

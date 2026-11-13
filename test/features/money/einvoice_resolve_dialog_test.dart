@@ -63,6 +63,30 @@ void main() {
     expect(find.byKey(const ValueKey('einvoice-resolve')), findsNothing);
   });
 
+  testWidgets('#3881 a document the platform took but has not confirmed '
+      'says so; a confirmed one does not', (tester) async {
+    final money = _money(EInvoiceSubmissionStatus.accepted);
+    await _pump(tester, money, canIssue: true);
+    expect(find.byKey(const ValueKey('einvoice-document-unconfirmed')),
+        findsOneWidget);
+    expect(
+        find.text(
+            'The platform has not confirmed this document yet. Ask it again later.'),
+        findsOneWidget);
+
+    money.transmissions['inv-1'] = InvoiceTransmission(
+      id: 't-1',
+      invoiceId: 'inv-1',
+      status: EInvoiceSubmissionStatus.accepted,
+      sentAt: DateTime(2026, 11, 2, 9),
+      provider: 'peppol',
+      documentVerdict: 'accepted',
+    );
+    await _pump(tester, money, canIssue: true);
+    expect(find.byKey(const ValueKey('einvoice-document-unconfirmed')),
+        findsNothing);
+  });
+
   testWidgets('a missing reason, then missing evidence, is refused under its '
       'field and settles nothing; both given, it settles', (tester) async {
     final money = _money(EInvoiceSubmissionStatus.uncertain);
