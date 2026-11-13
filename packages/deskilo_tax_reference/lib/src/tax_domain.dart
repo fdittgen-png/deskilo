@@ -60,7 +60,12 @@ enum TaxDomain {
   /// #2488 -- a country a workspace can be created in: its currency, the
   /// zone its capital keeps and how its banks identify an account. Creation
   /// defaults only; what DesKilo issues for is `issuing_gate`.
-  country('country');
+  country('country'),
+
+  /// #3850 -- the languages a document of a country may be written in: the
+  /// country's official languages, whether an invoice may follow its
+  /// customer's language, and a language a subdivision requires.
+  documentLanguage('document_language');
 
   const TaxDomain(this.wire);
   final String wire;

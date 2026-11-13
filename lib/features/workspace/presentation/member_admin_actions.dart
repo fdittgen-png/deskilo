@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/help/help_anchors.dart';
 import '../../../core/help/help_dot.dart';
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/locale/report_language.dart';
 import '../../../core/share/file_sharer.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
@@ -129,17 +128,8 @@ Future<void> sendMemberAgreement(
       if (!context.mounted) return;
       // #496 — the agreement prints in the MEMBER's language.
       final profile = ref.read(memberProfilesProvider).value?[member.userId];
-      final String language;
-      try {
-        language = resolveMemberReportLanguage(ref,
-            memberLocale: member.preferredLocaleOverride ?? profile?.preferredLocale ?? '');
-      } on AmbiguousReportLanguage {
-        AppSnack.error(
-          context,
-          l10n.reportLanguageAmbiguous,
-        );
-        return;
-      }
+      final language = resolveMemberReportLanguage(ref,
+          memberLocale: member.preferredLocaleOverride ?? profile?.preferredLocale ?? '');
       final docL10n = l10nForLanguage(language);
       final data = agreementReportData(
           reportStringsFor(context, l10n: docL10n, localeName: language),

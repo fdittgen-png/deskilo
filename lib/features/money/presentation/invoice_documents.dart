@@ -18,7 +18,6 @@ import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/files/file_names.dart';
-import '../../../core/i18n/format_controller.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/jurisdiction/installed_invoice_rules.dart';
 import '../../../core/jurisdiction/installed_payment_slips.dart';
@@ -39,7 +38,8 @@ import '../domain/invoice_report.dart';
 import '../domain/report_data.dart';
 import '../providers/money_providers.dart';
 import '../providers/usage_providers.dart';
-import 'invoice_actions.dart' show requireWorkspaceTaxReference;
+import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
+import 'invoice_document_locale.dart';
 import 'invoice_pdf_file_parts.dart';
 import 'invoice_status.dart';
 import 'period_label.dart';
@@ -95,16 +95,29 @@ AppLocalizations l10nForLanguage(String language) =>
     lookupAppLocalizations(Locale(language));
 
 /// Resolves a document's language for a reader (#496): member's
-/// preferred → workspace language → country language; throws
-/// [AmbiguousReportLanguage] for a multi-language country with nothing
-/// configured.
+/// preferred → the business's document language → its country's (#3850).
 String resolveMemberReportLanguage(WidgetRef ref, {String memberLocale = ''}) {
   final workspace = ref.read(currentWorkspaceProvider).value;
+  final country = workspace?.countryCode ?? '';
   return resolveReportLanguage(
     memberLocale: memberLocale,
     workspaceLocale: workspace?.defaultLocale ?? '',
-    countryCode: workspace?.countryCode ?? '',
+    countryLanguages: workspaceTaxReference(ref)?.documentLanguagesOf(country)?.languages ?? const [],
   );
+}
+
+/// #3850 — [invoiceDocumentLocaleOf] for the current workspace.
+DocumentLocale invoiceDocumentLocale(WidgetRef ref, Invoice invoice) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return invoiceDocumentLocaleOf(invoice, country: workspace?.countryCode ?? '',
+      locale: workspace?.defaultLocale ?? '', reference: workspaceTaxReference(ref));
+}
+
+/// #3850 — [businessDocumentLocaleOf] for the current workspace.
+DocumentLocale businessDocumentLocale(WidgetRef ref) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return businessDocumentLocaleOf(country: workspace?.countryCode ?? '',
+      locale: workspace?.defaultLocale ?? '', reference: workspaceTaxReference(ref));
 }
 
 /// Warms every provider the #494 letter-document builders read, so the
@@ -211,14 +224,7 @@ class InvoicePdfFileOptions {
     this.memberTerms,
     this.dueAt,
     this.memberCapacity,
-    this.language = '',
   });
-
-  /// #3673 — the language the document is printed in: '' for the
-  /// interface's (share, download and print, as before), else a supported
-  /// language code (the e-mail passes the customer's document language).
-  /// The template's texts, the words, the dates and the amounts follow it.
-  final String language;
 
   /// The workspace's own tax reference the document's mentions are stated on.
   final TaxReferenceSet reference;
@@ -262,22 +268,20 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   Invoice invoice,
   InvoicePdfFileOptions options,
 ) async {
-  // #3673 — the document's language: the caller's, or the interface's.
-  final language = options.language;
-  final named = language.isNotEmpty;
-  final l10n = named ? l10nForLanguage(language) : context.l10n;
-  final localeName = named ? language : null;
-  final proforma = options.proforma;
-  final template =
-      named ? options.template.forLocale(language) : options.template;
+  // #3850 — the document's language and conventions: frozen by the server
+  // at issue, else the business's; never those of the person printing.
   final workspace = options.workspace;
-  // #3484 — read before the awaits: the document's amounts spell in it.
-  final formatLocale = named ? language : appFormatOf(context).locale;
-  final periodLabel = named
-      ? invoicePeriodLabelOf(language, invoice)
-      : invoicePeriodLabel(context, invoice);
+  final locale = invoiceDocumentLocaleOf(invoice, country: workspace?.countryCode ?? '',
+      locale: workspace?.defaultLocale ?? '', reference: options.reference);
+  final language = locale.language;
+  final l10n = l10nForLanguage(language);
+  final localeName = language;
+  final proforma = options.proforma;
+  final template = options.template.forLocale(language);
+  final formatLocale = locale.formatLocale;
+  final periodLabel = invoicePeriodLabelOf(language, invoice);
   final reportData = invoiceReportData(
-    reportStringsFor(context, l10n: l10n, localeName: localeName),
+    documentStringsOf(locale),
     invoice,
     memberTerms: options.memberTerms,
     proforma: proforma,
@@ -315,9 +319,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         )
       : safeFileSlug(invoice.number);
   final layoutXml = invoiceLayoutXmlOf(invoice, options, template, features, l10n);
-  final dateFormat = DateFormat.yMMMd(
-    localeName ?? Localizations.maybeLocaleOf(context)?.toString(),
-  );
+  final dateFormat = DateFormat.yMMMd(localeName);
   final annexes = invoiceAnnexesOf(
     context,
     invoice,
@@ -404,7 +406,7 @@ String facturXmlOf(
   required TaxReferenceSet reference,
 }) {
   final association = ref.read(sellerIsAssociationProvider);
-  final words = reportStringsOf(context.l10n, formatLocale: appFormatOf(context).locale);
+  final words = documentStringsOf(invoiceDocumentLocale(ref, invoice)); // #3850 the PDF's own
   return buildInvoiceCii(EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, invoice: invoice,
     seller: seller,
     buyer: buyer,

@@ -6,6 +6,7 @@
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/domain/setup_status.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_readiness.dart';
@@ -15,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/test_workspace_context.dart';
 
 final _status = SetupStatus.fromJson({
   'steps': [
@@ -60,11 +62,16 @@ const _sections = [
   ),
 ];
 
-Future<List<Attention>> _lines({required bool guide}) async {
+Future<List<Attention>> _lines({
+  required bool guide,
+  Workspace Function(Workspace)? shape,
+}) async {
+  final repo = FakeWorkspaceRepository.withWorkspace();
+  if (shape != null) repo.workspaces[0] = shape(repo.workspaces[0]);
   final container = ProviderContainer(
     overrides: [
       ...standardTestOverrides(
-        workspace: FakeWorkspaceRepository.withWorkspace(),
+        workspace: repo,
         localSetup: FakeLocalSetupRepository(
           status: _status,
           readinessSections: _sections,
@@ -76,6 +83,7 @@ Future<List<Attention>> _lines({required bool guide}) async {
       myPermissionsProvider.overrideWithValue(const {
         WorkspacePermission.manageConfiguration,
       }),
+      testReadyWorkspaceContext(),
     ],
   );
   addTearDown(container.dispose);
@@ -107,5 +115,32 @@ void main() {
       [for (final l in lines) (l.action, l.route)],
       [(AttentionAction.setUp, '/editor')],
     );
+  });
+
+  // #3850 — a Swiss business's document language, given by the server
+  // (0753), waits for a configurer; saving it confirms it. Never blocking.
+  test('a business whose document language waits for confirmation gets a '
+      'to-do, and none once confirmed', () async {
+    List<AttentionAction> confirm(List<Attention> lines) => [
+          for (final l in lines)
+            if (l.action == AttentionAction.confirmLanguage) l.action,
+        ];
+    final waiting = await _lines(
+      guide: false,
+      shape: (w) => w.copyWith(
+          countryCode: 'CH', defaultLocale: 'de', documentLanguageConfirmed: false),
+    );
+    expect(confirm(waiting), [AttentionAction.confirmLanguage]);
+    final confirmed = await _lines(
+      guide: false,
+      shape: (w) => w.copyWith(countryCode: 'CH', defaultLocale: 'de'),
+    );
+    expect(confirm(confirmed), isEmpty);
+    // A country with one shipped language has nothing to choose.
+    final france = await _lines(
+      guide: false,
+      shape: (w) => w.copyWith(countryCode: 'FR', documentLanguageConfirmed: false),
+    );
+    expect(confirm(france), isEmpty);
   });
 }

@@ -16,6 +16,7 @@ import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
+import 'package:deskilo/features/money/presentation/invoice_document_locale.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -141,5 +142,47 @@ void main() {
                 'regenerate with --dart-define=WRITE_GOLDEN=true');
       });
     }
+  }
+
+  // #3850 — an issued invoice carries the language the server froze; two
+  // administrators whose apps speak Italian and Spanish build the same words
+  // and formats, those of the frozen language's golden.
+  for (final language in const ['en', 'fr', 'de']) {
+    testWidgets('an invoice frozen in $language reads the same for an Italian '
+        'and a Spanish administrator, in its own conventions', (tester) async {
+      final frozen =
+          _invoice.copyWith(documentLanguage: language, formatLocale: '${language}_FR');
+      final built = <String>[];
+      for (final reader in const [Locale('it'), Locale('es')]) {
+        late Map<String, Object?> data;
+        await tester.pumpWidget(MaterialApp(
+          locale: reader,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Builder(builder: (context) {
+            data = invoiceReportData(
+              documentStringsOf(invoiceDocumentLocaleOf(frozen, country: 'FR')),
+              frozen,
+              proforma: false,
+              copy: false,
+              workspace: _workspace,
+              dueAt: DateTime(2026, 8, 30), reference: ActiveTaxReference.current,
+            );
+            return const SizedBox();
+          }),
+        ));
+        built.add(const JsonEncoder.withIndent('  ').convert(data));
+      }
+      expect(built[0], built[1]);
+      // The pre-seam goldens spelled a French or German document's amounts in
+      // the reader's conventions (`€139.50`); the frozen document spells them
+      // in its own (`139,50 €`).
+      final file = File('test/features/money/goldens/invoice_report_data_frozen_$language.json');
+      if (_write) {
+        file.writeAsStringSync('${built[0]}\n');
+        return;
+      }
+      expect(built[0], file.readAsStringSync().trimRight());
+    });
   }
 }

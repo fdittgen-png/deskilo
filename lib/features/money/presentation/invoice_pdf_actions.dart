@@ -114,16 +114,14 @@ Future<bool> savePdfToDownloads(
 
 
 /// #3673 — what share, download and the invoice e-mail print an invoice
-/// with: one set of options for one builder. [language] '' prints in the
-/// interface's language (share and download, unchanged); the e-mail passes
-/// the customer's document language.
+/// with: one set of options for one builder, in the invoice's own document
+/// language (#3850).
 InvoicePdfFileOptions invoiceShareOptions(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-  List<Invoice> annexes, {
-  String language = '',
-}) => InvoicePdfFileOptions(
+  List<Invoice> annexes,
+) => InvoicePdfFileOptions(
   reference: requireWorkspaceTaxReference(ref),
   // #920 — through layoutImage, so the shipped layouts' `logo`
   // resolves to whatever the owner actually called theirs.
@@ -135,12 +133,11 @@ InvoicePdfFileOptions invoiceShareOptions(
     context,
     ref,
     invoice,
-    l10n: language.isEmpty ? null : l10nForLanguage(language),
+    l10n: l10nForLanguage(invoiceDocumentLocale(ref, invoice).language),
   ),
   annexInvoices: annexes,
   template: invoicePdfTemplateFor(ref),
   workspace: ref.read(currentWorkspaceProvider).value,
-  language: language,
 );
 
 Future<void> downloadInvoicePdf(

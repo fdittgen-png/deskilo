@@ -198,10 +198,11 @@ function applyChrome(){
 // the admin and the member; domains: the validation cards the page offers,
 // domainGates the switch each needs, domainEventTypes the server's name
 // where it differs from the page's key; invoicingCountries: where the app
-// issues invoices itself; countries: [ISO code, currency, time zone, bank
+// issues invoices itself; documentLanguageCountries: where the business must
+// choose its document language (#3850); countries: [ISO code, currency, time zone, bank
 // scheme]. Names and descriptions come from the ARB through setup_l10n.js.
 const {features:FEATURES,requires:REQUIRES,availableIn:AVAILABLE_IN,permissions:PERMS,defaultMatrix:PERM_DEFAULTS,
- domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,countries:COUNTRIES}=window.SETUP_REGISTRY;
+ domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,documentLanguageCountries:DOCUMENT_LANGUAGE_COUNTRIES,countries:COUNTRIES}=window.SETUP_REGISTRY;
 // #2926 — the untranslated words (language names, statutory VAT rate
 // labels, the XML fallback names) are in setup_params.js.
 const seedVatRates=()=>set('vatRates',(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent})));
