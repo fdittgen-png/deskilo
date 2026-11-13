@@ -1429,7 +1429,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get authPasswordLabel => 'Password';
 
   @override
-  String get authPasswordTooShort => 'Almeno 8 caratteri';
+  String authPasswordTooShort(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Almeno $length caratteri',
+      one: 'Almeno $length carattere',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -13791,6 +13799,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceDoctorAttention => 'Richiede attenzione';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'i codici durano al massimo un\'ora, le password hanno almeno $length caratteri, un cambio di password chiede di accedere di nuovo',
+      one:
+          'i codici durano al massimo un\'ora, le password hanno almeno $length carattere, un cambio di password chiede di accedere di nuovo',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Base di accesso';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'I codici di accesso durano più di un\'ora';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'valore  $value\n        Rimedio: $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Le password possono avere meno di $length caratteri',
+      one: 'Le password possono avere meno di $length carattere',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'Un cambio di password non chiede di accedere di nuovo';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Senza security_invoker la vista legge con i diritti del proprietario e aggira le policy delle tabelle sottostanti.';
   }
@@ -13921,6 +13969,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Policy';
 
   @override
+  String get instanceDoctorProbePush => 'Configurazione delle notifiche';
+
+  @override
   String get instanceDoctorProbeRoles => 'Ruoli dell\'installazione';
 
   @override
@@ -13937,6 +13988,23 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Protetto';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Rimedio: dart run tool/instance.dart push --ref <ref>, oppure imposti push_config su questo progetto.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Le chiamate di notifica e di regolamento vanno a un altro progetto';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'le chiamate di notifica e di regolamento vanno a questo progetto ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Configurazione delle notifiche';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {

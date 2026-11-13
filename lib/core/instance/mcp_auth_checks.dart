@@ -15,6 +15,7 @@
 // Mail is judged from configuration only. No mail is ever sent as a probe,
 // and nothing here writes the Auth configuration: an unconfirmed-signup
 // problem is reported, never "fixed" by switching confirmation off.
+import 'instance_builder.dart';
 import 'mcp_readiness.dart';
 import 'mcp_readiness_checks.dart';
 
@@ -187,7 +188,7 @@ List<ReadinessCheck> _emailChecks(Map<String, Object?> auth) {
             CheckOutcome.unknown,
             'the OTP length or lifetime is not reported',
           )
-        : otpLength >= 6 && otpExpiry > 0 && otpExpiry <= 86400
+        : otpLength >= 6 && otpExpiry > 0 && otpExpiry <= InstanceAuthConfig.otpLifetimeLimitSeconds
         ? ReadinessCheck(
             area,
             'email_otp_settings',
@@ -198,7 +199,7 @@ List<ReadinessCheck> _emailChecks(Map<String, Object?> auth) {
             area,
             'email_otp_settings',
             CheckOutcome.fail,
-            '$otpLength digits for ${otpExpiry}s is outside 6+ digits and one day',
+            '$otpLength digits for ${otpExpiry}s is outside 6+ digits and one hour',
           ),
   );
 

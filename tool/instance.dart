@@ -9,6 +9,7 @@
 //   dart run tool/instance.dart record   --token … --ref <project ref> --through NNNN
 //   dart run tool/instance.dart doctor   --token … --ref <project ref> [--public | --support-json] [--site-url <app URL>]
 //   dart run tool/instance.dart auth     --token … --ref <project ref> [--site-url <app URL>]
+//   dart run tool/instance.dart push     --token … --ref <project ref>
 //   dart run tool/instance.dart doctor   --token … --ref <project ref>
 //   dart run tool/instance.dart db-admins --token … --ref <ref> list | grant --email E [--review-only] [--apply] | revoke --email E [--apply]
 //   dart run tool/instance.dart enrol --token … --ref <personal home> list | add --workspace-ref W [--not-accepting] [--apply] | revoke --installation UUID [--apply]
@@ -33,7 +34,9 @@
 // still carries Supabase's default Site URL, `http://localhost:3000`,
 // and every confirmation e-mail it sends points at a server the new
 // member does not run (#1050). Reinstalling the schema to repair one
-// setting would be absurd, so this is the door for it. The token is
+// setting would be absurd, so this is the door for it. `push` (#3904)
+// sets the row the server's push and settlement calls read to this
+// project's own functions, as `install` does. The token is
 // read from --token or the SUPABASE_ACCESS_TOKEN environment variable.
 // Without --site-url, CLI and native setup retain the legacy Pages default;
 // supply the deployed web base explicitly for GoDaddy or a custom host.
@@ -81,7 +84,7 @@ Future<int> run(List<String> argv, {
   final args = _Args(argv);
   final token = args.option('token') ?? Platform.environment['SUPABASE_ACCESS_TOKEN'];
   if (args.command.isEmpty || token == null || token.isEmpty) {
-    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|doctor|db-admins|enrol --token … [--org … --name … --region … --ref … --skip N --through NNNN --site-url …]');
+    stderr.writeln('usage: dart run tool/instance.dart orgs|create|install|record|auth|push|doctor|db-admins|enrol --token … [--org … --name … --region … --ref … --skip N --through NNNN --site-url …]');
     return 2;
   }
   Map<String, Object?>? authPatch;
@@ -164,6 +167,15 @@ Future<int> run(List<String> argv, {
           ..writeln('site URL:      ${appliedAuth['site_url']}')
           ..writeln('redirect URLs: ${appliedAuth['uri_allow_list']}')
           ..writeln('sign-in settings applied to $ref');
+        return 0;
+      case 'push':
+        final ref = args.option('ref');
+        if (ref == null) {
+          stderr.writeln('push needs --ref');
+          return 2;
+        }
+        await builder.configurePush(ref);
+        stdout.writeln('push and settlement calls go to $ref');
         return 0;
       case 'doctor':
         final ref = args.option('ref');
@@ -248,7 +260,10 @@ Future<int> _install(InstanceBuilder builder, String ref, int? skip,
   await builder.installSchema(ref, bundle, skip: skip, onProgress: (p) {
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });
-  stdout.writeln('functions: ${bundle.functions.length}');
+  await builder.configurePush(ref);
+  stdout
+    ..writeln('push: calls go to $ref')
+    ..writeln('functions: ${bundle.functions.length}');
   await builder.deployFunctions(ref, bundle, onProgress: (p) {
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });

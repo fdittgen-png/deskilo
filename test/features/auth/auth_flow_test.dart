@@ -32,7 +32,7 @@ void main() {
       find.byType(TextFormField).at(0),
       'flo@example.com',
     );
-    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
@@ -48,7 +48,7 @@ void main() {
       find.byType(TextFormField).at(0),
       'flo@example.com',
     );
-    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
 
@@ -76,7 +76,7 @@ void main() {
       find.byType(TextFormField).at(1),
       'flo@example.com',
     );
-    await tester.enterText(find.byType(TextFormField).at(2), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(2), 'secret12345');
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
 
@@ -95,7 +95,7 @@ void main() {
       find.byType(TextFormField).at(1),
       'flo@example.com',
     );
-    await tester.enterText(find.byType(TextFormField).at(2), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(2), 'secret12345');
 
     // #1649 — the keyboard's Done bypasses the disabled button, so the
     // guard has to live in the submit path itself. Done also drops the
@@ -142,7 +142,7 @@ void main() {
   testWidgets('password visibility toggle reveals and hides the input',
       (tester) async {
     await pumpSignedOut(tester);
-    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
 
     bool obscured() => tester
         .widget<EditableText>(find.byType(EditableText).last)

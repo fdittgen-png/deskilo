@@ -17,6 +17,68 @@ void main() {
     expect(InstanceAuthConfig.patch['mailer_autoconfirm'], false);
   });
 
+  group('#3904 — the sign-in baseline', () {
+    const keys = {
+      'password_min_length': 10,
+      'security_update_password_require_reauthentication': true,
+      'mailer_otp_exp': 900,
+      'mailer_otp_length': 8,
+      'mailer_secure_email_change_enabled': true,
+      'security_refresh_token_reuse_interval': 10,
+      'refresh_token_rotation_enabled': true,
+      'rate_limit_otp': 30,
+      'rate_limit_verify': 30,
+    };
+
+    test('every instance gets it, the web build included', () {
+      final web = InstanceAuthConfig.patchForWebBase(Uri.parse('https://www.deskilo.org/app/'));
+      for (final MapEntry(:key, :value) in keys.entries) {
+        expect(InstanceAuthConfig.patch[key], value, reason: key);
+        expect(web[key], value, reason: key);
+      }
+    });
+
+    test('the doctor names codes kept over an hour, short passwords and a '
+        'password change without signing in again', () {
+      final weak = {
+        ...InstanceAuthConfig.patch,
+        'mailer_otp_exp': 86400,
+        'password_min_length': 8,
+        'security_update_password_require_reauthentication': false,
+      };
+      final findings = InstanceDoctor.checkAuthConfig(weak);
+      final warned = {
+        for (final f in findings)
+          if (f.level == DoctorLevel.warn) f.words,
+      };
+      expect(warned, {
+        DoctorWords.authCodesLong,
+        DoctorWords.authPasswordShort,
+        DoctorWords.authReauthOff,
+      });
+      expect(findings.map((f) => f.words), isNot(contains(DoctorWords.authBaseline)));
+      expect(
+        findings.firstWhere((f) => f.words == DoctorWords.authCodesLong).detail,
+        allOf(contains('86400'), contains('tool/instance.dart auth')),
+      );
+    });
+
+    test('the baseline itself is ok; an Auth version that reports none of it '
+        'is not judged', () {
+      final ok = InstanceDoctor.checkAuthConfig(InstanceAuthConfig.patch);
+      expect(ok.where((f) => f.words == DoctorWords.authBaseline).single.level, DoctorLevel.ok);
+      expect(ok.where((f) => f.level == DoctorLevel.warn), isEmpty);
+      final silent = InstanceDoctor.checkAuthConfig({
+        'site_url': InstanceAuthConfig.siteUrl,
+        'uri_allow_list': InstanceAuthConfig.redirectAllowList,
+      });
+      expect(
+        silent.where((f) => f.words?.name.startsWith('auth') ?? false),
+        isEmpty,
+      );
+    });
+  });
+
   test('web auth target uses the deployment origin and base path only', () {
     final patch = InstanceAuthConfig.patchForWebBase(
       Uri.parse('https://www.deskilo.org/app/?deskilo_flow=transient#/auth'),

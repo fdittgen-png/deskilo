@@ -40,7 +40,7 @@ Future<void> signUp(WidgetTester tester) async {
   await tester.pumpAndSettle();
   await tester.enterText(find.byType(TextFormField).at(0), 'Flo');
   await tester.enterText(find.byType(TextFormField).at(1), _email);
-  await tester.enterText(find.byType(TextFormField).at(2), 'secret123');
+  await tester.enterText(find.byType(TextFormField).at(2), 'secret12345');
   await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
   await tester.pumpAndSettle();
 }
@@ -159,7 +159,7 @@ void main() {
     auth.signInResult =
         const AuthResult.refused(AuthRefusal.emailNotConfirmed);
     await tester.enterText(find.byType(TextFormField).at(0), _email);
-    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
     await tester.tap(find.widgetWithText(FilledButton, 'Sign in'));
     await tester.pumpAndSettle();
     expect(_pending, findsOneWidget);
@@ -186,7 +186,7 @@ void main() {
     await tester.enterText(find.byType(TextFormField).at(2), 'abc');
     await tester.tap(find.widgetWithText(FilledButton, 'Create account'));
     await tester.pumpAndSettle();
-    expect(find.text('At least 8 characters'), findsOneWidget);
+    expect(find.text('At least 10 characters'), findsOneWidget);
     expect(fresh.signUps, isEmpty);
     expect(auth.signUps, isEmpty);
   });
