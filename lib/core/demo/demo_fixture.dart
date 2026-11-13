@@ -72,6 +72,8 @@ import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_year_seed.dart';
 
+part 'demo_fixture_spaces.dart';
+
 /// #1565 — who the visitor is acting AS, for the repositories whose
 /// subject is implicit.
 ///
@@ -89,7 +91,7 @@ class DemoActor {
 /// Everything one Demo session runs on. Built once per session and
 /// thrown away when it ends: a reset is a new [DemoFixture], never a
 /// cleanup of the old one.
-class DemoFixture implements DemoSpaceParts {
+class DemoFixture with _DemoLazySpaces implements DemoSpaceParts {
   DemoFixture._({
     required this.actor,
     required this.prefs,
@@ -211,19 +213,7 @@ class DemoFixture implements DemoSpaceParts {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
-    // #3846 — the spaces beside this one are listed now (the switcher and
-    // the profiles need their rows and people) and built when first read.
-    final listings = (
-      leipzig: DemoSecondSpaceData.list(home: workspaces, now: today),
-      london: DemoLondonData.list(home: workspaces),
-      newYork: DemoNewYorkData.list(home: workspaces),
-      zurich: DemoTradeCityData.list(city: demoZurich, home: workspaces),
-      milan: DemoTradeCityData.list(city: demoMilan, home: workspaces),
-    );
-    final twinSource = DemoTwinData.list(home: workspaces, productionPlan: floorPlan, productionRoles: roles);
-    for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, twinSource.listing]) {
-      listing.viewAs(actor.memberId);
-    }
+    final (listings, twinSource) = _listSpaces(workspaces, floorPlan, roles, actor.memberId, today);
     // The wall tablet greets the member whose badge it read.
     reservations
       ..kioskUserId = demoCast[1].userId
@@ -280,6 +270,7 @@ class DemoFixture implements DemoSpaceParts {
   }
 
   /// #1565 — the member every implicit-subject write is attributed to.
+  @override
   final DemoActor actor;
 
   /// #1564 — the per-device preferences this session owns, so nothing a
@@ -337,148 +328,16 @@ class DemoFixture implements DemoSpaceParts {
   final DemoOutwardEdges outward;
 
   /// The instant this session believes it is.
+  @override
   final DateTime seededAt;
 
+  @override
   final _DemoListings _listings;
   List<DemoSpaceListing> get _everyListing => [
     _listings.leipzig, _listings.london, _listings.newYork, _listings.zurich, _listings.milan, _twinSource.listing,
   ];
-  final DemoTwinSource _twinSource;
-  final Set<DemoSpaceKey> _built = {DemoSpaceKey.home};
-  int _seeding = 0;
-  DemoPersona _persona = initialDemoPersona;
-
-  /// #3846 — the spaces beside this one are built when first read, each on
-  /// its own, seeded as it is whenever that is (see [seeded]).
-  ///
-  /// The second space (Leipzig), with repositories of its own.
-  late final DemoSecondSpaceData secondSpace = _space(
-    DemoSpaceKey.leipzig,
-    _listings.leipzig,
-    () => DemoSecondSpaceData.build(listing: _listings.leipzig, actor: () => activeMemberId, now: seededAt),
-  );
-  late final DemoLondonData london = _space(
-    DemoSpaceKey.london,
-    _listings.london,
-    () => DemoLondonData.build(listing: _listings.london, actor: () => activeMemberId, now: seededAt),
-  );
-  late final DemoNewYorkData newYork = _space(
-    DemoSpaceKey.newYork,
-    _listings.newYork,
-    () => DemoNewYorkData.build(listing: _listings.newYork, actor: () => activeMemberId, now: seededAt),
-  );
-
-  /// #3832 — the trade cities: Zurich (francs) and Milan (euros).
-  late final DemoTradeCityData zurich = _space(
-    DemoSpaceKey.zurich,
-    _listings.zurich,
-    () => DemoTradeCityData.build(city: demoZurich, listing: _listings.zurich, actor: () => activeMemberId, now: seededAt),
-  );
-  late final DemoTradeCityData milan = _space(
-    DemoSpaceKey.milan,
-    _listings.milan,
-    () => DemoTradeCityData.build(city: demoMilan, listing: _listings.milan, actor: () => activeMemberId, now: seededAt),
-  );
-
-  /// #3302 — the main space's development twin, with stores of its own.
-  late final DemoTwinData twin = _space(
-    DemoSpaceKey.twin,
-    _twinSource.listing,
-    () => DemoTwinData.build(source: _twinSource, actor: () => activeMemberId, now: seededAt),
-  );
-
-  /// #3865 — what each space keeps for the whole session (purchases,
-  /// suppliers, bank, books, lease, register, rooms, guest passes, cost
-  /// rules): built when first read, once per space, so a switch of persona
-  /// reaches the same stores and a Reset (a new fixture) the seeded ones.
-  late final DemoSpaces<DemoSpaceStores> stores = DemoSpaces(
-    (key) => seeded(key, () => buildDemoSpaceStores(this, key)),
-  );
-
-  /// The space [key] names, built now if it was not yet.
-  DemoSpaceParts space(DemoSpaceKey key) => switch (key) {
-    DemoSpaceKey.home => this,
-    DemoSpaceKey.leipzig => secondSpace,
-    DemoSpaceKey.london => london,
-    DemoSpaceKey.newYork => newYork,
-    DemoSpaceKey.zurich => zurich,
-    DemoSpaceKey.milan => milan,
-    DemoSpaceKey.twin => twin,
-  };
-
-  /// #3846 — the spaces built so far: the main space, and each other space
-  /// from its first read.
-  Set<DemoSpaceKey> get builtSpaces => {..._built};
-
-  /// Every space's coherence problems (builds the spaces not yet built; a
-  /// space is checked as it is built, and refused if it is not coherent).
-  List<String> validateAllSpaces() => [
-    for (final key in DemoSpaceKey.values)
-      ...validateDemoFixture(
-        workspaces: space(key).workspaces,
-        plan: space(key).floorPlan,
-        reservations: space(key).reservations,
-        money: space(key).money,
-      ),
-  ];
-
-  late final FakePlanResourceRepository _homeResources = FakePlanResourceRepository(floorPlan);
-
   @override
-  FakePlanResourceRepository get planResources => _homeResources;
-
-  /// Who the session is currently acting as (#1565); while a space is being
-  /// seeded, the persona the session started as.
-  String get activeMemberId => _seeding > 0 ? initialDemoPersona.memberId : actor.memberId;
-
-  T _space<T extends DemoSpaceParts>(DemoSpaceKey key, DemoSpaceListing listing, T Function() build) {
-    final built = seeded(key, () {
-      final space = build();
-      // Fails closed, and says what is wrong (#1373): a space that points at a
-      // member or a seat that does not exist looks fine until a screen opens it.
-      final problems = validateDemoFixture(
-        workspaces: space.workspaces,
-        plan: space.floorPlan,
-        reservations: space.reservations,
-        money: space.money,
-      );
-      if (problems.isNotEmpty) {
-        throw StateError('the demo session is not coherent: ${problems.join('; ')}');
-      }
-      // Once a persona has been taken, every roles store knows its caller.
-      if (_persona != initialDemoPersona) space.roles.callerMemberId = actor.memberId;
-      return space;
-    });
-    _built.add(key);
-    return built;
-  }
-
-  /// #3846 — runs [build], which seeds the space [key] (or its stores), as the
-  /// session started: acting as the persona it began with, over the cast as
-  /// seeded. A space's data is therefore the same whether it is built first or
-  /// last, and whichever persona is being looked through when it is.
-  T seeded<T>(DemoSpaceKey key, T Function() build) {
-    final outermost = _seeding == 0;
-    final swap = outermost && _persona != initialDemoPersona;
-    if (swap) viewDemoPeopleAs(workspaces, initialDemoPersona.person);
-    _seeding++;
-    try {
-      final listing = switch (key) {
-        DemoSpaceKey.home => null,
-        DemoSpaceKey.leipzig => _listings.leipzig,
-        DemoSpaceKey.london => _listings.london,
-        DemoSpaceKey.newYork => _listings.newYork,
-        DemoSpaceKey.zurich => _listings.zurich,
-        DemoSpaceKey.milan => _listings.milan,
-        DemoSpaceKey.twin => _twinSource.listing,
-      };
-      return listing == null ? build() : listing.seeded(actor.memberId, build);
-    } finally {
-      _seeding--;
-      if (swap) viewDemoPeopleAs(workspaces, _persona.person);
-    }
-  }
-
+  final DemoTwinSource _twinSource;
   /// Looks at the same space through [persona] (#1376).
   ///
   /// The DATA is untouched: only who the fixture answers `fetchMyMember`
@@ -512,6 +371,29 @@ class DemoFixture implements DemoSpaceParts {
     profiles.myUserId = persona.userId;
     auth.signInAs(persona.userId);
   }
+}
+
+/// #3846 — the spaces beside the main one are listed now (the switcher and
+/// the profiles need their rows and people) and built when first read.
+(_DemoListings, DemoTwinSource) _listSpaces(
+  FakeWorkspaceRepository home,
+  FakeFloorPlanRepository floorPlan,
+  FakeWorkspaceRoles roles,
+  String memberId,
+  DateTime today,
+) {
+  final listings = (
+    leipzig: DemoSecondSpaceData.list(home: home, now: today),
+    london: DemoLondonData.list(home: home),
+    newYork: DemoNewYorkData.list(home: home),
+    zurich: DemoTradeCityData.list(city: demoZurich, home: home),
+    milan: DemoTradeCityData.list(city: demoMilan, home: home),
+  );
+  final twin = DemoTwinData.list(home: home, productionPlan: floorPlan, productionRoles: roles);
+  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, twin.listing]) {
+    listing.viewAs(memberId);
+  }
+  return (listings, twin);
 }
 
 /// #3846 — the listings of the spaces beside the main one.
