@@ -20755,6 +20755,7 @@
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",
   "usageBilledDuration": "Facturado {duration}",
   "usageBookedDuration": "Reservado {duration}",
+  "usageColBilled": "Facturado",
   "usageCorrected": "Corregido",
   "usageDelete": "Eliminar este registro",
   "usageDeleteSubmitted": "Eliminación solicitada.",

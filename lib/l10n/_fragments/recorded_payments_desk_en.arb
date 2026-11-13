@@ -7,5 +7,9 @@
   "statementDeskColLine": "Line",
   "@statementDeskColLine": {
     "description": "#3627 Column header of the month's statement lines at the desk."
+  },
+  "usageColBilled": "Billed",
+  "@usageColBilled": {
+    "description": "#3627 Column header: the part of a booking that is billed (a duration)."
   }
 }

@@ -44246,6 +44246,10 @@
       }
     }
   },
+  "usageColBilled": "Billed",
+  "@usageColBilled": {
+    "description": "#3627 Column header: the part of a booking that is billed (a duration)."
+  },
   "usageCorrected": "Corrected",
   "@usageCorrected": {
     "description": "#833 - an accepted early-departure correction"

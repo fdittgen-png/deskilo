@@ -34612,6 +34612,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get usageColBilled => 'Facturé';
+
+  @override
   String get usageCorrected => 'Corrigé';
 
   @override

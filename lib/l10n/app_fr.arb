@@ -20755,6 +20755,7 @@
   "usageAskSubmitted": "Demandé. Quelqu'un d'autre décide.",
   "usageBilledDuration": "Facturé {duration}",
   "usageBookedDuration": "Réservé {duration}",
+  "usageColBilled": "Facturé",
   "usageCorrected": "Corrigé",
   "usageDelete": "Supprimer ce relevé",
   "usageDeleteSubmitted": "Suppression demandée.",

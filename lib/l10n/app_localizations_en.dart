@@ -34163,6 +34163,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get usageColBilled => 'Billed';
+
+  @override
   String get usageCorrected => 'Corrected';
 
   @override

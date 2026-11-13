@@ -34549,6 +34549,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get usageColBilled => 'Abgerechnet';
+
+  @override
   String get usageCorrected => 'Korrigiert';
 
   @override

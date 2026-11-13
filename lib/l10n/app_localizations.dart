@@ -55475,6 +55475,12 @@ abstract class AppLocalizations {
   /// **'Booked {duration}'**
   String usageBookedDuration(String duration);
 
+  /// #3627 Column header: the part of a booking that is billed (a duration).
+  ///
+  /// In en, this message translates to:
+  /// **'Billed'**
+  String get usageColBilled;
+
   /// #833 - an accepted early-departure correction
   ///
   /// In en, this message translates to:

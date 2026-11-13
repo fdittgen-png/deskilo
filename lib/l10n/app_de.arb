@@ -20755,6 +20755,7 @@
   "usageAskSubmitted": "Angefragt. Jemand anderes entscheidet.",
   "usageBilledDuration": "Berechnet {duration}",
   "usageBookedDuration": "Gebucht {duration}",
+  "usageColBilled": "Abgerechnet",
   "usageCorrected": "Korrigiert",
   "usageDelete": "Diesen Satz entfernen",
   "usageDeleteSubmitted": "Entfernung angefragt.",

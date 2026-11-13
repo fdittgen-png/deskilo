@@ -1120,6 +1120,7 @@ Map<String, _Getter> _part2() => {
   'tipValidationDefault': (l) => l.tipValidationDefault,
   'ukLandTaxHelp': (l) => l.ukLandTaxHelp,
   'ukOptionToTaxDate': (l) => l.ukOptionToTaxDate,
+  'usageColBilled': (l) => l.usageColBilled,
   'usageReasonLabel': (l) => l.usageReasonLabel,
   'usageReportButton': (l) => l.usageReportButton,
   'usageReportSupplements': (l) => l.usageReportSupplements,

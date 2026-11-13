@@ -1,5 +1,6 @@
 {
   "@@locale": "es",
   "recordedPaymentsColMatched": "Conciliado el",
-  "statementDeskColLine": "Línea"
+  "statementDeskColLine": "Línea",
+  "usageColBilled": "Facturado"
 }

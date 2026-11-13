@@ -26,6 +26,7 @@ import '../widgets/my_invoices_table.dart';
 import '../widgets/negotiation_card.dart';
 import '../widgets/statement_desk.dart';
 import '../widgets/usage_face.dart';
+import '../widgets/usage_table.dart';
 import 'money_action_set.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
@@ -88,6 +89,8 @@ class MoneyFaceContent {
           ),
         ],
       ),
+    if (_atDesk && data.usageRecordsOn)
+      MoneyFace.usage: UsageTable(period: ops.period),
     if (_atDesk && data.member != null)
       MoneyFace.invoices: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,

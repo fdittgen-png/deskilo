@@ -34455,6 +34455,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get usageColBilled => 'Facturado';
+
+  @override
   String get usageCorrected => 'Corregido';
 
   @override
