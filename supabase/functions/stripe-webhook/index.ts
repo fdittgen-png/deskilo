@@ -8,6 +8,7 @@
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 import { handlePayout, isPayoutEvent } from "./payout.ts";
+import { handleReversal, isReversalEvent } from "./reversal.ts";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -182,6 +183,17 @@ export async function handle(
     );
   }
 
+  // #3905 -- a dispute or a refund at Stripe names a charge: the workspace is
+  // the one whose own webhook secret signed it (reversal.ts).
+  if (isReversalEvent(event.type)) {
+    return await handleReversal(
+      event,
+      (secret) =>
+        validSignature(payload, req.headers.get("stripe-signature") ?? "", secret, deps.nowS()),
+      { admin: deps.admin, fetch: deps.fetch ?? fetch },
+    );
+  }
+
   const admin = deps.admin();
   // #2014 — every answer below is TRUE: 2xx only when the event was
   // handled (or genuinely is not ours); a transient failure is a 5xx so
@@ -228,6 +240,11 @@ export async function handle(
   ) {
     console.error("stripe webhook signature verification FAILED");
     return new Response("verification_failed", { status: 400 });
+  }
+  // #3905 -- a test-mode event settles nothing in a production ledger.
+  if (event.livemode === false) {
+    console.log("stripe test event ignored");
+    return new Response("ok", { status: 200 });
   }
 
   // #1554 — `completed` means the checkout finished, NOT that the money

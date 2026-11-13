@@ -195,5 +195,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "payOnlineReversedTitle": "Online-Zahlung rückgängig gemacht",
+  "payOnlineReversedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
+  "payOnlineTestKeys": "Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben."
 }

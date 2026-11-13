@@ -227,4 +227,4 @@ secrets and the `settle_online_payment` migration land.
 - [ ] Operator: create the provider account(s) and `supabase secrets set` the vars in §7, incl. `PAYMENT_RETURN_URL`.
 - [ ] Test in sandbox/test mode end-to-end (sandbox buyer, test capture, webhook replay → exactly one credit).
 - [ ] Switch to live keys; enable the `onlinePayments` feature for a pilot workspace.
-- [ ] Document refunds/disputes handling (out of scope for v1).
+- [x] Refunds and disputes: a payment the provider reverses is marked `reversed` (0757) and a person corrects the ledger; no entry is posted on its own (#3905). A production workspace opens no order on test credentials, and the webhooks credit no test-mode payment.

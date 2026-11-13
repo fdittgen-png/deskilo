@@ -13263,6 +13263,9 @@
   "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunte al propietario del espacio.",
   "payOnlinePendingDetail": "El pago {reference} ({amount} vía {provider}) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.",
   "payOnlinePendingTitle": "Pago en línea pendiente",
+  "payOnlineReversedDetail": "El pago {reference} ({amount} con {provider}) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.",
+  "payOnlineReversedTitle": "Pago en línea revertido",
+  "payOnlineTestKeys": "El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.",
   "paymentAccountNumberLabel": "Número de cuenta",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

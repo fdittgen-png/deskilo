@@ -195,5 +195,8 @@
         "type": "String"
       }
     }
-  }
+  },
+  "payOnlineReversedTitle": "Paiement en ligne annulé",
+  "payOnlineReversedDetail": "Le paiement {reference} ({amount} via {provider}) a été annulé par le prestataire (un remboursement ou une contestation). L'entreprise corrige votre solde.",
+  "payOnlineTestKeys": "Le paiement en ligne n'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L'entreprise doit saisir ses clés de production."
 }

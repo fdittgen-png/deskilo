@@ -15,6 +15,7 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
+import { isReversalEvent, orderIdOf, takesRealMoney } from "./event_rules.ts";
 import {
   configOf,
   redactedProviderLog,
@@ -105,11 +106,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
   );
   const resource = (event.resource ?? {}) as Record<string, unknown>;
-  const orderId = String(
-    ((resource.supplementary_data as Record<string, unknown> | undefined)
-      ?.related_ids as Record<string, unknown> | undefined)?.order_id ??
-      resource.id ?? "",
-  );
+  const orderId = orderIdOf(resource);
 
   // Resolve the workspace from the intent, then load ITS PayPal config.
   const { data: intent } = await admin
@@ -172,6 +169,11 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.error("paypal webhook verification error", String(e));
     return respond("verification_error", 500);
   }
+  // #3905 -- a sandbox event settles nothing in a production ledger.
+  if (!takesRealMoney(cfg)) {
+    console.log("paypal test event ignored");
+    return respond("ok", 200);
+  }
 
   const settle = async (
     captureId: string,
@@ -219,6 +221,21 @@ Deno.serve(async (req: Request): Promise<Response> => {
   };
 
   const type = event.event_type as string;
+  // #3905 -- a capture reversed or refunded at PayPal: recorded on the
+  // payment, never posted on its own.
+  if (isReversalEvent(type)) {
+    const { error } = await admin.rpc("mark_payment_reversed", {
+      p_provider: "paypal",
+      p_order_id: orderId,
+      p_reason: type,
+    });
+    if (error) {
+      console.error("paypal reversal record failed", error.message);
+      return respond("reversal_record_failed", 500);
+    }
+    console.log("paypal payment reversed", { orderId, type });
+    return respond("ok", 200);
+  }
   if (type === "PAYMENT.CAPTURE.COMPLETED") {
     return await settle(String(resource.id), resource.amount as Money, resource);
   }
