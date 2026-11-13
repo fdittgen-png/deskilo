@@ -23689,6 +23689,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Facoltativo. Attivo, l\'indirizzo di questo dispositivo e ogni notifica passano dal servizio push; disattivo, l\'app continua a funzionare e a questo dispositivo non viene inviato nulla.';
 
   @override
+  String get privacyRequestsAnswered => 'Evase';
+
+  @override
+  String get privacyRequestsColKind => 'Richiesta';
+
+  @override
+  String get privacyRequestsColReceived => 'Ricevuta';
+
+  @override
+  String get privacyRequestsColStatus => 'A che punto è';
+
+  @override
+  String get privacyRequestsColWho => 'Membro';
+
+  @override
+  String get privacyRequestsOpen => 'In attesa di risposta';
+
+  @override
   String get privacySelfServiceOff =>
       'Questo spazio gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.';
 

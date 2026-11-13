@@ -16,11 +16,13 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/rights_labels.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../profile/application/privacy_admin.dart';
 import '../widgets/privacy_admin_sheets.dart';
+import 'privacy_desk.dart';
 
 class PrivacyAdminScreen extends ConsumerWidget {
   const PrivacyAdminScreen({super.key});
@@ -29,6 +31,18 @@ class PrivacyAdminScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final space = ref.watch(privacyAdminSpaceProvider);
+    // #3628 — at the desk the requests are a records table, a request beside
+    // it; the page's two actions stand in its bar.
+    if (space != null &&
+        WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return Scaffold(
+        appBar: AppBar(
+          title: PageTitle(l10n.privacyAdminTitle),
+          actions: [_RecordButton(space: space), _IncidentButton(space: space)],
+        ),
+        body: PrivacyDesk(space: space),
+      );
+    }
     return Scaffold(
       appBar: AppBar(title: PageTitle(l10n.privacyAdminTitle)),
       body: space == null ? const LoadingView() : _Body(space: space),
@@ -60,26 +74,8 @@ class _Body extends ConsumerWidget {
               spacing: AppSpacing.md,
               runSpacing: AppSpacing.sm,
               children: [
-                FilledButton.icon(
-                  key: const ValueKey('privacy-admin-record'),
-                  icon: const Icon(Icons.add),
-                  label: Text(l10n.privacyAdminRecord),
-                  onPressed: () => showRecordRequestSheet(
-                    context,
-                    workspaceId: workspaceId,
-                    members: space.members,
-                    today: ref.read(clockProvider).now(),
-                  ),
-                ),
-                OutlinedButton.icon(
-                  key: const ValueKey('privacy-admin-incident'),
-                  icon: const Icon(Icons.report_outlined),
-                  label: Text(l10n.privacyAdminIncidentTitle),
-                  onPressed: () => showIncidentSheet(
-                    context,
-                    workspaceId: workspaceId,
-                  ),
-                ),
+                _RecordButton(space: space),
+                _IncidentButton(space: space),
               ],
             ),
             const SizedBox(height: AppSpacing.lg),
@@ -101,7 +97,7 @@ class _Body extends ConsumerWidget {
                   : Column(
                       children: [
                         for (final r in list)
-                          _RequestTile(
+                          RightsRequestCard(
                             request: r,
                             who: names[r.memberId] ?? '',
                             date: date,
@@ -116,8 +112,46 @@ class _Body extends ConsumerWidget {
   }
 }
 
-class _RequestTile extends ConsumerWidget {
-  const _RequestTile({
+/// Records a rights request received another way (letter, desk, phone).
+class _RecordButton extends ConsumerWidget {
+  const _RecordButton({required this.space});
+
+  final PrivacyAdminSpace space;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => FilledButton.icon(
+    key: const ValueKey('privacy-admin-record'),
+    icon: const Icon(Icons.add),
+    label: Text(context.l10n.privacyAdminRecord),
+    onPressed: () => showRecordRequestSheet(
+      context,
+      workspaceId: space.id,
+      members: space.members,
+      today: ref.read(clockProvider).now(),
+    ),
+  );
+}
+
+/// Records a privacy incident.
+class _IncidentButton extends StatelessWidget {
+  const _IncidentButton({required this.space});
+
+  final PrivacyAdminSpace space;
+
+  @override
+  Widget build(BuildContext context) => OutlinedButton.icon(
+    key: const ValueKey('privacy-admin-incident'),
+    icon: const Icon(Icons.report_outlined),
+    label: Text(context.l10n.privacyAdminIncidentTitle),
+    onPressed: () => showIncidentSheet(context, workspaceId: space.id),
+  );
+}
+
+/// One rights request: who, what, when, where it stands, and its actions
+/// (#3628: also the record beside the desk's table).
+class RightsRequestCard extends ConsumerWidget {
+  const RightsRequestCard({
+    super.key,
     required this.request,
     required this.who,
     required this.date,

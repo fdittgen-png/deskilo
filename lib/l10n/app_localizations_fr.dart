@@ -23767,6 +23767,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Facultatif. Activé, l\'adresse de cet appareil et chaque notification passent par le service de notifications ; désactivé, l\'application fonctionne et rien n\'est envoyé à cet appareil.';
 
   @override
+  String get privacyRequestsAnswered => 'Traitées';
+
+  @override
+  String get privacyRequestsColKind => 'Demande';
+
+  @override
+  String get privacyRequestsColReceived => 'Reçue le';
+
+  @override
+  String get privacyRequestsColStatus => 'Où elle en est';
+
+  @override
+  String get privacyRequestsColWho => 'Membre';
+
+  @override
+  String get privacyRequestsOpen => 'En attente de réponse';
+
+  @override
   String get privacySelfServiceOff =>
       'Cet espace traite lui-même les demandes sur les données. Déposez une demande de droits : l’administrateur des données personnelles y répondra.';
 

@@ -23488,6 +23488,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.';
 
   @override
+  String get privacyRequestsAnswered => 'Answered';
+
+  @override
+  String get privacyRequestsColKind => 'Request';
+
+  @override
+  String get privacyRequestsColReceived => 'Received';
+
+  @override
+  String get privacyRequestsColStatus => 'Where it stands';
+
+  @override
+  String get privacyRequestsColWho => 'Member';
+
+  @override
+  String get privacyRequestsOpen => 'Waiting for an answer';
+
+  @override
   String get privacySelfServiceOff =>
       'This workspace handles data requests itself. File a rights request and the personal data admin will answer it.';
 

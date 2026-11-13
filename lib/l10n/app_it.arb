@@ -14159,6 +14159,12 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacyRequestsAnswered": "Evase",
+  "privacyRequestsColKind": "Richiesta",
+  "privacyRequestsColReceived": "Ricevuta",
+  "privacyRequestsColStatus": "A che punto è",
+  "privacyRequestsColWho": "Membro",
+  "privacyRequestsOpen": "In attesa di risposta",
   "privacySelfServiceOff": "Questo spazio gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
   "privacySpaceNotice": "L'informativa privacy di questo spazio",
   "@privacySpaceNotice": {

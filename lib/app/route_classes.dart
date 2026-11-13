@@ -289,7 +289,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/setup/step/:id', RouteClass.workspace, place: 'drawer-setup-guide'),
   RouteRule('/settings/number-sequences', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/members/managed', RouteClass.workspace, place: 'drawer-members'),
-  RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members'),
+  RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3628
+  RouteRule('/members/privacy/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3628
   RouteRule('/payment-methods', RouteClass.workspace, place: 'drawer-payment-methods'),
   RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings'),

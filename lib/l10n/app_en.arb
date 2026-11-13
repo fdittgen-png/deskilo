@@ -30839,6 +30839,30 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacyRequestsAnswered": "Answered",
+  "@privacyRequestsAnswered": {
+    "description": "#3628 privacy requests at the desk: chip: requests answered (completed or refused)"
+  },
+  "privacyRequestsColKind": "Request",
+  "@privacyRequestsColKind": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColReceived": "Received",
+  "@privacyRequestsColReceived": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColStatus": "Where it stands",
+  "@privacyRequestsColStatus": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColWho": "Member",
+  "@privacyRequestsColWho": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsOpen": "Waiting for an answer",
+  "@privacyRequestsOpen": {
+    "description": "#3628 privacy requests at the desk: chip: requests still to answer"
+  },
   "privacySelfServiceOff": "This workspace handles data requests itself. File a rights request and the personal data admin will answer it.",
   "@privacySelfServiceOff": {
     "description": "Shown as the text in refusal text (core), and 3 other places."

@@ -12,6 +12,7 @@ import '../../core/navigation/list_detail_route.dart';
 import '../../features/members/presentation/screens/managed_profile_screen.dart';
 import '../../features/members/presentation/screens/member_page.dart';
 import '../../features/members/presentation/screens/privacy_admin_screen.dart';
+import '../../features/members/presentation/screens/privacy_desk.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/screens/members_screen.dart';
@@ -59,6 +60,18 @@ List<RouteBase> membersRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const PrivacyAdminScreen(),
+      // #3628 — a request's address: beside the table on a large window,
+      // its card as a page otherwise.
+      routes: [
+        GoRoute(
+          path: ':id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => PrivacyRequestRecord(requestId: id),
+          ),
+        ),
+      ],
     ),
     // #3618 — the plans: the fee bands with their members, a plan beside
     // the table on a large window, a page otherwise. Before '/members', so

@@ -23723,6 +23723,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Optional. Ein: Die Adresse dieses Geräts und jede Benachrichtigung gehen an den Push-Dienst; aus: Die App funktioniert weiter und an dieses Gerät wird nichts gesendet.';
 
   @override
+  String get privacyRequestsAnswered => 'Beantwortet';
+
+  @override
+  String get privacyRequestsColKind => 'Anfrage';
+
+  @override
+  String get privacyRequestsColReceived => 'Eingegangen';
+
+  @override
+  String get privacyRequestsColStatus => 'Stand';
+
+  @override
+  String get privacyRequestsColWho => 'Mitglied';
+
+  @override
+  String get privacyRequestsOpen => 'Wartet auf Antwort';
+
+  @override
   String get privacySelfServiceOff =>
       'Dieser Bereich bearbeitet Datenanfragen selbst. Stellen Sie eine Betroffenenanfrage; der oder die Verantwortliche für personenbezogene Daten beantwortet sie.';
 

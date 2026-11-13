@@ -21,6 +21,7 @@ import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
+import 'package:deskilo/features/profile/domain/rights_request.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
@@ -214,6 +215,7 @@ const _pages = [
   ),
   // #3628 — the roles beside the chosen role's permissions.
   ('/roles', PageKind.document, 'people', 'roles'),
+  ('/members/privacy', PageKind.records, 'people', 'privacy-requests'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -307,6 +309,8 @@ void main() {
               RecordsHeader<BookExport>,
               RecordRow<ReportPage>,
               RecordsHeader<ReportPage>,
+              RecordRow<RightsRequest>,
+              RecordsHeader<RightsRequest>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -321,6 +325,7 @@ void main() {
               RecordsHeader<FeeBand>,
               RecordsHeader<BookExport>,
               RecordsHeader<ReportPage>,
+              RecordsHeader<RightsRequest>,
             ],
           ),
           isEmpty,

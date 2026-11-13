@@ -23657,6 +23657,24 @@ class AppLocalizationsEs extends AppLocalizations {
       'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
 
   @override
+  String get privacyRequestsAnswered => 'Respondidas';
+
+  @override
+  String get privacyRequestsColKind => 'Solicitud';
+
+  @override
+  String get privacyRequestsColReceived => 'Recibida';
+
+  @override
+  String get privacyRequestsColStatus => 'En qué punto está';
+
+  @override
+  String get privacyRequestsColWho => 'Miembro';
+
+  @override
+  String get privacyRequestsOpen => 'Pendientes de respuesta';
+
+  @override
   String get privacySelfServiceOff =>
       'Este espacio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.';
 

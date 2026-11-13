@@ -38030,6 +38030,42 @@ abstract class AppLocalizations {
   /// **'Optional. On, this device\'s address and each notification go to the push service; off, the app keeps working and nothing is sent to this device.'**
   String get privacyPushOnDeviceHint;
 
+  /// #3628 privacy requests at the desk: chip: requests answered (completed or refused)
+  ///
+  /// In en, this message translates to:
+  /// **'Answered'**
+  String get privacyRequestsAnswered;
+
+  /// #3628 privacy requests at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Request'**
+  String get privacyRequestsColKind;
+
+  /// #3628 privacy requests at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Received'**
+  String get privacyRequestsColReceived;
+
+  /// #3628 privacy requests at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Where it stands'**
+  String get privacyRequestsColStatus;
+
+  /// #3628 privacy requests at the desk: column
+  ///
+  /// In en, this message translates to:
+  /// **'Member'**
+  String get privacyRequestsColWho;
+
+  /// #3628 privacy requests at the desk: chip: requests still to answer
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for an answer'**
+  String get privacyRequestsOpen;
+
   /// Shown as the text in refusal text (core), and 3 other places.
   ///
   /// In en, this message translates to:
