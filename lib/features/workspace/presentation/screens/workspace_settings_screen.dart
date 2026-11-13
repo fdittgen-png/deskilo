@@ -114,7 +114,7 @@ class _WorkspaceSettingsScreenState
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
                   const BusinessKindTile(), // #3549
-                  if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.publicListings))ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
+                  if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,
                       helpTopic: helpTopic,
