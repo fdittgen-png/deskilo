@@ -16,7 +16,6 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
-import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/bi_modules.dart';
@@ -27,6 +26,7 @@ import '../../providers/bi_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'bi_customer_views.dart';
 import 'bi_dashboard.dart';
+import 'bi_figure_parts.dart';
 import 'bi_item_views.dart';
 import 'bi_overview_views.dart';
 import 'bi_purchase_views.dart';
@@ -344,29 +344,6 @@ class BiModuleSection extends ConsumerWidget {
 
 /// The comparison with the period before, after the sign of the change
 /// said in words, not by colour.
-class _ComparedLine extends StatelessWidget {
-  const _ComparedLine({required this.change, required this.text});
-
-  final BiChange change;
-  final String text;
-
-  @override
-  Widget build(BuildContext context) {
-    final direction = KpiTrendDirection.of(
-      change.points ?? change.absolute ?? change.relative,
-    );
-    return Row(
-      children: [
-        if (direction != null) ...[
-          KpiTrendMark(direction),
-          const SizedBox(width: AppSpacing.xs),
-        ],
-        Flexible(child: Text(text, key: const ValueKey('bi-compared'))),
-      ],
-    );
-  }
-}
-
 class _Result extends ConsumerWidget {
   const _Result({
     required this.module,
@@ -411,6 +388,20 @@ class _Result extends ConsumerWidget {
       if (exposureDiffers(total))
         l10n.biExposureDiffers,
     ];
+    // #3617 — the module's rows, from the result on screen: the table under
+    // a table or chart, and what a figure opens beside it on the dashboard.
+    Widget rows({BiView? as}) => BiRows(
+      rows: [...view.labelled(result.groups, l10n, locale), total],
+      view: as ?? query.view,
+      aggregation: agg,
+      format: (v) => view.value(v, locale, result.currency),
+      change: (row) =>
+          biChangeLabel(changeOf(row, agg), l10n, locale, format: amount),
+      comparedLabel: comparedPeriod == null ? null : comparedLabel,
+      groupHeader: query.groupBy == null
+          ? null
+          : biDimensionName(l10n, query.groupBy!),
+    );
     final drill = module.drill;
     final mayDrill =
         drill != null &&
@@ -419,7 +410,18 @@ class _Result extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (query.view == BiView.dashboard)
-          BiDashboard(module: module, view: view, query: query, result: result)
+          // #3617 — a click on the figure opens its rows beside it.
+          BiFigureOpen(
+            key: ValueKey('bi-figure-open-${module.id}'),
+            period: biPeriodLabel(result.period, l10n, locale),
+            rows: rows(as: BiView.table),
+            child: BiDashboard(
+              module: module,
+              view: view,
+              query: query,
+              result: result,
+            ),
+          )
         else ...[
         Text(
           biPeriodLabel(result.period, l10n, locale),
@@ -435,7 +437,7 @@ class _Result extends ConsumerWidget {
           CapacityEvidence(kpi: k),
         Text(view.basis(total.current, l10n, locale)),
         if (comparedPeriod != null && compared != null)
-          _ComparedLine(
+          BiComparedLine(
             change: changeOf(total, agg),
             text: l10n.biComparedLine(
               comparedLabel,
@@ -450,19 +452,7 @@ class _Result extends ConsumerWidget {
             child: Text(note, style: small),
           ),
         const SizedBox(height: AppSpacing.sm),
-        if (query.view != BiView.dashboard)
-        BiRows(
-          rows: [...view.labelled(result.groups, l10n, locale), total],
-          view: query.view,
-          aggregation: agg,
-          format: (v) => view.value(v, locale, result.currency),
-          change: (row) =>
-              biChangeLabel(changeOf(row, agg), l10n, locale, format: amount),
-          comparedLabel: comparedPeriod == null ? null : comparedLabel,
-          groupHeader: query.groupBy == null
-              ? null
-              : biDimensionName(l10n, query.groupBy!),
-        ),
+        if (query.view != BiView.dashboard) rows(),
         ExpansionTile(
           key: const ValueKey('bi-explain'),
           tilePadding: EdgeInsets.zero,
