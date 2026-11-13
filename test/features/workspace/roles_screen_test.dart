@@ -16,6 +16,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/refusal_matchers.dart';
 
 Future<FakeWorkspaceRepository> _pumpRoles(
   WidgetTester tester, {
@@ -166,7 +167,7 @@ void main() {
     await expectLater(
       workspace.setRolePermissions(
           workspace.workspaces.single.id, 'member', const []),
-      throwsA(isA<StateError>()),
+      throwsRefusal('DKN01'),
     );
     // An active CO-OWNER holds manageRoles by default ("can have
     // less" — until the owner takes it away).
