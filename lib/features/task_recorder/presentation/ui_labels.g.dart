@@ -5646,7 +5646,6 @@ Map<String, _Getter> _part15() => {
   'memberSendAgreement': (l) => l.memberSendAgreement,
   'membersColPlanFee': (l) => l.membersColPlanFee,
   'membersOutcomePending': (l) => l.membersOutcomePending,
-  'membersTabInvoices': (l) => l.membersTabInvoices,
   'myReservationsGone': (l) => l.myReservationsGone,
   'myReservationsKindSeat': (l) => l.myReservationsKindSeat,
   'myReservationsStatusCompleted': (l) => l.myReservationsStatusCompleted,

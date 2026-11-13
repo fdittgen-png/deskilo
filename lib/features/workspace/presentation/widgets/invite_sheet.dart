@@ -89,15 +89,22 @@ String buildInvitationMessage({
 
 /// Opens the invite sheet for the current invite tab (member or admin).
 /// Every send mints its own personal, single-use invitation code (#319)
-/// — the workspace ID is never what an invitation carries.
+/// — the workspace ID is never what an invitation carries. [asTask]
+/// (#3618): the same form as a short task, a dialog at the desk.
 Future<void> showInviteSheet(
   BuildContext context, {
   required Workspace workspace,
   required InviteRole role,
   String? memberId,
   PersonalInfo? identity,
-}) =>
-    showAppSheet<void>(
+  bool asTask = false,
+}) => asTask
+    ? showTask<void>(
+        context,
+        size: TaskSize.short,
+        builder: (_) => _InviteSheet(workspace: workspace, role: role),
+      )
+    : showAppSheet<void>(
       context: context,
       isScrollControlled: true,
       builder: (_) => _InviteSheet(
@@ -107,18 +114,6 @@ Future<void> showInviteSheet(
         identity: identity,
       ),
     );
-
-/// #3618 — the invitation of a member as a short task: a dialog at the
-/// desk, the same form as the sheet.
-Future<void> openInviteTask(BuildContext context, WidgetRef ref) async {
-  final workspace = ref.read(currentWorkspaceProvider).value;
-  if (workspace == null) return;
-  await showTask<void>(
-    context,
-    size: TaskSize.short,
-    builder: (_) => _InviteSheet(workspace: workspace, role: InviteRole.user),
-  );
-}
 
 class _InviteSheet extends ConsumerStatefulWidget {
   const _InviteSheet({

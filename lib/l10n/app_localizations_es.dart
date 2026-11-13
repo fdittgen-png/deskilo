@@ -20301,7 +20301,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String membersChangeDone(int changed, int count) {
-    return '$changed de $count cambiados';
+    String _temp0 = intl.Intl.pluralLogic(
+      changed,
+      locale: localeName,
+      other: '$changed cambiados',
+      one: '1 cambiado',
+      zero: 'Ninguno cambiado',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count miembros',
+      one: '1 miembro',
+    );
+    return '$_temp0 de $_temp1';
   }
 
   @override
@@ -20380,9 +20393,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get membersTabBookings => 'Reservas';
-
-  @override
-  String get membersTabInvoices => 'Facturas';
 
   @override
   String get membersTabNotes => 'Notas';

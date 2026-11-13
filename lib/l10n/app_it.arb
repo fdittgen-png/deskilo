@@ -12444,11 +12444,11 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "membersBulkPause": "Sospendi {count, plural, =1{1 membro} other{{count} membri}}",
-  "membersBulkPlan": "Cambia il piano di {count, plural, =1{1 membro} other{{count} membri}}",
-  "membersBulkResume": "Riattiva {count, plural, =1{1 membro} other{{count} membri}}",
+  "membersBulkPause": "Sospendi {count, plural, one{1 membro} other{{count} membri}}",
+  "membersBulkPlan": "Cambia il piano di {count, plural, one{1 membro} other{{count} membri}}",
+  "membersBulkResume": "Riattiva {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeApply": "Applica",
-  "membersChangeDone": "{changed} su {count} modificati",
+  "membersChangeDone": "{changed, plural, =0{Nessuno modificato} one{1 modificato} other{{changed} modificati}} su {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeFromToday": "Si applica da oggi, {date}. Ogni membro viene modificato singolarmente; chi non può esserlo è elencato con il motivo e resta invariato.",
   "membersChipOpen": "Con importo aperto",
   "membersColEmail": "E-mail",
@@ -12472,7 +12472,6 @@
   "membersPlanNone": "Nessun piano",
   "membersPlansTitle": "Abbonamenti e piani",
   "membersTabBookings": "Prenotazioni",
-  "membersTabInvoices": "Fatture",
   "membersTabNotes": "Note",
   "membersTabPlan": "Piano",
   "membersTabProfile": "Profilo",

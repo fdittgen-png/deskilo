@@ -12444,11 +12444,11 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "membersBulkPause": "Suspendre {count, plural, =1{1 membre} other{{count} membres}}",
-  "membersBulkPlan": "Changer la formule de {count, plural, =1{1 membre} other{{count} membres}}",
-  "membersBulkResume": "Réactiver {count, plural, =1{1 membre} other{{count} membres}}",
+  "membersBulkPause": "Suspendre {count, plural, one{{count} membre} other{{count} membres}}",
+  "membersBulkPlan": "Changer la formule de {count, plural, one{{count} membre} other{{count} membres}}",
+  "membersBulkResume": "Réactiver {count, plural, one{{count} membre} other{{count} membres}}",
   "membersChangeApply": "Appliquer",
-  "membersChangeDone": "{changed} sur {count} modifiés",
+  "membersChangeDone": "{changed, plural, =0{Aucun modifié} one{{changed} modifié} other{{changed} modifiés}} sur {count, plural, one{{count} membre} other{{count} membres}}",
   "membersChangeFromToday": "S'applique à partir d'aujourd'hui, le {date}. Chaque membre est modifié séparément ; celui qui ne peut pas l'être est listé avec la raison et reste inchangé.",
   "membersChipOpen": "Avec un montant ouvert",
   "membersColEmail": "E-mail",
@@ -12472,7 +12472,6 @@
   "membersPlanNone": "Aucun forfait",
   "membersPlansTitle": "Abonnements et formules",
   "membersTabBookings": "Réservations",
-  "membersTabInvoices": "Factures",
   "membersTabNotes": "Notes",
   "membersTabPlan": "Formule",
   "membersTabProfile": "Profil",

@@ -90,7 +90,7 @@
   "@plansNoMembers": {
     "description": "#3618 members at the desk: plan beside the table, no member on it"
   },
-  "membersBulkPlan": "Change the plan of {count, plural, =1{1 member} other{{count} members}}",
+  "membersBulkPlan": "Change the plan of {count, plural, one{1 member} other{{count} members}}",
   "@membersBulkPlan": {
     "description": "#3618 members at the desk: bulk action",
     "placeholders": {
@@ -99,7 +99,7 @@
       }
     }
   },
-  "membersBulkPause": "Pause {count, plural, =1{1 member} other{{count} members}}",
+  "membersBulkPause": "Pause {count, plural, one{1 member} other{{count} members}}",
   "@membersBulkPause": {
     "description": "#3618 members at the desk: bulk action",
     "placeholders": {
@@ -108,7 +108,7 @@
       }
     }
   },
-  "membersBulkResume": "Resume {count, plural, =1{1 member} other{{count} members}}",
+  "membersBulkResume": "Resume {count, plural, one{1 member} other{{count} members}}",
   "@membersBulkResume": {
     "description": "#3618 members at the desk: bulk action",
     "placeholders": {
@@ -130,9 +130,9 @@
   "@membersChangeApply": {
     "description": "#3618 members at the desk: bulk task button"
   },
-  "membersChangeDone": "{changed} of {count} changed",
+  "membersChangeDone": "{changed, plural, =0{None changed} one{1 changed} other{{changed} changed}} out of {count, plural, one{1 member} other{{count} members}}",
   "@membersChangeDone": {
-    "description": "#3618 members at the desk: bulk task result",
+    "description": "#3618 members at the desk: bulk task result: members changed out of those selected",
     "placeholders": {
       "changed": {
         "type": "int"
@@ -188,10 +188,6 @@
   },
   "membersTabBookings": "Bookings",
   "@membersTabBookings": {
-    "description": "#3618 members at the desk: member tab"
-  },
-  "membersTabInvoices": "Invoices",
-  "@membersTabInvoices": {
     "description": "#3618 members at the desk: member tab"
   },
   "membersTabNotes": "Notes",

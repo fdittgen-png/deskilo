@@ -7,9 +7,9 @@
 // outcome; one that cannot be changed (pending, exited, a kiosk, a rule the
 // share breaks, a refusal) is named with its reason and left as it was,
 // never skipped silently. There is no all-or-nothing bulk command.
-import '../../../core/trace/trace_logger.dart';
-import '../../workspace/application/set_member_subscription.dart';
-import '../../workspace/domain/member.dart';
+import '../../core/trace/trace_logger.dart';
+import '../../features/workspace/application/set_member_subscription.dart';
+import '../../features/workspace/domain/member.dart';
 
 /// What a selection asks for.
 sealed class MemberChange {
@@ -97,7 +97,7 @@ Future<Map<String, MemberChangeOutcome>> applyMemberChange(
 }
 
 /// Why [member] cannot take [change], or null when it may be sent.
-MemberChangeOutcome? memberChangeRefusal(Member member, MemberChange change) {
+MemberChangeOutcome? _refusal(Member member, MemberChange change) {
   if (member.status == MemberStatus.pending) return MemberChangeOutcome.pending;
   if (member.status == MemberStatus.exited) return MemberChangeOutcome.exited;
   if (member.isKiosk) return MemberChangeOutcome.kiosk;
@@ -125,7 +125,7 @@ Future<MemberChangeOutcome> _one(
   Member member,
   MemberChange change,
 ) async {
-  final refusal = memberChangeRefusal(member, change);
+  final refusal = _refusal(member, change);
   if (refusal != null) return refusal;
   try {
     switch (change) {

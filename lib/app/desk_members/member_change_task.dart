@@ -7,19 +7,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
-import '../../../../core/ui/adaptive/task_choice.dart';
-import '../../../../core/ui/adaptive/task_surface.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../money/providers/money_providers.dart';
-import '../../../workspace/application/set_member_subscription.dart';
-import '../../../workspace/domain/member.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../application/member_batch_change.dart';
+import '../../core/i18n/app_format.dart';
+import '../../core/i18n/format_controller.dart';
+import '../../core/l10n/context_l10n.dart';
+import '../../core/theme/app_spacing.dart';
+import '../../core/time/clock.dart';
+import '../../core/ui/adaptive/task_choice.dart';
+import '../../core/ui/adaptive/task_surface.dart';
+import '../../features/money/providers/money_providers.dart';
+import '../../features/workspace/application/set_member_subscription.dart';
+import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../../l10n/app_localizations.dart';
+import 'member_batch_change.dart';
 
 /// Opens the task that applies [change] to [members]; a [ChangePlan] asks
 /// for the share first (its own share is ignored).
@@ -34,7 +34,7 @@ Future<void> showMemberChangeTask(
 );
 
 /// The words for [outcome].
-String memberChangeOutcomeText(
+String _outcomeText(
   AppLocalizations l,
   MemberChangeOutcome outcome,
 ) => switch (outcome) {
@@ -79,8 +79,7 @@ class _MemberChangeTaskState extends ConsumerState<_MemberChangeTask> {
       final other => other,
     };
     setState(() => _running = true);
-    final workspaceId = ref.read(currentWorkspaceProvider).value?.id ?? '';
-    final outcomes = await applyMemberChange(_Commands(ref, workspaceId), [
+    final outcomes = await applyMemberChange(_Commands(ref), [
       for (final m in widget.members) m.id,
     ], change);
     if (!mounted) return;
@@ -152,7 +151,7 @@ class _MemberChangeTaskState extends ConsumerState<_MemberChangeTask> {
                 contentPadding: EdgeInsets.zero,
                 title: Text(names[m.id] ?? ''),
                 subtitle: Text(
-                  memberChangeOutcomeText(
+                  _outcomeText(
                     l,
                     outcomes[m.id] ?? MemberChangeOutcome.gone,
                   ),
@@ -186,14 +185,14 @@ class _MemberChangeTaskState extends ConsumerState<_MemberChangeTask> {
 
 /// The commands of one member, for a selection.
 class _Commands implements MemberChangeCommands {
-  _Commands(this._ref, this._workspaceId);
+  _Commands(this._ref);
 
   final WidgetRef _ref;
-  final String _workspaceId;
 
+  /// Read again now, through the app's own members read.
   @override
   Future<List<Member>> members() =>
-      _ref.read(workspaceRepositoryProvider).fetchMembers(_workspaceId);
+      _ref.refresh(workspaceMembersProvider.future);
 
   @override
   Future<void> setStatus(Member member, MemberStatus status) => _ref

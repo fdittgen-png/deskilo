@@ -5,9 +5,9 @@
 // from, never as "never".
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../core/time/clock.dart';
-import '../../reservations/domain/reservation.dart';
-import '../../reservations/providers/reservation_providers.dart';
+import '../../core/time/clock.dart';
+import '../../features/reservations/domain/reservation.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
 
 /// The bookings read for the last visits, and the first day they cover;
 /// [reservations] is null while a month is not read (or failed).

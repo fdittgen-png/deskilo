@@ -4,20 +4,21 @@
 // A route is one GoRoute and its RouteAccess here; router.dart only composes
 // the lists.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
-
 import '../../core/navigation/list_detail_route.dart';
 import '../../features/members/presentation/screens/managed_profile_screen.dart';
 import '../../features/members/presentation/screens/member_page.dart';
-import '../../features/members/presentation/screens/member_record.dart';
-import '../../features/members/presentation/screens/members_desk.dart';
-import '../../features/members/presentation/screens/plans_desk.dart';
 import '../../features/members/presentation/screens/privacy_admin_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/screens/members_screen.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import '../desk_members/member_record.dart';
+import '../desk_members/members_desk.dart';
+import '../desk_members/plans_desk.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 
@@ -64,7 +65,15 @@ List<RouteBase> membersRoutes(RouteEnv env) {
     // its ':id' never takes 'plans'.
     GoRoute(
       path: plansPath,
-      redirect: env.guard(_membersAccess),
+      // The plans are the fee bands: money, as Pricing & packages is.
+      redirect: env.guard(
+        const RouteAccess(
+          permission: WorkspacePermission.manageMembers,
+          bypass: RoleBypass.administrator,
+          features: [WorkspaceFeature.moneyTab],
+          to: membersPath,
+        ),
+      ),
       builder: (context, state) => const PlansScreen(),
       routes: [
         GoRoute(
@@ -82,10 +91,17 @@ List<RouteBase> membersRoutes(RouteEnv env) {
       builder: (context, state) => MembersScreen(
         desk: const MembersDesk(),
         deskActions: [
-          TextButton(
-            key: const ValueKey('members-plans'),
-            onPressed: () => context.go(plansPath),
-            child: Text(context.l10n.membersPlansTitle),
+          Consumer(
+            builder: (context, ref, _) =>
+                ref
+                    .watch(enabledFeaturesSyncProvider)
+                    .contains(WorkspaceFeature.moneyTab)
+                ? TextButton(
+                    key: const ValueKey('members-plans'),
+                    onPressed: () => context.go(plansPath),
+                    child: Text(context.l10n.membersPlansTitle),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),

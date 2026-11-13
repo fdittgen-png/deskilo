@@ -12444,11 +12444,11 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
-  "membersBulkPause": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}} pausieren",
-  "membersBulkPlan": "Tarif von {count, plural, =1{1 Mitglied} other{{count} Mitgliedern}} ändern",
-  "membersBulkResume": "{count, plural, =1{1 Mitglied} other{{count} Mitglieder}} reaktivieren",
+  "membersBulkPause": "{count, plural, one{1 Mitglied} other{{count} Mitglieder}} pausieren",
+  "membersBulkPlan": "Tarif von {count, plural, one{1 Mitglied} other{{count} Mitgliedern}} ändern",
+  "membersBulkResume": "{count, plural, one{1 Mitglied} other{{count} Mitglieder}} reaktivieren",
   "membersChangeApply": "Anwenden",
-  "membersChangeDone": "{changed} von {count} geändert",
+  "membersChangeDone": "{changed, plural, =0{Keines geändert} one{1 geändert} other{{changed} geändert}} von {count, plural, one{1 Mitglied} other{{count} Mitgliedern}}",
   "membersChangeFromToday": "Gilt ab heute, {date}. Jedes Mitglied wird einzeln geändert; wer nicht geändert werden kann, wird mit dem Grund aufgeführt und bleibt unverändert.",
   "membersChipOpen": "Mit offenem Betrag",
   "membersColEmail": "E-Mail",
@@ -12472,7 +12472,6 @@
   "membersPlanNone": "Kein Tarif",
   "membersPlansTitle": "Abos und Tarife",
   "membersTabBookings": "Buchungen",
-  "membersTabInvoices": "Rechnungen",
   "membersTabNotes": "Notizen",
   "membersTabPlan": "Tarif",
   "membersTabProfile": "Profil",

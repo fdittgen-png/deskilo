@@ -10288,7 +10288,6 @@ const Set<String> uiLabelKeys = {
   'membersPlanNone',
   'membersPlansTitle',
   'membersTabBookings',
-  'membersTabInvoices',
   'membersTabNotes',
   'membersTabPlan',
   'membersTabProfile',

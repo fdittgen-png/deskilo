@@ -20364,7 +20364,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres',
-      one: '1 membre',
+      one: '$count membre',
     );
     return 'Suspendre $_temp0';
   }
@@ -20375,7 +20375,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres',
-      one: '1 membre',
+      one: '$count membre',
     );
     return 'Changer la formule de $_temp0';
   }
@@ -20386,7 +20386,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count membres',
-      one: '1 membre',
+      one: '$count membre',
     );
     return 'Réactiver $_temp0';
   }
@@ -20396,7 +20396,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String membersChangeDone(int changed, int count) {
-    return '$changed sur $count modifiés';
+    String _temp0 = intl.Intl.pluralLogic(
+      changed,
+      locale: localeName,
+      other: '$changed modifiés',
+      one: '$changed modifié',
+      zero: 'Aucun modifié',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membres',
+      one: '$count membre',
+    );
+    return '$_temp0 sur $_temp1';
   }
 
   @override
@@ -20475,9 +20488,6 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get membersTabBookings => 'Réservations';
-
-  @override
-  String get membersTabInvoices => 'Factures';
 
   @override
   String get membersTabNotes => 'Notes';

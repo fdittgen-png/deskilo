@@ -161,7 +161,7 @@ void main() {
     );
     await tester.tap(find.byKey(const ValueKey('member-change-apply')));
     await tester.pumpAndSettle();
-    expect(find.text('1 of 2 changed'), findsOneWidget);
+    expect(find.text('1 changed out of 2 members'), findsOneWidget);
     expect(
       find.descendant(
         of: find.byKey(const ValueKey('member-change-outcome-member-3')),

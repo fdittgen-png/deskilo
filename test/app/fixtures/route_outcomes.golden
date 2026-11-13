@@ -1065,8 +1065,8 @@ admin off /member/:memberId -> /messages
 admin off /members -> (open)
 admin off /members/:id -> (open)
 admin off /members/managed -> /members
-admin off /members/plans -> (open)
-admin off /members/plans/:id -> (open)
+admin off /members/plans -> /members
+admin off /members/plans/:id -> /members
 admin off /members/privacy -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
@@ -1351,8 +1351,8 @@ owner off /member/:memberId -> /messages
 owner off /members -> (open)
 owner off /members/:id -> (open)
 owner off /members/managed -> /members
-owner off /members/plans -> (open)
-owner off /members/plans/:id -> (open)
+owner off /members/plans -> /members
+owner off /members/plans/:id -> /members
 owner off /members/privacy -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages

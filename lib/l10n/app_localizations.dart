@@ -32475,19 +32475,19 @@ abstract class AppLocalizations {
   /// #3618 members at the desk: bulk action
   ///
   /// In en, this message translates to:
-  /// **'Pause {count, plural, =1{1 member} other{{count} members}}'**
+  /// **'Pause {count, plural, one{1 member} other{{count} members}}'**
   String membersBulkPause(int count);
 
   /// #3618 members at the desk: bulk action
   ///
   /// In en, this message translates to:
-  /// **'Change the plan of {count, plural, =1{1 member} other{{count} members}}'**
+  /// **'Change the plan of {count, plural, one{1 member} other{{count} members}}'**
   String membersBulkPlan(int count);
 
   /// #3618 members at the desk: bulk action
   ///
   /// In en, this message translates to:
-  /// **'Resume {count, plural, =1{1 member} other{{count} members}}'**
+  /// **'Resume {count, plural, one{1 member} other{{count} members}}'**
   String membersBulkResume(int count);
 
   /// #3618 members at the desk: bulk task button
@@ -32496,10 +32496,10 @@ abstract class AppLocalizations {
   /// **'Apply'**
   String get membersChangeApply;
 
-  /// #3618 members at the desk: bulk task result
+  /// #3618 members at the desk: bulk task result: members changed out of those selected
   ///
   /// In en, this message translates to:
-  /// **'{changed} of {count} changed'**
+  /// **'{changed, plural, =0{None changed} one{1 changed} other{{changed} changed}} out of {count, plural, one{1 member} other{{count} members}}'**
   String membersChangeDone(int changed, int count);
 
   /// #3618 members at the desk: bulk task: the effective date
@@ -32639,12 +32639,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Bookings'**
   String get membersTabBookings;
-
-  /// #3618 members at the desk: member tab
-  ///
-  /// In en, this message translates to:
-  /// **'Invoices'**
-  String get membersTabInvoices;
 
   /// #3618 members at the desk: member tab
   ///

@@ -120,7 +120,6 @@ const _pages = [
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
   // #3618 — members and plans at the desk, and a member beside the table.
   ('/members', PageKind.records, 'members', 'members'),
-  ('/members/member-2', PageKind.records, 'members', 'member'),
   ('/members/plans', PageKind.records, 'members', 'plans'),
 ];
 

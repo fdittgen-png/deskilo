@@ -6,10 +6,10 @@
 // estimated next invoice is the statement's own figures for its period,
 // never a sum the table makes; the last visit is the latest booking the
 // member came to among the bookings read.
-import '../../money/domain/fee_band.dart';
-import '../../money/domain/statement.dart';
-import '../../reservations/domain/reservation.dart';
-import '../../workspace/domain/member.dart';
+import '../../features/money/domain/fee_band.dart';
+import '../../features/money/domain/statement.dart';
+import '../../features/reservations/domain/reservation.dart';
+import '../../features/workspace/domain/member.dart';
 
 /// A member's plan fee, as the fee bands give it.
 sealed class PlanFee {

@@ -4,7 +4,7 @@
 // member on what the space holds NOW: every member gets an outcome, one that
 // cannot be changed is named with its reason and left as it was, and a
 // refusal of one does not stop the others.
-import 'package:deskilo/features/members/application/member_batch_change.dart';
+import 'package:deskilo/app/desk_members/member_batch_change.dart';
 import 'package:deskilo/features/workspace/application/set_member_subscription.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';

@@ -8,23 +8,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
-import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../reservations/domain/reservation.dart';
-import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
-import '../../../workspace/domain/member.dart';
-import '../../../workspace/domain/workspace_feature.dart';
-import '../../../workspace/presentation/widgets/member_note_dialog.dart';
-import '../../../workspace/presentation/widgets/open_conversation.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../providers/member_desk_providers.dart';
-import '../widgets/member_money_card.dart';
-import '../widgets/member_plan_tab.dart';
-import 'member_page.dart';
+import '../../core/i18n/app_format.dart';
+import '../../core/i18n/format_controller.dart';
+import '../../core/l10n/context_l10n.dart';
+import '../../core/theme/app_spacing.dart';
+import '../../core/time/clock.dart';
+import '../../features/members/presentation/screens/member_page.dart';
+import '../../features/members/presentation/widgets/member_money_card.dart';
+import '../../features/plan/providers/floor_plan_providers.dart';
+import '../../features/reservations/domain/reservation.dart';
+import '../../features/reservations/presentation/widgets/reservation_detail_sheet.dart';
+import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/presentation/widgets/member_note_dialog.dart';
+import '../../features/workspace/presentation/widgets/open_conversation.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import 'member_desk_providers.dart';
+import 'member_plan_tab.dart';
 import 'members_desk.dart';
 
 /// The member [memberId], with their tabs.
@@ -69,7 +69,7 @@ class MemberRecord extends ConsumerWidget {
         if (rights.seesOpen || isSelf)
           (
             'invoices',
-            l.membersTabInvoices,
+            l.customerPageInvoices,
             SingleChildScrollView(
               padding: AppSpacing.lgAll,
               child: MemberMoneyCard(memberId: memberId, isSelf: isSelf),

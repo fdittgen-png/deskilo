@@ -9,21 +9,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/time/clock.dart';
-import '../../../money/domain/fee_band.dart';
-import '../../../money/providers/money_providers.dart';
-import '../../../workspace/domain/member.dart';
-import '../../../workspace/presentation/member_labels.dart';
-import '../../../workspace/presentation/subscription_text.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../application/member_batch_change.dart';
-import '../../domain/member_plan.dart';
-import '../screens/members_desk.dart';
+import '../../core/i18n/app_format.dart';
+import '../../core/i18n/format_controller.dart';
+import '../../core/l10n/context_l10n.dart';
+import '../../core/theme/app_spacing.dart';
+import '../../core/time/clock.dart';
+import '../../features/money/domain/fee_band.dart';
+import '../../features/money/providers/money_providers.dart';
+import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/presentation/member_labels.dart';
+import '../../features/workspace/presentation/subscription_text.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
+import 'member_batch_change.dart';
 import 'member_change_task.dart';
+import 'member_plan.dart';
+import 'members_desk.dart';
 
 /// The plan of [member], for a person with [rights].
 class MemberPlanTab extends ConsumerWidget {

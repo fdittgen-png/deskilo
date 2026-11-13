@@ -4,7 +4,7 @@
 // stored: the fee band's fee, "unavailable" where no band covers the share
 // (never a guess), the statement's own parts for the estimate, and the last
 // booking the member came to.
-import 'package:deskilo/features/members/domain/member_plan.dart';
+import 'package:deskilo/app/desk_members/member_plan.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
