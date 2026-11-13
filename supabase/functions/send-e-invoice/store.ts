@@ -35,6 +35,29 @@ export interface TransmissionRow {
   destination: string;
   format: string;
   receipt: Record<string, unknown>;
+  /** #3883 -- 'invoice', or 'test' for a sandbox test document. */
+  kind?: string;
+}
+
+/** #3883 -- a sandbox test document: no invoice, the sandbox and the
+ * government channel only (prepare_einvoice_test_v1, 0762). */
+export interface PrepareTestInput {
+  workspaceId: string;
+  provider: string;
+  actor: string;
+  byName: string;
+  format: string;
+  hash: string;
+  fileName: string;
+  mimeType: string;
+  bytes: Uint8Array<ArrayBuffer>;
+  declared: Record<string, string>;
+}
+
+export interface PrepareTestResult {
+  outcome: "prepared" | "test_pending";
+  id?: string;
+  phase?: Phase;
 }
 
 export interface PrepareInput {
@@ -104,6 +127,7 @@ export interface TransmissionStore {
   transmission(id: string): Promise<TransmissionRow | null>;
   expire(workspaceId: string): Promise<void>;
   prepare(input: PrepareInput): Promise<PrepareResult>;
+  prepareTest(input: PrepareTestInput): Promise<PrepareTestResult>;
   artifact(id: string): Promise<Artifact | null>;
   claim(id: string, owner: string, windowSeconds: number): Promise<ClaimResult>;
   record(
@@ -220,7 +244,7 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
       const { data } = await admin.from("invoice_transmissions")
         .select(
           "id, workspace_id, provider, phase, external_id, detail, " +
-            "environment, destination, format, receipt",
+            "environment, destination, format, receipt, kind",
         ).eq("id", id).maybeSingle();
       return (data as TransmissionRow | null) ?? null;
     },
@@ -244,6 +268,20 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
         p_mime_type: i.mimeType,
         p_receiver_scheme: i.receiverScheme,
         p_receiver_id: i.receiverId,
+        p_bytes: toHex(i.bytes),
+        p_declared: i.declared,
+      });
+    },
+    prepareTest(i) {
+      return rpc<PrepareTestResult>("prepare_einvoice_test_v1", {
+        p_workspace_id: i.workspaceId,
+        p_provider: i.provider,
+        p_actor: i.actor,
+        p_by_name: i.byName,
+        p_format: i.format,
+        p_hash: i.hash,
+        p_file_name: i.fileName,
+        p_mime_type: i.mimeType,
         p_bytes: toHex(i.bytes),
         p_declared: i.declared,
       });
