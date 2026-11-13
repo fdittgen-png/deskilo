@@ -23,9 +23,7 @@ Widget _table() => RecordsTable<_Rec>(
   tableId: 'long',
   rows: _rows,
   keyOf: (r) => r.id,
-  state: RecordsState.ready,
   onRetry: () {},
-  complete: true,
   columnStore: const PrefsStringStore('records_columns_long'),
   columns: [
     RecordColumn(
@@ -47,7 +45,6 @@ Widget _table() => RecordsTable<_Rec>(
       onRun: (_) {},
     ),
   ],
-  bulkActions: const [],
   cardBuilder: (_, r) => Card(child: Text(r.name)),
   empty: const Text('Nothing yet'),
 );
