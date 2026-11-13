@@ -6,5 +6,6 @@
   "recordedPaymentsPeriod": "Période : {from} – {to}",
   "recordedPaymentsReversalsTitle": "Annulés par le prestataire",
   "recordedPaymentsReversalsHint": "Un remboursement ou une contestation chez le prestataire. Corrigez le solde du membre, puis marquez l'annulation comme examinée.",
-  "recordedPaymentsReversalReviewed": "Examiné"
+  "recordedPaymentsReversalReviewed": "Examiné",
+  "recordedPaymentsReversalReviewFailed": "L'annulation n'a pas pu être marquée comme examinée. Réessayez."
 }

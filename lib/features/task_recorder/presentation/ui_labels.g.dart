@@ -3597,6 +3597,7 @@ Map<String, _Getter> _part9() => {
   'readStateOffline': (l) => l.readStateOffline,
   'readinessAreaRegionRules': (l) => l.readinessAreaRegionRules,
   'readinessFirstBookingReady': (l) => l.readinessFirstBookingReady,
+  'recordedPaymentsReversalReviewFailed': (l) => l.recordedPaymentsReversalReviewFailed,
   'recordingPrivacyWriteRefused': (l) => l.recordingPrivacyWriteRefused,
   'refFilterClear': (l) => l.refFilterClear,
   'refSortOldest': (l) => l.refSortOldest,

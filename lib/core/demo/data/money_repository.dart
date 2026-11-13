@@ -454,8 +454,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<List<ExpenseRepartition>> fetchExpenseRepartitions(String workspaceId) => expenses.fetchExpenseRepartitions(workspaceId);
   @override Future<List<LedgerEntry>> fetchWorkspaceLedger(String workspaceId) => accountQueries.fetchWorkspaceLedger(workspaceId);
   @override Future<bool> hasRecordedMoney(String workspaceId) => accountQueries.hasRecordedMoney(workspaceId);
-  @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => paymentGateway.fetchPaymentIntents(workspaceId);
-  @override Future<void> reviewPaymentReversal(String intentId) => paymentGateway.reviewPaymentReversal(intentId);
+  @override Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) => paymentGateway.fetchPaymentIntents(workspaceId);  @override Future<void> reviewPaymentReversal(String intentId) => paymentGateway.reviewPaymentReversal(intentId);
   @override Future<List<LedgerEntry>> fetchLedger(String memberId) => accountQueries.fetchLedger(memberId);
   @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => accountCommands.recordPayment(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);
   @override Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) => eInvoices.fetchEInvoiceGateway(workspaceId);

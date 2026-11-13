@@ -15368,6 +15368,7 @@
   "recordedPaymentsMore": "Afficher d'autres paiements",
   "recordedPaymentsOff": "La gestion de l'argent est désactivée dans cet espace.",
   "recordedPaymentsPeriod": "Période : {from} – {to}",
+  "recordedPaymentsReversalReviewFailed": "L'annulation n'a pas pu être marquée comme examinée. Réessayez.",
   "recordedPaymentsReversalReviewed": "Examiné",
   "recordedPaymentsReversalsHint": "Un remboursement ou une contestation chez le prestataire. Corrigez le solde du membre, puis marquez l'annulation comme examinée.",
   "recordedPaymentsReversalsTitle": "Annulés par le prestataire",

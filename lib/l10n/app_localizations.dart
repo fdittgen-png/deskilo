@@ -41247,6 +41247,12 @@ abstract class AppLocalizations {
   /// **'Period: {from} – {to}'**
   String recordedPaymentsPeriod(String from, String to);
 
+  /// #3925 a payment the provider reversed: marking it looked at failed
+  ///
+  /// In en, this message translates to:
+  /// **'The reversal could not be marked as looked at. Try again.'**
+  String get recordedPaymentsReversalReviewFailed;
+
   /// #3925 a payment the provider reversed: the button that marks it looked at
   ///
   /// In en, this message translates to:

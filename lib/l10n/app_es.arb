@@ -15368,6 +15368,7 @@
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsReversalReviewFailed": "La reversión no se pudo marcar como revisada. Inténtelo de nuevo.",
   "recordedPaymentsReversalReviewed": "Revisado",
   "recordedPaymentsReversalsHint": "Un reembolso o una disputa en el proveedor. Corrija el saldo del miembro y marque la reversión como revisada.",
   "recordedPaymentsReversalsTitle": "Revertidos por el proveedor",

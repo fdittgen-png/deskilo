@@ -25774,6 +25774,10 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'L\'annulation n\'a pas pu être marquée comme examinée. Réessayez.';
+
+  @override
   String get recordedPaymentsReversalReviewed => 'Examiné';
 
   @override

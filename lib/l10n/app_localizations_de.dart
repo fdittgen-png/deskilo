@@ -25731,6 +25731,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'Die Rückbuchung konnte nicht als angesehen markiert werden. Versuchen Sie es erneut.';
+
+  @override
   String get recordedPaymentsReversalReviewed => 'Angesehen';
 
   @override

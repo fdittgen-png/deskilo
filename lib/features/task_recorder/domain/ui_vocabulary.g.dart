@@ -11654,6 +11654,7 @@ const Set<String> uiLabelKeys = {
   'recordedPaymentsEmpty',
   'recordedPaymentsMore',
   'recordedPaymentsOff',
+  'recordedPaymentsReversalReviewFailed',
   'recordedPaymentsReversalReviewed',
   'recordedPaymentsReversalsHint',
   'recordedPaymentsReversalsTitle',

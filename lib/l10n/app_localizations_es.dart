@@ -25665,6 +25665,10 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'La reversión no se pudo marcar como revisada. Inténtelo de nuevo.';
+
+  @override
   String get recordedPaymentsReversalReviewed => 'Revisado';
 
   @override
