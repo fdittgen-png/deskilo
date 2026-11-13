@@ -97,6 +97,52 @@ void main() {
     expect(run, isNot(contains('2>&1')));
   });
 
+  test('an unconfigured instance doctor cannot end a scheduled run green', () {
+    // #3871 -- run the gate step's own script with the secrets empty.
+    final run =
+        _step('instance-doctor', 'doctor', 'Are the secrets there')['run']
+            as String;
+    final dir = Directory.systemTemp.createTempSync('doctor_gate');
+    try {
+      ProcessResult gate(String event, {String token = '', String ref = ''}) {
+        File('${dir.path}/out').writeAsStringSync('');
+        File('${dir.path}/summary').writeAsStringSync('');
+        return Process.runSync(
+          'bash',
+          ['-c', run],
+          environment: {
+            'TOKEN': token,
+            'REF': ref,
+            'GITHUB_EVENT_NAME': event,
+            'GITHUB_OUTPUT': '${dir.path}/out',
+            'GITHUB_STEP_SUMMARY': '${dir.path}/summary',
+          },
+        );
+      }
+
+      final scheduled = gate('schedule');
+      expect(
+        scheduled.exitCode,
+        isNot(0),
+        reason: 'a schedule that examined nothing',
+      );
+      expect('${scheduled.stdout}', contains('::error::'));
+      // A manual run may still explain and stop.
+      final manual = gate('workflow_dispatch');
+      expect(manual.exitCode, 0);
+      expect(
+        File('${dir.path}/summary').readAsStringSync(),
+        contains('not configured'),
+      );
+      // Configured: ready, whatever the event.
+      final configured = gate('schedule', token: 't', ref: 'r');
+      expect(configured.exitCode, 0);
+      expect(File('${dir.path}/out').readAsStringSync(), contains('ready=true'));
+    } finally {
+      dir.deleteSync(recursive: true);
+    }
+  });
+
   test('the Edge deployment CLI is the replay\'s: one pinned, cached install', () {
     final setup = _step(
       'edge-functions',
