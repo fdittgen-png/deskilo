@@ -53,21 +53,6 @@ const shellSearchButtonId = 'shell-search-button';
 
 enum _ShellBarRank { inbox, search, account, settings, scan, editor }
 
-/// The app bar's actions for the branch at [currentIndex], every one a
-/// button: the desk's bar, which has the room for all of them.
-List<Widget> shellBarActions(
-  BuildContext context,
-  WidgetRef ref, {
-  required int currentIndex,
-}) => [
-  for (final control in shellBarControls(
-    context,
-    ref,
-    currentIndex: currentIndex,
-  ))
-    control.button,
-];
-
 /// The bar's controls for the branch at [currentIndex], in the order the
 /// bar shows them.
 List<ShellBarControl> shellBarControls(

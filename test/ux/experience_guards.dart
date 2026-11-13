@@ -12,6 +12,7 @@ import 'dart:ui' as ui;
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/ui/kit/list_detail_scaffold.dart';
+import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
@@ -552,9 +553,18 @@ List<FocusNode> _focusables({
         n is! FocusScopeNode &&
         // A container whose controls are inside it is not one itself.
         !n.descendants.any((d) => d.canRequestFocus) &&
+        // #3891 — a read-only selectable text is skipped by Tab by design
+        // (Flutter's own); a person selects it with the pointer.
+        (tabStops || !_isReadOnlyText(n)) &&
         _onScreen(n))
       n,
 ];
+
+bool _isReadOnlyText(FocusNode n) {
+  final editable = n.context
+      ?.findAncestorWidgetOfExactType<EditableText>();
+  return editable != null && editable.readOnly;
+}
 
 bool _onScreen(FocusNode n) {
   final box = n.context!.findRenderObject();
@@ -609,6 +619,45 @@ Future<Set<String>> keyboardProblems(
   }
   if (skipped.difference(byArrow).isNotEmpty) {
     problems.add('unreachable by any key');
+  }
+  problems.addAll(await _tableRowsProblems(tester, seen));
+  return problems;
+}
+
+/// #3891 — a records table is one Tab stop and the arrows walk its rows,
+/// however many and however lazily built: from that stop the arrows reach
+/// the last row, and the row they stand on is on screen each time.
+Future<Set<String>> _tableRowsProblems(
+  WidgetTester tester,
+  List<FocusNode> stops,
+) async {
+  final problems = <String>{};
+  final window =
+      Offset.zero & (tester.view.physicalSize / tester.view.devicePixelRatio);
+  final rowsFinder = find.byWidgetPredicate((w) => w is RecordRow && w.focused);
+  for (final stop in stops) {
+    final c = stop.context;
+    if (c == null || !c.mounted) continue;
+    if (c.widget.key != const ValueKey('records-rows')) continue;
+    stop.requestFocus();
+    await tester.pump();
+    Key? last;
+    for (var i = 0; i < 1000; i++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+      await tester.pump();
+      final row = rowsFinder.evaluate().firstOrNull;
+      if (row == null) {
+        problems.add('the row the arrows stand on is not built');
+        break;
+      }
+      final rect = tester.getRect(rowsFinder.first);
+      if (rect.intersect(window).height < rect.height - 0.5) {
+        problems.add('the row the arrows stand on is off screen');
+        break;
+      }
+      if (row.widget.key == last) break; // the last row
+      last = row.widget.key;
+    }
   }
   return problems;
 }

@@ -73,6 +73,10 @@ void main() {
         'base_url': 'https://api.anaf.ro/test/FCTEL/rest',
         'cif': 'RO1234567',
         'access_token': 'secret',
+        // #3882 — the test twins, blank here: the function drops a blank.
+        'base_url_uat': '',
+        'cif_uat': '',
+        'access_token_uat': '',
       });
       form.dispose();
     });
