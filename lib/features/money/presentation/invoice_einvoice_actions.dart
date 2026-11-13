@@ -92,8 +92,8 @@ Future<void> sendEInvoice(
         // Every input is read BEFORE the first await.
         final input = EInvoiceInput(paymentReferenceRules: installedPaymentReferenceRules, nationalRules: installedNationalInvoiceRules, 
           invoice: invoice, seller: seller, buyer: buyer, iban: iban,
-          lineText: (line) => invoiceLineText(words, line,
-              association: association, period: invoice.period),
+          lineText: (line) => invoiceLineTextFor(words, invoice, line,
+              liveAssociation: association),
           dueDate: invoiceDueAt(ref, invoice),
           paymentTerms: invoice.legalClauses?.clauses.paymentTerms ??
               memberTermsFor(ref, invoice.memberId)?.paymentTerms ??
@@ -457,8 +457,8 @@ class _EInvoiceExportRun {
           seller: s.seller,
           buyer: s.buyer,
           iban: s.iban,
-          lineText: (line) => invoiceLineText(words, line,
-              association: association, period: s.invoice.period),
+          lineText: (line) => invoiceLineTextFor(words, s.invoice, line,
+              liveAssociation: association),
           reference: requireWorkspaceTaxReference(ref),
         ));
         final bytes = Uint8List.fromList(utf8.encode(xml));

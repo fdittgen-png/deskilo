@@ -8,10 +8,10 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/help/help_hint.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -21,6 +21,7 @@ import '../../../directory/presentation/member_employment_tile.dart';
 import '../../../money/presentation/widgets/consumption_sheet.dart';
 import '../../../money/presentation/widgets/negotiation_card.dart';
 import '../../domain/booking_policies.dart';
+import '../../domain/invite_uri.dart';
 import '../../domain/member.dart';
 import '../../domain/member_sheet_actions.dart';
 import '../../domain/overage_policy.dart';
@@ -28,6 +29,8 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../member_admin_actions.dart';
+import '../widgets/invite_sheet.dart';
+import '../widgets/member_list_chips.dart';
 import '../widgets/member_note_dialog.dart';
 import '../widgets/member_roles_card.dart';
 import '../widgets/open_conversation.dart';
@@ -35,7 +38,12 @@ import '../widgets/open_conversation.dart';
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
 class MembersScreen extends ConsumerWidget {
-  const MembersScreen({super.key});
+  const MembersScreen({super.key, this.desk, this.deskActions = const []});
+
+  /// #3618 — what a large window shows instead of the list (the members'
+  /// records table), with [deskActions] before the list's own actions.
+  final Widget? desk;
+  final List<Widget> deskActions;
 
   Future<void> _memberSheet(
     BuildContext context,
@@ -137,6 +145,20 @@ class MembersScreen extends ConsumerWidget {
     // #628 — the workspace default the per-member permission overrides.
     final policies =
         ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
+    // #3618 — at the desk the members are a records table.
+    if (desk case final body?
+        when WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return Scaffold(
+        appBar: AppBar(
+          title: PageTitle(l10n.membersTitle),
+          actions: [
+            ...deskActions,
+            ..._appBarActions(context, ref, me, features, desk: true),
+          ],
+        ),
+        body: body,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -162,8 +184,11 @@ class MembersScreen extends ConsumerWidget {
                   title: Text(names[member.id] ?? ''),
                   subtitle: Wrap(
                     spacing: 6,
-                    children: _memberChips(
-                        context, member, emails[member.id] ?? '', policies),
+                    children: [
+                      ...memberListChips(
+                          context, member, emails[member.id] ?? '', policies),
+                      ..._roleAndStatusChips(context, member),
+                    ],
                   ),
                   // One labeled management surface per member (UX pass):
                   // the row opens a sheet of named actions instead of a
@@ -192,7 +217,7 @@ class MembersScreen extends ConsumerWidget {
   /// permission, not literal ownership: active co-owners (0058) get the
   /// full owner surface.
   List<Widget> _appBarActions(BuildContext context, WidgetRef ref,
-      Member? me, Set<WorkspaceFeature> features) {
+      Member? me, Set<WorkspaceFeature> features, {bool desk = false}) {
     final l10n = context.l10n;
     final isOwner = me?.actsAsOwner ?? false;
     return [
@@ -230,7 +255,12 @@ class MembersScreen extends ConsumerWidget {
               key: const ValueKey('members-invite'),
               icon: const Icon(Icons.person_add_outlined),
               tooltip: l10n.membersInvite,
-              onPressed: () => context.push('/workspace-code'),
+              // #3618 — at the desk, the invitation as a short task.
+              onPressed: () => switch (ref.read(currentWorkspaceProvider).value) {
+                final ws? when desk => showInviteSheet(context,
+                    workspace: ws, role: InviteRole.user, asTask: true),
+                _ => context.push('/workspace-code'),
+              },
             ),
           if (isOwner && features.contains(WorkspaceFeature.moneyTab))
           IconButton(
@@ -242,64 +272,25 @@ class MembersScreen extends ConsumerWidget {
     ];
   }
 
-  /// The chips under a member's name: email, subscription or kiosk,
-  /// allowances, role and status.
-  List<Widget> _memberChips(BuildContext context, Member member, String email,
-      BookingPolicies policies) {
-    final l10n = context.l10n;
-    // #628 — the EFFECTIVE overlap allowance (member permission, else the
-    // workspace default); 1 is one place at a time and needs no chip.
-    final simultaneous = BookingPolicies.allowanceFor(
-        member.maxSimultaneousReservations, policies);
-    return [
-                      if (email.isNotEmpty)
-                        Text(email),
-                      // A kiosk is a device, not a paying member — no
-                      // subscription line.
-                      if (!member.isKiosk)
-                        Text(
-                          subscriptionText(l10n, appFormatOf(context), member.subscriptionPct),
-                        ),
-                      if (member.isKiosk)
-                        Text(l10n.memberKioskLabel),
-                      if (member.maxActiveReservations != null)
-                        Text(
-                          l10n.memberReservationLimitChip(
-                                member.maxActiveReservations!,
-                              ),
-                        ),
-                      if (simultaneous > BookingPolicies.defaultSimultaneous)
-                        Text(
-                          l10n.memberSimultaneousLimitChip(simultaneous),
-                        ),
-                      ..._roleAndStatusChips(context, member),
-    ];
-  }
-
   /// The role and status chips of [member].
   List<Widget> _roleAndStatusChips(BuildContext context, Member member) {
     final l10n = context.l10n;
     return [
-                      if (member.isOwner)
-                        Text(l10n.memberRoleOwner),
-                      if (member.coOwner == CoOwnerStatus.active)
-                        Text(l10n.memberCoOwnerChip),
-                      if (member.coOwner == CoOwnerStatus.passive)
-                        Text(l10n.memberCoOwnerPassiveChip),
-                      if (member.isAdmin && !member.isOwner)
-                        Text(l10n.memberRoleAdmin),
-                      if (member.status == MemberStatus.pending)
-                        Text(
-                          l10n.memberStatusPending,
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.error,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      if (member.status == MemberStatus.paused)
-                        Text(l10n.memberStatusPaused),
-                      if (member.status == MemberStatus.exited)
-                        Text(l10n.memberStatusExited),
+      if (member.isOwner) Text(l10n.memberRoleOwner),
+      if (member.coOwner == CoOwnerStatus.active) Text(l10n.memberCoOwnerChip),
+      if (member.coOwner == CoOwnerStatus.passive)
+        Text(l10n.memberCoOwnerPassiveChip),
+      if (member.isAdmin && !member.isOwner) Text(l10n.memberRoleAdmin),
+      if (member.status == MemberStatus.pending)
+        Text(
+          l10n.memberStatusPending,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.error,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+      if (member.status == MemberStatus.paused) Text(l10n.memberStatusPaused),
+      if (member.status == MemberStatus.exited) Text(l10n.memberStatusExited),
     ];
   }
 }

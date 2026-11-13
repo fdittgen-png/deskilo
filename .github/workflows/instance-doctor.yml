@@ -62,9 +62,12 @@ jobs:
       - uses: actions/checkout@v5
 
       # Owner-configurable, like the SMTP secrets on the release train:
-      # without them this says so loudly in the summary and stops. A
-      # health check that fails because it was never configured teaches
-      # everyone to ignore it.
+      # without them a manual run says so in the summary and stops. The
+      # SCHEDULED run ends red (#3871, as scripts/branch_protection.sh
+      # since #1446): a daily check that examined nothing must never look
+      # like one that found nothing wrong. Three results: examined and
+      # healthy (green), examined and unhealthy (an issue), unable to
+      # examine (red on the schedule).
       - name: Are the secrets there
         id: gate
         env:
@@ -80,6 +83,10 @@ jobs:
               echo "The doctor only reads: auth config and counts in auth.users."
             } >> "$GITHUB_STEP_SUMMARY"
             echo "ready=false" >> "$GITHUB_OUTPUT"
+            if [ "$GITHUB_EVENT_NAME" = schedule ]; then
+              echo "::error::the instance doctor examined nothing: SUPABASE_ACCESS_TOKEN or SUPABASE_PROJECT_REF is not set (set both, or remove the schedule)"
+              exit 1
+            fi
           else
             echo "ready=true" >> "$GITHUB_OUTPUT"
           fi

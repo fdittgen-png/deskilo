@@ -43,6 +43,41 @@ void main() {
     expect((await _run('bbb', '')).code, 1);
   });
 
+  group('the candidates (#3873)', () {
+    late Directory dir;
+    setUp(() {
+      dir = Directory.systemTemp.createTempSync('tree_cand');
+      // A fake `gh api`: runs 7 (up to date), 8 (behind the pushed parent).
+      File('${dir.path}/gh').writeAsStringSync(r'''#!/usr/bin/env bash
+case "$2" in
+  */git/commits/pushed) echo parentsha ;;
+  */git/commits/head7) echo tree7 ;;
+  */git/commits/head8) echo tree8 ;;
+  */compare/parentsha...head7) echo ahead ;;
+  */compare/parentsha...head8) echo diverged ;;
+  */actions/workflows/*) printf '8\thead8\tsuccess\n7\thead7\tsuccess\n' ;;
+esac
+''');
+      Process.runSync('chmod', ['+x', '${dir.path}/gh']);
+    });
+    tearDown(() => dir.deleteSync(recursive: true));
+
+    String candidates() =>
+        (Process.runSync(
+          'bash',
+          ['scripts/tree_candidates.sh'],
+          environment: {
+            'PATH': '${dir.path}:${Platform.environment['PATH']}',
+            'GITHUB_REPOSITORY': 'o/r',
+            'GITHUB_SHA': 'pushed',
+          },
+        ).stdout as String).trim();
+
+    test('a run whose head lacks the pushed parent is not a candidate', () {
+      expect(candidates(), '7\ttree7\tsuccess');
+    });
+  });
+
   test('the workflow looks first and skips only on a master push', () {
     final text = File('.github/workflows/quality.yml').readAsStringSync();
     expect(text, contains('scripts/tree_tested.sh'));

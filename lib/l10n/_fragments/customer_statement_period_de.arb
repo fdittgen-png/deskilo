@@ -18,5 +18,6 @@
   "customerStatementMoveMoved": "Guthaben auf ein anderes Konto übertragen",
   "customerStatementMoveApplied": "Guthaben mit einer Rechnung verrechnet",
   "customerStatementMoveFreed": "Zahlung freigegeben",
-  "customerStatementMoveAllocated": "Zahlung zugeordnet"
+  "customerStatementMoveAllocated": "Zahlung zugeordnet",
+  "customerStatementPeriodNothing": "Für diesen Zeitraum gibt es nichts darzustellen: weder ein Saldo noch eine Bewegung."
 }

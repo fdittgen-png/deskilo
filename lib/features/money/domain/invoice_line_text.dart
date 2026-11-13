@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:collection';
+
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 
@@ -115,4 +117,41 @@ String annexEntryText(ReportStrings strings, InvoiceDetailEntry entry) {
   };
   final label = _lineFactsText(strings, entry.text) ?? entry.label;
   return label.isEmpty ? category : '$category · $label';
+}
+
+/// #3875 — the line of [invoice] worded by the seller kind the invoice was
+/// issued under ([Invoice.sellerIsAssociationOr]); [liveAssociation] only
+/// serves an invoice that froze none.
+String invoiceLineTextFor(
+  ReportStrings strings,
+  Invoice invoice,
+  InvoiceLine line, {
+  required bool liveAssociation,
+}) =>
+    invoiceLineText(strings, line,
+        association: invoice.sellerIsAssociationOr(liveAssociation),
+        period: invoice.period);
+
+/// #3875 — the same for an export of several invoices, whose writers ask
+/// for the text of a line alone: each line is worded by ITS invoice (the
+/// writers pass the invoice's own line objects); a line of none is worded
+/// by [liveAssociation].
+String Function(InvoiceLine line) invoiceLineTextOfBooks(
+  ReportStrings strings,
+  Iterable<Invoice> invoices, {
+  required bool liveAssociation,
+}) {
+  final owner = HashMap<InvoiceLine, Invoice>.identity();
+  for (final invoice in invoices) {
+    for (final line in invoice.lines) {
+      owner[line] = invoice;
+    }
+  }
+  return (line) {
+    final invoice = owner[line];
+    return invoice == null
+        ? invoiceLineText(strings, line, association: liveAssociation)
+        : invoiceLineTextFor(strings, invoice, line,
+            liveAssociation: liveAssociation);
+  };
 }
