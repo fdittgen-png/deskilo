@@ -107,41 +107,42 @@ class DeskBreadcrumb extends StatelessWidget {
   /// The page's name takes a second line (#3893).
   final bool wraps;
 
-  @override
-  Widget build(BuildContext context) {
+  /// One part: its name, a button to the entry's page, a tooltip when it is
+  /// shortened so it still says where it leads.
+  Widget _part(
+    BuildContext context,
+    DeskCrumb crumb, {
+    required bool last,
+    required bool shortened,
+  }) {
     final theme = Theme.of(context);
     final muted = theme.colorScheme.onSurfaceVariant;
-    Widget part(
-      DeskCrumb crumb, {
-      required bool last,
-      required bool shortened,
-    }) {
-      final text = Text(
-        crumb.label,
-        maxLines: last && wraps ? 2 : 1,
-        overflow: TextOverflow.ellipsis,
-        style: last
-            ? null
-            : theme.textTheme.titleMedium?.copyWith(color: muted),
-      );
-      final entry = crumb.entry;
-      final shown = entry == null
-          ? text
-          : TextButton(
-              key: ValueKey('desk-crumb-${entry.key}'),
-              onPressed: entry.route == null
-                  ? entry.onTap
-                  : () => router.go(entry.route!),
-              style: TextButton.styleFrom(
-                foregroundColor: last ? theme.colorScheme.onSurface : muted,
-                textStyle: last ? theme.textTheme.titleLarge : null,
-              ),
-              child: text,
-            );
-      // A shortened part still says where it leads.
-      return shortened ? Tooltip(message: crumb.label, child: shown) : shown;
-    }
+    final text = Text(
+      crumb.label,
+      maxLines: last && wraps ? 2 : 1,
+      overflow: TextOverflow.ellipsis,
+      style: last ? null : theme.textTheme.titleMedium?.copyWith(color: muted),
+    );
+    final entry = crumb.entry;
+    final shown = entry == null
+        ? text
+        : TextButton(
+            key: ValueKey('desk-crumb-${entry.key}'),
+            onPressed: entry.route == null
+                ? entry.onTap
+                : () => router.go(entry.route!),
+            style: TextButton.styleFrom(
+              foregroundColor: last ? theme.colorScheme.onSurface : muted,
+              textStyle: last ? theme.textTheme.titleLarge : null,
+            ),
+            child: text,
+          );
+    return shortened ? Tooltip(message: crumb.label, child: shown) : shown;
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    final muted = Theme.of(context).colorScheme.onSurfaceVariant;
     return LayoutBuilder(
       builder: (context, box) {
         final natural = [
@@ -164,7 +165,8 @@ class DeskBreadcrumb extends StatelessWidget {
               if (i == crumbs.length - 1)
                 // The page's name takes the room that is left.
                 Flexible(
-                  child: part(
+                  child: _part(
+                    context,
                     crumb,
                     last: true,
                     shortened: widths[i] < natural[i],
@@ -173,10 +175,10 @@ class DeskBreadcrumb extends StatelessWidget {
               else if (widths[i] < natural[i])
                 SizedBox(
                   width: widths[i],
-                  child: part(crumb, last: false, shortened: true),
+                  child: _part(context, crumb, last: false, shortened: true),
                 )
               else
-                part(crumb, last: false, shortened: false),
+                _part(context, crumb, last: false, shortened: false),
             ],
           ],
         );
