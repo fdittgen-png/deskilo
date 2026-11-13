@@ -356,6 +356,17 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
       fullCfg,
       sent.destination as Destination,
     );
+    // #3883 -- a test's verdict opens the gate: it is read from the
+    // connector's documented sandbox only, as the test was sent there.
+    if (
+      sent.kind === "test" &&
+      !onDocumentedSandbox(
+        configFor(sentCfg, "uat", sent.provider),
+        SANDBOX[sent.provider] ?? {},
+      )
+    ) {
+      return json({ error: "sandbox_not_documented", provider: sent.provider }, 409);
+    }
     const asked = await askStatus(
       sent.provider,
       configFor(sentCfg, sent.environment as Environment, sent.provider),

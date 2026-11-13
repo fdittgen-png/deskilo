@@ -1506,3 +1506,18 @@ Deno.test("#3883 a test goes only to the connector's documented sandbox", async 
   assertEquals(s.rows.size, 0);
   assertEquals(p.posts.length, 0);
 });
+
+Deno.test("#3883 a test's verdict is read from the documented sandbox only", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  await call(s, p.fetchImpl, testBody);
+  const test = [...s.rows.values()][0];
+  test.external_id = "u-test";
+  s.config.base_url_uat = "https://elsewhere.test";
+  const asked = await read(
+    await call(s, p.fetchImpl, { workspace_id: WS, action: "status", transmission_id: test.id }),
+  );
+  assertEquals(asked.status, 409);
+  assertEquals(asked.body.error, "sandbox_not_documented");
+  assertEquals(test.verdict, {});
+});
