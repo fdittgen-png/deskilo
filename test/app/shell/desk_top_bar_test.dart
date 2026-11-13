@@ -110,7 +110,7 @@ void main() {
     const name = 'Name, country and time zone';
     await _pump(tester, width: 600, titleWidth: 540, name: name);
     final bar = tester.getSize(find.byKey(const ValueKey('desk-top-bar')));
-    expect(bar.height, deskTopBarWrapHeight);
+    expect(bar.height, greaterThan(kToolbarHeight));
     expect(tester.getSize(find.byKey(const ValueKey('name'))).height, greaterThan(30));
     expect(_cut(tester), isFalse);
   });

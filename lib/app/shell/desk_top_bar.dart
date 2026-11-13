@@ -11,7 +11,7 @@ import 'shell_app_bar.dart';
 import 'shell_phone_bar.dart';
 
 /// The height of a bar whose title wraps to a second line.
-const double deskTopBarWrapHeight = 80;
+const double _wrapHeight = 80;
 
 /// The desk's top bar: the title as [title] says it (given whether it must
 /// wrap), [titleWidth] wide on one line, and the [controls] that fit.
@@ -53,7 +53,7 @@ class DeskTopBar extends StatelessWidget implements PreferredSizeWidget {
       return AppBar(
         key: const ValueKey('desk-top-bar'),
         automaticallyImplyLeading: false,
-        toolbarHeight: wraps ? deskTopBarWrapHeight : null,
+        toolbarHeight: wraps ? _wrapHeight : null,
         title: title(wraps: wraps),
         actions: fit.overflow.isEmpty
             ? shown
