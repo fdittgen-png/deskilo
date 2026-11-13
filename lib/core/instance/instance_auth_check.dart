@@ -74,6 +74,32 @@ List<DoctorFinding> checkInstanceAuthConfig(
             : 'mailer_autoconfirm is OFF — every new account must click a '
                   'link, so the Site URL above has to be right',
       ),
-    );
+    )
+    ..addAll(_checkSignInBaseline(config, command));
   return findings;
+}
+
+/// #3904 — codes, passwords and a password change against the baseline the
+/// builder sets ([InstanceAuthConfig.signInBaseline]). A setting this Auth
+/// version does not report is not judged.
+List<DoctorFinding> _checkSignInBaseline(Map<String, Object?> config, String command) {
+  final otp = config['mailer_otp_exp'];
+  final length = config['password_min_length'];
+  final reauth = config['security_update_password_require_reauthentication'];
+  DoctorFinding warn(DoctorWords words, Object? value) => DoctorFinding.typed(
+      DoctorLevel.warn, words, facts: ['$value', command, InstanceAuthConfig.minPasswordLength]);
+  final weak = [
+    if (otp is int && otp > InstanceAuthConfig.otpLifetimeLimitSeconds)
+      warn(DoctorWords.authCodesLong, otp),
+    if (length is int && length < InstanceAuthConfig.minPasswordLength)
+      warn(DoctorWords.authPasswordShort, length),
+    if (reauth == false) warn(DoctorWords.authReauthOff, reauth),
+  ];
+  final judged = otp is int && length is int && reauth is bool;
+  return [
+    ...weak,
+    if (weak.isEmpty && judged)
+      const DoctorFinding.typed(DoctorLevel.ok, DoctorWords.authBaseline,
+          facts: [InstanceAuthConfig.minPasswordLength]),
+  ];
 }

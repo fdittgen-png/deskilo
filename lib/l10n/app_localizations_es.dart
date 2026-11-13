@@ -1431,7 +1431,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authPasswordLabel => 'Contraseña';
 
   @override
-  String get authPasswordTooShort => 'Al menos 8 caracteres';
+  String authPasswordTooShort(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Al menos $length caracteres',
+      one: 'Al menos $length carácter',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -13782,6 +13790,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceDoctorAttention => 'Requiere atención';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'los códigos duran como máximo una hora, las contraseñas tienen al menos $length caracteres, un cambio de contraseña pide volver a iniciar sesión',
+      one:
+          'los códigos duran como máximo una hora, las contraseñas tienen al menos $length carácter, un cambio de contraseña pide volver a iniciar sesión',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Base de inicio de sesión';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'Los códigos de inicio de sesión duran más de una hora';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'valor  $value\n        Solución: $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Las contraseñas pueden tener menos de $length caracteres',
+      one: 'Las contraseñas pueden tener menos de $length carácter',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'Un cambio de contraseña no pide volver a iniciar sesión';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Sin security_invoker, la vista lee con los derechos del propietario y esquiva las políticas de las tablas que hay debajo.';
   }
@@ -13913,6 +13961,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Políticas';
 
   @override
+  String get instanceDoctorProbePush => 'Configuración de notificaciones';
+
+  @override
   String get instanceDoctorProbeRoles => 'Roles de la instalación';
 
   @override
@@ -13929,6 +13980,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Protegido';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Solución: dart run tool/instance.dart push --ref <ref>, o apunte push_config a este proyecto.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Las llamadas de notificación y de liquidación van a otro proyecto';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'las llamadas de notificación y de liquidación van a este proyecto ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Configuración de notificaciones';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {

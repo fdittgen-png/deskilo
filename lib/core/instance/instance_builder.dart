@@ -80,7 +80,24 @@ abstract final class InstanceAuthConfig {
         // linking gotrue refuses linkIdentity and the app can only say
         // the provider "is not enabled on the server".
         'security_manual_linking_enabled': true,
+        ...signInBaseline,
       };
+
+  /// #3904 — the sign-in baseline every instance carries.
+  static const int minPasswordLength = 10;
+  static const int otpLifetimeSeconds = 900;
+  static const int otpLifetimeLimitSeconds = 3600;
+  static const Map<String, Object?> signInBaseline = {
+    'password_min_length': minPasswordLength,
+    'security_update_password_require_reauthentication': true,
+    'mailer_otp_exp': otpLifetimeSeconds,
+    'mailer_otp_length': 8,
+    'mailer_secure_email_change_enabled': true,
+    'security_refresh_token_reuse_interval': 10,
+    'refresh_token_rotation_enabled': true,
+    'rate_limit_otp': 30,
+    'rate_limit_verify': 30,
+  };
 }
 
 /// A step's progress: how many of [total] are done and the name of the
@@ -416,4 +433,32 @@ on conflict (version) do nothing;
   /// The endpoint the devices will use.
   Future<({String url, String key})> endpointOf(String ref) async =>
       (url: 'https://$ref.supabase.co', key: await api.publishableKey(ref));
+
+  /// #3904 — a project reference as Supabase issues it.
+  static final RegExp projectRef = RegExp(r'^[a-z0-9]{20}$');
+
+  /// #3904 — the row the server's push and settlement calls read: this
+  /// project's own functions and publishable key.
+  static String pushConfigSql(String ref, String publishableKey) {
+    if (!projectRef.hasMatch(ref)) {
+      throw InstanceStepFailure('push', 'not a project reference: $ref');
+    }
+    return '''
+insert into public.push_config (id, functions_url, anon_key)
+values (true, ${_quote('https://$ref.supabase.co/functions/v1')}, ${_quote(publishableKey)})
+on conflict (id) do update
+  set functions_url = excluded.functions_url, anon_key = excluded.anon_key;
+''';
+  }
+
+  /// #3904 — after the schema: the server calls this project's functions.
+  /// Run again on an existing instance, it sets the row the same way.
+  Future<void> configurePush(String ref) async {
+    try {
+      await api.runSql(ref, pushConfigSql(ref, await api.publishableKey(ref)));
+    } on ManagementApiException catch (e, st) {
+      // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
+      Error.throwWithStackTrace(InstanceStepFailure('push', e.message), st);
+    }
+  }
 }

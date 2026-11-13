@@ -56,7 +56,7 @@ class FakeSupabaseManagement implements SupabaseManagement {
   }) async {
     _auth();
     final p = (
-      ref: 'ref${projects.length + 1}',
+      ref: 'ref${projects.length + 1}'.padRight(20, 'x'),
       name: name,
       organizationId: organizationId,
       region: region,

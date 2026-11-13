@@ -126,7 +126,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(auth.confirmedResets, isEmpty);
-    expect(find.text('At least 8 characters'), findsOneWidget);
+    expect(find.text('At least 10 characters'), findsOneWidget);
   });
 
   testWidgets('a rate-limited request stays on the e-mail step and says so',
