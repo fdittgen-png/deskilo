@@ -10,5 +10,30 @@
   "kitScrollForward": "Scroll forward",
   "@kitScrollForward": {
     "description": "Tooltip of the arrow on a sideways strip that pages it on towards its end; shown only while a mouse is the pointer."
+  },
+  "kitCopy": "Copy",
+  "@kitCopy": {
+    "description": "Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer."
+  },
+  "kitCopyValue": "Copy {value}",
+  "@kitCopyValue": {
+    "description": "Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.",
+    "placeholders": {
+      "value": {
+        "type": "String"
+      }
+    }
+  },
+  "kitCopied": "Copied to the clipboard",
+  "@kitCopied": {
+    "description": "Confirmation shown after a value was copied to the clipboard."
+  },
+  "shellBarHideAction": "Hide the navigation bar",
+  "@shellBarHideAction": {
+    "description": "Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611)."
+  },
+  "shellBarShowAction": "Show the navigation bar",
+  "@shellBarShowAction": {
+    "description": "Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611)."
   }
 }

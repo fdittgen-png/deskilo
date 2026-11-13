@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'notched_bar_border.dart';
 import 'shell_bar_collapse.dart';
 import 'shell_bar_double_tap.dart';
+import 'shell_bar_toggle.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_center_button.dart';
 import 'shell_swipe_coach_mark.dart';
@@ -336,6 +337,12 @@ class ShellBottomBar extends ConsumerWidget {
                 ref.read(shellSwipeCoachSeenProvider.notifier).markSeen(),
               ),
             ),
+          // #3611 — the visible way to hide and show the bar, for a mouse.
+          Positioned(
+            right: 4,
+            bottom: lerpDouble(shown - ShellBarToggle.size, 0, t),
+            child: const ShellBarToggle(),
+          ),
           // The raised Reserve action. Horizontally centred and
           // vertically CONTINUOUS — this is the anchor the eye follows
           // through the whole transition, and the one piece of chrome

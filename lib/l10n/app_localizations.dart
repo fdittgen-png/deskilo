@@ -27283,6 +27283,24 @@ abstract class AppLocalizations {
   /// **'Working…'**
   String get kitActionBusy;
 
+  /// Confirmation shown after a value was copied to the clipboard.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied to the clipboard'**
+  String get kitCopied;
+
+  /// Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy'**
+  String get kitCopy;
+
+  /// Screen-reader name of the copy button beside a value: the action and the value it copies. {value} is the value as shown, never a count.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy {value}'**
+  String kitCopyValue(String value);
+
   /// Tooltip of the arrow on a sideways strip that pages it back towards its start; shown only while a mouse is the pointer.
   ///
   /// In en, this message translates to:
@@ -48905,11 +48923,23 @@ abstract class AppLocalizations {
   /// **'Navigation bar hidden'**
   String get shellBarHiddenAnnounce;
 
+  /// Tooltip and name of the visible button that hides the bottom navigation bar for a full-screen view; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Hide the navigation bar'**
+  String get shellBarHideAction;
+
   /// Semantics hint on the Reserve button while the bar shows (#1173)
   ///
   /// In en, this message translates to:
   /// **'Long-press for a full-screen view'**
   String get shellBarHideHint;
+
+  /// Tooltip and name of the visible button that brings the hidden bottom navigation bar back; shown while a mouse is the pointer (#3611).
+  ///
+  /// In en, this message translates to:
+  /// **'Show the navigation bar'**
+  String get shellBarShowAction;
 
   /// Semantics hint on the Reserve button while the bar is hidden (#1173)
   ///

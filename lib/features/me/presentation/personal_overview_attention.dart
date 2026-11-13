@@ -18,6 +18,7 @@ import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
+import '../../../core/ui/kit/copy_value.dart';
 import '../../../core/ui/personal_kit/me_kit_metrics.dart';
 import '../../../core/ui/private_value.dart';
 import '../../directory/domain/inbox_composition.dart';
@@ -287,6 +288,10 @@ class _Amount extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final d = document;
+    final shown = ref
+        .watch(personalFormatProvider)
+        .moneyNamed(d.currency)
+        .formatMinor(d.remainingCents);
     return Padding(
       padding: const EdgeInsetsDirectional.only(
         start: MeKitMetrics.tile + MeKitMetrics.gap,
@@ -297,12 +302,8 @@ class _Amount extends ConsumerWidget {
         hiddenLabel: l10n.financesAmountHidden,
         showLabel: l10n.financesShowAmount,
         hideLabel: l10n.financesHideAmount,
-        child: Text(
-          ref
-              .watch(personalFormatProvider)
-              .moneyNamed(d.currency)
-              .formatMinor(d.remainingCents),
-        ),
+        // #3611 — the copy button is built inside the revealed subtree.
+        child: CopyValue(value: shown, child: Text(shown)),
       ),
     );
   }

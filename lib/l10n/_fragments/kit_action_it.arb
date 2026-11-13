@@ -1,5 +1,10 @@
 {
   "kitActionBusy": "In corso…",
   "kitScrollBack": "Scorri indietro",
-  "kitScrollForward": "Scorri avanti"
+  "kitScrollForward": "Scorri avanti",
+  "kitCopy": "Copia",
+  "kitCopyValue": "Copia {value}",
+  "kitCopied": "Copiato negli appunti",
+  "shellBarHideAction": "Nascondi la barra di navigazione",
+  "shellBarShowAction": "Mostra la barra di navigazione"
 }
