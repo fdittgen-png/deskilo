@@ -16,6 +16,8 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/kit/dashboard_grid.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/add_purchase_button.dart';
 import 'accounting_status.dart';
@@ -117,7 +119,15 @@ class CashHubScreen extends ConsumerWidget {
             style: Theme.of(context).textTheme.bodySmall,
           ),
           const SizedBox(height: AppSpacing.sm),
-          ...doors,
+          // #3627 — at the desk the doors are a grid of cards; no figure is
+          // read here, so none is shown.
+          if (WindowClass.of(context).index >= WindowClass.expanded.index)
+            DashboardGrid(
+              minTileWidth: KitMetrics.doorMinWidth,
+              children: [for (final door in doors) Card(child: door)],
+            )
+          else
+            ...doors,
         ],
       ),
     );
