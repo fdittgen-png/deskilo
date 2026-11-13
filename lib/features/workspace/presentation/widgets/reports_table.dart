@@ -37,7 +37,10 @@ class ReportsTable extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // The table keeps three fifths of the page; the tools under it take
+        // what they need of the rest and scroll inside it when opened.
         Expanded(
+          flex: 3,
           child: RecordsTable<ReportPage>(
             tableId: 'reports',
             rows: pages,
@@ -86,10 +89,15 @@ class ReportsTable extends StatelessWidget {
           ),
         ),
         if (tools.isNotEmpty)
-          ExpansionTile(
-            key: const ValueKey('reports-tools'),
-            title: Text(l.reportsTools),
-            children: tools,
+          Flexible(
+            flex: 2,
+            child: SingleChildScrollView(
+              child: ExpansionTile(
+                key: const ValueKey('reports-tools'),
+                title: Text(l.reportsTools),
+                children: tools,
+              ),
+            ),
           ),
       ],
     );
