@@ -85,4 +85,29 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('records-row-r149')), findsOneWidget);
   });
+
+  testWidgets('150 rows: Tab leaves the table after a few stops, the context-menu key '
+      'opens the actions of the row the arrows stand on', (tester) async {
+    SharedPreferences.setMockInitialValues({});
+    await pumpApp(
+      tester,
+      Scaffold(body: _table()),
+      size: const Size(1200, 800),
+    );
+    await connectMouse(tester);
+    final stops = <FocusNode>{};
+    for (var i = 0; i < 12; i++) {
+      await tester.sendKeyEvent(LogicalKeyboardKey.tab);
+      await tester.pump();
+      stops.add(FocusManager.instance.primaryFocus!);
+    }
+    // The filter, the header, the rows: then it wraps.
+    expect(stops.length, lessThan(8));
+    await tester.tap(find.byKey(const ValueKey('records-row-r0')));
+    await tester.pumpAndSettle();
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowDown);
+    await tester.sendKeyEvent(LogicalKeyboardKey.contextMenu);
+    await tester.pumpAndSettle();
+    expect(find.text('Remind'), findsOneWidget);
+  });
 }

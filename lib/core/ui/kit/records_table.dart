@@ -23,6 +23,7 @@ import '../adaptive/window_class.dart';
 import 'list_detail_open.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
+import 'row_menu.dart';
 
 export 'records_table_model.dart';
 
@@ -113,6 +114,8 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     columns: widget.columns,
   )..rowsChanged(widget.rows, chips: widget.chips, columns: widget.columns);
   bool _touch = false;
+  final _scroll = ScrollController();
+  final _menus = <String, GlobalKey<RowMenuState>>{};
   final _filter = TextEditingController();
   final _filterFocus = FocusNode();
   final _rowsFocus = FocusNode();
@@ -163,6 +166,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     _filter.dispose();
     _filterFocus.dispose();
     _rowsFocus.dispose();
+    _scroll.dispose();
     super.dispose();
   }
 
@@ -328,7 +332,15 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       child: Actions(
         actions: recordsActions(
           focusFilter: _filterFocus.requestFocus,
-          move: _c.move,
+          move: (by) {
+            _c.move(by);
+            _reveal(shown.length, rowHeight);
+          },
+          rowMenu: () {
+            if (focusedRow() case final r?) {
+              unawaited(_menus[widget.keyOf(r)]?.currentState?.open());
+            }
+          },
           open: () {
             if (focusedRow() case final r?) widget.onOpen(r);
           },
@@ -363,6 +375,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
               const Divider(height: 1),
               Expanded(
                 child: ListView.separated(
+                  controller: _scroll,
                   itemCount: shown.length,
                   separatorBuilder: (_, _) => const Divider(height: 1),
                   itemBuilder: (context, i) {
@@ -384,6 +397,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                       focused: _rowsFocus.hasFocus && i == _c.focused,
                       minHeight: rowHeight,
                       selectable: _selectable,
+                      menuKey: _menus.putIfAbsent(key, GlobalKey.new),
                     );
                   },
                 ),
@@ -393,6 +407,19 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
         ),
       ),
     );
+  }
+
+  /// The row the arrows stand on stays in view: rows are a fixed height.
+  void _reveal(int count, double rowHeight) {
+    if (!_scroll.hasClients || count == 0) return;
+    final extent = rowHeight + 1; // content-fit: a row and its divider
+    final top = _c.focused.clamp(0, count - 1) * extent;
+    final p = _scroll.position;
+    if (top < p.pixels) {
+      _scroll.jumpTo(top);
+    } else if (top + extent > p.pixels + p.viewportDimension) {
+      _scroll.jumpTo(top + extent - p.viewportDimension);
+    }
   }
 
   Widget _cards(List<T> shown) => ListView.separated(
