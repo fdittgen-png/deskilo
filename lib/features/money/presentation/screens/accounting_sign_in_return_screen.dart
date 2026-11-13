@@ -86,17 +86,19 @@ class _AccountingSignInReturnScreenState
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final outcome = _outcome;
-    // On the desk the breadcrumb already says this place: a bar holding
-    // only that name would be an empty strip, so the page draws none and
-    // still tells its name (the title draws nothing there).
-    final title = l10n.hubAccountingTitle;
-    final named = PageTitle.repeatsPlace(context, title);
     return Scaffold(
-      appBar: named ? null : AppBar(title: PageTitle(title)),
+      // The page is reached by a link, with no page behind it: its bar
+      // carries the way back to Accounting.
+      appBar: AppBar(
+        leading: BackButton(
+          key: const ValueKey('accounting-sign-in-bar-back'),
+          onPressed: () => context.go('/money/accounting'),
+        ),
+        title: PageTitle(l10n.hubAccountingTitle),
+      ),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [
-          if (named) PageTitle(title),
           if (outcome == null)
             Semantics(
               key: const ValueKey('accounting-sign-in-completing'),
