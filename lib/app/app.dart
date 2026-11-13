@@ -6,7 +6,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/demo/demo_entry.dart';
-import '../core/demo/presentation/demo_workspace.dart';
+import '../core/demo/demo_loader.dart';
+import '../core/demo/presentation/demo_environment.dart';
 import '../core/l10n/context_l10n.dart';
 import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
@@ -48,7 +49,7 @@ class DeskiloRoot extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) =>
       ref.watch(demoEntryProvider)
-          ? const DemoWorkspace(child: DeskiloApp())
+          ? const DemoGate(child: DeskiloApp())
           : const DeskiloApp();
 }
 
