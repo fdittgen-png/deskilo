@@ -360,7 +360,7 @@ void main() {
         .where((s) => s.contains('operator_enrol_installation('))
         .single;
     expect(call, contains("'00000000-0000-4000-8000-0000002562b1'::uuid, "
-        "'https://ref2.supabase.co', 'sb_publishable_ref2_key'"));
+        "'https://ref2xxxxxxxxxxxxxxxx.supabase.co', 'sb_publishable_ref2xxxxxxxxxxxxxxxx_key'"));
     expect(find.byKey(const ValueKey('instance-enrol-done')), findsOneWidget);
     expect(find.text('Enrolled at Home project.'), findsOneWidget);
     await _tap(tester, 'wizard-next');
