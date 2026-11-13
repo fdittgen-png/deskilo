@@ -13,7 +13,7 @@ import 'fixture_clock.dart';
 
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
 /// and the RPC state checks (fakes over mocks).
-class FakeReservationRepository implements ReservationRepository {
+class FakeReservationRepository with ReadsLeaveNothingOut implements ReservationRepository {
   /// [_actor] — #1565: the signed-in member, READ on every call instead
   /// of captured once. Demo passes its fixture's active member, so a
   /// persona switch re-attributes the bookings that follow it; the

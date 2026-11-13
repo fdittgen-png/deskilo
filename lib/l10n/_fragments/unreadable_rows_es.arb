@@ -1,0 +1,7 @@
+{
+  "unreadableRowsNotice": "{count, plural, one{No se pudo mostrar 1 entrada: esta versión de la aplicación no la conoce. Actualiza la aplicación para verla.} other{No se pudieron mostrar {count} entradas: esta versión de la aplicación no las conoce. Actualiza la aplicación para verlas.}}",
+  "journalUnreadableEntries": "{count, plural, one{Los libros contienen 1 asiento que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.} other{Los libros contienen {count} asientos que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.}}",
+  "bookRoleMappedUnreadable": "Asignado a una cuenta que esta versión de la aplicación no puede leer.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.} other{{count} reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.}}",
+  "reservationUnreadable": "Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla."
+}
