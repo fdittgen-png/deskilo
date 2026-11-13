@@ -7668,6 +7668,7 @@
   "financesCoverageAnswered": "Leído desde {host}",
   "financesCoverageHome": "su instalación principal",
   "financesCoverageNoDocuments": "ningún documento",
+  "financesCoverageOlderSettled": "Los documentos pagados más antiguos no se listan; todo lo que queda por pagar, sí.",
   "financesCoverageReading": "Leyendo {host}…",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 documento} other{{count} documentos}}",
   "financesDevSection": "Espacios de desarrollo — datos de prueba, no contados arriba",

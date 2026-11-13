@@ -4,5 +4,6 @@
   "financesAmountMasked": "{currency} ••••",
   "financesAmountHidden": "Importo nascosto",
   "financesShowAmount": "Mostra l'importo",
-  "financesHideAmount": "Nascondi l'importo"
+  "financesHideAmount": "Nascondi l'importo",
+  "financesCoverageOlderSettled": "I documenti pagati più vecchi non sono elencati; tutto ciò che resta da pagare sì."
 }
