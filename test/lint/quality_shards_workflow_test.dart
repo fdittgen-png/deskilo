@@ -161,11 +161,11 @@ void main() {
     for (final id in [..._shardJobs.values, 'static']) {
       expect(gate, contains('needs.$id.result'));
     }
-    for (final step in const ['plan', 'rows', 'lcov', 'coverage']) {
+    for (final step in const ['plan', 'rows', 'lcov', 'coverage', 'countrycov']) {
       expect(gate, contains('steps.$step.outcome'));
     }
     final steps = (code['steps'] as YamlList).cast<YamlMap>();
-    for (final id in const ['plan', 'rows', 'lcov', 'coverage']) {
+    for (final id in const ['plan', 'rows', 'lcov', 'coverage', 'countrycov']) {
       expect(steps.firstWhere((s) => s['id'] == id)['if'], 'always()');
     }
     expect(_run(code), contains('quality_rows.dart'));

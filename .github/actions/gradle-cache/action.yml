@@ -1,0 +1,59 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+#
+# #3473 -- Gradle from a cache, checked against the repository's digest. A
+# release-CDN 504 (a Gradle distribution, a Kotlin compiler artifact) reddened
+# an Android run on a download, not on code. Two separate cache entries, so
+# discarding one never takes the other:
+#
+#   1. the pinned DISTRIBUTION ARCHIVE. scripts/install_gradle.sh compares it
+#      with `distributionSha256Sum` of gradle-wrapper.properties on every run,
+#      restored or downloaded (the wrapper checks that digest only when it
+#      downloads), and rebuilds the wrapper's directory from the verified
+#      archive. A bad cached archive is replaced by a fresh download.
+#   2. the DEPENDENCY cache (~/.gradle/caches: Maven and Kotlin compiler
+#      artifacts). An availability optimisation, NOT an integrity control: the
+#      build resolves anything missing from the network as it did before. Per
+#      caller (input `dependencies`):
+#        save    restore, and save at the job's end (android-boot on master).
+#        restore restore only (fdroid-foss).
+#        none    the verified distribution only: dev-apk, play-internal and
+#                fdroid-release, whose output is installed or signed, restore
+#                no dependency cache.
+#
+# The caller checks the repository out and sets up Java first, and calls this
+# action only when the checked-out tree holds it (see the callers).
+name: pinned Gradle
+description: Restore the digest-pinned Gradle distribution (and optionally the dependency cache)
+
+inputs:
+  dependencies:
+    description: "save | restore | none, the policy for the dependency cache"
+    default: none
+
+runs:
+  using: composite
+  steps:
+    - name: Restore the pinned Gradle distribution
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/deskilo-toolchain/gradle
+        key: toolchain-gradle-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}
+    - name: Verify the Gradle distribution and place it where the wrapper looks
+      shell: bash
+      run: >
+        bash scripts/install_gradle.sh android/gradle/wrapper/gradle-wrapper.properties
+        "$HOME/.gradle" "$HOME/.cache/deskilo-toolchain/gradle"
+    - name: Restore and save the Gradle dependency cache
+      if: inputs.dependencies == 'save'
+      uses: actions/cache@v4
+      with:
+        path: ~/.gradle/caches
+        key: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('pubspec.lock') }}
+        restore-keys: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-
+    - name: Restore the Gradle dependency cache
+      if: inputs.dependencies == 'restore'
+      uses: actions/cache/restore@v4
+      with:
+        path: ~/.gradle/caches
+        key: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-${{ hashFiles('pubspec.lock') }}
+        restore-keys: gradle-deps-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('android/gradle/wrapper/gradle-wrapper.properties') }}-
