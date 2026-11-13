@@ -37,6 +37,13 @@ enum PostingBlock {
   /// A document in another currency than the space's with no exchange
   /// rate recorded for it, named `reference (currency)`.
   missingRate,
+
+  /// #3884 -- entries (or a block) this build does not know: a role, a kind,
+  /// a journal or a block a newer server sends. The subject names the
+  /// document. The entry is left out of the postings and, because a total
+  /// without it would be wrong, every export refuses (a closing is the
+  /// server's and reads no client postings).
+  unreadable,
 }
 
 class PostingBlocker {
@@ -162,60 +169,108 @@ class PostingSet {
   const PostingSet(this.postings, this.blockers);
 
   /// The server's answer (`compute_postings`, 0518).
+  ///
+  /// #3884 -- an entry with a role, kind or journal this build does not know
+  /// is not guessed and does not fail the answer: it is left out and
+  /// replaced by one [PostingBlock.unreadable] blocker naming its document,
+  /// so the entries that can be read are returned while every export
+  /// refuses. A malformed entry is still a shape error.
   factory PostingSet.fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'compute_postings');
-    return PostingSet(
-      [for (final p in r.list('postings')) _postingFromJson(p)],
-      [
-        for (final b in r.list('blockers'))
-          _blockerFromJson(JsonReader.of(b, context: 'posting blocker')),
-      ],
-    );
+    final blockers = <PostingBlocker>[];
+    final postings = <Posting>[];
+    for (final p in r.list('postings')) {
+      final read = _postingFromJson(p);
+      if (read.posting != null) {
+        postings.add(read.posting!);
+      } else {
+        blockers.add(PostingBlocker(PostingBlock.unreadable, read.document));
+      }
+    }
+    for (final b in r.list('blockers')) {
+      blockers.add(_blockerFromJson(JsonReader.of(b, context: 'posting blocker')));
+    }
+    return PostingSet(postings, blockers);
   }
 
   final List<Posting> postings;
   final List<PostingBlocker> blockers;
+
+  /// How many entries (or blocks) this build could not read.
+  int get unreadable =>
+      blockers.where((b) => b.block == PostingBlock.unreadable).length;
 }
 
-PostingBlocker _blockerFromJson(JsonReader r) => PostingBlocker(
-  PostingBlock.values.byName(r.string('block')),
-  r.string('subject'),
-);
+PostingBlocker _blockerFromJson(JsonReader r) {
+  final wire = r.string('block');
+  final subject = r.string('subject');
+  final block = PostingBlock.values.asNameMap()[wire];
+  return block == null || block == PostingBlock.unreadable
+      ? PostingBlocker(PostingBlock.unreadable, subject)
+      : PostingBlocker(block, subject);
+}
 
-Posting _postingFromJson(Object? raw) {
+({Posting? posting, String document}) _postingFromJson(Object? raw) {
   final r = JsonReader.of(raw, context: 'posting');
   final currency = r.string('currency');
   final original = r.stringOrNull('original_currency');
-  return Posting(
-    journal: PostingJournal.values.byName(r.string('journal')),
-    date: r.dateTime('date'),
-    kind: PostingKind.values.firstWhere((k) => k.wire == r.string('kind')),
-    documentId: r.string('document_id'),
-    documentNumber: r.string('document_number'),
-    valueDate: r.dateTimeOrNull('value_date'),
-    bankReference: r.stringOr('bank_reference'),
-    lines: [
-      for (final l in r.list('lines'))
-        _lineFromJson(
-          JsonReader.of(l, context: 'posting line'),
-          currency,
-          original,
-        ),
-    ],
+  final documentId = r.string('document_id');
+  final journalWire = r.string('journal');
+  final kindWire = r.string('kind');
+  final date = r.dateTime('date');
+  final documentNumber = r.string('document_number');
+  final valueDate = r.dateTimeOrNull('value_date');
+  final bankReference = r.stringOr('bank_reference');
+  final lines = [
+    for (final l in r.list('lines'))
+      _lineFromJson(JsonReader.of(l, context: 'posting line'), currency, original),
+  ];
+  final journal = PostingJournal.values.asNameMap()[journalWire];
+  PostingKind? kind;
+  for (final k in PostingKind.values) {
+    if (k.wire == kindWire) kind = k;
+  }
+  if (journal == null || kind == null || lines.any((l) => l == null)) {
+    return (posting: null, document: documentId);
+  }
+  return (
+    posting: Posting(
+      journal: journal,
+      date: date,
+      kind: kind,
+      documentId: documentId,
+      documentNumber: documentNumber,
+      valueDate: valueDate,
+      bankReference: bankReference,
+      lines: [for (final l in lines) l!],
+    ),
+    document: documentId,
   );
 }
 
-PostingLine _lineFromJson(JsonReader r, String currency, String? original) =>
-    PostingLine(
-      role: BookRole.fromWire(r.string('role')),
-      qualifier: r.stringOrNull('qualifier'),
-      accountCode: r.string('account_code'),
-      debit: AccountingAmount(currency, r.integer('debit_cents')),
-      credit: AccountingAmount(currency, r.integer('credit_cents')),
-      original: original == null
-          ? null
-          : AccountingAmount(original, r.integer('original_cents')),
-    );
+/// The line, or null when its role is one this build does not know.
+PostingLine? _lineFromJson(JsonReader r, String currency, String? original) {
+  final role = BookRole.tryFromWire(r.string('role'));
+  final line = (
+    qualifier: r.stringOrNull('qualifier'),
+    accountCode: r.string('account_code'),
+    debit: AccountingAmount(currency, r.integer('debit_cents')),
+    credit: AccountingAmount(currency, r.integer('credit_cents')),
+    original: original == null
+        ? null
+        : AccountingAmount(original, r.integer('original_cents')),
+  );
+  return role == null
+      ? null
+      : PostingLine(
+          role: role,
+          qualifier: line.qualifier,
+          accountCode: line.accountCode,
+          debit: line.debit,
+          credit: line.credit,
+          original: line.original,
+        );
+}
 
 /// #2376 (0525) — the third party of a posted document: the member of an
 /// invoice or of a receipt, the supplier of a bill, by number and name. The

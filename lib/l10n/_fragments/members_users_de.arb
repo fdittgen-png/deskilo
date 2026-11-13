@@ -1,0 +1,9 @@
+{
+  "@@locale": "de",
+  "membersChipUsers": "Können sich anmelden",
+  "membersChipManaged": "Verwaltete Profile",
+  "membersBulkGiveRole": "{count, plural, one{1 Mitglied} other{{count} Mitgliedern}} eine Rolle geben",
+  "membersRoleGiven": "Rolle vergeben",
+  "membersRoleHeld": "Hat diese Rolle bereits",
+  "membersGiveRoleChoose": "Welche Rolle? Jedes Mitglied wird einzeln geprüft; wer sie nicht erhalten kann, wird mit dem Grund aufgeführt."
+}

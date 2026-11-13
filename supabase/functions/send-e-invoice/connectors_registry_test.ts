@@ -97,7 +97,12 @@ Deno.test("a document in a syntax the provider does not take is refused before a
 });
 
 Deno.test("the generic upload has no status read-back", async () => {
-  const out = await status("generic", {}, "ext-1");
+  let calls = 0;
+  const out = await status("generic", {}, "ext-1", () => {
+    calls++;
+    return Promise.resolve(new Response(""));
+  });
+  assertEquals(calls, 0);
   assertEquals(out.status, "failed");
   assertEquals(out.detail, "the generic upload has no status read-back");
   assertEquals(out.externalId, "ext-1");

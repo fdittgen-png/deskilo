@@ -603,7 +603,7 @@
   },
   "authNetworkError": "Impossibile raggiungere il server. Controlli la connessione e riprovi.",
   "authPasswordLabel": "Password",
-  "authPasswordTooShort": "Almeno 8 caratteri",
+  "authPasswordTooShort": "{length, plural, one{Almeno {length} carattere} other{Almeno {length} caratteri}}",
   "authProviderDisabled": "Questo metodo di accesso è disattivato su questo server.",
   "authRateLimited": "Troppi tentativi. Attenda un momento, poi riprovi.",
   "authRecoveryNotSaved": "Il codice è stato accettato, ma la nuova password non è stata salvata. Riprovi a salvarla.",
@@ -3075,6 +3075,7 @@
   "bookRoleExpenses": "Costi",
   "bookRoleFees": "Commissioni del fornitore di pagamenti",
   "bookRoleFixedAssets": "Immobilizzazioni (attrezzature)",
+  "bookRoleMappedUnreadable": "Associato a un conto che questa versione dell'app non può leggere.",
   "bookRolePrepayments": "Risconti attivi",
   "bookRoleRevenue": "Ricavi",
   "bookRoleStock": "Rimanenze (merci)",
@@ -8458,6 +8459,12 @@
   },
   "instanceDoctorAllHealthy": "Tutto ciò che è stato controllato è in salute.",
   "instanceDoctorAttention": "Richiede attenzione",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{i codici durano al massimo un'ora, le password hanno almeno {length} carattere, un cambio di password chiede di accedere di nuovo} other{i codici durano al massimo un'ora, le password hanno almeno {length} caratteri, un cambio di password chiede di accedere di nuovo}}",
+  "instanceDoctorAuthBaselineTitle": "Base di accesso",
+  "instanceDoctorAuthCodesLongTitle": "I codici di accesso durano più di un'ora",
+  "instanceDoctorAuthFixDetail": "valore  {value}\n        Rimedio: {command}",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Le password possono avere meno di {length} carattere} other{Le password possono avere meno di {length} caratteri}}",
+  "instanceDoctorAuthReauthOffTitle": "Un cambio di password non chiede di accedere di nuovo",
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Senza security_invoker la vista legge con i diritti del proprietario e aggira le policy delle tabelle sottostanti.",
   "instanceDoctorGuardAnonViewTitle": "Una vista leggibile da anon viene eseguita come il suo proprietario",
   "instanceDoctorGuardDefinerDetail": "{names}\n        Viene eseguita come proprietario; un search_path non fissato lascia decidere al chiamante quale tabella indichino i suoi nomi non qualificati.",
@@ -8481,12 +8488,17 @@
   "instanceDoctorProbeFailedTitle": "Interrogazione «{probe}» non riuscita",
   "instanceDoctorProbeHardening": "Hardening",
   "instanceDoctorProbePolicies": "Policy",
+  "instanceDoctorProbePush": "Configurazione delle notifiche",
   "instanceDoctorProbeRoles": "Ruoli dell'installazione",
   "instanceDoctorProbeSchema": "Schema",
   "instanceDoctorProbeSecurity": "Sicurezza",
   "instanceDoctorProbeSignups": "Registrazioni",
   "instanceDoctorProbeStorage": "Ambito dell'archiviazione",
   "instanceDoctorProtected": "Protetto",
+  "instanceDoctorPushForeignDetail": "{host}\n        Rimedio: dart run tool/instance.dart push --ref <ref>, oppure imposti push_config su questo progetto.",
+  "instanceDoctorPushForeignTitle": "Le chiamate di notifica e di regolamento vanno a un altro progetto",
+  "instanceDoctorPushOwnDetail": "le chiamate di notifica e di regolamento vanno a questo progetto ({host})",
+  "instanceDoctorPushOwnTitle": "Configurazione delle notifiche",
   "instanceDoctorRolesUndeclaredDetail": "lo schema è anteriore alla colonna dei ruoli; l'installazione si comporta come combinata (casa personale e host di spazi) — {held}.\n        Rimedio: dart run tool/instance.dart install --ref <ref>",
   "instanceDoctorRolesUndeclaredTitle": "Ruoli dell'installazione non dichiarati",
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Esistono solo personal_home e workspace_host; operator_set_installation_roles scrive un insieme valido.",
@@ -10466,6 +10478,7 @@
   "journalSafTRefused": "Il file SAF-T non è stato redatto: {gaps}",
   "journalSageRefused": "Il file Sage 50 non è stato scritto: {reasons}",
   "journalSwissTaxCodes": "Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{I libri contengono 1 registrazione che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.} other{I libri contengono {count} registrazioni che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.}}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -12496,13 +12509,16 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkGiveRole": "Assegna un ruolo a {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkPause": "Sospendi {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkPlan": "Cambia il piano di {count, plural, one{1 membro} other{{count} membri}}",
   "membersBulkResume": "Riattiva {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeApply": "Applica",
   "membersChangeDone": "{changed, plural, =0{Nessuno modificato} one{1 modificato} other{{changed} modificati}} su {count, plural, one{1 membro} other{{count} membri}}",
   "membersChangeFromToday": "Si applica da oggi, {date}. Ogni membro viene modificato singolarmente; chi non può esserlo è elencato con il motivo e resta invariato.",
+  "membersChipManaged": "Profili gestiti",
   "membersChipOpen": "Con importo aperto",
+  "membersChipUsers": "Possono accedere",
   "membersColEmail": "E-mail",
   "membersColLastVisit": "Ultima visita",
   "membersColName": "Nome",
@@ -12510,6 +12526,7 @@
   "membersColPlanFee": "Costo del piano",
   "membersColStatus": "Stato",
   "membersFeeUnavailable": "Non disponibile: nessuna fascia tariffaria copre questa quota",
+  "membersGiveRoleChoose": "Quale ruolo? Ogni membro è verificato singolarmente; chi non può riceverlo è elencato con il motivo.",
   "membersInvite": "Invita un membro",
   "membersNoVisitSince": "Nessuna dal {date}",
   "membersOutcomeApplied": "Modificato",
@@ -12523,6 +12540,8 @@
   "membersOutcomeWrongStatus": "Non sospeso: non riattivato",
   "membersPlanNone": "Nessun piano",
   "membersPlansTitle": "Abbonamenti e piani",
+  "membersRoleGiven": "Ruolo assegnato",
+  "membersRoleHeld": "Ha già questo ruolo",
   "membersTabBookings": "Prenotazioni",
   "membersTabNotes": "Note",
   "membersTabPlan": "Piano",
@@ -13429,6 +13448,44 @@
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
   },
+  "permAllowsAccessProd": "Entrare nella produzione di una coppia sviluppo e produzione.",
+  "permAllowsApproveExpenses": "Approvare le spese presentate dai membri.",
+  "permAllowsApproveStockAdjustments": "Approvare la rettifica proposta da un inventario.",
+  "permAllowsDeployToDev": "Aggiornare lo spazio di sviluppo dalla produzione.",
+  "permAllowsDeployToProd": "Portare configurazione e dati anagrafici dallo sviluppo alla produzione.",
+  "permAllowsDesignDocuments": "Progettare modelli, testi e impaginazione dei documenti.",
+  "permAllowsExportData": "Esportare la contabilità, l'archivio, Excel e la configurazione.",
+  "permAllowsIssueInvoices": "Emettere fatture, abbinare i pagamenti e inviare solleciti.",
+  "permAllowsMakeReservations": "Prenotare, vedere le proprie prenotazioni e registrare ingressi e uscite.",
+  "permAllowsManageBilling": "Gestire fasce tariffarie, aliquote IVA, numerazioni e regole di fatturazione.",
+  "permAllowsManageConfiguration": "Modificare funzioni, ambiente, codice dello spazio, importazioni e ripristino.",
+  "permAllowsManageDocuments": "Gestire i link della biblioteca dei documenti.",
+  "permAllowsManageIntegrations": "Configurare i fornitori di pagamento, le credenziali di fatturazione elettronica e WhatsApp.",
+  "permAllowsManageLease": "Registrare la locazione dei locali: condizioni, storico e cessazione.",
+  "permAllowsManageMembers": "Invitare, sospendere e rimuovere membri e cambiare i loro abbonamenti.",
+  "permAllowsManageNegotiations": "Proporre o modificare l'accordo commerciale di un membro.",
+  "permAllowsManagePrivacy": "Decidere le richieste sui dati dei membri ed essere avvisati di un incidente.",
+  "permAllowsManagePurchases": "Registrare e collegare le fatture dei fornitori dello spazio.",
+  "permAllowsManageReservations": "Prenotare per altri, annullare, registrare ingressi e uscite e bloccare posti.",
+  "permAllowsManageRoles": "Cambiare i permessi di ogni ruolo e i ruoli propri dello spazio.",
+  "permAllowsManageServices": "Gestire servizi, pacchetti e fasce tariffarie.",
+  "permAllowsManageSites": "Gestire le sedi, la sede dei membri e la planimetria.",
+  "permAllowsManageStock": "Caricare, spostare e scaricare merci.",
+  "permAllowsManageValidation": "Stabilire quali richieste vanno approvate e da chi.",
+  "permAllowsOperateKiosk": "Configurare il chiosco e assegnare i badge.",
+  "permAllowsPaymentTermsEdit": "Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.",
+  "permAllowsRecordOutgoingPayments": "Registrare e annullare il pagamento a un membro per una richiesta approvata.",
+  "permAllowsUseMessages": "Usare conversazioni, il flusso degli avvisi e le notifiche.",
+  "permAllowsViewAnalytics": "Consultare i dati operativi dello spazio, come l'occupazione; né persone né denaro.",
+  "permAllowsViewCalendar": "Vedere il calendario.",
+  "permAllowsViewDirectory": "Vedere chi sono i membri.",
+  "permAllowsViewDocuments": "Vedere i documenti condivisi con il membro.",
+  "permAllowsViewFinances": "Consultare le finanze dello spazio: il libro mastro e la fatturazione.",
+  "permAllowsViewMyMoney": "Vedere il proprio conto, l'estratto e le fatture.",
+  "permAllowsViewNegotiations": "Consultare l'accordo commerciale di un membro.",
+  "permAllowsViewPersonalData": "Consultare e-mail, identità gestite e dati postali dei membri.",
+  "permAllowsViewStock": "Vedere il magazzino: cosa è dove, i lotti e i movimenti.",
+  "permAllowsWorkspaceSettings": "Modificare l'identità dello spazio, le regole di prenotazione e le funzioni.",
   "permApproveExpenses": "Approvare le spese",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
@@ -13509,6 +13566,14 @@
   "@permManageValidation": {
     "description": "Permission label (#513)"
   },
+  "permModuleConfiguration": "Configurazione",
+  "permModuleDocuments": "Documenti e rapporti",
+  "permModuleEnvironments": "Ambienti",
+  "permModuleEveryday": "Uso quotidiano",
+  "permModuleMoney": "Denaro",
+  "permModulePeople": "Persone e i loro dati",
+  "permModulePlaces": "Spazi e prenotazioni",
+  "permModuleStock": "Magazzino",
   "permOperateKiosk": "Operare il chiosco e i badge",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
@@ -14133,6 +14198,12 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacyRequestsAnswered": "Evase",
+  "privacyRequestsColKind": "Richiesta",
+  "privacyRequestsColReceived": "Ricevuta",
+  "privacyRequestsColStatus": "A che punto è",
+  "privacyRequestsColWho": "Membro",
+  "privacyRequestsOpen": "In attesa di risposta",
   "privacySelfServiceOff": "Questo spazio gestisce da sé le richieste sui dati. Presenti una richiesta di diritti: l’amministratore dei dati personali risponderà.",
   "privacySpaceNotice": "L'informativa privacy di questo spazio",
   "@privacySpaceNotice": {
@@ -16730,6 +16801,7 @@
   "reservationNoteOverNotCheckedIn": "Questo periodo è finito senza check-in.",
   "reservationNoteRecordedAfterEnd": "Registrata dopo la fine di questo periodo, quindi resta come visita passata.",
   "reservationRecurring": "Prenotazione ricorrente",
+  "reservationUnreadable": "Questa prenotazione esiste, ma questa versione dell'app non può mostrarla. Aggiorna l'app per vederla.",
   "reservationUpdatedSnack": "Prenotazione aggiornata.",
   "reserveAvailabilityUnavailable": "Non è stato possibile caricare tutta la disponibilità, quindi nessun posto è mostrato come libero. Riprovi.",
   "reserveBackToNow": "Torna ad adesso",
@@ -17140,6 +17212,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
+  "rolesFilterPermissions": "Filtra i permessi",
   "rolesIntroEditor": "Ognuno ha esattamente un ruolo di base — Utente, Amministratore, Co-proprietario o Proprietario. Ogni altro ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario ha sempre tutti i permessi; un co-proprietario può averne meno.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
@@ -17168,14 +17241,18 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
+  "rolesOwnRoleEdit": "Modifica questo ruolo",
   "rolesOwnRolesLink": "I ruoli di questo spazio",
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
+  "rolesPeopleCount": "{count, plural, =0{Nessuno} one{1 persona} other{{count} persone}}",
   "rolesTitle": "Ruoli",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
+  "rolesWhoHasExplain": "Tutte le persone attive che lo hanno, dal loro ruolo base o da un ruolo proprio dello spazio.",
+  "rolesWhoHasTitle": "Chi ha «{permission}»",
   "rolesYourRole": "Il suo ruolo",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"
@@ -20746,6 +20823,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unreadableRowsNotice": "{count, plural, one{1 voce non è stata mostrata: questa versione dell'app non la conosce. Aggiorna l'app per vederla.} other{{count} voci non sono state mostrate: questa versione dell'app non le conosce. Aggiorna l'app per vederle.}}",
   "unsavedChangesBody": "Le modifiche fatte in questa pagina non sono ancora salvate.",
   "unsavedChangesDiscard": "Scarta le modifiche",
   "unsavedChangesKeep": "Continua a modificare",
@@ -22355,6 +22433,7 @@
   "workspaceDeskTransparencyTitle": "Trasparenza dei tavoli",
   "workspaceExcelExport": "Esporta i dati (Excel)",
   "workspaceExcelExportSubtitle": "Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 prenotazione non è stata letta da questa versione dell'app e non è in questo file.} other{{count} prenotazioni non sono state lette da questa versione dell'app e non sono in questo file.}}",
   "workspaceFieldsOptional": "facoltativo",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

@@ -96,3 +96,51 @@ String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permApproveStockAdjustments,
         _ => permission.name,
       };
+
+/// #3628 — one line of what each permission allows, beside its name. Data,
+/// not a branch per permission: `roles_desk_test` pins that every
+/// permission has its line.
+final Map<WorkspacePermission, String Function(AppLocalizations)> _allows = {
+  WorkspacePermission.manageRoles: (l10n) => l10n.permAllowsManageRoles,
+  WorkspacePermission.manageMembers: (l10n) => l10n.permAllowsManageMembers,
+  WorkspacePermission.manageValidation: (l10n) => l10n.permAllowsManageValidation,
+  WorkspacePermission.workspaceSettings: (l10n) => l10n.permAllowsWorkspaceSettings,
+  WorkspacePermission.issueInvoices: (l10n) => l10n.permAllowsIssueInvoices,
+  WorkspacePermission.viewFinances: (l10n) => l10n.permAllowsViewFinances,
+  WorkspacePermission.manageDocuments: (l10n) => l10n.permAllowsManageDocuments,
+  WorkspacePermission.manageServices: (l10n) => l10n.permAllowsManageServices,
+  WorkspacePermission.approveExpenses: (l10n) => l10n.permAllowsApproveExpenses,
+  WorkspacePermission.viewNegotiations: (l10n) => l10n.permAllowsViewNegotiations,
+  WorkspacePermission.manageNegotiations: (l10n) => l10n.permAllowsManageNegotiations,
+  WorkspacePermission.paymentTermsEdit: (l10n) => l10n.permAllowsPaymentTermsEdit,
+  WorkspacePermission.manageSites: (l10n) => l10n.permAllowsManageSites,
+  WorkspacePermission.manageBilling: (l10n) => l10n.permAllowsManageBilling,
+  WorkspacePermission.manageReservations: (l10n) => l10n.permAllowsManageReservations,
+  WorkspacePermission.operateKiosk: (l10n) => l10n.permAllowsOperateKiosk,
+  WorkspacePermission.exportData: (l10n) => l10n.permAllowsExportData,
+  WorkspacePermission.designDocuments: (l10n) => l10n.permAllowsDesignDocuments,
+  WorkspacePermission.viewPersonalData: (l10n) => l10n.permAllowsViewPersonalData,
+  WorkspacePermission.manageIntegrations: (l10n) => l10n.permAllowsManageIntegrations,
+  WorkspacePermission.manageConfiguration: (l10n) => l10n.permAllowsManageConfiguration,
+  WorkspacePermission.deployToProd: (l10n) => l10n.permAllowsDeployToProd,
+  WorkspacePermission.deployToDev: (l10n) => l10n.permAllowsDeployToDev,
+  WorkspacePermission.accessProd: (l10n) => l10n.permAllowsAccessProd,
+  WorkspacePermission.viewAnalytics: (l10n) => l10n.permAllowsViewAnalytics,
+  WorkspacePermission.useMessages: (l10n) => l10n.permAllowsUseMessages,
+  WorkspacePermission.makeReservations: (l10n) => l10n.permAllowsMakeReservations,
+  WorkspacePermission.viewCalendar: (l10n) => l10n.permAllowsViewCalendar,
+  WorkspacePermission.viewDirectory: (l10n) => l10n.permAllowsViewDirectory,
+  WorkspacePermission.viewMyMoney: (l10n) => l10n.permAllowsViewMyMoney,
+  WorkspacePermission.viewDocuments: (l10n) => l10n.permAllowsViewDocuments,
+  WorkspacePermission.managePurchases: (l10n) => l10n.permAllowsManagePurchases,
+  WorkspacePermission.recordOutgoingPayments: (l10n) => l10n.permAllowsRecordOutgoingPayments,
+  WorkspacePermission.manageLease: (l10n) => l10n.permAllowsManageLease,
+  WorkspacePermission.managePrivacy: (l10n) => l10n.permAllowsManagePrivacy,
+  WorkspacePermission.viewStock: (l10n) => l10n.permAllowsViewStock,
+  WorkspacePermission.manageStock: (l10n) => l10n.permAllowsManageStock,
+  WorkspacePermission.approveStockAdjustments: (l10n) => l10n.permAllowsApproveStockAdjustments,
+};
+
+/// The line of what [permission] allows.
+String permissionAllows(AppLocalizations l10n, WorkspacePermission permission) =>
+    _allows[permission]!(l10n);

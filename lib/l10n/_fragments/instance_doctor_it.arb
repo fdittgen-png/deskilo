@@ -36,5 +36,16 @@
   "instanceDoctorRolesUndeclaredTitle": "Ruoli dell'installazione non dichiarati",
   "instanceDoctorRolesUndeclaredDetail": "lo schema è anteriore alla colonna dei ruoli; l'installazione si comporta come combinata (casa personale e host di spazi) — {held}.\n        Rimedio: dart run tool/instance.dart install --ref <ref>",
   "instanceDoctorRolesUnknownTitle": "I ruoli dell'installazione non sono un insieme noto",
-  "instanceDoctorRolesUnknownDetail": "{roles}\n        Esistono solo personal_home e workspace_host; operator_set_installation_roles scrive un insieme valido."
+  "instanceDoctorRolesUnknownDetail": "{roles}\n        Esistono solo personal_home e workspace_host; operator_set_installation_roles scrive un insieme valido.",
+  "instanceDoctorProbePush": "Configurazione delle notifiche",
+  "instanceDoctorPushOwnTitle": "Configurazione delle notifiche",
+  "instanceDoctorPushOwnDetail": "le chiamate di notifica e di regolamento vanno a questo progetto ({host})",
+  "instanceDoctorPushForeignTitle": "Le chiamate di notifica e di regolamento vanno a un altro progetto",
+  "instanceDoctorPushForeignDetail": "{host}\n        Rimedio: dart run tool/instance.dart push --ref <ref>, oppure imposti push_config su questo progetto.",
+  "instanceDoctorAuthBaselineTitle": "Base di accesso",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{i codici durano al massimo un'ora, le password hanno almeno {length} carattere, un cambio di password chiede di accedere di nuovo} other{i codici durano al massimo un'ora, le password hanno almeno {length} caratteri, un cambio di password chiede di accedere di nuovo}}",
+  "instanceDoctorAuthCodesLongTitle": "I codici di accesso durano più di un'ora",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Le password possono avere meno di {length} carattere} other{Le password possono avere meno di {length} caratteri}}",
+  "instanceDoctorAuthReauthOffTitle": "Un cambio di password non chiede di accedere di nuovo",
+  "instanceDoctorAuthFixDetail": "valore  {value}\n        Rimedio: {command}"
 }

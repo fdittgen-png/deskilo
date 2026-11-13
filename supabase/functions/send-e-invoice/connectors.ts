@@ -60,7 +60,7 @@ export function buildRegistry(list: readonly Connector[]) {
     provider: string,
     cfg: Config,
     doc: ConnectorDocument,
-    fetchImpl: Fetch = fetch,
+    fetchImpl: Fetch,
   ): Promise<Submission> {
     if (!list.some((c) => c.id === provider)) {
       // a retired or unknown provider never falls back to the generic upload
@@ -108,7 +108,7 @@ export function buildRegistry(list: readonly Connector[]) {
     provider: string,
     cfg: Config,
     externalId: string,
-    fetchImpl: Fetch = fetch,
+    fetchImpl: Fetch,
   ): Promise<Submission> {
     if (!list.some((c) => c.id === provider)) {
       return {

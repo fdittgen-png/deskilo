@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../profile/domain/personal_info.dart';
 import 'overage_policy.dart';
+import 'workspace_permission.dart';
 
 part 'member.freezed.dart';
 
@@ -210,6 +211,15 @@ sealed class Member with _$Member implements SystemStamped {
   bool get actsAsOwner =>
       (isOwner || coOwner == CoOwnerStatus.active) &&
       status == MemberStatus.active;
+
+  /// #3903 — who may send an e-invoice, as the send function decides it:
+  /// the owner, or an active member who holds issueInvoices through the
+  /// permission matrix ([held]), an administrator like anyone given it by
+  /// a role.
+  bool maySendEInvoices(Set<WorkspacePermission> held) =>
+      actsAsOwner ||
+      (status == MemberStatus.active &&
+          held.contains(WorkspacePermission.issueInvoices));
 }
 
 /// The user ids that HAVE a profile to fetch (#962): managed members

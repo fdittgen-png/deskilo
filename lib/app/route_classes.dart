@@ -292,6 +292,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/number-sequences', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/members/managed', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.form),
   RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work),
+  RouteRule('/members/privacy/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3628
   RouteRule('/payment-methods', RouteClass.workspace, place: 'drawer-payment-methods', measure: PageMeasure.form),
   RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity', measure: PageMeasure.form),
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),

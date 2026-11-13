@@ -156,6 +156,7 @@ String _probe(AppLocalizations l10n, DoctorProbe probe) => switch (probe) {
   DoctorProbe.storage => l10n.instanceDoctorProbeStorage,
   DoctorProbe.hardening => l10n.instanceDoctorProbeHardening,
   DoctorProbe.roles => l10n.instanceDoctorProbeRoles,
+  DoctorProbe.push => l10n.instanceDoctorProbePush,
 };
 
 /// A finding's title in the member's language: the catalogue's wording where
@@ -181,6 +182,13 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.guardPublicBucket => l10n.instanceDoctorGuardPublicBucketTitle,
     DoctorWords.rolesUndeclared => l10n.instanceDoctorRolesUndeclaredTitle,
     DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
+    DoctorWords.pushOwn => l10n.instanceDoctorPushOwnTitle,
+    DoctorWords.pushForeign => l10n.instanceDoctorPushForeignTitle,
+    DoctorWords.authBaseline => l10n.instanceDoctorAuthBaselineTitle,
+    DoctorWords.authCodesLong => l10n.instanceDoctorAuthCodesLongTitle,
+    DoctorWords.authPasswordShort =>
+      l10n.instanceDoctorAuthPasswordShortTitle(facts[2] as int),
+    DoctorWords.authReauthOff => l10n.instanceDoctorAuthReauthOffTitle,
   };
 }
 
@@ -227,5 +235,14 @@ String _detail(AppLocalizations l10n, DoctorFinding f) {
     ),
     DoctorWords.rolesUnknown =>
       l10n.instanceDoctorRolesUnknownDetail('${facts[0]}'),
+    DoctorWords.pushOwn => l10n.instanceDoctorPushOwnDetail('${facts[0]}'),
+    DoctorWords.pushForeign =>
+      l10n.instanceDoctorPushForeignDetail('${facts[0]}'),
+    DoctorWords.authBaseline =>
+      l10n.instanceDoctorAuthBaselineDetail(facts[0] as int),
+    DoctorWords.authCodesLong ||
+    DoctorWords.authPasswordShort ||
+    DoctorWords.authReauthOff =>
+      l10n.instanceDoctorAuthFixDetail('${facts[0]}', '${facts[1]}'),
   };
 }

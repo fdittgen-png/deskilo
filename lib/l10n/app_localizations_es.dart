@@ -1431,7 +1431,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get authPasswordLabel => 'Contraseña';
 
   @override
-  String get authPasswordTooShort => 'Al menos 8 caracteres';
+  String authPasswordTooShort(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Al menos $length caracteres',
+      one: 'Al menos $length carácter',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get authProviderDisabled =>
@@ -5145,6 +5153,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bookRoleFixedAssets => 'Inmovilizado (equipos)';
+
+  @override
+  String get bookRoleMappedUnreadable =>
+      'Asignado a una cuenta que esta versión de la aplicación no puede leer.';
 
   @override
   String get bookRolePrepayments => 'Gastos anticipados';
@@ -13778,6 +13790,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceDoctorAttention => 'Requiere atención';
 
   @override
+  String instanceDoctorAuthBaselineDetail(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other:
+          'los códigos duran como máximo una hora, las contraseñas tienen al menos $length caracteres, un cambio de contraseña pide volver a iniciar sesión',
+      one:
+          'los códigos duran como máximo una hora, las contraseñas tienen al menos $length carácter, un cambio de contraseña pide volver a iniciar sesión',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthBaselineTitle => 'Base de inicio de sesión';
+
+  @override
+  String get instanceDoctorAuthCodesLongTitle =>
+      'Los códigos de inicio de sesión duran más de una hora';
+
+  @override
+  String instanceDoctorAuthFixDetail(String value, String command) {
+    return 'valor  $value\n        Solución: $command';
+  }
+
+  @override
+  String instanceDoctorAuthPasswordShortTitle(int length) {
+    String _temp0 = intl.Intl.pluralLogic(
+      length,
+      locale: localeName,
+      other: 'Las contraseñas pueden tener menos de $length caracteres',
+      one: 'Las contraseñas pueden tener menos de $length carácter',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get instanceDoctorAuthReauthOffTitle =>
+      'Un cambio de contraseña no pide volver a iniciar sesión';
+
+  @override
   String instanceDoctorGuardAnonViewDetail(String names) {
     return '$names\n        Sin security_invoker, la vista lee con los derechos del propietario y esquiva las políticas de las tablas que hay debajo.';
   }
@@ -13909,6 +13961,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceDoctorProbePolicies => 'Políticas';
 
   @override
+  String get instanceDoctorProbePush => 'Configuración de notificaciones';
+
+  @override
   String get instanceDoctorProbeRoles => 'Roles de la instalación';
 
   @override
@@ -13925,6 +13980,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get instanceDoctorProtected => 'Protegido';
+
+  @override
+  String instanceDoctorPushForeignDetail(String host) {
+    return '$host\n        Solución: dart run tool/instance.dart push --ref <ref>, o apunte push_config a este proyecto.';
+  }
+
+  @override
+  String get instanceDoctorPushForeignTitle =>
+      'Las llamadas de notificación y de liquidación van a otro proyecto';
+
+  @override
+  String instanceDoctorPushOwnDetail(String host) {
+    return 'las llamadas de notificación y de liquidación van a este proyecto ($host)';
+  }
+
+  @override
+  String get instanceDoctorPushOwnTitle => 'Configuración de notificaciones';
 
   @override
   String instanceDoctorRolesUndeclaredDetail(String held) {
@@ -16622,6 +16694,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String journalSwissTaxCodes(String keys) {
     return 'Estos grupos de tipos no tienen código de IVA en la referencia fiscal; no se ha escrito nada. Añada primero sus códigos: $keys';
+  }
+
+  @override
+  String journalUnreadableEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Los libros contienen $count asientos que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.',
+      one: 'Los libros contienen 1 asiento que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -20411,6 +20495,17 @@ class AppLocalizationsEs extends AppLocalizations {
   String get memberVatTreatmentLabel => 'Tratamiento del IVA';
 
   @override
+  String membersBulkGiveRole(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count miembros',
+      one: '1 miembro',
+    );
+    return 'Dar un rol a $_temp0';
+  }
+
+  @override
   String membersBulkPause(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -20470,7 +20565,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get membersChipManaged => 'Perfiles gestionados';
+
+  @override
   String get membersChipOpen => 'Con importe pendiente';
+
+  @override
+  String get membersChipUsers => 'Pueden iniciar sesión';
 
   @override
   String get membersColEmail => 'Correo electrónico';
@@ -20493,6 +20594,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get membersFeeUnavailable =>
       'No disponible: ningún tramo de tarifas cubre esta cuota';
+
+  @override
+  String get membersGiveRoleChoose =>
+      '¿Qué rol? Cada miembro se comprueba por separado; quien no pueda recibirlo aparece con el motivo.';
 
   @override
   String get membersInvite => 'Invitar a un miembro';
@@ -20537,6 +20642,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get membersPlansTitle => 'Suscripciones y planes';
+
+  @override
+  String get membersRoleGiven => 'Rol asignado';
+
+  @override
+  String get membersRoleHeld => 'Ya tiene este rol';
 
   @override
   String get membersTabBookings => 'Reservas';
@@ -22346,6 +22457,156 @@ class AppLocalizationsEs extends AppLocalizations {
   String get permAccessProd => 'Entrar en el espacio de producción';
 
   @override
+  String get permAllowsAccessProd =>
+      'Entrar en la producción de un par de desarrollo y producción.';
+
+  @override
+  String get permAllowsApproveExpenses =>
+      'Aprobar los gastos que presentan los miembros.';
+
+  @override
+  String get permAllowsApproveStockAdjustments =>
+      'Aprobar el ajuste que propone un recuento.';
+
+  @override
+  String get permAllowsDeployToDev =>
+      'Actualizar el espacio de desarrollo desde producción.';
+
+  @override
+  String get permAllowsDeployToProd =>
+      'Llevar la configuración y los datos maestros de desarrollo a producción.';
+
+  @override
+  String get permAllowsDesignDocuments =>
+      'Diseñar las plantillas, textos y diseños de los documentos.';
+
+  @override
+  String get permAllowsExportData =>
+      'Exportar la contabilidad, el archivo, Excel y la configuración.';
+
+  @override
+  String get permAllowsIssueInvoices =>
+      'Emitir facturas, conciliar pagos y enviar recordatorios.';
+
+  @override
+  String get permAllowsMakeReservations =>
+      'Reservar, ver las propias reservas y registrar entradas y salidas.';
+
+  @override
+  String get permAllowsManageBilling =>
+      'Gestionar tramos de tarifas, tipos de IVA, numeraciones y reglas de facturación.';
+
+  @override
+  String get permAllowsManageConfiguration =>
+      'Cambiar las funciones, el entorno, el código del espacio, las importaciones y el reinicio.';
+
+  @override
+  String get permAllowsManageDocuments =>
+      'Gestionar los enlaces de la biblioteca de documentos.';
+
+  @override
+  String get permAllowsManageIntegrations =>
+      'Configurar los proveedores de pago, las credenciales de facturación electrónica y WhatsApp.';
+
+  @override
+  String get permAllowsManageLease =>
+      'Registrar el arrendamiento del local: sus condiciones, su historial y su fin.';
+
+  @override
+  String get permAllowsManageMembers =>
+      'Invitar, pausar y retirar miembros, y cambiar sus suscripciones.';
+
+  @override
+  String get permAllowsManageNegotiations =>
+      'Proponer o cambiar el acuerdo comercial de un miembro.';
+
+  @override
+  String get permAllowsManagePrivacy =>
+      'Resolver las solicitudes de derechos sobre los datos y ser avisado de un incidente.';
+
+  @override
+  String get permAllowsManagePurchases =>
+      'Registrar y vincular las facturas de proveedores del espacio.';
+
+  @override
+  String get permAllowsManageReservations =>
+      'Reservar para otros, cancelar, registrar entradas y salidas y bloquear plazas.';
+
+  @override
+  String get permAllowsManageRoles =>
+      'Cambiar qué permisos da cada rol y los roles propios del espacio.';
+
+  @override
+  String get permAllowsManageServices =>
+      'Gestionar servicios, paquetes y tramos de tarifas.';
+
+  @override
+  String get permAllowsManageSites =>
+      'Gestionar las sedes, la sede de cada miembro y el plano.';
+
+  @override
+  String get permAllowsManageStock =>
+      'Dar entrada, mover y dar salida a mercancías.';
+
+  @override
+  String get permAllowsManageValidation =>
+      'Definir qué solicitudes necesitan aprobación y quién las aprueba.';
+
+  @override
+  String get permAllowsOperateKiosk =>
+      'Configurar el quiosco y entregar las tarjetas.';
+
+  @override
+  String get permAllowsPaymentTermsEdit =>
+      'Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.';
+
+  @override
+  String get permAllowsRecordOutgoingPayments =>
+      'Registrar y anular el pago hecho a un miembro por una solicitud aprobada.';
+
+  @override
+  String get permAllowsUseMessages =>
+      'Usar las conversaciones, el canal de avisos y las notificaciones.';
+
+  @override
+  String get permAllowsViewAnalytics =>
+      'Consultar las cifras de actividad del espacio, como la ocupación; ni personas ni dinero.';
+
+  @override
+  String get permAllowsViewCalendar => 'Ver el calendario.';
+
+  @override
+  String get permAllowsViewDirectory => 'Ver quiénes son los miembros.';
+
+  @override
+  String get permAllowsViewDocuments =>
+      'Ver los documentos compartidos con el miembro.';
+
+  @override
+  String get permAllowsViewFinances =>
+      'Consultar las finanzas del espacio: el libro mayor y la facturación.';
+
+  @override
+  String get permAllowsViewMyMoney =>
+      'Ver la propia cuenta, el extracto y las facturas.';
+
+  @override
+  String get permAllowsViewNegotiations =>
+      'Consultar el acuerdo comercial de un miembro.';
+
+  @override
+  String get permAllowsViewPersonalData =>
+      'Consultar los correos, identidades gestionadas y datos postales de los miembros.';
+
+  @override
+  String get permAllowsViewStock =>
+      'Ver las existencias: qué está dónde, sus lotes y sus movimientos.';
+
+  @override
+  String get permAllowsWorkspaceSettings =>
+      'Editar la identidad del espacio, sus reglas de reserva y sus funciones.';
+
+  @override
   String get permApproveExpenses => 'Aprobar gastos';
 
   @override
@@ -22414,6 +22675,30 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get permManageValidation => 'Configurar reglas de validación';
+
+  @override
+  String get permModuleConfiguration => 'Configuración';
+
+  @override
+  String get permModuleDocuments => 'Documentos e informes';
+
+  @override
+  String get permModuleEnvironments => 'Entornos';
+
+  @override
+  String get permModuleEveryday => 'Día a día';
+
+  @override
+  String get permModuleMoney => 'Dinero';
+
+  @override
+  String get permModulePeople => 'Personas y sus datos';
+
+  @override
+  String get permModulePlaces => 'Espacios y reservas';
+
+  @override
+  String get permModuleStock => 'Existencias';
 
   @override
   String get permOperateKiosk => 'Operar el quiosco y las tarjetas';
@@ -23514,6 +23799,24 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get privacyPushOnDeviceHint =>
       'Opcional. Activado, la dirección de este dispositivo y cada notificación pasan por el servicio push; desactivado, la aplicación sigue funcionando y no se envía nada a este dispositivo.';
+
+  @override
+  String get privacyRequestsAnswered => 'Respondidas';
+
+  @override
+  String get privacyRequestsColKind => 'Solicitud';
+
+  @override
+  String get privacyRequestsColReceived => 'Recibida';
+
+  @override
+  String get privacyRequestsColStatus => 'En qué punto está';
+
+  @override
+  String get privacyRequestsColWho => 'Miembro';
+
+  @override
+  String get privacyRequestsOpen => 'Pendientes de respuesta';
 
   @override
   String get privacySelfServiceOff =>
@@ -27109,6 +27412,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reservationRecurring => 'Reserva recurrente';
 
   @override
+  String get reservationUnreadable =>
+      'Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla.';
+
+  @override
   String get reservationUpdatedSnack => 'Reserva actualizada.';
 
   @override
@@ -27551,6 +27858,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get roleTakenBack => 'Rol retirado.';
 
   @override
+  String get rolesFilterPermissions => 'Filtrar los permisos';
+
+  @override
   String get rolesIntroEditor =>
       'Cada persona tiene exactamente un rol base — Usuario, Administrador, Copropietario o Propietario. Cualquier otro rol añade lo que sus titulares pueden hacer y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.';
 
@@ -27575,10 +27885,34 @@ class AppLocalizationsEs extends AppLocalizations {
   String get rolesOfSpaceTitle => 'Los roles de este espacio';
 
   @override
+  String get rolesOwnRoleEdit => 'Editar este rol';
+
+  @override
   String get rolesOwnRolesLink => 'Los roles de este espacio';
 
   @override
+  String rolesPeopleCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count personas',
+      one: '1 persona',
+      zero: 'Nadie',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get rolesTitle => 'Roles';
+
+  @override
+  String get rolesWhoHasExplain =>
+      'Todas las personas activas que lo tienen, por su rol base o por un rol propio del espacio.';
+
+  @override
+  String rolesWhoHasTitle(String permission) {
+    return 'Quién tiene «$permission»';
+  }
 
   @override
   String get rolesYourRole => 'Su rol';
@@ -34423,6 +34757,18 @@ class AppLocalizationsEs extends AppLocalizations {
   String get unblockAction => 'Desbloquear';
 
   @override
+  String unreadableRowsNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'No se pudieron mostrar $count entradas: esta versión de la aplicación no las conoce. Actualiza la aplicación para verlas.',
+      one: 'No se pudo mostrar 1 entrada: esta versión de la aplicación no la conoce. Actualiza la aplicación para verla.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get unsavedChangesBody =>
       'Lo que ha cambiado en esta página todavía no está guardado.';
 
@@ -36640,6 +36986,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get workspaceExcelExportSubtitle =>
       'Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.';
+
+  @override
+  String workspaceExportUnreadableBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.',
+      one: '1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get workspaceFieldsOptional => 'opcional';

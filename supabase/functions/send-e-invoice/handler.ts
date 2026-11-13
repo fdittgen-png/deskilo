@@ -226,13 +226,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const userId = await store.user(authorization.replace("Bearer ", ""));
   if (!userId) return json({ error: "unauthorized" }, 401);
   const me = await store.member(workspaceId, userId);
-  // #2137 — or whoever holds issueInvoices, through a role.
-  let mayIssue = !!me && (me.is_admin || me.is_owner);
-  if (me && me.status === "active" && !mayIssue) {
-    mayIssue = await store.hasPermission(me.id, "issueInvoices");
-  }
-  if (!me || me.status !== "active" || !mayIssue) {
-    return json({ error: "not an admin of this workspace" }, 403);
+  // An active owner, or an active member who holds issueInvoices (the
+  // permission matrix: from the base role or a role of the space).
+  const mayIssue = !!me && me.status === "active" &&
+    (me.is_owner || await store.hasPermission(me.id, "issueInvoices"));
+  if (!me || !mayIssue) {
+    return json({ error: "not allowed to issue invoices in this workspace" }, 403);
   }
 
   const credentials = await store.credentials(workspaceId);
@@ -424,6 +423,12 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   const invoice = await store.invoice(invoiceId);
   if (!invoice || invoice.workspace_id !== workspaceId) {
     return json({ error: "unknown invoice" }, 404);
+  }
+  // A voided invoice is not sent.
+  if (invoice.voided_at) return json({ error: "invoice_voided" }, 409);
+  // About ten megabytes once decoded.
+  if (content.length > 14_000_000) {
+    return json({ error: "document_too_large" }, 413);
   }
 
   const bytes = Uint8Array.from(atob(content), (c) => c.charCodeAt(0));

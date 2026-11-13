@@ -5,7 +5,6 @@
 // every record derived from the city's [DemoTradeCity] facts.
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/booking_granularity.dart';
-import '../../features/workspace/domain/workspace.dart';
 import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
@@ -21,6 +20,8 @@ import 'data/plan_resource_repository.dart';
 import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
+import 'demo_space_listing.dart';
+import 'demo_spaces.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_money_seed.dart';
 import 'seed/demo_city_plan_seed.dart';
@@ -28,7 +29,7 @@ import 'seed/demo_city_usage_seed.dart';
 import 'seed/demo_city_workflow_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
 
-class DemoTradeCityData {
+class DemoTradeCityData implements DemoSpaceParts {
   DemoTradeCityData._({
     required this.city,
     required this.workspaces,
@@ -39,18 +40,28 @@ class DemoTradeCityData {
     required this.money,
   });
 
-  /// Seeds [city] beside [home], whose list of spaces it joins. [actor] is
-  /// the member the session acts as, read on every call.
-  factory DemoTradeCityData.build({
+  /// #3846 — [city]'s row and people, beside [home], whose list of spaces it
+  /// joins: what the switcher needs at the start.
+  static DemoSpaceListing list({
     required DemoTradeCity city,
     required FakeWorkspaceRepository home,
-    required String Function() actor,
-    required DateTime now,
   }) {
     final space = FakeWorkspaceRepository(workspaces: home.workspaces);
     home.workspaces.add(city.workspace());
     city.seedPeople(space);
     space.bookingGranularities[city.id] = BookingGranularity.minutes60;
+    return DemoSpaceListing(city.id, space, home);
+  }
+
+  /// Seeds the rest of [city] over its [listing]. [actor] is the member the
+  /// session acts as, read on every call.
+  factory DemoTradeCityData.build({
+    required DemoTradeCity city,
+    required DemoSpaceListing listing,
+    required String Function() actor,
+    required DateTime now,
+  }) {
+    final space = listing.workspaces;
     final plan = CityFloorPlanRepository();
     seedCityPlans(
       plan,
@@ -155,42 +166,30 @@ class DemoTradeCityData {
   }
 
   final DemoTradeCity city;
+  @override
   final FakeWorkspaceRepository workspaces;
+  @override
   final FakeFloorPlanRepository floorPlan;
+  @override
   final RightsCheckedReservationRepository reservations;
+  @override
   final FakeEventRepository events;
+  @override
   final FakeCalendarRepository calendar;
+  @override
   final FakeMoneyRepository money;
 
   /// Isolated stores for capabilities that do not yet have city data.
+  @override
   final credits = FakeCreditRepository();
+  @override
   final accessories = FakeAccessoryRepository();
+  @override
   final chargingStations = FakeChargingStationRepository();
+  @override
   final fields = FakeWorkspaceFields();
+  @override
   final roles = FakeWorkspaceRoles();
+  @override
   late final planResources = FakePlanResourceRepository(floorPlan);
-
-  /// The city's row while the persona is not a member there.
-  Workspace? _parked;
-
-  /// Looks at the city as [memberId]: their membership becomes "mine" here
-  /// and in [home]'s list of memberships. A persona with no membership in
-  /// the city does not see the space at all.
-  void viewAs(String memberId, FakeWorkspaceRepository home) {
-    final rows = [workspaces.myMember, ...workspaces.otherMembers];
-    final mine = rows.where((m) => m.id == memberId).firstOrNull;
-    home.extraMyMemberships.removeWhere((m) => m.workspaceId == city.id);
-    final listed = home.workspaces.indexWhere((w) => w.id == city.id);
-    if (mine == null) {
-      if (listed >= 0) _parked = home.workspaces.removeAt(listed);
-      return;
-    }
-    workspaces.myMember = mine;
-    workspaces.otherMembers
-      ..clear()
-      ..addAll(rows.where((m) => m.id != mine.id));
-    home.extraMyMemberships.add(mine);
-    if (listed < 0 && _parked != null) home.workspaces.add(_parked!);
-    _parked = null;
-  }
 }

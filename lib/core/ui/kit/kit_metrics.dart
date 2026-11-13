@@ -44,4 +44,8 @@ abstract final class KitMetrics {
 
   /// The dot of a legend line.
   static const double dot = 12;
+
+  /// #3628 — a list of choices beside the one shown at the desk (the roles
+  /// of the space, the sections of a settings page).
+  static const double choiceListWidth = 280;
 }

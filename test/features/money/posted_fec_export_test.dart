@@ -388,6 +388,22 @@ void main() {
       expect(find.text(l10n.journalNeedsRates('B-2 (CHF)')), findsOneWidget);
     });
 
+    testWidgets('#3884: a fiscal year whose books hold entries this version '
+        'cannot read stops the archive, with the count', (tester) async {
+      final blocked = <bool>[];
+      await _run(tester, (context, ref) async {
+        final actions = FecExportActions(context, ref, _scope);
+        blocked.add(
+          actions.archiveYearBlocked([
+            _books(),
+            const JournalUnreadable(2),
+          ]),
+        );
+      });
+      expect(blocked, [true]);
+      expect(find.text(l10n.journalUnreadableEntries(2)), findsOneWidget);
+    });
+
     testWidgets('a changed closed year stops the whole archive, and nothing '
         'is logged', (tester) async {
       final log = _Log();

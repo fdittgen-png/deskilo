@@ -1859,6 +1859,7 @@ You want to sign in by scanning your badge instead of typing your e-mail.
 - The row reads **No PIN yet** or **PIN set**.
 - Only you can set it, and nobody, not even an owner, can read it back.
 - **Change PIN** replaces it; **Remove PIN** switches off badge sign-in for all your badges.
+- A badge signs you in to its own workspace. An owner or administrator of another workspace signs in with the password, not the badge.
 
 **See also:** [Your badge](help:user.profile.settings.badge)
 
@@ -8125,7 +8126,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build prepared for F-Droid has no push at all ([F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. For iPhone and Mac, add an Apple push key to the Firebase project.
 3. Store the Firebase service-account key as a secret of the server and deploy the push function.
-4. On your own installation, point the `push_config` row of your database at your own push function URL and key. It is seeded with the address of the reference installation.
+4. On your own installation, the builder sets the `push_config` row of your database to your own push function URL and key, and the doctor verifies it. `dart run tool/instance.dart push --ref <ref>` sets it again.
 5. Test it with two accounts, as described in [the test plan](help:setup.notify.test).
 
 **Good to know**

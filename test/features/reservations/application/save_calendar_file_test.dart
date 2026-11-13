@@ -11,6 +11,7 @@ import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/reservations/application/save_calendar_file.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_repository.dart' show ReservationUnreadable;
 import 'package:flutter_test/flutter_test.dart';
 
 final _now = DateTime.utc(2026, 5, 13, 10);
@@ -29,6 +30,13 @@ Reservation _mine({
       endsAt: WorkspaceTime.at(2026, 6, 2, 13),
       status: status,
     );
+
+/// A repository whose booking exists but has a status this build does not know.
+class _Unreadable extends FakeReservationRepository {
+  @override
+  Future<Reservation?> fetchById(String reservationId) async =>
+      throw ReservationUnreadable(reservationId);
+}
 
 /// A writer that records what it was handed and answers [handle].
 class _Writer {
@@ -80,6 +88,25 @@ void main() {
     expect(preview.fileName, matches(RegExp(r'^deskilo-20260602-[0-9a-f]{8}\.ics$')));
     expect(preview.text, startsWith('BEGIN:VCALENDAR\r\n'));
     expect(utf8.decode(preview.bytes), preview.text);
+  });
+
+  test('#3884: a booking that exists but cannot be read is "unreadable", '
+      'never the "not yours" of a missing one', () async {
+    final files = _files(_Unreadable(), _Writer());
+    expect(
+      await files.prepare(reservationId: 'res-1', memberId: 'member-1'),
+      isA<CalendarFileRefused>()
+          .having((r) => r.reason, 'reason', CalendarFileRefusal.unreadable),
+    );
+    final ready = await _files(
+      FakeReservationRepository()..reservations.add(_mine()),
+      _Writer(),
+    ).prepare(reservationId: 'res-1', memberId: 'member-1');
+    expect(
+      await files.save((ready as CalendarFileReady).preview, memberId: 'member-1'),
+      isA<CalendarSaveRefused>()
+          .having((r) => r.reason, 'reason', CalendarFileRefusal.unreadable),
+    );
   });
 
   test('a foreign member, a missing booking and a booking the repository '

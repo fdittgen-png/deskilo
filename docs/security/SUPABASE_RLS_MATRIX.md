@@ -39,7 +39,7 @@ in, not a member of the row's workspace), **worker** (active member),
 | profiles | update own | — | ✅ | ✅ | ✅ | ✅ | `profiles_update` |
 | workspaces | select | — | — | ✅ | ✅ | ✅ | `is_member_of()` |
 | workspaces | insert | — | RPC | RPC | RPC | RPC | `create_workspace()` (creator becomes owner) |
-| workspaces | update | — | — | — | — | ✅ | `is_owner_of()` |
+| workspaces | update | — | — | — | — | ✅ | `is_owner_of()`; trigger `workspaces_pair_immutable`: pair, environment and creator are set by the server (0756) |
 | workspaces | delete | — | — | — | — | ✅ | `is_owner_of()` |
 | members | select | — | — | ✅ | ✅ | ✅ | `is_member_of()` |
 | members | insert (join) | — | RPC | RPC | RPC | RPC | `join_workspace(invite_code)` |

@@ -18,23 +18,30 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/list_detail_route.dart';
 import '../../core/storage/pane_width_store.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/kit/records_table.dart';
 import '../../features/money/application/receivables.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/presentation/invoicing/invoicing_reads.dart';
 import '../../features/money/providers/money_providers.dart';
+import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/domain/role_assignment.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/domain/workspace_role.dart';
 import '../../features/workspace/presentation/member_labels.dart';
 import '../../features/workspace/presentation/subscription_text.dart';
+import '../../features/workspace/presentation/widgets/member_roles_card.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'member_batch_change.dart';
 import 'member_change_task.dart';
 import 'member_desk_providers.dart';
 import 'member_plan.dart';
 import 'member_record.dart';
+import 'member_roles_task.dart';
 
 /// The members' address; a member is `/members/<id>`.
 const String membersPath = '/members';
@@ -45,6 +52,7 @@ typedef MembersDeskRights = ({
   bool seesFees,
   bool seesOpen,
   bool changes,
+  bool givesRoles,
 });
 
 /// The rights of [me] holding [permissions].
@@ -62,6 +70,9 @@ MembersDeskRights membersDeskRights(
         finance || permissions.contains(WorkspacePermission.manageBilling),
     seesOpen: finance,
     changes: me?.actsAsOwner ?? false,
+    // #3628 — the owner asks for the Administrator role, manageRoles gives
+    // the space's own roles (the rule of the role card).
+    givesRoles: canGiveRoles(me, permissions),
   );
 }
 
@@ -123,8 +134,19 @@ class _MembersTable extends ConsumerWidget {
           : const <String, Map<String, int>>{},
       now: ref.watch(clockProvider).now(),
       visits: visits,
+      roles:
+          ref.watch(workspaceRolesProvider).value ??
+          const <
+            WorkspaceRole
+          >[], // empty-ok: no own role is named before they are read
+      assignments:
+          ref.watch(workspaceRoleAssignmentsProvider).value ??
+          const <
+            String,
+            Set<String>
+          >{}, // empty-ok: no own role is held before they are read
     );
-    return RecordsTable<Member>(
+    final table = RecordsTable<Member>(
       tableId: 'members',
       rows: view.rows,
       state: switch (read) {
@@ -144,12 +166,17 @@ class _MembersTable extends ConsumerWidget {
       amountColumn: 'fee',
       formatAmount: (code, minor) => format.moneyIn(code).formatMinor(minor),
       columns: view.columns(),
-      rowActions: rights.changes ? view.rowActions : null,
-      bulkActions: rights.changes ? view.bulkActions() : const [],
+      rowActions: rights.changes || rights.givesRoles ? view.rowActions : null,
+      bulkActions: view.bulkActions(),
       cardBuilder: (context, m) => ListTile(
         title: Text(view.names[m.id] ?? '', overflow: TextOverflow.ellipsis),
         subtitle: Text(memberStatusLabel(context.l10n, m.status)),
       ),
+    );
+    // #3884 — the last visits are read from bookings; some this version
+    // cannot read are not counted, and the table says so.
+    return Column(
+      children: [const UnreadableRowsNotice(areas: [reservationsArea]), Expanded(child: table)],
     );
   }
 
@@ -183,7 +210,13 @@ class _MembersView {
     required this.open,
     required this.now,
     required this.visits,
+    required this.roles,
+    required this.assignments,
   });
+
+  /// The space's roles and who holds which (#3628).
+  final List<WorkspaceRole> roles;
+  final Map<String, Set<String>> assignments;
 
   final BuildContext context;
   final MembersDeskRights rights;
@@ -242,7 +275,34 @@ class _MembersView {
         label: _l.membersChipOpen,
         keeps: (m) => open[m.id]?.isNotEmpty ?? false,
       ),
+    // #3628 — the users: who can sign in to this business; the managed
+    // profiles an administrator runs until the person claims them.
+    RecordChip(
+      id: 'users',
+      label: _l.membersChipUsers,
+      keeps: (m) =>
+          !m.isManaged && !m.isKiosk && m.origin != MemberOrigin.guest,
+    ),
+    RecordChip(
+      id: 'managed',
+      label: _l.membersChipManaged,
+      keeps: (m) => m.isManaged,
+    ),
   ];
+
+  /// [m]'s roles as the set they hold: ownership and the Administrator
+  /// role first, then the space's own; never folded into one string.
+  List<String> _rolesOf(Member m) {
+    final locale = Localizations.localeOf(context).languageCode;
+    return [
+      if (m.isOwner) _l.roleOwner,
+      if (m.coOwner == CoOwnerStatus.active) _l.memberCoOwnerChip,
+      if (m.isAdmin && !m.isOwner)
+        administratorName(roles, locale, _l.roleAdmin),
+      for (final r in rolesHeldBy(m.id, roles, assignments))
+        if (!r.builtin) r.nameIn(locale),
+    ];
+  }
 
   List<RecordColumn<Member>> columns() => [
     RecordColumn(
@@ -287,9 +347,20 @@ class _MembersView {
     RecordColumn(
       id: 'status',
       label: _l.membersColStatus,
-      flex: 2,
+      flex: 3,
       sortKey: (m) => m.status.index,
       cell: (_, m) => Text(memberStatusLabel(_l, m.status)),
+    ),
+    RecordColumn(
+      id: 'roles',
+      label: _l.rolesTitle,
+      flex: 3,
+      staysBeside: false,
+      sortKey: (m) => _rolesOf(m).join(' '),
+      cell: (_, m) => Text(switch (_rolesOf(m)) {
+        final held when held.isEmpty => _l.baseRoleUser,
+        final held => held.join(', '),
+      }, overflow: TextOverflow.ellipsis),
     ),
     if (rights.seesOpen)
       RecordColumn(
@@ -321,57 +392,81 @@ class _MembersView {
   List<RecordAction<Member>> rowActions(Member m) {
     final paused = m.status == MemberStatus.paused;
     return [
-      RecordAction(
-        id: 'plan',
-        label: _l.memberSubscriptionLabel,
-        icon: Icons.tune,
-        onRun: (m) => showMemberChangeTask(
-          context,
-          members: [m],
-          change: const ChangePlan(0),
+      if (rights.givesRoles)
+        RecordAction(
+          id: 'roles',
+          label: _l.rolesTitle,
+          icon: Icons.badge_outlined,
+          onRun: (m) =>
+              showMemberRolesTask(context, member: m, name: names[m.id] ?? ''),
         ),
-      ),
-      RecordAction(
-        id: 'pause',
-        label: paused ? _l.memberReactivate : _l.memberPause,
-        icon: paused ? Icons.play_circle_outline : Icons.pause_circle_outline,
-        onRun: (m) => showMemberChangeTask(
-          context,
-          members: [m],
-          change: paused ? const ResumeMembers() : const PauseMembers(),
+      if (rights.changes)
+        RecordAction(
+          id: 'plan',
+          label: _l.memberSubscriptionLabel,
+          icon: Icons.tune,
+          onRun: (m) => showMemberChangeTask(
+            context,
+            members: [m],
+            change: const ChangePlan(0),
+          ),
         ),
-      ),
+      if (rights.changes)
+        RecordAction(
+          id: 'pause',
+          label: paused ? _l.memberReactivate : _l.memberPause,
+          icon: paused ? Icons.play_circle_outline : Icons.pause_circle_outline,
+          onRun: (m) => showMemberChangeTask(
+            context,
+            members: [m],
+            change: paused ? const ResumeMembers() : const PauseMembers(),
+          ),
+        ),
     ];
   }
 
   List<RecordBulkAction> bulkActions() => [
-    for (final (id, label, icon, change) in [
-      ('plan', _l.membersBulkPlan, Icons.tune, const ChangePlan(0)),
-      (
-        'pause',
-        _l.membersBulkPause,
-        Icons.pause_circle_outline,
-        const PauseMembers(),
-      ),
-      (
-        'resume',
-        _l.membersBulkResume,
-        Icons.play_circle_outline,
-        const ResumeMembers(),
-      ),
-    ])
+    if (rights.givesRoles)
       RecordBulkAction(
-        id: id,
-        label: label,
-        icon: icon,
-        onRun: (keys) => showMemberChangeTask(
+        id: 'give-role',
+        label: _l.membersBulkGiveRole,
+        icon: Icons.badge_outlined,
+        onRun: (keys) => showGiveRoleTask(
           context,
           members: [
             for (final m in rows)
               if (keys.contains(m.id)) m,
           ],
-          change: change,
         ),
       ),
+    if (rights.changes)
+      for (final (id, label, icon, change) in [
+        ('plan', _l.membersBulkPlan, Icons.tune, const ChangePlan(0)),
+        (
+          'pause',
+          _l.membersBulkPause,
+          Icons.pause_circle_outline,
+          const PauseMembers(),
+        ),
+        (
+          'resume',
+          _l.membersBulkResume,
+          Icons.play_circle_outline,
+          const ResumeMembers(),
+        ),
+      ])
+        RecordBulkAction(
+          id: id,
+          label: label,
+          icon: icon,
+          onRun: (keys) => showMemberChangeTask(
+            context,
+            members: [
+              for (final m in rows)
+                if (keys.contains(m.id)) m,
+            ],
+            change: change,
+          ),
+        ),
   ];
 }

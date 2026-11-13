@@ -48,7 +48,22 @@ const json = (body: unknown, status = 200) =>
 
 // ── handler ───────────────────────────────────────────────────────────
 
-export async function handle(req: Request): Promise<Response> {
+export function handle(req: Request): Promise<Response> {
+  return handleWith(
+    req,
+    createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    ),
+  );
+}
+
+/** A canonical UUID, as `members.id` is. */
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+/** The request on the service client [admin] (the tests hand in their own). */
+// deno-lint-ignore no-explicit-any
+export async function handleWith(req: Request, admin: any): Promise<Response> {
   // #1553 — the preflight is answered before anything else: it
   // carries no JWT, so any auth or body work would refuse the
   // browser's question instead of answering it.
@@ -64,10 +79,6 @@ export async function handle(req: Request): Promise<Response> {
     return json({ error: "invalid_json" }, 400);
   }
 
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
   const workspaceId = body.workspace_id as string;
   if (!workspaceId) return json({ error: "invalid_request" }, 400);
 
@@ -114,6 +125,26 @@ export async function handle(req: Request): Promise<Response> {
     return json({ providers, missing });
   }
 
+  // AuthZ first: the JWT's user (verified above) must BE the active member
+  // they pay for, in this workspace, before anything about the workspace
+  // or its providers is answered.
+  const rawMemberId = typeof body.member_id === "string" ? body.member_id : "";
+  if (!UUID.test(rawMemberId)) {
+    return json({ error: "not_your_bill" }, 403);
+  }
+  const { data: member } = await admin
+    .from("members")
+    .select("id, user_id, workspace_id, status")
+    .eq("id", rawMemberId)
+    .maybeSingle();
+  if (
+    !member || member.user_id !== userData.user.id ||
+    member.workspace_id !== workspaceId || member.status !== "active"
+  ) {
+    console.error("payment member mismatch", { workspaceId });
+    return json({ error: "not_your_bill" }, 403);
+  }
+
   // #917 — a DEVELOPMENT workspace never opens a payment order: the
   // providers below take real money from a real card. Probing the
   // configuration above stays allowed, so a rehearsal space can be set
@@ -152,20 +183,8 @@ export async function handle(req: Request): Promise<Response> {
     return json({ status: "not_configured", provider, missing: gap });
   }
 
-  // AuthZ: the JWT's user (verified above) must BE the member they pay
-  // for.
-  const { data: member } = await admin
-    .from("members")
-    .select("id, user_id, workspace_id, status")
-    .eq("id", memberId)
-    .single();
-  if (
-    !member || member.user_id !== userData.user.id ||
-    member.workspace_id !== workspaceId || member.status !== "active"
-  ) {
-    console.error("payment member mismatch", { memberId, workspaceId });
-    return json({ error: "not_your_bill" }, 403);
-  }
+  // The order is for the member checked above, whatever the parse read.
+  if (memberId !== member.id) return json({ error: "not_your_bill" }, 403);
 
   // #928 — a readable per-workspace reference (PAY-2026-0117) drawn by
   // the number-sequence framework inside the intent's own insert; the
@@ -257,7 +276,10 @@ export async function handle(req: Request): Promise<Response> {
     const status = e instanceof ProviderRefusal ? e.status : null;
     console.error("payment order failed", { provider, outcome, status });
     if (outcome === "failed") {
-      await admin.from("payment_intents").update({ status: "failed" }).eq("id", intent.id);
+      // Only an intent still in its first state is marked failed: an intent
+      // the provider already settled keeps its status.
+      await admin.from("payment_intents").update({ status: "failed" })
+        .eq("id", intent.id).eq("status", "created");
       return json({ error: "provider_error", provider }, 502);
     }
     return json({ error: "outcome_unknown", provider }, 503);
