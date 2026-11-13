@@ -29917,6 +29917,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupChoicesUnsaved => 'Nur Vorschau – noch nichts angewendet.';
 
   @override
+  String setupDeskProgress(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$done von $total Schritten erledigt',
+      one: '$done von 1 Schritt erledigt',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get setupDraftChanged =>
       'Von jemand anderem geändert, während Sie bearbeitet haben.';
 
@@ -31487,6 +31498,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.';
 
   @override
+  String get setupStepLeave => 'Verlassen';
+
+  @override
+  String get setupStepLeaveMessage =>
+      'Ihre Antworten sind noch nicht übernommen. Sie bleiben als Entwurf gespeichert, und Sie finden sie hier wieder, wenn Sie zurückkommen.';
+
+  @override
+  String get setupStepLeaveTitle => 'Diesen Schritt verlassen?';
+
+  @override
   String get setupStepLoadFailed =>
       'Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.';
 
@@ -31654,6 +31675,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shortcutPreviousPeriod =>
       'Voriger Tag, vorige Woche oder voriger Monat';
+
+  @override
+  String get shortcutPreviousStep => 'Zum vorherigen Schritt zurück';
 
   @override
   String get shortcutPrint => 'Das Dokument dieser Seite';

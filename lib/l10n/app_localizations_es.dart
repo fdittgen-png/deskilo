@@ -29858,6 +29858,17 @@ class AppLocalizationsEs extends AppLocalizations {
       'Solo vista previa: no se ha aplicado nada.';
 
   @override
+  String setupDeskProgress(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$done de $total pasos hechos',
+      one: '$done de 1 paso hecho',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get setupDraftChanged =>
       'Otra persona lo ha cambiado mientras usted editaba.';
 
@@ -31417,6 +31428,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get setupStepHintVat => 'Los tipos que aplica y sus declaraciones.';
 
   @override
+  String get setupStepLeave => 'Salir';
+
+  @override
+  String get setupStepLeaveMessage =>
+      'Sus respuestas aún no se han aplicado. Quedan guardadas como borrador y las encontrará aquí cuando vuelva.';
+
+  @override
+  String get setupStepLeaveTitle => '¿Salir de este paso?';
+
+  @override
   String get setupStepLoadFailed =>
       'No se ha podido cargar este paso. Inténtelo más tarde.';
 
@@ -31583,6 +31604,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get shortcutPreviousPeriod => 'Día, semana o mes anterior';
+
+  @override
+  String get shortcutPreviousStep => 'Volver al paso anterior';
 
   @override
   String get shortcutPrint => 'El documento de esta página';

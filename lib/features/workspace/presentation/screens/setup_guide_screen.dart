@@ -34,7 +34,11 @@ import '../widgets/setup_no_invoicing_banner.dart';
 import '../widgets/setup_return_bar.dart';
 
 class SetupGuideScreen extends ConsumerWidget {
-  const SetupGuideScreen({super.key});
+  const SetupGuideScreen({super.key, this.listBeside = false});
+
+  /// #3629 — the steps are listed beside this page (the desk): it keeps
+  /// where the space stands and the next step, not the step lists.
+  final bool listBeside;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,6 +50,7 @@ class SetupGuideScreen extends ConsumerWidget {
         AsyncData(:final value) when value != null => _SetupGuideBody(
           workspaceId: value.id,
           workspaceName: value.name,
+          listBeside: listBeside,
         ),
         AsyncError() || AsyncData() => ListView(
           children: [
@@ -69,9 +74,11 @@ class _SetupGuideBody extends ConsumerWidget {
   const _SetupGuideBody({
     required this.workspaceId,
     required this.workspaceName,
+    required this.listBeside,
   });
   final String workspaceId;
   final String workspaceName;
+  final bool listBeside;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -212,49 +219,52 @@ class _SetupGuideBody extends ConsumerWidget {
               .refreshIndicatorSemanticLabel,
           onAction: actions.reload,
         ),
-      if (toDo.isNotEmpty) ...[
-        const SizedBox(height: AppSpacing.md),
-        _Header(text: l10n.setupGuideToDo),
-        for (final s in toDo)
-          _StepTile(step: s, status: status, actions: actions),
+      // #3629 — beside the steps on the desk, the lists are those steps.
+      if (!listBeside) ...[
+        if (toDo.isNotEmpty) ...[
+          const SizedBox(height: AppSpacing.md),
+          _Header(text: l10n.setupGuideToDo),
+          for (final s in toDo)
+            _StepTile(step: s, status: status, actions: actions),
+        ],
+        _Folded(
+          id: 'waiting',
+          title: l10n.setupGuideWaiting,
+          steps: status.waiting,
+          status: status,
+          actions: actions,
+        ),
+        _Folded(
+          id: 'later',
+          title: l10n.setupGuideLater,
+          steps: [
+            for (final s in status.later)
+              if (s != next) s,
+          ],
+          actions: actions,
+        ),
+        _Folded(
+          id: 'optional',
+          title: l10n.setupGuideOptional,
+          steps: [
+            for (final s in status.optional)
+              if (s != next) s,
+          ],
+          actions: actions,
+        ),
+        _Folded(
+          id: 'deferred',
+          title: l10n.setupGuideDeferred,
+          steps: status.deferred,
+          actions: actions,
+        ),
+        _Folded(
+          id: 'done',
+          title: l10n.setupGuideDone,
+          steps: status.done,
+          actions: actions,
+        ),
       ],
-      _Folded(
-        id: 'waiting',
-        title: l10n.setupGuideWaiting,
-        steps: status.waiting,
-        status: status,
-        actions: actions,
-      ),
-      _Folded(
-        id: 'later',
-        title: l10n.setupGuideLater,
-        steps: [
-          for (final s in status.later)
-            if (s != next) s,
-        ],
-        actions: actions,
-      ),
-      _Folded(
-        id: 'optional',
-        title: l10n.setupGuideOptional,
-        steps: [
-          for (final s in status.optional)
-            if (s != next) s,
-        ],
-        actions: actions,
-      ),
-      _Folded(
-        id: 'deferred',
-        title: l10n.setupGuideDeferred,
-        steps: status.deferred,
-        actions: actions,
-      ),
-      _Folded(
-        id: 'done',
-        title: l10n.setupGuideDone,
-        steps: status.done,
-        actions: actions,
-      ),
       SetupGuideAddMore(
         steps: status.addable,
         onAdd: () => _openLevels(context, actions.reload),
@@ -431,7 +441,7 @@ class _StepTile extends StatelessWidget {
     return ListTile(
       key: ValueKey('setup-step-${step.step}'),
       contentPadding: EdgeInsets.zero,
-      leading: Icon(_icon(step.state)),
+      leading: Icon(setupStepIcon(step.state)),
       title: Text(l10n.setupStepTitle(step.step)),
       subtitle: Text(
         [
@@ -472,16 +482,6 @@ Widget? _stepAction(
   );
 }
 
-
-IconData _icon(SetupStepState state) => switch (state) {
-  SetupStepState.ready => Icons.check_circle_outline,
-  SetupStepState.needsConfiguration => Icons.radio_button_unchecked,
-  SetupStepState.blocked => Icons.hourglass_empty,
-  SetupStepState.needsOperator => Icons.dns_outlined,
-  SetupStepState.notApplicable => Icons.remove_circle_outline,
-  SetupStepState.deferred => Icons.schedule,
-  SetupStepState.unknown => Icons.help_outline,
-};
 
 class _AllDone extends StatelessWidget {
   const _AllDone({required this.text});

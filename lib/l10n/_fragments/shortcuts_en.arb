@@ -70,5 +70,9 @@
   "shortcutViewMonth": "Show a month",
   "@shortcutViewMonth": {
     "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutPreviousStep": "Go back to the step before",
+  "@shortcutPreviousStep": {
+    "description": "#3629 a line of the keys overlay: the setup guide's step before"
   }
 }

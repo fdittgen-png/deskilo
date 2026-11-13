@@ -264,6 +264,10 @@ const _pages = [
   ('/workspace-settings', PageKind.task, 'settings', 'workspace'),
   ('/features', PageKind.records, 'settings', 'features'),
   ('/setup/step/basics', PageKind.task, 'settings', 'setup-step'),
+  // #3629 — the setup guide at the desk: its steps beside a step with a
+  // preview, beside a step done on its own screen, and beside Launch.
+  ('/setup/step/assistant', PageKind.task, 'settings', 'setup-step-elsewhere'),
+  ('/setup/launch', PageKind.task, 'settings', 'setup-launch'),
   // #3860 — a record open beside its table: the table keeps its staying
   // columns, the pane its reading measure, together the work area.
   (
@@ -303,7 +307,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 22;
+const _guardedWorkspaceRoutes = 23;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {

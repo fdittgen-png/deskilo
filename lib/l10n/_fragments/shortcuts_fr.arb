@@ -16,5 +16,6 @@
   "shortcutNextPeriod": "Jour, semaine ou mois suivant",
   "shortcutViewDay": "Afficher un jour",
   "shortcutViewWeek": "Afficher une semaine",
-  "shortcutViewMonth": "Afficher un mois"
+  "shortcutViewMonth": "Afficher un mois",
+  "shortcutPreviousStep": "Revenir à l'étape précédente"
 }

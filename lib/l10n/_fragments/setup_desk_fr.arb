@@ -1,0 +1,6 @@
+{
+  "setupDeskProgress": "{total, plural, =1{{done} étape faite sur 1} other{{done} étapes faites sur {total}}}",
+  "setupStepLeaveTitle": "Quitter cette étape ?",
+  "setupStepLeaveMessage": "Vos réponses ne sont pas encore appliquées. Elles restent enregistrées comme brouillon, et vous les retrouvez ici à votre retour.",
+  "setupStepLeave": "Quitter"
+}

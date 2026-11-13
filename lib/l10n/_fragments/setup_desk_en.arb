@@ -1,0 +1,26 @@
+{
+  "setupDeskProgress": "{total, plural, =1{{done} of 1 step done} other{{done} of {total} steps done}}",
+  "@setupDeskProgress": {
+    "description": "#3629 the setup guide's steps beside a step on a large window: how many of the steps the space uses are done.",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupStepLeaveTitle": "Leave this step?",
+  "@setupStepLeaveTitle": {
+    "description": "#3629 asked when leaving a setup step whose answers are a draft not applied yet."
+  },
+  "setupStepLeaveMessage": "Your answers are not applied yet. They stay saved as a draft, and you find them here when you come back.",
+  "@setupStepLeaveMessage": {
+    "description": "#3629 why leaving a setup step loses nothing: the draft is kept."
+  },
+  "setupStepLeave": "Leave",
+  "@setupStepLeave": {
+    "description": "#3629 the button that leaves the setup step; its draft is kept."
+  }
+}

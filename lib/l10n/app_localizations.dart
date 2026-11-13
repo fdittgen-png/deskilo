@@ -47788,6 +47788,12 @@ abstract class AppLocalizations {
   /// **'Preview only — nothing has been applied.'**
   String get setupChoicesUnsaved;
 
+  /// #3629 the setup guide's steps beside a step on a large window: how many of the steps the space uses are done.
+  ///
+  /// In en, this message translates to:
+  /// **'{total, plural, =1{{done} of 1 step done} other{{done} of {total} steps done}}'**
+  String setupDeskProgress(int done, int total);
+
   /// #2869 setup drafts: another configurer changed the setup step's draft meanwhile
   ///
   /// In en, this message translates to:
@@ -50241,6 +50247,24 @@ abstract class AppLocalizations {
   /// **'The rates you charge and your VAT returns.'**
   String get setupStepHintVat;
 
+  /// #3629 the button that leaves the setup step; its draft is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave'**
+  String get setupStepLeave;
+
+  /// #3629 why leaving a setup step loses nothing: the draft is kept.
+  ///
+  /// In en, this message translates to:
+  /// **'Your answers are not applied yet. They stay saved as a draft, and you find them here when you come back.'**
+  String get setupStepLeaveMessage;
+
+  /// #3629 asked when leaving a setup step whose answers are a draft not applied yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Leave this step?'**
+  String get setupStepLeaveTitle;
+
   /// #2870 setup steps: setupStepLoadFailed
   ///
   /// In en, this message translates to:
@@ -50546,6 +50570,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Previous day, week or month'**
   String get shortcutPreviousPeriod;
+
+  /// #3629 a line of the keys overlay: the setup guide's step before
+  ///
+  /// In en, this message translates to:
+  /// **'Go back to the step before'**
+  String get shortcutPreviousStep;
 
   /// #3610 a line of the keys overlay: what the key does
   ///

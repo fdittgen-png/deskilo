@@ -8,7 +8,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../core/ui/wizard_navigation.dart';
 import '../../features/auth/providers/auth_providers.dart';
-import '../../features/plan/presentation/widgets/setup_places_step.dart';
 import '../../features/workspace/domain/bi_modules.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -29,10 +28,6 @@ import '../../features/workspace/presentation/screens/questions_screen.dart';
 import '../../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../../features/workspace/presentation/screens/roles_screen.dart';
 import '../../features/workspace/presentation/screens/scan_join_screen.dart';
-import '../../features/workspace/presentation/screens/setup_guide_screen.dart';
-import '../../features/workspace/presentation/screens/setup_launch_screen.dart';
-import '../../features/workspace/presentation/screens/setup_levels_screen.dart';
-import '../../features/workspace/presentation/screens/setup_step_screen.dart';
 import '../../features/workspace/presentation/screens/sites_screen.dart';
 import '../../features/workspace/presentation/screens/what_you_can_do_screen.dart';
 import '../../features/workspace/presentation/screens/wording_screen.dart';
@@ -42,11 +37,11 @@ import '../../features/workspace/presentation/screens/workspace_library_screen.d
 import '../../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../../features/workspace/presentation/widgets/onboarding_host_gate.dart';
+import '../../features/workspace/presentation/widgets/setup_desk.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../route_access.dart';
 import '../route_env.dart';
-import 'setup_grow_pages.dart';
-import 'setup_run_pages.dart';
+import 'setup_pages.dart';
 
 /// Routes of the workspace feature.
 List<RouteBase> workspaceRoutes(RouteEnv env) => [
@@ -319,44 +314,10 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
       builder: (context, state) => const AttentionScreen(),
     ),
     // #2869 — the setup guide: one task list from creation to opening.
+    // #3629 — its pages are addresses under it: on the desk the guide
+    // draws them beside its steps, elsewhere each is a page of its own.
     GoRoute(
-      path: '/setup',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
-      builder: (context, state) => const SetupGuideScreen(),
-    ),
-    // #2868 — what the space does: a level per process from plain answers.
-    GoRoute(
-      path: '/setup/levels',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
-      builder: (context, state) => const SetupLevelsScreen(),
-    ),
-    // #2876 — check the answers and go live.
-    GoRoute(
-      path: '/setup/launch',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
-      builder: (context, state) => const SetupLaunchScreen(),
-    ),
-    // #2870 — one step of the guide: its form beside what members will see.
-    GoRoute(
-      path: '/setup/step/:id',
+      path: setupPath,
       redirect: env.guard(
         const RouteAccess(
           features: [WorkspaceFeature.setupGuide],
@@ -365,13 +326,34 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) =>
-          SetupStepScreen(
-            stepId: state.pathParameters['id'] ?? '',
-            placesStep: SetupPlacesStep.new,
-            runPages: setupRunPages,
-            growPages: setupGrowPages,
-            moneyRecorded: setupMoneyRecorded,
+          const SetupGuidePage(pageFor: setupPageFor),
+      routes: [
+        // #2868 — what the space does: a level per process from plain answers.
+        GoRoute(
+          path: 'levels',
+          pageBuilder: (context, state) =>
+              setupPage(context, state, setupPageFor('levels')!),
+        ),
+        // #2876 — check the answers and go live.
+        GoRoute(
+          path: 'launch',
+          pageBuilder: (context, state) =>
+              setupPage(context, state, setupPageFor('launch')!),
+        ),
+        // #2870 — one step of the guide: its form beside what members will
+        // see. Every way out of it asks the step first (#3629).
+        GoRoute(
+          path: 'step/:id',
+          onExit: (_, _) => env.ref.read(authStateProvider).value == null
+              ? true
+              : setupStepNavigation.requestExit(),
+          pageBuilder: (context, state) => setupPage(
+            context,
+            state,
+            setupPageFor('step/${state.pathParameters['id'] ?? ''}')!,
           ),
+        ),
+      ],
     ),
     // #1923 — Business analytics: only with a module this reader may see.
     GoRoute(
