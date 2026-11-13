@@ -7,7 +7,7 @@
 // zone, or one that is not an IANA name) is never claimed late, and
 // [FinanceInvoiceDue.dueDayUnknownAt] says so instead.
 import '../../../core/time/business_day.dart';
-import 'finance_overview.dart';
+import 'finance_invoice.dart';
 import 'invoice_due.dart';
 
 /// Whether [FinanceInvoice] is late, on its business's day.
