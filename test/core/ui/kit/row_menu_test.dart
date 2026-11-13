@@ -2,6 +2,7 @@
 //
 // #3611 -- a row's actions, declared once, open the same menu from the
 // ⋯ button, a right click, a long press and the keyboard.
+import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/core/ui/kit/row_menu.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -98,6 +99,8 @@ void main() {
     await tester.pumpAndSettle();
     opened['menu key'] = _entries(tester);
     await _close(tester);
+    // Closing the menu gives the focus back to the row it came from.
+    expect(Focus.of(tester.element(find.byKey(_row))).hasFocus, isTrue);
 
     await tester.sendKeyDownEvent(LogicalKeyboardKey.shiftLeft);
     await tester.sendKeyEvent(LogicalKeyboardKey.f10);
@@ -141,6 +144,35 @@ void main() {
     );
     final context = tester.element(find.byKey(_row));
     expect(label.style?.color, Theme.of(context).colorScheme.error);
+  });
+
+  testWidgets('an action that throws is recorded and never left uncaught', (
+    tester,
+  ) async {
+    final before = TraceLogger.instance.entries.length;
+    await tester.pumpWidget(
+      _host(
+        RowMenu(
+          keyPrefix: 'm',
+          actions: [
+            RowAction(
+              id: 'boom',
+              label: 'Boom',
+              onSelected: () => throw StateError('refused'),
+            ),
+          ],
+          child: const ListTile(key: _row, title: Text('A row')),
+        ),
+      ),
+    );
+    await rightClick(tester, find.byKey(_row));
+    await tester.tap(find.byKey(const ValueKey('m-boom')));
+    await tester.pump();
+    await tester.pump(const Duration(seconds: 1));
+    expect(tester.takeException(), isNull);
+    final added = TraceLogger.instance.entries.length - before;
+    expect(added, 1);
+    expect(TraceLogger.instance.entries.first.area, 'row-menu');
   });
 
   testWidgets('a hover button shows for a mouse over the row and never at '
