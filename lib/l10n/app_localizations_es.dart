@@ -22486,6 +22486,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get personalInfoVatId => 'NIF-IVA (opcional)';
 
   @override
+  String get phoneCountryLabel => 'País del número';
+
+  @override
+  String get phoneExtensionNoMessage =>
+      'Un número con extensión no puede recibir mensajes: quite la extensión.';
+
+  @override
+  String get phoneNeedsCorrection =>
+      'Este número se guardó antes de que se comprobaran los números: confírmelo o corríjalo y volverá a abrir llamadas y mensajes.';
+
+  @override
+  String get phoneNoCountry =>
+      'Elija el país de este número o escríbalo con su prefijo +.';
+
+  @override
+  String get phoneNotANumber =>
+      'Escriba solo cifras, con una extensión al final si la hay.';
+
+  @override
+  String get phoneNotValidForCountry =>
+      'Esto no puede ser un número de teléfono del país elegido.';
+
+  @override
   String placeFeedbackAverage(String average, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

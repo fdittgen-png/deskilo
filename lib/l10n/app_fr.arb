@@ -13603,6 +13603,12 @@
   "@personalInfoVatId": {
     "description": "#886 personal-information form / feature: personalInfoVatId"
   },
+  "phoneCountryLabel": "Pays du numéro",
+  "phoneExtensionNoMessage": "Un numéro avec un poste ne peut pas recevoir de messages : retirez le poste.",
+  "phoneNeedsCorrection": "Ce numéro a été enregistré avant la vérification des numéros : confirmez-le ou corrigez-le, et il ouvrira de nouveau appels et messages.",
+  "phoneNoCountry": "Choisissez le pays de ce numéro, ou saisissez-le avec son indicatif +.",
+  "phoneNotANumber": "Saisissez uniquement des chiffres, avec un poste à la fin s'il y en a un.",
+  "phoneNotValidForCountry": "Ce ne peut pas être un numéro de téléphone du pays choisi.",
   "placeFeedbackAverage": "{average} · {count, plural, one{{count} note} other{{count} notes}}",
   "@placeFeedbackAverage": {
     "description": "#2185 place feedback",

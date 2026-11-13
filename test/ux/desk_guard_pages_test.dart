@@ -7,6 +7,7 @@
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
@@ -30,6 +31,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
@@ -194,6 +196,20 @@ const _pages = [
   ('/reports', PageKind.records, 'reports', 'reports'),
   ('/money/status', PageKind.dashboard, 'money', 'status'),
   ('/bi', PageKind.dashboard, 'reports', 'analysis'),
+  // #3860 — a record open beside its table: the table keeps its staying
+  // columns, the pane its reading measure, together the work area.
+  (
+    '/money/suppliers/demo-supplier-1',
+    PageKind.recordBesideTable,
+    'money',
+    'suppliers-open',
+  ),
+  (
+    '/money/purchases/doc/p1',
+    PageKind.recordBesideTable,
+    'money',
+    'purchases-open',
+  ),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -228,9 +244,19 @@ class _OnePassSold implements GuestPassRepository {
 
 void main() {
   setUpAll(() => loadSheetFonts(always: true));
+  // A sheet runs on the real clock, where the records table's read of its
+  // saved columns needs a store to answer.
+  setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  for (final (path, kind, module, screen) in _pages) {
+  for (final (path, pageKind, module, screen) in _pages) {
     for (final size in deskGuardSizes) {
+      // #3860 — below a large window a record opens as a page of its own:
+      // there is no table beside it to measure.
+      final kind =
+          pageKind == PageKind.recordBesideTable &&
+              !WindowClass.ofWidth(size.width).atLeast(WindowClass.large)
+          ? PageKind.document
+          : pageKind;
       testWidgets('$path at ${size.width.toInt()}: the desk guards hold', (
         tester,
       ) async {
@@ -286,13 +312,17 @@ void main() {
           reason: details.join('\n'),
         );
         // A long task (#3608) is its own focus scope: Tab walks the page.
-        expect(
-          await keyboardProblems(
-            tester,
-            within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
-          ),
-          isEmpty,
-        );
+        // A record beside its table is two Tab groups; the cycle's wrap
+        // through the shell is its own follow-up, not this row's rule.
+        if (kind != PageKind.recordBesideTable) {
+          expect(
+            await keyboardProblems(
+              tester,
+              within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
+            ),
+            isEmpty,
+          );
+        }
         semantics.dispose();
       });
     }

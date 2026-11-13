@@ -36158,6 +36158,42 @@ abstract class AppLocalizations {
   /// **'VAT number (optional)'**
   String get personalInfoVatId;
 
+  /// the phone field's country, whose calling code a national number is read in (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'Country of the number'**
+  String get phoneCountryLabel;
+
+  /// a message to a number with an extension (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'A number with an extension cannot receive messages: leave the extension out.'**
+  String get phoneExtensionNoMessage;
+
+  /// a legacy number with no validated form (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'This number was saved before numbers were checked: confirm or correct it, and it will open calls and messages again.'**
+  String get phoneNeedsCorrection;
+
+  /// (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the country of this number, or type it with its + code.'**
+  String get phoneNoCountry;
+
+  /// (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'Type digits only, with an extension at the end if there is one.'**
+  String get phoneNotANumber;
+
+  /// (#3650)
+  ///
+  /// In en, this message translates to:
+  /// **'This cannot be a phone number of the chosen country.'**
+  String get phoneNotValidForCountry;
+
   /// #2185 place feedback
   ///
   /// In en, this message translates to:

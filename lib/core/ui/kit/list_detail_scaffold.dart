@@ -17,6 +17,7 @@ import '../../l10n/context_l10n.dart';
 import '../../shortcuts/app_shortcuts.dart';
 import '../../storage/pane_width_store.dart';
 import '../../trace/trace_logger.dart';
+import 'list_detail_open.dart';
 
 /// The pane's widths.
 abstract final class ListDetailMetrics {
@@ -237,7 +238,15 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
                       end: taken,
                       child: KeyedSubtree(
                         key: const ValueKey('list-detail-list'),
-                        child: widget.list,
+                        // #3860 — the list and the record are two groups Tab
+                        // walks one after the other; the list knows when a
+                        // record stands beside it.
+                        child: FocusTraversalGroup(
+                          child: ListDetailOpen(
+                            open: taken > 0,
+                            child: widget.list,
+                          ),
+                        ),
                       ),
                     ),
                     if (selected != null)
@@ -258,7 +267,9 @@ class _ListDetailScaffoldState extends State<ListDetailScaffold> {
                                 ),
                               Expanded(
                                 child: _Pane(
-                                  child: FocusScope(
+                                  // A group, not a scope: a scope keeps Tab
+                                  // inside it, and the pane would trap it.
+                                  child: FocusTraversalGroup(
                                     key: const ValueKey('list-detail-pane'),
                                     child: KeyedSubtree(
                                       key: ValueKey(

@@ -23,10 +23,14 @@ The experience guards (`test/ux/experience_guards.dart`) check a page as a perso
 
 `escapeProblems(tester, surfaces:, dirty:)` checks Escape on the top surface: a clean one closes, and a dirty one asks before discarding (one more surface on top, the first still there).
 
-The page kinds (`PageKind.records`, `task`, `dashboard`, `document`) decide which rules apply. Each rule has a self-test that fails a planted page (`test/ux/desk_guards_test.dart`).
+- **A switch inside a tile that is the tap target** (a `SwitchListTile`: the whole row toggles and the tile carries the name) is measured by the tile (#3860). Flutter keeps the switch's own 60 × 40 node as a child of the tile's; it is the same action, not a second target. A switch, checkbox or radio that stands alone is still measured and named; a button inside a tappable tile is still its own target.
+
+The page kinds (`PageKind.records`, `task`, `dashboard`, `document`, `recordBesideTable`) decide which rules apply.
+
+`PageKind.recordBesideTable` (#3860) is a record open in the pane beside its records table (`ListDetailScaffold`). The 60 % rule does not hold it (the table cannot and should not take it); its own measures do: the table keeps at least `besideTableMinWidth` (400), the pane is at most `besidePaneMaxWidth` (640), table, grip and pane fill the work area without a gap, no word of a table row is cut, and rows keep their height. Below a large window the record is a page of its own: guard it as `document`. The table gets there by priority: a `RecordColumn` declares `staysBeside`; with the pane open the table shows its staying columns (and the ones that may not be hidden), closing the pane brings the rest back, and the person's hidden columns hold. Each rule has a self-test that fails a planted page (`test/ux/desk_guards_test.dart`).
 
 ## Where they run
-`test/ux/desk_guard_pages_test.dart`: `/invoices` (records) and the Me overview, at the three desk sizes. A page joins by adding its line to `_pages`.
+`test/ux/desk_guard_pages_test.dart`: `/invoices` (records) and the Me overview, and the records pages with a record open beside them (`/money/suppliers/<id>`, `/money/purchases/doc/<id>`), at the three desk sizes. A page joins by adding its line to `_pages`.
 
 ## Sheets
 ```

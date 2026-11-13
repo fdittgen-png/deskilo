@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/backend/backend_settings.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
+import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
@@ -13,6 +14,7 @@ import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/phone_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
 import '../../application/assign_role.dart';
@@ -142,6 +144,10 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
   final _lastName = TextEditingController();
   final _phone = TextEditingController();
 
+  /// #3650 — the country a national number is read in.
+  final _phoneCountry = TextEditingController();
+  String? _phoneError;
+
   /// #1119 — whether this person should also reach production.
   ///
   /// The choice is two-way and not three: 0185's invariant is
@@ -175,6 +181,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
       _firstName.text = identity.firstName;
       _lastName.text = identity.lastName;
       _phone.text = identity.phone;
+      _phoneCountry.text = identity.countryCode;
     }
   }
 
@@ -183,6 +190,7 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     _firstName.dispose();
     _lastName.dispose();
     _phone.dispose();
+    _phoneCountry.dispose();
     super.dispose();
   }
 
@@ -240,9 +248,18 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
         features.contains(WorkspaceFeature.customRoles);
   }
 
-  /// The phone as wa.me digits ('' when none given).
-  String get _phoneDigits =>
-      _phone.text.replaceAll(RegExp(r'[^0-9]'), '');
+  /// #3650 — the typed number, read in its country; a message goes to it
+  /// only once validated, and without a number to a contact the person
+  /// picks in the app. Null after saying in words why it cannot be sent
+  /// to (and before a code is minted).
+  PhoneEntry? _recipient() {
+    final entry = phoneEntryOf(_phone, _phoneCountry);
+    final problem = entry.extension.isNotEmpty && entry.isValidated
+        ? context.l10n.phoneExtensionNoMessage
+        : phoneProblemText(context.l10n, entry);
+    setState(() => _phoneError = problem);
+    return problem == null ? entry : null;
+  }
 
   Future<void> _send(
     Uri Function(String message) uriOf, {
@@ -266,25 +283,27 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
     if (mounted) Navigator.of(context).pop();
   }
 
-  Future<void> _whatsapp() => _send(
-        // WhatsApp renders ```…``` as monospace, so the personal code
-        // reads as a code (#318).
-        (message) => Uri.https(
-          'wa.me',
-          '/${_phoneDigits.isEmpty ? '' : _phoneDigits}',
-          {'text': message},
-        ),
-        monospace: true,
-      );
+  Future<void> _whatsapp() async {
+    final to = _recipient();
+    if (to == null) return;
+    await _send(
+      // WhatsApp renders ```…``` as monospace, so the personal code
+      // reads as a code (#318).
+      (message) => to.isEmpty
+          ? whatsappShare(message)
+          : whatsappLink(to, text: message)!,
+      monospace: true,
+    );
+  }
 
-  Future<void> _sms() => _send(
-        (message) => Uri(
-          scheme: 'sms',
-          path: _phoneDigits.isEmpty ? '' : '+$_phoneDigits',
-          queryParameters: {'body': message},
-        ),
-        monospace: false,
-      );
+  Future<void> _sms() async {
+    final to = _recipient();
+    if (to == null) return;
+    await _send(
+      (message) => to.isEmpty ? smsShare(message) : smsLink(to, body: message)!,
+      monospace: false,
+    );
+  }
 
   Future<void> _share() async {
     final message = await _composeWithFreshCode(monospace: false);
@@ -336,13 +355,15 @@ class _InviteSheetState extends ConsumerState<_InviteSheet> {
           ),
         ]),
         const SizedBox(height: AppSpacing.sm),
-        TextField(
-          key: const ValueKey('invite-phone'),
-          controller: _phone,
-          keyboardType: TextInputType.phone,
-          decoration: InputDecoration(
-            labelText: l10n.invitePhoneLabel,
-          ),
+        PhoneField(
+          number: _phone,
+          country: _phoneCountry,
+          label: l10n.invitePhoneLabel,
+          fieldKey: 'invite-phone',
+          error: _phoneError,
+          onChanged: () {
+            if (_phoneError != null) setState(() => _phoneError = null);
+          },
         ),
         if (canChooseEnvironments) ...[
           const SizedBox(height: AppSpacing.md),

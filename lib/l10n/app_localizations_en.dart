@@ -22327,6 +22327,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get personalInfoVatId => 'VAT number (optional)';
 
   @override
+  String get phoneCountryLabel => 'Country of the number';
+
+  @override
+  String get phoneExtensionNoMessage =>
+      'A number with an extension cannot receive messages: leave the extension out.';
+
+  @override
+  String get phoneNeedsCorrection =>
+      'This number was saved before numbers were checked: confirm or correct it, and it will open calls and messages again.';
+
+  @override
+  String get phoneNoCountry =>
+      'Choose the country of this number, or type it with its + code.';
+
+  @override
+  String get phoneNotANumber =>
+      'Type digits only, with an extension at the end if there is one.';
+
+  @override
+  String get phoneNotValidForCountry =>
+      'This cannot be a phone number of the chosen country.';
+
+  @override
   String placeFeedbackAverage(String average, int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

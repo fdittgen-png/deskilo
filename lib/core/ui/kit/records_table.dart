@@ -20,6 +20,7 @@ import '../../l10n/context_l10n.dart';
 import '../../storage/prefs_stores.dart';
 import '../../theme/app_spacing.dart';
 import '../adaptive/window_class.dart';
+import 'list_detail_open.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
 
@@ -157,11 +158,6 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     _rowsFocus.dispose();
     super.dispose();
   }
-
-  List<RecordColumn<T>> get _columns => [
-    for (final c in widget.columns)
-      if (!c.hideable || !_c.hidden.contains(c.id)) c,
-  ];
 
   void _toggleColumn(String id) {
     _c.toggleColumn(id);
@@ -307,7 +303,12 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
   }
 
   Widget _table(BuildContext context, List<T> shown) {
-    final columns = _columns;
+    // #3860 — a record open beside the table: its staying columns.
+    final columns = columnsShown(
+      widget.columns,
+      _c.hidden,
+      beside: ListDetailOpen.of(context),
+    );
     final selected = _c.selected;
     final selectedShown = shown
         .where((r) => selected.contains(widget.keyOf(r)))

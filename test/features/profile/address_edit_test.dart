@@ -78,7 +78,7 @@ void main() {
       await type(tester, 'street', '209 rue Jean Bart, Immeuble AGORA 1B');
       await type(tester, 'postal-code', '31670');
       await type(tester, 'city', 'Labège');
-      await type(tester, 'phone', ' +33 6 00 00 00 00 ');
+      await type(tester, 'phone-number', ' +33 6 00 00 00 00 ');
 
       // The preview IS the envelope window: the addressee, then the
       // block. #912 — the company is the addressee, the person moves
