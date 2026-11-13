@@ -21,7 +21,8 @@ import '../helpers/mock_providers.dart';
 // #3609 the analysis page and the workspace overview are work pages (79 -> 77).
 // #3626 the calendar is a work page (69 -> 68).
 // #3616 the VAT return is a long task page (68 -> 67).
-const _framedWorkspaceRoutes = 67;
+// #3617 the reports and the status page are work pages (67 -> 65).
+const _framedWorkspaceRoutes = 65;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;

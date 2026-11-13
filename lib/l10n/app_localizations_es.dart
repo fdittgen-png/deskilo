@@ -25936,6 +25936,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get reportColUnitPrice => 'Precio unit.';
 
   @override
+  String get reportCoversAnalysis =>
+      'Ocupación, ventas, compras y tesorería en un periodo, comparadas y agrupadas.';
+
+  @override
+  String get reportCoversOverview =>
+      'Lo que le espera y luego las cifras que puede leer.';
+
+  @override
+  String get reportCoversRegister =>
+      'Cada factura en una línea: fecha, nombre, importe y estado.';
+
+  @override
+  String get reportCoversVat =>
+      'Las declaraciones de IVA de cada periodo, preparadas a partir de las facturas emitidas.';
+
+  @override
   String get reportDesignEmpty => 'Banda vacía — añada un elemento abajo.';
 
   @override
@@ -26219,6 +26235,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportFieldMeaningCreditNote => 'Verdadero en una nota de crédito';
+
+  @override
+  String get reportFieldMeaningCurrency =>
+      'El código ISO de la moneda, por ejemplo EUR o CAD';
 
   @override
   String get reportFieldMeaningDeclarationNote =>
@@ -26733,6 +26753,15 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get reportVisualAddLine => 'Añadir línea';
+
+  @override
+  String get reportsColumnCovers => 'Qué abarca';
+
+  @override
+  String get reportsColumnName => 'Informe';
+
+  @override
+  String get reportsTools => 'Herramientas';
 
   @override
   String get requestAccept => 'Aceptar';

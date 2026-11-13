@@ -304,14 +304,14 @@ void reportDataTests() {
       copy: false, reference: ActiveTaxReference.current,
     );
     final lines = data['lines']! as List<Object?>;
-    expect((lines.first! as Map)['amount'], '\$100.00');
+    expect((lines.first! as Map)['amount'], 'USD\u00A0100.00');
     expect((lines.first! as Map)['vat_rate'], '');
     expect(
       [for (final v in data['vat']! as List<Object?>) (v! as Map)['rate']],
       ['New York State 4%', 'New York City 4.5%', 'MCTD 0.375%'],
     );
-    expect(data['net_total'], '\$150.00');
-    expect(data['vat_total'], '\$8.88');
-    expect(data['total'], '\$158.88');
+    expect(data['net_total'], 'USD\u00A0150.00');
+    expect(data['vat_total'], 'USD\u00A08.88');
+    expect(data['total'], 'USD\u00A0158.88');
   });
 }

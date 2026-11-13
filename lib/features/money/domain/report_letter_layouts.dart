@@ -81,6 +81,11 @@ String? resolveLayoutXml({
   return null;
 }
 
+/// #3851 -- the ISO code beside the total, unless the total already spells it
+/// (a symbol another currency shares is printed as the code).
+const String _codeBesideTotal =
+    "{% unless total contains currency %}{{ ' ' | append: currency }}{% endunless %}";
+
 String _esc(String s) => s
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
@@ -168,7 +173,7 @@ $linesTable
           <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
           {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
           <row><cell>$payments</cell><cell>{{ payments }}</cell></row>
-          <row bold="true"><cell>$balance</cell><cell>{{ total }}</cell></row>
+          <row bold="true"><cell>$balance</cell><cell>{{ total }}$_codeBesideTotal</cell></row>
         </table>
       </column>
     </columns>
@@ -191,7 +196,7 @@ $simpleLines
     <table>
       <col w="70%"/><col w="30%" align="right"/>
       <row><cell>$payments</cell><cell>{{ payments }}</cell></row>
-      <row bold="true"><cell>$balance</cell><cell>{{ total }}</cell></row>
+      <row bold="true"><cell>$balance</cell><cell>{{ total }}$_codeBesideTotal</cell></row>
     </table>''',
     'agreement' => '''
     <text style="heading">$title</text>
@@ -253,7 +258,7 @@ $linesTable
     <rule/>
     <table>
       <col w="70%"/><col w="30%" align="right"/>
-      <row bold="true"><cell>$balance</cell><cell>{{ total }}</cell></row>
+      <row bold="true"><cell>$balance</cell><cell>{{ total }}$_codeBesideTotal</cell></row>
     </table>
 $mentions''',
   };
@@ -330,7 +335,7 @@ $linesTable
       <col w="70%"/><col w="30%" align="right"/>
       <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
       {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
-      <row bold="true"><cell>${_esc(s.total)}</cell><cell>{{ total }}</cell></row>
+      <row bold="true"><cell>${_esc(s.total)}</cell><cell>{{ total }}$_codeBesideTotal</cell></row>
     </table>
     {% if note != "" %}<spacer size="4mm"/><text>{{ note }}</text>{% endif %}
     <spacer size="6mm"/>
