@@ -10807,6 +10807,8 @@ const Set<String> uiLabelKeys = {
   'payOnlineFailedTitle',
   'payOnlineNotConfigured',
   'payOnlinePendingTitle',
+  'payOnlineReversedTitle',
+  'payOnlineTestKeys',
   'paymentAccountNumberLabel',
   'paymentBankCodeLabel',
   'paymentBankNameLabel',

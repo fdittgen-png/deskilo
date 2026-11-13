@@ -296,3 +296,16 @@ Deno.test("a payout event nobody's secret signed is acknowledged, not retried", 
   const res = await handle(req, { admin: () => admin as any, env: () => undefined, nowS: () => NOW });
   assertEquals(res.status, 200);
 });
+
+Deno.test("#3905 a test-mode event settles nothing in the ledger", async () => {
+  const fake = fakeAdmin({});
+  assertEquals((await call(fake, { ...paid(), livemode: false })).status, 200);
+  assertEquals(fake.rpcCalls, []);
+});
+
+Deno.test("#3905 with test payments on, a test-mode event settles", async () => {
+  const fake = fakeAdmin({});
+  const on = { DESKILO_ALLOW_TEST_PAYMENTS: "true" };
+  assertEquals((await call(fake, { ...paid(), livemode: false }, on)).status, 200);
+  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
+});

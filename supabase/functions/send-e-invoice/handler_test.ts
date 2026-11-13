@@ -672,10 +672,11 @@ Deno.test("O14: manual resolution needs the authority, a reason and evidence, an
       ...extra,
     });
   s.resolveError = "42501";
-  assertEquals(
-    (await resolve({ outcome: "failed", reason: "r", evidence: "e" })).status,
-    403,
-  );
+  const refused = await resolve({ outcome: "failed", reason: "r", evidence: "e" });
+  assertEquals(refused.status, 403);
+  assertEquals(await refused.json(), {
+    error: "not allowed to issue invoices in this workspace",
+  });
   s.resolveError = null;
   assertEquals(
     (await resolve({ outcome: "failed", reason: "r", evidence: "" })).status,

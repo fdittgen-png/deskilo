@@ -414,7 +414,7 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     } catch (error) {
       const code = (error as { code?: string }).code;
       if (code === "42501") {
-        return json({ error: "not an admin of this workspace" }, 403);
+        return json({ error: "not allowed to issue invoices in this workspace" }, 403);
       }
       if (code === "22023") {
         return json({ error: "a reason and the evidence are required" }, 400);

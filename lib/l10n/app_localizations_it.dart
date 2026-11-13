@@ -22263,6 +22263,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payOnlinePendingTitle => 'Pagamento online in sospeso';
 
   @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Il pagamento $reference ($amount tramite $provider) è stato stornato dal fornitore (un rimborso o una contestazione). L\'azienda corregge il suo saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Pagamento online stornato';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L\'azienda deve inserire le sue chiavi reali.';
+
+  @override
   String get paymentAccountNumberLabel => 'Numero di conto';
 
   @override

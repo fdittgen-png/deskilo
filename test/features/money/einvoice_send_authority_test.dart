@@ -6,15 +6,20 @@ import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Member _m({bool admin = false, bool owner = false, MemberStatus? status}) =>
-    Member(
-      id: 'm',
-      workspaceId: 'ws',
-      userId: 'u',
-      isAdmin: admin,
-      isOwner: owner,
-      status: status ?? MemberStatus.active,
-    );
+Member _m({
+  bool admin = false,
+  bool owner = false,
+  MemberStatus? status,
+  CoOwnerStatus coOwner = CoOwnerStatus.none,
+}) => Member(
+  id: 'm',
+  workspaceId: 'ws',
+  userId: 'u',
+  isAdmin: admin,
+  isOwner: owner,
+  coOwner: coOwner,
+  status: status ?? MemberStatus.active,
+);
 
 void main() {
   const issue = {WorkspacePermission.issueInvoices};
@@ -32,5 +37,21 @@ void main() {
   test('the owner sends; nobody inactive does', () {
     expect(_m(owner: true).maySendEInvoices(const {}), isTrue);
     expect(_m(status: MemberStatus.paused).maySendEInvoices(issue), isFalse);
+  });
+
+  test('a co-owner sends as the server decides it: with the right to issue '
+      'invoices only', () {
+    expect(
+      _m(coOwner: CoOwnerStatus.active).maySendEInvoices(const {}),
+      isFalse,
+    );
+    expect(_m(coOwner: CoOwnerStatus.active).maySendEInvoices(issue), isTrue);
+  });
+
+  test('an owner who is not active does not send', () {
+    expect(
+      _m(owner: true, status: MemberStatus.paused).maySendEInvoices(issue),
+      isFalse,
+    );
   });
 }

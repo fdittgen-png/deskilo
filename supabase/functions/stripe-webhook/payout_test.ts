@@ -179,3 +179,14 @@ Deno.test("two workspaces sharing one Stripe secret: the payout is attributed to
   assertEquals(called, false);
   assertEquals(fake.calls, []);
 });
+
+Deno.test("#3905 a test-mode payout reaches no books", async () => {
+  const { handle } = await import("./index.ts");
+  const body = JSON.stringify({ ...payoutEvent(), livemode: false });
+  const req = new Request("http://x/stripe-webhook", { method: "POST", body, headers: { "stripe-signature": "t=1,v1=x" } });
+  const fake = fakeAdmin({});
+  // deno-lint-ignore no-explicit-any
+  const res = await handle(req, { admin: () => fake.admin as any, env: () => undefined, nowS: () => 1, fetch: fetch });
+  assertEquals(res.status, 200);
+  assertEquals(fake.calls, []);
+});

@@ -29000,6 +29000,29 @@
   "@payOnlinePendingTitle": {
     "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"
   },
+  "payOnlineReversedDetail": "Payment {reference} ({amount} via {provider}) was reversed by the provider (a refund or a dispute). The business corrects your balance.",
+  "@payOnlineReversedDetail": {
+    "description": "#3905 reversed line: same placeholders as payOnlinePendingDetail",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      }
+    }
+  },
+  "payOnlineReversedTitle": "Online payment reversed",
+  "@payOnlineReversedTitle": {
+    "description": "#3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)"
+  },
+  "payOnlineTestKeys": "Online payment isn't available: the payment provider is set up with test credentials. The business needs to enter its live keys.",
+  "@payOnlineTestKeys": {
+    "description": "#3905 an online payment refused because the provider holds test credentials"
+  },
   "paymentAccountNumberLabel": "Account number",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

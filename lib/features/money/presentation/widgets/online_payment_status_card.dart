@@ -15,7 +15,9 @@ import '../payment_provider_labels.dart';
 /// there to quote if it never settles. A refused or expired one is
 /// FAILED: nothing was credited. A captured one needs no card — its
 /// credit is on the bill. Only the webhook's ledger posting ever says
-/// "paid"; the provider's redirect back to the app never does.
+/// "paid"; the provider's redirect back to the app never does. #3905 — one
+/// the provider REVERSED (a refund or a dispute) is said too: the business
+/// corrects the balance.
 class OnlinePaymentStatusCard extends StatelessWidget {
   const OnlinePaymentStatusCard({
     super.key,
@@ -34,7 +36,7 @@ class OnlinePaymentStatusCard extends StatelessWidget {
     final captured = ofMonth.any((i) => i.status == 'captured');
     return [
       for (final i in ofMonth)
-        if (i.status == 'created' || (i.status == 'failed' && !captured)) i,
+        if (i.status == 'created' || i.status == 'reversed' || (i.status == 'failed' && !captured)) i,
     ];
   }
 
@@ -52,16 +54,18 @@ class OnlinePaymentStatusCard extends StatelessWidget {
             ListTile(
               key: ValueKey('online-payment-${intent.status}-${intent.id}'),
               leading: Icon(
-                intent.status == 'failed'
-                    ? Icons.error_outline
-                    : Icons.hourglass_top_outlined,
+                switch (intent.status) {
+                  'failed' => Icons.error_outline,
+                  'reversed' => Icons.undo_outlined,
+                  _ => Icons.hourglass_top_outlined,
+                },
                 color: intent.status == 'failed' ? scheme.error : null,
               ),
-              title: Text(
-                intent.status == 'failed'
-                    ? (l10n.payOnlineFailedTitle)
-                    : (l10n.payOnlinePendingTitle),
-              ),
+              title: Text(switch (intent.status) {
+                'failed' => l10n.payOnlineFailedTitle,
+                'reversed' => l10n.payOnlineReversedTitle,
+                _ => l10n.payOnlinePendingTitle,
+              }),
               subtitle: Text(_detail(l10n, intent, currency)),
             ),
         ],
@@ -79,8 +83,10 @@ class OnlinePaymentStatusCard extends StatelessWidget {
         ? intent.provider
         : paymentProviderLabel(l10n, provider);
     final amount = currency.formatMinor(intent.amountCents);
-    return intent.status == 'failed'
-        ? (l10n.payOnlineFailedDetail(intent.reference, amount, via))
-        : (l10n.payOnlinePendingDetail(intent.reference, amount, via));
+    return switch (intent.status) {
+      'failed' => l10n.payOnlineFailedDetail(intent.reference, amount, via),
+      'reversed' => l10n.payOnlineReversedDetail(intent.reference, amount, via),
+      _ => l10n.payOnlinePendingDetail(intent.reference, amount, via),
+    };
   }
 }
