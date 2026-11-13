@@ -36,5 +36,9 @@
   "purchaseOrderRefused": "La commande n’a pas été modifiée. Vérifiez les saisies et réessayez.",
   "reportDocPurchaseOrder": "Bon de commande",
   "reportDocPurchaseOrderTitle": "Bon de commande {reference}",
-  "reportExpectedDelivery": "Livraison prévue"
+  "reportExpectedDelivery": "Livraison prévue",
+  "purchaseOrderSummaryTitle": "Résumé de la commande",
+  "purchaseOrderSummaryLines": "{count, plural, =0{Aucune ligne} one{{count} ligne} other{{count} lignes}}",
+  "purchaseOrderSummaryNet": "Net",
+  "purchaseOrderSummaryVat": "TVA"
 }
