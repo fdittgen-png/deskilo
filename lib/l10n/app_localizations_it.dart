@@ -5690,6 +5690,83 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDayEmpty => 'Niente in questo giorno.';
 
   @override
+  String get calendarDeskAll => 'Tutti';
+
+  @override
+  String get calendarDeskBooking => 'Dettagli della prenotazione';
+
+  @override
+  String get calendarDeskBookingActions =>
+      'Modifica, annulla o mostra sulla pianta';
+
+  @override
+  String get calendarDeskColumnFrom => 'Dal';
+
+  @override
+  String get calendarDeskColumnMember => 'Membro';
+
+  @override
+  String get calendarDeskColumnPlace => 'Posto';
+
+  @override
+  String get calendarDeskColumnState => 'Stato';
+
+  @override
+  String get calendarDeskColumnTo => 'Al';
+
+  @override
+  String get calendarDeskExport => 'Esporta';
+
+  @override
+  String get calendarDeskFilterKind => 'Tipo di posto';
+
+  @override
+  String get calendarDeskFilterLevel => 'Livello';
+
+  @override
+  String calendarDeskFreeDay(String place, String day) {
+    return '$place: libero il $day, nuova prenotazione';
+  }
+
+  @override
+  String calendarDeskFreeSlot(String place, String from, String to) {
+    return '$place: libero dalle $from alle $to, nuova prenotazione';
+  }
+
+  @override
+  String calendarDeskMissingHour(String from, String to) {
+    return 'Gli orologi vanno avanti: dalle $from alle $to non esiste in questo giorno';
+  }
+
+  @override
+  String get calendarDeskModeTable => 'Tutte le prenotazioni';
+
+  @override
+  String calendarDeskMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'altre $count',
+      one: 'altra $count',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get calendarDeskNew => 'Nuova prenotazione';
+
+  @override
+  String calendarDeskRepeatedHour(String time) {
+    return '$time, per la seconda volta: gli orologi sono tornati indietro';
+  }
+
+  @override
+  String get calendarDeskZoomIn => 'Ingrandisci';
+
+  @override
+  String get calendarDeskZoomOut => 'Riduci';
+
+  @override
   String calendarDueTitle(String number) {
     return 'Scadenza · $number';
   }
@@ -30797,7 +30874,13 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shortcutNew => 'Nuovo';
 
   @override
+  String get shortcutNextPeriod => 'Giorno, settimana o mese successivo';
+
+  @override
   String get shortcutOpenCalendar => 'Apri il calendario di un campo data';
+
+  @override
+  String get shortcutPreviousPeriod => 'Giorno, settimana o mese precedente';
 
   @override
   String get shortcutPrint => 'Il documento di questa pagina';
@@ -30815,7 +30898,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get shortcutSubmit => 'Salva o invia';
 
   @override
+  String get shortcutToday => 'Vai a oggi';
+
+  @override
   String get shortcutUndo => 'Annulla';
+
+  @override
+  String get shortcutViewDay => 'Mostra un giorno';
+
+  @override
+  String get shortcutViewMonth => 'Mostra un mese';
+
+  @override
+  String get shortcutViewWeek => 'Mostra una settimana';
 
   @override
   String get siteCity => 'Città';

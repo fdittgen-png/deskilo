@@ -23,6 +23,15 @@ typedef CityMoneySpec = ({
   List<({String siteId, String memberId, DateTime month})> siteRentals,
 });
 
+/// The invented address a member of the city's business is billed at: the
+/// street and the town of the space, told by its currency.
+String _memberAddress(String currency) => switch (currency) {
+  'GBP' => 'Example Street, London',
+  'CHF' => 'Beispielstrasse, Zurich',
+  'EUR' => 'Via Esempio, Milano',
+  _ => 'Example Avenue, New York',
+};
+
 void seedCityMoney(
   FakeMoneyRepository money,
   FakeWorkspaceRepository workspace,
@@ -197,9 +206,7 @@ class _CityMoney {
               ],
         currency: currency,
         memberName: workspace.memberNames[member.id] ?? 'Demo member',
-        memberAddress: currency == 'GBP'
-            ? 'Example Street, London'
-            : 'Example Avenue, New York',
+        memberAddress: _memberAddress(currency),
         workspaceName: name,
         workspaceAddress: workspace.workspaces
             .firstWhere((w) => w.id == workspaceId)

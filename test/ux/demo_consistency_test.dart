@@ -64,13 +64,16 @@ void main() {
       reason: 'the member has invoices on the workspace Money page',
     );
     // Me spans every space the person is in: the main one and Leipzig
-    // (euros), London (pounds) and New York (dollars).
+    // (euros), London (pounds), New York (dollars), Zurich (francs) and
+    // Milan (euros).
     final mine =
         [
           ...journey.fixture.money.invoices,
           ...journey.fixture.secondSpace.money.invoices,
           ...journey.fixture.london.money.invoices,
           ...journey.fixture.newYork.money.invoices,
+          ...journey.fixture.zurich.money.invoices,
+          ...journey.fixture.milan.money.invoices,
         ].where(
           (i) =>
               i.memberId == journey.fixture.actor.memberId &&
@@ -88,13 +91,13 @@ void main() {
     );
   });
 
-  testWidgets('Me shows one amount to pay per currency: euros, pounds and '
-      'dollars apart, on Me › Finances and on the Me home glance', (
+  testWidgets('Me shows one amount to pay per currency: euros, pounds, '
+      'dollars and francs apart, on Me › Finances and on the Me home glance', (
     tester,
   ) async {
     final journey = await pumpDemo(tester, persona: DemoPersona.member);
     final owed = demoOwedFromTheSpaces(journey.fixture);
-    expect(owed.keys.toSet(), {'EUR', 'GBP', 'USD'});
+    expect(owed.keys.toSet(), {'EUR', 'GBP', 'USD', 'CHF'});
 
     await _go(tester, '/account-activity');
     final summary = find.byKey(const ValueKey('finances-summary'));
@@ -238,15 +241,21 @@ void main() {
     await _go(tester, '/me');
 
     final listed = {for (final c in journey.fixture.directory.cards) c.id};
+    // The home is longer with two more businesses' finances (#3832): each
+    // visit is scrolled to before it is read, as a lazy list is built.
+    final scroller = find.byType(Scrollable).first;
+    var confirmed = false, requested = false;
     for (final visit in journey.fixture.guests.visits) {
       expect(listed, contains(visit.workspaceId), reason: visit.id);
-      expect(
-        find.byKey(ValueKey('me-visit-${visit.id}'), skipOffstage: false),
-        findsOneWidget,
-      );
+      final tile = find.byKey(ValueKey('me-visit-${visit.id}'));
+      await tester.scrollUntilVisible(tile, 300, scrollable: scroller);
+      await tester.pump();
+      expect(tile, findsOneWidget);
+      confirmed |= _shows('Confirmed');
+      requested |= _shows('Requested');
     }
-    expect(_shows('Confirmed'), isTrue);
-    expect(_shows('Requested'), isTrue);
+    expect(confirmed, isTrue);
+    expect(requested, isTrue);
   });
 
   testWidgets('Business analytics offers the team\'s saved views', (

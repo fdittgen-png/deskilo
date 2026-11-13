@@ -18,6 +18,7 @@ import 'demo_fixture.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 
 const _pezenasPasses = [
   GuestPassOffer(id: 'demo-pass-pezenas-day', name: 'Pass journée', unit: GuestPassUnit.day, priceCents: 1800),
@@ -67,6 +68,13 @@ List<Override> demoGuestPassOverrides(DemoFixture fixture) {
   final newYork = space(demoNewYorkSpaceId, 'USD',
       (reservations: fixture.newYork.reservations, workspaces: fixture.newYork.workspaces,
        money: fixture.newYork.money, seats: () => fixture.newYork.floorPlan.seats), _newYorkPasses);
+  // #3832 — the trade cities sell no passes yet, like Leipzig.
+  final zurich = space(demoZurichSpaceId, demoZurich.currency,
+      (reservations: fixture.zurich.reservations, workspaces: fixture.zurich.workspaces,
+       money: fixture.zurich.money, seats: () => fixture.zurich.floorPlan.seats), const []);
+  final milan = space(demoMilanSpaceId, demoMilan.currency,
+      (reservations: fixture.milan.reservations, workspaces: fixture.milan.workspaces,
+       money: fixture.milan.money, seats: () => fixture.milan.floorPlan.seats), const []);
   return [
     guestPassRepositoryProvider.overrideWith((ref) {
       rights.held = () => ref.read(myPermissionsProvider).toSet();
@@ -74,6 +82,8 @@ List<Override> demoGuestPassOverrides(DemoFixture fixture) {
         demoSecondSpaceId => leipzig,
         demoLondonSpaceId => london,
         demoNewYorkSpaceId => newYork,
+        demoZurichSpaceId => zurich,
+        demoMilanSpaceId => milan,
         _ => home,
       };
     }),

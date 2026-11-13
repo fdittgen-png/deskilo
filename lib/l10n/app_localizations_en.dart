@@ -5651,6 +5651,82 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarDayEmpty => 'Nothing on this day.';
 
   @override
+  String get calendarDeskAll => 'All';
+
+  @override
+  String get calendarDeskBooking => 'Booking details';
+
+  @override
+  String get calendarDeskBookingActions => 'Change, cancel or show on plan';
+
+  @override
+  String get calendarDeskColumnFrom => 'From';
+
+  @override
+  String get calendarDeskColumnMember => 'Member';
+
+  @override
+  String get calendarDeskColumnPlace => 'Place';
+
+  @override
+  String get calendarDeskColumnState => 'State';
+
+  @override
+  String get calendarDeskColumnTo => 'To';
+
+  @override
+  String get calendarDeskExport => 'Export';
+
+  @override
+  String get calendarDeskFilterKind => 'Kind of place';
+
+  @override
+  String get calendarDeskFilterLevel => 'Level';
+
+  @override
+  String calendarDeskFreeDay(String place, String day) {
+    return '$place: free on $day, new booking';
+  }
+
+  @override
+  String calendarDeskFreeSlot(String place, String from, String to) {
+    return '$place: free from $from to $to, new booking';
+  }
+
+  @override
+  String calendarDeskMissingHour(String from, String to) {
+    return 'The clocks go forward: $from to $to does not exist on this day';
+  }
+
+  @override
+  String get calendarDeskModeTable => 'All bookings';
+
+  @override
+  String calendarDeskMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count more',
+      one: '$count more',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get calendarDeskNew => 'New booking';
+
+  @override
+  String calendarDeskRepeatedHour(String time) {
+    return '$time, second time: the clocks went back';
+  }
+
+  @override
+  String get calendarDeskZoomIn => 'Zoom in';
+
+  @override
+  String get calendarDeskZoomOut => 'Zoom out';
+
+  @override
   String calendarDueTitle(String number) {
     return 'Payment due · $number';
   }
@@ -30506,7 +30582,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shortcutNew => 'New';
 
   @override
+  String get shortcutNextPeriod => 'Next day, week or month';
+
+  @override
   String get shortcutOpenCalendar => 'Open a date field\'s calendar';
+
+  @override
+  String get shortcutPreviousPeriod => 'Previous day, week or month';
 
   @override
   String get shortcutPrint => 'This page\'s document';
@@ -30524,7 +30606,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get shortcutSubmit => 'Save or send';
 
   @override
+  String get shortcutToday => 'Go to today';
+
+  @override
   String get shortcutUndo => 'Undo';
+
+  @override
+  String get shortcutViewDay => 'Show a day';
+
+  @override
+  String get shortcutViewMonth => 'Show a month';
+
+  @override
+  String get shortcutViewWeek => 'Show a week';
 
   @override
   String get siteCity => 'City';

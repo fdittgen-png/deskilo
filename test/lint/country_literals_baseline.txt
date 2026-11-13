@@ -18,6 +18,7 @@ lib/core/demo/seed/demo_new_york_seed.dart :: 6 :: the demonstration spaces' see
 lib/core/demo/seed/demo_people_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_purchase_seed.dart :: 7 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_second_space_seed.dart :: 2 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
+lib/core/demo/seed/demo_trade_city_seed.dart :: 6 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/demo/seed/demo_year_seed.dart :: 3 :: the demonstration spaces' seed data and fixtures (their countries): data, not a rule
 lib/core/i18n/app_format.dart :: 21 :: the regions whose Spanish reads Mexico's number and date conventions (#3647): locale data for a format pairing, not a rule
 lib/core/i18n/country_names.dart :: 35 :: the display names of the countries in every language: a table of names

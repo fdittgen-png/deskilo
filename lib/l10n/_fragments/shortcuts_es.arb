@@ -10,5 +10,11 @@
   "shortcutOpenCalendar": "Abrir el calendario de un campo de fecha",
   "shortcutUndo": "Deshacer",
   "shortcutRedo": "Rehacer",
-  "shortcutKeysTitle": "Teclas del teclado"
+  "shortcutKeysTitle": "Teclas del teclado",
+  "shortcutToday": "Ir a hoy",
+  "shortcutPreviousPeriod": "Día, semana o mes anterior",
+  "shortcutNextPeriod": "Día, semana o mes siguiente",
+  "shortcutViewDay": "Mostrar un día",
+  "shortcutViewWeek": "Mostrar una semana",
+  "shortcutViewMonth": "Mostrar un mes"
 }

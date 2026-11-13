@@ -1,0 +1,22 @@
+{
+  "calendarDeskNew": "Neue Buchung",
+  "calendarDeskAll": "Alle",
+  "calendarDeskFilterLevel": "Ebene",
+  "calendarDeskFilterKind": "Art des Platzes",
+  "calendarDeskColumnMember": "Mitglied",
+  "calendarDeskColumnPlace": "Platz",
+  "calendarDeskColumnFrom": "Von",
+  "calendarDeskColumnTo": "Bis",
+  "calendarDeskColumnState": "Status",
+  "calendarDeskExport": "Exportieren",
+  "calendarDeskBooking": "Buchungsdetails",
+  "calendarDeskBookingActions": "Ändern, stornieren oder im Plan zeigen",
+  "calendarDeskModeTable": "Alle Buchungen",
+  "calendarDeskZoomIn": "Vergrößern",
+  "calendarDeskZoomOut": "Verkleinern",
+  "calendarDeskMore": "{count, plural, one{{count} weitere} other{{count} weitere}}",
+  "calendarDeskFreeSlot": "{place}: frei von {from} bis {to}, neue Buchung",
+  "calendarDeskFreeDay": "{place}: frei am {day}, neue Buchung",
+  "calendarDeskRepeatedHour": "{time}, zum zweiten Mal: die Uhren wurden zurückgestellt",
+  "calendarDeskMissingHour": "Die Uhren werden vorgestellt: {from} bis {to} gibt es an diesem Tag nicht"
+}
