@@ -45,6 +45,10 @@
   "@membersPlansTitle": {
     "description": "#3618 members at the desk: plans page title and its door"
   },
+  "plansTitle": "Plans",
+  "@plansTitle": {
+    "description": "#3618 members at the desk: plans page title (short: it stands in the desk's title bar)"
+  },
   "plansColPlan": "Plan",
   "@plansColPlan": {
     "description": "#3618 members at the desk: plans column: the share range"

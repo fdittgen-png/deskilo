@@ -41,7 +41,7 @@ class PlansScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-    appBar: AppBar(title: PageTitle(context.l10n.membersPlansTitle)),
+    appBar: AppBar(title: PageTitle(context.l10n.plansTitle)),
     body: OpenRecord(
       listPath: plansPath,
       builder: (context, id) => ListDetailScaffold(

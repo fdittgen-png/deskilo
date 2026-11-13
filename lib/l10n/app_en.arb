@@ -29679,6 +29679,10 @@
       }
     }
   },
+  "plansTitle": "Plans",
+  "@plansTitle": {
+    "description": "#3618 members at the desk: plans page title (short: it stands in the desk's title bar)"
+  },
   "policyAdminCheckoutDesc": "An admin can end a member's running check-in.",
   "@policyAdminCheckoutDesc": {
     "description": "Shown as the line under a title in availability policies (workspace)."

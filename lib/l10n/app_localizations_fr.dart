@@ -22812,6 +22812,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get plansTitle => 'Formules';
+
+  @override
   String get policyAdminCheckoutDesc =>
       'Un admin peut terminer le check-in en cours d\'un membre.';
 

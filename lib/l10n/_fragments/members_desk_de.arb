@@ -10,6 +10,7 @@
   "membersFeeUnavailable": "Nicht verfügbar: Kein Gebührenband deckt diesen Anteil ab",
   "membersNoVisitSince": "Keiner seit {date}",
   "membersPlansTitle": "Abos und Tarife",
+  "plansTitle": "Tarife",
   "plansColPlan": "Tarif",
   "plansShareRange": "{from} bis {to}",
   "plansColIncluded": "Was enthalten ist",

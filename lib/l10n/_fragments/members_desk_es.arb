@@ -10,6 +10,7 @@
   "membersFeeUnavailable": "No disponible: ningún tramo de tarifas cubre esta cuota",
   "membersNoVisitSince": "Ninguna desde el {date}",
   "membersPlansTitle": "Suscripciones y planes",
+  "plansTitle": "Planes",
   "plansColPlan": "Plan",
   "plansShareRange": "de {from} a {to}",
   "plansColIncluded": "Qué incluye",

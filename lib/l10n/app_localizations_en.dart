@@ -22544,6 +22544,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get plansTitle => 'Plans';
+
+  @override
   String get policyAdminCheckoutDesc =>
       'An admin can end a member\'s running check-in.';
 

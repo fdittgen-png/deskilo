@@ -36494,6 +36494,12 @@ abstract class AppLocalizations {
   /// **'{from} to {to}'**
   String plansShareRange(String from, String to);
 
+  /// #3618 members at the desk: plans page title (short: it stands in the desk's title bar)
+  ///
+  /// In en, this message translates to:
+  /// **'Plans'**
+  String get plansTitle;
+
   /// Shown as the line under a title in availability policies (workspace).
   ///
   /// In en, this message translates to:

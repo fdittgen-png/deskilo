@@ -10,6 +10,7 @@
   "membersFeeUnavailable": "Non disponibile: nessuna fascia tariffaria copre questa quota",
   "membersNoVisitSince": "Nessuna dal {date}",
   "membersPlansTitle": "Abbonamenti e piani",
+  "plansTitle": "Piani",
   "plansColPlan": "Piano",
   "plansShareRange": "da {from} a {to}",
   "plansColIncluded": "Cosa è incluso",

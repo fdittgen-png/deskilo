@@ -13710,6 +13710,7 @@
   "plansIncluded": "Der Anteil des Mitglieds an den offenen Halbtagen des Monats; ein zusätzlicher Halbtag kostet {overage}",
   "plansNoMembers": "Kein Mitglied hat diesen Tarif.",
   "plansShareRange": "{from} bis {to}",
+  "plansTitle": "Tarife",
   "policyAdminCheckoutDesc": "Ein Admin kann den laufenden Check-in eines Mitglieds beenden.",
   "policyAdminCheckoutTitle": "Admins dürfen Mitglieder auschecken",
   "policyAllowPastDesc": "Mitglieder können eine bereits beendete Buchung nachtragen.",

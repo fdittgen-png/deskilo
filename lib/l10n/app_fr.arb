@@ -13710,6 +13710,7 @@
   "plansIncluded": "La part du membre des demi-journées ouvertes du mois ; une demi-journée en plus coûte {overage}",
   "plansNoMembers": "Aucun membre n'a cette formule.",
   "plansShareRange": "de {from} à {to}",
+  "plansTitle": "Formules",
   "policyAdminCheckoutDesc": "Un admin peut terminer le check-in en cours d'un membre.",
   "policyAdminCheckoutTitle": "Les admins peuvent faire le check-out des membres",
   "policyAllowPastDesc": "Les membres peuvent enregistrer une réservation déjà terminée (rattrapage).",

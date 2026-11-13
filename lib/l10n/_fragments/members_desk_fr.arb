@@ -10,6 +10,7 @@
   "membersFeeUnavailable": "Indisponible : aucun palier tarifaire ne couvre cette part",
   "membersNoVisitSince": "Aucune depuis le {date}",
   "membersPlansTitle": "Abonnements et formules",
+  "plansTitle": "Formules",
   "plansColPlan": "Formule",
   "plansShareRange": "de {from} à {to}",
   "plansColIncluded": "Ce qui est inclus",

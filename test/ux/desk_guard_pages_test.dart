@@ -10,12 +10,14 @@ import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
+import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
@@ -77,9 +79,23 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
-        workspace: FakeWorkspaceRepository.withWorkspace(
-          featureFlags: {for (final f in features) f.name: true},
-        ),
+        workspace:
+            FakeWorkspaceRepository.withWorkspace(
+                featureFlags: {for (final f in features) f.name: true},
+              )
+              // #3618 — a member on a plan, so the members' pages have rows.
+              ..otherMembers.add(
+                const Member(
+                  id: 'member-2',
+                  workspaceId: 'ws-1',
+                  userId: 'user-2',
+                  isAdmin: false,
+                  isOwner: false,
+                  status: MemberStatus.active,
+                  subscriptionPct: 50,
+                ),
+              )
+              ..memberEmails = {'member-2': 'bob@example.test'},
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
       guestPassRepositoryProvider.overrideWithValue(_OnePassSold()),
@@ -102,6 +118,10 @@ const _pages = [
   // #3615 — purchases at the desk.
   ('/money/purchases', PageKind.records, 'money', 'purchases'),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
+  // #3618 — members and plans at the desk, and a member beside the table.
+  ('/members', PageKind.records, 'members', 'members'),
+  ('/members/member-2', PageKind.records, 'members', 'member'),
+  ('/members/plans', PageKind.records, 'members', 'plans'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -166,6 +186,10 @@ void main() {
               RecordsHeader<Supplier>,
               RecordRow<_PurchaseRow>,
               RecordsHeader<_PurchaseRow>,
+              RecordRow<Member>,
+              RecordsHeader<Member>,
+              RecordRow<FeeBand>,
+              RecordsHeader<FeeBand>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -176,6 +200,8 @@ void main() {
               RecordsHeader<GuestPassRecord>,
               RecordsHeader<Supplier>,
               RecordsHeader<_PurchaseRow>,
+              RecordsHeader<Member>,
+              RecordsHeader<FeeBand>,
             ],
           ),
           isEmpty,

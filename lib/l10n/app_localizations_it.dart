@@ -22740,6 +22740,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get plansTitle => 'Piani';
+
+  @override
   String get policyAdminCheckoutDesc =>
       'Un amministratore può terminare il check-in in corso di un membro.';
 

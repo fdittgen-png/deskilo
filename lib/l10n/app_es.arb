@@ -13710,6 +13710,7 @@
   "plansIncluded": "La cuota del miembro de las medias jornadas abiertas del mes; una media jornada extra cuesta {overage}",
   "plansNoMembers": "Ningún miembro tiene este plan.",
   "plansShareRange": "de {from} a {to}",
+  "plansTitle": "Planes",
   "policyAdminCheckoutDesc": "Un administrador puede finalizar el check-in en curso de un miembro.",
   "policyAdminCheckoutTitle": "Los administradores pueden hacer el check-out de los miembros",
   "policyAllowPastDesc": "Los miembros pueden registrar una reserva ya finalizada.",
