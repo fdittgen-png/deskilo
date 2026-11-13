@@ -15,8 +15,11 @@ import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
+import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
+import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -49,6 +52,44 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     memberId: 'member-1',
     period: kTestPeriod,
   );
+  // #3627 — the money pages are guarded with their own records on them: the
+  // invoice paid (the payments page's row), one credit and one booking. The
+  // invoices page keeps its unpaid invoice.
+  if (path.startsWith('/money')) {
+    final paid = money.invoices.single;
+    money.invoiceMatchesStore[paid.id] = InvoiceMatch(
+      invoiceId: paid.id,
+      paidCents: paid.totalCents,
+      resolution: 'exact',
+      paymentLedgerId: 'payment-1',
+      matchedAt: kTestNow,
+    );
+    money.ledger.add(
+      LedgerEntry(
+        id: 'credit-1',
+        memberId: 'member-1',
+        kind: LedgerKind.credit,
+        category: LedgerCategory.payment,
+        amountCents: 5000,
+        description: 'Transfer',
+        period: kTestPeriod,
+        createdAt: kTestNow,
+      ),
+    );
+    money.usageRecords.add(
+      UsageRecord(
+        id: 'usage-1',
+        memberId: 'member-1',
+        reservationId: 'res-1',
+        period: kTestPeriod,
+        reservedFrom: kTestNow,
+        reservedTo: kTestNow.add(const Duration(hours: 4)),
+        countedMinutes: 240,
+        reservedMinutes: 240,
+        spaceLabel: 'Desk A1',
+      ),
+    );
+  }
   // #3615 — one supplier, owed one approved bill.
   final suppliers = FakeSupplierRepository();
   final supplier = await suppliers.save(
@@ -210,6 +251,13 @@ const _pages = [
   // #3616 — the books at the desk.
   ('/money/accounting', PageKind.dashboard, 'money', 'accounting'),
   ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
+  // #3627 — the payments received at the desk.
+  ('/money/payments', PageKind.records, 'money', 'payments'),
+  // #3627 — my money at the desk: the month a dashboard, the faces tables.
+  ('/money?face=statement', PageKind.dashboard, 'money', 'money-month'),
+  ('/money?face=invoices', PageKind.records, 'money', 'money-invoices'),
+  ('/money?face=payments', PageKind.records, 'money', 'money-payments'),
+  ('/money?face=usage', PageKind.records, 'money', 'money-usage'),
   ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
   // #3619 — settings and setup at the desk.
   ('/settings', PageKind.task, 'settings', 'account'),
@@ -255,7 +303,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 21;
+const _guardedWorkspaceRoutes = 22;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -358,6 +406,12 @@ void main() {
               RecordsHeader<ReportPage>,
               RecordRow<RightsRequest>,
               RecordsHeader<RightsRequest>,
+              RecordRow<RecordedPayment>,
+              RecordsHeader<RecordedPayment>,
+              RecordRow<LedgerEntry>,
+              RecordsHeader<LedgerEntry>,
+              RecordRow<UsageRecord>,
+              RecordsHeader<UsageRecord>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -374,6 +428,9 @@ void main() {
               RecordsHeader<FeatureManifestEntry>,
               RecordsHeader<ReportPage>,
               RecordsHeader<RightsRequest>,
+              RecordsHeader<RecordedPayment>,
+              RecordsHeader<LedgerEntry>,
+              RecordsHeader<UsageRecord>,
             ],
           ),
           isEmpty,

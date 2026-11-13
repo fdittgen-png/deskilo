@@ -33684,6 +33684,12 @@ abstract class AppLocalizations {
   /// **'Reminded ×{count}'**
   String moneyRemindedTimes(int count);
 
+  /// #3627 Caption above the report actions at the desk: the month they are made for.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports for {month}'**
+  String moneyReportsForMonth(String month);
+
   /// Finance/settings UX + workspace language (#486)
   ///
   /// In en, this message translates to:
@@ -41165,6 +41171,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing was reverse-charged in this period.'**
   String get recapEmpty;
+
+  /// #3627 payments table column: the day the payment was matched to its invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Matched on'**
+  String get recordedPaymentsColMatched;
 
   /// Empty state of the payments list
   ///
@@ -50963,6 +50975,12 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #3627 Column header of the month's statement lines at the desk.
+  ///
+  /// In en, this message translates to:
+  /// **'Line'**
+  String get statementDeskColLine;
+
   /// #934 workspace status / repartition wizard: statusAwaiting
   ///
   /// In en, this message translates to:
@@ -55972,6 +55990,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booked {duration}'**
   String usageBookedDuration(String duration);
+
+  /// #3627 Column header: the part of a booking that is billed (a duration).
+  ///
+  /// In en, this message translates to:
+  /// **'Billed'**
+  String get usageColBilled;
 
   /// #833 - an accepted early-departure correction
   ///

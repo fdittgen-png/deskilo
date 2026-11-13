@@ -12720,6 +12720,7 @@
   "moneyPaymentPeriodLabel": "Gilt für",
   "moneyRecordPayment": "Zahlung erfassen",
   "moneyRemindedTimes": "Gemahnt ×{count}",
+  "moneyReportsForMonth": "Berichte für {month}",
   "moneySectionDocuments": "Dokumente",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
@@ -15356,6 +15357,7 @@
     }
   },
   "recapEmpty": "In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.",
+  "recordedPaymentsColMatched": "Zugeordnet am",
   "recordedPaymentsEmpty": "In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.",
   "recordedPaymentsMore": "Weitere Zahlungen anzeigen",
   "recordedPaymentsOff": "Geld ist in diesem Bereich ausgeschaltet.",
@@ -19187,6 +19189,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "statementDeskColLine": "Posten",
   "statusAwaiting": "Offen",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -20838,6 +20841,7 @@
   "usageAskSubmitted": "Angefragt. Jemand anderes entscheidet.",
   "usageBilledDuration": "Berechnet {duration}",
   "usageBookedDuration": "Gebucht {duration}",
+  "usageColBilled": "Abgerechnet",
   "usageCorrected": "Korrigiert",
   "usageDelete": "Diesen Satz entfernen",
   "usageDeleteSubmitted": "Entfernung angefragt.",

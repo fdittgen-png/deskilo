@@ -1,0 +1,24 @@
+{
+  "@@locale": "en",
+  "recordedPaymentsColMatched": "Matched on",
+  "@recordedPaymentsColMatched": {
+    "description": "#3627 payments table column: the day the payment was matched to its invoice"
+  },
+  "statementDeskColLine": "Line",
+  "@statementDeskColLine": {
+    "description": "#3627 Column header of the month's statement lines at the desk."
+  },
+  "usageColBilled": "Billed",
+  "@usageColBilled": {
+    "description": "#3627 Column header: the part of a booking that is billed (a duration)."
+  },
+  "moneyReportsForMonth": "Reports for {month}",
+  "@moneyReportsForMonth": {
+    "description": "#3627 Caption above the report actions at the desk: the month they are made for.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  }
+}
