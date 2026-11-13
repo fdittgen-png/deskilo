@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/list_detail_route.dart';
+import '../../features/money/application/arrived_accounting_sign_in.dart';
 import '../../features/money/domain/accounting_sign_in_return.dart';
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
@@ -459,10 +460,10 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
 }
 
 /// #3906 — an accounting target's sign-in, completed by the signed-in person;
-/// the router took its code and state out of the address. Until the
-/// workspace's switches are read (right after a sign-in) the page stays: the
-/// defaults would send it away with the sign-in uncompleted, and the server
-/// checks the switch and the right on completion anyway.
+/// the router took its code and state out of the address. While a return
+/// waits to be completed the page stays — right after a sign-in the switches
+/// may still be the defaults — and the server decides switch and right on
+/// completion; with none waiting the guard applies.
 GoRoute _accountingSignInRoute(RouteEnv env) {
   final guard = env.guard(
     const RouteAccess(
@@ -473,9 +474,9 @@ GoRoute _accountingSignInRoute(RouteEnv env) {
   return GoRoute(
     path: accountingSignInReturnPath,
     redirect: (context, state) =>
-        env.ref.read(enabledFeaturesProvider).hasValue
-            ? guard(context, state)
-            : null,
+        env.ref.read(arrivedAccountingSignInProvider).holds
+            ? null
+            : guard(context, state),
     builder: (context, state) => const AccountingSignInReturnScreen(),
   );
 }

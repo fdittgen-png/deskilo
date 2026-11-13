@@ -35,16 +35,28 @@ class _AccountingSignInReturnScreenState
     extends ConsumerState<AccountingSignInReturnScreen> {
   SignInCompletion? _outcome;
 
+  late final ArrivedAccountingSignIn _arrived = ref.read(
+    arrivedAccountingSignInProvider,
+  );
+
   @override
   void initState() {
     super.initState();
-    final back = ref.read(arrivedAccountingSignInProvider).take();
+    final back = _arrived.held;
     if (back == null) {
       // Opened again, or after a reload: the link was spent or lost.
       _outcome = SignInCompletion.expired;
     } else {
+      _arrived.answering();
       unawaited(_complete(back));
     }
+  }
+
+  @override
+  void dispose() {
+    // Leaving the page spends what it held.
+    _arrived.clear(closed: true);
+    super.dispose();
   }
 
   Future<void> _complete(SignInReturn back) async {
@@ -61,6 +73,8 @@ class _AccountingSignInReturnScreenState
       );
       outcome = SignInCompletion.failed;
     }
+    // Used once, whatever the answer.
+    _arrived.clear();
     if (!mounted) return;
     if (outcome == SignInCompletion.connected) {
       ref.invalidate(accountingConnectionsProvider);

@@ -7,6 +7,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/accounting_connection_repository.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
+import 'package:deskilo/features/money/application/arrived_accounting_sign_in.dart';
 import 'package:deskilo/features/money/domain/accounting_connection.dart';
 import 'package:deskilo/features/money/providers/accounting_connection_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -131,13 +132,48 @@ void main() {
     );
   });
 
-  testWidgets('with the connectors off the page does not open, and nothing '
-      'is completed', (tester) async {
+  testWidgets('with the connectors off and no sign-in waiting, the page does '
+      'not open', (tester) async {
     final repo = _repo();
     final router = await _pump(tester, repo, connectors: false);
-    router.go(_back);
+    router.go('/accounting/connected');
     await tester.pumpAndSettle();
     expect(router.state.uri.path, isNot('/accounting/connected'));
     expect(repo.completed, isEmpty);
+  });
+
+  testWidgets('with the connectors off and a sign-in waiting, the page asks '
+      'the server once and shows its refusal; the sign-in is spent', (
+    tester,
+  ) async {
+    final repo = _repo()..completion = SignInCompletion.refused;
+    final router = await _pump(tester, repo, connectors: false);
+    router.go(_back);
+    await tester.pumpAndSettle();
+    expect(router.state.uri.toString(), '/accounting/connected');
+    expect(repo.completed, hasLength(1));
+    expect(
+      find.byKey(const ValueKey('accounting-sign-in-refused')),
+      findsOneWidget,
+    );
+    final arrived = ProviderScope.containerOf(
+      tester.element(find.byType(Scaffold).first),
+    ).read(arrivedAccountingSignInProvider);
+    expect(
+      arrived.held,
+      isNull,
+      reason: 'the code and the state are used once',
+    );
+
+    router.go('/money/accounting');
+    await tester.pumpAndSettle();
+    router.go('/accounting/connected');
+    await tester.pumpAndSettle();
+    expect(
+      router.state.uri.path,
+      isNot('/accounting/connected'),
+      reason: 'once the page closed, the guard applies again',
+    );
+    expect(repo.completed, hasLength(1));
   });
 }
