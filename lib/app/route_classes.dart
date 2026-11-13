@@ -254,7 +254,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
   RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/money/suppliers/:id', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
-  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work), // #3615
+  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders'),
   // #3608 — the order's form, a long task: a page with its own columns.
   RouteRule('/money/purchase-orders/new', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
   RouteRule('/money/purchase-orders/:id/edit', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
