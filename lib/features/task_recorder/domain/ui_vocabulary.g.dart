@@ -7314,6 +7314,7 @@ const Set<String> uiLabelKeys = {
   'customerStatementNothingOpen',
   'customerStatementOpening',
   'customerStatementOwedToYou',
+  'customerStatementPeriodNothing',
   'customerStatementPickCurrency',
   'customerStatementStillDue',
   'customerStatementTotalDue',

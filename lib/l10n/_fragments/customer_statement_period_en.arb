@@ -93,5 +93,9 @@
   "customerStatementMoveAllocated": "Payment allocated",
   "@customerStatementMoveAllocated": {
     "description": "(#3839)"
+  },
+  "customerStatementPeriodNothing": "Nothing to state for this period: no balance and no movement.",
+  "@customerStatementPeriodNothing": {
+    "description": "no statement is printed for a period without balance or movement (#3876)"
   }
 }
