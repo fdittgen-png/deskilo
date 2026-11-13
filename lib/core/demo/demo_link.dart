@@ -13,6 +13,7 @@ import 'demo_persona.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_second_space_seed.dart';
+import 'seed/demo_trade_city_seed.dart';
 
 part 'demo_link.g.dart';
 
@@ -65,7 +66,7 @@ class DemoLink {
   const DemoLink({this.persona, this.workspaceId, this.to});
 
   /// From the auth link's query: `persona` by name, `space` as `pezenas`
-  /// `leipzig`, `london` or `new-york`; `to` only when [_demoLinkAllows] it.
+  /// `leipzig`, `london`, `new-york`, `zurich` or `milan`; `to` only when [_demoLinkAllows] it.
   factory DemoLink.parse(Map<String, String> query) => DemoLink(
     persona: DemoPersona.values
         .where((p) => p.name == query['persona'])
@@ -75,6 +76,8 @@ class DemoLink {
       'leipzig' => demoSecondSpaceId,
       'london' => demoLondonSpaceId,
       'new-york' => demoNewYorkSpaceId,
+      'zurich' => demoZurichSpaceId,
+      'milan' => demoMilanSpaceId,
       _ => null,
     },
     to: _demoLinkAllows(query['to']) ? query['to'] : null,
@@ -102,6 +105,8 @@ class DemoLink {
       demoSecondSpaceId => 'leipzig',
       demoLondonSpaceId => 'london',
       demoNewYorkSpaceId => 'new-york',
+      demoZurichSpaceId => 'zurich',
+      demoMilanSpaceId => 'milan',
       _ => 'pezenas',
     },
     'persona': ?persona?.name,

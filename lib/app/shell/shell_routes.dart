@@ -4,13 +4,13 @@
 
 import 'package:go_router/go_router.dart';
 
-import '../../features/calendar/presentation/screens/calendar_branch.dart';
 import '../../features/members/presentation/screens/directory_screen.dart';
 import '../../features/money/presentation/screens/money_screen.dart';
 import '../../features/reservations/presentation/screens/reserve_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/presentation/screens/inbox_screen.dart';
 import '../../features/workspace/presentation/screens/workspace_overview_screen.dart';
+import '../desk_calendar/desk_calendar_branch.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'shell_destinations.dart';
@@ -64,7 +64,8 @@ StatefulShellRoute shellRoute(RouteEnv env) => StatefulShellRoute.indexedStack(
           ),
           // #718 — the hub when the feature is on, the classic
           // reservations calendar when it is off; picked per build.
-          builder: (context, state) => const CalendarBranch(),
+          builder: (context, state) =>
+              DeskCalendarBranch(query: state.uri.queryParameters),
         ),
       ],
     ),

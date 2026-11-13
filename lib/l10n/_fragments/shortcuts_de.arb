@@ -10,5 +10,11 @@
   "shortcutOpenCalendar": "Kalender eines Datumsfelds öffnen",
   "shortcutUndo": "Rückgängig",
   "shortcutRedo": "Wiederholen",
-  "shortcutKeysTitle": "Tastaturtasten"
+  "shortcutKeysTitle": "Tastaturtasten",
+  "shortcutToday": "Zu heute springen",
+  "shortcutPreviousPeriod": "Voriger Tag, vorige Woche oder voriger Monat",
+  "shortcutNextPeriod": "Nächster Tag, nächste Woche oder nächster Monat",
+  "shortcutViewDay": "Einen Tag zeigen",
+  "shortcutViewWeek": "Eine Woche zeigen",
+  "shortcutViewMonth": "Einen Monat zeigen"
 }

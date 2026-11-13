@@ -48,6 +48,20 @@ enum AppShortcutId {
 
   /// Ctrl/⌘+Shift+Z or Ctrl+Y in an editor.
   redo,
+
+  /// T: a calendar goes to today (#3626).
+  today,
+
+  /// ←: a calendar shows the period before.
+  previousPeriod,
+
+  /// →: a calendar shows the period after.
+  nextPeriod,
+
+  /// D, W, M: a calendar shows a day, a week, a month.
+  viewDay,
+  viewWeek,
+  viewMonth,
 }
 
 /// Where a key works.
@@ -134,6 +148,8 @@ String _keyName(LogicalKeyboardKey key) => switch (key) {
   LogicalKeyboardKey.enter => '↵',
   LogicalKeyboardKey.escape => 'Esc',
   LogicalKeyboardKey.arrowDown => '↓',
+  LogicalKeyboardKey.arrowLeft => '←',
+  LogicalKeyboardKey.arrowRight => '→',
   _ => key.keyLabel.toUpperCase(),
 };
 
@@ -195,6 +211,25 @@ const List<AppShortcut> appShortcuts = [
     KeyChord(LogicalKeyboardKey.keyZ, primary: true, shift: true),
     KeyChord(LogicalKeyboardKey.keyY, control: true),
   ]),
+  // #3626 — the calendar's keys.
+  AppShortcut(AppShortcutId.today, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.keyT),
+  ]),
+  AppShortcut(AppShortcutId.previousPeriod, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.arrowLeft),
+  ]),
+  AppShortcut(AppShortcutId.nextPeriod, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.arrowRight),
+  ]),
+  AppShortcut(AppShortcutId.viewDay, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.keyD),
+  ]),
+  AppShortcut(AppShortcutId.viewWeek, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.keyW),
+  ]),
+  AppShortcut(AppShortcutId.viewMonth, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.keyM),
+  ]),
 ];
 
 /// The registry's line for [id].
@@ -223,4 +258,10 @@ String shortcutLabel(AppLocalizations l10n, AppShortcutId id) => switch (id) {
   AppShortcutId.openCalendar => l10n.shortcutOpenCalendar,
   AppShortcutId.undo => l10n.shortcutUndo,
   AppShortcutId.redo => l10n.shortcutRedo,
+  AppShortcutId.today => l10n.shortcutToday,
+  AppShortcutId.previousPeriod => l10n.shortcutPreviousPeriod,
+  AppShortcutId.nextPeriod => l10n.shortcutNextPeriod,
+  AppShortcutId.viewDay => l10n.shortcutViewDay,
+  AppShortcutId.viewWeek => l10n.shortcutViewWeek,
+  AppShortcutId.viewMonth => l10n.shortcutViewMonth,
 };

@@ -1,0 +1,22 @@
+{
+  "calendarDeskNew": "Nueva reserva",
+  "calendarDeskAll": "Todos",
+  "calendarDeskFilterLevel": "Nivel",
+  "calendarDeskFilterKind": "Tipo de plaza",
+  "calendarDeskColumnMember": "Miembro",
+  "calendarDeskColumnPlace": "Plaza",
+  "calendarDeskColumnFrom": "Desde",
+  "calendarDeskColumnTo": "Hasta",
+  "calendarDeskColumnState": "Estado",
+  "calendarDeskExport": "Exportar",
+  "calendarDeskBooking": "Detalles de la reserva",
+  "calendarDeskBookingActions": "Cambiar, cancelar o ver en el plano",
+  "calendarDeskModeTable": "Todas las reservas",
+  "calendarDeskZoomIn": "Ampliar",
+  "calendarDeskZoomOut": "Reducir",
+  "calendarDeskMore": "{count, plural, one{{count} más} other{{count} más}}",
+  "calendarDeskFreeSlot": "{place}: libre de {from} a {to}, nueva reserva",
+  "calendarDeskFreeDay": "{place}: libre el {day}, nueva reserva",
+  "calendarDeskRepeatedHour": "{time}, por segunda vez: los relojes se atrasaron",
+  "calendarDeskMissingHour": "Los relojes se adelantan: de {from} a {to} no existe ese día"
+}
