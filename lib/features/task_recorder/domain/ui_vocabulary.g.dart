@@ -5717,6 +5717,7 @@ const Set<String> uiLabelKeys = {
   'accountingExportsBy',
   'accountingExportsFingerprint',
   'accountingExportsRows',
+  'accountingExportsTitle',
   'accountingSourceRefused',
   'accountingStatusAllBooks',
   'accountingStatusBankToMatch',
