@@ -8,6 +8,8 @@ import 'dart:io';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:yaml/yaml.dart';
 
+import 'lint_sources.dart';
+
 YamlMap _workflow(String name) =>
     loadYaml(File('.github/workflows/$name.yml').readAsStringSync()) as YamlMap;
 
@@ -306,7 +308,7 @@ void main() {
       'fdroid-release': 'none',
       'play-internal': 'none',
     };
-    for (final f in Directory('.github/workflows').listSync().whereType<File>()) {
+    for (final f in filesWithExtension('.github/workflows', '.yml')) {
       final text = f.readAsStringSync();
       if (!RegExp(r'flutter build (apk|appbundle)').hasMatch(text)) continue;
       final stem = f.uri.pathSegments.last.replaceAll('.yml', '');

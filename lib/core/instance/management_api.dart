@@ -193,10 +193,10 @@ class DioSupabaseManagement implements SupabaseManagement {
   Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
     String ref,
   ) async {
-    final list = await _call<List<dynamic>>(
+    final list = await _call<List<Object?>>(
         () => _dio.get('/v1/projects/$ref/functions'));
     return [
-      for (final f in list.cast<Map<dynamic, dynamic>>())
+      for (final f in list.cast<Map<Object?, Object?>>())
         (
           slug: '${f['slug']}',
           verifyJwt: f['verify_jwt'] is bool ? f['verify_jwt'] as bool : null,
