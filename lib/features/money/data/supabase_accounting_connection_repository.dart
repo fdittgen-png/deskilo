@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/accounting_connection.dart';
 import '../domain/accounting_delivery_run.dart';
 import '../domain/accounting_target.dart';
@@ -182,9 +183,14 @@ class SupabaseAccountingConnectionRepository
         },
       );
       return SignInCompletion.connected;
-    } on FunctionException catch (e) {
-      // trace-exempt: the refusal is the answer, shown on the page; the request carried a one-time credential.
+    } on FunctionException catch (e, st) {
       final key = e.details is Map ? '${(e.details as Map)['error']}' : '';
+      // The status and the function's error key only: the request carried
+      // a one-time credential.
+      TraceLogger.instance.warn(
+        'money',
+        'accounting sign-in not completed: ${e.status} $key\n$st',
+      );
       return switch (e.status) {
         403 => SignInCompletion.refused,
         400 when key == 'state_invalid' || key == 'state_expired' =>

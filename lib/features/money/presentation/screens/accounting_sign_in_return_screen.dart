@@ -17,6 +17,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/arrived_accounting_sign_in.dart';
 import '../../domain/accounting_connection.dart';
@@ -77,16 +78,10 @@ class _AccountingSignInReturnScreenState
         padding: AppSpacing.gutterAll,
         children: [
           if (outcome == null)
-            Row(
+            Semantics(
               key: const ValueKey('accounting-sign-in-completing'),
-              children: [
-                const SizedBox.square(
-                  dimension: AppSpacing.lg,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                ),
-                const SizedBox(width: AppSpacing.md),
-                Expanded(child: Text(l10n.accountingSignInCompleting)),
-              ],
+              label: l10n.accountingSignInCompleting,
+              child: const LoadingView(),
             )
           else
             _banner(l10n, outcome),
