@@ -3488,7 +3488,7 @@ routine public.setup_step_timings_no_person() -> trigger | function | invoker | 
 routine public.shared_workspaces_of_group(p_group uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:1335fc9c3a85
 routine public.shared_workspaces_with(p_user uuid) -> TABLE(id uuid, name text) | function | definer | stable | exec:authenticated,service_role | body:ab5de07c3a62
 routine public.shares_workspace_with(other uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:e85ad0fc6fb5
-routine public.space_host_roster(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:639107c0162d
+routine public.space_host_roster(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d97723637de
 routine public.stage_asset_valuations_v1(p_workspace_id uuid, p_request_id uuid, p_metadata jsonb, p_rows jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:aafe660685fe
 routine public.stamp_accessory_supplements_since() -> trigger | function | invoker | volatile | exec:service_role | body:3f79931d6627
 routine public.start_space_inquiry(p_workspace uuid, p_body text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:24335253d564
