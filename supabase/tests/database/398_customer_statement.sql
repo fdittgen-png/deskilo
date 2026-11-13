@@ -137,6 +137,13 @@ update public.invoice_matches set status = 'pending' where invoice_id = pg_temp.
 update public.events set status = 'pending'
  where id in (select event_id from public.invoice_match_payments where invoice_id = pg_temp.id('inv', 'ST-2C'));
 update public.invoices set voided_at = now() where id = pg_temp.id('inv', 'ST-2E');
+-- #3838 -- the statement reads the match history: it says so too.
+insert into public.invoice_match_history (workspace_id, company_id, subject, subject_id, invoice_id, op, image)
+select m.workspace_id, m.workspace_id, 'match', m.id, m.invoice_id, 'update', to_jsonb(m)
+  from public.invoice_matches m where m.invoice_id = pg_temp.id('inv', 'ST-2C');
+insert into public.invoice_match_history (workspace_id, company_id, subject, subject_id, invoice_id, op, image)
+select p.workspace_id, p.workspace_id, 'event', p.event_id, p.invoice_id, 'status', '{"status": "pending"}'
+  from public.invoice_match_payments p where p.invoice_id = pg_temp.id('inv', 'ST-2C') and p.event_id is not null;
 set local session_replication_role = origin;
 
 -- ── the decision's case ─────────────────────────────────────────────
@@ -187,6 +194,9 @@ update public.ledger_entries set created_at = now() - interval '10 days'
 update public.invoice_match_payments set created_datetime = now() - interval '10 days'
  where workspace_id = current_setting('st.ws')::uuid;
 update public.invoice_matches set created_datetime = now() - interval '10 days'
+ where workspace_id = current_setting('st.ws')::uuid;
+-- #3838 -- and the history of those matches is ten days older too.
+update public.invoice_match_history set at = at - interval '10 days'
  where workspace_id = current_setting('st.ws')::uuid;
 update public.invoices set voided_at = now() - interval '10 days' where id = pg_temp.id('inv', 'ST-2E');
 set local session_replication_role = origin;
