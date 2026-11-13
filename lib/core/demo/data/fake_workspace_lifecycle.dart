@@ -33,7 +33,8 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
   @override
   Future<void> setDevMode(String workspaceId, {required bool enabled}) async {
     if (!myMember.canAdminister) {
-      throw const PostgrestException(message: 'not an admin of this workspace');
+      throw const PostgrestException(
+          message: 'not an admin of this workspace', code: 'DKN01');
     }
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i >= 0) workspaces[i] = workspaces[i].copyWith(devMode: enabled);
@@ -49,13 +50,19 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
   Future<bool> isPlatformOwner() async => platformOwner;
   @override
   Future<List<WorkspaceOverview>> fetchAllWorkspaces() async {
-    if (!platformOwner) throw StateError('platform owners only');
+    if (!platformOwner) {
+      throw const PostgrestException(
+          message: 'platform owners only', code: 'DKN01');
+    }
     return List.of(allWorkspaces);
   }
 
   @override
   Future<List<WorkspaceOwner>> fetchWorkspaceOwners(String workspaceId) async {
-    if (!platformOwner) throw StateError('platform owners only');
+    if (!platformOwner) {
+      throw const PostgrestException(
+          message: 'platform owners only', code: 'DKN01');
+    }
     ownerReads.add(workspaceId);
     return List.of(ownersByWorkspace[workspaceId] ?? const []);
   }

@@ -99,10 +99,10 @@ select throws_ok($$update public.tax_reference set confirmed = true
   '42501', null, 'a member cannot update a version directly');
 select throws_ok($$select public.confirm_tax_reference((select id from public.tax_reference
                     where domain = 'rate' and country = 'CH' and key = 'standard' and valid_from = '2028-01-01'), 'x')$$,
-  'P0001', 'platform owners only', 'a member cannot confirm');
+  'DKN01', 'platform owners only', 'a member cannot confirm');
 select throws_ok($$select public.withdraw_tax_reference((select id from public.tax_reference
                     where domain = 'rate' and country = 'CH' and key = 'standard' and valid_from = '2028-01-01'), 'x')$$,
-  'P0001', 'platform owners only', 'a member cannot withdraw');
+  'DKN01', 'platform owners only', 'a member cannot withdraw');
 reset role;
 select is((select count(*)::int from public.tax_reference
             where domain = 'rate' and country = 'CH' and valid_from = '2028-01-01' and not confirmed), 2,

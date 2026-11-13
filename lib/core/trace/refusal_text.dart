@@ -84,17 +84,8 @@ enum KnownRefusal {
 /// Substrings of server refusals that mean "you may not".
 @visibleForTesting
 const List<String> permissionRefusalSubstrings = [
-  'not an admin of this workspace',
-  'not the owner of this workspace',
-  'admins only',
-  'platform owners only',
-  'only role managers may',
-  'only owners may',
-  'only admins may',
-  'only workspace settings managers may',
-  'not allowed to manage this profile',
-  // #1561 — the READ behind the same rule (0161's managed_identity_of).
-  'not allowed to read this profile',
+  // #3821 — every business permission refusal carries DKN01 since 0745 and
+  // is read by its code; what is left is Postgres's own words.
   'violates row-level security policy',
 ];
 
@@ -134,6 +125,8 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKI06': KnownRefusal.changedMeanwhile,
   'DKD01': KnownRefusal.alreadyDecided,
   'DKR01': KnownRefusal.personalHomeHostsNoWorkspace,
+  // #3821 — a business refusal: this person may not do this (0745).
+  'DKN01': KnownRefusal.permission,
 };
 
 /// #3811 — the server's refusal code and its DETAIL, for a screen that reads
