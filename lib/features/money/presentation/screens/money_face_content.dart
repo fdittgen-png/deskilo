@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/expense_schedule.dart';
@@ -18,6 +19,7 @@ import '../widgets/documents_face.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
+import '../widgets/my_credits_table.dart';
 import '../widgets/my_finances_link_card.dart';
 import '../widgets/my_invoices_list.dart';
 import '../widgets/my_invoices_table.dart';
@@ -63,6 +65,28 @@ class MoneyFaceContent {
       MoneyFace.statement: StatementDesk(
         statement: statement,
         currencyCode: data.currencyCode,
+      ),
+    if (_atDesk && data.member != null)
+      MoneyFace.payments: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Wrap(
+            spacing: AppSpacing.md,
+            runSpacing: AppSpacing.md,
+            children: [
+              for (final action in faceActions()[MoneyFace.payments] ?? const <Widget>[])
+                if (action is! SizedBox) action,
+            ],
+          ),
+          const SizedBox(height: AppSpacing.lg),
+          Expanded(
+            child: MyCreditsTable(
+              ledger: data.ledger,
+              memberId: data.member!.id,
+              currencyCode: data.currencyCode,
+            ),
+          ),
+        ],
       ),
     if (_atDesk && data.member != null)
       MoneyFace.invoices: Column(

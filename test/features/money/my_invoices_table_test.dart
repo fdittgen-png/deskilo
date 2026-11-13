@@ -3,6 +3,7 @@
 // #3627 — the Invoices face at the desk: my invoices as a records table, the
 // total per currency under it; the phone keeps its list.
 import 'package:deskilo/features/money/domain/money_face.dart';
+import 'package:deskilo/features/money/presentation/widgets/my_credits_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -30,5 +31,16 @@ void main() {
     await face(tester, MoneyFace.invoices);
     expect(find.byKey(ValueKey('my-invoice-$id')), findsOneWidget);
     expect(find.byKey(const ValueKey('records-total-EUR')), findsNothing);
+  });
+
+  testWidgets('at the desk the Payments face lists my payments and credits '
+      'as a table under its actions', (tester) async {
+    await pumpFaces(tester, size: const Size(1440, 1000));
+    await face(tester, MoneyFace.payments);
+    expect(
+      find.byKey(const ValueKey('money-face-body-payments')),
+      findsOneWidget,
+    );
+    expect(find.byType(MyCreditsTable), findsOneWidget);
   });
 }
