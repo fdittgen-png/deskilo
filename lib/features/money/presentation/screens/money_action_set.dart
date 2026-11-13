@@ -9,7 +9,6 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/accounting_connection.dart'
     show accountingTransferReaders;
@@ -372,7 +371,7 @@ class MoneyActionSet {
       if (data.expenseRepartitionOn &&
           ref
               .read(myPermissionsProvider)
-              .contains(WorkspacePermission.issueInvoices))
+              .any((p) => p.wireName == 'issueInvoices'))
         OutlinedButton.icon(
           key: const ValueKey('invoice-distribute-button'),
           onPressed: () => showExpenseRepartitionSheet(context, ref),

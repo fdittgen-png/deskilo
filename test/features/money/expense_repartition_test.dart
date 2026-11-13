@@ -226,7 +226,7 @@ void main() {
             .overrideWithValue({WorkspacePermission.issueInvoices}),
       ],
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('invoice-distribute-button')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('repartition-title')), findsOneWidget);
@@ -236,7 +236,7 @@ void main() {
       (tester) async {
     await pumpInvoices(tester, money: await seededMoney());
     await tester.tap(find.byKey(const ValueKey('invoicing-tools')));
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(find.byKey(const ValueKey('invoice-distribute-button')),
         findsNothing);
   });
@@ -253,7 +253,7 @@ void main() {
           myPermissionsProvider.overrideWithValue(r),
         ],
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
     }
 
     await pump(const {}, {WorkspacePermission.issueInvoices});
