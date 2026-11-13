@@ -127,6 +127,14 @@ Future<void> openAlertsTab(WidgetTester tester) async {
       await tester.tap(inbox);
     } else {
       await tapNavIcon(tester, Icons.calendar_month_outlined);
+      // #3626 — at the desk the calendar is the grid; the hub with its
+      // Alerts view is the calendar's Agenda.
+      final switcher = find.byKey(const ValueKey('calendar-view-switch'));
+      if (switcher.evaluate().isEmpty) {
+        await tester.pumpAndSettle();
+        await tester.tap(find.byIcon(Icons.view_agenda_outlined));
+        await tester.pumpAndSettle();
+      }
       final alerts = find.descendant(
         of: find.byKey(const ValueKey('calendar-view-switch')),
         matching: find.byIcon(Icons.notifications_outlined),

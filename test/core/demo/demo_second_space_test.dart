@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_trade_city_seed.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -110,6 +111,8 @@ void main() {
       demoSecondSpaceId,
       demoLondonSpaceId,
       demoNewYorkSpaceId,
+      demoZurichSpaceId,
+      demoMilanSpaceId,
     });
     expect(
       overview.outstanding.map((i) => i.workspaceName),

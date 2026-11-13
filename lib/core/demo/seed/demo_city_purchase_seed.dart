@@ -10,6 +10,7 @@ import '../data/supplier_repository.dart';
 import 'demo_london_seed.dart';
 import 'demo_new_york_seed.dart';
 import 'demo_purchase_seed.dart';
+import 'demo_trade_city_seed.dart';
 
 DemoPurchasing cityPurchasing(
   DateTime now, {
@@ -54,18 +55,133 @@ DemoPurchasing cityPurchasing(
   );
   suppliers.suppliers.addAll([vending, stock, drinks, amazon]);
   if (tenant) _landlordBills(now, suppliers, purchases);
-  _siteBills(now, tenant, siteIds, purchases, (
-    vending: vending,
-    stock: stock,
-    drinks: drinks,
-    amazon: amazon,
-  ));
+  _siteBills(
+    now,
+    (prefix: prefix, currency: tenant ? 'USD' : 'GBP', years: tenant ? 4 : 3),
+    siteIds,
+    purchases,
+    (vending: vending, stock: stock, drinks: drinks, amazon: amazon),
+  );
   _pendingBill(now, prefix, tenant ? 'USD' : 'GBP', stock, purchases);
   return DemoPurchasing(
     suppliers: suppliers,
     inbox: FakeEInvoiceInboxRepository(),
     purchases: purchases,
   );
+}
+
+/// #3832 — the purchase side of a trade city: its suppliers, a monthly run
+/// of approved and paid bills per site in the city's own currency, one bill
+/// that waits for approval, and one bill from a supplier abroad: in another
+/// currency, with the rate it was entered at kept apart from the bill.
+DemoPurchasing tradeCityPurchasing(
+  DemoTradeCity city,
+  DateTime now, {
+  required String Function() actor,
+}) {
+  final prefix = city.prefix, country = city.countryCode;
+  final suppliers = FakeSupplierRepository();
+  final purchases = FakePurchaseRepository(
+    actor: actor,
+    functionalCurrency: city.currency,
+    workspaceId: city.id,
+  );
+  Supplier local(String kind, String number, String name) => Supplier(
+    id: '$prefix-$kind',
+    number: number,
+    name: '${city.vendorStem} $name (Demo)',
+    city: city.city,
+    countryCode: country,
+    contact: 'orders@$prefix-$kind.example.test',
+  );
+  final vendors = (
+    vending: local('vending', '2', 'Vending Rentals'),
+    stock: local('stock', '3', 'Snack Wholesale'),
+    drinks: local('drinks', '4', 'Drinks Wholesale'),
+    amazon: local('print', '5', 'Office and Print Supplies'),
+  );
+  final abroad = Supplier(
+    id: '$prefix-abroad',
+    number: '6',
+    name: '${city.vendorStem} Booking Software (Demo)',
+    countryCode: city.foreignCountry,
+    contact: 'billing@$prefix-abroad.example.test',
+  );
+  suppliers.suppliers.addAll([
+    vendors.vending,
+    vendors.stock,
+    vendors.drinks,
+    vendors.amazon,
+    abroad,
+  ]);
+  _siteBills(
+    now,
+    (
+      prefix: prefix,
+      currency: city.currency,
+      years: DemoTradeCity.years,
+    ),
+    city.siteIds,
+    purchases,
+    vendors,
+  );
+  _pendingBill(now, prefix, city.currency, vendors.stock, purchases);
+  _foreignBill(now, city, abroad, purchases);
+  return DemoPurchasing(
+    suppliers: suppliers,
+    inbox: FakeEInvoiceInboxRepository(),
+    purchases: purchases,
+  );
+}
+
+/// A yearly licence billed in [DemoTradeCity.foreignCurrency], sent for
+/// approval at the rate entered with it: the approver confirms the rate. The
+/// bill keeps its own currency; the books are kept in the city's.
+void _foreignBill(
+  DateTime now,
+  DemoTradeCity city,
+  Supplier supplier,
+  FakePurchaseRepository purchases,
+) {
+  final received = now.subtract(const Duration(days: 5));
+  final id = '${city.prefix}-bill-abroad';
+  final summary = PurchaseSummary(
+    id: id,
+    supplierId: supplier.id,
+    kind: PurchaseKind.bill,
+    state: PurchaseState.draft,
+    category: 'Booking software, yearly licence',
+    reference: '${city.prefix.toUpperCase()}-ABROAD-1',
+    currency: city.foreignCurrency,
+    grossCents: 48000,
+    receivedOn: received,
+  );
+  purchases
+    ..rememberRate(
+      summary,
+      ExchangeRateEntry(
+        rate: ExactDecimal.parse(city.foreignRate),
+        rateDate: received,
+        source: 'tax_authority',
+      ),
+    )
+    ..addPendingBill(
+      PurchaseDetail(
+        summary: summary,
+        revision: 1,
+        sources: const [],
+        supplierName: supplier.name,
+        supplierNumber: supplier.number,
+        lines: const [
+          PurchaseLine(
+            lineNo: 1,
+            description: 'Booking software, yearly licence',
+            grossCents: 48000,
+          ),
+        ],
+        dueOn: now.add(const Duration(days: 25)),
+      ),
+    );
 }
 
 typedef _VendorSet = ({
@@ -124,13 +240,13 @@ void _landlordBills(
 
 void _siteBills(
   DateTime now,
-  bool tenant,
+  ({String prefix, String currency, int years}) books,
   List<String> siteIds,
   FakePurchaseRepository purchases,
   _VendorSet vendors,
 ) {
-  final prefix = tenant ? 'ny' : 'uk', currency = tenant ? 'USD' : 'GBP';
-  final start = DateTime(now.year - (tenant ? 4 : 3), now.month);
+  final (:prefix, :currency, :years) = books;
+  final start = DateTime(now.year - years, now.month);
   for (
     var month = start;
     month.isBefore(DateTime(now.year, now.month));

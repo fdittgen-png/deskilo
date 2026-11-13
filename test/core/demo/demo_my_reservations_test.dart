@@ -11,6 +11,7 @@ import 'package:deskilo/core/demo/demo_space_routing.dart';
 import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_trade_city_seed.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -53,14 +54,16 @@ void main() {
           .where((r) => r.memberId == fixture.secondSpace.reservations.myMemberId),
       ...fixture.london.reservations.reservations,
       ...fixture.newYork.reservations.reservations,
+      ...fixture.zurich.reservations.reservations,
+      ...fixture.milan.reservations.reservations,
     ], fixture.activeMemberId, query);
     expect(page.items, isNotEmpty, reason: 'the demo persona has bookings');
     expect(page.items.map((i) => i.id).toList(), expected.take(50).map((r) => r.id).toList(),
         reason: 'exactly the acting member\'s rows, in start order, one page of the registry\'s size');
     expect(page.hasMore, expected.length > 50);
     expect(expected.map((r) => r.workspaceId).toSet(),
-        containsAll([demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId]),
-        reason: 'all four spaces of the one installation are read');
+        containsAll([demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId, demoZurichSpaceId, demoMilanSpaceId]),
+        reason: 'all six spaces of the one installation are read');
     expect(page.items.every((i) => i.placeLabel.isNotEmpty), isTrue,
         reason: 'the plan names every booked place');
   });
@@ -115,7 +118,7 @@ void main() {
     final sources = await container.read(myReservationsSourcesProvider.future);
     expect(sources.map((s) => s.installationId), [kDemoInstallationId],
         reason: 'both spaces live on the one fictional installation');
-    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId]));
+    expect(sources.single.workspaceIds, containsAll([fixture.workspaces.workspaces.first.id, demoSecondSpaceId, demoLondonSpaceId, demoNewYorkSpaceId, demoZurichSpaceId, demoMilanSpaceId]));
 
     final page = await container
         .read(myReservationsRepositoryProvider)

@@ -10,5 +10,11 @@
   "shortcutOpenCalendar": "Apri il calendario di un campo data",
   "shortcutUndo": "Annulla",
   "shortcutRedo": "Ripeti",
-  "shortcutKeysTitle": "Tasti della tastiera"
+  "shortcutKeysTitle": "Tasti della tastiera",
+  "shortcutToday": "Vai a oggi",
+  "shortcutPreviousPeriod": "Giorno, settimana o mese precedente",
+  "shortcutNextPeriod": "Giorno, settimana o mese successivo",
+  "shortcutViewDay": "Mostra un giorno",
+  "shortcutViewWeek": "Mostra una settimana",
+  "shortcutViewMonth": "Mostra un mese"
 }

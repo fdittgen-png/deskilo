@@ -10,5 +10,11 @@
   "shortcutOpenCalendar": "Ouvrir le calendrier d'un champ de date",
   "shortcutUndo": "Annuler",
   "shortcutRedo": "Rétablir",
-  "shortcutKeysTitle": "Touches du clavier"
+  "shortcutKeysTitle": "Touches du clavier",
+  "shortcutToday": "Aller à aujourd'hui",
+  "shortcutPreviousPeriod": "Jour, semaine ou mois précédent",
+  "shortcutNextPeriod": "Jour, semaine ou mois suivant",
+  "shortcutViewDay": "Afficher un jour",
+  "shortcutViewWeek": "Afficher une semaine",
+  "shortcutViewMonth": "Afficher un mois"
 }

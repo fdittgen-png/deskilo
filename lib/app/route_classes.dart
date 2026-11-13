@@ -194,7 +194,13 @@ const List<RouteRule> routeRules = [
   // A membership still pending reaches no destination: no desk.
   RouteRule('/pending', RouteClass.workspace, chrome: RouteChrome.account),
   RouteRule('/messages', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}'),
-  RouteRule('/calendar', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.calendar}'),
+  RouteRule(
+    '/calendar',
+    RouteClass.workspace,
+    place: 'drawer-tab-${ShellBranch.calendar}',
+    // #3626 — the desk calendar: places and days fill the whole work area.
+    measure: PageMeasure.work,
+  ),
   RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.directory}'),
   RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/reserve', RouteClass.workspace, place: 'drawer-reserve'),
@@ -261,7 +267,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
   RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-invoices'),
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash'),
-  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting'),
+  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
+  RouteRule('/money/accounting/exports', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
   RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
   RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings'),
@@ -287,6 +294,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity'),
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations'),
+  RouteRule('/vat-declarations/:id', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
   RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat'),
   RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories'),

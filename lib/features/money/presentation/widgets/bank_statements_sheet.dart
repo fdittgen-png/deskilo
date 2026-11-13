@@ -3,12 +3,15 @@
 // #2380 — the bank statements of the space: every imported file with its
 // account, period and what is still waiting for a person, the door to
 // import another, and to the movements of each.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -19,6 +22,25 @@ import '../bank_labels.dart';
 import '../invoice_actions.dart' show savePdfToDownloads;
 import 'bank_import_flow.dart';
 import 'bank_lines_sheet.dart';
+
+/// #3616 — the bank statements in their sheet: the button's door and the
+/// status page's tile.
+Future<void> showBankStatementsSheet(
+  BuildContext context, {
+  required String workspaceId,
+  required String currency,
+  required bool canMatch,
+  required bool canReconcile,
+}) => showAppSheet<void>(
+  context: context,
+  isScrollControlled: true,
+  builder: (_) => BankStatementsView(
+    workspaceId: workspaceId,
+    currency: currency,
+    canMatch: canMatch,
+    canReconcile: canReconcile,
+  ),
+);
 
 /// The door to the bank statements, for those who match payments.
 class BankStatementsButton extends StatelessWidget {
@@ -44,15 +66,12 @@ class BankStatementsButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
     key: const ValueKey('bank-statements-button'),
-    onPressed: () => showAppSheet<void>(
-      context: context,
-      isScrollControlled: true,
-      builder: (_) => BankStatementsView(
-        workspaceId: workspaceId,
-        currency: currency,
-        canMatch: canMatch,
-        canReconcile: canReconcile,
-      ),
+    onPressed: () => showBankStatementsSheet(
+      context,
+      workspaceId: workspaceId,
+      currency: currency,
+      canMatch: canMatch,
+      canReconcile: canReconcile,
     ),
     icon: const Icon(Icons.account_balance_outlined),
     label: Text(context.l10n.bankStatementsTitle),
@@ -168,14 +187,34 @@ class BankStatementsView extends ConsumerWidget {
     );
   }
 
-  void _open(BuildContext context, StoredBankStatement s) => showAppSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => BankLinesView(
+  /// A statement's movements: a sheet on a phone; at the desk the whole
+  /// window, in two panes (#3616).
+  void _open(BuildContext context, StoredBankStatement s) {
+    final desk = WindowClass.of(context).index >= WindowClass.expanded.index;
+    final view = BankLinesView(
       workspaceId: workspaceId,
       statement: s,
       canMatch: canMatch,
       canReconcile: canReconcile,
-    ),
-  );
+      panes: desk,
+    );
+    if (!desk) {
+      unawaited(
+        showAppSheet<void>(
+          context: context,
+          isScrollControlled: true,
+          builder: (_) => view,
+        ),
+      );
+      return;
+    }
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (_) => Dialog.fullscreen(
+          child: ScaffoldMessenger(child: Scaffold(body: SafeArea(child: view))),
+        ),
+      ),
+    );
+  }
 }

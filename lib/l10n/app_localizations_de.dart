@@ -235,8 +235,41 @@ class AppLocalizationsDe extends AppLocalizations {
       'Entwicklungs-Arbeitsbereich: die Datei ist als DEV markiert und nicht die echte Buchhaltung.';
 
   @override
+  String get accountingExportsAgain => 'Diesen Zeitraum erneut exportieren';
+
+  @override
+  String get accountingExportsBy => 'Erstellt von';
+
+  @override
+  String get accountingExportsFingerprint => 'Prüfsumme';
+
+  @override
+  String get accountingExportsRows => 'Zeilen';
+
+  @override
+  String get accountingExportsTitle => 'Exporte';
+
+  @override
   String get accountingSourceRefused =>
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
+
+  @override
+  String get accountingStatusAllBooks => 'Alles in der Buchhaltung';
+
+  @override
+  String get accountingStatusBankToMatch => 'Zuzuordnende Bankbuchungen';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Bücher abgeschlossen bis';
+
+  @override
+  String get accountingStatusLastExport => 'Letzter Export';
+
+  @override
+  String get accountingStatusNotRead => 'Konnte nicht gelesen werden';
+
+  @override
+  String get accountingStatusVatToFile => 'Abzugebende Umsatzsteuererklärung';
 
   @override
   String get acctConnConnectToken => 'Mit API-Token verbinden';
@@ -2045,6 +2078,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get bankBasisQrReference => 'QR-Referenz';
+
+  @override
+  String get bankChooseMovement =>
+      'Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier.';
 
   @override
   String bankConfirmReferences(int count) {
@@ -5658,6 +5695,83 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendarDayEmpty => 'Nichts an diesem Tag.';
+
+  @override
+  String get calendarDeskAll => 'Alle';
+
+  @override
+  String get calendarDeskBooking => 'Buchungsdetails';
+
+  @override
+  String get calendarDeskBookingActions =>
+      'Ändern, stornieren oder im Plan zeigen';
+
+  @override
+  String get calendarDeskColumnFrom => 'Von';
+
+  @override
+  String get calendarDeskColumnMember => 'Mitglied';
+
+  @override
+  String get calendarDeskColumnPlace => 'Platz';
+
+  @override
+  String get calendarDeskColumnState => 'Status';
+
+  @override
+  String get calendarDeskColumnTo => 'Bis';
+
+  @override
+  String get calendarDeskExport => 'Exportieren';
+
+  @override
+  String get calendarDeskFilterKind => 'Art des Platzes';
+
+  @override
+  String get calendarDeskFilterLevel => 'Ebene';
+
+  @override
+  String calendarDeskFreeDay(String place, String day) {
+    return '$place: frei am $day, neue Buchung';
+  }
+
+  @override
+  String calendarDeskFreeSlot(String place, String from, String to) {
+    return '$place: frei von $from bis $to, neue Buchung';
+  }
+
+  @override
+  String calendarDeskMissingHour(String from, String to) {
+    return 'Die Uhren werden vorgestellt: $from bis $to gibt es an diesem Tag nicht';
+  }
+
+  @override
+  String get calendarDeskModeTable => 'Alle Buchungen';
+
+  @override
+  String calendarDeskMore(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count weitere',
+      one: '$count weitere',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get calendarDeskNew => 'Neue Buchung';
+
+  @override
+  String calendarDeskRepeatedHour(String time) {
+    return '$time, zum zweiten Mal: die Uhren wurden zurückgestellt';
+  }
+
+  @override
+  String get calendarDeskZoomIn => 'Vergrößern';
+
+  @override
+  String get calendarDeskZoomOut => 'Verkleinern';
 
   @override
   String calendarDueTitle(String number) {
@@ -31071,7 +31185,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shortcutNew => 'Neu';
 
   @override
+  String get shortcutNextPeriod =>
+      'Nächster Tag, nächste Woche oder nächster Monat';
+
+  @override
   String get shortcutOpenCalendar => 'Kalender eines Datumsfelds öffnen';
+
+  @override
+  String get shortcutPreviousPeriod =>
+      'Voriger Tag, vorige Woche oder voriger Monat';
 
   @override
   String get shortcutPrint => 'Das Dokument dieser Seite';
@@ -31089,7 +31211,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shortcutSubmit => 'Speichern oder senden';
 
   @override
+  String get shortcutToday => 'Zu heute springen';
+
+  @override
   String get shortcutUndo => 'Rückgängig';
+
+  @override
+  String get shortcutViewDay => 'Einen Tag zeigen';
+
+  @override
+  String get shortcutViewMonth => 'Einen Monat zeigen';
+
+  @override
+  String get shortcutViewWeek => 'Eine Woche zeigen';
 
   @override
   String get siteCity => 'Ort';
@@ -35498,6 +35632,35 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Summen des Zeitraums';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Wählen Sie ein Feld: seine Belege stehen dann hier.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'mehr',
+      'other': 'weniger',
+    });
+    return 'Erklärt $declared · Belege heute $today · $difference $_temp0 seit der Erklärung';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle =>
+      'Belege dieses Zeitraums zu diesem Satz';
+
+  @override
+  String get vatReturnNotCompared =>
+      'Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.';
+
+  @override
+  String get vatReturnOpen => 'Erklärung öffnen';
 
   @override
   String get vatSaved => 'Steuersätze gespeichert.';
