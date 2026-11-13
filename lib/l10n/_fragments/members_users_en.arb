@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "membersChipUsers": "Can sign in",
+  "@membersChipUsers": {
+    "description": "#3628 users on the members table: chip: people who can sign in (not a managed profile, kiosk or guest)"
+  },
+  "membersChipManaged": "Managed profiles",
+  "@membersChipManaged": {
+    "description": "#3628 users on the members table: chip: profiles an administrator runs (no account yet)"
+  },
+  "membersBulkGiveRole": "Give a role to {count, plural, one{1 member} other{{count} members}}",
+  "@membersBulkGiveRole": {
+    "description": "#3628 users on the members table: bulk action",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "membersRoleGiven": "Role given",
+  "@membersRoleGiven": {
+    "description": "#3628 users on the members table: one member's outcome"
+  },
+  "membersRoleHeld": "Already holds this role",
+  "@membersRoleHeld": {
+    "description": "#3628 users on the members table: one member's outcome"
+  },
+  "membersGiveRoleChoose": "Which role? Each member is checked on their own; one who cannot be given it is listed with the reason.",
+  "@membersGiveRoleChoose": {
+    "description": "#3628 users on the members table: the task asks which role"
+  }
+}

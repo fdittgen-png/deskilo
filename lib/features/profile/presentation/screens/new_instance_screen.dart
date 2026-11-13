@@ -199,13 +199,9 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
       _bundle ??= await this.ref.read(instanceBundleLoaderProvider)();
       await _builder.installSchema(ref, _bundle!, skip: _schemaDone == 0 ? null : _schemaDone,
           onProgress: (p) {
-        if (mounted) {
-          setState(() {
-            _progress = p;
-            _schemaDone = p.done;
-          });
-        }
+        if (mounted) setState(() { _progress = p; _schemaDone = p.done; });
       });
+      await _builder.configurePush(ref);
       setState(() => _schemaInstalled = true);
     });
   }

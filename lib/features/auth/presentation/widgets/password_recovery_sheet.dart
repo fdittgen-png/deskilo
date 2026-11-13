@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/instance/instance_builder.dart' show InstanceAuthConfig;
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -76,9 +77,9 @@ class _PasswordRecoverySheetState extends ConsumerState<_PasswordRecoverySheet> 
     // call, whichever arrives second while the first is in flight.
     if (_busy) return;
     final l10n = context.l10n;
-    if (_flow.step != RecoveryStep.request && _newPassword.text.length < 8) {
+    if (_flow.step != RecoveryStep.request && _newPassword.text.length < InstanceAuthConfig.minPasswordLength) {
       setState(() =>
-          _error = l10n.authPasswordTooShort);
+          _error = l10n.authPasswordTooShort(InstanceAuthConfig.minPasswordLength));
       return;
     }
     setState(() {

@@ -185,6 +185,13 @@
   "accountingExportsFingerprint": "Huella",
   "accountingExportsRows": "Filas",
   "accountingExportsTitle": "Exportaciones",
+  "accountingSignInBack": "Volver a Contabilidad",
+  "accountingSignInCompleting": "Completando el inicio de sesión…",
+  "accountingSignInConnected": "La conexión está hecha. Su estado se muestra en Contabilidad.",
+  "accountingSignInExpired": "Este enlace de inicio de sesión ha caducado o ya se usó. Vuelva a empezar desde Contabilidad.",
+  "accountingSignInFailed": "El inicio de sesión no se completó. El motivo se muestra en la conexión, en Contabilidad.",
+  "accountingSignInNotYours": "Este inicio de sesión lo empezó otra persona. Vuelva a empezar desde Contabilidad.",
+  "accountingSignInRefused": "No puede gestionar esta conexión, así que el inicio de sesión no se completó.",
   "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -603,7 +610,7 @@
   },
   "authNetworkError": "No se pudo contactar con el servidor. Compruebe su conexión e inténtelo de nuevo.",
   "authPasswordLabel": "Contraseña",
-  "authPasswordTooShort": "Al menos 8 caracteres",
+  "authPasswordTooShort": "{length, plural, one{Al menos {length} carácter} other{Al menos {length} caracteres}}",
   "authProviderDisabled": "Este método de acceso está desactivado en este servidor.",
   "authRateLimited": "Demasiados intentos. Espere un momento y vuelva a intentarlo.",
   "authRecoveryNotSaved": "Su código fue aceptado, pero la nueva contraseña no se guardó. Intente guardarla de nuevo.",
@@ -8459,6 +8466,12 @@
   },
   "instanceDoctorAllHealthy": "Todo lo comprobado está sano.",
   "instanceDoctorAttention": "Requiere atención",
+  "instanceDoctorAuthBaselineDetail": "{length, plural, one{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} carácter, un cambio de contraseña pide volver a iniciar sesión} other{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} caracteres, un cambio de contraseña pide volver a iniciar sesión}}",
+  "instanceDoctorAuthBaselineTitle": "Base de inicio de sesión",
+  "instanceDoctorAuthCodesLongTitle": "Los códigos de inicio de sesión duran más de una hora",
+  "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}",
+  "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Las contraseñas pueden tener menos de {length} carácter} other{Las contraseñas pueden tener menos de {length} caracteres}}",
+  "instanceDoctorAuthReauthOffTitle": "Un cambio de contraseña no pide volver a iniciar sesión",
   "instanceDoctorGuardAnonViewDetail": "{names}\n        Sin security_invoker, la vista lee con los derechos del propietario y esquiva las políticas de las tablas que hay debajo.",
   "instanceDoctorGuardAnonViewTitle": "Una vista legible por anon se ejecuta como su propietario",
   "instanceDoctorGuardDefinerDetail": "{names}\n        Se ejecuta como propietario; un search_path sin fijar deja que quien llama decida a qué tabla se refieren sus nombres sin calificar.",
@@ -8482,12 +8495,17 @@
   "instanceDoctorProbeFailedTitle": "Falló la consulta «{probe}»",
   "instanceDoctorProbeHardening": "Endurecimiento",
   "instanceDoctorProbePolicies": "Políticas",
+  "instanceDoctorProbePush": "Configuración de notificaciones",
   "instanceDoctorProbeRoles": "Roles de la instalación",
   "instanceDoctorProbeSchema": "Esquema",
   "instanceDoctorProbeSecurity": "Seguridad",
   "instanceDoctorProbeSignups": "Registros",
   "instanceDoctorProbeStorage": "Ámbito del almacenamiento",
   "instanceDoctorProtected": "Protegido",
+  "instanceDoctorPushForeignDetail": "{host}\n        Solución: dart run tool/instance.dart push --ref <ref>, o apunte push_config a este proyecto.",
+  "instanceDoctorPushForeignTitle": "Las llamadas de notificación y de liquidación van a otro proyecto",
+  "instanceDoctorPushOwnDetail": "las llamadas de notificación y de liquidación van a este proyecto ({host})",
+  "instanceDoctorPushOwnTitle": "Configuración de notificaciones",
   "instanceDoctorRolesUndeclaredDetail": "el esquema es anterior a la columna de roles; la instalación se comporta como combinada (hogar personal y anfitrión de espacios) — {held}.\n        Solución: dart run tool/instance.dart install --ref <ref>",
   "instanceDoctorRolesUndeclaredTitle": "Roles de la instalación sin declarar",
   "instanceDoctorRolesUnknownDetail": "{roles}\n        Solo existen personal_home y workspace_host; operator_set_installation_roles escribe un conjunto válido.",
@@ -12498,13 +12516,16 @@
   "@memberVatTreatmentLabel": {
     "description": "#985 VAT versions and counterparty: memberVatTreatmentLabel"
   },
+  "membersBulkGiveRole": "Dar un rol a {count, plural, one{1 miembro} other{{count} miembros}}",
   "membersBulkPause": "Pausar {count, plural, one{1 miembro} other{{count} miembros}}",
   "membersBulkPlan": "Cambiar el plan de {count, plural, one{1 miembro} other{{count} miembros}}",
   "membersBulkResume": "Reactivar {count, plural, one{1 miembro} other{{count} miembros}}",
   "membersChangeApply": "Aplicar",
   "membersChangeDone": "{changed, plural, =0{Ninguno cambiado} one{1 cambiado} other{{changed} cambiados}} de {count, plural, one{1 miembro} other{{count} miembros}}",
   "membersChangeFromToday": "Se aplica desde hoy, {date}. Cada miembro se cambia por separado; quien no pueda cambiarse aparece con el motivo y queda igual.",
+  "membersChipManaged": "Perfiles gestionados",
   "membersChipOpen": "Con importe pendiente",
+  "membersChipUsers": "Pueden iniciar sesión",
   "membersColEmail": "Correo electrónico",
   "membersColLastVisit": "Última visita",
   "membersColName": "Nombre",
@@ -12512,6 +12533,7 @@
   "membersColPlanFee": "Cuota del plan",
   "membersColStatus": "Estado",
   "membersFeeUnavailable": "No disponible: ningún tramo de tarifas cubre esta cuota",
+  "membersGiveRoleChoose": "¿Qué rol? Cada miembro se comprueba por separado; quien no pueda recibirlo aparece con el motivo.",
   "membersInvite": "Invitar a un miembro",
   "membersNoVisitSince": "Ninguna desde el {date}",
   "membersOutcomeApplied": "Cambiado",
@@ -12525,6 +12547,8 @@
   "membersOutcomeWrongStatus": "No está en pausa: no reactivado",
   "membersPlanNone": "Sin plan",
   "membersPlansTitle": "Suscripciones y planes",
+  "membersRoleGiven": "Rol asignado",
+  "membersRoleHeld": "Ya tiene este rol",
   "membersTabBookings": "Reservas",
   "membersTabNotes": "Notas",
   "membersTabPlan": "Plan",
@@ -13433,6 +13457,44 @@
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
   },
+  "permAllowsAccessProd": "Entrar en la producción de un par de desarrollo y producción.",
+  "permAllowsApproveExpenses": "Aprobar los gastos que presentan los miembros.",
+  "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
+  "permAllowsDeployToDev": "Actualizar el espacio de desarrollo desde producción.",
+  "permAllowsDeployToProd": "Llevar la configuración y los datos maestros de desarrollo a producción.",
+  "permAllowsDesignDocuments": "Diseñar las plantillas, textos y diseños de los documentos.",
+  "permAllowsExportData": "Exportar la contabilidad, el archivo, Excel y la configuración.",
+  "permAllowsIssueInvoices": "Emitir facturas, conciliar pagos y enviar recordatorios.",
+  "permAllowsMakeReservations": "Reservar, ver las propias reservas y registrar entradas y salidas.",
+  "permAllowsManageBilling": "Gestionar tramos de tarifas, tipos de IVA, numeraciones y reglas de facturación.",
+  "permAllowsManageConfiguration": "Cambiar las funciones, el entorno, el código del espacio, las importaciones y el reinicio.",
+  "permAllowsManageDocuments": "Gestionar los enlaces de la biblioteca de documentos.",
+  "permAllowsManageIntegrations": "Configurar los proveedores de pago, las credenciales de facturación electrónica y WhatsApp.",
+  "permAllowsManageLease": "Registrar el arrendamiento del local: sus condiciones, su historial y su fin.",
+  "permAllowsManageMembers": "Invitar, pausar y retirar miembros, y cambiar sus suscripciones.",
+  "permAllowsManageNegotiations": "Proponer o cambiar el acuerdo comercial de un miembro.",
+  "permAllowsManagePrivacy": "Resolver las solicitudes de derechos sobre los datos y ser avisado de un incidente.",
+  "permAllowsManagePurchases": "Registrar y vincular las facturas de proveedores del espacio.",
+  "permAllowsManageReservations": "Reservar para otros, cancelar, registrar entradas y salidas y bloquear plazas.",
+  "permAllowsManageRoles": "Cambiar qué permisos da cada rol y los roles propios del espacio.",
+  "permAllowsManageServices": "Gestionar servicios, paquetes y tramos de tarifas.",
+  "permAllowsManageSites": "Gestionar las sedes, la sede de cada miembro y el plano.",
+  "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
+  "permAllowsManageValidation": "Definir qué solicitudes necesitan aprobación y quién las aprueba.",
+  "permAllowsOperateKiosk": "Configurar el quiosco y entregar las tarjetas.",
+  "permAllowsPaymentTermsEdit": "Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.",
+  "permAllowsRecordOutgoingPayments": "Registrar y anular el pago hecho a un miembro por una solicitud aprobada.",
+  "permAllowsUseMessages": "Usar las conversaciones, el canal de avisos y las notificaciones.",
+  "permAllowsViewAnalytics": "Consultar las cifras de actividad del espacio, como la ocupación; ni personas ni dinero.",
+  "permAllowsViewCalendar": "Ver el calendario.",
+  "permAllowsViewDirectory": "Ver quiénes son los miembros.",
+  "permAllowsViewDocuments": "Ver los documentos compartidos con el miembro.",
+  "permAllowsViewFinances": "Consultar las finanzas del espacio: el libro mayor y la facturación.",
+  "permAllowsViewMyMoney": "Ver la propia cuenta, el extracto y las facturas.",
+  "permAllowsViewNegotiations": "Consultar el acuerdo comercial de un miembro.",
+  "permAllowsViewPersonalData": "Consultar los correos, identidades gestionadas y datos postales de los miembros.",
+  "permAllowsViewStock": "Ver las existencias: qué está dónde, sus lotes y sus movimientos.",
+  "permAllowsWorkspaceSettings": "Editar la identidad del espacio, sus reglas de reserva y sus funciones.",
   "permApproveExpenses": "Aprobar gastos",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
@@ -13513,6 +13575,14 @@
   "@permManageValidation": {
     "description": "Permission label (#513)"
   },
+  "permModuleConfiguration": "Configuración",
+  "permModuleDocuments": "Documentos e informes",
+  "permModuleEnvironments": "Entornos",
+  "permModuleEveryday": "Día a día",
+  "permModuleMoney": "Dinero",
+  "permModulePeople": "Personas y sus datos",
+  "permModulePlaces": "Espacios y reservas",
+  "permModuleStock": "Existencias",
   "permOperateKiosk": "Operar el quiosco y las tarjetas",
   "@permOperateKiosk": {
     "description": "#982 permission catalog: permOperateKiosk"
@@ -14137,6 +14207,12 @@
   "@privacyPushOnDeviceHint": {
     "description": "#1914 privacy notice: privacyPushOnDeviceHint"
   },
+  "privacyRequestsAnswered": "Respondidas",
+  "privacyRequestsColKind": "Solicitud",
+  "privacyRequestsColReceived": "Recibida",
+  "privacyRequestsColStatus": "En qué punto está",
+  "privacyRequestsColWho": "Miembro",
+  "privacyRequestsOpen": "Pendientes de respuesta",
   "privacySelfServiceOff": "Este espacio gestiona él mismo las solicitudes de datos. Presente una solicitud de derechos y el administrador de datos personales la responderá.",
   "privacySpaceNotice": "El aviso de privacidad de este espacio",
   "@privacySpaceNotice": {
@@ -17144,6 +17220,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
+  "rolesFilterPermissions": "Filtrar los permisos",
   "rolesIntroEditor": "Cada persona tiene exactamente un rol base — Usuario, Administrador, Copropietario o Propietario. Cualquier otro rol añade lo que sus titulares pueden hacer y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"
@@ -17172,14 +17249,18 @@
   "@rolesOfSpaceTitle": {
     "description": "#1528 the roles of a space: rolesOfSpaceTitle"
   },
+  "rolesOwnRoleEdit": "Editar este rol",
   "rolesOwnRolesLink": "Los roles de este espacio",
   "@rolesOwnRolesLink": {
     "description": "#2085 giving roles: rolesOwnRolesLink"
   },
+  "rolesPeopleCount": "{count, plural, =0{Nadie} one{1 persona} other{{count} personas}}",
   "rolesTitle": "Roles",
   "@rolesTitle": {
     "description": "Roles screen title (#513)"
   },
+  "rolesWhoHasExplain": "Todas las personas activas que lo tienen, por su rol base o por un rol propio del espacio.",
+  "rolesWhoHasTitle": "Quién tiene «{permission}»",
   "rolesYourRole": "Su rol",
   "@rolesYourRole": {
     "description": "Chip on the reader's own role card (#513)"

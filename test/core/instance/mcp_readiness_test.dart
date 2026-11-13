@@ -439,6 +439,13 @@ void main() {
       CheckOutcome.fail,
       null,
     ),
+    (
+      'an OTP that lasts longer than an hour',
+      readyEvidence(authConfig: {...auth, 'mailer_otp_exp': 7200}),
+      'email_otp_settings',
+      CheckOutcome.fail,
+      null,
+    ),
   ];
 
   for (final (name, evidence, code, outcome, detail) in cases) {

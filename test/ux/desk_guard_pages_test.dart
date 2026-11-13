@@ -22,6 +22,7 @@ import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
+import 'package:deskilo/features/profile/domain/rights_request.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
@@ -35,6 +36,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/fake_money_repository.dart';
+import '../helpers/fake_profile_repository.dart';
 import '../helpers/mock_providers.dart';
 import 'experience_guards.dart';
 
@@ -88,6 +90,20 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
+        // #3628 — a request waiting, so the privacy page has a row.
+        profile: FakeProfileRepository()
+          ..rightsRequests.add(
+            RightsRequest(
+              id: 'rr-1',
+              workspaceId: 'ws-1',
+              memberId: 'member-1',
+              kind: 'access',
+              status: 'received',
+              receivedAt: DateTime(2026, 11, 9),
+              dueOn: DateTime(2026, 12, 9),
+              details: 'a copy of what you hold',
+            ),
+          ),
         workspace:
             FakeWorkspaceRepository.withWorkspace(
                 featureFlags: {for (final f in features) f.name: true},
@@ -232,11 +248,14 @@ const _pages = [
     'money',
     'purchases-open',
   ),
+  // #3628 — the roles beside the chosen role's permissions.
+  ('/roles', PageKind.document, 'people', 'roles'),
+  ('/members/privacy', PageKind.records, 'people', 'privacy-requests'),
 ];
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 19;
+const _guardedWorkspaceRoutes = 21;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -337,6 +356,8 @@ void main() {
               RecordsHeader<FeatureManifestEntry>,
               RecordRow<ReportPage>,
               RecordsHeader<ReportPage>,
+              RecordRow<RightsRequest>,
+              RecordsHeader<RightsRequest>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -352,6 +373,7 @@ void main() {
               RecordsHeader<BookExport>,
               RecordsHeader<FeatureManifestEntry>,
               RecordsHeader<ReportPage>,
+              RecordsHeader<RightsRequest>,
             ],
           ),
           isEmpty,

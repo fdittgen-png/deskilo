@@ -250,9 +250,26 @@
     if (input.format !== undefined && input.format !== 'xml') return M.fail('validation_error', T('webmcpErrFormat'), ['xml']);
     var blocked = blockers();
     if (blocked.length) return M.fail('blocked', T('webmcpErrBlocked', { n: blocked.length }), undefined, { findings: blocked });
-    var text = P.buildXml();
+    // #3904 — through the agent the secret answers come back as "***" and
+    // are named in `masked`; the page's own download carries them.
+    var masked = parameters().filter(function (p) {
+      return p.secret && String(readPath(P.S, p.key) || '').trim();
+    }).map(function (p) { return p.key; });
+    var kept = masked.map(function (k) { return readPath(P.S, k); });
+    var put = function (k, v) {
+      var p = k.split('.');
+      var last = p.pop();
+      readPath(P.S, p.join('.'))[last] = v;
+    };
+    var text;
+    masked.forEach(function (k) { put(k, '***'); });
+    try {
+      text = P.buildXml();
+    } finally {
+      masked.forEach(function (k, i) { put(k, kept[i]); });
+    }
     if (text == null) return M.fail('blocked', T('webmcpErrBlocked', { n: 1 }));
-    return M.ok({ format: 'xml', text: text });
+    return M.ok({ format: 'xml', text: text, masked: masked });
   }
 
   function reset(input) {

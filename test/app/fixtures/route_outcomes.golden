@@ -3,6 +3,7 @@ signed-out on  /account-activity -> /auth
 signed-out on  /account-activity/history -> /auth
 signed-out on  /account-messages -> /auth
 signed-out on  /account-messages/thread -> /auth
+signed-out on  /accounting/connected -> /auth
 signed-out on  /applications -> /auth
 signed-out on  /assistants -> /auth
 signed-out on  /assistants/connect -> /auth
@@ -67,6 +68,7 @@ signed-out on  /members/managed -> /auth
 signed-out on  /members/plans -> /auth
 signed-out on  /members/plans/:id -> /auth
 signed-out on  /members/privacy -> /auth
+signed-out on  /members/privacy/:id -> /auth
 signed-out on  /messages -> /auth
 signed-out on  /money -> /auth
 signed-out on  /money/accounting -> /auth
@@ -148,6 +150,7 @@ signed-out off /account-activity -> /auth
 signed-out off /account-activity/history -> /auth
 signed-out off /account-messages -> /auth
 signed-out off /account-messages/thread -> /auth
+signed-out off /accounting/connected -> /auth
 signed-out off /applications -> /auth
 signed-out off /assistants -> /auth
 signed-out off /assistants/connect -> /auth
@@ -212,6 +215,7 @@ signed-out off /members/managed -> /auth
 signed-out off /members/plans -> /auth
 signed-out off /members/plans/:id -> /auth
 signed-out off /members/privacy -> /auth
+signed-out off /members/privacy/:id -> /auth
 signed-out off /messages -> /auth
 signed-out off /money -> /auth
 signed-out off /money/accounting -> /auth
@@ -293,6 +297,7 @@ no-space on  /account-activity -> (open)
 no-space on  /account-activity/history -> (open)
 no-space on  /account-messages -> (open)
 no-space on  /account-messages/thread -> /account-messages
+no-space on  /accounting/connected -> /me
 no-space on  /applications -> (open)
 no-space on  /assistants -> (open)
 no-space on  /assistants/connect -> /me
@@ -357,6 +362,7 @@ no-space on  /members/managed -> /me
 no-space on  /members/plans -> /me
 no-space on  /members/plans/:id -> /me
 no-space on  /members/privacy -> /me
+no-space on  /members/privacy/:id -> /me
 no-space on  /messages -> /me
 no-space on  /money -> /me
 no-space on  /money/accounting -> /me
@@ -438,6 +444,7 @@ no-space off /account-activity -> (open)
 no-space off /account-activity/history -> (open)
 no-space off /account-messages -> (open)
 no-space off /account-messages/thread -> /account-messages
+no-space off /accounting/connected -> /me
 no-space off /applications -> (open)
 no-space off /assistants -> (open)
 no-space off /assistants/connect -> /me
@@ -502,6 +509,7 @@ no-space off /members/managed -> /me
 no-space off /members/plans -> /me
 no-space off /members/plans/:id -> /me
 no-space off /members/privacy -> /me
+no-space off /members/privacy/:id -> /me
 no-space off /messages -> /me
 no-space off /money -> /me
 no-space off /money/accounting -> /me
@@ -583,6 +591,7 @@ member on  /account-activity -> (open)
 member on  /account-activity/history -> (open)
 member on  /account-messages -> (open)
 member on  /account-messages/thread -> /account-messages
+member on  /accounting/connected -> /calendar
 member on  /applications -> (open)
 member on  /assistants -> (open)
 member on  /assistants/connect -> /assistants
@@ -647,6 +656,7 @@ member on  /members/managed -> /calendar
 member on  /members/plans -> /calendar
 member on  /members/plans/:id -> /calendar
 member on  /members/privacy -> /calendar
+member on  /members/privacy/:id -> /calendar
 member on  /messages -> /calendar
 member on  /money -> (open)
 member on  /money/accounting -> /calendar
@@ -728,6 +738,7 @@ member off /account-activity -> (open)
 member off /account-activity/history -> (open)
 member off /account-messages -> (open)
 member off /account-messages/thread -> /account-messages
+member off /accounting/connected -> /messages
 member off /applications -> (open)
 member off /assistants -> (open)
 member off /assistants/connect -> /assistants
@@ -792,6 +803,7 @@ member off /members/managed -> /messages
 member off /members/plans -> /messages
 member off /members/plans/:id -> /messages
 member off /members/privacy -> /messages
+member off /members/privacy/:id -> /messages
 member off /messages -> (open)
 member off /money -> /messages
 member off /money/accounting -> /messages
@@ -873,6 +885,7 @@ admin on  /account-activity -> (open)
 admin on  /account-activity/history -> (open)
 admin on  /account-messages -> (open)
 admin on  /account-messages/thread -> /account-messages
+admin on  /accounting/connected -> /money/accounting
 admin on  /applications -> (open)
 admin on  /assistants -> (open)
 admin on  /assistants/connect -> /assistants
@@ -937,6 +950,7 @@ admin on  /members/managed -> (open)
 admin on  /members/plans -> (open)
 admin on  /members/plans/:id -> (open)
 admin on  /members/privacy -> (open)
+admin on  /members/privacy/:id -> (open)
 admin on  /messages -> /calendar
 admin on  /money -> (open)
 admin on  /money/accounting -> (open)
@@ -1018,6 +1032,7 @@ admin off /account-activity -> (open)
 admin off /account-activity/history -> (open)
 admin off /account-messages -> (open)
 admin off /account-messages/thread -> /account-messages
+admin off /accounting/connected -> /messages
 admin off /applications -> (open)
 admin off /assistants -> (open)
 admin off /assistants/connect -> /assistants
@@ -1082,6 +1097,7 @@ admin off /members/managed -> /members
 admin off /members/plans -> /members
 admin off /members/plans/:id -> /members
 admin off /members/privacy -> /settings
+admin off /members/privacy/:id -> /settings
 admin off /messages -> (open)
 admin off /money -> /messages
 admin off /money/accounting -> /messages
@@ -1163,6 +1179,7 @@ owner on  /account-activity -> (open)
 owner on  /account-activity/history -> (open)
 owner on  /account-messages -> (open)
 owner on  /account-messages/thread -> /account-messages
+owner on  /accounting/connected -> /money/accounting
 owner on  /applications -> (open)
 owner on  /assistants -> (open)
 owner on  /assistants/connect -> /assistants
@@ -1227,6 +1244,7 @@ owner on  /members/managed -> (open)
 owner on  /members/plans -> (open)
 owner on  /members/plans/:id -> (open)
 owner on  /members/privacy -> (open)
+owner on  /members/privacy/:id -> (open)
 owner on  /messages -> /calendar
 owner on  /money -> (open)
 owner on  /money/accounting -> (open)
@@ -1308,6 +1326,7 @@ owner off /account-activity -> (open)
 owner off /account-activity/history -> (open)
 owner off /account-messages -> (open)
 owner off /account-messages/thread -> /account-messages
+owner off /accounting/connected -> /messages
 owner off /applications -> (open)
 owner off /assistants -> (open)
 owner off /assistants/connect -> /assistants
@@ -1372,6 +1391,7 @@ owner off /members/managed -> /members
 owner off /members/plans -> /members
 owner off /members/plans/:id -> /members
 owner off /members/privacy -> /settings
+owner off /members/privacy/:id -> /settings
 owner off /messages -> (open)
 owner off /money -> /messages
 owner off /money/accounting -> /messages

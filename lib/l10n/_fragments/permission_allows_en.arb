@@ -1,0 +1,159 @@
+{
+  "@@locale": "en",
+  "permAllowsManageRoles": "Change which permissions each role gives, and the space's own roles.",
+  "@permAllowsManageRoles": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageMembers": "Invite, pause and remove members, and change their subscriptions.",
+  "@permAllowsManageMembers": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageValidation": "Set which requests need approval and who approves them.",
+  "@permAllowsManageValidation": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsWorkspaceSettings": "Edit the space's identity, booking rules and features.",
+  "@permAllowsWorkspaceSettings": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsIssueInvoices": "Issue invoices, match payments and send reminders.",
+  "@permAllowsIssueInvoices": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewFinances": "Read the space's finances: the ledger and the invoicing.",
+  "@permAllowsViewFinances": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageDocuments": "Manage the links of the document library.",
+  "@permAllowsManageDocuments": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageServices": "Manage services, packages and fee bands.",
+  "@permAllowsManageServices": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsApproveExpenses": "Approve the expenses members submit.",
+  "@permAllowsApproveExpenses": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewNegotiations": "Read a member's commercial agreement.",
+  "@permAllowsViewNegotiations": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageNegotiations": "Propose or change a member's commercial agreement.",
+  "@permAllowsManageNegotiations": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsPaymentTermsEdit": "Request a change of a member's payment conditions; validation decides.",
+  "@permAllowsPaymentTermsEdit": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageSites": "Manage sites, members' home sites and the floor plan.",
+  "@permAllowsManageSites": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageBilling": "Manage fee bands, VAT rates, number sequences and billing rules.",
+  "@permAllowsManageBilling": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageReservations": "Book for others, cancel, check in and out, and block places.",
+  "@permAllowsManageReservations": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsOperateKiosk": "Set up the kiosk and hand out badges.",
+  "@permAllowsOperateKiosk": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsExportData": "Export the accounting, the archive bundle, Excel and the configuration.",
+  "@permAllowsExportData": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsDesignDocuments": "Design the templates, texts and layouts of the documents.",
+  "@permAllowsDesignDocuments": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewPersonalData": "Read members' e-mails, managed identities and postal data.",
+  "@permAllowsViewPersonalData": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageIntegrations": "Set up payment providers, e-invoicing credentials and WhatsApp.",
+  "@permAllowsManageIntegrations": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageConfiguration": "Change the features, the environment, the workspace code, imports and reset.",
+  "@permAllowsManageConfiguration": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsDeployToProd": "Push configuration and master data from development to production.",
+  "@permAllowsDeployToProd": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsDeployToDev": "Refresh the development space from production.",
+  "@permAllowsDeployToDev": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsAccessProd": "Enter the production side of a development and production pair.",
+  "@permAllowsAccessProd": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewAnalytics": "Read the space's operational figures, such as seat use; no people, no money.",
+  "@permAllowsViewAnalytics": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsUseMessages": "Use conversations, the alerts feed and notifications.",
+  "@permAllowsUseMessages": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsMakeReservations": "Book, see one's own reservations, and check in and out.",
+  "@permAllowsMakeReservations": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewCalendar": "See the calendar.",
+  "@permAllowsViewCalendar": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewDirectory": "See who the members are.",
+  "@permAllowsViewDirectory": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewMyMoney": "See one's own account, statement and invoices.",
+  "@permAllowsViewMyMoney": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewDocuments": "See the documents shared with the member.",
+  "@permAllowsViewDocuments": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManagePurchases": "Capture and link the space's supplier bills.",
+  "@permAllowsManagePurchases": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsRecordOutgoingPayments": "Record and reverse the cash paid out to a member for an approved claim.",
+  "@permAllowsRecordOutgoingPayments": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageLease": "Record the premises lease: its terms, their history and its end.",
+  "@permAllowsManageLease": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManagePrivacy": "Decide members' data rights requests and be told of a privacy incident.",
+  "@permAllowsManagePrivacy": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsViewStock": "See the stock: what is where, its lots and its movements.",
+  "@permAllowsViewStock": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsManageStock": "Move goods in, between places and out.",
+  "@permAllowsManageStock": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "permAllowsApproveStockAdjustments": "Approve the adjustment a stock count proposes.",
+  "@permAllowsApproveStockAdjustments": {
+    "description": "#3628 roles at the desk: one line of what the permission allows"
+  },
+  "rolesFilterPermissions": "Filter the permissions",
+  "@rolesFilterPermissions": {
+    "description": "#3628 the filter over a role's permissions"
+  }
+}

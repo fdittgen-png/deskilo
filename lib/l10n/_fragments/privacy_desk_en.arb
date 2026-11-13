@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "privacyRequestsOpen": "Waiting for an answer",
+  "@privacyRequestsOpen": {
+    "description": "#3628 privacy requests at the desk: chip: requests still to answer"
+  },
+  "privacyRequestsAnswered": "Answered",
+  "@privacyRequestsAnswered": {
+    "description": "#3628 privacy requests at the desk: chip: requests answered (completed or refused)"
+  },
+  "privacyRequestsColWho": "Member",
+  "@privacyRequestsColWho": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColKind": "Request",
+  "@privacyRequestsColKind": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColReceived": "Received",
+  "@privacyRequestsColReceived": {
+    "description": "#3628 privacy requests at the desk: column"
+  },
+  "privacyRequestsColStatus": "Where it stands",
+  "@privacyRequestsColStatus": {
+    "description": "#3628 privacy requests at the desk: column"
+  }
+}

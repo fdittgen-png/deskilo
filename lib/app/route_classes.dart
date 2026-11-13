@@ -271,6 +271,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash', measure: PageMeasure.work),
   RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
   RouteRule('/money/accounting/exports', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
+  RouteRule('/accounting/connected', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.reading), // #3906: a target's sign-in, completed
   RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.form),
   RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
@@ -292,6 +293,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/number-sequences', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/members/managed', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.form),
   RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work),
+  RouteRule('/members/privacy/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3628
   RouteRule('/payment-methods', RouteClass.workspace, place: 'drawer-payment-methods', measure: PageMeasure.form),
   RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity', measure: PageMeasure.form),
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),

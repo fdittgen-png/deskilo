@@ -218,7 +218,7 @@ void main() {
     await tester.tap(toggle);
     await tester.pumpAndSettle();
     await tester.enterText(find.byType(TextFormField).at(0), 'flo@example.com');
-    await tester.enterText(find.byType(TextFormField).at(1), 'secret123');
+    await tester.enterText(find.byType(TextFormField).at(1), 'secret12345');
     final submit = find.widgetWithText(FilledButton, 'Sign in');
     await tester.ensureVisible(submit);
     await tester.tap(submit);

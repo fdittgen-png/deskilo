@@ -9,18 +9,21 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../domain/role_assignment.dart';
+import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_role.dart';
 import '../../providers/workspace_providers.dart';
 import '../../providers/workspace_roles_providers.dart';
 import '../widgets/role_editor_sheet.dart';
+import '../widgets/roles_desk.dart';
 import 'roles_screen_labels.dart';
 
 /// #513 — the CENTRAL role management: one matrix, roles × permissions.
@@ -132,6 +135,61 @@ class RolesScreen extends ConsumerWidget {
     ref.invalidate(workspaceRolesProvider);
   }
 
+  /// #3628 — the roles the desk lists: the base roles, then the space's own.
+  List<DeskRole> _deskRoles(
+    AppLocalizations l10n,
+    List<WorkspaceRole> roles,
+    String locale, {
+    required String administrator,
+    required bool ownRolesLink,
+  }) =>
+      [
+      for (final role in PermissionRole.values)
+        (
+          id: role.wireName,
+          name: _roleLabel(l10n, role, administrator: administrator),
+          base: role,
+          own: null,
+        ),
+      if (ownRolesLink)
+        for (final own in roles)
+          if (!own.builtin)
+            (id: 'own-${own.key}', name: own.nameIn(locale), base: null, own: own),
+    ];
+
+  /// #3628 — the roles beside the chosen role's permissions.
+  Widget _desk(
+    BuildContext context,
+    WidgetRef ref, {
+    required Workspace? workspace,
+    required bool canEdit,
+    required PermissionRole? myRole,
+    required List<DeskRole> roles,
+  }) {
+    final l10n = context.l10n;
+    return Scaffold(
+      appBar: AppBar(
+        title: PageTitle(l10n.rolesTitle),
+        actions: [
+          HelpDot(
+            l10n.helpHintMembersTip4Topic,
+            anchor: HelpAnchor.rolesMatrix,
+          ),
+        ],
+      ),
+      body: RolesDesk(
+        workspace: workspace,
+        canEdit: canEdit,
+        myRole: myRole,
+        intro: canEdit ? l10n.rolesIntroEditor : l10n.rolesIntroReadOnly,
+        roles: roles,
+        onToggle: (role, permission, current) => _toggle(context, ref,
+            role: role, permission: permission, current: current),
+        onEditOwn: (_) => context.push('/settings/roles-of-this-space'),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -156,6 +214,16 @@ class RolesScreen extends ConsumerWidget {
         features.contains(WorkspaceFeature.customRoles) &&
         ((me?.actsAsOwner ?? false) || canEdit);
 
+    // #3628 — at the desk the roles stand beside the chosen role's
+    // permissions; a phone keeps the cards below.
+    if (WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return _desk(context, ref,
+          workspace: workspace,
+          canEdit: canEdit,
+          myRole: myRole,
+          roles: _deskRoles(l10n, roles, locale,
+              administrator: administrator, ownRolesLink: ownRolesLink));
+    }
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.rolesTitle),
@@ -187,94 +255,109 @@ class RolesScreen extends ConsumerWidget {
               ),
             ),
           for (final role in PermissionRole.values) ...[
-            Builder(builder: (context) {
-              final granted = permissionsForRole(role, workspace);
-              final locked = role == PermissionRole.owner || !canEdit;
-              final mine = role == myRole;
-              return Card(
-                key: ValueKey('role-card-${role.wireName}'),
-                shape: mine
-                    ? RoundedRectangleBorder(
-                        side: BorderSide(
-                            color: Theme.of(context).colorScheme.primary),
-                        borderRadius: AppRadius.lgAll,
-                      )
-                    : null,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      vertical: AppSpacing.sm),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.lg),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                _roleLabel(l10n, role,
-                                    administrator: administrator),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.copyWith(
-                                        fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                            if (mine)
-                              Chip(
-                                label: Text(
-                                    l10n.rolesYourRole),
-                                visualDensity: VisualDensity.compact,
-                              ),
-                            // #2085 — the owner renames the Administrator.
-                            if (role == PermissionRole.admin &&
-                                renameable != null)
-                              IconButton(
-                                key: renameAdministratorKey,
-                                icon: const Icon(Icons.edit_outlined),
-                                tooltip: l10n.roleRenameAdministrator,
-                                onPressed: () =>
-                                    _rename(context, ref, renameable),
-                              ),
-                            if (role == PermissionRole.owner)
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: AppSpacing.sm),
-                                child: Icon(Icons.lock_outline,
-                                    size: 16,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .onSurfaceVariant),
-                              ),
-                          ],
-                        ),
-                      ),
-                      for (final permission in WorkspacePermission.values)
-                        CheckboxListTile(
-                          key: ValueKey(
-                              'perm-${role.wireName}-${permission.wireName}'),
-                          dense: true,
-                          controlAffinity:
-                              ListTileControlAffinity.leading,
-                          value: granted.contains(permission),
-                          onChanged: locked
-                              ? null
-                              : (_) => _toggle(context, ref,
-                                  role: role,
-                                  permission: permission,
-                                  current: granted),
-                          title: Text(permissionLabel(l10n, permission)),
-                        ),
-                    ],
-                  ),
+            _roleCard(context, ref, role,
+                state: (
+                  granted: permissionsForRole(role, workspace),
+                  locked: role == PermissionRole.owner || !canEdit,
+                  mine: role == myRole,
                 ),
-              );
-            }),
+                label: _roleLabel(l10n, role, administrator: administrator),
+                renameable: renameable),
             const SizedBox(height: AppSpacing.sm),
           ],
         ],
+      ),
+    );
+  }
+
+  /// One role's card on a phone: its name, and a switch per permission.
+  Widget _roleCard(
+    BuildContext context,
+    WidgetRef ref,
+    PermissionRole role, {
+    required ({Set<WorkspacePermission> granted, bool locked, bool mine}) state,
+    required String label,
+    required WorkspaceRole? renameable,
+  }) {
+    final l10n = context.l10n;
+    final (:granted, :locked, :mine) = state;
+    return Card(
+      key: ValueKey('role-card-${role.wireName}'),
+      shape: mine
+          ? RoundedRectangleBorder(
+              side: BorderSide(
+                  color: Theme.of(context).colorScheme.primary),
+              borderRadius: AppRadius.lgAll,
+            )
+          : null,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+            vertical: AppSpacing.sm),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.lg),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      label,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleSmall
+                          ?.copyWith(
+                              fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  if (mine)
+                    Chip(
+                      label: Text(
+                          l10n.rolesYourRole),
+                      visualDensity: VisualDensity.compact,
+                    ),
+                  // #2085 — the owner renames the Administrator.
+                  if (role == PermissionRole.admin &&
+                      renameable != null)
+                    IconButton(
+                      key: renameAdministratorKey,
+                      icon: const Icon(Icons.edit_outlined),
+                      tooltip: l10n.roleRenameAdministrator,
+                      onPressed: () =>
+                          _rename(context, ref, renameable),
+                    ),
+                  if (role == PermissionRole.owner)
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: AppSpacing.sm),
+                      child: Icon(Icons.lock_outline,
+                          size: 16,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .onSurfaceVariant),
+                    ),
+                ],
+              ),
+            ),
+            for (final permission in WorkspacePermission.values)
+              CheckboxListTile(
+                key: ValueKey(
+                    'perm-${role.wireName}-${permission.wireName}'),
+                dense: true,
+                controlAffinity:
+                    ListTileControlAffinity.leading,
+                value: granted.contains(permission),
+                onChanged: locked
+                    ? null
+                    : (_) => _toggle(context, ref,
+                        role: role,
+                        permission: permission,
+                        current: granted),
+                title: Text(permissionLabel(l10n, permission)),
+              ),
+          ],
+        ),
       ),
     );
   }

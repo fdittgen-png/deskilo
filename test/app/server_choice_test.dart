@@ -210,8 +210,8 @@ void main() {
     await _tap(tester, 'instance-doctor-run');
     expect(chosen, isEmpty);
     await _tap(tester, 'instance-use-here');
-    expect(api.deployed['ref1']!.single.slug, 'send-push');
-    expect(store.value?.url, 'https://ref1.supabase.co');
+    expect(api.deployed['ref1xxxxxxxxxxxxxxxx']!.single.slug, 'send-push');
+    expect(store.value?.url, 'https://ref1xxxxxxxxxxxxxxxx.supabase.co');
     expect(chosen, [1]);
   });
 
