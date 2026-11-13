@@ -283,13 +283,47 @@ void main() {
       final (launched, _, _) = await pumpSheet(tester);
 
       await tester.enterText(
-        find.byKey(const ValueKey('invite-phone')),
+        find.byKey(const ValueKey('invite-phone-number')),
         '+33 6 12 34 56 78',
       );
       await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
       await tester.pumpAndSettle();
 
       expect(launched.single.path, '/33612345678');
+    });
+
+    // #3650 — a message goes only to a validated number: nothing is minted
+    // or launched for one that is not, and the field says why.
+    for (final (typed, why) in const [
+      ('06 12 34 56 78', 'Choose the country of this number, or type it with its + code.'),
+      ('+0612345678', 'This cannot be a phone number of the chosen country.'),
+    ]) {
+      testWidgets('"$typed" is refused in words, before any code is minted',
+          (tester) async {
+        final (launched, _, repo) = await pumpSheet(tester);
+        await tester.enterText(
+          find.byKey(const ValueKey('invite-phone-number')),
+          typed,
+        );
+        await tester.tap(find.byKey(const ValueKey('invite-whatsapp')));
+        await tester.pumpAndSettle();
+        expect(launched, isEmpty);
+        expect(repo.mintedInvitations, isEmpty);
+        expect(find.text(why), findsOneWidget);
+      });
+    }
+
+    testWidgets('a number with an extension cannot receive a text message',
+        (tester) async {
+      final (launched, _, _) = await pumpSheet(tester);
+      await tester.enterText(
+        find.byKey(const ValueKey('invite-phone-number')),
+        '+33 1 23 45 67 89 x 12',
+      );
+      await tester.tap(find.byKey(const ValueKey('invite-sms')));
+      await tester.pumpAndSettle();
+      expect(launched, isEmpty);
+      expect(find.text('A number with an extension cannot receive messages: leave the extension out.'), findsOneWidget);
     });
 
     testWidgets('SMS carries the minted code UNformatted in the body',

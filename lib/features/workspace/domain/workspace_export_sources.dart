@@ -150,6 +150,8 @@ const List<ExportSource> workspaceExportSources = [
       'vat_id',
       'address',
       'whatsapp',
+      // #3650 — what the owner typed for it.
+      'whatsapp_typed',
       'first_name',
       'last_name',
       'company',

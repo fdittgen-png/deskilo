@@ -159,6 +159,7 @@ dependencies:
   deskilo_asset_gzip:
     path: packages/deskilo_asset_gzip
   desktop_drop: ^0.8.0
+  phone_numbers_parser: ^9.0.29
 
 dev_dependencies:
   # #1017 — the documentation screenshot pipeline (tool/media.dart):

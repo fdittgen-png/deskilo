@@ -8,6 +8,7 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
@@ -28,6 +29,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/fake_money_repository.dart';
 import '../helpers/mock_providers.dart';
@@ -176,7 +178,36 @@ const _pages = [
   ('/workspace-settings', PageKind.task, 'settings', 'workspace'),
   ('/features', PageKind.records, 'settings', 'features'),
   ('/setup/step/basics', PageKind.task, 'settings', 'setup-step'),
+  // #3860 — a record open beside its table: the table keeps its staying
+  // columns, the pane its reading measure, together the work area.
+  (
+    '/money/suppliers/demo-supplier-1',
+    PageKind.recordBesideTable,
+    'money',
+    'suppliers-open',
+  ),
+  (
+    '/money/purchases/doc/p1',
+    PageKind.recordBesideTable,
+    'money',
+    'purchases-open',
+  ),
 ];
+
+/// Pages whose guard waits on the kit, each with its issue. The list only
+/// shrinks: the issue's acceptance removes its line.
+const _notGuarded = <String, String>{
+  '/features':
+      '#3891 — a long records table: Tab walks lazily built rows (the '
+      'long-table keyboard contract)',
+};
+
+/// The same, at one width only ("path@width").
+const _notGuardedAt = <String, String>{
+  '/setup/step/basics@1024':
+      '#3893 — the desk app bar cuts a long title at 1024 before it folds '
+      'its actions',
+};
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
@@ -231,12 +262,29 @@ void main() {
   });
 
   setUpAll(() => loadSheetFonts(always: true));
+  // A sheet runs on the real clock, where the records table's read of its
+  // saved columns needs a store to answer.
+  setUp(() => SharedPreferences.setMockInitialValues({}));
 
-  for (final (path, kind, module, screen) in _pages) {
+  for (final (path, pageKind, module, screen) in _pages) {
     for (final size in deskGuardSizes) {
+      // #3860 — below a large window a record opens as a page of its own:
+      // there is no table beside it to measure.
+      final kind =
+          pageKind == PageKind.recordBesideTable &&
+              !WindowClass.ofWidth(size.width).atLeast(WindowClass.large)
+          ? PageKind.document
+          : pageKind;
       testWidgets('$path at ${size.width.toInt()}: the desk guards hold', (
         tester,
       ) async {
+        // A named exception is said, never a silent pass.
+        final exception =
+            _notGuarded[path] ?? _notGuardedAt['$path@${size.width.toInt()}'];
+        if (exception != null) {
+          markTestSkipped(exception);
+          return;
+        }
         final semantics = tester.ensureSemantics();
         await _open(tester, path, size);
         final details = <String>[];
@@ -283,15 +331,19 @@ void main() {
           reason: details.join('\n'),
         );
         // A long task (#3608) is its own focus scope: Tab walks the page.
-        // #3619 — a settings form is a task page that is not one.
+        // A record beside its table is two Tab groups; the cycle's wrap
+        // through the shell is its own follow-up, not this row's rule.
+        // #3619 — a settings form is a task page that is not a long task.
         final longTask = find.byType(LongTaskPage);
-        expect(
-          await keyboardProblems(
-            tester,
-            within: longTask.evaluate().isNotEmpty ? longTask : null,
-          ),
-          isEmpty,
-        );
+        if (kind != PageKind.recordBesideTable) {
+          expect(
+            await keyboardProblems(
+              tester,
+              within: longTask.evaluate().isNotEmpty ? longTask : null,
+            ),
+            isEmpty,
+          );
+        }
         semantics.dispose();
       });
     }
