@@ -9,6 +9,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -61,6 +62,14 @@ extension GermanAccountingExports on AccountingExportRun {
             error: e,
             stackTrace: st,
           );
+        }
+        // #3884 -- books with entries this build cannot read are refused
+        // before any file is built: a package without them is incomplete.
+        if (posted case JournalUnreadable(:final count)) {
+          if (context.mounted) {
+            AppSnack.error(context, context.l10n.journalUnreadableEntries(count));
+          }
+          return;
         }
         final sequences = await repo.fetchNumberSequences(workspace.id);
         final numbers = await memberNumbers();

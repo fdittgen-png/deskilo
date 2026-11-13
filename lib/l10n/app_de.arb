@@ -10447,6 +10447,7 @@
   "journalSafTRefused": "Die SAF-T-Datei wurde nicht erstellt: {gaps}",
   "journalSageRefused": "Die Sage-50-Datei wurde nicht geschrieben: {reasons}",
   "journalSwissTaxCodes": "Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{Die Bücher enthalten 1 Eintrag, den diese Version der App nicht kennt; deshalb wird nichts exportiert. Aktualisiere zuerst die App.} other{Die Bücher enthalten {count} Einträge, die diese Version der App nicht kennt; deshalb wird nichts exportiert. Aktualisiere zuerst die App.}}",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -20726,6 +20727,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Blockierung aufheben",
+  "unreadableRowsNotice": "{count, plural, one{1 Eintrag konnte nicht angezeigt werden: Diese Version der App kennt ihn nicht. Aktualisiere die App, um ihn zu sehen.} other{{count} Einträge konnten nicht angezeigt werden: Diese Version der App kennt sie nicht. Aktualisiere die App, um sie zu sehen.}}",
   "unsavedChangesBody": "Ihre Änderungen auf dieser Seite sind noch nicht gespeichert.",
   "unsavedChangesDiscard": "Änderungen verwerfen",
   "unsavedChangesKeep": "Weiter bearbeiten",

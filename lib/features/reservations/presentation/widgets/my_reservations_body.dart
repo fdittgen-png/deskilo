@@ -31,6 +31,7 @@ import '../../../../core/ui/app_date_picker.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/unreadable_rows_notice.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../visits/domain/guest_participation.dart';
 import '../../../visits/presentation/my_visits_section.dart';
@@ -151,6 +152,8 @@ class _Feed extends ConsumerWidget {
       children: [
         _WindowHeader(window: window, past: filter.tab == MyReservationsTab.past),
         _Filters(filter: filter, sources: loaded?.slots ?? const []),
+        // #3884 -- bookings this version could not read, said in one line.
+        const UnreadableRowsNotice(area: myReservationsArea),
         Expanded(child: body),
       ],
     );

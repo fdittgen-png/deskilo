@@ -7,11 +7,17 @@
 // The decoder is strict. A page of another schema version is incompatible,
 // a missing or mistyped field is a shape error, an unknown field is ignored;
 // nothing is defaulted silently, because a silent default here would draw a
-// person's booking as absent or as the wrong one.
+// person's booking as the wrong one. One booking whose status this build does
+// not know is the exception that says so (#3884): it is left out, counted
+// under [myReservationsArea] and traced, and the page keeps the others.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
+import '../../../core/data/unreadable_rows.dart';
 import 'reservation.dart';
+
+/// #3884 -- the area under which bookings left out of the list are counted.
+const String myReservationsArea = 'my_reservations';
 
 /// The one schema this reader understands.
 const int _schemaVersion = 1;
@@ -55,14 +61,20 @@ class MyReservationItem {
     required this.checkedOutAt,
   });
 
-  factory MyReservationItem.fromJson(Object? raw, {required String context}) {
+  /// The item, or null when its status is one this build does not know
+  /// (#3884): the page keeps its other bookings and says that one was left
+  /// out, rather than drawing it as a status it is not.
+  static MyReservationItem? tryFromJson(Object? raw, {required String context}) {
     final r = JsonReader.of(raw, context: context);
     final statusWire = r.string('status');
-    final ReservationStatus status;
-    try {
-      status = reservationStatusFromDb(statusWire);
-    } on ArgumentError {
-      throw JsonShapeException(context, 'status', 'a reservation status', statusWire);
+    final status = reservationStatusFromDb(statusWire);
+    if (status == null) {
+      UnreadableRows.instance.skip(
+        myReservationsArea,
+        r.string('id'),
+        what: 'reservation status $statusWire',
+      );
+      return null;
     }
     return MyReservationItem(
       id: r.string('id'),
@@ -221,7 +233,7 @@ class MyReservationsPage {
       source: source,
       items: List.unmodifiable([
         for (final item in itemsRaw)
-          MyReservationItem.fromJson(item, context: '$context.items'),
+          ?MyReservationItem.tryFromJson(item, context: '$context.items'),
       ]),
       next: next == null ? null : MyReservationsCursor.fromJson(next),
       hasMore: hasMore,

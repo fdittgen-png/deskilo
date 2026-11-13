@@ -16478,6 +16478,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String journalUnreadableEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The books hold $count entries this version of the app does not know, so nothing is exported. Update the app first.',
+      one: 'The books hold 1 entry this version of the app does not know, so nothing is exported. Update the app first.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Paid on $date — closed';
   }
@@ -34075,6 +34087,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unblockAction => 'Unblock';
+
+  @override
+  String unreadableRowsNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count entries could not be shown: this version of the app does not know them. Update the app to see them.',
+      one: '1 entry could not be shown: this version of the app does not know it. Update the app to see it.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get unsavedChangesBody =>

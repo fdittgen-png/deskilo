@@ -25,6 +25,7 @@ export '../application/generic_journal_export.dart'
         JournalOpeningRefused,
         JournalPosted,
         JournalSafTRefused,
+        JournalUnreadable,
         journalFileOf,
         writtenWith;
 
@@ -54,6 +55,8 @@ Future<void> exportGenericJournal(
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):
       AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+    case JournalUnreadable(:final count):
+      AppSnack.error(context, l10n.journalUnreadableEntries(count));
     case JournalNeedsRates(:final documents):
       AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
     case JournalRefused(:final blockers):

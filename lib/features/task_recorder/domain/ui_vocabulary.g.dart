@@ -3673,6 +3673,7 @@ const Set<String> uiKeys = {
   'unified-inbox-starred',
   'unified-inbox-unavailable',
   'unified-inbox-unread',
+  'unreadable-rows-notice',
   'unsaved-changes-dialog',
   'unsaved-changes-discard',
   'unsaved-changes-keep',

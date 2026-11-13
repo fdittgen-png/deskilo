@@ -16673,6 +16673,18 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String journalUnreadableEntries(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Les livres contiennent $count écritures que cette version de l\'application ne connaît pas : rien n\'est exporté. Mettez d\'abord l\'application à jour.',
+      one: 'Les livres contiennent 1 écriture que cette version de l\'application ne connaît pas : rien n\'est exporté. Mettez d\'abord l\'application à jour.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String journeyClosedPaid(String date) {
     return 'Payée le $date — close';
   }
@@ -34524,6 +34536,18 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get unblockAction => 'Débloquer';
+
+  @override
+  String unreadableRowsNotice(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count entrées n\'ont pas pu être affichées : cette version de l\'application ne les connaît pas. Mettez l\'application à jour pour les voir.',
+      one: '1 entrée n\'a pas pu être affichée : cette version de l\'application ne la connaît pas. Mettez l\'application à jour pour la voir.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get unsavedChangesBody =>

@@ -7,6 +7,7 @@ import '../../../core/cache/cached_fetch.dart';
 import '../../../core/data/paged_fetch.dart';
 import '../../../core/data/retry.dart';
 import '../../../core/data/sweep_throttle.dart';
+import '../../../core/data/unreadable_rows.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
@@ -123,10 +124,10 @@ class SupabaseReservationRepository implements ReservationRepository {
                 .count,
           );
         },
-        parse: (payload) => [
-          for (final row in payload as List)
-            _fromRow(Map<String, dynamic>.from(row as Map)),
-        ],
+        parse: (payload) => reservationsFromRows(
+          payload as List,
+          area: reservationsArea(workspaceId),
+        ),
       );
 
   @override
@@ -142,9 +143,7 @@ class SupabaseReservationRepository implements ReservationRepository {
           .order('starts_at', ascending: true)
           .order('id', ascending: true),
     );
-    return [
-      for (final row in rows) _fromRow(Map<String, dynamic>.from(row)),
-    ];
+    return reservationsFromRows(rows, area: reservationsArea(workspaceId));
   }
 
   @override
@@ -440,10 +439,36 @@ class SupabaseReservationRepository implements ReservationRepository {
         .select()
         .eq('id', reservationId)
         .maybeSingle();
-    return row == null ? null : _fromRow(Map<String, dynamic>.from(row));
+    return row == null
+        ? null
+        : reservationFromRow(
+            Map<String, dynamic>.from(row),
+            area: reservationsArea(row['workspace_id'] as String),
+          );
   }
+}
 
-  Reservation _fromRow(Map<String, dynamic> row) => Reservation(
+/// The reservations of [rows] this build can read. A row whose status it
+/// does not know is left out, counted under [area] and traced, never read
+/// as a status it is not: one such row no longer fails the whole list.
+List<Reservation> reservationsFromRows(Iterable<Object?> rows, {required String area}) => [
+      for (final row in rows)
+        ?reservationFromRow(Map<String, dynamic>.from(row! as Map), area: area),
+    ];
+
+/// One reservation, or null when its status is unknown (see
+/// [reservationsFromRows]).
+Reservation? reservationFromRow(Map<String, dynamic> row, {required String area}) {
+  final status = reservationStatusFromDb(row['status'] as String?);
+  if (status == null) {
+    UnreadableRows.instance.skip(
+      area,
+      row['id'] as String,
+      what: 'reservation status ${row['status']}',
+    );
+    return null;
+  }
+  return Reservation(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
         workspaceId: row['workspace_id'] as String,
@@ -454,7 +479,7 @@ class SupabaseReservationRepository implements ReservationRepository {
         memberId: row['member_id'] as String,
         startsAt: DateTime.parse(row['starts_at'] as String),
         endsAt: DateTime.parse(row['ends_at'] as String),
-        status: reservationStatusFromDb(row['status'] as String),
+        status: status,
         seriesId: row['series_id'] as String?,
         seriesPattern: row['series_pattern'] as String?,
         checkedInAt: row['checked_in_at'] == null

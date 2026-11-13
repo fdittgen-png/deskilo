@@ -9,6 +9,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/unreadable_rows_notice.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -163,6 +164,8 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
               l10n.bookChartTitle(widget.issuer.name),
               style: Theme.of(context).textTheme.titleLarge,
             ),
+            // #3884 — accounts or mappings this version could not read.
+            UnreadableRowsNotice(area: booksArea(workspace.id)),
             if (accounts.isEmpty)
               OutlinedButton(
                 key: const ValueKey('book-chart-suggest'),

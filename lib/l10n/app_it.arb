@@ -10447,6 +10447,7 @@
   "journalSafTRefused": "Il file SAF-T non è stato redatto: {gaps}",
   "journalSageRefused": "Il file Sage 50 non è stato scritto: {reasons}",
   "journalSwissTaxCodes": "Questi gruppi di aliquote non hanno un codice IVA nel riferimento fiscale; non è stato scritto nulla. Aggiunga prima i loro codici: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{I libri contengono 1 registrazione che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.} other{I libri contengono {count} registrazioni che questa versione dell'app non conosce, quindi non viene esportato nulla. Aggiorna prima l'app.}}",
   "journeyClosedPaid": "Pagata il {date} — chiusa",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -20726,6 +20727,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Sblocca",
+  "unreadableRowsNotice": "{count, plural, one{1 voce non è stata mostrata: questa versione dell'app non la conosce. Aggiorna l'app per vederla.} other{{count} voci non sono state mostrate: questa versione dell'app non le conosce. Aggiorna l'app per vederle.}}",
   "unsavedChangesBody": "Le modifiche fatte in questa pagina non sono ancora salvate.",
   "unsavedChangesDiscard": "Scarta le modifiche",
   "unsavedChangesKeep": "Continua a modificare",

@@ -46,6 +46,14 @@ final class JournalBlocked extends GenericJournal {
   final List<String> roles;
 }
 
+/// #3884 -- the books hold [count] entries this build does not know (a role,
+/// kind or journal a newer server sends): no export or closing is made,
+/// because a file without them would be incomplete.
+final class JournalUnreadable extends GenericJournal {
+  const JournalUnreadable(this.count);
+  final int count;
+}
+
 /// Documents in another currency than the space's that have no recorded
 /// exchange rate (`reference (currency)`); nothing was written.
 final class JournalNeedsRates extends GenericJournal {
@@ -289,6 +297,8 @@ class GenericJournalExport {
     final opening = (await _readYears(workspaceId, local, [
       FiscalYear(start, eve),
     ], named: false)).single;
+    // #3884 -- unreadable entries of the opening period refuse as such.
+    if (opening is JournalUnreadable) return opening;
     if (opening is! JournalPosted) {
       return JournalOpeningRefused(FiscalYear(start, eve), switch (opening) {
         JournalBlocked(:final roles) => roles,
@@ -404,6 +414,7 @@ class GenericJournalExport {
     required ({List<BookAccount> accounts, List<BookMapping> mappings})? chart,
     required Map<String, PostingParty> parties,
   }) {
+    if (set.unreadable > 0) return JournalUnreadable(set.unreadable);
     if (set.blockers.isNotEmpty) {
       final roles = {
         for (final b in set.blockers)

@@ -11,15 +11,21 @@ part 'reservation.freezed.dart';
 /// Lifecycle per spec §3. Persisted by name — never rename values.
 enum ReservationStatus { reserved, checkedIn, completed, cancelled, released }
 
-/// Maps the snake_case DB status strings (checked_in) to the enum.
-ReservationStatus reservationStatusFromDb(String value) => switch (value) {
+/// Maps the snake_case DB status strings (checked_in) to the enum; null for
+/// a status this build does not know (#3884): the reader leaves that row
+/// out and says so, it never reads it as a status it is not.
+ReservationStatus? reservationStatusFromDb(String? value) => switch (value) {
       'reserved' => ReservationStatus.reserved,
       'checked_in' => ReservationStatus.checkedIn,
       'completed' => ReservationStatus.completed,
       'cancelled' => ReservationStatus.cancelled,
       'released' => ReservationStatus.released,
-      _ => throw ArgumentError.value(value, 'value', 'unknown status'),
+      _ => null,
     };
+
+/// #3884 -- the area under which a workspace's unreadable reservations are
+/// counted and its reservations screen says so.
+String reservationsArea(String workspaceId) => 'reservations:$workspaceId';
 
 String reservationStatusToDb(ReservationStatus status) => switch (status) {
       ReservationStatus.reserved => 'reserved',

@@ -4,13 +4,15 @@
 // and acts inside a workspace only through that workspace's host.
 //
 // * `my_personal_workspace_refs_v1` decodes strictly: a malformed
-//   reference, status or freshness is refused, never an empty list.
+//   reference is refused, never an empty list; a status or freshness this
+//   build does not know is read as the safe one and traced (#3884).
 // * Me › Home lists the references this server does not show as a space,
 //   says "not verified" for another installation's workspace, works with
 //   zero workspaces here, and says when the references cannot be read.
 // * Leaving a space goes to the workspace-access repository, never to the
 //   personal one, and a host that cannot be verified leaves nothing.
 import 'package:deskilo/core/backend/context_clients.dart';
+import 'package:deskilo/core/trace/trace_logger.dart';
 import 'package:deskilo/features/me/application/me_actions.dart';
 import 'package:deskilo/features/me/data/host_workspace_access_repository.dart';
 import 'package:deskilo/features/me/domain/personal_workspace_refs.dart';
@@ -82,7 +84,7 @@ void main() {
       expect(refs.refs.first.status, RefStatus.active);
     });
 
-    test('a malformed reference, freshness or status is refused', () {
+    test('a malformed reference or answer is refused', () {
       expect(
         () => _refs([
           {..._ref(_away), 'network_id': _ws},
@@ -90,19 +92,23 @@ void main() {
         throwsA(isA<JsonShapeException>()),
       );
       expect(
-        () => _refs([
-          {..._ref(_away), 'freshness': 'guessed'},
-        ]),
-        throwsA(isA<JsonShapeException>()),
-      );
-      expect(
-        () => _refs([_ref(_home, freshness: 'local', status: 'owner')]),
-        throwsA(isA<JsonShapeException>()),
-      );
-      expect(
         () => PersonalWorkspaceRefs.fromJson({'refs': 'none'}),
         throwsA(isA<JsonShapeException>()),
       );
+    });
+
+    test('#3884: a future status reads as none and a future freshness as '
+        'unavailable, both traced; the other references stay', () {
+      final before = TraceLogger.instance.entries.length;
+      final refs = _refs([
+        _ref(_home, freshness: 'local', status: 'active', label: 'One'),
+        {..._ref(_away), 'status': 'future_status', 'freshness': 'future_word'},
+      ]);
+      expect(refs.refs, hasLength(2));
+      expect(refs.refs.last.status, isNull);
+      expect(refs.refs.last.freshness, RefFreshness.unavailable);
+      expect(refs.refs.first.status, RefStatus.active);
+      expect(TraceLogger.instance.entries.length - before, 2);
     });
 
     test('C2: a verified or stale fact elsewhere keeps its status', () {

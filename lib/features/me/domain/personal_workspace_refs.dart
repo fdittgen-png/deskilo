@@ -10,8 +10,13 @@
 // while in force, `stale` once it lapsed, #2563 C2), and says
 // "verification unavailable" without one. It never carries a
 // role or a permission. The decoding is strict (#2585): a malformed
-// reference, status or freshness is a shape error, never an empty list.
+// reference is a shape error, never an empty list. A status or freshness
+// this build does not know (a newer server's) is the exception (#3884): it
+// reads as no status / unavailable -- the readings that grant nothing -- and
+// is traced; the reference stays in the list.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/trace/trace_logger.dart';
 
 /// `installation-uuid:workspace-uuid`, lower-case, as 0559 stamps it.
 final RegExp _networkId = RegExp(
@@ -35,6 +40,8 @@ enum RefFreshness {
   /// Another installation's workspace: no verified relationship yet.
   unavailable;
 
+  /// #3884 -- a freshness this build does not know reads as [unavailable]
+  /// (no verified relationship: it authorizes nothing) and is traced.
   static RefFreshness fromWire(JsonReader r) {
     final wire = r.string('freshness');
     return switch (wire) {
@@ -42,12 +49,7 @@ enum RefFreshness {
       'verified' => verified,
       'stale' => stale,
       'unavailable' => unavailable,
-      _ => throw JsonShapeException(
-        r.context,
-        'freshness',
-        'local|verified|stale|unavailable',
-        wire,
-      ),
+      _ => _traced(r, 'freshness', wire, unavailable),
     };
   }
 }
@@ -59,14 +61,24 @@ enum RefStatus {
   pending,
   exited;
 
+  /// #3884 -- a status this build does not know reads as none (no
+  /// relationship shown, nothing granted) and is traced.
   static RefStatus? fromWire(JsonReader r) {
     final wire = r.stringOrNull('status');
     if (wire == null) return null;
     for (final s in values) {
       if (s.name == wire) return s;
     }
-    throw JsonShapeException(r.context, 'status', 'RefStatus?', wire);
+    return _traced<RefStatus?>(r, 'status', wire, null);
   }
+}
+
+T _traced<T>(JsonReader r, String field, String wire, T fallback) {
+  TraceLogger.instance.warn(
+    'me',
+    '${r.context}: unknown $field "$wire" -- read as ${fallback ?? 'none'}',
+  );
+  return fallback;
 }
 
 /// One workspace my account names.
