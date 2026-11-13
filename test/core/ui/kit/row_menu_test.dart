@@ -172,7 +172,7 @@ void main() {
     expect(tester.takeException(), isNull);
     final added = TraceLogger.instance.entries.length - before;
     expect(added, 1);
-    expect(TraceLogger.instance.entries.first.area, 'row-menu');
+    expect(TraceLogger.instance.entries.first.area, 'ui');
   });
 
   testWidgets('a hover button shows for a mouse over the row and never at '

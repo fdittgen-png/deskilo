@@ -148,8 +148,8 @@ class RowMenuState extends State<RowMenu> {
       await action.onSelected();
     } on Object catch (error, stackTrace) {
       TraceLogger.instance.error(
-        'row-menu',
-        'the action ${action.id} failed',
+        'ui',
+        'the row action ${action.id} failed',
         error: error,
         stackTrace: stackTrace,
       );
