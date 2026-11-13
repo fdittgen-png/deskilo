@@ -21977,6 +21977,154 @@ class AppLocalizationsEn extends AppLocalizations {
   String get permAccessProd => 'Enter the production workspace';
 
   @override
+  String get permAllowsAccessProd =>
+      'Enter the production side of a development and production pair.';
+
+  @override
+  String get permAllowsApproveExpenses =>
+      'Approve the expenses members submit.';
+
+  @override
+  String get permAllowsApproveStockAdjustments =>
+      'Approve the adjustment a stock count proposes.';
+
+  @override
+  String get permAllowsDeployToDev =>
+      'Refresh the development space from production.';
+
+  @override
+  String get permAllowsDeployToProd =>
+      'Push configuration and master data from development to production.';
+
+  @override
+  String get permAllowsDesignDocuments =>
+      'Design the templates, texts and layouts of the documents.';
+
+  @override
+  String get permAllowsExportData =>
+      'Export the accounting, the archive bundle, Excel and the configuration.';
+
+  @override
+  String get permAllowsIssueInvoices =>
+      'Issue invoices, match payments and send reminders.';
+
+  @override
+  String get permAllowsMakeReservations =>
+      'Book, see one\'s own reservations, and check in and out.';
+
+  @override
+  String get permAllowsManageBilling =>
+      'Manage fee bands, VAT rates, number sequences and billing rules.';
+
+  @override
+  String get permAllowsManageConfiguration =>
+      'Change the features, the environment, the workspace code, imports and reset.';
+
+  @override
+  String get permAllowsManageDocuments =>
+      'Manage the links of the document library.';
+
+  @override
+  String get permAllowsManageIntegrations =>
+      'Set up payment providers, e-invoicing credentials and WhatsApp.';
+
+  @override
+  String get permAllowsManageLease =>
+      'Record the premises lease: its terms, their history and its end.';
+
+  @override
+  String get permAllowsManageMembers =>
+      'Invite, pause and remove members, and change their subscriptions.';
+
+  @override
+  String get permAllowsManageNegotiations =>
+      'Propose or change a member\'s commercial agreement.';
+
+  @override
+  String get permAllowsManagePrivacy =>
+      'Decide members\' data rights requests and be told of a privacy incident.';
+
+  @override
+  String get permAllowsManagePurchases =>
+      'Capture and link the space\'s supplier bills.';
+
+  @override
+  String get permAllowsManageReservations =>
+      'Book for others, cancel, check in and out, and block places.';
+
+  @override
+  String get permAllowsManageRoles =>
+      'Change which permissions each role gives, and the space\'s own roles.';
+
+  @override
+  String get permAllowsManageServices =>
+      'Manage services, packages and fee bands.';
+
+  @override
+  String get permAllowsManageSites =>
+      'Manage sites, members\' home sites and the floor plan.';
+
+  @override
+  String get permAllowsManageStock => 'Move goods in, between places and out.';
+
+  @override
+  String get permAllowsManageValidation =>
+      'Set which requests need approval and who approves them.';
+
+  @override
+  String get permAllowsOperateKiosk => 'Set up the kiosk and hand out badges.';
+
+  @override
+  String get permAllowsPaymentTermsEdit =>
+      'Request a change of a member\'s payment conditions; validation decides.';
+
+  @override
+  String get permAllowsRecordOutgoingPayments =>
+      'Record and reverse the cash paid out to a member for an approved claim.';
+
+  @override
+  String get permAllowsUseMessages =>
+      'Use conversations, the alerts feed and notifications.';
+
+  @override
+  String get permAllowsViewAnalytics =>
+      'Read the space\'s operational figures, such as seat use; no people, no money.';
+
+  @override
+  String get permAllowsViewCalendar => 'See the calendar.';
+
+  @override
+  String get permAllowsViewDirectory => 'See who the members are.';
+
+  @override
+  String get permAllowsViewDocuments =>
+      'See the documents shared with the member.';
+
+  @override
+  String get permAllowsViewFinances =>
+      'Read the space\'s finances: the ledger and the invoicing.';
+
+  @override
+  String get permAllowsViewMyMoney =>
+      'See one\'s own account, statement and invoices.';
+
+  @override
+  String get permAllowsViewNegotiations =>
+      'Read a member\'s commercial agreement.';
+
+  @override
+  String get permAllowsViewPersonalData =>
+      'Read members\' e-mails, managed identities and postal data.';
+
+  @override
+  String get permAllowsViewStock =>
+      'See the stock: what is where, its lots and its movements.';
+
+  @override
+  String get permAllowsWorkspaceSettings =>
+      'Edit the space\'s identity, booking rules and features.';
+
+  @override
   String get permApproveExpenses => 'Approve expenses';
 
   @override
@@ -27124,6 +27272,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get roleTakenBack => 'Role taken back.';
+
+  @override
+  String get rolesFilterPermissions => 'Filter the permissions';
 
   @override
   String get rolesIntroEditor =>

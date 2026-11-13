@@ -35570,6 +35570,234 @@ abstract class AppLocalizations {
   /// **'Enter the production workspace'**
   String get permAccessProd;
 
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the production side of a development and production pair.'**
+  String get permAllowsAccessProd;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Approve the expenses members submit.'**
+  String get permAllowsApproveExpenses;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Approve the adjustment a stock count proposes.'**
+  String get permAllowsApproveStockAdjustments;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Refresh the development space from production.'**
+  String get permAllowsDeployToDev;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Push configuration and master data from development to production.'**
+  String get permAllowsDeployToProd;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Design the templates, texts and layouts of the documents.'**
+  String get permAllowsDesignDocuments;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Export the accounting, the archive bundle, Excel and the configuration.'**
+  String get permAllowsExportData;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Issue invoices, match payments and send reminders.'**
+  String get permAllowsIssueInvoices;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Book, see one\'s own reservations, and check in and out.'**
+  String get permAllowsMakeReservations;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Manage fee bands, VAT rates, number sequences and billing rules.'**
+  String get permAllowsManageBilling;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Change the features, the environment, the workspace code, imports and reset.'**
+  String get permAllowsManageConfiguration;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Manage the links of the document library.'**
+  String get permAllowsManageDocuments;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Set up payment providers, e-invoicing credentials and WhatsApp.'**
+  String get permAllowsManageIntegrations;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Record the premises lease: its terms, their history and its end.'**
+  String get permAllowsManageLease;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Invite, pause and remove members, and change their subscriptions.'**
+  String get permAllowsManageMembers;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Propose or change a member\'s commercial agreement.'**
+  String get permAllowsManageNegotiations;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Decide members\' data rights requests and be told of a privacy incident.'**
+  String get permAllowsManagePrivacy;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Capture and link the space\'s supplier bills.'**
+  String get permAllowsManagePurchases;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Book for others, cancel, check in and out, and block places.'**
+  String get permAllowsManageReservations;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Change which permissions each role gives, and the space\'s own roles.'**
+  String get permAllowsManageRoles;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Manage services, packages and fee bands.'**
+  String get permAllowsManageServices;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Manage sites, members\' home sites and the floor plan.'**
+  String get permAllowsManageSites;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Move goods in, between places and out.'**
+  String get permAllowsManageStock;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Set which requests need approval and who approves them.'**
+  String get permAllowsManageValidation;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Set up the kiosk and hand out badges.'**
+  String get permAllowsOperateKiosk;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Request a change of a member\'s payment conditions; validation decides.'**
+  String get permAllowsPaymentTermsEdit;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Record and reverse the cash paid out to a member for an approved claim.'**
+  String get permAllowsRecordOutgoingPayments;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Use conversations, the alerts feed and notifications.'**
+  String get permAllowsUseMessages;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Read the space\'s operational figures, such as seat use; no people, no money.'**
+  String get permAllowsViewAnalytics;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'See the calendar.'**
+  String get permAllowsViewCalendar;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'See who the members are.'**
+  String get permAllowsViewDirectory;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'See the documents shared with the member.'**
+  String get permAllowsViewDocuments;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Read the space\'s finances: the ledger and the invoicing.'**
+  String get permAllowsViewFinances;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'See one\'s own account, statement and invoices.'**
+  String get permAllowsViewMyMoney;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Read a member\'s commercial agreement.'**
+  String get permAllowsViewNegotiations;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Read members\' e-mails, managed identities and postal data.'**
+  String get permAllowsViewPersonalData;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'See the stock: what is where, its lots and its movements.'**
+  String get permAllowsViewStock;
+
+  /// #3628 roles at the desk: one line of what the permission allows
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the space\'s identity, booking rules and features.'**
+  String get permAllowsWorkspaceSettings;
+
   /// Permission label (#513)
   ///
   /// In en, this message translates to:
@@ -44087,6 +44315,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Role taken back.'**
   String get roleTakenBack;
+
+  /// #3628 the filter over a role's permissions
+  ///
+  /// In en, this message translates to:
+  /// **'Filter the permissions'**
+  String get rolesFilterPermissions;
 
   /// Roles screen intro for editors (#513)
   ///

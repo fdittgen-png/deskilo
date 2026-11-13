@@ -13367,6 +13367,44 @@
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
   },
+  "permAllowsAccessProd": "Entrar en la producción de un par de desarrollo y producción.",
+  "permAllowsApproveExpenses": "Aprobar los gastos que presentan los miembros.",
+  "permAllowsApproveStockAdjustments": "Aprobar el ajuste que propone un recuento.",
+  "permAllowsDeployToDev": "Actualizar el espacio de desarrollo desde producción.",
+  "permAllowsDeployToProd": "Llevar la configuración y los datos maestros de desarrollo a producción.",
+  "permAllowsDesignDocuments": "Diseñar las plantillas, textos y diseños de los documentos.",
+  "permAllowsExportData": "Exportar la contabilidad, el archivo, Excel y la configuración.",
+  "permAllowsIssueInvoices": "Emitir facturas, conciliar pagos y enviar recordatorios.",
+  "permAllowsMakeReservations": "Reservar, ver las propias reservas y registrar entradas y salidas.",
+  "permAllowsManageBilling": "Gestionar tramos de tarifas, tipos de IVA, numeraciones y reglas de facturación.",
+  "permAllowsManageConfiguration": "Cambiar las funciones, el entorno, el código del espacio, las importaciones y el reinicio.",
+  "permAllowsManageDocuments": "Gestionar los enlaces de la biblioteca de documentos.",
+  "permAllowsManageIntegrations": "Configurar los proveedores de pago, las credenciales de facturación electrónica y WhatsApp.",
+  "permAllowsManageLease": "Registrar el arrendamiento del local: sus condiciones, su historial y su fin.",
+  "permAllowsManageMembers": "Invitar, pausar y retirar miembros, y cambiar sus suscripciones.",
+  "permAllowsManageNegotiations": "Proponer o cambiar el acuerdo comercial de un miembro.",
+  "permAllowsManagePrivacy": "Resolver las solicitudes de derechos sobre los datos y ser avisado de un incidente.",
+  "permAllowsManagePurchases": "Registrar y vincular las facturas de proveedores del espacio.",
+  "permAllowsManageReservations": "Reservar para otros, cancelar, registrar entradas y salidas y bloquear plazas.",
+  "permAllowsManageRoles": "Cambiar qué permisos da cada rol y los roles propios del espacio.",
+  "permAllowsManageServices": "Gestionar servicios, paquetes y tramos de tarifas.",
+  "permAllowsManageSites": "Gestionar las sedes, la sede de cada miembro y el plano.",
+  "permAllowsManageStock": "Dar entrada, mover y dar salida a mercancías.",
+  "permAllowsManageValidation": "Definir qué solicitudes necesitan aprobación y quién las aprueba.",
+  "permAllowsOperateKiosk": "Configurar el quiosco y entregar las tarjetas.",
+  "permAllowsPaymentTermsEdit": "Solicitar un cambio de las condiciones de pago de un miembro; la validación decide.",
+  "permAllowsRecordOutgoingPayments": "Registrar y anular el pago hecho a un miembro por una solicitud aprobada.",
+  "permAllowsUseMessages": "Usar las conversaciones, el canal de avisos y las notificaciones.",
+  "permAllowsViewAnalytics": "Consultar las cifras de actividad del espacio, como la ocupación; ni personas ni dinero.",
+  "permAllowsViewCalendar": "Ver el calendario.",
+  "permAllowsViewDirectory": "Ver quiénes son los miembros.",
+  "permAllowsViewDocuments": "Ver los documentos compartidos con el miembro.",
+  "permAllowsViewFinances": "Consultar las finanzas del espacio: el libro mayor y la facturación.",
+  "permAllowsViewMyMoney": "Ver la propia cuenta, el extracto y las facturas.",
+  "permAllowsViewNegotiations": "Consultar el acuerdo comercial de un miembro.",
+  "permAllowsViewPersonalData": "Consultar los correos, identidades gestionadas y datos postales de los miembros.",
+  "permAllowsViewStock": "Ver las existencias: qué está dónde, sus lotes y sus movimientos.",
+  "permAllowsWorkspaceSettings": "Editar la identidad del espacio, sus reglas de reserva y sus funciones.",
   "permApproveExpenses": "Aprobar gastos",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
@@ -17085,6 +17123,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
+  "rolesFilterPermissions": "Filtrar los permisos",
   "rolesIntroEditor": "Cada persona tiene exactamente un rol base — Usuario, Administrador, Copropietario o Propietario. Cualquier otro rol añade lo que sus titulares pueden hacer y nunca quita nada. El propietario siempre tiene todos los permisos; un copropietario puede tener menos.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"

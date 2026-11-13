@@ -137,4 +137,27 @@ void main() {
     );
     expect(owner.onChanged, isNull);
   });
+
+  testWidgets('the filter keeps the permissions whose name or line matches, '
+      'module headings with nothing left are gone', (tester) async {
+    await _pump(tester);
+    await tester.tap(find.byKey(const ValueKey('roles-desk-role-admin')));
+    await tester.pumpAndSettle();
+    await tester.enterText(
+      find.byKey(const ValueKey('roles-desk-filter')),
+      'invoices',
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.byKey(const ValueKey('perm-admin-issueInvoices')),
+      findsOneWidget,
+    );
+    expect(find.byKey(const ValueKey('perm-admin-manageRoles')), findsNothing);
+    expect(find.text('Stock'), findsNothing);
+    // Each permission says what it allows.
+    expect(
+      find.text('Issue invoices, match payments and send reminders.'),
+      findsOneWidget,
+    );
+  });
 }

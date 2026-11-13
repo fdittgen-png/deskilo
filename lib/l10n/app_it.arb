@@ -13367,6 +13367,44 @@
   "@permAccessProd": {
     "description": "#987/#989 environment pairs: permAccessProd"
   },
+  "permAllowsAccessProd": "Entrare nella produzione di una coppia sviluppo e produzione.",
+  "permAllowsApproveExpenses": "Approvare le spese presentate dai membri.",
+  "permAllowsApproveStockAdjustments": "Approvare la rettifica proposta da un inventario.",
+  "permAllowsDeployToDev": "Aggiornare lo spazio di sviluppo dalla produzione.",
+  "permAllowsDeployToProd": "Portare configurazione e dati anagrafici dallo sviluppo alla produzione.",
+  "permAllowsDesignDocuments": "Progettare modelli, testi e impaginazione dei documenti.",
+  "permAllowsExportData": "Esportare la contabilità, l'archivio, Excel e la configurazione.",
+  "permAllowsIssueInvoices": "Emettere fatture, abbinare i pagamenti e inviare solleciti.",
+  "permAllowsMakeReservations": "Prenotare, vedere le proprie prenotazioni e registrare ingressi e uscite.",
+  "permAllowsManageBilling": "Gestire fasce tariffarie, aliquote IVA, numerazioni e regole di fatturazione.",
+  "permAllowsManageConfiguration": "Modificare funzioni, ambiente, codice dello spazio, importazioni e ripristino.",
+  "permAllowsManageDocuments": "Gestire i link della biblioteca dei documenti.",
+  "permAllowsManageIntegrations": "Configurare i fornitori di pagamento, le credenziali di fatturazione elettronica e WhatsApp.",
+  "permAllowsManageLease": "Registrare la locazione dei locali: condizioni, storico e cessazione.",
+  "permAllowsManageMembers": "Invitare, sospendere e rimuovere membri e cambiare i loro abbonamenti.",
+  "permAllowsManageNegotiations": "Proporre o modificare l'accordo commerciale di un membro.",
+  "permAllowsManagePrivacy": "Decidere le richieste sui dati dei membri ed essere avvisati di un incidente.",
+  "permAllowsManagePurchases": "Registrare e collegare le fatture dei fornitori dello spazio.",
+  "permAllowsManageReservations": "Prenotare per altri, annullare, registrare ingressi e uscite e bloccare posti.",
+  "permAllowsManageRoles": "Cambiare i permessi di ogni ruolo e i ruoli propri dello spazio.",
+  "permAllowsManageServices": "Gestire servizi, pacchetti e fasce tariffarie.",
+  "permAllowsManageSites": "Gestire le sedi, la sede dei membri e la planimetria.",
+  "permAllowsManageStock": "Caricare, spostare e scaricare merci.",
+  "permAllowsManageValidation": "Stabilire quali richieste vanno approvate e da chi.",
+  "permAllowsOperateKiosk": "Configurare il chiosco e assegnare i badge.",
+  "permAllowsPaymentTermsEdit": "Chiedere una modifica delle condizioni di pagamento di un membro; decide la convalida.",
+  "permAllowsRecordOutgoingPayments": "Registrare e annullare il pagamento a un membro per una richiesta approvata.",
+  "permAllowsUseMessages": "Usare conversazioni, il flusso degli avvisi e le notifiche.",
+  "permAllowsViewAnalytics": "Consultare i dati operativi dello spazio, come l'occupazione; né persone né denaro.",
+  "permAllowsViewCalendar": "Vedere il calendario.",
+  "permAllowsViewDirectory": "Vedere chi sono i membri.",
+  "permAllowsViewDocuments": "Vedere i documenti condivisi con il membro.",
+  "permAllowsViewFinances": "Consultare le finanze dello spazio: il libro mastro e la fatturazione.",
+  "permAllowsViewMyMoney": "Vedere il proprio conto, l'estratto e le fatture.",
+  "permAllowsViewNegotiations": "Consultare l'accordo commerciale di un membro.",
+  "permAllowsViewPersonalData": "Consultare e-mail, identità gestite e dati postali dei membri.",
+  "permAllowsViewStock": "Vedere il magazzino: cosa è dove, i lotti e i movimenti.",
+  "permAllowsWorkspaceSettings": "Modificare l'identità dello spazio, le regole di prenotazione e le funzioni.",
   "permApproveExpenses": "Approvare le spese",
   "@permApproveExpenses": {
     "description": "Permission label (#513)"
@@ -17085,6 +17123,7 @@
   "@roleTakenBack": {
     "description": "#2085 giving roles: roleTakenBack"
   },
+  "rolesFilterPermissions": "Filtra i permessi",
   "rolesIntroEditor": "Ognuno ha esattamente un ruolo di base — Utente, Amministratore, Co-proprietario o Proprietario. Ogni altro ruolo aggiunge ciò che i suoi titolari possono fare e non toglie mai nulla. Il proprietario ha sempre tutti i permessi; un co-proprietario può averne meno.",
   "@rolesIntroEditor": {
     "description": "Roles screen intro for editors (#513)"

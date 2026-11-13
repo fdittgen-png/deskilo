@@ -90,6 +90,15 @@ class RolesDesk extends ConsumerStatefulWidget {
 class _RolesDeskState extends ConsumerState<RolesDesk> {
   String? _chosen;
 
+  /// The filter over the permissions; kept while another role is chosen.
+  final _filter = TextEditingController();
+
+  @override
+  void dispose() {
+    _filter.dispose();
+    super.dispose();
+  }
+
   String? _inAddress() => GoRouter.maybeOf(context) == null
       ? null
       : GoRouterState.of(context).uri.queryParameters['role'];
@@ -173,6 +182,7 @@ class _RolesDeskState extends ConsumerState<RolesDesk> {
           child: FocusTraversalGroup(
             child: _Permissions(
               key: ValueKey('roles-desk-shown-${chosen.id}'),
+              filter: _filter,
               role: chosen,
               widget: widget,
               people: people,
@@ -195,7 +205,10 @@ class _Permissions extends StatelessWidget {
     required this.people,
     required this.own,
     required this.assignments,
+    required this.filter,
   });
+
+  final TextEditingController filter;
 
   final DeskRole role;
   final RolesDesk widget;
@@ -247,35 +260,71 @@ class _Permissions extends StatelessWidget {
         ),
         const SizedBox(height: AppSpacing.sm),
         Text(widget.intro, style: theme.textTheme.bodyMedium),
-        for (final (module, permissions) in permissionsByModule()) ...[
-          Padding(
-            padding: const EdgeInsets.only(
-              top: AppSpacing.lg,
-              bottom: AppSpacing.xs,
-            ),
-            child: Text(
-              permissionModuleName(l, module),
-              style: theme.textTheme.titleSmall,
-            ),
+        const SizedBox(height: AppSpacing.md),
+        TextField(
+          key: const ValueKey('roles-desk-filter'),
+          controller: filter,
+          decoration: InputDecoration(
+            labelText: l.rolesFilterPermissions,
+            prefixIcon: const Icon(Icons.filter_list),
           ),
-          for (final p in permissions)
-            CheckboxListTile(
-              key: ValueKey('perm-${role.id}-${p.wireName}'),
-              controlAffinity: ListTileControlAffinity.leading,
-              value: granted.contains(p),
-              onChanged: editable
-                  ? (_) => widget.onToggle(base, p, granted)
-                  : null,
-              title: Text(permissionLabel(l, p)),
-              secondary: TextButton(
-                key: ValueKey('perm-who-${p.wireName}'),
-                onPressed: () => _showHolders(context, p),
-                child: Text(l.rolesPeopleCount(_holders(p).length)),
-              ),
-            ),
-        ],
+        ),
+        ListenableBuilder(
+          listenable: filter,
+          builder: (context, _) => Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              for (final (module, all) in permissionsByModule())
+                if (_matching(l, all) case final permissions
+                    when permissions.isNotEmpty) ...[
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: AppSpacing.lg,
+                      bottom: AppSpacing.xs,
+                    ),
+                    child: Text(
+                      permissionModuleName(l, module),
+                      style: theme.textTheme.titleSmall,
+                    ),
+                  ),
+                  for (final p in permissions)
+                    CheckboxListTile(
+                      key: ValueKey('perm-${role.id}-${p.wireName}'),
+                      controlAffinity: ListTileControlAffinity.leading,
+                      value: granted.contains(p),
+                      onChanged: editable
+                          ? (_) => widget.onToggle(base, p, granted)
+                          : null,
+                      title: Text(permissionLabel(l, p)),
+                      subtitle: Text(permissionAllows(l, p)),
+                      secondary: TextButton(
+                        key: ValueKey('perm-who-${p.wireName}'),
+                        onPressed: () => _showHolders(context, p),
+                        child: Text(l.rolesPeopleCount(_holders(p).length)),
+                      ),
+                    ),
+                ],
+            ],
+          ),
+        ),
       ],
     );
+  }
+
+  /// The permissions of [all] whose name or line holds the filter's words.
+  List<WorkspacePermission> _matching(
+    AppLocalizations l,
+    List<WorkspacePermission> all,
+  ) {
+    final needle = filter.text.trim().toLowerCase();
+    if (needle.isEmpty) return all;
+    return [
+      for (final p in all)
+        if ('${permissionLabel(l, p)} ${permissionAllows(l, p)}'
+            .toLowerCase()
+            .contains(needle))
+          p,
+    ];
   }
 
   Future<void> _showHolders(BuildContext context, WorkspacePermission p) {
