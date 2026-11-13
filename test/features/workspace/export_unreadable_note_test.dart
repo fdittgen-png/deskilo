@@ -18,11 +18,10 @@ void main() {
   ];
 
   test('the note is the last row of the Reservations sheet only', () {
-    final out = withUnreadableNote(
+    final out = withBookingsNote(
       sheets,
-      sheetName: 'Reservations',
-      count: 2,
-      note: '2 bookings could not be read',
+      2,
+      (n) => '$n bookings could not be read',
     );
     expect(out.first.rows.last, ['2 bookings could not be read']);
     expect(out.first.rows, hasLength(3));
@@ -30,12 +29,7 @@ void main() {
   });
 
   test('nothing is added when every booking was read', () {
-    final out = withUnreadableNote(
-      sheets,
-      sheetName: 'Reservations',
-      count: 0,
-      note: 'x',
-    );
+    final out = withBookingsNote(sheets, 0, (n) => 'x');
     expect(out, same(sheets));
   });
 }

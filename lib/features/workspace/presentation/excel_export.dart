@@ -75,7 +75,7 @@ Future<void> exportWorkspaceExcel(
           .read(eventRepositoryProvider)
           .fetchDecisions(workspace.id, [for (final e in events) e.id]);
       final bookings = await ref.read(reservationRepositoryProvider).fetchAllForExportRead(workspace.id);
-      final built = [
+      final sheets = withBookingsNote([
         ...buildWorkspaceExcelExport(
         workspace: workspace,
         enabledFeatures: {for (final f in features) f.dbKey},
@@ -126,9 +126,7 @@ Future<void> exportWorkspaceExcel(
               .fetchRecords(workspace.id),
           currencyCode: workspace.currencyCode,
         ),
-      ];
-
-      final sheets = withBookingsNote(built, bookings.unreadable, l10n.workspaceExportUnreadableBookings);
+      ], bookings.unreadable, l10n.workspaceExportUnreadableBookings);
 
       // #1310 — the space's own stored files travel with its rows. A
       // file that cannot be read fails the export: a copy that silently
