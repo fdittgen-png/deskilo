@@ -39,6 +39,7 @@ class CustomerPage extends StatelessWidget {
     this.payments = const [],
     this.onAssign,
     this.onStatement,
+    this.onStatementPeriod,
     this.onClose,
   });
 
@@ -67,6 +68,9 @@ class CustomerPage extends StatelessWidget {
   final VoidCallback? onClose;
 
   final VoidCallback? onStatement;
+
+  /// #3839 — prints the customer's statement for a period; null, no button.
+  final VoidCallback? onStatementPeriod;
 
   List<Receivable> get _mine => [
     for (final r in receivables)
@@ -106,6 +110,13 @@ class CustomerPage extends StatelessWidget {
               tooltip: l.reportDocCustomerStatement,
               icon: const Icon(Icons.receipt_long_outlined),
               onPressed: print,
+            ),
+          if (onStatementPeriod case final period?)
+            IconButton(
+              key: const ValueKey('customer-page-statement-period'),
+              tooltip: l.reportDocCustomerStatementPeriod,
+              icon: const Icon(Icons.date_range_outlined),
+              onPressed: period,
             ),
           if (onClose case final close?)
             CloseButton(

@@ -1,0 +1,22 @@
+{
+  "@@locale": "de",
+  "reportDocCustomerStatementPeriod": "Kontoauszug für einen Zeitraum",
+  "customerStatementPeriodRange": "Vom {from} bis {to}",
+  "customerStatementOpening": "Anfangssaldo",
+  "customerStatementClosing": "Schlusssaldo",
+  "customerStatementNoMovement": "Keine Bewegung in diesem Zeitraum: Der Saldo blieb gleich.",
+  "customerStatementReconstructed": "Salden vor dem {day} sind aus den heutigen Aufzeichnungen rekonstruiert.",
+  "customerStatementDatedApart": "vom {day}",
+  "customerStatementMoveCreditNote": "Gutschrift",
+  "customerStatementMoveVoided": "Storniert",
+  "customerStatementMoveSettled": "In eine spätere Rechnung übernommen",
+  "customerStatementMoveReopened": "Wieder offen",
+  "customerStatementMoveWrittenOff": "Rest abgeschrieben",
+  "customerStatementMovePaid": "Bezahlt",
+  "customerStatementMovePayment": "Zahlung erhalten",
+  "customerStatementMoveCredit": "Guthaben",
+  "customerStatementMoveMoved": "Guthaben auf ein anderes Konto übertragen",
+  "customerStatementMoveApplied": "Guthaben mit einer Rechnung verrechnet",
+  "customerStatementMoveFreed": "Zahlung freigegeben",
+  "customerStatementMoveAllocated": "Zahlung zugeordnet"
+}

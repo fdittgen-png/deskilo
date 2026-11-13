@@ -6918,13 +6918,66 @@ class AppLocalizationsIt extends AppLocalizations {
   String get customerStatementBalanceOwed => 'Saldo a Suo favore';
 
   @override
+  String get customerStatementClosing => 'Saldo finale';
+
+  @override
+  String customerStatementDatedApart(String day) {
+    return 'del $day';
+  }
+
+  @override
   String customerStatementDue(String date) {
     return 'scadenza $date';
   }
 
   @override
+  String get customerStatementMoveAllocated => 'Pagamento imputato';
+
+  @override
+  String get customerStatementMoveApplied => 'Credito imputato a una fattura';
+
+  @override
+  String get customerStatementMoveCredit => 'Credito';
+
+  @override
+  String get customerStatementMoveCreditNote => 'Nota di credito';
+
+  @override
+  String get customerStatementMoveFreed => 'Pagamento liberato';
+
+  @override
+  String get customerStatementMoveMoved =>
+      'Credito trasferito su un altro conto';
+
+  @override
+  String get customerStatementMovePaid => 'Pagata';
+
+  @override
+  String get customerStatementMovePayment => 'Pagamento ricevuto';
+
+  @override
+  String get customerStatementMoveReopened => 'Di nuovo aperta';
+
+  @override
+  String get customerStatementMoveSettled =>
+      'Ripresa in una fattura successiva';
+
+  @override
+  String get customerStatementMoveVoided => 'Annullata';
+
+  @override
+  String get customerStatementMoveWrittenOff => 'Residuo stralciato';
+
+  @override
+  String get customerStatementNoMovement =>
+      'Nessun movimento in questo periodo: il saldo è rimasto lo stesso.';
+
+  @override
   String get customerStatementNothingOpen =>
       'Non c\'è nulla di aperto per questo cliente: nessun estratto conto da stampare.';
+
+  @override
+  String get customerStatementOpening => 'Saldo iniziale';
 
   @override
   String get customerStatementOwedToYou => 'A Suo favore';
@@ -6935,8 +6988,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String customerStatementPeriodRange(String from, String to) {
+    return 'Dal $from al $to';
+  }
+
+  @override
   String get customerStatementPickCurrency =>
       'L\'estratto conto in quale valuta?';
+
+  @override
+  String customerStatementReconstructed(String day) {
+    return 'I saldi precedenti al $day sono ricostruiti dalle registrazioni attuali.';
+  }
 
   @override
   String get customerStatementStillDue => 'Ancora dovuto';
@@ -12312,9 +12375,6 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get guestPassProblemNoSeat => 'Scelga un posto.';
-
-  @override
-  String get guestPassRevokeAction => 'Revoca';
 
   @override
   String guestPassRevokeCancelled(int count) {
@@ -25850,6 +25910,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get reportDocCustomerStatement => 'Estratto conto';
+
+  @override
+  String get reportDocCustomerStatementPeriod => 'Estratto conto di un periodo';
 
   @override
   String get reportDocGeneralLedger => 'Libro mastro';

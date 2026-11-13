@@ -3,7 +3,6 @@
   "guestPassRevokeSelected": "{count, plural, one{{count} Pass widerrufen} other{{count} Pässe widerrufen}}",
   "guestPassRevokeConfirmTitle": "{count, plural, one{{count} Pass widerrufen?} other{Diese {count} Pässe widerrufen?}}",
   "guestPassRevokeConfirmBody": "Ihre noch nicht begonnenen Buchungen werden storniert; bereits begonnene Tage bleiben. Es fließt kein Geld: Korrigieren Sie die Rechnung auf ihrer Seite, per Gutschrift oder Storno.",
-  "guestPassRevokeAction": "Widerrufen",
   "guestPassRevoked": "Widerrufen",
   "guestPassState": "Status",
   "guestPassRevokeResultTitle": "{count, plural, =0{Kein Pass widerrufen} one{{count} Pass widerrufen} other{{count} Pässe widerrufen}}",

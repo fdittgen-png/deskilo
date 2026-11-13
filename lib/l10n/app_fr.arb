@@ -4306,6 +4306,8 @@
   "@customerStatementBalanceOwed": {
     "description": "#3673 customer statement: customerStatementBalanceOwed"
   },
+  "customerStatementClosing": "Solde de clôture",
+  "customerStatementDatedApart": "daté du {day}",
   "customerStatementDue": "échéance {date}",
   "@customerStatementDue": {
     "description": "#3673 customer statement: customerStatementDue",
@@ -4315,10 +4317,24 @@
       }
     }
   },
+  "customerStatementMoveAllocated": "Paiement imputé",
+  "customerStatementMoveApplied": "Crédit imputé sur une facture",
+  "customerStatementMoveCredit": "Crédit",
+  "customerStatementMoveCreditNote": "Avoir",
+  "customerStatementMoveFreed": "Paiement libéré",
+  "customerStatementMoveMoved": "Crédit transféré vers un autre compte",
+  "customerStatementMovePaid": "Payée",
+  "customerStatementMovePayment": "Paiement reçu",
+  "customerStatementMoveReopened": "De nouveau ouverte",
+  "customerStatementMoveSettled": "Reprise dans une facture ultérieure",
+  "customerStatementMoveVoided": "Annulée",
+  "customerStatementMoveWrittenOff": "Reste passé en perte",
+  "customerStatementNoMovement": "Aucun mouvement sur cette période : le solde est resté le même.",
   "customerStatementNothingOpen": "Rien n'est ouvert pour ce client : aucun relevé à imprimer.",
   "@customerStatementNothingOpen": {
     "description": "#3673 customer statement: customerStatementNothingOpen"
   },
+  "customerStatementOpening": "Solde d'ouverture",
   "customerStatementOwedToYou": "Dû en votre faveur",
   "@customerStatementOwedToYou": {
     "description": "#3673 customer statement: customerStatementOwedToYou"
@@ -4332,10 +4348,12 @@
       }
     }
   },
+  "customerStatementPeriodRange": "Du {from} au {to}",
   "customerStatementPickCurrency": "Le relevé dans quelle devise ?",
   "@customerStatementPickCurrency": {
     "description": "#3673 customer statement: customerStatementPickCurrency"
   },
+  "customerStatementReconstructed": "Les soldes antérieurs au {day} sont reconstitués à partir des enregistrements actuels.",
   "customerStatementStillDue": "Reste dû",
   "@customerStatementStillDue": {
     "description": "#3673 customer statement: customerStatementStillDue"
@@ -7888,7 +7906,6 @@
   "guestPassProblemHourlyOneDay": "Un pass à l'heure vaut pour un seul jour.",
   "guestPassProblemNoOffer": "Choisissez un pass.",
   "guestPassProblemNoSeat": "Choisissez une place.",
-  "guestPassRevokeAction": "Révoquer",
   "guestPassRevokeCancelled": "{count, plural, =0{Aucune réservation annulée} one{{count} réservation annulée} other{{count} réservations annulées}}",
   "guestPassRevokeConfirmBody": "Leurs réservations pas encore commencées sont annulées ; les jours déjà commencés restent. Aucun argent ne bouge : corrigez la facture sur sa page, par un avoir ou une annulation.",
   "guestPassRevokeConfirmTitle": "{count, plural, one{Révoquer {count} pass ?} other{Révoquer ces {count} pass ?}}",
@@ -15778,6 +15795,7 @@
   "@reportDocCustomerStatement": {
     "description": "#3673 customer statement: reportDocCustomerStatement"
   },
+  "reportDocCustomerStatementPeriod": "Relevé sur une période",
   "reportDocGeneralLedger": "Grand-livre",
   "reportDocJournals": "Journaux",
   "reportDocPayments": "Rapport des paiements",

@@ -3,7 +3,6 @@
   "guestPassRevokeSelected": "{count, plural, one{Revoca {count} pass} other{Revoca {count} pass}}",
   "guestPassRevokeConfirmTitle": "{count, plural, one{Revocare {count} pass?} other{Revocare questi {count} pass?}}",
   "guestPassRevokeConfirmBody": "Le prenotazioni non ancora iniziate vengono annullate; i giorni già iniziati restano. Nessun denaro si muove: correggi la fattura nella sua pagina, con una nota di credito o un annullamento.",
-  "guestPassRevokeAction": "Revoca",
   "guestPassRevoked": "Revocato",
   "guestPassState": "Stato",
   "guestPassRevokeResultTitle": "{count, plural, =0{Nessun pass revocato} one{{count} pass revocato} other{{count} pass revocati}}",

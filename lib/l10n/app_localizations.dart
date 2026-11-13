@@ -10943,17 +10943,113 @@ abstract class AppLocalizations {
   /// **'Balance in your favour'**
   String get customerStatementBalanceOwed;
 
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Closing balance'**
+  String get customerStatementClosing;
+
+  /// a movement's own date when it counted on another day (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'dated {day}'**
+  String customerStatementDatedApart(String day);
+
   /// #3673 customer statement: customerStatementDue
   ///
   /// In en, this message translates to:
   /// **'due {date}'**
   String customerStatementDue(String date);
 
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment allocated'**
+  String get customerStatementMoveAllocated;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit applied to an invoice'**
+  String get customerStatementMoveApplied;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit'**
+  String get customerStatementMoveCredit;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit note'**
+  String get customerStatementMoveCreditNote;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment released'**
+  String get customerStatementMoveFreed;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Credit moved to another account'**
+  String get customerStatementMoveMoved;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get customerStatementMovePaid;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received'**
+  String get customerStatementMovePayment;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Open again'**
+  String get customerStatementMoveReopened;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Taken over by a later invoice'**
+  String get customerStatementMoveSettled;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get customerStatementMoveVoided;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Remainder written off'**
+  String get customerStatementMoveWrittenOff;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'No movement in this period: the balance stayed the same.'**
+  String get customerStatementNoMovement;
+
   /// #3673 customer statement: customerStatementNothingOpen
   ///
   /// In en, this message translates to:
   /// **'Nothing is open for this customer: no statement to print.'**
   String get customerStatementNothingOpen;
+
+  /// (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Opening balance'**
+  String get customerStatementOpening;
 
   /// #3673 customer statement: customerStatementOwedToYou
   ///
@@ -10967,11 +11063,23 @@ abstract class AppLocalizations {
   /// **'Payment of {date}'**
   String customerStatementPart(String date);
 
+  /// the period under the title (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'From {from} to {to}'**
+  String customerStatementPeriodRange(String from, String to);
+
   /// #3673 customer statement: customerStatementPickCurrency
   ///
   /// In en, this message translates to:
   /// **'The statement in which currency?'**
   String get customerStatementPickCurrency;
+
+  /// the line for a period before the match history (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Balances before {day} are reconstructed from today\'s records.'**
+  String customerStatementReconstructed(String day);
 
   /// #3673 customer statement: customerStatementStillDue
   ///
@@ -19962,12 +20070,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Choose a place.'**
   String get guestPassProblemNoSeat;
-
-  /// the confirmation's button (#3829)
-  ///
-  /// In en, this message translates to:
-  /// **'Revoke'**
-  String get guestPassRevokeAction;
 
   /// what a revoked pass cancelled (#3829)
   ///
@@ -41525,6 +41627,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Statement of account'**
   String get reportDocCustomerStatement;
+
+  /// the document kind (#3839)
+  ///
+  /// In en, this message translates to:
+  /// **'Statement for a period'**
+  String get reportDocCustomerStatementPeriod;
 
   /// Report kind (#2376): the general ledger
   ///

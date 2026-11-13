@@ -7,6 +7,10 @@
 // − unapplied. Nothing is added across currencies.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'customer_statement_period.dart';
+
+export 'customer_statement_period.dart';
+
 /// One payment part allocated to a document by the cutoff.
 class StatementAllocation {
   const StatementAllocation({
@@ -196,5 +200,14 @@ abstract interface class CustomerStatementReader {
     String workspaceId,
     String memberId,
     DateTime asOf,
+  );
+
+  /// #3839 — [memberId]'s statement for the period [from]–[to] (calendar
+  /// days, both included).
+  Future<CustomerStatementPeriod> period(
+    String workspaceId,
+    String memberId,
+    DateTime from,
+    DateTime to,
   );
 }
