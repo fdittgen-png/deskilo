@@ -182,7 +182,7 @@ void main() {
       expect(find.widgetWithText(TextField, 'Anne'), findsOneWidget,
           reason: 'the identity that arrived seeds the fields');
 
-      await _type(tester, 'phone', '+33 6 12 34 56 78');
+      await _type(tester, 'phone-number', '+33 6 12 34 56 78');
       await tester.tap(find.byKey(const ValueKey('personal-info-save')));
       await tester.pumpAndSettle();
 
