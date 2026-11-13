@@ -6,6 +6,7 @@ import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_balance_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/presentation/screens/suppliers_desk.dart';
 import 'package:deskilo/features/money/presentation/screens/suppliers_screen.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
@@ -20,6 +21,7 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 const _workspace = Workspace(
   id: 'ws',
@@ -145,10 +147,29 @@ void main() {
           ),
           memberLabelsProvider.overrideWithValue({}),
         ],
-        child: const MaterialApp(
+        // #3615 — a supplier opens at its address, its payables a page.
+        child: MaterialApp.router(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: SuppliersScreen(),
+          routerConfig: GoRouter(
+            initialLocation: '/money/suppliers',
+            routes: [
+              GoRoute(
+                path: '/money/suppliers',
+                builder: (_, _) => const SuppliersScreen(),
+                routes: [
+                  GoRoute(
+                    path: ':id',
+                    builder: (_, state) => SupplierRecord(
+                      workspaceId: 'ws',
+                      supplierId: state.pathParameters['id']!,
+                      held: const {'managePurchases'},
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -109,7 +109,7 @@ class FakePurchaseRepository
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => !_holds(workspaceId) ? const [] : [
     for (final p in payables)
       if (_doc(p.purchase.id) < 0) p.purchase,
-    for (final d in _documents.reversed) d.summary,
+    for (final d in _documents.reversed) d.listed,
   ];
 
   @override
