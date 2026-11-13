@@ -24,7 +24,7 @@
       }
     }
   },
-  "kitCopied": "Copied",
+  "kitCopied": "Copied to the clipboard",
   "@kitCopied": {
     "description": "Confirmation shown after a value was copied to the clipboard."
   },

@@ -17088,7 +17088,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get kitActionBusy => 'En curso…';
 
   @override
-  String get kitCopied => 'Copiado';
+  String get kitCopied => 'Copiado al portapapeles';
 
   @override
   String get kitCopy => 'Copiar';

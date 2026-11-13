@@ -8,6 +8,7 @@
 import 'package:deskilo/core/privacy/private_values.dart';
 import 'package:deskilo/core/ui/app_scroll_behavior.dart';
 import 'package:deskilo/core/ui/kit/copy_value.dart';
+import 'package:deskilo/core/ui/kit/desk_selection.dart';
 import 'package:deskilo/core/ui/private_value.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/gestures.dart';
@@ -91,7 +92,7 @@ void main() {
     expect(find.byKey(_button), findsOneWidget);
     await click(tester, find.byKey(_button));
     expect(_clipboard, 'INV-7');
-    expect(find.text('Copied'), findsOneWidget);
+    expect(find.text('Copied to the clipboard'), findsOneWidget);
     // Named for a screen reader with the value it copies.
     expect(find.bySemanticsLabel('Copy INV-7'), findsOneWidget);
   });
@@ -131,7 +132,7 @@ void main() {
     addTearDown(controller.dispose);
     await tester.pumpWidget(
       _host(
-        SelectionArea(
+        DeskSelection(
           child: ListView(
             controller: controller,
             children: [
@@ -165,7 +166,7 @@ void main() {
     var taps = 0;
     await tester.pumpWidget(
       _host(
-        SelectionArea(
+        DeskSelection(
           child: TextButton(onPressed: () => taps++, child: const Text('Open')),
         ),
       ),

@@ -4,7 +4,7 @@
   "kitScrollForward": "Desplazar hacia adelante",
   "kitCopy": "Copiar",
   "kitCopyValue": "Copiar {value}",
-  "kitCopied": "Copiado",
+  "kitCopied": "Copiado al portapapeles",
   "shellBarHideAction": "Ocultar la barra de navegación",
   "shellBarShowAction": "Mostrar la barra de navegación"
 }

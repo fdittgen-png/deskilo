@@ -27286,7 +27286,7 @@ abstract class AppLocalizations {
   /// Confirmation shown after a value was copied to the clipboard.
   ///
   /// In en, this message translates to:
-  /// **'Copied'**
+  /// **'Copied to the clipboard'**
   String get kitCopied;
 
   /// Tooltip of the button beside a value people copy (an invoice number, an amount, an address); shown while a mouse is the pointer.

@@ -17101,7 +17101,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get kitActionBusy => 'In corso…';
 
   @override
-  String get kitCopied => 'Copiato';
+  String get kitCopied => 'Copiato negli appunti';
 
   @override
   String get kitCopy => 'Copia';

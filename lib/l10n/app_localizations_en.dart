@@ -16964,7 +16964,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get kitActionBusy => 'Working…';
 
   @override
-  String get kitCopied => 'Copied';
+  String get kitCopied => 'Copied to the clipboard';
 
   @override
   String get kitCopy => 'Copy';

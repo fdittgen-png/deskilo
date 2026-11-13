@@ -4,7 +4,7 @@
   "kitScrollForward": "Weiter scrollen",
   "kitCopy": "Kopieren",
   "kitCopyValue": "{value} kopieren",
-  "kitCopied": "Kopiert",
+  "kitCopied": "In die Zwischenablage kopiert",
   "shellBarHideAction": "Navigationsleiste ausblenden",
   "shellBarShowAction": "Navigationsleiste einblenden"
 }

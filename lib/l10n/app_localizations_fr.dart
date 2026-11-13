@@ -17164,7 +17164,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get kitActionBusy => 'En cours…';
 
   @override
-  String get kitCopied => 'Copié';
+  String get kitCopied => 'Copié dans le presse-papiers';
 
   @override
   String get kitCopy => 'Copier';
