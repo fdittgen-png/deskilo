@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:meta/meta.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/cache/cache_store.dart';
@@ -441,7 +442,7 @@ class SupabaseReservationRepository implements ReservationRepository {
         .maybeSingle();
     return row == null
         ? null
-        : reservationFromRow(
+        : _reservationFromRow(
             Map<String, dynamic>.from(row),
             area: reservationsArea(row['workspace_id'] as String),
           );
@@ -451,14 +452,15 @@ class SupabaseReservationRepository implements ReservationRepository {
 /// The reservations of [rows] this build can read. A row whose status it
 /// does not know is left out, counted under [area] and traced, never read
 /// as a status it is not: one such row no longer fails the whole list.
+@visibleForTesting
 List<Reservation> reservationsFromRows(Iterable<Object?> rows, {required String area}) => [
       for (final row in rows)
-        ?reservationFromRow(Map<String, dynamic>.from(row! as Map), area: area),
+        ?_reservationFromRow(Map<String, dynamic>.from(row! as Map), area: area),
     ];
 
 /// One reservation, or null when its status is unknown (see
 /// [reservationsFromRows]).
-Reservation? reservationFromRow(Map<String, dynamic> row, {required String area}) {
+Reservation? _reservationFromRow(Map<String, dynamic> row, {required String area}) {
   final status = reservationStatusFromDb(row['status'] as String?);
   if (status == null) {
     UnreadableRows.instance.skip(

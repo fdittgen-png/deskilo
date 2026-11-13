@@ -51,9 +51,7 @@ class BookAccount {
   /// #2387 — read through [JsonReader].
   factory BookAccount.fromJson(Map<String, Object?> json) =>
       tryFromJson(json) ??
-      (throw FormatException(
-        'unknown account type or origin in ${json['id']}',
-      ));
+      (throw const FormatException('unknown account type or origin'));
 
   /// The account, or null when its type or origin is one this build does
   /// not know (#3884): never read as another type.
@@ -118,7 +116,7 @@ class BookMapping {
   /// #2387 — read through [JsonReader].
   factory BookMapping.fromJson(Map<String, Object?> json) =>
       tryFromJson(json) ??
-      (throw FormatException('unknown role in ${json['id']}'));
+      (throw const FormatException('unknown role'));
 
   /// The mapping, or null when its role is one this build does not know
   /// (#3884): never read as another role, with or without a qualifier.
@@ -277,20 +275,20 @@ bookChartFromJson(Map<String, Object?> map) {
   final unreadable = <String>[];
   final accounts = <BookAccount>[];
   for (final a in (map['accounts'] as List? ?? const [])) {
-    final json = Map<String, Object?>.from(a as Map);
-    final read = BookAccount.tryFromJson(json);
+    final row = Map<String, Object?>.from(a as Map);
+    final read = BookAccount.tryFromJson(row);
     if (read == null) {
-      unreadable.add('${json['id']}');
+      unreadable.add('${row['id']}');
     } else {
       accounts.add(read);
     }
   }
   final mappings = <BookMapping>[];
   for (final m in (map['mappings'] as List? ?? const [])) {
-    final json = Map<String, Object?>.from(m as Map);
-    final read = BookMapping.tryFromJson(json);
+    final row = Map<String, Object?>.from(m as Map);
+    final read = BookMapping.tryFromJson(row);
     if (read == null) {
-      unreadable.add('${json['id']}');
+      unreadable.add('${row['id']}');
     } else {
       mappings.add(read);
     }

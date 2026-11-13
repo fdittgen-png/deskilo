@@ -10464,7 +10464,7 @@
   "journalSafTRefused": "Le fichier SAF-T n’a pas été établi : {gaps}",
   "journalSageRefused": "Le fichier Sage 50 n’a pas été écrit : {reasons}",
   "journalSwissTaxCodes": "Ces groupes de taux n'ont pas de code TVA dans le référentiel fiscal ; rien n'a été écrit. Ajoutez d'abord leurs codes : {keys}",
-  "journalUnreadableEntries": "{count, plural, one{Les livres contiennent 1 écriture que cette version de l'application ne connaît pas : rien n'est exporté. Mettez d'abord l'application à jour.} other{Les livres contiennent {count} écritures que cette version de l'application ne connaît pas : rien n'est exporté. Mettez d'abord l'application à jour.}}",
+  "journalUnreadableEntries": "{count, plural, one{Les livres contiennent {count} écriture que cette version de l'application ne connaît pas : rien n'est exporté. Mettez d'abord l'application à jour.} other{Les livres contiennent {count} écritures que cette version de l'application ne connaît pas : rien n'est exporté. Mettez d'abord l'application à jour.}}",
   "journeyClosedPaid": "Payée le {date} — close",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -20744,7 +20744,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Débloquer",
-  "unreadableRowsNotice": "{count, plural, one{1 entrée n'a pas pu être affichée : cette version de l'application ne la connaît pas. Mettez l'application à jour pour la voir.} other{{count} entrées n'ont pas pu être affichées : cette version de l'application ne les connaît pas. Mettez l'application à jour pour les voir.}}",
+  "unreadableRowsNotice": "{count, plural, one{{count} entrée n'a pas pu être affichée : cette version de l'application ne la connaît pas. Mettez l'application à jour pour la voir.} other{{count} entrées n'ont pas pu être affichées : cette version de l'application ne les connaît pas. Mettez l'application à jour pour les voir.}}",
   "unsavedChangesBody": "Ce que vous avez modifié sur cette page n'est pas encore enregistré.",
   "unsavedChangesDiscard": "Abandonner les modifications",
   "unsavedChangesKeep": "Continuer la saisie",

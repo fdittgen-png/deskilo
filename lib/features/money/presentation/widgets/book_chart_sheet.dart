@@ -160,12 +160,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(
-              l10n.bookChartTitle(widget.issuer.name),
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            // #3884 — accounts or mappings this version could not read.
-            UnreadableRowsNotice(area: booksArea(workspace.id)),
+            _ChartTitle(widget.issuer.name, booksArea(workspace.id)),
             if (accounts.isEmpty)
               OutlinedButton(
                 key: const ValueKey('book-chart-suggest'),
@@ -344,4 +339,25 @@ class _RoleRow extends StatelessWidget {
           : (id) => onChosen!(accounts.firstWhere((a) => a.id == id)),
     );
   }
+}
+
+/// The sheet's title and, under it, the one line (#3884) saying accounts or
+/// mappings this version could not read were left out.
+class _ChartTitle extends StatelessWidget {
+  const _ChartTitle(this.issuerName, this.area);
+
+  final String issuerName;
+  final String area;
+
+  @override
+  Widget build(BuildContext context) => Column(
+    crossAxisAlignment: CrossAxisAlignment.stretch,
+    children: [
+      Text(
+        context.l10n.bookChartTitle(issuerName),
+        style: Theme.of(context).textTheme.titleLarge,
+      ),
+      UnreadableRowsNotice(area: area),
+    ],
+  );
 }
