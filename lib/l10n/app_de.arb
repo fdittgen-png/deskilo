@@ -560,6 +560,7 @@
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
+  "attentionReviewReversals": "{count, plural, one{1 vom Anbieter rückgängig gemachte Zahlung ansehen} other{{count} vom Anbieter rückgängig gemachte Zahlungen ansehen}}",
   "attentionSetUp": "Einzurichten: {area}",
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp"
@@ -13294,6 +13295,7 @@
   "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
   "payOnlinePendingTitle": "Online-Zahlung ausstehend",
   "payOnlineReversedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
+  "payOnlineReversedPartDetail": "Von der Zahlung {reference} ({amount} über {provider}) hat der Anbieter {reversed} rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
   "payOnlineReversedTitle": "Online-Zahlung rückgängig gemacht",
   "payOnlineTestKeys": "Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.",
   "paymentAccountNumberLabel": "Kontonummer",
@@ -15363,6 +15365,9 @@
   "recordedPaymentsMore": "Weitere Zahlungen anzeigen",
   "recordedPaymentsOff": "Geld ist in diesem Bereich ausgeschaltet.",
   "recordedPaymentsPeriod": "Zeitraum: {from} – {to}",
+  "recordedPaymentsReversalReviewed": "Angesehen",
+  "recordedPaymentsReversalsHint": "Eine Erstattung oder ein Widerspruch beim Anbieter. Berichtigen Sie den Saldo des Mitglieds und markieren Sie die Rückbuchung dann als angesehen.",
+  "recordedPaymentsReversalsTitle": "Vom Anbieter rückgängig gemacht",
   "recordedPaymentsTitle": "Eingegangene Zahlungen",
   "recordingPrivacyBadge": "Aufnahmemodus — erfundene Personen",
   "@recordingPrivacyBadge": {

@@ -3,5 +3,8 @@
   "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
-  "recordedPaymentsPeriod": "Periodo: {from} – {to}"
+  "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsReversalsTitle": "Revertidos por el proveedor",
+  "recordedPaymentsReversalsHint": "Un reembolso o una disputa en el proveedor. Corrija el saldo del miembro y marque la reversión como revisada.",
+  "recordedPaymentsReversalReviewed": "Revisado"
 }

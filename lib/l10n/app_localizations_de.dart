@@ -1378,6 +1378,17 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String attentionReviewReversals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count vom Anbieter rückgängig gemachte Zahlungen ansehen',
+      one: '1 vom Anbieter rückgängig gemachte Zahlung ansehen',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionSetUp(String area) {
     return 'Einzurichten: $area';
   }
@@ -22292,6 +22303,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  ) {
+    return 'Von der Zahlung $reference ($amount über $provider) hat der Anbieter $reversed rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.';
+  }
+
+  @override
   String get payOnlineReversedTitle => 'Online-Zahlung rückgängig gemacht';
 
   @override
@@ -25696,6 +25717,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String recordedPaymentsPeriod(String from, String to) {
     return 'Zeitraum: $from – $to';
   }
+
+  @override
+  String get recordedPaymentsReversalReviewed => 'Angesehen';
+
+  @override
+  String get recordedPaymentsReversalsHint =>
+      'Eine Erstattung oder ein Widerspruch beim Anbieter. Berichtigen Sie den Saldo des Mitglieds und markieren Sie die Rückbuchung dann als angesehen.';
+
+  @override
+  String get recordedPaymentsReversalsTitle =>
+      'Vom Anbieter rückgängig gemacht';
 
   @override
   String get recordedPaymentsTitle => 'Eingegangene Zahlungen';

@@ -3,5 +3,8 @@
   "recordedPaymentsEmpty": "Aucun paiement n'a été rapproché d'une facture sur cette période.",
   "recordedPaymentsMore": "Afficher d'autres paiements",
   "recordedPaymentsOff": "La gestion de l'argent est désactivée dans cet espace.",
-  "recordedPaymentsPeriod": "Période : {from} – {to}"
+  "recordedPaymentsPeriod": "Période : {from} – {to}",
+  "recordedPaymentsReversalsTitle": "Annulés par le prestataire",
+  "recordedPaymentsReversalsHint": "Un remboursement ou une contestation chez le prestataire. Corrigez le solde du membre, puis marquez l'annulation comme examinée.",
+  "recordedPaymentsReversalReviewed": "Examiné"
 }

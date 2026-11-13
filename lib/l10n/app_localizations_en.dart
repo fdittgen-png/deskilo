@@ -1366,6 +1366,17 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String attentionReviewReversals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Look at $count payments the provider reversed',
+      one: 'Look at 1 payment the provider reversed',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionSetUp(String area) {
     return 'Set up: $area';
   }
@@ -22083,6 +22094,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  ) {
+    return 'Of payment $reference ($amount via $provider), the provider reversed $reversed (a refund or a dispute). The business corrects your balance.';
+  }
+
+  @override
   String get payOnlineReversedTitle => 'Online payment reversed';
 
   @override
@@ -25437,6 +25458,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String recordedPaymentsPeriod(String from, String to) {
     return 'Period: $from – $to';
   }
+
+  @override
+  String get recordedPaymentsReversalReviewed => 'Looked at';
+
+  @override
+  String get recordedPaymentsReversalsHint =>
+      'A refund or a dispute at the provider. Correct the member\'s balance, then mark the reversal as looked at.';
+
+  @override
+  String get recordedPaymentsReversalsTitle => 'Reversed by the provider';
 
   @override
   String get recordedPaymentsTitle => 'Payments received';

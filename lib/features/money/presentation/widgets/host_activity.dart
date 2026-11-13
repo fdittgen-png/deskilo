@@ -145,6 +145,7 @@ String _line(
   switch (entry.status) {
     'created' => l10n.payOnlinePendingTitle,
     'failed' => l10n.payOnlineFailedTitle,
+    'reversed' => l10n.payOnlineReversedTitle,
     'confirmed' => l10n.accountPaymentConfirmed,
     'voided' => l10n.accountInvoiceVoided,
     'regrouped' => l10n.accountInvoiceRegrouped,

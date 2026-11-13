@@ -74,4 +74,4 @@ final class AttentionProvider
   }
 }
 
-String _$attentionHash() => r'fdb543e6db1a48ec44a10cd05c138ab1c86e629a';
+String _$attentionHash() => r'31d2bcc74bafa68ee7c720c848dd61f349863361';

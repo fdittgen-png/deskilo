@@ -560,6 +560,7 @@
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
+  "attentionReviewReversals": "{count, plural, one{Revisar 1 pago revertido por el proveedor} other{Revisar {count} pagos revertidos por el proveedor}}",
   "attentionSetUp": "Por configurar: {area}",
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp"
@@ -13294,6 +13295,7 @@
   "payOnlinePendingDetail": "El pago {reference} ({amount} vía {provider}) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.",
   "payOnlinePendingTitle": "Pago en línea pendiente",
   "payOnlineReversedDetail": "El pago {reference} ({amount} con {provider}) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.",
+  "payOnlineReversedPartDetail": "Del pago {reference} ({amount} con {provider}), el proveedor revirtió {reversed} (un reembolso o una disputa). La empresa corrige su saldo.",
   "payOnlineReversedTitle": "Pago en línea revertido",
   "payOnlineTestKeys": "El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.",
   "paymentAccountNumberLabel": "Número de cuenta",
@@ -15363,6 +15365,9 @@
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
   "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsReversalReviewed": "Revisado",
+  "recordedPaymentsReversalsHint": "Un reembolso o una disputa en el proveedor. Corrija el saldo del miembro y marque la reversión como revisada.",
+  "recordedPaymentsReversalsTitle": "Revertidos por el proveedor",
   "recordedPaymentsTitle": "Pagos recibidos",
   "recordingPrivacyBadge": "Modo grabación — personas inventadas",
   "@recordingPrivacyBadge": {

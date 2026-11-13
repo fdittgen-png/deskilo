@@ -12,11 +12,14 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../domain/payment_intent.dart';
 import '../../domain/recorded_payments.dart';
 import '../../domain/register_period.dart';
+import '../../providers/money_queries_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import 'money_view_data.dart';
 
@@ -44,6 +47,10 @@ class RecordedPaymentsScreen extends ConsumerWidget {
           : Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                _Reversals(
+                  workspaceId: workspace.id,
+                  currencyCode: workspace.currencyCode,
+                ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(
                     AppSpacing.md,
@@ -239,4 +246,81 @@ class _PaymentRow extends ConsumerWidget {
       ),
     );
   }
+}
+
+/// #3925 — the payments a provider reversed that nobody who sees the
+/// finances has looked at yet: each with its reference and what the provider
+/// reported, and the way to say it was looked at once the books are
+/// corrected. Nothing shows when none waits.
+class _Reversals extends ConsumerStatefulWidget {
+  const _Reversals({required this.workspaceId, required this.currencyCode});
+
+  final String workspaceId;
+  final String currencyCode;
+
+  @override
+  ConsumerState<_Reversals> createState() => _ReversalsState();
+}
+
+class _ReversalsState extends ConsumerState<_Reversals> {
+  late Future<List<PaymentIntent>> _waiting = _read();
+
+  Future<List<PaymentIntent>> _read() async => [
+    for (final p in await ref
+        .read(paymentGatewayRepositoryProvider)
+        .fetchPaymentIntents(widget.workspaceId))
+      if (p.awaitsReview) p,
+  ];
+
+  Future<void> _review(PaymentIntent intent) async {
+    await runGuarded(
+      context,
+      domain: 'money',
+      message: 'payment reversal review failed',
+      errorText: context.l10n.workspaceGenericError,
+      action: () => ref
+          .read(paymentGatewayRepositoryProvider)
+          .reviewPaymentReversal(intent.id),
+    );
+    if (mounted) setState(() => _waiting = _read());
+  }
+
+  @override
+  Widget build(BuildContext context) => FutureBuilder<List<PaymentIntent>>(
+    future: _waiting,
+    builder: (context, snapshot) {
+      final waiting = snapshot.data ?? const <PaymentIntent>[];
+      if (waiting.isEmpty) return const SizedBox.shrink();
+      final l10n = context.l10n;
+      final money = ref.watch(appFormatProvider).moneyIn(widget.currencyCode);
+      return Card(
+        key: const ValueKey('payment-reversals'),
+        margin: AppSpacing.mdAll,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            ListTile(
+              title: Text(l10n.recordedPaymentsReversalsTitle),
+              subtitle: Text(l10n.recordedPaymentsReversalsHint),
+            ),
+            for (final intent in waiting)
+              ListTile(
+                key: ValueKey('payment-reversal-${intent.id}'),
+                leading: const Icon(Icons.undo_outlined),
+                title: Text(
+                  '${intent.reference} · '
+                  '${money.formatMinor(intent.reversedMinor(widget.currencyCode) ?? intent.amountCents)}',
+                ),
+                subtitle: Text(intent.reversalReason),
+                trailing: TextButton(
+                  key: ValueKey('payment-reversal-reviewed-${intent.id}'),
+                  onPressed: () => _review(intent),
+                  child: Text(l10n.recordedPaymentsReversalReviewed),
+                ),
+              ),
+          ],
+        ),
+      );
+    },
+  );
 }

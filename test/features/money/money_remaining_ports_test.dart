@@ -191,6 +191,10 @@ class _Payments implements PaymentGatewayRepository {
   }
 
   @override
+  Future<void> reviewPaymentReversal(String intentId) =>
+      throw UnimplementedError();
+
+  @override
   Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) =>
       throw UnimplementedError();
 

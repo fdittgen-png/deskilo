@@ -11,6 +11,11 @@ abstract interface class PaymentGatewayRepository {
   /// online-payments rows. Admin-readable by the 0045 policy.
   Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId);
 
+  /// #3925 — marks a payment the provider reversed as looked at by someone
+  /// who sees the finances (RPC `review_payment_reversal_v1`); refused for
+  /// anyone else and for a payment that was not reversed.
+  Future<void> reviewPaymentReversal(String intentId);
+
   /// Which online-payment providers this WORKSPACE can charge with
   /// (create-payment-order's config probe) — plus per-provider missing
   /// config fields for the owner diagnostics. An undeployed function maps

@@ -20,6 +20,18 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       List.of(_m.paymentIntents);
 
   @override
+  Future<void> reviewPaymentReversal(String intentId) async {
+    final i = _m.paymentIntents.indexWhere((p) => p.id == intentId);
+    if (i < 0 || _m.paymentIntents[i].status != 'reversed') {
+      throw StateError('only a reversed payment is reviewed');
+    }
+    final intent = _m.paymentIntents[i];
+    if (intent.reversalReviewedAt == null) {
+      _m.paymentIntents[i] = intent.reviewedAt(_m.clock());
+    }
+  }
+
+  @override
   Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) async =>
       PaymentGatewayConfig(
         providers: List.of(_m.paymentProviders),
