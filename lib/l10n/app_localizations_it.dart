@@ -247,6 +247,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingExportsRows => 'Righe';
 
   @override
+  String get accountingExportsTitle => 'Esportazioni';
+
+  @override
   String get accountingSourceRefused =>
       'Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.';
 
@@ -35166,6 +35169,35 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Totali del periodo';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Scelga una casella: i suoi documenti sono elencati qui.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'in più',
+      'other': 'in meno',
+    });
+    return 'Dichiarato $declared · documenti oggi $today · $difference $_temp0 dalla dichiarazione';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle =>
+      'Documenti di questo periodo a questa aliquota';
+
+  @override
+  String get vatReturnNotCompared =>
+      'Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.';
+
+  @override
+  String get vatReturnOpen => 'Apri la dichiarazione';
 
   @override
   String get vatSaved => 'Aliquote IVA salvate.';

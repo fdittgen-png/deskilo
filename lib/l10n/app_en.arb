@@ -321,6 +321,10 @@
   "@accountingExportsRows": {
     "description": "#3616 export history column: the rows in the file"
   },
+  "accountingExportsTitle": "Exports",
+  "@accountingExportsTitle": {
+    "description": "#3616 the export history page title (short: the top bar holds it)"
+  },
   "accountingSourceRefused": "The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -45092,6 +45096,40 @@
   "vatReportTotals": "Period totals",
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
+  },
+  "vatReturnChooseBox": "Choose a box: its documents are listed here.",
+  "@vatReturnChooseBox": {
+    "description": "#3616 the VAT return page before a box is chosen"
+  },
+  "vatReturnDocumentsDiffer": "Declared {declared} · documents today {today} · {difference} {direction, select, more{more} other{less}} since the return",
+  "@vatReturnDocumentsDiffer": {
+    "description": "#3616 a VAT box whose documents today differ from what was declared: both figures and the difference",
+    "placeholders": {
+      "declared": {
+        "type": "String"
+      },
+      "today": {
+        "type": "String"
+      },
+      "difference": {
+        "type": "String"
+      },
+      "direction": {
+        "type": "String"
+      }
+    }
+  },
+  "vatReturnDocumentsTitle": "Documents of this period at this rate",
+  "@vatReturnDocumentsTitle": {
+    "description": "#3616 heading of the documents behind a VAT box"
+  },
+  "vatReturnNotCompared": "This box is made of purchases, a category or a correction: its documents are not added up here.",
+  "@vatReturnNotCompared": {
+    "description": "#3616 a VAT box the issued invoices alone do not make: no sum is shown"
+  },
+  "vatReturnOpen": "Open the return",
+  "@vatReturnOpen": {
+    "description": "#3616 opens a VAT return with the documents behind each box"
   },
   "vatSaved": "VAT rates saved.",
   "@vatSaved": {

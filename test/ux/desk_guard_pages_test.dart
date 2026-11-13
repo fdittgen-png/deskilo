@@ -4,16 +4,21 @@
 // builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
+import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
 import 'package:deskilo/core/ui/kit/customer_row.dart';
 import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/core/ui/kit/table_line.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
+import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -43,9 +48,69 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
       guestPassRepositoryProvider.overrideWithValue(_OnePassSold()),
+      // #3616 — the books: one closed quarter and its file; one return.
+      bookPeriodRepositoryProvider.overrideWithValue(_OneQuarter()),
+      vatDeclarationsProvider.overrideWith((ref) async => [_return]),
+      vatTaxPointsTodayProvider.overrideWith((ref) async => const []),
     ],
   );
 }
+
+/// One closed quarter, and the file handed out for it.
+class _OneQuarter implements BookPeriodRepository {
+  @override
+  Future<BookPeriodsOverview> fetch(String workspaceId) async =>
+      BookPeriodsOverview(
+        periods: [
+          BookPeriod(
+            id: 'q1',
+            from: DateTime(2026),
+            to: DateTime(2026, 3, 31),
+            reason: BookPeriodReason.of('owner'),
+          ),
+        ],
+        exports: [
+          BookExport(
+            id: 'x1',
+            formatId: 'fec',
+            from: DateTime(2026),
+            to: DateTime(2026, 3, 31),
+            sha256: 'ab' * 32,
+            byteCount: 2048,
+            rowCount: 24,
+            documentCount: 6,
+            closedPeriod: true,
+            exportedAt: DateTime(2026, 4, 3),
+          ),
+        ],
+      );
+
+  @override
+  dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+/// One prepared return of the first quarter.
+final _return = VatDeclaration(
+  id: 'd1',
+  workspaceId: 'ws-1',
+  periodStart: DateTime(2026),
+  periodEnd: DateTime(2026, 3, 31),
+  status: 'prepared',
+  lines: const [
+    VatDeclarationLine(
+      percent: 20,
+      grossCents: 12000,
+      netCents: 10000,
+      vatCents: 2000,
+      invoiceCount: 1,
+    ),
+  ],
+  totalNetCents: 10000,
+  totalVatCents: 2000,
+  currency: 'EUR',
+  invoiceCount: 1,
+  createdAt: DateTime(2026, 4, 2),
+);
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
@@ -56,6 +121,10 @@ const _pages = [
   // #3614 — sales at the desk.
   ('/services', PageKind.records, 'money', 'services'),
   ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
+  // #3616 — the books at the desk.
+  ('/money/accounting', PageKind.dashboard, 'money', 'accounting'),
+  ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
+  ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
 ];
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
@@ -116,6 +185,8 @@ void main() {
               RecordsHeader<ServiceItem>,
               RecordRow<GuestPassRecord>,
               RecordsHeader<GuestPassRecord>,
+              RecordRow<BookExport>,
+              RecordsHeader<BookExport>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -124,12 +195,20 @@ void main() {
               RecordsHeader<Receivable>,
               RecordsHeader<ServiceItem>,
               RecordsHeader<GuestPassRecord>,
+              RecordsHeader<BookExport>,
             ],
           ),
           isEmpty,
           reason: details.join('\n'),
         );
-        expect(await keyboardProblems(tester), isEmpty);
+        // A long task (#3608) is its own focus scope: Tab walks the page.
+        expect(
+          await keyboardProblems(
+            tester,
+            within: kind == PageKind.task ? find.byType(LongTaskPage) : null,
+          ),
+          isEmpty,
+        );
         semantics.dispose();
       });
     }

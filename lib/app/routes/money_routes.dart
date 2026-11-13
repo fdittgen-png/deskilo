@@ -31,6 +31,7 @@ import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
 import '../../features/money/presentation/screens/suppliers_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
+import '../../features/money/presentation/screens/vat_return_page.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
@@ -372,6 +373,14 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const VatDeclarationsScreen(),
+      // #3616 — a return as a long task at its address.
+      routes: [
+        GoRoute(
+          path: ':id',
+          builder: (context, state) =>
+              VatReturnPage(declarationId: state.pathParameters['id'] ?? ''),
+        ),
+      ],
     ),
     GoRoute(
       path: '/vat',

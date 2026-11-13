@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/files/file_saver.dart';
@@ -8,7 +9,9 @@ import '../../../core/time/clock.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/save_vat_filing_file.dart';
 import '../application/vat_register_files.dart';
+import '../domain/accounting_view.dart';
 import '../domain/vat_filing_files.dart';
+import '../domain/vat_return_documents.dart';
 import 'money_providers.dart';
 
 part 'vat_declaration_providers.g.dart';
@@ -70,3 +73,60 @@ VatRegisterFiles vatRegisterFiles(Ref ref) => VatRegisterFiles(
     null => false,
   },
 );
+
+/// #3616 — the period's tax points read again from the issued invoices,
+/// on the space's basis and with the payments the return used (the same
+/// engine as the VAT report): what a return's boxes are compared with.
+/// Every invoice's points; a return keeps the ones of its period.
+final vatTaxPointsTodayProvider =
+    FutureProvider.autoDispose<List<VatTaxPointAmount>>((ref) async {
+      final workspace = await ref.watch(currentWorkspaceProvider.future);
+      final context = ref.watch(readyWorkspaceContextProvider);
+      if (workspace == null || context == null) return const [];
+      final reference = context.taxReference.set;
+      final view = accountingView(
+        await ref.watch(invoicesProvider.future),
+        await ref.watch(invoiceMatchesProvider.future),
+      );
+      final instalments = await ref
+          .read(invoiceQueriesProvider)
+          .fetchInvoiceInstalments(workspace.id);
+      return vatTaxPointLedger(
+        view.invoices,
+        matches: view.matches,
+        instalments: instalments,
+        basis: taxPointBasisOf(
+          InvoiceLegal.fromJson(workspace.invoiceLegal),
+          workspace.countryCode,
+          reference: reference,
+        ),
+        reference: reference,
+        dayOf: context.calendar.dateOf,
+      );
+    });
+
+/// #3616 — the return [declarationId] with the documents behind each of its
+/// boxes; null while it is not found among the space's returns.
+final vatReturnBoxesProvider = FutureProvider.autoDispose
+    .family<({VatDeclaration declaration, List<VatBoxDocuments> boxes})?, String>(
+      (ref, declarationId) async {
+        final declarations = await ref.watch(vatDeclarationsProvider.future);
+        final declaration = declarations
+            .where((d) => d.id == declarationId)
+            .firstOrNull;
+        final workspace = await ref.watch(currentWorkspaceProvider.future);
+        final reference = ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
+        if (declaration == null || workspace == null || reference == null) {
+          return null;
+        }
+        return (
+          declaration: declaration,
+          boxes: vatBoxDocuments(
+            declaration,
+            await ref.watch(vatTaxPointsTodayProvider.future),
+            country: workspace.countryCode,
+            reference: reference,
+          ),
+        );
+      },
+    );

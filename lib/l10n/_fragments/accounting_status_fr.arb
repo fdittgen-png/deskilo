@@ -10,5 +10,11 @@
   "accountingExportsRows": "Lignes",
   "accountingExportsFingerprint": "Empreinte",
   "accountingExportsAgain": "Exporter de nouveau cette période",
-  "bankChooseMovement": "Choisissez à gauche un mouvement entrant : ses factures ouvertes sont listées ici."
+  "bankChooseMovement": "Choisissez à gauche un mouvement entrant : ses factures ouvertes sont listées ici.",
+  "vatReturnChooseBox": "Choisissez une case : ses documents sont listés ici.",
+  "vatReturnDocumentsTitle": "Documents de cette période à ce taux",
+  "vatReturnDocumentsDiffer": "Déclaré {declared} · documents aujourd’hui {today} · {difference} {direction, select, more{de plus} other{de moins}} depuis la déclaration",
+  "vatReturnNotCompared": "Cette case est faite d’achats, d’une catégorie ou d’une correction : ses documents ne sont pas additionnés ici.",
+  "vatReturnOpen": "Ouvrir la déclaration",
+  "accountingExportsTitle": "Exports"
 }

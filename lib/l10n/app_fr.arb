@@ -184,6 +184,7 @@
   "accountingExportsBy": "Fait par",
   "accountingExportsFingerprint": "Empreinte",
   "accountingExportsRows": "Lignes",
+  "accountingExportsTitle": "Exports",
   "accountingSourceRefused": "Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -21661,6 +21662,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Choisissez une case : ses documents sont listés ici.",
+  "vatReturnDocumentsDiffer": "Déclaré {declared} · documents aujourd’hui {today} · {difference} {direction, select, more{de plus} other{de moins}} depuis la déclaration",
+  "vatReturnDocumentsTitle": "Documents de cette période à ce taux",
+  "vatReturnNotCompared": "Cette case est faite d’achats, d’une catégorie ou d’une correction : ses documents ne sont pas additionnés ici.",
+  "vatReturnOpen": "Ouvrir la déclaration",
   "vatSaved": "Taux de TVA enregistrés.",
   "vatSeed": "Utiliser les taux usuels",
   "vatSeedWithRates": "Utiliser les taux usuels ({rates})",

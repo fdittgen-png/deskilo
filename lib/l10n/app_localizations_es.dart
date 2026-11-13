@@ -248,6 +248,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountingExportsRows => 'Filas';
 
   @override
+  String get accountingExportsTitle => 'Exportaciones';
+
+  @override
   String get accountingSourceRefused =>
       'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
 
@@ -35128,6 +35131,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Totales del periodo';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Elija una casilla: sus documentos se listan aquí.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'más',
+      'other': 'menos',
+    });
+    return 'Declarado $declared · documentos hoy $today · $difference $_temp0 desde la declaración';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle =>
+      'Documentos de este periodo a este tipo';
+
+  @override
+  String get vatReturnNotCompared =>
+      'Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.';
+
+  @override
+  String get vatReturnOpen => 'Abrir la declaración';
 
   @override
   String get vatSaved => 'Tipos de IVA guardados.';

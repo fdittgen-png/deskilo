@@ -184,6 +184,7 @@
   "accountingExportsBy": "Fatto da",
   "accountingExportsFingerprint": "Impronta",
   "accountingExportsRows": "Righe",
+  "accountingExportsTitle": "Esportazioni",
   "accountingSourceRefused": "Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -21661,6 +21662,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Scelga una casella: i suoi documenti sono elencati qui.",
+  "vatReturnDocumentsDiffer": "Dichiarato {declared} · documenti oggi {today} · {difference} {direction, select, more{in più} other{in meno}} dalla dichiarazione",
+  "vatReturnDocumentsTitle": "Documenti di questo periodo a questa aliquota",
+  "vatReturnNotCompared": "Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.",
+  "vatReturnOpen": "Apri la dichiarazione",
   "vatSaved": "Aliquote IVA salvate.",
   "vatSeed": "Usa le aliquote consuete",
   "vatSeedWithRates": "Usa le aliquote consuete ({rates})",

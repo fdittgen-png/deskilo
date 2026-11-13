@@ -247,6 +247,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingExportsRows => 'Rows';
 
   @override
+  String get accountingExportsTitle => 'Exports';
+
+  @override
   String get accountingSourceRefused =>
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
@@ -34827,6 +34830,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Period totals';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Choose a box: its documents are listed here.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'more',
+      'other': 'less',
+    });
+    return 'Declared $declared · documents today $today · $difference $_temp0 since the return';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle => 'Documents of this period at this rate';
+
+  @override
+  String get vatReturnNotCompared =>
+      'This box is made of purchases, a category or a correction: its documents are not added up here.';
+
+  @override
+  String get vatReturnOpen => 'Open the return';
 
   @override
   String get vatSaved => 'VAT rates saved.';

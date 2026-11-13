@@ -176,11 +176,7 @@ class AccountingStatusGrid extends ConsumerWidget {
               status.vatToFile,
               (p) => p == null
                   ? l.memberPageNone
-                  : l.bookPeriodsExportLine(
-                      l.vatDeclPeriod,
-                      dates.format(p.from),
-                      dates.format(p.to),
-                    ),
+                  : '${dates.format(p.from)} – ${dates.format(p.to)}',
             ),
             onTap: () => context.push('/vat-declarations'),
           ),

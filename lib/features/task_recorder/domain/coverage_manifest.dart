@@ -464,6 +464,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.payment,
   ),
+  RouteCoverage('/vat-declarations/:id', CoverageStatus.excluded, category: ProtectedSurface.payment),
   RouteCoverage(
     '/vat',
     CoverageStatus.excluded,

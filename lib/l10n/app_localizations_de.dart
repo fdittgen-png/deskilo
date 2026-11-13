@@ -247,6 +247,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingExportsRows => 'Zeilen';
 
   @override
+  String get accountingExportsTitle => 'Exporte';
+
+  @override
   String get accountingSourceRefused =>
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 
@@ -35216,6 +35219,35 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Summen des Zeitraums';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Wählen Sie ein Feld: seine Belege stehen dann hier.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'mehr',
+      'other': 'weniger',
+    });
+    return 'Erklärt $declared · Belege heute $today · $difference $_temp0 seit der Erklärung';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle =>
+      'Belege dieses Zeitraums zu diesem Satz';
+
+  @override
+  String get vatReturnNotCompared =>
+      'Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.';
+
+  @override
+  String get vatReturnOpen => 'Erklärung öffnen';
 
   @override
   String get vatSaved => 'Steuersätze gespeichert.';

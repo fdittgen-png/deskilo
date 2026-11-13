@@ -84,6 +84,7 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/settings/number-sequences': {_P.manageBilling},
   '/vat': {_P.manageBilling},
   '/vat-declarations': {_P.manageBilling, _P.viewFinances},
+  '/vat-declarations/:id': {_P.manageBilling, _P.viewFinances},
   '/services': {_P.manageServices},
   '/accessories': {_P.manageServices},
   '/payment-methods': {_P.manageIntegrations},

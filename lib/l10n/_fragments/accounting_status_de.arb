@@ -10,5 +10,11 @@
   "accountingExportsRows": "Zeilen",
   "accountingExportsFingerprint": "Prüfsumme",
   "accountingExportsAgain": "Diesen Zeitraum erneut exportieren",
-  "bankChooseMovement": "Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier."
+  "bankChooseMovement": "Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier.",
+  "vatReturnChooseBox": "Wählen Sie ein Feld: seine Belege stehen dann hier.",
+  "vatReturnDocumentsTitle": "Belege dieses Zeitraums zu diesem Satz",
+  "vatReturnDocumentsDiffer": "Erklärt {declared} · Belege heute {today} · {difference} {direction, select, more{mehr} other{weniger}} seit der Erklärung",
+  "vatReturnNotCompared": "Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.",
+  "vatReturnOpen": "Erklärung öffnen",
+  "accountingExportsTitle": "Exporte"
 }

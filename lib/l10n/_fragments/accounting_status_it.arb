@@ -10,5 +10,11 @@
   "accountingExportsRows": "Righe",
   "accountingExportsFingerprint": "Impronta",
   "accountingExportsAgain": "Esporta di nuovo questo periodo",
-  "bankChooseMovement": "Scelga a sinistra un movimento in entrata: qui sono elencate le sue fatture aperte."
+  "bankChooseMovement": "Scelga a sinistra un movimento in entrata: qui sono elencate le sue fatture aperte.",
+  "vatReturnChooseBox": "Scelga una casella: i suoi documenti sono elencati qui.",
+  "vatReturnDocumentsTitle": "Documenti di questo periodo a questa aliquota",
+  "vatReturnDocumentsDiffer": "Dichiarato {declared} · documenti oggi {today} · {difference} {direction, select, more{in più} other{in meno}} dalla dichiarazione",
+  "vatReturnNotCompared": "Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.",
+  "vatReturnOpen": "Apri la dichiarazione",
+  "accountingExportsTitle": "Esportazioni"
 }

@@ -59,7 +59,7 @@ class AccountingExportsScreen extends ConsumerWidget {
     );
     return Scaffold(
       appBar: AppBar(
-        title: PageTitle(l.bookPeriodsExports),
+        title: PageTitle(l.accountingExportsTitle),
         actions: [
           OutlinedButton.icon(
             key: const ValueKey('accounting-exports-new'),
@@ -142,7 +142,9 @@ class AccountingExportsScreen extends ConsumerWidget {
                 e.sha256.length > _fingerprintShown
                     ? e.sha256.substring(0, _fingerprintShown)
                     : e.sha256,
-                style: const TextStyle(fontFamily: 'monospace'),
+                style: const TextStyle(
+                  fontFeatures: [FontFeature.tabularFigures()],
+                ),
               ),
             ),
           ),
@@ -167,4 +169,4 @@ class AccountingExportsScreen extends ConsumerWidget {
 }
 
 /// How many characters of a file's fingerprint the table shows.
-const int _fingerprintShown = 12;
+const int _fingerprintShown = 8;

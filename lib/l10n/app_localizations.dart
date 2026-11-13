@@ -512,6 +512,12 @@ abstract class AppLocalizations {
   /// **'Rows'**
   String get accountingExportsRows;
 
+  /// #3616 the export history page title (short: the top bar holds it)
+  ///
+  /// In en, this message translates to:
+  /// **'Exports'**
+  String get accountingExportsTitle;
+
   /// #2365 accounting export refused: the fiscal source changed or is over budget
   ///
   /// In en, this message translates to:
@@ -56596,6 +56602,41 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Period totals'**
   String get vatReportTotals;
+
+  /// #3616 the VAT return page before a box is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a box: its documents are listed here.'**
+  String get vatReturnChooseBox;
+
+  /// #3616 a VAT box whose documents today differ from what was declared: both figures and the difference
+  ///
+  /// In en, this message translates to:
+  /// **'Declared {declared} · documents today {today} · {difference} {direction, select, more{more} other{less}} since the return'**
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  );
+
+  /// #3616 heading of the documents behind a VAT box
+  ///
+  /// In en, this message translates to:
+  /// **'Documents of this period at this rate'**
+  String get vatReturnDocumentsTitle;
+
+  /// #3616 a VAT box the issued invoices alone do not make: no sum is shown
+  ///
+  /// In en, this message translates to:
+  /// **'This box is made of purchases, a category or a correction: its documents are not added up here.'**
+  String get vatReturnNotCompared;
+
+  /// #3616 opens a VAT return with the documents behind each box
+  ///
+  /// In en, this message translates to:
+  /// **'Open the return'**
+  String get vatReturnOpen;
 
   /// Confirmation after saving the rates
   ///

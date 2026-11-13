@@ -184,6 +184,7 @@
   "accountingExportsBy": "Hecho por",
   "accountingExportsFingerprint": "Huella",
   "accountingExportsRows": "Filas",
+  "accountingExportsTitle": "Exportaciones",
   "accountingSourceRefused": "Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -21661,6 +21662,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Elija una casilla: sus documentos se listan aquí.",
+  "vatReturnDocumentsDiffer": "Declarado {declared} · documentos hoy {today} · {difference} {direction, select, more{más} other{menos}} desde la declaración",
+  "vatReturnDocumentsTitle": "Documentos de este periodo a este tipo",
+  "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
+  "vatReturnOpen": "Abrir la declaración",
   "vatSaved": "Tipos de IVA guardados.",
   "vatSeed": "Usar los tipos habituales",
   "vatSeedWithRates": "Usar los tipos habituales ({rates})",

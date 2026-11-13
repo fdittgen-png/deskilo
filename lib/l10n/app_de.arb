@@ -184,6 +184,7 @@
   "accountingExportsBy": "Erstellt von",
   "accountingExportsFingerprint": "Prüfsumme",
   "accountingExportsRows": "Zeilen",
+  "accountingExportsTitle": "Exporte",
   "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -21661,6 +21662,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Wählen Sie ein Feld: seine Belege stehen dann hier.",
+  "vatReturnDocumentsDiffer": "Erklärt {declared} · Belege heute {today} · {difference} {direction, select, more{mehr} other{weniger}} seit der Erklärung",
+  "vatReturnDocumentsTitle": "Belege dieses Zeitraums zu diesem Satz",
+  "vatReturnNotCompared": "Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.",
+  "vatReturnOpen": "Erklärung öffnen",
   "vatSaved": "Steuersätze gespeichert.",
   "vatSeed": "Übliche Sätze übernehmen",
   "vatSeedWithRates": "Übliche Sätze übernehmen ({rates})",
