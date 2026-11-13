@@ -2897,7 +2897,7 @@ routine public.mcp_setup_arguments(p_args jsonb, p_allowed text[]) -> void | fun
 routine public.mcp_setup_refusal(p_workspace_id uuid, p_args jsonb, p_allowed text[]) -> jsonb | function | definer | stable | exec:service_role | body:ac24f2b5a502
 routine public.mcp_setup_target_guard(p_workspace_id uuid, p_args jsonb, p_allowed text[]) -> void | function | definer | stable | exec:service_role | body:29583fda4247
 routine public.mcp_statement_outcome(c mcp_call_context, p_member_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dce6b454c6ad
-routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:0ae374a4bff6
+routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:885955f9a78c
 routine public.mcp_target_add_closure_days(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4398319ba1aa
 routine public.mcp_target_apply_setup_levels(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f41e2241a183
 routine public.mcp_target_create_invitations(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f8a6f13a2bb0
@@ -3254,7 +3254,7 @@ routine public.request_refund(p_invoice_id uuid, p_note text) -> jsonb | functio
 routine public.request_refund_v1(p_invoice_id uuid, p_request_id uuid, p_note text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:22e7635e5772
 routine public.request_reservation_deletion(p_reservation_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:f2a1b1d38b78
 routine public.request_role_change(p_workspace_id uuid, p_target_member_id uuid, p_make_admin boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7e5f8ef07dfa
-routine public.request_subscription_change(p_member_id uuid, p_pct integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:efa7937bf639
+routine public.request_subscription_change(p_member_id uuid, p_pct integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9d4fd059bf0b
 routine public.request_usage_correction(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0c4a3e0488a4
 routine public.request_usage_record_delete(p_record_id uuid, p_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:93def0b6dbab
 routine public.require_database_reviewer(p_provision boolean) -> uuid | function | definer | stable | exec:service_role | body:5c81f19c2258
