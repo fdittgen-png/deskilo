@@ -1741,7 +1741,7 @@
     },
     {
       "key": "invoiceEmail",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -1780,7 +1780,7 @@
     },
     {
       "key": "kioskEnrolment",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -2019,7 +2019,7 @@
     },
     {
       "key": "placeBooking",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -2108,7 +2108,7 @@
     },
     {
       "key": "quickSearch",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -2132,7 +2132,7 @@
     },
     {
       "key": "reminderEmail",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
@@ -2250,7 +2250,7 @@
     },
     {
       "key": "stockManagement",
-      "maturity": "unreviewed",
+      "maturity": "beta",
       "lifecycle": "active",
       "capabilities": []
     },
