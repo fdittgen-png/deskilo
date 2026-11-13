@@ -4,6 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 Future<void> openSettingsSection(WidgetTester tester, String id, {String pane = 'personal'}) async {
+  // #3619 — at the desk the pane lists its sections beside the one shown:
+  // opening one is choosing it in the list.
+  final listed = find.byKey(ValueKey('settings-$pane-section-$id'));
+  if (listed.evaluate().isNotEmpty) {
+    await tester.tap(listed);
+    await tester.pumpAndSettle();
+    return;
+  }
   final section = find.byKey(PageStorageKey('settings-section-$id'));
   final list = find.byKey(PageStorageKey('settings-$pane'));
   final scroll = find.descendant(of: list, matching: find.byType(Scrollable)).first;
