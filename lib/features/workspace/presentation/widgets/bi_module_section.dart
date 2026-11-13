@@ -357,6 +357,30 @@ class _Result extends ConsumerWidget {
   final BiQueryContext query;
   final BiResult result;
 
+  /// #3617 — the module's rows, from the result on screen, [as] a table or
+  /// a chart: under the figure, and what a figure opens beside it.
+  Widget _rows(BuildContext context, BiView as) {
+    final l10n = context.l10n;
+    final locale = appFormatOf(context).locale;
+    final agg = module.aggregation;
+    final comparedPeriod = result.comparedPeriod;
+    String amount(num v) => view.value(v, locale, result.currency);
+    return BiRows(
+      rows: [...view.labelled(result.groups, l10n, locale), result.total],
+      view: as,
+      aggregation: agg,
+      format: (v) => view.value(v, locale, result.currency),
+      change: (row) =>
+          biChangeLabel(changeOf(row, agg), l10n, locale, format: amount),
+      comparedLabel: comparedPeriod == null
+          ? null
+          : biPeriodLabel(comparedPeriod, l10n, locale),
+      groupHeader: query.groupBy == null
+          ? null
+          : biDimensionName(l10n, query.groupBy!),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -388,20 +412,6 @@ class _Result extends ConsumerWidget {
       if (exposureDiffers(total))
         l10n.biExposureDiffers,
     ];
-    // #3617 — the module's rows, from the result on screen: the table under
-    // a table or chart, and what a figure opens beside it on the dashboard.
-    Widget rows({BiView? as}) => BiRows(
-      rows: [...view.labelled(result.groups, l10n, locale), total],
-      view: as ?? query.view,
-      aggregation: agg,
-      format: (v) => view.value(v, locale, result.currency),
-      change: (row) =>
-          biChangeLabel(changeOf(row, agg), l10n, locale, format: amount),
-      comparedLabel: comparedPeriod == null ? null : comparedLabel,
-      groupHeader: query.groupBy == null
-          ? null
-          : biDimensionName(l10n, query.groupBy!),
-    );
     final drill = module.drill;
     final mayDrill =
         drill != null &&
@@ -414,7 +424,7 @@ class _Result extends ConsumerWidget {
           BiFigureOpen(
             key: ValueKey('bi-figure-open-${module.id}'),
             period: biPeriodLabel(result.period, l10n, locale),
-            rows: rows(as: BiView.table),
+            rows: _rows(context, BiView.table),
             child: BiDashboard(
               module: module,
               view: view,
@@ -452,7 +462,7 @@ class _Result extends ConsumerWidget {
             child: Text(note, style: small),
           ),
         const SizedBox(height: AppSpacing.sm),
-        if (query.view != BiView.dashboard) rows(),
+        if (query.view != BiView.dashboard) _rows(context, query.view),
         ExpansionTile(
           key: const ValueKey('bi-explain'),
           tilePadding: EdgeInsets.zero,

@@ -13,6 +13,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -222,7 +223,13 @@ class _StatusBody extends StatelessWidget {
         // What the net is, whole, under the figures.
         Padding(
           padding: const EdgeInsets.only(top: AppSpacing.sm),
-          child: Text(l10n.statusNetExplanation, style: theme.textTheme.bodySmall),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+              child: Text(l10n.statusNetExplanation, style: theme.textTheme.bodySmall),
+            ),
+          ),
         ),
         const SizedBox(height: AppSpacing.lg),
         Text(l10n.statusMembers, style: theme.textTheme.titleSmall),

@@ -50,6 +50,7 @@ class BiFigureOpen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => InkWell(
+    key: const ValueKey('bi-figure-open'),
     onTap: () => showTask<void>(
       context,
       size: TaskSize.standard,

@@ -367,6 +367,7 @@ const Set<String> uiKeys = {
   'bi-export-report',
   'bi-export-save',
   'bi-export-take',
+  'bi-figure-open',
   'bi-figure-rows',
   'bi-filter-bar',
   'bi-filter-none',
