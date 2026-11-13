@@ -28,11 +28,16 @@ $$;
 create function pg_temp.seat() returns uuid language sql as $$
   select current_setting('deskilo.pb.seat')::uuid
 $$;
+-- Hour [n] of the workspace's own day three days ahead: a booking must end on
+-- the local day it starts, so the slots are counted in the workspace's time
+-- zone and hold at any hour of the run.
 create function pg_temp.slot_from(n int) returns timestamptz language sql as $$
-  select date_trunc('day', now() + interval '3 days') + make_interval(hours => n)
+  select (date_trunc('day', now() at time zone w.timezone) + interval '3 days'
+          + make_interval(hours => n)) at time zone w.timezone
+    from public.workspaces w where w.id = pg_temp.ws()
 $$;
 create function pg_temp.slot_to(n int) returns timestamptz language sql as $$
-  select date_trunc('day', now() + interval '3 days') + make_interval(hours => n + 1)
+  select pg_temp.slot_from(n) + interval '1 hour'
 $$;
 create function pg_temp.member(p text) returns uuid language sql as $$
   select id from public.members where workspace_id = pg_temp.ws() and user_id = pg_temp.u(p)
@@ -83,9 +88,17 @@ values (pg_temp.ws(), 'Carnet', 10, 5000);
 select pg_temp.act_as(pg_temp.u('a1'));
 select set_config('deskilo.pb.res', public.create_reservation(pg_temp.ws(), pg_temp.seat(), null,
   pg_temp.slot_from(9), pg_temp.slot_to(9))::text, true);
+-- The member's booking is made at a slot no clock crosses, then moved to start
+-- in a minute with a direct update (as 198 does, #3353): booked at now(), it
+-- would cross the workspace's midnight in the last hour of its day.
 select set_config('deskilo.pb.now', public.admin_create_reservation_for(pg_temp.ws(), pg_temp.member('a2'),
-  pg_temp.seat(), date_trunc('minute', now()) + interval '1 minute', date_trunc('minute', now()) + interval '61 minutes')::text, true);
+  pg_temp.seat(), pg_temp.slot_from(19), pg_temp.slot_to(19))::text, true);
 reset role;
+update public.reservations
+   set starts_at = date_trunc('minute', now()) + interval '1 minute',
+       ends_at = date_trunc('minute', now()) + interval '61 minutes'
+ where workspace_id = pg_temp.ws() and member_id = pg_temp.member('a2')
+   and starts_at = pg_temp.slot_from(19);
 
 update public.workspaces set feature_flags = feature_flags || '{"placeBooking":false}' where id = pg_temp.ws();
 
@@ -119,8 +132,10 @@ select pg_temp.act_as(pg_temp.u('a4'));
 select throws_ok($$ select public.kiosk_act(pg_temp.ws(), 'PB-A2', 'reserve', pg_temp.seat(),
   pg_temp.slot_from(15), pg_temp.slot_to(15)) $$, '55000', 'place booking is off in this workspace',
   'with place booking off, a kiosk reserves nothing');
+-- A check-in to an existing booking finds it by member and seat; the window
+-- it passes is not read, so it is one that holds at any hour.
 select lives_ok($$ select public.kiosk_act(pg_temp.ws(), 'PB-A2', 'check_in', pg_temp.seat(),
-  date_trunc('minute', now()) + interval '1 minute', date_trunc('minute', now()) + interval '61 minutes') $$,
+  pg_temp.slot_from(19), pg_temp.slot_to(19)) $$,
   'the kiosk checks in to a booking that exists');
 select lives_ok($$ select public.kiosk_act(pg_temp.ws(), 'PB-A2', 'check_out') $$,
   'and checks out of it');

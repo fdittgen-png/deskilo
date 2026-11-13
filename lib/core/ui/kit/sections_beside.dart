@@ -7,8 +7,8 @@
 // screen reader. The page that uses it names the shown section in its
 // address (`?section=<id>`, see `AddressedSections`).
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
+import '../../navigation/address_query.dart';
 import '../../theme/app_spacing.dart';
 import '../adaptive/page_measure.dart';
 
@@ -144,27 +144,6 @@ class _Hidden extends StatelessWidget {
   );
 }
 
-/// The section the address names (`?section=<id>`); null when it names none
-/// or the page is not under the app's router.
-String? _sectionInAddress(BuildContext context) {
-  if (GoRouter.maybeOf(context) == null) return null;
-  return GoRouterState.of(context).uri.queryParameters['section'];
-}
-
-/// Shows section [id]: the address names it, without a new history entry.
-/// False when the page is not under the app's router (the caller keeps the
-/// choice itself).
-bool _showSectionInAddress(BuildContext context, String id) {
-  if (GoRouter.maybeOf(context) == null) return false;
-  final uri = GoRouterState.of(context).uri;
-  context.replace(
-    uri
-        .replace(queryParameters: {...uri.queryParameters, 'section': id})
-        .toString(),
-  );
-  return true;
-}
-
 /// Asks the [_SectionsBeside] host to show section [id] (a field of it needs
 /// the reader: a validation problem).
 class ShowSectionNotification extends Notification {
@@ -197,7 +176,7 @@ class _AddressedSectionsState extends State<AddressedSections> {
   String? _chosen;
 
   void _select(String id) {
-    if (!_showSectionInAddress(context, id)) setState(() => _chosen = id);
+    if (!setAddressQuery(context, {'section': id})) setState(() => _chosen = id);
   }
 
   @override
@@ -210,7 +189,7 @@ class _AddressedSectionsState extends State<AddressedSections> {
         child: _SectionsBeside(
           id: widget.id,
           sections: widget.sections,
-          selected: _sectionInAddress(context) ?? _chosen,
+          selected: addressQuery(context, 'section') ?? _chosen,
           onSelect: _select,
           header: widget.header,
           footer: widget.footer,

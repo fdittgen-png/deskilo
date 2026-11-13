@@ -8156,6 +8156,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eInvoiceContactPhoneField => 'Invoicing contact telephone';
 
   @override
+  String get eInvoiceDocumentUnconfirmed =>
+      'The platform has not confirmed this document yet. Ask it again later.';
+
+  @override
   String get eInvoiceEndpointIdField => 'Electronic address';
 
   @override
@@ -11490,7 +11494,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get featureSupplyClassificationDesc =>
-      'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.';
+      'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.';
 
   @override
   String get featureSupplyClassificationTitle => 'Place of supply per service';
@@ -21008,6 +21012,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String moneyReportsForMonth(String month) {
+    return 'Reports for $month';
+  }
+
+  @override
   String get moneySectionDocuments => 'Documents';
 
   @override
@@ -25483,6 +25492,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get recapEmpty => 'Nothing was reverse-charged in this period.';
+
+  @override
+  String get recordedPaymentsColMatched => 'Matched on';
 
   @override
   String get recordedPaymentsEmpty =>
@@ -31622,6 +31634,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceYoursNow => 'Reserved by you for this slot.';
 
   @override
+  String get statementDeskColLine => 'Line';
+
+  @override
   String get statusAwaiting => 'Awaiting';
 
   @override
@@ -32139,6 +32154,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'General service (not connected with the premises)';
 
   @override
+  String get supplyClassGeneralMeaning =>
+      'Taxed by the general rule: a business customer in another member state accounts for the VAT.';
+
+  @override
   String get supplyClassHelper =>
       'A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.';
 
@@ -32147,6 +32166,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get supplyClassProperty => 'Connected with the premises';
+
+  @override
+  String get supplyClassPropertyMeaning => 'Taxed where the premises are.';
 
   @override
   String get supportChanged => 'The context changed. Prepare a new preview.';
@@ -34602,6 +34624,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String usageBookedDuration(String duration) {
     return 'Booked $duration';
   }
+
+  @override
+  String get usageColBilled => 'Billed';
 
   @override
   String get usageCorrected => 'Corrected';

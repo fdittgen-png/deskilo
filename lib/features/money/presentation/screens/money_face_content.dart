@@ -6,7 +6,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/expense_schedule.dart';
 import '../../domain/money_face.dart';
@@ -17,9 +21,11 @@ import '../widgets/documents_face.dart';
 import '../widgets/expense_schedule_sheet.dart';
 import '../widgets/invoice_overview.dart';
 import '../widgets/money_faces_view.dart';
+import '../widgets/my_credits_table.dart';
 import '../widgets/my_finances_link_card.dart';
 import '../widgets/my_invoices_list.dart';
 import '../widgets/negotiation_card.dart';
+import '../widgets/statement_desk.dart';
 import '../widgets/usage_face.dart';
 import 'money_action_set.dart';
 import 'money_screen_ops.dart';
@@ -51,6 +57,67 @@ class MoneyFaceContent {
 
   /// #720 — one bill builder: the whole bill (face null) for the classic
   /// column and the PDF, one face at a time for the faces.
+  bool get _atDesk =>
+      WindowClass.of(context).index >= WindowClass.expanded.index;
+
+  /// #3627 — the faces drawn as pages of their own at the desk.
+  Map<MoneyFace, Widget> pages() => {
+    if (data.statement case final statement? when _atDesk)
+      MoneyFace.statement: StatementDesk(
+        statement: statement,
+        currencyCode: data.currencyCode,
+      ),
+    if (_atDesk && data.member != null)
+      MoneyFace.payments: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _compactTools([
+            actions.recordPayment,
+            ?actions.buyPackage,
+            ...actions.requestButtons,
+            ...actions.purchaseButtons,
+          ]),
+          const SizedBox(height: AppSpacing.md),
+          Expanded(
+            child: MyCreditsTable(
+              ledger: data.ledger,
+              memberId: data.member!.id,
+              currencyCode: data.currencyCode,
+            ),
+          ),
+        ],
+      ),
+    if (_atDesk && data.usageRecordsOn)
+      MoneyFace.usage: UsageTable(period: ops.period),
+    if (_atDesk && data.member != null)
+      MoneyFace.invoices: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (actions.hasWorkspaceTools)
+            MoneyWorkspaceTools(actions: actions.workspaceTools),
+          Expanded(child: MyInvoicesTable(memberId: data.member!.id)),
+        ],
+      ),
+  };
+
+  /// The face's tools as one compact row: the buttons keep their meaning,
+  /// not the phone's 56 dp height, and wrap rather than push the table.
+  Widget _compactTools(List<Widget> tools) => Theme(
+    data: Theme.of(context).copyWith(
+      outlinedButtonTheme: OutlinedButtonThemeData(
+        style: OutlinedButton.styleFrom(minimumSize: const Size(0, 48)),
+      ),
+      filledButtonTheme: FilledButtonThemeData(
+        style: FilledButton.styleFrom(minimumSize: const Size(0, 48)),
+      ),
+    ),
+    child: Wrap(
+      spacing: AppSpacing.sm,
+      runSpacing: AppSpacing.sm,
+      children: tools,
+    ),
+  );
+
   Widget bill(MoneyFace? face) => BillView(
         statement: data.statement!,
         ledger: data.ledger,
@@ -154,7 +221,8 @@ class MoneyFaceContent {
     return {
       MoneyFace.statement: [
         ...data.attemptsCard,
-        if (statement != null) bill(MoneyFace.statement),
+        // #3627 — at the desk the month is a dashboard over its lines.
+        if (statement != null && !_atDesk) bill(MoneyFace.statement),
         if (account != null && account.isNotable) ...[
           const SizedBox(height: 8),
           AccountCard(
@@ -231,7 +299,18 @@ class MoneyFaceContent {
       MoneyFace.invoices: [financesLink()],
       MoneyFace.usage: const [],
       MoneyFace.documents: [
+        // #3627 — at the desk the reports are a tool row that names the
+        // month they are made for (the month in the address).
+        if (_atDesk)
+          Text(
+            _l10n.moneyReportsForMonth(
+              appFormatOf(context).dates(DateShape.monthYear).format(ops.month),
+            ),
+            key: const ValueKey('money-reports-month'),
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
         DocumentsFaceActions(
+          inRow: _atDesk,
           onAgreement: reportsOn ? () => ops.memberDoc('agreement') : null,
           onPaymentsReport: reportsOn ? () => ops.memberDoc('payments') : null,
           onUsageReport: usageReportOn ? () => ops.memberDoc('usage') : null,

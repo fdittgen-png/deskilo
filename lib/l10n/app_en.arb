@@ -10729,6 +10729,10 @@
   "@eInvoiceContactPhoneField": {
     "description": "#2358 field: seller contact telephone"
   },
+  "eInvoiceDocumentUnconfirmed": "The platform has not confirmed this document yet. Ask it again later.",
+  "@eInvoiceDocumentUnconfirmed": {
+    "description": "#3881 under a document the national platform took but has not confirmed yet"
+  },
   "eInvoiceEndpointIdField": "Electronic address",
   "@eInvoiceEndpointIdField": {
     "description": "#2358 field: the electronic address"
@@ -15110,7 +15114,7 @@
   "@featureSubscriptionInvoicesTitle": {
     "description": "Shown as a text in feature names (workspace)."
   },
-  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.",
+  "featureSupplyClassificationDesc": "Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.",
   "@featureSupplyClassificationDesc": {
     "description": "#2354 place of supply: featureSupplyClassificationDesc"
   },
@@ -27596,6 +27600,15 @@
       }
     }
   },
+  "moneyReportsForMonth": "Reports for {month}",
+  "@moneyReportsForMonth": {
+    "description": "#3627 Caption above the report actions at the desk: the month they are made for.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
   "moneySectionDocuments": "Documents",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
@@ -33404,6 +33417,10 @@
   "recapEmpty": "Nothing was reverse-charged in this period.",
   "@recapEmpty": {
     "description": "#2354 recapitulative statement: recapEmpty"
+  },
+  "recordedPaymentsColMatched": "Matched on",
+  "@recordedPaymentsColMatched": {
+    "description": "#3627 payments table column: the day the payment was matched to its invoice"
   },
   "recordedPaymentsEmpty": "No payments were matched to an invoice in this period.",
   "@recordedPaymentsEmpty": {
@@ -41002,6 +41019,10 @@
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
+  "statementDeskColLine": "Line",
+  "@statementDeskColLine": {
+    "description": "#3627 Column header of the month's statement lines at the desk."
+  },
   "statusAwaiting": "Awaiting",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -41684,6 +41705,10 @@
   "@supplyClassGeneral": {
     "description": "#2354 place of supply: supplyClassGeneral"
   },
+  "supplyClassGeneralMeaning": "Taxed by the general rule: a business customer in another member state accounts for the VAT.",
+  "@supplyClassGeneralMeaning": {
+    "description": "#3864 place of supply: what the general-service choice means"
+  },
   "supplyClassHelper": "A desk, an office or a room is taxed where the building stands, for every customer. Choose general service only for what is not tied to the premises, such as mail handling or a virtual office: a business in another EU country then self-assesses the VAT.",
   "@supplyClassHelper": {
     "description": "#2354 place of supply: supplyClassHelper"
@@ -41695,6 +41720,10 @@
   "supplyClassProperty": "Connected with the premises",
   "@supplyClassProperty": {
     "description": "#2354 place of supply: supplyClassProperty"
+  },
+  "supplyClassPropertyMeaning": "Taxed where the premises are.",
+  "@supplyClassPropertyMeaning": {
+    "description": "#3864 place of supply: what the premises choice means"
   },
   "supportChanged": "The context changed. Prepare a new preview.",
   "@supportChanged": {
@@ -44727,6 +44756,10 @@
         "type": "String"
       }
     }
+  },
+  "usageColBilled": "Billed",
+  "@usageColBilled": {
+    "description": "#3627 Column header: the part of a booking that is billed (a duration)."
   },
   "usageCorrected": "Corrected",
   "@usageCorrected": {

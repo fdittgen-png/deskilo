@@ -82,14 +82,9 @@ List<ReportPage> reportPagesFor({
         route: '/invoice-register',
         icon: Icons.table_rows_outlined,
       ),
+    // #3627 — the status asks what its route and the server ask.
     if (on(WorkspaceFeature.workspaceStatus) &&
-        isAdmin &&
-        any({
-          WorkspacePermission.viewMyMoney,
-          WorkspacePermission.viewFinances,
-          WorkspacePermission.issueInvoices,
-          WorkspacePermission.manageBilling,
-        }))
+        any({WorkspacePermission.viewFinances}))
       const ReportPage(
         id: 'status',
         section: ReportSection.finance,

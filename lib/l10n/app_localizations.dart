@@ -13025,6 +13025,12 @@ abstract class AppLocalizations {
   /// **'Invoicing contact telephone'**
   String get eInvoiceContactPhoneField;
 
+  /// #3881 under a document the national platform took but has not confirmed yet
+  ///
+  /// In en, this message translates to:
+  /// **'The platform has not confirmed this document yet. Ask it again later.'**
+  String get eInvoiceDocumentUnconfirmed;
+
   /// #2358 field: the electronic address
   ///
   /// In en, this message translates to:
@@ -18792,7 +18798,7 @@ abstract class AppLocalizations {
   /// #2354 place of supply: featureSupplyClassificationDesc
   ///
   /// In en, this message translates to:
-  /// **'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears and every new charge is connected with the premises.'**
+  /// **'Each catalogue service says whether it is connected with the premises (the default: taxed where the building stands, for every customer) or a general service, such as mail handling or a virtual office, that a business in another EU state self-assesses. Off: the choice disappears, except in a business that books no places, whose new services start as general services.'**
   String get featureSupplyClassificationDesc;
 
   /// #2354 place of supply: featureSupplyClassificationTitle
@@ -33780,6 +33786,12 @@ abstract class AppLocalizations {
   /// **'Reminded ×{count}'**
   String moneyRemindedTimes(int count);
 
+  /// #3627 Caption above the report actions at the desk: the month they are made for.
+  ///
+  /// In en, this message translates to:
+  /// **'Reports for {month}'**
+  String moneyReportsForMonth(String month);
+
   /// Finance/settings UX + workspace language (#486)
   ///
   /// In en, this message translates to:
@@ -41283,6 +41295,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Nothing was reverse-charged in this period.'**
   String get recapEmpty;
+
+  /// #3627 payments table column: the day the payment was matched to its invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Matched on'**
+  String get recordedPaymentsColMatched;
 
   /// Empty state of the payments list
   ///
@@ -51081,6 +51099,12 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #3627 Column header of the month's statement lines at the desk.
+  ///
+  /// In en, this message translates to:
+  /// **'Line'**
+  String get statementDeskColLine;
+
   /// #934 workspace status / repartition wizard: statusAwaiting
   ///
   /// In en, this message translates to:
@@ -51969,6 +51993,12 @@ abstract class AppLocalizations {
   /// **'General service (not connected with the premises)'**
   String get supplyClassGeneral;
 
+  /// #3864 place of supply: what the general-service choice means
+  ///
+  /// In en, this message translates to:
+  /// **'Taxed by the general rule: a business customer in another member state accounts for the VAT.'**
+  String get supplyClassGeneralMeaning;
+
   /// #2354 place of supply: supplyClassHelper
   ///
   /// In en, this message translates to:
@@ -51986,6 +52016,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Connected with the premises'**
   String get supplyClassProperty;
+
+  /// #3864 place of supply: what the premises choice means
+  ///
+  /// In en, this message translates to:
+  /// **'Taxed where the premises are.'**
+  String get supplyClassPropertyMeaning;
 
   /// Shown as the text in support bundle screen (help).
   ///
@@ -56090,6 +56126,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Booked {duration}'**
   String usageBookedDuration(String duration);
+
+  /// #3627 Column header: the part of a booking that is billed (a duration).
+  ///
+  /// In en, this message translates to:
+  /// **'Billed'**
+  String get usageColBilled;
 
   /// #833 - an accepted early-departure correction
   ///

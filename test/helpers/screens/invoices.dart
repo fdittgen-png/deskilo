@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../fake_event_repository.dart';
 import '../fake_money_repository.dart';
 import '../mock_providers.dart';
@@ -63,6 +64,7 @@ Future<FakeMoneyRepository> pumpInvoices(
   // #3680 — a test of a failed source brings its override.
   List<Override> overrides = const [],
 }) async {
+  SharedPreferences.setMockInitialValues({});
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
@@ -105,10 +107,7 @@ Future<FakeMoneyRepository> pumpInvoices(
   // many elements" as soon as the screen holds a second one — which it
   // does whenever an empty state is on it, since that block scrolls too
   // rather than overflow at large text.
-  await tester.scrollUntilVisible(
-      find.byKey(const ValueKey('invoices-button')), 200,
-      scrollable: find.descendant(of: find.byKey(const ValueKey('money-face-body-invoices')),
-          matching: find.byType(Scrollable)).first);
+  await scrollInMoneyFace(tester, find.byKey(const ValueKey('invoices-button')));
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();

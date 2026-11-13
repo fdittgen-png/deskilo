@@ -47,6 +47,25 @@ void main() {
       );
     });
 
+    test('#3881 the platform verdict is read from the row, '
+        'and a taken document without one awaits it', () {
+      InvoiceTransmission of(Object? verdict) =>
+          InvoiceTransmission.fromRow(_row()..['verdict'] = verdict);
+      expect(of({'status': 'accepted'}).documentVerdict, 'accepted');
+      expect(of({'status': 'rejected'}).documentVerdict, 'rejected');
+      expect(of({'document': 'rejected'}).documentVerdict, 'rejected');
+      expect(of(<String, Object?>{}).documentVerdict, '');
+      expect(of(null).documentVerdict, '');
+      expect(of(<String, Object?>{}).awaitsDocumentVerdict, isTrue);
+      expect(of({'status': 'accepted'}).awaitsDocumentVerdict, isFalse);
+      expect(
+        InvoiceTransmission.fromRow(_row()..['provider'] = 'generic')
+            .awaitsDocumentVerdict,
+        isFalse,
+        reason: 'the generic upload has no read-back',
+      );
+    });
+
     test('a row from before #2358 has no receipt and no format', () {
       final row = _row()
         ..remove('format')

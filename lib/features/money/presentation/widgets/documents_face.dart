@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import 'money_faces_view.dart';
 
 /// #720 — the Documents face: the paperwork that is not an invoice.
@@ -17,7 +18,11 @@ class DocumentsFaceActions extends StatelessWidget {
     this.onUsageReport,
     required this.onStatementPdf,
     required this.showDocumentLibrary,
+    this.inRow = false,
   });
+
+  /// #3627 — at the desk the actions are a tool row, not a column.
+  final bool inRow;
 
   final VoidCallback? onAgreement;
   final VoidCallback? onPaymentsReport;
@@ -68,6 +73,9 @@ class DocumentsFaceActions extends StatelessWidget {
           label: fittedLabel(l10n.featureDocuments),
         ),
     ];
+    if (inRow) {
+      return Wrap(spacing: AppSpacing.md, runSpacing: AppSpacing.md, children: buttons);
+    }
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
