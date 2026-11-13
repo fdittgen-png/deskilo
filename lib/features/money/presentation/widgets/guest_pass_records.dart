@@ -3,8 +3,8 @@
 // #3614 — the guest passes sold, as records: the guest, the pass, the
 // window from and to, how much of it is used, and the price; sorted and
 // filtered like every records table, one total per currency of what is
-// shown. A pass is revoked through its own issue (#3829): this table only
-// lists.
+// shown. #3829 — whoever sells (issueInvoices) revokes a selection here,
+// one pass after another; a revoked pass says so.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,9 +16,11 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/records_table.dart';
+import '../../../../core/ui/kit/status_chip.dart';
 import '../../domain/guest_pass.dart';
 import '../../providers/guest_pass_providers.dart';
 import '../../providers/money_providers.dart';
+import 'guest_pass_revoke.dart';
 
 /// The passes sold in [workspaceId]; [offers] name them.
 class GuestPassRecords extends ConsumerWidget {
@@ -27,6 +29,7 @@ class GuestPassRecords extends ConsumerWidget {
     required this.workspaceId,
     required this.offers,
     required this.currency,
+    this.canRevoke = false,
   });
 
   final String workspaceId;
@@ -34,6 +37,9 @@ class GuestPassRecords extends ConsumerWidget {
 
   /// The space's currency: every pass is sold in it.
   final MoneyFormat currency;
+
+  /// #3829 — whether the reader may revoke (issueInvoices, as to sell).
+  final bool canRevoke;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -69,6 +75,25 @@ class GuestPassRecords extends ConsumerWidget {
       ),
       initialQuery: const RecordsQuery(sortColumn: 'from', ascending: false),
       amountOf: (p) => (currency: currency.code, minor: p.amountCents),
+      bulkActions: [
+        if (canRevoke)
+          RecordBulkAction(
+            id: 'revoke',
+            label: l10n.guestPassRevokeSelected,
+            icon: Icons.block_outlined,
+            onRun: (keys) => revokeGuestPasses(
+              context,
+              commands: ref.read(guestPassCommandsProvider),
+              onRevoked: () => ref.invalidate(guestPassesSoldProvider(workspaceId)),
+              workspaceId: workspaceId,
+              passes: [
+                for (final p in rows)
+                  if (keys.contains(p.id) && !p.revoked) p,
+              ],
+              holder: holder,
+            ),
+          ),
+      ],
       formatAmount: (_, minor) => currency.formatMinor(minor),
       columns: [
         RecordColumn(
@@ -109,6 +134,22 @@ class GuestPassRecords extends ConsumerWidget {
           cell: (_, p) => Text(l10n.noteRefFilterCount(used(p), p.units)),
         ),
         RecordColumn(
+          id: 'state',
+          label: l10n.guestPassState,
+          flex: 2,
+          sortKey: (p) => p.revoked ? 1 : 0,
+          cell: (_, p) => p.revoked
+              ? Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: StatusChip(
+                    key: ValueKey('guest-pass-revoked-${p.id}'),
+                    label: l10n.guestPassRevoked,
+                    tone: StatusTone.neutral,
+                  ),
+                )
+              : const SizedBox.shrink(),
+        ),
+        RecordColumn(
           id: 'price',
           label: l10n.servicesPrice,
           numeric: true,
@@ -128,6 +169,7 @@ class GuestPassRecords extends ConsumerWidget {
             Text(lastDay(p)),
             Text(l10n.guestPassUsed),
             Text(l10n.noteRefFilterCount(used(p), p.units)),
+            if (p.revoked) Text(l10n.guestPassRevoked),
           ],
         ),
         trailing: Text(currency.formatMinor(p.amountCents)),

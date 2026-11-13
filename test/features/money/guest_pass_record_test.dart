@@ -66,4 +66,30 @@ void main() {
     expect(hours.usedAt(DateTime.utc(2026, 11, 2, 8), _dayOf), 0);
     expect(hours.usedAt(DateTime.utc(2026, 11, 2, 10), _dayOf), 3);
   });
+
+  // #3829 — a revoked pass used what its revocation did not cancel.
+  test('a revoked pass used the bookings it kept', () {
+    GuestPassRecord revoked(GuestPassUnit unit, int units, int cancelled) => GuestPassRecord(
+      id: 'p',
+      memberId: 'm',
+      offerId: 'o',
+      unit: unit,
+      units: units,
+      amountCents: 0,
+      startsAt: DateTime.utc(2026, 11, 2, 8),
+      endsAt: DateTime.utc(2026, 11, 4, 18),
+      revokedAt: DateTime.utc(2026, 11, 2, 12),
+      cancelledBookings: cancelled,
+    );
+    final late = DateTime.utc(2026, 12, 2);
+    expect(revoked(GuestPassUnit.day, 3, 2).usedAt(late, _dayOf), 1);
+    expect(revoked(GuestPassUnit.day, 3, 3).usedAt(late, _dayOf), 0);
+    expect(revoked(GuestPassUnit.hour, 4, 1).usedAt(late, _dayOf), 0);
+    expect(revoked(GuestPassUnit.hour, 4, 0).usedAt(late, _dayOf), 4);
+    expect(GuestPassRecord.fromJson({
+      'id': 'p', 'member_id': 'm', 'offer_id': 'o', 'unit': 'day', 'units': 3,
+      'amount_cents': 0, 'starts_at': '2026-11-02T08:00:00Z', 'ends_at': '2026-11-04T18:00:00Z',
+      'revoked_at': '2026-11-02T12:00:00Z', 'revoked_reservation_ids': ['a', 'b'],
+    }).usedAt(late, _dayOf), 1);
+  });
 }

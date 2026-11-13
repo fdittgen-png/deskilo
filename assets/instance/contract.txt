@@ -3270,6 +3270,7 @@ routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_
 routine public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6386a82bf7d4
 routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad7fded4fe08
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
+routine public.revoke_guest_pass(p_workspace_id uuid, p_pass_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8f32c8e57c8c
 routine public.revoke_handover(p_member_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:49d76bb89b5d
 routine public.revoke_hmrc_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:83fa286451e9
 routine public.revoke_kiosk_device_v1(p_device_id uuid) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:b5503efd3f4e

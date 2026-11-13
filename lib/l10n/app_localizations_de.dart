@@ -12330,6 +12330,76 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassProblemNoSeat => 'Wählen Sie einen Platz.';
 
   @override
+  String get guestPassRevokeAction => 'Widerrufen';
+
+  @override
+  String guestPassRevokeCancelled(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Buchungen storniert',
+      one: '$count Buchung storniert',
+      zero: 'Keine Buchung storniert',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeConfirmBody =>
+      'Ihre noch nicht begonnenen Buchungen werden storniert; bereits begonnene Tage bleiben. Es fließt kein Geld: Korrigieren Sie die Rechnung auf ihrer Seite, per Gutschrift oder Storno.';
+
+  @override
+  String guestPassRevokeConfirmTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Diese $count Pässe widerrufen?',
+      one: '$count Pass widerrufen?',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeFailed => 'Der Server hat ihn nicht widerrufen.';
+
+  @override
+  String get guestPassRevokeNotDone => 'Nicht widerrufen';
+
+  @override
+  String get guestPassRevokeResultSubtitle =>
+      'Bekommt ein Gast Geld zurück, korrigieren Sie seine Rechnung auf ihrer Seite.';
+
+  @override
+  String guestPassRevokeResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Pässe widerrufen',
+      one: '$count Pass widerrufen',
+      zero: 'Kein Pass widerrufen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String guestPassRevokeSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Pässe widerrufen',
+      one: '$count Pass widerrufen',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get guestPassRevokeStays =>
+      'Diese Pässe bleiben, wie sie waren, mit ihren Buchungen.';
+
+  @override
+  String get guestPassRevoked => 'Widerrufen';
+
+  @override
   String get guestPassSaleFailed =>
       'Der Pass konnte nicht verkauft werden. Der Platz ist vielleicht belegt oder das Zeitfenster liegt außerhalb der Öffnungszeiten.';
 
@@ -12350,6 +12420,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String guestPassSold(String total, String name) {
     return 'Pass verkauft: $total, in Rechnung gestellt an $name.';
   }
+
+  @override
+  String get guestPassState => 'Status';
 
   @override
   String get guestPassTo => 'Bis';

@@ -7,6 +7,8 @@
 // and issues its own invoice to the guest, and files the payment as a
 // pending request when the money was taken. The same request id never
 // sells twice. Nothing leaves the visitor's session: no money moves.
+// #3829 — a revoked pass cancels its bookings not started yet, as
+// revoke_guest_pass (0749) does; the same request id never acts twice.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
@@ -14,6 +16,7 @@ import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 import '../../../features/money/domain/guest_pass.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/plan/domain/seat.dart';
+import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../text/collation.dart';
 import 'money/demo_member_account_commands.dart';
@@ -46,6 +49,9 @@ class FakeGuestPassRepository implements GuestPassRepository {
   final List<Seat> Function() floorPlanSeats;
   final List<GuestPassOffer> offerList;
   final Map<String, GuestPassSale> sales = {};
+
+  /// #3829 — the request that revoked each pass, and what it cancelled.
+  final Map<String, ({String requestId, int cancelled})> revocations = {};
 
   /// #3614 — the passes sold in this visit, the latest first.
   final List<GuestPassRecord> records = [];
@@ -246,5 +252,47 @@ class FakeGuestPassRepository implements GuestPassRepository {
     sales[requestId] = sale;
     _keep(sale, offer, draft);
     return sale;
+  }
+
+  @override
+  Future<int> revoke(
+    String workspaceId, {
+    required String passId,
+    required String requestId,
+  }) async {
+    if (!maySell()) {
+      throw const PostgrestException(message: 'not allowed to revoke a guest pass', code: 'DKN01');
+    }
+    final i = records.indexWhere((p) => p.id == passId);
+    if (i < 0) throw StateError('unknown guest pass');
+    final done = revocations[passId];
+    if (done != null) {
+      if (done.requestId == requestId) return done.cancelled;
+      throw const PostgrestException(message: 'this guest pass is already revoked', code: 'DKD01');
+    }
+    final sale = sales.values.firstWhere((s) => s.passId == passId);
+    final at = now();
+    var cancelled = 0;
+    for (final id in sale.reservationIds) {
+      final r = reservations.reservations.where((r) => r.id == id).firstOrNull;
+      if (r == null || r.status != ReservationStatus.reserved || !r.startsAt.isAfter(at)) continue;
+      await reservations.cancel(id);
+      cancelled++;
+    }
+    final p = records[i];
+    records[i] = GuestPassRecord(
+      id: p.id,
+      memberId: p.memberId,
+      offerId: p.offerId,
+      unit: p.unit,
+      units: p.units,
+      amountCents: p.amountCents,
+      startsAt: p.startsAt,
+      endsAt: p.endsAt,
+      revokedAt: at,
+      cancelledBookings: cancelled,
+    );
+    revocations[passId] = (requestId: requestId, cancelled: cancelled);
+    return cancelled;
   }
 }

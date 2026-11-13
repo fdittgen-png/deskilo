@@ -1,0 +1,15 @@
+{
+  "@@locale": "fr",
+  "guestPassRevokeSelected": "{count, plural, one{Révoquer {count} pass} other{Révoquer {count} pass}}",
+  "guestPassRevokeConfirmTitle": "{count, plural, one{Révoquer {count} pass ?} other{Révoquer ces {count} pass ?}}",
+  "guestPassRevokeConfirmBody": "Leurs réservations pas encore commencées sont annulées ; les jours déjà commencés restent. Aucun argent ne bouge : corrigez la facture sur sa page, par un avoir ou une annulation.",
+  "guestPassRevokeAction": "Révoquer",
+  "guestPassRevoked": "Révoqué",
+  "guestPassState": "État",
+  "guestPassRevokeResultTitle": "{count, plural, =0{Aucun pass révoqué} one{{count} pass révoqué} other{{count} pass révoqués}}",
+  "guestPassRevokeResultSubtitle": "Si un invité doit être remboursé, corrigez sa facture sur sa page.",
+  "guestPassRevokeCancelled": "{count, plural, =0{Aucune réservation annulée} one{{count} réservation annulée} other{{count} réservations annulées}}",
+  "guestPassRevokeNotDone": "Non révoqués",
+  "guestPassRevokeStays": "Ces pass restent tels quels, avec leurs réservations.",
+  "guestPassRevokeFailed": "Le serveur ne l'a pas révoqué."
+}
