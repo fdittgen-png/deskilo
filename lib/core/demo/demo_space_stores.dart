@@ -311,7 +311,7 @@ DemoEmptySpaceStores leipzigStores(
   FakeBookProfileRepository(
     money: fixture.secondSpace.money,
     purchases: purchasing.purchases,
-    country: 'DE',
+    country: fixture.secondSpace.workspaces.workspaces.first.countryCode,
   ),
 );
 
