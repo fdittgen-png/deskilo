@@ -46,6 +46,7 @@ class GuestPassRecords extends ConsumerWidget {
     final dayOf = ref.watch(invoicingBusinessProvider).dayOf;
     int used(GuestPassRecord p) => p.usedAt(now, dayOf);
     String day(DateTime instant) => dates.format(dayOf(instant));
+    String lastDay(GuestPassRecord p) => dates.format(p.lastDay(dayOf));
     final offerNames = {for (final o in offers) o.id: o.name};
     final rows = read.value ?? const <GuestPassRecord>[]; // empty-ok: the table shows loading or failed while it is not read
     String holder(GuestPassRecord p) => names[p.memberId] ?? '';
@@ -99,7 +100,7 @@ class GuestPassRecords extends ConsumerWidget {
           label: l10n.guestPassTo,
           flex: 2,
           sortKey: (p) => p.endsAt,
-          cell: (_, p) => Text(day(p.endsAt)),
+          cell: (_, p) => Text(lastDay(p)),
         ),
         RecordColumn(
           id: 'used',
@@ -124,7 +125,7 @@ class GuestPassRecords extends ConsumerWidget {
           children: [
             Text(offerNames[p.offerId] ?? ''),
             Text(day(p.startsAt)),
-            Text(day(p.endsAt)),
+            Text(lastDay(p)),
             Text(l10n.guestPassUsed),
             Text(l10n.noteRefFilterCount(used(p), p.units)),
           ],
