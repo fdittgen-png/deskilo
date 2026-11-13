@@ -144,77 +144,40 @@ import 'data/workbook_origin_repository.dart';
 import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
+import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
-import 'seed/demo_london_seed.dart';
-import 'seed/demo_new_york_seed.dart';
 import 'seed/demo_reachable_seed.dart';
-import 'seed/demo_second_space_seed.dart';
-import 'seed/demo_twin_seed.dart';
 
 /// The setup guide over each space's own fixture: Pézenas holds what
-/// every step names, Leipzig what a space a few weeks old holds.
-DemoSetupRepository _setupGuide(DemoFixture fixture) {
+/// every step names, Leipzig what a space a few weeks old holds. A space's
+/// sources are made when its guide is read (#3846).
+DemoSetupRepository _setupGuide(DemoFixture fixture) => DemoSetupRepository(
+  rows: fixture.workspaces,
+  sourcesOf: (id) {
+    final key = DemoSpaceKey.values.where((k) => k.id == id).firstOrNull;
+    if (key == null) return null;
+    final space = fixture.space(key);
+    return DemoSetupSources(
+      space: space.workspaces,
+      plan: space.floorPlan,
+      reservations: space.reservations,
+      money: space.money,
+      events: space.events,
+      books: key == DemoSpaceKey.home ? _mainSetupBooks(fixture) : null,
+      decided: key == DemoSpaceKey.home ? demoMainSpaceDecidedEvidence : const {},
+    );
+  },
+  acknowledged: {'ws-1': demoMainSpaceMarkedDone},
+);
+
+DemoSetupBooks _mainSetupBooks(DemoFixture fixture) {
   final main = fixture.stores.home;
-  final second = fixture.secondSpace;
-  return DemoSetupRepository(
-    rows: fixture.workspaces,
-    spaces: {
-      'ws-1': DemoSetupSources(
-        space: fixture.workspaces,
-        plan: fixture.floorPlan,
-        reservations: fixture.reservations,
-        money: fixture.money,
-        events: fixture.events,
-        books: DemoSetupBooks(
-          suppliers: main.buying.suppliers,
-          leases: main.figures.contracts.lease,
-          assets: main.figures.contracts.assets,
-          books: main.books,
-          directory: fixture.directory,
-        ),
-        decided: demoMainSpaceDecidedEvidence,
-      ),
-      demoSecondSpaceId: DemoSetupSources(
-        space: second.workspaces,
-        plan: second.floorPlan,
-        reservations: second.reservations,
-        money: second.money,
-        events: second.events,
-      ),
-      demoLondonSpaceId: DemoSetupSources(
-        space: fixture.london.workspaces,
-        plan: fixture.london.floorPlan,
-        reservations: fixture.london.reservations,
-        money: fixture.london.money,
-        events: fixture.london.events,
-      ),
-      demoNewYorkSpaceId: DemoSetupSources(
-        space: fixture.newYork.workspaces,
-        plan: fixture.newYork.floorPlan,
-        reservations: fixture.newYork.reservations,
-        money: fixture.newYork.money,
-        events: fixture.newYork.events,
-      ),
-      // #3832 — the trade cities' guides read their own stores.
-      for (final city in [fixture.zurich, fixture.milan])
-        city.city.id: DemoSetupSources(
-          space: city.workspaces,
-          plan: city.floorPlan,
-          reservations: city.reservations,
-          money: city.money,
-          events: city.events,
-        ),
-      // #3302 — the twin's guide reads its own (copied) plan and its own,
-      // empty activity: what a development side holds before a rehearsal.
-      demoTwinSpaceId: DemoSetupSources(
-        space: fixture.twin.workspaces,
-        plan: fixture.twin.floorPlan,
-        reservations: fixture.twin.reservations,
-        money: fixture.twin.money,
-        events: fixture.twin.events,
-      ),
-    },
-    acknowledged: {'ws-1': demoMainSpaceMarkedDone},
+  return DemoSetupBooks(
+    suppliers: main.buying.suppliers,
+    leases: main.figures.contracts.lease,
+    assets: main.figures.contracts.assets,
+    books: main.books,
+    directory: fixture.directory,
   );
 }
 
@@ -412,13 +375,8 @@ const _kDemoInstallationId = kDemoInstallationId;
 /// chosen spaces are named by network reference, the two demo spaces.
 FakeMeRepository _demoMe(DemoFixture fixture) => FakeMeRepository(
       homeInstallationId: _kDemoInstallationId,
-      spaceLabels: {
-        for (final w in [
-          ...fixture.workspaces.workspaces,
-          ...fixture.secondSpace.workspaces.workspaces,
-        ])
-          w.id: w.name,
-      },
+      // The one list holds every space's row.
+      spaceLabels: {for (final w in fixture.workspaces.workspaces) w.id: w.name},
     );
 
 /// #2472 — this server's directory is both spaces' cast, read at each

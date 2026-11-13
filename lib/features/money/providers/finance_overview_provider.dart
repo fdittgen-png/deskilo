@@ -390,7 +390,7 @@ DateTime financeNow(Ref ref) {
   final invoices = ref.watch(financeOverviewProvider).value?.invoices;
   final zones = {
     for (final i in invoices ?? const <FinanceInvoice>[])
-      if (i.state.toPay) i.timezone,
+      if (i.toPay) i.timezone,
   };
   for (final zone in zones) {
     ref.watch(businessTodayProvider(zone));

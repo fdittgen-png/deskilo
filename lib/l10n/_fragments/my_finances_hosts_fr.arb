@@ -4,5 +4,6 @@
   "financesAmountMasked": "{currency} ••••",
   "financesAmountHidden": "Montant masqué",
   "financesShowAmount": "Afficher le montant",
-  "financesHideAmount": "Masquer le montant"
+  "financesHideAmount": "Masquer le montant",
+  "financesCoverageOlderSettled": "Les documents payés plus anciens ne sont pas listés ; tout ce qui reste à payer l'est."
 }

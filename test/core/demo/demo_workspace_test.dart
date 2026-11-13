@@ -16,9 +16,14 @@ import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/purchase_draft.dart';
 import 'package:deskilo/features/money/providers/bank_statement_providers.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
+import 'package:deskilo/features/money/providers/customer_statement_providers.dart';
+import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/workspace/domain/cost_allocation.dart';
+import 'package:deskilo/features/workspace/domain/cost_allocation_rules.dart';
+import 'package:deskilo/features/workspace/providers/cost_allocation_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
     show SupplierDraft;
 import 'package:flutter/material.dart';
@@ -180,6 +185,23 @@ void main() {
     await scope
         .read(bookPeriodRepositoryProvider)
         .reopen('ws-1', period.id, 'a visitor reopens it');
+    // #3846 — a cost-allocation rule, a guest pass and the customer statement
+    // reader are the space's too: kept across a switch of persona.
+    final level = (await scope.read(floorPlanRepositoryProvider).fetchLevels('ws-1')).first;
+    await scope.read(costAllocationRepositoryProvider).save(
+      'ws-1',
+      ruleId: null,
+      expectedRevision: 0,
+      draft: AllocationRuleDraft(
+        category: 'Cleaning',
+        effectiveFrom: DateTime(2026),
+        basis: 'floor area',
+        weights: [AllocationWeight(resourceKind: 'level', resourceId: level.id, weight: 1)],
+      ),
+      requestId: 'req-3846',
+    );
+    final passes = scope.read(guestPassRepositoryProvider);
+    final statements = scope.read(customerStatementReaderProvider);
     final bank = scope.read(bankStatementRepositoryProvider)
         as FakeBankStatementRepository;
     final statement = (await bank.fetchStatements('ws-1')).first;
@@ -220,6 +242,13 @@ void main() {
         isNot(BankLineStatus.open),
         reason: 'the matched bank line is still matched',
       );
+      expect(
+        (await scope.read(costAllocationRepositoryProvider).rules('ws-1')).map((r) => r.category),
+        contains('Cleaning'),
+        reason: 'the cost-allocation rule is still there',
+      );
+      expect(scope.read(guestPassRepositoryProvider), same(passes), reason: 'the guest passes are the space\'s');
+      expect(scope.read(customerStatementReaderProvider), same(statements));
     }
 
     await expectKept();
@@ -248,6 +277,13 @@ void main() {
           .closed,
       isTrue,
     );
+    expect(
+      await scope.read(costAllocationRepositoryProvider).rules('ws-1'),
+      isEmpty,
+      reason: 'a Reset gives the seeded rules, none',
+    );
+    expect(scope.read(guestPassRepositoryProvider), isNot(same(passes)));
+    expect(scope.read(customerStatementReaderProvider), isNot(same(statements)));
   });
 
   testWidgets('the bar says what this space is, for a screen reader too', (

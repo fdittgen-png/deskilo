@@ -3075,6 +3075,7 @@
   "bookRoleExpenses": "Aufwand",
   "bookRoleFees": "Gebühren des Zahlungsdienstes",
   "bookRoleFixedAssets": "Anlagevermögen (Ausstattung)",
+  "bookRoleMappedUnreadable": "Einem Konto zugeordnet, das diese Version der App nicht lesen kann.",
   "bookRolePrepayments": "Aktive Rechnungsabgrenzung",
   "bookRoleRevenue": "Erlöse",
   "bookRoleStock": "Vorräte (Handelswaren)",
@@ -7418,6 +7419,10 @@
   "@featureWorkspaceVocabularyTitle": {
     "description": "#1277 workspace vocabulary: the feature switch title"
   },
+  "featuresColDepends": "Hängt ab von",
+  "featuresColDoes": "Was sie tut",
+  "featuresColFeature": "Funktion",
+  "featuresColState": "An oder aus",
   "featuresFilterChanged": "Geändert",
   "featuresNoMatch": "Keine Funktion passt dazu.",
   "featuresSearchLabel": "Funktionen durchsuchen",
@@ -7668,6 +7673,7 @@
   "financesCoverageAnswered": "Gelesen von {host}",
   "financesCoverageHome": "Ihre Heiminstallation",
   "financesCoverageNoDocuments": "keine Dokumente",
+  "financesCoverageOlderSettled": "Ältere bezahlte Dokumente sind nicht aufgeführt; alles, was noch zu zahlen ist, schon.",
   "financesCoverageReading": "{host} wird gelesen …",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 Dokument} other{{count} Dokumente}}",
   "financesDevSection": "Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt",
@@ -10461,6 +10467,7 @@
   "journalSafTRefused": "Die SAF-T-Datei wurde nicht erstellt: {gaps}",
   "journalSageRefused": "Die Sage-50-Datei wurde nicht geschrieben: {reasons}",
   "journalSwissTaxCodes": "Für diese Satzgruppen gibt es in den Steuergrundlagen keinen MWST-Code; es wurde nichts geschrieben. Erfassen Sie zuerst ihre Codes: {keys}",
+  "journalUnreadableEntries": "{count, plural, one{Die Bücher enthalten 1 Eintrag, den diese Version der App nicht kennt; deshalb wird nichts exportiert. Aktualisiere zuerst die App.} other{Die Bücher enthalten {count} Einträge, die diese Version der App nicht kennt; deshalb wird nichts exportiert. Aktualisiere zuerst die App.}}",
   "journeyClosedPaid": "Bezahlt am {date} — abgeschlossen",
   "@journeyClosedPaid": {
     "placeholders": {
@@ -16781,6 +16788,7 @@
   "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei.",
   "reservationNoteRecordedAfterEnd": "Nach dem Ende dieses Zeitraums erfasst, daher als vergangener Besuch erhalten.",
   "reservationRecurring": "Wiederkehrende Reservierung",
+  "reservationUnreadable": "Diese Buchung gibt es, aber diese Version der App kann sie nicht anzeigen. Aktualisiere die App, um sie zu sehen.",
   "reservationUpdatedSnack": "Reservierung aktualisiert.",
   "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen.",
   "reserveBackToNow": "Zurück zu jetzt",
@@ -20801,6 +20809,7 @@
     "description": "#2359: ukOptionToTaxReference"
   },
   "unblockAction": "Blockierung aufheben",
+  "unreadableRowsNotice": "{count, plural, one{1 Eintrag konnte nicht angezeigt werden: Diese Version der App kennt ihn nicht. Aktualisiere die App, um ihn zu sehen.} other{{count} Einträge konnten nicht angezeigt werden: Diese Version der App kennt sie nicht. Aktualisiere die App, um sie zu sehen.}}",
   "unsavedChangesBody": "Ihre Änderungen auf dieser Seite sind noch nicht gespeichert.",
   "unsavedChangesDiscard": "Änderungen verwerfen",
   "unsavedChangesKeep": "Weiter bearbeiten",
@@ -22409,6 +22418,7 @@
   "workspaceDeskTransparencyTitle": "Tisch-Transparenz",
   "workspaceExcelExport": "Daten exportieren (Excel)",
   "workspaceExcelExportSubtitle": "Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.",
+  "workspaceExportUnreadableBookings": "{count, plural, one{1 Buchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.} other{{count} Buchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.}}",
   "workspaceFieldsOptional": "optional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

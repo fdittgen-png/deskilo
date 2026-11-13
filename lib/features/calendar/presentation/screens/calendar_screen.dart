@@ -18,6 +18,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/availability_unavailable_banner.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/motion.dart';
 import '../../../../core/ui/view_toggle.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -403,6 +404,7 @@ class _CalendarScreenState extends ConsumerState<CalendarScreen> {
         // #606 — the calendar's contextual how-to; gated in the widget.
         // #611 — eased in/out at the call site instead of popping.
         const MotionReveal(child: HelpHint(HelpHintId.calendar)),
+        const UnreadableRowsNotice(areas: [reservationsArea]), // #3884
         _monthNavigator(l10n),
         _whoseAndView(l10n),
         _monthCard(visible, myMember?.id),

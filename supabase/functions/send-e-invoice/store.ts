@@ -92,7 +92,14 @@ export interface TransmissionStore {
   workspaceEnvironment(workspaceId: string): Promise<string>;
   invoice(
     id: string,
-  ): Promise<{ id: string; number: string; workspace_id: string } | null>;
+  ): Promise<
+    {
+      id: string;
+      number: string;
+      workspace_id: string;
+      voided_at?: string | null;
+    } | null
+  >;
   profileName(userId: string): Promise<string>;
   transmission(id: string): Promise<TransmissionRow | null>;
   expire(workspaceId: string): Promise<void>;
@@ -200,7 +207,8 @@ export function supabaseStore(admin: SupabaseClient): TransmissionStore {
     },
     async invoice(id) {
       const { data } = await admin.from("invoices")
-        .select("id, number, workspace_id").eq("id", id).maybeSingle();
+        .select("id, number, workspace_id, voided_at").eq("id", id)
+        .maybeSingle();
       return data ?? null;
     },
     async profileName(userId) {

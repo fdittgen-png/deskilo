@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/feature_lifecycle.dart';
@@ -17,6 +18,7 @@ import '../widgets/feature_capability_list.dart';
 import '../widgets/feature_maturity_badge.dart';
 import '../widgets/feature_switch_flow.dart';
 import '../widgets/features_filter_bar.dart';
+import '../widgets/features_table.dart';
 import '../widgets/features_view_switch.dart';
 import '../widgets/process_overview.dart';
 
@@ -38,7 +40,8 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
   final _search = TextEditingController();
   String _query = '';
   bool _changedOnly = false;
-  bool _switches = false;
+  /// Null until chosen: the desk opens on the table, a phone on the overview.
+  bool? _switches;
   var _maturity = FeatureMaturityFilter.all;
 
   /// A feature tapped on the overview, shown among the switches — the
@@ -87,6 +90,9 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
       ),
     );
 
+    final desk =
+        WindowClass.of(context).index >= WindowClass.expanded.index;
+    final switches = _switches ?? desk;
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.featuresTitle),
@@ -98,14 +104,28 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
               children: [
                 FeaturesViewSwitch(
                   key: const ValueKey('features-features-view-switch'),
-                  switches: _switches,
+                  switches: switches,
                   onChanged: (value) => setState(() => _switches = value),
                 ),
-                if (!_switches)
+                if (!switches)
                   Expanded(
                     child: ProcessOverview(
                       raw: raw,
                       onOpenFeature: (f) => _openFeature(featureName(l10n, f)),
+                    ),
+                  )
+                // #3619 — at the desk the switches are a records table.
+                else if (desk)
+                  Expanded(
+                    child: FeaturesTable(
+                      key: const ValueKey('features-table'),
+                      raw: raw,
+                      country: workspace.countryCode,
+                      onChanged: (feature, {required value}) =>
+                          switchWorkspaceFeature(context, ref,
+                              workspace: workspace, enabled: raw,
+                              feature: feature, value: value,
+                              assessments: widget.assessments),
                     ),
                   )
                 else ...[

@@ -9,7 +9,6 @@
 // being looked at (`demo_space_routing.dart`). The list of spaces is the
 // one thing both share: `workspaces.workspaces` is the same list, so a
 // change made to the Leipzig row is the change Me › Home lists.
-import '../../features/workspace/domain/workspace.dart';
 import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
@@ -24,11 +23,13 @@ import 'data/plan_resource_repository.dart';
 import 'data/workspace_fields_repository.dart';
 import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
+import 'demo_space_listing.dart';
+import 'demo_spaces.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_second_space_money_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 
-class DemoSecondSpaceData {
+class DemoSecondSpaceData implements DemoSpaceParts {
   DemoSecondSpaceData._({
     required this.workspaces,
     required this.floorPlan,
@@ -38,17 +39,27 @@ class DemoSecondSpaceData {
     required this.money,
   });
 
-  /// Seeds the Leipzig space beside [home], whose list of spaces it joins.
-  /// [actor] is the member the session acts as, read on every call.
-  factory DemoSecondSpaceData.build({
+  /// #3846 — Leipzig's row and people, beside [home], whose list of spaces
+  /// it joins: what the switcher needs at the start.
+  static DemoSpaceListing list({
     required FakeWorkspaceRepository home,
-    required String Function() actor,
     required DateTime now,
   }) {
     final space = FakeWorkspaceRepository(workspaces: home.workspaces);
     home.workspaces.add(demoSecondSpace());
     seedLeipzigPeople(space);
     seedLeipzigSpaceLife(space, now);
+    return DemoSpaceListing(demoSecondSpaceId, space, home);
+  }
+
+  /// Seeds the rest of Leipzig over its [listing]. [actor] is the member the
+  /// session acts as, read on every call.
+  factory DemoSecondSpaceData.build({
+    required DemoSpaceListing listing,
+    required String Function() actor,
+    required DateTime now,
+  }) {
+    final space = listing.workspaces;
     final plan = FakeFloorPlanRepository();
     seedLeipzigPlan(plan);
     final reservations = RightsCheckedReservationRepository(actor: actor);
@@ -88,45 +99,32 @@ class DemoSecondSpaceData {
     return data;
   }
 
+  @override
   final FakeWorkspaceRepository workspaces;
+  @override
   final FakeFloorPlanRepository floorPlan;
+  @override
   final RightsCheckedReservationRepository reservations;
+  @override
   final FakeEventRepository events;
+  @override
   final FakeCalendarRepository calendar;
+  @override
   final FakeMoneyRepository money;
 
   /// The features a new space keeps off, so these stay empty: they exist
   /// so that nothing of the main space answers for Leipzig.
+  @override
   final credits = FakeCreditRepository();
+  @override
   final accessories = FakeAccessoryRepository();
+  @override
   final chargingStations = FakeChargingStationRepository();
+  @override
   final fields = FakeWorkspaceFields();
+  @override
   final roles = FakeWorkspaceRoles();
+  @override
   late final planResources = FakePlanResourceRepository(floorPlan);
 
-  /// The Leipzig row while the persona is not a member there.
-  Workspace? _parked;
-
-  /// Looks at Leipzig as [memberId]: their membership becomes "mine"
-  /// here and in [home]'s list of memberships. A persona with no
-  /// membership in Leipzig does not see the space at all.
-  void viewAs(String memberId, FakeWorkspaceRepository home) {
-    final rows = [workspaces.myMember, ...workspaces.otherMembers];
-    final mine = rows.where((m) => m.id == memberId).firstOrNull;
-    home.extraMyMemberships.removeWhere(
-      (m) => m.workspaceId == demoSecondSpaceId,
-    );
-    final listed = home.workspaces.indexWhere((w) => w.id == demoSecondSpaceId);
-    if (mine == null) {
-      if (listed >= 0) _parked = home.workspaces.removeAt(listed);
-      return;
-    }
-    workspaces.myMember = mine;
-    workspaces.otherMembers
-      ..clear()
-      ..addAll(rows.where((m) => m.id != mine.id));
-    home.extraMyMemberships.add(mine);
-    if (listed < 0 && _parked != null) home.workspaces.add(_parked!);
-    _parked = null;
-  }
 }

@@ -28,7 +28,8 @@ class DemoMyReservationsRepository implements MyReservationsRepository {
   });
 
   final String installationId;
-  final List<DemoReservationSource> spaces;
+  /// Read at each page, so a space is built when its bookings are asked for.
+  final Iterable<DemoReservationSource> spaces;
 
   /// The name of a space by its id, read when a page is built: the list of
   /// spaces moves with the session (a link, a persona, a reset).

@@ -17,6 +17,8 @@ import '../features/plan/domain/office.dart';
 import '../features/plan/domain/seat.dart';
 import '../features/plan/providers/floor_plan_providers.dart';
 import '../features/reservations/domain/place_feedback.dart';
+import '../features/reservations/domain/reservation.dart';
+import '../features/reservations/domain/reservation_repository.dart' show ReservationUnreadable;
 import '../features/reservations/providers/place_feedback_providers.dart';
 import '../features/reservations/providers/reservation_providers.dart';
 import '../features/workspace/domain/workspace_feature.dart';
@@ -52,9 +54,17 @@ Future<Map<String, Object?>> webMcpPlace(
   if (workspace == null) throw _notFound;
   if (reservationId != null) {
     final me = await ref.read(myMemberProvider.future);
-    final booking = await ref
-        .read(reservationRepositoryProvider)
-        .fetchById(reservationId);
+    final Reservation? booking;
+    try {
+      booking = await ref
+          .read(reservationRepositoryProvider)
+          .fetchById(reservationId);
+    } on ReservationUnreadable {
+      throw const WebMcpRefused(
+        'unreadable',
+        'This booking exists, but this version of the app cannot read it.',
+      );
+    }
     if (booking == null ||
         me == null ||
         booking.memberId != me.id ||

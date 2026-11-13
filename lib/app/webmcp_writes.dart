@@ -231,7 +231,7 @@ Future<Reservation> _ownBooking(Ref ref, Map<String, Object?> input) async {
   }
   final workspaceId = await _workspaceId(ref);
   final me = await ref.read(myMemberProvider.future);
-  final booking = await ref.read(reservationRepositoryProvider).fetchById(id);
+  final booking = await _fetchOwnable(ref, id);
   // Only the person's own booking in this workspace: an administrator's
   // wider rights are not the assistant's.
   if (booking == null ||
@@ -250,6 +250,19 @@ Future<Reservation> _ownBooking(Ref ref, Map<String, Object?> input) async {
   return booking;
 }
 
+/// The booking by id; a booking this version cannot read is refused as
+/// such (#3884), never as "no such booking".
+Future<Reservation?> _fetchOwnable(Ref ref, String id) async {
+  try {
+    return await ref.read(reservationRepositoryProvider).fetchById(id);
+  } on ReservationUnreadable {
+    throw const WebMcpRefused(
+      'unreadable',
+      'This booking exists, but this version of the app cannot read it.',
+    );
+  }
+}
+
 Future<Map<String, Object?>> _onOwnBooking(
   Ref ref,
   Map<String, Object?> input,
@@ -258,7 +271,7 @@ Future<Map<String, Object?>> _onOwnBooking(
   final before = await _ownBooking(ref, input);
   final repo = ref.read(reservationRepositoryProvider);
   await act(repo, before.id);
-  final after = await repo.fetchById(before.id);
+  final after = await _fetchOwnable(ref, before.id);
   return _view(after ?? before);
 }
 

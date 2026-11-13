@@ -10,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../core/backend/operation_context.dart';
 import '../../../core/cache/cache_store.dart';
 import '../../../core/cache/target_cache_store.dart';
+import '../../../core/data/unreadable_rows.dart';
 import '../domain/reservation.dart';
 import 'supabase_reservation_repository.dart';
 
@@ -39,19 +40,19 @@ class ContextReservationRepository extends SupabaseReservationRepository {
   final CacheStore _base;
 
   @override
-  Future<List<Reservation>> fetchWindow(
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
     String workspaceId, {
     required DateTime from,
     required DateTime to,
   }) async {
     final captured = await context();
-    if (captured == null) return const [];
+    if (captured == null) return (rows: const <Reservation>[], unreadable: 0);
     if (captured.target.workspaceId != workspaceId) {
       throw StaleWorkspaceContext(workspaceId, captured.target.workspaceId);
     }
     return SupabaseReservationRepository(
       clientFor(captured.target.installationId),
       TargetCacheStore(_base, captured.cacheNamespace),
-    ).fetchWindow(workspaceId, from: from, to: to);
+    ).fetchWindowRead(workspaceId, from: from, to: to);
   }
 }

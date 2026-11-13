@@ -19,6 +19,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/page_title.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'desk_breadcrumb.dart';
 import 'desk_scaffold.dart';
 import 'shell_app_bar.dart';
 import 'shell_destinations.dart';
@@ -196,8 +197,8 @@ class _Desk extends ConsumerWidget {
           onBranch: onBranch,
         ),
         title: ({required wraps}) =>
-            _DeskBreadcrumb(crumbs: shown, router: router, wraps: wraps),
-        titleWidth: _crumbsWidth(context, shown),
+            DeskBreadcrumb(crumbs: shown, router: router, wraps: wraps),
+        titleWidth: crumbsWidth(context, shown),
         controls: shellBarControls(context, ref, currentIndex: branch),
         path: path,
         scrim: scrim,
@@ -208,98 +209,3 @@ class _Desk extends ConsumerWidget {
     );
   }
 }
-
-/// The place on screen as the sidebar shows it: "Purchases › Suppliers".
-/// The last part is the page's place; the record shown (a member's name)
-/// comes with the page's own leaf, not here.
-class _DeskBreadcrumb extends StatelessWidget {
-  const _DeskBreadcrumb({
-    required this.crumbs,
-    required this.router,
-    required this.wraps,
-  });
-
-  final List<DeskCrumb> crumbs;
-  final GoRouter router;
-
-  /// The page's name takes a second line (#3893).
-  final bool wraps;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final muted = theme.colorScheme.onSurfaceVariant;
-    Widget part(DeskCrumb crumb, {required bool last}) {
-      final text = Text(
-        crumb.label,
-        maxLines: last && wraps ? 2 : 1,
-        overflow: TextOverflow.ellipsis,
-        style: last
-            ? null
-            : theme.textTheme.titleMedium?.copyWith(color: muted),
-      );
-      final entry = crumb.entry;
-      if (entry == null) return text;
-      // The entry's own page: from a page opened on it, the way back.
-      final route = entry.route;
-      return TextButton(
-        key: ValueKey('desk-crumb-${entry.key}'),
-        onPressed: route == null ? entry.onTap : () => router.go(route),
-        style: TextButton.styleFrom(
-          foregroundColor: last ? theme.colorScheme.onSurface : muted,
-          textStyle: last ? theme.textTheme.titleLarge : null,
-        ),
-        child: text,
-      );
-    }
-
-    return Row(
-      key: const ValueKey('desk-breadcrumb'),
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        for (final (i, crumb) in crumbs.indexed) ...[
-          if (i > 0) Icon(Icons.chevron_right, color: muted),
-          // The room is shared by the length of the names: an equal share
-          // cut the page's long name while a short group name sat in room
-          // it did not use.
-          Flexible(
-            flex: crumb.label.length + 1,
-            child: part(crumb, last: i == crumbs.length - 1),
-          ),
-        ],
-      ],
-    );
-  }
-}
-
-/// How wide the crumbs are on one line: each part in its style, a crumb that
-/// is a button with the padding of its button, a chevron between.
-double _crumbsWidth(BuildContext context, List<DeskCrumb> crumbs) {
-  final theme = Theme.of(context);
-  final scaler = MediaQuery.textScalerOf(context);
-  final direction = Directionality.of(context);
-  var width = 0.0;
-  for (final (i, crumb) in crumbs.indexed) {
-    final last = i == crumbs.length - 1;
-    final style = last
-        ? theme.textTheme.titleLarge
-        : theme.textTheme.titleMedium;
-    final painter = TextPainter(
-      text: TextSpan(text: crumb.label, style: style),
-      textDirection: direction,
-      textScaler: scaler,
-      maxLines: 1,
-    )..layout();
-    width += painter.width.ceilToDouble();
-    painter.dispose();
-    if (crumb.entry != null) width += _crumbButtonPadding;
-    if (i > 0) width += _chevronWidth;
-  }
-  return width;
-}
-
-/// The horizontal padding of a crumb's text button, both sides.
-const double _crumbButtonPadding = 24;
-
-/// The chevron between two crumbs: an icon's width.
-const double _chevronWidth = 24;
