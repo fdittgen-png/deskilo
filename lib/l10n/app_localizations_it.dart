@@ -6877,6 +6877,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'La qualità del cliente non è stata salvata.';
 
   @override
+  String customerPageBalance(String amount) {
+    return 'Saldo: $amount';
+  }
+
+  @override
   String customerPageCredit(String amount) {
     return 'Credito: $amount';
   }

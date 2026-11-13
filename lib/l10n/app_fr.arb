@@ -4274,6 +4274,7 @@
   "@customerCapacitySaveError": {
     "description": "#1916 invoice clauses: customerCapacitySaveError"
   },
+  "customerPageBalance": "Solde : {amount}",
   "customerPageCredit": "Avoir : {amount}",
   "customerPageCreditHint": "Paiements qu'aucune facture n'a encore pris.",
   "customerPageInvoices": "Factures",

@@ -10,11 +10,13 @@ import '../../../../core/time/clock.dart';
 import '../../../events/providers/event_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/unassigned_money.dart';
+import '../../domain/customer_statement.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice_commands.dart';
 import '../../providers/bank_statement_providers.dart'
     show WorkspaceFeature, enabledFeaturesSyncProvider;
 import '../../providers/credit_move_providers.dart';
+import '../../providers/customer_statement_providers.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/invoice_journey_view.dart';
 import 'invoicing_home.dart' show InvoicingSource;
@@ -167,3 +169,19 @@ final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
 /// reloading or failed): unknown is not none.
 UnassignedMoney? unassignedMoneyKnown(AsyncValue<UnassignedMoney> read) =>
     read.isLoading || read.hasError ? null : read.value;
+
+/// #3840 — one customer's statement as of today, the server's snapshot
+/// (`customer_statement_v1`): the one source of the customer page's figures
+/// (still due, not yet applied and the balance, per currency, with the open
+/// documents). Read again after every match; a failed read is not a figure.
+final customerStatementProvider = FutureProvider.autoDispose
+    .family<CustomerStatement, String>((ref, customerId) async {
+      final business = ref.watch(invoicingBusinessProvider);
+      final today = business.dayOf(ref.watch(clockProvider).now());
+      // A match or a new invoice changes the statement: read it again.
+      await ref.watch(invoicesProvider.future);
+      await ref.watch(invoiceMatchesProvider.future);
+      return ref
+          .watch(customerStatementReaderProvider)
+          .read(business.id, customerId, today);
+    });

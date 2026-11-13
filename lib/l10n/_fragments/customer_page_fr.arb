@@ -2,6 +2,7 @@
   "customerPageOwes": "Doit",
   "customerPageNothingOwed": "Rien à payer",
   "customerPageCredit": "Avoir : {amount}",
+  "customerPageBalance": "Solde : {amount}",
   "customerPageCreditHint": "Paiements qu'aucune facture n'a encore pris.",
   "customerPageInvoices": "Factures",
   "customerPageStory": "Historique",

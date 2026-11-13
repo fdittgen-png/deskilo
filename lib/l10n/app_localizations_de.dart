@@ -6889,6 +6889,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Kundeneigenschaft wurde nicht gespeichert.';
 
   @override
+  String customerPageBalance(String amount) {
+    return 'Saldo: $amount';
+  }
+
+  @override
   String customerPageCredit(String amount) {
     return 'Guthaben: $amount';
   }
