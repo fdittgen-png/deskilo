@@ -16,8 +16,6 @@
 // is traced; the reference stays in the list.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import 'package:meta/meta.dart';
-
 import '../../../core/trace/trace_logger.dart';
 
 /// `installation-uuid:workspace-uuid`, lower-case, as 0559 stamps it.
@@ -78,10 +76,6 @@ enum RefStatus {
 /// The kinds of unknown value already traced: one entry per kind, not one
 /// per row on every decode (#3884).
 final Set<String> _tracedKinds = {};
-
-/// Forgets which kinds were traced (tests).
-@visibleForTesting
-void resetTracedRefKinds() => _tracedKinds.clear();
 
 T _traced<T>(JsonReader r, String field, String wire, T fallback) {
   if (_tracedKinds.add('$field|$wire')) {

@@ -40,6 +40,31 @@ class ReservationUnreadable implements Exception {
   String toString() => 'ReservationUnreadable($reservationId)';
 }
 
+/// For a repository that cannot meet a value it does not know (the
+/// in-memory one): its reads leave nothing out.
+mixin ReadsLeaveNothingOut {
+  Future<List<Reservation>> fetchWindow(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  });
+
+  Future<List<Reservation>> fetchAllForExport(String workspaceId);
+
+  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
+    String workspaceId, {
+    required DateTime from,
+    required DateTime to,
+  }) async => (
+    rows: await fetchWindow(workspaceId, from: from, to: to),
+    unreadable: 0,
+  );
+
+  Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
+    String workspaceId,
+  ) async => (rows: await fetchAllForExport(workspaceId), unreadable: 0);
+}
+
 abstract class ReservationRepository {
   /// Active + recent reservations of the workspace intersecting
   /// [from, to). Includes all statuses so history views work.
@@ -56,15 +81,12 @@ abstract class ReservationRepository {
     String workspaceId, {
     required DateTime from,
     required DateTime to,
-  }) async => (
-    rows: await fetchWindow(workspaceId, from: from, to: to),
-    unreadable: 0,
-  );
+  });
 
   /// [fetchAllForExport] and how many reservations could not be read.
   Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
     String workspaceId,
-  ) async => (rows: await fetchAllForExport(workspaceId), unreadable: 0);
+  );
 
   /// EVERY reservation of the workspace, oldest first — the reservations
   /// and check-ins tabs of the data export (#395). Not windowed: an

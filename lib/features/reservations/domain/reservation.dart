@@ -23,9 +23,10 @@ ReservationStatus? reservationStatusFromDb(String? value) => switch (value) {
       _ => null,
     };
 
-/// #3884 -- the area under which a workspace's unreadable reservations are
-/// counted and its reservations screen says so.
-String reservationsArea(String workspaceId) => 'reservations:$workspaceId';
+/// #3884 -- the area under which the workspace's unreadable reservations are
+/// counted (per workspace: a read for another one replaces them) and every
+/// screen that draws bookings says so.
+const String reservationsArea = 'reservations';
 
 String reservationStatusToDb(ReservationStatus status) => switch (status) {
       ReservationStatus.reserved => 'reserved',

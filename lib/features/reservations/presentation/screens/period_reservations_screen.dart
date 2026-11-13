@@ -14,12 +14,12 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
-import '../widgets/unread_bookings_notice.dart';
 
 class PeriodReservationsScreen extends ConsumerWidget {
   const PeriodReservationsScreen({
@@ -87,7 +87,7 @@ class PeriodReservationsScreen extends ConsumerWidget {
         ),
         AsyncData(:final value) when value.isEmpty => Column(
           children: [
-            const UnreadBookingsNotice(), // #3884 — empty is not unreadable
+            const UnreadableRowsNotice(areas: [reservationsArea]), // #3884 — empty is not unreadable
             Expanded(
               child: EmptyState(
                 key: const ValueKey('period-reservations-empty'),
@@ -101,7 +101,7 @@ class PeriodReservationsScreen extends ConsumerWidget {
           key: const ValueKey('period-reservations'),
           padding: AppSpacing.gutterAll,
           children: [
-            const UnreadBookingsNotice(), // #3884
+            const UnreadableRowsNotice(areas: [reservationsArea]), // #3884
             for (final (i, r) in value.indexed) ...[
               if (i == 0 ||
                   WorkspaceTime.dateOf(value[i - 1].startsAt) !=

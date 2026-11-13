@@ -18,13 +18,14 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/list_detail_route.dart';
 import '../../core/storage/pane_width_store.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/kit/records_table.dart';
 import '../../features/money/application/receivables.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/presentation/invoicing/invoicing_reads.dart';
 import '../../features/money/providers/money_providers.dart';
-import '../../features/reservations/presentation/widgets/unread_bookings_notice.dart';
+import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/member_labels.dart';
@@ -155,7 +156,7 @@ class _MembersTable extends ConsumerWidget {
     // #3884 — the last visits are read from bookings; some this version
     // cannot read are not counted, and the table says so.
     return Column(
-      children: [const UnreadBookingsNotice(), Expanded(child: table)],
+      children: [const UnreadableRowsNotice(areas: [reservationsArea]), Expanded(child: table)],
     );
   }
 

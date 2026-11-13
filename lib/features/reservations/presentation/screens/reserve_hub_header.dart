@@ -28,7 +28,6 @@ import '../../../../core/motion/motion.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/unreadable_rows_notice.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../plan/providers/default_level_controller.dart';
@@ -133,8 +132,7 @@ class ReserveHubHeader extends ConsumerWidget {
         MotionReveal(child: _closedDayBanner(ref, l10n, availability)),
         const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
         // #3884 — bookings this version could not read: nothing unless some.
-        if (workspace != null)
-          UnreadableRowsNotice.area(reservationsArea(workspace.id)),
+        const UnreadableRowsNotice(areas: [reservationsArea]),
         HeaderControlRow(
             children: _viewControls(context, ref, l10n, guidanceKey, gateOn)),
         HeaderControlRow(children: _whenControls(ref, timeViews)),

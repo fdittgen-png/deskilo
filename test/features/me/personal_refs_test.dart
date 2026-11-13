@@ -99,7 +99,6 @@ void main() {
 
     test('#3884: a future status reads as none and a future freshness as '
         'unavailable, both traced; the other references stay', () {
-      resetTracedRefKinds();
       final before = TraceLogger.instance.entries.length;
       final refs = _refs([
         _ref(_home, freshness: 'local', status: 'active', label: 'One'),

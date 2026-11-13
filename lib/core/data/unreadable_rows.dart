@@ -35,16 +35,34 @@ class UnreadableRows {
   final Map<String, Map<String, Set<String>>> _reads = {};
   final Map<String, ValueNotifier<int>> _counts = {};
   final Set<String> _tracedKinds = {};
+  final Map<String, String> _scopes = {};
+  Object? _account = _noAccount;
+
+  static const Object _noAccount = Object();
+
+  /// The signed-in account is [id]: when it is not the one the counts were
+  /// read for, they are forgotten (sign-out, another person on the device).
+  void account(String? id) {
+    if (_account != _noAccount && _account != id) clear();
+    _account = id;
+  }
 
   /// Records what the read [read] of [area] left out: [ids] (with [what],
   /// the unknown value, per id, for the trace). Replaces that read's
   /// previous record, so an empty [ids] clears it. Returns how many rows
   /// this read left out.
+  ///
+  /// [scope] names what the area is read for (a workspace): a read for
+  /// another scope drops the area's reads of the previous one, so a list
+  /// never shows another workspace's count.
   int record(
     String area,
     String read,
-    Map<String, String> ids,
-  ) {
+    Map<String, String> ids, {
+    String scope = '',
+  }) {
+    if (_scopes[area] != scope) _reads[area]?.clear();
+    _scopes[area] = scope;
     for (final what in ids.values.toSet()) {
       if (_tracedKinds.add('$area|$what')) {
         TraceLogger.instance.warn(
@@ -79,6 +97,7 @@ class UnreadableRows {
   /// Forgets every count (the account changed or signed out).
   void clear() {
     _reads.clear();
+    _scopes.clear();
     _tracedKinds.clear();
     for (final n in _counts.values) {
       n.value = 0;

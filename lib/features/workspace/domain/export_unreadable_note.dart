@@ -26,3 +26,17 @@ List<XlsxSheet> withUnreadableNote(
         sheet,
   ];
 }
+
+/// #3884 -- the workspace export's workbook with the note that [count]
+/// bookings (a status this version does not know) are not in it, worded by
+/// [words], at the foot of its Reservations sheet.
+List<XlsxSheet> withBookingsNote(
+  List<XlsxSheet> sheets,
+  int count,
+  String Function(int count) words,
+) => withUnreadableNote(
+  sheets,
+  sheetName: 'Reservations',
+  count: count,
+  note: count > 0 ? words(count) : '',
+);

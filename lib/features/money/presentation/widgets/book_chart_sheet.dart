@@ -9,7 +9,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/unreadable_rows_notice.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/site.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -160,10 +160,7 @@ class _BookChartSheetState extends ConsumerState<_BookChartSheet> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,
           children: [
-            _ChartTitle(widget.issuer.name, [
-              booksAccountsArea(workspace.id),
-              booksMappingsArea(workspace.id),
-            ]),
+            _ChartTitle(widget.issuer.name, workspace.id),
             if (accounts.isEmpty)
               OutlinedButton(
                 key: const ValueKey('book-chart-suggest'),
@@ -365,10 +362,10 @@ class _RoleRow extends StatelessWidget {
 /// The sheet's title and, under it, the one line (#3884) saying accounts or
 /// mappings this version could not read were left out.
 class _ChartTitle extends StatelessWidget {
-  const _ChartTitle(this.issuerName, this.areas);
+  const _ChartTitle(this.issuerName, this.workspaceId);
 
   final String issuerName;
-  final List<String> areas;
+  final String workspaceId;
 
   @override
   Widget build(BuildContext context) => Column(
@@ -378,7 +375,12 @@ class _ChartTitle extends StatelessWidget {
         context.l10n.bookChartTitle(issuerName),
         style: Theme.of(context).textTheme.titleLarge,
       ),
-      UnreadableRowsNotice(areas: areas),
+      UnreadableRowsNotice(
+        areas: [
+          booksAccountsArea(workspaceId),
+          booksMappingsArea(workspaceId),
+        ],
+      ),
     ],
   );
 }

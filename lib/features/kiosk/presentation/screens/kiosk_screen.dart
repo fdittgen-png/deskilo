@@ -40,7 +40,6 @@ import '../../../reservations/domain/reservation_repository.dart'
 import '../../../reservations/domain/space_act.dart';
 import '../../../reservations/presentation/booking_gate_scope.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
-import '../../../reservations/presentation/widgets/unread_bookings_notice.dart';
 import '../../../reservations/providers/reservation_providers.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../../workspace/domain/member.dart';
@@ -375,9 +374,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           child: Column(
           children: [
             _header(workspace?.name ?? '', levels, level),
-            // Closed today (open weekdays / closure days): say it UP
-            // FRONT — the settings gate the whole kiosk, not the last
-            // step of a finished flow.
+            // Closed today (open weekdays / closure days): said UP FRONT.
             if (_closedToday())
               Padding(
                 padding: const EdgeInsets.symmetric(
@@ -390,7 +387,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
                 ),
               ),
             // #3884 — bookings this version cannot read are not on the wall.
-            const UnreadBookingsNotice(),
+            const UnreadableRowsNotice(areas: [reservationsArea]),
             Expanded(
               child: switch (planAsync) {
                 AsyncData(value: final plan) =>

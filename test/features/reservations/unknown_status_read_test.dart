@@ -14,11 +14,11 @@ import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/stores.dart';
 import 'package:deskilo/core/trace/trace_logger.dart';
-import 'package:deskilo/core/ui/unreadable_rows_notice.dart';
+import 'package:deskilo/core/ui/inline_banner.dart';
+import 'package:deskilo/features/reservations/data/reservation_rows.dart';
 import 'package:deskilo/features/reservations/data/supabase_reservation_repository.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
-import 'package:deskilo/features/reservations/presentation/widgets/unread_bookings_notice.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -42,11 +42,11 @@ Map<String, dynamic> _row(String id, String status) => {
       'updated_at': '2031-03-01T08:00:00+00:00',
     };
 
-const _area = 'reservations:ws-1';
+const _area = reservationsArea;
 
 ReadWithUnreadable<List<Reservation>> _read(List<Map<String, dynamic>> rows,
-        {String window = 'w1', String area = _area}) =>
-    reservationsFromRows(rows, area: area, read: window);
+        {String window = 'w1', String workspace = 'ws-1'}) =>
+    reservationsFromRows(rows, workspaceId: workspace, read: window);
 
 /// A repository over a fake PostgREST: every `reservations` select answers
 /// [rows]; the sweep is accepted.
@@ -135,15 +135,28 @@ void main() {
     expect(read.unreadable, 1);
   });
 
-  test('areas do not share a count; clearing (sign-out, account change) '
-      'forgets every one', () {
+  test('a read for another workspace replaces the previous workspace\'s '
+      'count: a list never shows another workspace\'s', () {
     _read([_row('b', 'future_state')]);
-    _read([_row('b', 'future_state')], area: 'reservations:ws-2');
-    expect(UnreadableRows.instance.count(_area), 1);
-    expect(UnreadableRows.instance.count('reservations:ws-2'), 1);
-    UnreadableRows.instance.clear();
+    _read([_row('c', 'future_state'), _row('d', 'future_state')],
+        workspace: 'ws-2');
+    expect(UnreadableRows.instance.count(_area), 2);
+    _read([_row('a', 'reserved')]);
     expect(UnreadableRows.instance.count(_area), 0);
-    expect(UnreadableRows.instance.count('reservations:ws-2'), 0);
+  });
+
+  test('another account on the device, or signing out, forgets every count',
+      () {
+    UnreadableRows.instance.account('person-1');
+    _read([_row('b', 'future_state')]);
+    UnreadableRows.instance.account('person-1');
+    expect(UnreadableRows.instance.count(_area), 1,
+        reason: 'the same person (a token refresh) keeps it');
+    UnreadableRows.instance.account(null);
+    expect(UnreadableRows.instance.count(_area), 0);
+    _read([_row('b', 'future_state')]);
+    UnreadableRows.instance.account('person-2');
+    expect(UnreadableRows.instance.count(_area), 0);
   });
 
   test('the export read returns the rows it understood AND how many it left '
@@ -173,7 +186,7 @@ void main() {
       const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,
-        home: Scaffold(body: UnreadableRowsNotice(areas: [_area])),
+        home: Scaffold(body: UnreadableRowsNotice(areas: [reservationsArea])),
       ),
     );
     expect(find.byKey(const ValueKey('unreadable-rows-notice')), findsNothing);
@@ -215,7 +228,7 @@ void main() {
         child: const MaterialApp(
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          home: Scaffold(body: UnreadBookingsNotice()),
+          home: Scaffold(body: UnreadableRowsNotice(areas: [reservationsArea])),
         ),
       ),
     );

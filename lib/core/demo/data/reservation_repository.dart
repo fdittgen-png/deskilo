@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
@@ -14,7 +13,7 @@ import 'fixture_clock.dart';
 
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
 /// and the RPC state checks (fakes over mocks).
-class FakeReservationRepository implements ReservationRepository {
+class FakeReservationRepository with ReadsLeaveNothingOut implements ReservationRepository {
   /// [_actor] — #1565: the signed-in member, READ on every call instead
   /// of captured once. Demo passes its fixture's active member, so a
   /// persona switch re-attributes the bookings that follow it; the
@@ -43,21 +42,6 @@ class FakeReservationRepository implements ReservationRepository {
   /// mirrors the canonical walk-up snap-back and the same-day presence
   /// rule only when a test sets a day-based/hours granularity.
   BookingGranularity granularity = BookingGranularity.flexible;
-
-  @override
-  Future<ReadWithUnreadable<List<Reservation>>> fetchWindowRead(
-    String workspaceId, {
-    required DateTime from,
-    required DateTime to,
-  }) async => (
-    rows: await fetchWindow(workspaceId, from: from, to: to),
-    unreadable: 0,
-  );
-
-  @override
-  Future<ReadWithUnreadable<List<Reservation>>> fetchAllForExportRead(
-    String workspaceId,
-  ) async => (rows: await fetchAllForExport(workspaceId), unreadable: 0);
 
   @override
   Future<Reservation?> fetchById(String reservationId) async =>

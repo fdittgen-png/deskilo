@@ -74,11 +74,7 @@ Future<void> exportWorkspaceExcel(
       final decisions = await ref
           .read(eventRepositoryProvider)
           .fetchDecisions(workspace.id, [for (final e in events) e.id]);
-      // #3884 -- bookings with a status this version does not know are not
-      // in the file, and the file says how many.
-      final bookings = await ref
-          .read(reservationRepositoryProvider)
-          .fetchAllForExportRead(workspace.id);
+      final bookings = await ref.read(reservationRepositoryProvider).fetchAllForExportRead(workspace.id);
       final built = [
         ...buildWorkspaceExcelExport(
         workspace: workspace,
@@ -132,12 +128,7 @@ Future<void> exportWorkspaceExcel(
         ),
       ];
 
-      final sheets = withUnreadableNote(
-        built,
-        sheetName: 'Reservations',
-        count: bookings.unreadable,
-        note: l10n.workspaceExportUnreadableBookings(bookings.unreadable),
-      );
+      final sheets = withBookingsNote(built, bookings.unreadable, l10n.workspaceExportUnreadableBookings);
 
       // #1310 — the space's own stored files travel with its rows. A
       // file that cannot be read fails the export: a copy that silently
