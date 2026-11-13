@@ -12,6 +12,7 @@ import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/seed/demo_city_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_trade_city_seed.dart';
+import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
@@ -363,6 +364,19 @@ void main() {
       });
     });
   }
+
+  // #3883 — Milan has issued through the SdI for years, so its test document
+  // was accepted and the setup guide's card says the workspace issues; Zurich
+  // routes nothing through a national channel and shows no card.
+  test('Milan issues through the SdI, its test document accepted', () async {
+    final milan = await fixture.milan.money.fetchEInvoiceTest('ws-6');
+    expect(milan.available, isTrue);
+    expect(milan.verdict, EInvoiceTestVerdict.accepted);
+    expect(fixture.milan.money.invoices, isNotEmpty,
+        reason: 'the accepted test is what lets it issue');
+    final zurich = await fixture.zurich.money.fetchEInvoiceTest('ws-5');
+    expect(zurich.available, isFalse);
+  });
 
   test('a space nobody names is not Zurich or Milan', () {
     expect(DemoLink.parse({'space': 'basel'}).workspaceId, isNull);
