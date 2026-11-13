@@ -141,6 +141,9 @@ class _GateFrame extends StatelessWidget {
     supportedLocales: AppLocalizations.supportedLocales,
     theme: DeskiloTheme.light(),
     darkTheme: DeskiloTheme.dark(),
-    home: Scaffold(body: child),
+    // No navigator: the address the visitor arrived on belongs to the Demo's
+    // own router, which takes it once the library is there. A `home` would
+    // make this frame try that address itself and report it as unknown.
+    builder: (context, _) => Scaffold(body: child),
   );
 }
