@@ -25322,6 +25322,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'In diesem Zeitraum gab es keine Steuerschuldnerschaft des Empfängers.';
 
   @override
+  String get recordedPaymentsColMatched => 'Zugeordnet am';
+
+  @override
   String get recordedPaymentsEmpty =>
       'In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.';
 

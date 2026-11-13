@@ -15276,6 +15276,7 @@
     }
   },
   "recapEmpty": "Nessuna inversione contabile in questo periodo.",
+  "recordedPaymentsColMatched": "Abbinato il",
   "recordedPaymentsEmpty": "Nessun pagamento è stato abbinato a una fattura in questo periodo.",
   "recordedPaymentsMore": "Mostra altri pagamenti",
   "recordedPaymentsOff": "Il denaro è disattivato in questo spazio.",

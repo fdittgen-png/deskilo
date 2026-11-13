@@ -40668,6 +40668,12 @@ abstract class AppLocalizations {
   /// **'Nothing was reverse-charged in this period.'**
   String get recapEmpty;
 
+  /// #3627 payments table column: the day the payment was matched to its invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Matched on'**
+  String get recordedPaymentsColMatched;
+
   /// Empty state of the payments list
   ///
   /// In en, this message translates to:

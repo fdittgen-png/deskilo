@@ -25284,6 +25284,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get recapEmpty => 'Nessuna inversione contabile in questo periodo.';
 
   @override
+  String get recordedPaymentsColMatched => 'Abbinato il';
+
+  @override
   String get recordedPaymentsEmpty =>
       'Nessun pagamento è stato abbinato a una fattura in questo periodo.';
 

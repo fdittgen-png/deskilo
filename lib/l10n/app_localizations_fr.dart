@@ -25362,6 +25362,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get recapEmpty => 'Rien n\'a été autoliquidé sur cette période.';
 
   @override
+  String get recordedPaymentsColMatched => 'Rapproché le';
+
+  @override
   String get recordedPaymentsEmpty =>
       'Aucun paiement n\'a été rapproché d\'une facture sur cette période.';
 

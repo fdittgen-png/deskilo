@@ -7503,6 +7503,7 @@ Map<String, _Getter> _part20() => {
   'questionEditorVisibility': (l) => l.questionEditorVisibility,
   'questionTypeDecimal': (l) => l.questionTypeDecimal,
   'readinessStateNotApplicable': (l) => l.readinessStateNotApplicable,
+  'recordedPaymentsColMatched': (l) => l.recordedPaymentsColMatched,
   'regionalDeviceZone': (l) => l.regionalDeviceZone,
   'reminderEmailFailed': (l) => l.reminderEmailFailed,
   'reminderQueueCheckFirst': (l) => l.reminderQueueCheckFirst,

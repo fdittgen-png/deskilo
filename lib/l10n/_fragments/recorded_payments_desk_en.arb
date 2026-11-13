@@ -1,0 +1,7 @@
+{
+  "@@locale": "en",
+  "recordedPaymentsColMatched": "Matched on",
+  "@recordedPaymentsColMatched": {
+    "description": "#3627 payments table column: the day the payment was matched to its invoice"
+  }
+}

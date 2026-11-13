@@ -25255,6 +25255,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'No hubo inversión del sujeto pasivo en este periodo.';
 
   @override
+  String get recordedPaymentsColMatched => 'Conciliado el';
+
+  @override
   String get recordedPaymentsEmpty =>
       'Ningún pago se asignó a una factura en este periodo.';
 

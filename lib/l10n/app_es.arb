@@ -15276,6 +15276,7 @@
     }
   },
   "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
+  "recordedPaymentsColMatched": "Conciliado el",
   "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",

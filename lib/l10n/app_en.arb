@@ -32938,6 +32938,10 @@
   "@recapEmpty": {
     "description": "#2354 recapitulative statement: recapEmpty"
   },
+  "recordedPaymentsColMatched": "Matched on",
+  "@recordedPaymentsColMatched": {
+    "description": "#3627 payments table column: the day the payment was matched to its invoice"
+  },
   "recordedPaymentsEmpty": "No payments were matched to an invoice in this period.",
   "@recordedPaymentsEmpty": {
     "description": "Empty state of the payments list"

@@ -25065,6 +25065,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get recapEmpty => 'Nothing was reverse-charged in this period.';
 
   @override
+  String get recordedPaymentsColMatched => 'Matched on';
+
+  @override
   String get recordedPaymentsEmpty =>
       'No payments were matched to an invoice in this period.';
 
