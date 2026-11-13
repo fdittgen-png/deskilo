@@ -46,6 +46,15 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     memberId: 'member-1',
     period: kTestPeriod,
   );
+  // #3627 — that invoice paid this month, so the payments page has a row.
+  final paid = money.invoices.single;
+  money.invoiceMatchesStore[paid.id] = InvoiceMatch(
+    invoiceId: paid.id,
+    paidCents: paid.totalCents,
+    resolution: 'exact',
+    paymentLedgerId: 'payment-1',
+    matchedAt: kTestNow,
+  );
   // #3615 — one supplier, owed one approved bill.
   final suppliers = FakeSupplierRepository();
   final supplier = await suppliers.save(
@@ -193,6 +202,8 @@ const _pages = [
   // #3616 — the books at the desk.
   ('/money/accounting', PageKind.dashboard, 'money', 'accounting'),
   ('/money/accounting/exports', PageKind.records, 'money', 'accounting-exports'),
+  // #3627 — the payments received at the desk.
+  ('/money/payments', PageKind.records, 'money', 'payments'),
   ('/vat-declarations/d1', PageKind.task, 'money', 'vat-return'),
   // #3617 — reports and analysis at the desk.
   ('/reports', PageKind.records, 'reports', 'reports'),
