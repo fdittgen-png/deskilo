@@ -25,8 +25,20 @@ export '../application/generic_journal_export.dart'
         JournalOpeningRefused,
         JournalPosted,
         JournalSafTRefused,
+        JournalUnreadable,
         journalFileOf,
         writtenWith;
+
+/// #3884 -- whether [read] says the books hold entries (or chart accounts)
+/// this build cannot read; if so the person is told how many and nothing is
+/// exported. For the exports that take the books as they are read (DATEV).
+bool refuseUnreadableBooks(BuildContext context, GenericJournal? read) {
+  if (read is! JournalUnreadable) return false;
+  if (context.mounted) {
+    AppSnack.error(context, context.l10n.journalUnreadableEntries(read.count));
+  }
+  return true;
+}
 
 /// Builds a posted file through [build] (the generic journal, or #2365 the
 /// FEC of a local book) and hands it to [save].
@@ -54,6 +66,8 @@ Future<void> exportGenericJournal(
       AppSnack.error(context, l10n.journalNeedsLocalBook);
     case JournalBlocked(:final roles):
       AppSnack.error(context, l10n.journalBlocked(roles.join(', ')));
+    case JournalUnreadable(:final count):
+      AppSnack.error(context, l10n.journalUnreadableEntries(count));
     case JournalNeedsRates(:final documents):
       AppSnack.error(context, l10n.journalNeedsRates(documents.join(', ')));
     case JournalRefused(:final blockers):

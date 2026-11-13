@@ -131,6 +131,8 @@ class ReserveHubHeader extends ConsumerWidget {
         const PendingBookingBanner(), // #1855 — nothing unless an answer is owed
         MotionReveal(child: _closedDayBanner(ref, l10n, availability)),
         const MotionReveal(child: StaleAvailabilityBanner()), // #1305 S3
+        // #3884 — bookings this version could not read: nothing unless some.
+        const UnreadableRowsNotice(areas: [reservationsArea]),
         HeaderControlRow(
             children: _viewControls(context, ref, l10n, guidanceKey, gateOn)),
         HeaderControlRow(children: _whenControls(ref, timeViews)),

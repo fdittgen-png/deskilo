@@ -151,6 +151,8 @@ class _Feed extends ConsumerWidget {
       children: [
         _WindowHeader(window: window, past: filter.tab == MyReservationsTab.past),
         _Filters(filter: filter, sources: loaded?.slots ?? const []),
+        // #3884 -- bookings this version could not read, said in one line.
+        const UnreadableRowsNotice(areas: [myReservationsArea]),
         Expanded(child: body),
       ],
     );

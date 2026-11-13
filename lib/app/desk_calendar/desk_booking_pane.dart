@@ -16,6 +16,7 @@ import '../../core/time/clock.dart';
 import '../../core/ui/empty_state.dart';
 import '../../core/ui/loading_view.dart';
 import '../../features/reservations/domain/reservation.dart';
+import '../../features/reservations/domain/reservation_repository.dart' show ReservationUnreadable;
 import '../../features/reservations/presentation/widgets/booking_range_text.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
 import '../../features/reservations/presentation/widgets/reservation_detail_sheet.dart' show showReservationDetail;
@@ -73,6 +74,12 @@ class DeskBookingPane extends ConsumerWidget {
           icon: Icons.event_busy_outlined,
           title: l10n.noteRefGone,
         ),
+        // #3884 — it exists, but this version cannot show it: not "failed".
+        AsyncError(:final error) when error is ReservationUnreadable =>
+          EmptyState(
+            icon: Icons.visibility_off_outlined,
+            title: l10n.reservationUnreadable,
+          ),
         AsyncError() => EmptyState(
           icon: Icons.error_outline,
           title: l10n.periodReservationsFailed,

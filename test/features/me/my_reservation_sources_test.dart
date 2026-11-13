@@ -50,6 +50,35 @@ void main() {
     expect(sources.last.labels, ['Leipzig'], reason: 'an unnamed space adds no name');
   });
 
+  test('#3884: a workspace of mine whose status this version does not know is '
+      'still read: unknown is not "no relationship"', () {
+    final refs = PersonalWorkspaceRefs.fromJson({
+      'home': {'installation_id': _home},
+      'refs': [
+        {
+          'network_id': '$_home:${_ws(1)}',
+          'hosted_here': true,
+          'freshness': 'local',
+          'status': 'future_status',
+          'label': 'Mine',
+        },
+        {
+          'network_id': '$_home:${_ws(2)}',
+          'hosted_here': true,
+          'freshness': 'local',
+          'status': null,
+          'label': 'Saved',
+        },
+      ],
+    });
+    expect(refs.refs.first.statusUnknown, isTrue);
+    expect(refs.refs.last.statusUnknown, isFalse);
+    final sources = myReservationSourcesOf(refs);
+    expect(sources.single.workspaceIds, [_ws(1)],
+        reason: 'the unknown-status space is read, the saved one is not');
+    expect(sources.single.labels, ['Mine']);
+  });
+
   test('a reference saved here without a relationship is not read', () {
     final sources = myReservationSourcesOf(PersonalWorkspaceRefs(
       homeInstallationId: _home,
