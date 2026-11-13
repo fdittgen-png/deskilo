@@ -9,6 +9,7 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/share/text_sharer.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -106,6 +107,18 @@ Future<void> showInviteSheet(
         identity: identity,
       ),
     );
+
+/// #3618 — the invitation of a member as a short task: a dialog at the
+/// desk, the same form as the sheet.
+Future<void> openInviteTask(BuildContext context, WidgetRef ref) async {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  if (workspace == null) return;
+  await showTask<void>(
+    context,
+    size: TaskSize.short,
+    builder: (_) => _InviteSheet(workspace: workspace, role: InviteRole.user),
+  );
+}
 
 class _InviteSheet extends ConsumerStatefulWidget {
   const _InviteSheet({

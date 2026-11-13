@@ -12,6 +12,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/text/initials.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/empty_state.dart';
@@ -28,6 +29,7 @@ import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
 import '../member_admin_actions.dart';
+import '../widgets/invite_sheet.dart';
 import '../widgets/member_note_dialog.dart';
 import '../widgets/member_roles_card.dart';
 import '../widgets/open_conversation.dart';
@@ -35,7 +37,12 @@ import '../widgets/open_conversation.dart';
 /// Owner-only member management: role overview, subscription percentage
 /// assignment (#128, ADR 0008), pause/reactivate (spec §7.2).
 class MembersScreen extends ConsumerWidget {
-  const MembersScreen({super.key});
+  const MembersScreen({super.key, this.desk, this.deskActions = const []});
+
+  /// #3618 — what a large window shows instead of the list (the members'
+  /// records table), with [deskActions] before the list's own actions.
+  final Widget? desk;
+  final List<Widget> deskActions;
 
   Future<void> _memberSheet(
     BuildContext context,
@@ -137,6 +144,20 @@ class MembersScreen extends ConsumerWidget {
     // #628 — the workspace default the per-member permission overrides.
     final policies =
         ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
+    // #3618 — at the desk the members are a records table.
+    if (desk case final body?
+        when WindowClass.of(context).index >= WindowClass.expanded.index) {
+      return Scaffold(
+        appBar: AppBar(
+          title: PageTitle(l10n.membersTitle),
+          actions: [
+            ...deskActions,
+            ..._appBarActions(context, ref, me, features, desk: true),
+          ],
+        ),
+        body: body,
+      );
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -192,7 +213,7 @@ class MembersScreen extends ConsumerWidget {
   /// permission, not literal ownership: active co-owners (0058) get the
   /// full owner surface.
   List<Widget> _appBarActions(BuildContext context, WidgetRef ref,
-      Member? me, Set<WorkspaceFeature> features) {
+      Member? me, Set<WorkspaceFeature> features, {bool desk = false}) {
     final l10n = context.l10n;
     final isOwner = me?.actsAsOwner ?? false;
     return [
@@ -230,7 +251,10 @@ class MembersScreen extends ConsumerWidget {
               key: const ValueKey('members-invite'),
               icon: const Icon(Icons.person_add_outlined),
               tooltip: l10n.membersInvite,
-              onPressed: () => context.push('/workspace-code'),
+              // #3618 — at the desk, the invitation as a short task.
+              onPressed: () => desk
+                  ? openInviteTask(context, ref)
+                  : context.push('/workspace-code'),
             ),
           if (isOwner && features.contains(WorkspaceFeature.moneyTab))
           IconButton(

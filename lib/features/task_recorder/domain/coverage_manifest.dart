@@ -483,6 +483,9 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/bi', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi/report/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/members', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/:id', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/plans', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/members/plans/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/editor', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
     '/editor/level/:levelId',
