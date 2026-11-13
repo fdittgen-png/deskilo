@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -65,11 +66,7 @@ class MyInvoicesList extends ConsumerWidget {
             ..invalidate(invoiceRemindersProvider),
         );
     if (standIn != null) return standIn;
-    final all = invoicesAsync.requireValue;
-    final invoices = all
-        .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
-        .toList()
-      ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+    final invoices = _myInvoicesOf(invoicesAsync.requireValue, memberId, fold: fold);
     final matches = matchesAsync.requireValue;
     final reminders = remindersAsync.requireValue;
     final now = ref.watch(clockProvider).now();
@@ -136,7 +133,7 @@ class MyInvoicesList extends ConsumerWidget {
     final card = Card(
       child: ListTile(
         key: ValueKey('my-invoice-${invoice.id}'),
-        onTap: () => _open(context, ref, invoice, match),
+        onTap: () => MyInvoicesList.open(context, ref, invoice, match),
         title: Wrap(
           spacing: AppSpacing.sm,
           crossAxisAlignment: WrapCrossAlignment.center,
@@ -207,15 +204,8 @@ class MyInvoicesList extends ConsumerWidget {
     );
   }
 
-  /// #3285 — the four steps only while a move is left on the invoice.
-  static List<Widget> _rail(InvoiceJourney journey) => journey.closed
-      ? const []
-      : [
-          const SizedBox(height: AppSpacing.xs),
-          InvoiceJourneyBar(journey: journey),
-        ];
-
-  Future<void> _open(
+  /// Opens [invoice] in the detail sheet the register uses, as its payer.
+  static Future<void> open(
     BuildContext context,
     WidgetRef ref,
     Invoice invoice,
@@ -242,6 +232,113 @@ class MyInvoicesList extends ConsumerWidget {
           reminder: reminder,
         ),
       ),
+    );
+  }
+
+  /// #3285 — the four steps only while a move is left on the invoice.
+  static List<Widget> _rail(InvoiceJourney journey) => journey.closed
+      ? const []
+      : [
+          const SizedBox(height: AppSpacing.xs),
+          InvoiceJourneyBar(journey: journey),
+        ];
+
+}
+
+/// #3627 — my invoices as the Invoices face lists them: issued to [memberId],
+/// voided ones and (with [fold]) regrouped sources left out, newest first.
+List<Invoice> _myInvoicesOf(List<Invoice> all, String memberId, {required bool fold}) => all
+    .where((i) => i.memberId == memberId && !i.isVoided && !(fold && i.isFolded))
+    .toList()
+  ..sort((a, b) => b.issuedAt.compareTo(a.issuedAt));
+
+/// #3627 (desk M8) — the Invoices face at the desk: my invoices as a records
+/// table — number, period, issued, status and amount, the total per currency
+/// under the amount — each opening the detail sheet the list opens.
+class MyInvoicesTable extends ConsumerWidget {
+  const MyInvoicesTable({super.key, required this.memberId});
+
+  final String memberId;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l = context.l10n;
+    final invoicesAsync = ref.watch(invoicesProvider);
+    final matchesAsync = ref.watch(invoiceMatchesProvider);
+    final standIn = ReadsAnswer.of([invoicesAsync, matchesAsync]).standIn(
+      onRetry: () => ref
+        ..invalidate(invoicesProvider)
+        ..invalidate(invoiceMatchesProvider),
+    );
+    if (standIn != null) return standIn;
+    final fold = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.settlementFold);
+    final invoices = _myInvoicesOf(
+      invoicesAsync.requireValue,
+      memberId,
+      fold: fold,
+    );
+    final matches = matchesAsync.requireValue;
+    final format = appFormatOf(context);
+    final dates = format.dates(DateShape.date);
+    String status(Invoice i) =>
+        invoiceLifecycleLabel(l, invoiceLifecycleOf(i, matches[i.id]));
+    return RecordsTable<Invoice>(
+      tableId: 'my-invoices',
+      rows: invoices,
+      keyOf: (i) => i.id,
+      searchText: (i) => '${i.number} ${invoicePeriodLabel(context, i)}',
+      onOpen: (i) => MyInvoicesList.open(context, ref, i, matches[i.id]),
+      cardBuilder: (context, i) => ListTile(
+        title: Text(i.number),
+        trailing: Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
+      ),
+      empty: Center(child: Text(l.moneyNoInvoicesYet)),
+      initialQuery: const RecordsQuery(sortColumn: 'issued', ascending: false),
+      amountOf: (i) => (currency: i.currency, minor: i.totalCents),
+      amountColumn: 'amount',
+      formatAmount: (code, minor) => format.moneyIn(code).formatMinor(minor),
+      columns: [
+        RecordColumn(
+          id: 'number',
+          label: l.invoicingColInvoice,
+          flex: 2,
+          hideable: false,
+          sortKey: (i) => i.number,
+          cell: (_, i) => Text(i.number),
+        ),
+        RecordColumn(
+          id: 'period',
+          label: l.invoiceRegisterPeriodColumn,
+          flex: 2,
+          sortKey: (i) => i.period ?? '',
+          cell: (context, i) => Text(invoicePeriodLabel(context, i)),
+        ),
+        RecordColumn(
+          id: 'issued',
+          label: l.invoiceMonthIssued,
+          flex: 2,
+          sortKey: (i) => i.issuedAt,
+          cell: (_, i) => Text(dates.format(i.issuedAt)),
+        ),
+        RecordColumn(
+          id: 'status',
+          label: l.invoicingColStatus,
+          flex: 2,
+          sortKey: status,
+          cell: (_, i) => Text(status(i)),
+        ),
+        RecordColumn(
+          id: 'amount',
+          label: l.financesColumnAmount,
+          flex: 2,
+          numeric: true,
+          sortKey: (i) => i.totalCents,
+          cell: (_, i) =>
+              Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
+        ),
+      ],
     );
   }
 }

@@ -38,6 +38,10 @@ abstract final class KitMetrics {
   /// keeps its line length on a wide window (`showTaskSurface`, #3608).
   static const double taskDialogMaxWidth = 560;
 
+  /// #3627 — the narrowest a door card is laid out on a desk grid.
+  // content-fit: a door card holds its icon, a title of two or three words and its chevron
+  static const double doorMinWidth = 240;
+
   /// The dot of a legend line.
   static const double dot = 12;
 

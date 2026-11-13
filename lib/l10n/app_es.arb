@@ -12720,6 +12720,7 @@
   "moneyPaymentPeriodLabel": "Se aplica a",
   "moneyRecordPayment": "Registrar un pago",
   "moneyRemindedTimes": "Recordada ×{count}",
+  "moneyReportsForMonth": "Informes de {month}",
   "moneySectionDocuments": "Documentos",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
@@ -15359,6 +15360,7 @@
     }
   },
   "recapEmpty": "No hubo inversión del sujeto pasivo en este periodo.",
+  "recordedPaymentsColMatched": "Conciliado el",
   "recordedPaymentsEmpty": "Ningún pago se asignó a una factura en este periodo.",
   "recordedPaymentsMore": "Mostrar más pagos",
   "recordedPaymentsOff": "El dinero está desactivado en este espacio.",
@@ -19190,6 +19192,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Reservado por usted para esta franja.",
+  "statementDeskColLine": "Línea",
   "statusAwaiting": "Pendiente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -20841,6 +20844,7 @@
   "usageAskSubmitted": "Pedido. Lo decide otra persona.",
   "usageBilledDuration": "Facturado {duration}",
   "usageBookedDuration": "Reservado {duration}",
+  "usageColBilled": "Facturado",
   "usageCorrected": "Corregido",
   "usageDelete": "Eliminar este registro",
   "usageDeleteSubmitted": "Eliminación solicitada.",

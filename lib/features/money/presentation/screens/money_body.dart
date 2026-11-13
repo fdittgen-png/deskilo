@@ -77,6 +77,7 @@ class MoneyBody extends ConsumerWidget {
             periodHeader: periodHeader,
             cards: content.cards(occurrenceCards, exposure),
             actions: content.faceActions(),
+            pages: content.pages(),
           ),
         AsyncData() => classic,
         AsyncError() => Center(

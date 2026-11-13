@@ -21128,6 +21128,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String moneyReportsForMonth(String month) {
+    return 'Report di $month';
+  }
+
+  @override
   String get moneySectionDocuments => 'Documenti';
 
   @override
@@ -25642,6 +25647,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get recapEmpty => 'Nessuna inversione contabile in questo periodo.';
+
+  @override
+  String get recordedPaymentsColMatched => 'Abbinato il';
 
   @override
   String get recordedPaymentsEmpty =>
@@ -31861,6 +31869,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get spaceYoursNow => 'Riservato da Lei per questa fascia.';
 
   @override
+  String get statementDeskColLine => 'Voce';
+
+  @override
   String get statusAwaiting => 'In attesa';
 
   @override
@@ -34876,6 +34887,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String usageBookedDuration(String duration) {
     return 'Prenotato $duration';
   }
+
+  @override
+  String get usageColBilled => 'Fatturato';
 
   @override
   String get usageCorrected => 'Corretto';

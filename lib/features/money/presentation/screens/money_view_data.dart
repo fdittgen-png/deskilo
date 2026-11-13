@@ -20,6 +20,7 @@ import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/ledger_entry.dart';
 import '../../domain/member_account.dart';
+import '../../domain/money_tool_rights.dart';
 import '../../domain/payment_intent.dart';
 import '../../domain/statement.dart';
 import '../../providers/money_providers.dart';
@@ -43,6 +44,7 @@ class MoneyViewData {
     required this.account,
     required this.features,
     required this.format,
+    this.permissionNames = const {},
   });
 
   factory MoneyViewData.watch(WidgetRef ref, String period) {
@@ -80,6 +82,7 @@ class MoneyViewData {
       // #512 — the REAL cross-month position, above the per-month bill.
       account: ref.watch(myAccountProvider).value,
       features: ref.watch(enabledFeaturesSyncProvider),
+      permissionNames: purchasePermissionNames(ref),
     );
   }
 
@@ -107,6 +110,7 @@ class MoneyViewData {
     onlineAttempts: const [],
     account: null,
     features: ref.watch(enabledFeaturesSyncProvider),
+    permissionNames: purchasePermissionNames(ref),
   );
 
   final Workspace? workspace;
@@ -118,6 +122,11 @@ class MoneyViewData {
   final List<PaymentIntent> onlineAttempts;
   final MemberAccount? account;
   final Set<WorkspaceFeature> features;
+
+  /// #3627 — the permissions I hold, by name: the money tools ask them as
+  /// their routes do ([MoneyToolRights]).
+  final Set<String> permissionNames;
+  bool _holdsAny(Set<String> rights) => rights.any(permissionNames.contains);
 
   /// The permission names used by the purchase entry points.
   static Set<String> purchasePermissionNames(WidgetRef ref) => {
@@ -155,17 +164,18 @@ class MoneyViewData {
   /// #934 — the treasurer's view and the guided repartition are for those
   /// who manage the money.
   bool get statusToolOn =>
-      _on(WorkspaceFeature.workspaceStatus) && (member?.isAdmin ?? false);
+      _on(WorkspaceFeature.workspaceStatus) && _holdsAny(MoneyToolRights.status);
   /// #828, #3597 — the shared-expense distribution.
   bool get expenseRepartitionOn => _on(WorkspaceFeature.expenseRepartition);
   bool get repartitionWizardOn =>
       _on(WorkspaceFeature.expenseRepartitionWizard) &&
-      (member?.isAdmin ?? false);
+      _holdsAny(MoneyToolRights.repartitionWizard);
 
   /// #2567 — the suppliers are master data of the expense flows, for those
   /// who manage the money (the server decides who may write).
   bool get suppliersOn =>
-      _on(WorkspaceFeature.supplyExpenses) && (member?.isAdmin ?? false);
+      _on(WorkspaceFeature.supplyExpenses) &&
+      _holdsAny(MoneyToolRights.suppliers);
 
   /// #2863 — the supplier form may ask a company registry: the same
   /// verification VIES gives a member's VAT number.

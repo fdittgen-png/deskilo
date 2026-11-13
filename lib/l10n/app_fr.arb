@@ -12720,6 +12720,7 @@
   "moneyPaymentPeriodLabel": "S’applique à",
   "moneyRecordPayment": "Enregistrer un paiement",
   "moneyRemindedTimes": "Relancée ×{count}",
+  "moneyReportsForMonth": "Rapports de {month}",
   "moneySectionDocuments": "Documents",
   "@moneySectionDocuments": {
     "description": "Finance/settings UX + workspace language (#486)"
@@ -15359,6 +15360,7 @@
     }
   },
   "recapEmpty": "Rien n'a été autoliquidé sur cette période.",
+  "recordedPaymentsColMatched": "Rapproché le",
   "recordedPaymentsEmpty": "Aucun paiement n'a été rapproché d'une facture sur cette période.",
   "recordedPaymentsMore": "Afficher d'autres paiements",
   "recordedPaymentsOff": "La gestion de l'argent est désactivée dans cet espace.",
@@ -19190,6 +19192,7 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Réservé par vous pour ce créneau.",
+  "statementDeskColLine": "Ligne",
   "statusAwaiting": "En attente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
@@ -20841,6 +20844,7 @@
   "usageAskSubmitted": "Demandé. Quelqu'un d'autre décide.",
   "usageBilledDuration": "Facturé {duration}",
   "usageBookedDuration": "Réservé {duration}",
+  "usageColBilled": "Facturé",
   "usageCorrected": "Corrigé",
   "usageDelete": "Supprimer ce relevé",
   "usageDeleteSubmitted": "Suppression demandée.",

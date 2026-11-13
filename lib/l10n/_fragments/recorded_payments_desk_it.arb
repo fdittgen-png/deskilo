@@ -1,0 +1,7 @@
+{
+  "@@locale": "it",
+  "recordedPaymentsColMatched": "Abbinato il",
+  "statementDeskColLine": "Voce",
+  "usageColBilled": "Fatturato",
+  "moneyReportsForMonth": "Report di {month}"
+}

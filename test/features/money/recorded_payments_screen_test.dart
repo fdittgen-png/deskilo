@@ -17,12 +17,17 @@ import '../../helpers/read_probe.dart';
 
 final _en = AppLocalizationsEn();
 
-RecordedPayment _payment(String id, {int minor = 12500, String? number}) =>
+RecordedPayment _payment(
+  String id, {
+  int minor = 12500,
+  String? number,
+  String currency = 'EUR',
+}) =>
     RecordedPayment(
       id: id,
       matchedAt: DateTime.utc(2026, 5, 20, 8),
       amountMinor: minor,
-      currency: 'EUR',
+      currency: currency,
       invoiceId: 'inv-$id',
       invoiceNumber: number ?? 'F-$id',
       payerName: 'Payer $id',
@@ -47,11 +52,17 @@ class _Calls implements RecordedPaymentsRepository {
   }
 }
 
-Future<_Calls> _pump(WidgetTester tester, {String? from, String? to}) async {
+Future<_Calls> _pump(
+  WidgetTester tester, {
+  String? from,
+  String? to,
+  Size size = const Size(800, 1400),
+}) async {
   final calls = _Calls();
   await pumpStateScreen(
     tester,
     RecordedPaymentsScreen(from: from, to: to),
+    size: size,
     overrides: [
       ...standardTestOverrides(
         workspace: FakeWorkspaceRepository.withWorkspace(),
@@ -161,5 +172,38 @@ void main() {
     calls.probes.single.fail(const RecordedPaymentsSwitchedOff());
     await tester.pump();
     expect(find.text(_en.recordedPaymentsOff), findsOneWidget);
+  });
+
+  group('#3627 — at the desk', () {
+    const desk = Size(1440, 1000);
+
+    testWidgets('a records table: the invoice and the customer in their own '
+        'columns, the total per currency, partly read while pages remain; '
+        'more adds rows', (tester) async {
+      final calls = await _pump(tester, from: '2026-05', to: '2026-05', size: desk);
+      calls.probes.single.answer(
+        _page([
+          _payment('a'),
+          _payment('b', minor: 5000, currency: 'CHF'),
+        ], next: 'b'),
+      );
+      await tester.pumpAndSettle();
+      expect(find.text('F-a'), findsOneWidget);
+      expect(find.text('Payer b'), findsOneWidget);
+      expect(find.text('F-a · Payer a'), findsNothing,
+          reason: 'the phone\'s line is not the desk\'s row');
+      expect(find.byKey(const ValueKey('records-total-EUR')), findsOneWidget);
+      expect(find.byKey(const ValueKey('records-total-CHF')), findsOneWidget);
+      expect(find.byKey(const ValueKey('records-partly-read')), findsOneWidget);
+
+      await tester.tap(find.byKey(const ValueKey('recorded-payments-more')));
+      await tester.pump();
+      expect(calls.windows.last.after, 'b');
+      calls.probes.last.answer(_page([_payment('c', minor: 2500)]));
+      await tester.pumpAndSettle();
+      expect(find.text('F-c'), findsOneWidget);
+      expect(find.byKey(const ValueKey('records-partly-read')), findsNothing);
+      expect(find.byKey(const ValueKey('recorded-payments-more')), findsNothing);
+    });
   });
 }
