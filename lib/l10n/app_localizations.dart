@@ -3397,6 +3397,12 @@ abstract class AppLocalizations {
   /// **'QR reference'**
   String get bankBasisQrReference;
 
+  /// #3616 the bank statement's right pane at the desk before a movement is chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a movement of money in on the left: its open invoices are listed here.'**
+  String get bankChooseMovement;
+
   /// #2380 Lines sheet: confirm every match by structured reference.
   ///
   /// In en, this message translates to:

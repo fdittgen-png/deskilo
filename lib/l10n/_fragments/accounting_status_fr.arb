@@ -9,5 +9,6 @@
   "accountingExportsBy": "Fait par",
   "accountingExportsRows": "Lignes",
   "accountingExportsFingerprint": "Empreinte",
-  "accountingExportsAgain": "Exporter de nouveau cette période"
+  "accountingExportsAgain": "Exporter de nouveau cette période",
+  "bankChooseMovement": "Choisissez à gauche un mouvement entrant : ses factures ouvertes sont listées ici."
 }

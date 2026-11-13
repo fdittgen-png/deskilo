@@ -891,6 +891,7 @@
   "bankBasisCreditorReference": "RF-Referenz",
   "bankBasisInvoiceNumber": "Rechnungsnummer im Text",
   "bankBasisQrReference": "QR-Referenz",
+  "bankChooseMovement": "Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier.",
   "bankConfirmReferences": "{count, plural, one{1 Zuordnung per Referenz bestätigen} other{{count} Zuordnungen per Referenz bestätigen}}",
   "bankConfirmedReferences": "{count, plural, one{1 Zahlung zugeordnet.} other{{count} Zahlungen zugeordnet.}}",
   "bankCsvAccount": "Konto (IBAN)",

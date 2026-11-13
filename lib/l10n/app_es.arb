@@ -891,6 +891,7 @@
   "bankBasisCreditorReference": "referencia RF",
   "bankBasisInvoiceNumber": "número de factura en el concepto",
   "bankBasisQrReference": "referencia QR",
+  "bankChooseMovement": "Elija a la izquierda un movimiento de entrada: aquí se listan sus facturas abiertas.",
   "bankConfirmReferences": "{count, plural, one{Confirmar 1 conciliación por referencia} other{Confirmar {count} conciliaciones por referencia}}",
   "bankConfirmedReferences": "{count, plural, one{1 pago conciliado.} other{{count} pagos conciliados.}}",
   "bankCsvAccount": "Cuenta (IBAN)",

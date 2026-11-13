@@ -2667,6 +2667,10 @@
   "@bankBasisQrReference": {
     "description": "#2380 Why suggested: the QR reference."
   },
+  "bankChooseMovement": "Choose a movement of money in on the left: its open invoices are listed here.",
+  "@bankChooseMovement": {
+    "description": "#3616 the bank statement's right pane at the desk before a movement is chosen"
+  },
   "bankConfirmReferences": "{count, plural, one{Confirm 1 match by reference} other{Confirm {count} matches by reference}}",
   "@bankConfirmReferences": {
     "description": "#2380 Lines sheet: confirm every match by structured reference.",

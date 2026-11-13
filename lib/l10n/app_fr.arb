@@ -891,6 +891,7 @@
   "bankBasisCreditorReference": "référence RF",
   "bankBasisInvoiceNumber": "numéro de facture dans le libellé",
   "bankBasisQrReference": "référence QR",
+  "bankChooseMovement": "Choisissez à gauche un mouvement entrant : ses factures ouvertes sont listées ici.",
   "bankConfirmReferences": "{count, plural, one{Confirmer {count} rapprochement par référence} other{Confirmer {count} rapprochements par référence}}",
   "bankConfirmedReferences": "{count, plural, one{{count} paiement rapproché.} other{{count} paiements rapprochés.}}",
   "bankCsvAccount": "Compte (IBAN)",

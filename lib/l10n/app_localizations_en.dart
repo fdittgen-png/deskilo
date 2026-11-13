@@ -2057,6 +2057,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankBasisQrReference => 'QR reference';
 
   @override
+  String get bankChooseMovement =>
+      'Choose a movement of money in on the left: its open invoices are listed here.';
+
+  @override
   String bankConfirmReferences(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

@@ -3,12 +3,15 @@
 // #2380 — the bank statements of the space: every imported file with its
 // account, period and what is still waiting for a person, the door to
 // import another, and to the movements of each.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
@@ -184,14 +187,34 @@ class BankStatementsView extends ConsumerWidget {
     );
   }
 
-  void _open(BuildContext context, StoredBankStatement s) => showAppSheet<void>(
-    context: context,
-    isScrollControlled: true,
-    builder: (_) => BankLinesView(
+  /// A statement's movements: a sheet on a phone; at the desk the whole
+  /// window, in two panes (#3616).
+  void _open(BuildContext context, StoredBankStatement s) {
+    final desk = WindowClass.of(context).index >= WindowClass.expanded.index;
+    final view = BankLinesView(
       workspaceId: workspaceId,
       statement: s,
       canMatch: canMatch,
       canReconcile: canReconcile,
-    ),
-  );
+      panes: desk,
+    );
+    if (!desk) {
+      unawaited(
+        showAppSheet<void>(
+          context: context,
+          isScrollControlled: true,
+          builder: (_) => view,
+        ),
+      );
+      return;
+    }
+    unawaited(
+      showDialog<void>(
+        context: context,
+        builder: (_) => Dialog.fullscreen(
+          child: ScaffoldMessenger(child: Scaffold(body: SafeArea(child: view))),
+        ),
+      ),
+    );
+  }
 }

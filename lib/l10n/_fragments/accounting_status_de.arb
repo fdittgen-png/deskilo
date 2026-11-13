@@ -9,5 +9,6 @@
   "accountingExportsBy": "Erstellt von",
   "accountingExportsRows": "Zeilen",
   "accountingExportsFingerprint": "Prüfsumme",
-  "accountingExportsAgain": "Diesen Zeitraum erneut exportieren"
+  "accountingExportsAgain": "Diesen Zeitraum erneut exportieren",
+  "bankChooseMovement": "Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier."
 }

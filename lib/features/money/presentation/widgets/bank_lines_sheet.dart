@@ -41,8 +41,14 @@ class BankLinesView extends ConsumerStatefulWidget {
     required this.statement,
     required this.canMatch,
     required this.canReconcile,
+    this.panes = false,
     super.key,
   });
+
+  /// #3616 — at the desk: the movements on the left, the open invoices of
+  /// the chosen one on the right; choosing one is a proposal confirmed in
+  /// the match dialog.
+  final bool panes;
 
   final String workspaceId;
   final StoredBankStatement statement;
@@ -59,6 +65,9 @@ class BankLinesView extends ConsumerStatefulWidget {
 
 class _BankLinesViewState extends ConsumerState<BankLinesView> {
   bool _busy = false;
+
+  /// #3616 — the movement chosen on the left, at the desk.
+  String? _chosen;
 
   String get _statementId => widget.statement.id;
 
@@ -107,7 +116,28 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
     _ => false,
   };
 
-  Future<void> _decide(BankWorkList list, BankWorkItem item) async {
+  /// The open invoices in [item]'s currency it is not suggested for.
+  static List<OpenInvoice> _others(BankWorkList list, BankWorkItem item) {
+    final suggested = {for (final s in item.suggestions) s.invoice.id};
+    return [
+      for (final i in list.open)
+        if (i.currency == item.line.currency && !suggested.contains(i.id)) i,
+    ];
+  }
+
+  /// Whether [line] is money in a person may match now: at the desk it is
+  /// chosen on the left, its invoices shown on the right.
+  bool _matchable(StoredBankLine line) =>
+      widget.canMatch &&
+      line.isMoneyIn &&
+      (line.status == BankLineStatus.open ||
+          line.status == BankLineStatus.recorded);
+
+  Future<void> _decide(
+    BankWorkList list,
+    BankWorkItem item, {
+    String? proposed,
+  }) async {
     final line = item.line;
     final commands = ref.read(bankImportCommandsProvider);
     Future<void> Function()? action;
@@ -117,16 +147,13 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
         if (duplicate == null) return;
         action = () => commands.review(line, duplicate: duplicate);
       case BankLineStatus.open || BankLineStatus.recorded when line.isMoneyIn:
-        final suggested = {for (final s in item.suggestions) s.invoice.id};
         final choice = await showDialog<BankMatchChoice>(
           context: context,
           builder: (_) => BankMatchDialog(
             line: line,
             suggestions: item.suggestions,
-            others: [
-              for (final i in list.open)
-                if (i.currency == line.currency && !suggested.contains(i.id)) i,
-            ],
+            others: _others(list, item),
+            proposed: proposed,
           ),
         );
         if (choice == null) return;
@@ -231,29 +258,88 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
           ),
           const FormGap(),
         ],
+        Expanded(child: widget.panes ? _panes(list) : _lines(list)),
+      ],
+    );
+  }
+
+  Widget _lines(BankWorkList list) => ListView.builder(
+    itemCount: list.items.length,
+    itemBuilder: (_, i) {
+      final item = list.items[i];
+      final open = !_busy && _actionable(item.line);
+      return _LineTile(
+        key: ValueKey('bank-line-${item.line.id}'),
+        item: item,
+        selected: widget.panes && item.line.id == _chosen,
+        onTap: !open
+            ? null
+            : widget.panes && _matchable(item.line)
+            ? () => setState(() => _chosen = item.line.id)
+            : () => _decide(list, item),
+      );
+    },
+  );
+
+  /// #3616 — two panes: the movements, and the open invoices of the one
+  /// chosen, its suggestions first.
+  Widget _panes(BankWorkList list) {
+    final l10n = context.l10n;
+    final item = list.items
+        .where((i) => i.line.id == _chosen && _matchable(i.line))
+        .firstOrNull;
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Expanded(child: _lines(list)),
+        const VerticalDivider(width: 1),
         Expanded(
-          child: ListView.builder(
-            itemCount: list.items.length,
-            itemBuilder: (_, i) {
-              final item = list.items[i];
-              final open = !_busy && _actionable(item.line);
-              return _LineTile(
-                key: ValueKey('bank-line-${item.line.id}'),
-                item: item,
-                onTap: open ? () => _decide(list, item) : null,
-              );
-            },
-          ),
+          child: item == null
+              ? Center(child: Text(l10n.bankChooseMovement))
+              : ListView(
+                  key: const ValueKey('bank-candidates'),
+                  children: [
+                    for (final s in item.suggestions)
+                      _candidate(list, item, s.invoice, suggested: true),
+                    for (final i in _others(list, item))
+                      _candidate(list, item, i, suggested: false),
+                  ],
+                ),
         ),
       ],
+    );
+  }
+
+  Widget _candidate(
+    BankWorkList list,
+    BankWorkItem item,
+    OpenInvoice invoice, {
+    required bool suggested,
+  }) {
+    final money = appFormatOf(context).moneyIn(invoice.currency);
+    return ListTile(
+      key: ValueKey('bank-candidate-${invoice.id}'),
+      leading: suggested ? const Icon(Icons.auto_awesome_outlined) : null,
+      title: Text(invoice.number),
+      subtitle: Text(invoice.memberName),
+      trailing: Text(money.formatMinor(invoice.dueCents)),
+      onTap: _busy ? null : () => _decide(list, item, proposed: invoice.id),
     );
   }
 }
 
 class _LineTile extends StatelessWidget {
-  const _LineTile({required this.item, required this.onTap, super.key});
+  const _LineTile({
+    required this.item,
+    required this.onTap,
+    this.selected = false,
+    super.key,
+  });
 
   final BankWorkItem item;
+
+  /// Chosen on the left at the desk.
+  final bool selected;
 
   /// Null when the movement waits for nobody, or for someone else.
   final VoidCallback? onTap;
@@ -288,6 +374,7 @@ class _LineTile extends StatelessWidget {
       subtitle: Text(what.isEmpty ? status : '$what\n$status'),
       isThreeLine: what.isNotEmpty,
       trailing: onTap == null ? null : const Icon(Icons.chevron_right),
+      selected: selected,
       onTap: onTap,
     );
   }
