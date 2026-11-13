@@ -49,8 +49,13 @@ class RecordsTable<T> extends StatefulWidget {
     this.bulkActions = const [],
     this.columnStore,
     this.initialQuery = const RecordsQuery(),
+    this.onShown,
     super.key,
   });
+
+  /// #3614 — told the keys of the rows shown, in their order, each time
+  /// they are drawn: a record beside the table moves along them.
+  final ValueChanged<List<String>>? onShown;
 
   /// The query the table opens with (its default sort).
   final RecordsQuery initialQuery;
@@ -187,6 +192,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           builder: (context, box) {
             final shown = _c.shown;
             final selected = _c.selected;
+            widget.onShown?.call([for (final r in shown) widget.keyOf(r)]);
             return Column(
               children: [
                 _toolbar(context, shown),

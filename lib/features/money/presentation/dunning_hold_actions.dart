@@ -11,6 +11,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/adaptive/task_choice.dart';
+import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/dunning_hold.dart';
@@ -56,8 +58,10 @@ Future<void> toggleDunningHold(
     );
     return;
   }
-  final chosen = await showDialog<({String reason, String note})>(
-    context: context,
+  // #3614 — a short task: a sheet on a phone, a dialog at the desk.
+  final chosen = await showTask<({String reason, String note})>(
+    context,
+    size: TaskSize.short,
     builder: (context) => const _DunningHoldDialog(),
   );
   if (chosen == null || !context.mounted) return;
@@ -103,10 +107,9 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    return AlertDialog(
-      title: Text(l10n.invoiceHoldTitle),
-      content: SingleChildScrollView(
-        child: Column(
+    return TaskChoice(
+      title: l10n.invoiceHoldTitle,
+      content: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -139,7 +142,6 @@ class _DunningHoldDialogState extends State<_DunningHoldDialog> {
             ),
           ],
         ),
-      ),
       actions: [
         TextButton(
           key: const ValueKey('dunning-hold-actions-text-button'),

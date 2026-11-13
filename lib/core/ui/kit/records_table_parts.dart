@@ -23,7 +23,14 @@ Widget _recordCells<T>(
   List<Widget> cells, {
   Widget? leading,
   Widget? trailing,
+  double? lineHeight,
 }) => Row(
+  // #3614 — with [lineHeight], every cell is centred in the row's first
+  // line: a cell that wraps (a state in two parts, #3773) grows downwards
+  // and its neighbours stay level with its first line.
+  crossAxisAlignment: lineHeight == null
+      ? CrossAxisAlignment.center
+      : CrossAxisAlignment.start,
   children: [
     ?leading,
     for (final (i, c) in columns.indexed)
@@ -31,9 +38,11 @@ Widget _recordCells<T>(
         flex: c.flex,
         // A gap between neighbours: an end-aligned amount never touches
         // the column after it.
-        child: Padding(
+        child: Container(
+          constraints: BoxConstraints(minHeight: lineHeight ?? 0),
           padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
           child: Align(
+            heightFactor: 1,
             alignment: c.numeric
                 ? AlignmentDirectional.centerEnd
                 : AlignmentDirectional.centerStart,
@@ -221,6 +230,7 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                 child: _recordCells(
                   widget.columns,
                   [for (final c in widget.columns) c.cell(context, widget.row)],
+                  lineHeight: widget.minHeight,
                   leading: widget.selectable
                       ? Checkbox(
                           visualDensity: _rowDensity(side),

@@ -13,9 +13,12 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -26,7 +29,11 @@ import '../../../profile/domain/personal_info.dart';
 import '../../../profile/presentation/widgets/personal_info_form.dart';
 import '../../domain/guest_pass.dart';
 import '../../providers/guest_pass_providers.dart';
+import '../widgets/guest_pass_records.dart';
 import '../widgets/guest_pass_sale_section.dart';
+
+/// The most of the page the offers take above the passes sold.
+const double _offersShare = 0.45;
 
 class GuestPassesScreen extends ConsumerStatefulWidget {
   const GuestPassesScreen({super.key});
@@ -71,11 +78,22 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     if (list == null) return const LoadingView();
     final draft = _draft;
     if (draft != null) return _sale(l10n, workspace, list, draft, currency);
-    return ListView(
+    // #3614 — who may read the sales sees them as records under the offers.
+    final readsSales =
+        held.contains('viewFinances') || held.contains('issueInvoices');
+    final offersPart = ListView(
       key: const ValueKey('guest-passes'),
+      shrinkWrap: true,
       padding: AppSpacing.gutterAll,
       children: [
-        Text(l10n.guestPassesIntro),
+        // #3614 — words in a reading measure, beside the full-width table.
+        Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+            child: Text(l10n.guestPassesIntro),
+          ),
+        ),
         const FormGap(),
         if (list.isEmpty) Text(l10n.guestPassesEmpty),
         for (final o in list)
@@ -94,27 +112,73 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
                 : null,
           ),
         const FormGap(),
-        if (held.contains('manageServices'))
-          OutlinedButton.icon(
-            key: const ValueKey('guest-pass-add'),
-            icon: const Icon(Icons.add),
-            label: Text(l10n.guestPassAdd),
-            onPressed: () => _editOffer(workspace, currency, null),
-          ),
-        const FormGap(),
-        if (held.contains('issueInvoices') && list.any((o) => o.active))
-          FilledButton.icon(
-            key: const ValueKey('guest-pass-sell'),
-            icon: const Icon(Icons.confirmation_number_outlined),
-            label: Text(l10n.guestPassSell),
-            onPressed: () => setState(() {
-              _draft = _fresh(list);
-              _requestId = newRequestId();
-            }),
-          ),
+        Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.sm,
+          children: [
+            if (held.contains('manageServices'))
+              OutlinedButton.icon(
+                key: const ValueKey('guest-pass-add'),
+                icon: const Icon(Icons.add),
+                label: Text(l10n.guestPassAdd),
+                onPressed: () => _editOffer(workspace, currency, null),
+              ),
+            if (held.contains('issueInvoices') && list.any((o) => o.active))
+              FilledButton.icon(
+                key: const ValueKey('guest-pass-sell'),
+                icon: const Icon(Icons.confirmation_number_outlined),
+                label: Text(l10n.guestPassSell),
+                onPressed: () => _startSale(list),
+              ),
+          ],
+        ),
       ],
     );
+    if (!readsSales) return offersPart;
+    return ShortcutScope(
+      // #3614 — N: sell a pass.
+      handlers: {
+        if (held.contains('issueInvoices') && list.any((o) => o.active))
+          AppShortcutId.newRecord: () => _startSale(list),
+      },
+      child: LayoutBuilder(
+        builder: (context, box) => Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // The offers take at most this share of the page; the passes
+            // sold the rest.
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: box.maxHeight * _offersShare,
+              ),
+              child: offersPart,
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AppSpacing.md,
+              ),
+              child: Text(
+                l10n.guestPassesSoldTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+            ),
+            Expanded(
+              child: GuestPassRecords(
+                workspaceId: workspace.id,
+                offers: list,
+                currency: currency,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
+
+  void _startSale(List<GuestPassOffer> offers) => setState(() {
+    _draft = _fresh(offers);
+    _requestId = newRequestId();
+  });
 
   Widget _sale(
     AppLocalizations l10n,

@@ -8,6 +8,8 @@
 // currency state never prints a sum of its currencies. With SHEET=1 it
 // writes build/sheets/invoicing/<state>--<view>--<width>--<theme>.png.
 import 'package:deskilo/app/theme.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
+import 'package:deskilo/core/ui/kit/records_table_parts.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_home.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_list.dart';
@@ -185,7 +187,26 @@ void main() {
                 view: view,
               );
               final tag = '$width px, ×$scale, ${dark ? 'dark' : 'light'}';
-              for (final p in guardProblems(tester, width: width)) {
+              // #3614 — by invoice at the desk the home is a records table:
+              // its rows follow the pointer (36 with a mouse), so the desk
+              // guard measures it.
+              final desk =
+                  view == InvoicingView.invoices &&
+                  data.receivables.isNotEmpty &&
+                  !data.failed.any(InvoicingSource.statuses.contains) &&
+                  WindowClass.ofWidth(width).index >=
+                      WindowClass.expanded.index;
+              for (final p in desk
+                  ? deskGuardProblems(
+                      tester,
+                      kind: PageKind.records,
+                      size: Size(width, 2400),
+                      rowTypes: const [
+                        RecordRow<Receivable>,
+                        RecordsHeader<Receivable>,
+                      ],
+                    )
+                  : guardProblems(tester, width: width)) {
                 problems.putIfAbsent(p, () => {}).add(tag);
               }
               if (state == 'two currencies') {

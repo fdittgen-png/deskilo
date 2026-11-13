@@ -18,6 +18,8 @@ import '../../../core/state/policy_read.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/adaptive/task_choice.dart';
+import '../../../core/ui/adaptive/task_surface.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../events/providers/event_providers.dart';
 import '../../workspace/providers/workspace_providers.dart';
@@ -46,10 +48,12 @@ Future<void> requestInvoiceWriteoffDialog(
 ) async {
   final l10n = context.l10n;
   final reasonController = TextEditingController();
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (dialogContext) => AlertDialog(scrollable: true,
-      title: Text(l10n.invoiceWriteoffButton),
+  // #3614 — a short task: a sheet on a phone, a dialog at the desk.
+  final confirmed = await showTask<bool>(
+    context,
+    size: TaskSize.short,
+    builder: (dialogContext) => TaskChoice(
+      title: l10n.invoiceWriteoffButton,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
