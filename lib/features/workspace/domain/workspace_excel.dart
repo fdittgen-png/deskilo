@@ -261,9 +261,7 @@ class _ExcelExport {
       XlsxSheet(name: 'Payments', totals: 'total', rows: [
     [
       'state', 'member', 'amount', 'currency', 'period', 'occurred_on',
-      'recorded_at', 'description', 'provider', 'order_id',
-      // #3905 — a payment the provider reversed: when, and why.
-      'reversed_at', 'reversal_reason',
+      'recorded_at', 'description', 'provider', 'order_id', 'reversed_at', 'reversal_reason',
     ],
     for (final entry in ledger)
       if (isExportedPayment(entry))
@@ -286,8 +284,7 @@ class _ExcelExport {
       [
         'online (${intent.status})', memberName[intent.memberId],
         major(intent.amountCents), workspace.currencyCode, intent.period,
-        null, _at(intent.createdAt), null, intent.provider, intent.orderId,
-        _at(intent.reversedAt), intent.reversalReason,
+        null, _at(intent.createdAt), null, intent.provider, intent.orderId, _at(intent.reversedAt), intent.reversalReason,
       ],
   ]);
 
