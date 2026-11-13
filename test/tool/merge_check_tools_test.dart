@@ -15,12 +15,13 @@ void main() {
   late Directory root;
   late Directory work;
   late String script;
+  var counter = 0;
 
   ProcessResult git(List<String> args) =>
       Process.runSync('git', args, workingDirectory: work.path);
 
   void commit(String message) {
-    File('${work.path}/f').writeAsStringSync('$message${DateTime.now()}');
+    File('${work.path}/f').writeAsStringSync('$message${counter++}');
     git(['add', '-A']);
     const date = '2026-11-12T12:00:00Z';
     final r = Process.runSync(
