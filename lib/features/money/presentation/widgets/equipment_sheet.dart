@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -170,8 +171,11 @@ class _AssetCard extends StatelessWidget {
               style: Theme.of(context).textTheme.titleMedium,
             ),
             Text(
-              '${_stateLabel(l10n, asset)}'
-              '${asset.availableForUseOn == null ? '' : ' · ${l10n.equipmentUsedSince(material.formatMediumDate(asset.availableForUseOn!))}'}',
+              factLine(l10n, [
+                _stateLabel(l10n, asset),
+                if (asset.availableForUseOn != null)
+                  l10n.equipmentUsedSince(material.formatMediumDate(asset.availableForUseOn!)),
+              ]),
               key: ValueKey('equipment-state-${asset.id}'),
             ),
             Text(

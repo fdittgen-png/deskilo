@@ -361,16 +361,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get acctDeliverNothing => 'Nothing to deliver in this period.';
 
   @override
-  String get acctDeliverNothingSent => 'Nothing was delivered.';
+  String acctDeliverReasonNothingSent(String reason) {
+    return '$reason Nothing was delivered.';
+  }
+
+  @override
+  String acctDeliverReasonStoppedAt(String reason, String month, int count) {
+    return '$reason Stopped at $month. Delivered before it: $count.';
+  }
 
   @override
   String acctDeliverRefused(String detail) {
     return 'The accounting system refused this company: $detail.';
-  }
-
-  @override
-  String acctDeliverStoppedAt(String month, int count) {
-    return 'Stopped at $month. Delivered before it: $count.';
   }
 
   @override
@@ -2642,6 +2644,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String biChangeVsPrevious(String change) {
+    return '$change vs previous period';
+  }
+
+  @override
+  String biChangeVsYearAgo(String change) {
+    return '$change vs last year';
+  }
+
+  @override
   String get biCollectionCentre => 'of what was invoiced';
 
   @override
@@ -4566,12 +4578,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get biViewsTeam => 'Team views';
-
-  @override
-  String get biVsPrevious => 'vs previous period';
-
-  @override
-  String get biVsYearAgo => 'vs last year';
 
   @override
   String get billAccessorySupplements => 'Accessory supplements';
@@ -7847,6 +7853,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsUrlLabel => 'Link (https://…)';
 
   @override
+  String dotPair(String first, String second) {
+    return '$first · $second';
+  }
+
+  @override
   String get dunningAutomatic => 'Automatic reminders';
 
   @override
@@ -8686,6 +8697,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get environmentSaved => 'Workspace type saved.';
 
   @override
+  String environmentsPair(String dev, String prod) {
+    return '$dev + $prod';
+  }
+
+  @override
   String equipmentCost(String amount) {
     return 'Cost $amount';
   }
@@ -8943,11 +8959,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String eventForSubject(String name) {
-    return 'for $name';
-  }
-
-  @override
   String eventInvoiceIssuedLine(String number) {
     return 'New invoice $number';
   }
@@ -8990,6 +9001,16 @@ class AppLocalizationsEn extends AppLocalizations {
     String date,
   ) {
     return '$actor asks to change the rent of $premises to $amount from $date';
+  }
+
+  @override
+  String eventLineForSubject(String line, String name) {
+    return '$line for $name';
+  }
+
+  @override
+  String eventLineRepeated(String line, int count) {
+    return '$line ×$count';
   }
 
   @override
@@ -9065,11 +9086,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String eventRejectedBy(String name, String when) {
     return 'Declined by $name · $when';
-  }
-
-  @override
-  String eventRepeatedMarker(int count) {
-    return '×$count';
   }
 
   @override
@@ -12056,8 +12072,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get gobdProcedureImmutableHeading => 'Unalterability';
 
   @override
-  String gobdProcedureRetentionUntil(String date) {
-    return 'a document dated at the end of this period may be erased from $date';
+  String gobdProcedureRetentionLine(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  ) {
+    return '$docClass: $rule; a document dated at the end of this period may be erased from $date. $source';
+  }
+
+  @override
+  String gobdProcedureRetentionLineUnconfirmed(
+    String docClass,
+    String rule,
+    String date,
+    String source,
+  ) {
+    return '$docClass: $rule; a document dated at the end of this period may be erased from $date (not yet confirmed). $source';
   }
 
   @override
@@ -15406,6 +15437,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicePdfProforma => 'Proforma';
 
   @override
+  String invoicePdfProformaNamed(String name) {
+    return 'Proforma $name';
+  }
+
+  @override
   String get invoicePdfPurchaseOrder => 'Order reference';
 
   @override
@@ -17531,6 +17567,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get levelPriceLabel => 'Price per half-day';
 
   @override
+  String levelPriceLine(String price) {
+    return '$price / Price per half-day';
+  }
+
+  @override
   String get levelReorderStale =>
       'The levels changed meanwhile. Nothing was saved; the current order is shown.';
 
@@ -18794,6 +18835,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get mcpRefusalClientNotApproved =>
       'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant.';
+
+  @override
+  String mcpRefusalClientNotApprovedNamed(String names) {
+    return 'This assistant is not approved on this server yet. The operator approves each assistant once; ask them, then connect again from the assistant. Waiting for the server\'s operator: $names.';
+  }
 
   @override
   String get mcpRefusalNoIdentity =>
@@ -21966,6 +22012,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get planFromLabel => 'From';
 
   @override
+  String planFromTermTime(String term, String time) {
+    return '$term $time';
+  }
+
+  @override
   String get planFullDayChip => 'Day';
 
   @override
@@ -24918,8 +24969,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reminderPdfDaysOpen => 'Open for';
 
   @override
-  String reminderPdfDaysOpenLine(String days) {
-    return 'Open for $days days';
+  String reminderPdfDaysOpenLine(int days) {
+    String _temp0 = intl.Intl.pluralLogic(
+      days,
+      locale: localeName,
+      other: 'Open for $days days',
+      one: 'Open for $days day',
+    );
+    return '$_temp0';
   }
 
   @override
@@ -25501,6 +25558,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportExpectedDelivery => 'Expected delivery';
 
   @override
+  String reportExpectedDeliveryDate(String date) {
+    return 'Expected delivery $date';
+  }
+
+  @override
   String get reportFieldGroupBank => 'Bank details';
 
   @override
@@ -26059,6 +26121,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get reportSubject => 'Subject';
+
+  @override
+  String reportSubjectLine(String subject) {
+    return 'Subject: $subject';
+  }
 
   @override
   String get reportTemplateClearOverlay => 'Use the default for this language';
@@ -27237,11 +27304,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String seatDayTitle(String seat) {
     return 'Seat $seat today';
-  }
-
-  @override
-  String sentencePair(String first, String second) {
-    return '$first $second';
   }
 
   @override
@@ -30315,8 +30377,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Addresses, the levels at each, and who calls which home';
 
   @override
-  String get smallBusinessCheckFigure =>
-      'This limit is the last one verified: check the current figure with your tax office.';
+  String smallBusinessMessageUnconfirmed(String message) {
+    return '$message This limit is the last one verified: check the current figure with your tax office.';
+  }
 
   @override
   String smallBusinessNearImmediate(String turnover, String limit) {
@@ -33491,6 +33554,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get usageReportOverage => 'Overage carried to the next invoice';
 
   @override
+  String usageReportOverageLine(String amount) {
+    return 'Overage carried to the next invoice: $amount';
+  }
+
+  @override
   String get usageReportPaid => 'Paid ahead (participation)';
 
   @override
@@ -34214,6 +34282,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
 
   @override
+  String vatDeclDisclaimerWithBasis(String basis) {
+    return '$basis Generated from the period’s issued invoices. Verify against your accounting before filing — this is a filing aid, not tax advice.';
+  }
+
+  @override
   String get vatDeclEdiTva => 'EDI-TVA file (CA3)';
 
   @override
@@ -34330,6 +34403,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclNet => 'Net base';
 
   @override
+  String vatDeclNetAmount(String amount) {
+    return 'Net base $amount';
+  }
+
+  @override
   String get vatDeclPayable => 'VAT payable';
 
   @override
@@ -34388,7 +34466,23 @@ class AppLocalizationsEn extends AppLocalizations {
   String get vatDeclTotals => 'Totals';
 
   @override
+  String vatDeclTotalsLine(String net, String vat, int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices',
+      one: '1 invoice',
+    );
+    return 'Totals: $net · VAT $vat · $_temp0';
+  }
+
+  @override
   String get vatDeclVat => 'VAT';
+
+  @override
+  String vatDeclVatAmount(String amount) {
+    return 'VAT $amount';
+  }
 
   @override
   String get vatDeclVatId => 'VAT ID';
@@ -34574,6 +34668,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get vatSeed => 'Use the usual rates';
+
+  @override
+  String vatSeedWithRates(String rates) {
+    return 'Use the usual rates ($rates)';
+  }
 
   @override
   String get vatServiceRate => 'VAT rate';
@@ -34968,6 +35067,22 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get webMcpDeviceSwitchHint =>
       'Off by default. On, an AI assistant built into this browser can read your bookings, invoices and pending requests in this space while the page is open. The choice stays on this device.';
+
+  @override
+  String weekHalfSlotLabel(String seat, String day, String half, String state) {
+    String _temp0 = intl.Intl.selectLogic(half, {
+      'morning': 'morning',
+      'other': 'afternoon',
+    });
+    String _temp1 = intl.Intl.selectLogic(state, {
+      'free': 'free',
+      'mine': 'your booking',
+      'taken': 'taken',
+      'blocked': 'blocked',
+      'other': 'closed',
+    });
+    return '$seat, $day, $_temp0, $_temp1';
+  }
 
   @override
   String get welcomeLinkAction => 'What is DesKilo?';

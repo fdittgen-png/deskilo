@@ -12,6 +12,7 @@ import '../../domain/floor_plan.dart';
 import '../../domain/office.dart';
 import '../../domain/seat.dart';
 import 'floor_plan_painter.dart';
+import 'plan_paint_helpers.dart' show gridRectToPx;
 
 export 'decor_palette_sheet.dart' show decorKindLabel, decorOrImageName, pickDecorKind, selectedDecorOf;
 
@@ -223,7 +224,8 @@ class _PlanCanvasState extends State<PlanCanvas>
               const cell = PlanCanvasMetrics.cellSize;
               final x = (details.localPosition.dx / cell).floor();
               final y = (details.localPosition.dy / cell).floor();
-              final seat = widget.plan.seatAtCell(x, y);
+              final seat = widget.plan.seatAtCell(x, y) ??
+                  _seatNear(details.localPosition);
               if (seat != null) widget.onSeatTap(seat);
             },
             onDoubleTapDown: widget.onSpaceDoubleTap == null
@@ -268,6 +270,7 @@ class _PlanCanvasState extends State<PlanCanvas>
                 semanticLabels: _semanticLabels(context),
                 semanticsDirection: Directionality.of(context),
                 onSeatSemanticTap: widget.onSeatTap,
+                seatTouchSide: _touchSide,
                 highlightedSeatId: widget.highlightedSeatId,
                 highlightedDeskId: widget.highlightedDeskId,
                 highlightedOfficeId: widget.highlightedOfficeId,
@@ -295,5 +298,34 @@ class _PlanCanvasState extends State<PlanCanvas>
         ),
       ],
     );
+  }
+
+  /// #3817 — 48 dp on screen in canvas pixels, at the current zoom (the
+  /// x scale: getMaxScaleOnAxis also reads the unscaled z axis).
+  double get _touchSide {
+    final scale = _viewTransform.value.entry(0, 0);
+    return scale <= 0 ? 0 : kMinInteractiveDimension / scale;
+  }
+
+  /// #3817 — a tap beside a small seat, inside the 48 dp its finger area
+  /// reaches on screen (the same area its semantics node has): the
+  /// nearest such seat.
+  Seat? _seatNear(Offset at) {
+    final reach = _touchSide;
+    Seat? best;
+    var bestDistance = double.infinity;
+    for (final seat in widget.plan.seats) {
+      final area = seatTouchRect(
+        gridRectToPx(seat.footprint, PlanCanvasMetrics.cellSize),
+        reach,
+      );
+      if (!area.contains(at)) continue;
+      final distance = (area.center - at).distanceSquared;
+      if (distance < bestDistance) {
+        best = seat;
+        bestDistance = distance;
+      }
+    }
+    return best;
   }
 }

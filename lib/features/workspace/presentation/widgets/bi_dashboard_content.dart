@@ -140,9 +140,13 @@ class _DashboardBuilder {
         BiChipContent(
           kind: kind,
           direction: directionOf(against(past)),
-          label:
-              '${provisional ? '≈ ' : ''}${changeText(against(past))} '
-              '${kind == BiBarKind.previous ? (l10n.biVsPrevious) : (l10n.biVsYearAgo)}',
+          label: kind == BiBarKind.previous
+              ? l10n.biChangeVsPrevious(
+                  '${provisional ? '≈ ' : ''}${changeText(against(past))}',
+                )
+              : l10n.biChangeVsYearAgo(
+                  '${provisional ? '≈ ' : ''}${changeText(against(past))}',
+                ),
         ),
   ];
 

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/format/cents.dart';
 import '../../../../core/i18n/app_format.dart';
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -74,13 +75,15 @@ class VatDeclarationCard extends StatelessWidget {
                 ? ValueKey(
                     'vat-decl-correction-${declaration.id}-${line.corrects}')
                 : null,
-            '${VatDeclarationRow.hasNote(line) ? '${lineNote(line)} · ' : ''}'
-            '${VatDeclarationRow.percentLabel(line.percent, appFormatOf(context).locale)}'
-            '${line.category.isEmpty ? '' : ' ${line.category}'} · '
-            '${l10n.vatDeclNet} '
-            '${centsToMajor(line.netCents)} ${declaration.currency} · '
-            '${l10n.vatDeclVat} '
-            '${centsToMajor(line.vatCents)} ${declaration.currency}',
+            factLine(l10n, [
+              if (VatDeclarationRow.hasNote(line)) lineNote(line),
+              '${VatDeclarationRow.percentLabel(line.percent, appFormatOf(context).locale)}'
+                  '${line.category.isEmpty ? '' : ' ${line.category}'}',
+              l10n.vatDeclNetAmount(
+                  '${centsToMajor(line.netCents)} ${declaration.currency}'),
+              l10n.vatDeclVatAmount(
+                  '${centsToMajor(line.vatCents)} ${declaration.currency}'),
+            ]),
             style:
                 theme.textTheme.bodySmall,
           ),
@@ -91,12 +94,11 @@ class VatDeclarationCard extends StatelessWidget {
           ),
         const SizedBox(height: 4),
         Text(
-          '${l10n.vatDeclTotals}: '
-          '${centsToMajor(declaration.totalNetCents)} ${declaration.currency} · '
-          '${l10n.vatDeclVat} '
-          '${centsToMajor(declaration.totalVatCents)} ${declaration.currency} · '
-          '${declaration.invoiceCount} '
-          '${l10n.featureInvoicing}',
+          l10n.vatDeclTotalsLine(
+            '${centsToMajor(declaration.totalNetCents)} ${declaration.currency}',
+            '${centsToMajor(declaration.totalVatCents)} ${declaration.currency}',
+            declaration.invoiceCount,
+          ),
           style: theme.textTheme.bodyMedium
               ?.copyWith(
                   fontWeight:

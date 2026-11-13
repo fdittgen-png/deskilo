@@ -351,3 +351,27 @@ bool seatDayIsPartial(List<SeatDaySegment> segments) {
   }
   return covered < 0.995;
 }
+
+/// The booking on [seat] the hub's tap acts on: the one holding it at
+/// [liveAt] in live mode, else the one holding it during `[from, to)`.
+Reservation? reservationCovering({
+  required FloorPlan plan,
+  required Seat seat,
+  required List<Reservation> reservations,
+  required DateTime? liveAt,
+  required DateTime from,
+  required DateTime to,
+}) => liveAt != null
+    ? reservationOnSeatAt(
+        plan: plan,
+        seat: seat,
+        reservations: reservations,
+        at: liveAt,
+      )
+    : reservationOnSeatInRange(
+        plan: plan,
+        seat: seat,
+        reservations: reservations,
+        from: from,
+        to: to,
+      );

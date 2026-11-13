@@ -3,6 +3,7 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/i18n/fact_line.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/form_kit.dart';
@@ -94,8 +95,10 @@ class _SupplierBankDialogState extends ConsumerState<_SupplierBankDialog> {
             for (final r in history)
               Text(
                 key: ValueKey('supplier-bank-rev-${r.revision}'),
-                '${l10n.suppliersBankRevision(r.revision.toString(), _outcome(context, r.validation))}'
-                '${r.iban.isEmpty ? '' : ' · ${r.iban}'}',
+                factLine(l10n, [
+                  l10n.suppliersBankRevision(r.revision.toString(), _outcome(context, r.validation)),
+                  r.iban,
+                ]),
               ),
             const SizedBox(height: AppSpacing.md),
             AppTextField(

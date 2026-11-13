@@ -191,7 +191,7 @@ class ConsentRefusalBanner extends ConsumerWidget {
           if (p.name.isNotEmpty) p.name,
       ];
       if (names.isNotEmpty) {
-        text = '$text ${l10n.mcpConnectWaitingOperator(names.join(', '))}';
+        text = l10n.mcpRefusalClientNotApprovedNamed(names.join(', '));
       }
     }
     return ConsentBanner(

@@ -19,7 +19,6 @@
   "gobdProcedureSchemaApp": "Versión de esquema para la que se compiló esta aplicación: {version}",
   "gobdProcedureImmutableHeading": "Inalterabilidad",
   "gobdProcedureImmutableBody": "Una factura o nota de crédito emitida no se puede modificar ni eliminar: la base de datos lo rechaza. Cada documento se firma en una cadena con el anterior. Una corrección es un documento nuevo (nota de crédito o factura de sustitución) que nombra el que corrige. Un periodo cerrado rechaza anulaciones y pagos fechados en él.",
-  "gobdProcedureRetentionUntil": "un documento fechado al final de este periodo puede borrarse a partir del {date}",
   "gobdProcedureHandoverHeading": "Entrega de datos (Z3)",
   "gobdProcedureHandoverBody": "Este paquete sigue el Beschreibungsstandard: index.xml describe cada tabla, sus columnas, claves y relaciones, y nombra la DTD gdpdu-01-08-2002.dtd entregada junto a él. Cada tabla es un archivo CSV UTF-8 sin línea de cabecera. La carpeta belege contiene la factura electrónica estructurada de cada factura y, cuando se generó, su PDF/A-3 con ese XML incrustado.",
   "gobdProcedureExportsHeading": "Exportaciones",
@@ -31,5 +30,7 @@
   "datevProblemSachkontenlaenge": "la longitud de cuenta {length} no está entre 4 y 8",
   "datevProblemCurrency": "los importes están en {currency}; el archivo DATEV se escribe en euros",
   "datevProblemReferenceTooLong": "{field} «{value}» supera la longitud que admite DATEV y se recortaría",
-  "datevProblemFiscalYearStarts": "los perfiles contables de las sedes empiezan el ejercicio en días distintos"
+  "datevProblemFiscalYearStarts": "los perfiles contables de las sedes empiezan el ejercicio en días distintos",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un documento fechado al final de este periodo puede borrarse a partir del {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un documento fechado al final de este periodo puede borrarse a partir del {date} (aún sin confirmar). {source}"
 }

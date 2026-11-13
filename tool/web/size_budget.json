@@ -1,0 +1,29 @@
+{
+  "about": "The web build's size budget (#3622): the ONE place the numbers live. tool/web/size_budget_check.mjs compares a request trace (tool/web/first_load_trace.mjs) and the build folder with them; web.yml runs it after the build it already makes. Every ceiling is the value measured on master on 2026-11-12 (Flutter 3.47.5, flutter build web --release --no-web-resources-cdn --pwa-strategy=none) rounded up; it only falls. To RAISE one: change the number here in the PR that needs it and give the reason in that PR's text; a raise with no reason is a review finding. To LOWER one: do it in the PR that made the build smaller.",
+  "budgets": {
+    "first_load_wire_bytes": {
+      "max": 8500000,
+      "measured": 8433097,
+      "measures": "Bytes on the wire (gzip for text, raw for images) of every request a cold browser makes until Flutter shows its first frame: index, bootstrap, canvaskit engine (2.1 MB), main.dart.js (6.0 MB), fonts, the manifest and the few assets the first screen reads. The first download a visitor waits for.",
+      "raise": "Only when a feature genuinely belongs in the first frame; say in the PR why it cannot load on demand."
+    },
+    "settled_wire_bytes": {
+      "max": 8500000,
+      "measured": 8433097,
+      "measures": "The same trace up to three quiet seconds after the first frame: what the first screen has fetched once the app is idle. Equal to the first-load number today because nothing is fetched after the first frame without a click.",
+      "raise": "Only when something is prefetched on purpose; say what and why in the PR."
+    },
+    "on_demand_asset_bytes": {
+      "max": 41000000,
+      "measured": 40608902,
+      "measures": "Raw size of build/web/assets/assets: the declared pubspec assets (help images, help texts, the instance bundle, demo data) that are fetched only when a screen reads them. Not part of the first download; this keeps them from growing unseen.",
+      "raise": "A new guide image or help text raises it by its own size; state the size and the guide in the PR."
+    },
+    "deployment_bytes": {
+      "max": 117500000,
+      "measured": 116615732,
+      "measures": "Raw size of every file in build/web, the whole deployment the static host stores and serves.",
+      "raise": "Only with the reason in the PR text; a larger deployment with a flat first load needs a one-line explanation of what was added."
+    }
+  }
+}

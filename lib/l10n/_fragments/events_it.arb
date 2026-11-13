@@ -12,7 +12,6 @@
   "eventReservationCreated": "{actor} ha prenotato {target}",
   "eventReservationModified": "{actor} ha modificato la prenotazione di {target}",
   "eventReservationCancelled": "{actor} ha annullato la prenotazione di {target}",
-  "eventForSubject": "per {name}",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventExpenseSubmitted": "{actor} ha inviato una spesa di {amount}",
   "pushPendingTitle": "DesKilo",
@@ -122,9 +121,10 @@
   "eventActionApproved": "approvato",
   "eventActionRejected": "rifiutato",
   "eventActionUnknown": "aggiornato",
-  "eventRepeatedMarker": "×{count}",
   "eventOutcomeApplied": "Fatto",
   "eventOutcomeConfirmed": "Confermato",
   "eventOutcomePending": "In attesa di una decisione",
-  "eventOutcomeRejected": "Rifiutato"
+  "eventOutcomeRejected": "Rifiutato",
+  "eventLineForSubject": "{line} per {name}",
+  "eventLineRepeated": "{line} ×{count}"
 }

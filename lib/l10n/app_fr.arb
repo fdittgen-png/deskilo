@@ -214,9 +214,9 @@
   "acctDeliverMissing": "Renseignez d'abord ces correspondances : {keys}",
   "acctDeliverNotConnected": "Cette connexion est déconnectée : reconnectez-la, puis envoyez.",
   "acctDeliverNothing": "Rien à envoyer sur cette période.",
-  "acctDeliverNothingSent": "Rien n'a été envoyé.",
+  "acctDeliverReasonNothingSent": "{reason} Rien n'a été envoyé.",
+  "acctDeliverReasonStoppedAt": "{reason} Arrêté à {month}. Envoyées avant : {count}.",
   "acctDeliverRefused": "Le logiciel comptable a refusé cette société : {detail}.",
-  "acctDeliverStoppedAt": "Arrêté à {month}. Envoyées avant : {count}.",
   "acctDeliverYear": "Envoyer {year} à {target}",
   "acctDeliveryAcknowledged": "Reçu par le système",
   "acctDeliveryAttempts": "{count, plural, =0{{count} tentatives} one{une tentative} other{{count} tentatives}}",
@@ -1203,6 +1203,8 @@
     "description": "#2582 purchase analytics"
   },
   "biChangePoints": "{value} pts",
+  "biChangeVsPrevious": "{change} vs période précédente",
+  "biChangeVsYearAgo": "{change} vs l'an dernier",
   "biCollectionCentre": "de ce qui a été facturé",
   "@biCollectionCentre": {
     "description": "Business analytics dashboard: biCollectionCentre"
@@ -2747,14 +2749,6 @@
   "biViews": "Vues",
   "biViewsMine": "Mes vues",
   "biViewsTeam": "Vues de l’équipe",
-  "biVsPrevious": "vs période précédente",
-  "@biVsPrevious": {
-    "description": "Business analytics dashboard: biVsPrevious"
-  },
-  "biVsYearAgo": "vs l'an dernier",
-  "@biVsYearAgo": {
-    "description": "Business analytics dashboard: biVsYearAgo"
-  },
   "billAccessorySupplements": "Suppléments d'accessoires",
   "billCreditNoteCard": "Avoir {number}",
   "@billCreditNoteCard": {
@@ -5028,6 +5022,7 @@
   "@documentsUrlLabel": {
     "description": "Workspace document library (#500)"
   },
+  "dotPair": "{first} · {second}",
   "dunningAutomatic": "Relances automatiques",
   "dunningAutomaticHint": "Une fois par jour, les factures dont l'échéance enregistrée est dépassée passent d'elles-mêmes au niveau de relance suivant — pour le montant restant dû, jamais pendant qu'un paiement est en attente ou que la facture est suspendue. Les factures sans échéance enregistrée restent à votre main. Désactivé : vous envoyez chaque relance vous-même.",
   "dunningBetweenDays": "Jours entre les relances",
@@ -5716,6 +5711,7 @@
   "@environmentSaved": {
     "description": "#917 workspace environment: environmentSaved"
   },
+  "environmentsPair": "{dev} + {prod}",
   "equipmentCost": "Coût {amount}",
   "@equipmentCost": {
     "description": "#2576 equipment register",
@@ -5980,7 +5976,6 @@
   },
   "eventExpenseScheduleLine": "{actor} programme « {title} » — {amount} récurrent",
   "eventExpenseSubmitted": "{actor} a soumis une dépense de {amount}",
-  "eventForSubject": "pour {name}",
   "eventInvoiceIssuedLine": "Nouvelle facture {number}",
   "eventInvoicePaid": "Facture {number} payée — {amount}",
   "@eventInvoicePaid": {
@@ -6044,6 +6039,8 @@
       }
     }
   },
+  "eventLineForSubject": "{line} pour {name}",
+  "eventLineRepeated": "{line} ×{count}",
   "eventOpenSource": "Ouvrir le document d'achat",
   "eventOutcomeApplied": "Fait",
   "eventOutcomeConfirmed": "Confirmé",
@@ -6079,7 +6076,6 @@
   "eventQuotaRequested": "{actor} demande {halfDays, plural, one{{halfDays} demi-journée supplémentaire} other{{halfDays} demi-journées supplémentaires}} pour {period}",
   "eventReject": "Refuser",
   "eventRejectedBy": "Refusé par {name} · {when}",
-  "eventRepeatedMarker": "×{count}",
   "eventReservationCancelled": "{actor} a annulé la réservation de {target}",
   "eventReservationCreated": "{actor} a réservé {target}",
   "eventReservationDeleteCheckedIn": "pointée",
@@ -7808,7 +7804,8 @@
   "gobdProcedureHandoverHeading": "Remise des données (Z3)",
   "gobdProcedureImmutableBody": "Une facture ou un avoir émis ne peut être ni modifié ni supprimé : la base de données le refuse. Chaque document est signé dans une chaîne avec le précédent. Une correction est un nouveau document (avoir ou facture de remplacement) qui cite celui qu'il corrige. Une période clôturée refuse les annulations et les paiements datés en son sein.",
   "gobdProcedureImmutableHeading": "Inaltérabilité",
-  "gobdProcedureRetentionUntil": "un document daté de la fin de cette période peut être effacé à partir du {date}",
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date}. {source}",
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; un document daté de la fin de cette période peut être effacé à partir du {date} (pas encore confirmée). {source}",
   "gobdProcedureSchemaApp": "Version de schéma pour laquelle cette application est construite : {version}",
   "gobdProcedureSchemaLive": "Version du schéma de base de données de cette installation : {version}",
   "gobdProcedureSchemaUnknown": "Version du schéma de base de données de cette installation : illisible au moment de l'établissement",
@@ -9675,6 +9672,7 @@
   "invoicePdfPage": "Page",
   "invoicePdfPayments": "Paiements",
   "invoicePdfProforma": "Proforma",
+  "invoicePdfProformaNamed": "Proforma {name}",
   "invoicePdfPurchaseOrder": "N° d'engagement",
   "@invoicePdfPurchaseOrder": {
     "description": "#922 chorus pro: invoicePdfPurchaseOrder"
@@ -11454,6 +11452,7 @@
   "levelPermissionAllowed": "Peut réserver une table, un bureau ou un niveau entier",
   "levelPermissionDenied": "Ne peut pas réserver une table, un bureau ou un niveau entier",
   "levelPriceLabel": "Prix par demi-journée",
+  "levelPriceLine": "{price} / Prix par demi-journée",
   "levelReorderStale": "Les niveaux ont changé entre-temps. Rien n'a été enregistré ; l'ordre actuel est affiché.",
   "levelReserveButton": "Réserver le niveau",
   "levelSupplementLabel": "Réservations de niveau",
@@ -11928,6 +11927,7 @@
   "mcpPolicyTitle": "Accès des assistants",
   "mcpPolicyUnavailable": "Les réglages des assistants n'ont pas pu être chargés. Réessayez plus tard.",
   "mcpRefusalClientNotApproved": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant.",
+  "mcpRefusalClientNotApprovedNamed": "Cet assistant n’est pas encore approuvé sur ce serveur. L’opérateur approuve chaque assistant une fois ; demandez-le-lui, puis reconnectez-vous depuis l’assistant. En attente de l'opérateur du serveur : {names}.",
   "mcpRefusalNoIdentity": "Confirmez d’abord votre identité dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.",
   "mcpRefusalNotEligible": "Votre accès aux assistants n’est pas encore approuvé. Demandez-le dans DesKilo sous Assistants, puis reconnectez-vous depuis l’assistant.",
   "mcpRefusalOfferChanged": "Ce que propose cet espace de travail a changé pendant votre choix. Reconnectez-vous depuis l’assistant pour voir l’offre actuelle.",
@@ -13577,6 +13577,7 @@
   },
   "planEndBeforeStart": "La fin doit être après le début.",
   "planFromLabel": "De",
+  "planFromTermTime": "{term} {time}",
   "planFullDayChip": "Journée",
   "planFullDayError": "Ici, les réservations couvrent la journée entière.",
   "planHalfDayError": "Ici, les réservations se font par demi-journée.",
@@ -15399,7 +15400,7 @@
   "reminderPdfClosing": "Si vous avez déjà payé, veuillez ne pas tenir compte de ce courrier.",
   "reminderPdfDays": "jours",
   "reminderPdfDaysOpen": "Ouverte depuis",
-  "reminderPdfDaysOpenLine": "Ouverte depuis {days} jours",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Ouverte depuis {days} jour} other{Ouverte depuis {days} jours}}",
   "reminderPdfLevelLabel": "Niveau de relance",
   "reminderPdfOpeningFirm": "malgré notre relance précédente, la facture ci-dessous reste impayée. Merci de régler le montant sans délai.",
   "reminderPdfOpeningFriendly": "petit rappel amical : la facture ci-dessous est encore ouverte. Un simple oubli, sans doute — pas d'inquiétude.",
@@ -15793,6 +15794,7 @@
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportExpectedDelivery": "Livraison prévue",
+  "reportExpectedDeliveryDate": "Livraison prévue le {date}",
   "reportFieldGroupBank": "Coordonnées bancaires",
   "@reportFieldGroupBank": {
     "description": "#966 report guide: reportFieldGroupBank"
@@ -16422,6 +16424,7 @@
     "description": "#671 - report document text (reportSpaceCodesTitle)"
   },
   "reportSubject": "Objet",
+  "reportSubjectLine": "Objet : {subject}",
   "reportTemplateClearOverlay": "Utiliser le défaut pour cette langue",
   "reportTemplateLangDefault": "Par défaut (toutes langues)",
   "@reportTemplateLangDefault": {
@@ -17385,7 +17388,6 @@
       }
     }
   },
-  "sentencePair": "{first} {second}",
   "seriesBookedCount": "{count, plural, one{{count} réservation créée} other{{count} réservations créées}}",
   "seriesPreviewBookOthers": "{count, plural, =0{Réserver les {count} autres dates} one{Réserver l'autre date} other{Réserver les {count} autres dates}}",
   "seriesPreviewFailing": "Ces dates ne peuvent pas être réservées :",
@@ -18824,10 +18826,7 @@
   "@sitesSubtitle": {
     "description": "#945 sites: sitesSubtitle"
   },
-  "smallBusinessCheckFigure": "Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  },
+  "smallBusinessMessageUnconfirmed": "{message} Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
   "smallBusinessNearImmediate": "Votre chiffre d'affaires net de l'année ({turnover}) approche le seuil de {limit}. Le dépasser met fin à la franchise dès l'opération qui le dépasse.",
   "@smallBusinessNearImmediate": {
     "description": "#2440 small-business threshold: smallBusinessNearImmediate",
@@ -20629,6 +20628,7 @@
   "@usageReportOverage": {
     "description": "#873 consumption report: usageReportOverage"
   },
+  "usageReportOverageLine": "Dépassement reporté sur la prochaine facture : {amount}",
   "usageReportPaid": "Payé d'avance (participation)",
   "@usageReportPaid": {
     "description": "#873 consumption report: usageReportPaid"
@@ -21232,6 +21232,7 @@
   "@vatDeclDisclaimer": {
     "description": "Disclaimer at the bottom of the declaration PDF"
   },
+  "vatDeclDisclaimerWithBasis": "{basis} Générée à partir des factures émises de la période. Vérifiez avec votre comptabilité avant de déclarer — aide à la déclaration, pas un conseil fiscal.",
   "vatDeclEdiTva": "Fichier EDI-TVA (CA3)",
   "@vatDeclEdiTva": {
     "description": "#2357 VAT filing files: vatDeclEdiTva"
@@ -21360,6 +21361,7 @@
   "@vatDeclNet": {
     "description": "Net taxable base column"
   },
+  "vatDeclNetAmount": "Base HT {amount}",
   "vatDeclPayable": "TVA à payer",
   "@vatDeclPayable": {
     "description": "#2357 input VAT: vatDeclPayable"
@@ -21437,10 +21439,12 @@
   "@vatDeclTotals": {
     "description": "Totals row"
   },
+  "vatDeclTotalsLine": "Totaux : {net} · TVA {vat} · {count, plural, one{{count} facture} other{{count} factures}}",
   "vatDeclVat": "TVA",
   "@vatDeclVat": {
     "description": "Tax amount column"
   },
+  "vatDeclVatAmount": "TVA {amount}",
   "vatDeclVatId": "N° TVA",
   "@vatDeclVatId": {
     "description": "VAT identifier label"
@@ -21623,6 +21627,7 @@
   },
   "vatSaved": "Taux de TVA enregistrés.",
   "vatSeed": "Utiliser les taux usuels",
+  "vatSeedWithRates": "Utiliser les taux usuels ({rates})",
   "vatServiceRate": "Taux de TVA",
   "vatServiceRateDefault": "Taux par défaut de l'espace",
   "vatShareAmount": "dont TVA {amount}",
@@ -21865,6 +21870,7 @@
   "webMcpActed": "Un assistant de ce navigateur : {action}",
   "webMcpDeviceSwitch": "Autoriser les assistants de ce navigateur à utiliser l'application",
   "webMcpDeviceSwitchHint": "Désactivé par défaut. Activé, un assistant IA intégré à ce navigateur peut lire vos réservations, vos factures et vos demandes en attente dans cet espace tant que la page est ouverte. Le choix reste sur cet appareil.",
+  "weekHalfSlotLabel": "{seat}, {day}, {half, select, morning{matin} other{après-midi}}, {state, select, free{libre} mine{votre réservation} taken{réservé} blocked{bloqué} other{fermé}}",
   "welcomeLinkAction": "Qu’est-ce que DesKilo ?",
   "@welcomeLinkAction": {
     "description": "#2459 sign-in form: opens the public welcome page, beside the demo link"

@@ -2,51 +2,8 @@
 # A count that may only fall; never add or raise a line. Found by the scan that
 # reads string expressions (adjacent literals, +, translated locals) and calls
 # to a shared message that has only a space between its placeholders.
-# Total 69: 26 report-template lines, 43 others.
-
-# Report templates: a translated piece stands beside a print-time token. They
-# belong to issue #3660 (print-time values), not to this ratchet's own work.
-lib/features/money/presentation/report_defaults.dart 24
-lib/features/money/presentation/report_defaults_batch.dart 1
-lib/features/money/presentation/report_defaults_purchase_order.dart 1
-
-# The rest: sentences, labels and names built in code.
-lib/app/shell/shell_app_bar.dart 1
-lib/core/privacy/privacy_policy.dart 1
-lib/features/events/presentation/event_lines.dart 1
-lib/features/events/presentation/screens/events_screen.dart 1
-lib/features/mcp/presentation/widgets/mcp_access_status_card.dart 1
-lib/features/mcp/presentation/widgets/mcp_consent_parts.dart 1
-lib/features/me/presentation/personal_first_visit.dart 1
-lib/features/me/presentation/personal_space_compact_row.dart 1
-lib/features/money/domain/report_data.dart 1
-lib/features/money/domain/report_data_letters.dart 1
-lib/features/money/presentation/gobd_procedure_document.dart 1
-lib/features/money/presentation/invoice_documents.dart 1
-lib/features/money/presentation/screens/vat_declarations_screen.dart 1
-lib/features/money/presentation/screens/vat_screen.dart 1
-lib/features/money/presentation/widgets/accountant_handoff_preflight.dart 1
-lib/features/money/presentation/widgets/accounting_delivery_actions.dart 1
-lib/features/money/presentation/widgets/book_periods_sheet.dart 1
-lib/features/money/presentation/widgets/consumption_sheet.dart 1
-lib/features/money/presentation/widgets/einvoice_inbox_section.dart 1
-lib/features/money/presentation/widgets/equipment_sheet.dart 1
-lib/features/money/presentation/widgets/expense_schedule_sheet.dart 1
-lib/features/money/presentation/widgets/invoice_detail_sections.dart 2
-lib/features/money/presentation/widgets/small_business_notice.dart 1
-lib/features/money/presentation/widgets/supplier_bank_dialog.dart 1
-lib/features/money/presentation/widgets/suppliers_sheet.dart 1
-lib/features/money/presentation/widgets/usage_face.dart 1
-lib/features/money/presentation/widgets/vat_declaration_card.dart 2
-lib/features/money/presentation/widgets/wizard_steps_payments.dart 1
-lib/features/profile/presentation/screens/profiles_screen.dart 1
-lib/features/reservations/presentation/widgets/booking_range_text.dart 2
-lib/features/reservations/presentation/widgets/reservation_detail_sheet.dart 2
-lib/features/reservations/presentation/widgets/space_act_form.dart 1
-lib/features/reservations/presentation/widgets/space_scan.dart 1
-lib/features/task_recorder/presentation/recorder_labels.dart 1
-lib/features/workspace/presentation/screens/deployment_screen.dart 1
-lib/features/workspace/presentation/screens/setup_launch_screen.dart 1
-lib/features/workspace/presentation/widgets/bi_dashboard_content.dart 1
-lib/features/workspace/presentation/widgets/workspace_fields_section.dart 1
-lib/features/workspace/presentation/workspace_configuration_report_strings.dart 1
+# Total 0: the 43 sentences in the app became one message each in #3767, and
+# the 26 report-template lines in #3768 (a subject, an overage and an expected
+# delivery line are one message each; the reminder's day count is formed with
+# its plural by the report's own strings; a line break between two template
+# values is two lines, not one sentence).

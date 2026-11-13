@@ -40,6 +40,7 @@ import '../domain/own_booking_removal.dart';
 import '../domain/reservation.dart';
 import '../domain/seat_state_logic.dart';
 import '../domain/series_preview.dart';
+import '../domain/upcoming_on_seat.dart';
 import '../providers/default_period_controller.dart';
 import '../providers/reservation_providers.dart';
 import 'booking_feedback.dart';
@@ -231,6 +232,12 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           );
         }
       case SeatState.free:
+        // #3817 — free now, booked by this person for later today.
+        final later = myUpcomingOnSeat(reservations, seatId: seat.id,
+            memberId: myMemberId, now: ref.read(clockProvider).now(),
+            dateOf: ref.read(readyWorkspaceContextProvider)?.calendar.dateOf ??
+                DateUtils.dateOnly);
+        if (isLive && later != null) return _mySeatSheet(seat, later);
         // #2016 — a live free-seat tap OFFERS the walk-up; the sheet
         // opens on Reserve with its period editable, and checking in
         // now is the member's explicit choice there.
@@ -280,21 +287,14 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     Seat seat,
     List<Reservation> reservations,
     HalfDayWindow window,
-  ) =>
-      isLive
-          ? reservationOnSeatAt(
-              plan: plan,
-              seat: seat,
-              reservations: reservations,
-              at: ref.read(clockProvider).now(),
-            )
-          : reservationOnSeatInRange(
-              plan: plan,
-              seat: seat,
-              reservations: reservations,
-              from: window.start,
-              to: window.end,
-            );
+  ) => reservationCovering(
+    plan: plan,
+    seat: seat,
+    reservations: reservations,
+    liveAt: isLive ? ref.read(clockProvider).now() : null,
+    from: window.start,
+    to: window.end,
+  );
 
   /// Sheet on a blocked seat for owners/delegated admins (#161):
   /// explains the block and offers to make the seat reservable again.

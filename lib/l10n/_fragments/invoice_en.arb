@@ -1058,12 +1058,12 @@
   "@reminderPdfDaysOpen": {
     "description": "Mahnwesen / reminder letters (#472)"
   },
-  "reminderPdfDaysOpenLine": "Open for {days} days",
+  "reminderPdfDaysOpenLine": "{days, plural, one{Open for {days} day} other{Open for {days} days}}",
   "@reminderPdfDaysOpenLine": {
-    "description": "#3652 Reminder letter line: how long the invoice has been open. {days} is the number the report fills in.",
+    "description": "#3768 Reminder letter line: how long the invoice has been open, with the plural of the day count in the document's language.",
     "placeholders": {
       "days": {
-        "type": "String"
+        "type": "int"
       }
     }
   },
@@ -2644,5 +2644,14 @@
   "eventTypeInvoicePaymentReversed": "Payment match undone",
   "@eventTypeInvoicePaymentReversed": {
     "description": "#2380 event type: a match of money in was undone (0650)."
+  },
+  "invoicePdfProformaNamed": "Proforma {name}",
+  "@invoicePdfProformaNamed": {
+    "description": "#3767 The file name stem of a proforma: the word Proforma and what it covers (the invoice number, or the client and period).",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
   }
 }

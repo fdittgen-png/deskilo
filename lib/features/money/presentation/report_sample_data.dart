@@ -78,6 +78,7 @@ Map<String, Object?> sampleReportData(AppLocalizations l10n) => {
       'reminder_level': 1,
       'reminder_date': '2026-08-15',
       'days_open': 15,
+      'days_open_text': 'Open for 15 days',
       // #480 — the legal mention variables, filled like a French SARL.
       'seller_legal_form': 'SARL au capital de 7 500 €',
       'seller_registration': 'RCS Demo City 123 456 789',

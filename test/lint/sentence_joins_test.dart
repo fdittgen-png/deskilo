@@ -6,6 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'sentence_joins.dart';
 
+const _spaceOnly = {'sentencePair'};
+
 String _fn(String body) => 'String f(dynamic l10n, int a, int b) {\n$body\n}\n';
 
 void main() {
@@ -51,7 +53,10 @@ void main() {
   group('a space-only shared pattern is a join in another form', () {
     test('planted (d): sentencePair with a translated piece', () {
       expect(
-        sentenceJoins(_fn('  return l10n.sentencePair(l10n.booked, a);')),
+        sentenceJoins(
+          _fn('  return l10n.sentencePair(l10n.booked, a);'),
+          spaceOnly: _spaceOnly,
+        ),
         hasLength(1),
       );
     });
@@ -63,6 +68,7 @@ void main() {
             '  final label = l10n.booked;\n'
             '  return l10n.sentencePair(label, a);',
           ),
+          spaceOnly: _spaceOnly,
         ),
         hasLength(1),
       );
@@ -95,6 +101,17 @@ void main() {
       expect(
         sentenceJoins(_fn("  return '\${l10n.x} · '\n      '\$a';")),
         isEmpty,
+      );
+    });
+
+    test('the name of the language is not a translated read (#3767)', () {
+      expect(
+        sentenceJoins(_fn("  return '\${l10n.localeName} \$a';")),
+        isEmpty,
+      );
+      expect(
+        sentenceJoins(_fn("  return '\${l10n.booked} \$a';")),
+        hasLength(1),
       );
     });
 
@@ -131,6 +148,24 @@ void main() {
           reason: 'between "$between"',
         );
       }
+    });
+
+    test('a line break ends the sentence; a space does not (#3768)', () {
+      for (final between in [r'\n', r'\n---\n', r' {{ number }}\n> ', r'\n\n']) {
+        expect(
+          sentenceJoins(_fn("  return '\${l10n.x}$between\${l10n.y}';")),
+          isEmpty,
+          reason: 'between "$between"',
+        );
+      }
+      expect(
+        sentenceJoins(_fn(r"  return '${l10n.x}: ${l10n.y}';")),
+        hasLength(1),
+      );
+      expect(
+        sentenceJoins(_fn(r"  return '${l10n.x}${l10n.y}';")),
+        hasLength(1),
+      );
     });
 
     test('isIndependentJoin names the tags', () {

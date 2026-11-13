@@ -47,8 +47,5 @@
       }
     }
   },
-  "smallBusinessCheckFigure": "Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts.",
-  "@smallBusinessCheckFigure": {
-    "description": "#2440 small-business threshold: smallBusinessCheckFigure"
-  }
+  "smallBusinessMessageUnconfirmed": "{message} Ce seuil est le dernier vérifié : confirmez le montant en vigueur auprès de votre service des impôts."
 }

@@ -15,8 +15,8 @@ ReportBands purchaseOrderBands(AppLocalizations l10n) {
         '# {{ workspace }}\n> {{ workspace_address }}\n---\n'
         '{{ client_name }}\n> {{ client_address }}\n---\n'
         '# $title {{ number }}\n> $issuedLine'
-        '{% if expected_on != "" %} · ${l10n.reportExpectedDelivery} '
-        '{{ expected_on }}{% endif %}',
+        '{% if expected_on != "" %} · '
+        "${l10n.reportExpectedDeliveryDate('{{ expected_on }}')}{% endif %}",
     continuation: '{{ workspace }} — $title {{ number }}\n---',
     body:
         '{% for line in lines %}{{ line.label }} · {{ line.qty }} × '

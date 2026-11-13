@@ -176,7 +176,10 @@ List<ShellBarControl> shellBarControls(
                   child: const Icon(Icons.inbox_outlined),
                 ),
           tooltip:
-              '${lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents)} — ${l10n.uxAttentionSummary(attention.updates, attention.pending)}',
+              l10n.titleDashDetail(
+                  lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents),
+                  l10n.uxAttentionSummary(attention.updates, attention.pending),
+                ),
           // The /events path lands on the alerts (the calendar's Alerts
           // view when the hub holds them).
           onPressed: () => context.go('/events'),

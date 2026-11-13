@@ -329,8 +329,8 @@ class SpaceActFormState extends State<SpaceActForm> {
                         ? null
                         : () => _pickTime(isStart: true),
                     label: Text(
-                      '${lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel)} '
-                      '${timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_start))}',
+                      l10n.planFromTermTime(lexiconText(context, key: 'planFromLabel', fallback: l10n.planFromLabel),
+                          timeLabel.formatTimeOfDay(TimeOfDay.fromDateTime(_start))),
                     ),
                   ),
                 ),

@@ -157,15 +157,6 @@
   "@gobdProcedureImmutableBody": {
     "description": "Procedure documentation (#2375): how issued documents are protected"
   },
-  "gobdProcedureRetentionUntil": "a document dated at the end of this period may be erased from {date}",
-  "@gobdProcedureRetentionUntil": {
-    "description": "Procedure documentation (#2375): the first day a document of the period may be erased",
-    "placeholders": {
-      "date": {
-        "type": "String"
-      }
-    }
-  },
   "gobdProcedureHandoverHeading": "Data handover (Z3)",
   "@gobdProcedureHandoverHeading": {
     "description": "Procedure documentation (#2375): heading"
@@ -231,5 +222,41 @@
   "datevProblemFiscalYearStarts": "the book profiles of the sites start the fiscal year on different days",
   "@datevProblemFiscalYearStarts": {
     "description": "DATEV export (#2375): the issuers' book profiles start the fiscal year on different days"
+  },
+  "gobdProcedureRetentionLine": "{docClass}: {rule}; a document dated at the end of this period may be erased from {date}. {source}",
+  "@gobdProcedureRetentionLine": {
+    "description": "#3767 One line of the procedure document: a class of document, its retention rule, the date from which a document dated at the end of the period may be erased, and the legal source. The date arrives already formatted.",
+    "placeholders": {
+      "docClass": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "gobdProcedureRetentionLineUnconfirmed": "{docClass}: {rule}; a document dated at the end of this period may be erased from {date} (not yet confirmed). {source}",
+  "@gobdProcedureRetentionLineUnconfirmed": {
+    "description": "#3767 The same line when the retention rule is not confirmed yet. The date arrives already formatted.",
+    "placeholders": {
+      "docClass": {
+        "type": "String"
+      },
+      "rule": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "source": {
+        "type": "String"
+      }
+    }
   }
 }
