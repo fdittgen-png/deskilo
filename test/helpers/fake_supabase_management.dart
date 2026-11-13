@@ -117,6 +117,19 @@ class FakeSupabaseManagement implements SupabaseManagement {
   }
 
   @override
+  Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
+    String ref,
+  ) async {
+    _auth();
+    return [
+      for (final slug in existingFunctions[ref] ?? const <String>[])
+        (slug: slug, verifyJwt: null),
+      for (final d in deployed[ref] ?? const <({String slug, bool verifyJwt})>[])
+        (slug: d.slug, verifyJwt: d.verifyJwt),
+    ];
+  }
+
+  @override
   Future<void> deployFunction(String ref,
       {required String slug,
       required bool verifyJwt,

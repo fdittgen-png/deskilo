@@ -105,7 +105,7 @@ jobs:
           fetch-depth: 0
       - uses: dart-lang/setup-dart@6afc89df92d6eb3834022f73cd65adc8cdfcb92d # v1
         with:
-          sdk: stable
+          sdk: "3.13.4" # the Dart of Flutter 3.47.5 (#3473; pinned by workflow_pins_test)
       - id: verdict
         uses: ./.github/actions/classify-change
         with:
@@ -856,7 +856,13 @@ jobs:
     needs: [tested, gate, static, money, money2, workspace, rest, core]
     if: always() && needs.tested.outputs.skip != 'true'
     steps:
+      # #3516 -- two commits: the candidate and its first parent, which is the
+      # base the suite ran against (the merge commit of a pull request, the
+      # previous commit of a push), so the country-line check reads the same
+      # diff the coverage was made of, with no moving origin/<base>.
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
         with:
           flutter-version: ${{ env.FLUTTER_VERSION }}
@@ -984,6 +990,20 @@ jobs:
         continue-on-error: true
         run: bash scripts/coverage_gate.sh
 
+      # #3516 -- a changed line of lib/ that decides by a country code must be
+      # run by a test of the merged coverage. Fail-closed on the evidence it
+      # reads (no lcov, a tree that is not the candidate, an unreadable base);
+      # tool/country_coverage.dart states the measure. Reads, never reruns.
+      - name: Country coverage
+        id: countrycov
+        if: always()
+        continue-on-error: true
+        run: |
+          mkdir -p report
+          dart run tool/country_coverage.dart --lcov coverage/lcov.info \
+            --base "$(git rev-parse HEAD^1)" --candidate "$GITHUB_SHA" \
+            --line-out report/country-coverage-line.txt
+
       # #1864 B — where the runs spent their time, read from the same
       # streams (no second run), one clock per shard: wall clocks are not
       # added, the slowest shard is the critical path. Advisory: it
@@ -1037,6 +1057,8 @@ jobs:
           [ -f report/tests.psv ] || echo 'Tests|failure|the rows step did not run' > report/tests.psv
           printf 'Coverage|%s|%s\n' "${{ steps.coverage.outcome }}" \
             "$(cat report/coverage-line.txt 2>/dev/null || echo 'not measured')" > report/code.psv
+          printf 'Country coverage|%s|%s\n' "${{ steps.countrycov.outcome }}" \
+            "$(cat report/country-coverage-line.txt 2>/dev/null || echo 'not measured')" >> report/code.psv
           cat report/tests.psv report/code.psv
 
       # #2121 — the test inventory is generated, never committed (a
@@ -1090,7 +1112,8 @@ jobs:
             "Test plan=${{ steps.plan.outcome }}" \
             "Discipline rows=${{ steps.rows.outcome }}" \
             "Coverage merge=${{ steps.lcov.outcome }}" \
-            "Coverage=${{ steps.coverage.outcome }}"
+            "Coverage=${{ steps.coverage.outcome }}" \
+            "Country coverage=${{ steps.countrycov.outcome }}"
 
   database:
     name: quality · database

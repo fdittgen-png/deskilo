@@ -366,4 +366,107 @@ void main() {
       },
     );
   });
+
+  group('install_gradle.sh (#3473)', () {
+    // the wrapper's directory for the pinned URL: base 36 of MD5(url). The
+    // value is pinned here so a change of the derivation is a red test, not a
+    // build that silently downloads the distribution again.
+    const url = 'https://services.gradle.org/distributions/gradle-9.1.0-all.zip';
+    const wrapperDir =
+        'wrapper/dists/gradle-9.1.0-all/7wzd0jkjit61aq2p43wpjgij9';
+
+    String props({String? sha}) {
+      final f = File('${_tmp.path}/gradle-wrapper.properties')
+        ..writeAsStringSync(
+        'distributionBase=GRADLE_USER_HOME\n'
+        'distributionUrl=https\\://services.gradle.org/distributions/gradle-9.1.0-all.zip\n'
+        '${sha == null ? '' : 'distributionSha256Sum=$sha\n'}',
+      );
+      return f.path;
+    }
+
+    Future<ProcessResult> run(String properties, {String cache = ''}) => _bash(
+      'bash scripts/install_gradle.sh "$properties" "${_tmp.path}/home" $cache',
+      env: {
+        ...Platform.environment,
+        'PATH': '${_fakeCurl()}:${Platform.environment['PATH']}',
+      },
+    );
+
+    File zip() => File('${_tmp.path}/home/$wrapperDir/gradle-9.1.0-all.zip');
+    File cachedZip() =>
+        File('${_tmp.path}/cache/$_goodSha-gradle-9.1.0-all.zip');
+
+    test('the repository pins the digest of the archive its URL names', () {
+      final p = File('android/gradle/wrapper/gradle-wrapper.properties')
+          .readAsStringSync();
+      expect(p, contains(url.replaceFirst(':', r'\:')));
+      expect(p, matches(RegExp(r'distributionSha256Sum=[0-9a-f]{64}\n')));
+    });
+
+    test('a cold cache downloads, verifies, keeps it and seeds the wrapper',
+        () async {
+      final r = await run(props(sha: _goodSha), cache: '${_tmp.path}/cache');
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(_calls(), 1);
+      expect(zip().readAsStringSync(), _good, reason: 'where the wrapper looks');
+      expect(cachedZip().existsSync(), isTrue);
+    });
+
+    test('a warm cache works with no download at all', () async {
+      cachedZip()
+        ..createSync(recursive: true)
+        ..writeAsStringSync(_good);
+      final r = await run(props(sha: _goodSha), cache: '${_tmp.path}/cache');
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(_calls(), 0);
+      expect(zip().readAsStringSync(), _good);
+    });
+
+    test('a corrupted cached archive is downloaded again', () async {
+      cachedZip()
+        ..createSync(recursive: true)
+        ..writeAsStringSync('corrupted');
+      final r = await run(props(sha: _goodSha), cache: '${_tmp.path}/cache');
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(_calls(), 1);
+      expect('${r.stderr}', contains('failed its checksum'));
+      expect(zip().readAsStringSync(), _good);
+    });
+
+    test('a restored extracted tree is discarded, never run as it is',
+        () async {
+      cachedZip()
+        ..createSync(recursive: true)
+        ..writeAsStringSync(_good);
+      final mutated =
+          File('${_tmp.path}/home/$wrapperDir/gradle-9.1.0/bin/gradle')
+            ..createSync(recursive: true)
+            ..writeAsStringSync('mutated');
+      final marker =
+          File('${_tmp.path}/home/$wrapperDir/gradle-9.1.0-all.zip.ok')
+            ..writeAsStringSync('');
+      final r = await run(props(sha: _goodSha), cache: '${_tmp.path}/cache');
+      expect(r.exitCode, 0, reason: '${r.stderr}');
+      expect(mutated.existsSync(), isFalse);
+      expect(marker.existsSync(), isFalse);
+      expect(zip().readAsStringSync(), _good);
+    });
+
+    test('a download that fails the pinned digest is refused and seeds nothing',
+        () async {
+      final r = await run(props(sha: 'f' * 64), cache: '${_tmp.path}/cache');
+      expect(r.exitCode, isNot(0));
+      expect('${r.stderr}', contains('checksum mismatch'));
+      expect(zip().existsSync(), isFalse);
+      expect(Directory('${_tmp.path}/cache').existsSync(), isFalse);
+    });
+
+    test('a wrapper with no digest is refused before any download', () async {
+      final r = await run(props());
+      expect(r.exitCode, 2);
+      expect('${r.stderr}', contains('distributionSha256Sum'));
+      expect(_calls(), 0);
+    });
+  });
 }
