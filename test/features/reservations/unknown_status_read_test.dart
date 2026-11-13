@@ -55,10 +55,12 @@ SupabaseReservationRepository _repo(List<Map<String, dynamic>> rows) {
     'http://127.0.0.1:54321',
     'sb_publishable_test',
     httpClient: MockClient((request) async {
+      final offset = request.url.queryParameters['offset'];
       final body = request.url.path == '/rest/v1/reservations'
           ? (request.headers['Accept']?.contains('vnd.pgrst.object') ?? false)
               ? jsonEncode(rows.first)
-              : jsonEncode(rows)
+              // Paged: the rows once, then an empty page ends the read.
+              : jsonEncode(offset == null || offset == '0' ? rows : [])
           : jsonEncode(null);
       return http.Response(body, 200, request: request, headers: {
         'content-type': 'application/json',

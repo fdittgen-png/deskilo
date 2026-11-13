@@ -160,16 +160,16 @@ void main() {
   testWidgets('#3884: a role mapped to an account this version cannot read '
       'is not shown as unmapped, cannot be changed, and the sheet says '
       'entries could not be shown', (tester) async {
-    UnreadableRows.instance.reset();
     addTearDown(UnreadableRows.instance.reset);
+    final books = await _pump(
+      tester,
+      accounts: const [('706000', 'Prestations', AccountType.income)],
+    );
+    // After the app is up: signing in or out clears the counts.
     UnreadableRows.instance.record(
       booksAccountsArea('ws-1'),
       'chart',
       {'acc-gone': 'account type future'},
-    );
-    final books = await _pump(
-      tester,
-      accounts: const [('706000', 'Prestations', AccountType.income)],
     );
     books.mappings.add(
       BookMapping(
