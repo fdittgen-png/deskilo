@@ -54,15 +54,21 @@ PostgrestException _pg(String message, {String? code}) =>
 
 void main() {
   group('the families', () {
-    test('a permission refusal, in several server wordings', () {
+    test('a permission refusal, by its code (#3821) or Postgres\'s words', () {
       for (final m in [
         'not an admin of this workspace',
         'only owners may invite admins',
         'only workspace settings managers may change the wording',
-        'new row violates row-level security policy for table "fee_bands"',
       ]) {
-        expect(knownRefusalOf(_pg(m)), KnownRefusal.permission, reason: m);
+        expect(knownRefusalOf(_pg(m, code: 'DKN01')), KnownRefusal.permission,
+            reason: m);
+        // The sentence alone is no longer read: the code decides.
+        expect(knownRefusalOf(_pg(m)), isNull, reason: m);
       }
+      expect(
+          knownRefusalOf(_pg(
+              'new row violates row-level security policy for table "fee_bands"')),
+          KnownRefusal.permission);
       expect(knownRefusalOf(_pg('permission denied for table x', code: '42501')),
           KnownRefusal.permission);
     });
@@ -168,7 +174,8 @@ void main() {
 
   testWidgets('a guarded action refused for a permission says so instead of '
       '"try again"', (tester) async {
-    await _pumpGuarded(tester, _pg('not an admin of this workspace'));
+    await _pumpGuarded(
+        tester, _pg('not an admin of this workspace', code: 'DKN01'));
     expect(find.textContaining('do not have the permission'), findsOneWidget);
     expect(find.text(_generic), findsNothing);
   });

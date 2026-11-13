@@ -30,10 +30,12 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
     bool alsoProd = false,
   }) async {
     if (isAdmin && !myMember.isOwner) {
-      throw Exception('only owners may invite admins');
+      throw const PostgrestException(
+          message: 'only owners may invite admins', code: 'DKN01');
     }
     if (!isAdmin && !myMember.isAdmin) {
-      throw Exception('only admins may invite members');
+      throw const PostgrestException(
+          message: 'only admins may invite members', code: 'DKN01');
     }
     final code = 'INVITE${nextInviteCode++}Z';
     mintedInvitations.add((

@@ -99,6 +99,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     if (!mayActForOthers()) {
       throw const PostgrestException(
         message: 'not an admin of this workspace',
+        code: 'DKN01',
       );
     }
     if (!isActiveMember(subjectMemberId)) {

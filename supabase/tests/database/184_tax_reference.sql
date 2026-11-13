@@ -35,7 +35,7 @@ select is((select count(*)::int from public.tax_reference('rate', 'DE', '2026-06
 -- ── a non-owner writes nothing ─────────────────────────────────────────
 select throws_ok($$select public.set_tax_reference('rate', 'FR', 'standard',
   '{"label":"x","percent":1,"group":"standard","category":"S"}', 'src', true, '2027-01-01')$$,
-  'P0001', 'platform owners only', 'a member cannot write a version');
+  'DKN01', 'platform owners only', 'a member cannot write a version');
 select throws_ok($$insert into public.tax_reference (domain, country, key, valid_from, value, source)
   values ('eu_member', 'GB', 'member', '2030-01-01', '{}', 'x')$$,
   '42501', null, 'a member cannot insert into the table either');
@@ -76,7 +76,7 @@ select throws_ok($$select public.set_tax_reference('mandate', 'FR', 'x', '{}', '
 -- ── a delegated assistant token is not the owner ───────────────────────
 select pg_temp.act_as('00000000-0000-4000-8000-0000002477a1', 'assistant-2477');
 select throws_ok($$select public.set_tax_reference('eu_member', 'GB', 'member', '{}', 'src', true, '2030-01-01')$$,
-  'P0001', 'platform owners only', 'the owner''s delegated token cannot write');
+  'DKN01', 'platform owners only', 'the owner''s delegated token cannot write');
 
 -- ── anon reads nothing ─────────────────────────────────────────────────
 reset role;

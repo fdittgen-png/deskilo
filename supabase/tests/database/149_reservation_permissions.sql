@@ -144,14 +144,14 @@ select lives_ok(pg_temp.book_level(5), 'and books a whole level');
 
 -- ── a member without the permission ────────────────────────────────────
 select pg_temp.act_as('plain');
-select throws_ok(pg_temp.book_for(6), 'P0001', 'not an admin of this workspace',
+select throws_ok(pg_temp.book_for(6), 'DKN01', 'not an admin of this workspace',
   'a plain member books for nobody');
 select throws_ok(format($$ select public.set_member_reservation_limit(%L, 7) $$, pg_temp.id('m_subject')),
-  'P0001', 'not an admin of this workspace', 'sets no limit');
+  'DKN01', 'not an admin of this workspace', 'sets no limit');
 select throws_ok(format($$ select public.set_member_simultaneous_limit(%L, 3) $$, pg_temp.id('m_subject')),
-  'P0001', 'not an admin of this workspace', 'nor a simultaneous allowance');
+  'DKN01', 'not an admin of this workspace', 'nor a simultaneous allowance');
 select throws_ok(format($$ select public.set_member_level_permission(%L, false) $$, pg_temp.id('m_subject')),
-  'P0001', 'not an admin of this workspace', 'nor a level permission');
+  'DKN01', 'not an admin of this workspace', 'nor a level permission');
 select throws_ok(pg_temp.book_level(6), 'DKK21', 'not allowed to reserve a level',  -- #3810: its code
   'and books no whole level without being allowed to');
 select throws_ok(format($$ select public.create_series(%L, null, %L, %L, 'weekly', %L, null, null, %L) $$,
