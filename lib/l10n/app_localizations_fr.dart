@@ -23593,6 +23593,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get publicProfileTitle => 'Profil public';
 
   @override
+  String get purchaseApprovalApplied => 'Approuvé';
+
+  @override
+  String get purchaseApprovalChanged => 'Modifié entre-temps, non envoyé';
+
+  @override
   String get purchaseApprovalEvidenceUnavailable =>
       'Les justificatifs ne sont pas disponibles dans cette vue. Pour les examiner, contactez une personne autorisée à accéder aux détails de l’achat.';
 
@@ -23605,8 +23611,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le taux de change est indisponible dans cette vue.';
 
   @override
+  String get purchaseApprovalOutcomesTitle => 'Approbations de la sélection';
+
+  @override
   String get purchaseApprovalReceiptsUnavailable =>
       'Impossible de charger les justificatifs en attente.';
+
+  @override
+  String get purchaseApprovalRefusedItem => 'Pas à vous de l\'approuver';
+
+  @override
+  String get purchaseApprovalUnknown => 'Pas encore de réponse';
 
   @override
   String get purchaseApprovalVisibleReceipts =>
@@ -23622,6 +23637,17 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchaseApprovalsTitle => 'Factures fournisseurs à approuver';
+
+  @override
+  String purchaseApproveSelected(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Approuver $count documents',
+      one: 'Approuver $count document',
+    );
+    return '$_temp0';
+  }
 
   @override
   String purchaseBillForOrder(String reference) {
@@ -24260,6 +24286,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesQuantity => 'Quantité';
 
   @override
+  String get purchasesReceiptColumn => 'Justificatif';
+
+  @override
   String get purchasesReference => 'Numéro de facture';
 
   @override
@@ -24373,6 +24402,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get purchasesUnit => 'Unité (p. ex. carton, rame)';
+
+  @override
+  String get purchasesWithoutReceipt => 'Sans justificatif';
 
   @override
   String get pushAllowAction => 'Autoriser';
@@ -31288,6 +31320,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get suppliersArchive => 'Archiver';
 
   @override
+  String get suppliersArchivedChip => 'Archivés';
+
+  @override
   String get suppliersArchivedTag => 'archivé';
 
   @override
@@ -31373,6 +31408,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get suppliersIntro =>
       'Les bénéficiaires de vos achats. Un fournisseur est reconnu par un identifiant fiscal vérifié, jamais par son seul nom.';
+
+  @override
+  String get suppliersLastPurchase => 'Dernier achat';
 
   @override
   String get suppliersLoadMore => 'Charger plus';

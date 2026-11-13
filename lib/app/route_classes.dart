@@ -247,12 +247,14 @@ const List<RouteRule> routeRules = [
   RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings'),
   RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}'),
-  RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases'),
+  RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
+  RouteRule('/money/purchases/doc/:id', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
   RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-guest-passes', measure: PageMeasure.work), // #3614
-  RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals'),
+  RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals', measure: PageMeasure.work), // #3615
   RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
-  RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers'),
-  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders'),
+  RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
+  RouteRule('/money/suppliers/:id', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
+  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work), // #3615
   // #3608 — the order's form, a long task: a page with its own columns.
   RouteRule('/money/purchase-orders/new', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
   RouteRule('/money/purchase-orders/:id/edit', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),

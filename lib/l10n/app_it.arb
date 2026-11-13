@@ -14224,10 +14224,15 @@
   "publicProfilePublishBody": "Chiunque su Internet, con o senza accesso, potrà leggere il suo nome, la sua professione e la sua presentazione tramite il suo link. Contatti, presenza e posti restano privati.",
   "publicProfilePublishTitle": "Pubblicare un profilo pubblico?",
   "publicProfileTitle": "Profilo pubblico",
+  "purchaseApprovalApplied": "Approvato",
+  "purchaseApprovalChanged": "Modificato nel frattempo, non inviato",
   "purchaseApprovalEvidenceUnavailable": "I documenti giustificativi non sono disponibili in questa vista. Per esaminarli, contatti una persona autorizzata ad accedere ai dettagli dell’acquisto.",
   "purchaseApprovalFxSame": "La fattura è nella valuta dello spazio.",
   "purchaseApprovalFxUnavailable": "Il tasso di cambio non è disponibile in questa vista.",
+  "purchaseApprovalOutcomesTitle": "Approvazioni della selezione",
   "purchaseApprovalReceiptsUnavailable": "Impossibile caricare le ricevute in attesa.",
+  "purchaseApprovalRefusedItem": "Non spetta a lei approvarlo",
+  "purchaseApprovalUnknown": "Ancora nessuna risposta",
   "purchaseApprovalVisibleReceipts": "Ricevute dei membri in attesa che può visualizzare",
   "purchaseApprovalsEmpty": "Nessuna fattura fornitore attende la sua approvazione.",
   "@purchaseApprovalsEmpty": {
@@ -14241,6 +14246,7 @@
   "@purchaseApprovalsTitle": {
     "description": "#3070 purchases and suppliers navigation group and approvals queue"
   },
+  "purchaseApproveSelected": "{count, plural, one{Approva {count} documento} other{Approva {count} documenti}}",
   "purchaseBillForOrder": "Ordine di acquisto {reference}",
   "purchaseBillNoOrder": "Nessun ordine",
   "purchaseBillOrder": "Ordine di acquisto",
@@ -14667,6 +14673,7 @@
     "description": "#2576 equipment register: what a purchase line is for"
   },
   "purchasesQuantity": "Quantità",
+  "purchasesReceiptColumn": "Giustificativo",
   "purchasesReference": "Numero di fattura",
   "@purchasesReference": {
     "description": "#2573 purchases"
@@ -14811,6 +14818,7 @@
     "description": "#2573 purchases"
   },
   "purchasesUnit": "Unità (es. scatola, risma)",
+  "purchasesWithoutReceipt": "Senza giustificativo",
   "pushAllowAction": "Consenti",
   "pushCancelledBody": "Una prenotazione è stata rimossa da un admin.",
   "pushCancelledTitle": "Prenotazione rimossa",
@@ -19208,6 +19216,7 @@
   "@suppliersArchive": {
     "description": "#2567 suppliers"
   },
+  "suppliersArchivedChip": "Archiviati",
   "suppliersArchivedTag": "archiviato",
   "@suppliersArchivedTag": {
     "description": "#2567 suppliers"
@@ -19330,6 +19339,7 @@
   "@suppliersIntro": {
     "description": "#2567 suppliers"
   },
+  "suppliersLastPurchase": "Ultimo acquisto",
   "suppliersLoadMore": "Carica altro",
   "@suppliersLoadMore": {
     "description": "#3070 supplier outstanding balance"

@@ -109,8 +109,33 @@ class FakePurchaseRepository
   Future<List<PurchaseSummary>> fetchPurchases(String workspaceId) async => !_holds(workspaceId) ? const [] : [
     for (final p in payables)
       if (_doc(p.purchase.id) < 0) p.purchase,
-    for (final d in _documents.reversed) d.summary,
+    for (final d in _documents.reversed) _listed(d),
   ];
+
+  /// #3615 — a document as the server's list reads it: its lines' net and
+  /// VAT (null when a line does not state it) and its evidence.
+  static PurchaseSummary _listed(PurchaseDetail d) {
+    final s = d.summary;
+    final stated = d.lines.every((l) => l.netCents != null);
+    return PurchaseSummary(
+      id: s.id,
+      kind: s.kind,
+      state: s.state,
+      category: s.category,
+      reference: s.reference,
+      currency: s.currency,
+      grossCents: d.grossCents,
+      receivedOn: s.receivedOn,
+      originalDate: s.originalDate,
+      legacy: s.legacy,
+      supplierId: s.supplierId,
+      netCents: stated
+          ? d.lines.fold<int>(0, (a, l) => a + l.netCents!)
+          : null,
+      taxCents: d.taxPartial ? null : d.taxCents,
+      receipts: d.sources.length,
+    );
+  }
 
   @override
   Future<PurchaseDetail> fetchDetail(

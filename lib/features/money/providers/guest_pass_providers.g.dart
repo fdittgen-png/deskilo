@@ -205,7 +205,7 @@ final class GuestPassesSoldProvider
   }
 }
 
-String _$guestPassesSoldHash() => r'df5a5ac130b1eb892d49456ebced1493e899b61b';
+String _$guestPassesSoldHash() => r'cc66fde4882f253ef121b9f757601485e32474ac';
 
 /// #3614 — the passes sold in [workspaceId], the latest first.
 

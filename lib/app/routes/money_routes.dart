@@ -3,10 +3,10 @@
 // #2493 — feature route list: invoicing, VAT, billing, services, payment configuration and the account's finances.
 // A route is one GoRoute and its RouteAccess here; router.dart only composes
 // the lists.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/navigation/list_detail_route.dart';
-
 import '../../features/money/domain/invoicing_wizard.dart';
 import '../../features/money/presentation/invoicing/invoice_page.dart';
 import '../../features/money/presentation/invoicing/invoicing_customer_actions.dart';
@@ -18,6 +18,7 @@ import '../../features/money/presentation/screens/invoices_screen.dart';
 import '../../features/money/presentation/screens/invoicing_wizard_screen.dart';
 import '../../features/money/presentation/screens/legal_identity_screen.dart';
 import '../../features/money/presentation/screens/money_hubs_screen.dart';
+import '../../features/money/presentation/screens/money_view_data.dart';
 import '../../features/money/presentation/screens/my_finances_screen.dart';
 import '../../features/money/presentation/screens/my_payment_terms_screen.dart';
 import '../../features/money/presentation/screens/number_sequences_screen.dart';
@@ -29,16 +30,19 @@ import '../../features/money/presentation/screens/recorded_payments_screen.dart'
 import '../../features/money/presentation/screens/repartition_wizard_screen.dart';
 import '../../features/money/presentation/screens/report_editor_screen.dart';
 import '../../features/money/presentation/screens/services_screen.dart';
+import '../../features/money/presentation/screens/suppliers_desk.dart';
 import '../../features/money/presentation/screens/suppliers_screen.dart';
 import '../../features/money/presentation/screens/vat_declarations_screen.dart';
 import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
     show expenseRepartitionPage;
+import '../../features/money/presentation/widgets/purchases_sheet.dart';
 import '../../features/money/presentation/widgets/settlement_sheet.dart'
     show settlementPage;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'me_adapters.dart';
@@ -198,6 +202,24 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
         const RouteAccess(features: [WorkspaceFeature.purchases], to: '/money'),
       ),
       builder: (context, state) => const PurchasesHubScreen(),
+      // #3615 — a document's address: beside the purchases table on a large
+      // window, a page of its own otherwise.
+      routes: [
+        GoRoute(
+          path: 'doc/:id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => Consumer(
+              builder: (context, ref, _) => PurchaseRecord(
+                workspaceId: ref.watch(currentWorkspaceProvider).value?.id ?? '',
+                purchaseId: id,
+                held: MoneyViewData.purchasePermissionNames(ref),
+              ),
+            ),
+          ),
+        ),
+      ],
     ),
     // #3070 — what waits for a decision, with the count on its drawer entry.
     GoRoute(
@@ -241,8 +263,25 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
           to: '/money',
         ),
       ),
-      builder: (context, state) =>
-          SuppliersScreen(supplier: state.uri.queryParameters['supplier']),
+      builder: (context, state) => const SuppliersScreen(),
+      // #3615 — a supplier's address: beside the table on a large window,
+      // their payables as a page otherwise.
+      routes: [
+        GoRoute(
+          path: ':id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => Consumer(
+              builder: (context, ref, _) => SupplierRecord(
+                workspaceId: ref.watch(currentWorkspaceProvider).value?.id ?? '',
+                supplierId: id,
+                held: MoneyViewData.purchasePermissionNames(ref),
+              ),
+            ),
+          ),
+        ),
+      ],
     ),
     // #3307 — the space's orders to its suppliers.
     GoRoute(

@@ -276,8 +276,8 @@ class _CustomerSource implements SearchSource {
   }
 }
 
-/// Opened on the suppliers page, as its row opens it (#3615 gives
-/// suppliers an address of their own).
+/// Opened at the supplier's own address (#3615), beside the suppliers
+/// table on a large window.
 class _SupplierSource implements SearchSource {
   _SupplierSource(this._ref, this._workspaceId, this._what);
 
@@ -298,10 +298,8 @@ class _SupplierSource implements SearchSource {
           source: id,
           title: s.name,
           where: s.city.isEmpty ? _what : '$_what · ${s.city}',
-          route: Uri(
-            path: '/money/suppliers',
-            queryParameters: {'supplier': s.id},
-          ).toString(),
+          // #3615 — the supplier's own address.
+          route: '/money/suppliers/${Uri.encodeComponent(s.id)}',
         ),
   ];
 }

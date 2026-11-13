@@ -157,6 +157,9 @@ class PurchaseSummary {
     this.originalDate,
     this.legacy = false,
     this.supplierId,
+    this.netCents,
+    this.taxCents,
+    this.receipts = 0,
   });
 
   /// A table row (lines embedded as `purchase_lines`) or a detail document
@@ -164,16 +167,25 @@ class PurchaseSummary {
   factory PurchaseSummary.fromRow(Object? raw) {
     final r = JsonReader.of(raw, context: 'purchase');
     var gross = 0;
+    // #3614/#3615 — net and VAT are summed only when every line states them:
+    // an unstated part is never a zero.
+    int? net = 0;
+    int? tax = 0;
     for (final key in const ['purchase_lines', 'lines']) {
       for (final l in r.listOrAbsent(key)) {
-        gross += JsonReader.of(
-          l,
-          context: 'purchase line',
-        ).integer('gross_cents');
+        final line = JsonReader.of(l, context: 'purchase line');
+        gross += line.integer('gross_cents');
+        final n = line.intOrNull('net_cents');
+        final t = line.intOrNull('tax_cents');
+        net = net == null || n == null ? null : net + n;
+        tax = tax == null || t == null ? null : tax + t;
       }
     }
     return PurchaseSummary(
       grossCents: gross,
+      netCents: net,
+      taxCents: tax,
+      receipts: r.listOrAbsent('purchase_sources').length,
       id: r.string('id'),
       kind: PurchaseKind.of(r.stringOrNull('kind')),
       state: PurchaseState.of(r.stringOrNull('state')),
@@ -208,6 +220,16 @@ class PurchaseSummary {
   /// Filed before the purchase document existed: its supplier, date and
   /// classification are not verified.
   final bool legacy;
+
+  /// #3615 — the lines' net and VAT; null when a line does not state it.
+  final int? netCents;
+  final int? taxCents;
+
+  /// #3615 — the evidence filed with it (a receipt, a scan, an e-invoice).
+  final int receipts;
+
+  /// The day the document is dated: the supplier's, else when it came in.
+  DateTime? get dated => originalDate ?? receivedOn;
 }
 
 /// One document with its lines, evidence and supplier, as the server read it.

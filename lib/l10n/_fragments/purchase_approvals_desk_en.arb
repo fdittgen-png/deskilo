@@ -1,0 +1,32 @@
+{
+  "@@locale": "en",
+  "purchaseApproveSelected": "{count, plural, one{Approve {count} document} other{Approve {count} documents}}",
+  "@purchaseApproveSelected": {
+    "description": "#3615 approve the selected purchase documents, each on its own",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "purchaseApprovalOutcomesTitle": "Approvals of the selection",
+  "@purchaseApprovalOutcomesTitle": {
+    "description": "#3615 title of the per-item outcomes of approving a selection"
+  },
+  "purchaseApprovalApplied": "Approved",
+  "@purchaseApprovalApplied": {
+    "description": "#3615 outcome: the document was approved"
+  },
+  "purchaseApprovalRefusedItem": "Not yours to approve",
+  "@purchaseApprovalRefusedItem": {
+    "description": "#3615 outcome: the person may not approve this document; nothing was sent"
+  },
+  "purchaseApprovalChanged": "Changed meanwhile, not sent",
+  "@purchaseApprovalChanged": {
+    "description": "#3615 outcome: the document changed since it was shown; nothing was sent"
+  },
+  "purchaseApprovalUnknown": "No answer yet",
+  "@purchaseApprovalUnknown": {
+    "description": "#3615 outcome: the read or the decision did not answer; Retry sends the same request"
+  }
+}

@@ -37,9 +37,12 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   '/money': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
   '/money/status': {_P.viewMyMoney, _P.viewFinances, _P.issueInvoices, _P.manageBilling},
   '/money/purchases': {_P.viewMyMoney, _P.viewFinances, _P.managePurchases},
+  '/money/purchases/doc/:id': {_P.viewMyMoney, _P.viewFinances, _P.managePurchases},
   '/money/purchases/approvals': {_P.approveExpenses},
   '/money/payments': {_P.viewFinances},
   '/money/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
+  // #3615 — a supplier's payables: who reads the finances or the purchases.
+  '/money/suppliers/:id': {_P.viewFinances, _P.managePurchases},
   '/money/purchase-orders': {_P.viewFinances, _P.managePurchases},
   '/suppliers': {_P.viewFinances, _P.manageBilling, _P.managePurchases},
   '/money/sales': {_P.viewFinances, _P.issueInvoices, _P.manageBilling},

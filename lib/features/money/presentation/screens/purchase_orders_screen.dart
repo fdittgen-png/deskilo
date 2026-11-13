@@ -9,13 +9,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
@@ -90,6 +94,29 @@ class PurchaseOrdersScreen extends ConsumerWidget {
             key: const ValueKey('purchase-orders-empty'),
           ),
         ),
+        // #3615 — at the desk, a records table; an order opens beside it
+        // as a side panel with its actions.
+        AsyncValue(:final value?)
+            when WindowClass.of(context).index >=
+                WindowClass.expanded.index =>
+          _OrdersTable(
+            orders: value,
+            open: (o) => showTask<void>(
+              context,
+              size: TaskSize.standard,
+              builder: (_) => SingleChildScrollView(
+                child: _OrderTile(
+                  order: o,
+                  workspaceId: workspace!.id,
+                  canWrite: canWrite,
+                  letterhead: (
+                    name: workspace.name,
+                    address: workspace.address,
+                  ),
+                ),
+              ),
+            ),
+          ),
         AsyncValue(:final value?) => ListView(
           padding: const EdgeInsets.only(bottom: kFabSafeBottom),
           children: [
@@ -279,6 +306,87 @@ class _OrderTile extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// #3615 — the orders as a records table: reference, supplier, state,
+/// expected and total, one total per currency of what is shown.
+class _OrdersTable extends StatelessWidget {
+  const _OrdersTable({required this.orders, required this.open});
+
+  final List<PurchaseOrder> orders;
+  final ValueChanged<PurchaseOrder> open;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final format = appFormatOf(context);
+    final dates = format.dates(DateShape.numeric);
+    return RecordsTable<PurchaseOrder>(
+      tableId: 'purchase-orders',
+      rows: orders,
+      keyOf: (o) => o.id,
+      searchText: (o) => '${o.reference} ${o.supplierName}',
+      onOpen: open,
+      empty: Center(child: Text(l10n.purchaseOrdersEmpty)),
+      initialQuery: const RecordsQuery(sortColumn: 'reference', ascending: false),
+      chips: [
+        RecordChip(
+          id: 'open',
+          label: l10n.invoicingFilterOpen,
+          keeps: (o) => o.state.open,
+        ),
+      ],
+      amountOf: (o) => (currency: o.currency, minor: o.totalCents),
+      formatAmount: (c, m) => format.moneyIn(c).formatMinor(m),
+      columns: [
+        RecordColumn(
+          id: 'reference',
+          label: l10n.invoiceRegisterNumber,
+          flex: 2,
+          hideable: false,
+          sortKey: (o) => o.reference,
+          cell: (_, o) => Text(o.reference),
+        ),
+        RecordColumn(
+          id: 'supplier',
+          label: l10n.purchaseOrderSupplier,
+          flex: 3,
+          sortKey: (o) => o.supplierName.toLowerCase(),
+          cell: (_, o) => Text(o.supplierName, overflow: TextOverflow.ellipsis),
+        ),
+        RecordColumn(
+          id: 'state',
+          label: l10n.invoicingColStatus,
+          flex: 2,
+          sortKey: (o) => o.state.index,
+          cell: (_, o) => Text(_stateLabel(l10n, o.state)),
+        ),
+        RecordColumn(
+          id: 'expected',
+          label: l10n.purchaseOrderExpected,
+          flex: 2,
+          sortKey: (o) => o.expectedOn ?? DateTime(0),
+          cell: (_, o) => Text(
+            o.expectedOn == null ? '' : dates.format(o.expectedOn!),
+          ),
+        ),
+        RecordColumn(
+          id: 'total',
+          label: l10n.purchasesTotal,
+          numeric: true,
+          flex: 2,
+          sortKey: (o) => o.totalCents,
+          cell: (_, o) =>
+              Text(format.moneyIn(o.currency).formatMinor(o.totalCents)),
+        ),
+      ],
+      cardBuilder: (context, o) => ListTile(
+        title: Text(o.reference),
+        subtitle: Text(o.supplierName),
+        trailing: Text(format.moneyIn(o.currency).formatMinor(o.totalCents)),
       ),
     );
   }

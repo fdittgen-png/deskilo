@@ -3,31 +3,27 @@
 // #3070 — the suppliers on a screen of their own: a searchable list with a
 // deep link (`/money/suppliers`), the same add, edit, archive and bank doors
 // as the sheet, which stays the picker inside forms.
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/navigation/list_detail_route.dart';
+import '../../../../core/shortcuts/app_shortcuts.dart';
+import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/purchase.dart';
 import '../../providers/supplier_providers.dart';
-import '../widgets/purchases_sheet.dart';
 import '../widgets/suppliers_sheet.dart';
 import 'money_view_data.dart';
+import 'suppliers_desk.dart';
 
 class SuppliersScreen extends ConsumerStatefulWidget {
-  const SuppliersScreen({super.key, this.supplier});
-
-  /// #3610 — the supplier the address names (search,
-  /// `/money/suppliers?supplier=<id>`), opened once as its row opens it.
-  /// #3615 gives suppliers an address of their own, and this goes.
-  final String? supplier;
+  const SuppliersScreen({super.key});
 
   @override
   ConsumerState<SuppliersScreen> createState() => _SuppliersScreenState();
@@ -35,61 +31,6 @@ class SuppliersScreen extends ConsumerStatefulWidget {
 
 class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
   final _search = TextEditingController();
-
-  /// How a row opens its supplier at the last build; null when it opens
-  /// nothing for this reader.
-  ValueChanged<String>? _openRow;
-
-  /// The workspace at the last build.
-  String? _workspaceId;
-
-  @override
-  void initState() {
-    super.initState();
-    final id = widget.supplier;
-    if (id != null) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => unawaited(_openLinked(id)),
-      );
-    }
-  }
-
-  @override
-  void didUpdateWidget(SuppliersScreen old) {
-    super.didUpdateWidget(old);
-    final id = widget.supplier;
-    if (id != null && id != old.supplier) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) => unawaited(_openLinked(id)),
-      );
-    }
-  }
-
-  Future<void> _openLinked(String id) async {
-    final workspaceId = _workspaceId;
-    var known = false;
-    try {
-      known = workspaceId != null &&
-          (await ref.read(suppliersProvider(workspaceId).future))
-              .any((s) => s.id == id && s.isActive);
-    } on Object catch (e, st) {
-      TraceLogger.instance.warn(
-        'money',
-        'the linked supplier could not be read',
-        error: e,
-        stackTrace: st,
-      );
-    }
-    if (!mounted) return;
-    final open = _openRow;
-    if (known && open != null) return open(id);
-    ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-      SnackBar(
-        key: const ValueKey('search-record-unreadable'),
-        content: Text(context.l10n.searchRecordUnreadable),
-      ),
-    );
-  }
 
   @override
   void dispose() {
@@ -106,19 +47,54 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
     final held = MoneyViewData.purchasePermissionNames(ref);
     final canReadBalances = data.purchasesOn &&
         (held.contains('viewFinances') || held.contains(purchaseManagePermission));
-    _workspaceId = workspace?.id;
-    _openRow = !canReadBalances || workspace == null
+    // #3615 — a supplier opens at its address: beside the table at the
+    // desk, its payables as a page on a phone.
+    final ValueChanged<String>? openRow = !canReadBalances || workspace == null
         ? null
-        : (supplierId) => unawaited(
-            showSupplierPayablesSheet(
-              context,
-              workspace.id,
-              supplierId,
-              canCapture: held.contains(purchaseManagePermission),
-              canPay: held.contains(purchasePayPermission),
-              canDecide: held.contains(purchaseDecidePermission),
-            ),
-          );
+        : (supplierId) => openRecord(context, suppliersPath, supplierId);
+    if (workspace != null &&
+        canReadBalances &&
+        WindowClass.of(context).index >= WindowClass.expanded.index) {
+      final view = SuppliersView(workspaceId: workspace.id, lookupOn: lookupOn);
+      return ShortcutScope(
+        handlers: {
+          AppShortcutId.newRecord: () => view.edit(context, ref, null),
+        },
+        child: Scaffold(
+          appBar: AppBar(
+            title: PageTitle(l10n.bookRoleSuppliers),
+            actions: [
+              OutlinedButton.icon(
+                key: const ValueKey('supplier-add'),
+                onPressed: () => view.edit(context, ref, null),
+                icon: const Icon(Icons.add),
+                label: Text(l10n.suppliersAdd),
+              ),
+              // What waits for review stays on the list it was built for.
+              if (ref
+                      .watch(supplierReviewsProvider(workspace.id))
+                      .value
+                      ?.isNotEmpty ??
+                  false) // empty-ok: an unread review list offers no door
+                TextButton(
+                  key: const ValueKey('suppliers-reviews'),
+                  onPressed: () => showSuppliersSheet(
+                    context,
+                    workspace.id,
+                    lookupOn: lookupOn,
+                  ),
+                  child: Text(l10n.suppliersReviewTitle),
+                ),
+              HelpDot(
+                l10n.bookRoleSuppliers,
+                anchor: HelpAnchor.moneySupplierBalance,
+              ),
+            ],
+          ),
+          body: SuppliersDesk(view: view, held: held),
+        ),
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: PageTitle(l10n.bookRoleSuppliers),
@@ -148,7 +124,7 @@ class _SuppliersScreenState extends ConsumerState<SuppliersScreen> {
                     lookupOn: lookupOn,
                     embedded: true,
                     query: _search.text,
-                    onOpenPayables: _openRow,
+                    onOpenPayables: openRow,
                   ),
                 ),
               ],
