@@ -185,6 +185,13 @@
   "accountingExportsFingerprint": "Impronta",
   "accountingExportsRows": "Righe",
   "accountingExportsTitle": "Esportazioni",
+  "accountingSignInBack": "Torna a Contabilità",
+  "accountingSignInCompleting": "Completamento dell'accesso…",
+  "accountingSignInConnected": "La connessione è stabilita. Il suo stato è mostrato in Contabilità.",
+  "accountingSignInExpired": "Questo link di accesso è scaduto o è già stato usato. Ricominci da Contabilità.",
+  "accountingSignInFailed": "L'accesso non è stato completato. Il motivo è mostrato sulla connessione, in Contabilità.",
+  "accountingSignInNotYours": "Questo accesso è stato avviato da un'altra persona. Ricominci da Contabilità.",
+  "accountingSignInRefused": "Non può gestire questa connessione, quindi l'accesso non è stato completato.",
   "accountingSourceRefused": "Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -13286,6 +13293,9 @@
   "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chieda al proprietario dello spazio.",
   "payOnlinePendingDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Citi questo riferimento se non va a buon fine.",
   "payOnlinePendingTitle": "Pagamento online in sospeso",
+  "payOnlineReversedDetail": "Il pagamento {reference} ({amount} tramite {provider}) è stato stornato dal fornitore (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
+  "payOnlineReversedTitle": "Pagamento online stornato",
+  "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali.",
   "paymentAccountNumberLabel": "Numero di conto",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

@@ -251,6 +251,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountingExportsTitle => 'Exportaciones';
 
   @override
+  String get accountingSignInBack => 'Volver a Contabilidad';
+
+  @override
+  String get accountingSignInCompleting => 'Completando el inicio de sesión…';
+
+  @override
+  String get accountingSignInConnected =>
+      'La conexión está hecha. Su estado se muestra en Contabilidad.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Este enlace de inicio de sesión ha caducado o ya se usó. Vuelva a empezar desde Contabilidad.';
+
+  @override
+  String get accountingSignInFailed =>
+      'El inicio de sesión no se completó. El motivo se muestra en la conexión, en Contabilidad.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'Este inicio de sesión lo empezó otra persona. Vuelva a empezar desde Contabilidad.';
+
+  @override
+  String get accountingSignInRefused =>
+      'No puede gestionar esta conexión, así que el inicio de sesión no se completó.';
+
+  @override
   String get accountingSourceRefused =>
       'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
 
@@ -22198,6 +22224,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get payOnlinePendingTitle => 'Pago en línea pendiente';
+
+  @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'El pago $reference ($amount con $provider) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Pago en línea revertido';
+
+  @override
+  String get payOnlineTestKeys =>
+      'El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.';
 
   @override
   String get paymentAccountNumberLabel => 'Número de cuenta';

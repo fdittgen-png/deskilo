@@ -250,6 +250,32 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingExportsTitle => 'Exporte';
 
   @override
+  String get accountingSignInBack => 'Zurück zur Buchhaltung';
+
+  @override
+  String get accountingSignInCompleting => 'Die Anmeldung wird abgeschlossen …';
+
+  @override
+  String get accountingSignInConnected =>
+      'Die Verbindung ist hergestellt. Ihr Status steht unter Buchhaltung.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Dieser Anmeldelink ist abgelaufen oder wurde schon verwendet. Beginnen Sie erneut unter Buchhaltung.';
+
+  @override
+  String get accountingSignInFailed =>
+      'Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'Diese Anmeldung hat jemand anderes begonnen. Beginnen Sie erneut unter Buchhaltung.';
+
+  @override
+  String get accountingSignInRefused =>
+      'Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.';
+
+  @override
   String get accountingSourceRefused =>
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 
@@ -22255,6 +22281,22 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get payOnlinePendingTitle => 'Online-Zahlung ausstehend';
+
+  @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Die Zahlung $reference ($amount über $provider) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Online-Zahlung rückgängig gemacht';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.';
 
   @override
   String get paymentAccountNumberLabel => 'Kontonummer';

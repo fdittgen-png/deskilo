@@ -178,11 +178,20 @@ class MoneyOnlinePayment {
         // nobody chose (#2488).
         final currency = _ref.read(currentWorkspaceProvider).value?.currencyCode;
         if (currency == null) throw StateError('no workspace currency');
-        start = await _requests.run(workspaceId, memberId, provider, period,
-            amountCents, (id) => repo.createPaymentOrder(
-                provider: provider, workspaceId: workspaceId,
-                memberId: memberId, amountCents: amountCents,
-                currencyCode: currency, period: period, requestId: id));
+        try {
+          start = await _requests.run(workspaceId, memberId, provider, period,
+              amountCents, (id) => repo.createPaymentOrder(
+                  provider: provider, workspaceId: workspaceId,
+                  memberId: memberId, amountCents: amountCents,
+                  currencyCode: currency, period: period, requestId: id));
+        } on PaymentGatewayException catch (e, st) {
+          // #3905 — a production workspace takes real payments only: an order
+          // on test credentials is refused, and said in words.
+          if (e.status != 409 || !e.detail.contains('test_keys')) rethrow;
+          TraceLogger.instance.warn('payments', 'payment order refused: test credentials',
+              error: e, stackTrace: st);
+          if (_context.mounted) AppSnack.error(_context, l10n.payOnlineTestKeys);
+        }
       },
     );
     return ok ? start : null;

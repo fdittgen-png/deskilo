@@ -62,6 +62,7 @@ echo "creation: Mollie without a method, Wero with method=wero, each under its o
 # ── the real webhook handler takes the port over ─────────────────────
 kill "$FN_PID" 2>/dev/null; wait "$FN_PID" 2>/dev/null
 SUPABASE_URL="$API_URL" SUPABASE_SERVICE_ROLE_KEY="$SERVICE_KEY" MOLLIE_API_BASE="$MO" \
+DESKILO_ALLOW_TEST_PAYMENTS=true \
   deno run --allow-net --allow-env --allow-read --allow-import \
   supabase/functions/mollie-webhook/index.ts > "$WORK/wh.log" 2>&1 &
 FN_PID=$!

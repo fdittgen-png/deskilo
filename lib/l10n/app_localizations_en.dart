@@ -250,6 +250,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingSignInBack => 'Back to Accounting';
+
+  @override
+  String get accountingSignInCompleting => 'Completing the sign-in…';
+
+  @override
+  String get accountingSignInConnected =>
+      'The connection is made. Its state is shown in Accounting.';
+
+  @override
+  String get accountingSignInExpired =>
+      'This sign-in link has expired or was already used. Start again from Accounting.';
+
+  @override
+  String get accountingSignInFailed =>
+      'The sign-in was not completed. The reason is shown on the connection in Accounting.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'This sign-in was started by someone else. Start again from Accounting.';
+
+  @override
+  String get accountingSignInRefused =>
+      'You may not manage this connection, so the sign-in was not completed.';
+
+  @override
   String get accountingSourceRefused =>
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
@@ -22046,6 +22072,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payOnlinePendingTitle => 'Online payment pending';
+
+  @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Payment $reference ($amount via $provider) was reversed by the provider (a refund or a dispute). The business corrects your balance.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Online payment reversed';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Online payment isn\'t available: the payment provider is set up with test credentials. The business needs to enter its live keys.';
 
   @override
   String get paymentAccountNumberLabel => 'Account number';

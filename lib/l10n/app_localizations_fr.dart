@@ -251,6 +251,33 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingSignInBack => 'Retour à Comptabilité';
+
+  @override
+  String get accountingSignInCompleting =>
+      'Connexion en cours de finalisation…';
+
+  @override
+  String get accountingSignInConnected =>
+      'La connexion est établie. Son état est affiché dans Comptabilité.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Ce lien de connexion a expiré ou a déjà servi. Recommencez depuis Comptabilité.';
+
+  @override
+  String get accountingSignInFailed =>
+      'La connexion n\'a pas été finalisée. La raison est affichée sur la connexion, dans Comptabilité.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'Cette connexion a été lancée par quelqu\'un d\'autre. Recommencez depuis Comptabilité.';
+
+  @override
+  String get accountingSignInRefused =>
+      'Vous ne pouvez pas gérer cette connexion : la connexion n\'a pas été finalisée.';
+
+  @override
   String get accountingSourceRefused =>
       'Les écritures ont changé ou sont trop volumineuses pour un seul export. Rechargez le registre, ou choisissez une période plus courte, puis réessayez.';
 
@@ -22300,6 +22327,22 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get payOnlinePendingTitle => 'Paiement en ligne en attente';
+
+  @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Le paiement $reference ($amount via $provider) a été annulé par le prestataire (un remboursement ou une contestation). L\'entreprise corrige votre solde.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Paiement en ligne annulé';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Le paiement en ligne n\'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L\'entreprise doit saisir ses clés de production.';
 
   @override
   String get paymentAccountNumberLabel => 'Numéro de compte';

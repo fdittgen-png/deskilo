@@ -8,6 +8,7 @@
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
 import { handlePayout, isPayoutEvent } from "./payout.ts";
+import { handleReversal, ignoresTestEvent, isReversalEvent } from "./reversal.ts";
 
 /** #3093 E5 — the one body of every answer given BEFORE the signature is
  * checked: an unsigned caller learns nothing about which stage refused (the
@@ -174,7 +175,23 @@ export async function handle(
   // #2380 -- a payout event names no checkout session: the workspace is the
   // one whose own webhook secret signed it (payout.ts).
   if (isPayoutEvent(event.type)) {
+    // #3905 -- a test-mode payout reaches no books (unless test payments are on).
+    if (ignoresTestEvent(event, deps.env)) {
+      console.log("stripe test event ignored");
+      return new Response("ok", { status: 200 });
+    }
     return await handlePayout(
+      event,
+      (secret) =>
+        validSignature(payload, req.headers.get("stripe-signature") ?? "", secret, deps.nowS()),
+      { admin: deps.admin, env: deps.env, fetch: deps.fetch ?? fetch },
+    );
+  }
+
+  // #3905 -- a dispute or a refund at Stripe names a charge: the workspace is
+  // the one whose own webhook secret signed it (reversal.ts).
+  if (isReversalEvent(event.type)) {
+    return await handleReversal(
       event,
       (secret) =>
         validSignature(payload, req.headers.get("stripe-signature") ?? "", secret, deps.nowS()),
@@ -228,6 +245,12 @@ export async function handle(
   ) {
     console.error("stripe webhook signature verification FAILED");
     return new Response("verification_failed", { status: 400 });
+  }
+  // #3905 -- a test-mode event settles nothing in a production ledger,
+  // unless the installation takes test payments.
+  if (ignoresTestEvent(event, deps.env)) {
+    console.log("stripe test event ignored");
+    return new Response("ok", { status: 200 });
   }
 
   // #1554 — `completed` means the checkout finished, NOT that the money

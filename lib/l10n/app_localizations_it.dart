@@ -250,6 +250,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingExportsTitle => 'Esportazioni';
 
   @override
+  String get accountingSignInBack => 'Torna a Contabilità';
+
+  @override
+  String get accountingSignInCompleting => 'Completamento dell\'accesso…';
+
+  @override
+  String get accountingSignInConnected =>
+      'La connessione è stabilita. Il suo stato è mostrato in Contabilità.';
+
+  @override
+  String get accountingSignInExpired =>
+      'Questo link di accesso è scaduto o è già stato usato. Ricominci da Contabilità.';
+
+  @override
+  String get accountingSignInFailed =>
+      'L\'accesso non è stato completato. Il motivo è mostrato sulla connessione, in Contabilità.';
+
+  @override
+  String get accountingSignInNotYours =>
+      'Questo accesso è stato avviato da un\'altra persona. Ricominci da Contabilità.';
+
+  @override
+  String get accountingSignInRefused =>
+      'Non può gestire questa connessione, quindi l\'accesso non è stato completato.';
+
+  @override
   String get accountingSourceRefused =>
       'Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.';
 
@@ -22231,6 +22257,22 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get payOnlinePendingTitle => 'Pagamento online in sospeso';
+
+  @override
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  ) {
+    return 'Il pagamento $reference ($amount tramite $provider) è stato stornato dal fornitore (un rimborso o una contestazione). L\'azienda corregge il suo saldo.';
+  }
+
+  @override
+  String get payOnlineReversedTitle => 'Pagamento online stornato';
+
+  @override
+  String get payOnlineTestKeys =>
+      'Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L\'azienda deve inserire le sue chiavi reali.';
 
   @override
   String get paymentAccountNumberLabel => 'Numero di conto';

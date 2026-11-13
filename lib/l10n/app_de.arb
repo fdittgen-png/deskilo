@@ -185,6 +185,13 @@
   "accountingExportsFingerprint": "Prüfsumme",
   "accountingExportsRows": "Zeilen",
   "accountingExportsTitle": "Exporte",
+  "accountingSignInBack": "Zurück zur Buchhaltung",
+  "accountingSignInCompleting": "Die Anmeldung wird abgeschlossen …",
+  "accountingSignInConnected": "Die Verbindung ist hergestellt. Ihr Status steht unter Buchhaltung.",
+  "accountingSignInExpired": "Dieser Anmeldelink ist abgelaufen oder wurde schon verwendet. Beginnen Sie erneut unter Buchhaltung.",
+  "accountingSignInFailed": "Die Anmeldung wurde nicht abgeschlossen. Der Grund steht bei der Verbindung unter Buchhaltung.",
+  "accountingSignInNotYours": "Diese Anmeldung hat jemand anderes begonnen. Beginnen Sie erneut unter Buchhaltung.",
+  "accountingSignInRefused": "Sie dürfen diese Verbindung nicht verwalten, daher wurde die Anmeldung nicht abgeschlossen.",
   "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
@@ -13286,6 +13293,9 @@
   "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Fragen Sie den Inhaber des Workspace.",
   "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
   "payOnlinePendingTitle": "Online-Zahlung ausstehend",
+  "payOnlineReversedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
+  "payOnlineReversedTitle": "Online-Zahlung rückgängig gemacht",
+  "payOnlineTestKeys": "Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.",
   "paymentAccountNumberLabel": "Kontonummer",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"

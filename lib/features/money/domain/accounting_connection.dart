@@ -14,6 +14,7 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_delivery_run.dart';
+import 'accounting_sign_in_return.dart';
 import 'accounting_target.dart';
 import 'capability_state.dart';
 import 'remote_revocation.dart';
@@ -23,6 +24,7 @@ import 'remote_revocation.dart';
 export 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
     show FileDocument;
 
+export 'accounting_sign_in_return.dart';
 export 'accounting_systems_scope.dart';
 export 'capability_state.dart';
 
@@ -435,6 +437,9 @@ abstract class AccountingConnectionRepository {
     required String displayName,
     String? connectionId,
   });
+
+  /// #3906 — completes a target's sign-in with the person's own session.
+  Future<SignInCompletion> completeSignIn(SignInReturn back);
 
   /// Asks the target for fresh tokens; answers the connection's new state.
   Future<void> refresh(String connectionId);

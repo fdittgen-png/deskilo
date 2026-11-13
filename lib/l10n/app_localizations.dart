@@ -518,6 +518,48 @@ abstract class AppLocalizations {
   /// **'Exports'**
   String get accountingExportsTitle;
 
+  /// #3906 Button back to the accounting page.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Accounting'**
+  String get accountingSignInBack;
+
+  /// #3906 Shown while the app completes an accounting target's sign-in.
+  ///
+  /// In en, this message translates to:
+  /// **'Completing the sign-in…'**
+  String get accountingSignInCompleting;
+
+  /// #3906 The accounting target's sign-in completed; the connection is made.
+  ///
+  /// In en, this message translates to:
+  /// **'The connection is made. Its state is shown in Accounting.'**
+  String get accountingSignInConnected;
+
+  /// #3906 The accounting sign-in link is too old, was used, or was lost on a reload.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in link has expired or was already used. Start again from Accounting.'**
+  String get accountingSignInExpired;
+
+  /// #3906 The target refused or the person did not complete the sign-in there.
+  ///
+  /// In en, this message translates to:
+  /// **'The sign-in was not completed. The reason is shown on the connection in Accounting.'**
+  String get accountingSignInFailed;
+
+  /// #3906 The accounting sign-in was started by another person; only they complete it.
+  ///
+  /// In en, this message translates to:
+  /// **'This sign-in was started by someone else. Start again from Accounting.'**
+  String get accountingSignInNotYours;
+
+  /// #3906 The signed-in person may not manage the accounting connection; nothing was connected.
+  ///
+  /// In en, this message translates to:
+  /// **'You may not manage this connection, so the sign-in was not completed.'**
+  String get accountingSignInRefused;
+
   /// #2365 accounting export refused: the fiscal source changed or is over budget
   ///
   /// In en, this message translates to:
@@ -35539,6 +35581,28 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payment pending'**
   String get payOnlinePendingTitle;
+
+  /// #3905 reversed line: same placeholders as payOnlinePendingDetail
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} ({amount} via {provider}) was reversed by the provider (a refund or a dispute). The business corrects your balance.'**
+  String payOnlineReversedDetail(
+    String reference,
+    String amount,
+    String provider,
+  );
+
+  /// #3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment reversed'**
+  String get payOnlineReversedTitle;
+
+  /// #3905 an online payment refused because the provider holds test credentials
+  ///
+  /// In en, this message translates to:
+  /// **'Online payment isn\'t available: the payment provider is set up with test credentials. The business needs to enter its live keys.'**
+  String get payOnlineTestKeys;
 
   /// #711 - globalization
   ///
