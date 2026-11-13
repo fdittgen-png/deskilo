@@ -169,6 +169,20 @@ const PARAM_META=[
  ['validation.required','rolesRequired','int',{min:1}],['validation.ownerSignOff','rolesOwnerAlways','bool'],
  ['autoValidate.owner','rolesAutoOwner','bool'],['autoValidate.admin','rolesAutoAdmin','bool'],
 ];
+// #3904 — the answers marked secret (the e-invoice tokens) stay in this tab:
+// what the page keeps in the browser's storage carries them empty, so after a
+// reload they are not set until typed again or imported from the file.
+const SECRET_PATHS=PARAM_META.filter(m=>m[4]&&m[4].secret).map(m=>m[0]);
+function persistable(s){
+ if(!s||typeof s!=='object')return s;
+ const out=JSON.parse(JSON.stringify(s));
+ for(const path of SECRET_PATHS){const keys=path.split('.');const last=keys.pop();
+  const o=keys.reduce((a,k)=>a&&typeof a==='object'?a[k]:undefined,out);
+  if(o&&typeof o==='object'&&last in o)o[last]=''}
+ return out}
+// Answers kept by an earlier version of the page lose their secrets before
+// the page reads them.
+try{const kept=localStorage.getItem(LS);if(kept)localStorage.setItem(LS,JSON.stringify(persistable(JSON.parse(kept))))}catch(e){}
 // Answers the tools do not set one by one, and why. Lists of records
 // (floor plan, members, tariffs, rates) and the permission matrix are
 // edited in the UI; the VAT rates are offered through seedVatRates.

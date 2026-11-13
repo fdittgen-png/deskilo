@@ -50,6 +50,37 @@ void main() {
             '_part file is not a concern');
   });
 
+  // #3904 — the page declares a content policy that allows its own scripts
+  // and no outbound request; so nothing it loads may make one.
+  test('the page allows no outbound request, and makes none (#3904)', () {
+    final page = File(setupPagePath).readAsStringSync();
+    final policy = RegExp(
+      r'<meta http-equiv="Content-Security-Policy" content="([^"]+)">',
+    ).firstMatch(page)?.group(1);
+    expect(policy, isNotNull, reason: 'web/setup.html declares its policy');
+    for (final part in [
+      "default-src 'self'",
+      "connect-src 'none'",
+      "object-src 'none'",
+      "base-uri 'none'",
+      "form-action 'none'",
+    ]) {
+      expect(policy, contains(part));
+    }
+    final loaded = [
+      for (final m in RegExp(r'<script src="([^"]+)"></script>').allMatches(page))
+        'web/${m.group(1)}',
+    ];
+    final calls = RegExp(r'\b(fetch\s*\(|XMLHttpRequest|WebSocket|EventSource|sendBeacon)');
+    final found = [
+      for (final path in [setupPagePath, ...loaded])
+        for (final m in calls.allMatches(File(path).readAsStringSync()))
+          '$path: ${m.group(1)}',
+    ];
+    expect(found, isEmpty,
+        reason: "connect-src 'none' refuses every request the page would make");
+  });
+
   // #3888 — an owner who never opens the reminders step imports the page's
   // starting values, so they must be the app's: DunningRules.defaults,
   // delivered through the generated registry, never a literal in the page.
