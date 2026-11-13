@@ -73,7 +73,7 @@ void main() {
       for (final step in steps) {
         seen++;
         expect(
-          step.group(1)!.replaceAll('"', ''),
+          step.group(1)!.replaceAll('"', '').replaceAll("'", ''),
           matches(RegExp(r'^\d+\.\d+\.\d+$')),
           reason: '${file.path}: a Dart setup must pin x.y.z, the Dart of '
               'the pinned Flutter',
