@@ -236,8 +236,42 @@ class AppLocalizationsEs extends AppLocalizations {
       'Espacio de desarrollo: el archivo lleva la marca DEV y no es la contabilidad real.';
 
   @override
+  String get accountingExportsAgain => 'Exportar de nuevo este periodo';
+
+  @override
+  String get accountingExportsBy => 'Hecho por';
+
+  @override
+  String get accountingExportsFingerprint => 'Huella';
+
+  @override
+  String get accountingExportsRows => 'Filas';
+
+  @override
+  String get accountingExportsTitle => 'Exportaciones';
+
+  @override
   String get accountingSourceRefused =>
       'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
+
+  @override
+  String get accountingStatusAllBooks => 'Toda la contabilidad';
+
+  @override
+  String get accountingStatusBankToMatch =>
+      'Movimientos bancarios por conciliar';
+
+  @override
+  String get accountingStatusClosedUpTo => 'Libros cerrados hasta';
+
+  @override
+  String get accountingStatusLastExport => 'Última exportación';
+
+  @override
+  String get accountingStatusNotRead => 'No se pudo leer';
+
+  @override
+  String get accountingStatusVatToFile => 'Declaración de IVA por presentar';
 
   @override
   String get acctConnConnectToken => 'Conectar con un token de API';
@@ -2042,6 +2076,10 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get bankBasisQrReference => 'referencia QR';
+
+  @override
+  String get bankChooseMovement =>
+      'Elija a la izquierda un movimiento de entrada: aquí se listan sus facturas abiertas.';
 
   @override
   String bankConfirmReferences(int count) {
@@ -35296,6 +35334,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get vatReportTotals => 'Totales del periodo';
+
+  @override
+  String get vatReturnChooseBox =>
+      'Elija una casilla: sus documentos se listan aquí.';
+
+  @override
+  String vatReturnDocumentsDiffer(
+    String declared,
+    String today,
+    String difference,
+    String direction,
+  ) {
+    String _temp0 = intl.Intl.selectLogic(direction, {
+      'more': 'más',
+      'other': 'menos',
+    });
+    return 'Declarado $declared · documentos hoy $today · $difference $_temp0 desde la declaración';
+  }
+
+  @override
+  String get vatReturnDocumentsTitle =>
+      'Documentos de este periodo a este tipo';
+
+  @override
+  String get vatReturnNotCompared =>
+      'Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.';
+
+  @override
+  String get vatReturnOpen => 'Abrir la declaración';
 
   @override
   String get vatSaved => 'Tipos de IVA guardados.';

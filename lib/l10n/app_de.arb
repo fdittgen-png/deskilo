@@ -180,10 +180,21 @@
   "@accountingExportDevelopment": {
     "description": "#936 accounting exports: accountingExportDevelopment"
   },
+  "accountingExportsAgain": "Diesen Zeitraum erneut exportieren",
+  "accountingExportsBy": "Erstellt von",
+  "accountingExportsFingerprint": "Prüfsumme",
+  "accountingExportsRows": "Zeilen",
+  "accountingExportsTitle": "Exporte",
   "accountingSourceRefused": "Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.",
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
+  "accountingStatusAllBooks": "Alles in der Buchhaltung",
+  "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
+  "accountingStatusClosedUpTo": "Bücher abgeschlossen bis",
+  "accountingStatusLastExport": "Letzter Export",
+  "accountingStatusNotRead": "Konnte nicht gelesen werden",
+  "accountingStatusVatToFile": "Abzugebende Umsatzsteuererklärung",
   "acctConnConnectToken": "Mit API-Token verbinden",
   "acctConnDetail": "Antwort des Systems: {detail}",
   "acctConnRefresh": "Verbindung prüfen",
@@ -881,6 +892,7 @@
   "bankBasisCreditorReference": "RF-Referenz",
   "bankBasisInvoiceNumber": "Rechnungsnummer im Text",
   "bankBasisQrReference": "QR-Referenz",
+  "bankChooseMovement": "Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier.",
   "bankConfirmReferences": "{count, plural, one{1 Zuordnung per Referenz bestätigen} other{{count} Zuordnungen per Referenz bestätigen}}",
   "bankConfirmedReferences": "{count, plural, one{1 Zahlung zugeordnet.} other{{count} Zahlungen zugeordnet.}}",
   "bankCsvAccount": "Konto (IBAN)",
@@ -21706,6 +21718,11 @@
   "@vatReportTotals": {
     "description": "#878 VAT review / report: vatReportTotals"
   },
+  "vatReturnChooseBox": "Wählen Sie ein Feld: seine Belege stehen dann hier.",
+  "vatReturnDocumentsDiffer": "Erklärt {declared} · Belege heute {today} · {difference} {direction, select, more{mehr} other{weniger}} seit der Erklärung",
+  "vatReturnDocumentsTitle": "Belege dieses Zeitraums zu diesem Satz",
+  "vatReturnNotCompared": "Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.",
+  "vatReturnOpen": "Erklärung öffnen",
   "vatSaved": "Steuersätze gespeichert.",
   "vatSeed": "Übliche Sätze übernehmen",
   "vatSeedWithRates": "Übliche Sätze übernehmen ({rates})",
