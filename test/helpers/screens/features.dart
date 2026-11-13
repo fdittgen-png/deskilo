@@ -7,6 +7,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../mock_providers.dart';
 import '../navigation.dart' show pageScrollable;
 import '../settings_sections.dart';
@@ -58,6 +59,9 @@ Future<FakeWorkspaceRepository> pumpFeatures(
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
+  // #3619 — at the desk the features open on a records table, which reads
+  // its column choice from the device's preferences.
+  SharedPreferences.setMockInitialValues({});
   final workspace =
       await pumpSettings(tester, featureFlags: featureFlags);
   // #1246 — by icon, not by the English label.

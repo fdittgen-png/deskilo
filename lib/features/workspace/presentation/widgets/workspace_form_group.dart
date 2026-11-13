@@ -72,7 +72,8 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
   void dispose() { _controller.dispose(); _headingFocus.dispose(); super.dispose(); }
   @override
   Widget build(BuildContext context) => widget.flat
-      ? Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+      ? Column(key: ValueKey('workspace-group-${widget.id}'),
+          crossAxisAlignment: CrossAxisAlignment.stretch, children: [
           Text(widget.title, style: Theme.of(context).textTheme.titleLarge),
           const SizedBox(height: AppSpacing.md),
           ...widget.children,
