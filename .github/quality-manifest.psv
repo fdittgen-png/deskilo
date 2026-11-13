@@ -20,6 +20,7 @@ Localization|code|tests||test/i18n/,test/lint/legal_terms_test.dart|5 locales, s
 MCP conformance|code|tests|strict|test/features/mcp/,test/tool/mcp_contract_test.dart,test/tool/mcp_coverage_test.dart|every implemented tool mapped to executed tests; the multi-target journey names each injected fault; nothing skipped
 Privacy|code|tests||test/lint/privacy_claims_test.dart,test/lint/privacy_policy_version_test.dart|no claim the code does not keep, retention matrix, erasure
 Coverage|code|step|||by layer and in total, scripts/coverage_gate.sh
+Country coverage|code|step|||every changed country-code line of lib/ run by a test of the merged coverage, tool/country_coverage.dart
 Migration safety|database|step|||every migration replayed from empty
 Tenant isolation|database|step|conditional||workspace-scoped tables swept for read, update and delete, both roles
 Financial invariants|database|step|conditional||append-only ledger, reconciliation, webhook idempotency

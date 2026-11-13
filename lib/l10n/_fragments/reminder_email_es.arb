@@ -25,10 +25,6 @@
   "@reminderEmailOff": {
     "description": "#3673 reminders by e-mail: reminderEmailOff"
   },
-  "reminderEmailNoLanguage": "No se conoce el idioma de documentos del cliente, así que el recordatorio no se envió por correo. Elija su idioma o comparta la carta.",
-  "@reminderEmailNoLanguage": {
-    "description": "#3673 reminders by e-mail: reminderEmailNoLanguage"
-  },
   "reminderEmailRefused": "El correo fue rechazado: {reason}. No se registró ningún recordatorio.",
   "@reminderEmailRefused": {
     "description": "#3673 reminders by e-mail: reminderEmailRefused",

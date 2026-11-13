@@ -105,6 +105,7 @@ sealed class TaxValue {
           bankingScheme: r.string('banking_scheme'),
           position: r.intOrNull('position') ?? 0,
         ),
+      TaxDomain.documentLanguage => DocumentLanguageValue.read(r),
     };
   }
 }
@@ -522,4 +523,21 @@ class CountryValue extends TaxValue {
         'banking_scheme': bankingScheme,
         'position': position,
       };
+}
+
+/// #3850 -- `document_language` (key `document`, the seller's country): its official [languages]
+/// (ISO 639-1), usual first; whether an invoice may be in its customer's language; and the
+/// language a subdivision (ISO 3166-2 without the country) requires.
+class DocumentLanguageValue extends TaxValue {
+  const DocumentLanguageValue({required this.languages, required this.customerLanguage, this.requiredBySubdivision = const {}});
+  DocumentLanguageValue.read(JsonReader r) : this(languages: r.strings('languages'), customerLanguage: r.boolOr('customer_language', fallback: false),
+      requiredBySubdivision: {for (final e in r.objectOrEmpty('required_by_subdivision').entries) if (e.value case final String l) e.key: l});
+  final List<String> languages;
+  final bool customerLanguage;
+  final Map<String, String> requiredBySubdivision;
+  @override
+  TaxDomain get domain => TaxDomain.documentLanguage;
+  @override
+  Map<String, Object?> toJson() => {'languages': languages, 'customer_language': customerLanguage,
+        if (requiredBySubdivision.isNotEmpty) 'required_by_subdivision': requiredBySubdivision};
 }

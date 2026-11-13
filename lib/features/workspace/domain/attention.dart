@@ -71,6 +71,10 @@ enum AttentionAction {
   /// [Attention.subject] is that feature's name, [Attention.count] how
   /// many wait.
   unblock,
+
+  /// #3850 — confirm the business's document language, which the server
+  /// gave a business of a country with several shipped languages (0753).
+  confirmLanguage,
 }
 
 /// One line: who or what, the decision, and since when.

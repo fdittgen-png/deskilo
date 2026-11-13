@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
-import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
@@ -139,50 +138,23 @@ import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
-import 'data/premises_lease_repository.dart';
 import 'data/template_search_repository.dart';
 import 'data/usage_preparation.dart';
 import 'data/workbook_origin_repository.dart';
-import 'data/workspace_asset_repository.dart';
 import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
 import 'demo_space_routing.dart';
-import 'seed/demo_asset_seed.dart';
-import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
-import 'seed/demo_main_books_seed.dart';
 import 'seed/demo_new_york_seed.dart';
-import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_twin_seed.dart';
 
-/// The main space's purchase side, seeded once for the session: its
-/// providers and the setup guide's evidence read the same repositories.
-typedef _MainBooks = ({
-  DemoPurchasing purchasing,
-  FakeBookProfileRepository books,
-  FakePremisesLeaseRepository lease,
-  FakeWorkspaceAssetRepository assets,
-});
-
-_MainBooks _seedMainBooks(DemoFixture fixture) {
-  final purchasing = seedDemoPurchasing(fixture.seededAt, money: fixture.money, plan: (fixture.workspaces, fixture.floorPlan), actor: () => fixture.activeMemberId, workspaceId: demoFirstSpaceId);
-  return (
-    purchasing: purchasing,
-    // #1869 in memory; #2365 posts the demo money and its supplier bills.
-    books: demoMainBooks(fixture, purchasing),
-    // #2569 — the lease the demo space holds as tenant.
-    lease: seedDemoLease(fixture.seededAt),
-    // #2576 — the equipment the demo space bought.
-    assets: seedDemoAssets(fixture.seededAt),
-  );
-}
-
 /// The setup guide over each space's own fixture: Pézenas holds what
 /// every step names, Leipzig what a space a few weeks old holds.
-DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
+DemoSetupRepository _setupGuide(DemoFixture fixture) {
+  final main = fixture.stores.home;
   final second = fixture.secondSpace;
   return DemoSetupRepository(
     rows: fixture.workspaces,
@@ -194,9 +166,9 @@ DemoSetupRepository _setupGuide(DemoFixture fixture, _MainBooks main) {
         money: fixture.money,
         events: fixture.events,
         books: DemoSetupBooks(
-          suppliers: main.purchasing.suppliers,
-          leases: main.lease,
-          assets: main.assets,
+          suppliers: main.buying.suppliers,
+          leases: main.figures.contracts.lease,
+          assets: main.figures.contracts.assets,
           books: main.books,
           directory: fixture.directory,
         ),
@@ -273,7 +245,6 @@ List<Override> _serverOnlyOverrides() => [
 List<Override> demoOverrides(DemoFixture fixture) {
   // #1847 — the one in-memory directory behind its three interfaces.
   final directory = fixture.directory;
-  final main = _seedMainBooks(fixture);
   return [
       // The clock first: everything the fixture seeded is relative to it,
       // and it stands still on one fixed day, which the Demo bar names.
@@ -308,7 +279,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ),
       // #1656 — Demo lacks nothing locally; #2872 — its setup guide reads
       // each space's own fixture.
-      localSetupRepositoryProvider.overrideWithValue(_setupGuide(fixture, main)),
+      localSetupRepositoryProvider.overrideWithValue(_setupGuide(fixture)),
       // #1659 — Demo searches only its own fixture templates.
       templateSearchRepositoryProvider
           .overrideWithValue(FakeTemplateSearchRepository(source: () => fixture.workspaces.templates)),
@@ -323,7 +294,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
-      ...demoCityCommerceOverrides(fixture, main.purchasing, main.books, main.lease, main.assets), // #2358, #2567, #2573
+      ...demoCityCommerceOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider), seed: demoSettingSeed)), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564
       connectedInstallationsProvider.overrideWith((ref)=>FakeConnectedInstallations()), connectedSourcesProvider.overrideWith((ref) async=>[]), ...demoNoBackendOverrides(), // #3235

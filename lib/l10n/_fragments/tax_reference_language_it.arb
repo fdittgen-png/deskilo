@@ -1,0 +1,10 @@
+{
+  "@@locale": "it",
+  "taxRefDomainDocumentLanguage": "Lingue dei documenti",
+  "taxRefLanguages": "Lingue ufficiali (ISO 639-1, la consueta per prima)",
+  "taxRefCustomerLanguage": "Una fattura può essere nella lingua del suo cliente",
+  "taxRefRequiredLanguages": "Lingua che una regione impone (QC=fr, separate da virgole)",
+  "taxRefInvalidLanguages": "Codici di lingua di due lettere separati da virgole, come fr, de",
+  "taxRefInvalidRequiredLanguages": "Un codice di regione, un segno di uguale e un codice di lingua, come QC=fr",
+  "attentionConfirmDocumentLanguage": "Confermare la lingua dei documenti"
+}

@@ -11,12 +11,10 @@ import '../../../../core/files/file_saver.dart';
 import '../../../../core/i18n/country_names.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/locale/report_language.dart';
 import '../../../../core/text/collation.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/guarded.dart';
-import '../../../../core/ui/app_snack.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/domain/report_data_letters.dart';
 import '../../../money/presentation/invoice_documents.dart';
@@ -95,16 +93,7 @@ class WorkspaceSettingsReports {
         if (!context.mounted) return;
         // #496 — the workspace report prints in the workspace's own
         // language chain (no member involved).
-        final String language;
-        try {
-          language = resolveMemberReportLanguage(ref);
-        } on AmbiguousReportLanguage {
-          AppSnack.error(
-            context,
-            l10n.reportLanguageAmbiguous,
-          );
-          return;
-        }
+        final language = resolveMemberReportLanguage(ref);
         final docL10n = l10nForLanguage(language);
         // #3680 — the workspace's facts as read, awaited.
         final facts = await readWorkspaceFacts(ref, docL10n);

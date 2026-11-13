@@ -205,6 +205,11 @@ class PsqlSupabaseManagement implements SupabaseManagement {
       List.of(functionSlugs);
 
   @override
+  Future<List<({String slug, bool? verifyJwt})>> listDeployedFunctions(
+    String ref,
+  ) async => [for (final slug in functionSlugs) (slug: slug, verifyJwt: null)];
+
+  @override
   Future<void> deployFunction(
     String ref, {
     required String slug,

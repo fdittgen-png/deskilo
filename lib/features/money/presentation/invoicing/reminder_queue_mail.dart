@@ -42,9 +42,6 @@ enum QueueMailNote {
 
   /// Refused before the fence (rights, the invoice, the address).
   notSent,
-
-  /// The customer's document language is not known: nothing left.
-  noLanguage,
 }
 
 /// The queue's e-mail: the server's rows for its invoices and one send per
@@ -120,11 +117,10 @@ class ReminderQueueMail {
     }
   }
 
-  /// Sends [line]'s [letter] (null: no language, nothing leaves) once.
-  Future<void> send(QueuedReminder line, ReminderMailLetter? letter) async {
+  /// Sends [line]'s [letter] once.
+  Future<void> send(QueuedReminder line, ReminderMailLetter letter) async {
     final workspaceId = this.workspaceId;
     if (workspaceId == null) return;
-    if (letter == null) return _note(line, QueueMailNote.noLanguage);
     final attemptId = _attempts.putIfAbsent(line.invoiceId, newRequestId);
     final answer = await _commands.send(
       workspaceId: workspaceId,
@@ -145,7 +141,7 @@ class ReminderQueueMail {
   /// [line]'s e-mail: the letter the queue shares, in the customer's
   /// document language, with what is still owed in the invoice's currency;
   /// null when that language is not known (nothing leaves).
-  Future<ReminderMailLetter?> letterOf(
+  Future<ReminderMailLetter> letterOf(
     BuildContext context,
     QueuedReminder line,
     Invoice invoice,
@@ -161,7 +157,6 @@ class ReminderQueueMail {
       level: line.level,
       reference: requireWorkspaceTaxReference(_ref),
     );
-    if (pdf.language.isEmpty) return null;
     return _commands.letter(
       l10n: l10nForLanguage(pdf.language),
       document: (
@@ -248,7 +243,6 @@ String? queueMailText(
     QueueMailNote.levelMoved => l10n.reminderQueueLevelMoved,
     QueueMailNote.unreached => l10n.reminderQueueEmailUnreached,
     QueueMailNote.notSent => l10n.reminderEmailFailed,
-    QueueMailNote.noLanguage => l10n.reminderEmailNoLanguage,
     null => switch (row?.target) {
       ReminderMailTarget(available: true, :final recipient) =>
         l10n.reminderEmailTo(recipient),

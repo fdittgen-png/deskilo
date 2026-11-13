@@ -19,6 +19,7 @@ import 'package:deskilo/features/money/domain/reminder_mail.dart';
 import 'package:deskilo/features/money/presentation/invoice_email_actions.dart';
 import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
@@ -109,6 +110,7 @@ Future<void> _pump(
   WidgetTester tester,
   _Mail mail, {
   Future<void> Function(BuildContext, WidgetRef)? onTap,
+  Invoice? invoice,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -121,6 +123,7 @@ Future<void> _pump(
           (ref) async => InvoicePdfTemplate.empty,
         ),
         invoiceMatchesProvider.overrideWith((ref) async => const {}),
+        currentWorkspaceProvider.overrideWith((ref) async => null),
       ],
       child: MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -129,7 +132,7 @@ Future<void> _pump(
           body: Consumer(
             builder: (context, ref, _) => Column(
               children: [
-                InvoiceEmailPanel(invoice: _invoice),
+                InvoiceEmailPanel(invoice: invoice ?? _invoice),
                 if (onTap != null)
                   TextButton(
                     key: const ValueKey('go'),
@@ -240,25 +243,29 @@ void main() {
     expect(mail.sent.single.letter.language, 'fr');
   });
 
-  testWidgets('without the customer\'s language nothing leaves', (
+  testWidgets('an issued invoice is e-mailed in the language frozen with it (#3850)', (
     tester,
   ) async {
     final mail = _Mail(_reachable);
+    String? built;
     await _pump(
       tester,
       mail,
+      invoice: _invoice.copyWith(documentLanguage: 'de', formatLocale: 'de_FR'),
       onTap: (c, r) => InvoiceEmailFlow(
         c,
         r,
-        languageOf: (_) async => '',
-        documentOf: (invoice, language) async =>
-            (bytes: [1], fileName: 'x.pdf'),
-      ).send(_invoice, InvoiceMailKind.first),
+        documentOf: (invoice, language) async {
+          built = language;
+          return (bytes: [1], fileName: 'x.pdf');
+        },
+      ).send(_invoice.copyWith(documentLanguage: 'de', formatLocale: 'de_FR'),
+          InvoiceMailKind.first),
     );
     await tester.tap(find.byKey(const ValueKey('go')));
     await tester.pumpAndSettle();
-    expect(mail.sent, isEmpty);
-    expect(find.text(en.invoiceEmailNoLanguage), findsOneWidget);
+    expect(built, 'de');
+    expect(mail.sent.single.letter.language, 'de');
   });
 
   testWidgets('a retry of the same press reuses its attempt id', (
