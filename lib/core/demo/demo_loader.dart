@@ -21,6 +21,7 @@ import 'demo_runtime.dart' deferred as runtime;
 Future<void>? _loading;
 
 /// Fetches the deferred library (once; a failed fetch is asked for again).
+@visibleForTesting
 Future<void> loadDemoLibrary() {
   final pending = _loading ??= runtime.loadLibrary();
   // A failed fetch is not remembered: the next attempt asks again.
@@ -32,6 +33,7 @@ Future<void> loadDemoLibrary() {
 
 /// How the Demo's library is fetched. Tests override it to hold or fail the
 /// fetch; the default is the deferred import.
+@visibleForTesting
 final demoLibraryLoaderProvider = Provider<Future<void> Function()>(
   (ref) => loadDemoLibrary,
 );
