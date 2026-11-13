@@ -16,7 +16,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../providers/book_period_providers.dart';
 import 'premises_lease_dialogs.dart';
 
-Future<void> _showBookPeriodsSheet(
+Future<void> showBookPeriodsSheet(
   BuildContext context,
   String workspaceId, {
   required bool isOwner,
@@ -42,7 +42,7 @@ class BookPeriodsButton extends StatelessWidget {
     return OutlinedButton.icon(
       key: const ValueKey('book-periods-button'),
       onPressed: () =>
-          _showBookPeriodsSheet(context, workspaceId, isOwner: isOwner),
+          showBookPeriodsSheet(context, workspaceId, isOwner: isOwner),
       icon: const Icon(Icons.lock_clock_outlined),
       label: Text(context.l10n.bookPeriodsTitle),
     );

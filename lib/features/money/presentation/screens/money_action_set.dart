@@ -34,6 +34,7 @@ import '../widgets/money_faces_view.dart';
 import '../widgets/premises_lease_sheet.dart';
 import '../widgets/purchases_sheet.dart';
 import '../widgets/rented_rooms_sheet.dart';
+import 'accounting_status.dart';
 import 'money_screen_ops.dart';
 import 'money_view_data.dart';
 
@@ -443,6 +444,27 @@ class MoneyActionSet {
       // match payments.
       ?_bankButton(ref, data),
     ];
+  }
+
+  /// #3616 — the bank statements' sheet for the status tile, or null while
+  /// the flag is off or the person reads no statement.
+  static VoidCallback? bankDoor(
+    BuildContext context,
+    WidgetRef ref,
+    MoneyViewData data,
+  ) {
+    final workspace = data.workspace;
+    if (!data.bankImportOn || workspace == null) return null;
+    final owner = data.member?.isOwner ?? false;
+    final held = {for (final p in ref.read(myPermissionsProvider)) p.wireName};
+    if (!owner && held.intersection(bankStatementReaders).isEmpty) return null;
+    return bankStatementsDoor(
+      context,
+      workspaceId: workspace.id,
+      currency: workspace.currencyCode,
+      canMatch: owner || held.contains(bankMatchPermission),
+      canReconcile: owner || held.contains(bankReconcilePermission),
+    );
   }
 
   /// The bank statements' door, or null while the flag is off or the

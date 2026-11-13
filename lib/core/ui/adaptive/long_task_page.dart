@@ -90,7 +90,13 @@ class _LongTaskPageState extends State<LongTaskPage> {
   final GlobalKey _formKey = GlobalKey(debugLabel: 'long-task-form');
 
   /// The page's body (not its bar): where focus goes when it opens.
-  final FocusScopeNode _body = FocusScopeNode(debugLabel: 'long-task-body');
+  // A plain node, not a scope: a scope would keep Tab inside the body, and
+  // the page's own close button could no longer be reached by the keyboard.
+  final FocusNode _body = FocusNode(
+    debugLabel: 'long-task-body',
+    skipTraversal: true,
+    canRequestFocus: false,
+  );
 
   @override
   void initState() {
@@ -155,8 +161,8 @@ class _LongTaskPageState extends State<LongTaskPage> {
             ),
             title: PageTitle(widget.title),
           ),
-          body: FocusScope(
-            node: _body,
+          body: Focus(
+            focusNode: _body,
             child: SafeArea(
               top: false,
               child: LayoutBuilder(
@@ -171,14 +177,27 @@ class _LongTaskPageState extends State<LongTaskPage> {
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             children: [
-                              Expanded(flex: 5, child: FormColumn(child: form)),
+                              // Tab walks the form to its end, then the
+                              // summary: two panes side by side are two
+                              // groups, or the reading order would weave
+                              // between them row by row.
+                              Expanded(
+                                flex: 5,
+                                child: FocusTraversalGroup(
+                                  child: FormColumn(child: form),
+                                ),
+                              ),
                               const VerticalDivider(width: 1),
                               Expanded(
                                 flex: 3,
-                                child: SingleChildScrollView(
-                                  key: const ValueKey('long-task-summary'),
-                                  padding: const EdgeInsets.all(AppSpacing.xl),
-                                  child: summary,
+                                child: FocusTraversalGroup(
+                                  child: SingleChildScrollView(
+                                    key: const ValueKey('long-task-summary'),
+                                    padding: const EdgeInsets.all(
+                                      AppSpacing.xl,
+                                    ),
+                                    child: summary,
+                                  ),
                                 ),
                               ),
                             ],
