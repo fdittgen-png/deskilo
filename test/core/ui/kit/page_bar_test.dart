@@ -13,7 +13,6 @@ Future<String?> _pump(
   String? place,
   List<Widget> actions = const [],
 }) async {
-  final scope = GlobalKey();
   Widget page = Builder(
     builder: (context) => Scaffold(
       appBar: pageBar(context, title: 'Colours', actions: actions),
@@ -23,11 +22,12 @@ Future<String?> _pump(
   if (place != null) page = DeskPlaceLabel(label: place, child: page);
   await tester.pumpWidget(
     MaterialApp(
-      home: PageNameScope(key: scope, path: '/settings/colours', child: page),
+      home: PageNameScope(path: '/settings/colours', child: page),
     ),
   );
   await tester.pump();
-  return PageNameScope.nameOf(scope.currentContext!);
+  // The name, as a widget under the scope reads it.
+  return PageNameScope.nameOf(tester.element(find.text('body')));
 }
 
 void main() {

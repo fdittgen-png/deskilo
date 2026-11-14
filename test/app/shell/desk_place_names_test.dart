@@ -113,10 +113,10 @@ String _windowTitle(WidgetTester tester) =>
 /// show the entry crumb only. The count only falls.
 const _namelessBudget = 9;
 
-/// The desk pages whose own bar is left empty when this landed (no title
-/// drawn, no leading, no actions): collapsing them is for the desk pages
-/// (#3614 on). The count only falls.
-const _emptyBarBudget = 39;
+/// The desk pages whose own bar is left empty (no title drawn, no leading,
+/// no actions): none since #3927, where such a page draws no bar
+/// (`pageBar`). The count only falls.
+const _emptyBarBudget = 0;
 
 /// Whether the page's own bar draws nothing on the desk.
 bool _barEmpty(AppBar bar, String lastCrumb) {

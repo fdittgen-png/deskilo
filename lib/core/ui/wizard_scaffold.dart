@@ -13,7 +13,7 @@ import '../motion/motion.dart';
 import '../theme/app_spacing.dart';
 import 'adaptive/window_class.dart';
 import 'edge_fade_scroll.dart';
-import 'kit/page_title.dart';
+import 'kit/page_bar.dart';
 import 'motion.dart';
 import 'wizard_form_layout.dart';
 import 'wizard_progress.dart';
@@ -176,7 +176,7 @@ class WizardScaffold extends StatelessWidget {
             ),
           );
     return Scaffold(
-      appBar: AppBar(title: PageTitle(title), actions: actions, leading: leading),
+      appBar: pageBar(context, title: title, actions: actions, leading: leading),
       body: scrollForm
           ? WizardFormLayout(header: header, footer: footer,
               maxWidth: formMaxWidth, child: status == null ? content : Column(
