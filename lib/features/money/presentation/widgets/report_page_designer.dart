@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/invoice_pdf_template.dart';
 import '../../domain/invoice_report.dart';
@@ -355,7 +356,11 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                     child: Text(_zoomLabel(zoom)),
                   ),
               ],
-              child: Padding(
+              // #3947 — the zoom menu is a target of the kit's size.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                    minHeight: KitMetrics.minTarget),
+                child: Padding(
                 padding: const EdgeInsets.all(8),
                 child: Row(mainAxisSize: MainAxisSize.min, children: [
                   const Icon(Icons.zoom_in, size: 20),
@@ -366,6 +371,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                     style: theme.textTheme.labelSmall,
                   ),
                 ]),
+                ),
               ),
             ),
           ],

@@ -21,7 +21,7 @@ const _notGuardedYet = <String, String>{
   // A long task: its own page over the list (#3608), guarded with its list.
   '/money/purchase-orders/new': '#3946 a long task: none of its stops is reached by Tab',
   '/money/purchase-orders/:id/edit': '#3949 a long task over its list',
-  '/invoicing/wizard': '#3947 40 dp step targets in its header',
+  '/invoicing/wizard': '#3948 text wider than 760 px at 1024',
   // A record at its address under a guarded list.
   '/invoices/:id': '#3949 a record beside its guarded list',
   '/invoices/customer/:id': '#3949 a record beside its guarded list',
@@ -35,21 +35,19 @@ const _notGuardedYet = <String, String>{
   // The purchase orders: guarded by their own leaf.
   // Pages measured for the desk and not guarded yet.
   '/settings/public-page': '#3946 Tab reaches a control twice at 1024 and 1440',
-  '/money/repartition': '#3947 two 40 dp targets in its header',
-  '/money/settlement': '#3947 two 40 dp targets in its header',
-  '/billing': '#3946 Tab reaches a control twice; an unnamed control at 1920',
+  '/billing': '#3946 Tab reaches a control twice',
   '/einvoice-config': '#3946 Tab reaches a control twice at 1024 and 1440',
-  '/documents': '#3947 an unnamed control',
-  '/report-editor': '#3947 text wider than 760 px; 40 dp targets (Design, Preview, Insert element)',
+  '/report-editor':
+      '#3947 40 dp Design and Preview at 1024, a 42 dp Insert element at 1440; '
+      'text wider than 760 px; Tab reaches a control twice at 1920',
   '/settings/personal-info': '#3946 Tab reaches a control twice',
   '/settings/sites': '#3948 a sentence 852 px wide at 1024',
-  '/settings/wording': '#3947 a 45 dp language toggle',
-  '/settings/colours': '#3947 an unnamed control; 40 dp colour swatches',
+  '/settings/wording': '#3946 Tab reaches a control twice',
+  '/settings/colours': '#3946 Tab reaches a control twice at 1024',
   '/settings/what-you-can-do': '#3946 unreachable by Tab',
   '/settings/number-sequences': '#3946 Tab reaches a control twice',
   '/legal-identity': '#3946 Tab reaches a control twice',
   '/vat': '#3948 a sentence 834 px wide at 1024',
-  '/accessories': '#3947 an unnamed control',
   '/payment-methods': '#3946 Tab reaches a control twice at 1024',
   // Guarded, it is reached twice by Tab: its keyboard order, older than
   // this list, is to be fixed before its guard joins.

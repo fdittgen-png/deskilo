@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../l10n/context_l10n.dart';
 import '../theme/app_spacing.dart';
 import 'adaptive/window_class.dart';
+import 'kit/kit_metrics.dart';
 import 'wizard_scaffold.dart';
 
 enum WizardStepState { available, completed, skipped, unavailable }
@@ -42,9 +43,13 @@ class WizardProgress extends StatelessWidget {
           onPressed: onStepTap == null || states[i] == WizardStepState.unavailable
               ? null : () => onStepTap!(i),
           icon: Icon(i == index ? Icons.radio_button_checked : icon(i)),
+          // #3947 — a step is a target of the kit's minimum height.
           style: i == index ? TextButton.styleFrom(
+            minimumSize: const Size(0, KitMetrics.minTarget),
             backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
-            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer) : null,
+            foregroundColor: Theme.of(context).colorScheme.onSecondaryContainer)
+            : TextButton.styleFrom(
+                minimumSize: const Size(0, KitMetrics.minTarget)),
           label: Text(step.label))),
       ];
       if (compact) {

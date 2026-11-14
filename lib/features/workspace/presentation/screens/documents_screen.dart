@@ -287,7 +287,7 @@ class DocumentsScreen extends ConsumerWidget {
           ? FloatingActionButton(
               key: const ValueKey('documents-add'),
               onPressed: () => _addDialog(context, ref),
-              child: const Icon(Icons.add),
+              child: Icon(Icons.add, semanticLabel: context.l10n.documentsAdd),
             )
           : null,
       body: switch (documentsAsync) {
