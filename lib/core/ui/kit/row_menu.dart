@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 
 import '../../trace/trace_logger.dart';
 import '../mouse_presence.dart';
+import 'kit_metrics.dart';
 
 /// One entry of a row's menu.
 @immutable
@@ -74,6 +75,7 @@ class RowMenu extends StatefulWidget {
     this.expand = true,
     this.focusable = false,
     this.tooltip,
+    this.fullTarget = false,
   });
 
   /// The row's actions, in menu order.
@@ -99,6 +101,11 @@ class RowMenu extends StatefulWidget {
   /// focusable (a `ListTile` with `onTap`) leaves this false: the keys
   /// reach the menu from the focused child.
   final bool focusable;
+
+  /// #3947 — the ⋯ button as a target of the kit's minimum size, for a
+  /// menu outside a records table (a message's). In a table row it keeps
+  /// the row's compact size (false).
+  final bool fullTarget;
 
   /// The button's tooltip; the platform's "More options" when null.
   final String? tooltip;
@@ -213,7 +220,15 @@ class RowMenuState extends State<RowMenu> {
       key: widget.buttonKey ?? ValueKey('${widget.keyPrefix}-more'),
       tooltip:
           widget.tooltip ?? MaterialLocalizations.of(context).moreButtonTooltip,
-      visualDensity: VisualDensity.compact,
+      visualDensity: widget.fullTarget
+          ? VisualDensity.standard
+          : VisualDensity.compact,
+      constraints: widget.fullTarget
+          ? const BoxConstraints(
+              minWidth: KitMetrics.minTarget,
+              minHeight: KitMetrics.minTarget,
+            )
+          : null,
       iconSize: RowMenuMetrics.buttonIcon,
       color: Theme.of(context).colorScheme.onSurfaceVariant,
       onPressed: () => unawaited(open(anchor: buttonContext)),

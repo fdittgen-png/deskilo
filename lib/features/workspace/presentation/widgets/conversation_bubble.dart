@@ -226,6 +226,7 @@ class ConversationBubble extends ConsumerWidget {
           buttonFirst: mine,
           expand: false,
           focusable: true,
+          fullTarget: true,
           child: core,
         ),
       );
