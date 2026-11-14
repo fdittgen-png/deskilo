@@ -361,6 +361,16 @@
   "@accountingStatusAllBooks": {
     "description": "#3616 heading of the doors to every part of the books, under the status tiles"
   },
+  "accountingStatusAtLeast": "{count} or more",
+  "@accountingStatusAtLeast": {
+    "description": "#3913 A count shown when some rows could not be read by this version: the true count is at least this.",
+    "placeholders": {
+      "count": {
+        "type": "String",
+        "example": "12"
+      }
+    }
+  },
   "accountingStatusBankToMatch": "Bank lines to match",
   "@accountingStatusBankToMatch": {
     "description": "#3616 books status tile: bank movements waiting for a match"
@@ -3089,6 +3099,10 @@
   "bankReconUnmappedCount": "Source movements without verified retained-row association",
   "@bankReconUnmappedCount": {
     "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
+  },
+  "bankReconUnreadable": "This version cannot read some movements of this statement, so no report is made. Update the app, then open the statement again.",
+  "@bankReconUnreadable": {
+    "description": "#3913 A bank reconciliation report refused because a statement or a movement of it is one this version cannot read; names the next step."
   },
   "bankReconValueDate": "Stored value date (may default to booking date)",
   "@bankReconValueDate": {

@@ -283,6 +283,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingStatusAllBooks => 'Tutta la contabilità';
 
   @override
+  String accountingStatusAtLeast(String count) {
+    return '$count o più';
+  }
+
+  @override
   String get accountingStatusBankToMatch => 'Movimenti bancari da abbinare';
 
   @override
@@ -2433,6 +2438,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get bankReconUnmappedCount =>
       'Movimenti della fonte senza associazione verificata a una riga conservata';
+
+  @override
+  String get bankReconUnreadable =>
+      'Questa versione non riesce a leggere alcuni movimenti di questo estratto, quindi il resoconto non viene creato. Aggiorna l\'app, poi riapri l\'estratto.';
 
   @override
   String get bankReconValueDate =>

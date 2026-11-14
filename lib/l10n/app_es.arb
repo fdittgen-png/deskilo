@@ -197,6 +197,7 @@
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
   "accountingStatusAllBooks": "Toda la contabilidad",
+  "accountingStatusAtLeast": "{count} o más",
   "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
   "accountingStatusClosedUpTo": "Libros cerrados hasta",
   "accountingStatusLastExport": "Última exportación",
@@ -1049,6 +1050,7 @@
   "@bankReconUnmappedCount": {
     "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
   },
+  "bankReconUnreadable": "Esta versión no puede leer algunos movimientos de este extracto, así que no se genera el informe. Actualice la aplicación y vuelva a abrir el extracto.",
   "bankReconValueDate": "Fecha valor guardada (puede usar la fecha contable)",
   "@bankReconValueDate": {
     "description": "#2380 partial bank reconciliation report: bankReconValueDate."

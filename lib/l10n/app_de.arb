@@ -197,6 +197,7 @@
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
   "accountingStatusAllBooks": "Alles in der Buchhaltung",
+  "accountingStatusAtLeast": "{count} oder mehr",
   "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
   "accountingStatusClosedUpTo": "Bücher abgeschlossen bis",
   "accountingStatusLastExport": "Letzter Export",
@@ -1049,6 +1050,7 @@
   "@bankReconUnmappedCount": {
     "description": "#2380 statement-file arithmetic limitation: bankReconUnmappedCount."
   },
+  "bankReconUnreadable": "Diese Version kann einige Buchungen dieses Kontoauszugs nicht lesen, daher wird kein Bericht erstellt. Aktualisieren Sie die App und öffnen Sie den Kontoauszug erneut.",
   "bankReconValueDate": "Gespeichertes Valutadatum (gegebenenfalls Buchungsdatum)",
   "@bankReconValueDate": {
     "description": "#2380 partial bank reconciliation report: bankReconValueDate."

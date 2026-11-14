@@ -16,5 +16,6 @@
   "vatReturnDocumentsDiffer": "Dichiarato {declared} · documenti oggi {today} · {difference} {direction, select, more{in più} other{in meno}} dalla dichiarazione",
   "vatReturnNotCompared": "Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.",
   "vatReturnOpen": "Apri la dichiarazione",
-  "accountingExportsTitle": "Esportazioni"
+  "accountingExportsTitle": "Esportazioni",
+  "accountingStatusAtLeast": "{count} o più"
 }

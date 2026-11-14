@@ -15,9 +15,9 @@ import 'lint_sources.dart';
 
 /// The readers (data, domain, the money kernel; demo data excluded) that
 /// still throw on a value they do not know. #3884 converted the reservation
-/// status, the book chart, the postings and the personal references; the
-/// rest are listed in its hand-over.
-const int _throwingReaders = 9;
+/// status, the book chart, the postings and the personal references; #3913
+/// the bank lines and statements; the rest are listed in its hand-over.
+const int _throwingReaders = 7;
 
 void main() {
   test('wire readers that throw on an unknown value only get fewer', () {

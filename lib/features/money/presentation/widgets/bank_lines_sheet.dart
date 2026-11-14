@@ -20,6 +20,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/bank/bank_match.dart';
 import '../../domain/bank/bank_records.dart';
@@ -218,6 +219,8 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
                 const SheetCloseButton(key: ValueKey('sheet-close')),
               ],
             ),
+            // #3913 — the movements this version could not read, counted.
+            UnreadableRowsNotice.area(bankLinesArea(widget.statement.id)),
             BankReconciliationButton(
               workspaceId: widget.workspaceId,
               statementId: widget.statement.id,

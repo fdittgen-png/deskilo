@@ -285,6 +285,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountingStatusAllBooks => 'Toute la comptabilité';
 
   @override
+  String accountingStatusAtLeast(String count) {
+    return '$count ou plus';
+  }
+
+  @override
   String get accountingStatusBankToMatch => 'Lignes bancaires à rapprocher';
 
   @override
@@ -2446,6 +2451,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get bankReconUnmappedCount =>
       'Mouvements source sans association vérifiée à une ligne conservée';
+
+  @override
+  String get bankReconUnreadable =>
+      'Cette version ne sait pas lire certains mouvements de ce relevé : aucun rapport n\'est établi. Mettez l\'application à jour, puis rouvrez le relevé.';
 
   @override
   String get bankReconValueDate =>

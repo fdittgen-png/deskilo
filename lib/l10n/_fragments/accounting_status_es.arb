@@ -16,5 +16,6 @@
   "vatReturnDocumentsDiffer": "Declarado {declared} · documentos hoy {today} · {difference} {direction, select, more{más} other{menos}} desde la declaración",
   "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
   "vatReturnOpen": "Abrir la declaración",
-  "accountingExportsTitle": "Exportaciones"
+  "accountingExportsTitle": "Exportaciones",
+  "accountingStatusAtLeast": "{count} o más"
 }

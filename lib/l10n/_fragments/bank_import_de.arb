@@ -126,5 +126,6 @@
   "bankUnmatchConfirm": "Rückgängig machen",
   "@bankUnmatchConfirm": {
     "description": "#2380 money-in unmatch: the confirm button."
-  }
+  },
+  "bankReconUnreadable": "Diese Version kann einige Buchungen dieses Kontoauszugs nicht lesen, daher wird kein Bericht erstellt. Aktualisieren Sie die App und öffnen Sie den Kontoauszug erneut."
 }

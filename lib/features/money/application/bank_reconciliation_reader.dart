@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import '../../../core/data/unreadable_rows.dart';
 import '../domain/bank/bank_records.dart';
 import '../domain/bank/bank_statement.dart';
 import '../domain/bank/reconciliation_report.dart';
@@ -19,6 +20,7 @@ class BankReconciliationReader {
   }) async {
     final statements = await repository.fetchStatements(workspaceId);
     final selected = statements.where((s) => s.id == statementId).toList();
+    if (selected.isEmpty) _refuseIfLeftOut(bankStatementsArea(workspaceId));
     if (selected.length != 1) {
       throw StateError('statement unavailable or ambiguous');
     }
@@ -33,6 +35,8 @@ class BankReconciliationReader {
     BankFileLimits? sourceLimits,
   }) async {
     final statements = await repository.fetchStatements(workspaceId);
+    // #3913 — a year read without a statement is no year's report.
+    _refuseIfLeftOut(bankStatementsArea(workspaceId));
     if (statements.map((s) => s.id).toSet().length != statements.length) {
       throw StateError('ambiguous statement list');
     }
@@ -54,6 +58,7 @@ class BankReconciliationReader {
     int? year,
   }) async {
     final lines = await repository.fetchLines(statement.id);
+    _refuseIfLeftOut(bankLinesArea(statement.id));
     try {
       final verified = await _verify(
         workspaceId,
@@ -153,6 +158,7 @@ class BankReconciliationReader {
       throw StateError('statement unavailable or ambiguous');
     }
     final lines = await repository.fetchLines(statementId);
+    _refuseIfLeftOut(bankLinesArea(statementId));
     return BankReconciliationReport(
       statement: selected.single,
       lines: lines,
@@ -161,5 +167,13 @@ class BankReconciliationReader {
       requestedFrom: year == null ? null : DateTime.utc(year),
       requestedTo: year == null ? null : DateTime.utc(year, 12, 31),
     );
+  }
+
+  /// #3913 — a report never leaves out a movement (or a statement) this
+  /// build could not read: it is refused instead.
+  static void _refuseIfLeftOut(String area) {
+    if (UnreadableRows.instance.count(area) > 0) {
+      throw const BankRowsUnreadable();
+    }
   }
 }

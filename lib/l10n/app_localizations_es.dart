@@ -284,6 +284,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountingStatusAllBooks => 'Toda la contabilidad';
 
   @override
+  String accountingStatusAtLeast(String count) {
+    return '$count o más';
+  }
+
+  @override
   String get accountingStatusBankToMatch =>
       'Movimientos bancarios por conciliar';
 
@@ -2438,6 +2443,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get bankReconUnmappedCount =>
       'Movimientos de la fuente sin asociación verificada a una línea conservada';
+
+  @override
+  String get bankReconUnreadable =>
+      'Esta versión no puede leer algunos movimientos de este extracto, así que no se genera el informe. Actualice la aplicación y vuelva a abrir el extracto.';
 
   @override
   String get bankReconValueDate =>

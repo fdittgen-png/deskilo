@@ -572,6 +572,12 @@ abstract class AppLocalizations {
   /// **'Everything in the books'**
   String get accountingStatusAllBooks;
 
+  /// #3913 A count shown when some rows could not be read by this version: the true count is at least this.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} or more'**
+  String accountingStatusAtLeast(String count);
+
   /// #3616 books status tile: bank movements waiting for a match
   ///
   /// In en, this message translates to:
@@ -3930,6 +3936,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Source movements without verified retained-row association'**
   String get bankReconUnmappedCount;
+
+  /// #3913 A bank reconciliation report refused because a statement or a movement of it is one this version cannot read; names the next step.
+  ///
+  /// In en, this message translates to:
+  /// **'This version cannot read some movements of this statement, so no report is made. Update the app, then open the statement again.'**
+  String get bankReconUnreadable;
 
   /// #2380 partial bank reconciliation report: bankReconValueDate.
   ///

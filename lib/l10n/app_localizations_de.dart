@@ -283,6 +283,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingStatusAllBooks => 'Alles in der Buchhaltung';
 
   @override
+  String accountingStatusAtLeast(String count) {
+    return '$count oder mehr';
+  }
+
+  @override
   String get accountingStatusBankToMatch => 'Zuzuordnende Bankbuchungen';
 
   @override
@@ -2437,6 +2442,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get bankReconUnmappedCount =>
       'Quellbewegungen ohne geprüfte Zuordnung zu einer gespeicherten Zeile';
+
+  @override
+  String get bankReconUnreadable =>
+      'Diese Version kann einige Buchungen dieses Kontoauszugs nicht lesen, daher wird kein Bericht erstellt. Aktualisieren Sie die App und öffnen Sie den Kontoauszug erneut.';
 
   @override
   String get bankReconValueDate =>
