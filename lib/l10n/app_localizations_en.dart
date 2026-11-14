@@ -6973,6 +6973,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The servers your personal home offers could not be read.';
 
   @override
+  String get createHostUnreadable =>
+      'This version cannot read this host\'s state. Update the app, then choose it again.';
+
+  @override
   String get createHostUnverified => 'Your identity cannot be verified there';
 
   @override

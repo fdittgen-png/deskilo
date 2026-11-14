@@ -13,6 +13,7 @@
 // structurally: there was no set to iterate and nothing to check a new
 // member against. This file is that set. Everything that needs to know
 // what report kinds exist, or where one keeps its design, asks here.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:meta/meta.dart';
 import 'invoice_pdf_template.dart';
 
@@ -55,7 +56,7 @@ class ReportReminderSlot extends ReportSlot {
 /// One report the designer can edit and the exchange format can carry.
 class ReportKind {
   const ReportKind({required this.id, required this.slot,
-      this.numbersFirstPage = false});
+      this.numbersFirstPage = false, this.papers = Paper.values});
 
   /// The id used in the editor, the export file and every widget key.
   final String id;
@@ -64,6 +65,10 @@ class ReportKind {
   /// #2862 — a report read as a whole ("Page 1/5" on every page) rather
   /// than a letter, whose number starts on page 2.
   final bool numbersFirstPage;
+
+  /// #3852 — the papers this report is printed on. A report on another
+  /// paper is never scaled to it.
+  final List<Paper> papers;
 
   bool get isReminder => slot is ReportReminderSlot;
 }

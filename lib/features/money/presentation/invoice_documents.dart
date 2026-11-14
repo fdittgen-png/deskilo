@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,7 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
+import '../domain/address_window.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -319,6 +321,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         )
       : safeFileSlug(invoice.number);
   final layoutXml = invoiceLayoutXmlOf(invoice, options, template, features, l10n);
+  // #3852 — the paper frozen at issue; an invoice issued before it, A4.
+  final paper = Paper.fromWire(invoice.paper) ?? Paper.a4;
   final dateFormat = DateFormat.yMMMd(localeName);
   final annexes = invoiceAnnexesOf(
     context,
@@ -342,19 +346,22 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
       layoutXml: layoutXml,
       data: withOwnerTexts(reportData, template.texts),
       what: invoice.number.isEmpty ? stem : invoice.number,
-      documentTitle: strings.titleLine(invoice.number),
-      pageLabel: strings.page,
+      print: LayoutPrint(
+        documentTitle: strings.titleLine(invoice.number),
+        pageLabel: strings.page,
+        watermark: invoiceWatermark(
+          strings,
+          proforma: proforma,
+          voided: invoice.isVoided,
+          copy: options.copy,
+        ),
+        signatureLabel: strings.signature,
+        signature: proforma ? '' : invoice.signature,
+        lastPage: qrPage,
+        paper: paper,
+      ),
       font: _asset,
       image: options.reportImage,
-      watermark: invoiceWatermark(
-        strings,
-        proforma: proforma,
-        voided: invoice.isVoided,
-        copy: options.copy,
-      ),
-      signatureLabel: strings.signature,
-      signature: proforma ? '' : invoice.signature,
-      lastPage: qrPage,
     );
     if (bytes != null) return (bytes: bytes, fileName: '$stem.pdf');
   }
@@ -365,7 +372,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
-    addressWindow: invoiceAddressWindowOf(options, features),
+    addressWindow: addressWindowOnPaper(invoiceAddressWindowOf(options, features), paper),
+    paper: paper,
     invoice: invoice,
     reportImages: reportImages,
     lineText: (line) => invoiceLineTextFor(words, invoice, line,

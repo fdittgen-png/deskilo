@@ -86,8 +86,8 @@ void main() {
   });
 
   test('book_profiles: a profile without its revision names it', () {
-    final p = BookProfile.fromJson(Map<String, Object?>.of(_profile));
-    expect(BookProfile.fromJson(p.toJson()).toJson(), p.toJson());
+    final p = BookProfile.fromJson(Map<String, Object?>.of(_profile))!;
+    expect(BookProfile.fromJson(p.toJson())!.toJson(), p.toJson());
     expect(
       () => BookProfile.fromJson(
         Map<String, Object?>.of(_profile)..remove('revision'),

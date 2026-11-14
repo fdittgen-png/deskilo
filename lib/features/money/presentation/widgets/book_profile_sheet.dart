@@ -15,6 +15,7 @@ import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/save_book_profile.dart';
@@ -415,9 +416,13 @@ class BookProfileSection extends ConsumerWidget {
     final profiles = ref.watch(bookProfilesProvider).requireValue;
     final sites = {for (final s in ref.watch(sitesProvider).requireValue) s.id: s};
     final dates = appFormatOf(context).dates(DateShape.date);
+    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        // #3913 — the profiles this version could not read, counted.
+        if (workspaceId != null)
+          UnreadableRowsNotice.area(booksProfilesArea(workspaceId)),
         ListTile(
           key: const ValueKey('legal-identity-book'),
           contentPadding: EdgeInsets.zero,
