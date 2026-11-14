@@ -143,12 +143,14 @@ void main() {
       month: 7,
       basis: AccountingBasis.cash,
     );
-    expect(BookProfile.fromJson(p.toJson()).toJson(), p.toJson());
+    expect(BookProfile.fromJson(p.toJson())!.toJson(), p.toJson());
     expect(p.toJson()['authority_mode'], 'external_book');
     expect(p.toJson()['effective_from'], '2026-01-01');
-    expect(
-      () => BookProfile.fromJson({...p.toJson(), 'authority_mode': 'ledger'}),
-      throwsFormatException,
-    );
+    // #3913 — an authority or a basis this build does not know is no
+    // profile, never another authority or basis.
+    expect(BookProfile.fromJson({...p.toJson(), 'authority_mode': 'ledger'}),
+        isNull);
+    expect(BookProfile.fromJson({...p.toJson(), 'accounting_basis': 'mixed'}),
+        isNull);
   });
 }

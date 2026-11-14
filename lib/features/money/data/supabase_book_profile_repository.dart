@@ -18,10 +18,27 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       'book_profiles',
       params: {'p_workspace_id': workspaceId},
     );
-    return [
-      for (final row in (rows as List? ?? const []))
-        BookProfile.fromJson(Map<String, Object?>.from(row as Map)),
-    ];
+    // #3913 — a profile whose authority or basis this build does not know
+    // is left out and counted, never read as another.
+    final left = <String, String>{};
+    final kept = <BookProfile>[];
+    for (final row in (rows as List? ?? const [])) {
+      final json = Map<String, Object?>.from(row as Map);
+      final profile = BookProfile.fromJson(json);
+      if (profile != null) {
+        kept.add(profile);
+      } else {
+        left['${json['id']}'] =
+            'book profile ${json['authority_mode']}/${json['accounting_basis']}';
+      }
+    }
+    UnreadableRows.instance.record(
+      booksProfilesArea(workspaceId),
+      workspaceId,
+      left,
+      scope: workspaceId,
+    );
+    return kept;
   }
 
   @override
@@ -42,7 +59,9 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
           'p_expected_revision': p.revision,
         },
       );
-      return BookProfile.fromJson(Map<String, Object?>.from(row as Map));
+      // #3913 — saved; an answer this build cannot read back is the
+      // profile as sent: the list read again counts it.
+      return BookProfile.fromJson(Map<String, Object?>.from(row as Map)) ?? p;
     } on PostgrestException catch (e, st) {
       // trace-exempt: a stale save is an answer, anything else is rethrown
       // for the caller's runGuarded to trace.

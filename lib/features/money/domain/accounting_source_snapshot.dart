@@ -195,7 +195,10 @@ class AccountingSourceSnapshot {
     // stops, it does not assume "no profile".
     if (r.raw('book_profiles') is! List) bad('no book profiles in the answer');
     final profiles = r.objects('book_profiles', (p) {
-      final profile = BookProfile.fromJson(p.json);
+      // #3913 — a profile this build cannot read decides the books: the
+      // export stops rather than guess its authority or basis.
+      final profile = BookProfile.fromJson(p.json) ??
+          bad('a book profile this version cannot read');
       if (profile.workspaceId != workspaceId) bad('a profile of another workspace');
       return profile;
     });

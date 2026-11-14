@@ -9,7 +9,10 @@
 import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
+import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
+import 'package:deskilo/core/ui/inline_banner.dart';
+import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/providers/book_profile_providers.dart';
 import 'package:deskilo/features/workspace/domain/site.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -104,6 +107,33 @@ Future<void> _pickIssuer(WidgetTester tester, String label) async {
 }
 
 void main() {
+  // #3913 — a profile whose authority or basis this version cannot read is
+  // left out of the list and said under the book, never read as another.
+  testWidgets('a book profile this version cannot read is counted under '
+      'the book', (tester) async {
+    addTearDown(UnreadableRows.instance.clear);
+    final pumped = await _pump(tester);
+    UnreadableRows.instance.record(
+      booksProfilesArea(pumped.ws),
+      pumped.ws,
+      {'bp-9': 'book profile ledger/accrual'},
+      scope: pumped.ws,
+    );
+    await tester.scrollUntilVisible(
+      find.byKey(const ValueKey('legal-identity-book')),
+      120,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    expect(
+      find.descendant(
+        of: find.byType(UnreadableRowsNotice),
+        matching: find.byType(Text),
+      ),
+      findsWidgets,
+    );
+  });
+
   testWidgets('flag off: no book on the screen', (tester) async {
     await _pump(tester, flags: const {'moneyTab': true, 'invoicing': true});
     expect(find.byKey(const ValueKey('legal-identity-book')), findsNothing);
