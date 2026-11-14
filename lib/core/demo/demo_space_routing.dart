@@ -24,6 +24,7 @@ import '../../features/money/domain/hmrc_submission.dart';
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
+import '../../features/money/providers/guest_pass_providers.dart';
 import '../../features/money/providers/hmrc_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
@@ -31,6 +32,7 @@ import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
+import '../../features/reservations/providers/booking_price_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
@@ -40,6 +42,7 @@ import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
 import 'data/bank_statement_repository.dart';
+import 'data/demo_booking_prices.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_settlement_reviews.dart';
@@ -180,6 +183,24 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
       (ref) => demoPickSpace(ref, actions),
     ),
     creditRepositoryProvider.overrideWith((ref) => open(ref).credits),
+    // #3843 — what each booking of the open space is charged, by the
+    // server's rules over the space's own data.
+    bookingPriceReadsProvider.overrideWith((ref) {
+      final space = open(ref);
+      final key = demoOpenSpace(ref);
+      return DemoBookingPriceReads(
+        reservations: space.reservations,
+        plan: space.floorPlan,
+        credits: space.credits,
+        passes: () => ref.read(guestPassRepositoryProvider).passesSold(key.id),
+        statement: space.money.fetchStatement,
+        currency: key.currency,
+        readsAll: () => ref
+            .read(myPermissionsProvider)
+            .contains(WorkspacePermission.viewFinances),
+        me: () => ref.read(myMemberProvider).value?.id,
+      );
+    }),
     accessoryRepositoryProvider.overrideWith((ref) => open(ref).accessories),
     workspaceFieldsRepositoryProvider.overrideWith((ref) => open(ref).fields),
     workspaceRolesRepositoryProvider.overrideWith((ref) => open(ref).roles),

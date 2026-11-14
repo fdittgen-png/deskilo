@@ -26,12 +26,15 @@ import '../../core/time/clock.dart';
 import '../../core/time/day_axis.dart';
 import '../../core/time/work_hours.dart';
 import '../../core/time/workspace_calendar.dart';
+import '../../core/trace/trace_logger.dart';
 import '../../core/ui/availability_unavailable_banner.dart';
 import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/loading_view.dart';
+import '../../features/reservations/domain/booking_price.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
+import '../../features/reservations/providers/booking_price_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'bookings_csv.dart';
 import 'desk_booking_chip.dart';
@@ -110,10 +113,35 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
     capOf: (p, from) => _capOf(bookings, p, from),
   ));
 
+  /// #3843 — the period whose prices the bookings table asks for.
+  BookingPricePeriod? _pricePeriod(DeskSpan span) =>
+      switch (ref.read(currentWorkspaceProvider).value?.id) {
+        final id? => (workspaceId: id, from: _at(span.from), to: _at(span.to)),
+        null => null,
+      };
+
   Future<void> _export(List<Reservation> shown, DeskCalendarData data) async {
     final l10n = context.l10n;
     final format = appFormatOf(context);
     final names = ref.read(memberNamesProvider).value ?? const {}; // empty-ok: a missing name is blank in the file, not invented
+    final span = deskSpanOf(_address.view, _address.day, weekStartOf(format));
+    final period = _pricePeriod(span);
+    // The period's one price read (the table's, when it has made it).
+    var prices = const <String, BookingPrice>{};
+    if (period != null) {
+      try {
+        prices = await ref.read(bookingPricesProvider(period).future);
+      } on Object catch (e, st) {
+        // A refused or failed read leaves the prices blank in the file.
+        TraceLogger.instance.warn(
+          'calendar',
+          'bookings export: prices not read',
+          error: e,
+          stackTrace: st,
+        );
+      }
+      if (!mounted) return;
+    }
     final bytes = bookingsCsv(
       shown,
       header: (
@@ -122,16 +150,20 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
         from: l10n.calendarDeskColumnFrom,
         to: l10n.calendarDeskColumnTo,
         state: l10n.calendarDeskColumnState,
+        price: l10n.calendarDeskColumnPrice,
       ),
       who: (r) => deskBookingWho(names, r),
       place: (r) => data.names[bookingTargetId(r)] ?? r.spaceLabel ?? '',
       at: (instant) => instant.toUtc().toIso8601String(),
       state: (s) => myReservationStatusWords(l10n, s),
-    );
-    final span = deskSpanOf(
-      _address.view,
-      _address.day,
-      weekStartOf(format),
+      price: (r) => switch (prices[r.id]) {
+        final p? => bookingPriceText(
+          l10n,
+          (code, minor) => format.moneyIn(code).formatMinor(minor),
+          p,
+        ),
+        null => '',
+      },
     );
     final name = bookingsCsvName(
       ref.read(currentWorkspaceProvider).value?.name ?? '',
@@ -215,6 +247,7 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
             names: names,
             placeNames: data.names,
             onOpen: _open,
+            period: _pricePeriod(span),
           )
         : _grid(context, data, bookings, rows, seats, names);
     return ShortcutScope(

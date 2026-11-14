@@ -8417,6 +8417,42 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// #3843 A booking paid from a carnet of half-days
+  ///
+  /// In en, this message translates to:
+  /// **'Carnet'**
+  String get bookingPriceCarnet;
+
+  /// #3843 A booking charged on its own (a rented room); shown before its amount
+  ///
+  /// In en, this message translates to:
+  /// **'Charge'**
+  String get bookingPriceCharge;
+
+  /// #3843 A booking that counts toward no quota (outside the counted hours, or a place outside it)
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get bookingPriceFree;
+
+  /// #3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-day'**
+  String get bookingPriceOverage;
+
+  /// #3843 A booking paid by a guest pass
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get bookingPricePass;
+
+  /// #3843 A booking covered by the member's subscription for the month
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get bookingPriceSubscription;
+
   /// #3066 the collapsed rating row of the booking sheet
   ///
   /// In en, this message translates to:
@@ -8986,6 +9022,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place'**
   String get calendarDeskColumnPlace;
+
+  /// #3843 Column title of the desk calendar's bookings table and its export: what a booking was or will be charged
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get calendarDeskColumnPrice;
 
   /// #3626 Column and filter title: where a booking stands (reserved, checked in, completed...)
   ///

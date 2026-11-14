@@ -115,5 +115,33 @@
         "type": "String"
       }
     }
+  },
+  "calendarDeskColumnPrice": "Price",
+  "@calendarDeskColumnPrice": {
+    "description": "#3843 Column title of the desk calendar's bookings table and its export: what a booking was or will be charged"
+  },
+  "bookingPriceCharge": "Charge",
+  "@bookingPriceCharge": {
+    "description": "#3843 A booking charged on its own (a rented room); shown before its amount"
+  },
+  "bookingPricePass": "Pass",
+  "@bookingPricePass": {
+    "description": "#3843 A booking paid by a guest pass"
+  },
+  "bookingPriceCarnet": "Carnet",
+  "@bookingPriceCarnet": {
+    "description": "#3843 A booking paid from a carnet of half-days"
+  },
+  "bookingPriceFree": "Free",
+  "@bookingPriceFree": {
+    "description": "#3843 A booking that counts toward no quota (outside the counted hours, or a place outside it)"
+  },
+  "bookingPriceSubscription": "Subscription",
+  "@bookingPriceSubscription": {
+    "description": "#3843 A booking covered by the member's subscription for the month"
+  },
+  "bookingPriceOverage": "Extra half-day",
+  "@bookingPriceOverage": {
+    "description": "#3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)"
   }
 }

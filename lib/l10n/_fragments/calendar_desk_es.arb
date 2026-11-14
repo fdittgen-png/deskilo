@@ -18,5 +18,12 @@
   "calendarDeskFreeSlot": "{place}: libre de {from} a {to}, nueva reserva",
   "calendarDeskFreeDay": "{place}: libre el {day}, nueva reserva",
   "calendarDeskRepeatedHour": "{time}, por segunda vez: los relojes se atrasaron",
-  "calendarDeskMissingHour": "Los relojes se adelantan: de {from} a {to} no existe ese día"
+  "calendarDeskMissingHour": "Los relojes se adelantan: de {from} a {to} no existe ese día",
+  "calendarDeskColumnPrice": "Precio",
+  "bookingPriceCharge": "Cargo",
+  "bookingPricePass": "Pase",
+  "bookingPriceCarnet": "Bono",
+  "bookingPriceFree": "Gratis",
+  "bookingPriceSubscription": "Suscripción",
+  "bookingPriceOverage": "Media jornada extra"
 }

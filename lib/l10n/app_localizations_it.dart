@@ -5353,6 +5353,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione è interamente nel passato.';
 
   @override
+  String get bookingPriceCarnet => 'Carnet';
+
+  @override
+  String get bookingPriceCharge => 'Addebito';
+
+  @override
+  String get bookingPriceFree => 'Gratuito';
+
+  @override
+  String get bookingPriceOverage => 'Mezza giornata extra';
+
+  @override
+  String get bookingPricePass => 'Pass';
+
+  @override
+  String get bookingPriceSubscription => 'Abbonamento';
+
+  @override
   String get bookingRatePlace => 'Valuta questo posto';
 
   @override
@@ -5760,6 +5778,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get calendarDeskColumnPlace => 'Posto';
+
+  @override
+  String get calendarDeskColumnPrice => 'Prezzo';
 
   @override
   String get calendarDeskColumnState => 'Stato';

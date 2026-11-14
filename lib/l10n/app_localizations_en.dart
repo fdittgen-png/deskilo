@@ -5316,6 +5316,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bookingPastError => 'This booking lies entirely in the past.';
 
   @override
+  String get bookingPriceCarnet => 'Carnet';
+
+  @override
+  String get bookingPriceCharge => 'Charge';
+
+  @override
+  String get bookingPriceFree => 'Free';
+
+  @override
+  String get bookingPriceOverage => 'Extra half-day';
+
+  @override
+  String get bookingPricePass => 'Pass';
+
+  @override
+  String get bookingPriceSubscription => 'Subscription';
+
+  @override
   String get bookingRatePlace => 'Rate this place';
 
   @override
@@ -5720,6 +5738,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarDeskColumnPlace => 'Place';
+
+  @override
+  String get calendarDeskColumnPrice => 'Price';
 
   @override
   String get calendarDeskColumnState => 'State';
