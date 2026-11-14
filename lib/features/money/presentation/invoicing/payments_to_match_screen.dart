@@ -169,7 +169,7 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     return Scaffold(
       appBar: pageBar(context, title: l10n.paymentMatchTitle),
       body: money.hasError && !money.isLoading
-          ? _failed(l10n)
+          ? _failed(l10n, unreadable: unassignedMoneyUnreadable(money))
           : known == null || receivables == null
           ? const LoadingView()
           : _list(
@@ -179,13 +179,16 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     );
   }
 
-  Widget _failed(AppLocalizations l10n) => Padding(
+  Widget _failed(AppLocalizations l10n, {required bool unreadable}) => Padding(
     padding: AppSpacing.mdAll,
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // #3913 — unknown because ledger entries could not be read: said so.
         Text(
-          l10n.paymentMatchFailed,
+          unreadable
+              ? l10n.invoicingUnassignedUnreadable
+              : l10n.paymentMatchFailed,
           key: const ValueKey('payment-match-failed'),
         ),
         TextButton(

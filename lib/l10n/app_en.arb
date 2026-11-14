@@ -21785,6 +21785,10 @@
   "@invoicingTryAgain": {
     "description": "#3587 retry a failed source"
   },
+  "invoicingUnassignedUnreadable": "The money received and not assigned is not known: some account entries cannot be read by this version, and nobody is reminded until they are. Update the app, then open the invoices again.",
+  "@invoicingUnassignedUnreadable": {
+    "description": "#3913 The money received and not assigned cannot be known because ledger entries of a kind this version cannot read; nobody is reminded; names the next step."
+  },
   "invoicingViewCustomers": "Customers",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
@@ -26234,6 +26238,10 @@
   "meRefStale": "Membership not confirmed recently",
   "@meRefStale": {
     "description": "#2563 Me home: a workspace on another installation whose last verified membership fact lapsed"
+  },
+  "meRefStatusUnknown": "Membership status this version cannot read",
+  "@meRefStatusUnknown": {
+    "description": "#3913 A place on another server whose membership status this app version does not know: shown instead of a status it is not."
   },
   "meRefUnnamed": "A place on another server",
   "@meRefUnnamed": {
@@ -48010,6 +48018,15 @@
   "workspaceExportUnreadableBookings": "{count, plural, one{1 booking could not be read by this version of the app and is not in this file.} other{{count} bookings could not be read by this version of the app and are not in this file.}}",
   "@workspaceExportUnreadableBookings": {
     "description": "#3884 Note written on the Reservations sheet of the workspace export: bookings with a status this app version does not know are not in the file.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} ledger entry could not be read by this version of the app and is not in this file.} other{{count} ledger entries could not be read by this version of the app and are not in this file.}}",
+  "@workspaceExportUnreadableLedger": {
+    "description": "#3913 Note written on the Ledger sheet of the workspace export: ledger entries of a kind or category this app version does not know are not in the file.",
     "placeholders": {
       "count": {
         "type": "int"

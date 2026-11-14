@@ -75,6 +75,7 @@ import 'seed/demo_space_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
 import 'seed/demo_vat_numbers_seed.dart';
+import 'seed/demo_whatsapp_seed.dart';
 import 'seed/demo_year_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
@@ -173,6 +174,7 @@ class DemoFixture implements DemoSpaceParts {
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
+    seedDemoWhatsappGroup(workspaces); // #3963
     // #3960 — one customer has no address on file (demo_outbox.dart).
     workspaces.memberEmails.remove(demoMemberWithoutAddress);
     seedDemoReservations(reservations, floorPlan, today);

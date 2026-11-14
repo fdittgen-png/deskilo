@@ -6,5 +6,6 @@
   "meRefStale": "Mitgliedschaft seit einiger Zeit nicht bestätigt",
   "meRefNoRelationship": "Keine Mitgliedschaft auf diesem Server",
   "meRefDefault": "Standard",
-  "meRefsUnavailable": "Ihre Orte anderswo konnten nicht gelesen werden."
+  "meRefsUnavailable": "Ihre Orte anderswo konnten nicht gelesen werden.",
+  "meRefStatusUnknown": "Mitgliedsstatus, den diese Version nicht lesen kann"
 }
