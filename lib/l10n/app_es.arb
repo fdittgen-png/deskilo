@@ -10507,6 +10507,7 @@
   "@invoicingTryAgain": {
     "description": "#3587 retry a failed source"
   },
+  "invoicingUnassignedUnreadable": "El dinero recibido y no asignado no se conoce: esta versión no puede leer algunos movimientos de la cuenta, y no se recuerda a nadie hasta que se lean. Actualice la aplicación y vuelva a abrir las facturas.",
   "invoicingViewCustomers": "Clientes",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
@@ -12256,6 +12257,7 @@
   "meRefDefault": "Predeterminado",
   "meRefNoRelationship": "Sin membresía en este servidor",
   "meRefStale": "Membresía no confirmada recientemente",
+  "meRefStatusUnknown": "Estado de afiliación que esta versión no puede leer",
   "meRefUnnamed": "Un lugar en otro servidor",
   "meRefUnverified": "Membresía aún no verificada",
   "meRefsTitle": "Lugares en otros servidores",
@@ -22524,6 +22526,7 @@
   "workspaceExcelExport": "Exportar datos (Excel)",
   "workspaceExcelExportSubtitle": "Un ZIP: todos los datos en un libro (reservas, pagos, facturas, miembros, plano — una pestaña cada uno), un manifiesto que cuenta sus filas y los archivos guardados del espacio.",
   "workspaceExportUnreadableBookings": "{count, plural, one{1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.} other{{count} reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.}}",
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} movimiento de la cuenta no pudo ser leído por esta versión de la aplicación y no está en este archivo.} other{{count} movimientos de la cuenta no pudieron ser leídos por esta versión de la aplicación y no están en este archivo.}}",
   "workspaceFieldsOptional": "opcional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

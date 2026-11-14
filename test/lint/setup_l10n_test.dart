@@ -429,7 +429,8 @@ void main() {
       final resourceTag = html.indexOf('<script src="setup_l10n.js"></script>');
       final catalogueTag =
           html.indexOf('<script src="setup_catalogue.js"></script>');
-      final inline = html.indexOf('<script>');
+      // #3915 — the page's own code is setup_main.js.
+      final inline = html.indexOf('<script src="setup_main.js"></script>');
       expect(resourceTag, isNot(-1));
       expect(resourceTag, lessThan(inline));
       expect(catalogueTag, isNot(-1));

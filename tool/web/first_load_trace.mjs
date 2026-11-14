@@ -4,6 +4,7 @@
 // SPA fallback), opens it in a cold browser context (no cache, no service
 // worker) and records every response until two moments:
 //   first_frame -- Flutter has put its view in the page (flt-glass-pane);
+//                  a load the page's content policy refuses fails the run;
 //   settled     -- no request for 3 s after that (what a visitor has fetched
 //                  once the app sits idle on its first screen).
 // Bytes are the size on the wire: gzip level 6 for compressible types, the
@@ -69,8 +70,32 @@ page.on('requestfinished', (request) => {
   if (url.origin !== new URL(base).origin) return;
   log.push({path: strip(url.pathname), bytes: wire.get(url.pathname) ?? 0, atMs: Date.now() - t0});
 });
+// #3915 -- the page's content policy is part of the start-up: a source it
+// refuses fails this step, before the first frame and after it, never only
+// a blank page in a visitor's browser.
+await page.addInitScript(() => {
+  window.__policyRefused = [];
+  document.addEventListener('securitypolicyviolation', (e) => {
+    window.__policyRefused.push(`${e.effectiveDirective} refused ${e.blockedURI || '(inline)'}`);
+  });
+});
+const refused = () => page.evaluate(() => window.__policyRefused ?? []);
+const failOnRefusal = async (when) => {
+  const found = await refused();
+  if (found.length === 0) return;
+  console.error(`FAIL: the content policy refused ${found.length} load(s) ${when}:`);
+  for (const f of new Set(found)) console.error('  ' + f);
+  await browser.close();
+  server.close();
+  process.exit(1);
+};
 await page.goto(base, {waitUntil: 'commit'});
-await page.waitForSelector('flt-glass-pane', {state: 'attached', timeout: 120000});
+for (let waited = 0; !(await page.$('flt-glass-pane')); waited += 250) {
+  await failOnRefusal('before the first frame');
+  if (waited > 120000) throw new Error('no first frame within 120 s');
+  await page.waitForTimeout(250);
+}
+await failOnRefusal('before the first frame');
 const firstFrameAt = Date.now() - t0;
 let last = log.length;
 for (let quiet = 0; quiet < 3000;) { // settle: 3 s without a new request
@@ -78,6 +103,7 @@ for (let quiet = 0; quiet < 3000;) { // settle: 3 s without a new request
   quiet = log.length === last ? quiet + 250 : 0;
   last = log.length;
 }
+await failOnRefusal('after the first frame');
 await browser.close();
 server.close();
 

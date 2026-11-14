@@ -26851,6 +26851,12 @@ abstract class AppLocalizations {
   /// **'Try again'**
   String get invoicingTryAgain;
 
+  /// #3913 The money received and not assigned cannot be known because ledger entries of a kind this version cannot read; nobody is reminded; names the next step.
+  ///
+  /// In en, this message translates to:
+  /// **'The money received and not assigned is not known: some account entries cannot be read by this version, and nobody is reminded until they are. Update the app, then open the invoices again.'**
+  String get invoicingUnassignedUnreadable;
+
   /// #3587 list view: one line per customer
   ///
   /// In en, this message translates to:
@@ -32141,6 +32147,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Membership not confirmed recently'**
   String get meRefStale;
+
+  /// #3913 A place on another server whose membership status this app version does not know: shown instead of a status it is not.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership status this version cannot read'**
+  String get meRefStatusUnknown;
 
   /// #2563 Me home: a referenced workspace whose name may not be read here
   ///
@@ -60066,6 +60078,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{count, plural, one{1 booking could not be read by this version of the app and is not in this file.} other{{count} bookings could not be read by this version of the app and are not in this file.}}'**
   String workspaceExportUnreadableBookings(int count);
+
+  /// #3913 Note written on the Ledger sheet of the workspace export: ledger entries of a kind or category this app version does not know are not in the file.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} ledger entry could not be read by this version of the app and is not in this file.} other{{count} ledger entries could not be read by this version of the app and are not in this file.}}'**
+  String workspaceExportUnreadableLedger(int count);
 
   /// #1288 custom fields: workspaceFieldsOptional
   ///
