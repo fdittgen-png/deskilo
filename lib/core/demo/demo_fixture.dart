@@ -73,6 +73,7 @@ import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_space_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_twin_seed.dart';
+import 'seed/demo_vat_numbers_seed.dart';
 import 'seed/demo_year_seed.dart';
 
 /// #1565 — who the visitor is acting AS, for the repositories whose
@@ -440,7 +441,7 @@ class DemoFixture implements DemoSpaceParts {
 
 
 FakeProfileRepository _profilesForSpaces(DemoListings spaces, DateTime today) =>
-    demoProfiles(today: today)..profiles.addAll([
+    seedDemoVatNumbers(demoProfiles(today: today))..profiles.addAll([
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
           Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),

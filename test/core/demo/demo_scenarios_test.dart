@@ -65,6 +65,7 @@ import '../../helpers/demo_assistant_journeys.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
+import '../../helpers/demo_vies_export_journeys.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -916,12 +917,12 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'told apart on supplier lines',
     (w) async => (await w.purchases()).isNotEmpty,
   ),
+  // #3963 — the customer form's VAT number check answers by rule: valid,
+  // invalid, and a member state that does not answer.
   WorkspaceFeature.viesVerification: _action(
     _owner,
-    "Ada checks a "
-    "supplier's EU VAT number",
-    (w) =>
-        w.purchasing.suppliers.suppliers.any((s) => s.taxIdentifier.isNotEmpty),
+    "Ada checks three customers' EU VAT numbers: valid, invalid and no answer",
+    (_) => viesJourney(),
   ),
   WorkspaceFeature.recapitulativeStatement: _action(
     _owner,
@@ -955,13 +956,18 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   WorkspaceFeature.reportLayouts: _toggle('positioned layouts'),
   WorkspaceFeature.reportTexts: _toggle('the texts of a report'),
   WorkspaceFeature.reportDesigner: _toggle('the report designer'),
-  WorkspaceFeature.biReportDesigner: _state(
+  // #3963 — the analysis export is made from the Demo's own figures, in
+  // euros; what the Demo does not answer is left out and said. The sample-data
+  // card holds the Demo's one batch and loads no more: the Demo is sample data.
+  WorkspaceFeature.biReportDesigner: _action(
     _owner,
-    'two saved analyses and a report of two pages',
+    'a saved analysis is designed and exported as a file from the Demo\'s own '
+    'figures',
     (w) async {
       final views = await w.f.biViews.list('ws-1');
       return views.length >= 3 &&
-          views.any((v) => (v.definition?.report?.pages.length ?? 0) >= 2);
+          views.any((v) => (v.definition?.report?.pages.length ?? 0) >= 2) &&
+          await exportJourney();
     },
   ),
   WorkspaceFeature.usageReport: _state(
@@ -1016,7 +1022,12 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   ),
   WorkspaceFeature.instanceWizard: _toggle('the instance wizard'),
   // #2869 — the guide's demo setup states come with #2872.
-  WorkspaceFeature.setupGuide: _toggle('the setup guide'),
+  // #3963 — the guide's sample-data card holds the Demo's one batch and a fill
+  // answers it: the Demo is itself sample data, so it loads no more.
+  WorkspaceFeature.setupGuide: _toggle(
+    'the setup guide; its sample-data card holds the Demo\'s one batch, the '
+    'Demo being sample data itself, and loads no more',
+  ),
   WorkspaceFeature.decisionSurface: _state(
     _admin,
     'what needs a person, '

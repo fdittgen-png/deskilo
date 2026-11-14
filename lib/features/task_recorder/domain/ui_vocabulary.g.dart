@@ -971,6 +971,7 @@ const Set<String> uiKeys = {
   'demo-room-request',
   'demo-room-request-event',
   'demo-room-studio',
+  'demo-sample-batch',
   'demo-schedule-cleaning',
   'demo-schedule-coffee',
   'demo-schedule-internet',
