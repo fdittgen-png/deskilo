@@ -26,6 +26,7 @@ import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
 import 'package:deskilo_document_model/layout_model.dart';
 import 'package:deskilo_document_model/layout_units.dart';
 import 'package:deskilo_document_model/layout_xml.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 Future<void> main(List<String> argv) async {
@@ -94,7 +95,8 @@ Future<int> _render(_Args args, {required bool check}) async {
   File(out).writeAsBytesSync(bytes);
   stdout.writeln('wrote $out (${bytes.length} bytes)');
   if (!check) return 0;
-  return _check(bytes, document);
+  // #3852 — a design is rendered and measured on the paper it was made on.
+  return _check(bytes, document, document.paper);
 }
 
 /// #2898 — the pictures a design names (`<image name>`, `![name]`): every
@@ -110,16 +112,16 @@ Map<String, Uint8List> _images(String? dir) => {
 
 /// Measures the produced sheet against the spec — the same numbers the
 /// CI gate uses — and prints a table a designer can read with a ruler.
-int _check(Uint8List bytes, LayoutDocument document) {
+int _check(Uint8List bytes, LayoutDocument document, Paper paper) {
   final window = document.recipient?.window ??
       (document.recipient?.frame != null ? AddressWindow.right : AddressWindow.off);
-  final ink = textPositions(bytes);
+  final ink = textPositions(bytes, paper: paper);
   final page1 = ink.where((i) => i.page == 1).toList();
   final issues = <ConformanceIssue>[];
   final pages = ink.map((i) => i.page).toSet().length;
 
   stdout.writeln('\n  ${"zone".padRight(15)} ${"band".padRight(12)} ink');
-  for (final zone in reportZones(window)) {
+  for (final zone in reportZones(window, paper: paper)) {
     final inZone = page1.where((i) => zone.containsY(i.yMm)).toList();
     final left = zone.leftMm;
     for (final i in inZone) {
@@ -152,7 +154,8 @@ int _check(Uint8List bytes, LayoutDocument document) {
     final fieldPages = addressFieldPages(bytes,
         leftEdgePt: window.leftEdge,
         topPt: addressWindowTop,
-        heightPt: addressWindowHeight);
+        heightPt: addressWindowHeight,
+        paper: paper);
     if (fieldPages.toString() != '[1]') {
       issues.add(ConformanceIssue(
           'address field', 'painted on pages $fieldPages, must be [1]'));

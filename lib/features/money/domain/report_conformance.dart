@@ -11,6 +11,8 @@
 // So the spec lives here, in one place, and BOTH the conformance test
 // and the local report probe measure against these same numbers. A
 // layout change that breaks one breaks the other.
+import 'package:deskilo_document_model/paper.dart';
+
 import 'address_window.dart';
 
 /// One rule the finished sheet has to satisfy.
@@ -46,8 +48,10 @@ class ReportZone {
 /// back into the units the spec is written in.
 const double _perMm = 25.4 / 72;
 
-/// The A4 window-envelope contract, in the order the eye reads it.
-List<ReportZone> reportZones(AddressWindow window) => [
+/// The window-envelope contract, in the order the eye reads it. The zones
+/// are measured down from the top edge, so only the body's end depends on
+/// the [paper] (#3852).
+List<ReportZone> reportZones(AddressWindow window, {Paper paper = Paper.a4}) => [
       const ReportZone(
         name: 'sender',
         topMm: pageMargin * _perMm,
@@ -65,10 +69,10 @@ List<ReportZone> reportZones(AddressWindow window) => [
         why: 'the envelope aperture: ink outside it is not visible '
             'without opening the envelope',
       ),
-      const ReportZone(
+      ReportZone(
         name: 'body',
         topMm: addressWindowFlowResume * _perMm,
-        bottomMm: 297 - (pageMargin * _perMm),
+        bottomMm: paper.heightMm - (pageMargin * _perMm),
         leftMm: pageMargin * _perMm,
         why: 'the identification block — the word Facture, the number '
             'and the dates — opens here, under the aperture and its '

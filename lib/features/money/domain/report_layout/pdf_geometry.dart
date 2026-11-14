@@ -11,6 +11,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:meta/meta.dart';
 
 /// PostScript points per millimetre.
@@ -18,6 +19,10 @@ const double _mmPt = 72 / 25.4;
 
 /// The height of A4, in points.
 const double _a4HeightPt = 841.88976;
+
+/// The height of [paper], in points.
+double _heightPt(Paper paper) =>
+    paper == Paper.a4 ? _a4HeightPt : paper.heightMm * _mmPt;
 
 /// One piece of ink, positioned from the TOP-LEFT of the sheet in mm —
 /// the way a spec is written and a ruler is used, not the way PDF
@@ -57,11 +62,12 @@ List<String> pageStreams(Uint8List bytes) {
   return out;
 }
 
-/// Every text run in the document, as sheet coordinates.
+/// Every text run in the document, as sheet coordinates on [paper] (#3852).
 ///
 /// Text is glyph-encoded by the embedded font, so the CONTENT cannot be
 /// read back — only the position, which is the thing under test.
-List<InkAt> textPositions(Uint8List bytes) {
+List<InkAt> textPositions(Uint8List bytes, {Paper paper = Paper.a4}) {
+  final heightPt = _heightPt(paper);
   final found = <InkAt>[];
   final streams = pageStreams(bytes);
   for (var page = 0; page < streams.length; page++) {
@@ -91,7 +97,7 @@ List<InkAt> textPositions(Uint8List bytes) {
         found.add(InkAt(
           xMm: x / _mmPt,
           // PDF measures up from the bottom; a spec measures down.
-          yMm: (_a4HeightPt - y) / _mmPt,
+          yMm: (heightPt - y) / _mmPt,
           page: page + 1,
         ));
       }
@@ -111,10 +117,11 @@ List<int> addressFieldPages(
   required double leftEdgePt,
   required double topPt,
   required double heightPt,
+  Paper paper = Paper.a4,
 }) {
   // A `Positioned(left:, top:)` becomes a translate measured from the
   // bottom of the sheet.
-  final yPt = _a4HeightPt - topPt - heightPt;
+  final yPt = _heightPt(paper) - topPt - heightPt;
   final pages = <int>[];
   final streams = pageStreams(bytes);
   for (var page = 0; page < streams.length; page++) {
