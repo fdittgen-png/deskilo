@@ -126,5 +126,6 @@
   "bankUnmatchConfirm": "Annuler le rapprochement",
   "@bankUnmatchConfirm": {
     "description": "#2380 money-in unmatch: the confirm button."
-  }
+  },
+  "bankReconUnreadable": "Cette version ne sait pas lire certains mouvements de ce relevé : aucun rapport n'est établi. Mettez l'application à jour, puis rouvrez le relevé."
 }

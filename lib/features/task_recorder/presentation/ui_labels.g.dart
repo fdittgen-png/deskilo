@@ -425,6 +425,7 @@ Map<String, _Getter> _part1() => {
   'bankLineReview': (l) => l.bankLineReview,
   'bankMatchPick': (l) => l.bankMatchPick,
   'bankReconClosing': (l) => l.bankReconClosing,
+  'bankReconUnreadable': (l) => l.bankReconUnreadable,
   'bankStatementsIntro': (l) => l.bankStatementsIntro,
   'bankStatementsTitle': (l) => l.bankStatementsTitle,
   'bankUnmatchBody': (l) => l.bankUnmatchBody,
