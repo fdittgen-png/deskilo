@@ -15,6 +15,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -34,7 +35,7 @@ class NumberSequencesScreen extends ConsumerWidget {
         title: l10n.numberSequencesTitle,
       ),
       body: switch (sequences) {
-        AsyncData(value: final rows) => ListView(
+        AsyncData(value: final rows) => FormScroll(
           padding: AppSpacing.lgAll,
           children: [
             Text(

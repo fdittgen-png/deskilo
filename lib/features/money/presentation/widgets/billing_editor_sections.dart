@@ -188,7 +188,8 @@ class BillingPackageTile extends StatelessWidget {
       format: appFormatOf(context),
     );
     final vatLabel = rate == null ? null : (l10n.priceVatIncluded(rate));
-    return ListTile(
+    // #3947 — the switch is announced with the package it turns on.
+    return MergeSemantics(child: ListTile(
       key: ValueKey('package-${package.id}'),
       contentPadding: EdgeInsets.zero,
       title: Text(package.name),
@@ -198,7 +199,7 @@ class BillingPackageTile extends StatelessWidget {
         value: package.active,
         onChanged: (_) => onToggle(),
       ),
-    );
+    ));
   }
 }
 

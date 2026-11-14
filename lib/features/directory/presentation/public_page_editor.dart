@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/kit/form_scroll.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
@@ -278,7 +279,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                     ),
                   )
                 : const LoadingView())
-          : ListView(
+          : FormScroll(
               padding: AppSpacing.mdAll,
               children: [
                 SwitchListTile(

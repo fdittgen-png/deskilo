@@ -588,7 +588,10 @@ Future<Set<String>> keyboardProblems(
   final stops = _focusables(tabStops: true, scope: scope).toSet();
   final skipped = _focusables(tabStops: false, scope: scope).toSet();
   final seen = <FocusNode>[];
-  for (var i = 0; i < stops.length * 2 + 4; i++) {
+  // The cycle may leave [within] (a page's scope hands Tab on to the desk's
+  // navigation and bar, #3943) and must be given the room to come back.
+  final budget = _focusables(tabStops: true).length;
+  for (var i = 0; i < budget * 2 + 4; i++) {
     await tester.sendKeyEvent(LogicalKeyboardKey.tab);
     await tester.pump();
     final now = FocusManager.instance.primaryFocus;

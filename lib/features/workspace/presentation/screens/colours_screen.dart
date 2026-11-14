@@ -323,7 +323,13 @@ class _Swatch extends StatelessWidget {
   final VoidCallback? onTap;
 
   @override
-  Widget build(BuildContext context) => InkWell(
+  // #3947 — a swatch is named by its colour's name, and says it is chosen.
+  Widget build(BuildContext context) => MergeSemantics(
+        child: Semantics(
+        button: true,
+        selected: selected,
+        label: label,
+        child: InkWell(
         key: const ValueKey('colours-check'),
         onTap: onTap,
         borderRadius: AppRadius.mdAll,
@@ -344,6 +350,8 @@ class _Swatch extends StatelessWidget {
                       DeskiloTheme.light(brand: Color(argb)).colorScheme.onPrimary.toARGB32()))
               : null,
         ),
+      ),
+      ),
       );
 }
 

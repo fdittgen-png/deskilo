@@ -9,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/unsaved_changes_guard.dart';
@@ -415,7 +416,7 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
     final chargesVat = workspace?.vatRegime == 'vat_registered';
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: an unread rate shows no "incl. VAT" helper, never a wrong one
     final currencySymbol = appFormatOf(context).moneyIn(workspace?.currencyCode).currencySymbol;
-    final fields = ListView(
+    final fields = FormScroll(
       padding: const EdgeInsets.all(16),
       children: [
         BillingSectionHeader(

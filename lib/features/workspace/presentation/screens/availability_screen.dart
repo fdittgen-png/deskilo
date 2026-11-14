@@ -13,6 +13,8 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/work_hours.dart';
+import '../../../../core/ui/async_read_body.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/booking_policies.dart';
@@ -49,6 +51,21 @@ class AvailabilityScreen extends ConsumerWidget {
     final policies =
         ref.watch(bookingPoliciesProvider).value ?? const BookingPolicies();
     final actions = AvailabilityActions(context, ref);
+    // #3946 — a reload that failed is said, above the form that keeps the
+    // last value; Try again repeats the reads that failed.
+    final reads = <(AsyncValue<Object?>, void Function())>[
+      (weekdaysAsync, () => ref.invalidate(openWeekdaysProvider)),
+      (granularityAsync, () => ref.invalidate(bookingGranularityProvider)),
+      (closuresAsync, () => ref.invalidate(closureDaysProvider)),
+      (
+        ref.watch(bookingPoliciesProvider),
+        () => ref.invalidate(bookingPoliciesProvider),
+      ),
+    ];
+    final failed = [
+      for (final (value, retry) in reads)
+        if (value.hasValue && value.hasError) (value, retry),
+    ];
 
     return Scaffold(
       appBar: pageBar(context,
@@ -56,13 +73,32 @@ class AvailabilityScreen extends ConsumerWidget {
       ),
       body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (
-          AsyncData(value: final open),
-          AsyncData(value: final granularity),
-          AsyncData(value: final closures),
+          // #3946 — a value being reloaded still shows: a choice made by
+          // keyboard reloads the policies, and the form must keep its
+          // controls (and the keyboard on them), not give way to a spinner.
+          AsyncValue(value: final open?),
+          AsyncValue(value: final granularity?),
+          AsyncValue(value: final closures?),
         ) =>
-          ListView(
+          FormScroll(
             padding: const EdgeInsets.only(bottom: AppSpacing.xl),
             children: [
+              // A slot that is always there: the form below keeps its
+              // elements (and the keyboard on them) as the banner comes
+              // and goes.
+              KeyedSubtree(
+                key: const ValueKey('availability-read-failure-slot'),
+                child: failed.isEmpty
+                    ? const SizedBox.shrink()
+                    : ReadFailureBanner(
+                        error: failed.first.$1.error!,
+                        onRetry: () {
+                          for (final (_, retry) in failed) {
+                            retry();
+                          }
+                        },
+                      ),
+              ),
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.availability),
               AvailabilityWeekdays(actions: actions, open: open),

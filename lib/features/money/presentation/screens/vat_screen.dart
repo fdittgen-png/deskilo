@@ -319,7 +319,8 @@ class _VatScreenState extends ConsumerState<VatScreen> {
     final l10n = context.l10n;
     final catalogue = vatCatalogueFor(countryCode, on: ref.read(clockProvider).now());
     final catalogueNote = vatCatalogueNote(countryCode, on: ref.read(clockProvider).now());
-    return Row(children: [
+    // #3948 — the actions wrap within the form's measure.
+    return Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
       TextButton.icon(
         key: const ValueKey('vat-add-rate'),
         onPressed: () => _add(const VatRate(label: '', percent: 0)),

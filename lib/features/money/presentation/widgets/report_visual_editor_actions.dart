@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/invoice_report.dart';
 import '../../providers/money_providers.dart';
 import 'report_field_picker.dart';
@@ -405,7 +406,12 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
             ]),
           ),
       ],
-      child: child,
+      // #3947 — the menu is a target of the kit's minimum size.
+      child: ConstrainedBox(
+        constraints: const BoxConstraints(
+            minWidth: KitMetrics.minTarget, minHeight: KitMetrics.minTarget),
+        child: Center(widthFactor: 1, heightFactor: 1, child: child),
+      ),
     );
   }
 }

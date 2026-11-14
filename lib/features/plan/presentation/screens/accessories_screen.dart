@@ -126,7 +126,9 @@ class AccessoriesScreen extends ConsumerWidget {
         key: const ValueKey('accessories-new'),
         tooltip: l10n.accessoriesNew,
         onPressed: () => _editSheet(context, ref),
-        child: const Icon(Icons.add),
+        // #3947 — the button's name: a tooltip alone reaches no screen
+        // reader through the floating button.
+        child: Icon(Icons.add, semanticLabel: l10n.accessoriesNew),
       ),
       body: switch (accessoriesAsync) {
         AsyncData(value: final accessories) when accessories.isEmpty =>
