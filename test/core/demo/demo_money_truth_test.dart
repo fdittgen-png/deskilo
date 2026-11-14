@@ -25,6 +25,7 @@ void main() {
     (id: 'ws-4', currency: 'USD', home: fixture.newYork.workspaces, money: fixture.newYork.money),
     (id: 'ws-5', currency: 'CHF', home: fixture.zurich.workspaces, money: fixture.zurich.money),
     (id: 'ws-6', currency: 'EUR', home: fixture.milan.workspaces, money: fixture.milan.money),
+    (id: 'ws-7', currency: 'EUR', home: fixture.practice.workspaces, money: fixture.practice.money),
   ];
 
   for (final space in spaces) {
