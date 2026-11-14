@@ -2,10 +2,11 @@
 //
 // #3618 — a member's plan beside the members' table: the share, the plan
 // fee (the fee band's, or "unavailable"), the joining date (the only date
-// stored, labelled as that), a pause without dates (none are stored,
-// #3858), and the estimated next invoice from the statement of the
-// current period with its parts, its period and the day it was read. The
-// owner changes the plan, pauses and resumes here as short tasks.
+// stored, labelled as that), the day a pause began when it is recorded
+// (#3858), the scheduled changes with what they cost, and the estimated
+// next invoice from the statement of the current period with its parts,
+// its period and the day it was read. The owner changes the plan, pauses
+// and resumes here as short tasks.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -17,12 +18,15 @@ import '../../core/time/clock.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/domain/member_term_change.dart';
 import '../../features/workspace/presentation/member_labels.dart';
 import '../../features/workspace/presentation/subscription_text.dart';
+import '../../features/workspace/providers/member_term_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'member_batch_change.dart';
 import 'member_change_task.dart';
 import 'member_plan.dart';
+import 'member_terms_view.dart';
 import 'members_desk.dart';
 
 /// The plan of [member], for a person with [rights].
@@ -43,6 +47,12 @@ class MemberPlanTab extends ConsumerWidget {
         format.currencyCode;
     final money = format.moneyIn(currency);
     final paused = member.status == MemberStatus.paused;
+    final since = paused
+        ? pausedSince(
+            member.id,
+            ref.watch(memberTermChangesProvider).value ?? const [], // empty-ok: an unread history shows no date
+          )
+        : null;
     Widget row(String key, String label, String value) => ListTile(
       key: ValueKey('member-plan-$key'),
       contentPadding: EdgeInsets.zero,
@@ -74,10 +84,14 @@ class MemberPlanTab extends ConsumerWidget {
         row('status', l.membersColStatus, memberStatusLabel(l, member.status)),
         if (paused)
           Text(
-            l.memberPlanPausedNoDates,
+            switch (since) {
+              final on? => l.memberPlanPausedSince(dates.format(on)),
+              null => l.memberPlanPausedNoDates,
+            },
             key: const ValueKey('member-plan-paused'),
             style: Theme.of(context).textTheme.bodySmall,
           ),
+        MemberTermsSection(memberId: member.id),
         if (rights.seesOpen || isSelf) _Estimate(memberId: member.id),
         if (rights.changes) ...[
           const SizedBox(height: AppSpacing.md),

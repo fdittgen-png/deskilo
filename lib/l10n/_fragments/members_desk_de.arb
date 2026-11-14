@@ -40,7 +40,7 @@
   "memberPlanShareLabel": "Anteil",
   "memberPlanJoined": "Beitrittsdatum",
   "memberPlanJoinedUnknown": "Nicht erfasst",
-  "memberPlanPausedNoDates": "Pausiert: Für eine Pause werden keine Daten erfasst",
+  "memberPlanPausedNoDates": "Pausiert: Für diese Pause ist kein Datum erfasst",
   "memberPlanEstimate": "Voraussichtliche nächste Rechnung",
   "memberPlanEstimateBasis": "Für {period}, Stand {date}: die Abrechnung bisher",
   "memberPlanEstOverage": "Zusätzliche Halbtage",
