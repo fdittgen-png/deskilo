@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #875 / #2592 - draws a LayoutDocument on A4 pages. The host supplies
+// #875 / #2592 - draws a LayoutDocument on the paper of its page (#3852).
+// The host supplies
 // fonts, images, the recipient text and, optionally, a renderer for the
 // `<markup>` bridge; nothing here knows an invoice.
 import 'dart:math' as math;
@@ -11,6 +12,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
+import 'paper_format.dart';
 import 'report_page_footer.dart';
 import 'report_style.dart';
 
@@ -18,7 +20,7 @@ import 'report_style.dart';
 typedef LayoutMarkupBuilder =
     List<pw.Widget> Function(String source, Map<String, Uint8List> images);
 
-/// Renders [document] to A4 pages.
+/// Renders [document] to pages of its paper (#3852).
 ///
 /// [recipientName] and [recipientAddress] are the plain text the window
 /// shows. The legal chrome the bands never templated — the
@@ -44,8 +46,8 @@ Future<Uint8List> buildLayoutPdf({
   LayoutMarkupBuilder? markup,
   List<String>? diagnostics,
 }) async {
-  final pageW = PdfPageFormat.a4.width;
-  final pageH = PdfPageFormat.a4.height;
+  final format = pdfPageFormatOf(document.paper);
+  final pageW = format.width, pageH = format.height;
   final margin = document.margin.resolve(pageW);
   // #902 — the letterhead sits near the top edge and the footer near the
   // bottom one; the text column keeps the side margin.
@@ -86,7 +88,7 @@ Future<Uint8List> buildLayoutPdf({
   doc.addPage(
     pw.MultiPage(
       pageTheme: pw.PageTheme(
-        pageFormat: PdfPageFormat.a4,
+        pageFormat: format,
         theme: theme,
         margin: pw.EdgeInsets.fromLTRB(margin, marginTop, margin, marginBottom),
         buildBackground: !windowOn

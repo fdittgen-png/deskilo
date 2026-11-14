@@ -8,6 +8,7 @@
 // drift. Anything the tree cannot express, the format cannot promise.
 import 'address_window_kind.dart';
 import 'layout_units.dart';
+import 'paper.dart';
 
 /// The typographic roles a text may take. Same four the banded engine
 /// draws with, so a design that mixes `<markup>` and `<text>` reads as
@@ -188,6 +189,23 @@ class LayoutDocument {
   final String page;
   final Length margin;
 
+  /// #3852 — the paper [page] names; A4 when it names none the engine knows.
+  Paper get paper => Paper.fromWire(page) ?? Paper.a4;
+
+  /// #3852 — the same layout on [paper]: the host prints a design on the
+  /// paper of the document, whatever paper it was made on.
+  LayoutDocument onPaper(Paper paper) => LayoutDocument(
+    page: paper.wire,
+    margin: margin,
+    marginTop: marginTop,
+    marginBottom: marginBottom,
+    header: header,
+    continuation: continuation,
+    body: body,
+    footer: footer,
+    recipient: recipient,
+  );
+
   /// #902 — the vertical margins when the design states them apart. A
   /// letter wants its letterhead near the top edge and its footer near
   /// the bottom one while the text column keeps the horizontal margin;
@@ -203,8 +221,8 @@ class LayoutDocument {
   final LayoutZone footer;
   final LayoutRecipient? recipient;
 
-  /// The page formats this engine knows. Only A4 today — the envelope
-  /// spec is an A4 spec — but the attribute exists so a second format
-  /// is a value, not a schema change.
-  static const List<String> pageFormats = ['A4'];
+  /// The page formats this engine knows (#3852).
+  static final List<String> pageFormats = [
+    for (final paper in Paper.values) paper.wire,
+  ];
 }
