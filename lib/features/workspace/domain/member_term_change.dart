@@ -45,6 +45,7 @@ class MemberTermChange implements SystemStamped {
     this.reason = '',
     this.groupId,
     this.scheduled = true,
+    this.carried = false,
     this.system = SystemColumns.none,
   });
 
@@ -70,6 +71,10 @@ class MemberTermChange implements SystemStamped {
   /// Scheduled for a date, rather than written at once by a command.
   final bool scheduled;
 
+  /// A pause made before dated terms began, carried from the first day of
+  /// that month: it dates the money, not the day the pause began.
+  final bool carried;
+
   @override
   final SystemColumns system;
 
@@ -91,6 +96,7 @@ class MemberTermChange implements SystemStamped {
         reason: row['reason'] as String? ?? '',
         groupId: row['group_id'] as String?,
         scheduled: row['source'] == 'scheduled',
+        carried: row['source'] == 'carried',
         system: SystemColumns.fromRow(row),
       );
 }
@@ -196,7 +202,8 @@ MemberTermEntry? nextTermEntry(String memberId, List<MemberTermChange> all) {
 }
 
 /// The day [memberId]'s current pause began, when it is recorded: the last
-/// status change in force, when it is a pause.
+/// status change in force, when it is a pause — not a carried one, whose
+/// day the pause did not begin on.
 DateTime? pausedSince(String memberId, List<MemberTermChange> all) {
   MemberTermChange? last;
   for (final c in all) {
@@ -207,5 +214,5 @@ DateTime? pausedSince(String memberId, List<MemberTermChange> all) {
     }
     if (last == null || !c.dueOn.isBefore(last.dueOn)) last = c;
   }
-  return last?.toStatus == 'paused' ? last!.dueOn : null;
+  return last?.toStatus == 'paused' && !last!.carried ? last.dueOn : null;
 }

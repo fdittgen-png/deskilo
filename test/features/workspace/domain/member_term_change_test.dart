@@ -111,6 +111,22 @@ void main() {
     expect(pausedSince('m', const []), isNull);
     expect(
       pausedSince('m', [
+        MemberTermChange(
+          id: 'c',
+          memberId: 'm',
+          kind: MemberTermKind.status,
+          toStatus: 'paused',
+          dueOn: DateTime(2026, 11),
+          state: MemberTermState.applied,
+          scheduled: false,
+          carried: true,
+        ),
+      ]),
+      isNull,
+      reason: 'a pause carried from before dated terms has no day it began',
+    );
+    expect(
+      pausedSince('m', [
         _status('p', 'paused', DateTime(2027, 1, 5)),
         _status('a', 'active', DateTime(2027, 2)),
       ]),
