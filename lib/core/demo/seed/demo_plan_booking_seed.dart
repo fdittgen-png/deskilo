@@ -3,7 +3,7 @@
 // #3964 — what the plan and booking features of the reference business show
 // instead of being switches that are merely on: three members have a photo
 // (the wall tablet's member among them), the ground floor carries a couch and
-// a table drawn under its seats, the working day runs nine to six and the
+// a table drawn under its seats, the working day runs eight to six and the
 // workspace's booking rules are its own (two places at once, nothing longer
 // than ten hours, walk-up only outside the day). The photo is a one-pixel
 // picture: the Demo shows faces from a store, and invents none.
@@ -58,8 +58,8 @@ void seedDemoPlanAndRules(
   ]);
   workspaces
     ..workHours['ws-1'] = const WorkHours(
-      startMinutes: 9 * 60,
-      halfBoundaryMinutes: 13 * 60,
+      startMinutes: 8 * 60,
+      halfBoundaryMinutes: 12 * 60,
       endMinutes: 18 * 60,
       halfDayHours: 4,
       fullDayHours: 8,

@@ -29,7 +29,7 @@ void main() {
     expect(await spaceQrAction(), isTrue);
   });
 
-  test('the working day is nine to six', () async {
+  test('the working day is eight to six', () async {
     expect(await workingHoursState(), isTrue);
   });
 

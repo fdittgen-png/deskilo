@@ -332,7 +332,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'for maintenance',
     (w) => w.f.floorPlan.seats.length > 1,
   ),
-  WorkspaceFeature.workingHours: _state(_owner, 'the working day runs nine to six, and eight o\'clock is outside it', (_) => workingHoursState()),
+  WorkspaceFeature.workingHours: _state(_owner, 'the working day runs eight to six, an hour longer than the product\'s', (_) => workingHoursState()),
   WorkspaceFeature.publicHolidays: _state(
     _member,
     'public holidays close '

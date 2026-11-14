@@ -6,6 +6,7 @@
 // the batch's own test.
 import 'package:deskilo/core/calendar/calendar_item.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/directory/domain/messenger.dart';
 import 'package:deskilo/features/plan/presentation/seat_occupancy.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
@@ -119,8 +120,8 @@ Future<bool> spaceQrAction() async {
   return allHold(checks);
 }
 
-/// The working day of the reference business is nine to six, read through
-/// the app's provider: eight o'clock is outside it.
+/// The working day of the reference business is eight to six, an hour longer
+/// than the product's, read as the workspace context reads it.
 Future<bool> workingHoursState() async {
   final f = DemoFixture.build();
   final space = f.workspaces.workspaces.firstWhere((w) => w.id == 'ws-1');
@@ -131,9 +132,10 @@ Future<bool> workingHoursState() async {
     space.timezone,
   )).workHours;
   return allHold({
-    'starts at nine': hours.startMinutes == 9 * 60,
+    'starts at eight': hours.startMinutes == 8 * 60,
     'ends at six': hours.endMinutes == 18 * 60,
-    'eight is outside': 8 * 60 < hours.startMinutes,
+    'longer than the product\'s day':
+        hours.endMinutes > WorkHours.defaults.endMinutes,
     'valid': hours.isValid,
   });
 }
