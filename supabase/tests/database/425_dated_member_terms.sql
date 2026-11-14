@@ -587,8 +587,8 @@ select throws_ok(format($$ select public.schedule_member_share_change(%L, 50, %L
 select is(public.schedule_member_pause(pg_temp.u(401), current_setting('t.east')::date, null, gen_random_uuid()) ->> 'state'
        || ' / ' || (public.schedule_member_pause(pg_temp.u(411), current_setting('t.west')::date, null, gen_random_uuid()) ->> 'state'),
   'applied / applied', 'east and west of UTC, the business''s own today applies at once');
-select throws_ok(format($$ select public.schedule_member_pause(%L, %L, null, gen_random_uuid()) $$,
-  pg_temp.u(411), current_setting('t.west')::date - 1), '22023', 'a change is scheduled for today or later',
+select throws_like(format($$ select public.schedule_member_pause(%L, %L, null, gen_random_uuid()) $$,
+  pg_temp.u(411), current_setting('t.west')::date - 1), '%today or later — the earliest is ' || current_setting('t.west') || '%',
   'and its yesterday is refused, though it may be today elsewhere');
 reset role;
 select ok(current_setting('t.east')::date > current_setting('t.west')::date,

@@ -1050,8 +1050,8 @@ constraint member_term_changes.member_term_changes_kind_value CHECK ((((kind = '
 constraint member_term_changes.member_term_changes_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint member_term_changes.member_term_changes_pkey PRIMARY KEY (id)
 constraint member_term_changes.member_term_changes_requested_by_fkey FOREIGN KEY (requested_by) REFERENCES members(id) ON DELETE SET NULL
-constraint member_term_changes.member_term_changes_scheduled_status CHECK (((source <> 'scheduled'::text) OR (kind = 'share'::text) OR (to_status = ANY (ARRAY['active'::text, 'paused'::text]))))
-constraint member_term_changes.member_term_changes_source_check CHECK ((source = ANY (ARRAY['scheduled'::text, 'immediate'::text])))
+constraint member_term_changes.member_term_changes_scheduled_status CHECK (((source = 'immediate'::text) OR (kind = 'share'::text) OR (to_status = ANY (ARRAY['active'::text, 'paused'::text]))))
+constraint member_term_changes.member_term_changes_source_check CHECK ((source = ANY (ARRAY['scheduled'::text, 'immediate'::text, 'carried'::text])))
 constraint member_term_changes.member_term_changes_state_check CHECK ((state = ANY (ARRAY['pending'::text, 'scheduled'::text, 'applied'::text, 'refused'::text, 'cancelled'::text])))
 constraint member_term_changes.member_term_changes_to_pct_check CHECK (((to_pct >= 0) AND (to_pct <= 100)))
 constraint member_term_changes.member_term_changes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
@@ -2449,7 +2449,7 @@ routine public.can_discuss_workspace_application(p_event_id uuid) -> boolean | f
 routine public.can_manage_managed_profile(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:bd755e2c3694
 routine public.can_read_member_note(p_workspace uuid, p_from uuid, p_to uuid, p_conversation uuid, p_created_at timestamp with time zone) -> boolean | function | definer | stable | exec:authenticated,service_role | body:de558556d5bf
 routine public.cancel_expense_schedule(p_schedule_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:efe70d30388b
-routine public.cancel_member_term_change(p_change_id uuid) -> integer | function | definer | volatile | exec:authenticated,service_role | body:766c0b35c85c
+routine public.cancel_member_term_change(p_change_id uuid) -> integer | function | definer | volatile | exec:authenticated,service_role | body:c429fc10d25a
 routine public.cancel_my_guest_visit(p_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4eae049f4590
 routine public.cancel_purchase_order_v1(p_workspace_id uuid, p_order_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:4fee2acc6b67
 routine public.cancel_reservation(p_reservation_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3c6f527d4498
@@ -2963,7 +2963,7 @@ routine public.member_may_give_role(p_giver uuid, p_role workspace_roles) -> boo
 routine public.member_notes_announce_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7358450eb8ce
 routine public.member_notes_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:890b2c3ae02a
 routine public.member_notes_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7c2de38ad227
-routine public.member_pause_money(p_member_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:service_role | body:0596ad5b293c
+routine public.member_pause_money(p_member_id uuid, p_from date, p_to date) -> jsonb | function | definer | stable | exec:service_role | body:3d00d651759a
 routine public.member_paused_on(p_member_id uuid, p_day date, p_current text) -> boolean | function | definer | stable | exec:service_role | body:165156d1fbaa
 routine public.member_pct_in(p_member_id uuid, p_first date, p_current integer) -> integer | function | definer | stable | exec:service_role | body:bcacb274bd3a
 routine public.member_period_invoiced(p_member_id uuid, p_first date) -> boolean | function | definer | stable | exec:service_role | body:56e095a7be0e
@@ -2979,6 +2979,7 @@ routine public.member_simultaneous_allowance(p_member_id uuid) -> integer | func
 routine public.member_statement(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e5862fbb7150
 routine public.member_term_changes_decided() -> trigger | function | definer | volatile | exec:service_role | body:9fea1510c27f
 routine public.member_term_changes_rebalance() -> trigger | function | definer | volatile | exec:service_role | body:6be1f782e750
+routine public.member_terms_carry_paused(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fd8bafae2bfd
 routine public.member_vies_verified(p_member_id uuid, p_vat_id text) -> boolean | function | definer | stable | exec:service_role | body:0f32fc93d2ff
 routine public.members_administrator_holding() -> trigger | function | definer | volatile | exec:service_role | body:c7f82b3888a8
 routine public.members_invitation_roles() -> trigger | function | definer | volatile | exec:service_role | body:bd2f17c947c3
@@ -3403,8 +3404,8 @@ routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, 
 routine public.save_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean, p_options jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c85c87cb44a5
 routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1f4d58ca4a5f
 routine public.save_workspace_settings(p_workspace_id uuid, p_expected_modified timestamp with time zone, p_settings jsonb) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:14948c9719ec
-routine public.schedule_member_pause(p_member_id uuid, p_from date, p_to date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7aa423dccdf2
-routine public.schedule_member_share_change(p_member_id uuid, p_pct integer, p_effective_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c0dea576badf
+routine public.schedule_member_pause(p_member_id uuid, p_from date, p_to date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:450aca7cfd83
+routine public.schedule_member_share_change(p_member_id uuid, p_pct integer, p_effective_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7daa1245c0c6
 routine public.search_available_accounts(p_query text, p_before uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4165707cabe2
 routine public.search_workspace_templates(p_query text, p_required text[], p_excluded text[], p_limit integer, p_cursor text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5e9dd296be46
 routine public.seat_accessories_same_workspace() -> trigger | function | definer | volatile | exec:service_role | body:cc85316ae959
