@@ -6,6 +6,7 @@
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_approval_reads.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
@@ -26,6 +27,7 @@ import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
@@ -147,6 +149,32 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
           receivedOn: DateTime(2026, 11, 3),
         ),
       ),
+    )
+    // #3874 — a bill waiting for a second person, so the approvals page
+    // has a row.
+    ..addPendingBill(
+      PurchaseDetail(
+        summary: PurchaseSummary(
+          id: 'p2',
+          kind: PurchaseKind.bill,
+          state: PurchaseState.pending,
+          category: 'Cleaning',
+          reference: 'F-2026-12',
+          currency: 'EUR',
+          grossCents: 4800,
+          supplierId: supplier,
+          receivedOn: DateTime(2026, 11, 5),
+        ),
+        revision: 1,
+        lines: const [
+          PurchaseLine(
+            lineNo: 1,
+            description: 'Office cleaning, November',
+            grossCents: 4800,
+          ),
+        ],
+        sources: const [],
+      ),
     );
   await pumpRoute(
     tester,
@@ -156,6 +184,9 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       supplierRepositoryProvider.overrideWithValue(suppliers),
       purchaseOrderRepositoryProvider.overrideWithValue(orders),
       purchaseRepositoryProvider.overrideWithValue(purchases),
+      purchaseApprovalReadsProvider.overrideWithValue(
+        FakePurchaseApprovalReads(purchases),
+      ),
       ...standardTestOverrides(
         money: money,
         // #3629 — the guide's pages with the Demo's setup state: every
@@ -279,6 +310,13 @@ const _pages = [
   ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
   // #3615 — purchases at the desk.
   ('/money/purchases', PageKind.records, 'money', 'purchases'),
+  // #3874 — what waits for a decision.
+  (
+    '/money/purchases/approvals',
+    PageKind.records,
+    'money',
+    'purchase-approvals',
+  ),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
   // #3842 — the purchase orders as records, and an order beside the table.
   ('/money/purchase-orders', PageKind.records, 'money', 'purchase-orders'),
@@ -352,7 +390,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 25;
+const _guardedWorkspaceRoutes = 26;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -463,6 +501,8 @@ void main() {
               RecordsHeader<UsageRecord>,
               RecordRow<PurchaseOrder>,
               RecordsHeader<PurchaseOrder>,
+              RecordRow<PurchaseSummary>,
+              RecordsHeader<PurchaseSummary>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -483,6 +523,7 @@ void main() {
               RecordsHeader<LedgerEntry>,
               RecordsHeader<UsageRecord>,
               RecordsHeader<PurchaseOrder>,
+              RecordsHeader<PurchaseSummary>,
             ],
           ),
           isEmpty,
