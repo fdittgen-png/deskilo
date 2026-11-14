@@ -4,6 +4,7 @@
 // a form that creates a NEW version of a value (never edits one) and the
 // history of a value. One typed form per domain; the server validates the
 // shape again.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -259,7 +260,7 @@ class _VersionForm {
       },
       if (domain == TaxDomain.retention && (int.tryParse(fields.text('years')) ?? 0) < 1)
         'years': l10n.taxRefInvalidNumber,
-      if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields),
+      if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields, choice),
       if (domain == TaxDomain.documentLanguage) ...documentLanguageFieldErrors(l10n, fields),
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
@@ -386,6 +387,7 @@ class _VersionForm {
             _text('currency', l10n.taxRefCurrency), _text('time_zone', l10n.taxRefTimeZone),
             _pick('banking_scheme', l10n.taxRefBankingScheme, bankingSchemeNames),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
+            _pick('paper', l10n.taxRefPaper, Paper.values.map((p) => p.wire)), _text('papers', l10n.taxRefPapers),
           ],
         TaxDomain.documentLanguage => [_text('languages', l10n.taxRefLanguages),
             _switch('customer_language', l10n.taxRefCustomerLanguage, refresh), _text('required_languages', l10n.taxRefRequiredLanguages)],

@@ -34031,6 +34031,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefInvalidNumber => 'Enter a number from 0 to 99.999';
 
   @override
+  String get taxRefInvalidPapers =>
+      'A4, Letter or both, separated by a comma, including the usual paper';
+
+  @override
   String get taxRefInvalidRateComponents =>
       'One tax per line as scheme, authority, percent; together they must equal the combined rate';
 
@@ -34078,6 +34082,12 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get taxRefOutsideVatPostalCodes =>
       'Postal-code prefixes outside the VAT (comma-separated)';
+
+  @override
+  String get taxRefPaper => 'Usual paper of the documents';
+
+  @override
+  String get taxRefPapers => 'Papers allowed (A4, Letter; empty: both)';
 
   @override
   String get taxRefPattern => 'Pattern';
@@ -37017,6 +37027,34 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get workspaceNameLabel => 'Workspace name';
+
+  @override
+  String get workspacePaperA4 => 'A4';
+
+  @override
+  String workspacePaperFollows(String paper, String country) {
+    return '$paper (usual in $country)';
+  }
+
+  @override
+  String get workspacePaperHelper =>
+      'An invoice keeps the paper it was issued on.';
+
+  @override
+  String get workspacePaperLabel => 'Paper of the documents';
+
+  @override
+  String get workspacePaperLetter => 'US Letter';
+
+  @override
+  String workspacePaperOnly(String paper) {
+    return 'Documents of this country are printed on $paper only.';
+  }
+
+  @override
+  String workspacePaperOnlySlip(String paper) {
+    return 'Only $paper: invoices of this country end on a payment part printed on $paper.';
+  }
 
   @override
   String get workspacePaymentsBillingTitle => 'Payments & billing';

@@ -23,6 +23,7 @@ import '../widgets/new_member_defaults_tiles.dart';
 import '../widgets/settings_editor.dart';
 import '../widgets/workspace_form_group.dart';
 import '../widgets/workspace_own_screens.dart';
+import '../widgets/workspace_paper_field.dart';
 import 'workspace_settings_form.dart';
 import 'workspace_settings_host.dart';
 
@@ -143,6 +144,18 @@ class WorkspaceParameterTiles {
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspaceLanguage,
+                  ),
+                  const SizedBox(height: 12),
+                  // #3852 — the paper the documents are printed on.
+                  _withDot(
+                    WorkspacePaperField(
+                      countryCode: form.countryCode ?? '',
+                      paper: form.paper,
+                      enabled: !busy,
+                      onChanged: (p) => _update(() => form.paper = p),
+                    ),
+                    helpTopic,
+                    anchor: HelpAnchor.workspacePaper,
                   ),
                   const SizedBox(height: 12),
                   // 0060 — the postal address printed as the invoice

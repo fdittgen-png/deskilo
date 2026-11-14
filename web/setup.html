@@ -199,9 +199,10 @@ function applyChrome(){
 // domainGates the switch each needs, domainEventTypes the server's name
 // where it differs from the page's key; invoicingCountries: where the app
 // issues invoices itself; documentLanguageCountries: where the business must choose its document language (#3850);
-// countries: [ISO code, currency, time zone, bank scheme]; reminders: DunningRules.defaults (#3888). Names and descriptions come from the ARB through setup_l10n.js.
+// countries: [ISO code, currency, time zone, bank scheme, usual paper, papers allowed] (#3852);
+// paymentSlipCountries: where invoices end on a payment slip printed on A4 (#3852); reminders: DunningRules.defaults (#3888). Names and descriptions come from the ARB through setup_l10n.js.
 const {features:FEATURES,requires:REQUIRES,availableIn:AVAILABLE_IN,permissions:PERMS,defaultMatrix:PERM_DEFAULTS,
- domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,documentLanguageCountries:DOCUMENT_LANGUAGE_COUNTRIES,countries:COUNTRIES,reminders:REMINDER_DEFAULTS}=window.SETUP_REGISTRY;
+ domains:DOMAINS,domainGates:DOMAIN_GATE,domainEventTypes:DOMAIN_EVENT_TYPE,invoicingCountries:INVOICING_COUNTRIES,documentLanguageCountries:DOCUMENT_LANGUAGE_COUNTRIES,paymentSlipCountries:PAYMENT_SLIP_COUNTRIES,countries:COUNTRIES,reminders:REMINDER_DEFAULTS}=window.SETUP_REGISTRY;
 // #2926 — the untranslated words (language names, statutory VAT rate
 // labels, the XML fallback names) are in setup_params.js.
 const seedVatRates=()=>set('vatRates',(VAT_RATES[S.country]||[]).map(([label,percent])=>({label,percent})));
@@ -213,7 +214,7 @@ const DEFAULTS={
  name:'',businessKind:'coworking',country:'FR',currency:'EUR',timezone:'Europe/Paris',environment:'dev',
  // #2561 L3 — the server's role and, for a workspace host only, the
  // explicit personal home of its people (typed in the instance wizard).
- network:{roles:'combined',homeUrl:'',homeKey:''},language:'',address:'',whatsapp:'',brandColor:'',
+ network:{roles:'combined',homeUrl:'',homeKey:''},language:'',paper:'',address:'',whatsapp:'',brandColor:'',
  // #2562 C2a — enrolment at the personal home and the identity freshness
  // (typed in the instance wizard and the settings editor).
  enrolment:{accepting:true,lifetime:'900',reconcile:'300',skew:'30'},
@@ -317,7 +318,8 @@ const waitsFor=k=>{let f=REQUIRES[k];while(f&&S.features[f])f=REQUIRES[f];return
 const enableWith=k=>{const out=[[`features.${k}`,true]];let f=REQUIRES[k];while(f){out.push([`features.${f}`,true]);f=REQUIRES[f]}return out};
 // The two answers whose change ripples: the UI inputs and the WebMCP tools
 // both go through these.
-const onCountry=v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c)setMany([['currency',c[1]],['timezone',c[2]]])};
+// #3852 — a paper the new country does not allow follows the country instead.
+const onCountry=v=>{const c=COUNTRIES.find(x=>x[0]===v);if(c)setMany([['currency',c[1]],['timezone',c[2]],['paper',c[5].includes(S.paper)?S.paper:'']])};
 const applyFeature=(k,v)=>setMany(v?enableWith(k):[[`features.${k}`,false]]);
 const alsoEnabled=k=>{const r=[];let f=REQUIRES[k];while(f){if(!S.features[f])r.push(featureTitle(f));f=REQUIRES[f]}return r};
 const country=()=>COUNTRIES.find(c=>c[0]===S.country)||COUNTRIES[0];

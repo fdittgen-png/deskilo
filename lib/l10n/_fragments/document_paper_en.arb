@@ -1,0 +1,61 @@
+{
+  "@@locale": "en",
+  "taxRefPaper": "Usual paper of the documents",
+  "@taxRefPaper": {
+    "description": "#3852 reference editor: the usual paper of a country's documents"
+  },
+  "taxRefPapers": "Papers allowed (A4, Letter; empty: both)",
+  "@taxRefPapers": {
+    "description": "#3852 reference editor: the papers a country's documents may use"
+  },
+  "taxRefInvalidPapers": "A4, Letter or both, separated by a comma, including the usual paper",
+  "@taxRefInvalidPapers": {
+    "description": "#3852 reference editor: the papers field is malformed"
+  },
+  "workspacePaperLabel": "Paper of the documents",
+  "@workspacePaperLabel": {
+    "description": "#3852 settings: label of the paper the business's documents are printed on"
+  },
+  "workspacePaperFollows": "{paper} (usual in {country})",
+  "@workspacePaperFollows": {
+    "description": "#3852 settings: the choice that follows the country; paper is A4 or US Letter, country a country name",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      },
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperA4": "A4",
+  "@workspacePaperA4": {
+    "description": "#3852 settings: the A4 paper"
+  },
+  "workspacePaperLetter": "US Letter",
+  "@workspacePaperLetter": {
+    "description": "#3852 settings: the US Letter paper"
+  },
+  "workspacePaperHelper": "An invoice keeps the paper it was issued on.",
+  "@workspacePaperHelper": {
+    "description": "#3852 settings: what the paper setting does not change"
+  },
+  "workspacePaperOnlySlip": "Only {paper}: invoices of this country end on a payment part printed on {paper}.",
+  "@workspacePaperOnlySlip": {
+    "description": "#3852 settings: why one paper only, where invoices carry a payment slip; paper is A4",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperOnly": "Documents of this country are printed on {paper} only.",
+  "@workspacePaperOnly": {
+    "description": "#3852 settings: why one paper only; paper is A4 or US Letter",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
+  }
+}

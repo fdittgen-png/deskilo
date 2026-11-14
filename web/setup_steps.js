@@ -44,6 +44,8 @@ const STEPS=[
   obligationsCard(lbl),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
+  // #3852 — the paper of the documents: the country's usual one, or another it allows.
+  selectEl(T('identityPaper'),'paper',paperOpts(),paperHint(),null,'paper'),
   input(T('identityAddress'),'address',T('identityAddressHint'),'text',T('identityAddressPlaceholder'),'identity'),
   // #1289 — the brand seed; the app derives its themes from it and
   // refuses one that cannot be read, so the page only checks the shape.

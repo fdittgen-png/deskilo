@@ -3,6 +3,7 @@
 // The tax reference editor's closed-list choices, and the two fields a
 // threshold's charge (the Italian stamp duty) and an issuing gate's
 // outside-VAT postal codes (the Canary Islands, Ceuta, Melilla) are typed in.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../../core/i18n/time_zones.dart';
@@ -24,6 +25,7 @@ Map<String, String> taxReferenceChoicesOf(TaxValue? v) => {
   'status': v is TaxabilityValue ? v.status : taxabilityStatuses.first,
   'tax_system': v is IssuingGateValue ? v.taxSystem : 'vat',
   'banking_scheme': v is CountryValue ? v.bankingScheme : 'sepa',
+  'paper': v is CountryValue ? (v.paper ?? Paper.a4.wire) : Paper.a4.wire,
 };
 
 /// The text of the charge and postal-code fields, from the version copied.
@@ -34,6 +36,7 @@ Map<String, String> taxReferenceExtraTexts(TaxValue? v) => {
   'outside_vat_postal_codes': v is IssuingGateValue
       ? v.outsideVatPostalCodes.join(', ')
       : '',
+  'papers': v is CountryValue ? (v.papers ?? const []).join(', ') : '',
 };
 
 /// The postal-code prefixes typed in [text], separated by commas.
@@ -45,12 +48,27 @@ List<String> postalPrefixesOf(String text) => [
 /// #2488 -- the banking schemes a country of the creation catalogue may name.
 const bankingSchemeNames = ['sepa', 'uk', 'us', 'ca', 'ch'];
 
-/// The refusals of the `country` form: a three-letter currency and a zone
-/// the app's clock knows.
-FieldErrors countryFieldErrors(AppLocalizations l10n, FormControllers fields) => {
-  if (!RegExp(r'^[A-Za-z]{3}$').hasMatch(fields.text('currency'))) 'currency': l10n.taxRefRequired,
-  if (!TimeZones.isKnown(fields.text('time_zone').trim())) 'time_zone': l10n.taxRefInvalidTimeZone,
-};
+/// #3852 -- the papers typed in the `country` form; empty: A4 and Letter.
+List<String> _papersOf(FormControllers fields) => postalPrefixesOf(fields.text('papers'));
+
+/// The refusals of the `country` form: a three-letter currency, a zone the
+/// app's clock knows, and papers the app prints on that hold the usual one.
+FieldErrors countryFieldErrors(
+  AppLocalizations l10n,
+  FormControllers fields,
+  Map<String, String> choice,
+) {
+  final papers = _papersOf(fields);
+  return {
+    if (!RegExp(r'^[A-Za-z]{3}$').hasMatch(fields.text('currency'))) 'currency': l10n.taxRefRequired,
+    if (!TimeZones.isKnown(fields.text('time_zone').trim())) 'time_zone': l10n.taxRefInvalidTimeZone,
+    if (papers.isNotEmpty &&
+        (papers.any((p) => Paper.fromWire(p) == null) ||
+            papers.toSet().length != papers.length ||
+            !papers.contains(choice['paper'])))
+      'papers': l10n.taxRefInvalidPapers,
+  };
+}
 
 /// The `country` value the form's fields and choices stand for.
 CountryValue countryValueOf(FormControllers fields, Map<String, String> choice) => CountryValue(
@@ -58,4 +76,7 @@ CountryValue countryValueOf(FormControllers fields, Map<String, String> choice) 
   timeZone: fields.text('time_zone').trim(),
   bankingScheme: choice['banking_scheme']!,
   position: int.tryParse(fields.text('position')) ?? 0,
+  // #3852 -- A4 is what an absent paper means; an empty list, both papers.
+  paper: choice['paper'] == Paper.a4.wire ? null : choice['paper'],
+  papers: _papersOf(fields).isEmpty ? null : _papersOf(fields),
 );

@@ -61,6 +61,7 @@ const helpAnchorIndex = <String>{
   HelpAnchor.workspaceCountry,
   HelpAnchor.workspaceCurrencyTimezone,
   HelpAnchor.workspaceLanguage,
+  HelpAnchor.workspacePaper,
   HelpAnchor.workspaceAddress,
   HelpAnchor.workspaceWhatsappGroup,
   HelpAnchor.workspaceInvitationMessage,

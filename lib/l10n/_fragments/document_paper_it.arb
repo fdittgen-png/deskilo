@@ -1,0 +1,13 @@
+{
+  "@@locale": "it",
+  "taxRefPaper": "Carta abituale dei documenti",
+  "taxRefPapers": "Carte consentite (A4, Letter; vuoto: entrambe)",
+  "taxRefInvalidPapers": "A4, Letter o entrambe, separate da una virgola, compresa la carta abituale",
+  "workspacePaperLabel": "Carta dei documenti",
+  "workspacePaperFollows": "{paper} (abituale: {country})",
+  "workspacePaperA4": "A4",
+  "workspacePaperLetter": "Lettera USA",
+  "workspacePaperHelper": "Una fattura mantiene la carta con cui è stata emessa.",
+  "workspacePaperOnlySlip": "Solo {paper}: le fatture di questo paese terminano con una sezione di pagamento stampata su {paper}.",
+  "workspacePaperOnly": "I documenti di questo paese si stampano solo su {paper}."
+}

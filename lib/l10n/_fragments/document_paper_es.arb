@@ -1,0 +1,13 @@
+{
+  "@@locale": "es",
+  "taxRefPaper": "Papel habitual de los documentos",
+  "taxRefPapers": "Papeles permitidos (A4, Letter; vacío: ambos)",
+  "taxRefInvalidPapers": "A4, Letter o ambos, separados por una coma, incluido el papel habitual",
+  "workspacePaperLabel": "Papel de los documentos",
+  "workspacePaperFollows": "{paper} (habitual: {country})",
+  "workspacePaperA4": "A4",
+  "workspacePaperLetter": "Carta EE. UU.",
+  "workspacePaperHelper": "Una factura conserva el papel con el que se emitió.",
+  "workspacePaperOnlySlip": "Solo {paper}: las facturas de este país terminan con una sección de pago impresa en {paper}.",
+  "workspacePaperOnly": "Los documentos de este país se imprimen solo en {paper}."
+}

@@ -44116,6 +44116,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidPapers": "A4, Letter or both, separated by a comma, including the usual paper",
+  "@taxRefInvalidPapers": {
+    "description": "#3852 reference editor: the papers field is malformed"
+  },
   "taxRefInvalidRateComponents": "One tax per line as scheme, authority, percent; together they must equal the combined rate",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
@@ -44171,6 +44175,14 @@
   "taxRefOutsideVatPostalCodes": "Postal-code prefixes outside the VAT (comma-separated)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
+  },
+  "taxRefPaper": "Usual paper of the documents",
+  "@taxRefPaper": {
+    "description": "#3852 reference editor: the usual paper of a country's documents"
+  },
+  "taxRefPapers": "Papers allowed (A4, Letter; empty: both)",
+  "@taxRefPapers": {
+    "description": "#3852 reference editor: the papers a country's documents may use"
   },
   "taxRefPattern": "Pattern",
   "@taxRefPattern": {
@@ -47942,6 +47954,52 @@
   "workspaceNameLabel": "Workspace name",
   "@workspaceNameLabel": {
     "description": "Label of the workspace-name input"
+  },
+  "workspacePaperA4": "A4",
+  "@workspacePaperA4": {
+    "description": "#3852 settings: the A4 paper"
+  },
+  "workspacePaperFollows": "{paper} (usual in {country})",
+  "@workspacePaperFollows": {
+    "description": "#3852 settings: the choice that follows the country; paper is A4 or US Letter, country a country name",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      },
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperHelper": "An invoice keeps the paper it was issued on.",
+  "@workspacePaperHelper": {
+    "description": "#3852 settings: what the paper setting does not change"
+  },
+  "workspacePaperLabel": "Paper of the documents",
+  "@workspacePaperLabel": {
+    "description": "#3852 settings: label of the paper the business's documents are printed on"
+  },
+  "workspacePaperLetter": "US Letter",
+  "@workspacePaperLetter": {
+    "description": "#3852 settings: the US Letter paper"
+  },
+  "workspacePaperOnly": "Documents of this country are printed on {paper} only.",
+  "@workspacePaperOnly": {
+    "description": "#3852 settings: why one paper only; paper is A4 or US Letter",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperOnlySlip": "Only {paper}: invoices of this country end on a payment part printed on {paper}.",
+  "@workspacePaperOnlySlip": {
+    "description": "#3852 settings: why one paper only, where invoices carry a payment slip; paper is A4",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
   },
   "workspacePaymentsBillingTitle": "Payments & billing",
   "@workspacePaymentsBillingTitle": {

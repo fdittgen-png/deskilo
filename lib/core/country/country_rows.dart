@@ -5,8 +5,16 @@
 // `position` order. A row whose banking scheme the app has no payment form
 // for is left out, never read as SEPA: a workspace is not created with
 // payment instructions of the wrong shape.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'country_catalog.dart';
+
+/// #3852 — the papers a row names; none, or one the app does not print on:
+/// both.
+List<Paper> _papers(List<String>? wire) {
+  final papers = [for (final w in wire ?? const <String>[]) ?Paper.fromWire(w)];
+  return papers.isEmpty ? Paper.values : papers;
+}
 
 List<Country> countriesOfReference(TaxReferenceSet set) {
   final rows = [
@@ -14,7 +22,9 @@ List<Country> countriesOfReference(TaxReferenceSet set) {
       if (row.value case final CountryValue v)
         if (BankingScheme.values.asNameMap()[v.bankingScheme] case final scheme?)
           if (v.currency.length == 3 && v.timeZone.isNotEmpty)
-            (position: v.position, country: Country(row.country, v.currency, v.timeZone, scheme: scheme)),
+            (position: v.position, country: Country(row.country, v.currency, v.timeZone, scheme: scheme,
+                paper: Paper.fromWire(v.paper) ?? Paper.a4,
+                papers: _papers(v.papers))),
   ]..sort((a, b) {
       final byPosition = a.position.compareTo(b.position);
       return byPosition != 0 ? byPosition : a.country.code.compareTo(b.country.code);

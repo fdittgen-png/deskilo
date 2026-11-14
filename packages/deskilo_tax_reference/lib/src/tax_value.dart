@@ -104,6 +104,8 @@ sealed class TaxValue {
           timeZone: r.string('time_zone'),
           bankingScheme: r.string('banking_scheme'),
           position: r.intOrNull('position') ?? 0,
+          paper: r.stringOrNull('paper'),
+          papers: r.raw('papers') == null ? null : r.strings('papers'),
         ),
       TaxDomain.documentLanguage => DocumentLanguageValue.read(r),
     };
@@ -499,6 +501,8 @@ class CountryValue extends TaxValue {
     required this.timeZone,
     required this.bankingScheme,
     this.position = 0,
+    this.paper,
+    this.papers,
   });
 
   /// ISO 4217: what a workspace here bills in by default.
@@ -513,6 +517,12 @@ class CountryValue extends TaxValue {
   /// Where the country stands in the lists a workspace is created from.
   final int position;
 
+  /// #3852 — the usual paper of its documents, `A4` or `Letter`; null: A4.
+  final String? paper;
+
+  /// #3852 — the papers its documents may use; null: A4 and Letter.
+  final List<String>? papers;
+
   @override
   TaxDomain get domain => TaxDomain.country;
 
@@ -522,6 +532,8 @@ class CountryValue extends TaxValue {
         'time_zone': timeZone,
         'banking_scheme': bankingScheme,
         'position': position,
+        'paper': ?paper,
+        'papers': ?papers,
       };
 }
 

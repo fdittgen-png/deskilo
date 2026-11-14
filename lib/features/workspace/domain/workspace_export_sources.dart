@@ -261,6 +261,8 @@ const List<ExportSource> workspaceExportSources = [
       // #3850 — the language and conventions frozen at issue.
       'document_language',
       'format_locale',
+      // #3852 — the paper set at issue.
+      'paper',
       'member_id',
       'period',
       'issued_at',

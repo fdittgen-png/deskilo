@@ -3428,6 +3428,29 @@ Vous voulez que les invitations et les documents parlent la langue de votre comm
 
 **Voir aussi:** [Message d'invitation](help:user.workspace.settings.invitation-message)
 
+### Papier des documents
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise votre pays.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Étapes**
+
+1. Dans [Espace](app:/workspace-settings), sous **Informations générales**, ouvrez **Papier des documents**.
+2. Gardez le papier usuel de votre pays, ou choisissez-en un autre qu'il permet.
+3. Touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Les États-Unis et le Canada impriment sur Lettre US ; les autres pays sur A4, sauf si vous choisissez Lettre US.
+- En Suisse, seul l'A4 est proposé : une facture se termine par une section paiement imprimée sur A4.
+- Une facture garde le papier de son émission. Changer de papier change les factures émises ensuite.
+- Si l'espace passe dans un pays qui n'utilise pas le papier choisi, il suit le papier usuel de ce pays.
+
+**Voir aussi:** [Pays](help:user.workspace.settings.country)
+
 ### Adresse d'en-tête
 
 **Public:** Propriétaire · Administrateur·rice avec l'autorisation
