@@ -36,9 +36,22 @@ String einvoiceTestNumber(DateTime at) {
       '${two(at.hour)}${two(at.minute)}${two(at.second)}';
 }
 
-/// The test document for [memberId]'s proforma of [period], as the
+/// Builds the test document for a member's proforma of a period, as the
 /// channel's FatturaPA; null when that month tracked nothing to put on it.
-Future<({List<int> bytes, String fileName})?> buildEInvoiceTestDocument(
+typedef EInvoiceTestDocumentBuilder =
+    Future<({List<int> bytes, String fileName})?> Function(
+      WidgetRef ref, {
+      required String memberId,
+      required String period,
+    });
+
+/// The builder the test document card uses; a test hands in its own.
+final eInvoiceTestDocumentBuilderProvider =
+    Provider<EInvoiceTestDocumentBuilder>(
+      (ref) => _buildEInvoiceTestDocument,
+    );
+
+Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
   WidgetRef ref, {
   required String memberId,
   required String period,
