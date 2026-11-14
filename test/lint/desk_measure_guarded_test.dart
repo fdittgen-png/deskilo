@@ -27,7 +27,7 @@ const _notGuardedYet = <String, String>{
   // The purchase orders: guarded by their own leaf.
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
-  '/settings/colours': '#3946 Tab reaches a control twice at 1024',
+  '/settings/colours': '#3954 Tab reaches a control twice at 1024',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
 };
