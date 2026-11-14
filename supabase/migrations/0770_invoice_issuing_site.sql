@@ -5,7 +5,8 @@
 --  * The seller block an invoice freezes at issue (create_invoice) names the
 --    id of the site it is issued for beside its name.
 --  * `invoices.site_id` is that site, set at issue from the seller block: one
---    fact, not a second derivation. A credit note takes the site of the
+--    fact, not a second derivation. A site the issuing path names itself,
+--    of the same business, is kept. A credit note takes the site of the
 --    invoice it replaces. A block that names no site (the business itself,
 --    or an issuing path with no seller site) gives the default site.
 --  * Invoices issued before 0770 take the site their seller block names, by
@@ -79,8 +80,11 @@ create or replace function public.invoice_issuing_site_stamp()
 returns trigger
 language plpgsql security definer set search_path = public as $fn$
 begin
-  -- A credit note follows the invoice it replaces.
+  -- A site the server names for the invoice, of this business, stays; a
+  -- credit note follows the invoice it replaces.
   new.site_id := coalesce(
+    (select s.id from public.sites s
+      where s.id = new.site_id and s.workspace_id = new.workspace_id),
     (select o.site_id from public.invoices o
       where o.id = new.replaces_invoice_id and o.workspace_id = new.workspace_id),
     public.invoice_issuing_site(new.workspace_id, new.parties));

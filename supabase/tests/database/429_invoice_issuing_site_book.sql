@@ -8,7 +8,7 @@
 -- names, else the default site. A business with one site posts as before.
 -- Rolled back.
 begin;
-select plan(12);
+select plan(14);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -130,6 +130,19 @@ select i.workspace_id, i.member_id, i.member_id, 'BOOKS-CN-0001', 'Credit', '[]'
   from public.invoices i where i.id = (pg_temp.invoice_of('member_b')).id;
 select is((select site_id from public.invoices where number = 'BOOKS-CN-0001'), pg_temp.id('site_b'),
   'a credit note follows the invoice it replaces');
+insert into public.invoices (workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
+                             currency, member_name, workspace_name, issuer_name, signature, parties, site_id)
+select i.workspace_id, i.member_id, i.member_id, n, 'Named', '[]'::jsonb, 0, i.currency, i.member_name,
+       i.workspace_name, i.issuer_name, 'sig', i.parties, s
+  from public.invoices i,
+       (values ('BOOKS-NAMED-0001', pg_temp.id('site_a')),
+               ('BOOKS-NAMED-0002', (select id from public.sites
+                                      where workspace_id = pg_temp.id('one') and is_default))) v(n, s)
+ where i.id = (pg_temp.invoice_of('member_b')).id;
+select is((select site_id from public.invoices where number = 'BOOKS-NAMED-0001'), pg_temp.id('site_a'),
+  'a site of the business the server names for an invoice stays');
+select is((select site_id from public.invoices where number = 'BOOKS-NAMED-0002'), pg_temp.id('site_b'),
+  'a site of another business gives way to the one its seller block names');
 select is(public.invoice_issuing_site(pg_temp.id('ws'),
             '{"seller": {"site": "Site B", "site_default": false}}'::jsonb),
   pg_temp.id('site_b'), 'an invoice issued before takes the site its seller block names');
