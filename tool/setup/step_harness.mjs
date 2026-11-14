@@ -810,6 +810,37 @@ const fakeContext = () => {
   if (!page.exportXml().includes('T-TYPED-NOW')) fail('secrets: the download lacks the token');
   console.log('secrets: tokens stay in the tab; the agent export masks them');
 }
+// #3889 — the payment term is the business's own only when somebody wrote it,
+// whatever the number: the starting value typed stays stated after a reload
+// from the browser's storage and through the answers file; an untouched
+// starting value is left out of the export.
+{
+  const exportsTerm = (xml) => /name="first_after_days"/.test(xml || '');
+  const reads = () => { globalThis.DOMParser = class { parseFromString(t) { return miniXml(t); } }; };
+  const start = (stated) => {
+    const base = EXPORT_MODES.answered(globalThis.__FEATURES);
+    return { ...base, reminders: { ...base.reminders, firstDays: 0, firstDaysStated: stated } };
+  };
+  // the page's own starting value, as a fresh page shows it
+  load('en', { name: 'Term Space' });
+  const startingDays = globalThis.window.__setup.DEFAULTS.reminders.firstDays;
+  const at = (stated) => { const s = start(stated); s.reminders.firstDays = startingDays; if (!stated) delete s.reminders.firstDaysStated; return s; };
+  let page = load('en', at(false));
+  if (exportsTerm(page.exportXml())) fail('term: an untouched starting value was exported as the business\'s term');
+  page = load('en', at(true));
+  if (!exportsTerm(page.exportXml())) fail('term: the starting value typed was not exported');
+  globalThis.window.__setup.save();
+  const kept = JSON.parse(page.store['deskilo-setup-v1']);
+  page = load('en', kept);
+  if (globalThis.window.__setup.S.reminders.firstDaysStated !== true) fail('term: the statement did not survive a reload');
+  const file = page.exportXml();
+  if (!exportsTerm(file)) fail('term: after a reload the typed starting value was not exported');
+  globalThis.window.__setup.reset();
+  reads();
+  globalThis.__parseBack(file);
+  if (!exportsTerm(page.exportXml())) fail('term: the statement did not survive the answers file');
+  console.log('term: a typed starting value stays stated through a reload and the answers file; an untouched one is left out');
+}
 // #3075 — a fresh page with only the name typed produces no blocker: a
 // default is not an answer, and blocks nothing until the owner changes it.
 {
