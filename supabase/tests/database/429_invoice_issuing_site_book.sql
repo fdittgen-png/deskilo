@@ -8,7 +8,7 @@
 -- names, else the default site. A business with one site posts as before.
 -- Rolled back.
 begin;
-select plan(9);
+select plan(12);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -135,6 +135,29 @@ select is(public.invoice_issuing_site(pg_temp.id('ws'),
   pg_temp.id('site_b'), 'an invoice issued before takes the site its seller block names');
 select is(public.invoice_issuing_site(pg_temp.id('ws'), '{"seller": {"site": "", "site_default": true}}'::jsonb),
   pg_temp.id('site_a'), 'and the default site where it names none');
+
+-- ── the stamp of an invoice that has none ──
+-- the one-site invoice has no site since the case above. A signed-in caller
+-- has no update of invoices at all; the privilege and a policy are given for
+-- this test only, to reach the guard itself as one.
+grant update on public.invoices to authenticated;
+create policy invoices_update_for_this_test on public.invoices for update to authenticated
+  using (true) with check (true);
+select set_config('request.jwt.claims',
+  json_build_object('sub', current_setting('deskilo.test.owner'), 'role', 'authenticated')::text, true);
+set local role authenticated;
+select throws_ok(format($$update public.invoices set site_id = %L where member_id = %L$$,
+    (select id from public.sites where workspace_id = pg_temp.id('one') and is_default), pg_temp.id('one_member')),
+  'P0001', 'invoices are immutable', 'a signed-in caller does not choose the book of an invoice');
+reset role;
+drop policy invoices_update_for_this_test on public.invoices;
+revoke update on public.invoices from authenticated;
+select lives_ok(format($$update public.invoices set site_id = %L where member_id = %L$$,
+    (select id from public.sites where workspace_id = pg_temp.id('one') and is_default), pg_temp.id('one_member')),
+  'the server stamps the site of an invoice that has none');
+select throws_ok(format($$update public.invoices set site_id = %L where member_id = %L$$,
+    pg_temp.id('site_b'), pg_temp.id('one_member')),
+  'P0001', 'invoices are immutable', 'and only once');
 
 select * from finish();
 rollback;

@@ -95,8 +95,10 @@ create trigger invoice_issuing_site_stamp
   before insert on public.invoices
   for each row execute function public.invoice_issuing_site_stamp();
 
--- The guard of issued invoices lets the issuing site be stamped once on an
--- invoice that has none, with nothing else changing.
+-- The guard of issued invoices lets the server stamp the issuing site once on
+-- an invoice that has none, with nothing else changing. A signed-in caller
+-- never chooses the book an invoice lands in: for `authenticated` and `anon`
+-- the stamp is refused like any other change.
 create or replace function public.invoices_immutable()
 returns trigger
 language plpgsql
@@ -123,8 +125,9 @@ begin
      and (o - 'settled_by_invoice_id') = (n - 'settled_by_invoice_id') then
     return new;
   end if;
-  -- #3968: the issuing site, once.
+  -- #3968: the issuing site, once, by the server's own roles.
   if tg_op = 'UPDATE'
+     and current_user not in ('authenticated', 'anon')
      and old.site_id is null
      and new.site_id is not null
      and o = n then
