@@ -356,9 +356,7 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
     ),
     GoRoute(
       path: '/money/cash',
-      redirect: env.guard(
-        const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),
-      ),
+      redirect: env.cashRedirect,
       builder: (context, state) => const CashHubScreen(),
     ),
     // #934 — the treasurer's view, and the guided repartition.
