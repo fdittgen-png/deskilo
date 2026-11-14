@@ -12,9 +12,12 @@
 --    invoice, written only by store_invoice_original and never changed. The
 --    system columns record who stored it and when.
 -- 3. store_invoice_original: once per invoice, by someone who may issue
---    invoices in that business. Before it keeps the bytes it checks that the
---    PDF is a PDF and that the XML names the invoice's number, currency and
---    amount due.
+--    invoices in the invoice's own business. The bytes live in the table row.
+--    Before it keeps them it checks that the PDF is a PDF of at most
+--    invoice_original_max_bytes(), and that the XML names, once each, the
+--    number, currency and amount due of the invoice row as it was issued.
+--    The caller's words are never compared with themselves: every expected
+--    value is read from the row.
 
 -- ── 1. which invoices keep an original ────────────────────────────────────
 -- An added column with a constant default changes no row: the invoices
@@ -78,6 +81,15 @@ create trigger invoice_originals_no_update
   for each row execute function public.invoice_originals_immutable();
 
 -- ── 3. storing an original ────────────────────────────────────────────────
+-- The largest original kept: an invoice PDF with its fonts, its pictures and
+-- its annex pages is far below it.
+create or replace function public.invoice_original_max_bytes()
+returns integer language sql immutable set search_path = public as $fn$
+  select 16 * 1024 * 1024
+$fn$;
+revoke execute on function public.invoice_original_max_bytes() from public, anon;
+grant execute on function public.invoice_original_max_bytes() to authenticated;
+
 -- p_pdf is the PDF in base64; p_xml the CII document it carries.
 create or replace function public.store_invoice_original(p_invoice_id uuid, p_pdf text, p_xml text)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
@@ -88,6 +100,7 @@ declare
   v_ns text[] := array[
     array['rsm', 'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'],
     array['ram', 'urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:100']];
+  v_found xml[];
   v_number text;
   v_currency text;
   v_due text;
@@ -117,17 +130,26 @@ begin
   if length(v_pdf) < 5 or substring(v_pdf from 1 for 5) <> '\x255044462d'::bytea then
     raise exception 'the original is not a PDF' using errcode = '22023';
   end if;
+  if length(v_pdf) + octet_length(coalesce(p_xml, '')) > public.invoice_original_max_bytes() then
+    raise exception 'the original is larger than % bytes', public.invoice_original_max_bytes()
+      using errcode = '22023';
+  end if;
 
   begin
     v_doc := xmlparse(document coalesce(p_xml, ''));
   exception when others then
     raise exception 'the structured part is not an XML document' using errcode = '22023';
   end;
-  v_number := (xpath('/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:ID/text()', v_doc, v_ns))[1]::text;
-  v_currency := (xpath('//ram:ApplicableHeaderTradeSettlement/ram:InvoiceCurrencyCode/text()',
-                       v_doc, v_ns))[1]::text;
-  v_due := (xpath('//ram:SpecifiedTradeSettlementHeaderMonetarySummation/ram:DuePayableAmount/text()',
-                  v_doc, v_ns))[1]::text;
+  -- each value from its one place in the document: none, or two, is no value
+  v_found := xpath('/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:ID/text()', v_doc, v_ns);
+  v_number := case when cardinality(v_found) = 1 then v_found[1]::text end;
+  v_found := xpath('/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction'
+                   '/ram:ApplicableHeaderTradeSettlement/ram:InvoiceCurrencyCode/text()', v_doc, v_ns);
+  v_currency := case when cardinality(v_found) = 1 then v_found[1]::text end;
+  v_found := xpath('/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction'
+                   '/ram:ApplicableHeaderTradeSettlement/ram:SpecifiedTradeSettlementHeaderMonetarySummation'
+                   '/ram:DuePayableAmount/text()', v_doc, v_ns);
+  v_due := case when cardinality(v_found) = 1 then v_found[1]::text end;
   if v_number is distinct from v_inv.number then
     raise exception 'the structured part does not name this invoice''s number' using errcode = '22023';
   end if;

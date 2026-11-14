@@ -6,20 +6,21 @@
 -- invoice reads its original; nobody changes it. An invoice issued before
 -- keeps none. Rolled back.
 begin;
-select plan(15);
+select plan(18);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
   owner uuid := '00000000-0000-4000-8000-000000003853';
   person_a uuid := '00000000-0000-4000-8000-000000003854';
   person_b uuid := '00000000-0000-4000-8000-000000003855';
-  ws uuid; member_a uuid; member_b uuid;
+  other_owner uuid := '00000000-0000-4000-8000-000000003856';
+  ws uuid; other uuid; member_a uuid; member_b uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
   select u, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
          'originals-' || right(u::text, 4) || '@deskilo.test', '', now(), now(), now()
-    from unnest(array[owner, person_a, person_b]) u;
+    from unnest(array[owner, person_a, person_b, other_owner]) u;
   insert into public.profiles (id, display_name) values (person_a, 'Ana Original'), (person_b, 'Ben Original')
   on conflict (id) do update set display_name = excluded.display_name;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by,
@@ -28,6 +29,12 @@ begin
           'not_subject', '{"invoicing": true}') returning id into ws;
   insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
   values (ws, owner, true, true, '2026-01-01');
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by,
+                                 street, city, postal_code, vat_regime, feature_flags)
+  values ('ORIGINALS-OTHER', 'FR', 'EUR', 'Europe/Paris', other_owner, '2 rue B', 'Sète', '34200',
+          'not_subject', '{"invoicing": true}') returning id into other;
+  insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
+  values (other, other_owner, true, true, '2026-01-01');
   insert into public.members (workspace_id, user_id, subscription_pct, joined_at)
   values (ws, person_a, 100, '2026-01-01') returning id into member_a;
   insert into public.members (workspace_id, user_id, subscription_pct, joined_at)
@@ -43,6 +50,7 @@ begin
   perform set_config('deskilo.test.owner', owner::text, false);
   perform set_config('deskilo.test.person_a', person_a::text, false);
   perform set_config('deskilo.test.person_b', person_b::text, false);
+  perform set_config('deskilo.test.other_owner', other_owner::text, false);
 end;
 $seed$;
 select pg_temp.seed();
@@ -108,6 +116,16 @@ select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
 select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
     pg_temp.inv('ORIG-0003'), pg_temp.pdf(), pg_temp.cii('ORIG-0003', 'EUR', '123.45')),
   '22023', 'this invoice was issued before its original was kept', 'an invoice issued before keeps none');
+select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
+    pg_temp.inv('ORIG-0002'), encode(convert_to('%PDF-' || repeat('x', public.invoice_original_max_bytes()), 'UTF8'), 'base64'),
+    pg_temp.cii('ORIG-0002', 'EUR', '123.45')),
+  '22023', format('the original is larger than %s bytes', public.invoice_original_max_bytes()),
+  'an original larger than the bound is refused');
+select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
+    pg_temp.inv('ORIG-0002'), pg_temp.pdf(),
+    replace(pg_temp.cii('ORIG-0002', 'EUR', '123.45'), '<ram:ID>ORIG-0002</ram:ID>',
+            '<ram:ID>ORIG-0002</ram:ID><ram:ID>ORIG-0002</ram:ID>')),
+  '22023', 'the structured part does not name this invoice''s number', 'a number named twice is no number');
 select throws_ok(format($$insert into public.invoice_originals (invoice_id, workspace_id, pdf, xml, sha256, xml_sha256)
     select id, workspace_id, '\x00', '\x00', '', '' from public.invoices where number = 'ORIG-0002'$$),
   '42501', null, 'nobody writes an original by hand');
@@ -117,6 +135,16 @@ reset role;
 
 select is((select created_by_user from public.invoice_originals where invoice_id = pg_temp.inv('ORIG-0001')),
   current_setting('deskilo.test.owner')::uuid, 'it records who stored it');
+
+-- ── an issuer of another business ──
+-- the invoice's id is read first: that issuer does not see the invoice
+select set_config('deskilo.test.orig2', pg_temp.inv('ORIG-0002')::text, false);
+select pg_temp.as_user('other_owner');
+set local role authenticated;
+select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
+    current_setting('deskilo.test.orig2'), pg_temp.pdf(), pg_temp.cii('ORIG-0002', 'EUR', '123.45')),
+  '42501', 'not allowed to issue invoices', 'an issuer of another business stores none');
+reset role;
 
 -- ── a member who may not issue ──
 select pg_temp.as_user('person_a');
