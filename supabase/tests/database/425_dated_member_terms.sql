@@ -9,7 +9,7 @@
 -- month paused on its first day and resumes the member on its last date.
 -- Rolled back.
 begin;
-select plan(24);
+select plan(26);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003858' || lpad(n::text, 4, '0'))::uuid;
@@ -152,6 +152,19 @@ select throws_ok($$ select public.schedule_member_share_change('00000000-0000-40
 select is((select count(*)::int from public.member_term_changes where member_id <> pg_temp.u(202)), 0,
   'a member reads only their own changes');
 reset role;
+select pg_temp.act_as(pg_temp.u(1));
+set local role authenticated;
+select throws_ok($$ select public.schedule_member_pause('00000000-0000-4000-8000-000038580201',
+  current_date + 10, null, gen_random_uuid()) $$, 'DKN01', null,
+  'an owner is not paused, as with an immediate status change');
+reset role;
+-- a pause scheduled for someone who has become an owner since
+insert into public.member_term_changes (workspace_id, member_id, kind, to_status, due_on, state, source)
+values (pg_temp.u(101), pg_temp.u(201), 'status', 'paused', pg_temp.today(), 'scheduled', 'scheduled');
+select public.apply_due_member_term_changes();
+select is((select state || ' / ' || reason from public.member_term_changes
+            where member_id = pg_temp.u(201) and to_status = 'paused'),
+  'refused / an owner hands the workspace over first', 'the sweep refuses it on its day, with the reason');
 
 -- ── the member's own data ──
 select pg_temp.act_as(pg_temp.u(2));

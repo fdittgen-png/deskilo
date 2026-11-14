@@ -196,6 +196,14 @@ begin
     return coalesce(v_c.state, 'unknown');
   end if;
   select * into v_m from public.members where id = v_c.member_id for update;
+  -- the rules of an immediate change hold on the change's day: an owner (one
+  -- since it was scheduled) is not paused
+  if v_c.kind = 'status' and v_m.is_owner then
+    update public.member_term_changes
+       set state = 'refused', reason = 'an owner hands the workspace over first'
+     where id = p_change_id;
+    return 'refused';
+  end if;
   v_effective := public.member_term_effective_on(v_c.member_id, v_c.due_on);
   begin
     perform set_config('deskilo.term_change_applying', 'on', true);
@@ -338,6 +346,10 @@ begin
   if v_m.id is null then raise exception 'unknown member' using errcode = '22023'; end if;
   if not public.has_permission(v_m.workspace_id, 'manageMembers') then
     raise exception 'not allowed to change memberships' using errcode = 'DKN01';
+  end if;
+  -- as for an immediate status change (0181): an owner is not paused
+  if v_m.is_owner then
+    raise exception 'an owner hands the workspace over first' using errcode = 'DKN01';
   end if;
   v_actor := public.my_active_member(v_m.workspace_id);
   if p_from is null or p_from < public.workspace_today(v_m.workspace_id) then
