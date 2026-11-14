@@ -40,7 +40,7 @@
   "memberPlanShareLabel": "Quota",
   "memberPlanJoined": "Data di adesione",
   "memberPlanJoinedUnknown": "Non registrata",
-  "memberPlanPausedNoDates": "Sospeso: per una sospensione non si registrano date",
+  "memberPlanPausedNoDates": "Sospeso: per questa sospensione non è registrata alcuna data",
   "memberPlanEstimate": "Prossima fattura stimata",
   "memberPlanEstimateBasis": "Per {period}, al {date}: l'estratto finora",
   "memberPlanEstOverage": "Mezze giornate extra",

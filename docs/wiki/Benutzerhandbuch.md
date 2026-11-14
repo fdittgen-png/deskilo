@@ -4333,6 +4333,7 @@ Ein Neuzugang wartet auf Ihre Entscheidung oder ein Mitglied macht eine Pause, u
 - Die Entscheidung über ein neues Mitglied kann auch über die Validierungsregeln getroffen werden, wie unter [Validierungsregeln](#validierungsregeln-bereich-für-bereich) beschrieben.
 - Das Pausieren ist Inhabern vorbehalten und behält den gesamten Verlauf.
 - Ein Mitglied, das gegangen ist, zeigt **Ausgetreten** und kann nicht pausiert werden.
+- Eine Pause und eine Änderung des Anteils zählen in ganzen Monaten, ab dem ersten Monat, dessen erster Tag auf ihr Datum oder danach fällt; nichts wird anteilig berechnet. Ein bereits abgerechneter Monat behält, was seine Rechnung sagt; eine Änderung zählt ab dem ersten noch nicht abgerechneten Monat. Ein ab dem Monatsersten pausierter Monat schuldet keine Abonnementgebühr und enthält keine Halbtage; eine Pause ab dem 15. lässt diesen Monat voll berechnet und macht den nächsten frei. Der Reiter **Tarif** eines Mitglieds listet die geplanten Änderungen mit den berechneten und freien Monaten und der ersten Abrechnung, auf der eine Änderung des Anteils erscheint.
 
 **Siehe auch:** [Ein Mitglied einladen](#ein-mitglied-einladen)
 

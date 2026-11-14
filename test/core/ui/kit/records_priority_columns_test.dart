@@ -6,6 +6,7 @@
 // beside" comes from the scaffold, never from a width in the table.
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/storage/pane_width_store.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/core/ui/kit/list_detail_scaffold.dart';
 import 'package:deskilo/core/ui/kit/records_table.dart';
 import 'package:flutter/material.dart';
@@ -107,6 +108,28 @@ void main() {
         'name',
         'amount',
       });
+    });
+
+    test('a column of the lowest priority is drawn only where the table '
+        'has the room for it (#3858)', () {
+      final cols = [
+        ...all,
+        RecordColumn<String>(
+          id: 'next',
+          label: 'Next',
+          staysBeside: false,
+          shownFrom: WindowClass.large,
+          cell: (_, r) => Text(r),
+        ),
+      ];
+      expect(
+        _ids(columnsShown(cols, const {}, beside: false, room: WindowClass.expanded)),
+        {'name', 'note', 'amount', 'date'},
+      );
+      expect(
+        _ids(columnsShown(cols, const {}, beside: false, room: WindowClass.large)),
+        {'name', 'note', 'amount', 'date', 'next'},
+      );
     });
 
     test('beside a record the hidden choice still holds', () {

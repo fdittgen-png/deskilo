@@ -1,0 +1,23 @@
+{
+  "@@locale": "es",
+  "memberTermsTitle": "Cambios programados",
+  "memberTermShare": "{share} a partir del {date}: aparece primero en el extracto de {month}",
+  "memberTermPauseDated": "En pausa del {from} al {until}",
+  "memberTermPauseOpen": "En pausa a partir del {from} hasta la reanudación",
+  "memberTermChargedThenFree": "{charged} se cobra completo; sin cuota de suscripción en {free}",
+  "memberTermFreeOnly": "Sin cuota de suscripción en {free}",
+  "memberTermNoFreeMonth": "Ningún mes queda libre: cada mes afectado se sigue cobrando completo",
+  "memberTermMonthRange": "{first} a {last}",
+  "memberTermMonthOnwards": "{first} y cada mes siguiente, hasta la reanudación",
+  "memberTermPending": "Pendiente de aprobación",
+  "memberTermScheduled": "Programado",
+  "memberTermApplied": "Aplicado el {date}",
+  "memberTermRefused": "Rechazado: {reason}",
+  "memberTermCancelled": "Cancelado",
+  "memberPlanPausedSince": "En pausa desde el {date}",
+  "membersColNextChange": "Próximo cambio",
+  "memberTermNextShare": "{share} a partir del {date}",
+  "memberTermNextPause": "Pausa a partir del {date}",
+  "memberTermNextResume": "Reanudación el {date}",
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} reserva cae en los meses en pausa — se mantiene y se cobra como uso} other{{count} reservas caen en los meses en pausa — se mantienen y se cobran como uso}}"
+}
