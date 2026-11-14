@@ -206,7 +206,7 @@
   "@memberPlanJoinedUnknown": {
     "description": "#3618 members at the desk: joining date not stored"
   },
-  "memberPlanPausedNoDates": "Paused: no dates are recorded for a pause",
+  "memberPlanPausedNoDates": "Paused: no date is recorded for this pause",
   "@memberPlanPausedNoDates": {
     "description": "#3618 members at the desk: a pause has no stored dates"
   },

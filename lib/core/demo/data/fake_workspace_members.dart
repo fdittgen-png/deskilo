@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/membership_repository.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
@@ -174,6 +175,24 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
     myMember,
     ...otherMembers,
   ];
+  /// #3858 — the Demo's dated plan changes and pauses.
+  final memberTermChanges = <MemberTermChange>[];
+
+  @override
+  Future<List<MemberTermChange>> fetchMemberTermChanges(
+    String workspaceId,
+  ) async => List.of(memberTermChanges);
+
+  /// #3858 — the months a standing subscription invoice froze, by member.
+  final memberInvoicedMonths = <String, Set<DateTime>>{};
+
+  @override
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
+    String workspaceId,
+  ) async => {
+    for (final e in memberInvoicedMonths.entries) e.key: {...e.value},
+  };
+
   @override
   Future<List<Member>> fetchMyMembers() async => [
     myMember,

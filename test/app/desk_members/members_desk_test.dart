@@ -4,9 +4,14 @@
 // not there at all, not an empty one (the acceptance, with two roles); the
 // chips filter; a member opens beside the table at their address with their
 // tabs; the owner's selection runs the change task with its outcomes.
+// #3858 — the Plan tab lists the scheduled changes with the money they
+// mean in words, and the table names each member's next change.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
+import 'package:deskilo/core/demo/data/reservation_repository.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -51,14 +56,20 @@ Future<FakeWorkspaceRepository> _open(
   WidgetTester tester, {
   required bool owner,
   String path = '/members',
+  List<MemberTermChange> terms = const [],
+  List<Reservation> bookings = const [],
+  Size size = const Size(1440, 900),
 }) async {
-  final space = _space(owner: owner);
+  final space = _space(owner: owner)..memberTermChanges.addAll(terms);
   await pumpRoute(
     tester,
     path,
-    size: const Size(1440, 900),
+    size: size,
     overrides: [
-      ...standardTestOverrides(workspace: space),
+      ...standardTestOverrides(
+        workspace: space,
+        reservations: FakeReservationRepository()..reservations.addAll(bookings),
+      ),
       enabledFeaturesSyncProvider.overrideWithValue(
         WorkspaceFeature.values.toSet(),
       ),
@@ -171,5 +182,170 @@ void main() {
     );
     expect(space.memberOf('member-2')?.status, MemberStatus.paused);
     expect(space.memberOf('member-3')?.status, MemberStatus.pending);
+  });
+
+  group('#3858 dated terms', () {
+    MemberTermChange change(
+      String id,
+      MemberTermKind kind,
+      DateTime due,
+      MemberTermState state, {
+      int? pct,
+      String? status,
+      String reason = '',
+    }) => MemberTermChange(
+      id: id,
+      memberId: 'member-2',
+      kind: kind,
+      toPct: pct,
+      toStatus: status,
+      dueOn: due,
+      state: state,
+      reason: reason,
+    );
+
+    final terms = [
+      change(
+        'share',
+        MemberTermKind.share,
+        DateTime(2027, 2, 10),
+        MemberTermState.scheduled,
+        pct: 75,
+      ),
+      change(
+        'pause',
+        MemberTermKind.status,
+        DateTime(2027, 3, 15),
+        MemberTermState.pending,
+        status: 'paused',
+      ),
+      change(
+        'applied',
+        MemberTermKind.share,
+        DateTime(2026, 12),
+        MemberTermState.applied,
+        pct: 50,
+      ),
+      change(
+        'refused',
+        MemberTermKind.status,
+        DateTime(2026, 11),
+        MemberTermState.refused,
+        status: 'paused',
+        reason: 'the member is not active',
+      ),
+    ];
+
+    // Two kept bookings and a cancelled one in May 2027, the first month
+    // the waiting pause frees.
+    Reservation booking(String id, int day, ReservationStatus status) =>
+        Reservation(
+          id: id,
+          workspaceId: 'ws-1',
+          memberId: 'member-2',
+          seatId: 'seat',
+          startsAt: DateTime(2027, 5, day, 9),
+          endsAt: DateTime(2027, 5, day, 13),
+          status: status,
+        );
+    final bookings = [
+      booking('b1', 4, ReservationStatus.reserved),
+      booking('b2', 5, ReservationStatus.reserved),
+      booking('b3', 6, ReservationStatus.cancelled),
+    ];
+
+    Future<void> openPlan(WidgetTester tester) async {
+      final space = await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        bookings: bookings,
+      );
+      // April is already invoiced: it stays charged in full.
+      space.memberInvoicedMonths['member-2'] = {DateTime(2027, 4)};
+      await tester.tap(find.byKey(const ValueKey('records-row-member-2')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-tab-plan')));
+      await tester.pumpAndSettle();
+    }
+
+    String said(String key) => [
+      for (final t in find
+          .descendant(
+            of: find.byKey(ValueKey('member-term-$key')),
+            matching: find.byType(Text),
+          )
+          .evaluate()
+          .map((e) => e.widget as Text))
+        t.data ?? '',
+    ].join('\n');
+
+    testWidgets('a share change names the first statement it shows on', (
+      tester,
+    ) async {
+      await openPlan(tester);
+      expect(said('share'), contains('first on the statement of March 2027'));
+      expect(said('share'), contains('Scheduled'));
+    });
+
+    testWidgets('a pause from the 15th says which months stay charged, an '
+        'invoiced one with them, and which is the first free; and that it '
+        'waits for approval', (tester) async {
+      await openPlan(tester);
+      expect(said('pause'), contains('until resumed'));
+      expect(
+        said('pause'),
+        contains(
+          'March 2027 to April 2027 is charged in full; no subscription fee '
+          'for May 2027 and every month after, until resumed',
+        ),
+      );
+      expect(said('pause'), contains('Waiting for approval'));
+      expect(
+        said('pause'),
+        contains(
+          '2 bookings fall in the paused months — they stay and are '
+          'charged as use',
+        ),
+      );
+    });
+
+    testWidgets('a change in force shows its date and a refused one its '
+        'reason', (tester) async {
+      await openPlan(tester);
+      expect(said('applied'), contains('Took effect on'));
+      expect(said('refused'), contains('Refused: the member is not active'));
+    });
+
+    testWidgets('a wide table names the next change', (tester) async {
+      await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        size: const Size(2000, 900),
+      );
+      // The share is written the locale's way (its percent sign and space).
+      expect(
+        find.byWidgetPredicate(
+          (w) =>
+              w is Text &&
+              (w.data ?? '').contains('75') &&
+              (w.data ?? '').contains(' from '),
+        ),
+        findsOneWidget,
+      );
+    });
+
+    testWidgets('a narrow table gives the next change up first, and keeps '
+        'the amounts whole', (tester) async {
+      await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        size: const Size(1024, 900),
+      );
+      expect(find.text('NEXT CHANGE'), findsNothing);
+      expect(find.text('PLAN FEE'), findsOneWidget);
+    });
   });
 }
