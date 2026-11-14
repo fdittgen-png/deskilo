@@ -5381,14 +5381,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String bookingPriceCharge(String amount) {
-    return 'Facturé $amount';
+    return 'Tarif $amount';
   }
 
   @override
   String get bookingPriceFree => 'Gratuit';
 
   @override
-  String get bookingPriceOverage => 'Demi-journée en plus';
+  String get bookingPriceOverage => 'Demi-journée supplémentaire';
 
   @override
   String get bookingPricePass => 'Pass';
