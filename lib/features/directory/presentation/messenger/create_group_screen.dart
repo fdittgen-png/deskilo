@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../domain/messenger.dart';
 import '../../providers/directory_providers.dart';
 import '../../providers/messenger_providers.dart';
@@ -73,7 +73,7 @@ class _CreateGroupState extends ConsumerState<CreateGroupScreen> {
     final ready = _title.text.trim().isNotEmpty && _people.isNotEmpty && !_busy;
     return Scaffold(
       key: const ValueKey('create-group'),
-      appBar: AppBar(title: PageTitle(l10n.meGroupAdd)),
+      appBar: pageBar(context, title: l10n.meGroupAdd),
       body: Align(
         alignment: Alignment.topCenter,
         child: ConstrainedBox(

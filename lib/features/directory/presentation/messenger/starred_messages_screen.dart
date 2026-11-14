@@ -6,7 +6,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/member_note_refs.dart';
 import '../../providers/message_marks_providers.dart';
@@ -22,7 +22,7 @@ class StarredMessagesScreen extends ConsumerWidget {
     final format = ref.watch(appFormatProvider);
     return Scaffold(
       key: const ValueKey('starred-messages'),
-      appBar: AppBar(title: PageTitle(l10n.messengerStarred)),
+      appBar: pageBar(context, title: l10n.messengerStarred),
       body: switch (starred) {
         AsyncData(value: final rows) when rows.isEmpty => EmptyState(
             key: const ValueKey('starred-empty'),

@@ -13,7 +13,7 @@ import '../../../../core/instance/schema_compatibility.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../auth/providers/auth_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 
@@ -186,7 +186,7 @@ class _SupportBundleScreenState extends ConsumerState<SupportBundleScreen> {
     final demo = ref.watch(demoEntryProvider);
     final bundle = _bundle;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.supportTitle)),
+      appBar: pageBar(context, title: l10n.supportTitle),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

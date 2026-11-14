@@ -19,7 +19,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/form_scroll.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../application/workspace_colours.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
@@ -192,7 +192,7 @@ class _ColoursScreenState extends ConsumerState<ColoursScreen> {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.coloursTitle)),
+      appBar: pageBar(context, title: l10n.coloursTitle),
       // #3954 — the page's controls all built and walked in the order they
       // are built (the kit's form page), so Tab meets each once.
       body: FormScroll(

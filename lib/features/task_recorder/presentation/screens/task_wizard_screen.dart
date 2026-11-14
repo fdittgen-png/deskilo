@@ -32,7 +32,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../domain/stored_guide.dart';
@@ -60,7 +60,7 @@ class TaskWizardScreen extends ConsumerWidget {
     final text = Theme.of(context).textTheme;
     final available = ref.watch(taskRecorderAvailableProvider);
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.taskWizardTitle)),
+      appBar: pageBar(context, title: l10n.taskWizardTitle),
       // #3818 — a task file dropped on the page goes where the menu's
       // "add from file" sends a picked one.
       body: FileDropZone(

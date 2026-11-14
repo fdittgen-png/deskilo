@@ -14,7 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/wizard_navigation.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -98,7 +98,7 @@ class SetupStepScreen extends ConsumerWidget {
       leaveTitle: l10n.setupStepLeaveTitle,
       leaveLabel: l10n.setupStepLeave,
       builder: (_) => Scaffold(
-        appBar: AppBar(title: PageTitle(l10n.setupStepTitle(stepId))),
+        appBar: pageBar(context, title: l10n.setupStepTitle(stepId)),
         body: workspace == null
             ? const LoadingView()
             : Column(

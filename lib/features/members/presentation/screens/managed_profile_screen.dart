@@ -15,7 +15,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
@@ -141,8 +141,8 @@ class _ManagedProfileScreenState extends ConsumerState<ManagedProfileScreen> {
       slot = _form(l10n, value.identity, workspaceCountry);
     }
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.managedProfileTitle),
+      appBar: pageBar(context,
+        title: l10n.managedProfileTitle,
       ),
       body: SingleChildScrollView(
         padding: AppSpacing.gutterAll,

@@ -7,7 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../auth/domain/identity_binding.dart';
 import '../../../workspace/providers/instance_providers.dart';
 import '../../domain/mcp_access_status.dart';
@@ -267,7 +267,7 @@ class ConsentNotApproved extends StatelessWidget {
     final blocked = client.status == McpClientApproval.blocked;
     final decider = this.decider;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.mcpConsentTitle)),
+      appBar: pageBar(context, title: l10n.mcpConsentTitle),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [

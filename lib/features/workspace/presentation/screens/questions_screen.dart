@@ -14,7 +14,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/workspace_field.dart';
 import '../../providers/workspace_fields_providers.dart';
@@ -99,8 +99,8 @@ class _QuestionsScreenState extends ConsumerState<QuestionsScreen> {
         : workspace!.defaultLocale;
 
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.questionsTitle),
+      appBar: pageBar(context,
+        title: l10n.questionsTitle,
       ),
       floatingActionButton: FloatingActionButton.extended(
         key: QuestionsScreen.addKey,
