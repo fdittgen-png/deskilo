@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3963 (b) — the VAT number check of the reference business answers by a
-// rule (a French number is valid when its key is, invalid when it is not, and
-// a number of a member state that does not answer is an outage), and the
+// #3963 (b) — the VAT number check of the reference business answers by the
+// Demo's one rule (valid by its check digits, invalid by others, an outage
+// when the service does not answer), and the
 // analysis export answers the real snapshot read from the Demo's own figures
 // so the file can be written; the sample-data card holds the Demo's one batch
 // and loads no more.
@@ -19,8 +19,8 @@ import '../../helpers/bi_report_fixture.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 
 void main() {
-  test('a French number is valid by its key, invalid by another, and a '
-      'member state that does not answer is an outage', () async {
+  test('a number is valid by its check digits, invalid by others, and the '
+      'service that does not answer is an outage', () async {
     await withDemoSession((f, o, c) async {
       final vies = c.read(viesRepositoryProvider);
       final valid = await vies.checkVies('ws-1', 'member-1');

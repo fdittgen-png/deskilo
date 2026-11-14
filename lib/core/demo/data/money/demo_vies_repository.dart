@@ -1,47 +1,34 @@
-// SPDX-License-Identifier: AGPL-3.0-or-later
-//
-// #3963 — the Demo's VAT number check answers by a rule, never by a real
-// register: a French number is valid when its two-digit key is the one its
-// nine digits give, and invalid when it is not; a number of a member state
-// the Demo says does not answer is an outage, as VIES gives one; a member with
-// no number is never checked into validity. Each answer is recorded on the
-// Demo's day, with a consultation number the way a valid one has.
+// #3963 — the Demo's VAT number check answers by one stated rule, never by a
+// real register and never by a country's own rules: a number is two letters
+// and nine to twelve digits; with the digits taken as a number, it is VALID
+// when they leave a remainder of one when divided by 97 (a check-digit rule,
+// as a real register has), INVALID when they leave another, and an OUTAGE
+// when they end in a zero (the Demo's way of having a service that does not
+// answer). A member with no number is never checked into validity. Each
+// answer is recorded on the Demo's day, and a valid one has a consultation
+// number the way VIES gives one.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 
 import '../../../../features/money/domain/vies_check.dart';
 import '../../../../features/money/domain/vies_repository.dart';
 
-/// A French number: nine digits and the key they give.
-bool _frenchKeyHolds(String id) {
-  final match = RegExp(r'^FR(\d{2})(\d{9})$').firstMatch(id);
-  if (match == null) return false;
-  final key = (12 + 3 * (int.parse(match.group(2)!) % 97)) % 97;
-  return int.parse(match.group(1)!) == key;
-}
-
-/// What each member state's number must satisfy to be valid; a state not
-/// listed takes the general shape. `null` is a state that does not answer.
-final Map<String, bool Function(String)?> _rules = {
-  'FR': _frenchKeyHolds,
-  'IT': null,
-};
-
 /// What the rule says of [vatId]: its status and, for an outage, why.
 ({ViesStatus status, String detail}) _rule(String vatId) {
   final id = vatId.replaceAll(RegExp(r'\s'), '').toUpperCase();
   if (id.isEmpty) return (status: ViesStatus.none, detail: '');
-  if (id.length < 3) return (status: ViesStatus.invalid, detail: '');
-  final country = id.substring(0, 2);
-  if (_rules.containsKey(country) && _rules[country] == null) {
+  final shape = RegExp(r'^[A-Z]{2}([0-9]{9,12})$').firstMatch(id);
+  if (shape == null) return (status: ViesStatus.invalid, detail: '');
+  final digits = shape.group(1)!;
+  if (digits.endsWith('0')) {
     return (
       status: ViesStatus.unavailable,
-      detail: 'the member state does not answer (MS_UNAVAILABLE)',
+      detail: 'the service does not answer (MS_UNAVAILABLE)',
     );
   }
-  final holds =
-      _rules[country]?.call(id) ??
-      RegExp(r'^[A-Z]{2}[0-9A-Z]{8,12}$').hasMatch(id);
-  return (status: holds ? ViesStatus.valid : ViesStatus.invalid, detail: '');
+  return (
+    status: int.parse(digits) % 97 == 1 ? ViesStatus.valid : ViesStatus.invalid,
+    detail: '',
+  );
 }
 
 /// VIES checks of the Demo's members, read from their profiles' numbers.

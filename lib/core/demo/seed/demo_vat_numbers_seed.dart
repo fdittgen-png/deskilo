@@ -2,16 +2,15 @@
 //
 // #3963 — three customers of the reference business hold a VAT number, so the
 // check of the customer form (the member page's "Check now") has each of its
-// three answers to give: Ada's French number carries the key its digits give
-// (valid), Bruno's carries another (invalid), Chiara's is Italian, a member
-// state the Demo's VIES says does not answer (an outage). The numbers are
-// invented; the rule is demo_vies_repository.dart's.
+// three answers to give by the Demo's rule (demo_vies_repository.dart): Ada's
+// number is valid, Bruno's is invalid, Chiara's ends in a zero and the
+// service does not answer. The numbers are invented.
 import '../data/profile_repository.dart';
 import '../demo_dataset.dart';
 
 const _numbers = {
-  'member-1': 'FR32123456789',
-  'member-2': 'FR00123456789',
+  'member-1': 'FR12345675001',
+  'member-2': 'FR12345670007',
   'member-3': 'IT01234567890',
 };
 
