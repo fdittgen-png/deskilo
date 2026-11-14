@@ -11600,6 +11600,14 @@
   "@einvoiceEnvUat": {
     "description": "Environment label: the UAT endpoint."
   },
+  "einvoiceTestAccepted": "The platform accepted the test document: this workspace issues invoices.",
+  "@einvoiceTestAccepted": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestAwaiting": "A test document is waiting for the platform's verdict. Ask the platform again in a few minutes.",
+  "@einvoiceTestAwaiting": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
   "einvoiceTestEnvsHelp": "Separate endpoints and tokens for rehearsals. The choice appears at send time only while developer mode is on.",
   "@einvoiceTestEnvsHelp": {
     "description": "Help text under the test-environments section."
@@ -11607,6 +11615,67 @@
   "einvoiceTestEnvsTitle": "Test environments (UAT / Dev)",
   "@einvoiceTestEnvsTitle": {
     "description": "Section title on the platform config screen."
+  },
+  "einvoiceTestFailed": "The platform could not take the test document. Try again later.",
+  "@einvoiceTestFailed": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestIntro": "The national platform must accept one document of this workspace before it issues invoices here. Send it a test document: the proforma of a member's current month with a test number, to the platform's test environment. Nothing is issued, numbered or booked.",
+  "@einvoiceTestIntro": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestMember": "Member whose proforma is sent",
+  "@einvoiceTestMember": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestNone": "No test document has been sent yet.",
+  "@einvoiceTestNone": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestNotAllowed": "Only someone who manages the integrations sends a test document.",
+  "@einvoiceTestNotAllowed": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestNothingToInvoice": "This member has nothing on their bill this month: choose another member.",
+  "@einvoiceTestNothingToInvoice": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestPending": "A test document is still waiting for the platform's verdict. Ask the platform about it before sending another.",
+  "@einvoiceTestPending": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestRejected": "The platform refused the test document. Check the member's and the workspace's details, then send another.",
+  "@einvoiceTestRejected": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestSandboxElsewhere": "The test environment's addresses must be the platform's own documented test addresses.",
+  "@einvoiceTestSandboxElsewhere": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestSandboxMissing": "The test environment's credentials are incomplete: {fields}. Fill them on the e-invoicing platform screen.",
+  "@einvoiceTestSandboxMissing": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate",
+    "placeholders": {
+      "fields": {
+        "type": "String"
+      }
+    }
+  },
+  "einvoiceTestSend": "Send a test document",
+  "@einvoiceTestSend": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestSent": "Test document sent. Ask the platform for its verdict in a few minutes.",
+  "@einvoiceTestSent": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestTitle": "Open issuing with a test document",
+  "@einvoiceTestTitle": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "einvoiceTestUnavailable": "The configured platform takes no test document.",
+  "@einvoiceTestUnavailable": {
+    "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
   },
   "einvoiceUatEndpoint": "UAT upload URL",
   "@einvoiceUatEndpoint": {
@@ -38559,7 +38628,7 @@
   "@setupGrowDocumentsSaved": {
     "description": "#2875 setup grow steps: setupGrowDocumentsSaved"
   },
-  "setupGrowEinvoicingChannel": "Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.",
+  "setupGrowEinvoicingChannel": "Here every invoice goes through the country's national platform: the server issues invoices once the platform has accepted a document of this workspace.",
   "@setupGrowEinvoicingChannel": {
     "description": "#2875 setup grow steps: setupGrowEinvoicingChannel"
   },

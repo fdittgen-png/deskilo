@@ -234,13 +234,14 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     (me.is_owner || await store.hasPermission(me.id, "issueInvoices"));
   // #3883 -- a sandbox test document issues nothing: it is sent, and asked
   // about, by whoever manages the integrations (the credentials' right).
-  const testing = payload.action === "test" || payload.action === "status";
+  const testing = payload.action === "test" || payload.action === "status" ||
+    payload.action === "test_state";
   const mayManage = testing && !!me && me.status === "active" &&
     (me.is_owner || await store.hasPermission(me.id, "manageIntegrations"));
   if (!me || (!mayIssue && !mayManage)) {
     return json({ error: "not allowed to issue invoices in this workspace" }, 403);
   }
-  if (payload.action !== "test" && payload.action !== "status" && !mayIssue) {
+  if (!testing && !mayIssue) {
     return json({ error: "not allowed to issue invoices in this workspace" }, 403);
   }
 
@@ -318,6 +319,27 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
   }
 
   // ── #3883: a sandbox test document of the national channel ─────────
+  if (payload.action === "test_state") {
+    if (!mayManage) {
+      return json({
+        error: "not allowed to manage the integrations of this workspace",
+      }, 403);
+    }
+    const latest = await store.latestTest(workspaceId);
+    const verdict = (latest?.verdict ?? {}) as Record<string, unknown>;
+    return json({
+      available: takesTestDocument(credentials?.provider ?? "generic"),
+      test: latest === null ? null : {
+        transmission_id: latest.id,
+        phase: latest.phase,
+        document_status: verdict.document === "rejected"
+          ? "rejected"
+          : verdict.status === "accepted" || verdict.status === "rejected"
+          ? verdict.status
+          : "unknown",
+      },
+    });
+  }
   if (payload.action === "test") {
     return await sendTestDocument(
       store,

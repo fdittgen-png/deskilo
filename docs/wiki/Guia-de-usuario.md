@@ -5502,6 +5502,7 @@ Indica a DesKilo dónde enviar sus facturas como archivos legibles por máquina.
 - El token se guarda en el servidor y no vuelve a mostrarse.
 - El archivo válido es una factura EN 16931. Si su país exige una plataforma, y cuál, es algo que debe confirmar con su gestor.
 - Enviar el archivo es el segundo de tres pasos: véase [Lo que emite la aplicación y lo que queda en manos de su gestor](#lo-que-emite-la-aplicación-y-lo-que-queda-en-manos-de-su-gestor).
+- En Italia no se emite ninguna factura antes de que la plataforma nacional (el SdI) haya aceptado un documento del espacio. **Enviar un documento de prueba** en el paso de facturación electrónica de la guía de configuración: la proforma del mes en curso de un miembro, con un número de prueba, va al entorno de pruebas de la plataforma con sus credenciales de prueba. Nada se emite, numera ni contabiliza. Cuando la plataforma lo acepta, el espacio emite; unas credenciales nuevas u otra identidad del vendedor piden una nueva prueba.
 
 **Véase también:** [Enviar una factura electrónica](#enviar-una-factura-electrónica) · [Identidad legal](#su-identidad-legal)
 

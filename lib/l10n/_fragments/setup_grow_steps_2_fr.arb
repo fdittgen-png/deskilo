@@ -11,7 +11,7 @@
   "setupGrowEinvoicingLawTitle": "Ce que la loi demande dans votre pays",
   "setupGrowEinvoicingNoMandate": "Les données fiscales de référence n'enregistrent aucune obligation de facturation électronique pour ce pays. Demandez à votre comptable si l'une s'applique : l'opérateur l'enregistre dans les données fiscales de référence.",
   "setupGrowEinvoicingUnconfirmed": "Pas encore confirmé au regard du texte cité : l'opérateur confirme ces dates dans les données fiscales de référence, et votre comptable vous dit lesquelles s'appliquent à l'espace.",
-  "setupGrowEinvoicingChannel": "Ici, chaque facture doit passer par un canal national que l'application ne parle pas encore : le serveur refuse donc d'émettre des factures.",
+  "setupGrowEinvoicingChannel": "Ici, chaque facture passe par la plateforme nationale du pays : le serveur émet des factures une fois que la plateforme a accepté un document de cet espace.",
   "setupGrowBooksPreviewNote": "Ce que la comptabilité montrera :",
   "setupGrowBooksPre": "DesKilo tient les soldes des membres et les factures ; rien n'est passé en écriture.",
   "setupGrowBooksLocal": "DesKilo tient la comptabilité : factures et paiements sont passés en écriture dans le plan comptable.",

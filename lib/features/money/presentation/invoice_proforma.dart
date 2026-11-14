@@ -113,6 +113,10 @@ Future<Invoice?> proformaForMonth(
   WidgetRef ref, {
   required String memberId,
   required String period,
+
+  /// #3883 — a number outside the invoice sequence for a sandbox test
+  /// document; '' (nothing issued) otherwise.
+  String number = '',
 }) async {
   final workspace = ref.read(currentWorkspaceProvider).value;
   if (workspace == null) return null;
@@ -143,7 +147,7 @@ Future<Invoice?> proformaForMonth(
     id: '',
     workspaceId: workspace.id,
     memberId: memberId,
-    number: '',
+    number: number,
     issuedAt: ref.read(clockProvider).now(),
     period: period,
     title: period,
