@@ -232,7 +232,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   @override
   Future<MemberTermAnswer> requestMemberShare(String memberId, int pct) async =>
       MemberTermAnswer.fromJson(
-        await client.rpc<dynamic>(
+        await client.rpc<Object?>(
           'request_subscription_change',
           params: {'p_member_id': memberId, 'p_pct': pct},
         ),
@@ -272,7 +272,7 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   ) async {
     try {
       return MemberTermAnswer.fromJson(
-        await client.rpc<dynamic>(fn, params: params),
+        await client.rpc<Object?>(fn, params: params),
       );
     } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown typed; the task names the earliest date.

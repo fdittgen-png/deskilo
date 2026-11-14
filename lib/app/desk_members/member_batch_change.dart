@@ -194,8 +194,15 @@ Future<MemberChangeResult> _one(
         await commands.setStatus(member, MemberStatus.active);
         return const MemberChangeResult(MemberChangeOutcome.applied);
     }
-  } on MemberTermDateRefused catch (e) {
-    // trace-exempt: a refused date is an outcome, named with the earliest.
+  } on MemberTermDateRefused catch (e, st) {
+    // a refused date is an outcome, named with the earliest it can take
+    TraceLogger.instance.log(
+      TraceLevel.info,
+      'members',
+      'a date of a selection was refused',
+      error: e,
+      stackTrace: st,
+    );
     return MemberChangeResult(
       MemberChangeOutcome.dateRefused,
       earliest: e.earliest,
