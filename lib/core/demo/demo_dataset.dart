@@ -76,10 +76,6 @@ class DemoPerson {
   final String address;
 }
 
-/// #3960 — the member of the main space the Demo holds no e-mail address
-/// for: the refusal "no address on file" is reachable on their bills.
-const demoMemberWithoutAddress = 'member-3';
-
 /// Five people, each with a reason to exist on screen.
 const demoCast = <DemoPerson>[
   // The visitor: an owner, so every administrative surface has something
@@ -237,11 +233,7 @@ void _seedDemoPeopleAs(FakeWorkspaceRepository workspaces, DemoPerson me) {
     ..clear()
     ..addEntries([
       for (final person in demoCast)
-        // #3960 — one customer has no address on file: the refusal of an
-        // e-mail to them is reachable (see demo_outbox.dart).
-        if (person.email.isNotEmpty &&
-            person.memberId != demoMemberWithoutAddress)
-          MapEntry(person.memberId, person.email),
+        if (person.email.isNotEmpty) MapEntry(person.memberId, person.email),
     ]);
 }
 

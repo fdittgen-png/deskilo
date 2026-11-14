@@ -19,6 +19,10 @@ import '../../../../features/money/domain/reminder_mail.dart';
 import '../../demo_fixture.dart';
 import '../../demo_space_ids.dart';
 
+/// #3960 — the member of the main space the Demo holds no e-mail address
+/// for: the refusal "no address on file" is reachable on their bills.
+const demoMemberWithoutAddress = 'member-3';
+
 /// What an e-mail of the outbox was.
 enum DemoMailKind { invoice, reminder }
 
@@ -222,32 +226,27 @@ class DemoOutbox {
         'this reminder was already sent by e-mail',
       );
     }
-    final record = _record(
-      DemoMailKind.reminder,
-      attemptId,
-      invoiceId,
-      level,
-      target.recipient,
-      letter,
-    );
+    final record = _record(DemoMailKind.reminder, letter, (
+      attemptId: attemptId,
+      invoiceId: invoiceId,
+      level: level,
+      recipient: target.recipient,
+    ));
     return _reminderSend(record);
   }
 
   DemoMailRecord _record(
     DemoMailKind kind,
-    String attemptId,
-    String invoiceId,
-    int level,
-    String recipient,
-    ReminderMailLetter letter, {
+    ReminderMailLetter letter,
+    ({String attemptId, String invoiceId, int level, String recipient}) to, {
     bool resend = false,
   }) {
     final record = DemoMailRecord(
       kind: kind,
-      attemptId: attemptId,
-      invoiceId: invoiceId,
-      level: level,
-      recipient: recipient,
+      attemptId: to.attemptId,
+      invoiceId: to.invoiceId,
+      level: to.level,
+      recipient: to.recipient,
       subject: letter.subject,
       fileName: letter.fileName,
       language: letter.language,
@@ -310,11 +309,13 @@ class DemoOutbox {
     return _invoiceSend(
       _record(
         DemoMailKind.invoice,
-        attemptId,
-        invoiceId,
-        0,
-        target.recipient,
         letter,
+        (
+          attemptId: attemptId,
+          invoiceId: invoiceId,
+          level: 0,
+          recipient: target.recipient,
+        ),
         resend: kind == InvoiceMailKind.resend,
       ),
     );
