@@ -34315,6 +34315,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Dokumentsprachen';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Papiere der Dokumente';
+
+  @override
   String get taxRefDomainEuMember => 'EU-Mitglieder';
 
   @override

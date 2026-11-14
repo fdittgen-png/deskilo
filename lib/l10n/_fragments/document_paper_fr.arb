@@ -1,5 +1,6 @@
 {
   "@@locale": "fr",
+  "taxRefDomainDocumentPaper": "Papiers des documents",
   "taxRefPaper": "Papier usuel des documents",
   "taxRefPapers": "Papiers permis (A4, Letter ; vide : les deux)",
   "taxRefInvalidPapers": "A4, Letter ou les deux, séparés par une virgule, dont le papier usuel",

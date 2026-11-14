@@ -54974,6 +54974,12 @@ abstract class AppLocalizations {
   /// **'Document languages'**
   String get taxRefDomainDocumentLanguage;
 
+  /// #3852 reference editor: the name of the document_paper domain
+  ///
+  /// In en, this message translates to:
+  /// **'Document papers'**
+  String get taxRefDomainDocumentPaper;
+
   /// #2477 tax reference: Domain filter: EU member states.
   ///
   /// In en, this message translates to:

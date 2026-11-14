@@ -33934,6 +33934,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Document languages';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Document papers';
+
+  @override
   String get taxRefDomainEuMember => 'EU members';
 
   @override

@@ -31,6 +31,8 @@ List<XlsxSheet> workspaceOverviewSheets(
         ('street', workspace.street),
         ('postal_code', workspace.postalCode),
         ('city', workspace.city),
+        // #3852 — empty: the paper follows the country.
+        ('paper', workspace.paper ?? ''),
         ('id', workspace.id),
       ])
         [field, value],

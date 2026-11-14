@@ -61,6 +61,7 @@ const List<ExportSource> workspaceExportSources = [
       'street',
       'postal_code',
       'city',
+      'paper',
       'feature_flags',
     },
   ),

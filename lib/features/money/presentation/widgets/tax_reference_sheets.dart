@@ -4,7 +4,6 @@
 // a form that creates a NEW version of a value (never edits one) and the
 // history of a value. One typed form per domain; the server validates the
 // shape again.
-import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -22,6 +21,7 @@ import 'tax_reference_component_fields.dart';
 import 'tax_reference_gate_fields.dart';
 import 'tax_reference_labels.dart';
 import 'tax_reference_language_fields.dart';
+import 'tax_reference_paper_fields.dart';
 import 'tax_reference_sales_fields.dart';
 
 export 'tax_reference_labels.dart';
@@ -55,7 +55,7 @@ class _VersionForm {
             _ => '',
           },
           ...taxReferenceExtraTexts(from?.value),
-          ...documentLanguageTexts(from?.value),
+          ...documentLanguageTexts(from?.value), ...documentPaperTexts(from?.value),
           'tax_code': switch (from?.value) {
             AccountMapValue(:final taxCode) => taxCode,
             _ => '',
@@ -155,6 +155,7 @@ class _VersionForm {
         TaxDomain.mandate => MandateValue(duty: choice['duty']!, from: fields.text('from')),
         TaxDomain.country => countryValueOf(fields, choice),
         TaxDomain.documentLanguage => documentLanguageValueOf(fields, flag),
+        TaxDomain.documentPaper => documentPaperValueOf(fields, choice),
         _ => RetentionValue(years: int.tryParse(fields.text('years')) ?? 0, from: choice['start']!),
       };
 
@@ -179,7 +180,7 @@ class _VersionForm {
             cashOption: flag['cash_option']!,
             cashBackstop: choice['cash_backstop']!,
           ),
-        TaxDomain.mandate || TaxDomain.retention || TaxDomain.country || TaxDomain.documentLanguage => _pairedValue(),
+        TaxDomain.mandate || TaxDomain.retention || TaxDomain.country || TaxDomain.documentLanguage || TaxDomain.documentPaper => _pairedValue(),
         TaxDomain.issuingGate => IssuingGateValue(
             supported: flag['supported']!,
             requiresTaxNumber: flag['requires_tax_number']!,
@@ -260,8 +261,9 @@ class _VersionForm {
       },
       if (domain == TaxDomain.retention && (int.tryParse(fields.text('years')) ?? 0) < 1)
         'years': l10n.taxRefInvalidNumber,
-      if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields, choice),
+      if (domain == TaxDomain.country) ...countryFieldErrors(l10n, fields),
       if (domain == TaxDomain.documentLanguage) ...documentLanguageFieldErrors(l10n, fields),
+      if (domain == TaxDomain.documentPaper) ...documentPaperFieldErrors(l10n, fields, choice),
       if (domain == TaxDomain.mandate &&
           !RegExp(r'^\d{4}-\d{2}-\d{2}$').hasMatch(fields.text('from')))
         'from': l10n.taxRefInvalidDate,
@@ -387,8 +389,8 @@ class _VersionForm {
             _text('currency', l10n.taxRefCurrency), _text('time_zone', l10n.taxRefTimeZone),
             _pick('banking_scheme', l10n.taxRefBankingScheme, bankingSchemeNames),
             _text('position', l10n.taxRefPosition, type: TextInputType.number),
-            _pick('paper', l10n.taxRefPaper, Paper.values.map((p) => p.wire)), _text('papers', l10n.taxRefPapers),
           ],
+        TaxDomain.documentPaper => [_pick('paper', l10n.taxRefPaper, paperWires), _text('papers', l10n.taxRefPapers)],
         TaxDomain.documentLanguage => [_text('languages', l10n.taxRefLanguages),
             _switch('customer_language', l10n.taxRefCustomerLanguage, refresh), _text('required_languages', l10n.taxRefRequiredLanguages)],
         TaxDomain.rateComponent => [

@@ -2,13 +2,12 @@
 -- risk: additive
 --
 -- 0768 (#3852) -- the paper a business's documents are printed on.
---  * A country's catalogue row may name its usual paper (`paper`, absent:
---    A4) and the papers its documents may use (`papers`, absent: A4 and
---    Letter). The United States and Canada use Letter; Switzerland's
---    invoices end on a payment part printed on A4, so it allows A4 only.
---    The rows are creation defaults no one has confirmed, and an unconfirmed
---    version that closes another is only a proposal to the app: the open
---    rows carry the paper themselves.
+--  * A country's `document_paper` row of the reference store names the usual
+--    paper of its documents (`paper`, absent: A4) and the papers they may use
+--    (`papers`, absent: A4 and Letter); a country with no row prints on A4
+--    and may choose Letter. The United States and Canada use Letter;
+--    Switzerland's invoices end on a payment part printed on A4, so it allows
+--    A4 only.
 --  * `workspaces.paper` is the business's choice; null follows its
 --    country. A paper outside the country's set is refused in words, by
 --    every door that writes the row.
@@ -17,7 +16,7 @@
 --    on A4.
 -- Wire words: 'A4' and 'Letter'.
 
--- ── 1. the shape of a country row ─────────────────────────────────────
+-- ── 1. the shape of a document_paper row ──────────────────────────────
 create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
 returns text
 language plpgsql
@@ -44,27 +43,28 @@ declare
 begin
   select pg_get_functiondef('public.tax_reference_valid(text,jsonb)'::regprocedure) into v_def;
   v_def := pg_temp.anchor_replace(v_def,
-    $a$where k <> all (array['currency', 'time_zone', 'banking_scheme', 'position'])) then return false; end if;$a$,
-    $a$where k <> all (array['currency', 'time_zone', 'banking_scheme', 'position', 'paper', 'papers'])) then return false; end if;
-      -- #3852: the usual paper, and the papers its documents may use.
+    $a$    when 'country' then$a$,
+    $a$    when 'document_paper' then
+      -- #3852: the usual paper of a country's documents, and the papers they
+      -- may use: known papers, each once, holding the usual one.
+      if exists (select 1 from jsonb_object_keys(p_value) k
+                  where k <> all (array['paper', 'papers'])) then return false; end if;
       if p_value ? 'paper'
          and (jsonb_typeof(p_value -> 'paper') is distinct from 'string'
               or (p_value ->> 'paper') <> all (array['A4', 'Letter'])) then
         return false;
       end if;
-      if p_value ? 'papers' then
-        if jsonb_typeof(p_value -> 'papers') is distinct from 'array'
-           or jsonb_array_length(p_value -> 'papers') = 0
-           or exists (select 1 from jsonb_array_elements(p_value -> 'papers') e
-                       where jsonb_typeof(e) is distinct from 'string'
-                          or (e #>> '{}') <> all (array['A4', 'Letter']))
-           or (select count(distinct e) <> count(*) from jsonb_array_elements_text(p_value -> 'papers') e)
-           or not (p_value -> 'papers') ? coalesce(p_value ->> 'paper', 'A4') then
-          return false;
-        end if;
-      end if;$a$);
-  if v_def is null or position($a$#3852: the usual paper$a$ in v_def) = 0 then
-    raise exception '0768: tax_reference_valid country anchor missing';
+      return not p_value ? 'papers'
+        or (jsonb_typeof(p_value -> 'papers') = 'array'
+            and jsonb_array_length(p_value -> 'papers') > 0
+            and not exists (select 1 from jsonb_array_elements(p_value -> 'papers') e
+                             where jsonb_typeof(e) is distinct from 'string'
+                                or (e #>> '{}') <> all (array['A4', 'Letter']))
+            and (select count(distinct e) = count(*) from jsonb_array_elements_text(p_value -> 'papers') e)
+            and (p_value -> 'papers') ? coalesce(p_value ->> 'paper', 'A4'));
+    when 'country' then$a$);
+  if v_def is null or position($a$when 'document_paper' then$a$ in v_def) = 0 then
+    raise exception '0768: tax_reference_valid anchor missing';
   end if;
   execute v_def;
 end
@@ -75,55 +75,11 @@ $migration$;
 insert into public.tax_reference
   (domain, country, key, valid_from, value, source, confirmed)
 values
-('country', 'CA', 'catalogue', '1900-01-01', '{"currency":"CAD","time_zone":"America/Toronto","banking_scheme":"ca","position":32,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
-('country', 'CH', 'catalogue', '1900-01-01', '{"currency":"CHF","time_zone":"Europe/Zurich","banking_scheme":"ch","position":28,"papers":["A4"]}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
-('country', 'US', 'catalogue', '1900-01-01', '{"currency":"USD","time_zone":"America/New_York","banking_scheme":"us","position":31,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false)
+('document_paper', 'CA', 'document', '1900-01-01', '{"paper":"Letter"}'::jsonb, 'the papers of a country''s documents (#3852): the usual paper (absent: A4) and the papers they may use (absent: A4 and Letter). Letter is the usual office paper in Canada.', false),
+('document_paper', 'CH', 'document', '1900-01-01', '{"papers":["A4"]}'::jsonb, 'the papers of a country''s documents (#3852): the usual paper (absent: A4) and the papers they may use (absent: A4 and Letter). A Swiss invoice ends on its QR-bill payment part, printed on A4 (Swiss Implementation Guidelines for the QR-bill).', false),
+('document_paper', 'US', 'document', '1900-01-01', '{"paper":"Letter"}'::jsonb, 'the papers of a country''s documents (#3852): the usual paper (absent: A4) and the papers they may use (absent: A4 and Letter). Letter is the usual office paper in the United States.', false)
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
-
--- Every version of the CA, CH and US rows still in force or to come takes
--- its papers, the 1900 one and any successor the platform made since: a
--- missing key is never read from a predecessor, so each version carries it.
--- The generated lines above insert nothing where the row exists.
-create or replace function public.country_rows_take_papers()
-returns integer
-language plpgsql security definer set search_path = public as $fn$
-declare
-  v_rows int;
-begin
-  update public.tax_reference t
-     set value = t.value || s.papers,
-         source = t.source || ' #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.'
-    from (values ('CA', 'paper', '{"paper": "Letter"}'::jsonb),
-                 ('CH', 'papers', '{"papers": ["A4"]}'::jsonb),
-                 ('US', 'paper', '{"paper": "Letter"}'::jsonb)) s(country, attribute, papers)
-   where t.domain = 'country' and t.key = 'catalogue' and t.country = s.country
-     and (t.valid_to is null or t.valid_to > current_date)
-     and not t.value ? s.attribute;
-  get diagnostics v_rows = row_count;
-  return v_rows;
-end;
-$fn$;
-
-revoke execute on function public.country_rows_take_papers() from public, anon, authenticated;
-
-do $migration$
-declare
-  v_found int;
-  v_rows int;
-begin
-  select count(*) into v_found from public.tax_reference
-   where domain = 'country' and key = 'catalogue' and country in ('CA', 'CH', 'US')
-     and (valid_to is null or valid_to > current_date);
-  v_rows := public.country_rows_take_papers();
-  -- every version found took its papers, and each country has one
-  if v_rows <> v_found or (select count(distinct country) from public.tax_reference
-                            where domain = 'country' and key = 'catalogue'
-                              and country in ('CA', 'CH', 'US') and valid_to is null) <> 3 then
-    raise exception '0768: % of % catalogue versions of CA, CH and US took their papers', v_rows, v_found;
-  end if;
-end
-$migration$;
 
 -- ── 3. the papers of a country ────────────────────────────────────────
 -- The usual paper of [p_country] on [p_on], and the papers it allows:
@@ -136,7 +92,7 @@ language sql stable security definer set search_path = public as $fn$
            'papers', coalesce(v.value -> 'papers', '["A4", "Letter"]'::jsonb))
     from (select (select t.value
                     from public.tax_reference t
-                   where t.domain = 'country' and t.key = 'catalogue'
+                   where t.domain = 'document_paper' and t.key = 'document'
                      and t.country = upper(btrim(coalesce(p_country, '')))
                      and t.valid_from <= p_on and (t.valid_to is null or t.valid_to > p_on)
                    order by t.valid_from desc

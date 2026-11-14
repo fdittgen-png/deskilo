@@ -1,5 +1,9 @@
 {
   "@@locale": "en",
+  "taxRefDomainDocumentPaper": "Document papers",
+  "@taxRefDomainDocumentPaper": {
+    "description": "#3852 reference editor: the name of the document_paper domain"
+  },
   "taxRefPaper": "Usual paper of the documents",
   "@taxRefPaper": {
     "description": "#3852 reference editor: the usual paper of a country's documents"

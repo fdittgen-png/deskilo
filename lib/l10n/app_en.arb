@@ -43992,6 +43992,10 @@
   "@taxRefDomainDocumentLanguage": {
     "description": "#3850 document languages: taxRefDomainDocumentLanguage"
   },
+  "taxRefDomainDocumentPaper": "Document papers",
+  "@taxRefDomainDocumentPaper": {
+    "description": "#3852 reference editor: the name of the document_paper domain"
+  },
   "taxRefDomainEuMember": "EU members",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."

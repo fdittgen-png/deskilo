@@ -1,5 +1,6 @@
 {
   "@@locale": "de",
+  "taxRefDomainDocumentPaper": "Papiere der Dokumente",
   "taxRefPaper": "Übliches Papier der Dokumente",
   "taxRefPapers": "Erlaubte Papiere (A4, Letter; leer: beide)",
   "taxRefInvalidPapers": "A4, Letter oder beide, durch Komma getrennt, mit dem üblichen Papier",

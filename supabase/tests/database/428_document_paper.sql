@@ -2,13 +2,14 @@
 --
 -- #3852 (0768) -- the paper a business's documents are printed on.
 --
--- A country's row names its usual paper and the papers its documents may
--- use: Letter in the United States and Canada, A4 only in Switzerland, A4
--- and either elsewhere. A business follows its country unless it chooses
--- another paper the country allows; any other is refused in words, by every
--- door that writes the row. An invoice keeps the paper of its issue.
+-- A country's `document_paper` row names its usual paper and the papers its
+-- documents may use: Letter in the United States and Canada, A4 only in
+-- Switzerland; a country with no row prints on A4 and may choose Letter. A
+-- business follows its country unless it chooses another paper the country
+-- allows; any other is refused in words, by every door that writes the row.
+-- An invoice keeps the paper of its issue.
 begin;
-select plan(19);
+select plan(17);
 
 create or replace function pg_temp.invoice(p_ws uuid, p_member uuid, p_number text, p_paper text default null)
 returns uuid language plpgsql as $f$
@@ -75,24 +76,19 @@ select is(public.country_papers('CH', current_date),
 select is(public.country_papers('FR', current_date),
   '{"paper": "A4", "papers": ["A4", "Letter"]}'::jsonb,
   'a row that names no paper: A4, and either may be chosen');
+select is((select string_agg(country, ',' order by country) from public.tax_reference
+            where domain = 'document_paper' and key = 'document'),
+  'CA,CH,US', 'three countries name their papers; the others print on A4 and may choose Letter');
 select is((select count(*)::int from public.tax_reference
-            where domain = 'country' and key = 'catalogue' and country in ('CA', 'CH', 'US')
-              and valid_to is null),
-  3, 'the open row of each country carries its papers: no second version');
-select is((select count(*)::int from public.tax_reference
-            where domain = 'country' and key = 'catalogue'
-              and not public.tax_reference_valid(domain, value)),
-  0, 'every country row is valid');
-select ok(public.tax_reference_valid('country',
-            '{"currency": "USD", "time_zone": "America/New_York", "banking_scheme": "us", "paper": "Letter", "papers": ["Letter", "A4"]}'::jsonb)
-      and not public.tax_reference_valid('country',
-            '{"currency": "USD", "time_zone": "America/New_York", "banking_scheme": "us", "paper": "Legal"}'::jsonb)
-      and not public.tax_reference_valid('country',
-            '{"currency": "USD", "time_zone": "America/New_York", "banking_scheme": "us", "papers": []}'::jsonb)
-      and not public.tax_reference_valid('country',
-            '{"currency": "USD", "time_zone": "America/New_York", "banking_scheme": "us", "papers": ["A4", "A4"]}'::jsonb)
-      and not public.tax_reference_valid('country',
-            '{"currency": "USD", "time_zone": "America/New_York", "banking_scheme": "us", "paper": "Letter", "papers": ["A4"]}'::jsonb),
+            where domain = 'document_paper' and not public.tax_reference_valid(domain, value)),
+  0, 'every document_paper row is valid');
+select ok(public.tax_reference_valid('document_paper', '{"paper": "Letter", "papers": ["Letter", "A4"]}'::jsonb)
+      and public.tax_reference_valid('document_paper', '{}'::jsonb)
+      and not public.tax_reference_valid('document_paper', '{"paper": "Legal"}'::jsonb)
+      and not public.tax_reference_valid('document_paper', '{"papers": []}'::jsonb)
+      and not public.tax_reference_valid('document_paper', '{"papers": ["A4", "A4"]}'::jsonb)
+      and not public.tax_reference_valid('document_paper', '{"paper": "Letter", "papers": ["A4"]}'::jsonb)
+      and not public.tax_reference_valid('document_paper', '{"paper": "A4", "size": "A4"}'::jsonb),
   'the shape of a row: a known paper, and a set of known papers that holds the usual one');
 
 -- ── the business's paper ──
@@ -134,30 +130,6 @@ select throws_ok(
 -- ── the configuration transfer ──
 select is(public.export_workspace_configuration(pg_temp.id('fr')) #>> '{workspace,paper}', 'A4',
   'the configuration carries the paper');
-
--- ── a successor of the row ──
--- A confirmed version that succeeds the row without the attribute (made
--- before 0768) takes it like the row it succeeds: no key is read from a
--- predecessor, so the version carries it.
-create or replace function pg_temp.successor(p_country text) returns void language plpgsql as $f$
-begin
-  update public.tax_reference set valid_to = current_date
-   where domain = 'country' and key = 'catalogue' and country = p_country and valid_to is null;
-  insert into public.tax_reference (domain, country, key, valid_from, value, source, confirmed)
-  select domain, country, key, current_date, value - 'paper' - 'papers', 'a successor', true
-    from public.tax_reference
-   where domain = 'country' and key = 'catalogue' and country = p_country and valid_to = current_date;
-end;
-$f$;
-select pg_temp.successor('US');
-select pg_temp.successor('CH');
-select public.country_rows_take_papers();
-select is(public.country_papers('US', current_date) ->> 'paper', 'Letter',
-  'a confirmed successor of the United States row still prints on Letter');
-update public.workspaces set paper = null where id = pg_temp.id('ch');
-select throws_ok(format($$update public.workspaces set paper = 'Letter' where id = %L$$, pg_temp.id('ch')),
-  '22023', 'documents of this country are not printed on Letter',
-  'and one of the Swiss row still refuses Letter');
 
 select * from finish();
 rollback;

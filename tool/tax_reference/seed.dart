@@ -131,8 +131,12 @@ List<SeedRow> rowsNotSeededBy(List<SeedRow> rows, Iterable<String> earlier) {
 /// migration seeds, in their `position` order; the live catalogue is the
 /// store's, installed by the app once it has read it.
 String countrySeedDart(List<SeedRow> rows) {
-  // #3852 — the version in force of each country: the open one.
-  final countries = [for (final r in rows) if (r.domain == 'country' && r.validTo == null) r]
+  // #3852 — the papers of each country's documents, from its own rows.
+  final papersOf = {
+    for (final r in rows)
+      if (r.domain == 'document_paper' && r.validTo == null) r.country: r.value,
+  };
+  final countries = [for (final r in rows) if (r.domain == 'country') r]
     ..sort((a, b) {
       final byPosition = (a.value['position']! as int).compareTo(b.value['position']! as int);
       return byPosition != 0 ? byPosition : a.country.compareTo(b.country);
@@ -150,8 +154,8 @@ String countrySeedDart(List<SeedRow> rows) {
     ..writeln('const List<Country> bundledCountries = [');
   for (final r in countries) {
     final scheme = r.value['banking_scheme']! as String;
-    final paper = r.value['paper'] as String?;
-    final papers = (r.value['papers'] as List?)?.cast<String>();
+    final paper = papersOf[r.country]?['paper'] as String?;
+    final papers = (papersOf[r.country]?['papers'] as List?)?.cast<String>();
     String constant(String wire) => 'Paper.${wire[0].toLowerCase()}${wire.substring(1)}';
     b.writeln(
       "  Country('${r.country}', '${r.value['currency']}', '${r.value['time_zone']}'"

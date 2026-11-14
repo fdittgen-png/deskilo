@@ -34221,6 +34221,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Idiomas de los documentos';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Papeles de los documentos';
+
+  @override
   String get taxRefDomainEuMember => 'Miembros de la UE';
 
   @override

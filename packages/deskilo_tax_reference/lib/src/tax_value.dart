@@ -104,10 +104,12 @@ sealed class TaxValue {
           timeZone: r.string('time_zone'),
           bankingScheme: r.string('banking_scheme'),
           position: r.intOrNull('position') ?? 0,
+        ),
+      TaxDomain.documentLanguage => DocumentLanguageValue.read(r),
+      TaxDomain.documentPaper => DocumentPaperValue(
           paper: r.stringOrNull('paper'),
           papers: r.raw('papers') == null ? null : r.strings('papers'),
         ),
-      TaxDomain.documentLanguage => DocumentLanguageValue.read(r),
     };
   }
 }
@@ -501,8 +503,6 @@ class CountryValue extends TaxValue {
     required this.timeZone,
     required this.bankingScheme,
     this.position = 0,
-    this.paper,
-    this.papers,
   });
 
   /// ISO 4217: what a workspace here bills in by default.
@@ -517,12 +517,6 @@ class CountryValue extends TaxValue {
   /// Where the country stands in the lists a workspace is created from.
   final int position;
 
-  /// #3852 — the usual paper of its documents, `A4` or `Letter`; null: A4.
-  final String? paper;
-
-  /// #3852 — the papers its documents may use; null: A4 and Letter.
-  final List<String>? papers;
-
   @override
   TaxDomain get domain => TaxDomain.country;
 
@@ -532,8 +526,6 @@ class CountryValue extends TaxValue {
         'time_zone': timeZone,
         'banking_scheme': bankingScheme,
         'position': position,
-        'paper': ?paper,
-        'papers': ?papers,
       };
 }
 
@@ -552,4 +544,20 @@ class DocumentLanguageValue extends TaxValue {
   @override
   Map<String, Object?> toJson() => {'languages': languages, 'customer_language': customerLanguage,
         if (requiredBySubdivision.isNotEmpty) 'required_by_subdivision': requiredBySubdivision};
+}
+
+/// #3852 -- `document_paper`: {paper?, papers?}. [paper] is the usual paper
+/// of the country's documents, `A4` or `Letter` (null: A4); [papers] the ones
+/// they may use (null: A4 and Letter).
+class DocumentPaperValue extends TaxValue {
+  const DocumentPaperValue({this.paper, this.papers});
+
+  final String? paper;
+  final List<String>? papers;
+
+  @override
+  TaxDomain get domain => TaxDomain.documentPaper;
+
+  @override
+  Map<String, Object?> toJson() => {'paper': ?paper, 'papers': ?papers};
 }

@@ -1,5 +1,6 @@
 {
   "@@locale": "it",
+  "taxRefDomainDocumentPaper": "Carte dei documenti",
   "taxRefPaper": "Carta abituale dei documenti",
   "taxRefPapers": "Carte consentite (A4, Letter; vuoto: entrambe)",
   "taxRefInvalidPapers": "A4, Letter o entrambe, separate da una virgola, compresa la carta abituale",

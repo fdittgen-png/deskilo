@@ -34380,6 +34380,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Langues des documents';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Papiers des documents';
+
+  @override
   String get taxRefDomainEuMember => 'Membres de l\'UE';
 
   @override

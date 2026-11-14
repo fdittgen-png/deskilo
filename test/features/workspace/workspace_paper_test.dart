@@ -14,6 +14,7 @@ import 'package:deskilo/core/country/country_seed.g.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
 import 'package:deskilo/features/money/presentation/widgets/tax_reference_gate_fields.dart';
+import 'package:deskilo/features/money/presentation/widgets/tax_reference_paper_fields.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/presentation/screens/workspace_settings_form.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_paper_field.dart';
@@ -46,18 +47,26 @@ List<Country> _referenceCountries() => countriesOfReference(
 void main() {
   group('the country rows', () {
     test('the United States and Canada use Letter; Switzerland A4 only', () {
+      (Paper, String) papers(Country c) =>
+          (c.paper, c.papers.map((p) => p.wire).join(','));
       Country of(String code) =>
           _referenceCountries().firstWhere((c) => c.code == code);
-      expect((of('US').paper, of('US').papers), (Paper.letter, Paper.values));
-      expect((of('CA').paper, of('CA').papers), (Paper.letter, Paper.values));
-      expect((of('CH').paper, of('CH').papers), (Paper.a4, [Paper.a4]));
-      expect((of('FR').paper, of('FR').papers), (Paper.a4, Paper.values));
+      expect(papers(of('US')), (Paper.letter, 'A4,Letter'));
+      expect(papers(of('CA')), (Paper.letter, 'A4,Letter'));
+      expect(papers(of('CH')), (Paper.a4, 'A4'));
+      expect(papers(of('FR')), (Paper.a4, 'A4,Letter'));
     });
 
     test('the bundled copy reads the papers the rows name', () {
       expect(
-        [for (final c in bundledCountries) (c.code, c.paper, c.papers)],
-        [for (final c in _referenceCountries()) (c.code, c.paper, c.papers)],
+        [
+          for (final c in bundledCountries)
+            (c.code, c.paper, c.papers.join(',')),
+        ],
+        [
+          for (final c in _referenceCountries())
+            (c.code, c.paper, c.papers.join(',')),
+        ],
       );
     });
 
@@ -142,54 +151,48 @@ void main() {
   });
 
   group('the reference editor', () {
-    FormControllers fields(String papers) => FormControllers({
-      'currency': 'USD',
-      'time_zone': 'America/New_York',
-      'position': '31',
-      'papers': papers,
-    });
+    FormControllers fields(String papers) =>
+        FormControllers({'papers': papers});
 
     test('it keeps the papers of a row, and A4 is what no paper means', () {
-      final value = countryValueOf(fields('A4'), {
-        'banking_scheme': 'ch',
-        'paper': 'A4',
-      });
-      expect(value.paper, isNull);
-      expect(value.papers, ['A4']);
-      final us = countryValueOf(fields(''), {
-        'banking_scheme': 'us',
-        'paper': 'Letter',
-      });
-      expect((us.paper, us.papers), ('Letter', null));
+      final ch = documentPaperValueOf(fields('A4'), {'paper': 'A4'});
+      expect(ch.paper, isNull);
+      expect(ch.papers, ['A4']);
+      final us = documentPaperValueOf(fields(''), {'paper': 'Letter'});
+      expect(us.paper, 'Letter');
+      expect(us.papers, isNull);
     });
 
     test('it refuses papers it does not print on, twice the same, or without the usual one', () {
       for (final papers in ['A4, Legal', 'A4, A4', 'A4']) {
         expect(
-          countryFieldErrors(_l10n, fields(papers), {'paper': 'Letter'}),
+          documentPaperFieldErrors(_l10n, fields(papers), {'paper': 'Letter'}),
           containsPair('papers', _l10n.taxRefInvalidPapers),
           reason: papers,
         );
       }
       expect(
-        countryFieldErrors(_l10n, fields('Letter, A4'), {'paper': 'Letter'}),
+        documentPaperFieldErrors(_l10n, fields('Letter, A4'), {
+          'paper': 'Letter',
+        }),
         isEmpty,
       );
       expect(
-        countryFieldErrors(_l10n, fields(''), {'paper': 'Letter'}),
+        documentPaperFieldErrors(_l10n, fields(''), {'paper': 'Letter'}),
         isEmpty,
       );
     });
 
     test('the row it copies seeds the usual paper and the papers', () {
-      const ch = CountryValue(
-        currency: 'CHF',
-        timeZone: 'Europe/Zurich',
-        bankingScheme: 'ch',
-        papers: ['A4'],
-      );
+      const ch = DocumentPaperValue(papers: ['A4']);
       expect(taxReferenceChoicesOf(ch)['paper'], 'A4');
-      expect(taxReferenceExtraTexts(ch)['papers'], 'A4');
+      expect(documentPaperTexts(ch)['papers'], 'A4');
+      expect(
+        taxReferenceChoicesOf(
+          const DocumentPaperValue(paper: 'Letter'),
+        )['paper'],
+        'Letter',
+      );
     });
   });
 }

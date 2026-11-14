@@ -20442,6 +20442,7 @@
   },
   "taxRefDomainCountry": "Pays (catalogue de création)",
   "taxRefDomainDocumentLanguage": "Langues des documents",
+  "taxRefDomainDocumentPaper": "Papiers des documents",
   "taxRefDomainEuMember": "Membres de l'UE",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."

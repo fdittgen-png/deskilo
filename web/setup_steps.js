@@ -44,8 +44,6 @@ const STEPS=[
   obligationsCard(lbl),
   selectEl(T('identityTimezone'),'timezone',TIMEZONES.map(t=>[t,t]),T('identityTimezoneHint'),null,'region'),
   selectEl(T('identityLanguage'),'language',langOpts(),T('identityLanguageHint'),null,'language'),
-  // #3852 — the paper of the documents: the country's usual one, or another it allows.
-  selectEl(T('identityPaper'),'paper',paperOpts(),paperHint(),null,'paper'),
   input(T('identityAddress'),'address',T('identityAddressHint'),'text',T('identityAddressPlaceholder'),'identity'),
   // #1289 — the brand seed; the app derives its themes from it and
   // refuses one that cannot be read, so the page only checks the shape.
@@ -54,6 +52,8 @@ const STEPS=[
   ...(S.country==='US'?[selectEl(T('retUsYears'),'retention.usYears',opts(RET_US_YEARS),T('retUsYearsHint'),null,'legal')]:[]),
   // #3075 — the server and network parameters decide nothing for a newcomer: they sit behind an advanced disclosure the owner opens on purpose.
   ((d)=>{d.ontoggle=()=>{advOpen=d.open};return d})(h('details',{class:'adv',...(advOpen||S.network.roles==='workspace_host'?{open:''}:{})},h('summary',{},T('identityAdvanced')),
+  // #3852 — the paper of the documents: the country's usual one unless another it allows is chosen.
+  selectEl(T('identityPaper'),'paper',paperOpts(),paperHint(),null,'paper'),
   selectEl(T('networkRoles'),'network.roles',opts(NETWORK_ROLES),T('networkRolesHint'),null,'identity'),
   ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
   // #2562 C2a — for a workspace server enrolled at a personal home.
