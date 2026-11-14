@@ -31,11 +31,11 @@ import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/core/demo/demo_dataset.dart' show demoKioskDevice;
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
-import 'package:deskilo/core/demo/seed/demo_london_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
@@ -111,12 +111,22 @@ typedef _Check = FutureOr<bool> Function(_World w);
 enum _Kind { state, action, toggle }
 
 class _Scenario {
-  const _Scenario(this.kind, this.persona, this.story, this.check);
+  const _Scenario(
+    this.kind,
+    this.persona,
+    this.story,
+    this.check, {
+    this.business = demoFirstSpaceId,
+  });
 
   final _Kind kind;
   final DemoPersona persona;
   final String story;
   final _Check check;
+
+  /// The Demo business the scenario happens in: the reference business
+  /// (Atelier du Marché, `ws-1`) unless the use case cannot be held there.
+  final String business;
 }
 
 const _owner = DemoPersona.owner;
@@ -126,10 +136,47 @@ const _kiosk = DemoPersona.kiosk;
 
 _Scenario _state(DemoPersona p, String story, _Check check) =>
     _Scenario(_Kind.state, p, story, check);
-_Scenario _action(DemoPersona p, String story, _Check check) =>
-    _Scenario(_Kind.action, p, story, check);
+_Scenario _action(
+  DemoPersona p,
+  String story,
+  _Check check, {
+  String business = demoFirstSpaceId,
+}) => _Scenario(_Kind.action, p, story, check, business: business);
 _Scenario _toggle(String story) =>
     _Scenario(_Kind.toggle, _owner, story, (_) => true);
+
+/// #3959 — the Demo's reference business is Atelier du Marché (`ws-1`): every
+/// feature is on there, with seeded data and a process a persona can perform.
+/// A scenario happens in another business only when the reference business
+/// cannot hold its use case, and says why here. The list only shrinks: an
+/// entry whose scenario is back in the reference business is removed. A
+/// feature left off (`demoFeaturesLeftOff`, e.g. `mtdSubmission`, London's
+/// journey) has no scenario and so no entry.
+const Map<WorkspaceFeature, String> _elsewhere = {
+  WorkspaceFeature.guestPasses:
+      'the pass is sold and invoiced in pounds: a pound business is London',
+};
+
+/// The switch-only scenarios (kind toggle) the file holds today. It only
+/// falls: a feature gets a state or an action, not another switch.
+const int _switchOnlyBudget = 34;
+
+/// The features whose scenario is outside the reference business and not
+/// named in [elsewhere], and the entries of [elsewhere] that are stale.
+List<String> _businessProblems(
+  Map<WorkspaceFeature, _Scenario> scenarios,
+  Map<WorkspaceFeature, String> elsewhere,
+) => [
+  for (final e in scenarios.entries)
+    if (e.value.business != demoFirstSpaceId && !elsewhere.containsKey(e.key))
+      '${e.key.name} happens in ${e.value.business}: name the reason',
+  for (final f in elsewhere.keys)
+    if ((scenarios[f]?.business ?? demoFirstSpaceId) == demoFirstSpaceId)
+      '${f.name} is listed as elsewhere but happens in the reference business',
+];
+
+int _switchOnlyCount(Iterable<_Scenario> scenarios) =>
+    scenarios.where((s) => s.kind == _Kind.toggle).length;
 
 /// One scenario per feature, grouped as the process catalogue groups them.
 final Map<WorkspaceFeature, _Scenario> _scenarios = {
@@ -253,6 +300,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return sale.reservationIds.length == 1 &&
           london.money.invoices.any((i) => i.id == sale.invoiceId && i.currency == 'GBP' && i.totalCents == 2500);
     },
+    business: demoLondonSpaceId,
   ),
   // ── workspaceAccess / physicalAccess ─────────────────────────────────
   WorkspaceFeature.kioskMode: _state(
@@ -1146,6 +1194,55 @@ void main() {
   test('every persona has something to do', () {
     final byPersona = {for (final s in _scenarios.values) s.persona};
     expect(byPersona, containsAll(DemoPersona.values));
+  });
+
+  test('a scenario outside the reference business is named in _elsewhere, '
+      'and the list holds nothing stale', () {
+    expect(_businessProblems(_scenarios, _elsewhere), isEmpty);
+  });
+
+  test('the guard bites: planted scenarios outside the reference business', () {
+    final planted = {
+      WorkspaceFeature.coOwner: _state(
+        _owner,
+        'planted',
+        (_) => true,
+      ),
+      WorkspaceFeature.guestPasses: _action(
+        _owner,
+        'planted',
+        (_) => true,
+        business: demoLondonSpaceId,
+      ),
+    };
+    expect(_businessProblems(planted, const {}), [
+      'guestPasses happens in $demoLondonSpaceId: name the reason',
+    ]);
+    expect(
+      _businessProblems(planted, {
+        WorkspaceFeature.guestPasses: 'x',
+        WorkspaceFeature.coOwner: 'stale',
+      }),
+      ['coOwner is listed as elsewhere but happens in the reference business'],
+    );
+  });
+
+  test('the switch-only scenarios only fall', () {
+    expect(
+      _switchOnlyCount(_scenarios.values),
+      _switchOnlyBudget,
+      reason:
+          'a feature takes a state or an action, not a switch; when one is '
+          'upgraded, lower _switchOnlyBudget to the new count',
+    );
+  });
+
+  test('the budget bites: a planted extra switch is counted', () {
+    final planted = [
+      ..._scenarios.values,
+      _toggle('planted'),
+    ];
+    expect(_switchOnlyCount(planted), isNot(_switchOnlyBudget));
   });
 
   group('the state each scenario starts from', () {
