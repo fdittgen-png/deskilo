@@ -17,20 +17,25 @@
 --    terms for an invoiced period. A period invoiced before this migration
 --    has none and reads the member's row, exactly as before. A period not
 --    invoiced reads the terms as of its first day: the changes applied or
---    scheduled with a date on or before it, else the member's row. A voided
+--    scheduled with a date on or before it (of one date, the last released),
+--    else the member's row -- for a month before the current one that no
+--    change covers, not paused, as before. A voided
 --    invoice unfreezes its period; a replacement freezes what it recomputes,
 --    which reads the terms as of the period's first day, so only a change
 --    dated on or before that day enters it.
 --  * A period not invoiced: paused on its first day, no subscription fee and
 --    no included half-days; otherwise the full fee and quota of the share in
 --    force that day. Nothing is prorated. Use is always invoiceable.
---  * A share change always lands on a period's first day or later. One with
---    an explicit date inside an invoiced period is refused with the earliest
---    date it can take. The immediate share command has no date of its own: it
---    takes the first day of the current period when that period is not
---    invoiced, else the first day of the first period not yet invoiced, and
---    then waits for that day; an approved held change takes that date as of
---    the approval. The answer says the date.
+--  * A share change's date is a period's first day, after the last invoiced
+--    period from that month on. An explicit date that is not one is refused
+--    with the earliest it can take. The immediate share command has no date
+--    of its own: it takes the first day of the current period when nothing
+--    from it on is invoiced, else the first day after the last invoiced
+--    period, and then waits for that day. An approval dates a held change
+--    the same way as of the approval (a pause starts no earlier than that
+--    day). The answer and the event say the date. The share and the status
+--    change only through the commands: a direct write from the API is
+--    refused, and an accepted deal goes through the immediate command.
 --  * A pause is operational at once and never rewrites money: an invoiced
 --    period stays due; the first period it frees is the first one not
 --    invoiced whose first day the member is paused. The command answers
@@ -41,12 +46,14 @@
 --    resumption only to a member paused by that same pause; a refused pause
 --    takes its resumption with it; a member who leaves has their waiting
 --    changes cancelled. A waiting change is cancelled until its day, unless
---    an invoice already carries it.
+--    an invoice issued after it carries it. Every state a change takes
+--    rebalances the member's carnets.
 --  * The invoice run decides by the member's state on the invoiced period's
---    first day, and issues this month only for a member resumed from a pause
---    on its first day (or in the advance window before it). A full invoice
---    and a subscription or usage invoice of one member and period exclude
---    each other.
+--    first day; it applies the changes due first, so a business without the
+--    nightly job still has them in force. It issues this month, once ever,
+--    only for a member resumed from a pause on its first day (or in the
+--    advance window before it). A full invoice and a subscription or usage
+--    invoice of one member and period exclude each other.
 --  * The job, the commands and `create_invoice` take the business's advisory
 --    lock before they read whether a period is invoiced, so an invoice and a
 --    change never cross.
@@ -79,6 +86,9 @@ create table if not exists public.member_term_changes (
   request_id uuid,
   event_id uuid references public.events(id) on delete set null,
   requested_by uuid references public.members(id) on delete set null,
+  -- when it was released to apply: made, or approved when it was held;
+  -- among changes of one date the last released is in force
+  released_at timestamptz not null default now(),
   -- the order changes were made in, also within one transaction
   seq bigint generated always as identity,
   constraint member_term_changes_kind_value check (
@@ -177,52 +187,59 @@ returns public.member_period_terms language sql stable security definer set sear
 $fn$;
 revoke execute on function public.member_frozen_terms(uuid, date) from public, anon, authenticated;
 
--- The first day of the first period, from the one containing [p_day], that
--- is not invoiced.
+-- The earliest first day a share change can take from [p_day]'s month:
+-- the month itself, or the month after the last period from it on that is
+-- invoiced (an invoiced period keeps its terms, and so does every one
+-- before it).
 create or replace function public.member_first_open_period(p_member_id uuid, p_day date)
-returns date language plpgsql stable security definer set search_path = public as $fn$
-declare
-  v_month date := date_trunc('month', p_day)::date;
-begin
-  while public.member_period_invoiced(p_member_id, v_month) loop
-    v_month := (v_month + interval '1 month')::date;
-  end loop;
-  return v_month;
-end;
+returns date language sql stable security definer set search_path = public as $fn$
+  select greatest(date_trunc('month', p_day)::date,
+    coalesce((select (max(to_date(i.period || '-01', 'YYYY-MM-DD')) + interval '1 month')::date
+                from public.invoices i
+               where i.member_id = p_member_id and i.kind in ('subscription', 'full')
+                 and i.voided_at is null
+                 and position(i.id::text in coalesce(current_setting('deskilo.invoice_unseen', true), '')) = 0
+                 and to_date(i.period || '-01', 'YYYY-MM-DD') >= date_trunc('month', p_day)::date),
+             date_trunc('month', p_day)::date))
 $fn$;
 revoke execute on function public.member_first_open_period(uuid, date) from public, anon, authenticated;
 
 -- ── reading the terms as of a day ─────────────────────────────────────────
 -- The share in force on [p_day]: the last change dated on or before it,
--- applied or still waiting; else the share before the first change after
--- it; else the member's share now.
+-- applied or still waiting (of one date, the last released); else the share
+-- before the first change after it; else the member's share now.
 create or replace function public.member_share_as_of(p_member_id uuid, p_day date, p_current integer)
 returns integer language sql stable security definer set search_path = public as $fn$
   select coalesce(
     (select c.to_pct from public.member_term_changes c
       where c.member_id = p_member_id and c.kind = 'share'
         and c.state in ('applied', 'scheduled') and c.due_on <= p_day
-      order by c.due_on desc, c.seq desc limit 1),
+      order by c.due_on desc, c.released_at desc, c.seq desc limit 1),
     (select c.from_pct from public.member_term_changes c
       where c.member_id = p_member_id and c.kind = 'share' and c.state = 'applied'
         and c.due_on > p_day
-      order by c.due_on, c.seq limit 1),
+      order by c.due_on, c.released_at, c.seq limit 1),
     p_current)
 $fn$;
 revoke execute on function public.member_share_as_of(uuid, date, integer) from public, anon, authenticated;
 
--- Whether the member is paused on [p_day], read the same way.
+-- Whether the member is paused on [p_day], read the same way. A day before
+-- the current month that no recorded change covers is read as before dated
+-- terms: not paused.
 create or replace function public.member_paused_on(p_member_id uuid, p_day date, p_current text)
 returns boolean language sql stable security definer set search_path = public as $fn$
   select coalesce(
     (select c.to_status from public.member_term_changes c
       where c.member_id = p_member_id and c.kind = 'status'
         and c.state in ('applied', 'scheduled') and c.due_on <= p_day
-      order by c.due_on desc, c.seq desc limit 1),
+      order by c.due_on desc, c.released_at desc, c.seq desc limit 1),
+    case when p_day < date_trunc('month', public.workspace_today(
+                (select m.workspace_id from public.members m where m.id = p_member_id)))::date
+         then 'active' end,
     (select c.from_status from public.member_term_changes c
       where c.member_id = p_member_id and c.kind = 'status' and c.state = 'applied'
         and c.due_on > p_day
-      order by c.due_on, c.seq limit 1),
+      order by c.due_on, c.released_at, c.seq limit 1),
     p_current) = 'paused'
 $fn$;
 revoke execute on function public.member_paused_on(uuid, date, text) from public, anon, authenticated;
@@ -287,10 +304,9 @@ $fn$;
 revoke execute on function public.member_pause_money(uuid, date, date) from public, anon, authenticated;
 
 -- ── the changes written at once ───────────────────────────────────────────
--- A share written at once into the row counts from the first day of this
--- period when it is not invoiced, else from today (the invoiced period keeps
--- its frozen terms); a status from today. A member who leaves has their
--- waiting changes cancelled.
+-- A share written into the row (only the commands do) counts from the first
+-- day of this period, which is not invoiced; a status from today. A member
+-- who leaves has their waiting changes cancelled.
 create or replace function public.members_term_history()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 declare
@@ -310,8 +326,7 @@ begin
     insert into public.member_term_changes (workspace_id, member_id, kind, to_pct, from_pct,
       due_on, applied_on, state, source)
     values (new.workspace_id, new.id, 'share', coalesce(new.subscription_pct, 100),
-      coalesce(old.subscription_pct, 100),
-      case when public.member_period_invoiced(new.id, v_month) then v_today else v_month end,
+      coalesce(old.subscription_pct, 100), public.member_first_open_period(new.id, v_today),
       v_today, 'applied', 'immediate');
   end if;
   if new.status is distinct from old.status then
@@ -324,6 +339,25 @@ begin
 end;
 $fn$;
 revoke execute on function public.members_term_history() from public, anon, authenticated;
+-- A share or a status changes through its command (the definer functions),
+-- never by a direct write from the API.
+-- It runs as the caller (security invoker): inside a command, the definer.
+create or replace function public.members_terms_by_command()
+returns trigger language plpgsql security invoker set search_path = public as $fn$
+begin
+  if current_user in ('authenticated', 'anon')
+     and (new.subscription_pct is distinct from old.subscription_pct or new.status is distinct from old.status) then
+    raise exception 'a share or a status changes through its command' using errcode = '42501';
+  end if;
+  return new;
+end;
+$fn$;
+revoke execute on function public.members_terms_by_command() from public, anon, authenticated;
+drop trigger if exists members_terms_by_command on public.members;
+create trigger members_terms_by_command
+  before update of subscription_pct, status on public.members
+  for each row execute function public.members_terms_by_command();
+
 -- Named to fire before members_rebalance_credits (triggers of one event run
 -- in name order): the rebalance reads the share just recorded.
 drop trigger if exists members_term_history on public.members;
@@ -349,7 +383,7 @@ begin
   perform pg_advisory_xact_lock(hashtext(v_m.workspace_id::text));
   v_today := public.workspace_today(v_m.workspace_id);
   v_on := public.member_first_open_period(p_member_id, v_today);
-  if v_on <= v_today then
+  if v_on = date_trunc('month', v_today)::date then
     update public.members set subscription_pct = p_pct where id = p_member_id;
     return jsonb_build_object('effective_on', v_on, 'state', 'applied');
   end if;
@@ -480,7 +514,8 @@ revoke execute on function public.apply_member_term_change(uuid) from public, an
 -- business (the order the invoice run locks them in), then in date order;
 -- each once and each on its own: one that fails is kept as refused with the
 -- reason, and the others go on. Runs before the invoice run (06:40 UTC).
-create or replace function public.apply_due_member_term_changes()
+drop function if exists public.apply_due_member_term_changes();
+create or replace function public.apply_due_member_term_changes(p_workspace_id uuid default null)
 returns integer language plpgsql security definer set search_path = public as $fn$
 declare
   v_id uuid;
@@ -491,7 +526,8 @@ begin
   for v_id in
     select c.id from public.member_term_changes c
      where c.state = 'scheduled' and c.due_on <= public.workspace_today(c.workspace_id)
-     order by c.workspace_id, c.due_on, c.seq
+       and (p_workspace_id is null or c.workspace_id = p_workspace_id)
+     order by c.workspace_id, c.due_on, c.released_at, c.seq
   loop
     begin
       v_state := public.apply_member_term_change(v_id);
@@ -507,7 +543,36 @@ begin
   return v_n;
 end;
 $fn$;
-revoke execute on function public.apply_due_member_term_changes() from public, anon, authenticated;
+revoke execute on function public.apply_due_member_term_changes(uuid) from public, anon, authenticated;
+
+-- Every state a change takes (made, approved, cancelled, refused, applied)
+-- rebalances the member's carnets for the months they hold bookings in, as
+-- a change of the member's row does (0237).
+create or replace function public.member_term_changes_rebalance()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_at timestamptz;
+begin
+  if tg_op = 'UPDATE' and new.state is not distinct from old.state and new.due_on = old.due_on then
+    return null;
+  end if;
+  for v_at in
+    select min(r.starts_at)
+      from public.member_credit_uses u
+      join public.reservations r on r.id = u.reservation_id
+     where r.member_id = new.member_id and u.released_at is null
+     group by date_trunc('month', r.starts_at)
+  loop
+    perform public.rebalance_member_credits(new.member_id, v_at, null);
+  end loop;
+  return null;
+end;
+$fn$;
+revoke execute on function public.member_term_changes_rebalance() from public, anon, authenticated;
+drop trigger if exists member_term_changes_rebalance on public.member_term_changes;
+create trigger member_term_changes_rebalance
+  after insert or update of state, due_on on public.member_term_changes
+  for each row execute function public.member_term_changes_rebalance();
 
 do $cron$
 begin
@@ -520,8 +585,9 @@ end
 $cron$;
 
 -- ── the commands ──────────────────────────────────────────────────────────
--- Schedules a share for [p_effective_on] (today or later, in a period not
--- invoiced; else refused with the earliest date it can take). Held for
+-- Schedules a share for [p_effective_on]: a period's first day, today or
+-- later, with no invoiced period from it on; else refused with the earliest
+-- date it can take. Held for
 -- approval where a validation policy holds plan changes. A request id
 -- answers its own change again; used with other values, it is refused.
 create or replace function public.schedule_member_share_change(
@@ -557,9 +623,15 @@ begin
   if p_effective_on is null or p_effective_on < public.workspace_today(v_m.workspace_id) then
     raise exception 'a change is scheduled for today or later' using errcode = '22023';
   end if;
-  if public.member_period_invoiced(p_member_id, date_trunc('month', p_effective_on)::date) then
-    v_earliest := public.member_first_open_period(p_member_id, p_effective_on);
+  v_earliest := public.member_first_open_period(p_member_id, p_effective_on);
+  if v_earliest > date_trunc('month', p_effective_on)::date then
     raise exception 'this period is already invoiced — the earliest is %', v_earliest
+      using errcode = '22023', detail = v_earliest::text;
+  end if;
+  if extract(day from p_effective_on) <> 1 then
+    v_earliest := public.member_first_open_period(p_member_id,
+      (date_trunc('month', p_effective_on) + interval '1 month')::date);
+    raise exception 'a share changes on the first day of a period — the earliest is %', v_earliest
       using errcode = '22023', detail = v_earliest::text;
   end if;
   if public.validation_requires(v_m.workspace_id, 'subscription_change', 0) then
@@ -685,12 +757,15 @@ begin
   if v_c.state = 'scheduled' and v_c.due_on <= public.workspace_today(v_c.workspace_id) then
     raise exception 'this change applies today' using errcode = '55000';
   end if;
+  -- an invoice carries a waiting change it was issued after: its period
+  -- starts on or after the change's date
   if exists (
     select 1 from public.member_term_changes c
       join public.invoices i on i.member_id = c.member_id
-     where c.state in ('pending', 'scheduled')
+     where c.state = 'scheduled'
        and (c.id = p_change_id or (v_c.group_id is not null and c.group_id = v_c.group_id))
        and i.kind in ('subscription', 'full') and i.voided_at is null
+       and i.issued_at >= c.released_at
        and to_date(i.period || '-01', 'YYYY-MM-DD') >= c.due_on) then
     raise exception 'this change is already on an invoice — schedule a new one' using errcode = '55000';
   end if;
@@ -706,31 +781,55 @@ revoke execute on function public.cancel_member_term_change(uuid) from public, a
 grant execute on function public.cancel_member_term_change(uuid) to authenticated;
 
 -- ── the decision on a held change ─────────────────────────────────────────
--- An approved scheduled change is released (applied at once when its date
--- has come); a rejected one is refused, with the reason.
+-- An approved change is released as of the approval: a share takes the
+-- later of its date and the earliest first day open then; a pause starts no
+-- earlier than that day (and ends after it). The event says the dates, and
+-- for a pause what it costs. A rejected change is refused, with the reason.
 create or replace function public.member_term_changes_decided()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 declare
   v_change uuid := (new.payload ->> 'change_id')::uuid;
-  v_group uuid;
+  v_c public.member_term_changes;
+  v_today date;
+  v_on date;
+  v_end date;
   v_id uuid;
 begin
   if new.status = old.status or v_change is null
      or new.type not in ('subscription_change', 'member_status_change') then
     return new;
   end if;
-  select group_id into v_group from public.member_term_changes where id = v_change;
+  select * into v_c from public.member_term_changes where id = v_change;
+  if v_c.id is null then return new; end if;
   if new.status = 'confirmed' then
-    update public.member_term_changes set state = 'scheduled'
-     where state = 'pending' and (id = v_change or (v_group is not null and group_id = v_group));
+    perform pg_advisory_xact_lock(hashtext(v_c.workspace_id::text));
+    v_today := public.workspace_today(v_c.workspace_id);
+    if v_c.kind = 'share' then
+      v_on := greatest(v_c.due_on, public.member_first_open_period(v_c.member_id, v_today));
+      update public.member_term_changes set state = 'scheduled', due_on = v_on, released_at = now()
+       where id = v_change and state = 'pending';
+      update public.events set payload = payload || jsonb_build_object('effective_on', v_on) where id = new.id;
+    else
+      v_on := greatest(v_c.due_on, v_today);
+      select greatest(c.due_on, v_on + 1) into v_end from public.member_term_changes c
+       where c.group_id = v_c.group_id and c.id <> v_change and c.state = 'pending';
+      update public.member_term_changes
+         set state = 'scheduled', released_at = now(),
+             due_on = case when id = v_change then v_on else v_end end
+       where state = 'pending' and (id = v_change or (v_c.group_id is not null and group_id = v_c.group_id));
+      update public.events set payload = payload
+        || jsonb_build_object('effective_on', v_on, 'until', v_end)
+        || public.member_pause_money(v_c.member_id, v_on, v_end)
+       where id = new.id;
+    end if;
     for v_id in select id from public.member_term_changes
-                 where (id = v_change or (v_group is not null and group_id = v_group))
+                 where (id = v_change or (v_c.group_id is not null and group_id = v_c.group_id))
                    and state = 'scheduled' order by due_on, seq loop
       perform public.apply_member_term_change(v_id);
     end loop;
   elsif new.status = 'rejected' then
     update public.member_term_changes set state = 'refused', reason = 'not approved'
-     where state = 'pending' and (id = v_change or (v_group is not null and group_id = v_group));
+     where state = 'pending' and (id = v_change or (v_c.group_id is not null and group_id = v_c.group_id));
   end if;
   return new;
 end;
@@ -856,7 +955,13 @@ begin
   perform set_config('deskilo.invoice_unseen', coalesce(p_replaces::text, ''), true);
   select * into v_subject from public.members
     where id = p_member_id and workspace_id = p_workspace_id
-      and public.member_billable_in(id, p_period, p_kind) and not is_kiosk;$r$);
+      and public.member_billable_in(id, p_period, p_kind) and not is_kiosk;
+  if p_kind <> 'full' and exists (
+    select 1 from public.invoices i
+     where i.member_id = p_member_id and i.period = p_period and i.kind = 'full'
+       and i.voided_at is null and i.id is distinct from p_replaces) then
+    raise exception 'this month has a full invoice — void and replace it to add later use' using errcode = 'DKI07';
+  end if;$r$);
     if v_def is null then raise exception 'an anchor of #3858 was not found in create_invoice' using errcode = 'P0001'; end if;
     v_def := pg_temp.anchor_replace(v_def,
       $r$      and i.kind = p_kind$r$,
@@ -883,12 +988,21 @@ begin
     execute v_def;
   end if;
 
-  -- 5. the invoice run: by business in one order (the nightly job's); members
+  -- 5. the invoice run: the due changes first (where no cron runs the job,
+  -- the run still applies them); by business in one order (the job's); members
   -- active or paused now, each decided as of the invoiced period; this
   -- month only for a member resumed from a pause on its first day or in the
   -- advance window before it; a paused member's empty use is not invoiced
   v_def := pg_get_functiondef('public.sweep_billing_invoices(uuid)'::regprocedure);
   if position('#3858' in v_def) = 0 then
+    v_def := pg_temp.anchor_replace(v_def,
+      $r$  for v_ws in
+    select w.id, w.billing_rules, w.timezone, w.feature_flags$r$,
+      $r$  -- #3858: the changes due today are in force before anything is invoiced
+  perform public.apply_due_member_term_changes(p_workspace_id);
+  for v_ws in
+    select w.id, w.billing_rules, w.timezone, w.feature_flags$r$);
+    if v_def is null then raise exception 'an anchor of #3858 was not found in sweep_billing_invoices' using errcode = 'P0001'; end if;
     v_def := pg_temp.anchor_replace(v_def,
       $r$       and public.feature_effective_in(w.feature_flags, 'invoicing')
   loop$r$,
@@ -913,6 +1027,10 @@ begin
                         and c.from_status = 'paused' and c.to_status = 'active'
                         and c.due_on >= date_trunc('month', v_today)::date - v_advance
                         and c.due_on <= date_trunc('month', v_today)::date)
+         -- at most once: never again after an invoice of any state, voided included
+         and not exists (select 1 from public.invoices i
+                           where i.member_id = v_member.id and i.period = to_char(v_today, 'YYYY-MM')
+                             and i.kind in ('subscription', 'full'))
       then
         begin
           perform public.create_invoice(
@@ -973,6 +1091,37 @@ begin
   end if;
 end
 $migration$;
+
+-- An accepted deal (0138), restated whole: its share goes through the
+-- immediate command, dated the first day of the first period it can take.
+create or replace function public.apply_negotiation_on_decision()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_deal public.price_negotiations;
+begin
+  if new.type <> 'price_negotiation' or new.status = old.status then return new; end if;
+  if new.status = 'confirmed' then
+    update public.price_negotiations set status = 'superseded', decided_at = now()
+     where member_id = new.subject_member_id and status = 'active';
+    update public.price_negotiations set status = 'active', decided_at = now()
+     where event_id = new.id and status = 'pending'
+     returning * into v_deal;
+    -- #744 — the occupation is part of the deal: applied on validation,
+    -- the previous value kept for the comparison.
+    if v_deal.id is not null and v_deal.subscription_pct is not null then
+      update public.price_negotiations
+         set previous_subscription_pct = (select subscription_pct from public.members where id = v_deal.member_id)
+       where id = v_deal.id;
+      perform public.member_share_at_once(v_deal.member_id, v_deal.subscription_pct, new.actor_member_id, new.id);
+    end if;
+  elsif new.status in ('rejected', 'expired') then
+    update public.price_negotiations set status = 'rejected', decided_at = now()
+     where event_id = new.id and status = 'pending';
+  end if;
+  return new;
+end;
+$fn$;
+revoke execute on function public.apply_negotiation_on_decision() from public, anon, authenticated;
 
 -- The default tariff (0210), restated whole: the share of the current
 -- period.

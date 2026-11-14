@@ -20,7 +20,7 @@
 --  * the business's own day decides, east and west of UTC.
 -- Rolled back.
 begin;
-select plan(82);
+select plan(98);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003858' || lpad(n::text, 4, '0'))::uuid;
@@ -36,7 +36,7 @@ select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'a
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by,
                                street, city, postal_code, vat_regime, vat_id, legal_id, feature_flags)
 values (pg_temp.u(101), 'Terms', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
-        '1 Synthetic Street', 'Capital', '1000', 'vat_registered', 'FR123456789', 'REG-FR', '{"invoicing": true, "moneyTab": true, "subscriptionInvoices": true, "usageInvoices": true}');
+        '1 Synthetic Street', 'Capital', '1000', 'vat_registered', 'FR123456789', 'REG-FR', '{"invoicing": true, "moneyTab": true, "subscriptionInvoices": true, "usageInvoices": true, "priceNegotiations": true}');
 insert into public.vat_rates (workspace_id, label, percent, is_default)
 values (pg_temp.u(101), 'Synthetic standard', 20, true);
 -- 201 the owner; 202 a member with an account; 203-240 members with accounts
@@ -161,16 +161,16 @@ select is(pg_temp.statement(202, -1)::text, current_setting('t.prev2'), 'last mo
 
 -- ── scheduling ──
 set local role authenticated;
-select set_config('t.later', public.schedule_member_share_change(pg_temp.u(204), 50, pg_temp.today() + 40,
+select set_config('t.later', public.schedule_member_share_change(pg_temp.u(204), 50, pg_temp.first(2),
   '00000000-0000-4000-8000-000038580001')::text, true);
 select is(current_setting('t.later')::jsonb ->> 'state', 'scheduled', 'a share for a later date waits');
-select is((public.schedule_member_share_change(pg_temp.u(204), 50, pg_temp.today() + 40,
+select is((public.schedule_member_share_change(pg_temp.u(204), 50, pg_temp.first(2),
   '00000000-0000-4000-8000-000038580001') ->> 'replayed'), 'true', 'the same request is answered, not repeated');
 select throws_ok(format($$ select public.schedule_member_share_change(%L, 60, %L, '00000000-0000-4000-8000-000038580001') $$,
-  pg_temp.u(204), pg_temp.today() + 40), '22023', 'this request id belongs to another change',
+  pg_temp.u(204), pg_temp.first(2)), '22023', 'this request id belongs to another change',
   'the same request with other values is refused');
 select throws_ok(format($$ select public.schedule_member_share_change(%L, 50, %L, '00000000-0000-4000-8000-000038580001') $$,
-  pg_temp.u(205), pg_temp.today() + 40), '22023', 'this request id belongs to another change',
+  pg_temp.u(205), pg_temp.first(2)), '22023', 'this request id belongs to another change',
   'and so is the same request for another member');
 reset role;
 select is(public.apply_member_term_change((current_setting('t.later')::jsonb ->> 'change_id')::uuid), 'scheduled',
@@ -178,10 +178,38 @@ select is(public.apply_member_term_change((current_setting('t.later')::jsonb ->>
 set local role authenticated;
 select is(public.cancel_member_term_change((current_setting('t.later')::jsonb ->> 'change_id')::uuid), 1,
   'a waiting change no invoice carries is cancelled');
-select is(public.schedule_member_share_change(pg_temp.u(204), 75, pg_temp.today(),
-  '00000000-0000-4000-8000-000038580002') ->> 'state', 'applied', 'a change due today applies at once');
+select throws_like(format($$ select public.schedule_member_share_change(%L, 75, %L, gen_random_uuid()) $$,
+  pg_temp.u(204), pg_temp.first(1) + 9), '%first day of a period — the earliest is ' || pg_temp.first(2) || '%',
+  'a share dated on another day than a first is refused with the next first');
 reset role;
-select is((select subscription_pct from public.members where id = pg_temp.u(204)), 75, 'and the member''s row takes it');
+select is((select subscription_pct from public.members where id = pg_temp.u(204)), 100, 'and the member''s row keeps its share');
+
+-- ── 1. of one date, the last released stands ──
+set local role authenticated;
+select public.request_subscription_change(pg_temp.u(235), 60);
+select public.request_subscription_change(pg_temp.u(235), 70);
+reset role;
+select is(pg_temp.fee(235, 1) || ' / ' || pg_temp.issue(235, 1) || ' / ' || pg_temp.fee(235, 1),
+  '70 4000 / issued / 70 4000', 'two shares written at once the same month: the later stands, and the advance invoice reads it');
+
+-- ── 2. the earliest date is after the last invoiced period ──
+select pg_temp.applied(236, pg_temp.first(0), p_status => 'paused');
+select pg_temp.applied(236, pg_temp.first(0) + 9, p_status => 'active');
+select is(pg_temp.issue(236, 1), 'issued', 'next month is invoiced while this one, paused on its first day, is not');
+set local role authenticated;
+select set_config('t.bea', public.request_subscription_change(pg_temp.u(236), 50)::text, true);
+reset role;
+select is((current_setting('t.bea')::jsonb ->> 'effective_on') || ' / ' || pg_temp.fee(236, 1) || ' / ' || pg_temp.fee(236, 2),
+  pg_temp.first(2) || ' / 100 4000 / 50 2000',
+  'a share written at once takes the first day after the last invoiced month, and says it');
+
+-- ── 4. a member paused before dated terms ──
+select set_config('deskilo.term_change_applying', 'on', true);
+update public.members set status = 'paused' where id = pg_temp.u(237);
+select set_config('deskilo.term_change_applying', '', true);
+select is(pg_temp.fee(237, -1) || ' ' || (pg_temp.inc(237, -1) > 0)::text || ' / ' || pg_temp.fee(237, 0),
+  '100 4000 true / 100 0',
+  'paused before any recorded change: a past month reads as before, this month as paused');
 
 -- ── the job: in date order, each once, each on its own ──
 insert into public.member_term_changes (workspace_id, member_id, kind, to_pct, due_on, state, source)
@@ -309,12 +337,49 @@ select is((select payload ->> 'effective_on' from public.events where id = (curr
        || ' / ' || pg_temp.fee(230, 0) || ' / ' || pg_temp.fee(230, 1),
   pg_temp.first(1) || ' / 100 4000 / 50 2000',
   'approved, it takes the first day not invoiced, and the event says it');
+set local role authenticated;
+select set_config('t.held2', public.schedule_member_share_change(pg_temp.u(233), 50, pg_temp.first(1),
+  '00000000-0000-4000-8000-000038580013')::text, true);
+select set_config('t.held3', public.schedule_member_share_change(pg_temp.u(234), 50, pg_temp.first(1),
+  '00000000-0000-4000-8000-000038580014') ->> 'change_id', true);
+reset role;
+select is(pg_temp.issue(233, 1) || ' ' || pg_temp.issue(234, 1), 'issued issued',
+  'their month is invoiced while two scheduled changes wait for approval');
+update public.events set status = 'confirmed' where id = (current_setting('t.held2')::jsonb ->> 'event_id')::uuid;
+select is((select payload ->> 'effective_on' from public.events where id = (current_setting('t.held2')::jsonb ->> 'event_id')::uuid)
+       || ' / ' || pg_temp.fee(233, 1) || ' / ' || pg_temp.fee(233, 2),
+  pg_temp.first(2) || ' / 100 4000 / 50 2000',
+  'a scheduled change approved after its month was invoiced takes the next open first day, and the event says it');
+select is(pg_temp.issue(233, 1, 'subscription', pg_temp.invoice_id(233, 1)) || ' ' || pg_temp.fee(233, 1),
+  'issued 100 4000', 'and a replacement of the invoiced month does not take it in');
+set local role authenticated;
+select is(public.cancel_member_term_change(current_setting('t.held3')::uuid), 1,
+  'a held change no invoice carries is cancelled');
+reset role;
 delete from public.validation_policies where workspace_id = pg_temp.u(101) and event_type = 'subscription_change';
+
+-- ── 8. the share and the status change only through the commands ──
+select pg_temp.act_as(pg_temp.u(1));
+set local role authenticated;
+select throws_ok(format($$ update public.members set subscription_pct = 50 where id = %L $$, pg_temp.u(239)),
+  '42501', 'a share or a status changes through its command', 'a direct write of the share is refused');
+select throws_ok(format($$ update public.members set status = 'paused' where id = %L $$, pg_temp.u(239)),
+  '42501', 'a share or a status changes through its command', 'and of the status');
+reset role;
+select is(pg_temp.issue(240, 0), 'issued', 'this month is invoiced');
+set local role authenticated;
+select public.propose_price_negotiation(pg_temp.u(240), null, null, null, '', null, 50, '{}'::jsonb);
+reset role;
+update public.events set status = 'confirmed' where type = 'price_negotiation' and subject_member_id = pg_temp.u(240);
+select is((select state || ' ' || source || ' ' || (due_on = pg_temp.first(1))::text from public.member_term_changes
+            where member_id = pg_temp.u(240) and kind = 'share')
+       || ' / ' || (select subscription_pct from public.members where id = pg_temp.u(240)) || ' / ' || pg_temp.fee(240, 1),
+  'scheduled immediate true / 100 / 50 2000', 'an accepted deal''s share goes through the immediate command');
 
 -- ── g. a full invoice and the other kinds exclude each other ──
 select is(pg_temp.issue(220, 0, 'full') || ' / ' || pg_temp.issue(220, 0, 'subscription') || ' / ' || pg_temp.issue(220, 0, 'usage'),
-  'issued / period already invoiced for this member / period already invoiced for this member',
-  'after a full invoice, no second fee and no second use');
+  'issued / this month has a full invoice — void and replace it to add later use / this month has a full invoice — void and replace it to add later use',
+  'after a full invoice, no second fee and no later use, and the refusal says what to do');
 select is(pg_temp.issue(221, 0, 'subscription') || ' / ' || pg_temp.issue(221, 0, 'full'),
   'issued / period already invoiced for this member', 'and after a subscription, no full invoice');
 
@@ -394,6 +459,8 @@ select is((select state || ' / ' || reason from public.member_term_changes where
   'refused / the membership has ended / exited', 'a resumption is refused for a member who left, who stays out');
 
 -- ── i. a pause scheduled and cancelled leaves the credits as they were ──
+-- (a share of 0: the carnet pays the booking)
+select pg_temp.applied(223, pg_temp.first(0), p_pct => 0);
 insert into public.reservations (id, workspace_id, member_id, seat_id, starts_at, ends_at)
 values (pg_temp.u(623), pg_temp.u(101), pg_temp.u(223), pg_temp.u(604), pg_temp.weekday(1), pg_temp.weekday(1) + interval '3 hours');
 insert into public.member_credits (id, workspace_id, member_id, half_days) values (pg_temp.u(723), pg_temp.u(101), pg_temp.u(223), 3);
@@ -466,11 +533,11 @@ select set_config('t.west', public.workspace_today(pg_temp.u(104))::text, true);
 set local role authenticated;
 select throws_ok(format($$ select public.schedule_member_share_change(%L, 50, %L, gen_random_uuid()) $$,
   pg_temp.u(301), pg_temp.today() + 10), 'DKN01', null, 'a member of another business is refused');
-select is(public.schedule_member_share_change(pg_temp.u(401), 50, current_setting('t.east')::date, gen_random_uuid()) ->> 'state'
-       || ' / ' || (public.schedule_member_share_change(pg_temp.u(411), 50, current_setting('t.west')::date, gen_random_uuid()) ->> 'state'),
+select is(public.schedule_member_pause(pg_temp.u(401), current_setting('t.east')::date, null, gen_random_uuid()) ->> 'state'
+       || ' / ' || (public.schedule_member_pause(pg_temp.u(411), current_setting('t.west')::date, null, gen_random_uuid()) ->> 'state'),
   'applied / applied', 'east and west of UTC, the business''s own today applies at once');
-select throws_ok(format($$ select public.schedule_member_share_change(%L, 60, %L, gen_random_uuid()) $$,
-  pg_temp.u(401), current_setting('t.east')::date - 1), '22023', 'a change is scheduled for today or later',
+select throws_ok(format($$ select public.schedule_member_pause(%L, %L, null, gen_random_uuid()) $$,
+  pg_temp.u(411), current_setting('t.west')::date - 1), '22023', 'a change is scheduled for today or later',
   'and its yesterday is refused, though it may be today elsewhere');
 reset role;
 select ok(current_setting('t.east')::date > current_setting('t.west')::date,
@@ -485,7 +552,7 @@ select ok(jsonb_array_length(public.export_my_data(pg_temp.u(101)) -> 'term_chan
 reset role;
 select pg_temp.act_as(pg_temp.u(1));
 set local role authenticated;
-select public.schedule_member_share_change(pg_temp.u(202), 100, pg_temp.today() + 40, '00000000-0000-4000-8000-000038580012');
+select public.schedule_member_share_change(pg_temp.u(202), 100, pg_temp.first(2), '00000000-0000-4000-8000-000038580012');
 reset role;
 select pg_temp.act_as(pg_temp.u(2));
 set local role authenticated;
@@ -508,7 +575,12 @@ update public.members set status = 'exited' where id = pg_temp.u(218);
 select pg_temp.applied(218, pg_temp.first(0), p_status => 'active');
 select pg_temp.applied(219, pg_temp.first(-1), p_status => 'paused');
 select pg_temp.applied(219, pg_temp.first(0), p_status => 'active');
+insert into public.member_term_changes (workspace_id, member_id, kind, to_pct, due_on, state, source)
+values (pg_temp.u(101), pg_temp.u(238), 'share', 50, pg_temp.first(0), 'scheduled', 'scheduled');
 select lives_ok(format($$ select public.sweep_billing_invoices(%L) $$, pg_temp.u(101)), 'the invoice run goes through');
+select is((select state from public.member_term_changes where member_id = pg_temp.u(238) and kind = 'share'), 'applied',
+  'it applies the changes due first');
+select is(pg_temp.invoices(220, 0) + pg_temp.invoices(220, 0, 'full'), 1, 'a month with a full invoice gets no other from the run');
 select is(pg_temp.invoices(216, 0) + pg_temp.invoices(217, 0) + pg_temp.invoices(218, 0), 0,
   'no invoice for this month for a joiner, an approval or a member back from leaving');
 select is(pg_temp.invoices(219, 0), 1, 'a member resumed from a pause on the 1st is invoiced this month, once');
@@ -516,6 +588,14 @@ select set_config('t.k', (select count(*)::text from public.invoices where works
 select public.sweep_billing_invoices(pg_temp.u(101));
 select is((select count(*)::text from public.invoices where workspace_id = pg_temp.u(101)), current_setting('t.k'),
   'a second run issues nothing more');
+select ok(pg_temp.issue(219, 0, 'usage') not like 'period already invoiced%'
+      and pg_temp.issue(219, 0, 'usage') not like 'this month has a full%',
+  'after the run, a manual use invoice of the month is not refused as a second one');
+select pg_temp.act_as(pg_temp.u(1));
+select public.void_invoice(pg_temp.invoice_id(219, 0));
+select public.sweep_billing_invoices(pg_temp.u(101));
+select is((select count(*)::int from public.invoices where member_id = pg_temp.u(219) and period = pg_temp.period(0)
+             and kind = 'subscription'), 1, 'a caught-up month voided as a waiver is not issued again');
 
 select * from finish();
 rollback;
