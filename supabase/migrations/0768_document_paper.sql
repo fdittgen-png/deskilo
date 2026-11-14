@@ -81,23 +81,46 @@ values
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
 
--- The open rows of CA, CH and US take their papers (the generated lines above
--- insert nothing where the row exists).
-do $migration$
+-- Every version of the CA, CH and US rows still in force or to come takes
+-- its papers, the 1900 one and any successor the platform made since: a
+-- missing key is never read from a predecessor, so each version carries it.
+-- The generated lines above insert nothing where the row exists.
+create or replace function public.country_rows_take_papers()
+returns integer
+language plpgsql security definer set search_path = public as $fn$
 declare
   v_rows int;
 begin
   update public.tax_reference t
      set value = t.value || s.papers,
          source = t.source || ' #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.'
-    from (values ('CA', '{"paper": "Letter"}'::jsonb),
-                 ('CH', '{"papers": ["A4"]}'::jsonb),
-                 ('US', '{"paper": "Letter"}'::jsonb)) s(country, papers)
+    from (values ('CA', 'paper', '{"paper": "Letter"}'::jsonb),
+                 ('CH', 'papers', '{"papers": ["A4"]}'::jsonb),
+                 ('US', 'paper', '{"paper": "Letter"}'::jsonb)) s(country, attribute, papers)
    where t.domain = 'country' and t.key = 'catalogue' and t.country = s.country
-     and t.valid_from = date '1900-01-01' and t.valid_to is null;
+     and (t.valid_to is null or t.valid_to > current_date)
+     and not t.value ? s.attribute;
   get diagnostics v_rows = row_count;
-  if v_rows <> 3 then
-    raise exception '0768: % open catalogue rows of CA, CH and US took their papers, expected 3', v_rows;
+  return v_rows;
+end;
+$fn$;
+
+revoke execute on function public.country_rows_take_papers() from public, anon, authenticated;
+
+do $migration$
+declare
+  v_found int;
+  v_rows int;
+begin
+  select count(*) into v_found from public.tax_reference
+   where domain = 'country' and key = 'catalogue' and country in ('CA', 'CH', 'US')
+     and (valid_to is null or valid_to > current_date);
+  v_rows := public.country_rows_take_papers();
+  -- every version found took its papers, and each country has one
+  if v_rows <> v_found or (select count(distinct country) from public.tax_reference
+                            where domain = 'country' and key = 'catalogue'
+                              and country in ('CA', 'CH', 'US') and valid_to is null) <> 3 then
+    raise exception '0768: % of % catalogue versions of CA, CH and US took their papers', v_rows, v_found;
   end if;
 end
 $migration$;
