@@ -68,6 +68,7 @@ Future<void> _pumpMenu(
   WidgetTester tester, {
   required bool permanent,
   required Set<WorkspacePermission> permissions,
+  Size size = const Size(1440, 2400),
 }) async {
   final workspace = FakeWorkspaceRepository.withWorkspace();
   workspace.myMember = workspace.myMember.copyWith(
@@ -99,7 +100,7 @@ Future<void> _pumpMenu(
     tester,
     null,
     router: router,
-    size: const Size(1440, 2400),
+    size: size,
     overrides: [
       ...standardTestOverrides(workspace: workspace),
       enabledFeaturesSyncProvider.overrideWithValue(_cashFeatures),
@@ -223,20 +224,32 @@ void main() {
     expect(find.byKey(const ValueKey('drawer-cash')), findsOneWidget);
   });
 
-  testWidgets('at 1440 the bank entry opens the statements over the page', (
-    tester,
-  ) async {
-    await _pumpMenu(
-      tester,
-      permanent: true,
-      permissions: {WorkspacePermission.viewFinances},
-    );
-    await _openGroup(tester, 'finance');
-    await _openGroup(tester, 'cash');
-    await tester.tap(find.byKey(const ValueKey('drawer-bank-statements')));
-    await tester.pumpAndSettle();
-    expect(find.byType(BankStatementsView), findsOneWidget);
-  });
+  // The statements open as a sheet over the desk: at 1024 as at 1440 it
+  // lies within the window and nothing in it overflows.
+  for (final size in const [Size(1024, 768), Size(1440, 900)]) {
+    testWidgets('at ${size.width.toInt()} the bank entry opens the '
+        'statements over the page, whole', (tester) async {
+      await _pumpMenu(
+        tester,
+        permanent: true,
+        permissions: {WorkspacePermission.viewFinances},
+        size: size,
+      );
+      await _openGroup(tester, 'finance');
+      await _openGroup(tester, 'cash');
+      await tester.tap(find.byKey(const ValueKey('drawer-bank-statements')));
+      await tester.pumpAndSettle();
+      final sheet = find.byType(BankStatementsView);
+      expect(sheet, findsOneWidget);
+      final rect = tester.getRect(sheet);
+      expect(
+        (Offset.zero & size).intersect(rect),
+        rect,
+        reason: 'the sheet lies within the window',
+      );
+      expect(tester.takeException(), isNull);
+    });
+  }
 
   testWidgets('at 1440 the cash page goes to money in and out; a phone '
       'keeps it', (tester) async {

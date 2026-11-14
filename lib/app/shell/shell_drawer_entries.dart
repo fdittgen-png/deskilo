@@ -259,23 +259,6 @@ class DrawerEntries {
     ];
   }
 
-  /// #3926 — the cash page's doors as entries of Finance's Cash group at
-  /// the desk, each asking what its page or sheet asks: money in and out
-  /// (MoneyToolRights.status) and the bank statements. What is still to pay
-  /// is the Purchases group's.
-  List<DrawerEntry> cashPages() => [
-    if (permanent &&
-        features.contains(WorkspaceFeature.workspaceStatus) &&
-        may(WorkspacePermission.viewFinances))
-      DrawerEntry('drawer-cash-in-out', Icons.account_balance_outlined,
-          l10n.cashHubInOut, () => go('/money/status'),
-          route: '/money/status'),
-    if (permanent && openBankStatements != null)
-      DrawerEntry('drawer-bank-statements',
-          Icons.account_balance_wallet_outlined, l10n.bankStatementsTitle,
-          openBankStatements!),
-  ];
-
   /// #3307 — the space's orders to its suppliers, for a buyer or a
   /// finance reader.
   List<DrawerEntry> _purchaseOrders() => [
