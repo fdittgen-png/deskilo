@@ -197,7 +197,7 @@
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
   "accountingStatusAllBooks": "Toute la comptabilité",
-  "accountingStatusAtLeast": "{count} ou plus",
+  "accountingStatusAtLeast": "{figure} ou plus",
   "accountingStatusBankToMatch": "Lignes bancaires à rapprocher",
   "accountingStatusClosedUpTo": "Comptes clôturés jusqu’au",
   "accountingStatusLastExport": "Dernier export",

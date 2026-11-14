@@ -90,7 +90,7 @@ class DemoTradeCity {
     inviteCode: inviteCode,
     environment: 'prod',
     rolePermissions: everydayMatrix(),
-    featureFlags: demoFeatureFlags,
+    featureFlags: demoOtherSpacesFeatureFlags,
     address: '$street\n$postalCode $city',
     street: street,
     city: city,

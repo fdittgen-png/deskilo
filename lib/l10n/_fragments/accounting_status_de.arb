@@ -17,5 +17,5 @@
   "vatReturnNotCompared": "Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.",
   "vatReturnOpen": "Erklärung öffnen",
   "accountingExportsTitle": "Exporte",
-  "accountingStatusAtLeast": "{count} oder mehr"
+  "accountingStatusAtLeast": "{figure} oder mehr"
 }

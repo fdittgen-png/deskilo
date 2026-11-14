@@ -17,5 +17,5 @@
   "vatReturnNotCompared": "Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.",
   "vatReturnOpen": "Apri la dichiarazione",
   "accountingExportsTitle": "Esportazioni",
-  "accountingStatusAtLeast": "{count} o più"
+  "accountingStatusAtLeast": "{figure} o più"
 }

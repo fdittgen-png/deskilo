@@ -283,8 +283,8 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingStatusAllBooks => 'Tutta la contabilità';
 
   @override
-  String accountingStatusAtLeast(String count) {
-    return '$count o più';
+  String accountingStatusAtLeast(String figure) {
+    return '$figure o più';
   }
 
   @override

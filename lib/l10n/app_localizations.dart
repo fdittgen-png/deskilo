@@ -575,8 +575,8 @@ abstract class AppLocalizations {
   /// #3913 A count shown when some rows could not be read by this version: the true count is at least this.
   ///
   /// In en, this message translates to:
-  /// **'{count} or more'**
-  String accountingStatusAtLeast(String count);
+  /// **'{figure} or more'**
+  String accountingStatusAtLeast(String figure);
 
   /// #3616 books status tile: bank movements waiting for a match
   ///

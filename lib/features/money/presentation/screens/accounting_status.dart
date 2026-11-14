@@ -15,14 +15,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart' show DateFormat;
 
-import '../../../../core/data/unreadable_rows.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/bank/bank_records.dart' show bankStatementsArea;
 import '../../domain/number_sequence.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../../providers/book_period_providers.dart';
@@ -103,8 +101,7 @@ _AccountingStatus _accountingStatusOf(WidgetRef ref, String workspaceId) {
     bankToMatch: statements.whenData(
       (all) => (
         count: all.fold(0, (sum, s) => sum + s.openCount),
-        incomplete:
-            UnreadableRows.instance.count(bankStatementsArea(workspaceId)) > 0,
+        incomplete: bankStatementsLeftOut(workspaceId),
       ),
     ),
     nextInvoiceNumber: sequences.whenData((all) {
