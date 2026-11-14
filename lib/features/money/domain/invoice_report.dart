@@ -26,6 +26,7 @@
 //
 // A band that fails to parse or render NEVER blocks an invoice: the
 // caller falls back to the built-in layout.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:liquify/liquify.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -148,6 +149,7 @@ class InvoiceReport {
     required this.footer,
     this.continuation = const [],
     this.numberFirstPage = false,
+    this.paper = Paper.a4,
   });
 
   final List<ReportBlock> header;
@@ -161,6 +163,9 @@ class InvoiceReport {
   /// #2862 — whether page 1 carries its number too: a report's pages are
   /// counted from the first, a letter's from the second.
   final bool numberFirstPage;
+
+  /// #3852 — the paper the report is printed on.
+  final Paper paper;
 
   /// This report with page 1 numbered when the kind [kindId] asks for it.
   InvoiceReport numberedFor(String kindId) {

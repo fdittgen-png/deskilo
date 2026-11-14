@@ -247,8 +247,7 @@ class InvoicePdfStrings {
 }
 
 /// A standalone banded LETTER (#472: the payment reminders) — the
-/// report bands on a page of [paper] (#3852; A4 unless named) with the
-/// page footer, but NONE of the
+/// report bands on its paper (#3852) with the page footer, but NONE of the
 /// invoice's legal chrome: no signature (nothing was issued), no void
 /// watermark, no annex.
 Future<Uint8List> buildBandedLetterPdf({
@@ -264,13 +263,12 @@ Future<Uint8List> buildBandedLetterPdf({
   /// or a reminder from a rehearsal space must be as unmistakable as
   /// the invoices are.
   String watermark = '',
-  Paper paper = Paper.a4,
 }) {
   final doc = pw.Document(title: documentTitle, producer: _producer)
     ..addPage(
     reportFlowPage(
       pageTheme: pw.PageTheme(
-        pageFormat: pdfPageFormatOf(paper),
+        pageFormat: pdfPageFormatOf(report.paper),
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
         buildForeground: watermarkForeground(watermark),
