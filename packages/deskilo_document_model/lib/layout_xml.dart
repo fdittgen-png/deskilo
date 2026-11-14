@@ -121,7 +121,8 @@ LayoutDocument parseLayoutXml(String source) {
   final page = root.getAttribute(LayoutXml.attrPage) ?? 'A4';
   if (!LayoutDocument.pageFormats.contains(page)) {
     throw LayoutException(
-        LayoutError.badAttribute, 'page="$page" is not one of A4');
+        LayoutError.badAttribute,
+        'page="$page" is not one of ${LayoutDocument.pageFormats.join(', ')}');
   }
   final margin = Length.tryParse(root.getAttribute(LayoutXml.attrMargin),
           attribute: 'report-layout/@margin') ??

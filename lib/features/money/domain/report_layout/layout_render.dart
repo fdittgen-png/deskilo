@@ -73,7 +73,7 @@ Object? _escapeValue(Object? v) => switch (v) {
     };
 
 
-/// Renders [document] to A4 pages.
+/// Renders [document] to pages of its paper (#3852).
 ///
 /// [data] is the unescaped map the recipient block reads its name and
 /// address from. The legal chrome the bands never templated — the
