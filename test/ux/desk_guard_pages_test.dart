@@ -549,9 +549,10 @@ const _pages = [
   ('/reports', PageKind.records, 'reports', 'reports'),
   // #3947 — the report editor: its page shrunk beside the preview at 1440.
   ('/report-editor', PageKind.document, 'reports', 'report-editor'),
-  // #3970 — and with a line of the body selected: its toolbar is measured.
+  // #3970 — and with a line selected (the default layout first, which an
+  // empty page takes without asking): its toolbar is measured.
   (
-    '/report-editor?select=visual-body-line-0',
+    '/report-editor?select=invoice-template-reset,visual-header-line-0',
     PageKind.document,
     'reports',
     'report-editor-line',
@@ -648,11 +649,14 @@ void main() {
       ) async {
         final semantics = tester.ensureSemantics();
         await _open(tester, path, size);
-        // #3970 — a page measured with one of its parts selected.
-        if (Uri.parse(path).queryParameters['select'] case final key?) {
-          await tester.ensureVisible(find.byKey(ValueKey(key)));
-          await tester.tap(find.byKey(ValueKey(key)));
-          await tester.pumpAndSettle();
+        // #3970 — a page measured with one of its parts selected: the keys
+        // named are tapped in order.
+        if (Uri.parse(path).queryParameters['select'] case final keys?) {
+          for (final key in keys.split(',')) {
+            await tester.ensureVisible(find.byKey(ValueKey(key)));
+            await tester.tap(find.byKey(ValueKey(key)));
+            await tester.pumpAndSettle();
+          }
         }
         final details = <String>[];
         expect(
