@@ -75,8 +75,10 @@ select is(public.country_papers('CH', current_date),
 select is(public.country_papers('FR', current_date),
   '{"paper": "A4", "papers": ["A4", "Letter"]}'::jsonb,
   'a row that names no paper: A4, and either may be chosen');
-select is(public.country_papers('US', date '2026-01-01') ->> 'paper', 'A4',
-  'before its new version a country''s row named no paper');
+select is((select count(*)::int from public.tax_reference
+            where domain = 'country' and key = 'catalogue' and country in ('CA', 'CH', 'US')
+              and valid_to is null),
+  3, 'the open row of each country carries its papers: no second version');
 select is((select count(*)::int from public.tax_reference
             where domain = 'country' and key = 'catalogue'
               and not public.tax_reference_valid(domain, value)),

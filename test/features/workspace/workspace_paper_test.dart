@@ -154,7 +154,8 @@ void main() {
         'banking_scheme': 'ch',
         'paper': 'A4',
       });
-      expect((value.paper, value.papers), (null, ['A4']));
+      expect(value.paper, isNull);
+      expect(value.papers, ['A4']);
       final us = countryValueOf(fields(''), {
         'banking_scheme': 'us',
         'paper': 'Letter',

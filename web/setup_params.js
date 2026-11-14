@@ -101,7 +101,7 @@ const langOpts=()=>LANGS.map(([v,k])=>[v,k?T(k):ENDONYMS[v]]);
 // then the papers it allows when there are several; the hint says why when
 // there is one only.
 const paperName=p=>T(p==='Letter'?'identityPaperLetter':'identityPaperA4');
-const paperCountry=()=>COUNTRIES.find(c=>c[0]===S.country)||['', '', '', '', 'A4', ['A4','Letter']];
+const paperCountry=()=>COUNTRIES.find(c=>c[0]===(S&&S.country))||['','','','','A4',['A4','Letter']];
 const paperOpts=()=>{const c=paperCountry();return[['',T('identityPaperFollows',{paper:paperName(c[4]),country:countryName(c[0])})],...(c[5].length>1?c[5].map(p=>[p,paperName(p)]):[])]};
 const paperHint=()=>{const c=paperCountry();return c[5].length>1?T('identityPaperHint'):T(PAYMENT_SLIP_COUNTRIES.includes(c[0])?'identityPaperOnlySlip':'identityPaperOnly',{paper:paperName(c[5][0])})};
 const VAT_GROUPS=[['standard','vatGroupStandard'],['intermediate','vatGroupIntermediate'],['reduced','vatGroupReduced'],['super_reduced','vatGroupSuperReduced'],['zero','vatGroupZero'],['exempt','vatGroupExempt'],['not_subject','vatGroupNotSubject'],['deposit','vatGroupDeposit'],['excise','vatGroupExcise']];
@@ -124,7 +124,7 @@ const PARAM_META=[
  ['name','identityName','text'],['environment','identityEnvironment','enum',()=>ENVIRONMENTS.map(x=>x[0])],
  ['country','identityCountry','enum',()=>COUNTRIES.map(c=>c[0])],['currency','identityCurrency','enum',()=>CURRENCIES.slice()],
  ['timezone','identityTimezone','enum',()=>TIMEZONES.slice()],['language','identityLanguage','enum',()=>LANGS.map(x=>x[0])],
- ['paper','identityPaper','enum',()=>paperOpts().map(x=>x[0])],
+ ['paper','identityPaper','enum',()=>['','A4','Letter']],
  ['network.roles','networkRoles','enum',()=>NETWORK_ROLES.map(x=>x[0])],['network.homeUrl','networkHomeUrl','text'],['network.homeKey','networkHomeKey','text'],
  ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
  ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],

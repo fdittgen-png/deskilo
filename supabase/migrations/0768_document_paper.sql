@@ -6,7 +6,9 @@
 --    A4) and the papers its documents may use (`papers`, absent: A4 and
 --    Letter). The United States and Canada use Letter; Switzerland's
 --    invoices end on a payment part printed on A4, so it allows A4 only.
---    Each is a new version of the country's row.
+--    The rows are creation defaults no one has confirmed, and an unconfirmed
+--    version that closes another is only a proposal to the app: the open
+--    rows carry the paper themselves.
 --  * `workspaces.paper` is the business's choice; null follows its
 --    country. A paper outside the country's set is refused in words, by
 --    every door that writes the row.
@@ -69,32 +71,36 @@ end
 $migration$;
 
 -- ── 2. the rows ───────────────────────────────────────────────────────
--- The versions of 1900 end where the new ones begin.
-do $migration$
-declare
-  v_rows int;
-begin
-  update public.tax_reference
-     set valid_to = date '2026-11-14'
-   where domain = 'country' and key = 'catalogue' and country in ('CA', 'CH', 'US')
-     and valid_from = date '1900-01-01' and valid_to is null;
-  get diagnostics v_rows = row_count;
-  -- one open version each; any other count would leave two in force or none
-  if v_rows <> 3 then
-    raise exception '0768: % open catalogue versions of CA, CH and US closed, expected 3', v_rows;
-  end if;
-end
-$migration$;
-
 -- BEGIN GENERATED SEED (dart run tool/build_tax_reference_seed.dart)
 insert into public.tax_reference
   (domain, country, key, valid_from, value, source, confirmed)
 values
-('country', 'CA', 'catalogue', '2026-11-14', '{"currency":"CAD","time_zone":"America/Toronto","banking_scheme":"ca","position":32,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
-('country', 'CH', 'catalogue', '2026-11-14', '{"currency":"CHF","time_zone":"Europe/Zurich","banking_scheme":"ch","position":28,"papers":["A4"]}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
-('country', 'US', 'catalogue', '2026-11-14', '{"currency":"USD","time_zone":"America/New_York","banking_scheme":"us","position":31,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false)
+('country', 'CA', 'catalogue', '1900-01-01', '{"currency":"CAD","time_zone":"America/Toronto","banking_scheme":"ca","position":32,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
+('country', 'CH', 'catalogue', '1900-01-01', '{"currency":"CHF","time_zone":"Europe/Zurich","banking_scheme":"ch","position":28,"papers":["A4"]}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false),
+('country', 'US', 'catalogue', '1900-01-01', '{"currency":"USD","time_zone":"America/New_York","banking_scheme":"us","position":31,"paper":"Letter"}'::jsonb, 'the catalogue a workspace is created from (#711): ISO 3166-1 country, ISO 4217 currency, IANA zone of the capital, banking scheme of the payment instructions. Creation defaults only: not a tax or issuing fact (issuing_gate carries those). #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.', false)
 on conflict (domain, country, key, valid_from) do nothing;
 -- END GENERATED SEED
+
+-- The open rows of CA, CH and US take their papers (the generated lines above
+-- insert nothing where the row exists).
+do $migration$
+declare
+  v_rows int;
+begin
+  update public.tax_reference t
+     set value = t.value || s.papers,
+         source = t.source || ' #3852: the usual paper of its documents (absent: A4) and the papers they may use (absent: A4 and Letter): Letter in the United States and Canada; A4 only in Switzerland, whose invoices end on a payment part printed on A4.'
+    from (values ('CA', '{"paper": "Letter"}'::jsonb),
+                 ('CH', '{"papers": ["A4"]}'::jsonb),
+                 ('US', '{"paper": "Letter"}'::jsonb)) s(country, papers)
+   where t.domain = 'country' and t.key = 'catalogue' and t.country = s.country
+     and t.valid_from = date '1900-01-01' and t.valid_to is null;
+  get diagnostics v_rows = row_count;
+  if v_rows <> 3 then
+    raise exception '0768: % open catalogue rows of CA, CH and US took their papers, expected 3', v_rows;
+  end if;
+end
+$migration$;
 
 -- ── 3. the papers of a country ────────────────────────────────────────
 -- The usual paper of [p_country] on [p_on], and the papers it allows:
