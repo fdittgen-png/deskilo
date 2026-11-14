@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:meta/meta.dart';
+
 import '../../../features/money/domain/vies_check.dart';
 import '../../../features/money/domain/vies_repository.dart';
 import 'fixture_clock.dart';
 
 /// #2354 — VIES checks in memory. Demo never reaches VIES, so a check it
 /// is asked to make is an honest outage, never an invented "valid".
+@visibleForTesting
 class FakeViesRepository implements ViesRepository {
   /// memberId → the last check; tests seed it.
   final Map<String, ViesCheck> checks = {};

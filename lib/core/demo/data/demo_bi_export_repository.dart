@@ -6,6 +6,7 @@
 // pages show. A figure the Demo does not hold (accounts payable, say) is the
 // server's own `0A000` for that figure and is left out and said, never
 // approximated; amounts keep their currency; the same ask is the same hash.
+import '../../../core/trace/trace_logger.dart';
 import '../../../features/workspace/domain/bi_batch.dart';
 import '../../../features/workspace/domain/bi_report_snapshot.dart';
 import '../../../features/workspace/domain/kpi_contract.dart';
@@ -71,7 +72,13 @@ class DemoBiExportRepository implements BiExportRepository {
         );
         return {...base, 'ok': true, 'result': _money(k)};
       }
-    } on KpiUnavailable catch (e) {
+    } on KpiUnavailable catch (e, st) {
+      TraceLogger.instance.error(
+        'workspace',
+        'a figure of the Demo export is unavailable',
+        error: e,
+        stackTrace: st,
+      );
       return {...base, 'ok': false, 'code': '22023', 'message': e.reason};
     }
     return {

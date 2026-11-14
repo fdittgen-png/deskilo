@@ -482,17 +482,3 @@ abstract interface class BiExportRepository {
     int? reportRevision,
   });
 }
-
-/// No server to export from (the demonstration).
-class UnavailableBiExportRepository implements BiExportRepository {
-  const UnavailableBiExportRepository();
-
-  @override
-  Future<Object?> snapshot(
-    String workspaceId, {
-    required List<BiBatchRequest> requests,
-    required BiExportFormat format,
-    String? reportId,
-    int? reportRevision,
-  }) async => throw const BiExportRefused(BiExportFailure.unavailable);
-}
