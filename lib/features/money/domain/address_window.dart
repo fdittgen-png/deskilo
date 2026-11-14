@@ -3,6 +3,7 @@
 // #2592 - the geometry and the window widgets live in
 // packages/deskilo_document_pdf. The market default below is Deskilo's.
 import 'package:deskilo_document_model/address_window_kind.dart';
+import 'package:deskilo_document_model/paper.dart';
 
 export 'package:deskilo_document_pdf/address_window.dart';
 
@@ -21,3 +22,9 @@ AddressWindow addressWindowForCountry(String countryCode) =>
       'FR' || 'MC' => AddressWindow.right,
       _ => AddressWindow.left,
     };
+
+/// #3852 — the window of a document printed on [paper]. The conventions
+/// are A4 ones (the millimetres of `address_window_kind.dart`); on another
+/// paper no window is promised and the recipient prints in the flow.
+AddressWindow addressWindowOnPaper(AddressWindow window, Paper paper) =>
+    paper == Paper.a4 ? window : AddressWindow.off;

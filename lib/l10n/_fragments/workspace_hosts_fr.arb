@@ -11,5 +11,6 @@
   "createOnHostBanner": "Cet espace sera créé sur {host}.",
   "createHostLost": "Le serveur choisi pour cet espace n'est plus retenu. Rien n'a été créé.",
   "createHostChooseAgain": "Choisir un serveur",
-  "createHostNone": "Aucun serveur n'accepte encore de nouvelles entreprises pour votre domicile personnel. Rien n'a été créé."
+  "createHostNone": "Aucun serveur n'accepte encore de nouvelles entreprises pour votre domicile personnel. Rien n'a été créé.",
+  "createHostUnreadable": "Cette version ne sait pas lire l'état de cet hébergeur. Mettez l'application à jour, puis choisissez-le à nouveau."
 }

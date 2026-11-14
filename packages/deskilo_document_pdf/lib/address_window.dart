@@ -14,15 +14,15 @@ const double _mm = 72 / 25.4;
 /// 45 mm from the top (50 mm is the outer limit an aperture tolerates)
 /// and a 85 × 40 mm rectangle. The width and height are the APERTURE:
 /// everything drawn must fit inside them or it is behind cardboard.
-const double addressWindowTop = 45 * _mm;
-const double addressWindowWidth = 85 * _mm;
-const double addressWindowHeight = 40 * _mm;
+const double addressWindowTop = addressWindowTopMm * _mm;
+const double addressWindowWidth = addressWindowWidthMm * _mm;
+const double addressWindowHeight = addressWindowHeightMm * _mm;
 
 /// Where the document's own content resumes — 90 mm, below BOTH the
 /// field and the tolerance band under it. The invoice identification
 /// (the word "Facture", the number, the dates) starts here, so this is
 /// the first line of the body and not a matter of taste.
-const double addressWindowFlowResume = 90 * _mm;
+const double addressWindowFlowResume = addressWindowFlowResumeMm * _mm;
 
 /// The page margin: 20 mm from the top and left edges, which is where
 /// the sender block sits. The letterhead therefore has the 25 mm
@@ -36,16 +36,9 @@ const double pageMargin = 20 * _mm;
 const double senderLogoMaxHeight = 12 * _mm;
 
 extension AddressWindowGeometry on AddressWindow {
-  /// Distance from the LEFT PAGE EDGE to the address field.
-  ///
-  /// 110 mm is the right-hand DL aperture the French spec names; 20 mm
-  /// is the DIN 5008 left-hand one.
-  double get leftEdge => switch (this) {
-        AddressWindow.left => 20 * _mm,
-        AddressWindow.right => 110 * _mm,
-        // Never read: [off] places nothing.
-        AddressWindow.off => 0,
-      };
+  /// Distance from the LEFT PAGE EDGE to the address field, in points
+  /// ([AddressWindowMillimetres.leftEdgeMm]).
+  double get leftEdge => leftEdgeMm * _mm;
 
   bool get isOn => this != AddressWindow.off;
 }

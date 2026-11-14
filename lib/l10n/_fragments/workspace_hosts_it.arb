@@ -11,5 +11,6 @@
   "createOnHostBanner": "Questo spazio verrà creato su {host}.",
   "createHostLost": "Il server scelto per questo spazio non è più riservato. Non è stato creato nulla.",
   "createHostChooseAgain": "Scelga un server",
-  "createHostNone": "Nessun server accetta ancora nuove attività per la Sua casa personale. Non è stato creato nulla."
+  "createHostNone": "Nessun server accetta ancora nuove attività per la Sua casa personale. Non è stato creato nulla.",
+  "createHostUnreadable": "Questa versione non riesce a leggere lo stato di questo host. Aggiorna l'app, poi sceglilo di nuovo."
 }

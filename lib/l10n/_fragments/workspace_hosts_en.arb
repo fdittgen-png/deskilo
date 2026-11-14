@@ -52,5 +52,9 @@
   "createHostNone": "No server accepts new businesses for your personal home yet. Nothing was created.",
   "@createHostNone": {
     "description": "#2554 Create: a personal home that hosts no space and has no enrolled server offers nothing to create on"
+  },
+  "createHostUnreadable": "This version cannot read this host's state. Update the app, then choose it again.",
+  "@createHostUnreadable": {
+    "description": "#3913 A chosen host the personal home lists in a state this version cannot read: not guessed; names the next step."
   }
 }

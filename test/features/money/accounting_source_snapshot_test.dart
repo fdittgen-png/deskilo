@@ -214,6 +214,18 @@ void main() {
     _refused(c, AccountingSourceFailure.inconsistent);
   });
 
+  // #3913 — an authority or a basis decides the books: a profile this
+  // version cannot read stops the export, never an export without it.
+  test('a book profile of an authority or a basis this version does not '
+      'know stops the export', () {
+    final a = _answer();
+    ((a['book_profiles']! as List)[0]! as Map)['authority_mode'] = 'ledger';
+    _refused(a, AccountingSourceFailure.inconsistent);
+    final b = _answer();
+    ((b['book_profiles']! as List)[0]! as Map)['accounting_basis'] = 'mixed';
+    _refused(b, AccountingSourceFailure.inconsistent);
+  });
+
   test('#2587: the purchases come with their lines; missing or off their '
       'totals stops', () {
     final ok = _parse(_answer());
