@@ -487,6 +487,12 @@ Map<String, List<String>> _openItems() {
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'invoices': {
+    // #3853 — whether this installation keeps the invoice's stored original:
+    // a fact of this installation's store, which the original's own record
+    // states; the invoice's own facts are exported.
+    'keeps_original',
+  },
   'invoice_transmissions': {
     // #3335 — the dispatch bookkeeping of an e-invoice submission (its
     // business key, binding, owner, generation, deadline,
