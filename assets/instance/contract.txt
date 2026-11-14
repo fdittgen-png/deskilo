@@ -2498,7 +2498,7 @@ routine public.conversation_details(p_conversation_id uuid) -> jsonb | function 
 routine public.convert_to_series(p_reservation_id uuid, p_pattern text, p_until timestamp with time zone, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f1bc75036b58
 routine public.cost_allocation_rule_json(r bi_cost_allocation_rules) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:622f770f2792
 routine public.cost_allocation_rules_v1(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:789cffb7df60
-routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e88ec4f4583e
+routine public.country_papers(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:e88ec4f4583e
 routine public.courtesy_word(p_code text, p_lang text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:6ee8d303b265
 routine public.create_account_group(p_title text, p_users uuid[], p_expected_account uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8824f7fdaaa1
 routine public.create_expense_schedule(p_workspace_id uuid, p_title text, p_amount_cents integer, p_starts_on date, p_unit text, p_every integer, p_repeat_count integer, p_ends_on date, p_description text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:140ce7958d50
@@ -3409,7 +3409,7 @@ routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_nam
 routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[], p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2800511d785e
 routine public.save_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean, p_options jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c85c87cb44a5
 routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1f4d58ca4a5f
-routine public.save_workspace_settings(p_workspace_id uuid, p_expected_modified timestamp with time zone, p_settings jsonb) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:ae269fd64d66
+routine public.save_workspace_settings(p_workspace_id uuid, p_expected_modified timestamp with time zone, p_settings jsonb) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:1c32aa0ab5ee
 routine public.schedule_member_pause(p_member_id uuid, p_from date, p_to date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:450aca7cfd83
 routine public.schedule_member_share_change(p_member_id uuid, p_pct integer, p_effective_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7daa1245c0c6
 routine public.search_available_accounts(p_query text, p_before uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4165707cabe2
@@ -3709,7 +3709,7 @@ routine public.workspaces_money_locale_guard() -> trigger | function | definer |
 routine public.workspaces_network_id_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:09c693249fe1
 routine public.workspaces_network_id_stamp() -> trigger | function | definer | volatile | exec:service_role | body:7859aca20bbd
 routine public.workspaces_pair_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:979827c05d63
-routine public.workspaces_paper_in_country() -> trigger | function | invoker | volatile | exec:service_role | body:b170670f61c1
+routine public.workspaces_paper_in_country() -> trigger | function | definer | volatile | exec:service_role | body:aaa5b8758192
 routine public.workspaces_permitting(p_perms text[]) -> SETOF uuid | function | definer | stable | exec:authenticated,service_role | body:ec6bb1c27b83
 routine public.workspaces_personal_data_admin_role() -> trigger | function | definer | volatile | exec:service_role | body:e730e8b4af0a
 routine public.workspaces_sample_data_stays_test() -> trigger | function | definer | volatile | exec:service_role | body:d260749b5b84
