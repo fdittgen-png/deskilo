@@ -43,6 +43,7 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
     required this.queue,
     required this.today,
     required this.onMatch,
+    this.unknownNote,
     @visibleForTesting this.letterOf,
     @visibleForTesting this.previewOf,
     @visibleForTesting this.mailOf,
@@ -50,9 +51,10 @@ class ReminderQueueScreen extends ConsumerStatefulWidget {
 
   /// The lines waiting, as [reminderQueueOf] draws them from the current
   /// reads; null while who holds money received and not assigned is not
-  /// known: nothing can be shared until it is. A new queue (the reads
-  /// changed) replaces the lines, keeping what already left the device.
+  /// known: nothing can be shared until it is ([unknownNote], #3913). A new
+  /// queue (new reads) replaces the lines but keeps what left the device.
   final ReminderQueue? queue;
+  final String? unknownNote;
 
   /// The business's calendar day (how late each line is).
   final DateTime today;
@@ -329,7 +331,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
               if (_checking) ...[
                 const SizedBox(height: AppSpacing.sm),
                 QuietLine(
-                  l10n.invoicingCheckingPayments,
+                  widget.unknownNote ?? l10n.invoicingCheckingPayments,
                   key: const ValueKey('reminder-queue-checking'),
                 ),
               ],

@@ -8,7 +8,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../application/payment_candidates.dart';
 import '../../application/receivables.dart';
 import '../../application/reminder_queue.dart';
@@ -79,6 +81,15 @@ class LiveCustomerPage extends ConsumerWidget {
         '';
     return CustomerPage(
       customerId: customerId,
+      // #3913 — unknown because ledger entries could not be read: said so
+      // above the page, which offers nothing on it.
+      notice: unassignedMoneyUnreadable(ref.watch(unassignedMoneyProvider))
+          ? InlineBanner(
+              key: const ValueKey('customer-page-unreadable'),
+              icon: Icons.info_outline,
+              text: context.l10n.invoicingUnassignedUnreadable,
+            )
+          : null,
       receivables: now.receivables ?? const [],
       today: now.today,
       mode: now.mode,
@@ -136,6 +147,10 @@ class LiveReminderQueue extends ConsumerWidget {
             holdsUnassigned: money.holders,
           );
     return ReminderQueueScreen(
+      // #3913 — unknown because ledger entries could not be read: said so.
+      unknownNote: unassignedMoneyUnreadable(ref.watch(unassignedMoneyProvider))
+          ? context.l10n.invoicingUnassignedUnreadable
+          : null,
       queue: queue == null || ids == null
           ? queue
           : queue.only(

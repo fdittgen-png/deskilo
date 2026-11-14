@@ -2,6 +2,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/app_info.dart';
+import '../../../core/data/unreadable_rows.dart';
 import '../application/invoice_action.dart';
 import '../data/supabase_accounting_source_queries.dart';
 import '../data/supabase_billing_rules_repository.dart';
@@ -28,6 +29,7 @@ import '../domain/expense_repository.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_queries.dart';
+import '../domain/ledger_entry.dart';
 import '../domain/member_account_commands.dart';
 import '../domain/member_account_queries.dart';
 import '../domain/payment_gateway_repository.dart';
@@ -138,3 +140,9 @@ EInvoiceTransmissions eInvoiceTransmissions(Ref ref) =>
       ref.watch(moneyClientProvider),
       appVersion: () => ref.read(appVersionProvider.future),
     );
+
+/// #3913 — how many ledger rows the last read of [scope] (a member id, or
+/// `ws:<workspace id>`) left out: a screen or a file that shows that ledger
+/// says it is not complete.
+int ledgerLeftOut(String scope) =>
+    UnreadableRows.instance.count(ledgerArea(scope));

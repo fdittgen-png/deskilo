@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../../../core/data/unreadable_rows.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
@@ -76,7 +77,7 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
         .select()
         .eq('member_id', memberId)
         .order('created_at', ascending: false);
-    return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
+    return _counted(rows, ledgerArea(memberId), memberId);
   }
 
   @override
@@ -91,7 +92,30 @@ class SupabaseMemberAccountQueries implements MemberAccountQueries {
           .order('created_at', ascending: false)
           .order('id', ascending: true),
     );
-    return rows.map(_ledgerFromRow).whereType<LedgerEntry>().toList();
+    return _counted(rows, ledgerArea('ws:$workspaceId'), workspaceId);
+  }
+
+  /// #3913 — the rows read, the skipped ones counted under [area] so the
+  /// screens and the files that show the ledger say they are not complete.
+  List<LedgerEntry> _counted(
+    List<Map<String, Object?>> rows,
+    String area,
+    String scope,
+  ) {
+    final kept = <LedgerEntry>[];
+    final left = <String, String>{};
+    for (final row in rows) {
+      final entry = _ledgerFromRow(row);
+      if (entry != null) {
+        kept.add(entry);
+      } else {
+        final r = JsonReader.of(row, context: 'ledger_entries');
+        left[r.stringOr('id')] =
+            'ledger ${r.stringOr('kind')}/${r.stringOr('category')}';
+      }
+    }
+    UnreadableRows.instance.record(area, scope, left, scope: scope);
+    return kept;
   }
 
   // #1148 — a ledger row whose kind or category this build does not

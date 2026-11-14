@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
 import '../../../events/presentation/widgets/event_validation_trail.dart';
@@ -103,6 +104,8 @@ class BillView extends StatelessWidget {
     final balance = _BalanceFooter(statement: statement, settlement: settlement,
         money: currency.formatMinor, prominent: face != null);
     final cards = <Widget>[
+      // #3913 — the ledger rows this version could not read, counted.
+      UnreadableRowsNotice.area(ledgerArea(memberId)),
       if (face != null && (showStatement || showPayments)) balance,
       if (showStatement) ...[
         // At-a-glance usage for the current month (days included, used and

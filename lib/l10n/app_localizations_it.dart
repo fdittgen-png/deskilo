@@ -16829,6 +16829,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoicingTryAgain => 'Riprova';
 
   @override
+  String get invoicingUnassignedUnreadable =>
+      'Il denaro ricevuto e non assegnato non è noto: questa versione non riesce a leggere alcuni movimenti del conto, e nessuno riceve solleciti finché non vengono letti. Aggiorna l\'app, poi riapri le fatture.';
+
+  @override
   String get invoicingViewCustomers => 'Clienti';
 
   @override
@@ -20154,6 +20158,10 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get meRefStale => 'Iscrizione non confermata di recente';
+
+  @override
+  String get meRefStatusUnknown =>
+      'Stato di iscrizione che questa versione non sa leggere';
 
   @override
   String get meRefUnnamed => 'Un posto su un altro server';
@@ -37423,6 +37431,19 @@ class AppLocalizationsIt extends AppLocalizations {
       other:
           '$count prenotazioni non sono state lette da questa versione dell\'app e non sono in questo file.',
       one: '1 prenotazione non è stata letta da questa versione dell\'app e non è in questo file.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workspaceExportUnreadableLedger(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count movimenti del conto non sono stati letti da questa versione dell\'app e non sono in questo file.',
+      one:
+          '$count movimento del conto non è stato letto da questa versione dell\'app e non è in questo file.',
     );
     return '$_temp0';
   }

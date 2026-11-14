@@ -16890,6 +16890,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingTryAgain => 'Réessayer';
 
   @override
+  String get invoicingUnassignedUnreadable =>
+      'L\'argent reçu et non affecté n\'est pas connu : cette version ne sait pas lire certaines écritures du compte, et personne n\'est relancé tant qu\'elles ne le sont pas. Mettez l\'application à jour, puis rouvrez les factures.';
+
+  @override
   String get invoicingViewCustomers => 'Clients';
 
   @override
@@ -20224,6 +20228,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get meRefStale => 'Adhésion non confirmée récemment';
+
+  @override
+  String get meRefStatusUnknown =>
+      'Statut d\'adhésion illisible pour cette version';
 
   @override
   String get meRefUnnamed => 'Un lieu sur un autre serveur';
@@ -37546,6 +37554,19 @@ class AppLocalizationsFr extends AppLocalizations {
           '$count réservations n\'ont pas pu être lues par cette version de l\'application et ne figurent pas dans ce fichier.',
       one:
           '$count réservation n\'a pas pu être lue par cette version de l\'application et ne figure pas dans ce fichier.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workspaceExportUnreadableLedger(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count écritures du compte n\'ont pas pu être lues par cette version de l\'application et ne figurent pas dans ce fichier.',
+      one:
+          '$count écriture du compte n\'a pas pu être lue par cette version de l\'application et ne figure pas dans ce fichier.',
     );
     return '$_temp0';
   }

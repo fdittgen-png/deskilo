@@ -16856,6 +16856,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingTryAgain => 'Erneut versuchen';
 
   @override
+  String get invoicingUnassignedUnreadable =>
+      'Das eingegangene, nicht zugeordnete Geld ist nicht bekannt: Diese Version kann einige Kontobuchungen nicht lesen, und niemand wird erinnert, bis sie gelesen werden. Aktualisieren Sie die App und öffnen Sie die Rechnungen erneut.';
+
+  @override
   String get invoicingViewCustomers => 'Kunden';
 
   @override
@@ -20179,6 +20183,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get meRefStale => 'Mitgliedschaft seit einiger Zeit nicht bestätigt';
+
+  @override
+  String get meRefStatusUnknown =>
+      'Mitgliedsstatus, den diese Version nicht lesen kann';
 
   @override
   String get meRefUnnamed => 'Ein Ort auf einem anderen Server';
@@ -37480,6 +37488,19 @@ class AppLocalizationsDe extends AppLocalizations {
       other:
           '$count Buchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.',
       one: '1 Buchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workspaceExportUnreadableLedger(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Kontobuchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.',
+      one:
+          '$count Kontobuchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.',
     );
     return '$_temp0';
   }

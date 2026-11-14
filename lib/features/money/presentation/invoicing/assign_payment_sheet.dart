@@ -475,7 +475,10 @@ class _AssignPaymentBodyState extends ConsumerState<_AssignPaymentBody> {
       for (final source in sources)
         Text(
           source == InvoicingSource.credits
-              ? l10n.assignPaymentReadFailedPayment
+              // #3913 — unknown because ledger entries could not be read.
+              ? unassignedMoneyUnreadable(ref.watch(unassignedMoneyProvider))
+                  ? l10n.invoicingUnassignedUnreadable
+                  : l10n.assignPaymentReadFailedPayment
               : l10n.assignPaymentReadFailedInvoices,
           key: ValueKey('assign-payment-failed-${source.name}'),
         ),
