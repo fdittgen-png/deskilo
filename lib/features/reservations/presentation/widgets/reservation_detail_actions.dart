@@ -7,14 +7,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/trace/act_trace.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../l10n/app_localizations.dart';
 import '../../../plan/domain/half_day_windows.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../application/change_reservation.dart';
@@ -22,6 +21,7 @@ import '../../domain/booking_error_text.dart';
 import '../../domain/reservation.dart';
 import '../../domain/reservation_repository.dart';
 import 'reservation_detail_sheet.dart';
+import 'reservation_edit_pickers.dart';
 import 'reservation_time_picker.dart';
 import 'series_result_dialog.dart';
 
@@ -33,6 +33,8 @@ class ReservationDetailActions {
     required this.seriesAllowed,
     required this.refresh,
     required this.repository,
+    this.inPane = false,
+    this.onRefused,
   });
 
   final Reservation reservation;
@@ -49,6 +51,28 @@ class ReservationDetailActions {
   /// The bookings, resolved by the sheet when an action runs.
   final ReservationRepository Function() repository;
 
+  /// #3843 — the actions stand in a pane beside the calendar, not in a
+  /// sheet: nothing closes after them, and cancel asks as a short task.
+  final bool inPane;
+
+  /// #3843 — where a refusal is said (the pane); else a snack.
+  final void Function(String refusal)? onRefused;
+
+  /// Closes the sheet after an action; a pane stays.
+  void _close(BuildContext context) {
+    if (!inPane) Navigator.of(context).pop();
+  }
+
+  void _refused(BuildContext context, String refusal) {
+    final say = onRefused;
+    say == null ? AppSnack.error(context, refusal) : say(refusal);
+  }
+
+  /// The question before an action: a phone sheet, or a short task.
+  Future<T?> _ask<T>(BuildContext context, WidgetBuilder builder) => inPane
+      ? showTask<T>(context, size: TaskSize.short, builder: builder)
+      : showAppSheet<T>(context: context, builder: builder);
+
   BookingGranularity get _granularity =>
       readGranularity() ?? BookingGranularity.flexible;
 
@@ -56,7 +80,7 @@ class ReservationDetailActions {
   /// seat sheet files the same request through [requestBookingDeletion]).
   Future<void> requestDeletion(BuildContext context, WidgetRef ref) async {
     if (!await requestBookingDeletion(context, ref, reservation)) return;
-    if (context.mounted) Navigator.of(context).pop();
+    if (context.mounted) _close(context);
   }
 
   // ── cancel ──
@@ -66,9 +90,9 @@ class ReservationDetailActions {
   Future<void> cancel(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
     final r = reservation;
-    final choice = await showAppSheet<CancelScope>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
+    final choice = await _ask<CancelScope>(
+      context,
+      (sheetContext) => SafeArea(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -114,12 +138,12 @@ class ReservationDetailActions {
         stackTrace: st,
       );
       if (!context.mounted) return;
-      AppSnack.error(context, l10n.workspaceGenericError);
+      _refused(context, l10n.workspaceGenericError);
       return;
     }
     refresh();
     if (!context.mounted) return;
-    Navigator.of(context).pop();
+    _close(context);
     AppSnack.success(context, l10n.reservationCancelledSnack);
   }
 
@@ -137,7 +161,7 @@ class ReservationDetailActions {
 
     HalfDayWindow? window;
     if (granularity == BookingGranularity.halfDay) {
-      window = await _pickHalfDayWindow(context, l10n, day);
+      window = await pickHalfDayWindow(context, l10n, day);
     } else if (granularity == BookingGranularity.fullDay) {
       window = HalfDayWindows.fullDay(day);
     } else {
@@ -158,7 +182,7 @@ class ReservationDetailActions {
     final canRepeat = r.seriesId == null && seriesAllowed();
     SeriesPattern? pattern;
     if (canRepeat) {
-      pattern = await _pickPattern(context, l10n);
+      pattern = await pickSeriesPattern(context, l10n);
       if (!context.mounted) return;
     }
 
@@ -194,7 +218,7 @@ class ReservationDetailActions {
       if (!context.mounted) return;
       // #574 — the server's own reason (granularity, one-place, quota),
       // not a generic "taken": the edit flow used to swallow it.
-      AppSnack.error(
+      _refused(
         context,
         bookingErrorText(
           l10n,
@@ -207,7 +231,7 @@ class ReservationDetailActions {
     }
     refresh();
     if (!context.mounted) return;
-    Navigator.of(context).pop();
+    _close(context);
     // A repeat may book some dates and skip others, and the skips are
     // what the member needs to see — a generic "updated" would hide
     // them. The plain move has nothing to report beyond success.
@@ -370,7 +394,7 @@ class ReservationDetailActions {
         stackTrace: st,
       );
       if (!context.mounted) return;
-      AppSnack.error(
+      _refused(
         context,
         bookingErrorText(
           l10n,
@@ -383,114 +407,7 @@ class ReservationDetailActions {
     }
     refresh();
     if (!context.mounted) return;
-    Navigator.of(context).pop();
+    _close(context);
     AppSnack.success(context, l10n.reservationUpdatedSnack);
-  }
-
-  /// Repeat-modality picker for the edit flow (spec §5.2): the same
-  /// choices as the booking sheet's Repeat dropdown, as tappable rows.
-  Future<SeriesPattern?> _pickPattern(
-    BuildContext context,
-    AppLocalizations l10n,
-  ) {
-    Widget row(String key, SeriesPattern? p, String label, IconData icon) =>
-        ListTile(
-          key: ValueKey(key),
-          leading: Icon(icon),
-          title: Text(label),
-          onTap: () => Navigator.of(context).pop(p),
-        );
-    return showAppSheet<SeriesPattern?>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            row(
-              'edit-repeat-none',
-              null,
-              l10n.repeatNone,
-              Icons.event_outlined,
-            ),
-            row(
-              'edit-repeat-daily',
-              SeriesPattern.daily,
-              l10n.repeatDaily,
-              Icons.repeat,
-            ),
-            row(
-              'edit-repeat-weekdays',
-              SeriesPattern.weekdays,
-              l10n.repeatWeekdays,
-              Icons.work_outline,
-            ),
-            row(
-              'edit-repeat-weekly',
-              SeriesPattern.weekly,
-              l10n.repeatWeekly,
-              Icons.view_week_outlined,
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Future<HalfDayWindow?> _pickHalfDayWindow(
-    BuildContext context,
-    AppLocalizations l10n,
-    DateTime day,
-  ) {
-    return showAppSheet<HalfDayWindow>(
-      context: context,
-      builder: (sheetContext) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              key: const ValueKey('edit-window-am'),
-              leading: const Icon(Icons.wb_twilight_outlined),
-              title: Text(
-                lexiconText(
-                  context,
-                  key: 'planMorningChip',
-                  fallback: l10n.planMorningChip,
-                ),
-              ),
-              onTap: () =>
-                  Navigator.of(sheetContext).pop(HalfDayWindows.morning(day)),
-            ),
-            ListTile(
-              key: const ValueKey('edit-window-pm'),
-              leading: const Icon(Icons.wb_sunny_outlined),
-              title: Text(
-                lexiconText(
-                  context,
-                  key: 'planAfternoonChip',
-                  fallback: l10n.planAfternoonChip,
-                ),
-              ),
-              onTap: () =>
-                  Navigator.of(sheetContext).pop(HalfDayWindows.afternoon(day)),
-            ),
-            ListTile(
-              key: const ValueKey('edit-window-day'),
-              leading: const Icon(Icons.today_outlined),
-              title: Text(
-                lexiconText(
-                  context,
-                  key: 'reserveFullDayChip',
-                  fallback: l10n.reserveFullDayChip,
-                ),
-              ),
-              onTap: () =>
-                  Navigator.of(sheetContext).pop(HalfDayWindows.fullDay(day)),
-            ),
-            const SizedBox(height: 8),
-          ],
-        ),
-      ),
-    );
   }
 }
