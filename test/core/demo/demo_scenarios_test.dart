@@ -64,6 +64,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_free_seat.dart';
+import '../../helpers/demo_outbox_journeys.dart';
+import '../../helpers/demo_payment_journeys.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -715,11 +717,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) => w.f.money.invoices.any((i) => i.number.isNotEmpty),
   ),
   // ── billingPayments / collection ────────────────────────────────────
+  // #3961 — the order the app starts, the Demo's stand-in for the provider's
+  // page, and the books that agree afterwards.
   WorkspaceFeature.onlinePayments: _action(
     _member,
-    'Bruno pays his bill '
-    'online (the provider is simulated)',
-    (w) => _open(w, 'member-2'),
+    'Bruno pays his bill online on the Demo\'s stand-in for the provider\'s '
+    'page',
+    (w) => _open(w, 'member-2') ? onlinePaymentJourney() : false,
   ),
   WorkspaceFeature.bankImport: _state(
     _owner,
@@ -1114,6 +1118,19 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a bill sent '
     'as an e-invoice (the gateway is simulated)',
     (w) => w.f.money.invoices.isNotEmpty,
+  ),
+  // #3960 — e-mail is recorded in the Demo's outbox; nothing is sent.
+  WorkspaceFeature.reminderEmail: _action(
+    _owner,
+    'Ada e-mails the first reminder of an overdue bill; the customer '
+    'without an address is refused',
+    (_) => reminderEmailJourney(),
+  ),
+  WorkspaceFeature.invoiceEmail: _action(
+    _owner,
+    'Ada e-mails an invoice and sees it recorded with its date; the '
+    'customer without an address is refused',
+    (_) => invoiceEmailJourney(),
   ),
 };
 

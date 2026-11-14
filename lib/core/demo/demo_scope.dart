@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
+import 'package:deskilo/core/demo/data/money/demo_outbox.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -42,6 +43,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_payment_approval.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
@@ -55,6 +57,7 @@ import 'package:deskilo/features/directory/providers/saved_places_providers.dart
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
+import 'package:deskilo/features/money/providers/payment_approval_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_mail_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
@@ -185,7 +188,7 @@ DemoSetupBooks _mainSetupBooks(DemoFixture fixture) {
 /// receipts -- seeded for the session's day.
 
 /// What only a server can answer: Demo offers nothing in its place.
-List<Override> _serverOnlyOverrides() => [
+List<Override> _serverOnlyOverrides(DemoFixture fixture) => [
   // #3550 — the five kinds and their profiles.
   businessKindRepositoryProvider.overrideWith(
     (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
@@ -197,9 +200,9 @@ List<Override> _serverOnlyOverrides() => [
   ),
   // #2581 — an export is answered by the server's export read only.
   biExportRepositoryProvider.overrideWithValue(const UnavailableBiExportRepository()),
-  // #3673 — the Demo sends no e-mail.
-  reminderMailProvider.overrideWithValue(const DemoReminderMail()),
-  invoiceMailProvider.overrideWithValue(const DemoInvoiceMail()),
+  // #3960 — e-mail is recorded in the session's outbox, never sent.
+  reminderMailProvider.overrideWithValue(DemoReminderMail(DemoOutbox.of(fixture))),
+  invoiceMailProvider.overrideWithValue(DemoInvoiceMail(DemoOutbox.of(fixture))),
 ];
 
 /// The overrides that turn a scope into the Demo environment.
@@ -293,7 +296,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       eventSourceOpenersProvider.overrideWithValue(const {}),
       // #1918 — capacity over the demo's own plan and bookings.
       kpiRepositoryProvider.overrideWith((ref) => demoCapacityKpi(ref, fixture)),
-      ..._serverOnlyOverrides(),
+      ..._serverOnlyOverrides(fixture),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
 
@@ -307,7 +310,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ..._fileOverrides(fixture),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
-      linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
+      linkLauncherProvider.overrideWithValue(fixture.outward.openLink), paymentApprovalProvider.overrideWith(demoPaymentApproval(fixture)), // #3961
 
       // #1564 — the two edges that are neither a repository nor the
       // app's own doing, and so stayed live: the push transport and the

@@ -138,5 +138,21 @@
   "demoEntryFailed": "The demo could not be opened. Your workspace is unchanged.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
+  },
+  "demoProviderPageTitle": "Payment page (demonstration)",
+  "@demoProviderPageTitle": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageTitle"
+  },
+  "demoProviderPageBody": "This page stands in for a payment provider's: nothing is charged and nothing leaves this device. Choose what the provider answers.",
+  "@demoProviderPageBody": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageBody"
+  },
+  "demoProviderPagePay": "Pay",
+  "@demoProviderPagePay": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPagePay"
+  },
+  "demoProviderPageNoAnswer": "The provider does not answer",
+  "@demoProviderPageNoAnswer": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageNoAnswer"
   }
 }

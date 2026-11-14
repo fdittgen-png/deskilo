@@ -50,14 +50,21 @@ class SetupHoursStep extends ConsumerWidget {
         AsyncData(value: final closures),
       ) =>
         SetupStepLayout(
-          form: _HoursForm(
-            actions: AvailabilityActions(context, ref),
-            open: open,
-            granularity: granularity,
-            closures: closures,
-            workHours: workHours,
-            workingHoursOn: workingHoursOn,
-            holidaysOn: features.contains(WorkspaceFeature.publicHolidays),
+          form: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              _HoursForm(
+                actions: AvailabilityActions(context, ref),
+                open: open,
+                granularity: granularity,
+                closures: closures,
+                workHours: workHours,
+                workingHoursOn: workingHoursOn,
+                holidaysOn: features.contains(WorkspaceFeature.publicHolidays),
+              ),
+              if (features.contains(WorkspaceFeature.placeBooking))
+                const _OpenAvailability(),
+            ],
           ),
           preview: _HoursPreview(
             open: open,
@@ -120,18 +127,29 @@ class _HoursForm extends StatelessWidget {
           closures: closures,
           holidaysOn: holidaysOn,
         ),
-        const SizedBox(height: AppSpacing.sm),
-        Align(
-          alignment: AlignmentDirectional.centerStart,
-          child: TextButton(
-            key: const ValueKey('setup-hours-open-availability'),
-            onPressed: () => context.push('/availability'),
-            child: Text(l10n.setupHoursOpenAvailability),
-          ),
-        ),
       ],
     );
   }
+}
+
+/// The way on to the whole Availability page, which belongs to the places:
+/// in a business without them (#3863) the router refuses it, so the step
+/// does not offer it.
+class _OpenAvailability extends StatelessWidget {
+  const _OpenAvailability();
+
+  @override
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsets.only(top: AppSpacing.sm),
+    child: Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: TextButton(
+        key: const ValueKey('setup-hours-open-availability'),
+        onPressed: () => context.push('/availability'),
+        child: Text(context.l10n.setupHoursOpenAvailability),
+      ),
+    ),
+  );
 }
 
 class _HoursPreview extends StatelessWidget {

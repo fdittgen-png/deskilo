@@ -30,6 +30,7 @@ import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
 import 'data/money/demo_member_statement.dart';
+import 'data/money/demo_outbox.dart' show demoMemberWithoutAddress;
 import 'data/money_repository.dart';
 import 'data/notification_service.dart';
 import 'data/plan_resource_repository.dart';
@@ -62,6 +63,7 @@ import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_finish.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
+import 'seed/demo_payment_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_resource_seed.dart';
@@ -168,6 +170,8 @@ class DemoFixture implements DemoSpaceParts {
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
+    // #3960 — one customer has no address on file (demo_outbox.dart).
+    workspaces.memberEmails.remove(demoMemberWithoutAddress);
     seedDemoReservations(reservations, floorPlan, today);
     seedDemoBookings(reservations, floorPlan, today);
     // #2313 — four years, from January three years back to the end of
@@ -186,6 +190,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoMoneyStory(money, today, reservations.reservations);
     seedDemoYearOfResources(reservations, workspaces, today);
     finishDemoMoney(money, today);
+    seedDemoOnlinePayments(money, today); // #3961
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);

@@ -149,6 +149,10 @@ sealed class Workspace with _$Workspace implements SystemStamped, SpaceSide {
     /// administrator to confirm it; saving the language confirms it.
     @Default(true) bool documentLanguageConfirmed,
 
+    /// #3852 (0768) -- the paper the business's documents are printed on,
+    /// 'A4' or 'Letter'; null follows its country.
+    String? paper,
+
     /// Per-locale CUSTOM invitation templates (0096): language code →
     /// template. Absent key → legacy [invitationTemplate] → built-in.
     @Default(<String, dynamic>{}) Map<String, dynamic> invitationTemplates,

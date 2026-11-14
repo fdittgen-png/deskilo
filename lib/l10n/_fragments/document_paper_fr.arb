@@ -1,0 +1,14 @@
+{
+  "@@locale": "fr",
+  "taxRefDomainDocumentPaper": "Papiers des documents",
+  "taxRefPaper": "Papier usuel des documents",
+  "taxRefPapers": "Papiers permis (A4, Letter ; vide : les deux)",
+  "taxRefInvalidPapers": "A4, Letter ou les deux, séparés par une virgule, dont le papier usuel",
+  "workspacePaperLabel": "Papier des documents",
+  "workspacePaperFollows": "{paper} (usuel : {country})",
+  "workspacePaperA4": "A4",
+  "workspacePaperLetter": "Lettre US",
+  "workspacePaperHelper": "Une facture garde le papier de son émission.",
+  "workspacePaperOnlySlip": "{paper} seulement : les factures de ce pays se terminent par une section paiement imprimée sur {paper}.",
+  "workspacePaperOnly": "Les documents de ce pays s'impriment sur {paper} uniquement."
+}

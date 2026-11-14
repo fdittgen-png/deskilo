@@ -1,19 +1,18 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3673 — the Demo sends no e-mail: invoices by e-mail are left off in
-// every Demo space (demo_flags.dart); if one were switched on, the page
-// says the feature is off and a send is refused before anything leaves.
+// #3960 — invoices by e-mail in the Demo: the session's outbox records the
+// send and answers as the server does; nothing leaves the device.
 import '../../../../features/money/domain/invoice_mail.dart';
+import 'demo_outbox.dart';
 
 class DemoInvoiceMail implements InvoiceMail {
-  const DemoInvoiceMail();
+  const DemoInvoiceMail(this._outbox);
+
+  final DemoOutbox _outbox;
 
   @override
-  Future<InvoiceMailView> state(String workspaceId, String invoiceId) async =>
-      const InvoiceMailView(
-        available: false,
-        reason: InvoiceMailUnavailable.featureOff,
-      );
+  Future<InvoiceMailView> state(String workspaceId, String invoiceId) =>
+      _outbox.state(workspaceId, invoiceId);
 
   @override
   Future<InvoiceMailSend> send({
@@ -22,12 +21,19 @@ class DemoInvoiceMail implements InvoiceMail {
     required InvoiceMailKind kind,
     required String attemptId,
     required InvoiceMailLetter letter,
-  }) => Future.error(StateError('the Demo sends no e-mail'));
+  }) => _outbox.sendInvoice(
+    workspaceId: workspaceId,
+    invoiceId: invoiceId,
+    kind: kind,
+    attemptId: attemptId,
+    letter: letter,
+  );
 
+  // Every e-mail of the outbox is accepted: none is left to decide.
   @override
   Future<InvoiceMailSend> resolve(
     String workspaceId,
     String attemptId, {
     required bool delivered,
-  }) => Future.error(StateError('the Demo sends no e-mail'));
+  }) => _outbox.resolveInvoice(attemptId);
 }

@@ -21,6 +21,7 @@ class WorkspaceSettingsSave {
     required this.deskOpacity,
     required this.invitationTemplates,
     required this.newMemberDefaults,
+    this.paper,
   });
 
   /// The row's `modified_datetime` when the form was filled; null skips the
@@ -47,6 +48,10 @@ class WorkspaceSettingsSave {
 
   /// The `p_settings` payload. Values are sent as typed; the server trims
   /// and drops blank templates, so a retry compares like with like.
+  /// #3852 -- the paper of the documents: 'A4' or 'Letter', '' to follow
+  /// the country; null leaves it as it is.
+  final String? paper;
+
   Map<String, Object?> toSettings() => {
         'country_code': countryCode.toUpperCase(),
         'currency_code': currencyCode.toUpperCase(),
@@ -55,6 +60,7 @@ class WorkspaceSettingsSave {
         'address': address,
         'default_locale': defaultLocale,
         'desk_opacity': deskOpacity,
+        'paper': ?paper,
         'invitation_templates': invitationTemplates,
         if (newMemberDefaults case final defaults?)
           newMemberDefaultsKey: defaults.toValue(),

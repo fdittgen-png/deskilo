@@ -417,7 +417,8 @@ void main() {
     test('the countries are the CountryCatalog', () {
       expect(registry['countries'], [
         for (final c in CountryCatalog.countries)
-          [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
+          [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name, c.paper.wire,
+            [for (final p in c.papers) p.wire]],
       ]);
     });
   });

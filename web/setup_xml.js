@@ -149,7 +149,7 @@ function workspaceConfig(){
  const qst=registered()&&S.country==='CA'?S.landTax.qst.trim():'';
  const ws={
   address:S.address||'',street:S.street||'',postal_code:S.postal||'',city:S.city||'',
-  default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:Math.min(100,Math.max(20,int(S.deskOpacity,100))),
+  default_locale:S.language||'',paper:S.paper||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:Math.min(100,Math.max(20,int(S.deskOpacity,100))),
   invitation_templates:Object.fromEntries(Object.entries(S.invites).filter(([,v])=>String(v).trim()).map(([k,v])=>[k,String(v).trim()])),
   // #2331 — the column's own words: the page says "registered", the
   // workspaces row (and every issuing guard) says "vat_registered". The

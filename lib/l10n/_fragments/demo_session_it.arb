@@ -129,5 +129,9 @@
   "demoEntryFailed": "Non è stato possibile aprire la demo. Il suo spazio è invariato.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
-  }
+  },
+  "demoProviderPageTitle": "Pagina di pagamento (dimostrazione)",
+  "demoProviderPageBody": "Questa pagina sostituisce quella di un fornitore di pagamenti: non viene addebitato nulla e nulla lascia questo dispositivo. Scegli la risposta del fornitore.",
+  "demoProviderPagePay": "Paga",
+  "demoProviderPageNoAnswer": "Il fornitore non risponde"
 }

@@ -25,9 +25,12 @@ class DeskCalendarBranch extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final hub = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.calendarHub);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    // #3863 — the desk's grids are places down the side: a business
+    // without places keeps the calendar it has on every window.
+    final hub =
+        features.contains(WorkspaceFeature.calendarHub) &&
+        features.contains(WorkspaceFeature.placeBooking);
     return hub && WindowClass.of(context).atLeast(WindowClass.expanded)
         ? DeskCalendarPage(query: query)
         : const CalendarBranch();

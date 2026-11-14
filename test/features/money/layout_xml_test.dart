@@ -257,7 +257,8 @@ void main() {
           LayoutError.badUnit);
       expect(errorOf('<report-layout><body><image/></body></report-layout>'),
           LayoutError.badAttribute, reason: 'an image needs a name');
-      expect(errorOf('<report-layout page="Letter"/>'), LayoutError.badAttribute);
+      // #3852 — A4 and Letter are read; another paper is not.
+      expect(errorOf('<report-layout page="Legal"/>'), LayoutError.badAttribute);
       expect(
         errorOf('<report-layout><body><table><col/><row><cell/><cell/></row>'
             '</table></body></report-layout>'),

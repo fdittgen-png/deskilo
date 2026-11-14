@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 
 import 'shell_cash_entries.dart';
 import 'shell_drawer_entries.dart';
+import 'shell_sales_entries.dart';
 
 /// One titled group of entries, with its sub-groups.
 @immutable

@@ -233,6 +233,13 @@ mixin FakeWorkspaceLifecycle on FakeWorkspaceState
     await setInvitationTemplate(workspaceId, '');
     await setWorkspaceLanguage(workspaceId, save.defaultLocale);
     await setDeskOpacity(workspaceId, save.deskOpacity);
+    // #3852 — the paper of the documents; '' follows the country.
+    if (save.paper case final paper?) {
+      final i = workspaces.indexWhere((w) => w.id == workspaceId);
+      if (i >= 0) {
+        workspaces[i] = workspaces[i].copyWith(paper: paper.isEmpty ? null : paper);
+      }
+    }
     if (save.newMemberDefaults case final d?) {
       await setNewMemberDefaults(
         workspaceId,

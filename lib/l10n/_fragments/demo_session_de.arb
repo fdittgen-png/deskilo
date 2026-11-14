@@ -129,5 +129,9 @@
   "demoEntryFailed": "Die Demo konnte nicht geöffnet werden. Ihr Bereich ist unverändert.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
-  }
+  },
+  "demoProviderPageTitle": "Zahlungsseite (Demonstration)",
+  "demoProviderPageBody": "Diese Seite steht für die eines Zahlungsanbieters: Es wird nichts abgebucht und nichts verlässt dieses Gerät. Wählen Sie, was der Anbieter antwortet.",
+  "demoProviderPagePay": "Bezahlen",
+  "demoProviderPageNoAnswer": "Der Anbieter antwortet nicht"
 }

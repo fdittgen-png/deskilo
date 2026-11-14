@@ -25,10 +25,12 @@ Widget _menu(
   List<String> chosen, {
   RowMenuButton button = RowMenuButton.always,
   bool focusable = false,
+  bool fullTarget = false,
 }) => RowMenu(
   keyPrefix: 'm',
   button: button,
   focusable: focusable,
+  fullTarget: fullTarget,
   actions: [
     RowAction(
       id: 'quote',
@@ -189,4 +191,28 @@ void main() {
     await click(tester, find.byKey(const ValueKey('m-more')));
     expect(_entries(tester), expected);
   });
+
+  // #3947 — in a table row the ⋯ keeps the row's compact size; outside one
+  // (a message's menu) it is a target of the kit's minimum size, on a
+  // desktop's density too.
+  for (final full in [false, true]) {
+    testWidgets('the ⋯ is ${full ? '48 dp' : 'compact'} on a desktop when '
+        '${full ? '' : 'not '}asked to be a full target', (tester) async {
+      await tester.pumpWidget(
+        _host(
+          Theme(
+            data: ThemeData(platform: TargetPlatform.macOS),
+            child: _menu([], fullTarget: full),
+          ),
+        ),
+      );
+      final size = tester.getSize(find.byKey(const ValueKey('m-more')));
+      if (full) {
+        expect(size.width, greaterThanOrEqualTo(48));
+        expect(size.height, greaterThanOrEqualTo(48));
+      } else {
+        expect(size.height, lessThan(48));
+      }
+    });
+  }
 }
