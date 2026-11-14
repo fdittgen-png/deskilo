@@ -30053,6 +30053,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aperçu uniquement : rien n’a été appliqué.';
 
   @override
+  String setupDeskProgress(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total étapes',
+      one: '$total étape',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done faites',
+      one: '$done faite',
+      zero: 'aucune faite',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
   String get setupDraftChanged =>
       'Modifié par quelqu’un d’autre pendant votre saisie.';
 
@@ -31627,6 +31645,16 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les taux que vous appliquez et vos déclarations.';
 
   @override
+  String get setupStepLeave => 'Quitter';
+
+  @override
+  String get setupStepLeaveMessage =>
+      'Vos réponses ne sont pas encore appliquées. Elles restent enregistrées comme brouillon, et vous les retrouvez ici à votre retour.';
+
+  @override
+  String get setupStepLeaveTitle => 'Quitter cette étape ?';
+
+  @override
   String get setupStepLoadFailed =>
       'Cette étape n’a pas pu être chargée. Réessayez plus tard.';
 
@@ -31792,6 +31820,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get shortcutPreviousPeriod => 'Jour, semaine ou mois précédent';
+
+  @override
+  String get shortcutPreviousStep => 'Revenir à l\'étape précédente';
 
   @override
   String get shortcutPrint => 'Le document de cette page';

@@ -1,0 +1,6 @@
+{
+  "setupDeskProgress": "{total, plural, one{{total} paso} other{{total} pasos}}, {done, plural, =0{ninguno hecho} one{{done} hecho} other{{done} hechos}}",
+  "setupStepLeaveTitle": "¿Salir de este paso?",
+  "setupStepLeaveMessage": "Sus respuestas aún no se han aplicado. Quedan guardadas como borrador y las encontrará aquí cuando vuelva.",
+  "setupStepLeave": "Salir"
+}

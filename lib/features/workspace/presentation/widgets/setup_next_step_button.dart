@@ -46,20 +46,26 @@ class SetupNextStepButton extends ConsumerWidget {
   }
 
   void _go(WidgetRef ref, String workspaceId, SetupStepStatus? next) {
-    final pending = ref.read(setupReturnPendingProvider.notifier);
-    final opened = ref.read(setupOpenStepProvider.notifier);
     final status = workspaceSetupStatusProvider(workspaceId);
-    pending.set(open: next != null);
-    opened.set(next?.step);
-    router.go('/setup');
-    if (next == null) {
+    final route = next?.route;
+    // #3629 — a step's page is an address under the guide: going there
+    // keeps the guide under it, in one move the step's way out is asked
+    // for. A step done on a screen of its own still opens over the guide.
+    if (route == null || route.startsWith('/setup/')) {
+      ref.read(setupReturnPendingProvider.notifier).set(open: false);
+      ref.read(setupOpenStepProvider.notifier).set(next?.step);
+      router.go(route ?? '/setup');
       ref.invalidate(status);
       return;
     }
+    final pending = ref.read(setupReturnPendingProvider.notifier)
+      ..set(open: true);
+    ref.read(setupOpenStepProvider.notifier).set(next!.step);
+    router.go('/setup');
     // The guide's own push was dropped by `go`: this one reads the status
     // again on the way back and lowers the bar, as the guide's does.
     unawaited(
-      router.push(next.route).whenComplete(() {
+      router.push(route).whenComplete(() {
         pending.set(open: false);
         ref.invalidate(status);
       }),
