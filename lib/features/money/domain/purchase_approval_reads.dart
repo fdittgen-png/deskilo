@@ -58,10 +58,15 @@ class PurchaseApprovalFx {
       // can show: the tile says so, and the approval is not refused for it.
       _ => PurchaseApprovalFxStatus.unavailable,
     };
+    // A state with no rate to show reads its currencies as given, if any.
+    final known = status != PurchaseApprovalFxStatus.unavailable;
     return PurchaseApprovalFx(
       status: status,
-      currency: json.string('currency'),
-      functionalCurrency: json.string('functional_currency'),
+      currency:
+          known ? json.string('currency') : json.stringOrNull('currency'),
+      functionalCurrency: known
+          ? json.string('functional_currency')
+          : json.stringOrNull('functional_currency'),
       rate: status == PurchaseApprovalFxStatus.recorded ? json.string('rate') : null,
       rateDate: status == PurchaseApprovalFxStatus.recorded ? json.dateTime('rate_date') : null,
       source: status == PurchaseApprovalFxStatus.recorded ? json.string('source') : null,
