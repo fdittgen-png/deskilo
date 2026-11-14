@@ -22,7 +22,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_card.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/result_page.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -305,7 +305,7 @@ class _ReminderQueueScreenState extends ConsumerState<ReminderQueueScreen> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.reminderQueueTitle)),
+      appBar: pageBar(context, title: l10n.reminderQueueTitle),
       body: ListenableBuilder(
         listenable: Listenable.merge(
           [_queue, _working, _mail.lines, _mail.notes],

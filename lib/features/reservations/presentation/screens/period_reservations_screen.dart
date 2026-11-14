@@ -15,7 +15,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/workspace_time.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/reservation.dart';
@@ -60,12 +60,10 @@ class PeriodReservationsScreen extends ConsumerWidget {
         targets[r.seatId ?? r.officeId ?? r.levelId ?? ''] ??
         l10n.periodReservationsUnnamed;
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(
-          fromMonth == toMonth
-              ? l10n.periodReservationsTitle(fromMonth)
-              : l10n.periodReservationsTitle('$fromMonth – $toMonth'),
-        ),
+      appBar: pageBar(context,
+        title: fromMonth == toMonth
+            ? l10n.periodReservationsTitle(fromMonth)
+            : l10n.periodReservationsTitle('$fromMonth – $toMonth'),
         bottom: levelName == null
             ? null
             : PreferredSize(

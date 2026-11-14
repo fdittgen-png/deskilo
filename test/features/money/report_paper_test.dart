@@ -54,27 +54,15 @@ Map<String, Object?> _data(int lines) => {
 
 Future<Uint8List> _positioned(int lines, {Paper? paper}) {
   final data = _data(lines);
-  final document = renderLayoutDocument(_layout, data);
-  final regular = _ttf('assets/fonts/Roboto-Regular.ttf');
-  final bold = _ttf('assets/fonts/Roboto-Bold.ttf');
-  return paper == null
-      ? buildLayoutPdf(
-          document: document,
-          data: data,
-          documentTitle: 'test',
-          pageLabel: 'Page',
-          baseFont: regular,
-          boldFont: bold,
-        )
-      : buildLayoutPdf(
-          document: document,
-          data: data,
-          documentTitle: 'test',
-          pageLabel: 'Page',
-          baseFont: regular,
-          boldFont: bold,
-          paper: paper,
-        );
+  final made = renderLayoutDocument(_layout, data);
+  return buildLayoutPdf(
+    document: paper == null ? made : made.onPaper(paper),
+    data: data,
+    documentTitle: 'test',
+    pageLabel: 'Page',
+    baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+  );
 }
 
 /// The sizes of the pages, in points.
@@ -101,7 +89,11 @@ void main() {
   });
 
   test('a layout made on Letter is read; another paper is refused', () {
-    expect(parseLayoutXml('<report-layout page="Letter"/>').page, 'Letter');
+    expect(
+      parseLayoutXml('<report-layout page="Letter"/>').paper,
+      Paper.letter,
+    );
+    expect(parseLayoutXml('<report-layout/>').paper, Paper.a4);
     expect(
       () => parseLayoutXml('<report-layout page="Legal"/>'),
       throwsA(
@@ -113,6 +105,7 @@ void main() {
   });
 
   test('A4 unless named, with the same bytes', () async {
+    // a design made on A4 printed on A4 is the design as it was
     final unnamed = await _positioned(3);
     final named = await _positioned(3, paper: Paper.a4);
     expect(_stable(named), _stable(unnamed));
@@ -148,12 +141,12 @@ void main() {
         header: const [ReportHeading('HEADER')],
         body: [for (var i = 0; i < 90; i++) ReportText('Row $i')],
         footer: const [ReportText('FOOTER')],
+        paper: paper,
       ),
       pageLabel: 'Page',
       documentTitle: 'Reminder',
       baseFont: pw.Font.helvetica(),
       boldFont: pw.Font.helveticaBold(),
-      paper: paper,
     );
     for (final (w, h) in _mediaBoxes(await letter(paper: Paper.letter))) {
       expect((w, h), (612.0, 792.0));

@@ -81,8 +81,6 @@ Future<int> _render(_Args args, {required bool check}) async {
       ByteData.sublistView(File('$fonts/$file').readAsBytesSync()));
 
   final document = renderLayoutDocument(xml, data);
-  // #3852 — a design is rendered and measured on the paper it was made on.
-  final paper = Paper.fromWire(document.page) ?? Paper.a4;
   final bytes = await buildLayoutPdf(
     document: document,
     data: data,
@@ -91,14 +89,14 @@ Future<int> _render(_Args args, {required bool check}) async {
     baseFont: font('Roboto-Regular.ttf'),
     boldFont: font('Roboto-Bold.ttf'),
     images: _images(args.option('images')),
-    paper: paper,
   );
   final out = args.option('out') ??
       '${path.replaceAll(RegExp(r'\.xml$'), '')}.pdf';
   File(out).writeAsBytesSync(bytes);
   stdout.writeln('wrote $out (${bytes.length} bytes)');
   if (!check) return 0;
-  return _check(bytes, document, paper);
+  // #3852 — a design is rendered and measured on the paper it was made on.
+  return _check(bytes, document, document.paper);
 }
 
 /// #2898 — the pictures a design names (`<image name>`, `![name]`): every

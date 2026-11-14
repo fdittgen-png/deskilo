@@ -14,7 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -34,7 +34,7 @@ class SetupLaunchScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.setupLaunchTitle)),
+      appBar: pageBar(context, title: l10n.setupLaunchTitle),
       body: workspace == null
           ? const LoadingView()
           : _LaunchBody(workspace: workspace),

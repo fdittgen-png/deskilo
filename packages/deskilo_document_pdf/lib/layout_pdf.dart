@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #875 / #2592 - draws a LayoutDocument on its pages (#3852: A4 unless the
-// host names another paper). The host supplies
+// #875 / #2592 - draws a LayoutDocument on the paper of its page (#3852).
+// The host supplies
 // fonts, images, the recipient text and, optionally, a renderer for the
 // `<markup>` bridge; nothing here knows an invoice.
 import 'dart:math' as math;
@@ -20,7 +20,7 @@ import 'report_style.dart';
 typedef LayoutMarkupBuilder =
     List<pw.Widget> Function(String source, Map<String, Uint8List> images);
 
-/// Renders [document] to pages of [paper].
+/// Renders [document] to pages of its paper (#3852).
 ///
 /// [recipientName] and [recipientAddress] are the plain text the window
 /// shows. The legal chrome the bands never templated — the
@@ -45,13 +45,9 @@ Future<Uint8List> buildLayoutPdf({
   // [LayoutMarkup] element draws nothing and says so in [diagnostics].
   LayoutMarkupBuilder? markup,
   List<String>? diagnostics,
-  // #3852 - the paper the document is printed on; the design's own `page`
-  // is the paper it was made on. Lengths in % follow the paper.
-  Paper paper = Paper.a4,
 }) async {
-  final format = pdfPageFormatOf(paper);
-  final pageW = format.width;
-  final pageH = format.height;
+  final format = pdfPageFormatOf(document.paper);
+  final pageW = format.width, pageH = format.height;
   final margin = document.margin.resolve(pageW);
   // #902 — the letterhead sits near the top edge and the footer near the
   // bottom one; the text column keeps the side margin.
