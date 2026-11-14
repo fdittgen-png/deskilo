@@ -126,5 +126,6 @@
   "bankUnmatchConfirm": "Annulla l'abbinamento",
   "@bankUnmatchConfirm": {
     "description": "#2380 money-in unmatch: the confirm button."
-  }
+  },
+  "bankReconUnreadable": "Questa versione non riesce a leggere alcuni movimenti di questo estratto, quindi il resoconto non viene creato. Aggiorna l'app, poi riapri l'estratto."
 }

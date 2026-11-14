@@ -505,5 +505,9 @@
   "bankUnmatchConfirm": "Undo",
   "@bankUnmatchConfirm": {
     "description": "#2380 money-in unmatch: the confirm button."
+  },
+  "bankReconUnreadable": "This version cannot read some movements of this statement, so no report is made. Update the app, then open the statement again.",
+  "@bankReconUnreadable": {
+    "description": "#3913 A bank reconciliation report refused because a statement or a movement of it is one this version cannot read; names the next step."
   }
 }

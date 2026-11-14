@@ -273,7 +273,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
   }
 
   @override
-  Future<BankLineStatus> matchLine(
+  Future<BankLineStatus?> matchLine(
     String lineId, {
     required String invoiceId,
     required String resolution,
@@ -339,7 +339,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
   }
 
   @override
-  Future<BankLineStatus> reviewLine(
+  Future<BankLineStatus?> reviewLine(
     String lineId, {
     required bool duplicate,
   }) async {
@@ -353,7 +353,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
   }
 
   @override
-  Future<BankLineStatus> reconcileOut(
+  Future<BankLineStatus?> reconcileOut(
     String lineId, {
     required String outgoingPaymentId,
   }) async {
@@ -381,7 +381,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
       <String, ({String lineId, String paymentId, String reason})>{};
 
   @override
-  Future<BankLineStatus> unreconcileOut(
+  Future<BankLineStatus?> unreconcileOut(
     String lineId, {
     required String reason,
     required String requestId,
@@ -417,7 +417,7 @@ class FakeBankStatementRepository implements BankStatementRepository {
   bool Function() mayUnmatch = () => true; // issueInvoices
 
   @override
-  Future<BankLineStatus> unmatchIn(
+  Future<BankLineStatus?> unmatchIn(
     String lineId, {
     required String reason,
     required String requestId,

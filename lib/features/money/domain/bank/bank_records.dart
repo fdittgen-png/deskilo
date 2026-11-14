@@ -29,6 +29,21 @@ const Set<String> bankStatementReaders = {'viewFinances', 'issueInvoices'};
 const String bankMatchPermission = 'issueInvoices';
 const String bankReconcilePermission = 'recordOutgoingPayments';
 
+/// #3913 — the lists a bank read leaves rows out of, counted per list
+/// (`UnreadableRows`): a statement's lines, and a workspace's statements.
+String bankLinesArea(String statementId) => 'bank_lines:$statementId';
+String bankStatementsArea(String workspaceId) =>
+    'bank_statements:$workspaceId';
+
+/// #3913 — a report refused because the statement, or a movement of it, is
+/// one this build could not read: a report never leaves a movement out.
+class BankRowsUnreadable implements Exception {
+  const BankRowsUnreadable();
+
+  @override
+  String toString() => 'BankRowsUnreadable';
+}
+
 /// Where one movement stands.
 enum BankLineStatus {
   open,
@@ -39,10 +54,11 @@ enum BankLineStatus {
   matched,
   reconciled;
 
-  static BankLineStatus fromWire(String? wire) => values.firstWhere(
-    (s) => s.name == wire,
-    orElse: () => throw FormatException('unknown bank line status $wire'),
-  );
+  /// The status [wire] names; null for one this build does not know
+  /// (#3913): its row is left out of a list and counted, never read as a
+  /// status it is not.
+  static BankLineStatus? fromWire(String? wire) =>
+      values.where((s) => s.name == wire).firstOrNull;
 
   /// Still waiting for a person: to match, to review, or a payment that
   /// settles nothing yet.
@@ -101,8 +117,12 @@ class StoredBankLine {
     this.outgoingCandidates = const [],
   });
 
-  factory StoredBankLine.fromJson(Object? json) {
+  /// A row of `bank_statement_lines_v1`; null when its status is one this
+  /// build does not know (#3913).
+  static StoredBankLine? fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'bank');
+    final status = BankLineStatus.fromWire(r.stringOrNull('status'));
+    if (status == null) return null;
     return StoredBankLine(
       id: r.string('id'),
       position: r.integer('position'),
@@ -110,7 +130,7 @@ class StoredBankLine {
       valueDate: _day(r, 'value_date'),
       amountCents: r.integer('amount_cents'),
       currency: r.string('currency'),
-      status: BankLineStatus.fromWire(r.string('status')),
+      status: status,
       transactionId: r.stringOr('transaction_id'),
       counterpartyName: r.stringOr('counterparty_name'),
       counterpartyIban: r.stringOr('counterparty_iban'),
@@ -170,15 +190,16 @@ class StoredBankStatement {
     this.closingCents,
   });
 
-  factory StoredBankStatement.fromJson(Object? json) {
+  /// A row of `bank_statements_v1`; null when its file format is one this
+  /// build does not know (#3913).
+  static StoredBankStatement? fromJson(Object? json) {
     final r = JsonReader.of(json, context: 'bank');
     final format = r.string('format');
+    final known = BankFileFormat.values.where((f) => f.name == format);
+    if (known.isEmpty) return null;
     return StoredBankStatement(
       id: r.string('id'),
-      format: BankFileFormat.values.firstWhere(
-        (f) => f.name == format,
-        orElse: () => throw FormatException('unknown bank file format $format'),
-      ),
+      format: known.first,
       account: r.string('account'),
       currency: r.string('currency'),
       from: _day(r, 'period_from'),
@@ -272,9 +293,13 @@ abstract interface class BankStatementRepository {
     required String fileName,
   });
 
+  /// The writes below answer the line's status after them; null when the
+  /// write was done but its status is one this build does not know (#3913):
+  /// the write is not refused, and the list is read again.
+  ///
   /// Confirms money in against [invoiceId] with the resolution its amount
   /// demands (`exact`, `over_credit_note`, `over_forced`, `under_accepted`).
-  Future<BankLineStatus> matchLine(
+  Future<BankLineStatus?> matchLine(
     String lineId, {
     required String invoiceId,
     required String resolution,
@@ -283,10 +308,10 @@ abstract interface class BankStatementRepository {
 
   /// A movement that resembled another statement's: a duplicate, or a
   /// second genuine movement.
-  Future<BankLineStatus> reviewLine(String lineId, {required bool duplicate});
+  Future<BankLineStatus?> reviewLine(String lineId, {required bool duplicate});
 
   /// Money out confirmed against a payment reported as made.
-  Future<BankLineStatus> reconcileOut(
+  Future<BankLineStatus?> reconcileOut(
     String lineId, {
     required String outgoingPaymentId,
   });
@@ -294,7 +319,7 @@ abstract interface class BankStatementRepository {
   /// Undoes the reconciliation of money out, once, for [reason]: the
   /// movement is open again and its payment reported again; the undoing is
   /// kept on record. The same [requestId] again changes nothing.
-  Future<BankLineStatus> unreconcileOut(
+  Future<BankLineStatus?> unreconcileOut(
     String lineId, {
     required String reason,
     required String requestId,
@@ -306,7 +331,7 @@ abstract interface class BankStatementRepository {
   /// exact, single-payment, open-period match is undone: the server refuses
   /// the others with a known code. The same [requestId] again changes
   /// nothing.
-  Future<BankLineStatus> unmatchIn(
+  Future<BankLineStatus?> unmatchIn(
     String lineId, {
     required String reason,
     required String requestId,
