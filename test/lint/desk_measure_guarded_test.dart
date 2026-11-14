@@ -46,7 +46,6 @@ const _notGuardedYet = <String, String>{
   '/kiosk': '#3892 a desk page not guarded yet',
   '/pending': '#3892 a desk page not guarded yet',
   '/formats': '#3892 a desk page not guarded yet',
-  '/events': '#3892 a desk page not guarded yet',
   '/plan': '#3892 a desk page not guarded yet',
   '/library': '#3892 a desk page not guarded yet',
   '/workspace-code': '#3892 a desk page not guarded yet',
@@ -68,8 +67,6 @@ const _notGuardedYet = <String, String>{
   '/settings/roles-of-this-space': '#3892 a desk page not guarded yet',
   '/settings/what-you-can-do': '#3892 a desk page not guarded yet',
   '/settings/questions': '#3892 a desk page not guarded yet',
-  '/attention': '#3892 a desk page not guarded yet',
-  '/reservations/period': '#3892 a desk page not guarded yet',
   '/setup/levels': '#3892 a desk page not guarded yet',
   '/settings/number-sequences': '#3892 a desk page not guarded yet',
   '/members/managed': '#3892 a desk page not guarded yet',
@@ -78,14 +75,22 @@ const _notGuardedYet = <String, String>{
   '/vat-declarations': '#3892 a desk page not guarded yet',
   '/vat': '#3892 a desk page not guarded yet',
   '/accessories': '#3892 a desk page not guarded yet',
-  '/validation': '#3892 a desk page not guarded yet',
-  '/availability': '#3892 a desk page not guarded yet',
   '/members/plans': '#3892 a desk page not guarded yet',
   '/editor': '#3892 a desk page not guarded yet',
   '/payment-methods': '#3892 a desk page not guarded yet',
   // Guarded, it is reached twice by Tab: its keyboard order, older than
   // this list, is to be fixed before its guard joins.
   '/workspace-overview': '#3892 reached twice by Tab in its desk guard',
+  // Guarded, these fail on causes measured on 14 November (#3892):
+  // Tab, on a page with no control of its own, stays on the page's scope,
+  // and wraps only through the lower half of the desk's navigation, whose
+  // list drops its upper entries as Tab scrolls it.
+  '/reservations/period': '#3892 Tab is kept on an empty page',
+  // The rules are a lazily built list: Tab drops each row it passes.
+  '/validation': '#3892 Tab drops the rows of its lazy list',
+  // A sentence 807 px wide at 1024, a 40 x 22 control without a name,
+  // and Tab reached twice at 1920.
+  '/availability': '#3892 a wide sentence, a small unnamed control',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3892 redirects to /invoices, draws nothing',
 };
