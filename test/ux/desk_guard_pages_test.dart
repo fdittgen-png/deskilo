@@ -549,6 +549,13 @@ const _pages = [
   ('/reports', PageKind.records, 'reports', 'reports'),
   // #3947 — the report editor: its page shrunk beside the preview at 1440.
   ('/report-editor', PageKind.document, 'reports', 'report-editor'),
+  // #3970 — and with a line of the body selected: its toolbar is measured.
+  (
+    '/report-editor?select=visual-body-line-0',
+    PageKind.document,
+    'reports',
+    'report-editor-line',
+  ),
   ('/money/status', PageKind.dashboard, 'money', 'status'),
   ('/bi', PageKind.dashboard, 'reports', 'analysis'),
   // #3860 — a record open beside its table: the table keeps its staying
@@ -641,6 +648,12 @@ void main() {
       ) async {
         final semantics = tester.ensureSemantics();
         await _open(tester, path, size);
+        // #3970 — a page measured with one of its parts selected.
+        if (Uri.parse(path).queryParameters['select'] case final key?) {
+          await tester.ensureVisible(find.byKey(ValueKey(key)));
+          await tester.tap(find.byKey(ValueKey(key)));
+          await tester.pumpAndSettle();
+        }
         final details = <String>[];
         expect(
           deskGuardProblems(
