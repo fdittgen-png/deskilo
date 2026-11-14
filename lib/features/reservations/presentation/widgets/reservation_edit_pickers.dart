@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../plan/domain/half_day_windows.dart';
 import '../../domain/reservation_repository.dart';
 
 /// Repeat-modality picker for the edit flow (spec §5.2): the same
@@ -30,12 +29,7 @@ Future<SeriesPattern?> pickSeriesPattern(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          row(
-            'edit-repeat-none',
-            null,
-            l10n.repeatNone,
-            Icons.event_outlined,
-          ),
+          row('edit-repeat-none', null, l10n.repeatNone, Icons.event_outlined),
           row(
             'edit-repeat-daily',
             SeriesPattern.daily,
@@ -61,12 +55,16 @@ Future<SeriesPattern?> pickSeriesPattern(
   );
 }
 
-Future<HalfDayWindow?> pickHalfDayWindow(
+/// The half-day window to book: [morning], [afternoon] or [fullDay] of the
+/// day, as the caller builds them.
+Future<T?> pickHalfDayWindow<T>(
   BuildContext context,
-  AppLocalizations l10n,
-  DateTime day,
-) {
-  return showAppSheet<HalfDayWindow>(
+  AppLocalizations l10n, {
+  required T morning,
+  required T afternoon,
+  required T fullDay,
+}) {
+  return showAppSheet<T>(
     context: context,
     builder: (sheetContext) => SafeArea(
       child: Column(
@@ -82,8 +80,7 @@ Future<HalfDayWindow?> pickHalfDayWindow(
                 fallback: l10n.planMorningChip,
               ),
             ),
-            onTap: () =>
-                Navigator.of(sheetContext).pop(HalfDayWindows.morning(day)),
+            onTap: () => Navigator.of(sheetContext).pop(morning),
           ),
           ListTile(
             key: const ValueKey('edit-window-pm'),
@@ -95,8 +92,7 @@ Future<HalfDayWindow?> pickHalfDayWindow(
                 fallback: l10n.planAfternoonChip,
               ),
             ),
-            onTap: () =>
-                Navigator.of(sheetContext).pop(HalfDayWindows.afternoon(day)),
+            onTap: () => Navigator.of(sheetContext).pop(afternoon),
           ),
           ListTile(
             key: const ValueKey('edit-window-day'),
@@ -108,8 +104,7 @@ Future<HalfDayWindow?> pickHalfDayWindow(
                 fallback: l10n.reserveFullDayChip,
               ),
             ),
-            onTap: () =>
-                Navigator.of(sheetContext).pop(HalfDayWindows.fullDay(day)),
+            onTap: () => Navigator.of(sheetContext).pop(fullDay),
           ),
           const SizedBox(height: 8),
         ],

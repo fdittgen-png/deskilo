@@ -161,7 +161,13 @@ class ReservationDetailActions {
 
     HalfDayWindow? window;
     if (granularity == BookingGranularity.halfDay) {
-      window = await pickHalfDayWindow(context, l10n, day);
+      window = await pickHalfDayWindow(
+        context,
+        l10n,
+        morning: HalfDayWindows.morning(day),
+        afternoon: HalfDayWindows.afternoon(day),
+        fullDay: HalfDayWindows.fullDay(day),
+      );
     } else if (granularity == BookingGranularity.fullDay) {
       window = HalfDayWindows.fullDay(day);
     } else {
