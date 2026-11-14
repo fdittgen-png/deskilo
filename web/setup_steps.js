@@ -450,7 +450,7 @@ const STEPS=[
 // #3889 -- the payment term counts as the business's own only when the person
 // typed it: the field marks the answer as stated, and the export carries the
 // term only then (an untouched one stays the platform's default to review).
-function statesTerm(d){d.querySelector('input').addEventListener('input',()=>{S.reminders.firstDaysStated=true});return d}
+function statesTerm(d){const i=d.querySelector('input'),typed=i.oninput;i.oninput=e=>{S.reminders.firstDaysStated=true;if(typed)typed.call(i,e)};return d}
 function toDoInApp(){const out=[T('todoCreateSpace',{name:S.name.trim()||'—'})];
  const ms=S.members.filter(m=>String(m.email||'').trim());
  out.push(ms.length?T('todoInviteMembers',{n:ms.length}):T('todoInviteNobody'));
