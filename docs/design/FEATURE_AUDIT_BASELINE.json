@@ -4,6 +4,7 @@
     "siteDocuments": "Reserved flag, classified internal in workspace_process.dart (#1325): no implementation consumes it yet; not selectable until a gated workflow exists."
   },
   "doubleGates": {
+    "calendarHub>placeBooking@lib/app/desk_calendar/desk_calendar_branch.dart": "Deliberate (#3863): the desk calendar's grids are places down the side, so the desk branch asks placeBooking beside calendarHub; without places /calendar keeps the hub's own calendar on every window.",
     "calendarHub>eventsTab@lib/app/shell/shell_destinations.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
     "calendarHub>eventsTab@lib/app/shell/shell_routes.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
     "calendarTab>eventsTab@lib/app/shell/shell_destinations.dart": "Deliberate: the calendar absorbs the alerts only when the calendar tab, the hub and the alerts (eventsTab) are all on (calendarHoldsAlerts); eventsTab is an independent core feature of the messages surface and must not require the calendar.",
