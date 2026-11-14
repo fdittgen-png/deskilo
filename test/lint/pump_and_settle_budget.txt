@@ -33,6 +33,7 @@
 # review {"path":"test/features/workspace/setup_desk_test.dart","before":0,"after":15,"invariant":"#3629 the setup guide at the desk: the app settles on an address, then each way out of a step (the list, Keep editing or Leave, the browser's Back, Alt+Left, Ctrl+Enter, Escape) settles once before the question, the address or the stored draft is read","cost":"four tests in about 5 s locally"}
 # review {"path":"test/features/money/services_screen_test.dart","before":15,"after":21,"invariant":"#3864 a new service starts from the business's switches (books places or not), each choice says how it is taxed, and an existing service keeps its class: each opens the service sheet (a route animation) and the class menu (an overlay), and saves; each settles once before the field or the saved service is read","cost":"4 tests of about 1 s each locally (the file: 18 tests in 17 s)"}
 # review {"path":"test/features/workspace/setup_desk_test.dart","before":15,"after":17,"invariant":"#3629 a step the guide opens over itself (a push) is drawn beside the steps, and Back returns to the guide: each settles once before the address and the page are read","cost":"one test, about 1 s locally"}
+# review {"path":"test/features/money/guest_pass_invoice_screen_test.dart","before":0,"after":10,"invariant":"#3837 a revoked pass and its invoice: the page settles, then the selection, the revoke question and its result, the chip and the invoices read again each settle once before the line, the rows or the address are read","cost":"three tests in about 2 s locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -92,6 +93,7 @@
 17 test/features/money/expense_repartition_test.dart
 13 test/features/money/expense_schedule_test.dart
 11 test/features/money/finance_attention_test.dart
+10 test/features/money/guest_pass_invoice_screen_test.dart
 12 test/features/money/guest_passes_screen_test.dart
 14 test/features/money/input_vat_test.dart
 11 test/features/money/invoice_journey_test.dart

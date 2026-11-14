@@ -63,5 +63,31 @@
   "guestPassRevokeFailed": "The server did not revoke it.",
   "@guestPassRevokeFailed": {
     "description": "a refusal without words of its own (#3829)"
+  },
+  "guestPassOpenInvoice": "Open the invoice",
+  "@guestPassOpenInvoice": {
+    "description": "#3837 a revoked pass's link to the invoice its sale made"
+  },
+  "guestPassInvoiceNotCorrected": "Invoice {number} not corrected yet",
+  "@guestPassInvoiceNotCorrected": {
+    "description": "#3837 a revoked pass whose invoice is not voided, replaced or credited yet; never says which correction to make",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassInvoiceCorrected": "Invoice {number} corrected",
+  "@guestPassInvoiceCorrected": {
+    "description": "#3837 a revoked pass whose invoice is voided, replaced or credited",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassFilterUncorrected": "Revoked, invoice not corrected",
+  "@guestPassFilterUncorrected": {
+    "description": "#3837 the guest passes filter: revoked passes whose invoice is not corrected yet"
   }
 }

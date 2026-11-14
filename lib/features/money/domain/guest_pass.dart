@@ -178,6 +178,7 @@ class GuestPassRecord {
     required this.endsAt,
     this.revokedAt,
     this.cancelledBookings = 0,
+    this.invoiceId,
   });
 
   factory GuestPassRecord.fromJson(Map<String, Object?> json) {
@@ -196,6 +197,7 @@ class GuestPassRecord {
         final List<Object?> ids => ids.length,
         _ => 0,
       },
+      invoiceId: r.stringOrNull('invoice_id'),
     );
   }
 
@@ -216,6 +218,9 @@ class GuestPassRecord {
   final DateTime? revokedAt;
 
   bool get revoked => revokedAt != null;
+
+  /// #3837 — the invoice the sale made; null for a free pass.
+  final String? invoiceId;
 
   /// #3829 — the bookings the revocation cancelled (one per day of a day
   /// pass; an hourly pass has one).
