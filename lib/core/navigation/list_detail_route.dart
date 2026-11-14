@@ -56,13 +56,26 @@ class OpenRecord extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final info = GoRouter.of(context).routeInformationProvider;
+    final router = GoRouter.of(context);
     return ListenableBuilder(
-      listenable: info,
+      listenable: Listenable.merge([
+        router.routerDelegate,
+        router.routeInformationProvider,
+      ]),
       builder: (context, _) =>
-          builder(context, _recordIn(info.value.uri.path, listPath)),
+          builder(context, _recordIn(_topPath(router), listPath)),
     );
   }
+}
+
+/// #3842 — the address of the route on top. A record opened by a push is
+/// the configuration's last match; the address the router reports back
+/// after a rebuild is the configuration's base, without the record.
+String _topPath(GoRouter router) {
+  final delegate = router.routerDelegate;
+  return delegate.currentConfiguration.isEmpty
+      ? router.routeInformationProvider.value.uri.path
+      : delegate.state.uri.path;
 }
 
 /// Opens [id] beside or over the list at [listPath]: one entry in the

@@ -6,6 +6,7 @@
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_status.dart';
@@ -19,11 +20,13 @@ import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
@@ -98,6 +101,27 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     'ws-1',
     const SupplierDraft(name: 'ACME Office'),
   );
+  // #3842 — one order to that supplier, so the orders page has a row and
+  // an order to open beside it.
+  final orders = FakePurchaseOrderRepository(
+    suppliers: () => suppliers.suppliers,
+    services: () => const [],
+    now: () => kTestNow,
+  );
+  await orders.save(
+    'ws-1',
+    'guard-order',
+    PurchaseOrderDraft(
+      supplierId: supplier,
+      lines: const [
+        PurchaseOrderLineDraft(
+          description: 'Coffee beans',
+          quantity: 6,
+          unitPriceCents: 1450,
+        ),
+      ],
+    ),
+  );
   final purchases = FakePurchaseRepository()
     ..payables.add(
       PayableRow(
@@ -130,6 +154,7 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     size: size,
     overrides: [
       supplierRepositoryProvider.overrideWithValue(suppliers),
+      purchaseOrderRepositoryProvider.overrideWithValue(orders),
       purchaseRepositoryProvider.overrideWithValue(purchases),
       ...standardTestOverrides(
         money: money,
@@ -255,6 +280,14 @@ const _pages = [
   // #3615 — purchases at the desk.
   ('/money/purchases', PageKind.records, 'money', 'purchases'),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
+  // #3842 — the purchase orders as records, and an order beside the table.
+  ('/money/purchase-orders', PageKind.records, 'money', 'purchase-orders'),
+  (
+    '/money/purchase-orders/order/demo-order-1',
+    PageKind.recordBesideTable,
+    'money',
+    'purchase-orders-open',
+  ),
   // #3618 — members and plans at the desk, and a member beside the table.
   ('/members', PageKind.records, 'members', 'members'),
   ('/members/plans', PageKind.records, 'members', 'plans'),
@@ -319,7 +352,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 23;
+const _guardedWorkspaceRoutes = 25;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -428,6 +461,8 @@ void main() {
               RecordsHeader<LedgerEntry>,
               RecordRow<UsageRecord>,
               RecordsHeader<UsageRecord>,
+              RecordRow<PurchaseOrder>,
+              RecordsHeader<PurchaseOrder>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -447,6 +482,7 @@ void main() {
               RecordsHeader<RecordedPayment>,
               RecordsHeader<LedgerEntry>,
               RecordsHeader<UsageRecord>,
+              RecordsHeader<PurchaseOrder>,
             ],
           ),
           isEmpty,
