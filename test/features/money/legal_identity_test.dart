@@ -37,15 +37,21 @@ Future<FakeWorkspaceRepository> pumpIdentity(
   return workspace;
 }
 
-/// The #480 mention fields sit below the identity — the ListView is
-/// lazy, so scroll a field into existence before touching it.
+/// The #480 mention fields sit below the identity — scroll a field into
+/// view before touching it.
 Future<void> reveal(WidgetTester tester, Key key) async {
-  await tester.scrollUntilVisible(
-    find.byKey(key),
-    120,
-    scrollable: find.byType(Scrollable).first,
+  // The form is built whole (a column, not a lazy list): the target exists
+  // before it is on screen, so drag the form's own scrollable (the vertical
+  // one around the target) until the target can be hit.
+  final target = find.byKey(key);
+  final scrollable = find
+      .ancestor(of: target, matching: find.byType(Scrollable))
+      .last;
+  await tester.dragUntilVisible(
+    target.hitTestable(),
+    scrollable,
+    const Offset(0, -120),
   );
-  await tester.ensureVisible(find.byKey(key));
   await tester.pumpAndSettle();
 }
 

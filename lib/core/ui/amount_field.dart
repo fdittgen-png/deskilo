@@ -142,37 +142,59 @@ class _AppAmountFieldState extends State<AppAmountField> {
       skipTraversal: true,
       canRequestFocus: false,
       onFocusChange: (has) => setState(() => _left = _left || !has),
-      child: TextField(
-        controller: widget.controller,
-        focusNode: _focus,
-        enabled: widget.enabled,
-        autofocus: widget.autofocus,
-        textAlign: TextAlign.end,
-        style: const TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
-        keyboardType: TextInputType.numberWithOptions(
-          decimal: digits > 0,
-          signed: widget.allowNegative,
-        ),
-        inputFormatters: const [_AmountTidy()],
-        textInputAction: widget.textInputAction,
-        onChanged: (value) {
-          final key = widget.fieldKey;
-          if (key != null) FormErrorsScope.maybeOf(context)?.onEdit(key);
-          setState(() {});
-          widget.onChanged?.call(value);
+      // #3946 — a figure is one line: Up and Down take the caret to its
+      // start or end, as in any single-line field. Flutter's own vertical
+      // caret run asserts in an empty field whose text is aligned to the
+      // end, so the field answers these keys itself.
+      child: Actions(
+        actions: {
+          ExtendSelectionVerticallyToAdjacentLineIntent:
+              CallbackAction<ExtendSelectionVerticallyToAdjacentLineIntent>(
+                onInvoke: (intent) => _caretToEdge(forward: intent.forward),
+              ),
+          ExtendSelectionVerticallyToAdjacentPageIntent:
+              CallbackAction<ExtendSelectionVerticallyToAdjacentPageIntent>(
+                onInvoke: (intent) => _caretToEdge(forward: intent.forward),
+              ),
         },
-        onSubmitted: widget.onSubmitted,
-        decoration: InputDecoration(
-          labelText: widget.label,
-          helperText: widget.helper,
-          helperMaxLines: 3,
-          errorText: _problem(),
-          errorMaxLines: 3,
-          suffixText: widget.currency,
-          suffixIcon: widget.help,
+        child: TextField(
+          controller: widget.controller,
+          focusNode: _focus,
+          enabled: widget.enabled,
+          autofocus: widget.autofocus,
+          textAlign: TextAlign.end,
+          style: const TextStyle(fontFeatures: [FontFeature.tabularFigures()]),
+          keyboardType: TextInputType.numberWithOptions(
+            decimal: digits > 0,
+            signed: widget.allowNegative,
+          ),
+          inputFormatters: const [_AmountTidy()],
+          textInputAction: widget.textInputAction,
+          onChanged: (value) {
+            final key = widget.fieldKey;
+            if (key != null) FormErrorsScope.maybeOf(context)?.onEdit(key);
+            setState(() {});
+            widget.onChanged?.call(value);
+          },
+          onSubmitted: widget.onSubmitted,
+          decoration: InputDecoration(
+            labelText: widget.label,
+            helperText: widget.helper,
+            helperMaxLines: 3,
+            errorText: _problem(),
+            errorMaxLines: 3,
+            suffixText: widget.currency,
+            suffixIcon: widget.help,
+          ),
         ),
       ),
     );
+  }
+
+  Object? _caretToEdge({required bool forward}) {
+    final c = widget.controller;
+    c.selection = TextSelection.collapsed(offset: forward ? c.text.length : 0);
+    return null;
   }
 }
 
