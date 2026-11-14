@@ -13,63 +13,65 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The name of [paper] as the settings show it.
-String paperName(AppLocalizations l10n, Paper paper) => switch (paper) {
+String _paperName(AppLocalizations l10n, Paper paper) => switch (paper) {
   Paper.a4 => l10n.workspacePaperA4,
   Paper.letter => l10n.workspacePaperLetter,
 };
 
 /// Why a business of [country] has no choice of paper, or null when it has.
-String? paperOnlyReason(AppLocalizations l10n, Country country) {
+String? _paperOnlyReason(AppLocalizations l10n, Country country) {
   if (country.papers.length != 1) return null;
-  final only = paperName(l10n, country.papers.single);
+  final only = _paperName(l10n, country.papers.single);
   return paymentSlipOf(country.code) != null
       ? l10n.workspacePaperOnlySlip(only)
       : l10n.workspacePaperOnly(only);
 }
 
-/// The paper choice of the settings form: null follows [countryCode].
+/// The paper choice of the settings form, held by [paper]: null follows
+/// [countryCode].
 class WorkspacePaperField extends StatelessWidget {
   const WorkspacePaperField({
     super.key,
     required this.countryCode,
     required this.paper,
     required this.enabled,
-    required this.onChanged,
   });
 
   final String countryCode;
-  final Paper? paper;
+  final ValueNotifier<Paper?> paper;
   final bool enabled;
-  final ValueChanged<Paper?> onChanged;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final country = CountryCatalog.byCode(countryCode);
-    final only = paperOnlyReason(l10n, country);
-    return DropdownButtonFormField<Paper?>(
-      key: const Key('workspaceSettingsPaper'),
-      isExpanded: true,
-      initialValue: country.papers.contains(paper) ? paper : null,
-      decoration: InputDecoration(
-        labelText: l10n.workspacePaperLabel,
-        helperMaxLines: 3,
-        helperText: only ?? l10n.workspacePaperHelper,
-      ),
-      items: [
-        DropdownMenuItem(
-          child: Text(
-            l10n.workspacePaperFollows(
-              paperName(l10n, country.paper),
-              localizedCountryName(l10n, country.code),
+    final only = _paperOnlyReason(l10n, country);
+    return ValueListenableBuilder<Paper?>(
+      valueListenable: paper,
+      builder: (context, chosen, _) => DropdownButtonFormField<Paper?>(
+        key: const Key('workspaceSettingsPaper'),
+        isExpanded: true,
+        initialValue: country.papers.contains(chosen) ? chosen : null,
+        decoration: InputDecoration(
+          labelText: l10n.workspacePaperLabel,
+          helperMaxLines: 3,
+          helperText: only ?? l10n.workspacePaperHelper,
+        ),
+        items: [
+          DropdownMenuItem(
+            child: Text(
+              l10n.workspacePaperFollows(
+                _paperName(l10n, country.paper),
+                localizedCountryName(l10n, country.code),
+              ),
             ),
           ),
-        ),
-        if (only == null)
-          for (final p in country.papers)
-            DropdownMenuItem(value: p, child: Text(paperName(l10n, p))),
-      ],
-      onChanged: enabled && only == null ? onChanged : null,
+          if (only == null)
+            for (final p in country.papers)
+              DropdownMenuItem(value: p, child: Text(_paperName(l10n, p))),
+        ],
+        onChanged: enabled && only == null ? (p) => paper.value = p : null,
+      ),
     );
   }
 }

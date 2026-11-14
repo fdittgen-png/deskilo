@@ -31,8 +31,9 @@ class WorkspaceSettingsForm {
   // #486 — the workspace's own language ('' = sender's app language)
   // and the per-language invitation drafts the chips page through.
   String defaultLocale = '';
-  // #3852 — the paper of the documents; null follows the country.
-  Paper? paper;
+  // #3852 — the paper of the documents; null follows the country. A
+  // notifier, so a choice reaches the Save without rebuilding the screen.
+  final paper = ValueNotifier<Paper?>(null);
   String templateLang = 'en';
   final Map<String, String> templateDrafts = {};
 
@@ -66,7 +67,7 @@ class WorkspaceSettingsForm {
       languages: languages.keys,
     ));
     defaultLocale = workspace.defaultLocale;
-    paper = Paper.fromWire(workspace.paper);
+    paper.value = Paper.fromWire(workspace.paper);
     templateLang = languages.containsKey(defaultLocale) ? defaultLocale : 'en';
     whatsappGroup.text = workspace.whatsappGroup;
     workspaceAddress.text = workspace.address;
@@ -99,7 +100,7 @@ class WorkspaceSettingsForm {
   /// every keystroke and every Save.
   late final Listenable changes = Listenable.merge([
     currency, timezone, whatsappGroup, workspaceAddress, invitationTemplate,
-    _marks,
+    paper, _marks,
   ]);
 
   /// #1294 / #1563 — the defaults live in billing_rules, read separately;
@@ -131,7 +132,7 @@ class WorkspaceSettingsForm {
     currency.text = country.currencyCode;
     timezone.text = country.defaultTimezone;
     // #3852 — a paper the new country does not use follows it instead.
-    if (!country.papers.contains(paper)) paper = null;
+    if (!country.papers.contains(paper.value)) paper.value = null;
   }
 
   /// #1451 — the one save command, against the version the form was
@@ -147,7 +148,7 @@ class WorkspaceSettingsForm {
       whatsappGroup: whatsappGroup.text.trim(),
       address: workspaceAddress.text.trim(),
       defaultLocale: defaultLocale,
-      paper: paper?.wire ?? '',
+      paper: paper.value?.wire ?? '',
       deskOpacity: deskOpacity,
       invitationTemplates: Map.of(templateDrafts),
       newMemberDefaults: newMemberDefaults,
@@ -160,6 +161,7 @@ class WorkspaceSettingsForm {
     whatsappGroup.dispose();
     workspaceAddress.dispose();
     invitationTemplate.dispose();
+    paper.dispose();
     _marks.dispose();
   }
 }

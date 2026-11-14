@@ -11,6 +11,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/money_settings_rows.dart';
@@ -152,12 +153,11 @@ class WorkspaceParameterTiles {
                       countryCode: form.countryCode ?? '',
                       paper: form.paper,
                       enabled: !busy,
-                      onChanged: (p) => _update(() => form.paper = p),
                     ),
                     helpTopic,
                     anchor: HelpAnchor.workspacePaper,
                   ),
-                  const SizedBox(height: 12),
+                  const FormGap(),
                   // 0060 — the postal address printed as the invoice
                   // letterhead. Lives with the other identity basics.
                   TextFormField(

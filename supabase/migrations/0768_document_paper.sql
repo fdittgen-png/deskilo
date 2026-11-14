@@ -64,7 +64,7 @@ begin
             and (p_value -> 'papers') ? coalesce(p_value ->> 'paper', 'A4'));
     when 'country' then$a$);
   if v_def is null or position($a$when 'document_paper' then$a$ in v_def) = 0 then
-    raise exception '0768: tax_reference_valid anchor missing';
+    raise exception '0768: tax_reference_valid anchor missing' using errcode = 'P0001';
   end if;
   execute v_def;
 end
@@ -99,8 +99,7 @@ language sql stable security definer set search_path = public as $fn$
                    limit 1) as value) v;
 $fn$;
 
-revoke execute on function public.country_papers(text, date) from public, anon;
-grant execute on function public.country_papers(text, date) to authenticated;
+revoke execute on function public.country_papers(text, date) from public, anon, authenticated;
 
 -- ── 4. the business's paper ───────────────────────────────────────────
 alter table public.workspaces
@@ -117,7 +116,7 @@ comment on column public.workspaces.paper is
 -- writes it, and so is a country that does not use the paper chosen.
 create or replace function public.workspaces_paper_in_country()
 returns trigger
-language plpgsql set search_path = public as $fn$
+language plpgsql security definer set search_path = public as $fn$
 declare
   v_papers jsonb;
 begin
@@ -172,7 +171,7 @@ begin
     $a$'desk_opacity', coalesce(w.desk_opacity, 100),
       'paper', w.paper,$a$);
   if v_def is null or position($a$'paper', w.paper,$a$ in v_def) = 0 then
-    raise exception '0768: export_workspace_configuration anchor missing';
+    raise exception '0768: export_workspace_configuration anchor missing' using errcode = 'P0001';
   end if;
   execute v_def;
 
@@ -193,7 +192,7 @@ begin
       else w.paper
     end,$a$);
   if v_def is null or position($a$#3852 -- '' follows the country$a$ in v_def) = 0 then
-    raise exception '0768: import_workspace_configuration anchor missing';
+    raise exception '0768: import_workspace_configuration anchor missing' using errcode = 'P0001';
   end if;
   execute v_def;
 end
@@ -215,10 +214,10 @@ declare
   v_same boolean;
 begin
   if auth.uid() is null then
-    raise exception 'not authenticated';
+    raise exception 'not authenticated' using errcode = 'P0001';
   end if;
   if jsonb_typeof(p_settings) is distinct from 'object' then
-    raise exception 'workspace settings are an object';
+    raise exception 'workspace settings are an object' using errcode = 'P0001';
   end if;
   if p_settings ? 'invitation_templates' then
     select coalesce(jsonb_object_agg(e.key, btrim(e.value)), '{}'::jsonb)
@@ -229,7 +228,7 @@ begin
 
   select * into v_row from public.workspaces where id = p_workspace_id for update;
   if v_row.id is null then
-    raise exception 'only the owner and co-owners change the workspace settings';
+    raise exception 'only the owner and co-owners change the workspace settings' using errcode = 'P0001';
   end if;
 
   if p_expected_modified is not null
@@ -272,7 +271,7 @@ begin
    where id = p_workspace_id
   returning * into v_row;
   if v_row.id is null then
-    raise exception 'only the owner and co-owners change the workspace settings';
+    raise exception 'only the owner and co-owners change the workspace settings' using errcode = 'P0001';
   end if;
 
   if p_settings ? 'new_member_defaults' then

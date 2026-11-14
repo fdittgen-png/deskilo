@@ -92,9 +92,9 @@ void main() {
       final form = WorkspaceSettingsForm()
         ..seedOnce(_workspace('FR', paper: 'Letter'));
       addTearDown(form.dispose);
-      expect(form.paper, Paper.letter);
+      expect(form.paper.value, Paper.letter);
       expect(form.toSave('FR').toSettings()['paper'], 'Letter');
-      form.paper = null;
+      form.paper.value = null;
       expect(form.toSave('FR').toSettings()['paper'], '');
     });
 
@@ -104,12 +104,12 @@ void main() {
       addTearDown(form.dispose);
       form.pickCountry('US');
       expect(
-        form.paper,
+        form.paper.value,
         Paper.letter,
         reason: 'the United States allow Letter',
       );
       form.pickCountry('CH');
-      expect(form.paper, isNull);
+      expect(form.paper.value, isNull);
     });
   });
 
@@ -119,9 +119,8 @@ void main() {
       Scaffold(
         body: WorkspacePaperField(
           countryCode: country,
-          paper: null,
+          paper: ValueNotifier(null),
           enabled: true,
-          onChanged: (_) {},
         ),
       ),
     );
