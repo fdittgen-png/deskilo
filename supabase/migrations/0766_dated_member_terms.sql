@@ -1051,18 +1051,6 @@ begin
     execute v_def;
   end if;
 
-  -- 5b. an accepted deal's share goes through the immediate command: dated
-  -- the first day of the first period not invoiced
-  v_def := pg_get_functiondef('public.apply_negotiation_on_decision()'::regprocedure);
-  if position('#3858' in v_def) = 0 then
-    v_def := pg_temp.anchor_replace(v_def,
-      $r$      update public.members set subscription_pct = v_deal.subscription_pct where id = v_deal.member_id;$r$,
-      $r$      -- #3858: through the immediate command
-      perform public.member_share_at_once(v_deal.member_id, v_deal.subscription_pct, new.actor_member_id, new.id);$r$);
-    if v_def is null then raise exception 'an anchor of #3858 was not found in apply_negotiation_on_decision' using errcode = 'P0001'; end if;
-    execute v_def;
-  end if;
-
   -- 6. the member's own export carries their dated changes and the terms of
   -- their invoiced periods (its own object: the export's single call is at
   -- the argument limit)
@@ -1103,6 +1091,37 @@ begin
   end if;
 end
 $migration$;
+
+-- An accepted deal (0138), restated whole: its share goes through the
+-- immediate command, dated the first day of the first period it can take.
+create or replace function public.apply_negotiation_on_decision()
+returns trigger language plpgsql security definer set search_path = public as $fn$
+declare
+  v_deal public.price_negotiations;
+begin
+  if new.type <> 'price_negotiation' or new.status = old.status then return new; end if;
+  if new.status = 'confirmed' then
+    update public.price_negotiations set status = 'superseded', decided_at = now()
+     where member_id = new.subject_member_id and status = 'active';
+    update public.price_negotiations set status = 'active', decided_at = now()
+     where event_id = new.id and status = 'pending'
+     returning * into v_deal;
+    -- #744 — the occupation is part of the deal: applied on validation,
+    -- the previous value kept for the comparison.
+    if v_deal.id is not null and v_deal.subscription_pct is not null then
+      update public.price_negotiations
+         set previous_subscription_pct = (select subscription_pct from public.members where id = v_deal.member_id)
+       where id = v_deal.id;
+      perform public.member_share_at_once(v_deal.member_id, v_deal.subscription_pct, new.actor_member_id, new.id);
+    end if;
+  elsif new.status in ('rejected', 'expired') then
+    update public.price_negotiations set status = 'rejected', decided_at = now()
+     where event_id = new.id and status = 'pending';
+  end if;
+  return new;
+end;
+$fn$;
+revoke execute on function public.apply_negotiation_on_decision() from public, anon, authenticated;
 
 -- The default tariff (0210), restated whole: the share of the current
 -- period.
