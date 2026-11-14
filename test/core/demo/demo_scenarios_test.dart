@@ -65,6 +65,7 @@ import '../../helpers/demo_assistant_journeys.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
+import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -159,7 +160,7 @@ const Map<WorkspaceFeature, String> _elsewhere = {};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 34;
+const int _switchOnlyBudget = 24;
 
 /// The features whose scenario is outside the reference business and not
 /// named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -294,7 +295,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         w.f.workspaces.badges.any((b) => b.kind == BadgeKind.qr) &&
         w.f.workspaces.badges.any((b) => b.revokedAt != null),
   ),
-  WorkspaceFeature.kioskMemberPhotos: _toggle('the kiosk shows faces'),
+  WorkspaceFeature.kioskMemberPhotos: _state(_kiosk, 'the wall tablet greets Bruno, whose photo is on his profile and in the store', (_) => kioskPhotoState()),
   WorkspaceFeature.badgeSignIn: _state(
     _kiosk,
     "Ada's badge signs her in",
@@ -309,7 +310,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       today: w.f.seededAt,
     ).held.any((d) => d.name == demoKioskDevice.name && !d.revoked),
   ),
-  WorkspaceFeature.spaceQrCodes: _toggle('every place prints its QR code'),
+  WorkspaceFeature.spaceQrCodes: _action(_member, 'a place\'s QR code is read and brings the member to that place', (_) => spaceQrAction()),
   // ── spaceManagement ──────────────────────────────────────────────────
   WorkspaceFeature.placeBooking: _state(
     _member,
@@ -323,15 +324,15 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) => w.f.workspaces.sites.length >= 2,
   ),
   WorkspaceFeature.siteDocuments: _toggle('reserved flag (internal)'),
-  WorkspaceFeature.planObjectDelete: _toggle('the plan editor deletes'),
-  WorkspaceFeature.planDecor: _toggle('the plan editor draws shapes'),
+  WorkspaceFeature.planObjectDelete: _action(_owner, 'Ada deletes a drawn object of the plan; it is gone and the seats stay', (_) => planDeleteAction()),
+  WorkspaceFeature.planDecor: _state(_owner, 'the ground floor carries a couch and a table drawn under its seats', (_) => planDecorState()),
   WorkspaceFeature.adminSeatBlocking: _action(
     _admin,
     'Chiara blocks a seat '
     'for maintenance',
     (w) => w.f.floorPlan.seats.length > 1,
   ),
-  WorkspaceFeature.workingHours: _toggle('the day runs 9 to 18'),
+  WorkspaceFeature.workingHours: _state(_owner, 'the working day runs nine to six, and eight o\'clock is outside it', (_) => workingHoursState()),
   WorkspaceFeature.publicHolidays: _state(
     _member,
     'public holidays close '
@@ -362,17 +363,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return kpi.reservedSeatHours > 0 && kpi.offeredSeatHours > 0;
     },
   ),
-  WorkspaceFeature.planMemberPhotos: _toggle('the plan shows who sits where'),
+  WorkspaceFeature.planMemberPhotos: _state(_member, 'a held seat of the plan shows its occupant\'s photo', (_) => planPhotoState()),
   WorkspaceFeature.uniqueMonograms: _state(
     _member,
     'every avatar has its '
     'own letters',
     (w) => w.f.workspaces.memberNames.length > 1,
   ),
-  WorkspaceFeature.singleRoomLevelNames: _toggle(
-    'a one-room level reads as '
-    'the room',
-  ),
+  WorkspaceFeature.singleRoomLevelNames: _state(_member, 'the ground floor has one room only, read by the level\'s name', (_) => singleRoomState()),
   WorkspaceFeature.workspaceVocabulary: _action(
     _owner,
     'Ada renames '
@@ -437,7 +435,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a whole level',
     (w) => w.f.floorPlan.levels.any((l) => l.bookableAsWhole),
   ),
-  WorkspaceFeature.bookingPolicies: _toggle('booking rules apply'),
+  WorkspaceFeature.bookingPolicies: _state(_owner, 'the booking rules are the workspace\'s own: two places, ten hours, walk-up outside the day', (_) => bookingPoliciesState()),
   WorkspaceFeature.bookingGate: _state(
     _member,
     'a closed day refuses a '
@@ -482,7 +480,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'decisions on one calendar',
     (w) => w.f.calendar.items.length > 10,
   ),
-  WorkspaceFeature.calendarViews: _toggle('agenda, week and month'),
+  WorkspaceFeature.calendarViews: _action(_member, 'Bruno finds the same booking in the day, the week and the month', (_) => calendarViewsAction()),
   WorkspaceFeature.calendarValidations: _state(
     _admin,
     'pending decisions on '
@@ -560,7 +558,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'message to the studio group',
     (w) => w.f.workspaces.conversations.length >= 2,
   ),
-  WorkspaceFeature.captureProtection: _toggle('a message may forbid copies'),
+  WorkspaceFeature.captureProtection: _action(_member, 'a screenshot of a thread is recorded in the thread', (_) => captureAction()),
   WorkspaceFeature.messageMentions: _state(
     _owner,
     'the studio group to '
