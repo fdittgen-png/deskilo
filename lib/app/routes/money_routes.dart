@@ -51,6 +51,7 @@ import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_access.dart';
 import '../route_env.dart';
+import '../shell/desk_scaffold.dart' show deskShownAt;
 import 'me_adapters.dart';
 
 /// Routes of the money feature.
@@ -356,9 +357,19 @@ List<RouteBase> _financeRoutes(RouteEnv env) {
     ),
     GoRoute(
       path: '/money/cash',
-      redirect: env.guard(
-        const RouteAccess(features: [WorkspaceFeature.moneyTab], to: '/money'),
-      ),
+      // #3926 — at the desk the page's doors are the Cash group's entries:
+      // it goes to the first one the person may open. A phone keeps it.
+      redirect: (context, state) {
+        if (!env.mounted) return null;
+        final refused = const RouteAccess(
+          features: [WorkspaceFeature.moneyTab],
+          to: '/money',
+        ).redirectFor(env);
+        if (refused != null) return refused;
+        return deskShownAt(context, '/money/cash', inBusiness: true)
+            ? cashDeskLanding(env)
+            : null;
+      },
       builder: (context, state) => const CashHubScreen(),
     ),
     // #934 — the treasurer's view, and the guided repartition.

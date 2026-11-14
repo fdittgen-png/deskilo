@@ -98,6 +98,13 @@ List<NavGroup> navGroupsOf(
       all,
       {'drawer-cash'},
       sub: [
+        // #3926 — at the desk the cash page's doors, as a group.
+        NavGroup(
+          'cash',
+          labels.hubCashTitle,
+          Icons.account_balance_outlined,
+          entries.cashPages(),
+        ),
         NavGroup(
           'accounting',
           labels.hubAccountingTitle,

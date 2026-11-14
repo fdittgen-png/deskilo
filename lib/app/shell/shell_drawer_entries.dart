@@ -73,6 +73,7 @@ class DrawerEntries {
     required this.go,
     this.setupOpen = false,
     this.openToPay,
+    this.openBankStatements,
   });
 
   final BuildContext context;
@@ -96,6 +97,10 @@ class DrawerEntries {
 
   /// Opens the existing workspace-wide payable flow.
   final VoidCallback? openToPay;
+
+  /// #3926 — opens the bank statements; null when the person may not read
+  /// them or the bank import is off.
+  final VoidCallback? openBankStatements;
 
   /// Leaves the drawer and goes (or pushes) to [route].
   final void Function(String route, {bool push}) go;
@@ -241,7 +246,10 @@ class DrawerEntries {
           openToPay != null)
         DrawerEntry('drawer-purchases-to-pay', Icons.outbox_outlined,
             l10n.cashHubToPay, openToPay!),
-      if (money &&
+      // #3926 — at the desk the cash page's doors are the Cash group's
+      // entries ([cashPages]); the phone keeps the page.
+      if (!permanent &&
+          money &&
           (may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.manageBilling) ||
               may(WorkspacePermission.managePurchases)))
@@ -250,6 +258,23 @@ class DrawerEntries {
             route: '/money/cash'),
     ];
   }
+
+  /// #3926 — the cash page's doors as entries of Finance's Cash group at
+  /// the desk, each asking what its page or sheet asks: money in and out
+  /// (MoneyToolRights.status) and the bank statements. What is still to pay
+  /// is the Purchases group's.
+  List<DrawerEntry> cashPages() => [
+    if (permanent &&
+        features.contains(WorkspaceFeature.workspaceStatus) &&
+        may(WorkspacePermission.viewFinances))
+      DrawerEntry('drawer-cash-in-out', Icons.account_balance_outlined,
+          l10n.cashHubInOut, () => go('/money/status'),
+          route: '/money/status'),
+    if (permanent && openBankStatements != null)
+      DrawerEntry('drawer-bank-statements',
+          Icons.account_balance_wallet_outlined, l10n.bankStatementsTitle,
+          openBankStatements!),
+  ];
 
   /// #3307 — the space's orders to its suppliers, for a buyer or a
   /// finance reader.
