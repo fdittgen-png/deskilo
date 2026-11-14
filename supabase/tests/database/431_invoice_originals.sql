@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #3853 (0771) -- an issued invoice keeps one stored original. An issuer of
+-- #3853 (0772) -- an issued invoice keeps one stored original. An issuer of
 -- the invoice's business uploads its PDF once, at the path its digest names,
 -- and records it once; the server keeps the record only when the PDF is
 -- there and the XML names the invoice's number, currency and amount due.

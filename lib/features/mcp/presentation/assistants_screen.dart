@@ -16,9 +16,11 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/mcp_connection.dart';
 import '../providers/mcp_providers.dart';
+import '../providers/my_confirmations_provider.dart';
 import 'connect_assistant_screen.dart';
 import 'mcp_operation_labels.dart';
 import 'widgets/mcp_access_status_card.dart';
+import 'widgets/mcp_my_requests_section.dart';
 import 'widgets/mcp_usage_cards.dart';
 
 /// #1628 — the person's own assistant access on this database: whether
@@ -48,7 +50,8 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
       ..invalidate(myMcpConnectionsProvider)
       ..invalidate(myMcpUsageProvider)
       ..invalidate(mcpAccessStatusProvider)
-      ..invalidate(connectedMcpOverviewProvider);
+      ..invalidate(connectedMcpOverviewProvider)
+      ..invalidate(myActionConfirmationsProvider);
   }
 
   Future<void> _disconnect(AppLocalizations l10n, McpConnectionInfo c) async {
@@ -104,6 +107,8 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
             ),
             const SizedBox(height: AppSpacing.md),
           ],
+          // #3978 — what an assistant left for the person to confirm.
+          const McpMyRequestsSection(),
           // #1625 — the six facts and the next step, then the eligibility
           // actions they explain.
           const McpAccessStatusCard(),

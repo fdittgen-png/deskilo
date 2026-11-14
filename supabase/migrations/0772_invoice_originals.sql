@@ -41,7 +41,7 @@
 -- issued before stay as they were and keep no original.
 alter table public.invoices add column if not exists keeps_original boolean not null default false;
 comment on column public.invoices.keeps_original is
-  '#3853 (0771) -- an original of this invoice is kept: true for every invoice issued from 0771 on';
+  '#3853 (0772) -- an original of this invoice is kept: true for every invoice issued from 0772 on';
 
 create or replace function public.invoice_keeps_original_stamp()
 returns trigger language plpgsql set search_path = public as $fn$
@@ -284,4 +284,4 @@ $fn$;
 revoke execute on function public.store_invoice_original(uuid, text, text) from public, anon;
 grant execute on function public.store_invoice_original(uuid, text, text) to authenticated;
 
-select public.set_deskilo_schema_version(771);
+select public.set_deskilo_schema_version(772);

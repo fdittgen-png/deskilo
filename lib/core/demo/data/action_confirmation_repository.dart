@@ -16,6 +16,20 @@ class FakeActionConfirmationRepository implements ActionConfirmationRepository {
       confirmations[id] ?? ActionConfirmation(id: id, status: ConfirmationStatus.notFound);
 
   @override
+  Future<List<ActionConfirmation>> mine({
+    required DateTime answeredSince,
+  }) async => [
+    for (final c in confirmations.values)
+      if (c.status.answerable ||
+          !(c.askedAt?.isBefore(answeredSince) ?? false))
+        c,
+  ]..sort(
+    (a, b) => (b.askedAt ?? answeredSince).compareTo(
+      a.askedAt ?? answeredSince,
+    ),
+  );
+
+  @override
   Future<ConfirmationStatus> respond(String id, {required bool accept}) async {
     answers.add((id: id, accept: accept));
     final c = confirmations[id];
@@ -23,16 +37,7 @@ class FakeActionConfirmationRepository implements ActionConfirmationRepository {
     if (!c.status.answerable) return c.status;
     final next = accept ? ConfirmationStatus.acknowledged : ConfirmationStatus.declined;
     await onAnswered?.call(c, accept: accept);
-    confirmations[id] = ActionConfirmation(
-      id: c.id,
-      status: next,
-      operation: c.operation,
-      workspaceName: c.workspaceName,
-      clientName: c.clientName,
-      arguments: c.arguments,
-      target: c.target,
-      expiresAt: c.expiresAt,
-    );
+    confirmations[id] = c.withStatus(next);
     return next;
   }
 }
