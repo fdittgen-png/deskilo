@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/edge_fade_scroll.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/invoice_pdf_template.dart';
 import 'report_page_style.dart';
 import 'report_visual_editor_actions.dart';
@@ -98,6 +99,8 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final line = visualLines[index];
+    final side = ReportPageScale.onPage(context, KitMetrics.minTarget);
+    final target = BoxConstraints(minWidth: side, minHeight: side);
     return Container(
       decoration: BoxDecoration(
         color: ReportPage.backdrop.withValues(alpha: .6),
@@ -128,6 +131,8 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
                     fontSize: 11, color: ReportPage.chrome)),
           // A Wrap, not a Row: inside a column the toolbar is narrower
           // than its buttons, and a clipped Done button is no button.
+          // #3970 — each button a target of the kit's size on screen,
+          // however far the page is shrunk to fit.
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
             visualKindMenu(
               key: ValueKey('${widget.bandKey}-type-$index'),
@@ -141,6 +146,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               key: ValueKey('${widget.bandKey}-up-$index'),
               icon: const Icon(Icons.arrow_upward, size: 16),
               visualDensity: VisualDensity.compact,
+              constraints: target,
               onPressed: () => visualMove(index, -1),
             ),
             IconButton(
@@ -148,6 +154,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               key: ValueKey('${widget.bandKey}-down-$index'),
               icon: const Icon(Icons.arrow_downward, size: 16),
               visualDensity: VisualDensity.compact,
+              constraints: target,
               onPressed: () => visualMove(index, 1),
             ),
             // #822 — insert a TYPED element below.
@@ -166,6 +173,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
                 icon: const Icon(Icons.data_object, size: 16),
                 tooltip: l10n.reportDesignerFields,
                 visualDensity: VisualDensity.compact,
+                constraints: target,
                 onPressed: visualPickField,
               ),
             if (widget.bandChoices.isNotEmpty)
@@ -182,9 +190,16 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
                       child: Text(entry.value),
                     ),
                 ],
-                child: const Padding(
-                  padding: EdgeInsets.all(6),
-                  child: Icon(Icons.drive_file_move_outline, size: 16),
+                child: ConstrainedBox(
+                  constraints: target,
+                  child: const Center(
+                    widthFactor: 1,
+                    heightFactor: 1,
+                    child: Padding(
+                      padding: EdgeInsets.all(6),
+                      child: Icon(Icons.drive_file_move_outline, size: 16),
+                    ),
+                  ),
                 ),
               ),
             IconButton(
@@ -192,6 +207,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               key: ValueKey('${widget.bandKey}-delete-$index'),
               icon: const Icon(Icons.delete_outline, size: 16),
               visualDensity: VisualDensity.compact,
+              constraints: target,
               onPressed: () => visualDelete(index),
             ),
             IconButton(
@@ -199,6 +215,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               key: ValueKey('${widget.bandKey}-done-$index'),
               icon: const Icon(Icons.check, size: 16),
               visualDensity: VisualDensity.compact,
+              constraints: target,
               onPressed: visualDeselect,
             ),
           ]),
