@@ -3,6 +3,7 @@
 // #2360 — a Swiss seller's invoice ends on the QR-bill: its own A4 page,
 // built only where the guidelines can be met (a Swiss account, a positive
 // total, CHF or EUR, not a proforma, not voided).
+import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -13,6 +14,7 @@ import 'package:deskilo/features/money/domain/swiss_qr_bill_invoice.dart';
 import 'package:deskilo/features/money/domain/swiss_qr_bill_pdf.dart';
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -185,4 +187,35 @@ void main() {
     expect(pages(with_), 2);
     expect(String.fromCharCodes(with_.take(5)), '%PDF-');
   });
+
+  // #3852 — the payment part is a format of fixed size: whatever paper a
+  // business prints on, its page keeps the same bytes. The digest is of a
+  // fixed bill alone on its page, without the document's random id.
+  test('the payment part of a fixed bill keeps its bytes', () async {
+    final bill = swissQrBillOf(
+      _invoice(),
+      iban: _instructions.iban,
+      qrIban: _instructions.qrIban,
+      workspaceCountry: 'CH',
+    )!;
+    final doc = pw.Document()
+      ..addPage(
+        swissQrBillPage(
+          bill: bill,
+          strings: _words,
+          baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+          boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+        ),
+      );
+    final text = latin1
+        .decode(await doc.save())
+        .replaceAll(RegExp(r'/ID\s*\[[^\]]*\]'), '');
+    expect(
+      sha256.convert(latin1.encode(text)).toString(),
+      _paymentPartDigest,
+    );
+  });
 }
+
+const _paymentPartDigest =
+    '4c20ee9107ccfa22e9ff494b144e638ec11d3ed37cceac09e582dbaa97ac83dd';
