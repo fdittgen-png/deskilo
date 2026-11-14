@@ -33,6 +33,8 @@ enum DemoSpaceKey {
   newYork(demoNewYorkSpaceId, 'New York', 'USD'),
   zurich(demoZurichSpaceId, 'Zurich', 'CHF'),
   milan(demoMilanSpaceId, 'Milan', 'EUR'),
+  // #3863 — the one Demo business without places (Berlin, a practice).
+  practice(demoPracticeSpaceId, 'the Berlin practice', 'EUR'),
   twin(demoTwinSpaceId, 'the development twin', 'EUR');
 
   const DemoSpaceKey(this.id, this.label, this.currency);
@@ -96,6 +98,7 @@ class DemoSpaces<T> {
   T get newYork => at(DemoSpaceKey.newYork);
   T get zurich => at(DemoSpaceKey.zurich);
   T get milan => at(DemoSpaceKey.milan);
+  T get practice => at(DemoSpaceKey.practice);
   T get twin => at(DemoSpaceKey.twin);
 }
 

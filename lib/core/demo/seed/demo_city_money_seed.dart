@@ -23,6 +23,16 @@ typedef CityMoneySpec = ({
   List<({String siteId, String memberId, DateTime month})> siteRentals,
 });
 
+/// #3863 — what a business invoices every month: the invoice's title, the
+/// monthly fee's line, the address its members are billed at and its
+/// catalogue of services (name, unit price in minor units, kept in stock).
+typedef CityMoneyWords = ({
+  String title,
+  String fee,
+  String memberAddress,
+  List<(String, int, bool)> catalogue,
+});
+
 /// The invented address a member of the city's business is billed at: the
 /// street and the town of the space, told by its currency.
 String _memberAddress(String currency) => switch (currency) {
@@ -32,18 +42,23 @@ String _memberAddress(String currency) => switch (currency) {
   _ => 'Example Avenue, New York',
 };
 
+/// [words]: a coworking space's when not given (#3863: a practice names its
+/// own services).
 void seedCityMoney(
   FakeMoneyRepository money,
   FakeWorkspaceRepository workspace,
-  CityMoneySpec spec,
-) => _CityMoney(money, workspace, spec).seed();
+  CityMoneySpec spec, {
+  CityMoneyWords? words,
+}) => _CityMoney(money, workspace, spec, words).seed();
 
 class _CityMoney {
-  _CityMoney(this.money, this.workspace, this.spec);
+  _CityMoney(this.money, this.workspace, this.spec, this.words);
   final FakeMoneyRepository money;
   final FakeWorkspaceRepository workspace;
   final CityMoneySpec spec;
-  static const catalogue = <(String, int, bool)>[
+  final CityMoneyWords? words;
+  List<(String, int, bool)> get catalogue => words?.catalogue ?? _coworking;
+  static const _coworking = <(String, int, bool)>[
     ('Coffee', 250, true),
     ('Tea', 200, true),
     ('Bottled water', 150, true),
@@ -118,7 +133,7 @@ class _CityMoney {
     ];
     final sales = [
       for (final (i, item) in catalogue.indexed)
-        (item.$1, quantities[i], item.$2),
+        (item.$1, quantities[i % quantities.length], item.$2),
     ];
     final supplies = sales.fold<int>(0, (sum, item) => sum + item.$2 * item.$3);
     final bookedHours = hours[(member.id, period)] ?? 0;
@@ -153,10 +168,10 @@ class _CityMoney {
         number: '${prefix.toUpperCase()}-$period-$index',
         issuedAt: issued,
         period: period,
-        title: 'Coworking · $period',
+        title: '${words?.title ?? 'Coworking'} · $period',
         lines: [
           InvoiceLine(
-            label: 'Workspace membership',
+            label: words?.fee ?? 'Workspace membership',
             amountCents: charge,
             vatPercent: vatPercent,
           ),
@@ -206,7 +221,7 @@ class _CityMoney {
               ],
         currency: currency,
         memberName: workspace.memberNames[member.id] ?? 'Demo member',
-        memberAddress: _memberAddress(currency),
+        memberAddress: words?.memberAddress ?? _memberAddress(currency),
         workspaceName: name,
         workspaceAddress: workspace.workspaces
             .firstWhere((w) => w.id == workspaceId)
@@ -261,7 +276,7 @@ class _CityMoney {
         kind: LedgerKind.charge,
         category: LedgerCategory.subscription,
         amountCents: charge,
-        description: 'Workspace membership',
+        description: words?.fee ?? 'Workspace membership',
         period: period,
         createdAt: issued,
       ),

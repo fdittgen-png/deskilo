@@ -493,7 +493,14 @@ List<String> validateDemoFixture({
       problems.add('invoice ${invoice.number}: nothing to pay');
     }
   }
-  if (plan.seats.isEmpty) problems.add('the plan has no seat to book');
+  // #3863 — a business without places (the practice) has no seat to book.
+  final row = workspaces.workspaces
+      .where((w) => w.id == workspaces.myMember.workspaceId)
+      .firstOrNull;
+  final places = row?.featureFlags['placeBooking'] != false;
+  if (places && plan.seats.isEmpty) {
+    problems.add('the plan has no seat to book');
+  }
   if (memberIds.length < 2) problems.add('a space of one is not a space');
   return problems;
 }

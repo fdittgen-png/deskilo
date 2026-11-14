@@ -54,6 +54,8 @@ List<GuestPassOffer> _offers(DemoSpaceKey key) => switch (key) {
   DemoSpaceKey.leipzig ||
   DemoSpaceKey.zurich ||
   DemoSpaceKey.milan ||
+  // #3863 — a pass is a day at a place; the practice has none.
+  DemoSpaceKey.practice ||
   DemoSpaceKey.twin => const [],
 };
 

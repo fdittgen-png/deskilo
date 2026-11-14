@@ -9,6 +9,8 @@ const _homes = <String, ({String country, String city, String street})>{
   'uk': (country: 'GB', city: 'London', street: 'Example Street'),
   'ch': (country: 'CH', city: 'Zurich', street: 'Beispielstrasse'),
   'it': (country: 'IT', city: 'Milano', street: 'Via Esempio'),
+  // #3863 — the practice's clients.
+  'practice': (country: 'DE', city: 'Berlin', street: 'Musterstraße'),
 };
 const _newYork = (country: 'US', city: 'New York', street: 'Example Avenue');
 
