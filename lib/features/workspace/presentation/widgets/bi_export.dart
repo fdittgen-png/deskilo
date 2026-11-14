@@ -148,10 +148,10 @@ Future<void> exportBiPdf(
     Uint8List? bytes;
     if (layout != null) {
       bytes = await tryLayoutPdf(layoutXml: layout, data: data, what: title,
-          documentTitle: title, pageLabel: pageLabel, watermark: mark,
+          print: LayoutPrint(documentTitle: title, pageLabel: pageLabel, watermark: mark,
+              additionalBody: biReportBodyWidgets(sections, estimateNote)),
           font: (asset) async => pw.Font.ttf(asset.contains('Bold') ? bold : regular),
-          image: (name) => layoutImage(ref, name),
-          additionalBody: biReportBodyWidgets(sections, estimateNote));
+          image: (name) => layoutImage(ref, name));
     }
     bytes ??= await buildBiReportPdf(
       title: title, workspaceName: workspaceName, subtitle: subtitle,
@@ -223,12 +223,14 @@ class BiSnapshotPrinter {
         layoutXml: layout,
         data: data,
         what: document.title,
-        documentTitle: document.title,
-        pageLabel: l10n.invoicePdfPage,
-        watermark: mark,
+        print: LayoutPrint(
+          documentTitle: document.title,
+          pageLabel: l10n.invoicePdfPage,
+          watermark: mark,
+          additionalBody: biPrintBodyWidgets(document, title: true),
+        ),
         font: (asset) async => pw.Font.ttf(asset.contains('Bold') ? bold : regular),
         image: (name) => layoutImage(ref, name),
-        additionalBody: biPrintBodyWidgets(document, title: true),
       );
       if (bytes != null) return bytes;
     }

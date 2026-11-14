@@ -11069,6 +11069,12 @@ abstract class AppLocalizations {
   /// **'The servers your personal home offers could not be read.'**
   String get createHostUnavailable;
 
+  /// #3913 A chosen host the personal home lists in a state this version cannot read: not guessed; names the next step.
+  ///
+  /// In en, this message translates to:
+  /// **'This version cannot read this host\'s state. Update the app, then choose it again.'**
+  String get createHostUnreadable;
+
   /// #2562 C2c Create: an enrolled server where the person cannot be verified (state and refusal)
   ///
   /// In en, this message translates to:

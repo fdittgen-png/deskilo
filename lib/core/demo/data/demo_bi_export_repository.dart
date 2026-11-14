@@ -6,6 +6,10 @@
 // pages show. A figure the Demo does not hold (accounts payable, say) is the
 // server's own `0A000` for that figure and is left out and said, never
 // approximated; amounts keep their currency; the same ask is the same hash.
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+
 import '../../../core/trace/trace_logger.dart';
 import '../../../features/workspace/domain/bi_batch.dart';
 import '../../../features/workspace/domain/bi_report_snapshot.dart';
@@ -138,15 +142,8 @@ class DemoBiExportRepository implements BiExportRepository {
       'last_change_at': k.lastChangeAt!.toUtc().toIso8601String(),
   };
 
-  /// A stable 64-bit FNV-1a of [text], as 16 hex digits twice over.
-  static String _hash(String text) {
-    var a = 0xcbf29ce484222325;
-    var b = 0x84222325cbf29ce4;
-    for (final unit in text.codeUnits) {
-      a = ((a ^ unit) * 0x100000001b3) & 0xFFFFFFFFFFFFFFFF;
-      b = ((b ^ unit) * 0x1000193) & 0xFFFFFFFFFFFFFFFF;
-    }
-    return a.toRadixString(16).padLeft(16, '0') +
-        b.toRadixString(16).padLeft(16, '0');
-  }
+  /// A stable digest of [text]: the same ask gives the same one, on every
+  /// platform (a 64-bit integer does not survive the web build).
+  static String _hash(String text) =>
+      sha256.convert(utf8.encode(text)).toString();
 }

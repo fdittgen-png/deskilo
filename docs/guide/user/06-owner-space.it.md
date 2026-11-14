@@ -588,6 +588,7 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 - Gli Stati Uniti e il Canada stampano su Lettera USA; gli altri paesi su A4, a meno che Lei scelga Lettera USA.
 - In Svizzera è offerto solo l'A4: una fattura termina con una sezione di pagamento stampata su A4.
+- Su Lettera USA l'indirizzo si stampa dove lo colloca il modello; per la Lettera USA non è garantita una busta a finestra.
 - Una fattura mantiene la carta con cui è stata emessa. Cambiare carta cambia le fatture emesse dopo.
 - Se lo spazio passa a un paese che non usa la carta scelta, segue la carta abituale di quel paese.
 

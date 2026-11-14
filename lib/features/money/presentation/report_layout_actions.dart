@@ -11,6 +11,7 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -26,7 +27,36 @@ import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
 import 'report_layout_defaults.dart';
 
-/// Renders [layoutXml] against [data] into a PDF, or returns null after
+/// #3852 — how a positioned design is printed this time: the words and
+/// marks every page carries, what the document adds to the design, and
+/// the paper it is printed on (the design's own page names the paper it
+/// was made on).
+class LayoutPrint {
+  const LayoutPrint({
+    required this.documentTitle,
+    required this.pageLabel,
+    this.watermark = '',
+    this.signatureLabel = '',
+    this.signature = '',
+    this.additionalBody = const [],
+    this.lastPage,
+    this.paper,
+  });
+
+  final String documentTitle;
+  final String pageLabel;
+  final String watermark;
+  final String signatureLabel;
+  final String signature;
+  final List<pw.Widget> additionalBody;
+  final pw.Page? lastPage;
+
+  /// The paper of the document; null prints the design on its own page.
+  final Paper? paper;
+}
+
+/// Renders [layoutXml] against [data] into a PDF, printed as [print]
+/// says, or returns null after
 /// tracing why — the #470 contract that a broken design never blocks a
 /// document. [what] names the document in the trace ("INV-2026-0047",
 /// "Financial agreement Guilhem"), because a trace that cannot say which
@@ -35,18 +65,14 @@ Future<Uint8List?> tryLayoutPdf({
   required String layoutXml,
   required Map<String, Object?> data,
   required String what,
-  required String documentTitle,
-  required String pageLabel,
+  required LayoutPrint print,
   required Future<pw.Font> Function(String asset) font,
   Future<Uint8List?> Function(String name)? image,
-  String watermark = '',
-  String signatureLabel = '',
-  String signature = '',
-  List<pw.Widget> additionalBody = const [],
-  pw.Page? lastPage,
 }) async {
   try {
-    final document = renderLayoutDocument(layoutXml, data);
+    final made = renderLayoutDocument(layoutXml, data);
+    final paper = print.paper;
+    final document = paper == null ? made : made.onPaper(paper);
     final images = <String, Uint8List>{};
     if (image != null) {
       for (final name in layoutDocumentImageNames(document)) {
@@ -57,14 +83,14 @@ Future<Uint8List?> tryLayoutPdf({
     return await buildLayoutPdf(
       document: document,
       data: data,
-      documentTitle: documentTitle,
-      pageLabel: pageLabel,
+      documentTitle: print.documentTitle,
+      pageLabel: print.pageLabel,
       images: images,
-      watermark: watermark,
-      signatureLabel: signatureLabel,
-      signature: signature,
-      additionalBody: additionalBody,
-      lastPage: lastPage,
+      watermark: print.watermark,
+      signatureLabel: print.signatureLabel,
+      signature: print.signature,
+      additionalBody: print.additionalBody,
+      lastPage: print.lastPage,
       baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
       boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
     );

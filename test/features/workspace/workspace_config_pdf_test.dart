@@ -274,8 +274,7 @@ void main() {
         layoutXml: layout,
         data: data(pngs),
         what: 'configuration',
-        documentTitle: _strings.title,
-        pageLabel: 'Page',
+        print: LayoutPrint(documentTitle: _strings.title, pageLabel: 'Page'),
         font: (asset) async => _ttf(asset),
         image: (name) async => images[name],
       ))!;

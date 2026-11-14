@@ -4259,6 +4259,7 @@
   "createHostRevoked": "Wird von Ihrem persönlichen Zuhause nicht mehr angeboten",
   "createHostTitle": "Wo soll der Betrieb liegen?",
   "createHostUnavailable": "Die Server, die Ihr persönliches Zuhause anbietet, konnten nicht gelesen werden.",
+  "createHostUnreadable": "Diese Version kann den Zustand dieses Hosts nicht lesen. Aktualisieren Sie die App und wählen Sie ihn dann erneut.",
   "createHostUnverified": "Ihre Identität kann dort nicht bestätigt werden",
   "createOnHostBanner": "Dieser Space wird auf {host} angelegt.",
   "creditMoveAction": "Zu einem anderen Mitglied verschieben",

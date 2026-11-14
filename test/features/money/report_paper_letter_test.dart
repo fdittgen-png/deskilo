@@ -1,0 +1,247 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3852 — an invoice on the paper it was issued on. On Letter both engines
+// print it on the Letter sheet, with no ink off the sheet and the
+// recipient's name on page 1; on A4 nothing changes. The window
+// conventions are A4 ones: on Letter the banded invoice prints its client
+// in the flow, and a positioned design keeps its recipient where it puts
+// it, as a frame (the default letter layout's window is the right-hand
+// one). Every report kind declares the papers it is printed on.
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:deskilo/features/money/domain/address_window.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf.dart';
+import 'package:deskilo/features/money/domain/report_kind.dart';
+import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
+import 'package:deskilo/features/money/presentation/report_layout_actions.dart';
+import 'package:deskilo_document_model/deskilo_document_model.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:pdf/widgets.dart' as pw;
+
+import '../../helpers/pdf_geometry.dart';
+
+pw.Font _ttf(String path) =>
+    pw.Font.ttf(ByteData.sublistView(File(path).readAsBytesSync()));
+
+const _recipient = 'Zephyrine Quarterbridge-Okonkwo';
+
+const _strings = InvoicePdfStrings(
+  invoiceTitle: 'Invoice',
+  issuedOn: 'Issued on',
+  issuedBy: 'Issued by',
+  billedTo: 'Billed to',
+  total: 'Total',
+  signature: 'Digital signature (SHA-256)',
+  voided: '',
+  voidedWatermark: 'Voided',
+  proforma: 'Proforma',
+  replaces: 'Replaces',
+  description: 'Description',
+  charges: 'Charges',
+  payments: 'Payments',
+  annex: 'Annex — details',
+  attendance: 'Attendance',
+  activity: 'Bookings',
+  reserved: 'reserved',
+  page: 'Page',
+);
+
+Invoice _invoice(String recipient, {int lines = 60}) => Invoice(
+  id: 'i1',
+  workspaceId: 'w1',
+  memberId: 'm1',
+  number: 'INV-2026-0050',
+  issuedAt: DateTime.utc(2026, 9, 4),
+  title: '2026-08',
+  currency: 'USD',
+  memberName: recipient,
+  memberAddress: '1 Main Street\nSpringfield, IL 62701',
+  workspaceName: 'COWORKONTI',
+  workspaceAddress: '4 avenue de Castelnau, 34120 Pézenas',
+  issuerName: 'Flo',
+  signature: 'a' * 64,
+  totalCents: 10000 * lines,
+  paper: 'Letter',
+  lines: [
+    for (var i = 0; i < lines; i++)
+      InvoiceLine(
+        kind: 'adjustment',
+        label: 'Desk, half day $i',
+        amountCents: 10000,
+      ),
+  ],
+);
+
+Future<Uint8List> _banded(String recipient, Paper paper) => buildInvoicePdf(
+  InvoicePdfRequest(
+    invoice: _invoice(recipient),
+    strings: _strings,
+    addressWindow: addressWindowOnPaper(AddressWindow.left, paper),
+    paper: paper,
+    money: (cents) => '\$${(cents / 100).toStringAsFixed(2)}',
+    lineText: (line) => invoiceLineText(const ReportStrings(), line),
+    activityText: (entry) => annexEntryText(const ReportStrings(), entry),
+    dateLabel: 'Sep 4, 2026',
+    periodLabel: 'August 2026',
+    baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+  ),
+);
+
+Map<String, Object?> _data(String recipient) => {
+  'workspace': 'COWORKONTI',
+  'workspace_address': '4 avenue de Castelnau, 34120 Pézenas',
+  'number': 'INV-2026-0050',
+  'client_name': recipient,
+  'client_address': '1 Main Street, Springfield, IL 62701',
+  // the lists the letter standard's bodies loop over
+  'vat': <Object?>[],
+  'status_members': <Object?>[],
+  'usage_records': <Object?>[],
+  'lines': [
+    for (var i = 0; i < 60; i++)
+      {
+        'label': 'Desk, half day $i',
+        'qty': '1',
+        'unit_price': '100.00',
+        'amount': '100.00',
+      },
+  ],
+};
+
+Future<Uint8List> _positioned(
+  String recipient,
+  Paper? paper, {
+  String kind = 'invoice',
+}) async => (await tryLayoutPdf(
+  layoutXml: defaultLetterLayoutXml(kind, const LetterStrings()),
+  data: _data(recipient),
+  what: kind,
+  print: LayoutPrint(documentTitle: kind, pageLabel: 'Page', paper: paper),
+  font: (asset) async => _ttf(asset),
+))!;
+
+/// The sizes of the pages, in points.
+List<(double, double)> _sheets(Uint8List bytes) => [
+  for (final m in RegExp(
+    r'/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)\s*\]',
+  ).allMatches(latin1.decode(bytes)))
+    (double.parse(m.group(1)!), double.parse(m.group(2)!)),
+];
+
+/// The bytes without what changes on every run: the id and the dates.
+String _stable(Uint8List bytes) => latin1
+    .decode(bytes)
+    .replaceAll(RegExp(r'/ID\s*\[[^\]]*\]'), '')
+    .replaceAll(RegExp(r'/(CreationDate|ModDate)\s*\([^)]*\)'), '');
+
+Set<(int, int, int)> _ink(Uint8List bytes, Paper paper) => {
+  for (final i in textPositions(bytes, paper: paper))
+    (i.page, i.xMm.round(), i.yMm.round()),
+};
+
+/// On Letter: every sheet is Letter, no ink is off it, and the ink only
+/// the recipient's name adds is on page 1, inside the sheet.
+void _onLetter(Uint8List named, Uint8List unnamed) {
+  final sheets = _sheets(named);
+  expect(sheets.length, greaterThan(1), reason: 'a long invoice flows');
+  for (final sheet in sheets) {
+    expect(sheet, (612.0, 792.0));
+  }
+  for (final i in textPositions(named, paper: Paper.letter)) {
+    expect(i.xMm, inInclusiveRange(0, Paper.letter.widthMm), reason: '$i');
+    expect(i.yMm, inInclusiveRange(0, Paper.letter.heightMm), reason: '$i');
+  }
+  final name = _ink(
+    named,
+    Paper.letter,
+  ).difference(_ink(unnamed, Paper.letter));
+  expect(name, isNotEmpty, reason: 'the recipient is printed');
+  expect(name.map((i) => i.$1).toSet(), {1}, reason: 'on page 1');
+}
+
+void main() {
+  test('the window conventions are A4 ones', () {
+    for (final window in AddressWindow.values) {
+      expect(addressWindowOnPaper(window, Paper.a4), window);
+      expect(addressWindowOnPaper(window, Paper.letter), AddressWindow.off);
+    }
+  });
+
+  test('on Letter a named window keeps its place as a frame; A4 keeps it', () {
+    final made = parseLayoutXml(
+      '<report-layout><recipient window="fr"/></report-layout>',
+    );
+    expect(made.onPaper(Paper.a4).recipient!.window, AddressWindow.right);
+    final placed = made.onPaper(Paper.letter).recipient!;
+    expect(placed.window, isNull);
+    expect(placed.isOff, isFalse, reason: 'the recipient still prints');
+    final frame = placed.frame!;
+    expect(
+      [frame.x, frame.y, frame.w, frame.h].map((l) => (l!.value, l.unit)),
+      [
+        (110.0, LengthUnit.mm),
+        (45.0, LengthUnit.mm),
+        (85.0, LengthUnit.mm),
+        (40.0, LengthUnit.mm),
+      ],
+    );
+    final off = parseLayoutXml(
+      '<report-layout><recipient window="off"/></report-layout>',
+    );
+    expect(off.onPaper(Paper.letter).recipient!.isOff, isTrue);
+  });
+
+  test('the banded invoice on Letter', () async {
+    _onLetter(
+      await _banded(_recipient, Paper.letter),
+      await _banded('', Paper.letter),
+    );
+  });
+
+  test('the positioned invoice on Letter', () async {
+    _onLetter(
+      await _positioned(_recipient, Paper.letter),
+      await _positioned('', Paper.letter),
+    );
+  });
+
+  test('on A4 the positioned invoice is the design as it was', () async {
+    expect(
+      _stable(await _positioned(_recipient, Paper.a4)),
+      _stable(await _positioned(_recipient, null)),
+    );
+    final (w, h) = _sheets(await _positioned(_recipient, Paper.a4)).first;
+    expect(w, closeTo(595.28, 0.01));
+    expect(h, closeTo(841.89, 0.01));
+  });
+
+  test('every kind is printed on A4; a kind the letter standard draws on '
+      'Letter too, and its default layout stays on the Letter sheet', () async {
+    for (final kind in reportKinds(reminderLevels: 1)) {
+      expect(kind.papers, contains(Paper.a4), reason: kind.id);
+      if (!isPersonFacingKind(kind.id)) continue;
+      expect(kind.papers, contains(Paper.letter), reason: kind.id);
+      final bytes = await _positioned(_recipient, Paper.letter, kind: kind.id);
+      for (final sheet in _sheets(bytes)) {
+        expect(sheet, (612.0, 792.0), reason: kind.id);
+      }
+      for (final i in textPositions(bytes, paper: Paper.letter)) {
+        expect(
+          i.xMm,
+          inInclusiveRange(0, Paper.letter.widthMm),
+          reason: '${kind.id} $i',
+        );
+        expect(
+          i.yMm,
+          inInclusiveRange(0, Paper.letter.heightMm),
+          reason: '${kind.id} $i',
+        );
+      }
+    }
+  });
+}
