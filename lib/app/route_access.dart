@@ -133,6 +133,20 @@ bool mayOpen(String path, Set<WorkspacePermission> held) {
   return needed == null || needed.any(held.contains);
 }
 
+/// #3926 — where the cash page goes at the desk, where its doors are menu
+/// entries: money in and out when the person may open it, else the
+/// purchases, else the money page; never a page that refuses them.
+String cashDeskLanding(AccessContext access) {
+  final held = access.permissions;
+  for (final (path, feature) in const [
+    ('/money/status', WorkspaceFeature.workspaceStatus),
+    ('/money/purchases', WorkspaceFeature.purchases),
+  ]) {
+    if (access.featureEnabled(feature) && mayOpen(path, held)) return path;
+  }
+  return '/money';
+}
+
 /// Where someone lands when the screen they asked for is not theirs: the
 /// first everyday screen they hold, and their own account (which every
 /// member has) when they hold none.

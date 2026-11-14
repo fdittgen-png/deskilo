@@ -115,6 +115,18 @@ DateTime firstPeriodOf(DateTime on, {Set<DateTime> invoiced = const {}}) {
   return m;
 }
 
+/// The earliest first day a share change can take from [today], the
+/// server's rule: this month's, or the month after the last month from it on
+/// that is [invoiced] (an invoiced month keeps its terms, and so does every
+/// one before it).
+DateTime earliestShareDay(DateTime today, Set<DateTime> invoiced) {
+  var m = DateTime(today.year, today.month);
+  for (final i in invoiced) {
+    if (!i.isBefore(m)) m = _nextMonth(i);
+  }
+  return m;
+}
+
 /// What a pause from [from] until [until] (null: until resumed) costs, the
 /// server's rule: the months that stay charged in full (the month it starts
 /// in unless it starts on the 1st, and every month already [invoiced]) and

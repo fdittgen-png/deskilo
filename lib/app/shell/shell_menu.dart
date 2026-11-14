@@ -61,6 +61,7 @@ class ShellMenu {
     required bool permanent,
     required ShellTabs tabs,
     VoidCallback? openToPay,
+    VoidCallback? openBankStatements,
   }) {
     final (:tabTitles, :visibleBranches, :navs, :currentIndex, :onBranch) =
         tabs;
@@ -98,6 +99,7 @@ class ShellMenu {
       go: go,
       setupOpen: setupGuideOpenFor(ref, workspace?.id),
       openToPay: openToPay,
+      openBankStatements: openBankStatements,
     );
     final administration = [
       ...entries.setupGuide(),
