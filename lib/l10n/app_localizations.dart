@@ -32964,6 +32964,12 @@ abstract class AppLocalizations {
   /// **'Took effect on {date}'**
   String memberTermApplied(String date);
 
+  /// #3858 a pause: the member's bookings in the months it frees stay and are charged as use
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{{count} booking falls in the paused months — it stays and is charged as use} other{{count} bookings fall in the paused months — they stay and are charged as use}}'**
+  String memberTermBookingsInFreeMonths(int count);
+
   /// #3858 a member's dated plan terms
   ///
   /// In en, this message translates to:

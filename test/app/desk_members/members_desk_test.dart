@@ -8,6 +8,8 @@
 // mean in words, and the table names each member's next change.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
+import 'package:deskilo/core/demo/data/reservation_repository.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -55,6 +57,7 @@ Future<FakeWorkspaceRepository> _open(
   required bool owner,
   String path = '/members',
   List<MemberTermChange> terms = const [],
+  List<Reservation> bookings = const [],
 }) async {
   final space = _space(owner: owner)..memberTermChanges.addAll(terms);
   await pumpRoute(
@@ -62,7 +65,10 @@ Future<FakeWorkspaceRepository> _open(
     path,
     size: const Size(1440, 900),
     overrides: [
-      ...standardTestOverrides(workspace: space),
+      ...standardTestOverrides(
+        workspace: space,
+        reservations: FakeReservationRepository()..reservations.addAll(bookings),
+      ),
       enabledFeaturesSyncProvider.overrideWithValue(
         WorkspaceFeature.values.toSet(),
       ),
@@ -229,8 +235,31 @@ void main() {
       ),
     ];
 
+    // Two kept bookings and a cancelled one in May 2027, the first month
+    // the waiting pause frees.
+    Reservation booking(String id, int day, ReservationStatus status) =>
+        Reservation(
+          id: id,
+          workspaceId: 'ws-1',
+          memberId: 'member-2',
+          seatId: 'seat',
+          startsAt: DateTime(2027, 5, day, 9),
+          endsAt: DateTime(2027, 5, day, 13),
+          status: status,
+        );
+    final bookings = [
+      booking('b1', 4, ReservationStatus.reserved),
+      booking('b2', 5, ReservationStatus.reserved),
+      booking('b3', 6, ReservationStatus.cancelled),
+    ];
+
     Future<void> openPlan(WidgetTester tester) async {
-      final space = await _open(tester, owner: true, terms: terms);
+      final space = await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        bookings: bookings,
+      );
       // April is already invoiced: it stays charged in full.
       space.memberInvoicedMonths['member-2'] = {DateTime(2027, 4)};
       await tester.tap(find.byKey(const ValueKey('records-row-member-2')));
@@ -271,6 +300,13 @@ void main() {
         ),
       );
       expect(said('pause'), contains('Waiting for approval'));
+      expect(
+        said('pause'),
+        contains(
+          '2 bookings fall in the paused months — they stay and are '
+          'charged as use',
+        ),
+      );
     });
 
     testWidgets('a change in force shows its date and a refused one its '

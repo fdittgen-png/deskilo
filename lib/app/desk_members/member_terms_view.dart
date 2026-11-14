@@ -4,7 +4,9 @@
 // first statement it shows on, each pause with its dates and which months
 // stay charged in full and which it frees, and how each stands (waiting for
 // approval, scheduled, in force, refused with the reason, cancelled). The
-// months already invoiced keep the terms they were invoiced with.
+// months already invoiced keep the terms they were invoiced with. A waiting
+// pause counts the member's bookings in the months it frees: they stay, and
+// are charged as use.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -12,9 +14,13 @@ import '../../core/i18n/app_format.dart';
 import '../../core/i18n/format_controller.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
+import '../../core/time/clock.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/workspace/domain/booking_policies.dart';
 import '../../features/workspace/domain/member_term_change.dart';
 import '../../features/workspace/presentation/subscription_text.dart';
 import '../../features/workspace/providers/member_term_providers.dart';
+import '../../features/workspace/providers/workspace_providers.dart';
 import '../../l10n/app_localizations.dart';
 
 /// What [e] does, in words: the share and the first statement it shows on,
@@ -77,6 +83,47 @@ String _pauseMoney(
   return money.charged.isEmpty
       ? l.memberTermFreeOnly(free)
       : l.memberTermChargedThenFree(_months(l, format, money.charged), free);
+}
+
+/// The months a pause [e] frees that can hold bookings: those it frees, and
+/// for a pause until resumed every later one not invoiced up to the furthest
+/// a booking can be made.
+List<DateTime> _bookableFreeMonths(
+  WidgetRef ref,
+  MemberTermEntry e,
+  Set<DateTime> invoiced,
+) {
+  final money = pauseMoneyOf(
+    e.change.dueOn,
+    e.until?.dueOn,
+    invoiced: invoiced,
+  );
+  if (e.until != null || money.free.isEmpty) return money.free;
+  final horizon =
+      ref.watch(bookingPoliciesProvider).value?.advanceHorizonDays ??
+      BookingPolicies.defaultHorizonDays;
+  final last = ref.watch(clockProvider).now().add(Duration(days: horizon));
+  final months = <DateTime>[];
+  for (
+    var m = money.free.first;
+    !m.isAfter(DateTime(last.year, last.month)) || months.isEmpty;
+    m = DateTime(m.year, m.month + 1)
+  ) {
+    if (!invoiced.contains(m)) months.add(m);
+  }
+  return months;
+}
+
+/// The member's bookings in [months]: they stay, and are charged as use
+/// beyond a quota of 0. Null while a month is not read.
+int? _bookingsIn(WidgetRef ref, String memberId, List<DateTime> months) {
+  var n = 0;
+  for (final m in months) {
+    final rows = ref.watch(reservationsForMonthProvider(monthKeyOf(m))).value;
+    if (rows == null) return null;
+    n += rows.where((r) => r.memberId == memberId && r.held).length;
+  }
+  return n;
 }
 
 /// How [c] stands, in words.
@@ -144,6 +191,14 @@ class MemberTermsSection extends ConsumerWidget {
               subtitle: Text(
                 [
                   if (e.isPause) _pauseMoney(l, format, e, invoiced),
+                  if (e.isPause && e.change.upcoming)
+                    if (_bookingsIn(
+                          ref,
+                          memberId,
+                          _bookableFreeMonths(ref, e, invoiced),
+                        )
+                        case final n? when n > 0)
+                      l.memberTermBookingsInFreeMonths(n),
                   _state(
                     l,
                     format,

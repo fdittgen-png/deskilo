@@ -12531,6 +12531,7 @@
   "memberSubscriptionCustom": "Individuell (1–100)",
   "memberSubscriptionLabel": "Abo",
   "memberTermApplied": "Wirksam am {date}",
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} Buchung fällt in die pausierten Monate — sie bleibt und wird als Nutzung berechnet} other{{count} Buchungen fallen in die pausierten Monate — sie bleiben und werden als Nutzung berechnet}}",
   "memberTermCancelled": "Storniert",
   "memberTermChargedThenFree": "{charged} wird voll berechnet; keine Abonnementgebühr für {free}",
   "memberTermFreeOnly": "Keine Abonnementgebühr für {free}",

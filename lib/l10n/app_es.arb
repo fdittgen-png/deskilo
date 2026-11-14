@@ -12531,6 +12531,7 @@
   "memberSubscriptionCustom": "Personalizado (1–100)",
   "memberSubscriptionLabel": "Suscripción",
   "memberTermApplied": "Aplicado el {date}",
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} reserva cae en los meses en pausa — se mantiene y se cobra como uso} other{{count} reservas caen en los meses en pausa — se mantienen y se cobran como uso}}",
   "memberTermCancelled": "Cancelado",
   "memberTermChargedThenFree": "{charged} se cobra completo; sin cuota de suscripción en {free}",
   "memberTermFreeOnly": "Sin cuota de suscripción en {free}",

@@ -20641,6 +20641,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String memberTermBookingsInFreeMonths(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count prenotazioni cadono nei mesi sospesi — restano e vengono addebitate come utilizzo',
+      one:
+          '$count prenotazione cade nei mesi sospesi — resta e viene addebitata come utilizzo',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get memberTermCancelled => 'Annullato';
 
   @override

@@ -18,5 +18,6 @@
   "membersColNextChange": "Prossima modifica",
   "memberTermNextShare": "{share} dal {date}",
   "memberTermNextPause": "Sospensione dal {date}",
-  "memberTermNextResume": "Ripresa il {date}"
+  "memberTermNextResume": "Ripresa il {date}",
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} prenotazione cade nei mesi sospesi — resta e viene addebitata come utilizzo} other{{count} prenotazioni cadono nei mesi sospesi — restano e vengono addebitate come utilizzo}}"
 }
