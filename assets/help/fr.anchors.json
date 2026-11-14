@@ -153,6 +153,7 @@
   "user.workspace.settings.country": "Pays",
   "user.workspace.settings.currency-timezone": "Devise et fuseau horaire",
   "user.workspace.settings.language": "Langue de l'espace",
+  "user.workspace.settings.paper": "Papier des documents",
   "user.workspace.settings.address": "Adresse d'en-tête",
   "user.workspace.settings.whatsapp-group": "Groupe WhatsApp",
   "user.workspace.settings.invitation-message": "Message d'invitation",

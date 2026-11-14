@@ -165,7 +165,8 @@ void main() {
             .where(where ?? (_) => true)
             .length;
     final written = <String, (int, int)>{
-      'workspaces': (rowsOf('Overview'), 12),
+      // #3852 — the paper joined the Overview's fields.
+      'workspaces': (rowsOf('Overview'), 13),
       'levels': (rowsOf('Levels'), levels.length),
       'desks': (rowsOf('Desks'), plan.desks.length),
       'seats': (rowsOf('Seats'), plan.seats.length),

@@ -24,6 +24,7 @@ Map<String, String> taxReferenceChoicesOf(TaxValue? v) => {
   'status': v is TaxabilityValue ? v.status : taxabilityStatuses.first,
   'tax_system': v is IssuingGateValue ? v.taxSystem : 'vat',
   'banking_scheme': v is CountryValue ? v.bankingScheme : 'sepa',
+  'paper': v is DocumentPaperValue ? (v.paper ?? 'A4') : 'A4',
 };
 
 /// The text of the charge and postal-code fields, from the version copied.

@@ -55022,6 +55022,12 @@ abstract class AppLocalizations {
   /// **'Document languages'**
   String get taxRefDomainDocumentLanguage;
 
+  /// #3852 reference editor: the name of the document_paper domain
+  ///
+  /// In en, this message translates to:
+  /// **'Document papers'**
+  String get taxRefDomainDocumentPaper;
+
   /// #2477 tax reference: Domain filter: EU member states.
   ///
   /// In en, this message translates to:
@@ -55208,6 +55214,12 @@ abstract class AppLocalizations {
   /// **'Enter a number from 0 to 99.999'**
   String get taxRefInvalidNumber;
 
+  /// #3852 reference editor: the papers field is malformed
+  ///
+  /// In en, this message translates to:
+  /// **'A4, Letter or both, separated by a comma, including the usual paper'**
+  String get taxRefInvalidPapers;
+
   /// #2539 rate components: taxRefInvalidRateComponents
   ///
   /// In en, this message translates to:
@@ -55291,6 +55303,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Postal-code prefixes outside the VAT (comma-separated)'**
   String get taxRefOutsideVatPostalCodes;
+
+  /// #3852 reference editor: the usual paper of a country's documents
+  ///
+  /// In en, this message translates to:
+  /// **'Usual paper of the documents'**
+  String get taxRefPaper;
+
+  /// #3852 reference editor: the papers a country's documents may use
+  ///
+  /// In en, this message translates to:
+  /// **'Papers allowed (A4, Letter; empty: both)'**
+  String get taxRefPapers;
 
   /// #2477 tax reference: Field: regular expression for the identifier body.
   ///
@@ -60030,6 +60054,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace name'**
   String get workspaceNameLabel;
+
+  /// #3852 settings: the A4 paper
+  ///
+  /// In en, this message translates to:
+  /// **'A4'**
+  String get workspacePaperA4;
+
+  /// #3852 settings: the choice that follows the country; paper is A4 or US Letter, country a country name
+  ///
+  /// In en, this message translates to:
+  /// **'{paper} (usual in {country})'**
+  String workspacePaperFollows(String paper, String country);
+
+  /// #3852 settings: what the paper setting does not change
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice keeps the paper it was issued on.'**
+  String get workspacePaperHelper;
+
+  /// #3852 settings: label of the paper the business's documents are printed on
+  ///
+  /// In en, this message translates to:
+  /// **'Paper of the documents'**
+  String get workspacePaperLabel;
+
+  /// #3852 settings: the US Letter paper
+  ///
+  /// In en, this message translates to:
+  /// **'US Letter'**
+  String get workspacePaperLetter;
+
+  /// #3852 settings: why one paper only; paper is A4 or US Letter
+  ///
+  /// In en, this message translates to:
+  /// **'Documents of this country are printed on {paper} only.'**
+  String workspacePaperOnly(String paper);
+
+  /// #3852 settings: why one paper only, where invoices carry a payment slip; paper is A4
+  ///
+  /// In en, this message translates to:
+  /// **'Only {paper}: invoices of this country end on a payment part printed on {paper}.'**
+  String workspacePaperOnlySlip(String paper);
 
   /// Finance/settings UX + workspace language (#486)
   ///

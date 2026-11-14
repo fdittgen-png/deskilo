@@ -34249,6 +34249,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Idiomas de los documentos';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Papeles de los documentos';
+
+  @override
   String get taxRefDomainEuMember => 'Miembros de la UE';
 
   @override
@@ -34349,6 +34352,10 @@ class AppLocalizationsEs extends AppLocalizations {
   String get taxRefInvalidNumber => 'Introduzca un número de 0 a 99,999';
 
   @override
+  String get taxRefInvalidPapers =>
+      'A4, Letter o ambos, separados por una coma, incluido el papel habitual';
+
+  @override
   String get taxRefInvalidRateComponents =>
       'Un impuesto por línea: régimen, autoridad, porcentaje; juntos deben igualar la tasa combinada';
 
@@ -34398,6 +34405,12 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get taxRefOutsideVatPostalCodes =>
       'Prefijos de código postal fuera del IVA (separados por comas)';
+
+  @override
+  String get taxRefPaper => 'Papel habitual de los documentos';
+
+  @override
+  String get taxRefPapers => 'Papeles permitidos (A4, Letter; vacío: ambos)';
 
   @override
   String get taxRefPattern => 'Formato';
@@ -37363,6 +37376,34 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get workspaceNameLabel => 'Nombre del espacio';
+
+  @override
+  String get workspacePaperA4 => 'A4';
+
+  @override
+  String workspacePaperFollows(String paper, String country) {
+    return '$paper (habitual: $country)';
+  }
+
+  @override
+  String get workspacePaperHelper =>
+      'Una factura conserva el papel con el que se emitió.';
+
+  @override
+  String get workspacePaperLabel => 'Papel de los documentos';
+
+  @override
+  String get workspacePaperLetter => 'Carta EE. UU.';
+
+  @override
+  String workspacePaperOnly(String paper) {
+    return 'Los documentos de este país se imprimen solo en $paper.';
+  }
+
+  @override
+  String workspacePaperOnlySlip(String paper) {
+    return 'Solo $paper: las facturas de este país terminan con una sección de pago impresa en $paper.';
+  }
 
   @override
   String get workspacePaymentsBillingTitle => 'Pagos y facturación';
