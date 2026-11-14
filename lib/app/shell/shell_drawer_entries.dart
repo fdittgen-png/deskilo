@@ -191,7 +191,10 @@ class DrawerEntries {
   List<DrawerEntry> salesPages() {
     final sales = features.contains(WorkspaceFeature.invoicing);
     return <DrawerEntry>[
-      if (features.contains(WorkspaceFeature.guestPasses) &&
+      // #3863 — a pass is a day at a place: the entry asks what its route
+      // asks, the places too.
+      if (features.contains(WorkspaceFeature.placeBooking) &&
+          features.contains(WorkspaceFeature.guestPasses) &&
           (may(WorkspacePermission.issueInvoices) ||
               may(WorkspacePermission.manageServices)))
         DrawerEntry('drawer-guest-passes', Icons.confirmation_number_outlined,
