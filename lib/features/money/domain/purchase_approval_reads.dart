@@ -54,7 +54,9 @@ class PurchaseApprovalFx {
       'same_currency' => PurchaseApprovalFxStatus.sameCurrency,
       'missing' => PurchaseApprovalFxStatus.missing,
       'recorded' => PurchaseApprovalFxStatus.recorded,
-      _ => throw const FormatException('Unknown approval exchange rate state'),
+      // #3913 — a state this build does not know is no rate this approval
+      // can show: the tile says so, and the approval is not refused for it.
+      _ => PurchaseApprovalFxStatus.unavailable,
     };
     return PurchaseApprovalFx(
       status: status,

@@ -29,7 +29,10 @@ void main() {
       }));
       expect(value.rate, isNull);
     }
-    expect(() => PurchaseApprovalFx.fromJson(fx({'status': 'unknown'})), throwsFormatException);
+    // #3913 — a state this version does not know shows "no rate
+    // information", never another state, and does not refuse the approval.
+    expect(PurchaseApprovalFx.fromJson(fx({'status': 'unknown'})).status,
+        PurchaseApprovalFxStatus.unavailable);
     expect(() => PurchaseApprovalFx.fromJson(fx({
       'status': 'recorded', 'currency': 'CHF', 'functional_currency': 'EUR',
       'rate': 1.2, 'rate_date': '2026-11-02', 'source': 'bank',

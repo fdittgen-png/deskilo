@@ -7014,6 +7014,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'No se han podido leer los servidores que ofrece su hogar personal.';
 
   @override
+  String get createHostUnreadable =>
+      'Esta versión no puede leer el estado de este alojamiento. Actualice la aplicación y vuelva a elegirlo.';
+
+  @override
   String get createHostUnverified => 'Su identidad no se puede verificar allí';
 
   @override
