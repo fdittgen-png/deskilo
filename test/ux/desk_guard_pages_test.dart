@@ -301,6 +301,9 @@ final _return = VatDeclaration(
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
+  // #3892 — booking and requests at the desk.
+  ('/attention', PageKind.document, 'booking', 'attention'),
+  ('/events', PageKind.document, 'requests', 'events'),
   ('/invoices', PageKind.records, 'money', 'invoices'),
   ('/me', PageKind.dashboard, 'me', 'overview'),
   // #3606 — the first records table.
@@ -390,7 +393,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 26;
+const _guardedWorkspaceRoutes = 28;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
