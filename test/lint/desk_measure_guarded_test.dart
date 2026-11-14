@@ -42,13 +42,11 @@ const _notGuardedYet = <String, String>{
   '/documents': '#3947 an unnamed control',
   '/report-editor': '#3947 text wider than 760 px; 40 dp targets (Design, Preview, Insert element)',
   '/settings/personal-info': '#3946 Tab reaches a control twice',
-  '/settings/sites': '#3948 a sentence 852 px wide at 1024',
   '/settings/wording': '#3947 a 45 dp language toggle',
   '/settings/colours': '#3947 an unnamed control; 40 dp colour swatches',
   '/settings/what-you-can-do': '#3946 unreachable by Tab',
   '/settings/number-sequences': '#3946 Tab reaches a control twice',
   '/legal-identity': '#3946 Tab reaches a control twice',
-  '/vat': '#3948 a sentence 834 px wide at 1024',
   '/accessories': '#3947 an unnamed control',
   '/payment-methods': '#3946 Tab reaches a control twice at 1024',
   // Guarded, it is reached twice by Tab: its keyboard order, older than
