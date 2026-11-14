@@ -1,5 +1,7 @@
 # Demo features, setup and workspace values — #3290
 
+This is the state of its date, 2026-11-04, and it covers four of the Demo's six businesses (ws-1 to ws-4); Zurich and Milan came later and are not in the table.
+
 Run 2026-11-04 on master `f75677088` plus this change, in the in-memory Demo (`lib/core/demo`). Pinned by
 `test/core/demo/demo_feature_audit_test.dart`, whose expectations come from the feature manifest, the space's
 country (`effectiveFeatures(…, country:)`, the client twin of the server's `feature_effective` + `feature_available_in`,
