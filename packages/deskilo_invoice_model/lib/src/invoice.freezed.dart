@@ -1881,9 +1881,8 @@ mixin _$Invoice {
  String? get maturityBasis;/// #1916 (0349) — the legal clauses and facts frozen at issue, raw.
 /// Null on an invoice issued before 0349: legacy, evidence unknown.
 /// Read it through [legalClauses].
- Map<String, Object?>? get legalSnapshot;/// #3850 (0753) -- the language and its `fr_CH` pair frozen at issue; null before 0753 or on a draft.
- String? get documentLanguage; String? get formatLocale;/// #3852 (0768) -- the paper frozen at issue (`A4` | `Letter`); null on an invoice issued before 0768, printed on A4.
- String? get paper;/// #992 — the server's stamp on this row.
+ Map<String, Object?>? get legalSnapshot;/// #3850 (0753), #3852 (0768) -- the language, its `fr_CH` pair and the paper (`A4` | `Letter`) frozen at issue; null before them or on a draft (A4).
+ String? get documentLanguage; String? get formatLocale; String? get paper;/// #992 — the server's stamp on this row.
  SystemColumns get system;
 /// Create a copy of Invoice
 /// with the given fields replaced by the non-null parameter values.
@@ -2232,10 +2231,9 @@ class _Invoice extends Invoice {
   return EqualUnmodifiableMapView(value);
 }
 
-/// #3850 (0753) -- the language and its `fr_CH` pair frozen at issue; null before 0753 or on a draft.
+/// #3850 (0753), #3852 (0768) -- the language, its `fr_CH` pair and the paper (`A4` | `Letter`) frozen at issue; null before them or on a draft (A4).
 @override final  String? documentLanguage;
 @override final  String? formatLocale;
-/// #3852 (0768) -- the paper frozen at issue (`A4` | `Letter`); null on an invoice issued before 0768, printed on A4.
 @override final  String? paper;
 /// #992 — the server's stamp on this row.
 @override@JsonKey() final  SystemColumns system;
