@@ -4,9 +4,12 @@
 // not there at all, not an empty one (the acceptance, with two roles); the
 // chips filter; a member opens beside the table at their address with their
 // tabs; the owner's selection runs the change task with its outcomes.
+// #3858 — the Plan tab lists the scheduled changes with the money they
+// mean in words, and the table names each member's next change.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -51,8 +54,9 @@ Future<FakeWorkspaceRepository> _open(
   WidgetTester tester, {
   required bool owner,
   String path = '/members',
+  List<MemberTermChange> terms = const [],
 }) async {
-  final space = _space(owner: owner);
+  final space = _space(owner: owner)..memberTermChanges.addAll(terms);
   await pumpRoute(
     tester,
     path,
@@ -171,5 +175,126 @@ void main() {
     );
     expect(space.memberOf('member-2')?.status, MemberStatus.paused);
     expect(space.memberOf('member-3')?.status, MemberStatus.pending);
+  });
+
+  group('#3858 dated terms', () {
+    MemberTermChange change(
+      String id,
+      MemberTermKind kind,
+      DateTime due,
+      MemberTermState state, {
+      int? pct,
+      String? status,
+      DateTime? effective,
+      String reason = '',
+      String? group,
+    }) => MemberTermChange(
+      id: id,
+      memberId: 'member-2',
+      kind: kind,
+      toPct: pct,
+      toStatus: status,
+      dueOn: due,
+      state: state,
+      effectiveOn: effective,
+      reason: reason,
+      groupId: group,
+    );
+
+    final terms = [
+      change(
+        'share',
+        MemberTermKind.share,
+        DateTime(2027, 2, 10),
+        MemberTermState.scheduled,
+        pct: 75,
+      ),
+      change(
+        'pause',
+        MemberTermKind.status,
+        DateTime(2027, 3, 15),
+        MemberTermState.pending,
+        status: 'paused',
+      ),
+      change(
+        'late',
+        MemberTermKind.share,
+        DateTime(2026, 12),
+        MemberTermState.applied,
+        pct: 50,
+        effective: DateTime(2027),
+      ),
+      change(
+        'refused',
+        MemberTermKind.status,
+        DateTime(2026, 11),
+        MemberTermState.refused,
+        status: 'paused',
+        reason: 'the member is not active',
+      ),
+    ];
+
+    Future<void> openPlan(WidgetTester tester) async {
+      await _open(tester, owner: true, terms: terms);
+      await tester.tap(find.byKey(const ValueKey('records-row-member-2')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-tab-plan')));
+      await tester.pumpAndSettle();
+    }
+
+    String said(String key) => [
+      for (final t in find
+          .descendant(
+            of: find.byKey(ValueKey('member-term-$key')),
+            matching: find.byType(Text),
+          )
+          .evaluate()
+          .map((e) => e.widget as Text))
+        t.data ?? '',
+    ].join('\n');
+
+    testWidgets('a share change names the first statement it shows on', (
+      tester,
+    ) async {
+      await openPlan(tester);
+      expect(said('share'), contains('first on the statement of March 2027'));
+      expect(said('share'), contains('Scheduled'));
+    });
+
+    testWidgets('a pause from the 15th says which month is charged and '
+        'which is free, and that it waits for approval', (tester) async {
+      await openPlan(tester);
+      expect(said('pause'), contains('until resumed'));
+      expect(
+        said('pause'),
+        contains(
+          'March 2027 is charged in full; no subscription fee for '
+          'April 2027 and every month after, until resumed',
+        ),
+      );
+      expect(said('pause'), contains('Waiting for approval'));
+    });
+
+    testWidgets('a late change shows both dates and a refused one its '
+        'reason', (tester) async {
+      await openPlan(tester);
+      expect(said('late'), contains('Due on'));
+      expect(said('late'), contains('took effect on'));
+      expect(said('refused'), contains('Refused: the member is not active'));
+    });
+
+    testWidgets('the table names the next change', (tester) async {
+      await _open(tester, owner: true, terms: terms);
+      // The share is written the locale's way (its percent sign and space).
+      expect(
+        find.byWidgetPredicate(
+          (w) =>
+              w is Text &&
+              (w.data ?? '').contains('75') &&
+              (w.data ?? '').contains(' from '),
+        ),
+        findsOneWidget,
+      );
+    });
   });
 }

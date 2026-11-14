@@ -108,7 +108,8 @@ class MemberTermsSection extends ConsumerWidget {
     final theme = Theme.of(context);
     final entries = memberTermEntries(
       memberId,
-      ref.watch(memberTermChangesProvider).value ?? const [], // empty-ok: no section until the changes are read
+      ref.watch(memberTermChangesProvider).value ??
+          const [], // empty-ok: no section until the changes are read
     );
     if (entries.isEmpty) return const SizedBox.shrink();
     return Padding(

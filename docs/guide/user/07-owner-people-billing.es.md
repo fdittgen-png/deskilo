@@ -148,6 +148,7 @@ Un recién llegado espera su decisión, o un miembro se toma un descanso, y quie
 - La decisión sobre un nuevo miembro también puede tomarse mediante las reglas de validación, como se explica en las [Reglas de validación](help:user.validation.overview).
 - La pausa es cosa de los propietarios y conserva todo el historial.
 - Un miembro que se fue aparece como **Salido** y no se puede pausar.
+- Una pausa y un cambio de cuota cuentan por meses enteros, desde el primer mes cuyo primer día cae en su fecha o después; nada se prorratea. Un mes en pausa desde su primer día no debe cuota de suscripción ni incluye medias jornadas; una pausa que empieza el 15 deja ese mes cobrado completo y libera el siguiente. La pestaña **Plan** de un miembro lista los cambios programados, con los meses cobrados y libres, y el primer extracto en que aparece un cambio de cuota.
 
 **Véase también:** [Invite a un miembro](help:user.members.invite)
 

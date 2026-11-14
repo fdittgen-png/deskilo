@@ -10,6 +10,22 @@
 /// What a change changes.
 enum MemberTermKind { share, status }
 
+/// Where a change comes from.
+enum MemberTermSource {
+  /// Scheduled for a date.
+  scheduled,
+
+  /// Written at once by a command.
+  immediate,
+
+  /// The member's status on the day dated terms began: no change, and no
+  /// date of the pause it may show.
+  baseline;
+
+  static MemberTermSource fromWire(String? s) =>
+      values.asNameMap()[s] ?? MemberTermSource.immediate;
+}
+
 /// How a change stands.
 enum MemberTermState {
   /// Held by a validation policy until it is approved.
@@ -43,7 +59,7 @@ class MemberTermChange {
     this.effectiveOn,
     this.reason = '',
     this.groupId,
-    this.scheduled = true,
+    this.source = MemberTermSource.scheduled,
   });
 
   final String id;
@@ -64,8 +80,10 @@ class MemberTermChange {
   /// The pause it belongs to: its start and its end share it.
   final String? groupId;
 
+  final MemberTermSource source;
+
   /// Scheduled for a date, rather than written at once by a command.
-  final bool scheduled;
+  bool get scheduled => source == MemberTermSource.scheduled;
 
   /// Still to come: waiting for its day or for an approval.
   bool get upcoming =>
@@ -93,15 +111,14 @@ class MemberTermChange {
         state: MemberTermState.fromWire(row['state'] as String?),
         reason: row['reason'] as String? ?? '',
         groupId: row['group_id'] as String?,
-        scheduled: row['source'] != 'immediate',
+        source: MemberTermSource.fromWire(row['source'] as String?),
       );
 }
 
 /// The first day of the first period a change dated [on] counts for: the
 /// day itself when it is a month's first, else the next month's first.
-DateTime firstPeriodOf(DateTime on) => on.day == 1
-    ? DateTime(on.year, on.month)
-    : DateTime(on.year, on.month + 1);
+DateTime firstPeriodOf(DateTime on) =>
+    on.day == 1 ? DateTime(on.year, on.month) : DateTime(on.year, on.month + 1);
 
 /// The months a pause from [from] until [until] (null: until resumed) owes no
 /// subscription fee for: those whose first day falls inside it. Lists at most
@@ -114,7 +131,8 @@ List<DateTime> freeMonthsOfPause(
   final months = <DateTime>[];
   var m = firstPeriodOf(from);
   while ((until == null && months.length < max) ||
-      (until != null && m.isBefore(DateTime(until.year, until.month, until.day)))) {
+      (until != null &&
+          m.isBefore(DateTime(until.year, until.month, until.day)))) {
     months.add(m);
     m = DateTime(m.year, m.month + 1);
   }
@@ -180,7 +198,8 @@ DateTime? pausedSince(String memberId, List<MemberTermChange> all) {
   for (final c in all) {
     if (c.memberId != memberId ||
         c.state != MemberTermState.applied ||
-        c.kind != MemberTermKind.status) {
+        c.kind != MemberTermKind.status ||
+        c.source == MemberTermSource.baseline) {
       continue;
     }
     if (last == null || !on(c).isBefore(on(last))) last = c;

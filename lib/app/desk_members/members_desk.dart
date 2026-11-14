@@ -27,12 +27,14 @@ import '../../features/money/presentation/invoicing/invoicing_reads.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/workspace/domain/member.dart';
+import '../../features/workspace/domain/member_term_change.dart';
 import '../../features/workspace/domain/role_assignment.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/domain/workspace_role.dart';
 import '../../features/workspace/presentation/member_labels.dart';
 import '../../features/workspace/presentation/subscription_text.dart';
 import '../../features/workspace/presentation/widgets/member_roles_card.dart';
+import '../../features/workspace/providers/member_term_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../../l10n/app_localizations.dart';
@@ -42,6 +44,7 @@ import 'member_desk_providers.dart';
 import 'member_plan.dart';
 import 'member_record.dart';
 import 'member_roles_task.dart';
+import 'member_terms_view.dart';
 
 /// The members' address; a member is `/members/<id>`.
 const String membersPath = '/members';
@@ -134,6 +137,9 @@ class _MembersTable extends ConsumerWidget {
           : const <String, Map<String, int>>{},
       now: ref.watch(clockProvider).now(),
       visits: visits,
+      terms:
+          ref.watch(memberTermChangesProvider).value ??
+          const [], // empty-ok: no next change is shown before they are read
       roles:
           ref.watch(workspaceRolesProvider).value ??
           const <
@@ -210,6 +216,7 @@ class _MembersView {
     required this.open,
     required this.now,
     required this.visits,
+    required this.terms,
     required this.roles,
     required this.assignments,
   });
@@ -230,6 +237,9 @@ class _MembersView {
   final Map<String, Map<String, int>> open;
   final DateTime now;
   final MembersVisits visits;
+
+  /// The members' dated plan terms (#3858).
+  final List<MemberTermChange> terms;
 
   AppLocalizations get _l => context.l10n;
   AppFormat get _format => appFormatOf(context);
@@ -350,6 +360,16 @@ class _MembersView {
       flex: 3,
       sortKey: (m) => m.status.index,
       cell: (_, m) => Text(memberStatusLabel(_l, m.status)),
+    ),
+    RecordColumn(
+      id: 'next',
+      staysBeside: false,
+      label: _l.membersColNextChange,
+      flex: 2,
+      cell: (_, m) => Text(switch (nextTermEntry(m.id, terms)) {
+        final e? => memberTermNext(_l, _format, e),
+        null => '',
+      }, overflow: TextOverflow.ellipsis),
     ),
     RecordColumn(
       id: 'roles',
