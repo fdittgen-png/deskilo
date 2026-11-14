@@ -245,15 +245,25 @@ void main() {
   test('the bookings file has the table\'s columns and guards a formula', () {
     final bytes = bookingsCsv(
       [_r('a', seatId: 's1')],
-      header: (member: 'M', place: 'P', from: 'F', to: 'T', state: 'S'),
-      who: (_) => '=cmd',
-      place: (_) => 'Seat 1',
-      at: (i) => i.toUtc().toIso8601String(),
-      state: (_) => 'Reserved',
+      header: (
+        member: 'M',
+        place: 'P',
+        from: 'F',
+        to: 'T',
+        state: 'S',
+        price: 'Pr',
+      ),
+      cells: (
+        who: (_) => '=cmd',
+        place: (_) => 'Seat 1',
+        at: (i) => i.toUtc().toIso8601String(),
+        state: (_) => 'Reserved',
+        price: (_) => 'Free',
+      ),
     );
     final text = String.fromCharCodes(bytes.sublist(3));
     expect(bytes.take(3), [0xEF, 0xBB, 0xBF]);
-    expect(text.split('\r\n').first, '"M","P","F","T","S"');
+    expect(text.split('\r\n').first, '"M","P","F","T","S","Pr"');
     expect(text, isNot(contains(',=cmd')));
     expect(text, contains('2026-11-12T09:00:00.000Z'));
   });

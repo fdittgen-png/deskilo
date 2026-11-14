@@ -5377,6 +5377,26 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette réservation est entièrement dans le passé.';
 
   @override
+  String get bookingPriceCarnet => 'Carnet';
+
+  @override
+  String bookingPriceCharge(String amount) {
+    return 'Tarif $amount';
+  }
+
+  @override
+  String get bookingPriceFree => 'Gratuit';
+
+  @override
+  String get bookingPriceOverage => 'Demi-journée supplémentaire';
+
+  @override
+  String get bookingPricePass => 'Pass';
+
+  @override
+  String get bookingPriceSubscription => 'Abonnement';
+
+  @override
   String get bookingRatePlace => 'Noter cette place';
 
   @override
@@ -5788,6 +5808,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get calendarDeskColumnPlace => 'Place';
+
+  @override
+  String get calendarDeskColumnPrice => 'Prix';
 
   @override
   String get calendarDeskColumnState => 'État';
