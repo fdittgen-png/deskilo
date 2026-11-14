@@ -420,6 +420,8 @@ const _pages = [
   ),
   // #3617 — reports and analysis at the desk.
   ('/reports', PageKind.records, 'reports', 'reports'),
+  // #3947 — the report editor: its page shrunk beside the preview at 1440.
+  ('/report-editor', PageKind.document, 'reports', 'report-editor'),
   ('/money/status', PageKind.dashboard, 'money', 'status'),
   ('/bi', PageKind.dashboard, 'reports', 'analysis'),
   // #3860 — a record open beside its table: the table keeps its staying
@@ -443,7 +445,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 74;
+const _guardedWorkspaceRoutes = 75;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {

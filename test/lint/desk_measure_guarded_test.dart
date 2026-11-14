@@ -31,10 +31,6 @@ const _notGuardedYet = <String, String>{
   '/conversation/:conversationId': '#3949 a record page',
   '/editor/level/:levelId': '#3949 a record page',
   // The purchase orders: guarded by their own leaf.
-  // Pages measured for the desk and not guarded yet.
-  '/report-editor':
-      '#3947 40 dp Design and Preview at 1024, a 42 dp Insert element at 1440; '
-      'text wider than 760 px; Tab reaches a control twice at 1920',
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
   '/billing': '#3947 to join: its Tab order and its unnamed control are both fixed',

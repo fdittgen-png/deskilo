@@ -163,10 +163,19 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
   Widget _zoomed(Widget page) {
     final zoom = _zoom;
     if (zoom == null) {
-      return FittedBox(
-        fit: BoxFit.scaleDown,
-        alignment: Alignment.topCenter,
-        child: page,
+      // #3947 — the page says how much it is shrunk, so the controls drawn
+      // on it stay targets of the kit's size on screen.
+      return LayoutBuilder(
+        builder: (context, constraints) => FittedBox(
+          fit: BoxFit.scaleDown,
+          alignment: Alignment.topCenter,
+          child: ReportPageScale(
+            scale: constraints.maxWidth < ReportPage.width
+                ? constraints.maxWidth / ReportPage.width
+                : 1,
+            child: page,
+          ),
+        ),
       );
     }
     return SingleChildScrollView(
@@ -176,7 +185,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         child: FittedBox(
           fit: BoxFit.fitWidth,
           alignment: Alignment.topLeft,
-          child: page,
+          child: ReportPageScale(scale: zoom, child: page),
         ),
       ),
     );
@@ -308,8 +317,13 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
               SegmentedButton<bool>(
                 key: const ValueKey('report-designer-mode'),
                 showSelectedIcon: false,
+                // #3947 — both segments are targets of the kit's size.
                 style: const ButtonStyle(
-                    visualDensity: VisualDensity.compact),
+                  visualDensity: VisualDensity.standard,
+                  tapTargetSize: MaterialTapTargetSize.padded,
+                  minimumSize: WidgetStatePropertyAll(
+                      Size(0, KitMetrics.minTarget)),
+                ),
                 segments: [
                   ButtonSegment(
                     value: false,
