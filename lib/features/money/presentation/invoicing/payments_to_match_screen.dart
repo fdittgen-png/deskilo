@@ -20,7 +20,7 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/kit_card.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/status_chip.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -167,7 +167,7 @@ class _PaymentsToMatchScreenState extends ConsumerState<PaymentsToMatchScreen> {
     final known = unassignedMoneyKnown(money);
     final receivables = ref.watch(invoicingReceivablesProvider);
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.paymentMatchTitle)),
+      appBar: pageBar(context, title: l10n.paymentMatchTitle),
       body: money.hasError && !money.isLoading
           ? _failed(l10n)
           : known == null || receivables == null

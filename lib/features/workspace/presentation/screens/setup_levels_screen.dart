@@ -23,7 +23,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/form_error_summary.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
@@ -143,7 +143,7 @@ class _SetupLevelsScreenState extends ConsumerState<SetupLevelsScreen> {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.setupLevelsTitle)),
+      appBar: pageBar(context, title: l10n.setupLevelsTitle),
       body: workspace == null ? const LoadingView() : _body(l10n, workspace),
     );
   }

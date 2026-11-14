@@ -14,7 +14,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/invite_uri.dart';
 import '../../providers/workspace_providers.dart';
@@ -160,8 +160,8 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
 
     if (workspace == null) {
       return Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.workspaceCodeTitle),
+        appBar: pageBar(context,
+          title: l10n.workspaceCodeTitle,
         ),
         body: const LoadingView(),
       );
@@ -179,8 +179,8 @@ class _WorkspaceCodeScreenState extends ConsumerState<WorkspaceCodeScreen> {
           );
 
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.workspaceCodeTitle),
+      appBar: pageBar(context,
+        title: l10n.workspaceCodeTitle,
       ),
       body: Center(
         child: SingleChildScrollView(

@@ -13,7 +13,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../core/ui/unsaved_changes_guard.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -86,7 +86,7 @@ class _WorkspaceSettingsScreenState
     final workspace = ref.watch(currentWorkspaceProvider).value;
     final helpTopic = l10n.helpHintWorkspaceTopic;
     if (widget.reportsOnly) { return Scaffold(
-      appBar: AppBar(title: PageTitle(labels.uxReportsTitle)),
+      appBar: pageBar(context, title: labels.uxReportsTitle),
       body: workspace == null ? const LoadingView() : WorkspaceReports(
         workspaceName: workspace.name,
         initialSection: widget.reportSection,
@@ -102,8 +102,8 @@ class _WorkspaceSettingsScreenState
       isDirty: () => _form.isDirty,
       refreshOn: _form.changes,
       child: Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.workspaceSettingsTitle),
+      appBar: pageBar(context,
+        title: l10n.workspaceSettingsTitle,
       ),
       body: workspace == null
           ? const LoadingView()
