@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
 // #3963 — the Demo's VAT number check answers by one stated rule, never by a
 // real register and never by a country's own rules: a number is two letters
 // and nine to twelve digits; with the digits taken as a number, it is VALID
