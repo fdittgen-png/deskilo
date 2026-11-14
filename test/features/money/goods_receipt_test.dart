@@ -15,7 +15,6 @@ import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/purchase_order_receipt.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
-import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
@@ -32,6 +31,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
+import '../../helpers/screens/purchase_orders_app.dart';
 
 final _today = DateTime(2026, 11, 4);
 
@@ -91,7 +92,7 @@ Widget _app(
   FakePurchaseOrderRepository repo,
   FakeSupplierRepository s,
   Set<WorkspacePermission> rights,
-) => _scope([
+) => purchaseOrdersApp([
   currentWorkspaceProvider.overrideWith((ref) async => _workspace),
   myMemberProvider.overrideWith((ref) async => null),
   myPermissionsProvider.overrideWithValue(rights),
@@ -103,7 +104,7 @@ Widget _app(
   purchaseOrderRepositoryProvider.overrideWithValue(repo),
   servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),
   clockProvider.overrideWithValue(FixedClock(_today)),
-], const PurchaseOrdersScreen());
+]);
 
 PurchaseOrderReceiptDraft _delivery(
   PurchaseOrder order,
@@ -281,6 +282,8 @@ void main() {
         _app(repo, suppliers, {WorkspacePermission.managePurchases}),
       );
       await settle(tester);
+      // #3842 — at the desk the order's receipt is in its record.
+      await openOrder(tester, '2026-0001');
       expect(find.text('Capsules: 0 of 100 received'), findsOneWidget);
       await tester.tap(
         find.byKey(const ValueKey('purchase-order-receive-2026-0001')),

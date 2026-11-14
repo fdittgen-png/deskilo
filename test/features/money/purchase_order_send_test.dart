@@ -11,7 +11,6 @@ import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/data/supabase_purchase_order_repository.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
-import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
@@ -19,14 +18,14 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart'
     show FunctionException, PostgrestException;
+
+import '../../helpers/screens/purchase_orders_app.dart';
 
 const PurchaseOrderMail _mail = (
   subject: 'Purchase order 2026-0001',
@@ -280,6 +279,7 @@ void main() {
       for (var i = 0; i < 4; i++) {
         await tester.pump(const Duration(milliseconds: 300));
       }
+      await openOrder(tester, '2026-0001');
       expect(
         find.byKey(const ValueKey('purchase-order-mail-settings')),
         findsOneWidget,
@@ -358,6 +358,7 @@ void main() {
       for (var i = 0; i < 4; i++) {
         await tester.pump(const Duration(milliseconds: 300));
       }
+      await openOrder(tester, '2026-0001');
       expect(
         find.byKey(const ValueKey('purchase-order-mail-settings')),
         findsOneWidget,
@@ -390,11 +391,6 @@ void _undecided() {
   });
 }
 
-Widget _scope(List<Override> overrides) => ProviderScope(
-  overrides: overrides,
-  child: const MaterialApp(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    home: PurchaseOrdersScreen(),
-  ),
-);
+/// #3842 — the orders at their addresses: an order's actions are in its
+/// record at the desk.
+Widget _scope(List<Override> overrides) => purchaseOrdersApp(overrides);
