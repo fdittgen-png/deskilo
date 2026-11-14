@@ -269,8 +269,11 @@ begin
 end;
 $fn$;
 revoke execute on function public.members_term_history() from public, anon, authenticated;
+-- Named to fire before members_rebalance_credits (triggers of one event run
+-- in name order): the rebalance reads the share just recorded.
 drop trigger if exists members_term_history on public.members;
-create trigger members_term_history
+drop trigger if exists members_dated_terms on public.members;
+create trigger members_dated_terms
   after update of subscription_pct, status on public.members
   for each row execute function public.members_term_history();
 
@@ -304,6 +307,13 @@ begin
     return 'refused';
   end if;
   v_effective := public.member_term_effective_on(v_c.member_id, v_c.due_on, v_c.released_at);
+  -- recorded first: what the member's row triggers (the credit rebalance)
+  -- reads the terms with this change in force
+  update public.member_term_changes
+     set state = 'applied', effective_on = v_effective,
+         from_pct = case when kind = 'share' then coalesce(v_m.subscription_pct, 100) end,
+         from_status = case when kind = 'status' then v_m.status end
+   where id = p_change_id;
   begin
     perform set_config('deskilo.term_change_applying', 'on', true);
     if v_c.kind = 'share' then
@@ -315,15 +325,10 @@ begin
   exception when others then
     perform set_config('deskilo.term_change_applying', '', true);
     update public.member_term_changes
-       set state = 'refused', reason = left(sqlerrm, 300)
+       set state = 'refused', reason = left(sqlerrm, 300), effective_on = null
      where id = p_change_id;
     return 'refused';
   end;
-  update public.member_term_changes
-     set state = 'applied', effective_on = v_effective,
-         from_pct = case when kind = 'share' then coalesce(v_m.subscription_pct, 100) end,
-         from_status = case when kind = 'status' then v_m.status end
-   where id = p_change_id;
   perform public.record_applied_event(v_c.workspace_id,
     case when v_c.kind = 'share' then 'subscription_change' else 'member_status_change' end,
     -- whoever scheduled it; the member, when that person is gone
