@@ -8,7 +8,7 @@
 -- invoice issued before keeps none; a voided invoice and a credit note keep
 -- theirs. Rolled back.
 begin;
-select plan(34);
+select plan(37);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -220,6 +220,35 @@ select is((select count(*)::int from pg_policies where schemaname = 'storage' an
   'no policy updates or deletes a stored PDF');
 select throws_ok($$update public.invoice_originals set pdf_sha256 = repeat('1', 64)$$,
   '42501', 'an invoice''s original is never changed', 'nobody changes a recorded original');
+
+-- ── the folder is part of the rule ──
+select pg_temp.as_user('owner');
+set local role authenticated;
+select throws_ok(format('select public.store_invoice_original(%L, %L, %L)', gen_random_uuid(), pg_temp.sha('x'),
+    pg_temp.cii('ORIG-9999', 'EUR', '1.00')),
+  '42501', 'not allowed to issue invoices', 'an invoice that does not exist answers as one the caller may not issue');
+reset role;
+-- test data written as the server: a record whose file sits in another
+-- business's folder, and a file of a malformed name
+insert into storage.objects (bucket_id, name, metadata)
+values ('invoice-originals', pg_temp.path('ORIG-0002', pg_temp.sha('elsewhere'), 'other'), '{"size": 9}'::jsonb),
+       ('invoice-originals', 'not-a-business/not-an-invoice.pdf', '{"size": 9}'::jsonb);
+insert into public.invoice_originals (invoice_id, workspace_id, path, pdf_bytes, pdf_sha256, xml, xml_sha256)
+values (pg_temp.inv('ORIG-0002'), current_setting('deskilo.test.ws')::uuid,
+        pg_temp.path('ORIG-0002', pg_temp.sha('elsewhere'), 'other'), 9, pg_temp.sha('elsewhere'), '', '');
+select pg_temp.as_user('person_a');
+set local role authenticated;
+select is((select count(*)::int from storage.objects where bucket_id = 'invoice-originals'
+            and name = pg_temp.path('ORIG-0002', pg_temp.sha('elsewhere'), 'other')), 0,
+  'a recorded file in a folder not of its record''s business is read by nobody');
+reset role;
+select pg_temp.as_user('owner');
+set local role authenticated;
+select is((select count(*)::int from storage.objects where bucket_id = 'invoice-originals'
+            and name = 'not-a-business/not-an-invoice.pdf'), 0,
+  'a file of a malformed name answers no row, without an error');
+reset role;
+delete from public.invoice_originals where invoice_id = pg_temp.inv('ORIG-0002');
 
 -- ── a voided invoice and a credit note keep theirs ──
 select pg_temp.as_user('owner');

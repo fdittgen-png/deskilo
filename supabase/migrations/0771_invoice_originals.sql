@@ -149,22 +149,26 @@ create policy invoice_originals_insert on storage.objects for insert to authenti
 
 -- Whether the caller may issue invoices in the business whose folder holds
 -- [p_name]: who uploads there sees what was uploaded there.
+-- The folder is read only once the name has the shape of an original's, so a
+-- malformed name answers false and never raises.
 create or replace function public.invoice_original_issuer(p_name text)
 returns boolean language sql stable security definer set search_path = public as $fn$
-  select public.invoice_original_invoice(p_name) is not null
-     and public.has_permission(split_part(p_name, '/', 1)::uuid, 'issueInvoices');
+  select case when public.invoice_original_invoice(p_name) is not null
+              then coalesce(public.has_permission(((storage.foldername(p_name))[1])::uuid, 'issueInvoices'), false)
+              else false end;
 $fn$;
 revoke execute on function public.invoice_original_issuer(text) from public, anon;
 grant execute on function public.invoice_original_issuer(text) to authenticated;
 
--- An object is read when a recorded original names it, by whoever reads that
--- original (and so its invoice), and by who may issue invoices in its
--- business, who uploads it.
+-- An object is read when a recorded original of the business its folder
+-- names records it, by whoever reads that original (and so its invoice), and
+-- by who may issue invoices in the business its folder names, who uploads it.
 drop policy if exists invoice_originals_select on storage.objects;
 create policy invoice_originals_select on storage.objects for select to authenticated
   using (bucket_id = 'invoice-originals'
          and not public.mcp_is_delegated()
-         and (exists (select 1 from public.invoice_originals o where o.path = name)
+         and (exists (select 1 from public.invoice_originals o
+                       where o.path = name and o.workspace_id::text = (storage.foldername(name))[1])
               or public.invoice_original_issuer(name)));
 
 -- ── 4. the provenance of an original ──────────────────────────────────────
@@ -205,11 +209,11 @@ declare
   v_due_minor numeric;
   v_xml_sha text;
 begin
+  -- an invoice the caller may not issue in, and one that does not exist,
+  -- answer alike
   select * into v_inv from public.invoices where id = p_invoice_id;
-  if not found then
-    raise exception 'no such invoice' using errcode = 'P0002';
-  end if;
-  if public.mcp_is_delegated() or not public.has_permission(v_inv.workspace_id, 'issueInvoices') then
+  if v_inv.id is null or public.mcp_is_delegated()
+     or not coalesce(public.has_permission(v_inv.workspace_id, 'issueInvoices'), false) then
     raise exception 'not allowed to issue invoices' using errcode = '42501';
   end if;
   if not v_inv.keeps_original then
