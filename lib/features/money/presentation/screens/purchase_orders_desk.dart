@@ -26,7 +26,7 @@ import '../widgets/purchase_order_record.dart';
 const String _ordersPath = '/money/purchase-orders';
 
 /// Where an order opens: `/money/purchase-orders/order/<id>`.
-const String purchaseOrderPath = '/money/purchase-orders/order';
+const String _orderPath = '/money/purchase-orders/order';
 
 /// The orders table, with the open order beside it.
 class PurchaseOrdersDesk extends ConsumerWidget {
@@ -41,7 +41,7 @@ class PurchaseOrdersDesk extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => OpenRecord(
-    listPath: purchaseOrderPath,
+    listPath: _orderPath,
     builder: (context, id) => ListDetailScaffold(
       id: 'purchase-orders',
       paneStore: ref.watch(paneWidthStoreProvider),
@@ -49,7 +49,7 @@ class PurchaseOrdersDesk extends ConsumerWidget {
       list: _list(context, ref),
       selected: recordBesideList(context) ? id : null,
       onClose: () => context.go(_ordersPath),
-      onMove: (id) => moveToRecord(context, purchaseOrderPath, id),
+      onMove: (id) => moveToRecord(context, _orderPath, id),
       detail: (context, id) => PurchaseOrderRecord(
         key: ValueKey('purchase-order-record-$id'),
         orderId: id,
@@ -68,7 +68,7 @@ class PurchaseOrdersDesk extends ConsumerWidget {
         _ => RecordsState.loading,
       },
       onRetry: () => ref.invalidate(purchaseOrdersProvider(workspaceId)),
-      onOpen: (id) => openRecord(context, purchaseOrderPath, id),
+      onOpen: (id) => openRecord(context, _orderPath, id),
     );
   }
 }
