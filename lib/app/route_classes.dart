@@ -307,7 +307,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/workspace-settings', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/reports', RouteClass.workspace, place: 'reporting', measure: PageMeasure.work),
   RouteRule('/validation', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),
-  RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability', measure: PageMeasure.work),
+  RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability', measure: PageMeasure.form), // #3892: a settings form
   RouteRule(
     '/bi',
     RouteClass.workspace,

@@ -303,6 +303,7 @@ final _return = VatDeclaration(
 const _pages = [
   // #3892 — booking and requests at the desk.
   // #3892 — settings, people, money and documents at the desk.
+  ('/validation', PageKind.task, 'requests', 'validation'),
   ('/assistants/connect', PageKind.task, 'settings', 'assistants-connect'),
   ('/settings/assistants', PageKind.task, 'settings', 'assistants'),
   ('/settings/assistant-setup', PageKind.task, 'settings', 'assistant-setup'),
@@ -420,7 +421,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 54;
+const _guardedWorkspaceRoutes = 55;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {

@@ -60,11 +60,10 @@ const _notGuardedYet = <String, String>{
   // and wraps only through the lower half of the desk's navigation, whose
   // list drops its upper entries as Tab scrolls it.
   '/reservations/period': '#3892 Tab is kept on an empty page',
-  // The rules are a lazily built list: Tab drops each row it passes.
-  '/validation': '#3892 Tab drops the rows of its lazy list',
-  // A sentence 807 px wide at 1024, a 40 x 22 control without a name,
-  // and Tab reached twice at 1920.
-  '/availability': '#3892 a wide sentence, a small unnamed control',
+  // Its outside-hours rows (RadioListTile in a RadioGroup) each give the
+  // radio a node and a Tab stop of its own: a 40 x 40 control without a
+  // name, and every row reached twice by Tab.
+  '/availability': '#3892 each radio row is two controls, one unnamed',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3892 redirects to /invoices, draws nothing',
 };
