@@ -77,7 +77,7 @@ class MemberTermChange implements SystemStamped {
   bool get upcoming =>
       state == MemberTermState.scheduled || state == MemberTermState.pending;
 
-  factory MemberTermChange.fromRow(Map<String, dynamic> row) =>
+  factory MemberTermChange.fromRow(Map<String, Object?> row) =>
       MemberTermChange(
         id: row['id'] as String,
         memberId: row['member_id'] as String,
