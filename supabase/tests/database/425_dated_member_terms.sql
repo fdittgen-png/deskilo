@@ -20,7 +20,7 @@
 --  * the business's own day decides, east and west of UTC.
 -- Rolled back.
 begin;
-select plan(98);
+select plan(110);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00003858' || lpad(n::text, 4, '0'))::uuid;
@@ -39,7 +39,7 @@ values (pg_temp.u(101), 'Terms', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
         '1 Synthetic Street', 'Capital', '1000', 'vat_registered', 'FR123456789', 'REG-FR', '{"invoicing": true, "moneyTab": true, "subscriptionInvoices": true, "usageInvoices": true, "priceNegotiations": true}');
 insert into public.vat_rates (workspace_id, label, percent, is_default)
 values (pg_temp.u(101), 'Synthetic standard', 20, true);
--- 201 the owner; 202 a member with an account; 203-240 members with accounts
+-- 201 the owner; 202 a member with an account; 203-246 members with accounts
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status,
                             subscription_pct, overage_policy, joined_at)
 values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', 100, 'blocked', now() - interval '2 years'),
@@ -47,14 +47,14 @@ values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', 100,
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(500 + n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'terms-m' || n || '@example.test', '', now(), now(), now()
-  from generate_series(3, 40) n;
+  from generate_series(3, 46) n;
 update public.profiles set first_name = 'Synthetic', last_name = 'Member ' || right(id::text, 2),
        country_code = 'FR', street = '2 Synthetic Street', city = 'Capital', postal_code = '1000'
- where id in (select pg_temp.u(500 + n) from generate_series(3, 40) n);
+ where id in (select pg_temp.u(500 + n) from generate_series(3, 46) n);
 insert into public.members (id, workspace_id, user_id, status, subscription_pct, overage_policy, joined_at)
 select pg_temp.u(200 + n), pg_temp.u(101), pg_temp.u(500 + n), 'active', 100,
        case when n in (6, 32) then 'payg' else 'blocked' end, now() - interval '2 years'
-  from generate_series(3, 40) n;
+  from generate_series(3, 46) n;
 delete from public.fee_bands where workspace_id = pg_temp.u(101);
 insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage_fee_cents)
 values (pg_temp.u(101), 0, 50, 2000, 1000), (pg_temp.u(101), 50, 100, 4000, 1000);
@@ -492,6 +492,57 @@ select throws_ok(format($$ select public.assert_member_quota(%L, %L) $$, pg_temp
 select is(public.member_quota_shortfall(pg_temp.u(232), pg_temp.weekday(0)) || ' / '
        || public.member_quota_shortfall(pg_temp.u(232), pg_temp.weekday(1) + interval '4 hours'), '0 / 1',
   'a month paused on its first day includes no half-day: its use is beyond the quota');
+
+-- ── a pause made before dated terms ──
+select set_config('deskilo.term_change_applying', 'on', true);
+update public.members set status = 'paused' where id = pg_temp.u(241);
+select set_config('deskilo.term_change_applying', '', true);
+select ok(public.member_terms_carry_paused(pg_temp.u(101)) >= 1, 'a member paused before dated terms gets one carried pause');
+select is(pg_temp.fee(241, 0) || ' / ' || pg_temp.fee(241, -1), '100 0 / 100 4000',
+  'from the first day of that month: this month reads paused, the month before as before');
+update public.member_term_changes set due_on = pg_temp.first(-1)
+ where member_id = pg_temp.u(241) and source = 'carried';
+select is(pg_temp.fee(241, -1) || ' / ' || pg_temp.fee(241, -2), '100 0 / 100 4000',
+  'and once that month has passed it still reads paused; the one before it does not');
+
+-- ── a date in the past ──
+set local role authenticated;
+select is(public.schedule_member_share_change(pg_temp.u(242), 50, pg_temp.first(0), gen_random_uuid()) ->> 'state',
+  'applied', 'this month''s first day is accepted when nothing from it on is invoiced, as the immediate command dates it');
+reset role;
+select is(pg_temp.fee(242, 0), '50 2000', 'and this month reads the new share');
+select is(pg_temp.issue(243, 0), 'issued', 'this month is invoiced');
+set local role authenticated;
+select throws_like(format($$ select public.schedule_member_share_change(%L, 50, %L, gen_random_uuid()) $$,
+  pg_temp.u(243), pg_temp.first(0)), '%the earliest is ' || pg_temp.first(1) || '%',
+  'a passed date is refused with the earliest it can take');
+select throws_like(format($$ select public.schedule_member_pause(%L, %L, null, gen_random_uuid()) $$,
+  pg_temp.u(244), pg_temp.today() - 1), '%today or later — the earliest is ' || pg_temp.today() || '%',
+  'and a pause dated yesterday with today');
+reset role;
+
+-- ── cancelling one of two changes of a date ──
+set local role authenticated;
+select set_config('t.c60', public.schedule_member_share_change(pg_temp.u(245), 60, pg_temp.first(1), gen_random_uuid()) ->> 'change_id', true);
+select set_config('t.c70', public.schedule_member_share_change(pg_temp.u(245), 70, pg_temp.first(1), gen_random_uuid()) ->> 'change_id', true);
+reset role;
+select is(pg_temp.issue(245, 1) || ' ' || pg_temp.fee(245, 1), 'issued 70 4000', 'the invoice reads the later of the two');
+set local role authenticated;
+select is(public.cancel_member_term_change(current_setting('t.c60')::uuid), 1,
+  'the earlier one, which no invoice reads, is cancelled');
+select throws_ok(format($$ select public.cancel_member_term_change(%L) $$, current_setting('t.c70')),
+  '55000', 'this change is already on an invoice — schedule a new one', 'the one the invoice reads is not');
+reset role;
+
+-- ── bookings in the months a pause frees ──
+insert into public.reservations (workspace_id, member_id, seat_id, starts_at, ends_at)
+values (pg_temp.u(101), pg_temp.u(246), pg_temp.u(604), pg_temp.weekday(2), pg_temp.weekday(2) + interval '3 hours'),
+       (pg_temp.u(101), pg_temp.u(246), pg_temp.u(604), pg_temp.weekday(2) + interval '4 hours', pg_temp.weekday(2) + interval '7 hours'),
+       (pg_temp.u(101), pg_temp.u(246), pg_temp.u(605), pg_temp.weekday(1) + interval '4 hours', pg_temp.weekday(1) + interval '7 hours');
+set local role authenticated;
+select is(public.schedule_member_pause(pg_temp.u(246), pg_temp.first(1) + 1, null, gen_random_uuid()) ->> 'bookings_in_free_months',
+  '2', 'a pause answers how many bookings fall in the months it frees: they stay, as use');
+reset role;
 
 -- ── who ──
 select pg_temp.act_as(pg_temp.u(2));

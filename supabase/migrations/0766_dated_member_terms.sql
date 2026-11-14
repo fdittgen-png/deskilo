@@ -19,7 +19,9 @@
 --    invoiced reads the terms as of its first day: the changes applied or
 --    scheduled with a date on or before it (of one date, the last released),
 --    else the member's row -- for a month before the current one that no
---    change covers, not paused, as before. A voided
+--    change covers, not paused, as before. A member paused when this
+--    migration runs gets one applied pause from the first day of that month,
+--    so that month and the later ones read as they do that day. A voided
 --    invoice unfreezes its period; a replacement freezes what it recomputes,
 --    which reads the terms as of the period's first day, so only a change
 --    dated on or before that day enters it.
@@ -46,8 +48,10 @@
 --    resumption only to a member paused by that same pause; a refused pause
 --    takes its resumption with it; a member who leaves has their waiting
 --    changes cancelled. A waiting change is cancelled until its day, unless
---    an invoice issued after it carries it. Every state a change takes
---    rebalances the member's carnets.
+--    an invoice issued after it carries it and its period reads it. Every
+--    state a change takes rebalances the member's carnets; a carnet is
+--    spent by a booking, never by a later change, so a pause scheduled over
+--    booked months leaves those bookings as use beyond the quota.
 --  * The invoice run decides by the member's state on the invoiced period's
 --    first day; it applies the changes due first, so a business without the
 --    nightly job still has them in force. It issues this month, once ever,
@@ -81,7 +85,9 @@ create table if not exists public.member_term_changes (
   state text not null default 'scheduled'
     check (state in ('pending', 'scheduled', 'applied', 'refused', 'cancelled')),
   reason text not null default '',
-  source text not null check (source in ('scheduled', 'immediate')),
+  -- carried: a pause made before this store began, in force from the first
+  -- day of the month the store began in
+  source text not null check (source in ('scheduled', 'immediate', 'carried')),
   group_id uuid,
   request_id uuid,
   event_id uuid references public.events(id) on delete set null,
@@ -95,7 +101,7 @@ create table if not exists public.member_term_changes (
     (kind = 'share' and to_pct is not null and to_status is null)
     or (kind = 'status' and to_status is not null and to_pct is null)),
   constraint member_term_changes_scheduled_status check (
-    source <> 'scheduled' or kind = 'share' or to_status in ('active', 'paused')),
+    source = 'immediate' or kind = 'share' or to_status in ('active', 'paused')),
   constraint member_term_changes_applied_dated check (
     state <> 'applied' or applied_on is not null)
 );
@@ -276,7 +282,8 @@ revoke execute on function public.member_billable_in(uuid, text, text) from publ
 
 -- What a pause from [p_from] until [p_to] (null: until resumed) costs: the
 -- months that stay due (the month it starts in unless it starts on the 1st,
--- and every invoiced month it covers), and the first month it frees.
+-- and every invoiced month it covers), the first month it frees, and how
+-- many of the member's bookings fall in the months it frees.
 create or replace function public.member_pause_money(p_member_id uuid, p_from date, p_to date)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
 declare
@@ -298,7 +305,19 @@ begin
     end if;
     v_month := (v_month + interval '1 month')::date;
   end loop;
-  return jsonb_build_object('due', to_jsonb(v_due), 'first_free', v_free);
+  return jsonb_build_object('due', to_jsonb(v_due), 'first_free', v_free,
+    -- the member's bookings in the months it frees: they stay, and are
+    -- charged as use beyond a quota of 0
+    'bookings_in_free_months', (
+      select count(*)::int from public.reservations r
+        join public.members m on m.id = r.member_id
+        join public.workspaces w on w.id = m.workspace_id
+        cross join lateral (select date_trunc('month', r.starts_at at time zone coalesce(nullif(w.timezone, ''), 'UTC'))::date as month) x
+       where r.member_id = p_member_id and r.status in ('reserved', 'checked_in', 'completed')
+         and x.month >= case when extract(day from p_from) = 1 then p_from
+                             else (date_trunc('month', p_from) + interval '1 month')::date end
+         and (p_to is null or x.month < p_to)
+         and not public.member_period_invoiced(p_member_id, x.month)));
 end;
 $fn$;
 revoke execute on function public.member_pause_money(uuid, date, date) from public, anon, authenticated;
@@ -620,8 +639,14 @@ begin
   if p_pct is null or p_pct < 0 or p_pct > 100 then
     raise exception 'pct out of range' using errcode = '22023';
   end if;
-  if p_effective_on is null or p_effective_on < public.workspace_today(v_m.workspace_id) then
-    raise exception 'a change is scheduled for today or later' using errcode = '22023';
+  -- the earliest open first day (this month's, when nothing from it on is
+  -- invoiced) is accepted though it has passed: the immediate command would
+  -- date the change the same
+  v_earliest := public.member_first_open_period(p_member_id, public.workspace_today(v_m.workspace_id));
+  if p_effective_on is null
+     or (p_effective_on < public.workspace_today(v_m.workspace_id) and p_effective_on <> v_earliest) then
+    raise exception 'a change is scheduled for today or later — the earliest is %', v_earliest
+      using errcode = '22023', detail = v_earliest::text;
   end if;
   v_earliest := public.member_first_open_period(p_member_id, p_effective_on);
   if v_earliest > date_trunc('month', p_effective_on)::date then
@@ -701,7 +726,9 @@ begin
   end if;
   v_actor := public.my_active_member(v_m.workspace_id);
   if p_from is null or p_from < public.workspace_today(v_m.workspace_id) then
-    raise exception 'a change is scheduled for today or later' using errcode = '22023';
+    raise exception 'a change is scheduled for today or later — the earliest is %',
+      public.workspace_today(v_m.workspace_id)
+      using errcode = '22023', detail = public.workspace_today(v_m.workspace_id)::text;
   end if;
   if p_to is not null and p_to <= p_from then
     raise exception 'a pause ends after it starts' using errcode = '22023';
@@ -766,7 +793,14 @@ begin
        and (c.id = p_change_id or (v_c.group_id is not null and c.group_id = v_c.group_id))
        and i.kind in ('subscription', 'full') and i.voided_at is null
        and i.issued_at >= c.released_at
-       and to_date(i.period || '-01', 'YYYY-MM-DD') >= c.due_on) then
+       and to_date(i.period || '-01', 'YYYY-MM-DD') >= c.due_on
+       -- and it is the change that period reads, not one a later change of
+       -- the same date superseded
+       and c.id = (select x.id from public.member_term_changes x
+                    where x.member_id = c.member_id and x.kind = c.kind
+                      and x.state in ('applied', 'scheduled')
+                      and x.due_on <= to_date(i.period || '-01', 'YYYY-MM-DD')
+                    order by x.due_on desc, x.released_at desc, x.seq desc limit 1)) then
     raise exception 'this change is already on an invoice — schedule a new one' using errcode = '55000';
   end if;
   update public.member_term_changes
@@ -779,6 +813,34 @@ end;
 $fn$;
 revoke execute on function public.cancel_member_term_change(uuid) from public, anon;
 grant execute on function public.cancel_member_term_change(uuid) to authenticated;
+
+-- ── pauses made before the store ──────────────────────────────────────────
+-- A member paused on the day this store begins has no recorded change: one
+-- applied pause is written, in force from the first day of that month, so
+-- the month and every later one read paused as they do that day, and the
+-- months before it keep the reading from before (not paused).
+create or replace function public.member_terms_carry_paused(p_workspace_id uuid default null)
+returns integer language plpgsql security definer set search_path = public as $fn$
+declare
+  v_n integer;
+begin
+  insert into public.member_term_changes (workspace_id, member_id, kind, to_status, from_status,
+    due_on, applied_on, state, source, reason)
+  select m.workspace_id, m.id, 'status', 'paused', 'active',
+         date_trunc('month', public.workspace_today(m.workspace_id))::date,
+         public.workspace_today(m.workspace_id), 'applied', 'carried',
+         'paused before dated terms began'
+    from public.members m
+   where m.status = 'paused'
+     and (p_workspace_id is null or m.workspace_id = p_workspace_id)
+     and not exists (select 1 from public.member_term_changes c
+                      where c.member_id = m.id and c.kind = 'status');
+  get diagnostics v_n = row_count;
+  return v_n;
+end;
+$fn$;
+revoke execute on function public.member_terms_carry_paused(uuid) from public, anon, authenticated;
+select public.member_terms_carry_paused();
 
 -- ── the decision on a held change ─────────────────────────────────────────
 -- An approved change is released as of the approval: a share takes the
