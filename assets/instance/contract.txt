@@ -2437,6 +2437,7 @@ routine public.book_periods_v1(p_workspace_id uuid) -> jsonb | function | define
 routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
 routine public.book_role_account_type(p_role text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:aedea518c9ee
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
+routine public.booking_prices(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> TABLE(reservation_id uuid, member_id uuid, kind text, amount_cents integer, currency text) | function | definer | stable | exec:authenticated,service_role | body:4ff349a266a9
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
 routine public.business_document_language(p_locale text, p_country text, p_on date) -> text | function | definer | stable | exec:service_role | body:aa4b68900fc1
 routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
