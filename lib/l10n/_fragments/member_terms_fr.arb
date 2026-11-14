@@ -19,5 +19,13 @@
   "memberTermNextShare": "{share} à partir du {date}",
   "memberTermNextPause": "Suspension à partir du {date}",
   "memberTermNextResume": "Reprise le {date}",
-  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} réservation tombe dans les mois suspendus — elle reste et est facturée comme utilisation} other{{count} réservations tombent dans les mois suspendus — elles restent et sont facturées comme utilisation}}"
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} réservation tombe dans les mois suspendus — elle reste et est facturée comme utilisation} other{{count} réservations tombent dans les mois suspendus — elles restent et sont facturées comme utilisation}}",
+  "membersChangeWhen": "Prise d'effet",
+  "membersChangeSoonest": "Dès que possible",
+  "membersChangeFromMonth": "À partir du premier d'un mois",
+  "membersPauseFrom": "Suspendu à partir du",
+  "membersPauseUntil": "De nouveau actif le",
+  "membersPauseUntilHelper": "Laisser vide : jusqu'à la reprise",
+  "membersOutcomeScheduled": "Prend effet le {date}",
+  "membersOutcomeEarliest": "Non modifié : la date la plus proche possible est le {date}"
 }

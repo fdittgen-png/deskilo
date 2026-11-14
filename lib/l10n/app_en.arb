@@ -27103,6 +27103,10 @@
       }
     }
   },
+  "membersChangeFromMonth": "From the first of a month",
+  "@membersChangeFromMonth": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
   "membersChangeFromToday": "Applies from today, {date}. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.",
   "@membersChangeFromToday": {
     "description": "#3618 members at the desk: bulk task: the effective date",
@@ -27111,6 +27115,14 @@
         "type": "String"
       }
     }
+  },
+  "membersChangeSoonest": "As soon as possible",
+  "@membersChangeSoonest": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersChangeWhen": "When it takes effect",
+  "@membersChangeWhen": {
+    "description": "#3858 the members' change task: the date it takes effect"
   },
   "membersChipManaged": "Managed profiles",
   "@membersChipManaged": {
@@ -27177,6 +27189,15 @@
   "@membersOutcomeApplied": {
     "description": "#3618 members at the desk: one member's outcome"
   },
+  "membersOutcomeEarliest": "Not changed: the earliest date it can take is {date}",
+  "@membersOutcomeEarliest": {
+    "description": "#3858 the members' change task: the date it takes effect",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "membersOutcomeExited": "Has left the space: not changed",
   "@membersOutcomeExited": {
     "description": "#3618 members at the desk: one member's outcome"
@@ -27201,6 +27222,15 @@
   "@membersOutcomeRuleRefused": {
     "description": "#3618 members at the desk: one member's outcome"
   },
+  "membersOutcomeScheduled": "Takes effect on {date}",
+  "@membersOutcomeScheduled": {
+    "description": "#3858 the members' change task: the date it takes effect",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "membersOutcomeUnchanged": "Already so: nothing to change",
   "@membersOutcomeUnchanged": {
     "description": "#3618 members at the desk: one member's outcome"
@@ -27208,6 +27238,18 @@
   "membersOutcomeWrongStatus": "Not paused: not resumed",
   "@membersOutcomeWrongStatus": {
     "description": "#3618 members at the desk: one member's outcome"
+  },
+  "membersPauseFrom": "Paused from",
+  "@membersPauseFrom": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersPauseUntil": "Active again on",
+  "@membersPauseUntil": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersPauseUntilHelper": "Leave empty: until resumed",
+  "@membersPauseUntilHelper": {
+    "description": "#3858 the members' change task: the date it takes effect"
   },
   "membersPlanNone": "No plan",
   "@membersPlanNone": {

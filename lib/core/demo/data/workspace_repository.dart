@@ -14,6 +14,7 @@ import 'fake_badges.dart';
 import 'fake_booking_rules.dart';
 import 'fake_conversations.dart';
 import 'fake_managed_identity.dart';
+import 'fake_member_terms.dart';
 import 'fake_role_permissions.dart';
 import 'fake_sites.dart';
 import 'fake_workspace_identity.dart';
@@ -29,6 +30,7 @@ class FakeWorkspaceRepository extends FakeWorkspaceState
         FakeBookingRules,
         FakeWorkspaceLifecycle,
         FakeWorkspaceMembers,
+        FakeMemberTerms,
         FakeManagedIdentity,
         FakeBadges,
         FakeRolePermissions,

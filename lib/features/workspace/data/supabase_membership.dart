@@ -4,9 +4,13 @@
 // `SupabaseWorkspaceRepository` (the part-file bodies and their `_xxxImpl`
 // forwarders are gone).
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';
+import '../domain/member_term_answer.dart';
 import '../domain/member_term_change.dart';
 import '../domain/membership_repository.dart';
 import '../domain/new_member_defaults.dart';
@@ -223,6 +227,61 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .order('due_on', ascending: true)
         .order('seq', ascending: true);
     return rows.map(MemberTermChange.fromRow).toList();
+  }
+
+  @override
+  Future<MemberTermAnswer> requestMemberShare(String memberId, int pct) async =>
+      MemberTermAnswer.fromJson(
+        await client.rpc<Object?>(
+          'request_subscription_change',
+          params: {'p_member_id': memberId, 'p_pct': pct},
+        ),
+      );
+
+  @override
+  Future<MemberTermAnswer> scheduleMemberShare(
+    String memberId,
+    int pct,
+    DateTime on,
+    String requestId,
+  ) => _dated('schedule_member_share_change', {
+    'p_member_id': memberId,
+    'p_pct': pct,
+    'p_effective_on': isoDay(on),
+    'p_request_id': requestId,
+  });
+
+  @override
+  Future<MemberTermAnswer> scheduleMemberPause(
+    String memberId,
+    DateTime from,
+    DateTime? until,
+    String requestId,
+  ) => _dated('schedule_member_pause', {
+    'p_member_id': memberId,
+    'p_from': isoDay(from),
+    'p_to': until == null ? null : isoDay(until),
+    'p_request_id': requestId,
+  });
+
+  /// A dated command; a date it refuses names the earliest it can take (the
+  /// refusal's detail).
+  Future<MemberTermAnswer> _dated(
+    String fn,
+    Map<String, Object?> params,
+  ) async {
+    try {
+      return MemberTermAnswer.fromJson(
+        await client.rpc<Object?>(fn, params: params),
+      );
+    } on PostgrestException catch (e, st) {
+      // trace-exempt: rethrown typed; the task names the earliest date.
+      final earliest = e.code == '22023'
+          ? DateTime.tryParse(e.details?.toString() ?? '')
+          : null;
+      if (earliest == null) rethrow;
+      Error.throwWithStackTrace(MemberTermDateRefused(earliest), st);
+    }
   }
 
   @override

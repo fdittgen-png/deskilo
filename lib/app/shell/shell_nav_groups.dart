@@ -5,6 +5,7 @@
 // One table (#2313, #3071), rendered three ways; never a second one.
 import 'package:flutter/material.dart';
 
+import 'shell_cash_entries.dart';
 import 'shell_drawer_entries.dart';
 
 /// One titled group of entries, with its sub-groups.
@@ -98,6 +99,13 @@ List<NavGroup> navGroupsOf(
       all,
       {'drawer-cash'},
       sub: [
+        // #3926 — at the desk the cash page's doors, as a group.
+        NavGroup(
+          'cash',
+          labels.hubCashTitle,
+          Icons.account_balance_outlined,
+          entries.cashPages(),
+        ),
         NavGroup(
           'accounting',
           labels.hubAccountingTitle,
