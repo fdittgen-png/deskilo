@@ -63,6 +63,7 @@ import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/demo_assistant_journeys.dart';
 import '../../helpers/demo_free_seat.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
@@ -1118,6 +1119,18 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a bill sent '
     'as an e-invoice (the gateway is simulated)',
     (w) => w.f.money.invoices.isNotEmpty,
+  ),
+  // #3962 — an assistant connected in the reference business, the request it
+  // left for confirmation, and the page's assistant that books a room.
+  WorkspaceFeature.mcpAccess: _action(
+    _owner,
+    'Ada reads what her assistant may do and confirms the request it left',
+    (_) => confirmRoomRequestJourney(),
+  ),
+  WorkspaceFeature.webMcp: _action(
+    _owner,
+    'the assistant in the page books the meeting room on a Thursday morning',
+    (_) => webAssistantBooksJourney(),
   ),
   // #3960 — e-mail is recorded in the Demo's outbox; nothing is sent.
   WorkspaceFeature.reminderEmail: _action(

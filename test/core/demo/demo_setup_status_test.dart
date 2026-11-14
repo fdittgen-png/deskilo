@@ -42,8 +42,8 @@ void main() {
     expect(s.milestones.where((m) => m.applies), hasLength(4));
     expect(
       _state(s, 'assistant'),
-      SetupStepState.notApplicable,
-      reason: 'the demo has no assistant endpoint',
+      SetupStepState.ready,
+      reason: 'the reference business has its assistant connected (#3962)',
     );
   });
 

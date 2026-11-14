@@ -27,7 +27,7 @@ Workspace demoNewYorkSpace() => Workspace(
   // descendants follow by the chain), so the setup guide asks for no VAT
   // rates, returns or e-invoicing VAT. US sales tax stays on.
   featureFlags: {
-    ...demoFeatureFlags,
+    ...demoOtherSpacesFeatureFlags,
     WorkspaceFeature.vatManagement.dbKey: false,
   },
   address: '100 Example Avenue\nNew York, NY 10001',
