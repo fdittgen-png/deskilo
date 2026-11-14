@@ -302,6 +302,33 @@ final _return = VatDeclaration(
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
   // #3892 — booking and requests at the desk.
+  // #3892 — settings, people, money and documents at the desk.
+  ('/assistants/connect', PageKind.task, 'settings', 'assistants-connect'),
+  ('/settings/assistants', PageKind.task, 'settings', 'assistants'),
+  ('/settings/assistant-setup', PageKind.task, 'settings', 'assistant-setup'),
+  ('/kiosk-gate', PageKind.task, 'kiosk', 'kiosk-gate'),
+  ('/kiosk', PageKind.task, 'kiosk', 'kiosk'),
+  ('/pending', PageKind.document, 'account', 'pending'),
+  ('/plan', PageKind.document, 'places', 'plan'),
+  ('/badge-kiosks', PageKind.task, 'settings', 'badge-kiosks'),
+  ('/accounting/connected', PageKind.document, 'money', 'accounting-connected'),
+  ('/suppliers', PageKind.records, 'money', 'suppliers-alias'),
+  ('/deployment', PageKind.task, 'settings', 'deployment'),
+  ('/editor', PageKind.task, 'places', 'editor'),
+  ('/money/repartition-wizard', PageKind.task, 'money', 'repartition-wizard'),
+  ('/members/privacy/rr-1', PageKind.recordBesideTable, 'people', 'privacy-open'),
+  ('/settings/payment-terms', PageKind.task, 'settings', 'payment-terms'),
+  ('/settings/questions', PageKind.task, 'settings', 'questions'),
+  ('/settings/roles-of-this-space', PageKind.document, 'settings', 'roles-of-this-space'),
+  ('/formats', PageKind.task, 'settings', 'formats'),
+  ('/payment-config', PageKind.task, 'settings', 'payment-config'),
+  ('/nfc-config', PageKind.task, 'settings', 'nfc-config'),
+  ('/workspace-code', PageKind.document, 'settings', 'workspace-code'),
+  ('/members/managed', PageKind.task, 'people', 'managed'),
+  ('/money/cash', PageKind.document, 'money', 'cash'),
+  ('/vat-declarations', PageKind.document, 'money', 'vat-declarations'),
+  ('/library', PageKind.document, 'reports', 'library'),
+  ('/setup/levels', PageKind.task, 'settings', 'setup-levels'),
   ('/attention', PageKind.document, 'booking', 'attention'),
   ('/events', PageKind.document, 'requests', 'events'),
   ('/invoices', PageKind.records, 'money', 'invoices'),
@@ -393,7 +420,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 28;
+const _guardedWorkspaceRoutes = 54;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
