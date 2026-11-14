@@ -167,5 +167,47 @@
         "type": "int"
       }
     }
+  },
+  "membersChangeWhen": "When it takes effect",
+  "@membersChangeWhen": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersChangeSoonest": "As soon as possible",
+  "@membersChangeSoonest": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersChangeFromMonth": "From the first of a month",
+  "@membersChangeFromMonth": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersPauseFrom": "Paused from",
+  "@membersPauseFrom": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersPauseUntil": "Active again on",
+  "@membersPauseUntil": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersPauseUntilHelper": "Leave empty: until resumed",
+  "@membersPauseUntilHelper": {
+    "description": "#3858 the members' change task: the date it takes effect"
+  },
+  "membersOutcomeScheduled": "Takes effect on {date}",
+  "@membersOutcomeScheduled": {
+    "description": "#3858 the members' change task: the date it takes effect",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "membersOutcomeEarliest": "Not changed: the earliest date it can take is {date}",
+  "@membersOutcomeEarliest": {
+    "description": "#3858 the members' change task: the date it takes effect",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

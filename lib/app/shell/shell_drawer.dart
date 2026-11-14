@@ -17,7 +17,9 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/events/providers/attention_providers.dart';
+import '../../features/money/domain/bank/bank_records.dart';
 import '../../features/money/domain/purchase_approval_reads.dart';
+import '../../features/money/presentation/widgets/bank_statements_sheet.dart';
 import '../../features/money/presentation/widgets/purchases_sheet.dart';
 import '../../features/money/providers/purchase_approval_provider.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
@@ -94,6 +96,36 @@ void _openToPay(
   ));
 }
 
+/// #3926 — who may read the bank statements: the owner, or a reader.
+bool _readsBank(WidgetRef ref, Set<WorkspacePermission> permissions) =>
+    (ref.watch(myMemberProvider).value?.isOwner ?? false) ||
+    permissions.any((p) => bankStatementReaders.contains(p.wireName));
+
+/// #3926 — the bank statements, from the desk's Cash group, on the router's
+/// navigator over the page (as [_openToPay]).
+void _openBankStatements(
+  BuildContext context,
+  WidgetRef ref,
+  String workspaceId,
+  String currency,
+  Set<WorkspacePermission> permissions, {
+  required bool permanent,
+}) {
+  final navigator = permanent
+      ? GoRouter.of(context).routerDelegate.navigatorKey.currentState!
+      : Navigator.of(context);
+  if (!permanent) navigator.pop();
+  final owner = ref.read(myMemberProvider).value?.isOwner ?? false;
+  bool holds(String wire) => permissions.any((p) => p.wireName == wire);
+  unawaited(showBankStatementsSheet(
+    navigator.context,
+    workspaceId: workspaceId,
+    currency: currency,
+    canMatch: owner || holds(bankMatchPermission),
+    canReconcile: owner || holds(bankReconcilePermission),
+  ));
+}
+
 /// Whether the shell navigates through the drawer — the web build
 /// always, native per the user's choice (#969) or the device's default
 /// (#2414), and tests that ask for it.
@@ -155,6 +187,12 @@ class ShellDrawer extends ConsumerWidget {
       openToPay: workspace == null
           ? null
           : () => _openToPay(context, workspace.id, perms, permanent: permanent),
+      openBankStatements: workspace == null ||
+              !features.contains(WorkspaceFeature.bankImport) ||
+              !_readsBank(ref, perms)
+          ? null
+          : () => _openBankStatements(context, ref, workspace.id,
+              workspace.currencyCode, perms, permanent: permanent),
     );
     final navigation = menu.navigation;
     final administration = menu.administration;
