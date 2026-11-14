@@ -12617,16 +12617,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get guestPassEdit => 'Pass bearbeiten';
 
   @override
+  String get guestPassFilterUncorrected =>
+      'Widerrufen, Rechnung nicht korrigiert';
+
+  @override
   String get guestPassFrom => 'Von';
 
   @override
   String get guestPassHolder => 'Gast';
 
   @override
+  String guestPassInvoiceCorrected(String number) {
+    return 'Rechnung $number korrigiert';
+  }
+
+  @override
+  String guestPassInvoiceNotCorrected(String number) {
+    return 'Rechnung $number noch nicht korrigiert';
+  }
+
+  @override
   String get guestPassName => 'Name';
 
   @override
   String get guestPassNameRequired => 'Geben Sie einen Namen ein.';
+
+  @override
+  String get guestPassOpenInvoice => 'Rechnung öffnen';
 
   @override
   String get guestPassPaid => 'Am Empfang bezahlt';

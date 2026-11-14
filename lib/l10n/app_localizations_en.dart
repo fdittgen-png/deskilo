@@ -12507,16 +12507,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get guestPassEdit => 'Edit the pass';
 
   @override
+  String get guestPassFilterUncorrected => 'Revoked, invoice not corrected';
+
+  @override
   String get guestPassFrom => 'From';
 
   @override
   String get guestPassHolder => 'Guest';
 
   @override
+  String guestPassInvoiceCorrected(String number) {
+    return 'Invoice $number corrected';
+  }
+
+  @override
+  String guestPassInvoiceNotCorrected(String number) {
+    return 'Invoice $number not corrected yet';
+  }
+
+  @override
   String get guestPassName => 'Name';
 
   @override
   String get guestPassNameRequired => 'Enter a name.';
+
+  @override
+  String get guestPassOpenInvoice => 'Open the invoice';
 
   @override
   String get guestPassPaid => 'Paid at the desk';
