@@ -28,8 +28,9 @@ class SupabaseBookProfileRepository implements BookProfileRepository {
       if (profile != null) {
         kept.add(profile);
       } else {
-        left['${json['id']}'] =
-            'book profile ${json['authority_mode']}/${json['accounting_basis']}';
+        final r = JsonReader(json, context: 'book_profiles');
+        left[r.stringOr('id')] = 'book profile '
+            '${r.stringOr('authority_mode')}/${r.stringOr('accounting_basis')}';
       }
     }
     UnreadableRows.instance.record(

@@ -124,7 +124,7 @@ void main() {
       120,
       scrollable: find.byType(Scrollable).first,
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
     expect(
       find.descendant(
         of: find.byType(UnreadableRowsNotice),

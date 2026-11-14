@@ -77,6 +77,20 @@ const AccountingSourceRevisions _demoAccountingSourceRevisions = (
   calendar: 'in-memory',
 );
 
+/// One book profile of the answer. #3913 — a profile this build cannot read
+/// decides the books: the export stops rather than guess its authority or
+/// basis; a profile of another workspace stops it too.
+BookProfile _profileOf(
+  JsonReader p,
+  String workspaceId,
+  Never Function(String why) bad,
+) {
+  final profile =
+      BookProfile.fromJson(p.json) ?? bad('a book profile this version cannot read');
+  if (profile.workspaceId != workspaceId) bad('a profile of another workspace');
+  return profile;
+}
+
 /// The books of one workspace and period as ONE server response under ONE
 /// statement snapshot (`accounting_source_snapshot_v1`, #2365): the ledger
 /// and repartitions an export is built from, the invoice headers they sit
@@ -194,14 +208,10 @@ class AccountingSourceSnapshot {
     // An answer without the profiles is an older producer: the export
     // stops, it does not assume "no profile".
     if (r.raw('book_profiles') is! List) bad('no book profiles in the answer');
-    final profiles = r.objects('book_profiles', (p) {
-      // #3913 — a profile this build cannot read decides the books: the
-      // export stops rather than guess its authority or basis.
-      final profile = BookProfile.fromJson(p.json) ??
-          bad('a book profile this version cannot read');
-      if (profile.workspaceId != workspaceId) bad('a profile of another workspace');
-      return profile;
-    });
+    final profiles = r.objects(
+      'book_profiles',
+      (p) => _profileOf(p, workspaceId, bad),
+    );
 
     // An answer without the purchases is an older producer: stop, never
     // read it as "nothing was bought".

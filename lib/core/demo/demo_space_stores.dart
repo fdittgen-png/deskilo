@@ -33,6 +33,7 @@ import 'demo_analysis_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
 import 'demo_purchase_order_overrides.dart';
+import 'demo_space_ids.dart';
 import 'demo_spaces.dart';
 import 'demo_trade_city_commerce.dart';
 import 'demo_trade_city_space.dart';
@@ -44,10 +45,9 @@ import 'seed/demo_city_purchase_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_main_books_seed.dart';
-import 'seed/demo_new_york_seed.dart';
+import 'seed/demo_practice_seed.dart' show demoPracticeCountry;
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
-import 'seed/demo_second_space_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
 import 'seed/demo_valuation_seed.dart';
 
@@ -102,6 +102,7 @@ DemoSpaceStores buildDemoSpaceStores(DemoFixture fixture, DemoSpaceKey key) =>
       DemoSpaceKey.newYork => _newYork(fixture, _orders(fixture)),
       DemoSpaceKey.zurich => _trade(fixture, DemoSpaceKey.zurich, demoZurich, fixture.zurich),
       DemoSpaceKey.milan => _trade(fixture, DemoSpaceKey.milan, demoMilan, fixture.milan),
+      DemoSpaceKey.practice => _practice(fixture),
       DemoSpaceKey.twin => _twin(fixture),
     };
 
@@ -136,6 +137,33 @@ DemoSpaceStores _leipzig(DemoFixture fixture) {
     buying,
     _leipzigStores(fixture, buying),
     fixture.secondSpace.money,
+  );
+}
+
+/// #3863 — the practice's own purchases and books, empty: it buys nothing
+/// in the Demo yet.
+DemoSpaceStores _practice(DemoFixture fixture) {
+  final buying = DemoPurchasing(
+    suppliers: FakeSupplierRepository(),
+    inbox: FakeEInvoiceInboxRepository(),
+    purchases: FakePurchaseRepository(
+      actor: () => fixture.activeMemberId,
+      workspaceId: demoPracticeSpaceId,
+    ),
+  );
+  return _empty(
+    fixture,
+    DemoSpaceKey.practice,
+    buying,
+    _emptyBooks(
+      fixture,
+      FakeBookProfileRepository(
+        money: fixture.practice.money,
+        purchases: buying.purchases,
+        country: demoPracticeCountry,
+      ),
+    ),
+    fixture.practice.money,
   );
 }
 
