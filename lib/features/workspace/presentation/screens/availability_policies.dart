@@ -7,6 +7,7 @@ import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/radio_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/booking_policies.dart';
 import '../widgets/availability_tiles.dart';
@@ -97,25 +98,25 @@ class AvailabilityPolicies extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          RadioListTile<OutsideHoursMode>(
+          RadioRow<OutsideHoursMode>(
             key: const Key('policy-outside-hours-off'),
             value: OutsideHoursMode.off,
             title: Text(l10n.policyOutsideHoursOff),
             subtitle: Text(l10n.policyOutsideHoursOffDesc),
           ),
-          RadioListTile<OutsideHoursMode>(
+          RadioRow<OutsideHoursMode>(
             key: const Key('policy-outside-hours-walkup'),
             value: OutsideHoursMode.walkupOnly,
             title: Text(l10n.policyOutsideHoursWalkUp),
             subtitle: Text(l10n.policyOutsideHoursWalkUpDesc),
           ),
-          RadioListTile<OutsideHoursMode>(
+          RadioRow<OutsideHoursMode>(
             key: const Key('policy-outside-hours-free'),
             value: OutsideHoursMode.free,
             title: Text(l10n.policyOutsideHoursFree),
             subtitle: Text(l10n.policyOutsideHoursFreeDesc),
           ),
-          RadioListTile<OutsideHoursMode>(
+          RadioRow<OutsideHoursMode>(
             key: const Key('policy-outside-hours-charged'),
             value: OutsideHoursMode.charged,
             title: Text(l10n.policyOutsideHoursCharged),
