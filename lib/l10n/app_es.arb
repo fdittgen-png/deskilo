@@ -4259,6 +4259,7 @@
   "createHostRevoked": "Su hogar personal ya no lo ofrece",
   "createHostTitle": "¿Dónde debe estar el negocio?",
   "createHostUnavailable": "No se han podido leer los servidores que ofrece su hogar personal.",
+  "createHostUnreadable": "Esta versión no puede leer el estado de este alojamiento. Actualice la aplicación y vuelva a elegirlo.",
   "createHostUnverified": "Su identidad no se puede verificar allí",
   "createOnHostBanner": "Este espacio se creará en {host}.",
   "creditMoveAction": "Mover a otro miembro",

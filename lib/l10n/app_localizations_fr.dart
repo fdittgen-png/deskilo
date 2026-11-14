@@ -7050,6 +7050,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Les serveurs proposés par votre domicile personnel n\'ont pas pu être lus.';
 
   @override
+  String get createHostUnreadable =>
+      'Cette version ne sait pas lire l\'état de cet hébergeur. Mettez l\'application à jour, puis choisissez-le à nouveau.';
+
+  @override
   String get createHostUnverified =>
       'Votre identité ne peut pas y être vérifiée';
 

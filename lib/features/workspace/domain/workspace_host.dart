@@ -14,6 +14,8 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/data/unreadable_rows.dart';
+
 /// What the personal home says about one enrolled host.
 enum WorkspaceHostState {
   /// It accepts new workspaces and the person can be verified there.
@@ -49,8 +51,15 @@ class WorkspaceHost {
 }
 
 /// The hosts a person may create a workspace on.
+/// #3913 — the hosts a read left out (a state this build does not know).
+const workspaceHostsArea = 'workspace_hosts';
+
 class WorkspaceHosts {
-  const WorkspaceHosts({required this.hereHosts, required this.hosts});
+  const WorkspaceHosts({
+    required this.hereHosts,
+    required this.hosts,
+    this.unreadable = const {},
+  });
 
   /// No enrolled host; this server hosts workspaces itself.
   static const localOnly = WorkspaceHosts(hereHosts: true, hosts: []);
@@ -59,6 +68,10 @@ class WorkspaceHosts {
   final bool hereHosts;
   final List<WorkspaceHost> hosts;
 
+  /// #3913 — the installations listed in a state this build does not know:
+  /// left out of [hosts], never read as another state.
+  final Set<String> unreadable;
+
   /// The home's answer; a malformed one is refused (a [JsonShapeException]
   /// or a [FormatException]), never a shorter list.
   static WorkspaceHosts parse(Object? json) {
@@ -66,15 +79,28 @@ class WorkspaceHosts {
     if (r.raw('here_hosts') is! bool || r.raw('hosts') is! List) {
       throw const FormatException('$_rpc: not a host list');
     }
+    final kept = <WorkspaceHost>[];
+    final left = <String, String>{};
+    for (final h in r.objects('hosts', (h) => h)) {
+      final host = _host(h);
+      if (host != null) {
+        kept.add(host);
+      } else {
+        left[h.string('installation_id')] = 'host state ${h.string('state')}';
+      }
+    }
+    UnreadableRows.instance.record(workspaceHostsArea, _rpc, left);
     return WorkspaceHosts(
       hereHosts: r.isTrue('here_hosts'),
-      hosts: r.objects('hosts', _host),
+      hosts: kept,
+      unreadable: left.keys.toSet(),
     );
   }
 
   static const _rpc = 'my_workspace_hosts_v1';
 
-  static WorkspaceHost _host(JsonReader h) {
+  /// A host of the answer; null for a state this build does not know.
+  static WorkspaceHost? _host(JsonReader h) {
     final origin = h.string('origin');
     final key = h.string('publishable_key');
     final id = h.string('installation_id');
@@ -82,8 +108,9 @@ class WorkspaceHosts {
       'available' => WorkspaceHostState.available,
       'not_accepting' => WorkspaceHostState.notAccepting,
       'unverified' => WorkspaceHostState.unverified,
-      _ => throw const FormatException('$_rpc: unknown host state'),
+      _ => null,
     };
+    if (state == null) return null;
     final uri = Uri.tryParse(origin);
     if (id.isEmpty || key.isEmpty || uri == null || uri.scheme != 'https' ||
         uri.host.isEmpty || uri.origin != origin) {
@@ -112,6 +139,10 @@ enum HostRefusal {
   /// The person cannot be verified there, or the connection this device
   /// holds for its address is another installation.
   unverified,
+
+  /// #3913 — the home lists it in a state this version cannot read: it is
+  /// not guessed.
+  unreadable,
 }
 
 /// Whether a chosen host may be used now.
@@ -151,6 +182,9 @@ HostReadiness decideHost(
   String installationId,
   List<HostConnection> connections,
 ) {
+  if (fresh.unreadable.contains(installationId)) {
+    return const HostRefused(HostRefusal.unreadable);
+  }
   final host = fresh.byId(installationId);
   if (host == null) return const HostRefused(HostRefusal.revoked);
   switch (host.state) {

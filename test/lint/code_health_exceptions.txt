@@ -8,5 +8,6 @@
 #
 # The id is exactly what the failing test prints: file#Type.name(signature).
 # An entry for a function that is under the limits, that the baseline already
-# holds, or that no longer exists is itself a failure. Nothing is listed
-# today; adding a line is a reviewed decision, like raising a file budget.
+# holds, or that no longer exists is itself a failure. Adding a line is a
+# reviewed decision, like raising a file budget.
+lib/features/money/presentation/letter_doc_pdf.dart#letterDocPdf(BuildContext context,WidgetRef ref,{required InvoiceReport report,required String title,required String kind,String? layoutXml,Map<String, Object?> data}) | #3852 | a thin wrapper that hands each argument to letterPdfOf; the kind decides the paper both engines print on

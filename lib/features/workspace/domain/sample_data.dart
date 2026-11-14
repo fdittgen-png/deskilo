@@ -57,21 +57,3 @@ abstract class SampleDataRepository {
   /// Clears [batchId]; the answer is the batch as the server left it.
   Future<SampleDataBatch> clear(String workspaceId, String batchId);
 }
-
-/// Where no server answers (the demonstration): nothing to show, and no
-/// sample data to make.
-class UnavailableSampleDataRepository implements SampleDataRepository {
-  const UnavailableSampleDataRepository();
-
-  @override
-  Future<SampleDataBatch?> status(String workspaceId) async =>
-      throw UnsupportedError('no server in this mode');
-
-  @override
-  Future<SampleDataBatch> fill(String workspaceId, String requestId) async =>
-      throw UnsupportedError('no server in this mode');
-
-  @override
-  Future<SampleDataBatch> clear(String workspaceId, String batchId) async =>
-      throw UnsupportedError('no server in this mode');
-}

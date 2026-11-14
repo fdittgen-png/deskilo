@@ -76,6 +76,7 @@ class _CreateHostSheetState extends ConsumerState<CreateHostSheet> {
         HostRefusal.revoked => l10n.createHostRevoked,
         HostRefusal.notAccepting => l10n.createHostNotAccepting,
         HostRefusal.unverified => l10n.createHostUnverified,
+        HostRefusal.unreadable => l10n.createHostUnreadable,
       };
 
   Future<void> _choose(WorkspaceHost host) async {
@@ -154,6 +155,8 @@ class _CreateHostSheetState extends ConsumerState<CreateHostSheet> {
             Text(l10n.createHostTitle,
                 style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: AppSpacing.md),
+            // #3913 — the hosts this version could not read, counted.
+            UnreadableRowsNotice.area(workspaceHostsArea),
             if (_message case final message?)
               Semantics(
                 liveRegion: true,
