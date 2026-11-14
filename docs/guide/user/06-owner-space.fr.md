@@ -590,6 +590,7 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 - En Suisse, seul l'A4 est proposé : une facture se termine par une section paiement imprimée sur A4.
 - Sur Lettre US, l'adresse s'imprime là où la mise en page la place ; aucune enveloppe à fenêtre n'est garantie pour la Lettre US.
 - Une facture garde le papier de son émission. Changer de papier change les factures émises ensuite.
+- Une lettre, une relance, un relevé ou un rapport s'imprime sur le papier choisi au moment où vous l'imprimez.
 - Si l'espace passe dans un pays qui n'utilise pas le papier choisi, il suit le papier usuel de ce pays.
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)

@@ -141,6 +141,7 @@ Future<void> sendMemberAgreement(
       final pdf = await letterDocPdf(context, ref,
           report: report,
           title: '${docL10n.reportDocAgreement} $name',
+          kind: 'agreement',
           layoutXml: letterLayoutXml(ref,
               docId: 'agreement', language: language),
           data: data);

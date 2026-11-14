@@ -118,6 +118,7 @@ class MoneyMemberDocuments {
         final pdf = await letterDocPdf(_context, _ref,
             report: report,
             title: title,
+            kind: docId,
             layoutXml:
                 letterLayoutXml(_ref, docId: docId, language: language),
             data: data);

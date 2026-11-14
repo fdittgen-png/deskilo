@@ -86,6 +86,7 @@ class _State extends ConsumerState<WorkspaceStatusScreen> {
           ref,
           report: report,
           title: title,
+          kind: 'status',
           layoutXml: letterLayoutXml(ref, docId: 'status'),
           data: data,
         );

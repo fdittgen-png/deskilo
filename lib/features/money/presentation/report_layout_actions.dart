@@ -16,6 +16,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../../core/country/country_catalog.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/workspace_feature.dart';
@@ -114,6 +115,14 @@ Future<Uint8List?> tryLayoutPdf({
     );
     return null;
   }
+}
+
+/// #3852 — the paper the business's letters and reports made now are
+/// printed on: its own choice, else its country's usual paper.
+Paper businessPaperOf(WidgetRef ref) {
+  final workspace = ref.read(currentWorkspaceProvider).value;
+  return Paper.fromWire(workspace?.paper) ??
+      CountryCatalog.byCode(workspace?.countryCode ?? '').paper;
 }
 
 /// The positioned layout for letter [docId] in [language], or null when

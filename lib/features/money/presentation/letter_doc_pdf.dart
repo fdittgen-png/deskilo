@@ -18,6 +18,7 @@ import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_report.dart';
+import '../domain/report_kind.dart';
 import 'invoice_documents.dart' show developmentMark;
 import 'report_image_resolve.dart';
 import 'report_layout_actions.dart';
@@ -31,6 +32,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   WidgetRef ref, {
   required InvoiceReport report,
   required String title,
+  required String kind,
   String? layoutXml,
   Map<String, Object?> data = const {},
 }) => letterPdfOf(
@@ -44,6 +46,7 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   ),
   // #917 — read before the first await: the context must not be used
   // across an async gap, and the answer cannot change mid-render.
+  kind: kind,
   pageLabel: context.l10n.invoicePdfPage,
   watermark: developmentMark(context, ref),
 );
@@ -52,6 +55,8 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
 /// [watermark] a development workspace prints (#917). #2898 — the
 /// source's `images` are the document's own pictures, by the name its
 /// markup gives them, in the positioned layout and the bands alike.
+/// #3852 — both engines print it on the business's paper when its [kind]
+/// declares that paper, else on its design's own.
 Future<({Uint8List bytes, String fileName})> letterPdfOf(
   WidgetRef ref,
   ({
@@ -62,11 +67,13 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
     Map<String, Uint8List> images,
   })
   source, {
+  required String kind,
   required String pageLabel,
   List<String> mandatoryNotices = const [],
   String watermark = '',
 }) async {
   final (:report, :title, :layoutXml, :data, :images) = source;
+  final paper = reportKindById(kind)?.printedOn(businessPaperOf(ref));
   Future<pw.Font> font(String asset) async =>
       pw.Font.ttf(await rootBundle.load(asset));
   if (layoutXml != null) {
@@ -80,6 +87,7 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
         // #917 — a report from a rehearsal space says so, like its
         // invoices do.
         watermark: watermark,
+        paper: paper,
         additionalBody: [
           for (final notice in mandatoryNotices)
             pw.Padding(
@@ -105,6 +113,7 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
       footer: report.footer,
       continuation: report.continuation,
       numberFirstPage: report.numberFirstPage,
+      paper: paper ?? report.paper,
     ),
     reportImages: await resolveReportImages(
       ref,

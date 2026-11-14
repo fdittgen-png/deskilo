@@ -149,6 +149,7 @@ class CustomerStatementPeriodPrint {
           ref,
           report: rendered,
           title: title,
+          kind: 'customer_statement_period',
           layoutXml: letterLayoutXml(ref, docId: 'customer_statement_period'),
           data: data,
         );

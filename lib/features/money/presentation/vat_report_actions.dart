@@ -207,6 +207,7 @@ Future<void> showVatReport(
         final pdf = await letterDocPdf(context, ref,
             report: rendered,
             title: title,
+            kind: 'vat',
             layoutXml: letterLayoutXml(ref, docId: 'vat'),
             data: data);
         return (bytes: pdf.bytes, fileName: '${_stem(report)}.pdf');

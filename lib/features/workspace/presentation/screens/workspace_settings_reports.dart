@@ -107,6 +107,7 @@ class WorkspaceSettingsReports {
         final pdf = await letterDocPdf(context, ref,
             report: report,
             title: docL10n.reportDocWorkspace,
+            kind: 'workspace',
             layoutXml: letterLayoutXml(ref,
                 docId: 'workspace', language: language),
             data: data);
@@ -215,6 +216,7 @@ class WorkspaceSettingsReports {
           final pdf = await letterPdfOf(ref, (report: report,
               title: strings.title, data: data, images: configPlanImages(printed.pngs),
               layoutXml: letterLayoutXml(ref, docId: 'workspace_configuration', l10n: l10n)),
+              kind: 'workspace_configuration',
               pageLabel: l10n.invoicePdfPage, watermark: developmentMark(context, ref));
           if (!context.mounted) return;
           final path = await ref.read(fileSaverProvider)(

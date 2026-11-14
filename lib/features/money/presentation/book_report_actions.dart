@@ -104,6 +104,7 @@ class BookReportPrint {
           ref,
           report: rendered,
           title: title,
+          kind: kindId,
           layoutXml: letterLayoutXml(ref, docId: kindId),
           data: full,
         );

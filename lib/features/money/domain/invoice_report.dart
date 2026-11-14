@@ -172,9 +172,16 @@ class InvoiceReport {
     final numbered = reportKindById(kindId)?.numbersFirstPage ?? false;
     return numbered == numberFirstPage
         ? this
-        : InvoiceReport(header: header, body: body, footer: footer,
-            continuation: continuation, numberFirstPage: numbered);
+        : _with(numberFirstPage: numbered, paper: paper);
   }
+
+  /// #3852 — this report printed on [on]; null keeps its own paper.
+  InvoiceReport onPaper(Paper? on) =>
+      on == null || on == paper ? this : _with(numberFirstPage: numberFirstPage, paper: on);
+
+  InvoiceReport _with({required bool numberFirstPage, required Paper paper}) =>
+      InvoiceReport(header: header, body: body, footer: footer, continuation: continuation,
+          numberFirstPage: numberFirstPage, paper: paper);
 }
 
 /// Renders ONE band set (#472: the invoice's own, or a reminder
