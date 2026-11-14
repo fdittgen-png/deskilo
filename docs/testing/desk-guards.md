@@ -30,7 +30,7 @@ The page kinds (`PageKind.records`, `task`, `dashboard`, `document`, `recordBesi
 `PageKind.recordBesideTable` (#3860) is a record open in the pane beside its records table (`ListDetailScaffold`). The 60 % rule does not hold it (the table cannot and should not take it); its own measures do: the table keeps at least `besideTableMinWidth` (400), the pane is at most `besidePaneMaxWidth` (640), table, grip and pane fill the work area without a gap, no word of a table row is cut, and rows keep their height. Below a large window the record is a page of its own: guard it as `document`. The table gets there by priority: a `RecordColumn` declares `staysBeside`; with the pane open the table shows its staying columns (and the ones that may not be hidden), closing the pane brings the rest back, and the person's hidden columns hold. Each rule has a self-test that fails a planted page (`test/ux/desk_guards_test.dart`).
 
 ## Where they run
-`test/ux/desk_guard_pages_test.dart`: `/invoices` (records) and the Me overview, and the records pages with a record open beside them (`/money/suppliers/<id>`, `/money/purchases/doc/<id>`), at the three desk sizes. A page joins by adding its line to `_pages`.
+`test/ux/desk_guard_pages_test.dart`: `/invoices` (records) and the Me overview, and the records pages with a record open beside them (`/money/suppliers/<id>`, `/money/purchases/doc/<id>`), at the three desk sizes. A page joins by adding its line to `_pages`. A route given a desk measure (any but `framed`) must be opened by a desk guard or named, with the issue that will guard it, in `test/lint/desk_measure_guarded_test.dart` (#3874); that list only shrinks.
 
 ## Sheets
 ```
