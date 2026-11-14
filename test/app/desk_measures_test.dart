@@ -87,7 +87,7 @@ const _measured = <(String, PageMeasure, String)>[
   ('/workspace-settings', _work, '/workspace-settings'),
   ('/reports', _work, '/reports'),
   ('/validation', _work, '/validation'),
-  ('/availability', _work, '/availability'),
+  ('/availability', _form, '/availability'),
   ('/bi/report/:id', _work, ''),
   ('/members', _work, '/members'),
   ('/editor', _work, '/editor'),

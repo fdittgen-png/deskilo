@@ -59,6 +59,7 @@ Future<FakeWorkspaceRepository> _open(
   String path = '/members',
   List<MemberTermChange> terms = const [],
   List<Reservation> bookings = const [],
+  Size size = const Size(1440, 900),
 }) async {
   final space = _space(owner: owner)
     ..memberTermChanges.addAll(terms)
@@ -67,7 +68,7 @@ Future<FakeWorkspaceRepository> _open(
   await pumpRoute(
     tester,
     path,
-    size: const Size(1440, 900),
+    size: size,
     overrides: [
       ...standardTestOverrides(
         workspace: space,
@@ -320,8 +321,13 @@ void main() {
       expect(said('refused'), contains('Refused: the member is not active'));
     });
 
-    testWidgets('the table names the next change', (tester) async {
-      await _open(tester, owner: true, terms: terms);
+    testWidgets('a wide table names the next change', (tester) async {
+      await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        size: const Size(2000, 900),
+      );
       // The share is written the locale's way (its percent sign and space).
       expect(
         find.byWidgetPredicate(
@@ -332,6 +338,18 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+
+    testWidgets('a narrow table gives the next change up first, and keeps '
+        'the amounts whole', (tester) async {
+      await _open(
+        tester,
+        owner: true,
+        terms: terms,
+        size: const Size(1024, 900),
+      );
+      expect(find.text('NEXT CHANGE'), findsNothing);
+      expect(find.text('PLAN FEE'), findsOneWidget);
     });
   });
 

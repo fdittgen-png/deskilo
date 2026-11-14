@@ -18,6 +18,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/list_detail_route.dart';
 import '../../core/storage/pane_width_store.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/adaptive/window_class.dart';
 import '../../core/ui/inline_banner.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
 import '../../core/ui/kit/records_table.dart';
@@ -361,9 +362,12 @@ class _MembersView {
       sortKey: (m) => m.status.index,
       cell: (_, m) => Text(memberStatusLabel(_l, m.status)),
     ),
+    // #3858 — the lowest priority: drawn only where a desktop table has the
+    // room, and never beside an open member.
     RecordColumn(
       id: 'next',
       staysBeside: false,
+      shownFrom: WindowClass.large,
       label: _l.membersColNextChange,
       flex: 2,
       cell: (_, m) => Text(switch (nextTermEntry(m.id, terms)) {
