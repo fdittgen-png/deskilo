@@ -7,6 +7,7 @@
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';
+import '../domain/member_term_change.dart';
 import '../domain/membership_repository.dart';
 import '../domain/new_member_defaults.dart';
 import '../domain/overage_policy.dart';
@@ -209,6 +210,36 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .eq('workspace_id', workspaceId)
         .order('joined_at', ascending: true);
     return rows.map(memberFromRow).toList();
+  }
+
+  @override
+  Future<List<MemberTermChange>> fetchMemberTermChanges(
+    String workspaceId,
+  ) async {
+    final rows = await client
+        .from('member_term_changes')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('due_on', ascending: true)
+        .order('seq', ascending: true);
+    return rows.map(MemberTermChange.fromRow).toList();
+  }
+
+  @override
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
+    String workspaceId,
+  ) async {
+    final rows = await client
+        .from('member_period_terms')
+        .select('member_id, period, invoices!inner(voided_at)')
+        .eq('workspace_id', workspaceId)
+        .isFilter('invoices.voided_at', null);
+    final months = <String, Set<DateTime>>{};
+    for (final row in rows) {
+      final period = DateTime.parse('${row['period'] as String}-01');
+      (months[row['member_id'] as String] ??= {}).add(period);
+    }
+    return months;
   }
 
   @override

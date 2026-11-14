@@ -205,6 +205,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           builder: (context, box) {
             final shown = _c.shown;
             final selected = _c.selected;
+            final room = WindowClass.ofWidth(box.maxWidth);
             widget.onShown?.call([for (final r in shown) widget.keyOf(r)]);
             return Column(
               children: [
@@ -217,13 +218,12 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                     onClear: _c.clear,
                   ),
                 Expanded(
-                  child:
-                      WindowClass.ofWidth(box.maxWidth) == WindowClass.compact
+                  child: room == WindowClass.compact
                       ? _cards(shown)
-                      : _table(context, shown),
+                      : _table(context, shown, room),
                 ),
                 const Divider(height: 1),
-                _footer(shown),
+                _footer(shown, room),
               ],
             );
           },
@@ -319,12 +319,14 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     );
   }
 
-  Widget _table(BuildContext context, List<T> shown) {
-    // #3860 — a record open beside the table: its staying columns.
+  Widget _table(BuildContext context, List<T> shown, WindowClass room) {
+    // #3860 — a record open beside the table: its staying columns; #3858 —
+    // the columns the table has room for.
     final columns = columnsShown(
       widget.columns,
       _c.hidden,
       beside: ListDetailOpen.of(context),
+      room: room,
     );
     final selected = _c.selected;
     final selectedShown = shown
@@ -455,7 +457,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     },
   );
 
-  Widget _footer(List<T> shown) {
+  Widget _footer(List<T> shown, WindowClass room) {
     final of = widget.columns
         .where((c) => c.id == widget.amountColumn)
         .firstOrNull;
@@ -465,6 +467,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           widget.columns,
           _c.hidden,
           beside: ListDetailOpen.of(context),
+          room: room,
         ).contains(of);
     final amountOf = totalHidden ? null : widget.amountOf;
     final selected = _c.selected;

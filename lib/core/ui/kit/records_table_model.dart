@@ -11,6 +11,8 @@
 // add is loaded; it is per currency and never one sum across currencies.
 import 'package:flutter/widgets.dart';
 
+import '../adaptive/window_class.dart';
+
 /// One column of a records table.
 @immutable
 class RecordColumn<T> {
@@ -23,6 +25,7 @@ class RecordColumn<T> {
     this.sortKey,
     this.hideable = true,
     this.staysBeside = true,
+    this.shownFrom = WindowClass.compact,
   });
 
   /// Stable, for the column choice kept on the device.
@@ -45,19 +48,29 @@ class RecordColumn<T> {
   /// one that names the row and the one a person scans for stay; the rest
   /// come back when the pane closes. A column that may not be hidden stays.
   final bool staysBeside;
+
+  /// #3858 — the narrowest table it is drawn in, by the table's own width:
+  /// a column of the lowest priority gives way first, and never squeezes
+  /// the others (an amount is never cut). A column that may not be hidden
+  /// is always drawn.
+  final WindowClass shownFrom;
 }
 
-/// The columns drawn: those the person has not hidden, and while a record
-/// is open [beside] the table only those that stay. A table where none
-/// would stay keeps all of what the person left, never an empty table.
+/// The columns drawn: those the person has not hidden and the table has
+/// [room] for, and while a record is open [beside] the table only those
+/// that stay. A table where none would stay keeps all of what the person
+/// left, never an empty table.
 List<RecordColumn<T>> columnsShown<T>(
   List<RecordColumn<T>> columns,
   Set<String> hidden, {
   required bool beside,
+  WindowClass room = WindowClass.extraLarge,
 }) {
   final chosen = [
     for (final c in columns)
-      if (!c.hideable || !hidden.contains(c.id)) c,
+      if (!c.hideable ||
+          (!hidden.contains(c.id) && room.index >= c.shownFrom.index))
+        c,
   ];
   if (!beside) return chosen;
   final staying = [
