@@ -229,6 +229,7 @@ const Set<String> uiKeys = {
   'availability-policy-max-duration-title',
   'availability-policy-min-duration-title',
   'availability-public-holidays',
+  'availability-read-failure-slot',
   'availability-save',
   'availability-simultaneous-tile',
   'availability-tiles-hour-option',

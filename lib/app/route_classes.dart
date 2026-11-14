@@ -253,7 +253,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/roles', RouteClass.workspace, place: 'drawer-roles', measure: PageMeasure.work),
   RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),
+  RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form), // #3948: a settings form
   RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
   RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
   RouteRule('/money/purchases/doc/:id', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
@@ -300,7 +300,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work),
   RouteRule('/vat-declarations/:id', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
-  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat', measure: PageMeasure.work),
+  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat', measure: PageMeasure.form), // #3948: a settings form
   RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories', measure: PageMeasure.work),
   RouteRule('/features', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),

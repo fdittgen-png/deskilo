@@ -10,6 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../application/workspace_symbol.dart';
 import '../../domain/workspace_branding.dart';
 import '../../providers/workspace_providers.dart';
@@ -142,9 +143,10 @@ class _SymbolEditorState extends ConsumerState<SymbolEditor> {
                   key: ValueKey('symbol-colour-$hex'),
                   customBorder: const CircleBorder(),
                   onTap: () => setState(() => _colour = hex),
+                  // #3947 — a target of the kit's minimum size.
                   child: Container(
-                    width: 40,
-                    height: 40,
+                    width: KitMetrics.minTarget,
+                    height: KitMetrics.minTarget,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Color(parseHexColor(hex)!),

@@ -66,7 +66,10 @@ void main() {
       300,
       scrollable: find.byType(Scrollable).first,
     );
-    expect(find.textContaining('2026-0001'), findsNWidgets(2));
+    final credit = tester.widget<Text>(
+      find.byKey(const ValueKey('number-sequence-preview-credit_note')),
+    );
+    expect(credit.data, contains('2026-0001'));
   });
 
   testWidgets('typing reformats the preview live; save goes through the '

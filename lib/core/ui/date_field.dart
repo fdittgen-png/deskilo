@@ -243,8 +243,11 @@ class _AppDateFieldState extends State<AppDateField> {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Tab moves from field to field; the calendar is for the
-              // pointer, a keyboard types the date.
-              ExcludeFocusTraversal(
+              // pointer, a keyboard types the date or opens the calendar
+              // with Alt+Down (above). The button is no stop of the
+              // keyboard at all: a control Tab skips but the arrows can
+              // still reach is a second place the keyboard can land.
+              ExcludeFocus(
                 child: IconButton(
                   key: key is ValueKey<String>
                       ? ValueKey('${key.value}-pick')
