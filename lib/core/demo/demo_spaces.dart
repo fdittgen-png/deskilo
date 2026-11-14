@@ -124,3 +124,12 @@ extension DemoFixtureSpaces on DemoFixture {
   DemoSpaces<RightsCheckedReservationRepository> get spaceReservations =>
       DemoSpaces((key) => space(key).reservations);
 }
+
+/// #3863 — whether the space [workspaces] looks at books places: a business
+/// without them (the practice) has no seat, and is whole so.
+bool demoHasPlaces(FakeWorkspaceRepository workspaces) =>
+    workspaces.workspaces
+        .where((w) => w.id == workspaces.myMember.workspaceId)
+        .firstOrNull
+        ?.featureFlags['placeBooking'] !=
+    false;

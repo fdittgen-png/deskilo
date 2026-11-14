@@ -135,9 +135,15 @@ void main() {
     final router = ProviderScope.containerOf(
       tester.element(find.byType(DeskiloApp)),
     ).read(routerProvider);
+    // Fixed frames: a page that keeps a progress spinner never settles.
+    Future<void> settle() async {
+      await tester.pump();
+      await tester.pump(const Duration(seconds: 1));
+    }
+
     Future<void> visit(String path) async {
       router.go(path);
-      await tester.pumpAndSettle();
+      await settle();
       expect(_placeWordsShown(tester), isEmpty, reason: path);
     }
 
@@ -151,7 +157,7 @@ void main() {
     await tester.tap(
       find.descendant(of: sales, matching: find.text(title)).first,
     );
-    await tester.pumpAndSettle();
+    await settle();
     expect(find.byKey(const ValueKey('drawer-guest-passes')), findsNothing);
     await visit('/billing');
     expect(find.byType(CarnetsEditor, skipOffstage: false), findsNothing);

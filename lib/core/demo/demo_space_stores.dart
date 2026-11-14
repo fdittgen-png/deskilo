@@ -45,6 +45,7 @@ import 'seed/demo_city_purchase_seed.dart';
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_main_books_seed.dart';
+import 'seed/demo_practice_seed.dart' show demoPracticeCountry;
 import 'seed/demo_purchase_seed.dart';
 import 'seed/demo_room_seed.dart';
 import 'seed/demo_trade_city_seed.dart';
@@ -159,7 +160,7 @@ DemoSpaceStores _practice(DemoFixture fixture) {
       FakeBookProfileRepository(
         money: fixture.practice.money,
         purchases: buying.purchases,
-        country: 'DE',
+        country: demoPracticeCountry,
       ),
     ),
     fixture.practice.money,

@@ -31,6 +31,7 @@ import 'data/reservation_repository.dart';
 import 'data/workspace_repository.dart';
 import 'demo_clock.dart';
 import 'demo_invoice_names.dart';
+import 'demo_spaces.dart' show demoHasPlaces;
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_rights_seed.dart';
@@ -493,14 +494,7 @@ List<String> validateDemoFixture({
       problems.add('invoice ${invoice.number}: nothing to pay');
     }
   }
-  // #3863 — a business without places (the practice) has no seat to book.
-  final row = workspaces.workspaces
-      .where((w) => w.id == workspaces.myMember.workspaceId)
-      .firstOrNull;
-  final places = row?.featureFlags['placeBooking'] != false;
-  if (places && plan.seats.isEmpty) {
-    problems.add('the plan has no seat to book');
-  }
+  if (plan.seats.isEmpty && demoHasPlaces(workspaces)) problems.add('the plan has no seat to book');
   if (memberIds.length < 2) problems.add('a space of one is not a space');
   return problems;
 }

@@ -24,13 +24,16 @@ typedef CityMoneySpec = ({
 });
 
 /// #3863 — what a business invoices every month: the invoice's title, the
-/// monthly fee's line, the address its members are billed at and its
-/// catalogue of services (name, unit price in minor units, kept in stock).
+/// monthly fee's line, the address its members are billed at, its catalogue
+/// of services (name, unit price in minor units, kept in stock), and whether
+/// its owner is billed too (a coworking owner is a member of the space; a
+/// practice's owner is not her own client).
 typedef CityMoneyWords = ({
   String title,
   String fee,
   String memberAddress,
   List<(String, int, bool)> catalogue,
+  bool billsOwner,
 });
 
 /// The invented address a member of the city's business is billed at: the
@@ -88,7 +91,10 @@ class _CityMoney {
             stock: item.$3 ? 50 : null,
           ),
       ]);
-    final members = [workspace.myMember, ...workspace.otherMembers];
+    final members = [
+      if (words?.billsOwner ?? true) workspace.myMember,
+      ...workspace.otherMembers,
+    ];
     final hours = <(String, String), int>{};
     for (final booking in hourlyBookings) {
       final period = yearMonth(booking.startsAt.year, booking.startsAt.month);

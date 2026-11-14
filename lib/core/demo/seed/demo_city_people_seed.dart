@@ -3,6 +3,7 @@
 import '../../../features/profile/domain/personal_info.dart';
 import '../../../features/profile/domain/profile.dart';
 import '../data/workspace_repository.dart';
+import 'demo_practice_seed.dart' show demoPracticeCountry;
 
 /// Where the people of a city's prefix live: their country, town and street.
 const _homes = <String, ({String country, String city, String street})>{
@@ -10,7 +11,11 @@ const _homes = <String, ({String country, String city, String street})>{
   'ch': (country: 'CH', city: 'Zurich', street: 'Beispielstrasse'),
   'it': (country: 'IT', city: 'Milano', street: 'Via Esempio'),
   // #3863 — the practice's clients.
-  'practice': (country: 'DE', city: 'Berlin', street: 'Musterstraße'),
+  'practice': (
+    country: demoPracticeCountry,
+    city: 'Berlin',
+    street: 'Musterstraße',
+  ),
 };
 const _newYork = (country: 'US', city: 'New York', street: 'Example Avenue');
 

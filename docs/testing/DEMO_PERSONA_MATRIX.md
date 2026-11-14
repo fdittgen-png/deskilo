@@ -17,8 +17,8 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 | persona | Pézenas (`ws-1`) | Leipzig | London / New York / Zurich / Milan | the practice (`ws-7`, #3863) |
 |---|---|---|---|---|
 | owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast | owner |
-| member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan | client |
-| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | client |
+| member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan | none: its clients are people of Berlin |
+| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | none |
 | kiosk — front desk tablet (`member-kiosk`) | kiosk device | none | none | none |
 
 ## Actions

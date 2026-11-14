@@ -21,16 +21,19 @@ import 'demo_city_people_seed.dart';
 
 const demoPracticeName = 'Lindner Beratung';
 
+/// The practice's country: Leipzig's, reused (#3863).
+const demoPracticeCountry = 'DE';
+
 /// The practice's features: a new space's, the kind's profile applied on top
 /// (with the parents it needs), and the Overview it opens on.
-Map<String, bool> demoPracticeFeatureFlags() {
+Map<String, bool> _practiceFlags() {
   final fresh = defaultFeatureFlagsForNewWorkspace();
   return {
     ...fresh,
     ...proposalFor(
       profile: demoNoPlacesProfile,
       raw: resolveEnabledFeatures(fresh),
-      country: 'DE',
+      country: demoPracticeCountry,
     ).flags,
     WorkspaceFeature.workspaceOverview.dbKey: true,
   };
@@ -41,11 +44,11 @@ Workspace demoPracticeSpace() => Workspace(
   id: demoPracticeSpaceId,
   rolePermissions: everydayMatrix(),
   name: demoPracticeName,
-  countryCode: 'DE',
+  countryCode: demoPracticeCountry,
   currencyCode: 'EUR',
   timezone: 'Europe/Berlin',
   inviteCode: 'LINDNER2026',
-  featureFlags: demoPracticeFeatureFlags(),
+  featureFlags: _practiceFlags(),
   environment: 'prod',
   address: 'Kastanienallee 12, 10435 Berlin',
   street: 'Kastanienallee 12',
@@ -61,29 +64,26 @@ Workspace demoPracticeSpace() => Workspace(
   },
 );
 
-/// The clients beside the cast.
-const _clients = 3;
+/// The practice's clients, people of the city.
+const _clients = 4;
 
-/// Ada owns the practice; Chiara and Bruno are clients, as are a few people
-/// of the city. A persona switch moves the "mine" pointer.
+/// Ada owns the practice; its clients are people of the city (the cast's
+/// own finances stay those of the spaces they belong to). A persona switch
+/// moves the "mine" pointer.
 void seedPracticePeople(FakeWorkspaceRepository space) {
-  Member member(DemoPerson p, {bool owner = false}) => Member(
-    id: p.memberId,
-    workspaceId: demoPracticeSpaceId,
-    userId: p.userId,
-    isAdmin: owner,
-    isOwner: owner,
-    status: MemberStatus.active,
-    subscriptionPct: p.subscriptionPct,
-  );
-  final people = demoCast.take(3).toList();
+  final owner = demoCast.first;
   space
-    ..myMember = member(people.first, owner: true)
-    ..otherMembers.addAll([for (final p in people.skip(1)) member(p)]);
-  for (final p in people) {
-    space.memberNames[p.memberId] = p.name;
-    space.memberEmails[p.memberId] = p.email;
-  }
+    ..myMember = Member(
+      id: owner.memberId,
+      workspaceId: demoPracticeSpaceId,
+      userId: owner.userId,
+      isAdmin: true,
+      isOwner: true,
+      status: MemberStatus.active,
+      subscriptionPct: owner.subscriptionPct,
+    )
+    ..memberNames[owner.memberId] = owner.name
+    ..memberEmails[owner.memberId] = owner.email;
   for (var i = 0; i < _clients; i++) {
     final id = 'practice-member-${i + 1}';
     space.otherMembers.add(
@@ -107,6 +107,7 @@ const CityMoneyWords demoPracticeMoneyWords = (
   title: 'Beratung',
   fee: 'Monthly advisory retainer',
   memberAddress: 'Musterstraße, Berlin',
+  billsOwner: false,
   catalogue: [
     ('Consultation hour', 9000, false),
     ('Workshop half-day', 45000, false),
