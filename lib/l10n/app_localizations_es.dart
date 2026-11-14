@@ -1377,6 +1377,17 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String attentionReviewReversals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Revisar $count pagos revertidos por el proveedor',
+      one: 'Revisar 1 pago revertido por el proveedor',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionSetUp(String area) {
     return 'Por configurar: $area';
   }
@@ -22306,6 +22317,16 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  ) {
+    return 'Del pago $reference ($amount con $provider), el proveedor revirtió $reversed (un reembolso o una disputa). La empresa corrige su saldo.';
+  }
+
+  @override
   String get payOnlineReversedTitle => 'Pago en línea revertido';
 
   @override
@@ -25704,6 +25725,20 @@ class AppLocalizationsEs extends AppLocalizations {
   String recordedPaymentsPeriod(String from, String to) {
     return 'Periodo: $from – $to';
   }
+
+  @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'La reversión no se pudo marcar como revisada. Inténtelo de nuevo.';
+
+  @override
+  String get recordedPaymentsReversalReviewed => 'Revisado';
+
+  @override
+  String get recordedPaymentsReversalsHint =>
+      'Un reembolso o una disputa en el proveedor. Corrija el saldo del miembro y marque la reversión como revisada.';
+
+  @override
+  String get recordedPaymentsReversalsTitle => 'Revertidos por el proveedor';
 
   @override
   String get recordedPaymentsTitle => 'Pagos recibidos';

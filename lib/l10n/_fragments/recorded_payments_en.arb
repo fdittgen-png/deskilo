@@ -26,5 +26,21 @@
         "type": "String"
       }
     }
+  },
+  "recordedPaymentsReversalsTitle": "Reversed by the provider",
+  "@recordedPaymentsReversalsTitle": {
+    "description": "#3925 a payment the provider reversed: the section title on the payments screen"
+  },
+  "recordedPaymentsReversalsHint": "A refund or a dispute at the provider. Correct the member's balance, then mark the reversal as looked at.",
+  "@recordedPaymentsReversalsHint": {
+    "description": "#3925 a payment the provider reversed: what to do with it"
+  },
+  "recordedPaymentsReversalReviewed": "Looked at",
+  "@recordedPaymentsReversalReviewed": {
+    "description": "#3925 a payment the provider reversed: the button that marks it looked at"
+  },
+  "recordedPaymentsReversalReviewFailed": "The reversal could not be marked as looked at. Try again.",
+  "@recordedPaymentsReversalReviewFailed": {
+    "description": "#3925 a payment the provider reversed: marking it looked at failed"
   }
 }

@@ -65,7 +65,7 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
 
   Future<String?> _send(String workspaceId, String period) async {
     final l10n = context.l10n;
-    final file = await buildEInvoiceTestDocument(
+    final file = await ref.read(eInvoiceTestDocumentBuilderProvider)(
       ref,
       memberId: _memberId!,
       period: period,

@@ -85,7 +85,17 @@ class OnlinePaymentStatusCard extends StatelessWidget {
     final amount = currency.formatMinor(intent.amountCents);
     return switch (intent.status) {
       'failed' => l10n.payOnlineFailedDetail(intent.reference, amount, via),
-      'reversed' => l10n.payOnlineReversedDetail(intent.reference, amount, via),
+      // #3925 — the amount the provider reversed, when it is part of it.
+      'reversed' => switch (intent.reversedMinor(currencyCode)) {
+        final part? when part != intent.amountCents =>
+          l10n.payOnlineReversedPartDetail(
+            intent.reference,
+            amount,
+            via,
+            currency.formatMinor(part),
+          ),
+        _ => l10n.payOnlineReversedDetail(intent.reference, amount, via),
+      },
       _ => l10n.payOnlinePendingDetail(intent.reference, amount, via),
     };
   }

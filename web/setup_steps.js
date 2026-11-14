@@ -225,7 +225,7 @@ const STEPS=[
    input(T('mentionLegalForm'),'mentions.legalForm',T('mentionLegalFormHint')),input(T('mentionTerms'),'mentions.terms',T('mentionTermsHint')),
    h('div',{class:'row'},input(T('mentionPenalty'),'mentions.penalty',''),input(T('mentionRecovery'),'mentions.recovery','')),
    h('div',{class:'row'},input(T('mentionEscompte'),'mentions.escompte',''),input(T('mentionInsurance'),'mentions.insurance','')),input(T('mentionSpecial'),'mentions.special',''));
-  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
+  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),statesTerm(input(T('dunningFirstDays'),'reminders.firstDays','','number')),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
    if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>set('reminders.automatic',v),'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
   if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice','einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
@@ -447,6 +447,10 @@ const STEPS=[
 // #2331 — every answer the import cannot apply (DEST 'app' / 'file'), and
 // what nothing in the page asks for but the space needs, in the order the
 // owner meets them in the app.
+// #3889 -- the payment term counts as the business's own only when the person
+// typed it: the field marks the answer as stated, and the export carries the
+// term only then (an untouched one stays the platform's default to review).
+function statesTerm(d){const i=d.querySelector('input'),typed=i.oninput;i.oninput=e=>{S.reminders.firstDaysStated=true;if(typed)typed.call(i,e)};return d}
 function toDoInApp(){const out=[T('todoCreateSpace',{name:S.name.trim()||'—'})];
  const ms=S.members.filter(m=>String(m.email||'').trim());
  out.push(ms.length?T('todoInviteMembers',{n:ms.length}):T('todoInviteNobody'));
