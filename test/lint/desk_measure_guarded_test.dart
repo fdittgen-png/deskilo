@@ -20,18 +20,14 @@ import 'lint_sources.dart';
 const _notGuardedYet = <String, String>{
   // A long task: its own page over the list (#3608), guarded with its list.
   '/money/purchase-orders/new': '#3946 a long task: none of its stops is reached by Tab',
-  '/money/purchase-orders/:id/edit': '#3949 a long task over its list',
+  '/money/purchase-orders/:id/edit':
+      '#3946 a long task: none of its stops is reached by Tab',
   '/invoicing/wizard': '#3947 40 dp step targets in its header',
   // A record at its address under a guarded list.
-  '/invoices/:id': '#3949 a record beside its guarded list',
-  '/invoices/customer/:id': '#3949 a record beside its guarded list',
-  '/members/plans/:id': '#3949 a record beside its guarded list',
-  '/bi/report/:id': '#3949 a record of a guarded page',
   '/member/:memberId': '#3946 Tab reaches a control twice',
-  '/res/:id': '#3949 a record page, guarded on phones only',
-  '/space/:kind/:id': '#3949 a record page',
-  '/conversation/:conversationId': '#3949 a record page',
-  '/editor/level/:levelId': '#3949 a record page',
+  '/conversation/:conversationId':
+      '#3947 40 dp targets: the message actions (the kit\'s row menu) and '
+      'the thread header',
   // The purchase orders: guarded by their own leaf.
   // Pages measured for the desk and not guarded yet.
   '/settings/public-page': '#3946 Tab reaches a control twice at 1024 and 1440',
