@@ -126,5 +126,6 @@
   "bankUnmatchConfirm": "Deshacer",
   "@bankUnmatchConfirm": {
     "description": "#2380 money-in unmatch: the confirm button."
-  }
+  },
+  "bankReconUnreadable": "Esta versión no puede leer algunos movimientos de este extracto, así que no se genera el informe. Actualice la aplicación y vuelva a abrir el extracto."
 }

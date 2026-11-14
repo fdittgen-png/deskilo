@@ -4,8 +4,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/money_format.dart';
+import '../../../core/l10n/context_l10n.dart';
 import '../../../core/state/policy_read.dart';
+import '../../../core/ui/app_snack.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../domain/bank/bank_records.dart' show BankRowsUnreadable;
 import '../domain/bank/reconciliation_report.dart';
 import '../providers/bank_statement_providers.dart';
 import '../providers/money_providers.dart';
@@ -45,11 +48,21 @@ class BankReconciliationActions {
     }
 
     final reader = ref.read(bankReconciliationReaderProvider);
-    final report = await reader.read(
-      workspaceId: workspaceId,
-      statementId: statementId,
-      sourceLimits: ref.read(bankImportSettingsProvider).limits,
-    );
+    final BankReconciliationReport report;
+    try {
+      report = await reader.read(
+        workspaceId: workspaceId,
+        statementId: statementId,
+        sourceLimits: ref.read(bankImportSettingsProvider).limits,
+      );
+    } on BankRowsUnreadable {
+      // #3913 — a report never leaves a movement out: refused, with what
+      // to do next.
+      if (context.mounted) {
+        AppSnack.error(context, context.l10n.bankReconUnreadable);
+      }
+      return;
+    }
     // #3742 — the letter is printed with the owner's template, read.
     await readPolicy(
       ref,

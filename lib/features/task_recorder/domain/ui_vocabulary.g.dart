@@ -6405,6 +6405,7 @@ const Set<String> uiLabelKeys = {
   'bankReconSourceVerificationFailed',
   'bankReconTitle',
   'bankReconUnmappedCount',
+  'bankReconUnreadable',
   'bankReconValueDate',
   'bankRefusedBadAmount',
   'bankRefusedBadCurrency',
