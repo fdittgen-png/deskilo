@@ -32,6 +32,7 @@
 # review {"path":"test/features/workspace/roles_desk_test.dart","before":0,"after":12,"invariant":"#3628 the roles page at the desk: a role is chosen in the list, the permission filter typed, and the holders task opened and closed; each settle waits for a selection, a filter or the task's animation","cost":"5 widget tests, one settle per selection, filter or task step"}
 # review {"path":"test/features/workspace/setup_desk_test.dart","before":0,"after":15,"invariant":"#3629 the setup guide at the desk: the app settles on an address, then each way out of a step (the list, Keep editing or Leave, the browser's Back, Alt+Left, Ctrl+Enter, Escape) settles once before the question, the address or the stored draft is read","cost":"four tests in about 5 s locally"}
 # review {"path":"test/features/money/services_screen_test.dart","before":15,"after":21,"invariant":"#3864 a new service starts from the business's switches (books places or not), each choice says how it is taxed, and an existing service keeps its class: each opens the service sheet (a route animation) and the class menu (an overlay), and saves; each settles once before the field or the saved service is read","cost":"4 tests of about 1 s each locally (the file: 18 tests in 17 s)"}
+# review {"path":"test/features/workspace/setup_desk_test.dart","before":15,"after":17,"invariant":"#3629 a step the guide opens over itself (a push) is drawn beside the steps, and Back returns to the guide: each settles once before the address and the page are read","cost":"one test, about 1 s locally"}
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
 10 test/app/shell/shell_bar_drag_test.dart
@@ -167,7 +168,7 @@
 25 test/features/workspace/process_overview_test.dart
 11 test/features/workspace/ref_picker_sheet_filters_test.dart
 12 test/features/workspace/roles_desk_test.dart
-15 test/features/workspace/setup_desk_test.dart
+17 test/features/workspace/setup_desk_test.dart
 17 test/features/workspace/template_capability_search_test.dart
 11 test/features/workspace/template_discovery_journey_test.dart
 10 test/features/workspace/template_results_export_test.dart
