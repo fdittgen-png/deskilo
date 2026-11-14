@@ -19,7 +19,7 @@ import '../../core/navigation/list_detail_route.dart';
 import '../../core/storage/pane_width_store.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/ui/kit/list_detail_scaffold.dart';
-import '../../core/ui/kit/page_title.dart';
+import '../../core/ui/kit/page_bar.dart';
 import '../../core/ui/kit/records_table.dart';
 import '../../features/money/domain/fee_band.dart';
 import '../../features/money/providers/money_providers.dart';
@@ -41,7 +41,7 @@ class PlansScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) => Scaffold(
-    appBar: AppBar(title: PageTitle(context.l10n.plansTitle)),
+    appBar: pageBar(context, title: context.l10n.plansTitle),
     body: OpenRecord(
       listPath: plansPath,
       builder: (context, id) => ListDetailScaffold(

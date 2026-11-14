@@ -19,6 +19,7 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/core/ui/kit/page_bar.dart';
 import 'package:deskilo/core/ui/kit/page_title.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -77,7 +78,8 @@ List<String> _crumbs(WidgetTester tester) => [
     t.data!,
 ];
 
-/// The titles the page's own bars ask for (PageTitle's text, or a Text).
+/// The titles the page's own bars ask for (PageTitle's text, or a Text),
+/// a bar the kit leaves out on the desk (#3927) included.
 List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [
   for (final bar in tester.widgetList<AppBar>(
     find.descendant(of: within, matching: find.byType(AppBar)),
@@ -86,6 +88,10 @@ List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [
       text
     else if (bar.title case Text(:final data?))
       data,
+  for (final bar in tester.widgetList<QuietPageBar>(
+    find.descendant(of: within, matching: find.byType(QuietPageBar)),
+  ))
+    bar.title,
 ];
 
 /// The texts the page's own bars show.

@@ -13,7 +13,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -413,8 +413,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) {
       return Scaffold(
-        appBar: AppBar(
-          title: PageTitle(l10n.legalIdentityTitle),
+        appBar: pageBar(context,
+          title: l10n.legalIdentityTitle,
         ),
         body: const LoadingView(),
       );
@@ -428,10 +428,8 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(
-          l10n.legalIdentityTitle,
-        ),
+      appBar: pageBar(context,
+        title: l10n.legalIdentityTitle,
       ),
       body: ListView(
         padding: AppSpacing.gutterAll,

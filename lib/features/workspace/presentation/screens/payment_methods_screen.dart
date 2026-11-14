@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../application/save_payment_instructions.dart';
@@ -69,9 +70,8 @@ class _PaymentMethodsScreenState
     final workspace = ref.watch(currentWorkspaceProvider).value;
     if (workspace == null) {
       return Scaffold(
-        appBar: AppBar(
-          title: PageTitle(
-              l10n.paymentInstructionsTitle),
+        appBar: pageBar(context,
+          title: l10n.paymentInstructionsTitle,
         ),
         body: const LoadingView(),
       );

@@ -10,7 +10,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_document.dart';
@@ -280,8 +280,8 @@ class DocumentsScreen extends ConsumerWidget {
         .watch(myPermissionsProvider)
         .contains(WorkspacePermission.manageDocuments);
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.featureDocuments),
+      appBar: pageBar(context,
+        title: l10n.featureDocuments,
       ),
       floatingActionButton: canCurate
           ? FloatingActionButton(

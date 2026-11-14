@@ -29,7 +29,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../../../core/ui/kit/kit_card.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/select_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../application/issue_invoice.dart';
@@ -195,10 +195,8 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
         child: child!,
       ),
       child: Scaffold(
-        appBar: AppBar(
-          title: PageTitle(
-            l10n.invoiceMonthTitle(monthLabel(context, widget.period)),
-          ),
+        appBar: pageBar(context,
+          title: l10n.invoiceMonthTitle(monthLabel(context, widget.period)),
         ),
         body: ListenableBuilder(
           listenable: _state,

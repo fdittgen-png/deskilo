@@ -9,7 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/workspace_feature.dart';
@@ -401,8 +401,8 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     if (status != null) _loadOnce(status);
 
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.einvoiceConfigTitle),
+      appBar: pageBar(context,
+        title: l10n.einvoiceConfigTitle,
       ),
       // An unreachable probe used to leave the screen spinning for ever
       // (field report): a failing RPC is now something the owner can see
