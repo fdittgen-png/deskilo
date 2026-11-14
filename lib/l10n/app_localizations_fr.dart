@@ -7543,6 +7543,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get demoPersonaOwner => 'Le propriétaire';
 
   @override
+  String get demoProviderPageBody =>
+      'Cette page tient lieu de celle d\'un prestataire de paiement : rien n\'est débité et rien ne quitte cet appareil. Choisissez la réponse du prestataire.';
+
+  @override
+  String get demoProviderPageNoAnswer => 'Le prestataire ne répond pas';
+
+  @override
+  String get demoProviderPagePay => 'Payer';
+
+  @override
+  String get demoProviderPageTitle => 'Page de paiement (démonstration)';
+
+  @override
   String get demoSessionBadge => 'Démo';
 
   @override

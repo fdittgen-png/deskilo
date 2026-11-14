@@ -7520,6 +7520,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get demoPersonaOwner => 'Inhaber';
 
   @override
+  String get demoProviderPageBody =>
+      'Diese Seite steht für die eines Zahlungsanbieters: Es wird nichts abgebucht und nichts verlässt dieses Gerät. Wählen Sie, was der Anbieter antwortet.';
+
+  @override
+  String get demoProviderPageNoAnswer => 'Der Anbieter antwortet nicht';
+
+  @override
+  String get demoProviderPagePay => 'Bezahlen';
+
+  @override
+  String get demoProviderPageTitle => 'Zahlungsseite (Demonstration)';
+
+  @override
   String get demoSessionBadge => 'Demo';
 
   @override
