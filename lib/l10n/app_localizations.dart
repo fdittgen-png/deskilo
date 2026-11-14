@@ -31212,6 +31212,66 @@ abstract class AppLocalizations {
   /// **'Remove this workspace'**
   String get mcpRemoveWorkspace;
 
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Asked by {client} in {workspace}, {when}'**
+  String mcpRequestAsked(String client, String workspace, String when);
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Confirmed'**
+  String get mcpRequestConfirmed;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get mcpRequestExpired;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Open'**
+  String get mcpRequestOpen;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Refused'**
+  String get mcpRequestRefused;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Withdrawn'**
+  String get mcpRequestRevoked;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Answer not readable'**
+  String get mcpRequestUnknown;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Answered recently'**
+  String get mcpRequestsAnsweredTitle;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Your assistants\' requests could not be read. Open this page again later.'**
+  String get mcpRequestsUnavailable;
+
+  /// #3978 mcp_my_requests
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for your confirmation'**
+  String get mcpRequestsWaitingTitle;
+
   /// #1626 #1627 #1628 mcp_settings
   ///
   /// In en, this message translates to:

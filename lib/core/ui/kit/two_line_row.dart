@@ -24,7 +24,8 @@ class TwoLineRow extends StatelessWidget {
   /// The second line; a widget, so a part of it can carry a colour.
   final Widget caption;
   final String amount;
-  final VoidCallback onTap;
+  /// Null: the line names something that does not open (#3978).
+  final VoidCallback? onTap;
   final Widget? leading;
 
   /// Under the line at its end: a status chip or one button.

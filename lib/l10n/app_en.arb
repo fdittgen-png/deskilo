@@ -25493,6 +25493,57 @@
   "@mcpRemoveWorkspace": {
     "description": "#1626 #1627 #1628 mcp_settings"
   },
+  "mcpRequestAsked": "Asked by {client} in {workspace}, {when}",
+  "@mcpRequestAsked": {
+    "description": "#3978 mcp_my_requests",
+    "placeholders": {
+      "client": {
+        "type": "String"
+      },
+      "workspace": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpRequestConfirmed": "Confirmed",
+  "@mcpRequestConfirmed": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestExpired": "Expired",
+  "@mcpRequestExpired": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestOpen": "Open",
+  "@mcpRequestOpen": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestRefused": "Refused",
+  "@mcpRequestRefused": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestRevoked": "Withdrawn",
+  "@mcpRequestRevoked": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestUnknown": "Answer not readable",
+  "@mcpRequestUnknown": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestsAnsweredTitle": "Answered recently",
+  "@mcpRequestsAnsweredTitle": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestsUnavailable": "Your assistants' requests could not be read. Open this page again later.",
+  "@mcpRequestsUnavailable": {
+    "description": "#3978 mcp_my_requests"
+  },
+  "mcpRequestsWaitingTitle": "Waiting for your confirmation",
+  "@mcpRequestsWaitingTitle": {
+    "description": "#3978 mcp_my_requests"
+  },
   "mcpReviewApprove": "Approve",
   "@mcpReviewApprove": {
     "description": "#1626 #1627 #1628 mcp_settings"
