@@ -11,3 +11,6 @@ const demoLondonSpaceId = 'ws-3';
 const demoNewYorkSpaceId = 'ws-4';
 const demoZurichSpaceId = 'ws-5';
 const demoMilanSpaceId = 'ws-6';
+
+/// #3863 — the practice: a business without places.
+const demoPracticeSpaceId = 'ws-7';

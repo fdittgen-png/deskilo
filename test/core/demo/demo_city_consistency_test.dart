@@ -61,6 +61,15 @@ void main() {
         money: fixture.milan.money,
         months: 24,
       ),
+      // #3863 - the practice: three years of invoices, no place at all.
+      (
+        id: 'ws-7',
+        space: fixture.practice.workspaces,
+        plan: fixture.practice.floorPlan,
+        bookings: fixture.practice.reservations,
+        money: fixture.practice.money,
+        months: 36,
+      ),
     ]) {
       final members = {
         city.space.myMember.id,
