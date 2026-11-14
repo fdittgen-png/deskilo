@@ -17,5 +17,5 @@
   "vatReturnNotCompared": "Cette case est faite d’achats, d’une catégorie ou d’une correction : ses documents ne sont pas additionnés ici.",
   "vatReturnOpen": "Ouvrir la déclaration",
   "accountingExportsTitle": "Exports",
-  "accountingStatusAtLeast": "{count} ou plus"
+  "accountingStatusAtLeast": "{figure} ou plus"
 }

@@ -361,11 +361,11 @@
   "@accountingStatusAllBooks": {
     "description": "#3616 heading of the doors to every part of the books, under the status tiles"
   },
-  "accountingStatusAtLeast": "{count} or more",
+  "accountingStatusAtLeast": "{figure} or more",
   "@accountingStatusAtLeast": {
     "description": "#3913 A count shown when some rows could not be read by this version: the true count is at least this.",
     "placeholders": {
-      "count": {
+      "figure": {
         "type": "String",
         "example": "12"
       }

@@ -4,6 +4,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart' show Provider;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/data/unreadable_rows.dart';
 import '../../../core/settings/active_settings.dart';
 import '../application/bank_import_commands.dart';
 import '../application/bank_reconciliation_reader.dart';
@@ -66,3 +67,9 @@ Future<BankWorkList> bankWorkList(Ref ref, String statementId) async {
     windowDays: window,
   );
 }
+
+/// #3913 — whether the last read of [workspaceId]'s statements left one out
+/// (a statement this version cannot read): a figure summed over them is then
+/// a lower bound.
+bool bankStatementsLeftOut(String workspaceId) =>
+    UnreadableRows.instance.count(bankStatementsArea(workspaceId)) > 0;

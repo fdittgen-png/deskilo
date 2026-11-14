@@ -17,5 +17,5 @@
   "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
   "vatReturnOpen": "Abrir la declaración",
   "accountingExportsTitle": "Exportaciones",
-  "accountingStatusAtLeast": "{count} o más"
+  "accountingStatusAtLeast": "{figure} o más"
 }
