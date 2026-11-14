@@ -1093,6 +1093,18 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'the assistant in the page books the meeting room on a Thursday morning',
     (_) => webAssistantBooksJourney(),
   ),
+  // #3962 — an assistant connected in the reference business, the request it
+  // left for confirmation, and the page's assistant that books a room.
+  WorkspaceFeature.mcpAccess: _action(
+    _owner,
+    'Ada reads what her assistant may do and confirms the request it left',
+    (_) => confirmRoomRequestJourney(),
+  ),
+  WorkspaceFeature.webMcp: _action(
+    _owner,
+    'the assistant in the page books the meeting room on a Thursday morning',
+    (_) => webAssistantBooksJourney(),
+  ),
   // #3960 — e-mail is recorded in the Demo's outbox; nothing is sent.
   WorkspaceFeature.reminderEmail: _action(
     _owner,
