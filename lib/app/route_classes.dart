@@ -316,9 +316,9 @@ const List<RouteRule> routeRules = [
   ), // #1923
   RouteRule('/bi/report/:id', RouteClass.workspace, place: 'drawer-bi', measure: PageMeasure.work), // #2580
   RouteRule('/members', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
-  RouteRule('/members/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
-  RouteRule('/members/plans', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
+  RouteRule('/members/plans', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618; #3943: before '/members/:id', which would take 'plans'
   RouteRule('/members/plans/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
+  RouteRule('/members/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
   RouteRule('/editor', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/editor/level/:levelId', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
 ];
