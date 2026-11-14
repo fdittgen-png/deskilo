@@ -44,7 +44,10 @@ void seedDemoOnlinePayments(FakeMoneyRepository money, DateTime now) {
   }
 
   final reversed = money.invoices.firstWhere((i) => i.id == 'demo-usage-ada-a');
-  final reversedAmount = (reversed.totalCents / 100).toStringAsFixed(2);
+  // The amount as the webhooks write it: plain decimals, two of them.
+  final digits = reversed.totalCents.toString().padLeft(3, '0');
+  final reversedAmount =
+      '${digits.substring(0, digits.length - 2)}.${digits.substring(digits.length - 2)}';
   // The list grows one by one: each intent numbers itself from the list.
   void add(PaymentIntent p) => money.paymentIntents.add(p);
   // Ada's bill of the month, paid online.

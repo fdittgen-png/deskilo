@@ -14,7 +14,7 @@ enum DemoPaymentOutcome { paid, cancelled, noAnswer }
 
 /// #3961 — the address the Demo's order "opens": it names the order, and the
 /// app's approval seam answers it with the stand-in page, never a browser.
-Uri demoProviderApprovalUri(String orderId) => Uri(
+Uri _approvalUri(String orderId) => Uri(
   scheme: 'demo-provider',
   host: 'approve',
   queryParameters: {'order': orderId},
@@ -118,36 +118,51 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     String? requestId,
   }) async {
     _m.paymentOrders.add((provider, amountCents));
-    if (standIn && _m.paymentApprovalUrl == null) {
-      return _openStandInOrder(
-        provider: provider,
-        workspaceId: workspaceId,
-        memberId: memberId,
-        amountCents: amountCents,
-        currencyCode: currencyCode,
-        period: period,
-        requestId: requestId,
-      );
-    }
     final url = _m.paymentApprovalUrl;
-    if (url == null) {
-      return const PaymentOrderStart(missing: ['PAYPAL_CLIENT_ID']);
-    }
-    return PaymentOrderStart(approveUrl: url, orderId: 'order-1');
+    return url != null
+        ? PaymentOrderStart(approveUrl: url, orderId: 'order-1')
+        : _withoutApprovalUrl(
+            provider,
+            memberId,
+            amountCents,
+            currencyCode,
+            period,
+            requestId,
+          );
   }
+
+  /// No approval address was given: the Demo's stand-in opens an order of its
+  /// own where it stands in for the provider, and anywhere else the provider
+  /// is simply not set up.
+  PaymentOrderStart _withoutApprovalUrl(
+    PaymentProvider provider,
+    String memberId,
+    int amountCents,
+    String currencyCode,
+    String period,
+    String? requestId,
+  ) => standIn
+      ? _openStandInOrder(
+          provider,
+          memberId,
+          amountCents,
+          currencyCode,
+          period,
+          requestId,
+        )
+      : const PaymentOrderStart(missing: ['PAYPAL_CLIENT_ID']);
 
   /// An order of the Demo's stand-in: a retried request is the order it
   /// already opened, a paid one answers [PaymentOrderStart.alreadyPaid], and
   /// a failed one is not retried but replaced.
-  PaymentOrderStart _openStandInOrder({
-    required PaymentProvider provider,
-    required String workspaceId,
-    required String memberId,
-    required int amountCents,
-    required String currencyCode,
-    required String period,
+  PaymentOrderStart _openStandInOrder(
+    PaymentProvider provider,
+    String memberId,
+    int amountCents,
+    String currencyCode,
+    String period,
     String? requestId,
-  }) {
+  ) {
     if (amountCents <= 0 || currencyCode != _m.invoiceCommands.currency) {
       throw const PaymentGatewayException(400, 'amount or currency refused');
     }
@@ -159,7 +174,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       }
       if (earlier.status == 'created') {
         return PaymentOrderStart(
-          approveUrl: demoProviderApprovalUri(known),
+          approveUrl: _approvalUri(known),
           orderId: known,
         );
       }
@@ -182,7 +197,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     );
     if (requestId != null) _orderOfRequest[requestId] = orderId;
     return PaymentOrderStart(
-      approveUrl: demoProviderApprovalUri(orderId),
+      approveUrl: _approvalUri(orderId),
       orderId: orderId,
     );
   }

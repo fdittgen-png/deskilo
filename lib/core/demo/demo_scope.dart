@@ -310,8 +310,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ..._fileOverrides(fixture),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
-      linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
-      paymentApprovalProvider.overrideWith(demoPaymentApproval(fixture)), // #3961
+      linkLauncherProvider.overrideWithValue(fixture.outward.openLink), paymentApprovalProvider.overrideWith(demoPaymentApproval(fixture)), // #3961
 
       // #1564 — the two edges that are neither a repository nor the
       // app's own doing, and so stayed live: the push transport and the

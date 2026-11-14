@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../../l10n/context_l10n.dart';
 import '../../ui/app_sheet.dart';
+import '../../ui/form_kit.dart';
 import '../../ui/form_sheet.dart';
 import '../data/money/demo_payment_gateway_repository.dart';
 
@@ -22,20 +23,20 @@ Future<DemoPaymentOutcome?> showDemoProviderPage(BuildContext context) =>
           title: l10n.demoProviderPageTitle,
           children: [
             Text(l10n.demoProviderPageBody),
-            const SizedBox(height: 16),
+            const FormGap.large(),
             FilledButton(
               key: const ValueKey('demo-provider-pay'),
               onPressed: () => Navigator.of(sheet).pop(DemoPaymentOutcome.paid),
               child: Text(l10n.demoProviderPagePay),
             ),
-            const SizedBox(height: 8),
+            const FormGap.small(),
             OutlinedButton(
               key: const ValueKey('demo-provider-cancel'),
               onPressed: () =>
                   Navigator.of(sheet).pop(DemoPaymentOutcome.cancelled),
               child: Text(l10n.commonCancel),
             ),
-            const SizedBox(height: 8),
+            const FormGap.small(),
             TextButton(
               key: const ValueKey('demo-provider-no-answer'),
               onPressed: () =>
