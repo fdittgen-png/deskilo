@@ -185,7 +185,11 @@ class ValidationSettingsScreen extends ConsumerWidget {
         title: PageTitle(l10n.validationTitle),
       ),
       body: switch (policiesAsync) {
-        AsyncData(value: final policies) => ListView(
+        // #3892 — built whole: each rule is a control a person changes, and a
+        // lazily built list would drop the rows Tab passes.
+        AsyncData(value: final policies) => SingleChildScrollView(
+            child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // #606 — contextual how-to; gated inside the widget.
               const HelpHint(HelpHintId.validation),
@@ -241,6 +245,7 @@ class ValidationSettingsScreen extends ConsumerWidget {
                     ),
               ],
             ],
+          ),
           ),
         AsyncError() => Center(
             child: Text(

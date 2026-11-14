@@ -86,7 +86,8 @@ class DeskScaffold extends ConsumerWidget {
     final rail = !large || collapsed;
     // The window's title is the app's (window_title.dart, #3605).
     return Scaffold(
-      body: FocusTraversalGroup(
+      body: _FocusLeavesEmptyPages(
+        child: FocusTraversalGroup(
         policy: OrderedTraversalPolicy(),
         child: Row(
           children: [
@@ -152,7 +153,56 @@ class DeskScaffold extends ConsumerWidget {
           ],
         ),
       ),
+      ),
     );
+  }
+}
+
+/// #3943 — Tab and Shift+Tab on the desk: the next stop as Flutter finds
+/// it, or, when nothing moved (a page with no control of its own: its
+/// route's scope holds the keyboard and has nowhere to send it), the desk's
+/// first stop going forward and its last going back. A page never keeps
+/// the keyboard it cannot pass on.
+class _FocusLeavesEmptyPages extends StatelessWidget {
+  const _FocusLeavesEmptyPages({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => Actions(
+    actions: {
+      NextFocusIntent: CallbackAction<NextFocusIntent>(
+        onInvoke: (_) => _move(context, forward: true),
+      ),
+      PreviousFocusIntent: CallbackAction<PreviousFocusIntent>(
+        onInvoke: (_) => _move(context, forward: false),
+      ),
+    },
+    child: child,
+  );
+
+  static Object? _move(BuildContext desk, {required bool forward}) {
+    final focus = FocusManager.instance.primaryFocus;
+    // A page's own scope with no stop in it: Flutter would enter the group
+    // before it at its first stop, so the desk chooses both ways itself.
+    final emptyPage =
+        focus is FocusScopeNode &&
+        !focus.traversalDescendants.any(
+          (n) => n.canRequestFocus && !n.skipTraversal,
+        );
+    final moved =
+        !emptyPage &&
+        focus != null &&
+        (forward ? focus.nextFocus() : focus.previousFocus());
+    if (moved) return null;
+    final scope = Focus.maybeOf(desk) ?? FocusManager.instance.rootScope;
+    final stops = [
+      for (final n in scope.traversalDescendants)
+        if (n.canRequestFocus && !n.skipTraversal && n is! FocusScopeNode) n,
+    ];
+    if (stops.isEmpty) return null;
+    (forward ? stops.first : stops.last).requestFocus();
+    return null;
   }
 }
 

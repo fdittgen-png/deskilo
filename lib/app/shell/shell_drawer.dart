@@ -211,8 +211,12 @@ class ShellDrawer extends ConsumerWidget {
             color: theme.colorScheme.onSurface,
           ),
         ),
-          child: ListView(
+          // #3943 — built whole: as Tab scrolls the navigation, every entry
+          // stays a stop (a lazily built list dropped those scrolled away).
+          child: SingleChildScrollView(
           padding: AppSpacing.smH,
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             _drawerHeading(workspace?.name ?? 'DesKilo', theme),
             ListTile(
@@ -234,6 +238,7 @@ class ShellDrawer extends ConsumerWidget {
             const Divider(),
             for (final e in account) tile(e),
           ],
+        ),
         ),
       ),
     );
