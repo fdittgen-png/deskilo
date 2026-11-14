@@ -21,18 +21,26 @@ typedef BookingsCsvHeader = ({
   String from,
   String to,
   String state,
+  String price,
 });
 
-/// [bookings] as the table's CSV; [who], [place], [at] and [state] give a
-/// row's words as the table shows them.
+/// A row's words as the table shows them (#3843: the price, blank while it
+/// is not read).
+typedef BookingsCsvCells = ({
+  String Function(Reservation r) who,
+  String Function(Reservation r) place,
+  String Function(DateTime instant) at,
+  String Function(ReservationStatus status) state,
+  String Function(Reservation r) price,
+});
+
+/// [bookings] as the table's CSV, each row in [cells]' words.
 Uint8List bookingsCsv(
   List<Reservation> bookings, {
   required BookingsCsvHeader header,
-  required String Function(Reservation r) who,
-  required String Function(Reservation r) place,
-  required String Function(DateTime instant) at,
-  required String Function(ReservationStatus status) state,
+  required BookingsCsvCells cells,
 }) {
+  final (:who, :place, :at, :state, :price) = cells;
   final lines = <String>[
     [
       header.member,
@@ -40,6 +48,7 @@ Uint8List bookingsCsv(
       header.from,
       header.to,
       header.state,
+      header.price,
     ].map(csvCell).join(','),
     for (final r in bookings)
       [
@@ -48,6 +57,7 @@ Uint8List bookingsCsv(
         csvCell(at(r.startsAt)),
         csvCell(at(r.endsAt)),
         csvCell(state(r.status)),
+        csvCell(price(r)),
       ].join(','),
   ];
   return Uint8List.fromList([

@@ -61,6 +61,7 @@ configuration.
 | invoice_legal, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account | `workspaces.*` | A | **no** — legal identity is the space's own | replace | — | `vat_regime_test` |
 | address, street, city, postal_code | `workspaces.*` | A | no — identity | replace | — | — |
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
+| paper | `workspaces.paper` | B | yes — empty follows the country; a paper the target's country does not allow leaves the target's own | replace | #3852 | `428_document_paper` |
 | document_language_confirmed | `workspaces.document_language_confirmed` | E | never — whether this space's administrator has confirmed the document language 0753 gave it; saving the language sets it | — | #3850 | `415_document_language` |
 | invitation_template, invitation_templates | `workspaces.*` | B | yes | replace | — | — |
 | lexicon | `workspaces.lexicon` jsonb | B | yes | **merge** — keyed on (locale, key) (0223) | #1277 | `26_workspace_lexicon` |
@@ -83,7 +84,7 @@ actually moves.
 
 | key | kind | tables / workspace keys | class | note |
 |---|---|---|---|---|
-| identity | configuration | address, street, postal_code, city, default_locale, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account, invoice_legal, whatsapp_group | A | legal identity travels between a space's OWN twins, not between spaces. `whatsapp_group` joined it in #1360 — it names one space the same way an address does |
+| identity | configuration | address, street, postal_code, city, default_locale, paper, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account, invoice_legal, whatsapp_group | A | legal identity travels between a space's OWN twins, not between spaces. `whatsapp_group` joined it in #1360 — it names one space the same way an address does |
 | vat | master_data | vat_rates, subscription_vat_rate | B | |
 | tariffs | master_data | fee_bands, plans, subscription_levels, billing_rules | B | |
 | services | master_data | services | B | |

@@ -6983,6 +6983,36 @@
   "@bookingPastError": {
     "description": "Shown as a text in booking error text (reservations), and 1 other place."
   },
+  "bookingPriceCarnet": "Carnet",
+  "@bookingPriceCarnet": {
+    "description": "#3843 A booking paid from a carnet of half-days"
+  },
+  "bookingPriceCharge": "Charge {amount}",
+  "@bookingPriceCharge": {
+    "description": "#3843 A booking charged on its own (a rented room), with its amount in the business's currency",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€65.00"
+      }
+    }
+  },
+  "bookingPriceFree": "Free",
+  "@bookingPriceFree": {
+    "description": "#3843 A booking that counts toward no quota (outside the counted hours, or a place outside it)"
+  },
+  "bookingPriceOverage": "Extra half-day",
+  "@bookingPriceOverage": {
+    "description": "#3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)"
+  },
+  "bookingPricePass": "Pass",
+  "@bookingPricePass": {
+    "description": "#3843 A booking paid by a guest pass"
+  },
+  "bookingPriceSubscription": "Subscription",
+  "@bookingPriceSubscription": {
+    "description": "#3843 A booking covered by the member's subscription for the month"
+  },
   "bookingRatePlace": "Rate this place",
   "@bookingRatePlace": {
     "description": "#3066 the collapsed rating row of the booking sheet"
@@ -7465,6 +7495,10 @@
   "calendarDeskColumnPlace": "Place",
   "@calendarDeskColumnPlace": {
     "description": "#3626 Column and field title: the place a booking is on"
+  },
+  "calendarDeskColumnPrice": "Price",
+  "@calendarDeskColumnPrice": {
+    "description": "#3843 Column title of the desk calendar's bookings table and its export: what a booking was or will be charged"
   },
   "calendarDeskColumnState": "State",
   "@calendarDeskColumnState": {
@@ -44050,6 +44084,10 @@
   "@taxRefDomainDocumentLanguage": {
     "description": "#3850 document languages: taxRefDomainDocumentLanguage"
   },
+  "taxRefDomainDocumentPaper": "Document papers",
+  "@taxRefDomainDocumentPaper": {
+    "description": "#3852 reference editor: the name of the document_paper domain"
+  },
   "taxRefDomainEuMember": "EU members",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -44174,6 +44212,10 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidPapers": "A4, Letter or both, separated by a comma, including the usual paper",
+  "@taxRefInvalidPapers": {
+    "description": "#3852 reference editor: the papers field is malformed"
+  },
   "taxRefInvalidRateComponents": "One tax per line as scheme, authority, percent; together they must equal the combined rate",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
@@ -44229,6 +44271,14 @@
   "taxRefOutsideVatPostalCodes": "Postal-code prefixes outside the VAT (comma-separated)",
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
+  },
+  "taxRefPaper": "Usual paper of the documents",
+  "@taxRefPaper": {
+    "description": "#3852 reference editor: the usual paper of a country's documents"
+  },
+  "taxRefPapers": "Papers allowed (A4, Letter; empty: both)",
+  "@taxRefPapers": {
+    "description": "#3852 reference editor: the papers a country's documents may use"
   },
   "taxRefPattern": "Pattern",
   "@taxRefPattern": {
@@ -48000,6 +48050,52 @@
   "workspaceNameLabel": "Workspace name",
   "@workspaceNameLabel": {
     "description": "Label of the workspace-name input"
+  },
+  "workspacePaperA4": "A4",
+  "@workspacePaperA4": {
+    "description": "#3852 settings: the A4 paper"
+  },
+  "workspacePaperFollows": "{paper} (usual in {country})",
+  "@workspacePaperFollows": {
+    "description": "#3852 settings: the choice that follows the country; paper is A4 or US Letter, country a country name",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      },
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperHelper": "An invoice keeps the paper it was issued on.",
+  "@workspacePaperHelper": {
+    "description": "#3852 settings: what the paper setting does not change"
+  },
+  "workspacePaperLabel": "Paper of the documents",
+  "@workspacePaperLabel": {
+    "description": "#3852 settings: label of the paper the business's documents are printed on"
+  },
+  "workspacePaperLetter": "US Letter",
+  "@workspacePaperLetter": {
+    "description": "#3852 settings: the US Letter paper"
+  },
+  "workspacePaperOnly": "Documents of this country are printed on {paper} only.",
+  "@workspacePaperOnly": {
+    "description": "#3852 settings: why one paper only; paper is A4 or US Letter",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
+  },
+  "workspacePaperOnlySlip": "Only {paper}: invoices of this country end on a payment part printed on {paper}.",
+  "@workspacePaperOnlySlip": {
+    "description": "#3852 settings: why one paper only, where invoices carry a payment slip; paper is A4",
+    "placeholders": {
+      "paper": {
+        "type": "String"
+      }
+    }
   },
   "workspacePaymentsBillingTitle": "Payments & billing",
   "@workspacePaymentsBillingTitle": {

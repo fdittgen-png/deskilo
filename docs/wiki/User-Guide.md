@@ -3580,6 +3580,30 @@ You want invitations and documents to speak the language of your community.
 
 **See also:** [Invitation message](#invitation-message)
 
+<!-- anchor: user.workspace.settings.paper -->
+### Paper of the documents
+
+**Audience:** Owner · Administrator with the permission
+
+You want your invoices and letters printed on the paper your country uses.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Steps**
+
+1. In [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings), under **General details**, open **Paper of the documents**.
+2. Keep the paper usual in your country, or pick another one it allows.
+3. Tap **Save**.
+
+**Good to know**
+
+- The United States and Canada print on US Letter; other countries print on A4 unless you choose US Letter.
+- In Switzerland only A4 is offered: an invoice ends on a payment part printed on A4.
+- An invoice keeps the paper it was issued on. Changing the paper changes the invoices issued after it.
+- If you move the space to a country that does not use the paper you chose, the space follows that country's usual paper.
+
+**See also:** [Country](#country)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Letterhead address
 

@@ -65,7 +65,12 @@ enum TaxDomain {
   /// #3850 -- the languages a document of a country may be written in: the
   /// country's official languages, whether an invoice may follow its
   /// customer's language, and a language a subdivision requires.
-  documentLanguage('document_language');
+  documentLanguage('document_language'),
+
+  /// #3852 -- the papers a document of a country is printed on: the usual
+  /// one, and the ones it may use. A country with no row prints on A4 and may
+  /// choose Letter.
+  documentPaper('document_paper');
 
   const TaxDomain(this.wire);
   final String wire;

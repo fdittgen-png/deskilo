@@ -8417,6 +8417,42 @@ abstract class AppLocalizations {
   /// **'This booking lies entirely in the past.'**
   String get bookingPastError;
 
+  /// #3843 A booking paid from a carnet of half-days
+  ///
+  /// In en, this message translates to:
+  /// **'Carnet'**
+  String get bookingPriceCarnet;
+
+  /// #3843 A booking charged on its own (a rented room), with its amount in the business's currency
+  ///
+  /// In en, this message translates to:
+  /// **'Charge {amount}'**
+  String bookingPriceCharge(String amount);
+
+  /// #3843 A booking that counts toward no quota (outside the counted hours, or a place outside it)
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get bookingPriceFree;
+
+  /// #3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)
+  ///
+  /// In en, this message translates to:
+  /// **'Extra half-day'**
+  String get bookingPriceOverage;
+
+  /// #3843 A booking paid by a guest pass
+  ///
+  /// In en, this message translates to:
+  /// **'Pass'**
+  String get bookingPricePass;
+
+  /// #3843 A booking covered by the member's subscription for the month
+  ///
+  /// In en, this message translates to:
+  /// **'Subscription'**
+  String get bookingPriceSubscription;
+
   /// #3066 the collapsed rating row of the booking sheet
   ///
   /// In en, this message translates to:
@@ -8986,6 +9022,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Place'**
   String get calendarDeskColumnPlace;
+
+  /// #3843 Column title of the desk calendar's bookings table and its export: what a booking was or will be charged
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get calendarDeskColumnPrice;
 
   /// #3626 Column and filter title: where a booking stands (reserved, checked in, completed...)
   ///
@@ -55046,6 +55088,12 @@ abstract class AppLocalizations {
   /// **'Document languages'**
   String get taxRefDomainDocumentLanguage;
 
+  /// #3852 reference editor: the name of the document_paper domain
+  ///
+  /// In en, this message translates to:
+  /// **'Document papers'**
+  String get taxRefDomainDocumentPaper;
+
   /// #2477 tax reference: Domain filter: EU member states.
   ///
   /// In en, this message translates to:
@@ -55232,6 +55280,12 @@ abstract class AppLocalizations {
   /// **'Enter a number from 0 to 99.999'**
   String get taxRefInvalidNumber;
 
+  /// #3852 reference editor: the papers field is malformed
+  ///
+  /// In en, this message translates to:
+  /// **'A4, Letter or both, separated by a comma, including the usual paper'**
+  String get taxRefInvalidPapers;
+
   /// #2539 rate components: taxRefInvalidRateComponents
   ///
   /// In en, this message translates to:
@@ -55315,6 +55369,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Postal-code prefixes outside the VAT (comma-separated)'**
   String get taxRefOutsideVatPostalCodes;
+
+  /// #3852 reference editor: the usual paper of a country's documents
+  ///
+  /// In en, this message translates to:
+  /// **'Usual paper of the documents'**
+  String get taxRefPaper;
+
+  /// #3852 reference editor: the papers a country's documents may use
+  ///
+  /// In en, this message translates to:
+  /// **'Papers allowed (A4, Letter; empty: both)'**
+  String get taxRefPapers;
 
   /// #2477 tax reference: Field: regular expression for the identifier body.
   ///
@@ -60054,6 +60120,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Workspace name'**
   String get workspaceNameLabel;
+
+  /// #3852 settings: the A4 paper
+  ///
+  /// In en, this message translates to:
+  /// **'A4'**
+  String get workspacePaperA4;
+
+  /// #3852 settings: the choice that follows the country; paper is A4 or US Letter, country a country name
+  ///
+  /// In en, this message translates to:
+  /// **'{paper} (usual in {country})'**
+  String workspacePaperFollows(String paper, String country);
+
+  /// #3852 settings: what the paper setting does not change
+  ///
+  /// In en, this message translates to:
+  /// **'An invoice keeps the paper it was issued on.'**
+  String get workspacePaperHelper;
+
+  /// #3852 settings: label of the paper the business's documents are printed on
+  ///
+  /// In en, this message translates to:
+  /// **'Paper of the documents'**
+  String get workspacePaperLabel;
+
+  /// #3852 settings: the US Letter paper
+  ///
+  /// In en, this message translates to:
+  /// **'US Letter'**
+  String get workspacePaperLetter;
+
+  /// #3852 settings: why one paper only; paper is A4 or US Letter
+  ///
+  /// In en, this message translates to:
+  /// **'Documents of this country are printed on {paper} only.'**
+  String workspacePaperOnly(String paper);
+
+  /// #3852 settings: why one paper only, where invoices carry a payment slip; paper is A4
+  ///
+  /// In en, this message translates to:
+  /// **'Only {paper}: invoices of this country end on a payment part printed on {paper}.'**
+  String workspacePaperOnlySlip(String paper);
 
   /// Finance/settings UX + workspace language (#486)
   ///
