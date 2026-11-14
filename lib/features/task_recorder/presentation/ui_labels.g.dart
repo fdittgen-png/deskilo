@@ -392,6 +392,7 @@ Map<String, _Getter> _part0() => {
   'wizardTallyMatched': (l) => l.wizardTallyMatched,
   'wizardTallyRegistered': (l) => l.wizardTallyRegistered,
   'wizardTodoNone': (l) => l.wizardTodoNone,
+  'workspacePaperLetter': (l) => l.workspacePaperLetter,
   'workspaceSettingsCurrencyHelper': (l) => l.workspaceSettingsCurrencyHelper,
 };
 
@@ -2225,6 +2226,7 @@ Map<String, _Getter> _part5() => {
   'taskWorkbenchOfflineOff': (l) => l.taskWorkbenchOfflineOff,
   'taxCertEmpty': (l) => l.taxCertEmpty,
   'taxRefConfirm': (l) => l.taxRefConfirm,
+  'taxRefInvalidPapers': (l) => l.taxRefInvalidPapers,
   'taxRefRequiredLanguages': (l) => l.taxRefRequiredLanguages,
   'taxRefUnconfirmed': (l) => l.taxRefUnconfirmed,
   'templateChangedSinceReview': (l) => l.templateChangedSinceReview,
@@ -2934,6 +2936,7 @@ Map<String, _Getter> _part7() => {
   'taxRefExcludeGroups': (l) => l.taxRefExcludeGroups,
   'taxRefFrom': (l) => l.taxRefFrom,
   'taxRefOfflineCopy': (l) => l.taxRefOfflineCopy,
+  'taxRefPaper': (l) => l.taxRefPaper,
   'templateApplyConflict': (l) => l.templateApplyConflict,
   'templateClearFilters': (l) => l.templateClearFilters,
   'templateWhyHide': (l) => l.templateWhyHide,
@@ -4797,6 +4800,7 @@ Map<String, _Getter> _part12() => {
   'taskWorkbenchStoryboardRestored': (l) => l.taskWorkbenchStoryboardRestored,
   'taxRefDomainCatalogueNote': (l) => l.taxRefDomainCatalogueNote,
   'taxRefFormat': (l) => l.taxRefFormat,
+  'taxRefPapers': (l) => l.taxRefPapers,
   'taxRefState': (l) => l.taxRefState,
   'taxRefTimeZone': (l) => l.taxRefTimeZone,
   'tipAvailabilityHours': (l) => l.tipAvailabilityHours,
@@ -6286,6 +6290,7 @@ Map<String, _Getter> _part16() => {
   'visibilityPreviewNothing': (l) => l.visibilityPreviewNothing,
   'visibilityUnsupported': (l) => l.visibilityUnsupported,
   'visitGuestNote': (l) => l.visitGuestNote,
+  'workspacePaperHelper': (l) => l.workspacePaperHelper,
   'workspaceXmlImportPreviewConfigurationSkipped': (l) => l.workspaceXmlImportPreviewConfigurationSkipped,
 };
 
@@ -7706,6 +7711,7 @@ Map<String, _Getter> _part20() => {
   'taskWizardOpenFileHint': (l) => l.taskWizardOpenFileHint,
   'taxCertKindOther': (l) => l.taxCertKindOther,
   'taxRefCouldNotSave': (l) => l.taxRefCouldNotSave,
+  'taxRefDomainDocumentPaper': (l) => l.taxRefDomainDocumentPaper,
   'taxRefNotAllowed': (l) => l.taxRefNotAllowed,
   'taxRefOutsideVatPostalCodes': (l) => l.taxRefOutsideVatPostalCodes,
   'taxRefStandardRule': (l) => l.taxRefStandardRule,
@@ -8082,6 +8088,7 @@ Map<String, _Getter> _part21() => {
   'workspaceCurrencyLabel': (l) => l.workspaceCurrencyLabel,
   'workspaceInviteCodeInvalid': (l) => l.workspaceInviteCodeInvalid,
   'workspaceLanguageUnset': (l) => l.workspaceLanguageUnset,
+  'workspacePaperA4': (l) => l.workspacePaperA4,
   'workspaceXmlImportConfigurationSwitchOn': (l) => l.workspaceXmlImportConfigurationSwitchOn,
 };
 
@@ -8449,6 +8456,7 @@ Map<String, _Getter> _part22() => {
   'visibilityReachability': (l) => l.visibilityReachability,
   'wizardIssueNothing': (l) => l.wizardIssueNothing,
   'workspaceConfigMembersSection': (l) => l.workspaceConfigMembersSection,
+  'workspacePaperLabel': (l) => l.workspacePaperLabel,
   'workspaceXmlImportSubtitle': (l) => l.workspaceXmlImportSubtitle,
 };
 

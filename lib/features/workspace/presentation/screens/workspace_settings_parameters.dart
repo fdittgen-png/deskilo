@@ -11,6 +11,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/workspace_locale_fields.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/settings/settings.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/help_row.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../money/presentation/widgets/money_settings_rows.dart';
@@ -23,6 +24,7 @@ import '../widgets/new_member_defaults_tiles.dart';
 import '../widgets/settings_editor.dart';
 import '../widgets/workspace_form_group.dart';
 import '../widgets/workspace_own_screens.dart';
+import '../widgets/workspace_paper_field.dart';
 import 'workspace_settings_form.dart';
 import 'workspace_settings_host.dart';
 
@@ -145,6 +147,17 @@ class WorkspaceParameterTiles {
                     anchor: HelpAnchor.workspaceLanguage,
                   ),
                   const SizedBox(height: 12),
+                  // #3852 — the paper the documents are printed on.
+                  _withDot(
+                    WorkspacePaperField(
+                      countryCode: form.countryCode ?? '',
+                      paper: form.paper,
+                      enabled: !busy,
+                    ),
+                    helpTopic,
+                    anchor: HelpAnchor.workspacePaper,
+                  ),
+                  const FormGap(),
                   // 0060 — the postal address printed as the invoice
                   // letterhead. Lives with the other identity basics.
                   TextFormField(

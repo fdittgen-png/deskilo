@@ -20454,6 +20454,7 @@
   },
   "taxRefDomainCountry": "Pays (catalogue de création)",
   "taxRefDomainDocumentLanguage": "Langues des documents",
+  "taxRefDomainDocumentPaper": "Papiers des documents",
   "taxRefDomainEuMember": "Membres de l'UE",
   "@taxRefDomainEuMember": {
     "description": "#2477 tax reference: Domain filter: EU member states."
@@ -20575,6 +20576,7 @@
   "@taxRefInvalidNumber": {
     "description": "#2477 tax reference: Validation: percentage."
   },
+  "taxRefInvalidPapers": "A4, Letter ou les deux, séparés par une virgule, dont le papier usuel",
   "taxRefInvalidRateComponents": "Une taxe par ligne : régime, autorité, pourcentage ; leur somme doit égaler le taux combiné",
   "@taxRefInvalidRateComponents": {
     "description": "#2539 rate components: taxRefInvalidRateComponents"
@@ -20622,6 +20624,8 @@
   "@taxRefOutsideVatPostalCodes": {
     "description": "#2363 tax reference editor: taxRefOutsideVatPostalCodes"
   },
+  "taxRefPaper": "Papier usuel des documents",
+  "taxRefPapers": "Papiers permis (A4, Letter ; vide : les deux)",
   "taxRefPattern": "Format",
   "@taxRefPattern": {
     "description": "#2477 tax reference: Field: regular expression for the identifier body."
@@ -22548,6 +22552,13 @@
     "description": "Finance/settings UX + workspace language (#486)"
   },
   "workspaceNameLabel": "Nom de l'espace",
+  "workspacePaperA4": "A4",
+  "workspacePaperFollows": "{paper} (usuel : {country})",
+  "workspacePaperHelper": "Une facture garde le papier de son émission.",
+  "workspacePaperLabel": "Papier des documents",
+  "workspacePaperLetter": "Lettre US",
+  "workspacePaperOnly": "Les documents de ce pays s'impriment sur {paper} uniquement.",
+  "workspacePaperOnlySlip": "{paper} seulement : les factures de ce pays se terminent par une section paiement imprimée sur {paper}.",
   "workspacePaymentsBillingTitle": "Paiements et facturation",
   "@workspacePaymentsBillingTitle": {
     "description": "Finance/settings UX + workspace language (#486)"

@@ -288,6 +288,9 @@ abstract final class HelpAnchor {
   /// The language the space speaks by default.
   static const workspaceLanguage = 'user.workspace.settings.language';
 
+  /// The paper the space's documents are printed on (#3852).
+  static const workspacePaper = 'user.workspace.settings.paper';
+
   /// The free-text address a paper document prints.
   static const workspaceAddress = 'user.workspace.settings.address';
 

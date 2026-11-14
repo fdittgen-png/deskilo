@@ -169,6 +169,10 @@ List<TemplateFieldSpec> _workspaceColumns() => [
         'tax_exemption_reason', 'vat_account', 'invoice_legal', 'whatsapp_group'])
         _f('workspace.$c', 'identity', _text, p: _never, reason: _ownIdentity),
       _f('workspace.default_locale', 'identity', TemplateFieldType.locale, absent: _product),
+      // #3852 — absent or empty follows the country; one the target's
+      // country does not allow leaves the target's own.
+      _f('workspace.paper', 'identity', TemplateFieldType.enumeration, absent: _product,
+          values: ['A4', 'Letter'], dependsOn: ['workspace.country_code']),
       _f('workspace.document_language_confirmed', 'workspace', _bool, p: _never,
           reason: "this space's own to-do, set when its language is saved"),
       _f('workspace.vat_regime', 'identity', TemplateFieldType.enumeration, absent: _product),

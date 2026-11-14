@@ -29,6 +29,7 @@ String taxValueSummary(TaxValue v, String? locale) => switch (v) {
   RetentionValue() => '${v.years} (${v.from})',
   CountryValue() => '${v.currency} · ${v.timeZone}',
   DocumentLanguageValue() => v.languages.join(', '),
+  DocumentPaperValue() => [v.paper ?? 'A4', ...?v.papers].join(' · '),
 };
 
 String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
@@ -50,6 +51,7 @@ String taxDomainLabel(BuildContext context, TaxDomain d) => switch (d) {
   TaxDomain.retention => context.l10n.taxRefDomainRetention,
   TaxDomain.country => context.l10n.taxRefDomainCountry,
   TaxDomain.documentLanguage => context.l10n.taxRefDomainDocumentLanguage,
+  TaxDomain.documentPaper => context.l10n.taxRefDomainDocumentPaper,
 };
 
 /// The lists of a return box as the version form edits them, comma

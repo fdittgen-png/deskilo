@@ -34356,6 +34356,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Dokumentsprachen';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Papiere der Dokumente';
+
+  @override
   String get taxRefDomainEuMember => 'EU-Mitglieder';
 
   @override
@@ -34456,6 +34459,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get taxRefInvalidNumber => 'Zahl von 0 bis 99,999 eingeben';
 
   @override
+  String get taxRefInvalidPapers =>
+      'A4, Letter oder beide, durch Komma getrennt, mit dem üblichen Papier';
+
+  @override
   String get taxRefInvalidRateComponents =>
       'Eine Steuer je Zeile: Regime, Behörde, Prozent; zusammen müssen sie dem kombinierten Satz entsprechen';
 
@@ -34505,6 +34512,12 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get taxRefOutsideVatPostalCodes =>
       'Postleitzahl-Präfixe außerhalb der USt (durch Kommas getrennt)';
+
+  @override
+  String get taxRefPaper => 'Übliches Papier der Dokumente';
+
+  @override
+  String get taxRefPapers => 'Erlaubte Papiere (A4, Letter; leer: beide)';
 
   @override
   String get taxRefPattern => 'Muster';
@@ -37478,6 +37491,34 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get workspaceNameLabel => 'Name des Workspace';
+
+  @override
+  String get workspacePaperA4 => 'A4';
+
+  @override
+  String workspacePaperFollows(String paper, String country) {
+    return '$paper (üblich: $country)';
+  }
+
+  @override
+  String get workspacePaperHelper =>
+      'Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde.';
+
+  @override
+  String get workspacePaperLabel => 'Papier der Dokumente';
+
+  @override
+  String get workspacePaperLetter => 'US Letter';
+
+  @override
+  String workspacePaperOnly(String paper) {
+    return 'Dokumente dieses Landes werden nur auf $paper gedruckt.';
+  }
+
+  @override
+  String workspacePaperOnlySlip(String paper) {
+    return 'Nur $paper: Rechnungen dieses Landes enden mit einem Zahlteil auf $paper.';
+  }
 
   @override
   String get workspacePaymentsBillingTitle => 'Zahlungen & Abrechnung';
