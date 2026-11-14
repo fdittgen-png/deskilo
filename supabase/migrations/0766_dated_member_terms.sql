@@ -75,7 +75,7 @@ create policy member_term_changes_select on public.member_term_changes
   for select using (
     workspace_id in (select public.workspaces_permitting(array['manageMembers']))
     or exists (select 1 from public.members m
-                where m.id = member_id and m.user_id = auth.uid()));
+                where m.id = member_id and m.user_id = (select auth.uid())));
 drop policy if exists mcp_delegated_deny on public.member_term_changes;
 create policy mcp_delegated_deny on public.member_term_changes as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
@@ -567,6 +567,7 @@ returns jsonb language sql stable security definer set search_path to 'public' a
         and public.is_member_of(m.workspace_id)
       limit 1), jsonb_build_object('fee_cents', 0, 'overage_fee_cents', 0));
 $function$;
+revoke execute on function public.default_tariff_of(uuid) from public, anon;
 
 notify pgrst, 'reload schema';
 
