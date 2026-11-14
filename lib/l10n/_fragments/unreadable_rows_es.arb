@@ -3,5 +3,6 @@
   "journalUnreadableEntries": "{count, plural, one{Los libros contienen 1 asiento que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.} other{Los libros contienen {count} asientos que esta versión de la aplicación no conoce, así que no se exporta nada. Actualiza primero la aplicación.}}",
   "bookRoleMappedUnreadable": "Asignado a una cuenta que esta versión de la aplicación no puede leer.",
   "workspaceExportUnreadableBookings": "{count, plural, one{1 reserva no pudo ser leída por esta versión de la aplicación y no está en este archivo.} other{{count} reservas no pudieron ser leídas por esta versión de la aplicación y no están en este archivo.}}",
-  "reservationUnreadable": "Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla."
+  "reservationUnreadable": "Esta reserva existe, pero esta versión de la aplicación no puede mostrarla. Actualiza la aplicación para verla.",
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} movimiento de la cuenta no pudo ser leído por esta versión de la aplicación y no está en este archivo.} other{{count} movimientos de la cuenta no pudieron ser leídos por esta versión de la aplicación y no están en este archivo.}}"
 }

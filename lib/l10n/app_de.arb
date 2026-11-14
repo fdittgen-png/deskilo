@@ -10507,6 +10507,7 @@
   "@invoicingTryAgain": {
     "description": "#3587 retry a failed source"
   },
+  "invoicingUnassignedUnreadable": "Das eingegangene, nicht zugeordnete Geld ist nicht bekannt: Diese Version kann einige Kontobuchungen nicht lesen, und niemand wird erinnert, bis sie gelesen werden. Aktualisieren Sie die App und öffnen Sie die Rechnungen erneut.",
   "invoicingViewCustomers": "Kunden",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
@@ -12266,6 +12267,7 @@
   "meRefDefault": "Standard",
   "meRefNoRelationship": "Keine Mitgliedschaft auf diesem Server",
   "meRefStale": "Mitgliedschaft seit einiger Zeit nicht bestätigt",
+  "meRefStatusUnknown": "Mitgliedsstatus, den diese Version nicht lesen kann",
   "meRefUnnamed": "Ein Ort auf einem anderen Server",
   "meRefUnverified": "Mitgliedschaft noch nicht bestätigt",
   "meRefsTitle": "Orte anderswo",
@@ -22534,6 +22536,7 @@
   "workspaceExcelExport": "Daten exportieren (Excel)",
   "workspaceExcelExportSubtitle": "Ein ZIP: alle Daten in einer Arbeitsmappe (Buchungen, Zahlungen, Rechnungen, Mitglieder, Plan — je ein Tab), ein Manifest, das ihre Zeilen zählt, und die gespeicherten Dateien des Space.",
   "workspaceExportUnreadableBookings": "{count, plural, one{1 Buchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.} other{{count} Buchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.}}",
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} Kontobuchung konnte von dieser Version der App nicht gelesen werden und fehlt in dieser Datei.} other{{count} Kontobuchungen konnten von dieser Version der App nicht gelesen werden und fehlen in dieser Datei.}}",
   "workspaceFieldsOptional": "optional",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

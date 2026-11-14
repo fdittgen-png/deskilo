@@ -4,6 +4,7 @@
 // invoice page read an invoice the same way, from the same matches,
 // reminders, rules, holds, transmissions and payment events, so the page
 // and the line it was opened from cannot say two different things.
+import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/time/clock.dart';
@@ -13,6 +14,7 @@ import '../../application/unassigned_money.dart';
 import '../../domain/customer_statement.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice_commands.dart';
+import '../../domain/ledger_entry.dart';
 import '../../providers/bank_statement_providers.dart'
     show WorkspaceFeature, enabledFeaturesSyncProvider;
 import '../../providers/credit_move_providers.dart';
@@ -155,6 +157,7 @@ final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
     workspaceId: id,
   );
   final ledger = await accounts.fetchWorkspaceLedger(id);
+  refuseUnreadableLedger(id);
   return UnassignedMoney(
     currency: currency,
     paymentsOf: unassignedPaymentsByCustomer(
@@ -164,6 +167,19 @@ final unassignedMoneyProvider = FutureProvider.autoDispose<UnassignedMoney>((
     ),
   );
 });
+
+/// #3913 — a ledger read of [workspaceId] that left rows out (a kind or a
+/// category this version cannot read) leaves the money not assigned
+/// unknown, never smaller: nobody is reminded on it.
+@visibleForTesting
+void refuseUnreadableLedger(String workspaceId) {
+  if (ledgerLeftOut('ws:$workspaceId') > 0) throw const LedgerRowsUnreadable();
+}
+
+/// #3913 — whether the money not assigned is unknown because ledger rows
+/// could not be read (said as such, never as a failed read or a zero).
+bool unassignedMoneyUnreadable(AsyncValue<UnassignedMoney> read) =>
+    read.error is LedgerRowsUnreadable;
 
 /// The unassigned money once it is read, or null while it is not (loading,
 /// reloading or failed): unknown is not none.

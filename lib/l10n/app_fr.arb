@@ -10507,6 +10507,7 @@
   "@invoicingTryAgain": {
     "description": "#3587 retry a failed source"
   },
+  "invoicingUnassignedUnreadable": "L'argent reçu et non affecté n'est pas connu : cette version ne sait pas lire certaines écritures du compte, et personne n'est relancé tant qu'elles ne le sont pas. Mettez l'application à jour, puis rouvrez les factures.",
   "invoicingViewCustomers": "Clients",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
@@ -12266,6 +12267,7 @@
   "meRefDefault": "Par défaut",
   "meRefNoRelationship": "Aucune adhésion sur ce serveur",
   "meRefStale": "Adhésion non confirmée récemment",
+  "meRefStatusUnknown": "Statut d'adhésion illisible pour cette version",
   "meRefUnnamed": "Un lieu sur un autre serveur",
   "meRefUnverified": "Adhésion pas encore vérifiée",
   "meRefsTitle": "Lieux ailleurs",
@@ -22534,6 +22536,7 @@
   "workspaceExcelExport": "Exporter les données (Excel)",
   "workspaceExcelExportSubtitle": "Un ZIP : toutes les données dans un classeur (réservations, paiements, factures, membres, plan — un onglet chacun), un manifeste qui en compte les lignes, et les fichiers de l'espace.",
   "workspaceExportUnreadableBookings": "{count, plural, one{{count} réservation n'a pas pu être lue par cette version de l'application et ne figure pas dans ce fichier.} other{{count} réservations n'ont pas pu être lues par cette version de l'application et ne figurent pas dans ce fichier.}}",
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} écriture du compte n'a pas pu être lue par cette version de l'application et ne figure pas dans ce fichier.} other{{count} écritures du compte n'ont pas pu être lues par cette version de l'application et ne figurent pas dans ce fichier.}}",
   "workspaceFieldsOptional": "facultatif",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

@@ -32,8 +32,10 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
       'UK only: on in the London space (ws-3), where its journey is shown; '
       'left off in the French and German spaces',
   WorkspaceFeature.recordingPrivacy:
-      'filming mode would replace the invented cast by other invented '
-      'people on every screen',
+      'recording privacy is the mode itself, not a switch beside it: on, '
+      'every name the Demo prints is replaced by an invented one from the '
+      'first screen, so the Demo keeps it off and the owner can turn it on '
+      'from Features for a session, the cast returning when it is turned off',
   // #3824 — the goods ledger has no screen before stock S2, and its Demo
   // is the shop of stock S11 (#3823), whose figures agree with its pages.
   WorkspaceFeature.stockManagement:

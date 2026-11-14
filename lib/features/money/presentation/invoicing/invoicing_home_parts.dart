@@ -3,6 +3,7 @@
 // #3587 release 1 -- the invoicing home's two plain states: a business
 // that has never invoiced, and a source that could not be read.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -10,6 +11,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/personal_theme.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import 'invoicing_home.dart' show InvoicingSource;
+import 'invoicing_reads.dart';
 
 /// The home of a business that has never invoiced.
 class InvoicingEmptyHome extends StatelessWidget {
@@ -51,7 +53,7 @@ class InvoicingEmptyHome extends StatelessWidget {
 }
 
 /// One line naming a source that could not be read, with a retry.
-class InvoicingFailedSource extends StatelessWidget {
+class InvoicingFailedSource extends ConsumerWidget {
   const InvoicingFailedSource({
     super.key,
     required this.source,
@@ -62,7 +64,7 @@ class InvoicingFailedSource extends StatelessWidget {
   final VoidCallback onRetry;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
     final t = PersonalTheme.of(context);
     final name = switch (source) {
@@ -89,7 +91,14 @@ class InvoicingFailedSource extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                l.invoicingSourceFailed(name),
+                // #3913 — the money not assigned is unknown because ledger
+                // entries could not be read: said so, not as a failed read.
+                source == InvoicingSource.credits &&
+                        unassignedMoneyUnreadable(
+                          ref.watch(unassignedMoneyProvider),
+                        )
+                    ? l.invoicingUnassignedUnreadable
+                    : l.invoicingSourceFailed(name),
                 style: TextStyle(color: t.warning),
               ),
             ),

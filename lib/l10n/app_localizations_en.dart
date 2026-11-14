@@ -16693,6 +16693,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingTryAgain => 'Try again';
 
   @override
+  String get invoicingUnassignedUnreadable =>
+      'The money received and not assigned is not known: some account entries cannot be read by this version, and nobody is reminded until they are. Update the app, then open the invoices again.';
+
+  @override
   String get invoicingViewCustomers => 'Customers';
 
   @override
@@ -20015,6 +20019,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get meRefStale => 'Membership not confirmed recently';
+
+  @override
+  String get meRefStatusUnknown => 'Membership status this version cannot read';
 
   @override
   String get meRefUnnamed => 'A place on another server';
@@ -37094,6 +37101,19 @@ class AppLocalizationsEn extends AppLocalizations {
       other:
           '$count bookings could not be read by this version of the app and are not in this file.',
       one: '1 booking could not be read by this version of the app and is not in this file.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String workspaceExportUnreadableLedger(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count ledger entries could not be read by this version of the app and are not in this file.',
+      one:
+          '$count ledger entry could not be read by this version of the app and is not in this file.',
     );
     return '$_temp0';
   }
