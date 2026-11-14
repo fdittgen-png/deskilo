@@ -119,16 +119,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   }) async {
     _m.paymentOrders.add((provider, amountCents));
     final url = _m.paymentApprovalUrl;
-    return url != null
-        ? PaymentOrderStart(approveUrl: url, orderId: 'order-1')
-        : _withoutApprovalUrl(
-            provider,
-            memberId,
-            amountCents,
-            currencyCode,
-            period,
-            requestId,
-          );
+    return url != null ? PaymentOrderStart(approveUrl: url, orderId: 'order-1') : _withoutApprovalUrl(provider, memberId, amountCents, currencyCode, period, requestId);
   }
 
   /// No approval address was given: the Demo's stand-in opens an order of its
