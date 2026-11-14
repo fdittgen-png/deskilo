@@ -35,8 +35,6 @@ const _notGuardedYet = <String, String>{
   '/report-editor':
       '#3947 40 dp Design and Preview at 1024, a 42 dp Insert element at 1440; '
       'text wider than 760 px; Tab reaches a control twice at 1920',
-  '/settings/sites': '#3948 a sentence 852 px wide at 1024',
-  '/vat': '#3948 a sentence 834 px wide at 1024',
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
   '/billing': '#3947 to join: its Tab order and its unnamed control are both fixed',
