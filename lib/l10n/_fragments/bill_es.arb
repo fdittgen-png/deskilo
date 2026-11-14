@@ -198,5 +198,6 @@
   },
   "payOnlineReversedTitle": "Pago en línea revertido",
   "payOnlineReversedDetail": "El pago {reference} ({amount} con {provider}) fue revertido por el proveedor (un reembolso o una disputa). La empresa corrige su saldo.",
-  "payOnlineTestKeys": "El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales."
+  "payOnlineTestKeys": "El pago en línea no está disponible: el proveedor de pagos está configurado con credenciales de prueba. La empresa debe introducir sus claves reales.",
+  "payOnlineReversedPartDetail": "Del pago {reference} ({amount} con {provider}), el proveedor revirtió {reversed} (un reembolso o una disputa). La empresa corrige su saldo."
 }

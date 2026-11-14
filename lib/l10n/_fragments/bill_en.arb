@@ -383,5 +383,23 @@
   },
   "@payOnlineTestKeys": {
     "description": "#3905 an online payment refused because the provider holds test credentials"
+  },
+  "payOnlineReversedPartDetail": "Of payment {reference} ({amount} via {provider}), the provider reversed {reversed} (a refund or a dispute). The business corrects your balance.",
+  "@payOnlineReversedPartDetail": {
+    "description": "#3925 a payment the provider reversed: part of it, on the member's bill",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "reversed": {
+        "type": "String"
+      }
+    }
   }
 }

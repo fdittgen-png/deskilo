@@ -2234,6 +2234,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{Invoice 1 member for the month} other{Invoice {count} members for the month}}'**
   String attentionIssue(int count);
 
+  /// #3925 a payment the provider reversed: the decision surface's line
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Look at 1 payment the provider reversed} other{Look at {count} payments the provider reversed}}'**
+  String attentionReviewReversals(int count);
+
   /// #2332: attentionSetUp
   ///
   /// In en, this message translates to:
@@ -35700,6 +35706,17 @@ abstract class AppLocalizations {
     String provider,
   );
 
+  /// #3925 a payment the provider reversed: part of it, on the member's bill
+  ///
+  /// In en, this message translates to:
+  /// **'Of payment {reference} ({amount} via {provider}), the provider reversed {reversed} (a refund or a dispute). The business corrects your balance.'**
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  );
+
   /// #3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)
   ///
   /// In en, this message translates to:
@@ -41325,6 +41342,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Period: {from} – {to}'**
   String recordedPaymentsPeriod(String from, String to);
+
+  /// #3925 a payment the provider reversed: marking it looked at failed
+  ///
+  /// In en, this message translates to:
+  /// **'The reversal could not be marked as looked at. Try again.'**
+  String get recordedPaymentsReversalReviewFailed;
+
+  /// #3925 a payment the provider reversed: the button that marks it looked at
+  ///
+  /// In en, this message translates to:
+  /// **'Looked at'**
+  String get recordedPaymentsReversalReviewed;
+
+  /// #3925 a payment the provider reversed: what to do with it
+  ///
+  /// In en, this message translates to:
+  /// **'A refund or a dispute at the provider. Correct the member\'s balance, then mark the reversal as looked at.'**
+  String get recordedPaymentsReversalsHint;
+
+  /// #3925 a payment the provider reversed: the section title on the payments screen
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed by the provider'**
+  String get recordedPaymentsReversalsTitle;
 
   /// Screen title: the payments behind the collected figure
   ///

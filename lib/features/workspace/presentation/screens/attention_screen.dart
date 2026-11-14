@@ -156,6 +156,8 @@ String _attentionTitle(AppLocalizations l10n, Attention item) =>
           ),
         ),
       AttentionAction.confirmLanguage => l10n.attentionConfirmDocumentLanguage,
+      AttentionAction.reviewReversals =>
+        l10n.attentionReviewReversals(item.count),
     };
 
 /// Where a tap takes the person: the screen where that decision is made.
@@ -171,4 +173,5 @@ String attentionRoute(Attention item) =>
       AttentionAction.setUpStep => '/setup',
       AttentionAction.unblock => '/features',
       AttentionAction.confirmLanguage => '/workspace-settings',
+      AttentionAction.reviewReversals => '/money/payments',
     };

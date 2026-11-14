@@ -34,6 +34,12 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
   }
 
   @override
+  Future<void> reviewPaymentReversal(String intentId) => _client.rpc<void>(
+    'review_payment_reversal_v1',
+    params: {'p_intent_id': intentId},
+  );
+
+  @override
   Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) async {
     final data = await _invokePayments({
       'action': 'config',

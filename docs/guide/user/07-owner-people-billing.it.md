@@ -593,7 +593,7 @@ Vuole che i membri paghino online un conto aperto, sul Suo account presso il for
 
 Le chiavi provengono dalla dashboard del fornitore: **Client ID**, **Secret**, **Ambiente**, **ID webhook** e **URL di ritorno** per PayPal; **Chiave segreta**, **Segreto di firma webhook** e **URL di ritorno** per Stripe; **Chiave API** e **URL di ritorno** per Mollie e Wero. Tenga separate le chiavi di prova e quelle reali: tutte le chiavi che inserisce devono appartenere alla stessa modalità.
 
-Uno spazio di produzione incassa solo con chiavi reali: con chiavi di prova, il pagamento online di un membro viene rifiutato. Per Stripe, l'endpoint del webhook ascolta anche **charge.dispute.created** e **charge.refunded**: un pagamento che il fornitore storna (un rimborso o una contestazione) viene allora segnato come stornato, e lei corregge il saldo del membro.
+Uno spazio di produzione incassa solo con chiavi reali: con chiavi di prova, il pagamento online di un membro viene rifiutato. Per Stripe, l'endpoint del webhook ascolta anche **charge.dispute.created** e **charge.refunded**: un pagamento che il fornitore storna (un rimborso o una contestazione) viene allora segnato come stornato, e lei corregge il saldo del membro. Finché nessuno che vede le finanze lo segna come **Esaminato** sotto **Stornati dal fornitore** nella schermata dei pagamenti, la panoramica indica quanti storni attendono.
 
 Un'installazione che si limita a provare i pagamenti può impostare `DESKILO_ALLOW_TEST_PAYMENTS=true` nell'ambiente delle sue funzioni: gli ordini si aprono allora con chiavi di prova e gli eventi in modalità di prova vengono elaborati; non deve mai essere impostato su un'installazione che incassa pagamenti reali.
 

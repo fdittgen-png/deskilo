@@ -163,7 +163,7 @@ function workspaceConfig(){
  // names). Written only while the page asks for it; a role row REPLACES
  // the app's defaults for that role, which is why the page offers all of them.
  if(on('roleManagement'))ws.role_permissions=Object.fromEntries(Object.keys(PERM_DEFAULTS).map(role=>[role,PERMS.filter(p=>(S.perms[role]||[]).includes(p))]));
- if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
+ if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),...(termStated()?{first_after_days:int(S.reminders.firstDays,14)}:{}),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
  return ws;
 }
 // #2331 — the two series the page asks for (only while invoicing as a
@@ -346,3 +346,8 @@ ans.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name'
  ans.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
  return ans;
 }
+// #3889 -- the reminders' delay is the business's own term when somebody wrote
+// it: the person typed it here, or the answers carry a value other than the
+// page's starting one (a saved or imported answer). An untouched default is
+// left out, so the business keeps the platform's default to review.
+function termStated(){return S.reminders.firstDaysStated===true||int(S.reminders.firstDays,REMINDER_DEFAULTS.firstDays)!==REMINDER_DEFAULTS.firstDays}

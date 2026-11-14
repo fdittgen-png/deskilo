@@ -1782,6 +1782,15 @@
       }
     }
   },
+  "attentionReviewReversals": "{count, plural, one{Look at 1 payment the provider reversed} other{Look at {count} payments the provider reversed}}",
+  "@attentionReviewReversals": {
+    "description": "#3925 a payment the provider reversed: the decision surface's line",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "attentionSetUp": "Set up: {area}",
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp",
@@ -29093,6 +29102,24 @@
       }
     }
   },
+  "payOnlineReversedPartDetail": "Of payment {reference} ({amount} via {provider}), the provider reversed {reversed} (a refund or a dispute). The business corrects your balance.",
+  "@payOnlineReversedPartDetail": {
+    "description": "#3925 a payment the provider reversed: part of it, on the member's bill",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "reversed": {
+        "type": "String"
+      }
+    }
+  },
   "payOnlineReversedTitle": "Online payment reversed",
   "@payOnlineReversedTitle": {
     "description": "#3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)"
@@ -33445,6 +33472,22 @@
         "type": "String"
       }
     }
+  },
+  "recordedPaymentsReversalReviewFailed": "The reversal could not be marked as looked at. Try again.",
+  "@recordedPaymentsReversalReviewFailed": {
+    "description": "#3925 a payment the provider reversed: marking it looked at failed"
+  },
+  "recordedPaymentsReversalReviewed": "Looked at",
+  "@recordedPaymentsReversalReviewed": {
+    "description": "#3925 a payment the provider reversed: the button that marks it looked at"
+  },
+  "recordedPaymentsReversalsHint": "A refund or a dispute at the provider. Correct the member's balance, then mark the reversal as looked at.",
+  "@recordedPaymentsReversalsHint": {
+    "description": "#3925 a payment the provider reversed: what to do with it"
+  },
+  "recordedPaymentsReversalsTitle": "Reversed by the provider",
+  "@recordedPaymentsReversalsTitle": {
+    "description": "#3925 a payment the provider reversed: the section title on the payments screen"
   },
   "recordedPaymentsTitle": "Payments received",
   "@recordedPaymentsTitle": {

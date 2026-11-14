@@ -190,6 +190,7 @@ class _ActivityState extends ConsumerState<AccountActivityScreen> {
   String _status(AppLocalizations l10n, String status) => switch (status) {
     'created' => l10n.payOnlinePendingTitle,
     'failed' => l10n.payOnlineFailedTitle,
+    'reversed' => l10n.payOnlineReversedTitle,
     'confirmed' => l10n.accountPaymentConfirmed,
     'voided' => l10n.accountInvoiceVoided,
     'regrouped' =>

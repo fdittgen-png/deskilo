@@ -19,6 +19,7 @@ class PaymentIntent implements SystemStamped {
     this.reference = '',
     this.reversedAt,
     this.reversalReason = '',
+    this.reversalReviewedAt,
     this.system = SystemColumns.none,
   });
 
@@ -50,6 +51,51 @@ class PaymentIntent implements SystemStamped {
   final DateTime? reversedAt;
   final String reversalReason;
 
+  /// #3925 — when someone who sees the finances looked at the reversal;
+  /// null while it waits for them.
+  final DateTime? reversalReviewedAt;
+
+  /// #3925 — a reversal nobody has looked at yet: the books may still need
+  /// correcting.
+  bool get awaitsReview => status == 'reversed' && reversalReviewedAt == null;
+
+  /// #3925 — the amount the provider reversed, in minor units of
+  /// [currency], read from [reversalReason]: its last two words are the
+  /// amount and its currency, as the webhooks write them (0757). Null when
+  /// the reason names no amount, or one in another currency.
+  int? reversedMinor(String currency) {
+    final m = RegExp(r'(\d+(?:\.\d+)?) ([A-Z]{3})$')
+        .firstMatch(reversalReason.trim());
+    if (m == null || m.group(2) != currency.trim().toUpperCase()) return null;
+    try {
+      final exponent = exponentOf(m.group(2)!);
+      final amount = ExactDecimal.parse(m.group(1)!);
+      if (amount.scale > exponent) return null;
+      return (amount.units * BigInt.from(10).pow(exponent - amount.scale))
+          .toInt();
+    } on AccountingException {
+      return null;
+    }
+  }
+
+  /// The same payment, its reversal looked at [at].
+  PaymentIntent reviewedAt(DateTime at) => PaymentIntent(
+        id: id,
+        memberId: memberId,
+        provider: provider,
+        orderId: orderId,
+        period: period,
+        amountCents: amountCents,
+        status: status,
+        createdAt: createdAt,
+        captureId: captureId,
+        reference: reference,
+        reversedAt: reversedAt,
+        reversalReason: reversalReason,
+        reversalReviewedAt: at,
+        system: system,
+      );
+
   factory PaymentIntent.fromRow(Map<String, dynamic> row) => PaymentIntent(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
@@ -64,5 +110,8 @@ class PaymentIntent implements SystemStamped {
         createdAt: DateTime.parse(row['created_at'] as String),
         reversedAt: row['reversed_at'] == null ? null : DateTime.parse(row['reversed_at'] as String),
         reversalReason: row['reversal_reason'] as String? ?? '',
+        reversalReviewedAt: row['reversal_reviewed_at'] == null
+            ? null
+            : DateTime.parse(row['reversal_reviewed_at'] as String),
       );
 }

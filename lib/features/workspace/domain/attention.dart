@@ -75,6 +75,10 @@ enum AttentionAction {
   /// #3850 — confirm the business's document language, which the server
   /// gave a business of a country with several shipped languages (0753).
   confirmLanguage,
+
+  /// #3925 — look at the payments a provider reversed and correct the
+  /// books; [Attention.count] how many wait.
+  reviewReversals,
 }
 
 /// One line: who or what, the decision, and since when.
