@@ -610,7 +610,8 @@ void main() {
     expect(row.hasPrimaryFocus, isTrue);
     workspace.failRead = true;
     await tester.sendKeyEvent(LogicalKeyboardKey.arrowUp);
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
     expect(control, findsOneWidget);
@@ -630,7 +631,8 @@ void main() {
 
     workspace.failRead = false;
     await tester.tap(find.text('Try again'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     expect(find.byKey(const ValueKey('read-failure')), findsNothing);
     expect(shown(), OutsideHoursMode.free);
   });
