@@ -21,7 +21,6 @@ import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
-import 'package:deskilo/core/demo/data/guest_pass_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
@@ -48,7 +47,6 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
-import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -64,8 +62,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_assistant_journeys.dart';
-import '../../helpers/demo_free_seat.dart';
 import '../../helpers/demo_outbox_journeys.dart';
+import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 
 /// Everything a scenario may look at: the session and the repositories
@@ -155,10 +153,7 @@ _Scenario _toggle(String story) =>
 /// entry whose scenario is back in the reference business is removed. A
 /// feature left off (`demoFeaturesLeftOff`, e.g. `mtdSubmission`, London's
 /// journey) has no scenario and so no entry.
-const Map<WorkspaceFeature, String> _elsewhere = {
-  WorkspaceFeature.guestPasses:
-      'the pass is sold and invoiced in pounds: a pound business is London',
-};
+const Map<WorkspaceFeature, String> _elsewhere = {};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
@@ -264,46 +259,12 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'other spaces as a guest',
     (w) => w.f.guests.visits.isNotEmpty,
   ),
-  // #3308 — a London day pass sold at the desk: the guest's place is booked
-  // and the pass invoiced to the guest, in pounds.
+  // #3963 — a day pass sold at the desk in the reference business and used:
+  // the seat is booked and checked in, the pass invoiced in euros.
   WorkspaceFeature.guestPasses: _action(
     _owner,
-    'a day pass sold to a guest in London',
-    (w) async {
-      final london = w.f.london;
-      final passes = FakeGuestPassRepository(
-        workspaceId: demoLondonSpaceId,
-        currency: 'GBP',
-        reservations: london.reservations,
-        workspaces: london.workspaces,
-        money: london.money,
-        now: () => w.now,
-        maySell: () => true,
-        mayPrice: () => true,
-        floorPlanSeats: () => london.floorPlan.seats,
-        offers: const [
-          GuestPassOffer(id: 'p', name: 'Day pass', unit: GuestPassUnit.day, priceCents: 2500),
-        ],
-      );
-      final offer = (await passes.offers(demoLondonSpaceId)).single;
-      final slot = freeSeatForPass(london.floorPlan.seats, london.reservations.reservations,
-          DateTime(w.now.year, w.now.month, w.now.day + 20), startMinutes: 9 * 60, endMinutes: 17 * 60);
-      final sale = await passes.sell(
-        demoLondonSpaceId,
-        draft: GuestPassDraft(
-          offer: offer,
-          seatId: slot.seatId,
-          day: slot.day,
-          startMinutes: 9 * 60,
-          endMinutes: 17 * 60,
-        ),
-        guest: const {'first_name': 'Gwen', 'last_name': 'Guest'},
-        requestId: 'scenario-pass',
-      );
-      return sale.reservationIds.length == 1 &&
-          london.money.invoices.any((i) => i.id == sale.invoiceId && i.currency == 'GBP' && i.totalCents == 2500);
-    },
-    business: demoLondonSpaceId,
+    'a day pass sold to a guest, who uses it',
+    (_) => dayPassJourney(),
   ),
   // ── workspaceAccess / physicalAccess ─────────────────────────────────
   WorkspaceFeature.kioskMode: _state(
@@ -1116,9 +1077,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   ),
   WorkspaceFeature.einvoiceCustomerDelivery: _action(
     _owner,
-    'a bill sent '
-    'as an e-invoice (the gateway is simulated)',
-    (w) => w.f.money.invoices.isNotEmpty,
+    'a bill sent as an e-invoice through the configured channel, its receipt '
+    'read, and the submission nobody could confirm settled',
+    (_) => eInvoiceJourney(),
   ),
   // #3962 — an assistant connected in the reference business, the request it
   // left for confirmation, and the page's assistant that books a room.
