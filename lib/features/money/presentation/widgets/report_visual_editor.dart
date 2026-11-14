@@ -145,7 +145,6 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               tooltip: l10n.spaceMoveUp,
               key: ValueKey('${widget.bandKey}-up-$index'),
               icon: const Icon(Icons.arrow_upward, size: 16),
-              visualDensity: VisualDensity.compact,
               constraints: target,
               onPressed: () => visualMove(index, -1),
             ),
@@ -153,7 +152,6 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               tooltip: l10n.spaceMoveDown,
               key: ValueKey('${widget.bandKey}-down-$index'),
               icon: const Icon(Icons.arrow_downward, size: 16),
-              visualDensity: VisualDensity.compact,
               constraints: target,
               onPressed: () => visualMove(index, 1),
             ),
@@ -172,7 +170,6 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
                 key: ValueKey('${widget.bandKey}-fields-$index'),
                 icon: const Icon(Icons.data_object, size: 16),
                 tooltip: l10n.reportDesignerFields,
-                visualDensity: VisualDensity.compact,
                 constraints: target,
                 onPressed: visualPickField,
               ),
@@ -206,7 +203,6 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
               key: ValueKey('${widget.bandKey}-delete-$index'),
               icon: const Icon(Icons.delete_outline, size: 16),
-              visualDensity: VisualDensity.compact,
               constraints: target,
               onPressed: () => visualDelete(index),
             ),
@@ -214,7 +210,6 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
               tooltip: l10n.a11yFinishEditing,
               key: ValueKey('${widget.bandKey}-done-$index'),
               icon: const Icon(Icons.check, size: 16),
-              visualDensity: VisualDensity.compact,
               constraints: target,
               onPressed: visualDeselect,
             ),
@@ -446,19 +441,24 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
         : (columns[column - 1].isNotEmpty
             ? columns[column - 1].last + 1
             : null);
-    return InkWell(
-      key: before == null
-          ? null
-          : ValueKey('${widget.bandKey}-line-$before'),
-      onTap: before == null ? null : () => visualSelect(before),
-      child: Container(
-        width: 16,
-        constraints: const BoxConstraints(minHeight: 24),
-        alignment: Alignment.center,
+    // #3970 — the handle says what it is; it keeps the size of the page.
+    return Semantics(
+      button: before != null,
+      label: context.l10n.reportLineColumnsSplit,
+      child: InkWell(
+        key: before == null
+            ? null
+            : ValueKey('${widget.bandKey}-line-$before'),
+        onTap: before == null ? null : () => visualSelect(before),
         child: Container(
-          width: 1,
-          height: 24,
-          color: ReportPage.chrome.withValues(alpha: .5),
+          width: 16,
+          constraints: const BoxConstraints(minHeight: 24),
+          alignment: Alignment.center,
+          child: Container(
+            width: 1,
+            height: 24,
+            color: ReportPage.chrome.withValues(alpha: .5),
+          ),
         ),
       ),
     );
