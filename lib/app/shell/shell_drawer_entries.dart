@@ -73,6 +73,7 @@ class DrawerEntries {
     required this.go,
     this.setupOpen = false,
     this.openToPay,
+    this.openBankStatements,
   });
 
   final BuildContext context;
@@ -96,6 +97,10 @@ class DrawerEntries {
 
   /// Opens the existing workspace-wide payable flow.
   final VoidCallback? openToPay;
+
+  /// #3926 — opens the bank statements; null when the person may not read
+  /// them or the bank import is off.
+  final VoidCallback? openBankStatements;
 
   /// Leaves the drawer and goes (or pushes) to [route].
   final void Function(String route, {bool push}) go;
@@ -241,7 +246,10 @@ class DrawerEntries {
           openToPay != null)
         DrawerEntry('drawer-purchases-to-pay', Icons.outbox_outlined,
             l10n.cashHubToPay, openToPay!),
-      if (money &&
+      // #3926 — at the desk the cash page's doors are the Cash group's
+      // entries ([cashPages]); the phone keeps the page.
+      if (!permanent &&
+          money &&
           (may(WorkspacePermission.viewFinances) ||
               may(WorkspacePermission.manageBilling) ||
               may(WorkspacePermission.managePurchases)))
