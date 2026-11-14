@@ -65,6 +65,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/demo_free_seat.dart';
 import '../../helpers/demo_outbox_journeys.dart';
+import '../../helpers/demo_payment_journeys.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -716,11 +717,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) => w.f.money.invoices.any((i) => i.number.isNotEmpty),
   ),
   // ── billingPayments / collection ────────────────────────────────────
+  // #3961 — the order the app starts, the Demo's stand-in for the provider's
+  // page, and the books that agree afterwards.
   WorkspaceFeature.onlinePayments: _action(
     _member,
-    'Bruno pays his bill '
-    'online (the provider is simulated)',
-    (w) => _open(w, 'member-2'),
+    'Bruno pays his bill online on the Demo\'s stand-in for the provider\'s '
+    'page',
+    (w) => _open(w, 'member-2') ? onlinePaymentJourney() : false,
   ),
   WorkspaceFeature.bankImport: _state(
     _owner,

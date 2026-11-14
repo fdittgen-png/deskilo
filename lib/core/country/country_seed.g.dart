@@ -3,6 +3,8 @@
 //
 // The `country` rows of the tax reference seed (#2488), in catalogue order.
 
+import 'package:deskilo_document_model/paper.dart';
+
 import 'country_catalog.dart';
 
 const List<Country> bundledCountries = [
@@ -33,9 +35,9 @@ const List<Country> bundledCountries = [
   Country('PL', 'PLN', 'Europe/Warsaw'),
   Country('RO', 'RON', 'Europe/Bucharest'),
   Country('SE', 'SEK', 'Europe/Stockholm'),
-  Country('CH', 'CHF', 'Europe/Zurich', scheme: BankingScheme.ch),
+  Country('CH', 'CHF', 'Europe/Zurich', scheme: BankingScheme.ch, papers: [Paper.a4]),
   Country('NO', 'NOK', 'Europe/Oslo'),
   Country('GB', 'GBP', 'Europe/London', scheme: BankingScheme.uk),
-  Country('US', 'USD', 'America/New_York', scheme: BankingScheme.us),
-  Country('CA', 'CAD', 'America/Toronto', scheme: BankingScheme.ca),
+  Country('US', 'USD', 'America/New_York', scheme: BankingScheme.us, paper: Paper.letter),
+  Country('CA', 'CAD', 'America/Toronto', scheme: BankingScheme.ca, paper: Paper.letter),
 ];

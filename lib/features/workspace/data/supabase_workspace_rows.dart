@@ -76,6 +76,7 @@ mixin SupabaseWorkspaceRows {
     invoiceLegal: row['invoice_legal'] as Map<String, dynamic>? ?? const {},
     defaultLocale: row['default_locale'] as String? ?? '',
     documentLanguageConfirmed: row['document_language_confirmed'] != false,
+    paper: row['paper'] as String?,
     invitationTemplates:
         row['invitation_templates'] as Map<String, dynamic>? ?? const {},
   );

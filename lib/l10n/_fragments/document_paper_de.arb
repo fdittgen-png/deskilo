@@ -1,0 +1,14 @@
+{
+  "@@locale": "de",
+  "taxRefDomainDocumentPaper": "Papiere der Dokumente",
+  "taxRefPaper": "Übliches Papier der Dokumente",
+  "taxRefPapers": "Erlaubte Papiere (A4, Letter; leer: beide)",
+  "taxRefInvalidPapers": "A4, Letter oder beide, durch Komma getrennt, mit dem üblichen Papier",
+  "workspacePaperLabel": "Papier der Dokumente",
+  "workspacePaperFollows": "{paper} (üblich: {country})",
+  "workspacePaperA4": "A4",
+  "workspacePaperLetter": "US Letter",
+  "workspacePaperHelper": "Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde.",
+  "workspacePaperOnlySlip": "Nur {paper}: Rechnungen dieses Landes enden mit einem Zahlteil auf {paper}.",
+  "workspacePaperOnly": "Dokumente dieses Landes werden nur auf {paper} gedruckt."
+}

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
+import 'package:deskilo_document_model/paper.dart';
+
 import 'country_seed.g.dart';
 
 /// How a country's banks identify an account — the shape the payment
@@ -30,6 +32,8 @@ class Country {
     this.currencyCode,
     this.defaultTimezone, {
     this.scheme = BankingScheme.sepa,
+    this.paper = Paper.a4,
+    this.papers = Paper.values,
   });
 
   /// ISO 3166-1 alpha-2.
@@ -44,6 +48,13 @@ class Country {
   final String defaultTimezone;
 
   final BankingScheme scheme;
+
+  /// #3852 — the usual paper of its documents, the one a business here
+  /// prints on unless it chooses another of [papers].
+  final Paper paper;
+
+  /// #3852 — the papers its documents may use.
+  final List<Paper> papers;
 }
 
 /// The countries a workspace may be in (#711 -- 32, aligned with the VAT

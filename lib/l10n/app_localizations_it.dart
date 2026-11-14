@@ -5353,6 +5353,26 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa prenotazione è interamente nel passato.';
 
   @override
+  String get bookingPriceCarnet => 'Carnet';
+
+  @override
+  String bookingPriceCharge(String amount) {
+    return 'Addebito $amount';
+  }
+
+  @override
+  String get bookingPriceFree => 'Gratuito';
+
+  @override
+  String get bookingPriceOverage => 'Mezza giornata extra';
+
+  @override
+  String get bookingPricePass => 'Pass';
+
+  @override
+  String get bookingPriceSubscription => 'Abbonamento';
+
+  @override
   String get bookingRatePlace => 'Valuta questo posto';
 
   @override
@@ -5760,6 +5780,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get calendarDeskColumnPlace => 'Posto';
+
+  @override
+  String get calendarDeskColumnPrice => 'Prezzo';
 
   @override
   String get calendarDeskColumnState => 'Stato';
@@ -7505,6 +7528,19 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get demoPersonaOwner => 'Proprietario';
+
+  @override
+  String get demoProviderPageBody =>
+      'Questa pagina sostituisce quella di un fornitore di pagamenti: non viene addebitato nulla e nulla lascia questo dispositivo. Scegli la risposta del fornitore.';
+
+  @override
+  String get demoProviderPageNoAnswer => 'Il fornitore non risponde';
+
+  @override
+  String get demoProviderPagePay => 'Paga';
+
+  @override
+  String get demoProviderPageTitle => 'Pagina di pagamento (dimostrazione)';
 
   @override
   String get demoSessionBadge => 'Demo';
@@ -34292,6 +34328,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefDomainDocumentLanguage => 'Lingue dei documenti';
 
   @override
+  String get taxRefDomainDocumentPaper => 'Carte dei documenti';
+
+  @override
   String get taxRefDomainEuMember => 'Membri UE';
 
   @override
@@ -34391,6 +34430,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get taxRefInvalidNumber => 'Inserisci un numero da 0 a 99,999';
 
   @override
+  String get taxRefInvalidPapers =>
+      'A4, Letter o entrambe, separate da una virgola, compresa la carta abituale';
+
+  @override
   String get taxRefInvalidRateComponents =>
       'Un\'imposta per riga: regime, autorità, percentuale; insieme devono essere pari all\'aliquota combinata';
 
@@ -34439,6 +34482,12 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get taxRefOutsideVatPostalCodes =>
       'Prefissi di CAP fuori dall’IVA (separati da virgole)';
+
+  @override
+  String get taxRefPaper => 'Carta abituale dei documenti';
+
+  @override
+  String get taxRefPapers => 'Carte consentite (A4, Letter; vuoto: entrambe)';
 
   @override
   String get taxRefPattern => 'Formato';
@@ -37407,6 +37456,34 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get workspaceNameLabel => 'Nome dello spazio';
+
+  @override
+  String get workspacePaperA4 => 'A4';
+
+  @override
+  String workspacePaperFollows(String paper, String country) {
+    return '$paper (abituale: $country)';
+  }
+
+  @override
+  String get workspacePaperHelper =>
+      'Una fattura mantiene la carta con cui è stata emessa.';
+
+  @override
+  String get workspacePaperLabel => 'Carta dei documenti';
+
+  @override
+  String get workspacePaperLetter => 'Lettera USA';
+
+  @override
+  String workspacePaperOnly(String paper) {
+    return 'I documenti di questo paese si stampano solo su $paper.';
+  }
+
+  @override
+  String workspacePaperOnlySlip(String paper) {
+    return 'Solo $paper: le fatture di questo paese terminano con una sezione di pagamento stampata su $paper.';
+  }
 
   @override
   String get workspacePaymentsBillingTitle => 'Pagamenti e fatturazione';

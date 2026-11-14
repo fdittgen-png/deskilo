@@ -28,6 +28,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/locale/report_language.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
@@ -459,10 +460,17 @@ Map<String, Object?> setupRegistryData() {
         if (choosesDocumentLanguage(reference.documentLanguagesOf(c.code)?.languages ?? const []))
           c.code,
     ]..sort(),
+    // #3852 — with the country's usual paper and the papers it allows.
     'countries': [
       for (final c in CountryCatalog.countries)
-        [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name],
+        [c.code, c.currencyCode, c.defaultTimezone, c.scheme.name, c.paper.wire,
+          [for (final p in c.papers) p.wire]],
     ],
+    // #3852 — where invoices end on a payment slip (why only A4).
+    'paymentSlipCountries': [
+      for (final c in CountryCatalog.countries)
+        if (paymentSlipOf(c.code) != null) c.code,
+    ]..sort(),
     'reminders': {
       'levels': DunningRules.defaults.levels,
       'firstDays': DunningRules.defaults.firstAfterDays,
