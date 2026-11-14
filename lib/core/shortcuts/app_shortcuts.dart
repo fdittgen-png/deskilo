@@ -62,6 +62,9 @@ enum AppShortcutId {
   viewDay,
   viewWeek,
   viewMonth,
+
+  /// Alt+←: a guide goes back to its step before (#3629).
+  previousStep,
 }
 
 /// Where a key works.
@@ -230,6 +233,10 @@ const List<AppShortcut> appShortcuts = [
   AppShortcut(AppShortcutId.viewMonth, ShortcutReach.page, [
     KeyChord(LogicalKeyboardKey.keyM),
   ]),
+  // #3629 — the setup guide's step before; Ctrl/⌘+Enter is its next.
+  AppShortcut(AppShortcutId.previousStep, ShortcutReach.page, [
+    KeyChord(LogicalKeyboardKey.arrowLeft, alt: true),
+  ]),
 ];
 
 /// The registry's line for [id].
@@ -264,4 +271,5 @@ String shortcutLabel(AppLocalizations l10n, AppShortcutId id) => switch (id) {
   AppShortcutId.viewDay => l10n.shortcutViewDay,
   AppShortcutId.viewWeek => l10n.shortcutViewWeek,
   AppShortcutId.viewMonth => l10n.shortcutViewMonth,
+  AppShortcutId.previousStep => l10n.shortcutPreviousStep,
 };

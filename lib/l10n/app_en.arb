@@ -38504,6 +38504,18 @@
   "@setupChoicesUnsaved": {
     "description": "Workspace configuration guidance and status."
   },
+  "setupDeskProgress": "{total, plural, one{{total} step} other{{total} steps}}, {done, plural, =0{none done} one{{done} done} other{{done} done}}",
+  "@setupDeskProgress": {
+    "description": "#3629 the setup guide's steps beside a step on a large window: how many of the steps the space uses are done.",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
   "setupDraftChanged": "Changed by someone else while you were editing.",
   "@setupDraftChanged": {
     "description": "#2869 setup drafts: another configurer changed the setup step's draft meanwhile"
@@ -40450,6 +40462,18 @@
   "@setupStepHintVat": {
     "description": "#3485 setupStepHint: the label for case 'vat'."
   },
+  "setupStepLeave": "Leave",
+  "@setupStepLeave": {
+    "description": "#3629 the button that leaves the setup step; its draft is kept."
+  },
+  "setupStepLeaveMessage": "Your answers are not applied yet. They stay saved as a draft, and you find them here when you come back.",
+  "@setupStepLeaveMessage": {
+    "description": "#3629 why leaving a setup step loses nothing: the draft is kept."
+  },
+  "setupStepLeaveTitle": "Leave this step?",
+  "@setupStepLeaveTitle": {
+    "description": "#3629 asked when leaving a setup step whose answers are a draft not applied yet."
+  },
   "setupStepLoadFailed": "This step could not be loaded. Try again later.",
   "@setupStepLoadFailed": {
     "description": "#2870 setup steps: setupStepLoadFailed"
@@ -40666,6 +40690,10 @@
   "shortcutPreviousPeriod": "Previous day, week or month",
   "@shortcutPreviousPeriod": {
     "description": "#3626 a line of the keys overlay: what the calendar key does"
+  },
+  "shortcutPreviousStep": "Go back to the step before",
+  "@shortcutPreviousStep": {
+    "description": "#3629 a line of the keys overlay: the setup guide's step before"
   },
   "shortcutPrint": "This page's document",
   "@shortcutPrint": {

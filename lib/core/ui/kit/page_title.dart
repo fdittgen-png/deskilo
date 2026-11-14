@@ -121,7 +121,8 @@ class PageTitle extends StatelessWidget {
     // The top route's title names the page; the route below takes over
     // when this one is popped (its isCurrent changes, this builds again).
     context.dependOnInheritedWidgetOfExactType<_ScopePath>();
-    if (ModalRoute.of(context)?.isCurrent ?? false) {
+    if ((ModalRoute.of(context)?.isCurrent ?? false) ||
+        BesidePageTitle.shownFor(context)) {
       final scope = PageNameScope._of(context);
       if (scope != null) {
         WidgetsBinding.instance.addPostFrameCallback((_) => scope.tell(text));
@@ -131,6 +132,28 @@ class PageTitle extends StatelessWidget {
         ? const SizedBox.shrink()
         : Text(text, overflow: overflow);
   }
+}
+
+/// #3629 — a page drawn by the page under it for an address whose own entry
+/// in the history draws nothing (`besidePage`): its route is not the top
+/// one, so the page that draws it says when the address is the one shown,
+/// and its title then names the page as a top route's does.
+class BesidePageTitle extends InheritedWidget {
+  const BesidePageTitle({
+    required this.shown,
+    required super.child,
+    super.key,
+  });
+
+  /// Whether the address of the page under this is the one shown.
+  final bool shown;
+
+  static bool shownFor(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<BesidePageTitle>()?.shown ??
+      false;
+
+  @override
+  bool updateShouldNotify(BesidePageTitle old) => old.shown != shown;
 }
 
 /// The page name a bar's [title] holds: PageTitle's text, drawn or silent,

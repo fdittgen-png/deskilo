@@ -29669,6 +29669,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupChoicesUnsaved => 'Preview only — nothing has been applied.';
 
   @override
+  String setupDeskProgress(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total steps',
+      one: '$total step',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done done',
+      one: '$done done',
+      zero: 'none done',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
   String get setupDraftChanged =>
       'Changed by someone else while you were editing.';
 
@@ -31215,6 +31233,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupStepHintVat => 'The rates you charge and your VAT returns.';
 
   @override
+  String get setupStepLeave => 'Leave';
+
+  @override
+  String get setupStepLeaveMessage =>
+      'Your answers are not applied yet. They stay saved as a draft, and you find them here when you come back.';
+
+  @override
+  String get setupStepLeaveTitle => 'Leave this step?';
+
+  @override
   String get setupStepLoadFailed =>
       'This step could not be loaded. Try again later.';
 
@@ -31379,6 +31407,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shortcutPreviousPeriod => 'Previous day, week or month';
+
+  @override
+  String get shortcutPreviousStep => 'Go back to the step before';
 
   @override
   String get shortcutPrint => 'This page\'s document';

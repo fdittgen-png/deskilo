@@ -29,7 +29,6 @@ import '../../features/workspace/presentation/screens/questions_screen.dart';
 import '../../features/workspace/presentation/screens/roles_of_space_screen.dart';
 import '../../features/workspace/presentation/screens/roles_screen.dart';
 import '../../features/workspace/presentation/screens/scan_join_screen.dart';
-import '../../features/workspace/presentation/screens/setup_guide_screen.dart';
 import '../../features/workspace/presentation/screens/setup_launch_screen.dart';
 import '../../features/workspace/presentation/screens/setup_levels_screen.dart';
 import '../../features/workspace/presentation/screens/setup_step_screen.dart';
@@ -42,10 +41,12 @@ import '../../features/workspace/presentation/screens/workspace_library_screen.d
 import '../../features/workspace/presentation/screens/workspace_settings_screen.dart';
 import '../../features/workspace/presentation/widgets/conversation_thread.dart';
 import '../../features/workspace/presentation/widgets/onboarding_host_gate.dart';
+import '../../features/workspace/presentation/widgets/setup_desk.dart';
 import '../../features/workspace/presentation/widgets/workspace_reports.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import 'setup_grow_pages.dart';
+import 'setup_pages.dart';
 import 'setup_run_pages.dart';
 
 /// Routes of the workspace feature.
@@ -319,6 +320,8 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
       builder: (context, state) => const AttentionScreen(),
     ),
     // #2869 — the setup guide: one task list from creation to opening.
+    // #3629 — its pages are addresses under it: on the desk the guide
+    // draws them beside its steps, elsewhere each is a page of its own.
     GoRoute(
       path: '/setup',
       redirect: env.guard(
@@ -328,50 +331,44 @@ List<RouteBase> _peopleRoutes(RouteEnv env) {
           to: '/workspace-settings',
         ),
       ),
-      builder: (context, state) => const SetupGuideScreen(),
-    ),
-    // #2868 — what the space does: a level per process from plain answers.
-    GoRoute(
-      path: '/setup/levels',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
-      builder: (context, state) => const SetupLevelsScreen(),
-    ),
-    // #2876 — check the answers and go live.
-    GoRoute(
-      path: '/setup/launch',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
-      builder: (context, state) => const SetupLaunchScreen(),
-    ),
-    // #2870 — one step of the guide: its form beside what members will see.
-    GoRoute(
-      path: '/setup/step/:id',
-      redirect: env.guard(
-        const RouteAccess(
-          features: [WorkspaceFeature.setupGuide],
-          permission: WorkspacePermission.manageConfiguration,
-          to: '/workspace-settings',
-        ),
-      ),
       builder: (context, state) =>
-          SetupStepScreen(
-            stepId: state.pathParameters['id'] ?? '',
-            placesStep: SetupPlacesStep.new,
-            runPages: setupRunPages,
-            growPages: setupGrowPages,
-            moneyRecorded: setupMoneyRecorded,
+          const SetupGuidePage(pageFor: setupPageFor),
+      routes: [
+        // #2868 — what the space does: a level per process from plain answers.
+        GoRoute(
+          path: 'levels',
+          pageBuilder: (context, state) =>
+              setupPage(context, state, const SetupLevelsScreen()),
+        ),
+        // #2876 — check the answers and go live.
+        GoRoute(
+          path: 'launch',
+          pageBuilder: (context, state) =>
+              setupPage(context, state, const SetupLaunchScreen()),
+        ),
+        // #2870 — one step of the guide: its form beside what members will
+        // see. Every way out of it asks the step first (#3629).
+        GoRoute(
+          path: 'step/:id',
+          onExit: (_, _) => env.ref.read(authStateProvider).value == null
+              ? true
+              : setupStepNavigation.requestExit(),
+          // The screen is built here (the feature audit reads which screens
+          // a route builds) and in `setupPageFor` for the desk: the same.
+          pageBuilder: (context, state) => setupPage(
+            context,
+            state,
+            SetupStepScreen(
+              stepId: state.pathParameters['id'] ?? '',
+              placesStep: SetupPlacesStep.new,
+              runPages: setupRunPages,
+              growPages: setupGrowPages,
+              moneyRecorded: setupMoneyRecorded,
+              navigation: setupStepNavigation,
+            ),
           ),
+        ),
+      ],
     ),
     // #1923 — Business analytics: only with a module this reader may see.
     GoRoute(
