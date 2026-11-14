@@ -41,3 +41,23 @@ AddressWindow? addressWindowFromWire(String? wire) => switch (wire) {
       'right' => AddressWindow.right,
       _ => null,
     };
+
+/// #3852 — the address field's millimetres on an A4 sheet, measured from
+/// the page edge: its top, its aperture and where the flow resumes. The
+/// one place they are written; `address_window.dart` (deskilo_document_pdf)
+/// turns them into points and the layout model into a frame.
+const double addressWindowTopMm = 45;
+const double addressWindowWidthMm = 85;
+const double addressWindowHeightMm = 40;
+const double addressWindowFlowResumeMm = 90;
+
+extension AddressWindowMillimetres on AddressWindow {
+  /// Distance from the LEFT PAGE EDGE to the address field: 110 mm is the
+  /// right-hand DL aperture the French spec names; 20 mm the DIN 5008
+  /// left-hand one. [AddressWindow.off] places nothing.
+  double get leftEdgeMm => switch (this) {
+        AddressWindow.left => 20,
+        AddressWindow.right => 110,
+        AddressWindow.off => 0,
+      };
+}

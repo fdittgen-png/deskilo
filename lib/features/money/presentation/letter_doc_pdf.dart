@@ -74,20 +74,22 @@ Future<({Uint8List bytes, String fileName})> letterPdfOf(
       layoutXml: layoutXml,
       data: data,
       what: title,
-      documentTitle: title,
-      pageLabel: pageLabel,
+      print: LayoutPrint(
+        documentTitle: title,
+        pageLabel: pageLabel,
+        // #917 — a report from a rehearsal space says so, like its
+        // invoices do.
+        watermark: watermark,
+        additionalBody: [
+          for (final notice in mandatoryNotices)
+            pw.Padding(
+              padding: const pw.EdgeInsets.only(top: 8),
+              child: pw.Text(notice),
+            ),
+        ],
+      ),
       font: font,
       image: (name) async => images[name] ?? await layoutImage(ref, name),
-      // #917 — a report from a rehearsal space says so, like its
-      // invoices do.
-      watermark: watermark,
-      additionalBody: [
-        for (final notice in mandatoryNotices)
-          pw.Padding(
-            padding: const pw.EdgeInsets.only(top: 8),
-            child: pw.Text(notice),
-          ),
-      ],
     );
     if (bytes != null) {
       return (bytes: bytes, fileName: '${safeFileSlug(title)}.pdf');

@@ -347,6 +347,8 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// #3850 (0753) -- the language and its `fr_CH` pair frozen at issue; null before 0753 or on a draft.
     String? documentLanguage,
     String? formatLocale,
+    /// #3852 (0768) -- the paper frozen at issue (`A4` | `Letter`); null on an invoice issued before 0768, printed on A4.
+    String? paper,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
@@ -441,6 +443,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       _ => null,
     },
     documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?,
+    paper: row['paper'] as String?,
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',
