@@ -523,7 +523,12 @@ class _BillingEditorState extends ConsumerState<_BillingEditor> {
           value: _pkgVatRateId,
           onChanged: (id) => setState(() => _pkgVatRateId = id),
         ),
-        if (ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.carnets))
+        // #3863 — a carnet is spent by place bookings: with the places
+        // off there is nothing to spend it on.
+        if (ref.watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.placeBooking) &&
+            ref.watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.carnets))
           ...const [Divider(height: 32), CarnetsEditor()], // #1279
       ],
     );

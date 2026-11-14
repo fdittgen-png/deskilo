@@ -4,12 +4,15 @@
 // surface: at the desk the calendar is the one it has on every window, not a
 // grid of places; the Sales group offers no Guest passes (a pass is a day at
 // a place, and its route refuses it); the setup guide's hours step offers no
-// way on to the Availability page, which the router refuses. With places on,
-// each is there as before.
+// way on to the Availability page, which the router refuses; Billing offers no
+// carnet and a member's page shows none (a carnet is spent by place bookings,
+// so nothing could spend it). With places on, each is there as before.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/desk_calendar/desk_calendar_page.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/app/shell/shell_drawer_tiles.dart';
+import 'package:deskilo/features/money/presentation/widgets/carnets_editor.dart';
+import 'package:deskilo/features/money/presentation/widgets/member_carnet_tile.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
@@ -101,6 +104,26 @@ void main() {
         places ? findsOneWidget : findsNothing,
       );
       expect(find.byKey(const ValueKey('setup-hours-failed')), findsNothing);
+    });
+
+    testWidgets('$business, Billing ${places ? 'offers' : 'does not offer'} '
+        'a carnet', (tester) async {
+      final router = await _pump(tester, places: places);
+      await _visit(tester, router, '/billing');
+      expect(
+        find.byType(CarnetsEditor, skipOffstage: false),
+        places ? findsOneWidget : findsNothing,
+      );
+    });
+
+    testWidgets('$business, a member\'s page ${places ? 'shows' : 'shows no'} '
+        'carnet', (tester) async {
+      final router = await _pump(tester, places: places);
+      await _visit(tester, router, '/member/member-1');
+      expect(
+        find.byType(MemberCarnetTile, skipOffstage: false),
+        places ? findsOneWidget : findsNothing,
+      );
     });
   }
 }
