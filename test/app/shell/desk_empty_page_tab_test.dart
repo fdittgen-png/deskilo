@@ -3,7 +3,8 @@
 // #3943 — on the desk, a page with no control of its own does not keep the
 // keyboard: Tab from it reaches the top bar and every entry of the desk's
 // navigation (the first one too, whatever the navigation has scrolled) and
-// comes back round; Shift+Tab the same the other way. The page here is
+// comes back round; Shift+Tab the same the other way (#3946: the same stops
+// in reverse). The page here is
 // `/reservations/period` opened bare: "No booking in these months", not one
 // control.
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -100,11 +101,16 @@ void main() {
         LogicalKeyboardKey.tab,
       ]);
       expect(back.cycled, isTrue, reason: 'Shift+Tab comes back round');
-      // Shift+Tab walks the whole navigation back; it enters the top bar at
-      // its crumbs, so the bar's own controls are reached by Tab (above).
-      for (final stop in reached.take(2)) {
+      // #3946 — Shift+Tab walks the same stops as Tab, the other way round:
+      // the top bar from its last control, then the whole navigation.
+      for (final stop in reached) {
         expect(back.stops, contains(stop), reason: 'Shift+Tab reaches $stop');
       }
+      expect(
+        back.stops.reversed.toList(),
+        forward.stops,
+        reason: 'Shift+Tab is Tab in reverse',
+      );
       expect(tester.takeException(), isNull);
     });
   }

@@ -69,4 +69,23 @@ void main() {
     expect(find.byKey(const ValueKey('wizard-finish')), findsNothing);
     expect(find.byKey(const ValueKey('wizard-next')), findsNothing);
   });
+
+  // #3947 — on a desktop, where buttons are not padded by default, every
+  // step is still a target of the kit's minimum size.
+  testWidgets('every step is 48 dp high on a desktop', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      theme: ThemeData(platform: TargetPlatform.macOS),
+      home: WizardScaffold(
+        title: 'Assistant',
+        steps: steps,
+        index: 1,
+        body: const Text('step'),
+        onStepTap: (_) {},
+      ),
+    ));
+    for (final s in steps) {
+      expect(tester.getSize(find.byKey(ValueKey('wizard-step-${s.name}'))).height,
+          greaterThanOrEqualTo(48), reason: s.name);
+    }
+  });
 }
