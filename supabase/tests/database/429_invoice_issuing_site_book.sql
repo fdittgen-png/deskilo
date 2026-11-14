@@ -81,7 +81,8 @@ create or replace function pg_temp.postings(p_ws text, p_site uuid) returns text
   select public.compute_postings(pg_temp.id(p_ws), p_site, current_date - 1, current_date + 1)::text
 $$;
 create or replace function pg_temp.invoice_of(p_member text) returns public.invoices language sql as $$
-  select i from public.invoices i where i.member_id = pg_temp.id(p_member) order by i.issued_at limit 1
+  -- the invoice create_invoice issued: the test's own rows are numbered BOOKS-*
+  select i from public.invoices i where i.member_id = pg_temp.id(p_member) and i.number not like 'BOOKS-%'
 $$;
 grant execute on all functions in schema pg_temp to authenticated;
 
