@@ -141,6 +141,8 @@ begin
 end;
 $fn$;
 
+revoke execute on function public.invoices_immutable() from public, anon;
+
 -- The invoices issued before: the site their seller block names, else the
 -- default site; credit notes then follow the invoice they replace. A business
 -- with no site at all keeps its invoices without one: it has no book.
