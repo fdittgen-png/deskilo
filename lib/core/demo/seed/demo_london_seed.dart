@@ -41,7 +41,7 @@ const demoLondonVrn = '999904143';
 /// those [demoFeaturesLeftOff] names), plus the MTD submission it exists to
 /// show. The EC Sales List stays off by country: the UK is outside the EU.
 final Map<String, Object?> _featureFlags = {
-  ...demoFeatureFlags,
+  ...demoOtherSpacesFeatureFlags,
   WorkspaceFeature.mtdSubmission.dbKey: true,
 };
 

@@ -36,13 +36,13 @@ const _operations = [
 ];
 
 /// The Demo's assistant, as the connection page lists it.
-const demoAssistantId = 'demo-assistant';
+const _assistantId = 'demo-assistant';
 
 /// What an assistant of one Demo session holds: the fakes behind the four
 /// repositories, kept for the session so a switch of persona reaches the
 /// same requests.
-class DemoAssistants {
-  DemoAssistants._(DemoFixture fixture) {
+class _DemoAssistants {
+  _DemoAssistants._(DemoFixture fixture) {
     final now = fixture.seededAt;
     final workspace = fixture.workspaces.workspaces.firstWhere(
       (w) => w.id == 'ws-1',
@@ -65,7 +65,7 @@ class DemoAssistants {
       )
       ..live.add(
         McpConnectionInfo(
-          clientId: demoAssistantId,
+          clientId: _assistantId,
           clientName: 'Demo assistant',
           connectedAt: now.subtract(const Duration(days: 9)),
           workspaces: [
@@ -144,11 +144,12 @@ class DemoAssistants {
       };
   }
 
-  static final Expando<DemoAssistants> _perSession = Expando<DemoAssistants>();
+  static final Expando<_DemoAssistants> _perSession =
+      Expando<_DemoAssistants>();
 
   /// The assistants of the session [fixture].
-  static DemoAssistants of(DemoFixture fixture) =>
-      _perSession[fixture] ??= DemoAssistants._(fixture);
+  static _DemoAssistants of(DemoFixture fixture) =>
+      _perSession[fixture] ??= _DemoAssistants._(fixture);
 
   final identity = FakeIdentityBindingRepository(
     initial: IdentityBindingStatus(
@@ -182,7 +183,7 @@ class DemoAssistants {
 
 /// The four repositories of the assistants, the Demo's own.
 List<Override> demoAssistantOverrides(DemoFixture fixture) {
-  final held = DemoAssistants.of(fixture);
+  final held = _DemoAssistants.of(fixture);
   return [
     identityBindingRepositoryProvider.overrideWithValue(held.identity),
     actionConfirmationRepositoryProvider.overrideWithValue(held.confirmations),

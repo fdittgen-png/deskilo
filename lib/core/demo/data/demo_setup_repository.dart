@@ -79,6 +79,9 @@ const demoMainSpaceDecidedEvidence = {
   'online_payments',
   'einvoicing',
   'recovery',
+  // #3962 — its assistant is connected and its policy exposed, in the
+  // Demo's own fakes rather than a store the setup guide reads.
+  'assistant',
 };
 
 /// The manual steps Pézenas's owner marked done: the server cannot verify

@@ -50,6 +50,15 @@ final Map<String, dynamic> demoFeatureFlags = {
         !requirementChain(feature).any(demoFeaturesLeftOff.containsKey),
 };
 
+/// #3962 — the other Demo businesses (London, New York, the trade cities)
+/// hold the main space's features but no assistant: the one connected
+/// assistant and its requests belong to the reference business.
+final Map<String, dynamic> demoOtherSpacesFeatureFlags = {
+  ...demoFeatureFlags,
+  WorkspaceFeature.mcpAccess.dbKey: false,
+  WorkspaceFeature.webMcp.dbKey: false,
+};
+
 /// ws-2: exactly what a space created today is given.
 final Map<String, bool> demoSecondSpaceFeatureFlags =
     defaultFeatureFlagsForNewWorkspace();
