@@ -6,7 +6,7 @@
 -- invoice reads its original; nobody changes it. An invoice issued before
 -- keeps none. Rolled back.
 begin;
-select plan(18);
+select plan(20);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -135,6 +135,14 @@ reset role;
 
 select is((select created_by_user from public.invoice_originals where invoice_id = pg_temp.inv('ORIG-0001')),
   current_setting('deskilo.test.owner')::uuid, 'it records who stored it');
+
+select is((select artifacts ->> 'pdf_sha256' from public.provenance_envelopes
+            where result_kind = 'invoice_original' and result_id = pg_temp.inv('ORIG-0001')),
+  encode(sha256(convert_to('%PDF-1.7 an invoice', 'UTF8')), 'hex'),
+  'the stored original leaves a provenance entry with its digest');
+select is((select issuer ->> 'number' from public.provenance_envelopes
+            where result_kind = 'invoice_original' and result_id = pg_temp.inv('ORIG-0001')),
+  'ORIG-0001', 'and the invoice''s number, never the bytes');
 
 -- ── an issuer of another business ──
 -- the invoice's id is read first: that issuer does not see the invoice

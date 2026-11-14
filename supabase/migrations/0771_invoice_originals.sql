@@ -17,7 +17,8 @@
 --    invoice_original_max_bytes(), and that the XML names, once each, the
 --    number, currency and amount due of the invoice row as it was issued.
 --    The caller's words are never compared with themselves: every expected
---    value is read from the row.
+--    value is read from the row. Each stored original leaves a provenance
+--    entry with the invoice's number and the digests, never the bytes.
 
 -- ── 1. which invoices keep an original ────────────────────────────────────
 -- An added column with a constant default changes no row: the invoices
@@ -80,12 +81,32 @@ create trigger invoice_originals_no_update
   before update on public.invoice_originals
   for each row execute function public.invoice_originals_immutable();
 
--- ── 3. storing an original ────────────────────────────────────────────────
--- The largest original kept: an invoice PDF with its fonts, its pictures and
--- its annex pages is far below it.
+-- ── 3. the provenance of an original ──────────────────────────────────────
+-- 0693's registry, restated whole with the stored original as a result kind.
+create or replace function public.provenance_modules()
+returns jsonb language sql immutable set search_path = public as $fn$
+  select jsonb_build_object(
+    'invoice',             jsonb_build_object('module_id', 'invoice.issue',         'module_version', '1', 'input_schema', 'invoice-legal-snapshot/1'),
+    'book_export',         jsonb_build_object('module_id', 'book.export',           'module_version', '1', 'input_schema', 'book-export/1'),
+    'file_delivery',       jsonb_build_object('module_id', 'book.file-delivery',    'module_version', '1', 'input_schema', 'file-delivery/1'),
+    'accounting_delivery', jsonb_build_object('module_id', 'accounting.delivery',   'module_version', '1', 'input_schema', 'accounting-delivery/1'),
+    'transmission',        jsonb_build_object('module_id', 'einvoice.transmission', 'module_version', '1', 'input_schema', 'einvoice-transmission/1'),
+    'invoice_original',    jsonb_build_object('module_id', 'invoice.original',      'module_version', '1', 'input_schema', 'invoice-original/1'))
+$fn$;
+revoke execute on function public.provenance_modules() from public, anon;
+grant execute on function public.provenance_modules() to authenticated;
+
+alter table public.provenance_envelopes drop constraint if exists provenance_envelopes_result_kind_check;
+alter table public.provenance_envelopes add constraint provenance_envelopes_result_kind_check
+  check (result_kind in ('invoice', 'book_export', 'file_delivery', 'accounting_delivery', 'transmission',
+                         'invoice_original'));
+
+-- ── 4. storing an original ────────────────────────────────────────────────
+-- The largest original kept, PDF and XML together: about ten times the
+-- largest invoice of the Demo business (an 11-line invoice, 30 506 bytes).
 create or replace function public.invoice_original_max_bytes()
 returns integer language sql immutable set search_path = public as $fn$
-  select 16 * 1024 * 1024
+  select 300 * 1024
 $fn$;
 revoke execute on function public.invoice_original_max_bytes() from public, anon;
 grant execute on function public.invoice_original_max_bytes() to authenticated;
@@ -169,6 +190,11 @@ begin
   v_xml_sha := encode(sha256(convert_to(p_xml, 'UTF8')), 'hex');
   insert into public.invoice_originals (invoice_id, workspace_id, pdf, xml, sha256, xml_sha256)
   values (v_inv.id, v_inv.workspace_id, v_pdf, convert_to(p_xml, 'UTF8'), v_sha, v_xml_sha);
+  perform public.record_provenance(v_inv.workspace_id, 'invoice_original', v_inv.id,
+    jsonb_build_object('stored_by', auth.uid(), 'number', v_inv.number),
+    '{}'::jsonb,
+    jsonb_build_object('pdf_sha256', v_sha, 'xml_sha256', v_xml_sha,
+                       'pdf_bytes', length(v_pdf), 'xml_bytes', octet_length(p_xml)));
   return jsonb_build_object('invoice_id', v_inv.id, 'sha256', v_sha, 'xml_sha256', v_xml_sha);
 end;
 $fn$;
