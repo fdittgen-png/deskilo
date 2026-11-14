@@ -53,7 +53,7 @@ final Map<String, dynamic> demoFeatureFlags = {
 /// #3962 — the other Demo businesses (London, New York, the trade cities)
 /// hold the main space's features but no assistant: the one connected
 /// assistant and its requests belong to the reference business.
-final Map<String, dynamic> demoOtherSpacesFeatureFlags = {
+final Map<String, Object?> demoOtherSpacesFeatureFlags = {
   ...demoFeatureFlags,
   WorkspaceFeature.mcpAccess.dbKey: false,
   WorkspaceFeature.webMcp.dbKey: false,
