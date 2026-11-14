@@ -10507,6 +10507,7 @@
   "@invoicingTryAgain": {
     "description": "#3587 retry a failed source"
   },
+  "invoicingUnassignedUnreadable": "Il denaro ricevuto e non assegnato non è noto: questa versione non riesce a leggere alcuni movimenti del conto, e nessuno riceve solleciti finché non vengono letti. Aggiorna l'app, poi riapri le fatture.",
   "invoicingViewCustomers": "Clienti",
   "@invoicingViewCustomers": {
     "description": "#3587 list view: one line per customer"
@@ -12256,6 +12257,7 @@
   "meRefDefault": "Predefinito",
   "meRefNoRelationship": "Nessuna iscrizione su questo server",
   "meRefStale": "Iscrizione non confermata di recente",
+  "meRefStatusUnknown": "Stato di iscrizione che questa versione non sa leggere",
   "meRefUnnamed": "Un posto su un altro server",
   "meRefUnverified": "Iscrizione non ancora verificata",
   "meRefsTitle": "Posti altrove",
@@ -22524,6 +22526,7 @@
   "workspaceExcelExport": "Esporta i dati (Excel)",
   "workspaceExcelExportSubtitle": "Uno ZIP: tutti i dati in una cartella (prenotazioni, pagamenti, fatture, membri, piantina — una scheda ciascuno), un manifesto che ne conta le righe e i file salvati dello spazio.",
   "workspaceExportUnreadableBookings": "{count, plural, one{1 prenotazione non è stata letta da questa versione dell'app e non è in questo file.} other{{count} prenotazioni non sono state lette da questa versione dell'app e non sono in questo file.}}",
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} movimento del conto non è stato letto da questa versione dell'app e non è in questo file.} other{{count} movimenti del conto non sono stati letti da questa versione dell'app e non sono in questo file.}}",
   "workspaceFieldsOptional": "facoltativo",
   "@workspaceFieldsOptional": {
     "description": "#1288 custom fields: workspaceFieldsOptional"

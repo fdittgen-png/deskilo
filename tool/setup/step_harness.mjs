@@ -23,8 +23,8 @@ const l10nSource = fs.readFileSync(new URL('../../web/setup_l10n.js', import.met
 const catalogueSource = fs.readFileSync(new URL('../../web/setup_catalogue.js', import.meta.url), 'utf8');
 const webmcpSource = fs.readFileSync(new URL('../../web/webmcp.js', import.meta.url), 'utf8');
 const setupWebmcpSource = fs.readFileSync(new URL('../../web/setup_webmcp.js', import.meta.url), 'utf8');
-// #2926 — the page's own code: its inline scripts and the files it splits
-// into (setup_params.js, setup_steps.js, setup_xml.js), in the page's
+// #2926 — the page's own code: the files it is split into (setup_main.js,
+// setup_params.js, setup_steps.js, setup_xml.js, #3915), in the page's
 // order, as ONE source — classic scripts share one global scope in the
 // browser. The generated resources and the WebMCP files load on their own.
 const SHARED = new Set(['setup_catalogue.js', 'setup_l10n.js', 'webmcp.js', 'setup_webmcp.js']);
@@ -49,7 +49,7 @@ const mk = (tag) => {
       toggle(c,on){on?this._s.add(c):this._s.delete(c)}, contains(c){return this._s.has(c)} },
     append(...k){k.forEach(x=>{if(x!=null)this.children.push(x)})},
     setAttribute(k,v){this.attrs[k]=v}, getAttribute(k){return this.attrs[k]??null},
-    insertBefore(n){this.children.unshift(n)}, remove(){}, click(){},
+    insertBefore(n){this.children.unshift(n)}, remove(){}, click(){}, addEventListener(){},
     querySelector(sel){ const want = sel.replace(/^span\s*/,'').trim();
       const walk=(n)=>{ for(const c of (n.children||[])){
         if(typeof c!=='object') continue;

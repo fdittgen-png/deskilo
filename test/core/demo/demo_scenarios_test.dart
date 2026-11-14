@@ -66,6 +66,7 @@ import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
+import '../../helpers/demo_whatsapp_journeys.dart';
 
 /// Everything a scenario may look at: the session and the repositories
 /// the Demo scope seeds beside it.
@@ -1080,11 +1081,11 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   WorkspaceFeature.demoMode: _toggle('this demonstration'),
   // ── integrations ─────────────────────────────────────────────────────
   WorkspaceFeature.pushNotifications: _toggle('push, inert in the demo'),
+  // #3963 — the group link is stored and a member reads it.
   WorkspaceFeature.whatsappIntegration: _action(
     _owner,
-    "Ada links the "
-    "space's group",
-    (w) => w.f.workspaces.memberNames.isNotEmpty,
+    "Ada stores the space's group link and a member reads it",
+    (_) => whatsappJourney(),
   ),
   WorkspaceFeature.einvoiceCustomerDelivery: _action(
     _owner,

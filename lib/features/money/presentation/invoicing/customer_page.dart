@@ -45,6 +45,7 @@ class CustomerPage extends StatelessWidget {
     this.onStatement,
     this.onStatementPeriod,
     this.onClose,
+    this.notice,
   });
 
   final String customerId;
@@ -79,6 +80,9 @@ class CustomerPage extends StatelessWidget {
   /// #3673 — prints the customer's statement of account; null, no button.
   /// #3614 — set when the page stands beside the list: its close button.
   final VoidCallback? onClose;
+
+  /// #3913 — a line above the page's figures (what is not known on it).
+  final Widget? notice;
 
   final VoidCallback? onStatement;
 
@@ -144,6 +148,7 @@ class CustomerPage extends StatelessWidget {
             child: ListView(
               padding: AppSpacing.mdAll,
               children: [
+                ?notice,
                 _owed(context, mine),
                 if (credit case final held? when held.values.any((v) => v > 0))
                   ..._credit(context, held, holds: holds),

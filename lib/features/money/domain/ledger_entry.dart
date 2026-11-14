@@ -53,3 +53,18 @@ sealed class LedgerEntry with _$LedgerEntry implements SystemStamped {
   /// it was booked.
   DateTime get on => occurredOn ?? createdAt;
 }
+
+/// #3913 — the ledger rows a read left out (a kind or a category this build
+/// does not know): per member for their account, `ws:<id>` for the whole
+/// workspace's ledger.
+String ledgerArea(String scope) => 'ledger:$scope';
+
+/// #3913 — a figure over the ledger refused because some of its rows are of
+/// a kind or a category this version cannot read: the figure is not known,
+/// never a smaller one.
+class LedgerRowsUnreadable implements Exception {
+  const LedgerRowsUnreadable();
+
+  @override
+  String toString() => 'LedgerRowsUnreadable';
+}

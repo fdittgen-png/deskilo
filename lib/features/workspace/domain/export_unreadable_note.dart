@@ -27,6 +27,20 @@ List<XlsxSheet> _withUnreadableNote(
   ];
 }
 
+/// #3913 -- the workspace export's workbook with the note that [count]
+/// ledger entries (a kind or a category this version does not know) are
+/// not in it, worded by [words], at the foot of its Ledger sheet.
+List<XlsxSheet> withLedgerNote(
+  List<XlsxSheet> sheets,
+  int count,
+  String Function(int count) words,
+) => _withUnreadableNote(
+  sheets,
+  sheetName: 'Ledger',
+  count: count,
+  note: count > 0 ? words(count) : '',
+);
+
 /// #3884 -- the workspace export's workbook with the note that [count]
 /// bookings (a status this version does not know) are not in it, worded by
 /// [words], at the foot of its Reservations sheet.
