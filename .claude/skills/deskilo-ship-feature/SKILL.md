@@ -52,6 +52,7 @@ Edit ALL of these in the same commit:
    `web/setup.html` itself needs no line for a switch.
 5. `workspace_process.dart` — primary subprocess or explicit internal reason;
    `dart run tool/build_process_catalogue.dart`.
+   The feature's Demo use case goes into the reference business Atelier du Marché (`ws-1`); another Demo business only with the reason in `_elsewhere` of `demo_scenarios_test.dart`.
 6. `lib/features/workspace/domain/feature_lifecycle.dart` — the flag's
    `featureAssessments` line (#1850): `_legacy`/unreviewed until a review names
    evidence ids from `docs/product/capabilities.json`; maturity never gates
