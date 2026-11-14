@@ -220,10 +220,14 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                   child:
                       WindowClass.ofWidth(box.maxWidth) == WindowClass.compact
                       ? _cards(shown)
-                      : _table(context, shown),
+                      : _table(
+                          context,
+                          shown,
+                          WindowClass.ofWidth(box.maxWidth),
+                        ),
                 ),
                 const Divider(height: 1),
-                _footer(shown),
+                _footer(shown, WindowClass.ofWidth(box.maxWidth)),
               ],
             );
           },
@@ -319,12 +323,14 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     );
   }
 
-  Widget _table(BuildContext context, List<T> shown) {
-    // #3860 — a record open beside the table: its staying columns.
+  Widget _table(BuildContext context, List<T> shown, WindowClass room) {
+    // #3860 — a record open beside the table: its staying columns; #3858 —
+    // the columns the table has room for.
     final columns = columnsShown(
       widget.columns,
       _c.hidden,
       beside: ListDetailOpen.of(context),
+      room: room,
     );
     final selected = _c.selected;
     final selectedShown = shown
@@ -455,7 +461,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     },
   );
 
-  Widget _footer(List<T> shown) {
+  Widget _footer(List<T> shown, WindowClass room) {
     final of = widget.columns
         .where((c) => c.id == widget.amountColumn)
         .firstOrNull;
@@ -465,6 +471,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           widget.columns,
           _c.hidden,
           beside: ListDetailOpen.of(context),
+          room: room,
         ).contains(of);
     final amountOf = totalHidden ? null : widget.amountOf;
     final selected = _c.selected;
