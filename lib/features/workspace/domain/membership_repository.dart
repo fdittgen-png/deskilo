@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invitation_answer.dart';
 import 'member.dart';
+import 'member_term_change.dart';
 import 'new_member_defaults.dart';
 import 'overage_policy.dart';
 
@@ -23,6 +24,16 @@ abstract class MembershipRepository {
 
   /// All memberships of the workspace (owner management screen).
   Future<List<Member>> fetchMembers(String workspaceId);
+
+  /// #3858 — the dated plan changes and pauses of [workspaceId]'s members the
+  /// caller may read (whoever manages members: all; a member: their own),
+  /// by date.
+  Future<List<MemberTermChange>> fetchMemberTermChanges(String workspaceId);
+
+  /// #3858 — the months of each member of [workspaceId] the caller may read
+  /// that a standing subscription invoice has frozen, by member id: the
+  /// first day of each month.
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(String workspaceId);
 
   /// All of MY membership rows across workspaces — one per profile (#89).
   Future<List<Member>> fetchMyMembers();

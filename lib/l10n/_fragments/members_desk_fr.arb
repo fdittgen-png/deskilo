@@ -40,7 +40,7 @@
   "memberPlanShareLabel": "Part",
   "memberPlanJoined": "Date d'adhésion",
   "memberPlanJoinedUnknown": "Non enregistrée",
-  "memberPlanPausedNoDates": "Suspendu : aucune date n'est enregistrée pour une suspension",
+  "memberPlanPausedNoDates": "Suspendu : aucune date n'est enregistrée pour cette suspension",
   "memberPlanEstimate": "Prochaine facture estimée",
   "memberPlanEstimateBasis": "Pour {period}, au {date} : le relevé à ce jour",
   "memberPlanEstOverage": "Demi-journées en plus",
