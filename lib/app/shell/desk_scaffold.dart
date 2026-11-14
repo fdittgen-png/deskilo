@@ -130,6 +130,11 @@ class DeskScaffold extends ConsumerWidget {
                     child: FocusTraversalOrder(
                       order: const NumericFocusOrder(3),
                       child: FocusTraversalGroup(
+                        // #3946 — in the order the page builds its controls:
+                        // reading order sorts by place on screen, so a long
+                        // form scrolled by Tab came round to its first
+                        // fields again before the cycle closed.
+                        policy: WidgetOrderTraversalPolicy(),
                         // The page's semantics must not hide the navigation.
                         child: Semantics(
                           container: true,
