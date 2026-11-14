@@ -224,6 +224,7 @@ const Set<String> _exported = {
   'member_credits',
   // #3858 — the member's own dated plan changes and pauses (0766, anchored patch).
   'member_term_changes',
+  'member_period_terms',
 };
 
 Set<String> _tablesWithAMemberColumn() {

@@ -76,6 +76,7 @@ final Set<String> _exported = {
 /// disagree with in review.
 const Map<String, String> _notExported = {
   'member_term_changes': 'a member\'s dated plan changes and pauses (#3858): the history of their terms, personal data returned by export_my_data to the member it belongs to; the workbook carries each member\'s current share and status',
+  'member_period_terms': 'the terms each subscription invoice was computed with (#3858): derived from the invoices and the members\' plans, personal data returned by export_my_data to the member it belongs to; the workbook carries the invoices',
   'provenance_envelopes': 'server-written evidence of how each durable result of this installation was produced (#3336): insert-only, derived from the results themselves and their producers, not portable configuration',
   'capability_states': 'the operator\'s decision to admit or stop new work of a capability on this installation (#3336): an operational state of this installation, not portable configuration — a space decides again from its feature choice',
   'invoice_transmission_artifacts': 'service-only copy of the exact e-invoice bytes prepared for a provider (#3335): a delivery fact of this installation, never client-readable, not portable configuration',
