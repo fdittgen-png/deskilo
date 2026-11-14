@@ -13,6 +13,7 @@ import 'package:deskilo/features/workspace/domain/closure_day.dart';
 import 'package:deskilo/features/workspace/domain/work_hours_provenance.dart';
 import 'package:deskilo/features/workspace/presentation/screens/availability_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -41,6 +42,19 @@ Future<FakeWorkspaceRepository> pumpAvailability(
   unawaited(GoRouter.of(context).push('/availability'));
   await tester.pumpAndSettle();
   return workspace;
+}
+
+/// A workspace whose policies read can be made to fail.
+class _FlakyPolicies extends FakeWorkspaceRepository {
+  _FlakyPolicies() : super.withWorkspace();
+
+  bool failRead = false;
+
+  @override
+  Future<BookingPolicies> fetchBookingPolicies(String workspaceId) async {
+    if (failRead) throw StateError('policies unreadable');
+    return super.fetchBookingPolicies(workspaceId);
+  }
 }
 
 // test-inventory: structure is the invariant — the reads are each control's
@@ -568,6 +582,57 @@ void main() {
       expect(find.byKey(const ValueKey('work-hours-reset-template')), findsNothing);
       expect(find.byKey(const ValueKey('work-hours-reset-default')), findsOneWidget);
     });
+  });
+
+  testWidgets('#3946 — a choice whose reload fails: the last value stays, the '
+      'failure is said, the keyboard stays on the control, Try again clears it',
+      (tester) async {
+    final workspace = _FlakyPolicies();
+    await pumpAvailability(tester, workspace: workspace);
+    final control = find.byKey(const Key('policy-outside-hours'));
+    await tester.ensureVisible(control);
+    OutsideHoursMode shown() =>
+        tester.widget<RadioGroup<OutsideHoursMode>>(control).groupValue!;
+    expect(shown(), OutsideHoursMode.charged);
+    expect(find.byKey(const ValueKey('read-failure')), findsNothing);
+
+    // Charged is the last row: Up chooses Free, by keyboard.
+    final charged = find.byKey(const Key('policy-outside-hours-charged'));
+    final row = tester
+        .widgetList<Focus>(
+          find.descendant(of: charged, matching: find.byType(Focus)),
+        )
+        .map((f) => f.focusNode)
+        .whereType<FocusNode>()
+        .firstWhere((n) => n.canRequestFocus)
+      ..requestFocus();
+    await tester.pump();
+    expect(row.hasPrimaryFocus, isTrue);
+    workspace.failRead = true;
+    await tester.sendKeyEvent(LogicalKeyboardKey.arrowUp);
+    await tester.pumpAndSettle();
+
+    expect(find.byKey(const ValueKey('read-failure')), findsOneWidget);
+    expect(control, findsOneWidget);
+    expect(shown(), OutsideHoursMode.charged, reason: 'the last value stays');
+    // The arrow moved the keyboard to the chosen row: it is still on the
+    // group's control, not given up to the page.
+    final focusContext = FocusManager.instance.primaryFocus?.context;
+    expect(focusContext, isNotNull);
+    expect(
+      find.descendant(
+        of: control,
+        matching: find.byElementPredicate((e) => identical(e, focusContext)),
+      ),
+      findsOneWidget,
+      reason: 'the keyboard stays on the control that was used',
+    );
+
+    workspace.failRead = false;
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('read-failure')), findsNothing);
+    expect(shown(), OutsideHoursMode.free);
   });
 }
 
