@@ -28,9 +28,6 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 /// The features the demo's main space keeps off, and why.
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
-  WorkspaceFeature.mcpAccess:
-      'an assistant needs a server endpoint and an OAuth account',
-  WorkspaceFeature.webMcp: 'needs mcpAccess, which needs a server',
   WorkspaceFeature.mtdSubmission:
       'UK only: on in the London space (ws-3), where its journey is shown; '
       'left off in the French and German spaces',
