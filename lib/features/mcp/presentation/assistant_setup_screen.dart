@@ -8,7 +8,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/inline_banner.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -146,8 +146,8 @@ class _AssistantSetupScreenState extends ConsumerState<AssistantSetupScreen> {
           l10n.mcpNextUnavailable,
     );
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.assistantSetupTitle),
+      appBar: pageBar(context,
+        title: l10n.assistantSetupTitle,
       ),
       body: scope.when(
         loading: () => const LoadingView(),

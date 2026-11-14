@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 
 class ReportLayoutPanel extends StatelessWidget {
   const ReportLayoutPanel({
@@ -63,9 +64,14 @@ class ReportLayoutPanel extends StatelessWidget {
               ),
             ]),
             const SizedBox(height: AppSpacing.xs),
-            Text(
-              l10n.reportLayoutSubtitle,
-              style: theme.textTheme.bodySmall,
+            // #3948 — the explanation keeps a reading line's width.
+            ConstrainedBox(
+              constraints:
+                  const BoxConstraints(maxWidth: kReadingColumnWidth),
+              child: Text(
+                l10n.reportLayoutSubtitle,
+                style: theme.textTheme.bodySmall,
+              ),
             ),
             const SizedBox(height: AppSpacing.sm),
             Wrap(

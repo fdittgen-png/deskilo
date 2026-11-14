@@ -19,6 +19,7 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/device_prefs.dart';
 import 'package:deskilo/core/locale/locale_controller.dart';
+import 'package:deskilo/core/ui/kit/page_bar.dart';
 import 'package:deskilo/core/ui/kit/page_title.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -77,7 +78,11 @@ List<String> _crumbs(WidgetTester tester) => [
     t.data!,
 ];
 
-/// The titles the page's own bars ask for (PageTitle's text, or a Text).
+// test-inventory: structure is the invariant — the name a page's bar asks
+// for is read from the bar's widgets: on the desk a silent title paints
+// nothing, and a bar the kit leaves out has no height.
+/// The titles the page's own bars ask for (PageTitle's text, or a Text),
+/// a bar the kit leaves out on the desk (#3927) included.
 List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [
   for (final bar in tester.widgetList<AppBar>(
     find.descendant(of: within, matching: find.byType(AppBar)),
@@ -86,6 +91,10 @@ List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [
       text
     else if (bar.title case Text(:final data?))
       data,
+  for (final bar in tester.widgetList<QuietPageBar>(
+    find.descendant(of: within, matching: find.byType(QuietPageBar)),
+  ))
+    bar.title,
 ];
 
 /// The texts the page's own bars show.
@@ -107,10 +116,10 @@ String _windowTitle(WidgetTester tester) =>
 /// show the entry crumb only. The count only falls.
 const _namelessBudget = 9;
 
-/// The desk pages whose own bar is left empty when this landed (no title
-/// drawn, no leading, no actions): collapsing them is for the desk pages
-/// (#3614 on). The count only falls.
-const _emptyBarBudget = 39;
+/// The desk pages whose own bar is left empty (no title drawn, no leading,
+/// no actions): none since #3927, where such a page draws no bar
+/// (`pageBar`). The count only falls.
+const _emptyBarBudget = 0;
 
 /// Whether the page's own bar draws nothing on the desk.
 bool _barEmpty(AppBar bar, String lastCrumb) {

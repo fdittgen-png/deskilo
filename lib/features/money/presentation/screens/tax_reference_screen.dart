@@ -13,7 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/country_field.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../providers/tax_reference_providers.dart';
 import '../widgets/tax_reference_history_sheet.dart';
@@ -69,7 +69,7 @@ class _TaxReferenceScreenState extends ConsumerState<TaxReferenceScreen> {
     final l10n = context.l10n;
     final owner = widget.canEdit;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.taxRefTitle)),
+      appBar: pageBar(context, title: l10n.taxRefTitle),
       floatingActionButton: owner
           ? FloatingActionButton.extended(
               key: const ValueKey('tax-reference-add'),

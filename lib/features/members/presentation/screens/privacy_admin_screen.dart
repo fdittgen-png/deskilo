@@ -18,7 +18,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/inline_banner.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../profile/application/privacy_admin.dart';
 import '../widgets/privacy_admin_sheets.dart';
@@ -43,7 +43,7 @@ class PrivacyAdminScreen extends ConsumerWidget {
       // The title keeps the bar to itself; the two actions stand in a row
       // over the table, giving way before it (a title is never cut).
       return Scaffold(
-        appBar: AppBar(title: PageTitle(l10n.privacyAdminTitle)),
+        appBar: pageBar(context, title: l10n.privacyAdminTitle),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
@@ -64,7 +64,7 @@ class PrivacyAdminScreen extends ConsumerWidget {
       );
     }
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.privacyAdminTitle)),
+      appBar: pageBar(context, title: l10n.privacyAdminTitle),
       body: space == null ? const LoadingView() : _Body(space: space),
     );
   }

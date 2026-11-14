@@ -8,7 +8,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../task_recorder/domain/action_registry.dart';
 import '../../../task_recorder/presentation/recorder_seam.dart';
@@ -181,8 +181,8 @@ class ValidationSettingsScreen extends ConsumerWidget {
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id ?? '';
 
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.validationTitle),
+      appBar: pageBar(context,
+        title: l10n.validationTitle,
       ),
       body: switch (policiesAsync) {
         // #3892 — built whole: each rule is a control a person changes, and a

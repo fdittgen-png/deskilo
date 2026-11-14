@@ -5,10 +5,13 @@
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
+import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_approval_reads.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
+import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_status.dart';
 import 'package:deskilo/core/ui/adaptive/long_task_page.dart';
@@ -33,9 +36,14 @@ import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
 import 'package:deskilo/features/profile/domain/rights_request.dart';
+import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/workspace/domain/bi_query.dart';
+import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
+import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
+import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -176,6 +184,55 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
         sources: const [],
       ),
     );
+  // #3949 — the places, one booking and one saved report, for the record
+  // pages opened at their address (only there: the other pages keep the
+  // fixture they were measured with).
+  final records = const [
+    '/res/',
+    '/space/',
+    '/editor/level/',
+    '/reservations/period?',
+    '/bi/report/',
+  ].any(path.startsWith);
+  final plan = FakeFloorPlanRepository()..seedSmallPlan();
+  final bookings = FakeReservationRepository()
+    ..reservations.add(
+      Reservation(
+        id: 'res-1',
+        workspaceId: 'ws-1',
+        seatId: 'seat-4',
+        memberId: 'member-1',
+        startsAt: kTestNow,
+        endsAt: kTestNow.add(const Duration(hours: 4)),
+        status: ReservationStatus.reserved,
+      ),
+    );
+  // One saved report (view-1): the seat use as a figure, from the booking.
+  final views = InMemoryBiViewRepository();
+  await views.save(
+    'ws-1',
+    scope: BiViewScope.private,
+    name: 'Seat use',
+    definition: BiViewDefinition.ofReport(
+      BiReportDefinition(
+        period: const BiReportPeriod.relative(BiGrain.month, 0),
+        pages: [
+          BiReportPage(
+            id: 'p1',
+            title: 'Capacity',
+            visuals: [
+              BiReportVisual.kpi(
+                id: 'v1',
+                metricId: 'capacity.seat_utilisation',
+                layout: const BiVisualLayout(order: 0, span: 3, height: 1),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+    expectedRevision: 0,
+  );
   await pumpRoute(
     tester,
     path,
@@ -189,6 +246,9 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       ),
       ...standardTestOverrides(
         money: money,
+        floorPlan: records ? plan : null,
+        reservations: records ? bookings : null,
+        biViews: records ? views : null,
         // #3629 — the guide's pages with the Demo's setup state: every
         // feature on, the basics and the hours done.
         localSetup: path.startsWith('/setup')
@@ -232,6 +292,14 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
               ..memberEmails = {'member-2': 'bob@example.test'},
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
+      if (records)
+        kpiRepositoryProvider.overrideWithValue(
+          DemoCapacityKpiRepository(
+            plan: plan,
+            reservations: bookings,
+            now: kTestNow,
+          ),
+        ),
       guestPassRepositoryProvider.overrideWithValue(_OnePassSold()),
       // #3616 — the books: one closed quarter and its file; one return.
       bookPeriodRepositoryProvider.overrideWithValue(_OneQuarter()),
@@ -322,6 +390,34 @@ const _pages = [
   // #3948 — a settings form's text wraps inside the form's measure.
   ('/vat', PageKind.document, 'money', 'vat'),
   ('/settings/sites', PageKind.document, 'settings', 'sites'),
+  // #3949 — a record page opened at its address, with its record.
+  ('/invoices/inv-1', PageKind.recordBesideTable, 'money', 'invoice-open'),
+  (
+    '/invoices/customer/member-1',
+    PageKind.recordBesideTable,
+    'money',
+    'customer-open',
+  ),
+  ('/members/plans/band-2', PageKind.recordBesideTable, 'members', 'plan-open'),
+  ('/editor/level/level-1', PageKind.task, 'places', 'level-canvas'),
+  (
+    '/reservations/period?from=2026-05&to=2026-05',
+    PageKind.document,
+    'booking',
+    'period-filled',
+  ),
+  ('/res/res-1', PageKind.document, 'booking', 'reservation-open'),
+  ('/space/seat/seat-4', PageKind.document, 'booking', 'space-open'),
+  ('/bi/report/view-1', PageKind.dashboard, 'reports', 'report-open'),
+  // #3949 — the pages of #3946 and #3947, with both causes on master.
+  ('/billing', PageKind.document, 'money', 'billing'),
+  ('/settings/wording', PageKind.document, 'settings', 'wording'),
+  (
+    '/money/purchase-orders/demo-order-1/edit',
+    PageKind.task,
+    'money',
+    'purchase-order-edit',
+  ),
   // #3943 — an empty page passes the keyboard on.
   ('/reservations/period', PageKind.document, 'booking', 'period'),
   // #3892 — settings, people, money and documents at the desk.
@@ -420,6 +516,8 @@ const _pages = [
   ),
   // #3617 — reports and analysis at the desk.
   ('/reports', PageKind.records, 'reports', 'reports'),
+  // #3947 — the report editor: its page shrunk beside the preview at 1440.
+  ('/report-editor', PageKind.document, 'reports', 'report-editor'),
   ('/money/status', PageKind.dashboard, 'money', 'status'),
   ('/bi', PageKind.dashboard, 'reports', 'analysis'),
   // #3860 — a record open beside its table: the table keeps its staying
@@ -443,7 +541,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 74;
+const _guardedWorkspaceRoutes = 85;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
