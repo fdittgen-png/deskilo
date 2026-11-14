@@ -110,7 +110,11 @@ class _SetupDeskState extends ConsumerState<_SetupDesk> {
     return ListenableBuilder(
       listenable: delegate,
       builder: (context, _) {
-        final path = delegate.currentConfiguration.uri.path;
+        // The top route's address: a step the guide opened with a push is
+        // the configuration's last match, not its base address.
+        final path = delegate.currentConfiguration.isEmpty
+            ? ''
+            : delegate.state.uri.path;
         final open = _addressIn(path);
         final page = open == null ? null : widget.pageFor(open);
         final shown = path == _setupPath || open != null;

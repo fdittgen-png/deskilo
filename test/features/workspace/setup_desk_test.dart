@@ -6,6 +6,8 @@
 // own: leaving a step whose answers are a draft asks first by every way out
 // — the steps beside it, Next and Back by the keys, Escape and the
 // browser's history — and the draft read afterwards is the step's own.
+import 'dart:async';
+
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_status.dart';
@@ -144,6 +146,22 @@ void main() {
       findsOneWidget,
     );
     expect(find.byKey(const ValueKey('setup-look-hex')), findsOneWidget);
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('a step the guide opens over itself (a push) is drawn beside '
+      'the steps, and Back returns to the guide', (tester) async {
+    await _pump(tester, size: const Size(1440, 1000));
+    unawaited(_router(tester).push('/setup/step/look'));
+    await tester.pumpAndSettle();
+    expect(_at(tester), '/setup/step/look');
+    expect(_steps, findsOneWidget);
+    expect(find.byKey(const ValueKey('setup-look-hex')), findsOneWidget);
+
+    _router(tester).pop();
+    await tester.pumpAndSettle();
+    expect(_at(tester), '/setup');
+    expect(find.byKey(const ValueKey('setup-look-hex')), findsNothing);
     expect(tester.takeException(), isNull);
   });
 

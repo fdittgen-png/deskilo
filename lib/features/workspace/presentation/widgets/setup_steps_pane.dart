@@ -38,6 +38,7 @@ class SetupStepsPane extends ConsumerWidget {
   });
 
   /// The width of the list: a step's name and its state on one line each.
+  // content-fit: a step's name and its state stay on one line each
   static const double listWidth = 264;
 
   /// The width of the rail of numbers.
