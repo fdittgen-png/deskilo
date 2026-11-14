@@ -2861,6 +2861,7 @@ routine public.mcp_is_delegated() -> boolean | function | invoker | stable | exe
 routine public.mcp_limit_retry_after(p_workspace_id uuid, p_client text, p_mutation boolean) -> integer | function | invoker | volatile | exec:service_role | body:1ed13d447619
 routine public.mcp_member_outcome(p_status text, p_data jsonb, p_member_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:ee7587699da9
 routine public.mcp_member_view(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:8d9cb5a3eddd
+routine public.mcp_my_action_confirmations(p_answered_since timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:0b06cafd98ce
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
 routine public.mcp_op_add_closure_days(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ae1061a4785e
 routine public.mcp_op_apply_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dc393f595dfa

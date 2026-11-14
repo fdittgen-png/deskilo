@@ -81,8 +81,7 @@ class _DemoAssistants {
         for (final id in [...confirmations.confirmations.keys]) {
           final c = confirmations.confirmations[id]!;
           if (c.status.answerable) {
-            confirmations.confirmations[id] = _copy(
-              c,
+            confirmations.confirmations[id] = c.withStatus(
               ConfirmationStatus.revoked,
             );
           }
@@ -102,6 +101,7 @@ class _DemoAssistants {
       ConfirmationStatus status,
       String event,
       String type,
+      Duration ago,
     ) => ActionConfirmation(
       id: id,
       status: status,
@@ -111,6 +111,7 @@ class _DemoAssistants {
       arguments: {'event_id': event, 'accept': true},
       target: {'kind': 'event', 'type': type},
       expiresAt: now.add(const Duration(days: 2)),
+      askedAt: now.subtract(ago),
     );
     confirmations
       ..confirmations['demo-confirm-room'] = request(
@@ -118,18 +119,21 @@ class _DemoAssistants {
         ConfirmationStatus.pending,
         'demo-room-request-event',
         'space_reservation',
+        const Duration(minutes: 40),
       )
       ..confirmations['demo-confirm-quota'] = request(
         'demo-confirm-quota',
         ConfirmationStatus.acknowledged,
         'demo-quota-done',
         'quota',
+        const Duration(days: 1),
       )
       ..confirmations['demo-confirm-expense'] = request(
         'demo-confirm-expense',
         ConfirmationStatus.declined,
         'demo-expense-refused',
         'expense',
+        const Duration(days: 3),
       )
       ..onAnswered = (c, {required accept}) async {
         // Confirming approves what the assistant asked to approve; declining
@@ -165,20 +169,6 @@ class _DemoAssistants {
   final confirmations = FakeActionConfirmationRepository();
   final admin = FakeMcpAdminRepository();
   final onboarding = FakeMcpOnboardingRepository();
-
-  static ActionConfirmation _copy(
-    ActionConfirmation c,
-    ConfirmationStatus status,
-  ) => ActionConfirmation(
-    id: c.id,
-    status: status,
-    operation: c.operation,
-    workspaceName: c.workspaceName,
-    clientName: c.clientName,
-    arguments: c.arguments,
-    target: c.target,
-    expiresAt: c.expiresAt,
-  );
 }
 
 /// The four repositories of the assistants, the Demo's own.

@@ -45,6 +45,7 @@ class ActionConfirmation {
     this.arguments = const {},
     this.target = const {},
     this.expiresAt,
+    this.askedAt,
     this.scope,
   });
 
@@ -64,6 +65,9 @@ class ActionConfirmation {
   final Map<String, Object?> target;
   final DateTime? expiresAt;
 
+  /// #3978 — when the assistant asked (the assistants page lists it).
+  final DateTime? askedAt;
+
   /// #1625 — the installation and account it was read from; the answer
   /// goes back there, whatever the app shows by then.
   final McpInstanceRef? scope;
@@ -77,6 +81,7 @@ class ActionConfirmation {
     arguments: arguments,
     target: target,
     expiresAt: expiresAt,
+    askedAt: askedAt,
     scope: scope,
   );
 
@@ -97,12 +102,47 @@ class ActionConfirmation {
       target: preview.objectOrAbsent('target').json,
       expiresAt:
           DateTime.tryParse(r.textOrAbsent('expires_at') ?? '')?.toUtc(),
+      askedAt: DateTime.tryParse(r.textOrAbsent('created_at') ?? '')?.toUtc(),
     );
   }
+
+  /// #3978 — this request with [status], everything else kept.
+  ActionConfirmation withStatus(ConfirmationStatus status) =>
+      ActionConfirmation(
+        id: id,
+        status: status,
+        operation: operation,
+        workspaceName: workspaceName,
+        clientName: clientName,
+        arguments: arguments,
+        target: target,
+        expiresAt: expiresAt,
+        askedAt: askedAt,
+        scope: scope,
+      );
 }
+
+/// #3978 — how far back the assistants page lists the requests already
+/// answered: the last days, enough to find what was just decided on
+/// another device, without growing into a history.
+const answeredRequestsShown = Duration(days: 7);
+
+/// #3978 — the person's own requests, as the server lists them (newest
+/// first). A status this version cannot read reads as unavailable, never
+/// as waiting; a row without its id is no request.
+List<ActionConfirmation> actionConfirmationsFromJson(Object? json) => [
+  if (json is List)
+    for (final row in json)
+      if (row is Map && row['id'] is String)
+        ActionConfirmation.fromJson(row['id']! as String, row),
+];
 
 abstract interface class ActionConfirmationRepository {
   Future<ActionConfirmation> get(String id);
+
+  /// #3978 — every request waiting for the person and the ones asked since
+  /// [answeredSince], newest first.
+  Future<List<ActionConfirmation>> mine({required DateTime answeredSince});
 
   /// Confirms ([accept]) or declines; answers the resulting status.
   Future<ConfirmationStatus> respond(String id, {required bool accept});

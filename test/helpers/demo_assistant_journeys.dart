@@ -13,6 +13,7 @@ import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/mcp/domain/action_confirmation.dart';
 import 'package:deskilo/features/mcp/providers/mcp_providers.dart';
+import 'package:deskilo/features/mcp/providers/my_confirmations_provider.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,14 +60,20 @@ WorkspaceEvent eventOf(DemoFixture f, String id) =>
 Future<ActionConfirmation> confirmationOf(ProviderContainer c, String id) =>
     c.read(actionConfirmationProvider(id).future);
 
+/// #3978 — the requests as the assistants page lists them.
+Future<List<ActionConfirmation>> pageRequests(ProviderContainer c) =>
+    c.read(myActionConfirmationsProvider.future);
+
 /// The page of the assistants: eligible, one assistant connected with its
-/// operations, and the three requests it left.
+/// operations, and the three requests it left, listed there.
 Future<bool> assistantsPageHolds(ProviderContainer c) async {
   final caps = await c.read(myDatabaseCapabilitiesProvider.future);
   final connections = await c.read(myMcpConnectionsProvider.future);
-  final waiting = await confirmationOf(c, waitingConfirmation);
-  final confirmed = await confirmationOf(c, confirmedConfirmation);
-  final refused = await confirmationOf(c, refusedConfirmation);
+  final listed = {for (final r in await pageRequests(c)) r.id: r};
+  final waiting = listed[waitingConfirmation];
+  final confirmed = listed[confirmedConfirmation];
+  final refused = listed[refusedConfirmation];
+  if (waiting == null || confirmed == null || refused == null) return false;
   final one = connections.singleOrNull;
   return caps.eligibility == McpEligibility.eligible &&
       one != null &&
@@ -78,13 +85,16 @@ Future<bool> assistantsPageHolds(ProviderContainer c) async {
       refused.status == ConfirmationStatus.declined;
 }
 
-/// The owner confirms the waiting request: the Demo's event is decided, the
-/// booking it held stays on the plan, and the request reads as done. The
-/// event, the room's booking and the member's bookings tell one story.
+/// The owner finds the waiting request on the assistants page (#3978) and
+/// confirms it: the Demo's event is decided, the booking it held stays on
+/// the plan, and the request leaves the waiting ones as done. The event,
+/// the room's booking and the member's bookings tell one story.
 Future<bool> confirmRoomRequestJourney() => withOwnerSession((f, c) async {
   if (!await assistantsPageHolds(c)) return false;
   final before = roomRequest(f);
-  final waiting = await confirmationOf(c, waitingConfirmation);
+  final found = (await pageRequests(c)).where((r) => r.status.answerable);
+  if (found.length != 1) return false;
+  final waiting = await confirmationOf(c, found.single.id);
   final answer = await c
       .read(confirmationAnswersProvider)
       .answer(waiting, accept: true);
@@ -93,7 +103,10 @@ Future<bool> confirmRoomRequestJourney() => withOwnerSession((f, c) async {
       .where((r) => r.memberId == after.memberId && r.id == after.id)
       .length;
   // The screen reads it again after an answer, as the page does.
-  c.invalidate(actionConfirmationProvider(waitingConfirmation));
+  c
+    ..invalidate(actionConfirmationProvider(waitingConfirmation))
+    ..invalidate(myActionConfirmationsProvider);
+  final listedAfter = {for (final r in await pageRequests(c)) r.id: r};
   final checks = {
     'answer': answer == ConfirmationStatus.acknowledged,
     'event': eventOf(f, roomRequestEvent).status == EventStatus.confirmed,
@@ -104,6 +117,10 @@ Future<bool> confirmRoomRequestJourney() => withOwnerSession((f, c) async {
     'request done':
         (await confirmationOf(c, waitingConfirmation)).status ==
         ConfirmationStatus.acknowledged,
+    'left the waiting ones':
+        listedAfter[waitingConfirmation]?.status ==
+            ConfirmationStatus.acknowledged &&
+        !listedAfter.values.any((r) => r.status.answerable),
   };
   final failed = [
     for (final e in checks.entries)
