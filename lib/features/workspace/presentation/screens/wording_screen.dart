@@ -27,6 +27,7 @@ import '../../../../core/l10n/lexicon_defaults.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -120,15 +121,20 @@ class _WordingScreenState extends ConsumerState<WordingScreen> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: AppSpacing.md),
-            child: DropdownButton<String>(
-              key: const ValueKey('wording-locale'),
-              value: locale,
-              underline: const SizedBox.shrink(),
-              onChanged: (value) => setState(() => _locale = value),
-              items: [
-                for (final code in locales)
-                  DropdownMenuItem(value: code, child: Text(code.toUpperCase())),
-              ],
+            // #3947 — the language picker is a target of the kit's size.
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(minWidth: KitMetrics.minTarget),
+              child: DropdownButton<String>(
+                key: const ValueKey('wording-locale'),
+                value: locale,
+                underline: const SizedBox.shrink(),
+                onChanged: (value) => setState(() => _locale = value),
+                items: [
+                  for (final code in locales)
+                    DropdownMenuItem(
+                        value: code, child: Text(code.toUpperCase())),
+                ],
+              ),
             ),
           ),
         ],

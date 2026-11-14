@@ -13,6 +13,7 @@ import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -429,11 +430,9 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: PageTitle(
-          l10n.legalIdentityTitle,
-        ),
+        title: PageTitle(l10n.legalIdentityTitle),
       ),
-      body: ListView(
+      body: FormScroll(
         padding: AppSpacing.gutterAll,
         children: [
           Text(

@@ -6,6 +6,7 @@ import 'dart:convert';
 
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/public_network/public_network_negotiator.dart';
+import 'package:deskilo/core/ui/kit/form_scroll.dart';
 import 'package:deskilo/features/auth/presentation/screens/auth_screen.dart';
 import 'package:deskilo/features/directory/domain/directory_location.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
@@ -305,7 +306,7 @@ void main() {
       400,
       scrollable: find
           .descendant(
-            of: find.byType(ListView),
+            of: find.byType(FormScroll),
             matching: find.byType(Scrollable),
           )
           .first,

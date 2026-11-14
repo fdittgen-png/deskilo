@@ -369,7 +369,27 @@ final _return = VatDeclaration(
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
+  // #3946 — Tab walks each of these once, in the order they are built.
+  ('/settings/number-sequences', PageKind.task, 'money', 'number-sequences'),
+  ('/settings/personal-info', PageKind.task, 'settings', 'personal-info'),
+  ('/workspace-overview', PageKind.task, 'settings', 'workspace-overview'),
+  ('/availability', PageKind.task, 'settings', 'availability'),
+  ('/money/purchase-orders/new', PageKind.task, 'money', 'purchase-order-new'),
+  ('/settings/public-page', PageKind.task, 'settings', 'public-page'),
+  ('/einvoice-config', PageKind.task, 'money', 'einvoice-config'),
+  ('/legal-identity', PageKind.task, 'money', 'legal-identity'),
+  ('/payment-methods', PageKind.task, 'money', 'payment-methods'),
+  ('/member/member-2', PageKind.task, 'people', 'member'),
+  ('/settings/what-you-can-do', PageKind.task, 'settings', 'what-you-can-do'),
   // #3892 — booking and requests at the desk.
+  // #3947 — controls named, targets of the kit's size.
+  ('/accessories', PageKind.document, 'money', 'accessories'),
+  ('/documents', PageKind.document, 'reports', 'documents'),
+  ('/money/settlement', PageKind.task, 'money', 'settlement'),
+  ('/money/repartition', PageKind.task, 'money', 'repartition'),
+  // #3948 — a settings form's text wraps inside the form's measure.
+  ('/vat', PageKind.document, 'money', 'vat'),
+  ('/settings/sites', PageKind.document, 'settings', 'sites'),
   // #3949 — a record page opened at its address, with its record.
   ('/invoices/inv-1', PageKind.recordBesideTable, 'money', 'invoice-open'),
   (
@@ -389,6 +409,15 @@ const _pages = [
   ('/res/res-1', PageKind.document, 'booking', 'reservation-open'),
   ('/space/seat/seat-4', PageKind.document, 'booking', 'space-open'),
   ('/bi/report/view-1', PageKind.dashboard, 'reports', 'report-open'),
+  // #3949 — the pages of #3946 and #3947, with both causes on master.
+  ('/billing', PageKind.document, 'money', 'billing'),
+  ('/settings/wording', PageKind.document, 'settings', 'wording'),
+  (
+    '/money/purchase-orders/demo-order-1/edit',
+    PageKind.task,
+    'money',
+    'purchase-order-edit',
+  ),
   // #3943 — an empty page passes the keyboard on.
   ('/reservations/period', PageKind.document, 'booking', 'period'),
   // #3892 — settings, people, money and documents at the desk.
@@ -510,7 +539,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 64;
+const _guardedWorkspaceRoutes = 84;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
