@@ -231,7 +231,17 @@ void main() {
 const _leipzigNew = 'Leipzig carries exactly what a new workspace starts with '
     '(defaultFeatureFlagsForNewWorkspace, pinned by demo_second_space_test): the '
     'space shows the Demo a fresh, basic space, so these steps are off there by design.';
+const _practiceNoPlaces = 'The practice (#3863) is a business without places: '
+    'what a new workspace starts with and the practice kind on top, so the '
+    'place steps (access, structure, attendance) are off by design, and the '
+    'steps a new workspace keeps off stay off as in Leipzig.';
 const _offOnPurpose = <String, String>{
+  'ws-7/workspaceAccess/physicalAccess': _practiceNoPlaces,
+  'ws-7/spaceManagement/structure': _practiceNoPlaces,
+  'ws-7/reservationsUsage/attendance': _practiceNoPlaces,
+  'ws-7/billingPayments/expenses': _practiceNoPlaces,
+  'ws-7/billingPayments/tax': _practiceNoPlaces,
+  'ws-7/documentsInformation/reportDesign': _practiceNoPlaces,
   'ws-2/billingPayments/collection': _leipzigNew,
   'ws-2/billingPayments/expenses': _leipzigNew,
   'ws-2/billingPayments/tax': _leipzigNew,
