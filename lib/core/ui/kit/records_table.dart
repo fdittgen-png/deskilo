@@ -205,6 +205,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
           builder: (context, box) {
             final shown = _c.shown;
             final selected = _c.selected;
+            final room = WindowClass.ofWidth(box.maxWidth);
             widget.onShown?.call([for (final r in shown) widget.keyOf(r)]);
             return Column(
               children: [
@@ -217,17 +218,12 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                     onClear: _c.clear,
                   ),
                 Expanded(
-                  child:
-                      WindowClass.ofWidth(box.maxWidth) == WindowClass.compact
+                  child: room == WindowClass.compact
                       ? _cards(shown)
-                      : _table(
-                          context,
-                          shown,
-                          WindowClass.ofWidth(box.maxWidth),
-                        ),
+                      : _table(context, shown, room),
                 ),
                 const Divider(height: 1),
-                _footer(shown, WindowClass.ofWidth(box.maxWidth)),
+                _footer(shown, room),
               ],
             );
           },
