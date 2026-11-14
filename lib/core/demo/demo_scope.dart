@@ -43,6 +43,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
+import 'package:deskilo/core/demo/demo_payment_approval.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
@@ -56,6 +57,7 @@ import 'package:deskilo/features/directory/providers/saved_places_providers.dart
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
+import 'package:deskilo/features/money/providers/payment_approval_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_mail_providers.dart';
 import 'package:deskilo/features/money/providers/sales_tax_providers.dart';
 import 'package:deskilo/features/money/providers/tax_reference_providers.dart';
@@ -308,7 +310,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ..._fileOverrides(fixture),
       fileSharerProvider.overrideWithValue(fixture.outward.shareFile),
       textSharerProvider.overrideWithValue(fixture.outward.shareText),
-      linkLauncherProvider.overrideWithValue(fixture.outward.openLink),
+      linkLauncherProvider.overrideWithValue(fixture.outward.openLink), paymentApprovalProvider.overrideWith(demoPaymentApproval(fixture)), // #3961
 
       // #1564 — the two edges that are neither a repository nor the
       // app's own doing, and so stayed live: the push transport and the

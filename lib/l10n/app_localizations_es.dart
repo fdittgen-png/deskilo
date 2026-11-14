@@ -7502,6 +7502,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get demoPersonaOwner => 'Propietario';
 
   @override
+  String get demoProviderPageBody =>
+      'Esta página hace las veces de la de un proveedor de pagos: no se cobra nada y nada sale de este dispositivo. Elija la respuesta del proveedor.';
+
+  @override
+  String get demoProviderPageNoAnswer => 'El proveedor no responde';
+
+  @override
+  String get demoProviderPagePay => 'Pagar';
+
+  @override
+  String get demoProviderPageTitle => 'Página de pago (demostración)';
+
+  @override
   String get demoSessionBadge => 'Demo';
 
   @override

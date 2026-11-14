@@ -9824,6 +9824,22 @@
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
+  "demoProviderPageBody": "This page stands in for a payment provider's: nothing is charged and nothing leaves this device. Choose what the provider answers.",
+  "@demoProviderPageBody": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageBody"
+  },
+  "demoProviderPageNoAnswer": "The provider does not answer",
+  "@demoProviderPageNoAnswer": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageNoAnswer"
+  },
+  "demoProviderPagePay": "Pay",
+  "@demoProviderPagePay": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPagePay"
+  },
+  "demoProviderPageTitle": "Payment page (demonstration)",
+  "@demoProviderPageTitle": {
+    "description": "#3961 the Demo stand-in for a payment provider page: demoProviderPageTitle"
+  },
   "demoSessionBadge": "Demo",
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"

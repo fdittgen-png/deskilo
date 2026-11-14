@@ -11885,6 +11885,30 @@ abstract class AppLocalizations {
   /// **'The owner'**
   String get demoPersonaOwner;
 
+  /// #3961 the Demo stand-in for a payment provider page: demoProviderPageBody
+  ///
+  /// In en, this message translates to:
+  /// **'This page stands in for a payment provider\'s: nothing is charged and nothing leaves this device. Choose what the provider answers.'**
+  String get demoProviderPageBody;
+
+  /// #3961 the Demo stand-in for a payment provider page: demoProviderPageNoAnswer
+  ///
+  /// In en, this message translates to:
+  /// **'The provider does not answer'**
+  String get demoProviderPageNoAnswer;
+
+  /// #3961 the Demo stand-in for a payment provider page: demoProviderPagePay
+  ///
+  /// In en, this message translates to:
+  /// **'Pay'**
+  String get demoProviderPagePay;
+
+  /// #3961 the Demo stand-in for a payment provider page: demoProviderPageTitle
+  ///
+  /// In en, this message translates to:
+  /// **'Payment page (demonstration)'**
+  String get demoProviderPageTitle;
+
   /// #1375 demo session: demoSessionBadge
   ///
   /// In en, this message translates to:

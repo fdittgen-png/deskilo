@@ -4613,6 +4613,10 @@
   "@demoPersonaOwner": {
     "description": "#1376 demo personas: demoPersonaOwner"
   },
+  "demoProviderPageBody": "Questa pagina sostituisce quella di un fornitore di pagamenti: non viene addebitato nulla e nulla lascia questo dispositivo. Scegli la risposta del fornitore.",
+  "demoProviderPageNoAnswer": "Il fornitore non risponde",
+  "demoProviderPagePay": "Paga",
+  "demoProviderPageTitle": "Pagina di pagamento (dimostrazione)",
   "demoSessionBadge": "Demo",
   "@demoSessionBadge": {
     "description": "#1375 demo session: demoSessionBadge"
