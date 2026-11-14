@@ -557,5 +557,7 @@ storage.objects.floor_plans_insert_sites
 storage.objects.floor_plans_select
 storage.objects.floor_plans_update
 storage.objects.floor_plans_update_sites
+storage.objects.invoice_originals_insert
+storage.objects.invoice_originals_select
 storage.objects.mcp_delegated_deny
 storage.objects.personal_native_session

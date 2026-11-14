@@ -1,24 +1,40 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
+-- (one private storage bucket with an insert and a select policy, no update
+-- and no delete; one column on invoices with its stamp; one table; the
+-- provenance registry restated whole with one kind more)
 --
--- #3853 -- an issued invoice is its stored original: the PDF, its XML and
+-- #3853 -- an issued invoice is its stored original: its PDF, its XML and
 -- their digests, kept once per invoice. Every later view, download or
 -- reprint serves those bytes.
 --
 -- 1. invoices.keeps_original: true on every invoice issued from now on, so
 --    the invoice itself says whether an original is kept for it. An invoice
 --    issued before keeps none and prints as a labelled copy.
--- 2. invoice_originals: one row per invoice, readable by whoever reads the
---    invoice, written only by store_invoice_original and never changed. The
---    system columns record who stored it and when.
--- 3. store_invoice_original: once per invoice, by someone who may issue
---    invoices in the invoice's own business. The bytes live in the table row.
---    Before it keeps them it checks that the PDF is a PDF of at most
---    invoice_original_max_bytes(), and that the XML names, once each, the
---    number, currency and amount due of the invoice row as it was issued.
---    The caller's words are never compared with themselves: every expected
---    value is read from the row. Each stored original leaves a provenance
---    entry with the invoice's number and the digests, never the bytes.
+-- 2. The PDF is an object of the private bucket invoice-originals, at
+--    <workspace_id>/<invoice_id>/<sha256 of the PDF>.pdf, at most the
+--    bucket's own file_size_limit (5 MiB). It is written once, by someone who
+--    may issue invoices in that business, for an invoice that keeps an
+--    original and has none recorded yet. No API role updates or deletes an
+--    object: it leaves with its invoice, by the server's roles. An upload
+--    that no recorded original names is left as it is; the server's own
+--    maintenance removes those.
+-- 3. invoice_originals: one small row per invoice -- the object's path, the
+--    PDF's size read from the stored object, the PDF's SHA-256 as declared
+--    by whoever stored it, the XML itself and its SHA-256 computed here. The
+--    system columns record who stored it and when. Readable by whoever reads
+--    the invoice; never changed.
+-- 4. store_invoice_original(invoice, pdf_sha256, xml): after the upload,
+--    once per invoice, by someone who may issue invoices in the invoice's
+--    own business. It requires the object at the path the declared digest
+--    names, and checks that the XML names, once each, the number, currency
+--    and amount due of the invoice row as it was issued; every expected value
+--    is read from the row. A refusal records nothing. Each stored original
+--    leaves a provenance entry with the invoice's number and the digests,
+--    never the bytes.
+-- The PDF's digest is recorded as declared and checked by whoever reads the
+-- original against the bytes they download; how its page looks is checked
+-- by nobody.
 
 -- ── 1. which invoices keep an original ────────────────────────────────────
 -- An added column with a constant default changes no row: the invoices
@@ -42,19 +58,31 @@ create trigger invoice_keeps_original_stamp
   for each row execute function public.invoice_keeps_original_stamp();
 
 -- ── 2. the originals ──────────────────────────────────────────────────────
+-- The largest XML kept: about thirty times the Demo business's largest
+-- invoice (11 lines, 15 725 bytes).
+create or replace function public.invoice_original_xml_max_bytes()
+returns integer language sql immutable set search_path = public as $fn$
+  select 512 * 1024
+$fn$;
+revoke execute on function public.invoice_original_xml_max_bytes() from public, anon;
+grant execute on function public.invoice_original_xml_max_bytes() to authenticated;
+
 create table if not exists public.invoice_originals (
   invoice_id uuid primary key references public.invoices(id) on delete cascade,
   workspace_id uuid not null references public.workspaces(id) on delete cascade,
-  pdf bytea not null,
-  xml bytea not null,
-  sha256 text not null,
+  path text not null unique,
+  pdf_bytes bigint not null check (pdf_bytes > 0),
+  pdf_sha256 text not null check (pdf_sha256 ~ '^[0-9a-f]{64}$'),
+  xml text not null,
   xml_sha256 text not null
 );
 select public.ensure_system_columns('invoice_originals');
 comment on table public.invoice_originals is
-  '#3853 -- the stored original of each issued invoice: the PDF and its XML, served by every later view, download or reprint';
-comment on column public.invoice_originals.sha256 is 'hex sha256 of pdf';
-comment on column public.invoice_originals.xml_sha256 is 'hex sha256 of xml';
+  '#3853 -- the stored original of each issued invoice: its PDF in the invoice-originals bucket, its XML here; served by every later view, download or reprint';
+comment on column public.invoice_originals.path is 'the PDF''s object in the invoice-originals bucket';
+comment on column public.invoice_originals.pdf_bytes is 'the size of the stored object, read by the server';
+comment on column public.invoice_originals.pdf_sha256 is 'hex sha256 of the PDF as declared by whoever stored it; checked at every read';
+comment on column public.invoice_originals.xml_sha256 is 'hex sha256 of xml, computed by the server';
 create index if not exists invoice_originals_workspace_idx
   on public.invoice_originals (workspace_id);
 
@@ -81,7 +109,65 @@ create trigger invoice_originals_no_update
   before update on public.invoice_originals
   for each row execute function public.invoice_originals_immutable();
 
--- ── 3. the provenance of an original ──────────────────────────────────────
+-- ── 3. the bucket ─────────────────────────────────────────────────────────
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('invoice-originals', 'invoice-originals', false, 5242880, array['application/pdf'])
+on conflict (id) do nothing;
+
+-- The invoice an object path names, or null for any other shape.
+create or replace function public.invoice_original_invoice(p_name text)
+returns uuid language sql immutable set search_path = public as $fn$
+  select case when p_name ~ ('^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+                             '/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
+                             '/[0-9a-f]{64}\.pdf$')
+              then split_part(p_name, '/', 2)::uuid end;
+$fn$;
+revoke execute on function public.invoice_original_invoice(text) from public, anon;
+grant execute on function public.invoice_original_invoice(text) to authenticated;
+
+-- Whether the caller may upload [p_name]: its folder is the business of the
+-- invoice it names, that invoice keeps an original and has none recorded,
+-- and the caller may issue invoices there; never an assistant's token.
+create or replace function public.invoice_original_may_upload(p_name text)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select auth.uid() is not null
+     and not public.mcp_is_delegated()
+     and exists (select 1 from public.invoices i
+                  where i.id = public.invoice_original_invoice(p_name)
+                    and i.workspace_id::text = split_part(p_name, '/', 1)
+                    and i.keeps_original
+                    and public.has_permission(i.workspace_id, 'issueInvoices'))
+     and not exists (select 1 from public.invoice_originals o
+                      where o.invoice_id = public.invoice_original_invoice(p_name));
+$fn$;
+revoke execute on function public.invoice_original_may_upload(text) from public, anon;
+grant execute on function public.invoice_original_may_upload(text) to authenticated;
+
+drop policy if exists invoice_originals_insert on storage.objects;
+create policy invoice_originals_insert on storage.objects for insert to authenticated
+  with check (bucket_id = 'invoice-originals' and public.invoice_original_may_upload(name));
+
+-- Whether the caller may issue invoices in the business whose folder holds
+-- [p_name]: who uploads there sees what was uploaded there.
+create or replace function public.invoice_original_issuer(p_name text)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select public.invoice_original_invoice(p_name) is not null
+     and public.has_permission(split_part(p_name, '/', 1)::uuid, 'issueInvoices');
+$fn$;
+revoke execute on function public.invoice_original_issuer(text) from public, anon;
+grant execute on function public.invoice_original_issuer(text) to authenticated;
+
+-- An object is read when a recorded original names it, by whoever reads that
+-- original (and so its invoice), and by who may issue invoices in its
+-- business, who uploads it.
+drop policy if exists invoice_originals_select on storage.objects;
+create policy invoice_originals_select on storage.objects for select to authenticated
+  using (bucket_id = 'invoice-originals'
+         and not public.mcp_is_delegated()
+         and (exists (select 1 from public.invoice_originals o where o.path = name)
+              or public.invoice_original_issuer(name)));
+
+-- ── 4. the provenance of an original ──────────────────────────────────────
 -- 0693's registry, restated whole with the stored original as a result kind.
 create or replace function public.provenance_modules()
 returns jsonb language sql immutable set search_path = public as $fn$
@@ -101,26 +187,13 @@ alter table public.provenance_envelopes add constraint provenance_envelopes_resu
   check (result_kind in ('invoice', 'book_export', 'file_delivery', 'accounting_delivery', 'transmission',
                          'invoice_original'));
 
--- ── 4. storing an original ────────────────────────────────────────────────
--- The largest original kept, PDF and XML together, from the largest picture
--- the report image library accepts (its bucket's own limit, 0215): five
--- pictures' worth. A design with two pictures at that limit, header and
--- footer, makes a PDF of about two and a half (a PNG is embedded re-encoded),
--- so the ceiling is about twice that; the invoice itself adds a few kilobytes.
-create or replace function public.invoice_original_max_bytes()
-returns bigint language sql stable security definer set search_path = public as $fn$
-  select 5 * coalesce((select b.file_size_limit from storage.buckets b where b.id = 'floor-plans'),
-                      10485760)::bigint
-$fn$;
-revoke execute on function public.invoice_original_max_bytes() from public, anon;
-grant execute on function public.invoice_original_max_bytes() to authenticated;
-
--- p_pdf is the PDF in base64; p_xml the CII document it carries.
-create or replace function public.store_invoice_original(p_invoice_id uuid, p_pdf text, p_xml text)
+-- ── 5. recording an original ──────────────────────────────────────────────
+create or replace function public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
   v_inv public.invoices;
-  v_pdf bytea;
+  v_path text;
+  v_bytes bigint;
   v_doc xml;
   v_ns text[] := array[
     array['rsm', 'urn:un:unece:uncefact:data:standard:CrossIndustryInvoice:100'],
@@ -130,14 +203,13 @@ declare
   v_currency text;
   v_due text;
   v_due_minor numeric;
-  v_sha text;
   v_xml_sha text;
 begin
   select * into v_inv from public.invoices where id = p_invoice_id;
   if not found then
     raise exception 'no such invoice' using errcode = 'P0002';
   end if;
-  if not public.has_permission(v_inv.workspace_id, 'issueInvoices') then
+  if public.mcp_is_delegated() or not public.has_permission(v_inv.workspace_id, 'issueInvoices') then
     raise exception 'not allowed to issue invoices' using errcode = '42501';
   end if;
   if not v_inv.keeps_original then
@@ -147,28 +219,28 @@ begin
     raise exception 'this invoice already has its original' using errcode = '23505';
   end if;
 
-  -- the size first, before anything is decoded or parsed: base64 carries
-  -- three bytes in four characters
-  if octet_length(coalesce(p_pdf, '')) / 4 * 3 + octet_length(coalesce(p_xml, ''))
-       > public.invoice_original_max_bytes() then
-    raise exception 'the original is larger than % bytes', public.invoice_original_max_bytes()
-      using errcode = '22023';
+  -- the PDF: at the path its declared digest names, already stored
+  if coalesce(p_pdf_sha256, '') !~ '^[0-9a-f]{64}$' then
+    raise exception 'the PDF''s digest is not a SHA-256' using errcode = '22023';
   end if;
-  begin
-    v_pdf := decode(coalesce(p_pdf, ''), 'base64');
-  exception when others then
-    raise exception 'the original is not a PDF' using errcode = '22023';
-  end;
-  if length(v_pdf) < 5 or substring(v_pdf from 1 for 5) <> '\x255044462d'::bytea then
-    raise exception 'the original is not a PDF' using errcode = '22023';
+  v_path := v_inv.workspace_id || '/' || v_inv.id || '/' || p_pdf_sha256 || '.pdf';
+  select (o.metadata ->> 'size')::bigint into v_bytes
+    from storage.objects o where o.bucket_id = 'invoice-originals' and o.name = v_path;
+  if v_bytes is null then
+    raise exception 'the original''s PDF is not stored' using errcode = '22023';
   end if;
 
+  -- the XML: its size first, before it is parsed; then each value from its
+  -- one place in the document -- none, or two, is no value
+  if octet_length(coalesce(p_xml, '')) > public.invoice_original_xml_max_bytes() then
+    raise exception 'the structured part is larger than % bytes', public.invoice_original_xml_max_bytes()
+      using errcode = '22023';
+  end if;
   begin
     v_doc := xmlparse(document coalesce(p_xml, ''));
   exception when others then
     raise exception 'the structured part is not an XML document' using errcode = '22023';
   end;
-  -- each value from its one place in the document: none, or two, is no value
   v_found := xpath('/rsm:CrossIndustryInvoice/rsm:ExchangedDocument/ram:ID/text()', v_doc, v_ns);
   v_number := case when cardinality(v_found) = 1 then v_found[1]::text end;
   v_found := xpath('/rsm:CrossIndustryInvoice/rsm:SupplyChainTradeTransaction'
@@ -193,16 +265,16 @@ begin
     raise exception 'the structured part does not name this invoice''s amount due' using errcode = '22023';
   end if;
 
-  v_sha := encode(sha256(v_pdf), 'hex');
   v_xml_sha := encode(sha256(convert_to(p_xml, 'UTF8')), 'hex');
-  insert into public.invoice_originals (invoice_id, workspace_id, pdf, xml, sha256, xml_sha256)
-  values (v_inv.id, v_inv.workspace_id, v_pdf, convert_to(p_xml, 'UTF8'), v_sha, v_xml_sha);
+  insert into public.invoice_originals (invoice_id, workspace_id, path, pdf_bytes, pdf_sha256, xml, xml_sha256)
+  values (v_inv.id, v_inv.workspace_id, v_path, v_bytes, p_pdf_sha256, p_xml, v_xml_sha);
   perform public.record_provenance(v_inv.workspace_id, 'invoice_original', v_inv.id,
     jsonb_build_object('stored_by', auth.uid(), 'number', v_inv.number),
     '{}'::jsonb,
-    jsonb_build_object('pdf_sha256', v_sha, 'xml_sha256', v_xml_sha,
-                       'pdf_bytes', length(v_pdf), 'xml_bytes', octet_length(p_xml)));
-  return jsonb_build_object('invoice_id', v_inv.id, 'sha256', v_sha, 'xml_sha256', v_xml_sha);
+    jsonb_build_object('path', v_path, 'pdf_sha256', p_pdf_sha256, 'pdf_bytes', v_bytes,
+                       'xml_sha256', v_xml_sha, 'xml_bytes', octet_length(p_xml)));
+  return jsonb_build_object('invoice_id', v_inv.id, 'path', v_path, 'pdf_bytes', v_bytes,
+                            'pdf_sha256', p_pdf_sha256, 'xml_sha256', v_xml_sha);
 end;
 $fn$;
 revoke execute on function public.store_invoice_original(uuid, text, text) from public, anon;
