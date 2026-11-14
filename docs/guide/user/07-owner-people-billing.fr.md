@@ -148,7 +148,7 @@ Un nouvel arrivant attend votre décision, ou un membre fait une pause, et vous 
 - La décision sur un nouveau membre peut aussi passer par les règles de validation, comme décrit dans [Règles de validation](help:user.validation.overview).
 - La mise en pause est réservée aux propriétaires et conserve tout l'historique.
 - Un membre parti affiche **Parti** et ne peut pas être mis en pause.
-- Une suspension et un changement de part comptent par mois entiers, à partir du premier mois dont le premier jour tombe à leur date ou après ; rien n'est calculé au prorata. Un mois suspendu dès son premier jour ne doit aucun abonnement et n'inclut aucune demi-journée ; une suspension qui commence le 15 laisse ce mois facturé en entier et libère le suivant. L'onglet **Formule** d'un membre liste les changements programmés, avec les mois facturés et libérés, et le premier relevé où figure un changement de part.
+- Une suspension et un changement de part comptent par mois entiers, à partir du premier mois dont le premier jour tombe à leur date ou après ; rien n'est calculé au prorata. Un mois déjà facturé garde ce que dit sa facture ; un changement compte à partir du premier mois pas encore facturé. Un mois suspendu dès son premier jour ne doit aucun abonnement et n'inclut aucune demi-journée ; une suspension qui commence le 15 laisse ce mois facturé en entier et libère le suivant. L'onglet **Formule** d'un membre liste les changements programmés, avec les mois facturés et libérés, et le premier relevé où figure un changement de part.
 
 **Voir aussi:** [Inviter un membre](help:user.members.invite)
 

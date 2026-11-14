@@ -49,3 +49,45 @@ final class MemberTermChangesProvider
 }
 
 String _$memberTermChangesHash() => r'2d9fb3221153181cef4f6ecebb3543b9a2d04b90';
+
+@ProviderFor(memberInvoicedMonths)
+final memberInvoicedMonthsProvider = MemberInvoicedMonthsProvider._();
+
+final class MemberInvoicedMonthsProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<Map<String, Set<DateTime>>>,
+          Map<String, Set<DateTime>>,
+          FutureOr<Map<String, Set<DateTime>>>
+        >
+    with
+        $FutureModifier<Map<String, Set<DateTime>>>,
+        $FutureProvider<Map<String, Set<DateTime>>> {
+  MemberInvoicedMonthsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'memberInvoicedMonthsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$memberInvoicedMonthsHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<Map<String, Set<DateTime>>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<Map<String, Set<DateTime>>> create(Ref ref) {
+    return memberInvoicedMonths(ref);
+  }
+}
+
+String _$memberInvoicedMonthsHash() =>
+    r'de19058c3941ca29f6d15d5f79f99d50697b6be8';

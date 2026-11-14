@@ -32961,12 +32961,6 @@ abstract class AppLocalizations {
   /// #3858 a member's dated plan terms
   ///
   /// In en, this message translates to:
-  /// **'Due on {due}; took effect on {effective}, the first period not yet invoiced'**
-  String memberTermLate(String due, String effective);
-
-  /// #3858 a member's dated plan terms
-  ///
-  /// In en, this message translates to:
   /// **'{first} and every month after, until resumed'**
   String memberTermMonthOnwards(String first);
 
@@ -32997,7 +32991,7 @@ abstract class AppLocalizations {
   /// #3858 a member's dated plan terms
   ///
   /// In en, this message translates to:
-  /// **'Every month is charged in full: the pause covers no first day of a month'**
+  /// **'No month is freed: each month it touches stays charged in full'**
   String get memberTermNoFreeMonth;
 
   /// #3858 a member's dated plan terms

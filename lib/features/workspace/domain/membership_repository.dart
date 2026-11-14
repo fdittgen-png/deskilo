@@ -30,6 +30,11 @@ abstract class MembershipRepository {
   /// by date.
   Future<List<MemberTermChange>> fetchMemberTermChanges(String workspaceId);
 
+  /// #3858 — the months of each member of [workspaceId] the caller may read
+  /// that a standing subscription invoice has frozen, by member id: the
+  /// first day of each month.
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(String workspaceId);
+
   /// All of MY membership rows across workspaces — one per profile (#89).
   Future<List<Member>> fetchMyMembers();
 

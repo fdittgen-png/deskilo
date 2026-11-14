@@ -148,7 +148,7 @@ A newcomer waits for your decision, or a member takes a break, and you want the 
 - The decision on a new member can also be taken through the validation rules, as described in [Validation rules](help:user.validation.overview).
 - Pausing is for owners and keeps all history.
 - A member who left shows **Exited**, and cannot be paused.
-- A pause and a share change count in whole months, from the first month whose first day is on or after their date; nothing is prorated. A month paused on its first day owes no subscription fee and includes no half-days; a pause starting on the 15th leaves that month charged in full and frees the next. A member's **Plan** tab lists the scheduled changes with the months they charge and free, and the first statement a share change shows on.
+- A pause and a share change count in whole months, from the first month whose first day is on or after their date; nothing is prorated. A month already invoiced keeps what its invoice says; a change counts from the first month not yet invoiced. A month paused on its first day owes no subscription fee and includes no half-days; a pause starting on the 15th leaves that month charged in full and frees the next. A member's **Plan** tab lists the scheduled changes with the months they charge and free, and the first statement a share change shows on.
 
 **See also:** [Invite a member](help:user.members.invite)
 

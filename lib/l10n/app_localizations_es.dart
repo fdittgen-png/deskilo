@@ -20611,11 +20611,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String memberTermLate(String due, String effective) {
-    return 'Previsto el $due; aplicado el $effective, el primer periodo aún no facturado';
-  }
-
-  @override
   String memberTermMonthOnwards(String first) {
     return '$first y cada mes siguiente, hasta la reanudación';
   }
@@ -20642,7 +20637,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get memberTermNoFreeMonth =>
-      'Cada mes se cobra completo: la pausa no cubre ningún primer día de mes';
+      'Ningún mes queda libre: cada mes afectado se sigue cobrando completo';
 
   @override
   String memberTermPauseDated(String from, String until) {

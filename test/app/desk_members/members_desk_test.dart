@@ -185,9 +185,7 @@ void main() {
       MemberTermState state, {
       int? pct,
       String? status,
-      DateTime? effective,
       String reason = '',
-      String? group,
     }) => MemberTermChange(
       id: id,
       memberId: 'member-2',
@@ -196,9 +194,7 @@ void main() {
       toStatus: status,
       dueOn: due,
       state: state,
-      effectiveOn: effective,
       reason: reason,
-      groupId: group,
     );
 
     final terms = [
@@ -217,12 +213,11 @@ void main() {
         status: 'paused',
       ),
       change(
-        'late',
+        'applied',
         MemberTermKind.share,
         DateTime(2026, 12),
         MemberTermState.applied,
         pct: 50,
-        effective: DateTime(2027),
       ),
       change(
         'refused',
@@ -235,7 +230,9 @@ void main() {
     ];
 
     Future<void> openPlan(WidgetTester tester) async {
-      await _open(tester, owner: true, terms: terms);
+      final space = await _open(tester, owner: true, terms: terms);
+      // April is already invoiced: it stays charged in full.
+      space.memberInvoicedMonths['member-2'] = {DateTime(2027, 4)};
       await tester.tap(find.byKey(const ValueKey('records-row-member-2')));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('member-tab-plan')));
@@ -261,25 +258,25 @@ void main() {
       expect(said('share'), contains('Scheduled'));
     });
 
-    testWidgets('a pause from the 15th says which month is charged and '
-        'which is free, and that it waits for approval', (tester) async {
+    testWidgets('a pause from the 15th says which months stay charged, an '
+        'invoiced one with them, and which is the first free; and that it '
+        'waits for approval', (tester) async {
       await openPlan(tester);
       expect(said('pause'), contains('until resumed'));
       expect(
         said('pause'),
         contains(
-          'March 2027 is charged in full; no subscription fee for '
-          'April 2027 and every month after, until resumed',
+          'March 2027 to April 2027 is charged in full; no subscription fee '
+          'for May 2027 and every month after, until resumed',
         ),
       );
       expect(said('pause'), contains('Waiting for approval'));
     });
 
-    testWidgets('a late change shows both dates and a refused one its '
+    testWidgets('a change in force shows its date and a refused one its '
         'reason', (tester) async {
       await openPlan(tester);
-      expect(said('late'), contains('Due on'));
-      expect(said('late'), contains('took effect on'));
+      expect(said('applied'), contains('Took effect on'));
       expect(said('refused'), contains('Refused: the member is not active'));
     });
 

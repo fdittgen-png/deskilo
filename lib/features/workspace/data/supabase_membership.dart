@@ -226,6 +226,23 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
   }
 
   @override
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
+    String workspaceId,
+  ) async {
+    final rows = await client
+        .from('member_period_terms')
+        .select('member_id, period, invoices!inner(voided_at)')
+        .eq('workspace_id', workspaceId)
+        .isFilter('invoices.voided_at', null);
+    final months = <String, Set<DateTime>>{};
+    for (final row in rows) {
+      final period = DateTime.parse('${row['period'] as String}-01');
+      (months[row['member_id'] as String] ??= {}).add(period);
+    }
+    return months;
+  }
+
+  @override
   Future<void> updateMemberSubscription(String memberId, int pct) async {
     // #982 — through the subscription_change policy.
     final answer = await client.rpc<dynamic>(

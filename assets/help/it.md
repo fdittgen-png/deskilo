@@ -4145,7 +4145,7 @@ Un nuovo arrivato attende la Sua decisione, oppure un membro si prende una pausa
 - La decisione su un nuovo membro può essere presa anche tramite le regole di convalida, come descritto in [Regole di convalida](help:user.validation.overview).
 - La sospensione è riservata ai proprietari e conserva tutta la cronologia.
 - Un membro che se n'è andato mostra **Uscito** e non può essere sospeso.
-- Una sospensione e una modifica della quota contano a mesi interi, dal primo mese il cui primo giorno cade alla loro data o dopo; nulla è calcolato pro rata. Un mese sospeso dal primo giorno non deve alcuna quota di abbonamento e non include mezze giornate; una sospensione che inizia il 15 lascia quel mese addebitato per intero e libera il successivo. La scheda **Piano** di un membro elenca le modifiche programmate, con i mesi addebitati e liberi, e il primo estratto in cui compare una modifica della quota.
+- Una sospensione e una modifica della quota contano a mesi interi, dal primo mese il cui primo giorno cade alla loro data o dopo; nulla è calcolato pro rata. Un mese già fatturato mantiene quanto indica la sua fattura; una modifica conta dal primo mese non ancora fatturato. Un mese sospeso dal primo giorno non deve alcuna quota di abbonamento e non include mezze giornate; una sospensione che inizia il 15 lascia quel mese addebitato per intero e libera il successivo. La scheda **Piano** di un membro elenca le modifiche programmate, con i mesi addebitati e liberi, e il primo estratto in cui compare una modifica della quota.
 
 **Vedi anche:** [Invitare un membro](help:user.members.invite)
 

@@ -26892,18 +26892,6 @@
       }
     }
   },
-  "memberTermLate": "Due on {due}; took effect on {effective}, the first period not yet invoiced",
-  "@memberTermLate": {
-    "description": "#3858 a member's dated plan terms",
-    "placeholders": {
-      "due": {
-        "type": "String"
-      },
-      "effective": {
-        "type": "String"
-      }
-    }
-  },
   "memberTermMonthOnwards": "{first} and every month after, until resumed",
   "@memberTermMonthOnwards": {
     "description": "#3858 a member's dated plan terms",
@@ -26955,7 +26943,7 @@
       }
     }
   },
-  "memberTermNoFreeMonth": "Every month is charged in full: the pause covers no first day of a month",
+  "memberTermNoFreeMonth": "No month is freed: each month it touches stays charged in full",
   "@memberTermNoFreeMonth": {
     "description": "#3858 a member's dated plan terms"
   },

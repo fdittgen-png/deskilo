@@ -20461,11 +20461,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String memberTermLate(String due, String effective) {
-    return 'Due on $due; took effect on $effective, the first period not yet invoiced';
-  }
-
-  @override
   String memberTermMonthOnwards(String first) {
     return '$first and every month after, until resumed';
   }
@@ -20492,7 +20487,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberTermNoFreeMonth =>
-      'Every month is charged in full: the pause covers no first day of a month';
+      'No month is freed: each month it touches stays charged in full';
 
   @override
   String memberTermPauseDated(String from, String until) {

@@ -183,6 +183,16 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
     String workspaceId,
   ) async => List.of(memberTermChanges);
 
+  /// #3858 — the months a standing subscription invoice froze, by member.
+  final memberInvoicedMonths = <String, Set<DateTime>>{};
+
+  @override
+  Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(
+    String workspaceId,
+  ) async => {
+    for (final e in memberInvoicedMonths.entries) e.key: {...e.value},
+  };
+
   @override
   Future<List<Member>> fetchMyMembers() async => [
     myMember,
