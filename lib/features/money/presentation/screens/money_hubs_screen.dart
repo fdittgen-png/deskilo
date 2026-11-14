@@ -18,6 +18,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../widgets/add_purchase_button.dart';
 import 'accounting_status.dart';
@@ -146,7 +147,7 @@ class AccountingHubScreen extends ConsumerWidget {
     final data = MoneyViewData.gates(ref);
     final doors = MoneyActionSet.accountingDoors(context, ref, data);
     return Scaffold(
-      appBar: AppBar(title: PageTitle(context.l10n.hubAccountingTitle)),
+      appBar: pageBar(context, title: context.l10n.hubAccountingTitle),
       body: ListView(
         key: const ValueKey('accounting-hub'),
         padding: AppSpacing.mdAll,

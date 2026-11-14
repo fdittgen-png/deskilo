@@ -104,3 +104,28 @@ class PageBreakGuidePainter extends CustomPainter {
   @override
   bool shouldRepaint(covariant PageBreakGuidePainter oldDelegate) => false;
 }
+
+/// How large the page shows against how large it is drawn: 1 at full size,
+/// less when the page is shrunk to fit beside its preview or zoomed out.
+///
+/// A control drawn ON the page shrinks with it. One that must stay a target
+/// of the kit's size on screen asks [onPage] for the size to be drawn at.
+class ReportPageScale extends InheritedWidget {
+  const ReportPageScale({super.key, required this.scale, required super.child});
+
+  final double scale;
+
+  /// The size to draw at on the page so that it shows as [onScreen] at
+  /// least. A page shown larger than drawn keeps the size as given.
+  static double onPage(BuildContext context, double onScreen) {
+    final scale = context
+            .dependOnInheritedWidgetOfExactType<ReportPageScale>()
+            ?.scale ??
+        1;
+    return scale > 0 && scale < 1 ? onScreen / scale : onScreen;
+  }
+
+  @override
+  bool updateShouldNotify(ReportPageScale oldWidget) =>
+      oldWidget.scale != scale;
+}

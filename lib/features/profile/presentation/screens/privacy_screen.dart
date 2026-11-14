@@ -16,7 +16,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../auth/providers/sign_out.dart';
 import '../../../calendar/presentation/widgets/access_sheet.dart';
 import '../../../calendar/providers/calendar_providers.dart';
@@ -67,7 +67,7 @@ class PrivacyScreen extends ConsumerWidget {
     final isOwner = ref.watch(myMemberProvider).value?.isOwner ?? false;
 
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.privacyTitle)),
+      appBar: pageBar(context, title: l10n.privacyTitle),
       body: ListView(children: [
         const HelpHint(HelpHintId.privacy),
         Padding(

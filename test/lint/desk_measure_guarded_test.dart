@@ -19,27 +19,15 @@ import 'lint_sources.dart';
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
   // A long task: its own page over the list (#3608), guarded with its list.
-  '/money/purchase-orders/:id/edit': '#3949 a long task over its list',
   '/invoicing/wizard': '#3948 text wider than 760 px at 1024',
   // A record at its address under a guarded list.
-  '/invoices/:id': '#3949 a record beside its guarded list',
-  '/invoices/customer/:id': '#3949 a record beside its guarded list',
-  '/members/plans/:id': '#3949 a record beside its guarded list',
-  '/bi/report/:id': '#3949 a record of a guarded page',
-  '/res/:id': '#3949 a record page, guarded on phones only',
-  '/space/:kind/:id': '#3949 a record page',
-  '/conversation/:conversationId': '#3949 a record page',
-  '/editor/level/:levelId': '#3949 a record page',
+  '/conversation/:conversationId':
+      '#3947 40 dp targets: a message\'s actions (the kit\'s row menu) and '
+      'the thread header',
   // The purchase orders: guarded by their own leaf.
-  // Pages measured for the desk and not guarded yet.
-  '/report-editor':
-      '#3947 40 dp Design and Preview at 1024, a 42 dp Insert element at 1440; '
-      'text wider than 760 px; Tab reaches a control twice at 1920',
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
-  '/billing': '#3947 to join: its Tab order and its unnamed control are both fixed',
-  '/settings/wording': '#3947 to join: its Tab order and its toggle are both fixed',
-  '/settings/colours': '#3947 to join: its Tab order, names and swatches are fixed',
+  '/settings/colours': '#3954 Tab reaches a control twice at 1024',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
 };

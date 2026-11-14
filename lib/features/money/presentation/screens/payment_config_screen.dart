@@ -10,7 +10,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -72,8 +72,8 @@ class _PaymentConfigScreenState extends ConsumerState<PaymentConfigScreen> {
     final l10n = context.l10n;
     final status = _status;
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l10n.payConfigTitle),
+      appBar: pageBar(context,
+        title: l10n.payConfigTitle,
       ),
       body: status == null
           ? const LoadingView()

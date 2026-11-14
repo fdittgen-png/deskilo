@@ -7,7 +7,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/inline_banner.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/domain/database_capabilities.dart';
@@ -88,7 +88,7 @@ class _AssistantsScreenState extends ConsumerState<AssistantsScreen> {
     final caps = ref.watch(myDatabaseCapabilitiesProvider);
     final connections = ref.watch(myMcpConnectionsProvider);
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.mcpAssistantsTitle)),
+      appBar: pageBar(context, title: l10n.mcpAssistantsTitle),
       body: ListView(
         padding: AppSpacing.gutterAll,
         children: [

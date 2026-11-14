@@ -24,7 +24,7 @@ import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
 import '../../export/task_document.dart' show recordingRevision;
@@ -233,7 +233,7 @@ class _TaskWorkbenchScreenState extends ConsumerState<TaskWorkbenchScreen> {
     final opened = _opened;
     final copy = _copy;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.taskWorkbenchTitle)),
+      appBar: pageBar(context, title: l10n.taskWorkbenchTitle),
       body: FileDropZone(
        typeGroup: _types,
        onFile: _take,
@@ -399,10 +399,8 @@ class _StoryboardPageState extends State<_StoryboardPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(
-          l10n.taskWorkbenchReviewIllustrations,
-        ),
+      appBar: pageBar(context,
+        title: l10n.taskWorkbenchReviewIllustrations,
       ),
       body: StoryboardPreview(
         key: const ValueKey('task-workbench-storyboard-preview'),
