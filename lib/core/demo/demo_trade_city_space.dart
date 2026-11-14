@@ -101,10 +101,10 @@ class DemoTradeCityData implements DemoSpaceParts {
     seedCityDecisions(events, city.prefix, now);
     final money = FakeMoneyRepository(events: events, clock: () => now)
       ..invoiceCommands.currency = city.currency;
-    // #3883 — an Italian city issues through the SdI: its channel is set up
+    // #3883 — Milan issues through the SdI: its channel is set up
     // and its sandbox test document was accepted, so its issuing gate is open
     // and the setup guide's card says so (the city has issued for years).
-    if (city.countryCode == 'IT') {
+    if (city == demoMilan) {
       money.einvoiceGateway = const EInvoiceGatewayConfig(
         configured: true,
         provider: 'it_sdi',
