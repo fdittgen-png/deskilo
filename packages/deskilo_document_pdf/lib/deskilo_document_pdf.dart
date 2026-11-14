@@ -4,6 +4,7 @@
 
 export 'address_window.dart';
 export 'layout_pdf.dart';
+export 'paper_format.dart';
 export 'report_flow_page.dart';
 export 'report_page_footer.dart';
 export 'report_style.dart';

@@ -2,9 +2,9 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_pdf/paper_format.dart';
 import 'package:deskilo_document_pdf/report_page_footer.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../../core/i18n/rate_format.dart';
@@ -250,7 +250,7 @@ class InvoiceSheet {
   }
 
   pw.PageTheme _pageTheme() => pw.PageTheme(
-          pageFormat: PdfPageFormat.a4,
+          pageFormat: pdfPageFormatOf(request.paper),
           theme: theme,
           // #873 — 20 mm all round: the sender block sits at 20 mm
           // from the top and left edges, which the spec fixes.
