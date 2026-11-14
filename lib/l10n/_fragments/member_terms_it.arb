@@ -1,0 +1,23 @@
+{
+  "@@locale": "it",
+  "memberTermsTitle": "Modifiche programmate",
+  "memberTermShare": "{share} dal {date}: compare per la prima volta nell'estratto di {month}",
+  "memberTermPauseDated": "Sospeso dal {from} al {until}",
+  "memberTermPauseOpen": "Sospeso dal {from} fino alla ripresa",
+  "memberTermChargedThenFree": "{charged} è addebitato per intero; nessuna quota di abbonamento per {free}",
+  "memberTermFreeOnly": "Nessuna quota di abbonamento per {free}",
+  "memberTermNoFreeMonth": "Nessun mese viene liberato: ogni mese coinvolto resta addebitato per intero",
+  "memberTermMonthRange": "{first} – {last}",
+  "memberTermMonthOnwards": "{first} e ogni mese successivo, fino alla ripresa",
+  "memberTermPending": "In attesa di approvazione",
+  "memberTermScheduled": "Programmato",
+  "memberTermApplied": "Applicato il {date}",
+  "memberTermRefused": "Rifiutato: {reason}",
+  "memberTermCancelled": "Annullato",
+  "memberPlanPausedSince": "Sospeso dal {date}",
+  "membersColNextChange": "Prossima modifica",
+  "memberTermNextShare": "{share} dal {date}",
+  "memberTermNextPause": "Sospensione dal {date}",
+  "memberTermNextResume": "Ripresa il {date}",
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} prenotazione cade nei mesi sospesi — resta e viene addebitata come utilizzo} other{{count} prenotazioni cadono nei mesi sospesi — restano e vengono addebitate come utilizzo}}"
+}

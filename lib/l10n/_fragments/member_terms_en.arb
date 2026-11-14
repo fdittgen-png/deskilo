@@ -1,0 +1,171 @@
+{
+  "@@locale": "en",
+  "memberTermsTitle": "Scheduled changes",
+  "@memberTermsTitle": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermShare": "{share} from {date}: first on the statement of {month}",
+  "@memberTermShare": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "share": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermPauseDated": "Paused from {from} until {until}",
+  "@memberTermPauseDated": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermPauseOpen": "Paused from {from} until resumed",
+  "@memberTermPauseOpen": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermChargedThenFree": "{charged} is charged in full; no subscription fee for {free}",
+  "@memberTermChargedThenFree": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "charged": {
+        "type": "String"
+      },
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermFreeOnly": "No subscription fee for {free}",
+  "@memberTermFreeOnly": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNoFreeMonth": "No month is freed: each month it touches stays charged in full",
+  "@memberTermNoFreeMonth": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermMonthRange": "{first} to {last}",
+  "@memberTermMonthRange": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermMonthOnwards": "{first} and every month after, until resumed",
+  "@memberTermMonthOnwards": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermPending": "Waiting for approval",
+  "@memberTermPending": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermScheduled": "Scheduled",
+  "@memberTermScheduled": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermApplied": "Took effect on {date}",
+  "@memberTermApplied": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermRefused": "Refused: {reason}",
+  "@memberTermRefused": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermCancelled": "Cancelled",
+  "@memberTermCancelled": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberPlanPausedSince": "Paused since {date}",
+  "@memberPlanPausedSince": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "membersColNextChange": "Next change",
+  "@membersColNextChange": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermNextShare": "{share} from {date}",
+  "@memberTermNextShare": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "share": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNextPause": "Pause from {date}",
+  "@memberTermNextPause": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNextResume": "Resumes on {date}",
+  "@memberTermNextResume": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermBookingsInFreeMonths": "{count, plural, one{{count} booking falls in the paused months — it stays and is charged as use} other{{count} bookings fall in the paused months — they stay and are charged as use}}",
+  "@memberTermBookingsInFreeMonths": {
+    "description": "#3858 a pause: the member's bookings in the months it frees stay and are charged as use",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}
