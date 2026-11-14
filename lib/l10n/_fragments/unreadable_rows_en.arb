@@ -33,5 +33,14 @@
   "reservationUnreadable": "This booking exists, but this version of the app cannot show it. Update the app to see it.",
   "@reservationUnreadable": {
     "description": "#3884 A booking that exists but has a status this app version does not know: opened by a link, it cannot be shown (it is not gone)."
+  },
+  "workspaceExportUnreadableLedger": "{count, plural, one{{count} ledger entry could not be read by this version of the app and is not in this file.} other{{count} ledger entries could not be read by this version of the app and are not in this file.}}",
+  "@workspaceExportUnreadableLedger": {
+    "description": "#3913 Note written on the Ledger sheet of the workspace export: ledger entries of a kind or category this app version does not know are not in the file.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

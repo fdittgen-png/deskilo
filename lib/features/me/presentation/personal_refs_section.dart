@@ -30,6 +30,8 @@ class PersonalRefsSection extends ConsumerWidget {
         l10n.meRefUnverified
       else if (ref.freshness == RefFreshness.stale)
         l10n.meRefStale
+      else if (ref.statusUnknown)
+        l10n.meRefStatusUnknown
       else if (status == null)
         l10n.meRefNoRelationship
       else
