@@ -337,7 +337,7 @@ select is((pg_temp.statement(222, 0) ->> 'fee_cents') || ' ' || pg_temp.inc(222,
   '0 0 2 -2000', 'its two booked half-days are use beyond a quota of 0: 2000 owed');
 select set_config('t.h', pg_temp.issue(222, 0, 'usage'), true);
 select is(current_setting('t.h') || ' ' || pg_temp.invoices(222, 0, 'usage'), 'issued 1', 'and its use is invoiced');
-select is((select sum((l ->> 'amount_cents')::int) from public.invoices i, jsonb_array_elements(i.lines) l
+select is((select sum((l ->> 'amount_cents')::int)::int from public.invoices i, jsonb_array_elements(i.lines) l
             where i.id = pg_temp.invoice_id(222, 0, 'usage')), 2000,
   'for what the statement owes');
 
