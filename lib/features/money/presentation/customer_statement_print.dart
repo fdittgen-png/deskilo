@@ -115,8 +115,7 @@ class CustomerStatementPrint {
           context,
           ref,
           report: rendered,
-          title: title,
-          kind: 'customer_statement',
+          letter: PrintedLetter(kind: 'customer_statement', title: title),
           layoutXml: letterLayoutXml(ref, docId: 'customer_statement'),
           data: data,
         );

@@ -103,8 +103,7 @@ class BookReportPrint {
           context,
           ref,
           report: rendered,
-          title: title,
-          kind: kindId,
+          letter: PrintedLetter(kind: kindId, title: title),
           layoutXml: letterLayoutXml(ref, docId: kindId),
           data: full,
         );

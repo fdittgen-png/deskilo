@@ -133,8 +133,7 @@ class _VatDeclarationsScreenState
     final report = renderLetterDoc(context, ref,
         docId: 'vat_declaration', data: data);
     final pdf = await letterDocPdf(context, ref,
-        title: l10n.vatDeclTitle,
-        kind: 'vat_declaration',
+        letter: PrintedLetter(kind: 'vat_declaration', title: l10n.vatDeclTitle),
         report: report, data: data,
         layoutXml: letterLayoutXml(ref, docId: 'vat_declaration', l10n: l10n));
     final start =

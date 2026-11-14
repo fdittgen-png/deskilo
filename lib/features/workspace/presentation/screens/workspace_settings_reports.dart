@@ -106,8 +106,7 @@ class WorkspaceSettingsReports {
             docId: 'workspace', data: data, language: language);
         final pdf = await letterDocPdf(context, ref,
             report: report,
-            title: docL10n.reportDocWorkspace,
-            kind: 'workspace',
+            letter: PrintedLetter(kind: 'workspace', title: docL10n.reportDocWorkspace),
             layoutXml: letterLayoutXml(ref,
                 docId: 'workspace', language: language),
             data: data);

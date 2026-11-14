@@ -23,6 +23,15 @@ import 'invoice_documents.dart' show developmentMark;
 import 'report_image_resolve.dart';
 import 'report_layout_actions.dart';
 
+/// #3852 — what a letter is: its report [kind], which decides the paper it
+/// is printed on, and its [title].
+class PrintedLetter {
+  const PrintedLetter({required this.kind, required this.title});
+
+  final String kind;
+  final String title;
+}
+
 /// The PDF of a rendered letter document (#494).
 ///
 /// #875 — with [layoutXml] and [data] the positioned engine renders the
@@ -31,22 +40,21 @@ Future<({Uint8List bytes, String fileName})> letterDocPdf(
   BuildContext context,
   WidgetRef ref, {
   required InvoiceReport report,
-  required String title,
-  required String kind,
+  required PrintedLetter letter,
   String? layoutXml,
   Map<String, Object?> data = const {},
 }) => letterPdfOf(
   ref,
   (
     report: report,
-    title: title,
+    title: letter.title,
     layoutXml: layoutXml,
     data: data,
     images: const {},
   ),
+  kind: letter.kind,
   // #917 — read before the first await: the context must not be used
   // across an async gap, and the answer cannot change mid-render.
-  kind: kind,
   pageLabel: context.l10n.invoicePdfPage,
   watermark: developmentMark(context, ref),
 );

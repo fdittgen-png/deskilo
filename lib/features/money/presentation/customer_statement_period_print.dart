@@ -148,8 +148,7 @@ class CustomerStatementPeriodPrint {
           context,
           ref,
           report: rendered,
-          title: title,
-          kind: 'customer_statement_period',
+          letter: PrintedLetter(kind: 'customer_statement_period', title: title),
           layoutXml: letterLayoutXml(ref, docId: 'customer_statement_period'),
           data: data,
         );
