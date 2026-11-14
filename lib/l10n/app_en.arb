@@ -16438,6 +16438,10 @@
   "@guestPassEdit": {
     "description": "#3308 guest passes sold at the desk"
   },
+  "guestPassFilterUncorrected": "Revoked, invoice not corrected",
+  "@guestPassFilterUncorrected": {
+    "description": "#3837 the guest passes filter: revoked passes whose invoice is not corrected yet"
+  },
   "guestPassFrom": "From",
   "@guestPassFrom": {
     "description": "#3308 guest passes sold at the desk"
@@ -16446,6 +16450,24 @@
   "@guestPassHolder": {
     "description": "Column of the guest passes sold: who holds the pass."
   },
+  "guestPassInvoiceCorrected": "Invoice {number} corrected",
+  "@guestPassInvoiceCorrected": {
+    "description": "#3837 a revoked pass whose invoice is voided, replaced or credited",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "guestPassInvoiceNotCorrected": "Invoice {number} not corrected yet",
+  "@guestPassInvoiceNotCorrected": {
+    "description": "#3837 a revoked pass whose invoice is not voided, replaced or credited yet; never says which correction to make",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
   "guestPassName": "Name",
   "@guestPassName": {
     "description": "#3308 guest passes sold at the desk"
@@ -16453,6 +16475,10 @@
   "guestPassNameRequired": "Enter a name.",
   "@guestPassNameRequired": {
     "description": "#3308 guest passes sold at the desk"
+  },
+  "guestPassOpenInvoice": "Open the invoice",
+  "@guestPassOpenInvoice": {
+    "description": "#3837 a revoked pass's link to the invoice its sale made"
   },
   "guestPassPaid": "Paid at the desk",
   "@guestPassPaid": {

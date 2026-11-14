@@ -10,5 +10,9 @@
   "guestPassRevokeCancelled": "{count, plural, =0{Keine Buchung storniert} one{{count} Buchung storniert} other{{count} Buchungen storniert}}",
   "guestPassRevokeNotDone": "Nicht widerrufen",
   "guestPassRevokeStays": "Diese Pässe bleiben, wie sie waren, mit ihren Buchungen.",
-  "guestPassRevokeFailed": "Der Server hat ihn nicht widerrufen."
+  "guestPassRevokeFailed": "Der Server hat ihn nicht widerrufen.",
+  "guestPassOpenInvoice": "Rechnung öffnen",
+  "guestPassInvoiceNotCorrected": "Rechnung {number} noch nicht korrigiert",
+  "guestPassInvoiceCorrected": "Rechnung {number} korrigiert",
+  "guestPassFilterUncorrected": "Widerrufen, Rechnung nicht korrigiert"
 }

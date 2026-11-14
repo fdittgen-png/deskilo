@@ -20401,6 +20401,12 @@ abstract class AppLocalizations {
   /// **'Edit the pass'**
   String get guestPassEdit;
 
+  /// #3837 the guest passes filter: revoked passes whose invoice is not corrected yet
+  ///
+  /// In en, this message translates to:
+  /// **'Revoked, invoice not corrected'**
+  String get guestPassFilterUncorrected;
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20413,6 +20419,18 @@ abstract class AppLocalizations {
   /// **'Guest'**
   String get guestPassHolder;
 
+  /// #3837 a revoked pass whose invoice is voided, replaced or credited
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} corrected'**
+  String guestPassInvoiceCorrected(String number);
+
+  /// #3837 a revoked pass whose invoice is not voided, replaced or credited yet; never says which correction to make
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice {number} not corrected yet'**
+  String guestPassInvoiceNotCorrected(String number);
+
   /// #3308 guest passes sold at the desk
   ///
   /// In en, this message translates to:
@@ -20424,6 +20442,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Enter a name.'**
   String get guestPassNameRequired;
+
+  /// #3837 a revoked pass's link to the invoice its sale made
+  ///
+  /// In en, this message translates to:
+  /// **'Open the invoice'**
+  String get guestPassOpenInvoice;
 
   /// #3308 guest passes sold at the desk
   ///
