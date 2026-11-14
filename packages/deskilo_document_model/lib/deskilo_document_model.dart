@@ -6,3 +6,4 @@ export 'address_window_kind.dart';
 export 'layout_model.dart';
 export 'layout_units.dart';
 export 'layout_xml.dart';
+export 'paper.dart';

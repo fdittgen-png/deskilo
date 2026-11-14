@@ -30,6 +30,7 @@ import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
 import 'data/messenger_repository.dart';
 import 'data/money/demo_member_statement.dart';
+import 'data/money/demo_outbox.dart' show demoMemberWithoutAddress;
 import 'data/money_repository.dart';
 import 'data/notification_service.dart';
 import 'data/plan_resource_repository.dart';
@@ -169,6 +170,8 @@ class DemoFixture implements DemoSpaceParts {
     final chargingStations = FakeChargingStationRepository(); // #2631
     // The cast first: everything below points at it (#1374).
     seedDemoPeople(workspaces);
+    // #3960 — one customer has no address on file (demo_outbox.dart).
+    workspaces.memberEmails.remove(demoMemberWithoutAddress);
     seedDemoReservations(reservations, floorPlan, today);
     seedDemoBookings(reservations, floorPlan, today);
     // #2313 — four years, from January three years back to the end of
