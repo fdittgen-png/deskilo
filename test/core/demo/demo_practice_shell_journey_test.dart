@@ -20,6 +20,7 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/features/money/presentation/widgets/carnets_editor.dart';
 import 'package:deskilo/features/money/presentation/widgets/member_carnet_tile.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -33,9 +34,17 @@ final _placeWords = RegExp(
   caseSensitive: false,
 );
 
+/// Billing's subscription levels are pricing tiers, not the levels of a
+/// building: the one "level" a business without places has.
+final _pricingLevels = {
+  AppLocalizationsEn().billingLevels,
+  AppLocalizationsEn().billingLevelValue,
+};
+
 List<String> _placeWordsShown(WidgetTester tester) => [
   for (final t in tester.widgetList<Text>(find.byType(Text)))
-    if (_placeWords.hasMatch(t.data ?? t.textSpan?.toPlainText() ?? ''))
+    if (_placeWords.hasMatch(t.data ?? t.textSpan?.toPlainText() ?? '') &&
+        !_pricingLevels.contains(t.data))
       t.data ?? t.textSpan!.toPlainText(),
 ];
 
