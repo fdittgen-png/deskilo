@@ -37,6 +37,16 @@ class SupabaseActionConfirmationRepository
   }
 
   @override
+  Future<List<ActionConfirmation>> mine({
+    required DateTime answeredSince,
+  }) async => actionConfirmationsFromJson(
+    await _client.rpc<Object?>(
+      'mcp_my_action_confirmations',
+      params: {'p_answered_since': answeredSince.toUtc().toIso8601String()},
+    ),
+  );
+
+  @override
   Future<ConfirmationStatus> respond(String id, {required bool accept}) async {
     final answer = await _client.rpc<Object?>(
       'mcp_confirm_action',
