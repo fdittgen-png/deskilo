@@ -8827,11 +8827,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get einvoiceEnvUat => 'UAT (test platform)';
 
   @override
+  String get einvoiceTestAccepted =>
+      'The platform accepted the test document: this workspace issues invoices.';
+
+  @override
+  String get einvoiceTestAwaiting =>
+      'A test document is waiting for the platform\'s verdict. Ask the platform again in a few minutes.';
+
+  @override
   String get einvoiceTestEnvsHelp =>
       'Separate endpoints and tokens for rehearsals. The choice appears at send time only while developer mode is on.';
 
   @override
   String get einvoiceTestEnvsTitle => 'Test environments (UAT / Dev)';
+
+  @override
+  String get einvoiceTestFailed =>
+      'The platform could not take the test document. Try again later.';
+
+  @override
+  String get einvoiceTestIntro =>
+      'The national platform must accept one document of this workspace before it issues invoices here. Send it a test document: the proforma of a member\'s current month with a test number, to the platform\'s test environment. Nothing is issued, numbered or booked.';
+
+  @override
+  String get einvoiceTestMember => 'Member whose proforma is sent';
+
+  @override
+  String get einvoiceTestNone => 'No test document has been sent yet.';
+
+  @override
+  String get einvoiceTestNotAllowed =>
+      'Only someone who manages the integrations sends a test document.';
+
+  @override
+  String get einvoiceTestNothingToInvoice =>
+      'This member has nothing on their bill this month: choose another member.';
+
+  @override
+  String get einvoiceTestPending =>
+      'A test document is still waiting for the platform\'s verdict. Ask the platform about it before sending another.';
+
+  @override
+  String get einvoiceTestRejected =>
+      'The platform refused the test document. Check the member\'s and the workspace\'s details, then send another.';
+
+  @override
+  String get einvoiceTestSandboxElsewhere =>
+      'The test environment\'s addresses must be the platform\'s own documented test addresses.';
+
+  @override
+  String einvoiceTestSandboxMissing(String fields) {
+    return 'The test environment\'s credentials are incomplete: $fields. Fill them on the e-invoicing platform screen.';
+  }
+
+  @override
+  String get einvoiceTestSend => 'Send a test document';
+
+  @override
+  String get einvoiceTestSent =>
+      'Test document sent. Ask the platform for its verdict in a few minutes.';
+
+  @override
+  String get einvoiceTestTitle => 'Open issuing with a test document';
+
+  @override
+  String get einvoiceTestUnavailable =>
+      'The configured platform takes no test document.';
 
   @override
   String get einvoiceUatEndpoint => 'UAT upload URL';
@@ -29722,7 +29783,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGrowEinvoicingChannel =>
-      'Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.';
+      'Here every invoice goes through the country\'s national platform: the server issues invoices once the platform has accepted a document of this workspace.';
 
   @override
   String setupGrowEinvoicingIncomplete(String provider) {

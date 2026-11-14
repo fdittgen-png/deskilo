@@ -8892,11 +8892,74 @@ class AppLocalizationsIt extends AppLocalizations {
   String get einvoiceEnvUat => 'UAT (piattaforma di prova)';
 
   @override
+  String get einvoiceTestAccepted =>
+      'La piattaforma ha accettato il documento di prova: questo spazio emette fatture.';
+
+  @override
+  String get einvoiceTestAwaiting =>
+      'Un documento di prova attende il verdetto della piattaforma. Lo chieda di nuovo tra qualche minuto.';
+
+  @override
   String get einvoiceTestEnvsHelp =>
       'Endpoint e token separati per le prove. La scelta appare all’invio solo con la modalità sviluppatore attiva.';
 
   @override
   String get einvoiceTestEnvsTitle => 'Ambienti di prova (UAT / Dev)';
+
+  @override
+  String get einvoiceTestFailed =>
+      'La piattaforma non ha potuto ricevere il documento di prova. Riprovi più tardi.';
+
+  @override
+  String get einvoiceTestIntro =>
+      'La piattaforma nazionale deve accettare un documento di questo spazio prima che emetta fatture qui. Le invii un documento di prova: la proforma del mese in corso di un membro, con un numero di prova, all\'ambiente di prova della piattaforma. Nulla viene emesso, numerato o registrato.';
+
+  @override
+  String get einvoiceTestMember => 'Membro di cui si invia la proforma';
+
+  @override
+  String get einvoiceTestNone =>
+      'Non è stato ancora inviato alcun documento di prova.';
+
+  @override
+  String get einvoiceTestNotAllowed =>
+      'Solo chi gestisce le integrazioni invia un documento di prova.';
+
+  @override
+  String get einvoiceTestNothingToInvoice =>
+      'Questo membro non ha nulla in fattura questo mese: scelga un altro membro.';
+
+  @override
+  String get einvoiceTestPending =>
+      'Un documento di prova attende ancora il verdetto della piattaforma. Lo chieda prima di inviarne un altro.';
+
+  @override
+  String get einvoiceTestRejected =>
+      'La piattaforma ha rifiutato il documento di prova. Controlli i dati del membro e dello spazio, poi ne invii un altro.';
+
+  @override
+  String get einvoiceTestSandboxElsewhere =>
+      'Gli indirizzi dell\'ambiente di prova devono essere gli indirizzi di prova documentati della piattaforma.';
+
+  @override
+  String einvoiceTestSandboxMissing(String fields) {
+    return 'Le credenziali dell\'ambiente di prova sono incomplete: $fields. Le completi nella schermata della piattaforma di fatturazione elettronica.';
+  }
+
+  @override
+  String get einvoiceTestSend => 'Inviare un documento di prova';
+
+  @override
+  String get einvoiceTestSent =>
+      'Documento di prova inviato. Chieda il verdetto della piattaforma tra qualche minuto.';
+
+  @override
+  String get einvoiceTestTitle =>
+      'Aprire l\'emissione con un documento di prova';
+
+  @override
+  String get einvoiceTestUnavailable =>
+      'La piattaforma configurata non accetta documenti di prova.';
 
   @override
   String get einvoiceUatEndpoint => 'URL di caricamento UAT';
@@ -30008,7 +30071,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupGrowEinvoicingChannel =>
-      'Qui ogni fattura deve passare per un canale nazionale che l\'app non parla ancora, quindi il server rifiuta di emettere fatture.';
+      'Qui ogni fattura passa per la piattaforma nazionale del paese: il server emette fatture una volta che la piattaforma ha accettato un documento di questo spazio.';
 
   @override
   String setupGrowEinvoicingIncomplete(String provider) {
