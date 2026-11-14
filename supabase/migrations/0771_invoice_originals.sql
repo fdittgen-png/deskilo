@@ -102,11 +102,15 @@ alter table public.provenance_envelopes add constraint provenance_envelopes_resu
                          'invoice_original'));
 
 -- ── 4. storing an original ────────────────────────────────────────────────
--- The largest original kept, PDF and XML together: about ten times the
--- largest invoice of the Demo business (an 11-line invoice, 30 506 bytes).
+-- The largest original kept, PDF and XML together, from the largest picture
+-- the report image library accepts (its bucket's own limit, 0215): five
+-- pictures' worth. A design with two pictures at that limit, header and
+-- footer, makes a PDF of about two and a half (a PNG is embedded re-encoded),
+-- so the ceiling is about twice that; the invoice itself adds a few kilobytes.
 create or replace function public.invoice_original_max_bytes()
-returns integer language sql immutable set search_path = public as $fn$
-  select 300 * 1024
+returns bigint language sql stable security definer set search_path = public as $fn$
+  select 5 * coalesce((select b.file_size_limit from storage.buckets b where b.id = 'floor-plans'),
+                      10485760)::bigint
 $fn$;
 revoke execute on function public.invoice_original_max_bytes() from public, anon;
 grant execute on function public.invoice_original_max_bytes() to authenticated;

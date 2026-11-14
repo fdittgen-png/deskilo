@@ -6,7 +6,7 @@
 -- invoice reads its original; nobody changes it. An invoice issued before
 -- keeps none. Rolled back.
 begin;
-select plan(20);
+select plan(21);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -116,11 +116,19 @@ select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
 select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
     pg_temp.inv('ORIG-0003'), pg_temp.pdf(), pg_temp.cii('ORIG-0003', 'EUR', '123.45')),
   '22023', 'this invoice was issued before its original was kept', 'an invoice issued before keeps none');
+reset role;
+select is(public.invoice_original_max_bytes(),
+  5 * (select file_size_limit from storage.buckets where id = 'floor-plans')::bigint,
+  'the bound is five pictures at the report image library''s own limit');
+-- the bound made small for this test only, so a large file is not built
+create or replace function public.invoice_original_max_bytes()
+returns bigint language sql stable as $$ select 2048::bigint $$;
+select pg_temp.as_user('owner');
+set local role authenticated;
 select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
-    pg_temp.inv('ORIG-0002'), encode(convert_to('%PDF-' || repeat('x', public.invoice_original_max_bytes()), 'UTF8'), 'base64'),
+    pg_temp.inv('ORIG-0002'), encode(convert_to('%PDF-' || repeat('x', 2048), 'UTF8'), 'base64'),
     pg_temp.cii('ORIG-0002', 'EUR', '123.45')),
-  '22023', format('the original is larger than %s bytes', public.invoice_original_max_bytes()),
-  'an original larger than the bound is refused');
+  '22023', 'the original is larger than 2048 bytes', 'an original larger than the bound is refused');
 select throws_ok(format($$select public.store_invoice_original(%L, %L, %L)$$,
     pg_temp.inv('ORIG-0002'), pg_temp.pdf(),
     replace(pg_temp.cii('ORIG-0002', 'EUR', '123.45'), '<ram:ID>ORIG-0002</ram:ID>',
