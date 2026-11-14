@@ -25,10 +25,6 @@ const _notGuardedYet = <String, String>{
       '#3947 40 dp targets: a message\'s actions (the kit\'s row menu) and '
       'the thread header',
   // The purchase orders: guarded by their own leaf.
-  // Pages measured for the desk and not guarded yet.
-  '/report-editor':
-      '#3947 40 dp Design and Preview at 1024, a 42 dp Insert element at 1440; '
-      'text wider than 760 px; Tab reaches a control twice at 1920',
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
   '/settings/colours': '#3946 Tab reaches a control twice at 1024',

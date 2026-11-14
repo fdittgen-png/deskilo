@@ -406,10 +406,13 @@ mixin ReportVisualEditorActions on ConsumerState<ReportVisualEditor> {
             ]),
           ),
       ],
-      // #3947 — the menu is a target of the kit's minimum size.
+      // #3947 — the menu is a target of the kit's minimum size on screen,
+      // however much the page it is drawn on is shrunk.
       child: ConstrainedBox(
-        constraints: const BoxConstraints(
-            minWidth: KitMetrics.minTarget, minHeight: KitMetrics.minTarget),
+        constraints: BoxConstraints(
+          minWidth: ReportPageScale.onPage(context, KitMetrics.minTarget),
+          minHeight: ReportPageScale.onPage(context, KitMetrics.minTarget),
+        ),
         child: Center(widthFactor: 1, heightFactor: 1, child: child),
       ),
     );
