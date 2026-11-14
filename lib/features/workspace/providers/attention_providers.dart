@@ -67,6 +67,10 @@ Future<List<Attention>> attention(Ref ref) async {
   final now = ref.watch(clockProvider).now();
   // #3850 — the workspace's own reference, watched before the first await.
   final reference = ref.watch(readyWorkspaceContextProvider)?.taxReference.set;
+  // #3925 — who sees the finances, and where the payments are read, before
+  // the first await.
+  final permissions = ref.watch(myPermissionsProvider);
+  final payments = ref.watch(paymentGatewayRepositoryProvider);
 
   // Events awaiting MY decision. `myPendingEventsProvider` already
   // applies the validation policy and the caller's own permissions, so
@@ -126,6 +130,17 @@ Future<List<Attention>> attention(Ref ref) async {
   // prerequisite), and the setup steps the space still REQUIRES.
   final workspace = await ref.watch(currentWorkspaceProvider.future);
   if (workspace != null) {
+    // #3925 — payments the provider reversed that nobody who sees the
+    // finances has looked at: the books may still need correcting.
+    items.addAll(
+      await _reversalLines(
+        permissions,
+        () => payments.fetchPaymentIntents(workspace.id),
+        (p) => p.awaitsReview,
+        (p) => p.reversedAt,
+        now,
+      ),
+    );
     final waiting = <WorkspaceFeature, Set<WorkspaceFeature>>{};
     for (final process
         in processStatuses(resolveEnabledFeatures(workspace.featureFlags))) {
@@ -165,6 +180,37 @@ Future<List<Attention>> attention(Ref ref) async {
   }
 
   return rankAttention(items);
+}
+
+/// #3925 — ONE line for the payments a provider reversed that wait to be
+/// looked at, for whoever sees the finances (the pair that reads payment
+/// intents); none for anyone else, and none when nothing waits. [read] is only
+/// called for them.
+Future<List<Attention>> _reversalLines<T>(
+  Set<WorkspacePermission> permissions,
+  Future<List<T>> Function() read,
+  bool Function(T) waits,
+  DateTime? Function(T) since,
+  DateTime now,
+) async {
+  if (!permissions.contains(WorkspacePermission.viewFinances) &&
+      !permissions.contains(WorkspacePermission.issueInvoices)) {
+    return const [];
+  }
+  final reversed = (await read()).where(waits).toList();
+  if (reversed.isEmpty) return const [];
+  return [
+    Attention(
+      kind: AttentionKind.money,
+      subject: 'reversals',
+      action: AttentionAction.reviewReversals,
+      waitingSince: reversed
+          .map<DateTime>((p) => since(p) ?? now)
+          .reduce((a, b) => a.isBefore(b) ? a : b),
+      count: reversed.length,
+      route: '/money/payments',
+    ),
+  ];
 }
 
 /// #3850 — whether [workspace]'s document language waits for a configurer:

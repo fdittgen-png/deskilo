@@ -198,5 +198,6 @@
   },
   "payOnlineReversedTitle": "Pagamento online stornato",
   "payOnlineReversedDetail": "Il pagamento {reference} ({amount} tramite {provider}) è stato stornato dal fornitore (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
-  "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali."
+  "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali.",
+  "payOnlineReversedPartDetail": "Del pagamento {reference} ({amount} tramite {provider}), il fornitore ha stornato {reversed} (un rimborso o una contestazione). L'azienda corregge il suo saldo."
 }

@@ -3,5 +3,9 @@
   "recordedPaymentsEmpty": "In diesem Zeitraum wurde keine Zahlung einer Rechnung zugeordnet.",
   "recordedPaymentsMore": "Weitere Zahlungen anzeigen",
   "recordedPaymentsOff": "Geld ist in diesem Bereich ausgeschaltet.",
-  "recordedPaymentsPeriod": "Zeitraum: {from} – {to}"
+  "recordedPaymentsPeriod": "Zeitraum: {from} – {to}",
+  "recordedPaymentsReversalsTitle": "Vom Anbieter rückgängig gemacht",
+  "recordedPaymentsReversalsHint": "Eine Erstattung oder ein Widerspruch beim Anbieter. Berichtigen Sie den Saldo des Mitglieds und markieren Sie die Rückbuchung dann als angesehen.",
+  "recordedPaymentsReversalReviewed": "Angesehen",
+  "recordedPaymentsReversalReviewFailed": "Die Rückbuchung konnte nicht als angesehen markiert werden. Versuchen Sie es erneut."
 }

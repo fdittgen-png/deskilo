@@ -1385,6 +1385,17 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String attentionReviewReversals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Examiner $count paiements annulés par le prestataire',
+      one: 'Examiner $count paiement annulé par le prestataire',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionSetUp(String area) {
     return 'À configurer : $area';
   }
@@ -22409,6 +22420,16 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  ) {
+    return 'Sur le paiement $reference ($amount via $provider), le prestataire a annulé $reversed (un remboursement ou une contestation). L\'entreprise corrige votre solde.';
+  }
+
+  @override
   String get payOnlineReversedTitle => 'Paiement en ligne annulé';
 
   @override
@@ -25813,6 +25834,20 @@ class AppLocalizationsFr extends AppLocalizations {
   String recordedPaymentsPeriod(String from, String to) {
     return 'Période : $from – $to';
   }
+
+  @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'L\'annulation n\'a pas pu être marquée comme examinée. Réessayez.';
+
+  @override
+  String get recordedPaymentsReversalReviewed => 'Examiné';
+
+  @override
+  String get recordedPaymentsReversalsHint =>
+      'Un remboursement ou une contestation chez le prestataire. Corrigez le solde du membre, puis marquez l\'annulation comme examinée.';
+
+  @override
+  String get recordedPaymentsReversalsTitle => 'Annulés par le prestataire';
 
   @override
   String get recordedPaymentsTitle => 'Paiements reçus';

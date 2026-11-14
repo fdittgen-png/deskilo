@@ -516,6 +516,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     'provider_fee_currency',
     'provider_transaction_id',
     'payout_id',
+    // #3925 — when a person looked at a reversal: the decision surface's
+    // working state, not a fact of the payment (its reversal is exported).
+    'reversal_reviewed_at',
   },
   'einvoice_inbox': {
     // The received document itself: it travels as a file of its own, not

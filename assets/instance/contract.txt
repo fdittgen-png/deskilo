@@ -2527,7 +2527,7 @@ routine public.document_language_chosen(p_country text, p_on date) -> boolean | 
 routine public.document_language_facts(p_country text, p_on date) -> jsonb | function | definer | stable | exec:service_role | body:2cc8b378753f
 routine public.document_language_supported(p_language text) -> boolean | function | invoker | immutable | exec:service_role | body:2d66eb676151
 routine public.document_site_for_member(p_member_id uuid) -> sites | function | definer | stable | exec:authenticated,service_role | body:f9884a94d124
-routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:42537c6febc6
+routine public.dunning_rules_sync_setting() -> trigger | function | definer | volatile | exec:service_role | body:668fc497e209
 routine public.edit_message(p_kind text, p_message_id uuid, p_body text) -> void | function | definer | volatile | exec:authenticated,service_role | body:ecca59e978a3
 routine public.effective_payment_terms(p_member_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7541cf6a1fbe
 routine public.einvoice_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:7b9035a41e2d
@@ -2992,7 +2992,7 @@ routine public.my_database_capabilities() -> jsonb | function | definer | stable
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
 routine public.my_favorites(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:96d104d3b59e
 routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3fa541ba3efe
-routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fe5c08620f64
+routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:84d21820a6ea
 routine public.my_group_inbox() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87b3be0c6a
 routine public.my_guest_participations() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:392d10602309
 routine public.my_identity_status() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5834f2bc6bd0
@@ -3303,6 +3303,7 @@ routine public.retire_invite_code() -> trigger | function | definer | volatile |
 routine public.reverse_commitment_match_v1(p_workspace_id uuid, p_match_id uuid, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:97d633ba12e0
 routine public.reverse_purchase_allocation_v1(p_workspace_id uuid, p_allocation_id uuid, p_revision integer, p_reason text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d30e7f7dde11
 routine public.review_bank_line_v1(p_line_id uuid, p_duplicate boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6386a82bf7d4
+routine public.review_payment_reversal_v1(p_intent_id uuid) -> timestamp with time zone | function | definer | volatile | exec:authenticated,service_role | body:a76574fd6ca6
 routine public.revoke_accounting_connection_v1(p_connection_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad7fded4fe08
 routine public.revoke_database_admin_internal(p_target uuid, p_actor text) -> jsonb | function | definer | volatile | exec:service_role | body:0bfc1190fea1
 routine public.revoke_guest_pass(p_workspace_id uuid, p_pass_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:8f32c8e57c8c
@@ -3406,7 +3407,7 @@ routine public.set_einvoice_credentials(p_workspace_id uuid, p_config jsonb) -> 
 routine public.set_expense_schedule_supplier(p_schedule_id uuid, p_supplier_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:73819586b316
 routine public.set_expense_schedule_vat(p_schedule_id uuid, p_vat jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e2971cdc5ddb
 routine public.set_favorite(p_workspace uuid, p_kind text, p_resource uuid, p_on boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:de88f8ec85e3
-routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:266bd6df81ae
+routine public.set_feature_flags(p_workspace_id uuid, p_flags jsonb, p_expected jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c859fb44ef6b
 routine public.set_invitation_roles(p_workspace_id uuid, p_code text, p_role_keys text[]) -> void | function | definer | volatile | exec:authenticated,service_role | body:4e01f7f49035
 routine public.set_invoice_pdf_template(p_workspace_id uuid, p_template jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:eef14ac15c75
 routine public.set_level_kind_v1(p_workspace_id uuid, p_level_id uuid, p_kind text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:60810e505bbf

@@ -3,5 +3,9 @@
   "recordedPaymentsEmpty": "Nessun pagamento è stato abbinato a una fattura in questo periodo.",
   "recordedPaymentsMore": "Mostra altri pagamenti",
   "recordedPaymentsOff": "Il denaro è disattivato in questo spazio.",
-  "recordedPaymentsPeriod": "Periodo: {from} – {to}"
+  "recordedPaymentsPeriod": "Periodo: {from} – {to}",
+  "recordedPaymentsReversalsTitle": "Stornati dal fornitore",
+  "recordedPaymentsReversalsHint": "Un rimborso o una contestazione presso il fornitore. Corregga il saldo del membro, poi segni lo storno come esaminato.",
+  "recordedPaymentsReversalReviewed": "Esaminato",
+  "recordedPaymentsReversalReviewFailed": "Lo storno non è stato segnato come esaminato. Riprovi."
 }

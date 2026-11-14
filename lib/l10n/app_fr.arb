@@ -560,6 +560,7 @@
   "@attentionIssue": {
     "description": "#2326: attentionIssue"
   },
+  "attentionReviewReversals": "{count, plural, one{Examiner {count} paiement annulé par le prestataire} other{Examiner {count} paiements annulés par le prestataire}}",
   "attentionSetUp": "À configurer : {area}",
   "@attentionSetUp": {
     "description": "#2332: attentionSetUp"
@@ -13312,6 +13313,7 @@
   "payOnlinePendingDetail": "Le paiement {reference} ({amount} via {provider}) n'a pas encore été confirmé par le prestataire : le solde affiche donc toujours ce qui est dû. Citez cette référence s'il n'aboutit pas.",
   "payOnlinePendingTitle": "Paiement en ligne en attente",
   "payOnlineReversedDetail": "Le paiement {reference} ({amount} via {provider}) a été annulé par le prestataire (un remboursement ou une contestation). L'entreprise corrige votre solde.",
+  "payOnlineReversedPartDetail": "Sur le paiement {reference} ({amount} via {provider}), le prestataire a annulé {reversed} (un remboursement ou une contestation). L'entreprise corrige votre solde.",
   "payOnlineReversedTitle": "Paiement en ligne annulé",
   "payOnlineTestKeys": "Le paiement en ligne n'est pas disponible : le prestataire de paiement est configuré avec des identifiants de test. L'entreprise doit saisir ses clés de production.",
   "paymentAccountNumberLabel": "Numéro de compte",
@@ -15382,6 +15384,10 @@
   "recordedPaymentsMore": "Afficher d'autres paiements",
   "recordedPaymentsOff": "La gestion de l'argent est désactivée dans cet espace.",
   "recordedPaymentsPeriod": "Période : {from} – {to}",
+  "recordedPaymentsReversalReviewFailed": "L'annulation n'a pas pu être marquée comme examinée. Réessayez.",
+  "recordedPaymentsReversalReviewed": "Examiné",
+  "recordedPaymentsReversalsHint": "Un remboursement ou une contestation chez le prestataire. Corrigez le solde du membre, puis marquez l'annulation comme examinée.",
+  "recordedPaymentsReversalsTitle": "Annulés par le prestataire",
   "recordedPaymentsTitle": "Paiements reçus",
   "recordingPrivacyBadge": "Mode tournage — personnes inventées",
   "@recordingPrivacyBadge": {

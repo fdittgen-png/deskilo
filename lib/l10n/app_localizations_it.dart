@@ -1376,6 +1376,17 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String attentionReviewReversals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Esaminare $count pagamenti stornati dal fornitore',
+      one: 'Esaminare 1 pagamento stornato dal fornitore',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String attentionSetUp(String area) {
     return 'Da configurare: $area';
   }
@@ -22340,6 +22351,16 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String payOnlineReversedPartDetail(
+    String reference,
+    String amount,
+    String provider,
+    String reversed,
+  ) {
+    return 'Del pagamento $reference ($amount tramite $provider), il fornitore ha stornato $reversed (un rimborso o una contestazione). L\'azienda corregge il suo saldo.';
+  }
+
+  @override
   String get payOnlineReversedTitle => 'Pagamento online stornato';
 
   @override
@@ -25732,6 +25753,20 @@ class AppLocalizationsIt extends AppLocalizations {
   String recordedPaymentsPeriod(String from, String to) {
     return 'Periodo: $from – $to';
   }
+
+  @override
+  String get recordedPaymentsReversalReviewFailed =>
+      'Lo storno non è stato segnato come esaminato. Riprovi.';
+
+  @override
+  String get recordedPaymentsReversalReviewed => 'Esaminato';
+
+  @override
+  String get recordedPaymentsReversalsHint =>
+      'Un rimborso o una contestazione presso il fornitore. Corregga il saldo del membro, poi segni lo storno come esaminato.';
+
+  @override
+  String get recordedPaymentsReversalsTitle => 'Stornati dal fornitore';
 
   @override
   String get recordedPaymentsTitle => 'Pagamenti ricevuti';

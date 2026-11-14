@@ -80,5 +80,14 @@
   "featureCustomFieldsDesc": "The workspace may ask its own questions inside the identity form — a committee role, a joining date, an emergency contact. The answers belong to the membership, so a question asked here never follows somebody elsewhere.",
   "@featureCustomFieldsDesc": {
     "description": "#1288 custom fields: featureCustomFieldsDesc"
+  },
+  "attentionReviewReversals": "{count, plural, one{Look at 1 payment the provider reversed} other{Look at {count} payments the provider reversed}}",
+  "@attentionReviewReversals": {
+    "description": "#3925 a payment the provider reversed: the decision surface's line",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

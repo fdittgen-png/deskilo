@@ -34,8 +34,8 @@ select is((select count(distinct row->>'workspace_id') from jsonb_array_elements
 select is((select count(distinct row->>'currency') from jsonb_array_elements(public.my_financial_activity('payments')) row),2::bigint,'currencies are not mixed');
 select is(public.my_financial_activity('usage')->0->>'minutes','60','departed member retains billable consumption');
 select is(public.my_financial_activity('invoices')->0->>'reference','ACT-OWN','own invoice visible even to an admin; other account invoices excluded');
-select throws_ok($$select public.my_financial_activity('anything')$$,'P0001','invalid activity kind','unknown views rejected');
-select throws_ok($$select public.my_financial_activity('payments',now(),null)$$,'P0001','invalid cursor','partial cursor rejected');
+select throws_ok($$select public.my_financial_activity('anything')$$,'22023','invalid activity kind','unknown views rejected');
+select throws_ok($$select public.my_financial_activity('payments',now(),null)$$,'22023','invalid cursor','partial cursor rejected');
 select lives_ok($$select public.set_personal_preferences('{"payment_provider":"stripe"}')$$,'user configures preferred checkout');
 select is(public.my_personal_preferences()->'defaults'->>'payment_provider','stripe','saved preference is returned');
 select throws_ok($$select public.set_personal_preferences('{"payment_provider":"invented"}')$$,'P0001','invalid preference value','unknown payment provider rejected');
