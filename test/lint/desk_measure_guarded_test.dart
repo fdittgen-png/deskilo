@@ -21,13 +21,9 @@ const _notGuardedYet = <String, String>{
   // A long task: its own page over the list (#3608), guarded with its list.
   '/invoicing/wizard': '#3948 text wider than 760 px at 1024',
   // A record at its address under a guarded list.
-  '/conversation/:conversationId':
-      '#3947 40 dp targets: a message\'s actions (the kit\'s row menu) and '
-      'the thread header',
   // The purchase orders: guarded by their own leaf.
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947
   // its names and sizes): to join the guards once measured with both.
-  '/settings/colours': '#3954 Tab reaches a control twice at 1024',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
 };

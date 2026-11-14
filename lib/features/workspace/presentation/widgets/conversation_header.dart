@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../domain/conversation.dart';
 
 /// The top of a conversation: back or close, the title, a mute mark and the
@@ -59,8 +60,15 @@ class ConversationHeader extends StatelessWidget {
             child: InkWell(
               key: const ValueKey('conversation-header'),
               onTap: onOpen,
-              child: Column(
+              // #3947 — a target of the kit's minimum height, the title
+              // centred in it.
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  minHeight: KitMetrics.minTarget,
+                ),
+                child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Row(
@@ -107,6 +115,7 @@ class ConversationHeader extends StatelessWidget {
                       ],
                     ),
                 ],
+                ),
               ),
             ),
           ),
