@@ -9,6 +9,7 @@ import 'demo_fixture.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_persona.dart';
+import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
 import 'demo_space_listing.dart';
 import 'demo_space_stores.dart';
@@ -24,6 +25,7 @@ typedef DemoListings = ({
   DemoSpaceListing newYork,
   DemoSpaceListing zurich,
   DemoSpaceListing milan,
+  DemoSpaceListing practice,
 });
 
 class DemoLazySpaces {
@@ -93,6 +95,17 @@ class DemoLazySpaces {
     ),
   );
 
+  /// #3863 — the practice in Berlin: the one business without places.
+  late final DemoPracticeData practice = _space(
+    DemoSpaceKey.practice,
+    listings.practice,
+    () => DemoPracticeData.build(
+      listing: listings.practice,
+      actor: () => activeMemberId,
+      now: _home.seededAt,
+    ),
+  );
+
   /// #3302 — the main space's development twin, with stores of its own.
   late final DemoTwinData twin = _space(
     DemoSpaceKey.twin,
@@ -120,6 +133,7 @@ class DemoLazySpaces {
     DemoSpaceKey.newYork => newYork,
     DemoSpaceKey.zurich => zurich,
     DemoSpaceKey.milan => milan,
+    DemoSpaceKey.practice => practice,
     DemoSpaceKey.twin => twin,
   };
 
@@ -191,6 +205,7 @@ class DemoLazySpaces {
         DemoSpaceKey.newYork => listings.newYork,
         DemoSpaceKey.zurich => listings.zurich,
         DemoSpaceKey.milan => listings.milan,
+        DemoSpaceKey.practice => listings.practice,
         DemoSpaceKey.twin => _twinSource.listing,
       };
       return listing == null
@@ -209,6 +224,7 @@ class DemoLazySpaces {
     listings.newYork,
     listings.zurich,
     listings.milan,
+    listings.practice,
     _twinSource.listing,
   ];
 }
