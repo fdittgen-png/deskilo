@@ -190,7 +190,7 @@ void main() {
     // A second reset over a filled layout asks.
     await tester.ensureVisible(
         find.byKey(const ValueKey('invoice-template-reset')));
-    await tester.pumpAndSettle();
+    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('invoice-template-reset')));
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('report-designer-replace-confirm')),
