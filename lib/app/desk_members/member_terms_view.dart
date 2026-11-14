@@ -32,20 +32,31 @@ String _what(
   Set<DateTime> invoiced,
 ) {
   final day = format.dates(DateShape.numeric).format;
-  final month = format.dates(DateShape.monthYear).format;
   final c = e.change;
   if (!e.isPause) {
-    return l.memberTermShare(
-      subscriptionText(l, format, c.toPct ?? 0),
-      day(c.dueOn),
-      month(firstPeriodOf(c.dueOn, invoiced: invoiced)),
-    );
+    return memberShareText(l, format, c.toPct ?? 0, c.dueOn, invoiced);
   }
   return switch (e.until) {
     final end? => l.memberTermPauseDated(day(c.dueOn), day(end.dueOn)),
     null => l.memberTermPauseOpen(day(c.dueOn)),
   };
 }
+
+/// A share of [pct] from [on], in words, with the first statement it shows
+/// on (past the months already [invoiced]).
+String memberShareText(
+  AppLocalizations l,
+  AppFormat format,
+  int pct,
+  DateTime on,
+  Set<DateTime> invoiced,
+) => l.memberTermShare(
+  subscriptionText(l, format, pct),
+  format.dates(DateShape.numeric).format(on),
+  format
+      .dates(DateShape.monthYear)
+      .format(firstPeriodOf(on, invoiced: invoiced)),
+);
 
 /// Months in words: one, a run from the first to the last, or a list.
 String _months(AppLocalizations l, AppFormat format, List<DateTime> months) {
@@ -60,22 +71,20 @@ String _months(AppLocalizations l, AppFormat format, List<DateTime> months) {
       : months.map(month).join(', ');
 }
 
-/// The money a pause [e] means, in words: the months that stay charged in
-/// full (the month it starts in unless it starts on the 1st, and the months
-/// already invoiced) and the months it frees. Nothing is prorated.
-String _pauseMoney(
+/// The money a pause from [from] until [until] (null: until resumed) means,
+/// in words: the months that stay charged in full (the month it starts in
+/// unless it starts on the 1st, and the months already [invoiced]) and the
+/// months it frees. Nothing is prorated.
+String memberPauseMoneyText(
   AppLocalizations l,
   AppFormat format,
-  MemberTermEntry e,
+  DateTime from,
+  DateTime? until,
   Set<DateTime> invoiced,
 ) {
-  final money = pauseMoneyOf(
-    e.change.dueOn,
-    e.until?.dueOn,
-    invoiced: invoiced,
-  );
+  final money = pauseMoneyOf(from, until, invoiced: invoiced);
   if (money.free.isEmpty) return l.memberTermNoFreeMonth;
-  final free = e.until == null
+  final free = until == null
       ? l.memberTermMonthOnwards(
           format.dates(DateShape.monthYear).format(money.free.first),
         )
@@ -85,20 +94,17 @@ String _pauseMoney(
       : l.memberTermChargedThenFree(_months(l, format, money.charged), free);
 }
 
-/// The months a pause [e] frees that can hold bookings: those it frees, and
-/// for a pause until resumed every later one not invoiced up to the furthest
-/// a booking can be made.
+/// The months a pause frees that can hold bookings: those it frees, and for
+/// a pause until resumed every later one not invoiced up to the furthest a
+/// booking can be made.
 List<DateTime> _bookableFreeMonths(
   WidgetRef ref,
-  MemberTermEntry e,
+  DateTime from,
+  DateTime? until,
   Set<DateTime> invoiced,
 ) {
-  final money = pauseMoneyOf(
-    e.change.dueOn,
-    e.until?.dueOn,
-    invoiced: invoiced,
-  );
-  if (e.until != null || money.free.isEmpty) return money.free;
+  final money = pauseMoneyOf(from, until, invoiced: invoiced);
+  if (until != null || money.free.isEmpty) return money.free;
   final horizon =
       ref.watch(bookingPoliciesProvider).value?.advanceHorizonDays ??
       BookingPolicies.defaultHorizonDays;
@@ -114,8 +120,26 @@ List<DateTime> _bookableFreeMonths(
   return months;
 }
 
-/// The member's bookings in [months]: they stay, and are charged as use
-/// beyond a quota of 0. Null while a month is not read.
+/// The bookings of [memberId] in the months a pause from [from] until
+/// [until] frees, in words — they stay, and are charged as use beyond a
+/// quota of 0 — or null when there are none or they are not read yet.
+String? memberPauseBookingsText(
+  WidgetRef ref,
+  AppLocalizations l,
+  String memberId,
+  DateTime from,
+  DateTime? until,
+  Set<DateTime> invoiced,
+) => switch (_bookingsIn(
+  ref,
+  memberId,
+  _bookableFreeMonths(ref, from, until, invoiced),
+)) {
+  final n? when n > 0 => l.memberTermBookingsInFreeMonths(n),
+  _ => null,
+};
+
+/// The member's bookings in [months]. Null while a month is not read.
 int? _bookingsIn(WidgetRef ref, String memberId, List<DateTime> months) {
   var n = 0;
   for (final m in months) {
@@ -190,15 +214,23 @@ class MemberTermsSection extends ConsumerWidget {
               title: Text(_what(l, format, e, invoiced)),
               subtitle: Text(
                 [
-                  if (e.isPause) _pauseMoney(l, format, e, invoiced),
+                  if (e.isPause)
+                    memberPauseMoneyText(
+                      l,
+                      format,
+                      e.change.dueOn,
+                      e.until?.dueOn,
+                      invoiced,
+                    ),
                   if (e.isPause && e.change.upcoming)
-                    if (_bookingsIn(
-                          ref,
-                          memberId,
-                          _bookableFreeMonths(ref, e, invoiced),
-                        )
-                        case final n? when n > 0)
-                      l.memberTermBookingsInFreeMonths(n),
+                    ?memberPauseBookingsText(
+                      ref,
+                      l,
+                      memberId,
+                      e.change.dueOn,
+                      e.until?.dueOn,
+                      invoiced,
+                    ),
                   _state(
                     l,
                     format,

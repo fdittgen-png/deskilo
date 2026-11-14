@@ -4,9 +4,11 @@
 // files; the state it reads is `FakeWorkspaceState`.
 import 'dart:async';
 
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_term_answer.dart';
 import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/membership_repository.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
@@ -192,6 +194,131 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
   ) async => {
     for (final e in memberInvoicedMonths.entries) e.key: {...e.value},
   };
+
+  /// #3858 — the day the demo's dated changes are measured from.
+  Clock termClock = const SystemClock();
+
+  DateTime get _termToday {
+    final now = termClock.now();
+    return DateTime(now.year, now.month, now.day);
+  }
+
+  /// The first day after the last invoiced month from [on]'s month on.
+  DateTime _earliestOpen(String memberId, DateTime on) => earliestShareDay(
+    on,
+    memberInvoicedMonths[memberId] ?? const <DateTime>{},
+  );
+
+  MemberTermChange _term(
+    String memberId,
+    MemberTermKind kind,
+    DateTime on, {
+    int? pct,
+    String? status,
+    String? group,
+    bool scheduled = true,
+  }) => MemberTermChange(
+    id: 'term-${memberTermChanges.length + 1}',
+    memberId: memberId,
+    kind: kind,
+    toPct: pct,
+    toStatus: status,
+    dueOn: on,
+    state: on.isAfter(_termToday)
+        ? MemberTermState.scheduled
+        : MemberTermState.applied,
+    groupId: group,
+    scheduled: scheduled,
+  );
+
+  @override
+  Future<MemberTermAnswer> requestMemberShare(String memberId, int pct) async {
+    final today = _termToday;
+    final on = _earliestOpen(memberId, today);
+    final change = _term(
+      memberId,
+      MemberTermKind.share,
+      on,
+      pct: pct,
+      scheduled: false,
+    );
+    memberTermChanges.add(change);
+    if (change.state == MemberTermState.applied) {
+      await updateMemberSubscription(memberId, pct);
+    }
+    return MemberTermAnswer(state: change.state, effectiveOn: on);
+  }
+
+  @override
+  Future<MemberTermAnswer> scheduleMemberShare(
+    String memberId,
+    int pct,
+    DateTime on,
+    String requestId,
+  ) async {
+    final today = _termToday;
+    final open = _earliestOpen(memberId, today);
+    if (on.isBefore(today) && on != open) throw MemberTermDateRefused(open);
+    final earliest = _earliestOpen(memberId, on);
+    if (earliest.isAfter(DateTime(on.year, on.month))) {
+      throw MemberTermDateRefused(earliest);
+    }
+    if (on.day != 1) {
+      throw MemberTermDateRefused(
+        _earliestOpen(memberId, DateTime(on.year, on.month + 1)),
+      );
+    }
+    final change = _term(memberId, MemberTermKind.share, on, pct: pct);
+    memberTermChanges.add(change);
+    if (change.state == MemberTermState.applied) {
+      await updateMemberSubscription(memberId, pct);
+    }
+    return MemberTermAnswer(state: change.state, effectiveOn: on);
+  }
+
+  @override
+  Future<MemberTermAnswer> scheduleMemberPause(
+    String memberId,
+    DateTime from,
+    DateTime? until,
+    String requestId,
+  ) async {
+    if (from.isBefore(_termToday)) throw MemberTermDateRefused(_termToday);
+    final group = 'pause-${memberTermChanges.length + 1}';
+    final start = _term(
+      memberId,
+      MemberTermKind.status,
+      from,
+      status: 'paused',
+      group: group,
+    );
+    memberTermChanges.add(start);
+    if (until != null) {
+      memberTermChanges.add(
+        _term(
+          memberId,
+          MemberTermKind.status,
+          until,
+          status: 'active',
+          group: group,
+        ),
+      );
+    }
+    if (start.state == MemberTermState.applied) {
+      await updateMemberStatus(memberId, MemberStatus.paused);
+    }
+    final money = pauseMoneyOf(
+      from,
+      until,
+      invoiced: memberInvoicedMonths[memberId] ?? const {},
+    );
+    return MemberTermAnswer(
+      state: start.state,
+      effectiveOn: from,
+      charged: money.charged,
+      firstFree: money.free.isEmpty ? null : money.free.first,
+    );
+  }
 
   @override
   Future<List<Member>> fetchMyMembers() async => [

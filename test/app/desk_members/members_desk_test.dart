@@ -9,6 +9,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/reservation_repository.dart';
+import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_term_change.dart';
@@ -59,7 +60,10 @@ Future<FakeWorkspaceRepository> _open(
   List<MemberTermChange> terms = const [],
   List<Reservation> bookings = const [],
 }) async {
-  final space = _space(owner: owner)..memberTermChanges.addAll(terms);
+  final space = _space(owner: owner)
+    ..memberTermChanges.addAll(terms)
+    // the demo's dated commands read the test's day
+    ..termClock = FixedClock(kTestNow);
   await pumpRoute(
     tester,
     path,
@@ -166,7 +170,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('records-bulk-pause')));
     await tester.pumpAndSettle();
     expect(
-      find.byKey(const ValueKey('member-change-from-today')),
+      find.byKey(const ValueKey('member-change-pause-from')),
       findsOneWidget,
     );
     await tester.tap(find.byKey(const ValueKey('member-change-apply')));
@@ -328,6 +332,121 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+  });
+
+  group('#3858 the change task takes its date', () {
+    Future<void> openTab(
+      WidgetTester tester,
+      FakeWorkspaceRepository space,
+    ) async {
+      await tester.tap(find.byKey(const ValueKey('records-row-member-2')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-tab-plan')));
+      await tester.pumpAndSettle();
+    }
+
+    String textOf(Finder f) => [
+      for (final t
+          in find
+              .descendant(of: f, matching: find.byType(Text))
+              .evaluate()
+              .map((e) => e.widget as Text))
+        t.data ?? '',
+    ].join('\n');
+
+    testWidgets('a pause says what it costs before and after it is applied', (
+      tester,
+    ) async {
+      final space = await _open(tester, owner: true);
+      await openTab(tester, space);
+      await tester.tap(find.byKey(const ValueKey('member-plan-pause')));
+      await tester.pumpAndSettle();
+      // From today, the 13th, until resumed: May is charged, June is the
+      // first month it frees.
+      expect(
+        tester
+                .widget<Text>(
+                  find.byKey(const ValueKey('member-change-preview')),
+                )
+                .data ??
+            '',
+        contains(
+          'May 2026 is charged in full; no subscription fee for June 2026 '
+          'and every month after, until resumed',
+        ),
+      );
+      await tester.tap(find.byKey(const ValueKey('member-change-apply')));
+      await tester.pumpAndSettle();
+      expect(
+        textOf(find.byKey(const ValueKey('member-change-outcome-member-2'))),
+        allOf(
+          contains('Changed'),
+          contains('no subscription fee for June 2026'),
+        ),
+      );
+      expect(space.memberOf('member-2')?.status, MemberStatus.paused);
+    });
+
+    testWidgets('a share from the first of a month waits for that day and '
+        'says it', (tester) async {
+      final space = await _open(tester, owner: true);
+      await openTab(tester, space);
+      await tester.tap(find.byKey(const ValueKey('member-plan-change')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-change-share-0')));
+      await tester.tap(find.byKey(const ValueKey('member-change-from-month')));
+      await tester.pumpAndSettle();
+      expect(
+        tester
+                .widget<Text>(
+                  find.byKey(const ValueKey('member-change-preview')),
+                )
+                .data ??
+            '',
+        contains('first on the statement of June 2026'),
+      );
+      await tester.tap(find.byKey(const ValueKey('member-change-apply')));
+      await tester.pumpAndSettle();
+      expect(
+        textOf(find.byKey(const ValueKey('member-change-outcome-member-2'))),
+        contains('Takes effect on'),
+      );
+      // Waiting for its day: the share has not changed yet.
+      expect(space.memberOf('member-2')?.subscriptionPct, 50);
+      expect(space.memberTermChanges.single.state, MemberTermState.scheduled);
+    });
+
+    testWidgets('a date the server refuses names the earliest it can take', (
+      tester,
+    ) async {
+      final space = await _open(tester, owner: true);
+      // June and July are already invoiced for this member.
+      space.memberInvoicedMonths['member-2'] = {
+        DateTime(2026, 6),
+        DateTime(2026, 7),
+      };
+      for (final id in ['member-2', 'member-3']) {
+        await tester.tap(
+          find.descendant(
+            of: find.byKey(ValueKey('records-row-$id')),
+            matching: find.byType(Checkbox),
+          ),
+        );
+        await tester.pumpAndSettle();
+      }
+      await tester.tap(find.byKey(const ValueKey('records-bulk-plan')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-change-share-0')));
+      await tester.tap(find.byKey(const ValueKey('member-change-from-month')));
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('member-change-apply')));
+      await tester.pumpAndSettle();
+      expect(
+        textOf(find.byKey(const ValueKey('member-change-outcome-member-2'))),
+        contains('Not changed: the earliest date it can take is'),
+      );
+      expect(space.memberOf('member-2')?.subscriptionPct, 50);
     });
   });
 }
