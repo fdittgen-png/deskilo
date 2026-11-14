@@ -4259,6 +4259,7 @@
   "createHostRevoked": "N'est plus proposé par votre domicile personnel",
   "createHostTitle": "Où cette entreprise doit-elle vivre ?",
   "createHostUnavailable": "Les serveurs proposés par votre domicile personnel n'ont pas pu être lus.",
+  "createHostUnreadable": "Cette version ne sait pas lire l'état de cet hébergeur. Mettez l'application à jour, puis choisissez-le à nouveau.",
   "createHostUnverified": "Votre identité ne peut pas y être vérifiée",
   "createOnHostBanner": "Cet espace sera créé sur {host}.",
   "creditMoveAction": "Déplacer vers un autre membre",

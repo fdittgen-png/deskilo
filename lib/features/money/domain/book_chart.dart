@@ -315,3 +315,6 @@ bookChartFromJson(Map<String, Object?> map) {
 String booksAccountsArea(String workspaceId) => 'books:$workspaceId:accounts';
 String booksMappingsArea(String workspaceId) => 'books:$workspaceId:mappings';
 String booksPostingsArea(String workspaceId) => 'books:$workspaceId:postings';
+
+/// #3913 — the book profiles a read left out.
+String booksProfilesArea(String workspaceId) => 'books:$workspaceId:profiles';
