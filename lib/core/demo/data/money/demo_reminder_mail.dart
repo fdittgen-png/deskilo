@@ -1,41 +1,30 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3673 — the Demo sends no e-mail: reminders by e-mail are left off in
-// every Demo space (demo_flags.dart), and if one were switched on the
-// channel is not offered and a send is refused before anything leaves.
+// #3960 — reminders by e-mail in the Demo: the session's outbox records the
+// send and answers as the server does; nothing leaves the device.
 import '../../../../features/money/domain/reminder_mail.dart';
+import 'demo_outbox.dart';
 
 class DemoReminderMail implements ReminderMail {
-  const DemoReminderMail();
+  const DemoReminderMail(this._outbox);
+
+  final DemoOutbox _outbox;
 
   @override
-  Future<ReminderMailTarget> target(
-    String workspaceId,
-    String invoiceId,
-  ) async => const ReminderMailTarget(
-    available: false,
-    reason: ReminderMailUnavailable.featureOff,
-  );
+  Future<ReminderMailTarget> target(String workspaceId, String invoiceId) =>
+      _outbox.target(workspaceId, invoiceId);
 
   @override
   Future<Map<String, ReminderMailLine>> lines(
     String workspaceId,
     List<String> invoiceIds,
-  ) async => {
-    for (final id in invoiceIds)
-      id: const ReminderMailLine(
-        target: ReminderMailTarget(
-          available: false,
-          reason: ReminderMailUnavailable.featureOff,
-        ),
-      ),
-  };
+  ) => _outbox.lines(workspaceId, invoiceIds);
 
   @override
   Future<List<ReminderMailSend>> awaiting(
     String workspaceId,
     String invoiceId,
-  ) async => const [];
+  ) => _outbox.awaiting(workspaceId, invoiceId);
 
   @override
   Future<ReminderMailSend> send({
@@ -44,12 +33,19 @@ class DemoReminderMail implements ReminderMail {
     required int level,
     required String attemptId,
     required ReminderMailLetter letter,
-  }) => Future.error(StateError('the Demo sends no e-mail'));
+  }) => _outbox.sendReminder(
+    workspaceId: workspaceId,
+    invoiceId: invoiceId,
+    level: level,
+    attemptId: attemptId,
+    letter: letter,
+  );
 
+  // Every e-mail of the outbox is accepted: none is left to decide.
   @override
   Future<ReminderMailSend> resolve(
     String workspaceId,
     String attemptId, {
     required bool delivered,
-  }) => Future.error(StateError('the Demo sends no e-mail'));
+  }) => _outbox.resolveReminder(attemptId);
 }

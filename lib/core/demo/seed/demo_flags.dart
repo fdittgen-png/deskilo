@@ -37,14 +37,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.recordingPrivacy:
       'filming mode would replace the invented cast by other invented '
       'people on every screen',
-  // #3673 — reminders by e-mail leave from the server.
-  WorkspaceFeature.reminderEmail:
-      'a reminder e-mail leaves from the server through the business\'s own '
-      'provider; the Demo sends no e-mail',
-  // #3673 — invoices by e-mail leave from the server too.
-  WorkspaceFeature.invoiceEmail:
-      'an invoice e-mail leaves from the server through the business\'s own '
-      'provider; the Demo sends no e-mail',
   // #3824 — the goods ledger has no screen before stock S2, and its Demo
   // is the shop of stock S11 (#3823), whose figures agree with its pages.
   WorkspaceFeature.stockManagement:

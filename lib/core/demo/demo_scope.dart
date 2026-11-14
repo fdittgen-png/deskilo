@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
+import 'package:deskilo/core/demo/data/money/demo_outbox.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
@@ -185,7 +186,7 @@ DemoSetupBooks _mainSetupBooks(DemoFixture fixture) {
 /// receipts -- seeded for the session's day.
 
 /// What only a server can answer: Demo offers nothing in its place.
-List<Override> _serverOnlyOverrides() => [
+List<Override> _serverOnlyOverrides(DemoFixture fixture) => [
   // #3550 — the five kinds and their profiles.
   businessKindRepositoryProvider.overrideWith(
     (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
@@ -197,9 +198,9 @@ List<Override> _serverOnlyOverrides() => [
   ),
   // #2581 — an export is answered by the server's export read only.
   biExportRepositoryProvider.overrideWithValue(const UnavailableBiExportRepository()),
-  // #3673 — the Demo sends no e-mail.
-  reminderMailProvider.overrideWithValue(const DemoReminderMail()),
-  invoiceMailProvider.overrideWithValue(const DemoInvoiceMail()),
+  // #3960 — e-mail is recorded in the session's outbox, never sent.
+  reminderMailProvider.overrideWithValue(DemoReminderMail(DemoOutbox.of(fixture))),
+  invoiceMailProvider.overrideWithValue(DemoInvoiceMail(DemoOutbox.of(fixture))),
 ];
 
 /// The overrides that turn a scope into the Demo environment.
@@ -293,7 +294,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       eventSourceOpenersProvider.overrideWithValue(const {}),
       // #1918 — capacity over the demo's own plan and bookings.
       kpiRepositoryProvider.overrideWith((ref) => demoCapacityKpi(ref, fixture)),
-      ..._serverOnlyOverrides(),
+      ..._serverOnlyOverrides(fixture),
       // #1923 C — saved views live in memory for the demonstration.
       biViewRepositoryProvider.overrideWithValue(fixture.biViews),
 
