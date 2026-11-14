@@ -9,11 +9,11 @@
 // The list only shrinks. A route guarded since must leave it (a stale name
 // fails), and a new measured route either joins a guard or is named here
 // with an issue, never silently.
-import 'dart:io';
-
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/ui/adaptive/page_measures.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 /// Measured routes no desk guard opens yet, each with the issue that will
 /// guard it (or why it never draws a page of its own).
@@ -116,7 +116,7 @@ List<String> unguarded(
 /// The guards that open pages on the desk: every guard of `test/ux` but
 /// the phones' (`pocket_guards_test.dart`).
 Iterable<String> _deskGuards() => [
-  for (final f in Directory('test/ux').listSync().whereType<File>())
+  for (final f in filesWithExtension('test/ux', '.dart'))
     if (f.uri.pathSegments.last case final name
         when name.contains('guard') && name != 'pocket_guards_test.dart')
       f.readAsStringSync(),
