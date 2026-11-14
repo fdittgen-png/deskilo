@@ -64,6 +64,25 @@ void main() {
         '%PDF-');
   }, timeout: const Timeout(Duration(minutes: 3)));
 
+  // #3852 — a design made on Letter is rendered and measured on Letter.
+  test('check renders a design made on Letter on Letter', () async {
+    final out = Directory.systemTemp.createTempSync('report-cli');
+    final letter = File('${out.path}/letter.xml')
+      ..writeAsStringSync(File(_sample)
+          .readAsStringSync()
+          .replaceFirst('<report-layout', '<report-layout page="Letter"'));
+    final pdf = '${out.path}/letter.pdf';
+    final result = await _run(['check', letter.path, '--out', pdf]);
+    expect(result.exitCode, 0,
+        reason: 'stdout:\n${result.stdout}\nstderr:\n${result.stderr}');
+    expect(result.stdout, contains('CONFORMS'));
+    final boxes = RegExp(r'/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)')
+        .allMatches(latin1.decode(File(pdf).readAsBytesSync()))
+        .map((m) => (double.parse(m.group(1)!), double.parse(m.group(2)!)))
+        .toSet();
+    expect(boxes, {(612.0, 792.0)});
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
   test('a layout that puts ink in the window band FAILS check with exit 1',
       () async {
     final out = Directory.systemTemp.createTempSync('report-cli');

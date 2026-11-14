@@ -18,6 +18,7 @@ import 'dart:typed_data';
 import 'package:deskilo_document_model/layout_model.dart';
 import 'package:deskilo_document_model/layout_units.dart';
 import 'package:deskilo_document_model/layout_xml.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_document_pdf/deskilo_document_pdf.dart' as doc;
 import 'package:liquify/liquify.dart';
 import 'package:pdf/widgets.dart' as pw;
@@ -73,7 +74,7 @@ Object? _escapeValue(Object? v) => switch (v) {
     };
 
 
-/// Renders [document] to A4 pages.
+/// Renders [document] to pages of [paper] (#3852; A4 unless named).
 ///
 /// [data] is the unescaped map the recipient block reads its name and
 /// address from. The legal chrome the bands never templated — the
@@ -93,6 +94,7 @@ Future<Uint8List> buildLayoutPdf({
   List<pw.Widget> additionalBody = const [],
   // #2360 — a page after the document's own (the Swiss QR-bill).
   pw.Page? lastPage,
+  Paper paper = Paper.a4,
 }) => doc.buildLayoutPdf(
   document: document,
   // #886 — the full name, else the display name.
@@ -108,6 +110,7 @@ Future<Uint8List> buildLayoutPdf({
   signature: signature,
   additionalBody: additionalBody,
   lastPage: lastPage,
+  paper: paper,
   markup: (source, images) =>
       reportBlockWidgets(parseReportMarkup(source), images: images),
 );

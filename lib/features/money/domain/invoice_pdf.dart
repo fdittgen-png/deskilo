@@ -2,6 +2,8 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
+import 'package:deskilo_document_pdf/paper_format.dart';
 import 'package:deskilo_document_pdf/report_flow_page.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:pdf/pdf.dart';
@@ -38,6 +40,7 @@ class InvoicePdfRequest {
     this.annexes = const [],
     this.addressWindow = AddressWindow.off,
     this.qrBillPage,
+    this.paper = Paper.a4,
   });
 
   final Invoice invoice;
@@ -95,6 +98,10 @@ class InvoicePdfRequest {
   /// #2360 — the Swiss QR-bill, on a page of its own after the invoice
   /// (before any annex); null for every other document.
   final pw.Page? qrBillPage;
+
+  /// #3852 — the paper the invoice's sheets are printed on. The payment
+  /// part keeps its own A4 page whatever this is.
+  final Paper paper;
 }
 
 /// Localized strings the invoice PDF prints.
@@ -240,7 +247,8 @@ class InvoicePdfStrings {
 }
 
 /// A standalone banded LETTER (#472: the payment reminders) — the
-/// report bands on an A4 page with the page footer, but NONE of the
+/// report bands on a page of [paper] (#3852; A4 unless named) with the
+/// page footer, but NONE of the
 /// invoice's legal chrome: no signature (nothing was issued), no void
 /// watermark, no annex.
 Future<Uint8List> buildBandedLetterPdf({
@@ -256,12 +264,13 @@ Future<Uint8List> buildBandedLetterPdf({
   /// or a reminder from a rehearsal space must be as unmistakable as
   /// the invoices are.
   String watermark = '',
+  Paper paper = Paper.a4,
 }) {
   final doc = pw.Document(title: documentTitle, producer: _producer)
     ..addPage(
     reportFlowPage(
       pageTheme: pw.PageTheme(
-        pageFormat: PdfPageFormat.a4,
+        pageFormat: pdfPageFormatOf(paper),
         theme: pw.ThemeData.withFont(base: baseFont, bold: boldFont),
         margin: const pw.EdgeInsets.fromLTRB(48, 44, 48, 44),
         buildForeground: watermarkForeground(watermark),
