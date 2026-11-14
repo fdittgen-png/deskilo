@@ -2733,7 +2733,7 @@ routine public.invoice_maturity_freeze() -> trigger | function | definer | volat
 routine public.invoice_member_match_payments_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_match_payments | function | definer | stable | exec:service_role | body:17d3198d31d7
 routine public.invoice_member_matches_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_matches | function | definer | stable | exec:service_role | body:baa2177b8137
 routine public.invoice_original_invoice(p_name text) -> uuid | function | invoker | immutable | exec:authenticated,service_role | body:d0f1e82ce0d7
-routine public.invoice_original_issuer(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:c9cf695b2efa
+routine public.invoice_original_issuer(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:67abcc34dfb1
 routine public.invoice_original_may_upload(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6b22104a894e
 routine public.invoice_original_xml_max_bytes() -> integer | function | invoker | immutable | exec:authenticated,service_role | body:770442338eed
 routine public.invoice_originals_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:8caacaa7487f
@@ -3575,7 +3575,7 @@ routine public.stock_record(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, 
 routine public.stock_take(p_workspace_id uuid, p_item_id uuid, p_location_id uuid, p_quantity numeric) -> TABLE(lot_id uuid, quantity numeric) | function | definer | stable | exec:service_role | body:c4ba4a851a37
 routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:2a3077980693
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:360eeecc0bea
-routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e0d85273fcfd
+routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:516b15a47957
 routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text, p_by uuid) -> boolean | function | definer | volatile | exec:service_role | body:c233f4937fef
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
