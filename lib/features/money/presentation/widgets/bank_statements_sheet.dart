@@ -15,6 +15,7 @@ import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
+import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/bank/bank_records.dart';
 import '../../providers/bank_statement_providers.dart';
@@ -114,6 +115,8 @@ class BankStatementsView extends ConsumerWidget {
           label: Text(l10n.bankImportAction),
         ),
         const FormGap(),
+        // #3913 — the statements this version could not read, counted.
+        UnreadableRowsNotice.area(bankStatementsArea(workspaceId)),
         statements.when(
           loading: () => const LoadingView(),
           error: (_, _) => Text(

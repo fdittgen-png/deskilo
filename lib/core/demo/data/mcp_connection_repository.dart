@@ -27,6 +27,10 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
   /// #1809 — the optional fields each prepare consented, per workspace.
   final preparedFields = <Map<String, List<String>>>[];
   final live = <McpConnectionInfo>[];
+
+  /// #3962 — what the Demo does when a connection ends: the requests still
+  /// waiting for it are closed.
+  void Function(String clientId)? onEnded;
   bool failFinalize = false;
 
   /// #1630 — the person's usage per assistant; Demo has none.
@@ -88,6 +92,7 @@ class FakeMcpConnectionRepository implements McpConnectionRepository {
     calls.add('disconnect:$clientId');
     final gone = live.where((c) => c.clientId == clientId).toList();
     live.removeWhere((c) => c.clientId == clientId);
+    onEnded?.call(clientId);
     return _answer(
       McpRevocation(
         installationId: installationId,

@@ -93,7 +93,7 @@ class BankImportCommands {
   /// Confirms [line] against [invoiceId] with the resolution its amount
   /// demands against [dueCents]: exact, under (accepted, a note is
   /// required) or over ([overResolution], a forced one needs a note).
-  Future<BankLineStatus> confirm(
+  Future<BankLineStatus?> confirm(
     StoredBankLine line, {
     required String invoiceId,
     required int dueCents,
@@ -128,10 +128,10 @@ class BankImportCommands {
     return confirmed;
   }
 
-  Future<BankLineStatus> review(StoredBankLine line, {required bool duplicate}) =>
+  Future<BankLineStatus?> review(StoredBankLine line, {required bool duplicate}) =>
       _repository.reviewLine(line.id, duplicate: duplicate);
 
-  Future<BankLineStatus> reconcileOut(
+  Future<BankLineStatus?> reconcileOut(
     StoredBankLine line, {
     required String outgoingPaymentId,
   }) => _repository.reconcileOut(line.id, outgoingPaymentId: outgoingPaymentId);

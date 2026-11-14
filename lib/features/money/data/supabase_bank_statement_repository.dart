@@ -3,8 +3,10 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+
 import '../domain/bank/bank_records.dart';
 import '../domain/bank/bank_statement.dart';
+import 'bank_rows.dart';
 
 /// The bank statements (`bank_statements`, `bank_statement_lines`) through
 /// their RPCs. Every call checks the bankImport flag and the caller's
@@ -14,12 +16,19 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
 
   final SupabaseClient _client;
 
-  Future<BankLineStatus> _status(String fn, Map<String, Object?> params) async {
+  /// A write's answer: the line's status, or null when it is one this
+  /// build does not know (#3913) — the write was done; the caller reads the
+  /// list again.
+  Future<BankLineStatus?> _status(
+    String fn,
+    Map<String, Object?> params,
+  ) async {
     final row = await _client.rpc<Object?>(fn, params: params);
     return BankLineStatus.fromWire(
       row is Map ? row['status'] as String? : null,
     );
   }
+
 
   @override
   Future<List<StoredBankStatement>> fetchStatements(String workspaceId) async {
@@ -27,10 +36,13 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
       'bank_statements_v1',
       params: {'p_workspace_id': workspaceId},
     );
-    return [
-      for (final row in rows is List ? rows : const <Object?>[])
-        StoredBankStatement.fromJson(row),
-    ];
+    return readableBankRows(
+      rows,
+      StoredBankStatement.fromJson,
+      area: bankStatementsArea(workspaceId),
+      key: workspaceId,
+      what: 'format',
+    );
   }
 
   @override
@@ -39,10 +51,13 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
       'bank_statement_lines_v1',
       params: {'p_statement_id': statementId},
     );
-    return [
-      for (final row in rows is List ? rows : const <Object?>[])
-        StoredBankLine.fromJson(row),
-    ];
+    return readableBankRows(
+      rows,
+      StoredBankLine.fromJson,
+      area: bankLinesArea(statementId),
+      key: statementId,
+      what: 'status',
+    );
   }
 
   /// #2380 — the bucket of the originals (0621); the path is
@@ -118,7 +133,7 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
   );
 
   @override
-  Future<BankLineStatus> matchLine(
+  Future<BankLineStatus?> matchLine(
     String lineId, {
     required String invoiceId,
     required String resolution,
@@ -131,14 +146,14 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
   });
 
   @override
-  Future<BankLineStatus> reviewLine(String lineId, {required bool duplicate}) =>
+  Future<BankLineStatus?> reviewLine(String lineId, {required bool duplicate}) =>
       _status('review_bank_line_v1', {
         'p_line_id': lineId,
         'p_duplicate': duplicate,
       });
 
   @override
-  Future<BankLineStatus> reconcileOut(
+  Future<BankLineStatus?> reconcileOut(
     String lineId, {
     required String outgoingPaymentId,
   }) => _status('reconcile_bank_line_out_v1', {
@@ -147,7 +162,7 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
   });
 
   @override
-  Future<BankLineStatus> unreconcileOut(
+  Future<BankLineStatus?> unreconcileOut(
     String lineId, {
     required String reason,
     required String requestId,
@@ -158,7 +173,7 @@ class SupabaseBankStatementRepository implements BankStatementRepository {
   });
 
   @override
-  Future<BankLineStatus> unmatchIn(
+  Future<BankLineStatus?> unmatchIn(
     String lineId, {
     required String reason,
     required String requestId,

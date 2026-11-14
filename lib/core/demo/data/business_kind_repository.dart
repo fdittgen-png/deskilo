@@ -7,7 +7,9 @@ import '../../../features/workspace/domain/business_kind.dart';
 import '../../../features/workspace/domain/business_profile.dart';
 import '../../settings/settings.dart';
 
-const _noPlaces = {
+/// The profile of a kind without places (#3863: the Demo practice is
+/// seeded with it).
+const demoNoPlacesProfile = {
   'placeBooking': false,
   'moneyTab': true,
   'services': true,
@@ -25,10 +27,10 @@ class DemoBusinessKindRepository implements BusinessKindRepository {
   @override
   Future<List<BusinessKind>> kinds() async => const [
     BusinessKind(code: 'coworking', sortOrder: 10),
-    BusinessKind(code: 'studio', sortOrder: 20, profile: _noPlaces),
-    BusinessKind(code: 'practice', sortOrder: 30, profile: _noPlaces),
-    BusinessKind(code: 'salon', sortOrder: 40, profile: _noPlaces),
-    BusinessKind(code: 'service', sortOrder: 50, profile: _noPlaces),
+    BusinessKind(code: 'studio', sortOrder: 20, profile: demoNoPlacesProfile),
+    BusinessKind(code: 'practice', sortOrder: 30, profile: demoNoPlacesProfile),
+    BusinessKind(code: 'salon', sortOrder: 40, profile: demoNoPlacesProfile),
+    BusinessKind(code: 'service', sortOrder: 50, profile: demoNoPlacesProfile),
   ];
 
   @override

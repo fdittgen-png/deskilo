@@ -48,6 +48,7 @@ import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
+import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_stores.dart';
@@ -58,6 +59,7 @@ import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
+import 'seed/demo_einvoice_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_finish.dart';
@@ -191,6 +193,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoYearOfResources(reservations, workspaces, today);
     finishDemoMoney(money, today);
     seedDemoOnlinePayments(money, today); // #3961
+    seedDemoEInvoiceChannel(money, today); // #3963
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);
@@ -348,6 +351,9 @@ class DemoFixture implements DemoSpaceParts {
   DemoTradeCityData get zurich => _spaces.zurich;
   DemoTradeCityData get milan => _spaces.milan;
 
+  /// #3863 — the practice in Berlin, the one business without places.
+  DemoPracticeData get practice => _spaces.practice;
+
   /// #3302 — the main space's development twin, with stores of its own.
   DemoTwinData get twin => _spaces.twin;
 
@@ -428,9 +434,10 @@ class DemoFixture implements DemoSpaceParts {
     newYork: DemoNewYorkData.list(home: home),
     zurich: DemoTradeCityData.list(city: demoZurich, home: home),
     milan: DemoTradeCityData.list(city: demoMilan, home: home),
+    practice: DemoPracticeData.list(home: home),
   );
   final twin = DemoTwinData.list(home: home, productionPlan: floorPlan, productionRoles: roles);
-  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, twin.listing]) {
+  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, twin.listing]) {
     listing.viewAs(memberId);
   }
   return (listings, twin);
@@ -446,4 +453,5 @@ FakeProfileRepository _profilesForSpaces(DemoListings spaces, DateTime today) =>
       ...demoCityProfiles(spaces.newYork.workspaces, 'ny'),
       for (final (city, listing) in [(demoZurich, spaces.zurich), (demoMilan, spaces.milan)])
         ...demoCityProfiles(listing.workspaces, city.prefix),
+      ...demoCityProfiles(spaces.practice.workspaces, 'practice'),
     ]);
