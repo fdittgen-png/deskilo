@@ -21,6 +21,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/kit/status_chip.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/guest_pass.dart';
 import '../../domain/guest_pass_invoice.dart';
 import '../../providers/guest_pass_providers.dart';
@@ -62,13 +63,11 @@ class GuestPassRecords extends ConsumerWidget {
     final offerNames = {for (final o in offers) o.id: o.name};
     final rows = read.value ?? const <GuestPassRecord>[]; // empty-ok: the table shows loading or failed while it is not read
     String holder(GuestPassRecord p) => names[p.memberId] ?? '';
-    // #3837 — the business's invoices, read beside the passes: a pass not
-    // found among them says nothing of its money.
+    // #3837 — the business's invoices, read beside the passes.
     final invoices = ref.watch(invoicesProvider).value ?? const []; // empty-ok: an invoice not read leaves the pass's money unsaid
     PassInvoice invoiceOf(GuestPassRecord p) => passInvoiceOf(p, invoices);
     void openInvoice(String id) => context.push('/invoices/$id');
-    bool uncorrected(GuestPassRecord p) =>
-        p.revoked && invoiceOf(p).state == PassInvoiceState.notCorrected;
+    bool uncorrected(GuestPassRecord p) => p.revoked && invoiceOf(p).state == PassInvoiceState.notCorrected;
     return RecordsTable<GuestPassRecord>(
       tableId: 'guest-passes-sold',
       state: switch (read) {
@@ -121,9 +120,7 @@ class GuestPassRecords extends ConsumerWidget {
                 for (final p in rows)
                   if (keys.contains(p.id) && !p.revoked) p,
               ],
-              holder: holder,
-              invoiceOf: invoiceOf,
-              onOpenInvoice: openInvoice,
+              reading: (holder: holder, invoiceOf: invoiceOf, open: openInvoice),
             ),
           ),
       ],
@@ -171,26 +168,7 @@ class GuestPassRecords extends ConsumerWidget {
           label: l10n.guestPassState,
           flex: 2,
           sortKey: (p) => p.revoked ? (uncorrected(p) ? 2 : 1) : 0,
-          cell: (_, p) => p.revoked
-              ? Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    StatusChip(
-                      key: ValueKey('guest-pass-revoked-${p.id}'),
-                      label: l10n.guestPassRevoked,
-                      tone: StatusTone.neutral,
-                    ),
-                    if (passInvoiceWords(l10n, invoiceOf(p)) case final line?)
-                      Text(
-                        line,
-                        key: ValueKey('guest-pass-invoice-${p.id}'),
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.bodySmall,
-                      ),
-                  ],
-                )
-              : const SizedBox.shrink(),
+          cell: (_, p) => _PassState(pass: p, invoice: invoiceOf(p)),
         ),
         RecordColumn(
           id: 'price',
@@ -212,14 +190,57 @@ class GuestPassRecords extends ConsumerWidget {
             Text(lastDay(p)),
             Text(l10n.guestPassUsed),
             Text(l10n.noteRefFilterCount(used(p), p.units)),
-            if (p.revoked) Text(l10n.guestPassRevoked),
-            if (p.revoked)
-              if (passInvoiceWords(l10n, invoiceOf(p)) case final line?)
-                Text(line),
+            ..._revokedWords(l10n, p, invoiceOf(p)),
           ],
         ),
         trailing: Text(currency.formatMinor(p.amountCents)),
       ),
+    );
+  }
+}
+
+/// On a phone's card: that the pass is revoked and where its invoice
+/// stands.
+List<Widget> _revokedWords(
+  AppLocalizations l10n,
+  GuestPassRecord pass,
+  PassInvoice invoice,
+) => [
+  if (pass.revoked) ...[
+    Text(l10n.guestPassRevoked),
+    if (passInvoiceWords(l10n, invoice) case final line?) Text(line),
+  ],
+];
+
+/// The State cell: a revoked pass's chip and where its invoice stands.
+class _PassState extends StatelessWidget {
+  const _PassState({required this.pass, required this.invoice});
+
+  final GuestPassRecord pass;
+  final PassInvoice invoice;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!pass.revoked) return const SizedBox.shrink();
+    final l10n = context.l10n;
+    final line = passInvoiceWords(l10n, invoice);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        StatusChip(
+          key: ValueKey('guest-pass-revoked-${pass.id}'),
+          label: l10n.guestPassRevoked,
+          tone: StatusTone.neutral,
+        ),
+        if (line != null)
+          Text(
+            line,
+            key: ValueKey('guest-pass-invoice-${pass.id}'),
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+      ],
     );
   }
 }

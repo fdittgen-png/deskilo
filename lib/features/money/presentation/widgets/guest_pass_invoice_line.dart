@@ -5,7 +5,16 @@
 // correction to make (a pass paid at the desk is corrected by a credit note
 // and a refund, one not paid may be voided).
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/guest_pass.dart';
 import '../../domain/guest_pass_invoice.dart';
+
+/// How a pass reads: its guest's name ([holder]), where its invoice stands
+/// ([invoiceOf]), and the way to open one ([open]).
+typedef PassReading = ({
+  String Function(GuestPassRecord pass) holder,
+  PassInvoice Function(GuestPassRecord pass) invoiceOf,
+  void Function(String invoiceId) open,
+});
 
 /// The line for [read], or null when there is nothing to say (a free pass,
 /// an invoice not read).

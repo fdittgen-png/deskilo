@@ -13,23 +13,19 @@ import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/kit/result_page.dart';
 import '../../application/guest_pass_commands.dart';
 import '../../domain/guest_pass.dart';
-import '../../domain/guest_pass_invoice.dart';
 import 'guest_pass_invoice_line.dart';
 
 /// Asks, then revokes [passes] of [workspaceId] through [commands], one
-/// after another; [holder] names each pass's guest in the result, and
-/// [onRevoked] runs once they were sent. [invoiceOf] says where a pass's
-/// invoice stands; [onOpenInvoice] opens one, for who may read it (null:
-/// no link).
+/// after another; [reading] names each pass's guest in the result, says
+/// where its invoice stands and opens it; [onRevoked] runs once they were
+/// sent.
 Future<void> revokeGuestPasses(
   BuildContext context, {
   required GuestPassCommands commands,
   required String workspaceId,
   required List<GuestPassRecord> passes,
-  required String Function(GuestPassRecord pass) holder,
+  required PassReading reading,
   required VoidCallback onRevoked,
-  required PassInvoice Function(GuestPassRecord pass) invoiceOf,
-  ValueChanged<String>? onOpenInvoice,
 }) async {
   final l10n = context.l10n;
   final ok = await showDialog<bool>(
@@ -67,10 +63,10 @@ Future<void> revokeGuestPasses(
   final done = <ResultLine>[
     for (final r in revoked)
       (
-        title: holder(r.pass),
+        title: reading.holder(r.pass),
         detail: [
           l10n.guestPassRevokeCancelled(r.cancelled),
-          ?passInvoiceWords(l10n, invoiceOf(r.pass)),
+          ?passInvoiceWords(l10n, reading.invoiceOf(r.pass)),
         ].join(' · '),
         outcome: l10n.guestPassRevoked,
       ),
@@ -79,7 +75,7 @@ Future<void> revokeGuestPasses(
     for (final o in outcomes)
       if (o.error case final error?)
         (
-          title: holder(byId[o.passId]!),
+          title: reading.holder(byId[o.passId]!),
           detail: knownRefusalText(l10n, error) ?? l10n.guestPassRevokeFailed,
           outcome: '',
         ),
@@ -103,12 +99,12 @@ Future<void> revokeGuestPasses(
             notDone: notDone,
             doneActions: [
               for (final r in revoked)
-                switch ((invoiceOf(r.pass).invoice, onOpenInvoice)) {
-                  (final invoice?, final open?) => TextButton(
+                switch (reading.invoiceOf(r.pass).invoice) {
+                  final invoice? => TextButton(
                     key: ValueKey('guest-pass-open-invoice-${r.pass.id}'),
                     onPressed: () {
                       Navigator.of(dialog).pop();
-                      open(invoice.id);
+                      reading.open(invoice.id);
                     },
                     child: Text(l10n.guestPassOpenInvoice),
                   ),
