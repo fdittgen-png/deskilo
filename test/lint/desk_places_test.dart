@@ -11,10 +11,16 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/shell/shell_branch.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'lint_sources.dart';
+
 /// The keys and group ids the navigation's sources declare.
 Set<String> _knownPlaces() {
-  final entries = File('lib/app/shell/shell_drawer_entries.dart')
-      .readAsStringSync();
+  // The entries, and the groups' entries kept in files of their own
+  // (`shell_sales_entries.dart`, `shell_cash_entries.dart`).
+  final entries = [
+    for (final f in filesWithExtension('lib/app/shell', '_entries.dart'))
+      f.readAsStringSync(),
+  ].join('\n');
   final groups = File('lib/app/shell/shell_nav_groups.dart').readAsStringSync();
   final destinations = File('lib/app/shell/shell_destinations.dart')
       .readAsStringSync();

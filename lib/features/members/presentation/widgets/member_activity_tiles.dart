@@ -29,7 +29,10 @@ List<Widget> _memberMoneyTiles(
   Set<WorkspacePermission> p,
 ) => [
   // carnets, VIES, certificates
-  if (f.contains(WorkspaceFeature.carnets) && !m.isKiosk)
+  // #3863 — a carnet is spent by place bookings, so only with the places.
+  if (f.contains(WorkspaceFeature.placeBooking) &&
+      f.contains(WorkspaceFeature.carnets) &&
+      !m.isKiosk)
     MemberCarnetTile(
       memberId: m.id,
       canSell: p.contains(WorkspacePermission.issueInvoices),

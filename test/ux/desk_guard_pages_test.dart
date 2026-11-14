@@ -40,7 +40,9 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/bi_report_definition.dart';
 import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
+import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_note.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
@@ -233,6 +235,8 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     ),
     expectedRevision: 0,
   );
+  // #3947 — a conversation with a message, for its page.
+  final talk = path.startsWith('/conversation/');
   await pumpRoute(
     tester,
     path,
@@ -289,7 +293,29 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
                   subscriptionPct: 50,
                 ),
               )
-              ..memberEmails = {'member-2': 'bob@example.test'},
+              ..memberEmails = {'member-2': 'bob@example.test'}
+              ..conversations.addAll([
+                if (talk)
+                  Conversation(
+                    id: 'conv-1',
+                    kind: ConversationKind.direct,
+                    otherMemberId: 'member-2',
+                    lastAt: kTestNow,
+                  ),
+              ])
+              ..conversationMessages.addAll({
+                if (talk)
+                  'conv-1': [
+                    MemberNote(
+                      id: 'n1',
+                      workspaceId: 'ws-1',
+                      fromMemberId: 'member-2',
+                      toMemberId: 'member-1',
+                      body: 'Is the meeting room free on Friday?',
+                      createdAt: kTestNow,
+                    ),
+                  ],
+              }),
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
       if (records)
@@ -418,6 +444,11 @@ const _pages = [
     'money',
     'purchase-order-edit',
   ),
+  // #3954 — the colours page, walked by Tab once at every size.
+  ('/settings/colours', PageKind.document, 'settings', 'colours'),
+  // #3947 — a conversation with a message: its menu and header are targets
+  // of the kit's size.
+  ('/conversation/conv-1', PageKind.document, 'people', 'conversation'),
   // #3943 — an empty page passes the keyboard on.
   ('/reservations/period', PageKind.document, 'booking', 'period'),
   // #3892 — settings, people, money and documents at the desk.
@@ -541,7 +572,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 85;
+const _guardedWorkspaceRoutes = 87;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
