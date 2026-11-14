@@ -33120,11 +33120,29 @@ abstract class AppLocalizations {
   /// **'{changed, plural, =0{None changed} one{1 changed} other{{changed} changed}} out of {count, plural, one{1 member} other{{count} members}}'**
   String membersChangeDone(int changed, int count);
 
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'From the first of a month'**
+  String get membersChangeFromMonth;
+
   /// #3618 members at the desk: bulk task: the effective date
   ///
   /// In en, this message translates to:
   /// **'Applies from today, {date}. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.'**
   String membersChangeFromToday(String date);
+
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'As soon as possible'**
+  String get membersChangeSoonest;
+
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'When it takes effect'**
+  String get membersChangeWhen;
 
   /// #3628 users on the members table: chip: profiles an administrator runs (no account yet)
   ///
@@ -33216,6 +33234,12 @@ abstract class AppLocalizations {
   /// **'Changed'**
   String get membersOutcomeApplied;
 
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'Not changed: the earliest date it can take is {date}'**
+  String membersOutcomeEarliest(String date);
+
   /// #3618 members at the desk: one member's outcome
   ///
   /// In en, this message translates to:
@@ -33252,6 +33276,12 @@ abstract class AppLocalizations {
   /// **'This share is not allowed for them: not changed'**
   String get membersOutcomeRuleRefused;
 
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'Takes effect on {date}'**
+  String membersOutcomeScheduled(String date);
+
   /// #3618 members at the desk: one member's outcome
   ///
   /// In en, this message translates to:
@@ -33263,6 +33293,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Not paused: not resumed'**
   String get membersOutcomeWrongStatus;
+
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'Paused from'**
+  String get membersPauseFrom;
+
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'Active again on'**
+  String get membersPauseUntil;
+
+  /// #3858 the members' change task: the date it takes effect
+  ///
+  /// In en, this message translates to:
+  /// **'Leave empty: until resumed'**
+  String get membersPauseUntilHelper;
 
   /// Plan dropdown option for members without a plan
   ///

@@ -20623,9 +20623,18 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get membersChangeFromMonth => 'From the first of a month';
+
+  @override
   String membersChangeFromToday(String date) {
     return 'Applies from today, $date. Each member is changed on their own; one who cannot be changed is listed with the reason and left as they are.';
   }
+
+  @override
+  String get membersChangeSoonest => 'As soon as possible';
+
+  @override
+  String get membersChangeWhen => 'When it takes effect';
 
   @override
   String get membersChipManaged => 'Managed profiles';
@@ -20677,6 +20686,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get membersOutcomeApplied => 'Changed';
 
   @override
+  String membersOutcomeEarliest(String date) {
+    return 'Not changed: the earliest date it can take is $date';
+  }
+
+  @override
   String get membersOutcomeExited => 'Has left the space: not changed';
 
   @override
@@ -20697,10 +20711,24 @@ class AppLocalizationsEn extends AppLocalizations {
       'This share is not allowed for them: not changed';
 
   @override
+  String membersOutcomeScheduled(String date) {
+    return 'Takes effect on $date';
+  }
+
+  @override
   String get membersOutcomeUnchanged => 'Already so: nothing to change';
 
   @override
   String get membersOutcomeWrongStatus => 'Not paused: not resumed';
+
+  @override
+  String get membersPauseFrom => 'Paused from';
+
+  @override
+  String get membersPauseUntil => 'Active again on';
+
+  @override
+  String get membersPauseUntilHelper => 'Leave empty: until resumed';
 
   @override
   String get membersPlanNone => 'No plan';

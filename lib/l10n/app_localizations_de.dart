@@ -20822,9 +20822,18 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get membersChangeFromMonth => 'Ab dem Ersten eines Monats';
+
+  @override
   String membersChangeFromToday(String date) {
     return 'Gilt ab heute, $date. Jedes Mitglied wird einzeln geändert; wer nicht geändert werden kann, wird mit dem Grund aufgeführt und bleibt unverändert.';
   }
+
+  @override
+  String get membersChangeSoonest => 'So bald wie möglich';
+
+  @override
+  String get membersChangeWhen => 'Wann es wirksam wird';
 
   @override
   String get membersChipManaged => 'Verwaltete Profile';
@@ -20876,6 +20885,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get membersOutcomeApplied => 'Geändert';
 
   @override
+  String membersOutcomeEarliest(String date) {
+    return 'Nicht geändert: das früheste mögliche Datum ist der $date';
+  }
+
+  @override
   String get membersOutcomeExited => 'Hat den Space verlassen: nicht geändert';
 
   @override
@@ -20897,10 +20911,24 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Anteil ist für sie nicht erlaubt: nicht geändert';
 
   @override
+  String membersOutcomeScheduled(String date) {
+    return 'Wirksam am $date';
+  }
+
+  @override
   String get membersOutcomeUnchanged => 'Bereits so: nichts zu ändern';
 
   @override
   String get membersOutcomeWrongStatus => 'Nicht pausiert: nicht reaktiviert';
+
+  @override
+  String get membersPauseFrom => 'Pausiert ab';
+
+  @override
+  String get membersPauseUntil => 'Wieder aktiv am';
+
+  @override
+  String get membersPauseUntilHelper => 'Leer lassen: bis zur Wiederaufnahme';
 
   @override
   String get membersPlanNone => 'Kein Tarif';

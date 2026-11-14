@@ -61,7 +61,7 @@ const _measured = <(String, PageMeasure, String)>[
   ('/money/purchase-orders', _work, '/money/purchase-orders'),
   ('/suppliers', _work, ''),
   ('/money/sales', _work, ''),
-  ('/money/cash', _work, '/money/cash'),
+  ('/money/cash', _work, ''),
   ('/money/repartition-wizard', _form, '/money/repartition-wizard'),
   ('/settings/wording', _form, '/settings/wording'),
   ('/settings/colours', _form, '/settings/colours'),
@@ -110,6 +110,7 @@ const _notOpened = {
   '/plan': 'an old address that forwards to /reserve',
   '/suppliers': 'an old address that forwards to /money/suppliers',
   '/money/sales': 'an old address that forwards to /invoices',
+  '/money/cash': 'at the desk it opens its first door, /money/status (#3926)',
   '/deployment': 'needs deployToDev, which the fixture\'s owner does not hold',
 };
 

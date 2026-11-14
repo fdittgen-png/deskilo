@@ -20800,9 +20800,18 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get membersChangeFromMonth => 'Dal primo di un mese';
+
+  @override
   String membersChangeFromToday(String date) {
     return 'Si applica da oggi, $date. Ogni membro viene modificato singolarmente; chi non può esserlo è elencato con il motivo e resta invariato.';
   }
+
+  @override
+  String get membersChangeSoonest => 'Il prima possibile';
+
+  @override
+  String get membersChangeWhen => 'Quando ha effetto';
 
   @override
   String get membersChipManaged => 'Profili gestiti';
@@ -20854,6 +20863,11 @@ class AppLocalizationsIt extends AppLocalizations {
   String get membersOutcomeApplied => 'Modificato';
 
   @override
+  String membersOutcomeEarliest(String date) {
+    return 'Non modificato: la data più vicina possibile è il $date';
+  }
+
+  @override
   String get membersOutcomeExited => 'Ha lasciato lo spazio: non modificato';
 
   @override
@@ -20876,10 +20890,24 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa quota non è consentita per loro: non modificato';
 
   @override
+  String membersOutcomeScheduled(String date) {
+    return 'Ha effetto il $date';
+  }
+
+  @override
   String get membersOutcomeUnchanged => 'Già così: niente da modificare';
 
   @override
   String get membersOutcomeWrongStatus => 'Non sospeso: non riattivato';
+
+  @override
+  String get membersPauseFrom => 'Sospeso dal';
+
+  @override
+  String get membersPauseUntil => 'Di nuovo attivo il';
+
+  @override
+  String get membersPauseUntilHelper => 'Lasciare vuoto: fino alla ripresa';
 
   @override
   String get membersPlanNone => 'Nessun piano';
