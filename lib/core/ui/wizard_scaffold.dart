@@ -95,8 +95,7 @@ class WizardScaffold extends StatelessWidget {
       return SizedBox(
             height: 56,
             child: EdgeFadeScroll(
-              // #3947 — the steps are targets of the kit's minimum size:
-              // 48 high in the 56 of the bar, on every platform.
+              // #3947 — each step 48 high in the bar, on every platform.
               padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.md, vertical: AppSpacing.xs),
               child: Row(children: [
@@ -105,11 +104,8 @@ class WizardScaffold extends StatelessWidget {
                     padding: const EdgeInsets.only(right: AppSpacing.xs),
                     child: ChoiceChip(
                       key: ValueKey('wizard-step-${step.name}'),
-                      // #1191/#1192 — a selected Chip draws its OWN
-                      // checkmark, and it lands ON the avatar: the
-                      // step number under a tick, the group-by icon
-                      // under one too — a dark smudge where a glyph
-                      // should be. The avatar IS the state here.
+                      // #1191/#1192 — no checkmark: it would land ON the
+                      // avatar, and the avatar IS the state here.
                       showCheckmark: false,
                       materialTapTargetSize: MaterialTapTargetSize.padded,
                       visualDensity: VisualDensity.standard,
