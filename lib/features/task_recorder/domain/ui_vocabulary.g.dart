@@ -909,6 +909,8 @@ const Set<String> uiKeys = {
   'demo-level-first',
   'demo-level-own',
   'demo-level-parking',
+  'demo-mail-seed-invoice',
+  'demo-mail-seed-reminder',
   'demo-map-revenue',
   'demo-map-vat-20',
   'demo-meeting-room',
