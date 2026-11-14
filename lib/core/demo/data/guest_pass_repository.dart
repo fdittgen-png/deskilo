@@ -74,6 +74,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
           amountCents: sale.amountCents,
           startsAt: draft.startsAt,
           endsAt: draft.endsAt.add(Duration(days: draft.days - 1)),
+          invoiceId: sale.invoiceId,
         ),
       );
 
@@ -291,6 +292,7 @@ class FakeGuestPassRepository implements GuestPassRepository {
       endsAt: p.endsAt,
       revokedAt: at,
       cancelledBookings: cancelled,
+      invoiceId: p.invoiceId,
     );
     revocations[passId] = (requestId: requestId, cancelled: cancelled);
     return cancelled;

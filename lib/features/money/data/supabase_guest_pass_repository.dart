@@ -29,7 +29,7 @@ class SupabaseGuestPassRepository implements GuestPassRepository {
         .from('guest_passes')
         .select(
           'id, member_id, offer_id, unit, units, amount_cents, starts_at, ends_at, '
-          'revoked_at, revoked_reservation_ids',
+          'revoked_at, revoked_reservation_ids, invoice_id',
         )
         .eq('workspace_id', workspaceId)
         .order('sold_at', ascending: false);
