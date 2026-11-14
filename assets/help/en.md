@@ -5247,6 +5247,7 @@ You tell DesKilo where to post your invoices as machine-readable files.
 - The token is stored on the server and never shown again.
 - The valid file is an EN 16931 invoice. Whether your country requires a platform, and which, is something to confirm with your accountant.
 - Posting the file is the second of three steps: see [What the app issues, and what stays with your accountant](help:user.invoicing.scope).
+- In Italy no invoice is issued before the national platform (the SdI) has accepted one of the workspace's documents. **Send a test document** in the setup guide's e-invoicing step: the proforma of a member's current month, with a test number, goes to the platform's test environment with its test credentials. Nothing is issued, numbered or booked. Once the platform accepts it, the workspace issues; new credentials or another seller identity ask for a new test.
 
 **See also:** [Sending an e-invoice](help:user.money.einvoice.send) · [Legal identity](help:user.money.legal.identity)
 

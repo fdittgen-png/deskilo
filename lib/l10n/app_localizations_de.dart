@@ -8920,11 +8920,73 @@ class AppLocalizationsDe extends AppLocalizations {
   String get einvoiceEnvUat => 'UAT (Testplattform)';
 
   @override
+  String get einvoiceTestAccepted =>
+      'Die Plattform hat das Testdokument angenommen: Dieser Bereich stellt Rechnungen aus.';
+
+  @override
+  String get einvoiceTestAwaiting =>
+      'Ein Testdokument wartet auf das Urteil der Plattform. Fragen Sie in einigen Minuten erneut nach.';
+
+  @override
   String get einvoiceTestEnvsHelp =>
       'Eigene Endpunkte und Token für Proben. Die Auswahl erscheint beim Senden nur bei aktivem Entwicklermodus.';
 
   @override
   String get einvoiceTestEnvsTitle => 'Testumgebungen (UAT / Dev)';
+
+  @override
+  String get einvoiceTestFailed =>
+      'Die Plattform konnte das Testdokument nicht annehmen. Versuchen Sie es später erneut.';
+
+  @override
+  String get einvoiceTestIntro =>
+      'Die nationale Plattform muss ein Dokument dieses Bereichs annehmen, bevor er hier Rechnungen ausstellt. Senden Sie ihr ein Testdokument: die Proforma des laufenden Monats eines Mitglieds mit einer Testnummer, an die Testumgebung der Plattform. Nichts wird ausgestellt, nummeriert oder gebucht.';
+
+  @override
+  String get einvoiceTestMember => 'Mitglied, dessen Proforma gesendet wird';
+
+  @override
+  String get einvoiceTestNone => 'Es wurde noch kein Testdokument gesendet.';
+
+  @override
+  String get einvoiceTestNotAllowed =>
+      'Nur wer die Integrationen verwaltet, sendet ein Testdokument.';
+
+  @override
+  String get einvoiceTestNothingToInvoice =>
+      'Dieses Mitglied hat in diesem Monat nichts auf der Rechnung: Wählen Sie ein anderes Mitglied.';
+
+  @override
+  String get einvoiceTestPending =>
+      'Ein Testdokument wartet noch auf das Urteil der Plattform. Fragen Sie danach, bevor Sie ein weiteres senden.';
+
+  @override
+  String get einvoiceTestRejected =>
+      'Die Plattform hat das Testdokument abgelehnt. Prüfen Sie die Angaben des Mitglieds und des Bereichs und senden Sie dann ein neues.';
+
+  @override
+  String get einvoiceTestSandboxElsewhere =>
+      'Die Adressen der Testumgebung müssen die dokumentierten Testadressen der Plattform sein.';
+
+  @override
+  String einvoiceTestSandboxMissing(String fields) {
+    return 'Die Zugangsdaten der Testumgebung sind unvollständig: $fields. Ergänzen Sie sie auf dem Bildschirm der E-Rechnungs-Plattform.';
+  }
+
+  @override
+  String get einvoiceTestSend => 'Testdokument senden';
+
+  @override
+  String get einvoiceTestSent =>
+      'Testdokument gesendet. Fragen Sie die Plattform in einigen Minuten nach ihrem Urteil.';
+
+  @override
+  String get einvoiceTestTitle =>
+      'Die Ausstellung mit einem Testdokument öffnen';
+
+  @override
+  String get einvoiceTestUnavailable =>
+      'Die eingerichtete Plattform nimmt kein Testdokument an.';
 
   @override
   String get einvoiceUatEndpoint => 'UAT-Upload-URL';
@@ -29957,6 +30019,24 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupChoicesUnsaved => 'Nur Vorschau – noch nichts angewendet.';
 
   @override
+  String setupDeskProgress(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: '$total Schritte',
+      one: '$total Schritt',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      done,
+      locale: localeName,
+      other: '$done erledigt',
+      one: '$done erledigt',
+      zero: 'keiner erledigt',
+    );
+    return '$_temp0, $_temp1';
+  }
+
+  @override
   String get setupDraftChanged =>
       'Von jemand anderem geändert, während Sie bearbeitet haben.';
 
@@ -30055,7 +30135,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupGrowEinvoicingChannel =>
-      'Hier muss jede Rechnung über einen nationalen Kanal laufen, den die App noch nicht spricht, deshalb lehnt der Server das Ausstellen von Rechnungen ab.';
+      'Hier läuft jede Rechnung über die nationale Plattform des Landes: Der Server stellt Rechnungen aus, sobald die Plattform ein Dokument dieses Bereichs angenommen hat.';
 
   @override
   String setupGrowEinvoicingIncomplete(String provider) {
@@ -31527,6 +31607,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Sätze, die Sie berechnen, und Ihre Voranmeldungen.';
 
   @override
+  String get setupStepLeave => 'Verlassen';
+
+  @override
+  String get setupStepLeaveMessage =>
+      'Ihre Antworten sind noch nicht übernommen. Sie bleiben als Entwurf gespeichert, und Sie finden sie hier wieder, wenn Sie zurückkommen.';
+
+  @override
+  String get setupStepLeaveTitle => 'Diesen Schritt verlassen?';
+
+  @override
   String get setupStepLoadFailed =>
       'Dieser Schritt konnte nicht geladen werden. Versuchen Sie es später erneut.';
 
@@ -31694,6 +31784,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get shortcutPreviousPeriod =>
       'Voriger Tag, vorige Woche oder voriger Monat';
+
+  @override
+  String get shortcutPreviousStep => 'Zum vorherigen Schritt zurück';
 
   @override
   String get shortcutPrint => 'Das Dokument dieser Seite';

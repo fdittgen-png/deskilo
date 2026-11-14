@@ -5247,6 +5247,7 @@ Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden 
 - Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
 - Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
 - Die Datei zu übermitteln ist der zweite von drei Schritten: siehe [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope).
+- In Italien wird keine Rechnung ausgestellt, bevor die nationale Plattform (das SdI) ein Dokument des Bereichs angenommen hat. **Testdokument senden** im Schritt E-Rechnung des Einrichtungsleitfadens: Die Proforma des laufenden Monats eines Mitglieds geht mit einer Testnummer an die Testumgebung der Plattform, mit deren Test-Zugangsdaten. Nichts wird ausgestellt, nummeriert oder gebucht. Sobald die Plattform es annimmt, stellt der Bereich aus; neue Zugangsdaten oder eine andere Identität des Verkäufers verlangen einen neuen Test.
 
 **Siehe auch:** [Eine E-Rechnung senden](help:user.money.einvoice.send) · [Rechtliche Identität](help:user.money.legal.identity)
 

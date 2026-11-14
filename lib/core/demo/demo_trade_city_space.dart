@@ -3,6 +3,7 @@
 // #3832 — a trade city (Zurich, Milan) as the repositories hold it: its own
 // in-memory stores beside the main space's, a shared list of spaces, and
 // every record derived from the city's [DemoTradeCity] facts.
+import '../../features/money/domain/einvoice_gateway.dart';
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/booking_granularity.dart';
 import 'data/accessory_repository.dart';
@@ -100,6 +101,18 @@ class DemoTradeCityData implements DemoSpaceParts {
     seedCityDecisions(events, city.prefix, now);
     final money = FakeMoneyRepository(events: events, clock: () => now)
       ..invoiceCommands.currency = city.currency;
+    // #3883 — Milan issues through the SdI: its channel is set up
+    // and its sandbox test document was accepted, so its issuing gate is open
+    // and the setup guide's card says so (the city has issued for years).
+    if (city == demoMilan) {
+      money.einvoiceGateway = const EInvoiceGatewayConfig(
+        configured: true,
+        provider: 'it_sdi',
+      );
+      money.eInvoices
+        ..testId = '${city.prefix}-sdi-test'
+        ..testVerdict = EInvoiceTestVerdict.accepted;
+    }
     seedCityExpenses(money, city.id, city.prefix, now);
     seedCityMoney(money, space, (
       workspaceId: city.id,

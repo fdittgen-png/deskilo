@@ -17,11 +17,21 @@ class WizardNavigationController {
 class WizardNavigation extends StatefulWidget {
   const WizardNavigation({super.key, required this.busy,
     required this.hasDraft, required this.discardMessage,
-    required this.builder, this.onStepBack, this.controller});
+    required this.builder, this.onStepBack, this.controller,
+    this.draftNow, this.leaveTitle, this.leaveLabel});
   final WizardNavigationController? controller;
   final bool busy;
   final bool hasDraft;
   final String discardMessage;
+
+  /// #3629 — whether there is a draft at the moment of leaving, when it is
+  /// kept outside this widget's build (an autosaved draft); else [hasDraft].
+  final bool Function()? draftNow;
+
+  /// #3629 — the question and the leaving button, when leaving keeps the
+  /// draft rather than discarding it; else the discard words.
+  final String? leaveTitle;
+  final String? leaveLabel;
   final VoidCallback? onStepBack;
   final Widget Function(VoidCallback back) builder;
 
@@ -59,12 +69,12 @@ class _WizardNavigationState extends State<WizardNavigation> {
     if (_leaving || widget.controller?.completed == true) return true;
     if (widget.busy || _asking) return false;
     if (widget.onStepBack != null) { widget.onStepBack!(); return false; }
-    if (!widget.hasDraft) { _leaving = true; return true; }
+    if (!(widget.draftNow?.call() ?? widget.hasDraft)) { _leaving = true; return true; }
     _asking = true;
     final l10n = context.l10n;
     final leave = await showDialog<bool>(context: context,
       builder: (dialogContext) => AlertDialog(
-        title: Text(l10n.reportDesignerDiscardTitle),
+        title: Text(widget.leaveTitle ?? l10n.reportDesignerDiscardTitle),
         content: Text(widget.discardMessage),
         actions: [
           TextButton(key: const ValueKey('wizard-keep-draft'),
@@ -72,7 +82,7 @@ class _WizardNavigationState extends State<WizardNavigation> {
             child: Text(l10n.reportDesignerKeepEditing)),
           TextButton(key: const ValueKey('wizard-discard-draft'),
             onPressed: () => Navigator.of(dialogContext).pop(true),
-            child: Text(l10n.reportDesignerDiscard)),
+            child: Text(widget.leaveLabel ?? l10n.reportDesignerDiscard)),
         ],
       ));
     _asking = false;

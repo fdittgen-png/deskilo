@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/backend/context_client_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/wizard_navigation.dart';
 import '../../../../l10n/dictionary_labels.dart';
+import '../../application/setup_draft_autosave.dart';
 import '../../application/setup_step_timing_recorder.dart';
 import '../../domain/setup_steps.dart';
 import '../../domain/site.dart';
@@ -42,6 +46,7 @@ class SetupStepScreen extends ConsumerWidget {
     this.runPages,
     this.growPages,
     this.moneyRecorded,
+    this.navigation,
   });
 
   /// The catalogue id of the step (`setup_steps.dart`).
@@ -65,32 +70,65 @@ class SetupStepScreen extends ConsumerWidget {
   /// open and the server still refuses.
   final SetupMoneyRecorded? moneyRecorded;
 
+  /// #3629 — the router's way out of a step (`onExit`): every way of
+  /// leaving — the steps beside it, Next, the keys, the browser's history —
+  /// asks this one decision before a step whose answers are a draft.
+  final WizardNavigationController? navigation;
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
-    return Scaffold(
-      appBar: AppBar(title: PageTitle(context.l10n.setupStepTitle(stepId))),
-      body: workspace == null
-          ? const LoadingView()
-          : Column(
-              children: [
-                SetupTaskContext(
-                  workspaceName: workspace.name,
-                  stepId: stepId,
-                  status: ref
-                      .watch(workspaceSetupStatusProvider(workspace.id))
-                      .value,
-                ),
-                Expanded(
-                  child: _Session(
-                    workspaceId: workspace.id,
+    // #3629 — the step's form, its draft and its timing belong to one
+    // account, source, workspace and step: another of these is another
+    // page, never this one's state carried over.
+    final scope = [
+      ref.watch(sessionStateProvider).value,
+      ref.watch(selectedWorkspaceHostProvider)?.source,
+      workspace?.id,
+      stepId,
+    ].join('|');
+    return WizardNavigation(
+      key: ValueKey('setup-step-navigation|$scope'),
+      controller: navigation,
+      busy: false,
+      hasDraft: false,
+      draftNow: () => workspace != null && _unapplied(ref, workspace.id),
+      discardMessage: l10n.setupStepLeaveMessage,
+      leaveTitle: l10n.setupStepLeaveTitle,
+      leaveLabel: l10n.setupStepLeave,
+      builder: (_) => Scaffold(
+        appBar: AppBar(title: PageTitle(l10n.setupStepTitle(stepId))),
+        body: workspace == null
+            ? const LoadingView()
+            : Column(
+                children: [
+                  SetupTaskContext(
+                    workspaceName: workspace.name,
                     stepId: stepId,
-                    child: _page(ref, workspace),
+                    status: ref
+                        .watch(workspaceSetupStatusProvider(workspace.id))
+                        .value,
                   ),
-                ),
-              ],
-            ),
+                  Expanded(
+                    child: _Session(
+                      key: ValueKey('setup-step-session|$scope'),
+                      workspaceId: workspace.id,
+                      stepId: stepId,
+                      child: _page(ref, workspace),
+                    ),
+                  ),
+                ],
+              ),
+      ),
     );
+  }
+
+  /// Whether the step's draft holds answers not applied yet; a step
+  /// without a draft frame has none.
+  bool _unapplied(WidgetRef ref, String workspaceId) {
+    final draft = setupDraftAutosaveProvider(workspaceId, stepId);
+    return ref.exists(draft) && ref.read(draft.notifier).holdsUnapplied();
   }
 
   bool _moneyRecorded(WidgetRef ref, String workspaceId) =>
@@ -127,6 +165,7 @@ typedef SetupMoneyRecorded = bool Function(WidgetRef ref, String workspaceId);
 /// guide reads on the way back.
 class _Session extends ConsumerStatefulWidget {
   const _Session({
+    super.key,
     required this.workspaceId,
     required this.stepId,
     required this.child,

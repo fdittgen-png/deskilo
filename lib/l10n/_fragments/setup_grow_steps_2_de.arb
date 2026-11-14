@@ -11,7 +11,7 @@
   "setupGrowEinvoicingLawTitle": "Was das Gesetz in Ihrem Land verlangt",
   "setupGrowEinvoicingNoMandate": "Die Steuer-Referenzdaten verzeichnen für dieses Land keine E-Rechnungspflicht. Fragen Sie Ihre Steuerberatung, ob eine gilt: Der Betreiber trägt sie in die Steuer-Referenzdaten ein.",
   "setupGrowEinvoicingUnconfirmed": "Noch nicht anhand des zitierten Gesetzes bestätigt: Der Betreiber bestätigt diese Daten in den Steuer-Referenzdaten, und Ihre Steuerberatung sagt Ihnen, welche für den Space gelten.",
-  "setupGrowEinvoicingChannel": "Hier muss jede Rechnung über einen nationalen Kanal laufen, den die App noch nicht spricht, deshalb lehnt der Server das Ausstellen von Rechnungen ab.",
+  "setupGrowEinvoicingChannel": "Hier läuft jede Rechnung über die nationale Plattform des Landes: Der Server stellt Rechnungen aus, sobald die Plattform ein Dokument dieses Bereichs angenommen hat.",
   "setupGrowBooksPreviewNote": "Was die Bücher zeigen werden:",
   "setupGrowBooksPre": "DesKilo führt die Salden der Mitglieder und die Rechnungen; nichts wird gebucht.",
   "setupGrowBooksLocal": "DesKilo führt die Bücher: Rechnungen und Zahlungen werden auf den Kontenplan gebucht.",

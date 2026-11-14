@@ -62,7 +62,7 @@
   "@setupGrowEinvoicingUnconfirmed": {
     "description": "#2875 setup grow steps: setupGrowEinvoicingUnconfirmed"
   },
-  "setupGrowEinvoicingChannel": "Here every invoice has to go through a national channel the app does not speak yet, so the server refuses to issue invoices.",
+  "setupGrowEinvoicingChannel": "Here every invoice goes through the country's national platform: the server issues invoices once the platform has accepted a document of this workspace.",
   "@setupGrowEinvoicingChannel": {
     "description": "#2875 setup grow steps: setupGrowEinvoicingChannel"
   },

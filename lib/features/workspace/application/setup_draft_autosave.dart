@@ -131,6 +131,15 @@ class SetupDraftAutosave extends _$SetupDraftAutosave {
     _timer = Timer(AppDurations.draftAutosave, () => unawaited(_drain()));
   }
 
+  /// #3629 — whether the step holds answers not applied yet: a draft the
+  /// server keeps, or edits still on their way to it. Leaving such a step
+  /// asks first; the draft stays either way.
+  bool holdsUnapplied() =>
+      _version != null ||
+      _pending != null ||
+      _unconfirmed != null ||
+      _mine != null;
+
   /// Sends the failed save again, under its own request id.
   Future<void> retry() {
     _timer?.cancel();

@@ -28,9 +28,13 @@ Page<void> recordPage(
   Widget Function(String id) page,
 ) {
   final id = state.pathParameters['id'] ?? '';
-  if (recordBesideList(context)) return _BesidePage(key: state.pageKey);
+  if (recordBesideList(context)) return besidePage(state);
   return MaterialPage<void>(key: state.pageKey, child: page(id));
 }
+
+/// #3629 — the entry in the history for [state] that draws nothing: the
+/// page under it reads the address and draws what it names.
+Page<void> besidePage(GoRouterState state) => _BesidePage(key: state.pageKey);
 
 /// The record [path] names under [listPath] (`/x/a` → `a`), or null.
 String? _recordIn(String path, String listPath) {

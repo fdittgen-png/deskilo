@@ -296,6 +296,15 @@ class _EInvoices implements EInvoiceTransmissions {
   @override
   Future<void> clearEInvoiceCredentials(String workspaceId) =>
       throw UnimplementedError();
+  @override
+  Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) =>
+      throw UnimplementedError();
+  @override
+  Future<EInvoiceTestSent> sendEInvoiceTest({
+    required String workspaceId,
+    required String fileName,
+    required List<int> bytes,
+  }) => throw UnimplementedError();
 }
 
 void main() {
