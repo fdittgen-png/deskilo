@@ -569,6 +569,30 @@ Vuole che gli inviti e i documenti parlino la lingua della sua comunità.
 
 **Vedi anche:** [Messaggio d'invito](help:user.workspace.settings.invitation-message)
 
+<!-- anchor: user.workspace.settings.paper -->
+### Carta dei documenti
+
+**Destinatari:** Proprietario · Amministratore con il permesso
+
+Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo paese.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Passaggi**
+
+1. In [Spazio di lavoro](app:/workspace-settings), sotto **Informazioni generali**, apra **Carta dei documenti**.
+2. Mantenga la carta abituale del suo paese, oppure ne scelga un'altra che questo consente.
+3. Tocchi **Salva**.
+
+**Da sapere**
+
+- Gli Stati Uniti e il Canada stampano su Lettera USA; gli altri paesi su A4, a meno che Lei scelga Lettera USA.
+- In Svizzera è offerto solo l'A4: una fattura termina con una sezione di pagamento stampata su A4.
+- Una fattura mantiene la carta con cui è stata emessa. Cambiare carta cambia le fatture emesse dopo.
+- Se lo spazio passa a un paese che non usa la carta scelta, segue la carta abituale di quel paese.
+
+**Vedi anche:** [Paese](help:user.workspace.settings.country)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Indirizzo dell'intestazione
 

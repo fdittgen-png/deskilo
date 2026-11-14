@@ -129,5 +129,9 @@
   "demoEntryFailed": "La démo n'a pas pu s'ouvrir. Votre espace n'a pas changé.",
   "@demoEntryFailed": {
     "description": "#3235 demo visit: demoEntryFailed"
-  }
+  },
+  "demoProviderPageTitle": "Page de paiement (démonstration)",
+  "demoProviderPageBody": "Cette page tient lieu de celle d'un prestataire de paiement : rien n'est débité et rien ne quitte cet appareil. Choisissez la réponse du prestataire.",
+  "demoProviderPagePay": "Payer",
+  "demoProviderPageNoAnswer": "Le prestataire ne répond pas"
 }

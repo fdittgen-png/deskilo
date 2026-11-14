@@ -3580,6 +3580,30 @@ Sie möchten, dass Einladungen und Dokumente die Sprache Ihrer Gemeinschaft spre
 
 **Siehe auch:** [Einladungstext](#einladungstext)
 
+<!-- anchor: user.workspace.settings.paper -->
+### Papier der Dokumente
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, das Ihr Land verwendet.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](https://fdittgen-png.github.io/deskilo/#/workspace-settings) unter **Allgemeine Angaben** das **Papier der Dokumente**.
+2. Behalten Sie das in Ihrem Land übliche Papier, oder wählen Sie ein anderes, das es erlaubt.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die USA und Kanada drucken auf US Letter; die anderen Länder auf A4, außer Sie wählen US Letter.
+- In der Schweiz wird nur A4 angeboten: Eine Rechnung endet mit einem Zahlteil auf A4.
+- Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde. Ein anderes Papier gilt für die danach ausgestellten Rechnungen.
+- Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.
+
+**Siehe auch:** [Land](#land)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Adresse im Briefkopf
 

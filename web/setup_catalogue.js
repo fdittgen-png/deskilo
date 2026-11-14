@@ -953,194 +953,356 @@ window.SETUP_REGISTRY={
    "AT",
    "EUR",
    "Europe/Vienna",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "BE",
    "EUR",
    "Europe/Brussels",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "CY",
    "EUR",
    "Asia/Nicosia",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "DE",
    "EUR",
    "Europe/Berlin",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "EE",
    "EUR",
    "Europe/Tallinn",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "ES",
    "EUR",
    "Europe/Madrid",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "FI",
    "EUR",
    "Europe/Helsinki",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "FR",
    "EUR",
    "Europe/Paris",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "GR",
    "EUR",
    "Europe/Athens",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "HR",
    "EUR",
    "Europe/Zagreb",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "IE",
    "EUR",
    "Europe/Dublin",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "IT",
    "EUR",
    "Europe/Rome",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "LT",
    "EUR",
    "Europe/Vilnius",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "LU",
    "EUR",
    "Europe/Luxembourg",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "LV",
    "EUR",
    "Europe/Riga",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "MT",
    "EUR",
    "Europe/Malta",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "NL",
    "EUR",
    "Europe/Amsterdam",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "PT",
    "EUR",
    "Europe/Lisbon",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "SI",
    "EUR",
    "Europe/Ljubljana",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "SK",
    "EUR",
    "Europe/Bratislava",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "BG",
    "BGN",
    "Europe/Sofia",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "CZ",
    "CZK",
    "Europe/Prague",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "DK",
    "DKK",
    "Europe/Copenhagen",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "HU",
    "HUF",
    "Europe/Budapest",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "PL",
    "PLN",
    "Europe/Warsaw",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "RO",
    "RON",
    "Europe/Bucharest",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "SE",
    "SEK",
    "Europe/Stockholm",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "CH",
    "CHF",
    "Europe/Zurich",
-   "ch"
+   "ch",
+   "A4",
+   [
+    "A4"
+   ]
   ],
   [
    "NO",
    "NOK",
    "Europe/Oslo",
-   "sepa"
+   "sepa",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "GB",
    "GBP",
    "Europe/London",
-   "uk"
+   "uk",
+   "A4",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "US",
    "USD",
    "America/New_York",
-   "us"
+   "us",
+   "Letter",
+   [
+    "A4",
+    "Letter"
+   ]
   ],
   [
    "CA",
    "CAD",
    "America/Toronto",
-   "ca"
+   "ca",
+   "Letter",
+   [
+    "A4",
+    "Letter"
+   ]
   ]
+ ],
+ "paymentSlipCountries": [
+  "CH"
  ],
  "reminders": {
   "levels": 3,

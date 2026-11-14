@@ -7,7 +7,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/links/link_launcher.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -20,6 +19,7 @@ import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/payment_request_ids.dart';
 import '../../providers/money_providers.dart';
+import '../../providers/payment_approval_providers.dart';
 import '../payment_provider_labels.dart';
 
 /// Starts an online payment (0043 scaffolding, #1637, #2014 B): asks the
@@ -104,7 +104,7 @@ class MoneyOnlinePayment {
       'order created: provider=${chosen.wireName} orderId=${order.orderId}',
     );
     // Launch failures are traced inside the shared link seam.
-    await _ref.read(linkLauncherProvider)(order.approveUrl!);
+    await _ref.read(paymentApprovalProvider)(_context, order.approveUrl!);
   }
 
   Future<PaymentGatewayConfig?> _probe(
