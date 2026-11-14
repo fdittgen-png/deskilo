@@ -28,7 +28,6 @@ const _notGuardedYet = <String, String>{
   '/bi/report/:id': '#3949 a record of a guarded page',
   '/res/:id': '#3949 a record page, guarded on phones only',
   '/space/:kind/:id': '#3949 a record page',
-  '/conversation/:conversationId': '#3949 a record page',
   '/editor/level/:levelId': '#3949 a record page',
   // The purchase orders: guarded by their own leaf.
   // Pages measured for the desk and not guarded yet.
@@ -39,7 +38,6 @@ const _notGuardedYet = <String, String>{
   // its names and sizes): to join the guards once measured with both.
   '/billing': '#3947 to join: its Tab order and its unnamed control are both fixed',
   '/settings/wording': '#3947 to join: its Tab order and its toggle are both fixed',
-  '/settings/colours': '#3947 to join: its Tab order, names and swatches are fixed',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
 };
