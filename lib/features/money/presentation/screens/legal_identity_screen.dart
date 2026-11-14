@@ -430,9 +430,7 @@ class _LegalIdentityScreenState extends ConsumerState<LegalIdentityScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: PageTitle(
-          l10n.legalIdentityTitle,
-        ),
+        title: PageTitle(l10n.legalIdentityTitle),
       ),
       body: FormScroll(
         padding: AppSpacing.gutterAll,
