@@ -18,6 +18,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../../tool/setup/page_sources.dart';
 import '../../helpers/installed_reference_shims.dart';
 
 final _case = RegExp(
@@ -67,7 +68,7 @@ void main() {
   test('one EU set: SQL, the questionnaire and Dart list the same 27', () {
     final sqlSet = _memberRows();
     expect(sqlSet, euMemberStates);
-    final html = File('web/setup.html').readAsStringSync();
+    final html = setupPageSource(); // #3915: the page with its scripts
     final eu = RegExp(r'const EU=new Set\(\[([^\]]*)\]\)').firstMatch(html);
     expect(eu, isNotNull);
     expect(_codes(eu!.group(1)!), euMemberStates);

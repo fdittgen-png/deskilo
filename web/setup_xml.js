@@ -4,7 +4,8 @@
 // the page reads back — the typed <configuration> tree, the <setup>
 // answers and profile, readTree(), the frozen reader of the files a page
 // before #2925 wrote, and migrate(), every rule an older questionnaire is
-// read by. Loaded after web/setup.html's own script.
+// read by. Loaded after setup_main.js, the page's own script; its last
+// line starts the page (#3915).
 'use strict';
 // #2331 — a stored role row REPLACES the app's defaults, so the page offers
 // every permission. The ten a page older than #2331 never offered: an
@@ -351,3 +352,5 @@ ans.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name'
 // page's starting one (a saved or imported answer). An untouched default is
 // left out, so the business keeps the platform's default to review.
 function termStated(){return S.reminders.firstDaysStated===true||int(S.reminders.firstDays,REMINDER_DEFAULTS.firstDays)!==REMINDER_DEFAULTS.firstDays}
+// #3915 — every script of the page has loaded: start it.
+boot();

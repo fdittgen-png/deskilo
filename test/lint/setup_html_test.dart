@@ -58,6 +58,14 @@ void main() {
       r'<meta http-equiv="Content-Security-Policy" content="([^"]+)">',
     ).firstMatch(page)?.group(1);
     expect(policy, isNotNull, reason: 'web/setup.html declares its policy');
+    // #3915 — the page's code is in its own files: no inline script, no
+    // handler in the markup, and the policy allows neither.
+    final scriptSrc = RegExp(r'script-src ([^;]+)').firstMatch(policy!)!;
+    expect(scriptSrc.group(1), "'self'");
+    expect(RegExp(r'<script>').hasMatch(page), isFalse,
+        reason: 'a script is a file the page loads');
+    expect(RegExp(r'\son[a-z]+="').hasMatch(page), isFalse,
+        reason: 'a handler is wired by setup_main.js');
     for (final part in [
       "default-src 'self'",
       "connect-src 'none'",
