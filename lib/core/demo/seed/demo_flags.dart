@@ -28,9 +28,6 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 /// The features the demo's main space keeps off, and why.
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
-  WorkspaceFeature.mcpAccess:
-      'an assistant needs a server endpoint and an OAuth account',
-  WorkspaceFeature.webMcp: 'needs mcpAccess, which needs a server',
   WorkspaceFeature.mtdSubmission:
       'UK only: on in the London space (ws-3), where its journey is shown; '
       'left off in the French and German spaces',
@@ -51,6 +48,15 @@ final Map<String, dynamic> demoFeatureFlags = {
     feature.dbKey:
         !demoFeaturesLeftOff.containsKey(feature) &&
         !requirementChain(feature).any(demoFeaturesLeftOff.containsKey),
+};
+
+/// #3962 — the other Demo businesses (London, New York, the trade cities)
+/// hold the main space's features but no assistant: the one connected
+/// assistant and its requests belong to the reference business.
+final Map<String, Object?> demoOtherSpacesFeatureFlags = {
+  ...demoFeatureFlags,
+  WorkspaceFeature.mcpAccess.dbKey: false,
+  WorkspaceFeature.webMcp.dbKey: false,
 };
 
 /// ws-2: exactly what a space created today is given.

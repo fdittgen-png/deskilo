@@ -42,6 +42,7 @@ import 'package:deskilo/core/demo/data/vies_repository.dart';
 // providers, not SharedPreferences and not `Supabase.instance`, so the
 // only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
+import 'package:deskilo/core/demo/demo_assistant_overrides.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
 import 'package:deskilo/core/demo/demo_payment_approval.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
@@ -75,7 +76,6 @@ import '../../app/shell/desk_navigation.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
 import '../../features/auth/providers/oauth_consent_providers.dart';
-import '../../features/mcp/providers/assistant_setup_providers.dart';
 import '../../features/mcp/providers/mcp_providers.dart';
 import '../../features/plan/providers/default_level_controller.dart';
 import '../../features/profile/providers/personal_preferences_providers.dart';
@@ -129,15 +129,11 @@ import '../storage/space_prefs_store.dart';
 import '../theme/theme_controller.dart';
 import '../time/clock.dart';
 import '../webmcp/webmcp_device_switch.dart';
-import 'data/action_confirmation_repository.dart';
 import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/device_prefs.dart' show DemoDevicePrefs;
-import 'data/identity_binding_repository.dart';
 import 'data/instance_repository.dart';
 import 'data/mcp_admin_repository.dart';
-import 'data/mcp_connection_repository.dart';
-import 'data/mcp_onboarding_repository.dart';
 import 'data/oauth_consent_repository.dart';
 import 'data/personal_preferences_repository.dart';
 import 'data/place_feedback_repository.dart';
@@ -222,20 +218,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, taskContextFromWorkspace, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, ...featureSheetsFromApp, // #2495
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
-      // #1647 — Demo binds no identity: the visitor is not a Deskilo user.
-      identityBindingRepositoryProvider.overrideWithValue(FakeIdentityBindingRepository()),
-      // #1619 — Demo has no assistant, so nothing to confirm.
-      actionConfirmationRepositoryProvider
-          .overrideWithValue(FakeActionConfirmationRepository()),
-      // #1615 — nor an assistant to connect.
-      mcpConnectionRepositoryProvider.overrideWithValue(
-        FakeMcpConnectionRepository(installationId: _kDemoInstallationId),
-      ),
-      // #1626/#1627 — no policy to save, no queue, no second factor (no Auth).
-      mcpAdminRepositoryProvider.overrideWithValue(FakeMcpAdminRepository()),
-      // #2145 — no client to approve, no endpoint, no notices.
-      mcpOnboardingRepositoryProvider
-          .overrideWithValue(FakeMcpOnboardingRepository()),
+      ...demoAssistantOverrides(fixture), // #3962 — identity, assistants, their requests
       // #1829 — Demo names no instance owner: the visitor is not an account.
       instanceRepositoryProvider.overrideWithValue(FakeInstanceRepository()),
       // #1625 — Demo's one fictional installation: nothing is verified
