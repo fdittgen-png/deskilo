@@ -95,8 +95,10 @@ class WizardScaffold extends StatelessWidget {
       return SizedBox(
             height: 56,
             child: EdgeFadeScroll(
+              // #3947 — the steps are targets of the kit's minimum size:
+              // 48 high in the 56 of the bar, on every platform.
               padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.md, vertical: AppSpacing.sm),
+                  horizontal: AppSpacing.md, vertical: AppSpacing.xs),
               child: Row(children: [
                 for (final (i, step) in steps.indexed)
                   Padding(
@@ -109,6 +111,8 @@ class WizardScaffold extends StatelessWidget {
                       // under one too — a dark smudge where a glyph
                       // should be. The avatar IS the state here.
                       showCheckmark: false,
+                      materialTapTargetSize: MaterialTapTargetSize.padded,
+                      visualDensity: VisualDensity.standard,
                       avatar: i < index
                           ? const Icon(Icons.check, size: 16)
                           : CircleAvatar(

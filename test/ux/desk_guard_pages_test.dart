@@ -305,6 +305,8 @@ const _pages = [
   // #3947 — controls named, targets of the kit's size.
   ('/accessories', PageKind.document, 'money', 'accessories'),
   ('/documents', PageKind.document, 'reports', 'documents'),
+  ('/money/settlement', PageKind.task, 'money', 'settlement'),
+  ('/money/repartition', PageKind.task, 'money', 'repartition'),
   // #3943 — an empty page passes the keyboard on.
   ('/reservations/period', PageKind.document, 'booking', 'period'),
   // #3892 — settings, people, money and documents at the desk.
@@ -426,7 +428,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 59;
+const _guardedWorkspaceRoutes = 61;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
