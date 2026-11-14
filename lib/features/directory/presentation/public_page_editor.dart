@@ -8,7 +8,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/ui/kit/form_scroll.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
@@ -264,8 +264,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       'plans': l.portalPlans,
     };
     return Scaffold(
-      appBar: AppBar(
-        title: PageTitle(l.portalPublication),
+      appBar: pageBar(context,
+        title: l.portalPublication,
       ),
       body: !owner
           ? const SizedBox.shrink()

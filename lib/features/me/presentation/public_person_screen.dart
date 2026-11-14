@@ -10,7 +10,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/ui/empty_state.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../providers/public_profile_providers.dart';
 
@@ -29,7 +29,7 @@ class PublicPersonScreen extends ConsumerWidget {
       title: l10n.publicPersonUnavailable,
     );
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.publicProfileTitle)),
+      appBar: pageBar(context, title: l10n.publicProfileTitle),
       body: switch (person) {
         AsyncData(value: final p?) => Align(
           alignment: Alignment.topCenter,

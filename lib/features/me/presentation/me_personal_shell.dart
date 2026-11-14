@@ -23,7 +23,7 @@ import '../../../core/l10n/context_l10n.dart';
 import '../../../core/navigation/navigation_style.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
-import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/kit/page_bar.dart';
 import '../../directory/presentation/messenger/conversation_pane.dart';
 import '../../directory/providers/conversation_pane_providers.dart';
 import '../../directory/providers/messenger_providers.dart';
@@ -40,7 +40,7 @@ class MeAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: PageTitle(context.l10n.meUtilityAccount)),
+        appBar: pageBar(context, title: context.l10n.meUtilityAccount),
         body: const MeAccountTab(),
       );
 }

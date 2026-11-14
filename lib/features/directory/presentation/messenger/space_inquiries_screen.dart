@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
@@ -67,7 +67,7 @@ class SpaceInquiriesScreen extends ConsumerWidget {
     final inquiries = ref.watch(provider);
     return Scaffold(
       key: const ValueKey('space-inquiries'),
-      appBar: AppBar(title: PageTitle(l10n.messengerInquiriesTitle)),
+      appBar: pageBar(context, title: l10n.messengerInquiriesTitle),
       body: switch (inquiries) {
         AsyncData(value: final list) when list.isEmpty => Center(
           child: Padding(

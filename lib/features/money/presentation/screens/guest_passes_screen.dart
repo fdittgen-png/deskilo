@@ -22,7 +22,7 @@ import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
-import '../../../../core/ui/kit/page_title.dart';
+import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_info.dart';
@@ -63,7 +63,7 @@ class _GuestPassesScreenState extends ConsumerState<GuestPassesScreen> {
     final l10n = context.l10n;
     final workspace = ref.watch(currentWorkspaceProvider).value;
     return Scaffold(
-      appBar: AppBar(title: PageTitle(l10n.guestPassesTitle)),
+      appBar: pageBar(context, title: l10n.guestPassesTitle),
       body: workspace == null
           ? const LoadingView()
           : _body(l10n, workspace),
