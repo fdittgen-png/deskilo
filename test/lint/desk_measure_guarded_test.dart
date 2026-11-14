@@ -19,7 +19,6 @@ import 'lint_sources.dart';
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
   // A long task: its own page over the list (#3608), guarded with its list.
-  '/money/purchase-orders/new': '#3946 a long task: none of its stops is reached by Tab',
   '/money/purchase-orders/:id/edit': '#3949 a long task over its list',
   '/invoicing/wizard': '#3947 40 dp step targets in its header',
   // A record at its address under a guarded list.
@@ -27,37 +26,22 @@ const _notGuardedYet = <String, String>{
   '/invoices/customer/:id': '#3949 a record beside its guarded list',
   '/members/plans/:id': '#3949 a record beside its guarded list',
   '/bi/report/:id': '#3949 a record of a guarded page',
-  '/member/:memberId': '#3946 Tab reaches a control twice',
   '/res/:id': '#3949 a record page, guarded on phones only',
   '/space/:kind/:id': '#3949 a record page',
   '/conversation/:conversationId': '#3949 a record page',
   '/editor/level/:levelId': '#3949 a record page',
   // The purchase orders: guarded by their own leaf.
   // Pages measured for the desk and not guarded yet.
-  '/settings/public-page': '#3946 Tab reaches a control twice at 1024 and 1440',
   '/money/repartition': '#3947 two 40 dp targets in its header',
   '/money/settlement': '#3947 two 40 dp targets in its header',
-  '/billing': '#3946 Tab reaches a control twice; an unnamed control at 1920',
-  '/einvoice-config': '#3946 Tab reaches a control twice at 1024 and 1440',
+  '/billing': '#3947 an unnamed control at 1920 (its Tab order is guarded, #3946)',
   '/documents': '#3947 an unnamed control',
   '/report-editor': '#3947 text wider than 760 px; 40 dp targets (Design, Preview, Insert element)',
-  '/settings/personal-info': '#3946 Tab reaches a control twice',
   '/settings/sites': '#3948 a sentence 852 px wide at 1024',
   '/settings/wording': '#3947 a 45 dp language toggle',
   '/settings/colours': '#3947 an unnamed control; 40 dp colour swatches',
-  '/settings/what-you-can-do': '#3946 unreachable by Tab',
-  '/settings/number-sequences': '#3946 Tab reaches a control twice',
-  '/legal-identity': '#3946 Tab reaches a control twice',
   '/vat': '#3948 a sentence 834 px wide at 1024',
   '/accessories': '#3947 an unnamed control',
-  '/payment-methods': '#3946 Tab reaches a control twice at 1024',
-  // Guarded, it is reached twice by Tab: its keyboard order, older than
-  // this list, is to be fixed before its guard joins.
-  '/workspace-overview': '#3946 reached twice by Tab in its desk guard',
-  // Its outside-hours rows (RadioListTile in a RadioGroup) each give the
-  // radio a node and a Tab stop of its own: a 40 x 40 control without a
-  // name, and every row reached twice by Tab.
-  '/availability': '#3946 each radio row is two controls, one unnamed',
   // An address that only redirects: it draws no page.
   '/money/sales': '#3874 redirects to /invoices, draws nothing',
 };

@@ -6,6 +6,7 @@ import 'dart:async';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/time/work_hours.dart';
+import 'package:deskilo/core/ui/kit/radio_row.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:deskilo/features/workspace/domain/closure_day.dart';
@@ -451,7 +452,7 @@ void main() {
     expect(
       find.descendant(
         of: control,
-        matching: find.byType(RadioListTile<OutsideHoursMode>),
+        matching: find.byType(RadioRow<OutsideHoursMode>),
       ),
       findsNWidgets(OutsideHoursMode.values.length),
     );

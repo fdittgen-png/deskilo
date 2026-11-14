@@ -13,6 +13,7 @@ import '../../../../core/help/help_hint.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/work_hours.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/booking_policies.dart';
@@ -56,11 +57,14 @@ class AvailabilityScreen extends ConsumerWidget {
       ),
       body: switch ((weekdaysAsync, granularityAsync, closuresAsync)) {
         (
-          AsyncData(value: final open),
-          AsyncData(value: final granularity),
-          AsyncData(value: final closures),
+          // #3946 — a value being reloaded still shows: a choice made by
+          // keyboard reloads the policies, and the form must keep its
+          // controls (and the keyboard on them), not give way to a spinner.
+          AsyncValue(value: final open?),
+          AsyncValue(value: final granularity?),
+          AsyncValue(value: final closures?),
         ) =>
-          ListView(
+          FormScroll(
             padding: const EdgeInsets.only(bottom: AppSpacing.xl),
             children: [
               // #606 — contextual how-to; gated inside the widget.

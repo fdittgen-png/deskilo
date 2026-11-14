@@ -9,6 +9,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/inline_banner.dart';
+import '../../../../core/ui/kit/form_scroll.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -179,7 +180,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
     _customerField.text = status.fields['customer_field_name'] ?? '';
   }
 
-  Widget _errorBody(AppLocalizations l10n) => ListView(
+  Widget _errorBody(AppLocalizations l10n) => FormScroll(
         padding: AppSpacing.gutterAll,
         children: [
           InlineBanner(
@@ -410,7 +411,7 @@ class _EInvoiceConfigScreenState extends ConsumerState<EInvoiceConfigScreen> {
       body: switch (statusAsync) {
         AsyncError() => _errorBody(l10n),
         _ when status == null => const LoadingView(),
-        _ => ListView(
+        _ => FormScroll(
               padding: AppSpacing.gutterAll,
               children: [
                 Text(

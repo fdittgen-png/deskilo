@@ -16,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/kit/radio_row.dart';
 import '../../domain/booking_policies.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -60,13 +61,13 @@ class LegendProfileTile extends ConsumerWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              RadioListTile<LegendProfile>(
+              RadioRow<LegendProfile>(
                 key: fullKey,
                 value: LegendProfile.full,
                 title: Text(l10n.legendProfileFull),
                 subtitle: Text(l10n.legendProfileFullDesc),
               ),
-              RadioListTile<LegendProfile>(
+              RadioRow<LegendProfile>(
                 key: simpleKey,
                 value: LegendProfile.simple,
                 title: Text(l10n.legendProfileSimple),

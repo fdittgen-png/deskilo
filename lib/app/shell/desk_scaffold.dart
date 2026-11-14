@@ -14,8 +14,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/navigation/navigation_style.dart';
 import '../../core/ui/adaptive/window_class.dart';
+import '../../core/ui/kit/form_scroll.dart';
 import '../route_classes.dart';
 import 'desk_navigation.dart';
+import 'desk_page_entry.dart';
 import 'desk_page_frame.dart';
 import 'desk_top_bar.dart';
 import 'shell_app_bar.dart';
@@ -130,6 +132,8 @@ class DeskScaffold extends ConsumerWidget {
                     child: FocusTraversalOrder(
                       order: const NumericFocusOrder(3),
                       child: FocusTraversalGroup(
+                        // #3946 — a form is walked in the order it is built.
+                        policy: PageTraversalPolicy(),
                         // The page's semantics must not hide the navigation.
                         child: Semantics(
                           container: true,
@@ -140,7 +144,7 @@ class DeskScaffold extends ConsumerWidget {
                           // is laid in the measure its route declares
                           // (#3604) as it is built (desk_page_frame.dart).
                           child: KeyedSubtree(
-                            key: const ValueKey('desk-page'),
+                            key: deskPageKey,
                             child: DeskPageFrame(child: body),
                           ),
                         ),
@@ -182,6 +186,10 @@ class _FocusLeavesEmptyPages extends StatelessWidget {
   );
 
   static Object? _move(BuildContext desk, {required bool forward}) {
+    // #3946 — a page entered from outside starts at its first stop.
+    if (forward && deskPageToStart(desk, () => _move(desk, forward: true))) {
+      return null;
+    }
     final focus = FocusManager.instance.primaryFocus;
     // A page's own scope with no stop in it: Flutter would enter the group
     // before it at its first stop, so the desk chooses both ways itself.
@@ -201,7 +209,13 @@ class _FocusLeavesEmptyPages extends StatelessWidget {
         if (n.canRequestFocus && !n.skipTraversal && n is! FocusScopeNode) n,
     ];
     if (stops.isEmpty) return null;
-    (forward ? stops.first : stops.last).requestFocus();
+    // The desk's first stop in the order Tab walks (navigation, top bar,
+    // page), going back its last: the top bar's last control, not the one
+    // the tree happens to build last.
+    final walked = OrderedTraversalPolicy()
+        .sortDescendants(stops, stops.first)
+        .toList();
+    (forward ? walked.first : walked.last).requestFocus();
     return null;
   }
 }
