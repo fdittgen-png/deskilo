@@ -40,7 +40,7 @@
   "memberPlanShareLabel": "Cuota",
   "memberPlanJoined": "Fecha de alta",
   "memberPlanJoinedUnknown": "No registrada",
-  "memberPlanPausedNoDates": "En pausa: no se registran fechas para una pausa",
+  "memberPlanPausedNoDates": "En pausa: no hay fecha registrada para esta pausa",
   "memberPlanEstimate": "Próxima factura estimada",
   "memberPlanEstimateBasis": "Para {period}, a fecha de {date}: el extracto hasta hoy",
   "memberPlanEstOverage": "Medias jornadas extra",

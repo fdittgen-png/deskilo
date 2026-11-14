@@ -7,6 +7,7 @@ import 'dart:async';
 import 'package:deskilo/features/workspace/domain/invitation_answer.dart';
 import 'package:deskilo/features/workspace/domain/invite_uri.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/domain/member_term_change.dart';
 import 'package:deskilo/features/workspace/domain/membership_repository.dart';
 import 'package:deskilo/features/workspace/domain/new_member_defaults.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
@@ -174,6 +175,14 @@ mixin FakeWorkspaceMembers on FakeWorkspaceState
     myMember,
     ...otherMembers,
   ];
+  /// #3858 — the Demo's dated plan changes and pauses.
+  final memberTermChanges = <MemberTermChange>[];
+
+  @override
+  Future<List<MemberTermChange>> fetchMemberTermChanges(
+    String workspaceId,
+  ) async => List.of(memberTermChanges);
+
   @override
   Future<List<Member>> fetchMyMembers() async => [
     myMember,

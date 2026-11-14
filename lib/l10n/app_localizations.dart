@@ -32757,8 +32757,14 @@ abstract class AppLocalizations {
   /// #3618 members at the desk: a pause has no stored dates
   ///
   /// In en, this message translates to:
-  /// **'Paused: no dates are recorded for a pause'**
+  /// **'Paused: no date is recorded for this pause'**
   String get memberPlanPausedNoDates;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Paused since {date}'**
+  String memberPlanPausedSince(String date);
 
   /// #704 - the contact section of a member profile
   ///
@@ -32928,6 +32934,114 @@ abstract class AppLocalizations {
   /// **'Subscription'**
   String get memberSubscriptionLabel;
 
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Took effect on {date}'**
+  String memberTermApplied(String date);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get memberTermCancelled;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'{charged} is charged in full; no subscription fee for {free}'**
+  String memberTermChargedThenFree(String charged, String free);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'No subscription fee for {free}'**
+  String memberTermFreeOnly(String free);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Due on {due}; took effect on {effective}, the first period not yet invoiced'**
+  String memberTermLate(String due, String effective);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'{first} and every month after, until resumed'**
+  String memberTermMonthOnwards(String first);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'{first} to {last}'**
+  String memberTermMonthRange(String first, String last);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Pause from {date}'**
+  String memberTermNextPause(String date);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Resumes on {date}'**
+  String memberTermNextResume(String date);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'{share} from {date}'**
+  String memberTermNextShare(String share, String date);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Every month is charged in full: the pause covers no first day of a month'**
+  String get memberTermNoFreeMonth;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Paused from {from} until {until}'**
+  String memberTermPauseDated(String from, String until);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Paused from {from} until resumed'**
+  String memberTermPauseOpen(String from);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Waiting for approval'**
+  String get memberTermPending;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Refused: {reason}'**
+  String memberTermRefused(String reason);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled'**
+  String get memberTermScheduled;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'{share} from {date}: first on the statement of {month}'**
+  String memberTermShare(String share, String date, String month);
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Scheduled changes'**
+  String get memberTermsTitle;
+
   /// Owner action reverting a kiosk account to a regular member
   ///
   /// In en, this message translates to:
@@ -33023,6 +33137,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Name'**
   String get membersColName;
+
+  /// #3858 a member's dated plan terms
+  ///
+  /// In en, this message translates to:
+  /// **'Next change'**
+  String get membersColNextChange;
 
   /// #3618 members at the desk: column: the subscription share
   ///

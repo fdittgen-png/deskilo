@@ -1,0 +1,23 @@
+{
+  "@@locale": "de",
+  "memberTermsTitle": "Geplante Änderungen",
+  "memberTermShare": "{share} ab {date}: zuerst auf der Abrechnung für {month}",
+  "memberTermPauseDated": "Pausiert vom {from} bis {until}",
+  "memberTermPauseOpen": "Pausiert ab {from} bis zur Wiederaufnahme",
+  "memberTermChargedThenFree": "{charged} wird voll berechnet; keine Abonnementgebühr für {free}",
+  "memberTermFreeOnly": "Keine Abonnementgebühr für {free}",
+  "memberTermNoFreeMonth": "Jeder Monat wird voll berechnet: Die Pause umfasst keinen Monatsersten",
+  "memberTermMonthRange": "{first} bis {last}",
+  "memberTermMonthOnwards": "{first} und jeden folgenden Monat bis zur Wiederaufnahme",
+  "memberTermPending": "Wartet auf Genehmigung",
+  "memberTermScheduled": "Geplant",
+  "memberTermApplied": "Wirksam am {date}",
+  "memberTermLate": "Fällig am {due}; wirksam am {effective}, dem ersten noch nicht abgerechneten Zeitraum",
+  "memberTermRefused": "Abgelehnt: {reason}",
+  "memberTermCancelled": "Storniert",
+  "memberPlanPausedSince": "Pausiert seit {date}",
+  "membersColNextChange": "Nächste Änderung",
+  "memberTermNextShare": "{share} ab {date}",
+  "memberTermNextPause": "Pause ab {date}",
+  "memberTermNextResume": "Wiederaufnahme am {date}"
+}

@@ -20540,7 +20540,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberPlanPausedNoDates =>
-      'Pausiert: Für eine Pause werden keine Daten erfasst';
+      'Pausiert: Für diese Pause ist kein Datum erfasst';
+
+  @override
+  String memberPlanPausedSince(String date) {
+    return 'Pausiert seit $date';
+  }
 
   @override
   String memberPlanShare(String pct) {
@@ -20634,6 +20639,87 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get memberSubscriptionLabel => 'Abo';
+
+  @override
+  String memberTermApplied(String date) {
+    return 'Wirksam am $date';
+  }
+
+  @override
+  String get memberTermCancelled => 'Storniert';
+
+  @override
+  String memberTermChargedThenFree(String charged, String free) {
+    return '$charged wird voll berechnet; keine Abonnementgebühr für $free';
+  }
+
+  @override
+  String memberTermFreeOnly(String free) {
+    return 'Keine Abonnementgebühr für $free';
+  }
+
+  @override
+  String memberTermLate(String due, String effective) {
+    return 'Fällig am $due; wirksam am $effective, dem ersten noch nicht abgerechneten Zeitraum';
+  }
+
+  @override
+  String memberTermMonthOnwards(String first) {
+    return '$first und jeden folgenden Monat bis zur Wiederaufnahme';
+  }
+
+  @override
+  String memberTermMonthRange(String first, String last) {
+    return '$first bis $last';
+  }
+
+  @override
+  String memberTermNextPause(String date) {
+    return 'Pause ab $date';
+  }
+
+  @override
+  String memberTermNextResume(String date) {
+    return 'Wiederaufnahme am $date';
+  }
+
+  @override
+  String memberTermNextShare(String share, String date) {
+    return '$share ab $date';
+  }
+
+  @override
+  String get memberTermNoFreeMonth =>
+      'Jeder Monat wird voll berechnet: Die Pause umfasst keinen Monatsersten';
+
+  @override
+  String memberTermPauseDated(String from, String until) {
+    return 'Pausiert vom $from bis $until';
+  }
+
+  @override
+  String memberTermPauseOpen(String from) {
+    return 'Pausiert ab $from bis zur Wiederaufnahme';
+  }
+
+  @override
+  String get memberTermPending => 'Wartet auf Genehmigung';
+
+  @override
+  String memberTermRefused(String reason) {
+    return 'Abgelehnt: $reason';
+  }
+
+  @override
+  String get memberTermScheduled => 'Geplant';
+
+  @override
+  String memberTermShare(String share, String date, String month) {
+    return '$share ab $date: zuerst auf der Abrechnung für $month';
+  }
+
+  @override
+  String get memberTermsTitle => 'Geplante Änderungen';
 
   @override
   String get memberUnmakeKiosk => 'Kiosk zu Mitglied zurücksetzen';
@@ -20732,6 +20818,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get membersColName => 'Name';
+
+  @override
+  String get membersColNextChange => 'Nächste Änderung';
 
   @override
   String get membersColPlan => 'Tarif und Anteil';

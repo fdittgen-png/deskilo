@@ -1,0 +1,23 @@
+{
+  "@@locale": "fr",
+  "memberTermsTitle": "Changements programmés",
+  "memberTermShare": "{share} à partir du {date} : figure d'abord sur le relevé de {month}",
+  "memberTermPauseDated": "Suspendu du {from} au {until}",
+  "memberTermPauseOpen": "Suspendu à partir du {from} jusqu'à la reprise",
+  "memberTermChargedThenFree": "{charged} est facturé en entier ; pas d'abonnement pour {free}",
+  "memberTermFreeOnly": "Pas d'abonnement pour {free}",
+  "memberTermNoFreeMonth": "Chaque mois est facturé en entier : la suspension ne couvre aucun premier jour de mois",
+  "memberTermMonthRange": "{first} à {last}",
+  "memberTermMonthOnwards": "{first} et chaque mois suivant, jusqu'à la reprise",
+  "memberTermPending": "En attente d'approbation",
+  "memberTermScheduled": "Programmé",
+  "memberTermApplied": "Appliqué le {date}",
+  "memberTermLate": "Prévu le {due} ; appliqué le {effective}, première période non encore facturée",
+  "memberTermRefused": "Refusé : {reason}",
+  "memberTermCancelled": "Annulé",
+  "memberPlanPausedSince": "Suspendu depuis le {date}",
+  "membersColNextChange": "Prochain changement",
+  "memberTermNextShare": "{share} à partir du {date}",
+  "memberTermNextPause": "Suspension à partir du {date}",
+  "memberTermNextResume": "Reprise le {date}"
+}

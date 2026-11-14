@@ -7,6 +7,7 @@
 import '../../../core/validation/pending_validation.dart';
 import '../domain/invitation_answer.dart';
 import '../domain/member.dart';
+import '../domain/member_term_change.dart';
 import '../domain/membership_repository.dart';
 import '../domain/new_member_defaults.dart';
 import '../domain/overage_policy.dart';
@@ -209,6 +210,19 @@ mixin SupabaseMembership on SupabaseWorkspaceRows, SupabaseManagedIdentity
         .eq('workspace_id', workspaceId)
         .order('joined_at', ascending: true);
     return rows.map(memberFromRow).toList();
+  }
+
+  @override
+  Future<List<MemberTermChange>> fetchMemberTermChanges(
+    String workspaceId,
+  ) async {
+    final rows = await client
+        .from('member_term_changes')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .order('due_on', ascending: true)
+        .order('seq', ascending: true);
+    return rows.map(MemberTermChange.fromRow).toList();
   }
 
   @override

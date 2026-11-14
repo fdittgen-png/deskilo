@@ -26718,9 +26718,18 @@
   "@memberPlanJoinedUnknown": {
     "description": "#3618 members at the desk: joining date not stored"
   },
-  "memberPlanPausedNoDates": "Paused: no dates are recorded for a pause",
+  "memberPlanPausedNoDates": "Paused: no date is recorded for this pause",
   "@memberPlanPausedNoDates": {
     "description": "#3618 members at the desk: a pause has no stored dates"
+  },
+  "memberPlanPausedSince": "Paused since {date}",
+  "@memberPlanPausedSince": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "memberPlanShare": "Plan {pct}%",
   "@memberPlanShare": {
@@ -26849,6 +26858,164 @@
   "@memberSubscriptionLabel": {
     "description": "Title of the per-member subscription picker dialog"
   },
+  "memberTermApplied": "Took effect on {date}",
+  "@memberTermApplied": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermCancelled": "Cancelled",
+  "@memberTermCancelled": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermChargedThenFree": "{charged} is charged in full; no subscription fee for {free}",
+  "@memberTermChargedThenFree": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "charged": {
+        "type": "String"
+      },
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermFreeOnly": "No subscription fee for {free}",
+  "@memberTermFreeOnly": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "free": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermLate": "Due on {due}; took effect on {effective}, the first period not yet invoiced",
+  "@memberTermLate": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "due": {
+        "type": "String"
+      },
+      "effective": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermMonthOnwards": "{first} and every month after, until resumed",
+  "@memberTermMonthOnwards": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermMonthRange": "{first} to {last}",
+  "@memberTermMonthRange": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "first": {
+        "type": "String"
+      },
+      "last": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNextPause": "Pause from {date}",
+  "@memberTermNextPause": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNextResume": "Resumes on {date}",
+  "@memberTermNextResume": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNextShare": "{share} from {date}",
+  "@memberTermNextShare": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "share": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermNoFreeMonth": "Every month is charged in full: the pause covers no first day of a month",
+  "@memberTermNoFreeMonth": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermPauseDated": "Paused from {from} until {until}",
+  "@memberTermPauseDated": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "until": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermPauseOpen": "Paused from {from} until resumed",
+  "@memberTermPauseOpen": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermPending": "Waiting for approval",
+  "@memberTermPending": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermRefused": "Refused: {reason}",
+  "@memberTermRefused": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermScheduled": "Scheduled",
+  "@memberTermScheduled": {
+    "description": "#3858 a member's dated plan terms"
+  },
+  "memberTermShare": "{share} from {date}: first on the statement of {month}",
+  "@memberTermShare": {
+    "description": "#3858 a member's dated plan terms",
+    "placeholders": {
+      "share": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "memberTermsTitle": "Scheduled changes",
+  "@memberTermsTitle": {
+    "description": "#3858 a member's dated plan terms"
+  },
   "memberUnmakeKiosk": "Revert kiosk to member",
   "@memberUnmakeKiosk": {
     "description": "Owner action reverting a kiosk account to a regular member"
@@ -26945,6 +27112,10 @@
   "membersColName": "Name",
   "@membersColName": {
     "description": "#3618 members at the desk: column"
+  },
+  "membersColNextChange": "Next change",
+  "@membersColNextChange": {
+    "description": "#3858 a member's dated plan terms"
   },
   "membersColPlan": "Plan and share",
   "@membersColPlan": {
