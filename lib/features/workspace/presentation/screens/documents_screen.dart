@@ -286,8 +286,10 @@ class DocumentsScreen extends ConsumerWidget {
       floatingActionButton: canCurate
           ? FloatingActionButton(
               key: const ValueKey('documents-add'),
+              tooltip: context.l10n.documentsAdd,
               onPressed: () => _addDialog(context, ref),
-              child: const Icon(Icons.add),
+              // #3947 — the button's name, said by its icon.
+              child: Icon(Icons.add, semanticLabel: context.l10n.documentsAdd),
             )
           : null,
       body: switch (documentsAsync) {
