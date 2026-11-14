@@ -78,6 +78,9 @@ List<String> _crumbs(WidgetTester tester) => [
     t.data!,
 ];
 
+// test-inventory: structure is the invariant — the name a page's bar asks
+// for is read from the bar's widgets: on the desk a silent title paints
+// nothing, and a bar the kit leaves out has no height.
 /// The titles the page's own bars ask for (PageTitle's text, or a Text),
 /// a bar the kit leaves out on the desk (#3927) included.
 List<String> _pageTitles(WidgetTester tester, {required Finder within}) => [

@@ -38,7 +38,9 @@ PreferredSizeWidget pageBar(
 }
 
 /// A page's bar on the desk when it would show nothing but the place's
-/// name: no height, the name told to the desk.
+/// name: no height, the name told to the desk. Public for the tests that
+/// read a page's name from its bar.
+@visibleForTesting
 class QuietPageBar extends StatelessWidget implements PreferredSizeWidget {
   const QuietPageBar({required this.title, super.key});
 
