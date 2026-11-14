@@ -8,8 +8,7 @@ import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
-import 'package:deskilo/features/money/presentation/screens/purchase_order_page.dart';
-import 'package:deskilo/features/money/presentation/screens/purchase_orders_screen.dart';
+import 'package:deskilo/features/money/presentation/widgets/purchase_order_record.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
@@ -17,14 +16,13 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
-import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:go_router/go_router.dart';
+
+import '../../helpers/screens/purchase_orders_app.dart';
 
 const _workspace = Workspace(
   id: 'ws',
@@ -35,35 +33,9 @@ const _workspace = Workspace(
   inviteCode: 'x',
 );
 
-/// The list and the order's form, at the addresses the app gives them
-/// (#3608: the form is a long task, a page with an address).
-Widget _scope(List<Override> overrides) => ProviderScope(
-  overrides: overrides,
-  child: MaterialApp.router(
-    localizationsDelegates: AppLocalizations.localizationsDelegates,
-    supportedLocales: AppLocalizations.supportedLocales,
-    routerConfig: GoRouter(
-      initialLocation: '/money/purchase-orders',
-      routes: [
-        GoRoute(
-          path: '/money/purchase-orders',
-          builder: (context, state) => const PurchaseOrdersScreen(),
-          routes: [
-            GoRoute(
-              path: 'new',
-              builder: (context, state) => const PurchaseOrderPage(),
-            ),
-            GoRoute(
-              path: ':id/edit',
-              builder: (context, state) =>
-                  PurchaseOrderPage(orderId: state.pathParameters['id']),
-            ),
-          ],
-        ),
-      ],
-    ),
-  ),
-);
+/// The list, the order's form and the order's record, at the addresses
+/// the app gives them (#3608, #3842).
+Widget _scope(List<Override> overrides) => purchaseOrdersApp(overrides);
 
 Future<(FakePurchaseOrderRepository, Widget)> _app(
   Set<WorkspacePermission> permissions,
@@ -121,10 +93,9 @@ void main() {
     final (orders, app) = await _app({WorkspacePermission.managePurchases});
     await tester.pumpWidget(app);
     await _settle(tester);
-    expect(
-      find.byKey(const ValueKey('purchase-order-2026-0001')),
-      findsOneWidget,
-    );
+    // #3842 — at the desk the order is a row of the table.
+    expect(find.byKey(const ValueKey('records-rows')), findsOneWidget);
+    expect(find.text('2026-0001'), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
     await _settle(tester);
@@ -167,6 +138,12 @@ void main() {
       ('2026-0002', 1250, 5.5),
     );
 
+    // The order's actions are in its record, beside the table.
+    await openOrder(tester, '2026-0001');
+    expect(
+      find.byKey(const ValueKey('purchase-order-panel-2026-0001')),
+      findsOneWidget,
+    );
     await tester.ensureVisible(
       find.byKey(const ValueKey('purchase-order-sent-2026-0001')),
     );
@@ -218,6 +195,46 @@ void main() {
       find.byKey(const ValueKey('purchase-order-cancel-2026-0001')),
       findsNothing,
     );
+  });
+
+  testWidgets('#3842 — an order opens beside the table at its own address; '
+      'the form pushed over the list is never read as an order', (
+    tester,
+  ) async {
+    tester.view.physicalSize = const Size(1440, 900);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    final (orders, app) = await _app({WorkspacePermission.managePurchases});
+    await tester.pumpWidget(app);
+    await _settle(tester);
+    final id = orders.orders.single.id;
+    final panel = find.byKey(const ValueKey('purchase-order-panel-2026-0001'));
+
+    await openOrder(tester, '2026-0001');
+    expect(orderAddress(tester), '/money/purchase-orders/order/$id');
+    expect(panel, findsOneWidget);
+    expect(find.byKey(const ValueKey('records-rows')), findsOneWidget);
+    expect(
+      find.byKey(const ValueKey('records-total-EUR')),
+      findsOneWidget,
+      reason: 'one total per currency, under the table',
+    );
+
+    await tester.tap(find.byKey(const ValueKey('purchase-order-close')));
+    await _settle(tester);
+    expect(orderAddress(tester), '/money/purchase-orders');
+    expect(panel, findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('purchase-order-new')));
+    await _settle(tester);
+    expect(orderAddress(tester), '/money/purchase-orders/new');
+    expect(find.byKey(const ValueKey('purchase-order-gone')), findsNothing);
+    expect(
+      find.byWidgetPredicate((w) => w is PurchaseOrderRecord),
+      findsNothing,
+      reason: '"new" is the form, never an order',
+    );
+    expect(tester.takeException(), isNull);
   });
 
   group('the order is a long task: a page with its totals', () {
@@ -305,6 +322,7 @@ void main() {
       final (orders, app) = await _app({WorkspacePermission.managePurchases});
       await tester.pumpWidget(app);
       await _settle(tester);
+      await openOrder(tester, '2026-0001');
       await tester.tap(
         find.byKey(const ValueKey('purchase-order-edit-2026-0001')),
       );
@@ -321,10 +339,10 @@ void main() {
       await tester.tap(save);
       await _settle(tester);
       expect(orders.orders.first.lines.single.quantity, 20);
-      // Back on the list, the page gone.
+      // Back on the order beside the table, the page gone.
       expect(save, findsNothing);
       expect(
-        find.byKey(const ValueKey('purchase-order-2026-0001')),
+        find.byKey(const ValueKey('purchase-order-panel-2026-0001')),
         findsOneWidget,
       );
     });

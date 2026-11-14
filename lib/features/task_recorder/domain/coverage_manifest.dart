@@ -385,6 +385,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/money/guest-passes', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchase-orders', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchase-orders/new', CoverageStatus.planned, owner: '#1884'),
+  RouteCoverage('/money/purchase-orders/order/:id', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/purchase-orders/:id/edit', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/suppliers', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/money/payments', CoverageStatus.planned, owner: '#1884'),
