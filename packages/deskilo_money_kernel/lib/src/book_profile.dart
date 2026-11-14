@@ -28,10 +28,10 @@ enum BookAuthority {
   const BookAuthority(this.wire);
   final String wire;
 
-  static BookAuthority fromWire(String? wire) => values.firstWhere(
-    (v) => v.wire == wire,
-    orElse: () => throw FormatException('unknown authority $wire'),
-  );
+  /// The authority [wire] names; null for one this build does not know
+  /// (#3913): a profile with it is not read, never read as another.
+  static BookAuthority? fromWire(String? wire) =>
+      values.where((v) => v.wire == wire).firstOrNull;
 }
 
 /// When income and charges are recognised.
@@ -39,10 +39,9 @@ enum AccountingBasis {
   accrual,
   cash;
 
-  static AccountingBasis fromWire(String? wire) => values.firstWhere(
-    (v) => v.name == wire,
-    orElse: () => throw FormatException('unknown basis $wire'),
-  );
+  /// The basis [wire] names; null for one this build does not know (#3913).
+  static AccountingBasis? fromWire(String? wire) =>
+      values.where((v) => v.name == wire).firstOrNull;
 }
 
 class BookProfile {
@@ -62,18 +61,24 @@ class BookProfile {
 
   /// #2387 — read through [JsonReader]: a missing column names the
   /// table, the key and the type instead of `Null is not a subtype`.
-  factory BookProfile.fromJson(Map<String, Object?> json) {
+  ///
+  /// #3913 — null when its authority or its basis is one this build does not
+  /// know: both decide the books, so the profile is never guessed.
+  static BookProfile? fromJson(Map<String, Object?> json) {
     final r = JsonReader(json, context: 'book_profiles');
+    final authority = BookAuthority.fromWire(r.stringOrNull('authority_mode'));
+    final basis = AccountingBasis.fromWire(r.stringOrNull('accounting_basis'));
+    if (authority == null || basis == null) return null;
     return BookProfile(
       id: r.stringOr('id'),
       workspaceId: r.string('workspace_id'),
       issuerSiteId: r.string('issuer_site_id'),
-      authority: BookAuthority.fromWire(r.stringOrNull('authority_mode')),
+      authority: authority,
       externalSystem: r.stringOr('external_system'),
       functionalCurrency: r.string('functional_currency'),
       fiscalYearStartMonth: r.integer('fiscal_year_start_month'),
       fiscalYearStartDay: r.integer('fiscal_year_start_day'),
-      basis: AccountingBasis.fromWire(r.stringOrNull('accounting_basis')),
+      basis: basis,
       effectiveFrom: r.dateTime('effective_from'),
       revision: r.integer('revision'),
     );

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // #2562 C2c -- the personal home's list of enrolled workspace hosts, read
 // strictly, and the one decision whether a chosen host may be used now.
+import 'package:deskilo/core/data/unreadable_rows.dart';
 import 'package:deskilo/features/workspace/domain/workspace_host.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -31,12 +32,30 @@ void main() {
       expect(hosts.byId('inst-a')?.publishableKey, 'sb_publishable_wa_key');
     });
 
+    // #3913 — a state this version does not know leaves that host out and
+    // counts it; it is never read as another state, and the rest is read.
+    test('a host of an unknown state is left out and counted', () {
+      addTearDown(UnreadableRows.instance.clear);
+      final hosts = WorkspaceHosts.parse({
+        'here_hosts': true,
+        'hosts': [_host('a'), _host('b', state: 'paused')],
+      });
+      expect([for (final h in hosts.hosts) h.installationId], ['inst-a']);
+      expect(hosts.unreadable, {'inst-b'});
+      expect(UnreadableRows.instance.count(workspaceHostsArea), 1);
+      expect(
+        decideHost(hosts, 'inst-b', const []),
+        isA<HostRefused>().having((r) => r.reason, 'reason',
+            HostRefusal.unreadable),
+        reason: 'chosen anyway: refused as unreadable, never as revoked',
+      );
+    });
+
     test('a malformed answer is refused, never a shorter list', () {
       for (final bad in <Object?>[
         null,
         <Object?>[],
         {'hosts': <Object?>[]},
-        {'here_hosts': true, 'hosts': [_host('a', state: 'revoked')]},
         {'here_hosts': true, 'hosts': [{..._host('a'), 'origin': 'http://w-a.example'}]},
         {'here_hosts': true, 'hosts': [{..._host('a'), 'origin': 'https://w-a.example/path'}]},
         {'here_hosts': true, 'hosts': [{..._host('a'), 'publishable_key': ''}]},

@@ -9117,6 +9117,10 @@
   "@createHostUnavailable": {
     "description": "#2562 C2c Create: the list of servers could not be read"
   },
+  "createHostUnreadable": "This version cannot read this host's state. Update the app, then choose it again.",
+  "@createHostUnreadable": {
+    "description": "#3913 A chosen host the personal home lists in a state this version cannot read: not guessed; names the next step."
+  },
   "createHostUnverified": "Your identity cannot be verified there",
   "@createHostUnverified": {
     "description": "#2562 C2c Create: an enrolled server where the person cannot be verified (state and refusal)"

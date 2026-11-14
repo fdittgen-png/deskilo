@@ -1,46 +1,48 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+//
+//
+//
+//
+// #1373 — what makes a `ProviderScope` the Demo environment.
+// #1564 finished the list. "The repositories" was not the whole of what
+// ADR 0028: Demo is the repository seam, with no backend behind it. This
+// Everything a member could change in Demo lives in the fixture, so
+// The guarantee is structural, not a promise: inside a scope built from
+// a Demo scope has to own: the per-device preferences, the backend
+// a cleanup of the old one (#1375).
+// a payment, an e-invoice or a push cannot leave. There is no `if (demo)`
+// branch to forget, because there is no code path at all.
+// endpoint, the schema probe and the push pair are none of them
+// implementation inside the scope. A separate root container replaces
+// is that seam as a list — every provider that would otherwise resolve
+// leaving the scope disposes it and a reset is a new fixture rather than
+// only thing that made them isolated was that nobody had noticed.
+// providers, not SharedPreferences and not `Supabase.instance`, so the
+// repositories, and every one of them resolved to its real
+// the fixture seeded.
+// these overrides there is no Supabase client to reach, so an invitation,
+// to a Supabase-backed implementation, overridden with the in-memory one
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/operation_context.dart';
 import 'package:deskilo/core/demo/data/business_kind_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/data/demo_bi_export_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_sample_data_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_customer_statement.dart';
 import 'package:deskilo/core/demo/data/money/demo_invoice_mail.dart';
 import 'package:deskilo/core/demo/data/money/demo_outbox.dart';
 import 'package:deskilo/core/demo/data/money/demo_reminder_mail.dart';
+import 'package:deskilo/core/demo/data/money/demo_vies_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
 import 'package:deskilo/core/demo/data/personal_message_directory_repository.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/data/sales_tax_repository.dart';
 import 'package:deskilo/core/demo/data/settings_repository.dart';
 import 'package:deskilo/core/demo/data/tax_reference_repository.dart';
-import 'package:deskilo/core/demo/data/vies_repository.dart';
-//
-// #1373 — what makes a `ProviderScope` the Demo environment.
-//
-// ADR 0028: Demo is the repository seam, with no backend behind it. This
-// is that seam as a list — every provider that would otherwise resolve
-// to a Supabase-backed implementation, overridden with the in-memory one
-// the fixture seeded.
-//
-// The guarantee is structural, not a promise: inside a scope built from
-// these overrides there is no Supabase client to reach, so an invitation,
-// a payment, an e-invoice or a push cannot leave. There is no `if (demo)`
-// branch to forget, because there is no code path at all.
-//
-// Everything a member could change in Demo lives in the fixture, so
-// leaving the scope disposes it and a reset is a new fixture rather than
-// a cleanup of the old one (#1375).
-//
-// #1564 finished the list. "The repositories" was not the whole of what
-// a Demo scope has to own: the per-device preferences, the backend
-// endpoint, the schema probe and the push pair are none of them
-// repositories, and every one of them resolved to its real
-// implementation inside the scope. A separate root container replaces
-// providers, not SharedPreferences and not `Supabase.instance`, so the
-// only thing that made them isolated was that nobody had noticed.
 import 'package:deskilo/core/demo/data/workspace_application_repository.dart';
 import 'package:deskilo/core/demo/demo_assistant_overrides.dart';
 import 'package:deskilo/core/demo/demo_finances.dart';
@@ -48,6 +50,7 @@ import 'package:deskilo/core/demo/demo_payment_approval.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
 import 'package:deskilo/core/demo/demo_workspace_context.dart';
 import 'package:deskilo/core/demo/demo_workspace_exports.dart';
+import 'package:deskilo/core/demo/seed/demo_vat_numbers_seed.dart' show demoVatIdOf;
 import 'package:deskilo/core/instance/settings_bundle_asset.dart';
 import 'package:deskilo/core/session/session_source.dart';
 import 'package:deskilo/features/directory/providers/directory_location_providers.dart';
@@ -86,8 +89,6 @@ import '../../features/reservations/providers/place_feedback_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/application/creation_intent.dart';
 import '../../features/workspace/application/template_compare.dart';
-import '../../features/workspace/domain/bi_report_snapshot.dart';
-import '../../features/workspace/domain/sample_data.dart';
 import '../../features/workspace/domain/workspace_host.dart';
 import '../../features/workspace/providers/bi_providers.dart';
 import '../../features/workspace/providers/deployment_providers.dart';
@@ -189,13 +190,26 @@ List<Override> _serverOnlyOverrides(DemoFixture fixture) => [
   businessKindRepositoryProvider.overrideWith(
     (ref) => DemoBusinessKindRepository(ref.watch(settingsRepositoryProvider)),
   ),
-  // #2872 — sample data is made by a server in a test space; Demo is its
-  // own sample, so the card offers nothing here.
+  // #2872/#3963 — the Demo is its own sample data: its one batch is counted
+  // from its space, and a fill answers it.
   sampleDataRepositoryProvider.overrideWithValue(
-    const UnavailableSampleDataRepository(),
+    DemoSampleDataRepository(
+      since: fixture.seededAt,
+      counts: () => {
+        'members': fixture.workspaces.otherMembers.length + 1,
+        'reservations': fixture.reservations.reservations.length,
+        'ledger_entries': fixture.money.ledger.length,
+      },
+    ),
   ),
-  // #2581 — an export is answered by the server's export read only.
-  biExportRepositoryProvider.overrideWithValue(const UnavailableBiExportRepository()),
+  // #2581/#3963 — the export snapshot is made from the Demo's own figures.
+  biExportRepositoryProvider.overrideWith(
+    (ref) => DemoBiExportRepository(
+      seats: ref.watch(kpiRepositoryProvider),
+      finance: ref.watch(financeKpiRepositoryProvider),
+      now: () => fixture.seededAt,
+    ),
+  ),
   // #3960 — e-mail is recorded in the session's outbox, never sent.
   reminderMailProvider.overrideWithValue(DemoReminderMail(DemoOutbox.of(fixture))),
   invoiceMailProvider.overrideWithValue(DemoInvoiceMail(DemoOutbox.of(fixture))),
@@ -241,7 +255,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       ...demoGuestPassOverrides(fixture), demoCustomerStatementOverride(fixture), // #3308, #3673
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
-      viesRepositoryProvider.overrideWithValue(FakeViesRepository()), // #2354
+      viesRepositoryProvider.overrideWithValue(DemoViesRepository(vatIdOf: (memberId) => demoVatIdOf(fixture.profiles, memberId), now: () => fixture.seededAt)), // #2354 #3963
       salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
       ...demoCityCommerceOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider), seed: demoSettingSeed)), // #2477 #2484 in memory
