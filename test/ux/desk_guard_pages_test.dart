@@ -6,6 +6,8 @@
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
+import 'package:deskilo/core/demo/data/purchase_approval_reads.dart';
+import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
 import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/demo/seed/demo_setup_status.dart';
@@ -19,11 +21,14 @@ import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
+import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
+import 'package:deskilo/features/money/providers/purchase_approval_provider.dart';
+import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
 import 'package:deskilo/features/money/providers/vat_declaration_providers.dart';
@@ -98,6 +103,27 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     'ws-1',
     const SupplierDraft(name: 'ACME Office'),
   );
+  // #3842 — one order to that supplier, so the orders page has a row and
+  // an order to open beside it.
+  final orders = FakePurchaseOrderRepository(
+    suppliers: () => suppliers.suppliers,
+    services: () => const [],
+    now: () => kTestNow,
+  );
+  await orders.save(
+    'ws-1',
+    'guard-order',
+    PurchaseOrderDraft(
+      supplierId: supplier,
+      lines: const [
+        PurchaseOrderLineDraft(
+          description: 'Coffee beans',
+          quantity: 6,
+          unitPriceCents: 1450,
+        ),
+      ],
+    ),
+  );
   final purchases = FakePurchaseRepository()
     ..payables.add(
       PayableRow(
@@ -123,6 +149,32 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
           receivedOn: DateTime(2026, 11, 3),
         ),
       ),
+    )
+    // #3874 — a bill waiting for a second person, so the approvals page
+    // has a row.
+    ..addPendingBill(
+      PurchaseDetail(
+        summary: PurchaseSummary(
+          id: 'p2',
+          kind: PurchaseKind.bill,
+          state: PurchaseState.pending,
+          category: 'Cleaning',
+          reference: 'F-2026-12',
+          currency: 'EUR',
+          grossCents: 4800,
+          supplierId: supplier,
+          receivedOn: DateTime(2026, 11, 5),
+        ),
+        revision: 1,
+        lines: const [
+          PurchaseLine(
+            lineNo: 1,
+            description: 'Office cleaning, November',
+            grossCents: 4800,
+          ),
+        ],
+        sources: const [],
+      ),
     );
   await pumpRoute(
     tester,
@@ -130,7 +182,11 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
     size: size,
     overrides: [
       supplierRepositoryProvider.overrideWithValue(suppliers),
+      purchaseOrderRepositoryProvider.overrideWithValue(orders),
       purchaseRepositoryProvider.overrideWithValue(purchases),
+      purchaseApprovalReadsProvider.overrideWithValue(
+        FakePurchaseApprovalReads(purchases),
+      ),
       ...standardTestOverrides(
         money: money,
         // #3629 — the guide's pages with the Demo's setup state: every
@@ -245,6 +301,36 @@ final _return = VatDeclaration(
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
+  // #3892 — booking and requests at the desk.
+  // #3892 — settings, people, money and documents at the desk.
+  ('/assistants/connect', PageKind.task, 'settings', 'assistants-connect'),
+  ('/settings/assistants', PageKind.task, 'settings', 'assistants'),
+  ('/settings/assistant-setup', PageKind.task, 'settings', 'assistant-setup'),
+  ('/kiosk-gate', PageKind.task, 'kiosk', 'kiosk-gate'),
+  ('/kiosk', PageKind.task, 'kiosk', 'kiosk'),
+  ('/pending', PageKind.document, 'account', 'pending'),
+  ('/plan', PageKind.document, 'places', 'plan'),
+  ('/badge-kiosks', PageKind.task, 'settings', 'badge-kiosks'),
+  ('/accounting/connected', PageKind.document, 'money', 'accounting-connected'),
+  ('/suppliers', PageKind.records, 'money', 'suppliers-alias'),
+  ('/deployment', PageKind.task, 'settings', 'deployment'),
+  ('/editor', PageKind.task, 'places', 'editor'),
+  ('/money/repartition-wizard', PageKind.task, 'money', 'repartition-wizard'),
+  ('/members/privacy/rr-1', PageKind.recordBesideTable, 'people', 'privacy-open'),
+  ('/settings/payment-terms', PageKind.task, 'settings', 'payment-terms'),
+  ('/settings/questions', PageKind.task, 'settings', 'questions'),
+  ('/settings/roles-of-this-space', PageKind.document, 'settings', 'roles-of-this-space'),
+  ('/formats', PageKind.task, 'settings', 'formats'),
+  ('/payment-config', PageKind.task, 'settings', 'payment-config'),
+  ('/nfc-config', PageKind.task, 'settings', 'nfc-config'),
+  ('/workspace-code', PageKind.document, 'settings', 'workspace-code'),
+  ('/members/managed', PageKind.task, 'people', 'managed'),
+  ('/money/cash', PageKind.document, 'money', 'cash'),
+  ('/vat-declarations', PageKind.document, 'money', 'vat-declarations'),
+  ('/library', PageKind.document, 'reports', 'library'),
+  ('/setup/levels', PageKind.task, 'settings', 'setup-levels'),
+  ('/attention', PageKind.document, 'booking', 'attention'),
+  ('/events', PageKind.document, 'requests', 'events'),
   ('/invoices', PageKind.records, 'money', 'invoices'),
   ('/me', PageKind.dashboard, 'me', 'overview'),
   // #3606 — the first records table.
@@ -254,7 +340,22 @@ const _pages = [
   ('/money/guest-passes', PageKind.records, 'money', 'guest-passes'),
   // #3615 — purchases at the desk.
   ('/money/purchases', PageKind.records, 'money', 'purchases'),
+  // #3874 — what waits for a decision.
+  (
+    '/money/purchases/approvals',
+    PageKind.records,
+    'money',
+    'purchase-approvals',
+  ),
   ('/money/suppliers', PageKind.records, 'money', 'suppliers'),
+  // #3842 — the purchase orders as records, and an order beside the table.
+  ('/money/purchase-orders', PageKind.records, 'money', 'purchase-orders'),
+  (
+    '/money/purchase-orders/order/demo-order-1',
+    PageKind.recordBesideTable,
+    'money',
+    'purchase-orders-open',
+  ),
   // #3618 — members and plans at the desk, and a member beside the table.
   ('/members', PageKind.records, 'members', 'members'),
   ('/members/plans', PageKind.records, 'members', 'plans'),
@@ -319,7 +420,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 23;
+const _guardedWorkspaceRoutes = 54;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
@@ -428,6 +529,10 @@ void main() {
               RecordsHeader<LedgerEntry>,
               RecordRow<UsageRecord>,
               RecordsHeader<UsageRecord>,
+              RecordRow<PurchaseOrder>,
+              RecordsHeader<PurchaseOrder>,
+              RecordRow<PurchaseSummary>,
+              RecordsHeader<PurchaseSummary>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -447,6 +552,8 @@ void main() {
               RecordsHeader<RecordedPayment>,
               RecordsHeader<LedgerEntry>,
               RecordsHeader<UsageRecord>,
+              RecordsHeader<PurchaseOrder>,
+              RecordsHeader<PurchaseSummary>,
             ],
           ),
           isEmpty,

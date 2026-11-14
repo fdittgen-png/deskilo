@@ -4,7 +4,8 @@
 // then one pass after another, each with its own request id, and one
 // outcome per pass. A pass the server refused stays as it was and says
 // why; nothing is reported revoked that the server did not revoke. No money
-// moves here: the invoice is corrected on its page.
+// moves here: the invoice is corrected on its page. #3837 — each revoked
+// pass says whether its invoice is corrected yet and opens it.
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -12,16 +13,18 @@ import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/ui/kit/result_page.dart';
 import '../../application/guest_pass_commands.dart';
 import '../../domain/guest_pass.dart';
+import 'guest_pass_invoice_line.dart';
 
 /// Asks, then revokes [passes] of [workspaceId] through [commands], one
-/// after another; [holder] names each pass's guest in the result, and
-/// [onRevoked] runs once they were sent.
+/// after another; [reading] names each pass's guest in the result, says
+/// where its invoice stands and opens it; [onRevoked] runs once they were
+/// sent.
 Future<void> revokeGuestPasses(
   BuildContext context, {
   required GuestPassCommands commands,
   required String workspaceId,
   required List<GuestPassRecord> passes,
-  required String Function(GuestPassRecord pass) holder,
+  required PassReading reading,
   required VoidCallback onRevoked,
 }) async {
   final l10n = context.l10n;
@@ -52,20 +55,27 @@ Future<void> revokeGuestPasses(
   ]);
   onRevoked();
   final byId = {for (final p in passes) p.id: p};
-  final done = <ResultLine>[
+  final revoked = [
     for (final o in outcomes)
       if (o.cancelled case final cancelled?)
-        (
-          title: holder(byId[o.passId]!),
-          detail: l10n.guestPassRevokeCancelled(cancelled),
-          outcome: l10n.guestPassRevoked,
-        ),
+        (pass: byId[o.passId]!, cancelled: cancelled),
+  ];
+  final done = <ResultLine>[
+    for (final r in revoked)
+      (
+        title: reading.holder(r.pass),
+        detail: [
+          l10n.guestPassRevokeCancelled(r.cancelled),
+          ?passInvoiceWords(l10n, reading.invoiceOf(r.pass)),
+        ].join(' · '),
+        outcome: l10n.guestPassRevoked,
+      ),
   ];
   final notDone = <ResultLine>[
     for (final o in outcomes)
       if (o.error case final error?)
         (
-          title: holder(byId[o.passId]!),
+          title: reading.holder(byId[o.passId]!),
           detail: knownRefusalText(l10n, error) ?? l10n.guestPassRevokeFailed,
           outcome: '',
         ),
@@ -87,6 +97,20 @@ Future<void> revokeGuestPasses(
             subtitle: l10n.guestPassRevokeResultSubtitle,
             done: done,
             notDone: notDone,
+            doneActions: [
+              for (final r in revoked)
+                switch (reading.invoiceOf(r.pass).invoice) {
+                  final invoice? => TextButton(
+                    key: ValueKey('guest-pass-open-invoice-${r.pass.id}'),
+                    onPressed: () {
+                      Navigator.of(dialog).pop();
+                      reading.open(invoice.id);
+                    },
+                    child: Text(l10n.guestPassOpenInvoice),
+                  ),
+                  _ => null,
+                },
+            ],
             notDoneHeading: l10n.guestPassRevokeNotDone,
             staysNote: l10n.guestPassRevokeStays,
             doneLabel: l10n.commonDone,

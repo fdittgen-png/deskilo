@@ -42,6 +42,7 @@ import '../../features/money/presentation/screens/vat_screen.dart';
 import '../../features/money/presentation/screens/workspace_status_screen.dart';
 import '../../features/money/presentation/widgets/expense_repartition_sheet.dart'
     show expenseRepartitionPage;
+import '../../features/money/presentation/widgets/purchase_order_record.dart';
 import '../../features/money/presentation/widgets/purchases_sheet.dart';
 import '../../features/money/presentation/widgets/settlement_sheet.dart'
     show settlementPage;
@@ -306,6 +307,17 @@ List<RouteBase> _purchaseRoutes(RouteEnv env) {
           path: 'new',
           redirect: env.guard(_orderWriteAccess),
           builder: (context, state) => const PurchaseOrderPage(),
+        ),
+        // #3842 — an order's address: beside the orders table on a large
+        // window, a page of its own otherwise. The segment before the id
+        // keeps `new` from being read as an order.
+        GoRoute(
+          path: 'order/:id',
+          pageBuilder: (context, state) => recordPage(
+            context,
+            state,
+            (id) => PurchaseOrderRecord(orderId: id),
+          ),
         ),
         GoRoute(
           path: ':id/edit',

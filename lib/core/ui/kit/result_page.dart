@@ -34,6 +34,7 @@ class ResultPage extends StatelessWidget {
     this.tone,
     this.secondaryAction,
     this.notDoneActions = const [],
+    this.doneActions = const [],
   });
 
   final String title;
@@ -56,6 +57,10 @@ class ResultPage extends StatelessWidget {
 
   /// An action per [notDone] line, by position ("Fix"); null or missing: none.
   final List<Widget?> notDoneActions;
+
+  /// #3837 — an action per [done] line, by position ("Open the invoice");
+  /// null or missing: none.
+  final List<Widget?> doneActions;
 
   /// A second action beside Done ("Retry for these"), tonal, never filled.
   final Widget? secondaryAction;
@@ -118,7 +123,16 @@ class ResultPage extends StatelessWidget {
               ),
               const SizedBox(height: AppSpacing.md),
               if (done.isNotEmpty)
-                RowList(rows: [for (final l in done) line(l, ok: true)]),
+                RowList(
+                  rows: [
+                    for (var i = 0; i < done.length; i++)
+                      line(
+                        done[i],
+                        ok: true,
+                        action: i < doneActions.length ? doneActions[i] : null,
+                      ),
+                  ],
+                ),
               if (notDone.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
                 Text(notDoneHeading, style: theme.textTheme.titleSmall),

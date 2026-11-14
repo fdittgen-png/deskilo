@@ -12601,16 +12601,32 @@ class AppLocalizationsIt extends AppLocalizations {
   String get guestPassEdit => 'Modificare il pass';
 
   @override
+  String get guestPassFilterUncorrected => 'Revocati, fattura non corretta';
+
+  @override
   String get guestPassFrom => 'Dalle';
 
   @override
   String get guestPassHolder => 'Ospite';
 
   @override
+  String guestPassInvoiceCorrected(String number) {
+    return 'Fattura $number corretta';
+  }
+
+  @override
+  String guestPassInvoiceNotCorrected(String number) {
+    return 'Fattura $number non ancora corretta';
+  }
+
+  @override
   String get guestPassName => 'Nome';
 
   @override
   String get guestPassNameRequired => 'Inserisca un nome.';
+
+  @override
+  String get guestPassOpenInvoice => 'Apri la fattura';
 
   @override
   String get guestPassPaid => 'Pagato all\'accoglienza';

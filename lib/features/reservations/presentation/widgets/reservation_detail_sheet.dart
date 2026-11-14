@@ -65,41 +65,14 @@ class ReservationDetailSheet extends ConsumerWidget {
     final target = targetAsync.value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final actions = ReservationDetailActions(
-      r,
-      readGranularity: () => ref.read(bookingGranularityProvider).value,
-      seriesAllowed: () => ref
-          .read(enabledFeaturesSyncProvider)
-          .contains(WorkspaceFeature.seriesBooking),
-      refresh: () => invalidateBookingData(ref),
-      repository: () => ref.read(reservationRepositoryProvider),
-    );
+    final actions = reservationActionsOf(ref, r);
     // The actions belong to the owner of a still-upcoming booking; a
     // PAST or already CHECKED-IN one is never deleted directly (#492) —
     // deleting it becomes a REQUEST an owner/admin validates (was the
     // check-in forgotten, or was the booking unused?).
     final now = ref.read(clockProvider).now();
     final mine = r.memberId == myMemberId;
-    // #2328 — the same rule the plan's "your seat" sheet reads.
-    final removal = ownBookingRemovalOf(ref, r);
-    final editable = mine && removal == OwnBookingRemoval.cancel;
-    // #574 — a RUNNING booking may still grow: sitting in the morning
-    // seat and staying the day extends the end to a later canonical
-    // edge (the server keeps the start immovable).
-    final extendable = mine &&
-        r.status == ReservationStatus.checkedIn &&
-        r.endsAt.isAfter(now) &&
-        actions.laterEndFor(r) != null;
-    // #638 — and a RUNNING booking may also SHRINK: `update_reservation`
-    // v2 accepts an earlier canonical end ahead of now, but the client
-    // only ever offered "later", so "cancel the rest of the day" was
-    // documented and impossible.
-    final endEarlyable = mine &&
-        r.status == ReservationStatus.checkedIn &&
-        r.endsAt.isAfter(now) &&
-        actions.earlierEndFor(r, now) != null;
-    final deletionRequestable =
-        mine && removal == OwnBookingRemoval.requestDeletion;
+    final offered = ownBookingOffers(ref, r, actions, mine: mine);
     // #1643 — MY booking, in my own calendar: any state, since a
     // cancelled one exports as cancelled rather than being hidden.
     final calendarFile = mine &&
@@ -149,12 +122,7 @@ class ReservationDetailSheet extends ConsumerWidget {
                   : () => Navigator.of(context).pop(target),
               label: Text(l10n.calendarShowOnPlan),
             ),
-            ..._ownActions(context, ref, actions, (
-              editable: editable,
-              extendable: extendable,
-              endEarlyable: endEarlyable,
-              deletionRequestable: deletionRequestable,
-            )),
+            ..._ownActions(context, ref, actions, offered),
             if (calendarFile) ...[
               const SizedBox(height: 8),
               CalendarFileButton(reservation: r),
@@ -252,12 +220,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     BuildContext context,
     WidgetRef ref,
     ReservationDetailActions actions,
-    ({
-      bool editable,
-      bool extendable,
-      bool endEarlyable,
-      bool deletionRequestable,
-    }) offered,
+    OwnBookingOffers offered,
   ) {
     final l10n = context.l10n;
     return [
@@ -373,6 +336,63 @@ Future<void> showReservationDetail(
   Navigator.of(context).popUntil((route) =>
       route is! ModalBottomSheetRoute && route is! RawDialogRoute);
   context.go('/plan');
+}
+
+/// The actions on [r] as this space reads them. #3843 — the desk calendar's
+/// pane passes [inPane], where a refusal goes ([onRefused]) and what to read
+/// again after a change ([refresh]; by default every booking read).
+ReservationDetailActions reservationActionsOf(
+  WidgetRef ref,
+  Reservation r, {
+  bool inPane = false,
+  void Function(String refusal)? onRefused,
+  void Function()? refresh,
+}) => ReservationDetailActions(
+  r,
+  readGranularity: () => ref.read(bookingGranularityProvider).value,
+  seriesAllowed: () => ref
+      .read(enabledFeaturesSyncProvider)
+      .contains(WorkspaceFeature.seriesBooking),
+  refresh: refresh ?? () => invalidateBookingData(ref),
+  repository: () => ref.read(reservationRepositoryProvider),
+  inPane: inPane,
+  onRefused: onRefused,
+);
+
+/// What a booking's own member may do with it now.
+typedef OwnBookingOffers = ({
+  bool editable,
+  bool extendable,
+  bool endEarlyable,
+  bool deletionRequestable,
+});
+
+/// #3843 — the one rule for what [r]'s own member ([mine]) may do with it,
+/// read by the booking's sheet and by the desk calendar's pane. The actions
+/// belong to the owner of a still-upcoming booking; a PAST or already
+/// CHECKED-IN one is never deleted directly (#492) — deleting it becomes a
+/// REQUEST an owner/admin validates. #574 — a RUNNING booking may still grow
+/// to a later canonical edge; #638 — and may SHRINK to an earlier one ahead
+/// of now.
+OwnBookingOffers ownBookingOffers(
+  WidgetRef ref,
+  Reservation r,
+  ReservationDetailActions actions, {
+  required bool mine,
+}) {
+  final now = ref.read(clockProvider).now();
+  // #2328 — the same rule the plan's "your seat" sheet reads.
+  final removal = ownBookingRemovalOf(ref, r);
+  final running =
+      mine &&
+      r.status == ReservationStatus.checkedIn &&
+      r.endsAt.isAfter(now);
+  return (
+    editable: mine && removal == OwnBookingRemoval.cancel,
+    extendable: running && actions.laterEndFor(r) != null,
+    endEarlyable: running && actions.earlierEndFor(r, now) != null,
+    deletionRequestable: mine && removal == OwnBookingRemoval.requestDeletion,
+  );
 }
 
 // #2328 — removing MY booking, shared with the plan's "your seat" sheet

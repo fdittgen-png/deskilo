@@ -4,9 +4,13 @@
 // window from and to, how much of it is used, and the price; sorted and
 // filtered like every records table, one total per currency of what is
 // shown. #3829 — whoever sells (issueInvoices) revokes a selection here,
-// one pass after another; a revoked pass says so.
+// one pass after another; a revoked pass says so. #3837 — a pass opens the
+// invoice its sale made, and a revoked one says whether that invoice is
+// corrected yet; a chip finds those still to correct. The table is shown
+// only to who may read the invoices (guest_passes_screen.dart).
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -17,9 +21,12 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../core/ui/kit/status_chip.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/guest_pass.dart';
+import '../../domain/guest_pass_invoice.dart';
 import '../../providers/guest_pass_providers.dart';
 import '../../providers/money_providers.dart';
+import 'guest_pass_invoice_line.dart';
 import 'guest_pass_revoke.dart';
 
 /// The passes sold in [workspaceId]; [offers] name them.
@@ -56,6 +63,11 @@ class GuestPassRecords extends ConsumerWidget {
     final offerNames = {for (final o in offers) o.id: o.name};
     final rows = read.value ?? const <GuestPassRecord>[]; // empty-ok: the table shows loading or failed while it is not read
     String holder(GuestPassRecord p) => names[p.memberId] ?? '';
+    // #3837 — the business's invoices, read beside the passes.
+    final invoices = ref.watch(invoicesProvider).value ?? const []; // empty-ok: an invoice not read leaves the pass's money unsaid
+    PassInvoice invoiceOf(GuestPassRecord p) => passInvoiceOf(p, invoices);
+    void openInvoice(String id) => context.push('/invoices/$id');
+    bool uncorrected(GuestPassRecord p) => p.revoked && invoiceOf(p).state == PassInvoiceState.notCorrected;
     return RecordsTable<GuestPassRecord>(
       tableId: 'guest-passes-sold',
       state: switch (read) {
@@ -68,7 +80,25 @@ class GuestPassRecords extends ConsumerWidget {
       keyOf: (p) => p.id,
       searchText: (p) => '${holder(p)} ${offerNames[p.offerId] ?? ''}',
       // The guest's invoice is where the pass is read in full.
-      onOpen: (_) {},
+      onOpen: (p) {
+        if (invoiceOf(p).invoice case final invoice?) openInvoice(invoice.id);
+      },
+      rowActions: (p) => [
+        if (invoiceOf(p).invoice case final invoice?)
+          RecordAction(
+            id: 'invoice',
+            label: l10n.guestPassOpenInvoice,
+            icon: Icons.receipt_long_outlined,
+            onRun: (_) => openInvoice(invoice.id),
+          ),
+      ],
+      chips: [
+        RecordChip(
+          id: 'uncorrected',
+          label: l10n.guestPassFilterUncorrected,
+          keeps: uncorrected,
+        ),
+      ],
       empty: EmptyState(
         icon: Icons.confirmation_number_outlined,
         title: l10n.guestPassesSoldEmpty,
@@ -90,7 +120,7 @@ class GuestPassRecords extends ConsumerWidget {
                 for (final p in rows)
                   if (keys.contains(p.id) && !p.revoked) p,
               ],
-              holder: holder,
+              reading: (holder: holder, invoiceOf: invoiceOf, open: openInvoice),
             ),
           ),
       ],
@@ -137,17 +167,8 @@ class GuestPassRecords extends ConsumerWidget {
           id: 'state',
           label: l10n.guestPassState,
           flex: 2,
-          sortKey: (p) => p.revoked ? 1 : 0,
-          cell: (_, p) => p.revoked
-              ? Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: StatusChip(
-                    key: ValueKey('guest-pass-revoked-${p.id}'),
-                    label: l10n.guestPassRevoked,
-                    tone: StatusTone.neutral,
-                  ),
-                )
-              : const SizedBox.shrink(),
+          sortKey: (p) => p.revoked ? (uncorrected(p) ? 2 : 1) : 0,
+          cell: (_, p) => _PassState(pass: p, invoice: invoiceOf(p)),
         ),
         RecordColumn(
           id: 'price',
@@ -169,11 +190,57 @@ class GuestPassRecords extends ConsumerWidget {
             Text(lastDay(p)),
             Text(l10n.guestPassUsed),
             Text(l10n.noteRefFilterCount(used(p), p.units)),
-            if (p.revoked) Text(l10n.guestPassRevoked),
+            ..._revokedWords(l10n, p, invoiceOf(p)),
           ],
         ),
         trailing: Text(currency.formatMinor(p.amountCents)),
       ),
+    );
+  }
+}
+
+/// On a phone's card: that the pass is revoked and where its invoice
+/// stands.
+List<Widget> _revokedWords(
+  AppLocalizations l10n,
+  GuestPassRecord pass,
+  PassInvoice invoice,
+) => [
+  if (pass.revoked) ...[
+    Text(l10n.guestPassRevoked),
+    if (passInvoiceWords(l10n, invoice) case final line?) Text(line),
+  ],
+];
+
+/// The State cell: a revoked pass's chip and where its invoice stands.
+class _PassState extends StatelessWidget {
+  const _PassState({required this.pass, required this.invoice});
+
+  final GuestPassRecord pass;
+  final PassInvoice invoice;
+
+  @override
+  Widget build(BuildContext context) {
+    if (!pass.revoked) return const SizedBox.shrink();
+    final l10n = context.l10n;
+    final line = passInvoiceWords(l10n, invoice);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        StatusChip(
+          key: ValueKey('guest-pass-revoked-${pass.id}'),
+          label: l10n.guestPassRevoked,
+          tone: StatusTone.neutral,
+        ),
+        if (line != null)
+          Text(
+            line,
+            key: ValueKey('guest-pass-invoice-${pass.id}'),
+            overflow: TextOverflow.ellipsis,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+      ],
     );
   }
 }
