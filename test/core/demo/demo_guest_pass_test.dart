@@ -16,6 +16,7 @@ import 'package:deskilo/core/demo/seed/demo_new_york_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_second_space_seed.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/guest_pass.dart';
+import 'package:deskilo/features/money/domain/guest_pass_invoice.dart';
 import 'package:deskilo/features/money/providers/guest_pass_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -101,6 +102,13 @@ void main() {
     expect(invoice.currency, 'GBP');
     expect(invoice.totalCents, sale.amountCents);
     expect(invoice.memberName, 'Gwen Guest');
+    // #3837 — the pass keeps the invoice its sale made: not corrected while
+    // it stands as issued, credited once the guest has a credit note.
+    final record = (await passes.passesSold(demoLondonSpaceId)).firstWhere((p) => p.id == sale.passId);
+    expect(record.invoiceId, sale.invoiceId);
+    expect(passInvoiceOf(record, fixture.london.money.invoices).state, PassInvoiceState.notCorrected);
+    fixture.london.money.invoices.add(invoice.copyWith(id: 'credit-gwen', number: 'A-1', totalCents: -invoice.totalCents));
+    expect(passInvoiceOf(record, fixture.london.money.invoices).state, PassInvoiceState.credited);
     expect(
       fixture.london.money.eventRepository!.events
           .any((e) => e.id == sale.paymentEventId && e.type == EventType.payment && e.status == EventStatus.pending),

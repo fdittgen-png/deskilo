@@ -109,6 +109,8 @@ Future<void> _pump(WidgetTester tester, _Passes passes, Set<WorkspacePermission>
         myPermissionsProvider.overrideWithValue(held),
         guestPassRepositoryProvider.overrideWithValue(passes),
         memberLabelsProvider.overrideWithValue(const {'g1': 'Gale Guest', 'g2': 'Hal Host'}),
+        // #3837 — the table reads the invoices beside the passes.
+        invoicesProvider.overrideWith((ref) async => const []),
       ],
       child: const MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
