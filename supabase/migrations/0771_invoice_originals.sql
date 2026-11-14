@@ -147,6 +147,13 @@ begin
     raise exception 'this invoice already has its original' using errcode = '23505';
   end if;
 
+  -- the size first, before anything is decoded or parsed: base64 carries
+  -- three bytes in four characters
+  if octet_length(coalesce(p_pdf, '')) / 4 * 3 + octet_length(coalesce(p_xml, ''))
+       > public.invoice_original_max_bytes() then
+    raise exception 'the original is larger than % bytes', public.invoice_original_max_bytes()
+      using errcode = '22023';
+  end if;
   begin
     v_pdf := decode(coalesce(p_pdf, ''), 'base64');
   exception when others then
@@ -154,10 +161,6 @@ begin
   end;
   if length(v_pdf) < 5 or substring(v_pdf from 1 for 5) <> '\x255044462d'::bytea then
     raise exception 'the original is not a PDF' using errcode = '22023';
-  end if;
-  if length(v_pdf) + octet_length(coalesce(p_xml, '')) > public.invoice_original_max_bytes() then
-    raise exception 'the original is larger than % bytes', public.invoice_original_max_bytes()
-      using errcode = '22023';
   end if;
 
   begin
