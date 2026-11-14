@@ -222,6 +222,8 @@ const Set<String> _exported = {
   'data_access_log',
   // #1279 — carnets.
   'member_credits',
+  // #3858 — the member's own dated plan changes and pauses (0766, anchored patch).
+  'member_term_changes',
 };
 
 Set<String> _tablesWithAMemberColumn() {
