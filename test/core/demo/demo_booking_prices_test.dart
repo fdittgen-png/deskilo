@@ -13,6 +13,7 @@ import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/reservations/domain/booking_price.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show yearMonth;
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -82,8 +83,7 @@ void main() {
             p.kind == BookingPriceKind.overage,
       )) {
         final r = byId[p.reservationId]!;
-        final month =
-            '${r.startsAt.year}-${r.startsAt.month.toString().padLeft(2, '0')}';
+        final month = yearMonth(r.startsAt.year, r.startsAt.month);
         final extra = (await space.money.fetchStatement(
           r.memberId,
           month,

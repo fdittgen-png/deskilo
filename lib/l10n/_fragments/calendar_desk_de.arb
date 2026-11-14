@@ -20,7 +20,7 @@
   "calendarDeskRepeatedHour": "{time}, zum zweiten Mal: die Uhren wurden zurückgestellt",
   "calendarDeskMissingHour": "Die Uhren werden vorgestellt: {from} bis {to} gibt es an diesem Tag nicht",
   "calendarDeskColumnPrice": "Preis",
-  "bookingPriceCharge": "Gebühr",
+  "bookingPriceCharge": "Gebühr {amount}",
   "bookingPricePass": "Pass",
   "bookingPriceCarnet": "Mehrfachkarte",
   "bookingPriceFree": "Kostenlos",

@@ -24,18 +24,23 @@ typedef BookingsCsvHeader = ({
   String price,
 });
 
-/// [bookings] as the table's CSV; [who], [place], [at], [state] and [price]
-/// give a row's words as the table shows them (#3843: the price, blank while
-/// it is not read).
+/// A row's words as the table shows them (#3843: the price, blank while it
+/// is not read).
+typedef BookingsCsvCells = ({
+  String Function(Reservation r) who,
+  String Function(Reservation r) place,
+  String Function(DateTime instant) at,
+  String Function(ReservationStatus status) state,
+  String Function(Reservation r) price,
+});
+
+/// [bookings] as the table's CSV, each row in [cells]' words.
 Uint8List bookingsCsv(
   List<Reservation> bookings, {
   required BookingsCsvHeader header,
-  required String Function(Reservation r) who,
-  required String Function(Reservation r) place,
-  required String Function(DateTime instant) at,
-  required String Function(ReservationStatus status) state,
-  required String Function(Reservation r) price,
+  required BookingsCsvCells cells,
 }) {
+  final (:who, :place, :at, :state, :price) = cells;
   final lines = <String>[
     [
       header.member,

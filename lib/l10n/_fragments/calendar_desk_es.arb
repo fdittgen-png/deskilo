@@ -20,7 +20,7 @@
   "calendarDeskRepeatedHour": "{time}, por segunda vez: los relojes se atrasaron",
   "calendarDeskMissingHour": "Los relojes se adelantan: de {from} a {to} no existe ese día",
   "calendarDeskColumnPrice": "Precio",
-  "bookingPriceCharge": "Cargo",
+  "bookingPriceCharge": "Cargo {amount}",
   "bookingPricePass": "Pase",
   "bookingPriceCarnet": "Bono",
   "bookingPriceFree": "Gratis",

@@ -32,7 +32,6 @@ import '../../features/money/providers/settlement_review_providers.dart';
 import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
-import '../../features/reservations/providers/booking_price_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';

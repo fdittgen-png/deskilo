@@ -5357,7 +5357,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bookingPriceCarnet => 'Bono';
 
   @override
-  String get bookingPriceCharge => 'Cargo';
+  String bookingPriceCharge(String amount) {
+    return 'Cargo $amount';
+  }
 
   @override
   String get bookingPriceFree => 'Gratis';

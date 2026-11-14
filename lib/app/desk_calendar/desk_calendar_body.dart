@@ -34,7 +34,7 @@ import '../../core/ui/loading_view.dart';
 import '../../features/reservations/domain/booking_price.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
-import '../../features/reservations/providers/booking_price_providers.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'bookings_csv.dart';
 import 'desk_booking_chip.dart';
@@ -152,18 +152,20 @@ class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
         state: l10n.calendarDeskColumnState,
         price: l10n.calendarDeskColumnPrice,
       ),
-      who: (r) => deskBookingWho(names, r),
-      place: (r) => data.names[bookingTargetId(r)] ?? r.spaceLabel ?? '',
-      at: (instant) => instant.toUtc().toIso8601String(),
-      state: (s) => myReservationStatusWords(l10n, s),
-      price: (r) => switch (prices[r.id]) {
-        final p? => bookingPriceText(
-          l10n,
-          (code, minor) => format.moneyIn(code).formatMinor(minor),
-          p,
-        ),
-        null => '',
-      },
+      cells: (
+        who: (r) => deskBookingWho(names, r),
+        place: (r) => data.names[bookingTargetId(r)] ?? r.spaceLabel ?? '',
+        at: (instant) => instant.toUtc().toIso8601String(),
+        state: (s) => myReservationStatusWords(l10n, s),
+        price: (r) => switch (prices[r.id]) {
+          final p? => bookingPriceText(
+            l10n,
+            (code, minor) => format.moneyIn(code).formatMinor(minor),
+            p,
+          ),
+          null => '',
+        },
+      ),
     );
     final name = bookingsCsvName(
       ref.read(currentWorkspaceProvider).value?.name ?? '',

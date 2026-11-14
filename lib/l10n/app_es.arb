@@ -3177,7 +3177,7 @@
   "bookingOverlapsAnother": "El puesto ya está reservado durante parte de este tiempo.",
   "bookingPastError": "Esta reserva está completamente en el pasado.",
   "bookingPriceCarnet": "Bono",
-  "bookingPriceCharge": "Cargo",
+  "bookingPriceCharge": "Cargo {amount}",
   "bookingPriceFree": "Gratis",
   "bookingPriceOverage": "Media jornada extra",
   "bookingPricePass": "Pase",

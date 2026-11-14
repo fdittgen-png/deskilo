@@ -6995,7 +6995,6 @@ const Set<String> uiLabelKeys = {
   'bookingOverlapsAnother',
   'bookingPastError',
   'bookingPriceCarnet',
-  'bookingPriceCharge',
   'bookingPriceFree',
   'bookingPriceOverage',
   'bookingPricePass',

@@ -16,7 +16,7 @@ class SupabaseBookingPriceReads implements BookingPriceReads {
     required DateTime from,
     required DateTime to,
   }) async {
-    final rows = await _client.rpc<List<dynamic>>(
+    final rows = await _client.rpc<List<Object?>>(
       'booking_prices',
       params: {
         'p_workspace_id': workspaceId,
@@ -25,8 +25,7 @@ class SupabaseBookingPriceReads implements BookingPriceReads {
       },
     );
     return [
-      for (final row in rows)
-        ?BookingPrice.fromRow(Map<String, dynamic>.from(row as Map)),
+      for (final row in rows) ?BookingPrice.fromRow(row),
     ];
   }
 }

@@ -6987,9 +6987,15 @@
   "@bookingPriceCarnet": {
     "description": "#3843 A booking paid from a carnet of half-days"
   },
-  "bookingPriceCharge": "Charge",
+  "bookingPriceCharge": "Charge {amount}",
   "@bookingPriceCharge": {
-    "description": "#3843 A booking charged on its own (a rented room); shown before its amount"
+    "description": "#3843 A booking charged on its own (a rented room), with its amount in the business's currency",
+    "placeholders": {
+      "amount": {
+        "type": "String",
+        "example": "€65.00"
+      }
+    }
   },
   "bookingPriceFree": "Free",
   "@bookingPriceFree": {

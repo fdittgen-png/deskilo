@@ -253,11 +253,13 @@ void main() {
         state: 'S',
         price: 'Pr',
       ),
-      who: (_) => '=cmd',
-      place: (_) => 'Seat 1',
-      at: (i) => i.toUtc().toIso8601String(),
-      state: (_) => 'Reserved',
-      price: (_) => 'Free',
+      cells: (
+        who: (_) => '=cmd',
+        place: (_) => 'Seat 1',
+        at: (i) => i.toUtc().toIso8601String(),
+        state: (_) => 'Reserved',
+        price: (_) => 'Free',
+      ),
     );
     final text = String.fromCharCodes(bytes.sublist(3));
     expect(bytes.take(3), [0xEF, 0xBB, 0xBF]);

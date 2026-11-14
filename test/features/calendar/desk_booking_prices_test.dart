@@ -10,7 +10,7 @@ import 'package:deskilo/app/desk_calendar/bookings_csv.dart';
 import 'package:deskilo/app/desk_calendar/desk_bookings_table.dart';
 import 'package:deskilo/features/reservations/domain/booking_price.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
-import 'package:deskilo/features/reservations/providers/booking_price_providers.dart';
+import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -190,14 +190,16 @@ void main() {
         state: 'S',
         price: l10n.calendarDeskColumnPrice,
       ),
-      who: (_) => 'Ada',
-      place: (_) => 'Seat',
-      at: (i) => i.toUtc().toIso8601String(),
-      state: (_) => 'Reserved',
-      price: (r) => bookingPriceText(
-        l10n,
-        (code, minor) => '$code ${(minor / 100).toStringAsFixed(2)}',
-        _prices.firstWhere((p) => p.reservationId == r.id),
+      cells: (
+        who: (_) => 'Ada',
+        place: (_) => 'Seat',
+        at: (i) => i.toUtc().toIso8601String(),
+        state: (_) => 'Reserved',
+        price: (r) => bookingPriceText(
+          l10n,
+          (code, minor) => '$code ${(minor / 100).toStringAsFixed(2)}',
+          _prices.firstWhere((p) => p.reservationId == r.id),
+        ),
       ),
     );
     final lines = String.fromCharCodes(bytes.sublist(3)).split('\r\n');

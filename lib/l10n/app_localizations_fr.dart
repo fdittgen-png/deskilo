@@ -5380,7 +5380,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get bookingPriceCarnet => 'Carnet';
 
   @override
-  String get bookingPriceCharge => 'Facturé';
+  String bookingPriceCharge(String amount) {
+    return 'Facturé $amount';
+  }
 
   @override
   String get bookingPriceFree => 'Gratuit';

@@ -20,7 +20,7 @@
   "calendarDeskRepeatedHour": "{time}, une seconde fois : les horloges ont reculé",
   "calendarDeskMissingHour": "Les horloges avancent : de {from} à {to} n’existe pas ce jour-là",
   "calendarDeskColumnPrice": "Prix",
-  "bookingPriceCharge": "Facturé",
+  "bookingPriceCharge": "Facturé {amount}",
   "bookingPricePass": "Pass",
   "bookingPriceCarnet": "Carnet",
   "bookingPriceFree": "Gratuit",

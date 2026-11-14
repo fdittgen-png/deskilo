@@ -3415,7 +3415,6 @@ Map<String, _Getter> _part9() => {
   'bookRoleCustomers': (l) => l.bookRoleCustomers,
   'bookRoleFees': (l) => l.bookRoleFees,
   'bookRoleSuppliers': (l) => l.bookRoleSuppliers,
-  'bookingPriceCharge': (l) => l.bookingPriceCharge,
   'bookingRecoveryBanner': (l) => l.bookingRecoveryBanner,
   'bookingRecoveryCheck': (l) => l.bookingRecoveryCheck,
   'businessExampleMembersOweMoney': (l) => l.businessExampleMembersOweMoney,

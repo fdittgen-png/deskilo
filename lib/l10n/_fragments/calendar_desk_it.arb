@@ -20,7 +20,7 @@
   "calendarDeskRepeatedHour": "{time}, per la seconda volta: gli orologi sono tornati indietro",
   "calendarDeskMissingHour": "Gli orologi vanno avanti: dalle {from} alle {to} non esiste in questo giorno",
   "calendarDeskColumnPrice": "Prezzo",
-  "bookingPriceCharge": "Addebito",
+  "bookingPriceCharge": "Addebito {amount}",
   "bookingPricePass": "Pass",
   "bookingPriceCarnet": "Carnet",
   "bookingPriceFree": "Gratuito",

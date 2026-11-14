@@ -3177,7 +3177,7 @@
   "bookingOverlapsAnother": "La place est déjà réservée pendant une partie de ce créneau.",
   "bookingPastError": "Cette réservation est entièrement dans le passé.",
   "bookingPriceCarnet": "Carnet",
-  "bookingPriceCharge": "Facturé",
+  "bookingPriceCharge": "Facturé {amount}",
   "bookingPriceFree": "Gratuit",
   "bookingPriceOverage": "Demi-journée en plus",
   "bookingPricePass": "Pass",

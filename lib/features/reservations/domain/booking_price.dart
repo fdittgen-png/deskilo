@@ -7,6 +7,7 @@
 // member's subscription; or counting toward the month's extra half-days —
 // with no amount, since the statement does not say which booking of a month
 // was the extra one.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 /// The ways a booking is paid for, as `booking_prices` names them.
 enum BookingPriceKind {
@@ -32,14 +33,15 @@ class BookingPrice {
   });
 
   /// A row of `booking_prices`; null when its kind is not one this app knows.
-  static BookingPrice? fromRow(Map<String, dynamic> row) {
-    final kind = BookingPriceKind.fromWire(row['kind'] as String?);
+  static BookingPrice? fromRow(Object? row) {
+    final r = JsonReader.of(row, context: 'booking_prices');
+    final kind = BookingPriceKind.fromWire(r.stringOrNull('kind'));
     if (kind == null) return null;
     return BookingPrice(
-      reservationId: row['reservation_id'] as String,
+      reservationId: r.string('reservation_id'),
       kind: kind,
-      amountCents: (row['amount_cents'] as num?)?.toInt(),
-      currency: row['currency'] as String?,
+      amountCents: r.intOrNull('amount_cents'),
+      currency: r.stringOrNull('currency'),
     );
   }
 

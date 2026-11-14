@@ -19,7 +19,7 @@ import '../../core/ui/kit/records_table.dart';
 import '../../features/reservations/domain/booking_price.dart';
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
-import '../../features/reservations/providers/booking_price_providers.dart';
+import '../../features/reservations/providers/reservation_providers.dart';
 import '../../l10n/app_localizations.dart';
 import 'desk_booking_chip.dart';
 import 'desk_calendar.dart';
@@ -27,10 +27,10 @@ import 'desk_calendar.dart';
 /// The key of the records table of the desk calendar.
 const Key _deskBookingsTableKey = ValueKey('desk-bookings-table');
 
-/// The word for a booking's [kind] of price.
-String bookingPriceWord(AppLocalizations l10n, BookingPriceKind kind) =>
+/// The word for a booking's [kind] of price (a charge says its amount).
+String _priceWord(AppLocalizations l10n, BookingPriceKind kind) =>
     switch (kind) {
-      BookingPriceKind.charge => l10n.bookingPriceCharge,
+      BookingPriceKind.charge => l10n.bookingPriceCharge('').trim(),
       BookingPriceKind.pass => l10n.bookingPricePass,
       BookingPriceKind.carnet => l10n.bookingPriceCarnet,
       BookingPriceKind.free => l10n.bookingPriceFree,
@@ -42,11 +42,11 @@ String bookingPriceWord(AppLocalizations l10n, BookingPriceKind kind) =>
 /// amount, else the kind's word.
 String bookingPriceText(
   AppLocalizations l10n,
-  String Function(String currency, int minor) money,
+  String Function(String currency, int minor) amountText,
   BookingPrice price,
 ) => price.isCharge
-    ? '${l10n.bookingPriceCharge} ${money(price.currency!, price.amountCents!)}'
-    : bookingPriceWord(l10n, price.kind);
+    ? l10n.bookingPriceCharge(amountText(price.currency!, price.amountCents!))
+    : _priceWord(l10n, price.kind);
 
 class DeskBookingsTable extends ConsumerStatefulWidget {
   const DeskBookingsTable({
@@ -95,7 +95,7 @@ class _DeskBookingsTableState extends ConsumerState<DeskBookingsTable> {
         ? const <String, BookingPrice>{}
         : ref.watch(bookingPricesProvider(period)).value ??
               const <String, BookingPrice>{}; // empty-ok: no price is shown until the read answers, and none when it is refused
-    String money(String code, int minor) =>
+    String amount(String code, int minor) =>
         format.moneyIn(code).formatMinor(minor);
     return RecordsTable<Reservation>(
       key: _deskBookingsTableKey,
@@ -110,7 +110,7 @@ class _DeskBookingsTableState extends ConsumerState<DeskBookingsTable> {
         _ => null,
       },
       amountColumn: 'price',
-      formatAmount: money,
+      formatAmount: amount,
       empty: EmptyState(
         icon: Icons.event_busy_outlined,
         title: l10n.calendarNothingHere,
@@ -166,7 +166,7 @@ class _DeskBookingsTableState extends ConsumerState<DeskBookingsTable> {
             },
             cell: (_, r) => switch (prices[r.id]) {
               final p? => Text(
-                bookingPriceText(l10n, money, p),
+                bookingPriceText(l10n, amount, p),
                 overflow: TextOverflow.ellipsis,
               ),
               null => const SizedBox.shrink(),

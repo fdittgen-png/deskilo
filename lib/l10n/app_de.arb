@@ -3177,7 +3177,7 @@
   "bookingOverlapsAnother": "Der Platz ist in einem Teil dieser Zeit bereits gebucht.",
   "bookingPastError": "Diese Buchung liegt vollständig in der Vergangenheit.",
   "bookingPriceCarnet": "Mehrfachkarte",
-  "bookingPriceCharge": "Gebühr",
+  "bookingPriceCharge": "Gebühr {amount}",
   "bookingPriceFree": "Kostenlos",
   "bookingPriceOverage": "Zusätzlicher Halbtag",
   "bookingPricePass": "Pass",

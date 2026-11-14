@@ -8423,11 +8423,11 @@ abstract class AppLocalizations {
   /// **'Carnet'**
   String get bookingPriceCarnet;
 
-  /// #3843 A booking charged on its own (a rented room); shown before its amount
+  /// #3843 A booking charged on its own (a rented room), with its amount in the business's currency
   ///
   /// In en, this message translates to:
-  /// **'Charge'**
-  String get bookingPriceCharge;
+  /// **'Charge {amount}'**
+  String bookingPriceCharge(String amount);
 
   /// #3843 A booking that counts toward no quota (outside the counted hours, or a place outside it)
   ///

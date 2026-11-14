@@ -3177,7 +3177,7 @@
   "bookingOverlapsAnother": "Il posto è già prenotato per parte di questo orario.",
   "bookingPastError": "Questa prenotazione è interamente nel passato.",
   "bookingPriceCarnet": "Carnet",
-  "bookingPriceCharge": "Addebito",
+  "bookingPriceCharge": "Addebito {amount}",
   "bookingPriceFree": "Gratuito",
   "bookingPriceOverage": "Mezza giornata extra",
   "bookingPricePass": "Pass",

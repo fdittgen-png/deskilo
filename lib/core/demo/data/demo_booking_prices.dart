@@ -11,6 +11,8 @@
 //    half-days when the month has some (the statement's own figure).
 // Who reads what is the server's rule: whoever reads the finances, every
 // booking; a member, their own.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show yearMonth;
+
 import '../../../features/money/domain/guest_pass.dart';
 import '../../../features/money/domain/statement.dart';
 import '../../../features/reservations/domain/booking_price.dart';
@@ -119,8 +121,7 @@ class DemoBookingPriceReads implements BookingPriceReads {
     }
     if (carnet.contains(r.id)) return of(BookingPriceKind.carnet);
     if (r.seatId == null) return of(BookingPriceKind.free);
-    final month =
-        '${r.startsAt.year}-${r.startsAt.month.toString().padLeft(2, '0')}';
+    final month = yearMonth(r.startsAt.year, r.startsAt.month);
     final key = '${r.memberId}/$month';
     final over = extra[key] ??= (await statement(
       r.memberId,
