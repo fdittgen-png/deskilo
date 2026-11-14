@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'invitation_answer.dart';
 import 'member.dart';
+import 'member_term_answer.dart';
 import 'member_term_change.dart';
 import 'new_member_defaults.dart';
 import 'overage_policy.dart';
@@ -34,6 +35,33 @@ abstract class MembershipRepository {
   /// that a standing subscription invoice has frozen, by member id: the
   /// first day of each month.
   Future<Map<String, Set<DateTime>>> fetchInvoicedMonths(String workspaceId);
+
+  /// #3858 — the immediate share command: in force from this month's first
+  /// day when nothing from it on is invoiced, else from the first day after
+  /// the last invoiced month (it then waits for that day). The answer says
+  /// the date; a held change answers pending.
+  Future<MemberTermAnswer> requestMemberShare(String memberId, int pct);
+
+  /// #3858 — schedules the share [pct] for [on], a month's first day after
+  /// the last invoiced month; otherwise [MemberTermDateRefused] names the
+  /// earliest date it can take.
+  Future<MemberTermAnswer> scheduleMemberShare(
+    String memberId,
+    int pct,
+    DateTime on,
+    String requestId,
+  );
+
+  /// #3858 — schedules a pause from [from] (today or later) until [until]
+  /// (the member is active again that day; null: until resumed). The answer
+  /// names the months that stay charged, the first it frees and the
+  /// bookings in the months it frees.
+  Future<MemberTermAnswer> scheduleMemberPause(
+    String memberId,
+    DateTime from,
+    DateTime? until,
+    String requestId,
+  );
 
   /// All of MY membership rows across workspaces — one per profile (#89).
   Future<List<Member>> fetchMyMembers();
