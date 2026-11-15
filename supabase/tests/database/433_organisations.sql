@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #4004 (0773) -- the organisation of a customer's businesses. An owner of
+-- #4004 (0775) -- the organisation of a customer's businesses. An owner of
 -- two businesses makes one organisation of them; someone who owns only one
 -- of the two is refused; the members of a house read the organisation's
 -- name, someone outside reads nothing. Only the server writes a business's
