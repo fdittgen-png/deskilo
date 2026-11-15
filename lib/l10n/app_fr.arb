@@ -13305,6 +13305,7 @@
   "organisationName": "Nom de l’organisation",
   "organisationNone": "Cette entreprise n’est dans aucune organisation. Une entreprise dans un autre pays ou une autre devise est une maison à part entière dans l’organisation de sa tête.",
   "organisationRefusedAlreadyInOne": "Cette entreprise est déjà dans une organisation.",
+  "organisationRefusedDemoOneHouse": "La démo ajoute une seule maison à l’étranger : en Pologne, en złoty. Choisissez la Pologne pour l’ajouter.",
   "organisationRefusedFeatureOff": "L’organisation est désactivée dans cette entreprise : activez-la d’abord dans ses fonctionnalités.",
   "organisationRefusedHeadLeavesLast": "La tête part en dernier : retirez d’abord les autres maisons.",
   "organisationRefusedInNone": "Cette entreprise n’est dans aucune organisation.",

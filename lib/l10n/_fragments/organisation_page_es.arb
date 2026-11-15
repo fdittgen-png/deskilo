@@ -28,5 +28,6 @@
   "organisationConfirmEnd": "{organisation} termina: {head} vuelve a ser un negocio independiente.",
   "organisationConfirmHead": "{house} pasa a ser la sede: sus propietarios gestionan la organización a partir de ahora.",
   "organisationRefusedLanguage": "Los documentos hablan inglés, francés, alemán, español o italiano.",
-  "organisationRefusedRequestUsed": "Esta solicitud ya creó otro negocio. Vuelva a abrir el formulario."
+  "organisationRefusedRequestUsed": "Esta solicitud ya creó otro negocio. Vuelva a abrir el formulario.",
+  "organisationRefusedDemoOneHouse": "La demo añade una casa en el extranjero: en Polonia, en esloti. Elija Polonia para añadirla."
 }

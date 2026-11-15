@@ -13305,6 +13305,7 @@
   "organisationName": "Nombre de la organización",
   "organisationNone": "Este negocio no está en ninguna organización. Un negocio en otro país o en otra moneda es una casa propia en la organización de su sede.",
   "organisationRefusedAlreadyInOne": "Este negocio ya está en una organización.",
+  "organisationRefusedDemoOneHouse": "La demo añade una casa en el extranjero: en Polonia, en esloti. Elija Polonia para añadirla.",
   "organisationRefusedFeatureOff": "La organización está desactivada en este negocio: actívela primero en sus funciones.",
   "organisationRefusedHeadLeavesLast": "La sede sale la última: saque primero las demás casas.",
   "organisationRefusedInNone": "Este negocio no está en ninguna organización.",

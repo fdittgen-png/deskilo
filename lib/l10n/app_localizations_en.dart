@@ -22444,6 +22444,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This business is already in an organisation.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'The organisation is off in this business: turn it on in its features first.';
 

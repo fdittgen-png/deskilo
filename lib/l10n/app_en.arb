@@ -29445,6 +29445,10 @@
   "@organisationRefusedAlreadyInOne": {
     "description": "#4006 — the organisation page: organisationRefusedAlreadyInOne."
   },
+  "organisationRefusedDemoOneHouse": "The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.",
+  "@organisationRefusedDemoOneHouse": {
+    "description": "#4005 — in the Demo, a house abroad can only be added in the Demo's own country and currency."
+  },
   "organisationRefusedFeatureOff": "The organisation is off in this business: turn it on in its features first.",
   "@organisationRefusedFeatureOff": {
     "description": "#4006 — the organisation page: organisationRefusedFeatureOff."

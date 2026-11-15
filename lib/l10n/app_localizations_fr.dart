@@ -22700,6 +22700,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette entreprise est déjà dans une organisation.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'La démo ajoute une seule maison à l’étranger : en Pologne, en złoty. Choisissez la Pologne pour l’ajouter.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'L’organisation est désactivée dans cette entreprise : activez-la d’abord dans ses fonctionnalités.';
 

@@ -13305,6 +13305,7 @@
   "organisationName": "Name der Organisation",
   "organisationNone": "Dieses Unternehmen gehört zu keiner Organisation. Ein Unternehmen in einem anderen Land oder einer anderen Währung ist ein eigenes Haus in der Organisation seines Hauptsitzes.",
   "organisationRefusedAlreadyInOne": "Dieses Unternehmen gehört bereits zu einer Organisation.",
+  "organisationRefusedDemoOneHouse": "Die Demo fügt ein Haus im Ausland hinzu: in Polen, in Złoty. Wählen Sie Polen, um es hinzuzufügen.",
   "organisationRefusedFeatureOff": "Die Organisation ist in diesem Unternehmen aus: Schalten Sie sie zuerst in seinen Funktionen ein.",
   "organisationRefusedHeadLeavesLast": "Der Hauptsitz geht zuletzt: Nehmen Sie zuerst die anderen Häuser heraus.",
   "organisationRefusedInNone": "Dieses Unternehmen gehört zu keiner Organisation.",

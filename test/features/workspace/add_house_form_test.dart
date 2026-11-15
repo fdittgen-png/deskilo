@@ -41,7 +41,18 @@ _open(WidgetTester tester, {HouseRole role = HouseRole.owner}) async {
     organisations: [_organisation(role)],
     createBusiness: (r) async {
       requests.add(r);
-      return 'house-${r.requestId}';
+      return HouseBirth(
+        workspaceId: 'house-${r.requestId}',
+        headWorkspaceId: 'head',
+        plans: 0,
+        services: 0,
+        packages: 0,
+        validationPolicies: 0,
+        features: 0,
+        amountsKept: false,
+        coOwnersAdded: 0,
+        pricesPending: true,
+      );
     },
   );
   String? created;

@@ -15,6 +15,7 @@ class FakeOrganisationRepository implements OrganisationRepository {
     List<Organisation> organisations = const [],
     List<OrganisationHouse> businesses = const [],
     this.createBusiness,
+    this.onlyHouse,
   }) : _organisations = List.of(organisations),
        _source = null,
        _businessSource = null,
@@ -25,6 +26,7 @@ class FakeOrganisationRepository implements OrganisationRepository {
     Future<List<Organisation>> Function() source, {
     Future<List<OrganisationHouse>> Function()? businesses,
     this.createBusiness,
+    this.onlyHouse,
   }) : _organisations = [],
        _source = source,
        _businessSource = businesses,
@@ -32,7 +34,11 @@ class FakeOrganisationRepository implements OrganisationRepository {
 
   /// #4005 — makes the house's business where the person's businesses are
   /// kept, and answers its id; the same request answers the same business.
-  final Future<String> Function(HouseRequest request)? createBusiness;
+  final Future<HouseBirth> Function(HouseRequest request)? createBusiness;
+
+  /// #4005 — the one house the Demo can add (its country and currency); a
+  /// request for another is refused in words, never swapped silently.
+  final ({String country, String currency})? onlyHouse;
 
   final Map<String, HouseBirth> _births = {};
 
@@ -182,7 +188,13 @@ class FakeOrganisationRepository implements OrganisationRepository {
     if (create == null) {
       return (workspaceId: null, refused: OrganisationRefusal.other);
     }
-    final id = await create(request);
+    if (onlyHouse case final only?
+        when only.country != request.country ||
+            only.currency != request.currency) {
+      return (workspaceId: null, refused: OrganisationRefusal.demoOneHouse);
+    }
+    final birth = await create(request);
+    final id = birth.workspaceId;
     if (o.houseOf(id) == null) {
       final house = OrganisationHouse(
         workspaceId: id,
@@ -193,20 +205,8 @@ class FakeOrganisationRepository implements OrganisationRepository {
       );
       _businesses.add(house);
       all[i] = _with(o, houses: [...o.houses, house]);
-      _births[id] = HouseBirth(
-        workspaceId: id,
-        headWorkspaceId: o.headWorkspaceId,
-        plans: 0,
-        services: 0,
-        packages: 0,
-        validationPolicies: 0,
-        features: 0,
-        amountsKept:
-            o.houseOf(o.headWorkspaceId)?.currencyCode == request.currency,
-        coOwnersAdded: 0,
-        pricesPending: false,
-      );
     }
+    _births[id] = birth;
     return (workspaceId: id, refused: null);
   }
 

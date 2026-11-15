@@ -22632,6 +22632,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa attività fa già parte di un’organizzazione.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'La demo aggiunge una casa all’estero: in Polonia, in złoty. Scelga la Polonia per aggiungerla.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'L’organizzazione è disattivata in questa attività: la attivi prima nelle sue funzioni.';
 

@@ -161,6 +161,10 @@ enum OrganisationRefusal {
   /// #4005 — this request already made another business.
   requestUsed,
 
+  /// #4005 — the Demo adds one house abroad, in its own country and
+  /// currency, and says which.
+  demoOneHouse,
+
   /// Anything else the server said no to.
   other,
 }
@@ -229,6 +233,7 @@ class HouseBirth {
     required this.coOwnersAdded,
     required this.pricesPending,
     this.createdAt,
+    this.rateHints = const {},
   });
 
   factory HouseBirth.fromJson(Object? raw) {
@@ -246,6 +251,11 @@ class HouseBirth {
       coOwnersAdded: row.listOrAbsent('co_owners_added').length,
       pricesPending: row.isTrue('prices_pending'),
       createdAt: row.dateTimeOrNull('created_at'),
+      rateHints: {
+        for (final MapEntry(:key, :value)
+            in carried.objectOrAbsent('rate_hints').json.entries)
+          if (value is String) key: value,
+      },
     );
   }
 
@@ -258,4 +268,8 @@ class HouseBirth {
   final int coOwnersAdded;
   final bool pricesPending;
   final DateTime? createdAt;
+
+  /// #4005 — the head's rate category per carried priced row, keyed
+  /// `<table>:<name>` (`services:Coffee`): the EN 16931 code (S, Z, E, O).
+  final Map<String, String> rateHints;
 }

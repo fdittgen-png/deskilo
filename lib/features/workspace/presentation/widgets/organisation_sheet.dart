@@ -52,6 +52,7 @@ String organisationRefusalText(
   OrganisationRefusal.featureOff => l10n.organisationRefusedFeatureOff,
   OrganisationRefusal.language => l10n.organisationRefusedLanguage,
   OrganisationRefusal.requestUsed => l10n.organisationRefusedRequestUsed,
+  OrganisationRefusal.demoOneHouse => l10n.organisationRefusedDemoOneHouse,
   OrganisationRefusal.other => l10n.organisationRefusedOther,
 };
 

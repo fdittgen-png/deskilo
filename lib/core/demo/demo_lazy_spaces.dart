@@ -6,6 +6,7 @@
 // built. The fixture delegates to one of these (`DemoFixture.london` ...).
 import 'demo_dataset.dart';
 import 'demo_fixture.dart';
+import 'demo_house_space.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
 import 'demo_persona.dart';
@@ -26,6 +27,7 @@ typedef DemoListings = ({
   DemoSpaceListing zurich,
   DemoSpaceListing milan,
   DemoSpaceListing practice,
+  DemoSpaceListing house,
 });
 
 class DemoLazySpaces {
@@ -106,6 +108,17 @@ class DemoLazySpaces {
     ),
   );
 
+  /// #4005 — the house abroad the Demo adds: empty, dormant until added.
+  late final DemoHouseData house = _space(
+    DemoSpaceKey.house,
+    listings.house,
+    () => DemoHouseData.build(
+      listing: listings.house,
+      actor: () => activeMemberId,
+      now: _home.seededAt,
+    ),
+  );
+
   /// #3302 — the main space's development twin, with stores of its own.
   late final DemoTwinData twin = _space(
     DemoSpaceKey.twin,
@@ -134,6 +147,7 @@ class DemoLazySpaces {
     DemoSpaceKey.zurich => zurich,
     DemoSpaceKey.milan => milan,
     DemoSpaceKey.practice => practice,
+    DemoSpaceKey.house => house,
     DemoSpaceKey.twin => twin,
   };
 
@@ -206,6 +220,7 @@ class DemoLazySpaces {
         DemoSpaceKey.zurich => listings.zurich,
         DemoSpaceKey.milan => listings.milan,
         DemoSpaceKey.practice => listings.practice,
+        DemoSpaceKey.house => listings.house,
         DemoSpaceKey.twin => _twinSource.listing,
       };
       return listing == null
@@ -225,6 +240,7 @@ class DemoLazySpaces {
     listings.zurich,
     listings.milan,
     listings.practice,
+    listings.house,
     _twinSource.listing,
   ];
 }

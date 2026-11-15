@@ -13305,6 +13305,7 @@
   "organisationName": "Nome dell’organizzazione",
   "organisationNone": "Questa attività non fa parte di alcuna organizzazione. Un’attività in un altro paese o in un’altra valuta è una casa a sé nell’organizzazione della sua sede.",
   "organisationRefusedAlreadyInOne": "Questa attività fa già parte di un’organizzazione.",
+  "organisationRefusedDemoOneHouse": "La demo aggiunge una casa all’estero: in Polonia, in złoty. Scelga la Polonia per aggiungerla.",
   "organisationRefusedFeatureOff": "L’organizzazione è disattivata in questa attività: la attivi prima nelle sue funzioni.",
   "organisationRefusedHeadLeavesLast": "La sede esce per ultima: tolga prima le altre case.",
   "organisationRefusedInNone": "Questa attività non fa parte di alcuna organizzazione.",

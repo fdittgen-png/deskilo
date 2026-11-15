@@ -35992,6 +35992,12 @@ abstract class AppLocalizations {
   /// **'This business is already in an organisation.'**
   String get organisationRefusedAlreadyInOne;
 
+  /// #4005 — in the Demo, a house abroad can only be added in the Demo's own country and currency.
+  ///
+  /// In en, this message translates to:
+  /// **'The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.'**
+  String get organisationRefusedDemoOneHouse;
+
   /// #4006 — the organisation page: organisationRefusedFeatureOff.
   ///
   /// In en, this message translates to:
