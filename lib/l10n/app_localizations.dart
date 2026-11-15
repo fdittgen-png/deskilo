@@ -9065,6 +9065,12 @@ abstract class AppLocalizations {
   /// **'Alerts: the number waiting could not be read'**
   String get calendarAlertsCountUnknown;
 
+  /// #4021 — the name of the calendar's Alerts control with the number of decisions waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Alerts, {count} new} other{Alerts, {count} new}}'**
+  String calendarAlertsNew(int count);
+
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
   ///
   /// In en, this message translates to:
@@ -9316,6 +9322,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everyone'**
   String get calendarEveryoneTab;
+
+  /// #4021 — the calendar's control that holds its secondary filters (the kinds) on a phone, and the title of their sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get calendarFilters;
+
+  /// #4021 — clears the kinds chosen in the calendar's filters sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get calendarFiltersClear;
 
   /// Shown as a text in calendar item row (calendar).
   ///
@@ -12028,6 +12046,28 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The demo is not available in this workspace.'**
   String get demoEntryUnavailable;
+
+  /// #4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.
+  ///
+  /// In en, this message translates to:
+  /// **'This demo is one organisation: {organisation}, with houses in {countries, plural, one{{countries} country} other{{countries} countries}} and {currencies, plural, one{{currencies} currency} other{{currencies} currencies}}. Each house keeps its own country\'s rules and its own currency; nothing is added across them.'**
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  );
+
+  /// #4009 the Demo first-run card: the heading of the houses a visitor may enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a house'**
+  String get demoOrganisationEnter;
+
+  /// #4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.
+  ///
+  /// In en, this message translates to:
+  /// **'{business} is a business of its own, outside the organisation.'**
+  String demoOrganisationOutside(String business);
 
   /// #1376 demo personas: demoPersonaAdmin
   ///
@@ -25381,11 +25421,35 @@ abstract class AppLocalizations {
   /// **'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.'**
   String get invoiceOriginalNotYetKept;
 
+  /// #3853 snack: the original could not be kept; the server's words follow
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the original of this invoice could not be kept. {why}'**
+  String invoiceOriginalRefused(String why);
+
   /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
   ///
   /// In en, this message translates to:
   /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
   String get invoiceOriginalTooLarge;
+
+  /// #3853 after keeping the originals from To do: how many could not be kept; each invoice says why when opened
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of {count} invoice could not be kept. Open it to see why.} other{The originals of {count} invoices could not be kept. Open one to see why.}}'**
+  String invoiceOriginalsCouldNotKeep(int count);
+
+  /// #3853 progress while the originals are kept in turn [not a count: done]
+  ///
+  /// In en, this message translates to:
+  /// **'{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}'**
+  String invoiceOriginalsKeeping(int done, int total);
+
+  /// #3853 after issuing: the originals kept in the same flow
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of {count} invoice is kept.} other{The originals of {count} invoices are kept.}}'**
+  String invoiceOriginalsKeptNow(int count);
 
   /// #3853 after issuing: how many originals could not be kept in the same flow; the invoices stay issued
   ///
@@ -26970,6 +27034,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fix'**
   String get invoicingTodoFix;
+
+  /// #3853 To do: the action that keeps the originals, in turn
+  ///
+  /// In en, this message translates to:
+  /// **'Keep them'**
+  String get invoicingTodoKeep;
+
+  /// #3853 To do: issued invoices whose original is not kept yet
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Keep the original of {count} invoice} other{Keep the originals of {count} invoices}}'**
+  String invoicingTodoKeepOriginals(int count);
 
   /// #3587 To do: received payments to match
   ///

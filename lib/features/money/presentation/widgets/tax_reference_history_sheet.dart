@@ -11,6 +11,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../application/tax_reference_commands.dart';
@@ -34,26 +35,8 @@ Future<void> showTaxReferenceHistorySheet(
     builder: (context) {
       final l10n = context.l10n;
 
-      Future<void> act(Future<void> Function() change) async {
-        final navigator = Navigator.of(context);
-        final messenger = ScaffoldMessenger.of(context);
-        try {
-          await change();
-        } on Object catch (e, st) {
-          TraceLogger.instance.error(
-            'money',
-            'tax reference change failed',
-            error: e,
-            stackTrace: st,
-          );
-          messenger.showSnackBar(
-            SnackBar(content: Text(l10n.taxRefActionFailed)),
-          );
-          return;
-        }
-        navigator.pop();
-        onDone?.call();
-      }
+      Future<void> act(Future<void> Function() change) =>
+          _act(context, change, onDone);
 
       Future<void> withdraw(TaxReferenceRow v) async {
         final text = await showDialog<String>(
@@ -154,4 +137,28 @@ class _WithdrawDialogState extends State<_WithdrawDialog> {
       ],
     );
   }
+}
+
+/// Runs [change] from the sheet of [context]: the sheet closes once it is
+/// done, or the failure is said and the sheet stays.
+Future<void> _act(
+  BuildContext context,
+  Future<void> Function() change,
+  VoidCallback? onDone,
+) async {
+  final navigator = Navigator.of(context);
+  try {
+    await change();
+  } on Object catch (e, st) {
+    TraceLogger.instance.error(
+      'money',
+      'tax reference change failed',
+      error: e,
+      stackTrace: st,
+    );
+    if (context.mounted) AppSnack.error(context, context.l10n.taxRefActionFailed);
+    return;
+  }
+  navigator.pop();
+  onDone?.call();
 }

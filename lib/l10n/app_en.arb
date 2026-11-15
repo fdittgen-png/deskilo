@@ -7530,6 +7530,15 @@
   "@calendarAlertsCountUnknown": {
     "description": "#4017 — the name of the calendar's Alerts mark when the number of decisions waiting could not be read (no number is shown)."
   },
+  "calendarAlertsNew": "{count, plural, one{Alerts, {count} new} other{Alerts, {count} new}}",
+  "@calendarAlertsNew": {
+    "description": "#4021 — the name of the calendar's Alerts control with the number of decisions waiting.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "calendarAllLevels": "All levels",
   "@calendarAllLevels": {
     "description": "First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)"
@@ -7749,6 +7758,14 @@
   "calendarEveryoneTab": "Everyone",
   "@calendarEveryoneTab": {
     "description": "Calendar filter for admins showing all reservations"
+  },
+  "calendarFilters": "Filters",
+  "@calendarFilters": {
+    "description": "#4021 — the calendar's control that holds its secondary filters (the kinds) on a phone, and the title of their sheet."
+  },
+  "calendarFiltersClear": "Clear",
+  "@calendarFiltersClear": {
+    "description": "#4021 — clears the kinds chosen in the calendar's filters sheet."
   },
   "calendarGroupActivity": "Alerts & messages",
   "@calendarGroupActivity": {
@@ -9936,6 +9953,34 @@
   "demoEntryUnavailable": "The demo is not available in this workspace.",
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoOrganisationBody": "This demo is one organisation: {organisation}, with houses in {countries, plural, one{{countries} country} other{{countries} countries}} and {currencies, plural, one{{currencies} currency} other{{currencies} currencies}}. Each house keeps its own country's rules and its own currency; nothing is added across them.",
+  "@demoOrganisationBody": {
+    "description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      },
+      "countries": {
+        "type": "int"
+      },
+      "currencies": {
+        "type": "int"
+      }
+    }
+  },
+  "demoOrganisationEnter": "Enter a house",
+  "@demoOrganisationEnter": {
+    "description": "#4009 the Demo first-run card: the heading of the houses a visitor may enter."
+  },
+  "demoOrganisationOutside": "{business} is a business of its own, outside the organisation.",
+  "@demoOrganisationOutside": {
+    "description": "#4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "demoPersonaAdmin": "An administrator",
   "@demoPersonaAdmin": {
@@ -20532,9 +20577,48 @@
   "@invoiceOriginalNotYetKept": {
     "description": "#3853 snack: nobody who may issue invoices has opened it yet, a copy is shown"
   },
+  "invoiceOriginalRefused": "Copy: the original of this invoice could not be kept. {why}",
+  "@invoiceOriginalRefused": {
+    "description": "#3853 snack: the original could not be kept; the server's words follow",
+    "placeholders": {
+      "why": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.",
   "@invoiceOriginalTooLarge": {
     "description": "#3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)"
+  },
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{The original of {count} invoice could not be kept. Open it to see why.} other{The originals of {count} invoices could not be kept. Open one to see why.}}",
+  "@invoiceOriginalsCouldNotKeep": {
+    "description": "#3853 after keeping the originals from To do: how many could not be kept; each invoice says why when opened",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceOriginalsKeeping": "{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}",
+  "@invoiceOriginalsKeeping": {
+    "description": "#3853 progress while the originals are kept in turn [not a count: done]",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceOriginalsKeptNow": "{count, plural, one{The original of {count} invoice is kept.} other{The originals of {count} invoices are kept.}}",
+  "@invoiceOriginalsKeptNow": {
+    "description": "#3853 after issuing: the originals kept in the same flow",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoiceOriginalsNotKeptNow": "{count, plural, one{The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.} other{The originals of {count} invoices were not kept yet. The invoices are issued; their originals are kept later.}}",
   "@invoiceOriginalsNotKeptNow": {
@@ -21875,6 +21959,19 @@
   "invoicingTodoFix": "Fix",
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
+  },
+  "invoicingTodoKeep": "Keep them",
+  "@invoicingTodoKeep": {
+    "description": "#3853 To do: the action that keeps the originals, in turn"
+  },
+  "invoicingTodoKeepOriginals": "{count, plural, one{Keep the original of {count} invoice} other{Keep the originals of {count} invoices}}",
+  "@invoicingTodoKeepOriginals": {
+    "description": "#3853 To do: issued invoices whose original is not kept yet",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicingTodoMatch": "Match payments",
   "@invoicingTodoMatch": {

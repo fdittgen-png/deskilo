@@ -8,6 +8,7 @@
 // paper, without a copy stamp, a paid stamp or appended sources: the
 // Factur-X PDF/A-3 where the business's country has an e-invoice route,
 // else the plain PDF with its CII recorded beside it.
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -15,7 +16,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -58,42 +61,153 @@ class InvoiceDocumentFlow {
       );
     }
     final document = await documentOf(invoice);
-    final why = _whyACopy(document.source);
+    final why = _whyACopy(document);
     if (why != null && context.mounted) {
       AppSnack.info(context, why(context.l10n));
     }
     return (bytes: document.bytes, fileName: document.fileName);
   }
 
+  /// The Factur-X of [invoice] as it leaves for a platform or a download:
+  /// its stored original, made first if it is missing, which is the
+  /// Factur-X wherever the business's country has an e-invoice route. Null
+  /// when the invoice has no original: the caller renders it as before.
+  Future<({List<int> bytes, String fileName})?> facturXOriginal(
+    Invoice invoice,
+  ) async {
+    final document = await documentOf(invoice);
+    if (document.source != InvoiceDocumentSource.original) return null;
+    return (
+      bytes: document.bytes,
+      fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
+    );
+  }
+
+  /// The Factur-X file of [invoice]: its stored original where it has one,
+  /// else rendered now as before, for the [seller], [buyer] and [iban] given.
+  Future<({List<int> bytes, String fileName})> facturXFile(
+    Invoice invoice, {
+    required InvoiceParty seller,
+    required InvoiceParty buyer,
+    required String iban,
+  }) async {
+    final original = await facturXOriginal(invoice);
+    if (original != null) return original;
+    if (!context.mounted) return (bytes: const <int>[], fileName: '');
+    return buildFacturXFile(
+      context,
+      ref,
+      invoice,
+      seller: seller,
+      buyer: buyer,
+      iban: iban,
+    );
+  }
+
   /// Keeps the originals of the invoices just issued, in turn, in the same
   /// flow and without a tap. An invoice whose original is not kept now stays
   /// issued and is kept later; how many is said in words.
-  Future<void> keep(Iterable<String> invoiceIds) async {
+  ///
+  /// [askedFor]: the person asked for it (the To do's action), so a dialog
+  /// shows the progress and an original not kept is said to be one that
+  /// could not be kept.
+  Future<void> keep(
+    Iterable<String> invoiceIds, {
+    bool askedFor = false,
+  }) async {
     final ids = invoiceIds.toSet();
     if (ids.isEmpty) return;
-    var notKept = ids.length;
+    var kept = 0;
+    final done = ValueNotifier<int>(0);
+    // The progress is closed by the run that opened it, on the navigator it
+    // was opened on, and only while it is still open: a page that left the
+    // tree meanwhile must not leave it up, and a run that ends must never
+    // close the page under it.
+    final navigator = Navigator.of(context, rootNavigator: true);
+    var progressOpen = askedFor;
+    if (askedFor) {
+      unawaited(
+        _showProgress(
+          done,
+          ids.length,
+        ).whenComplete(() => progressOpen = false),
+      );
+    }
+    void closeProgress() {
+      if (progressOpen && navigator.mounted) navigator.pop();
+      progressOpen = false;
+    }
+
     try {
       await readDocumentPolicies(ref);
       // the list as it stands now, with the invoices just issued in it
       ref.invalidate(invoicesProvider);
       final invoices = await ref.read(invoicesProvider.future);
       for (final invoice in invoices.where((i) => ids.contains(i.id))) {
-        if (!context.mounted) return;
-        final document = await documentOf(invoice);
-        if (document.source == InvoiceDocumentSource.original) notKept--;
+        if (!context.mounted) break;
+        // one that is not kept never stops the others
+        try {
+          final document = await documentOf(invoice);
+          if (document.source == InvoiceDocumentSource.original) kept++;
+          done.value++;
+        } on Object catch (e, st) {
+          done.value++;
+          TraceLogger.instance.warn(
+            'money',
+            'the original of ${invoice.number} was not kept',
+            error: e,
+            stackTrace: st,
+          );
+        }
       }
     } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
-        'the originals of the invoices just issued were not all kept',
+        'the invoices just issued could not be read to keep their originals',
         error: e,
         stackTrace: st,
       );
     }
-    if (notKept > 0 && context.mounted) {
-      AppSnack.info(context, context.l10n.invoiceOriginalsNotKeptNow(notKept));
-    }
+    closeProgress();
+    if (!context.mounted) return;
+    final l10n = context.l10n;
+    final notKept = ids.length - kept;
+    AppSnack.info(
+      context,
+      notKept == 0
+          ? l10n.invoiceOriginalsKeptNow(kept)
+          : askedFor
+          ? l10n.invoiceOriginalsCouldNotKeep(notKept)
+          : l10n.invoiceOriginalsNotKeptNow(notKept),
+    );
   }
+
+  /// The progress of a run the person asked for: done of [total].
+  Future<void> _showProgress(ValueNotifier<int> done, int total) =>
+      showDialog<void>(
+        context: context,
+        barrierDismissible: false,
+        // Back and Escape do not close it: the run does, when it ends.
+        builder: (context) => PopScope(
+          canPop: false,
+          child: AlertDialog(
+            key: const ValueKey('invoice-originals-keeping'),
+            content: ValueListenableBuilder<int>(
+              valueListenable: done,
+              builder: (context, value, _) => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(context.l10n.invoiceOriginalsKeeping(value, total)),
+                  const SizedBox(height: AppSpacing.md),
+                  LinearProgressIndicator(
+                    value: total == 0 ? null : value / total,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      );
 
   /// Today's copy of [invoice] with its payment status: rendered now, stamped
   /// as a copy and with the paid stamp, saved for the person who asks. It is
@@ -132,8 +246,10 @@ class InvoiceDocumentFlow {
         iban: workspaceIban(workspace),
         reference: reference,
       );
-      if (eInvoiceRouteFor(workspace.countryCode, reference: reference) != null) {
-        icc = (await rootBundle.load('assets/pdf/sRGB2014.icc')).buffer.asUint8List();
+      if (eInvoiceRouteFor(workspace.countryCode, reference: reference) !=
+          null) {
+        icc = (await rootBundle.load('assets/pdf/sRGB2014.icc')).buffer
+            .asUint8List();
       }
     }
     if (!context.mounted) return (pdf: Uint8List(0), xml: '');
@@ -157,12 +273,16 @@ class InvoiceDocumentFlow {
 }
 
 /// What a copy says about itself, or null for the original.
-String Function(AppLocalizations)? _whyACopy(InvoiceDocumentSource source) =>
-    switch (source) {
+String Function(AppLocalizations)? _whyACopy(InvoiceDocument document) =>
+    switch (document.source) {
+      InvoiceDocumentSource.refused => (l10n) => l10n.invoiceOriginalRefused(
+        document.why,
+      ),
       InvoiceDocumentSource.original => null,
       InvoiceDocumentSource.notKept => (l10n) => l10n.invoiceOriginalNotKept,
       InvoiceDocumentSource.mismatch => (l10n) => l10n.invoiceOriginalMismatch,
       InvoiceDocumentSource.tooLarge => (l10n) => l10n.invoiceOriginalTooLarge,
-      InvoiceDocumentSource.notYetKept => (l10n) =>
-          l10n.invoiceOriginalNotYetKept,
+      InvoiceDocumentSource.notYetKept => (
+        l10n,
+      ) => l10n.invoiceOriginalNotYetKept,
     };

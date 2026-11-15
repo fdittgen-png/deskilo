@@ -58,12 +58,18 @@ void main() {
   testWidgets('the chip is offered when the workspace wants decisions on '
       'the timeline', (tester) async {
     await pumpHub(tester);
+    // #4021 — the kinds sit in the Filters sheet.
+    await tester.tap(find.byKey(const ValueKey('calendar-filters')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('calendar-kind-validation')),
         findsOneWidget);
   });
 
   testWidgets('with the feature off the chip is gone', (tester) async {
     await pumpHub(tester, flags: const {'calendarValidations': false});
+    // #4021 — the kinds sit in the Filters sheet.
+    await tester.tap(find.byKey(const ValueKey('calendar-filters')));
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('calendar-kind-validation')),
         findsNothing);
   });

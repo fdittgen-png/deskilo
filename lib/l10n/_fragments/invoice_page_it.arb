@@ -287,5 +287,11 @@
   "invoiceOriginalKept": "Originale conservato il {when} da {who} · SHA-256 {digest}",
   "invoiceCopyWithPaymentStatus": "Copia con lo stato del pagamento",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{L’originale di 1 fattura non è ancora stato conservato. La fattura è emessa; il suo originale sarà conservato più tardi.} other{Gli originali di {count} fatture non sono ancora stati conservati. Le fatture sono emesse; i loro originali saranno conservati più tardi.}}",
-  "invoiceQuickViewIsPreview": "Anteprima: l’originale è il PDF scaricato."
+  "invoiceQuickViewIsPreview": "Anteprima: l’originale è il PDF scaricato.",
+  "invoiceOriginalRefused": "Copia: non è stato possibile conservare l’originale di questa fattura. {why}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{L’originale di {count} fattura è conservato.} other{Gli originali di {count} fatture sono conservati.}}",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Conservare l’originale di {count} fattura} other{Conservare gli originali di {count} fatture}}",
+  "invoicingTodoKeep": "Conservarli",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{Non è stato possibile conservare l’originale di {count} fattura. La apra per vedere perché.} other{Non è stato possibile conservare gli originali di {count} fatture. Ne apra una per vedere perché.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Conservazione dell’originale: {done} di {total}} other{Conservazione degli originali: {done} di {total}}}"
 }

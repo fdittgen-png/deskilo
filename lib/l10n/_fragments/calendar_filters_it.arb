@@ -1,0 +1,5 @@
+{
+  "calendarFilters": "Filtri",
+  "calendarFiltersClear": "Cancella",
+  "calendarAlertsNew": "{count, plural, one{Avvisi, {count} nuovo} other{Avvisi, {count} nuovi}}"
+}

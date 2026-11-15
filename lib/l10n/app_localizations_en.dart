@@ -5773,6 +5773,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Alerts: the number waiting could not be read';
 
   @override
+  String calendarAlertsNew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Alerts, $count new',
+      one: 'Alerts, $count new',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarAllLevels => 'All levels';
 
   @override
@@ -5919,6 +5930,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Everyone';
+
+  @override
+  String get calendarFilters => 'Filters';
+
+  @override
+  String get calendarFiltersClear => 'Clear';
 
   @override
   String get calendarGroupActivity => 'Alerts & messages';
@@ -7545,6 +7562,35 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get demoEntryUnavailable =>
       'The demo is not available in this workspace.';
+
+  @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries countries',
+      one: '$countries country',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies currencies',
+      one: '$currencies currency',
+    );
+    return 'This demo is one organisation: $organisation, with houses in $_temp0 and $_temp1. Each house keeps its own country\'s rules and its own currency; nothing is added across them.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Enter a house';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business is a business of its own, outside the organisation.';
+  }
 
   @override
   String get demoPersonaAdmin => 'An administrator';
@@ -15772,8 +15818,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.';
 
   @override
+  String invoiceOriginalRefused(String why) {
+    return 'Copy: the original of this invoice could not be kept. $why';
+  }
+
+  @override
   String get invoiceOriginalTooLarge =>
       'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+
+  @override
+  String invoiceOriginalsCouldNotKeep(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The originals of $count invoices could not be kept. Open one to see why.',
+      one:
+          'The original of $count invoice could not be kept. Open it to see why.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeeping(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: 'Keeping the originals: $done of $total',
+      one: 'Keeping the original: $done of $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'The originals of $count invoices are kept.',
+      one: 'The original of $count invoice is kept.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceOriginalsNotKeptNow(int count) {
@@ -16767,6 +16853,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicingTodoFix => 'Fix';
+
+  @override
+  String get invoicingTodoKeep => 'Keep them';
+
+  @override
+  String invoicingTodoKeepOriginals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Keep the originals of $count invoices',
+      one: 'Keep the original of $count invoice',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingTodoMatch => 'Match payments';

@@ -3450,6 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Alertes : le nombre en attente n’a pas pu être lu",
+  "calendarAlertsNew": "{count, plural, one{Alertes, {count} nouvelle} other{Alertes, {count} nouvelles}}",
   "calendarAllLevels": "Tous les étages",
   "calendarCancelFollowing": "Annuler celle-ci et les suivantes",
   "calendarCancelOccurrence": "Annuler cette occurrence",
@@ -3517,6 +3518,8 @@
     }
   },
   "calendarEveryoneTab": "Tout le monde",
+  "calendarFilters": "Filtres",
+  "calendarFiltersClear": "Effacer",
   "calendarGroupActivity": "Alertes et messages",
   "calendarGroupBookings": "Réservations et présence",
   "calendarGroupMoney": "Finances",
@@ -4624,6 +4627,34 @@
   "demoEntryUnavailable": "La démo n'est pas disponible dans cet espace.",
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoOrganisationBody": "Cette démo est une organisation : {organisation}, avec des maisons dans {countries, plural, one{{countries} pays} other{{countries} pays}} et {currencies, plural, one{{currencies} devise} other{{currencies} devises}}. Chaque maison garde les règles de son pays et sa propre devise ; rien n’est additionné entre elles.",
+  "@demoOrganisationBody": {
+    "description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      },
+      "countries": {
+        "type": "int"
+      },
+      "currencies": {
+        "type": "int"
+      }
+    }
+  },
+  "demoOrganisationEnter": "Entrer dans une maison",
+  "@demoOrganisationEnter": {
+    "description": "#4009 the Demo first-run card: the heading of the houses a visitor may enter."
+  },
+  "demoOrganisationOutside": "{business} est une entreprise à part, hors de l’organisation.",
+  "@demoOrganisationOutside": {
+    "description": "#4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "demoPersonaAdmin": "Un administrateur",
   "@demoPersonaAdmin": {
@@ -9513,7 +9544,11 @@
   "invoiceOriginalMismatch": "Copie : l’original conservé ne correspond pas à son empreinte ; celle-ci est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalNotKept": "Copie : cette facture a été émise avant que son original soit conservé ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalNotYetKept": "Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
+  "invoiceOriginalRefused": "Copie : l’original de cette facture n’a pas pu être conservé. {why}",
   "invoiceOriginalTooLarge": "Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{L’original de {count} facture n’a pas pu être conservé. Ouvrez-la pour voir pourquoi.} other{Les originaux de {count} factures n’ont pas pu être conservés. Ouvrez-en une pour voir pourquoi.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Conservation de l’original : {done} sur {total}} other{Conservation des originaux : {done} sur {total}}}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{L’original de {count} facture est conservé.} other{Les originaux de {count} factures sont conservés.}}",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{L’original de {count} facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.} other{Les originaux de {count} factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.}}",
   "invoicePageApprovalRecorded": "Votre approbation est enregistrée ; elle attend les autres.",
   "@invoicePageApprovalRecorded": {
@@ -10493,6 +10528,8 @@
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
   },
+  "invoicingTodoKeep": "Les conserver",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Conserver l’original de {count} facture} other{Conserver les originaux de {count} factures}}",
   "invoicingTodoMatch": "Rapprocher des paiements",
   "@invoicingTodoMatch": {
     "description": "#3587 To do: received payments to match"

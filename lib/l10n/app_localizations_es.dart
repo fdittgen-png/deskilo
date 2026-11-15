@@ -5811,6 +5811,17 @@ class AppLocalizationsEs extends AppLocalizations {
       'Alertas: no se pudo leer cuántas esperan';
 
   @override
+  String calendarAlertsNew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Alertas, $count nuevas',
+      one: 'Alertas, $count nueva',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarAllLevels => 'Todas las plantas';
 
   @override
@@ -5958,6 +5969,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Todos';
+
+  @override
+  String get calendarFilters => 'Filtros';
+
+  @override
+  String get calendarFiltersClear => 'Borrar';
 
   @override
   String get calendarGroupActivity => 'Alertas y mensajes';
@@ -7586,6 +7603,35 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get demoEntryUnavailable =>
       'La demo no está disponible en este espacio.';
+
+  @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries países',
+      one: '$countries país',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies monedas',
+      one: '$currencies moneda',
+    );
+    return 'Esta demo es una organización: $organisation, con casas en $_temp0 y $_temp1. Cada casa conserva las reglas de su país y su propia moneda; nada se suma entre ellas.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Entrar en una casa';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business es un negocio aparte, fuera de la organización.';
+  }
 
   @override
   String get demoPersonaAdmin => 'Administrador/a';
@@ -15888,8 +15934,48 @@ class AppLocalizationsEs extends AppLocalizations {
       'Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.';
 
   @override
+  String invoiceOriginalRefused(String why) {
+    return 'Copia: no se pudo conservar el original de esta factura. $why';
+  }
+
+  @override
   String get invoiceOriginalTooLarge =>
       'Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.';
+
+  @override
+  String invoiceOriginalsCouldNotKeep(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'No se pudieron conservar los originales de $count facturas. Abra una para ver por qué.',
+      one:
+          'No se pudo conservar el original de $count factura. Ábrala para ver por qué.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeeping(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: 'Conservando los originales: $done de $total',
+      one: 'Conservando el original: $done de $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Los originales de $count facturas están conservados.',
+      one: 'El original de $count factura está conservado.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceOriginalsNotKeptNow(int count) {
@@ -16886,6 +16972,20 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoicingTodoFix => 'Corregir';
+
+  @override
+  String get invoicingTodoKeep => 'Conservarlos';
+
+  @override
+  String invoicingTodoKeepOriginals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Conservar los originales de $count facturas',
+      one: 'Conservar el original de $count factura',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingTodoMatch => 'Conciliar pagos';

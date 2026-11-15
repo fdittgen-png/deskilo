@@ -30,13 +30,16 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/scoped_messenger.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
 import '../../domain/dunning.dart';
+import '../../providers/invoice_original_providers.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_original_document.dart';
 import '../widgets/invoice_form_sheet.dart';
 import 'invoice_month_flow.dart';
 import 'invoice_page.dart';
@@ -264,7 +267,10 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final holdsUnassigned = money?.holdersAmong(receivables) ?? const {};
     final period = overview.value?.period;
     final currency = workspace?.currencyCode ?? '';
+    // #3853 — the issued invoices whose original waits to be kept
+    final withoutOriginal = ref.watch(invoicesWithoutOriginalProvider).value ?? const <Invoice>[]; // empty-ok: until read, no entry asks to keep originals
     final data = InvoicingHomeData(
+      originalsToKeep: withoutOriginal.length,
       receivables: receivables,
       today: today,
       month: format.dates(DateShape.month).format(today),
@@ -353,6 +359,13 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   /// entry opens its flow, the reminders by hand their queue.
   Future<void> _todo(TodoKind kind, String? period) async {
     if (kind == TodoKind.invoiceTheMonth) await _invoiceTheMonth(period);
+    if (kind == TodoKind.keepOriginals) {
+      final waiting = await ref.read(invoicesWithoutOriginalProvider.future);
+      if (!mounted) return;
+      await InvoiceDocumentFlow(context, ref)
+          .keep([for (final i in waiting) i.id], askedFor: true);
+      ref.invalidate(invoicesWithoutOriginalProvider);
+    }
     final creditsKnown =
         unassignedMoneyKnown(ref.read(unassignedMoneyProvider)) != null;
     if (kind == TodoKind.shareReminders && creditsKnown) {
@@ -363,7 +376,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   /// Full screen, with its own messenger, so what it says is said there.
   Future<void> _fullScreen(Widget child) => showDialog<void>(
     context: context,
-    builder: (_) => Dialog.fullscreen(child: ScaffoldMessenger(child: child)),
+    builder: (_) => Dialog.fullscreen(child: ScopedMessenger(child: child)),
   );
 
   /// The reminders shared by hand, the customers holding money we have not
@@ -388,7 +401,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       builder: (_) => Dialog.fullscreen(
         // Its own messenger: what the month says is said once, here, not
         // also on the home under it.
-        child: ScaffoldMessenger(
+        child: ScopedMessenger(
           child: InvoiceMonthFlow(
             period: period ?? overview.period,
             entries: overview.toInvoice,

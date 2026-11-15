@@ -248,7 +248,7 @@ class PlaceFields extends ConsumerWidget {
             key: const ValueKey('onboarding-timezone'),
             controller: timezone,
             focusNode: timezoneFocus,
-            readOnly: true,
+            readOnly: true, // field-locked: the zone is picked from the list, never typed
             onTap: () async {
               final picked = await showTimeZonePicker(
                 context,
