@@ -26260,6 +26260,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchasesSupplier => 'Fornitore';
 
   @override
+  String get purchasesSupplierNotRead => 'Non letto';
+
+  @override
   String get purchasesTabDocuments => 'Documenti';
 
   @override

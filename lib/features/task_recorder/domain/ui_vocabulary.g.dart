@@ -11869,6 +11869,7 @@ const Set<String> uiLabelKeys = {
   'purchasesSubmitRefused',
   'purchasesSubmitted',
   'purchasesSupplier',
+  'purchasesSupplierNotRead',
   'purchasesTabDocuments',
   'purchasesTaxField',
   'purchasesTaxFieldHelper',

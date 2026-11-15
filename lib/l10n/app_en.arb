@@ -34245,6 +34245,10 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesSupplierNotRead": "Not read",
+  "@purchasesSupplierNotRead": {
+    "description": "#4067 the purchases table: the supplier cell when the suppliers could not be read"
+  },
   "purchasesTabDocuments": "Documents",
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
