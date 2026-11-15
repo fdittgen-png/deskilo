@@ -93,11 +93,13 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
       initiallyExpanded: widget.initiallyExpanded,
       leading: Icon(widget.icon), title: Text(widget.title),
       childrenPadding: AppSpacing.gutterAll,
-      // #4034 — a closed group's fields stay mounted, not reached by Tab.
-      children: [ExcludeFocus(excluding: !_controller.isExpanded,
+      // #4034 — a closed group's fields stay mounted, not reached by Tab;
+      // read from the controller as it changes (the tile opens it itself).
+      children: [ListenableBuilder(listenable: _controller,
+        builder: (context, _) => ExcludeFocus(excluding: !_controller.isExpanded,
         child: TickerMode(enabled: _controller.isExpanded,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: widget.children)))]),
+          children: widget.children))))]),
   ));
 }
 

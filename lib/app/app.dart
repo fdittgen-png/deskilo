@@ -190,10 +190,7 @@ class DeskiloApp extends ConsumerWidget {
                       child: desk
                           ? DeskFrame(router: router, path: path, child: page)
                           // #3604 — the measure its route declares.
-                          : FocusTraversalGroup(
-                              policy: PageTraversalPolicy(),
-                              child: framePage(path, page, inside: false),
-                            ),
+                          : _offDesk(path, page),
                     ),
                     ),
                     );
@@ -210,3 +207,10 @@ class DeskiloApp extends ConsumerWidget {
     );
   }
 }
+
+/// #3604 — off the desk, [page] in the measure its route declares; #4034 —
+/// walked by Tab as the desk's page area is ([PageTraversalPolicy]).
+Widget _offDesk(String path, Widget page) => FocusTraversalGroup(
+  policy: PageTraversalPolicy(),
+  child: framePage(path, page, inside: false),
+);
