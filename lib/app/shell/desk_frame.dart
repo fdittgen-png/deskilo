@@ -19,6 +19,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/page_title.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 import 'chrome_role.dart';
 import 'desk_breadcrumb.dart';
 import 'desk_scaffold.dart';
@@ -131,10 +132,17 @@ String _branchLocation(List<List<String>> tabs, int branch) =>
     permanent: true,
     tabs: tabs,
   ).crumbsOf(path);
+  // #4060 — a page outside the tabs that declares a tab as its place (a
+  // conversation: Messages) is named under that tab.
+  final placed = int.tryParse(
+    (placeOf(path) ?? '').replaceFirst('drawer-tab-', ''),
+  );
   final tabTitle = path == '/workspace-overview'
       ? l10n.overviewTitle
       : branch >= 0
       ? tabTitles[branch]
+      : placed != null && placed >= 0 && placed < tabTitles.length
+      ? tabTitles[placed]
       : null;
   return (
     crumbs: crumbs.isEmpty && tabTitle != null

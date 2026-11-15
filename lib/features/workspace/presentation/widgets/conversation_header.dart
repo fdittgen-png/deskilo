@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
+import '../../../../core/ui/kit/page_title.dart';
 import '../../domain/conversation.dart';
 
 /// The top of a conversation: back or close, the title, a mute mark and the
@@ -74,11 +75,21 @@ class ConversationHeader extends StatelessWidget {
                   Row(
                     children: [
                       Flexible(
-                        child: Text(
-                          title,
-                          style: theme.textTheme.titleMedium,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                        // #4060 — a conversation as a page names itself, so
+                        // the desk's top bar says whom it is with.
+                        child: asPage
+                            ? DefaultTextStyle.merge(
+                                style: theme.textTheme.titleMedium,
+                                child: PageTitle(
+                                  title,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              )
+                            : Text(
+                                title,
+                                style: theme.textTheme.titleMedium,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                       ),
                       if (conversation?.muted ?? false) ...[
                         const SizedBox(width: AppSpacing.xs),
