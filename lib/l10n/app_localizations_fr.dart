@@ -6369,6 +6369,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get chOptionToTaxDate => 'Option effective dès (AAAA-MM-JJ)';
 
   @override
+  String chromeRoleAs(String role) {
+    return 'en tant que $role';
+  }
+
+  @override
   String get coOwnerAction => 'Copropriété';
 
   @override

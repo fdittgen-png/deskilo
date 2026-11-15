@@ -3818,6 +3818,7 @@
   "@chOptionToTaxDate": {
     "description": "#2360: chOptionToTaxDate"
   },
+  "chromeRoleAs": "como {role}",
   "coOwnerAction": "Copropiedad",
   "coOwnerActivate": "Promover a propietario ahora",
   "coOwnerActive": "Copropietario activo — permisos de propietario ya, sucesión automática",

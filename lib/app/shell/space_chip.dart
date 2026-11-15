@@ -12,6 +12,7 @@ import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
+import 'chrome_role.dart';
 import 'house_switch.dart';
 import 'space_entry.dart';
 
@@ -47,8 +48,12 @@ double _lineWidth(BuildContext context, String text, TextStyle? style) {
 /// is dropped where it would crowd the name out, and the business's line
 /// is left out where it cannot be read whole — the drawer names it.
 class SpaceChip extends ConsumerWidget {
-  const SpaceChip({super.key, required this.tabTitle});
+  const SpaceChip({super.key, required this.tabTitle, this.path});
   final String tabTitle;
+
+  /// #4019 — the page's path: where it declares that the role decides it,
+  /// the business's line names the role too.
+  final String? path;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,6 +63,7 @@ class SpaceChip extends ConsumerWidget {
     final brand = space == null ? null : spaceBrand(space);
     final avatarSide = brand != null ? _ringSide : 2 * _avatarRadius;
     final houses = otherHousesOf(ref, space?.id);
+    final role = chromeRoleFor(context, ref, path);
     final chip = LayoutBuilder(
       builder: (context, constraints) {
         final page = _lineWidth(context, tabTitle, text.titleMedium);
@@ -67,9 +73,17 @@ class SpaceChip extends ConsumerWidget {
         final column =
             constraints.maxWidth -
             (withAvatar ? avatarSide + AppSpacing.sm : 0);
-        final business = space == null
+        final plain = space == null ? null : '${l10n.appTitle} · ${space.name}';
+        // #4019 — the role joins the business's line only where the whole
+        // line is still read; never at the price of the page's name.
+        final withRole = plain == null || role == null
             ? null
-            : '${l10n.appTitle} · ${space.name}';
+            : '$plain · $role';
+        final business =
+            withRole != null &&
+                _lineWidth(context, withRole, text.labelLarge) <= column
+            ? withRole
+            : plain;
         final showBusiness =
             business != null &&
             _lineWidth(context, business, text.labelLarge) <= column;
@@ -149,20 +163,42 @@ class SpaceChip extends ConsumerWidget {
         );
       },
     );
-    if (houses.isEmpty) return chip;
+    // #4019 — one label, "<business>, <page>"; where it switches houses it
+    // ends with the tooltip's words, and it is a button only then.
+    final label = space == null ? tabTitle : '${space.name}, $tabTitle';
+    if (houses.isEmpty) {
+      return Semantics(
+        container: true,
+        label: label,
+        excludeSemantics: true,
+        child: chip,
+      );
+    }
     return Tooltip(
       message: l10n.spaceOtherHouses,
-      child: InkWell(
-        key: const ValueKey('space-chip-houses'),
-        onTap: () async {
-          final picked = await HouseSheet.open(context, houses);
-          if (picked == null || !context.mounted) return;
-          unawaited(enterSpace(context, ref, picked));
-        },
-        // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
-        child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
-          child: Align(alignment: AlignmentDirectional.centerStart, child: chip),
+      excludeFromSemantics: true,
+      child: Semantics(
+        container: true,
+        button: true,
+        label: '$label, ${l10n.spaceOtherHouses}',
+        excludeSemantics: true,
+        child: InkWell(
+          key: const ValueKey('space-chip-houses'),
+          onTap: () async {
+            final picked = await HouseSheet.open(context, houses);
+            if (picked == null || !context.mounted) return;
+            unawaited(enterSpace(context, ref, picked));
+          },
+          // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: kMinInteractiveDimension,
+            ),
+            child: Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: chip,
+            ),
+          ),
         ),
       ),
     );

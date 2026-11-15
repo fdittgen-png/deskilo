@@ -19,6 +19,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/page_title.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import 'chrome_role.dart';
 import 'desk_breadcrumb.dart';
 import 'desk_scaffold.dart';
 import 'shell_app_bar.dart';
@@ -177,6 +178,8 @@ class _Desk extends ConsumerWidget {
     final (:crumbs, :tabs) = deskPlaceOf(context, ref, router, path);
     // #3789 — a sub-page's own name follows its place.
     final shown = withPageName(crumbs, PageNameScope.nameOf(context));
+    // #4019 — where the role decides the page, the breadcrumb names it.
+    final role = chromeRoleFor(context, ref, path);
     final tabTitles = tabs.tabTitles;
     final visibleBranches = tabs.visibleBranches;
     final navs = tabs.navs;
@@ -197,7 +200,12 @@ class _Desk extends ConsumerWidget {
           onBranch: onBranch,
         ),
         title: ({required wraps}) =>
-            DeskBreadcrumb(crumbs: shown, router: router, wraps: wraps),
+            DeskBreadcrumb(
+              crumbs: shown,
+              router: router,
+              wraps: wraps,
+              role: role,
+            ),
         titleWidth: crumbsWidth(context, shown),
         controls: shellBarControls(context, ref, currentIndex: branch),
         path: path,

@@ -1,0 +1,11 @@
+{
+  "chromeRoleAs": "as {role}",
+  "@chromeRoleAs": {
+    "description": "#4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  }
+}
