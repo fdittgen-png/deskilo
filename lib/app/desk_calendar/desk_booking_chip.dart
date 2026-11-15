@@ -93,9 +93,16 @@ class DeskBookingChip extends StatelessWidget {
               : BorderSide.none,
         ),
         clipBehavior: Clip.antiAlias,
-        child: InkWell(
+        // #4054 — a tapped booking takes the keyboard, so closing it gives
+        // the keyboard back to it.
+        child: _TapTakesFocus(
+          builder: (focus) => InkWell(
           key: deskBookingKey(booking.id),
-          onTap: onOpen,
+          focusNode: focus,
+          onTap: () {
+            focus.requestFocus();
+            onOpen();
+          },
           child: Align(
             alignment: AlignmentDirectional.centerStart,
             child: Padding(
@@ -111,9 +118,34 @@ class DeskBookingChip extends StatelessWidget {
             ),
           ),
         ),
+        ),
       ),
     );
   }
+}
+
+/// [builder]'s control, with a focus node of its own for as long as it is
+/// shown.
+class _TapTakesFocus extends StatefulWidget {
+  const _TapTakesFocus({required this.builder});
+
+  final Widget Function(FocusNode focus) builder;
+
+  @override
+  State<_TapTakesFocus> createState() => _TapTakesFocusState();
+}
+
+class _TapTakesFocusState extends State<_TapTakesFocus> {
+  final _focus = FocusNode();
+
+  @override
+  void dispose() {
+    _focus.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => widget.builder(_focus);
 }
 
 /// The chip's words: [range] first and whole, then [label], cut if it must

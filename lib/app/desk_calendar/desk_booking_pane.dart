@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3626 (desk M7) — a booking opened beside the grid (K2): who, where, when and
-// in what state, and the one door to everything that can be done with it (the
-// booking's own sheet: edit the window, stay longer, cancel, show on the plan).
+// in what state. #4054 — and what this reader can do with it, each as its own
+// button: no door to a sheet that only lists them, none that promises an
+// action the reader does not have.
 // #3843 — edit, cancel and stay longer stand in the pane's own row, offered
 // where the sheet offers them (the booking's own member), through the same
 // actions: nothing closes, cancel asks as a short task, a refusal is said in
@@ -26,11 +27,14 @@ import '../../features/events/providers/event_providers.dart' show invalidateBoo
 import '../../features/reservations/domain/reservation.dart';
 import '../../features/reservations/domain/reservation_repository.dart' show ReservationUnreadable;
 import '../../features/reservations/presentation/widgets/booking_range_text.dart';
+import '../../features/reservations/presentation/widgets/calendar_file_button.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
 import '../../features/reservations/presentation/widgets/reservation_detail_sheet.dart'
-    show ownBookingOffers, reservationActionsOf, showReservationDetail;
+    show ownBookingOffers, reservationActionsOf, watchReservationPlace;
 import '../../features/reservations/presentation/widgets/reservation_status_note.dart';
-import '../../features/workspace/providers/workspace_providers.dart' show myMemberProvider;
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/providers/workspace_providers.dart'
+    show enabledFeaturesSyncProvider, myMemberProvider;
 
 import 'desk_calendar.dart';
 import 'desk_calendar_providers.dart';
@@ -38,8 +42,8 @@ import 'desk_calendar_providers.dart';
 /// The key of the pane's close button.
 const Key _deskPaneCloseKey = ValueKey('desk-booking-pane-close');
 
-/// The key of the pane's button to the booking's own sheet.
-const Key _deskPaneActionsKey = ValueKey('desk-booking-pane-actions');
+/// The key of the pane's button that shows the booking on the plan.
+const Key _deskPaneOnPlanKey = ValueKey('desk-pane-show-on-plan');
 
 class DeskBookingPane extends ConsumerStatefulWidget {
   const DeskBookingPane({
@@ -153,12 +157,23 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
         ),
         const SizedBox(height: AppSpacing.lg),
         ..._ownActions(context, r),
-        FilledButton.icon(
-          key: _deskPaneActionsKey,
-          icon: const Icon(Icons.tune),
-          label: Text(l10n.calendarDeskBookingActions),
-          onPressed: () => showReservationDetail(context, ref, r),
-        ),
+        if (watchReservationPlace(ref, r).value case final target?)
+          OutlinedButton.icon(
+            key: _deskPaneOnPlanKey,
+            icon: const Icon(Icons.map_outlined),
+            label: Text(l10n.calendarShowOnPlan),
+            onPressed: () => reservationActionsOf(
+              ref,
+              r,
+            ).showOnPlan(context, ref, target.levelId),
+          ),
+        if (r.memberId == ref.watch(myMemberProvider).value?.id &&
+            ref
+                .watch(enabledFeaturesSyncProvider)
+                .contains(WorkspaceFeature.calendarFileExport)) ...[
+          const SizedBox(height: AppSpacing.sm),
+          CalendarFileButton(reservation: r),
+        ],
       ],
     );
   }
@@ -217,6 +232,20 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
           Icons.more_time_outlined,
           l10n.reservationExtendButton,
           actions.extendEnd,
+        ),
+      if (offered.endEarlyable)
+        button(
+          'desk-pane-end-early',
+          Icons.timer_off_outlined,
+          l10n.reservationEndEarlyButton,
+          actions.endEarly,
+        ),
+      if (offered.deletionRequestable)
+        button(
+          'desk-pane-delete-request',
+          Icons.delete_outline,
+          l10n.reservationDeleteRequestButton,
+          actions.requestDeletion,
         ),
     ];
     return [
