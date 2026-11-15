@@ -9129,7 +9129,6 @@ const Set<String> uiLabelKeys = {
   'houseOwnLinks',
   'houseOwnPayment',
   'houseOwnTitle',
-  'housePriceLabel',
   'housePriceRequired',
   'housePricesTitle',
   'houseRateLabel',

@@ -18063,10 +18063,6 @@
   "@houseOwnTitle": {
     "description": "#4005 — a house's first task, naming its prices: houseOwnTitle."
   },
-  "housePriceLabel": "Price",
-  "@housePriceLabel": {
-    "description": "#4005 — a house's first task, naming its prices: housePriceLabel."
-  },
   "housePriceRequired": "Name a price; 0 makes it free.",
   "@housePriceRequired": {
     "description": "#4005 — a house's first task, naming its prices: housePriceRequired."

@@ -5,7 +5,6 @@
   "houseNamePrices": "{count, plural, =0{Ponga sus precios (ninguno pendiente)} one{Ponga sus precios (1 pendiente)} other{Ponga sus precios ({count} pendientes)}}",
   "houseNamePricesAfterRates": "Fije primero los tipos de impuesto.",
   "housePricesTitle": "Ponga sus precios",
-  "housePriceLabel": "Precio",
   "houseRateLabel": "Tipo",
   "housePriceRequired": "Indique un precio; 0 lo hace gratuito.",
   "houseRateRequired": "Elija un tipo.",

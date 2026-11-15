@@ -22355,12 +22355,6 @@ abstract class AppLocalizations {
   /// **'This house\'s own to set'**
   String get houseOwnTitle;
 
-  /// #4005 — a house's first task, naming its prices: housePriceLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'Price'**
-  String get housePriceLabel;
-
   /// #4005 — a house's first task, naming its prices: housePriceRequired.
   ///
   /// In en, this message translates to:

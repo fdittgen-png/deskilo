@@ -43,10 +43,6 @@
   "@housePricesTitle": {
     "description": "#4005 — a house's first task, naming its prices: housePricesTitle."
   },
-  "housePriceLabel": "Price",
-  "@housePriceLabel": {
-    "description": "#4005 — a house's first task, naming its prices: housePriceLabel."
-  },
   "houseRateLabel": "Rate",
   "@houseRateLabel": {
     "description": "#4005 — a house's first task, naming its prices: houseRateLabel."

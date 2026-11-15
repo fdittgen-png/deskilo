@@ -5,7 +5,6 @@
   "houseNamePrices": "{count, plural, =0{Stabilire i prezzi (nessuno rimasto)} one{Stabilire i prezzi (1 rimasto)} other{Stabilire i prezzi ({count} rimasti)}}",
   "houseNamePricesAfterRates": "Imposti prima le aliquote fiscali.",
   "housePricesTitle": "Stabilire i prezzi",
-  "housePriceLabel": "Prezzo",
   "houseRateLabel": "Aliquota",
   "housePriceRequired": "Indichi un prezzo; 0 lo rende gratuito.",
   "houseRateRequired": "Scelga un’aliquota.",

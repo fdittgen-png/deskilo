@@ -15,6 +15,8 @@
 import 'dart:async';
 
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart'
+    show TaxReferenceQueries, TaxReferenceSet;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -25,18 +27,18 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/adaptive/task_surface.dart';
 import '../../core/ui/form_kit.dart';
 import '../../core/ui/master_data_field.dart';
-import '../../core/vat/tax_reference_active.dart';
 import '../../features/money/domain/house_prices.dart';
 import '../../features/money/domain/service_item.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/workspace/domain/organisation.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/providers/organisation_providers.dart';
+import '../../features/workspace/providers/workspace_tax_reference.dart';
 
-/// Whether [workspace]'s country taxes sales without VAT (sales tax).
-bool _noVat(Workspace workspace) =>
-    ActiveTaxReference.current.gateOf(workspace.countryCode)?.salesTaxMode ??
-    false;
+/// Whether [workspace]'s country taxes sales without VAT (sales tax), by
+/// the reference its context captured.
+bool _noVat(TaxReferenceSet? reference, Workspace workspace) =>
+    reference?.gateOf(workspace.countryCode)?.salesTaxMode ?? false;
 
 /// The card of a house whose prices are still to be named; nothing
 /// otherwise.
@@ -62,7 +64,7 @@ class HousePricesCard extends ConsumerWidget {
     final left = houseRowsToName(services: services, packages: packages);
     if (left.isEmpty) return const SizedBox.shrink();
     final country = localizedCountryName(l10n, workspace.countryCode);
-    final noVat = _noVat(workspace);
+    final noVat = _noVat(watchWorkspaceTaxReference(ref), workspace);
     final taxed = rates.isNotEmpty;
     final pricesOpen = noVat || taxed;
     return Card(
@@ -91,16 +93,14 @@ class HousePricesCard extends ConsumerWidget {
                 leading: Icon(
                   taxed ? Icons.check_circle : Icons.radio_button_unchecked,
                 ),
-                title: Text('1. ${l10n.houseSetRates(country)}'),
+                title: Text(l10n.houseSetRates(country)),
                 onTap: () => context.push('/setup/step/vat'),
               ),
             ListTile(
               key: const ValueKey('house-prices-name'),
               enabled: pricesOpen,
               leading: const Icon(Icons.sell_outlined),
-              title: Text(
-                '${noVat ? 1 : 2}. ${l10n.houseNamePrices(left.length)}',
-              ),
+              title: Text(l10n.houseNamePrices(left.length)),
               subtitle: pricesOpen
                   ? null
                   : Text(l10n.houseNamePricesAfterRates),
@@ -350,7 +350,7 @@ class _HouseRowEditor extends StatelessWidget {
         AppAmountField(
           key: ValueKey('house-price-${row.id}'),
           controller: price,
-          label: l10n.housePriceLabel,
+          label: l10n.servicesPrice,
           currency: currency,
           allowNegative: false,
           helper: price.text.trim() == '0' ? l10n.houseFree : null,

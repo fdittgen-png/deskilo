@@ -13914,9 +13914,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get houseOwnTitle => 'Von diesem Haus selbst festzulegen';
 
   @override
-  String get housePriceLabel => 'Preis';
-
-  @override
   String get housePriceRequired =>
       'Geben Sie einen Preis an; 0 macht es kostenlos.';
 

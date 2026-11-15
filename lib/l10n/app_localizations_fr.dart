@@ -13950,9 +13950,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get houseOwnTitle => 'Propres à cette maison';
 
   @override
-  String get housePriceLabel => 'Prix';
-
-  @override
   String get housePriceRequired => 'Indiquez un prix ; 0 le rend gratuit.';
 
   @override

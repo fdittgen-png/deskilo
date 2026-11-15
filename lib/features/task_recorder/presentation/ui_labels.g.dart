@@ -939,7 +939,6 @@ Map<String, _Getter> _part2() => {
   'hmrcRefusalInFlight': (l) => l.hmrcRefusalInFlight,
   'hmrcSheetIntro': (l) => l.hmrcSheetIntro,
   'holidayAscension': (l) => l.holidayAscension,
-  'housePriceLabel': (l) => l.housePriceLabel,
   'instanceAccessTitle': (l) => l.instanceAccessTitle,
   'instanceDelegateAlreadyOwner': (l) => l.instanceDelegateAlreadyOwner,
   'instanceDoctorProbeSignups': (l) => l.instanceDoctorProbeSignups,
