@@ -1511,7 +1511,7 @@ Usted decide si una persona pulsa los botones cada mes o si lo hace DesKilo.
 - Cada tipo de factura (suscripción, fin de mes) puede emitirse una vez por miembro y mes. Las facturas no se pueden editar ni borrar; una errónea se marca como tal y se sustituye.
 - Por defecto emiten facturas el propietario y los copropietarios. **Los admins emiten facturas** lo extiende a los administradores.
 
-**Véase también:** [La pantalla de Facturación](Guia-de-usuario#la-pantalla-de-facturación) · [Reclamar y liquidar las facturas abiertas](Guia-de-usuario#reclamar-y-saldar-facturas-abiertas)
+**Véase también:** [La pantalla de Facturación](Guia-de-usuario#la-pantalla-de-facturación) · [Seguir una factura](Guia-de-usuario#seguir-una-factura)
 
 <!-- anchor: setup.money.reminders -->
 ### Recordatorios de pago

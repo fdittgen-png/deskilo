@@ -1511,7 +1511,7 @@ You decide whether a person presses the buttons each month or DesKilo does.
 - Each kind of invoice (subscription, end-of-month) can be issued once per member and month. Invoices cannot be edited or deleted; a wrong one is marked erroneous and replaced.
 - By default the owner and co-owners issue invoices. **Admins issue invoices** extends this to administrators.
 
-**See also:** [The Invoicing screen](User-Guide#the-invoicing-screen) · [Chase and settle open invoices](User-Guide#chase-and-settle-open-invoices)
+**See also:** [The Invoicing screen](User-Guide#the-invoicing-screen) · [Follow one invoice](User-Guide#follow-one-invoice)
 
 <!-- anchor: setup.money.reminders -->
 ### Payment reminders

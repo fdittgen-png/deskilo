@@ -354,6 +354,31 @@ Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort f
 
 **Siehe auch:** [Rechnungsstellung im Überblick](help:user.money.invoicing) · [Die Seite Einkauf und Einkauf / Ausgabe hinzufügen](help:user.money.purchases)
 
+<!-- anchor: user.money.guest-passes -->
+### Einen Gästepass verkaufen und widerrufen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Gast, der kein Mitglied ist, nimmt einen Platz für einen Tag oder einige Stunden, zahlt am Empfang und erhält eine Rechnung.
+
+<!-- image: user-money-guest-passes -->
+
+**Schritte**
+
+1. Öffnen Sie [Gästepässe](app:/money/guest-passes) oder **Gästepässe** auf der Seite [Verkauf](app:/money/sales).
+2. Tippen Sie beim ersten Mal auf **Pass hinzufügen**: sein **Name**, **Pro Tag** oder **Pro Stunde**, der **Preis pro Einheit** und **Im Verkauf**.
+3. Tippen Sie auf **Pass verkaufen**, wählen Sie den **Pass** und den **Platz**, die Tage (**Von**, **Bis**) sowie Namen und Kontakt des Gastes, und haken Sie **Am Empfang bezahlt** an, wenn er bezahlt hat.
+4. **Verkaufte Pässe** listet jeden Pass mit dem, was **Genutzt** wurde. Um Pässe zurückzunehmen, wählen Sie sie aus, tippen Sie auf **Widerrufen** und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Der Gast wird kein Mitglied; sein Name und sein Kontakt stehen auf der Rechnung.
+- Widerrufen storniert die Buchungen, die noch nicht begonnen haben. Die schon begonnenen Tage bleiben, und kein Geld bewegt sich: Korrigieren Sie die Rechnung des Gastes auf ihrer Seite, wenn ihm Geld zurücksteht.
+- **Widerrufen, Rechnung nicht korrigiert** listet die widerrufenen Pässe, deren Rechnung noch auf ihre Korrektur wartet; **Rechnung öffnen** bringt Sie dorthin.
+- Ein Stundenpass gilt für einen Tag; ein Tagespass dauert 1 bis 31 Tage.
+
+**Siehe auch:** [Die Seite Verkauf](help:user.money.sales) · [Eine Rechnung verfolgen](help:user.invoicing.open)
+
 <!-- anchor: user.money.purchases -->
 ### Die Seite Einkauf und Einkauf / Ausgabe hinzufügen
 
@@ -607,21 +632,21 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 **Zielgruppe:** Abrechnungsadministrator:in · Inhaber
 
-Sie stellen die Rechnungen des ganzen Workspace aus und verfolgen sie nach und möchten wissen, wo Sie anfangen.
+Sie stellen die Rechnungen des ganzen Arbeitsbereichs aus, mahnen sie und möchten wissen, wo Sie anfangen.
 
 <p><img src="images/user-money-invoicing.de.jpg" width="280"></p>
 
 **Schritte**
 
-1. Öffnen Sie [Rechnungsstellung](app:/invoices).
-2. Lesen Sie die Reiter: **Zu berechnen** listet Mitglieder, die für den Monat noch abzurechnen sind, **Offen** die ausgestellten, unbezahlten Rechnungen und **Archiv** die abgeschlossenen.
-3. Lesen Sie die Zeile mit vier Schritten unter dem Banner: **Auszustellen**, **Einzuziehen**, **Zu bestätigen** und **Abgeschlossen**, jeweils mit einer Anzahl.
-4. Tippen Sie auf **Monatsabschluss-Assistent**, um einen Monat abzurechnen, oder auf **Neue Rechnung** für eine einzelne.
-5. Tippen Sie auf das Werkzeugsymbol für das Rechnungsregister, die Mahnregeln, die PDF-Vorlage der Rechnung und **Meine Finanzen**.
+1. Öffnen Sie die [Rechnungsstellung](app:/invoices).
+2. Lesen Sie **Offen an Sie**: was **Überfällig** und was **Noch nicht fällig** ist.
+3. Arbeiten Sie **Zu tun** ab: Jeder Eintrag öffnet sich mit **Ansehen**, bis dort **Alles ist erledigt.** steht.
+4. Lesen Sie darunter die Kunden und ihre Rechnungen; tippen Sie auf **Neu** für eine einzelne Rechnung und auf **Mehr** für die anderen Werkzeuge.
 
 **Gut zu wissen**
 
-- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird als fehlerhaft markiert und ersetzt.
-- Der vollständige Ablauf vom Monatsabschluss über den Ausgleich bis zu den Erinnerungen steht in Kapitel 08: [Mahnregeln](help:user.money.reminders.rules) und [Die PDF-Vorlage der Rechnung](help:user.money.reports.invoice-template) sind gute Stellen zum Weiterlesen.
+- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird mit einer Ersatzrechnung korrigiert.
+- Der ganze Ablauf, vom Abrechnen des Monats über das Zuordnen der Zahlungen bis zum Auszahlen der Gutschriften, steht in Kapitel 08: Beginnen Sie mit [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub).
 
-**Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
+**Siehe auch:** [Den Monat abrechnen](help:user.invoicing.month) · [Mahnregeln](help:user.money.reminders.rules)
+
