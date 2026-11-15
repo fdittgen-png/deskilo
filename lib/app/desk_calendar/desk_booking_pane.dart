@@ -165,7 +165,7 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
             onPressed: () => reservationActionsOf(
               ref,
               r,
-            ).showOnPlan(context, ref, target),
+            ).showOnPlan(context, ref, target.levelId),
           ),
         if (r.memberId == ref.watch(myMemberProvider).value?.id &&
             ref

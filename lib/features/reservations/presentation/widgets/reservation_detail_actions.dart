@@ -16,7 +16,6 @@ import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/half_day_windows.dart';
-import '../../../plan/domain/seat_context.dart';
 import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../application/change_reservation.dart';
@@ -61,12 +60,12 @@ class ReservationDetailActions {
   /// #3843 — where a refusal is said (the pane); else a snack.
   final void Function(String refusal)? onRefused;
 
-  /// #182 — the plan, focused on this booking at [target]'s level: every
-  /// sheet still open over it is closed first, so the plan is seen.
-  void showOnPlan(BuildContext context, WidgetRef ref, SeatContext target) {
+  /// #182 — the plan, focused on this booking on [levelId]: every sheet
+  /// still open over it is closed first, so the plan is seen.
+  void showOnPlan(BuildContext context, WidgetRef ref, String levelId) {
     ref.read(planFocusControllerProvider.notifier).setFocus(
           PlanFocus(
-            levelId: target.levelId,
+            levelId: levelId,
             seatId: reservation.seatId,
             // #576 — a whole-desk/office/level booking highlights the
             // SPACE it covers, not nothing.

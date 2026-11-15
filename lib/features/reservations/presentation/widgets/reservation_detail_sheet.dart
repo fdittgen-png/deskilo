@@ -309,7 +309,10 @@ Future<void> showReservationDetail(
     recordTaskStep(ref, RecorderActions.back); // #1865
   }
   if (target == null || !context.mounted) return;
-  reservationActionsOf(ref, reservation).showOnPlan(context, ref, target);
+  reservationActionsOf(
+    ref,
+    reservation,
+  ).showOnPlan(context, ref, target.levelId);
 }
 
 /// #4054 — where [r] stands on the plan (its seat's or its office's level
