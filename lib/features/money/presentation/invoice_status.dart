@@ -132,7 +132,7 @@ String invoiceLifecycleLabel(AppLocalizations l10n, InvoiceLifecycle status) =>
 /// #3999 — the kit's tone of [status]: open says nothing to act on, waiting
 /// for validation is information, paid or refunded is done, a part paid or a
 /// remainder cancelled is a warning, an erroneous document is due.
-StatusTone invoiceLifecycleTone(InvoiceLifecycle status) => switch (status) {
+StatusTone _lifecycleTone(InvoiceLifecycle status) => switch (status) {
   InvoiceLifecycle.open => StatusTone.neutral,
   InvoiceLifecycle.awaitingValidation => StatusTone.info,
   InvoiceLifecycle.paid || InvoiceLifecycle.refunded => StatusTone.ok,
@@ -145,7 +145,7 @@ StatusTone invoiceLifecycleTone(InvoiceLifecycle status) => switch (status) {
 StatusChip invoiceStatusChip(BuildContext context, InvoiceLifecycle status) =>
     StatusChip(
       label: invoiceLifecycleLabel(context.l10n, status),
-      tone: invoiceLifecycleTone(status),
+      tone: _lifecycleTone(status),
     );
 
 /// #802/#804 — what a document CHARGES FOR, in the reader's language.
