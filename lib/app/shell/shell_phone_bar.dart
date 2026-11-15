@@ -108,6 +108,7 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
 /// [titleWidth] wide painted whole, after the [leading] button, the
 /// toolbar's [spacing] on either side of its title and its actions'
 /// [padding].
+@visibleForTesting
 int shellBarSlots({
   required double width,
   required double titleWidth,

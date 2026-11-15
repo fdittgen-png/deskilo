@@ -47,7 +47,14 @@ class ShellBarControl {
   /// #4030 — it has something new to say: the overflow button carries the
   /// mark while this control is behind it.
   final bool attention;
+
+  /// The same control, kept on the bar: no entry behind the menu.
+  ShellBarControl staying() =>
+      ShellBarControl(id: id, rank: rank, button: button, attention: attention);
 }
+
+/// #4030 — the inbox's id on the bar.
+const shellEventsBellId = 'shell-events-bell';
 
 /// The order of priority of the bar's controls, most needed first: the
 /// way back to the account never leaves the bar; the inbox leaves it last
@@ -163,7 +170,7 @@ List<ShellBarControl> shellBarControls(
         // when the hub holds them).
         void open() => context.go('/events');
         return ShellBarControl(
-          id: 'shell-events-bell',
+          id: shellEventsBellId,
           rank: _ShellBarRank.inbox.index,
           attention: attention.total > 0,
           button: IconButton(
@@ -180,7 +187,7 @@ List<ShellBarControl> shellBarControls(
           ),
           // #4030 — the inbox may leave a narrow bar too, last of all.
           entry: RowAction(
-            id: 'shell-events-bell',
+            id: shellEventsBellId,
             label: label,
             icon: Icons.inbox_outlined,
             onSelected: open,

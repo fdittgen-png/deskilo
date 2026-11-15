@@ -39,14 +39,20 @@ class DeskTopBar extends StatelessWidget implements PreferredSizeWidget {
       final spacing = theme.titleSpacing ?? NavigationToolbar.kMiddleSpacing;
       final padding = theme.actionsPadding?.horizontal ?? 0;
       final room = constraints.maxWidth - 2 * spacing - padding;
+      // #4030 — the desk keeps the inbox on its bar: only the phone bar
+      // may fold it into the menu.
+      final kept = [
+        for (final c in controls)
+          if (c.id == shellEventsBellId) c.staying() else c,
+      ];
       final slots = ((room - titleWidth.ceil()) / shellControlExtent)
           .floor()
-          .clamp(0, controls.length);
-      final fit = fitShellControls(controls, slots: slots);
+          .clamp(0, kept.length);
+      final fit = fitShellControls(kept, slots: slots);
       // With every control that may leave gone, is the name still wider
       // than the room?
-      final staying = controls.where((c) => c.entry == null).length;
-      final hasFolded = controls.any((c) => c.entry != null);
+      final staying = kept.where((c) => c.entry == null).length;
+      final hasFolded = kept.any((c) => c.entry != null);
       final least = (staying + (hasFolded ? 1 : 0)) * shellControlExtent;
       final wraps = titleWidth.ceil() > room - least;
       final shown = [for (final c in fit.shown) c.button];
