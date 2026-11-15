@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4008 — through the Demo's own screens: Bruno, a member of the
-// organisation's other houses, finds Milan under the organisation on Me and
-// asks to join it, after one question that says what joining means. Milan
-// decides: the request waits for it. Where Milan welcomes the organisation's
-// members, he is a member at once and Milan is one of his businesses. Ada,
-// an owner, sets her house's welcome in Settings › Organisation.
+// #4008 — through the Demo's own screens: once Ada has added the house in
+// Kraków, Bruno, a member of the organisation's other houses, finds it under
+// the organisation on Me and asks to join it, after one question that says
+// what joining means. The house decides: the request waits for it. Where the
+// house welcomes the organisation's members, he is a member at once and it
+// is one of his businesses. Ada sets her house's welcome in Settings ›
+// Organisation.
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -24,7 +25,8 @@ Future<void> _settle(WidgetTester tester) async {
 }
 
 Future<void> _tap(WidgetTester tester, Finder target) async {
-  await tester.ensureVisible(target);
+  // Centred: at the end of Me the last row would stand under the edge.
+  await Scrollable.ensureVisible(tester.element(target), alignment: 0.5);
   await _settle(tester);
   await tester.tap(target);
   await _settle(tester);
@@ -38,69 +40,73 @@ Future<void> _openMe(WidgetTester tester) async {
 const _organisation = 'demo-organisation-atelier';
 
 void main() {
-  testWidgets('Bruno asks Milan from Me, and the request waits for Milan', (
-    tester,
-  ) async {
-    final journey = await pumpDemo(
-      tester,
-      persona: DemoPersona.member,
-      openHub: false,
-    );
-    await _openMe(tester);
-    final section = find.byKey(
-      const ValueKey('me-other-houses-$_organisation'),
-      skipOffstage: false,
-    );
-    expect(section, findsOneWidget);
-    expect(
-      find.descendant(
-        of: section,
-        matching: find.byKey(
-          const ValueKey('me-other-house-$demoMilanSpaceId'),
-        ),
-      ),
-      findsOneWidget,
-      reason: 'Milan, the one house he is not a member of',
-    );
-
-    await _tap(
-      tester,
-      find.byKey(const ValueKey('house-join-$demoMilanSpaceId')),
-    );
-    // Nothing is sent before the question is answered.
-    expect(find.byKey(const ValueKey('house-join-sheet')), findsOneWidget);
-    final milan = journey.fixture.listings.firstWhere(
-      (l) => l.id == demoMilanSpaceId,
-    );
-    expect(milan.memberOf(journey.fixture.actor.memberId), isNull);
-
-    await _tap(tester, find.byKey(const ValueKey('house-join-confirm')));
-    expect(
-      milan.memberOf(journey.fixture.actor.memberId)?.status,
-      MemberStatus.pending,
-    );
-    expect(
-      find.byKey(
-        const ValueKey('house-join-asked-$demoMilanSpaceId'),
+  testWidgets(
+    'Bruno asks the house in Kraków from Me, and the request waits for it',
+    (tester) async {
+      final journey = await pumpDemo(
+        tester,
+        persona: DemoPersona.member,
+        openHub: false,
+      );
+      journey.fixture.revealHouse();
+      await _openMe(tester);
+      final section = find.byKey(
+        const ValueKey('me-other-houses-$_organisation'),
         skipOffstage: false,
-      ),
-      findsOneWidget,
-      reason: 'the request, waiting for Milan',
-    );
-  });
+      );
+      expect(section, findsOneWidget);
+      expect(
+        find.descendant(
+          of: section,
+          matching: find.byKey(
+            const ValueKey('me-other-house-$demoHouseSpaceId'),
+          ),
+        ),
+        findsOneWidget,
+        reason: 'the house he is not a member of',
+      );
 
-  testWidgets('a welcoming Milan takes Bruno at once', (tester) async {
+      await _tap(
+        tester,
+        find.byKey(const ValueKey('house-join-$demoHouseSpaceId')),
+      );
+      // Nothing is sent before the question is answered.
+      expect(find.byKey(const ValueKey('house-join-sheet')), findsOneWidget);
+      final house = journey.fixture.listings.firstWhere(
+        (l) => l.id == demoHouseSpaceId,
+      );
+      expect(house.memberOf(journey.fixture.actor.memberId), isNull);
+
+      await _tap(tester, find.byKey(const ValueKey('house-join-confirm')));
+      expect(
+        house.memberOf(journey.fixture.actor.memberId)?.status,
+        MemberStatus.pending,
+      );
+      expect(
+        find.byKey(
+          const ValueKey('house-join-asked-$demoHouseSpaceId'),
+          skipOffstage: false,
+        ),
+        findsOneWidget,
+        reason: 'the request, waiting for the house',
+      );
+    },
+  );
+
+  testWidgets('a welcoming house takes Bruno at once', (tester) async {
     final journey = await pumpDemo(
       tester,
       persona: DemoPersona.member,
       openHub: false,
     );
-    journey.fixture.houseWelcomes.add(demoMilanSpaceId);
+    journey.fixture
+      ..revealHouse()
+      ..houseWelcomes.add(demoHouseSpaceId);
     await _openMe(tester);
     expect(
       find.descendant(
         of: find.byKey(
-          const ValueKey('me-other-house-$demoMilanSpaceId'),
+          const ValueKey('me-other-house-$demoHouseSpaceId'),
           skipOffstage: false,
         ),
         matching: find.text('You will be a member at once'),
@@ -110,20 +116,20 @@ void main() {
 
     await _tap(
       tester,
-      find.byKey(const ValueKey('house-join-$demoMilanSpaceId')),
+      find.byKey(const ValueKey('house-join-$demoHouseSpaceId')),
     );
     await _tap(tester, find.byKey(const ValueKey('house-join-confirm')));
 
-    final milan = journey.fixture.listings.firstWhere(
-      (l) => l.id == demoMilanSpaceId,
+    final house = journey.fixture.listings.firstWhere(
+      (l) => l.id == demoHouseSpaceId,
     );
     expect(
-      milan.memberOf(journey.fixture.actor.memberId)?.status,
+      house.memberOf(journey.fixture.actor.memberId)?.status,
       MemberStatus.active,
     );
     expect(
       find.byKey(
-        const ValueKey('me-other-house-$demoMilanSpaceId'),
+        const ValueKey('me-other-house-$demoHouseSpaceId'),
         skipOffstage: false,
       ),
       findsNothing,
@@ -131,11 +137,11 @@ void main() {
     );
     expect(
       find.byKey(
-        const ValueKey('me-space-pair-$demoMilanSpaceId'),
+        const ValueKey('me-space-pair-$demoHouseSpaceId'),
         skipOffstage: false,
       ),
       findsOneWidget,
-      reason: 'Milan is one of his businesses now',
+      reason: 'the house is one of his businesses now',
     );
   });
 

@@ -33,8 +33,7 @@ const _currencyOf = {
 };
 
 /// The currencies each human of the cast holds documents in, from the
-/// membership facts: Ada, Bruno and Chiara work in all six spaces' countries
-/// (Bruno in every business but Milan, #4008);
+/// membership facts: Ada, Bruno and Chiara work in all six spaces' countries;
 /// Dov (pending) and Elise (paused) in the main space are active members of
 /// the two trade cities only.
 const _currenciesOf = {
@@ -72,11 +71,7 @@ void main() {
         final rows = invoices
             .where((i) => i.workspaceId == entry.key && i.id.contains('-invoice-'))
             .toList();
-        // #4008 — Bruno is no member of Milan: he asks to join it from Me.
-        final outside = person.memberId == 'member-2' && entry.key == 'ws-6';
-        final here =
-            !outside &&
-            (!tradeOnly || entry.key == 'ws-5' || entry.key == 'ws-6');
+        final here = !tradeOnly || entry.key == 'ws-5' || entry.key == 'ws-6';
         expect(rows, hasLength(here ? entry.value : 0), reason: '${person.name} in ${entry.key}');
         expect({for (final r in rows) r.currency}, here ? {_currencyOf[entry.key]} : <String>{});
       }

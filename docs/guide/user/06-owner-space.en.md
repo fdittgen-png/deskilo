@@ -616,7 +616,7 @@ Your business has sites abroad, in another country or another currency. Each of 
 **Good to know**
 
 - Each house shows its country, its currency and your own role there. Who else owns a house is shown inside that house.
-- A member of one house sees the organisation's other houses on Me, under **Other houses of** the organisation, and taps **Ask to join**. One question first says what joining means: their profile becomes visible to that house, which is a business of its own with its own terms, prices and currency (#4008).
+- A member of one house sees the organisation's other houses on Me, under **Other houses of** the organisation, and taps **Ask to join**. One question first says what joining means: their profile becomes visible to that house, which is a business of its own with its own terms, prices and currency.
 - On Me, the houses are listed together under the organisation's name: the head first, then by country.
 - Inside a house, tap the business's name at the top to move to another house of the organisation.
 - Amounts in different currencies are shown side by side and never added up.

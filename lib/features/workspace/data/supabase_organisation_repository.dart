@@ -108,7 +108,7 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
     final rows = await _client.rpc<Object?>('my_organisation_houses_v1');
     return [
       for (final row in rows as List? ?? const []) // empty-ok: the server answers [] for none
-        JoinableHouse.fromJson((row as Map).cast<String, Object?>()),
+        JoinableHouse.fromJson(row),
     ];
   }
 
@@ -121,7 +121,10 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
         'request_house_membership',
         params: {'p_house': workspaceId},
       );
-      final status = answer is Map ? answer['status'] as String? : null;
+      final status = JsonReader.of(
+        answer is Map ? answer : const <String, Object?>{},
+        context: 'house membership request',
+      ).stringOrNull('status');
       return (joined: HouseJoin.of(status), refused: null);
     } on PostgrestException catch (e, st) {
       if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
@@ -145,8 +148,12 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
         .select('welcoming_houses')
         .eq('id', organisationId)
         .maybeSingle();
-    final houses = row?['welcoming_houses'];
-    return houses is List && houses.contains(workspaceId);
+    final houses = row == null
+        ? const <Object?>[] // empty-ok: no organisation row welcomes no one
+        : JsonReader.of(row, context: 'organisation').listOrAbsent(
+            'welcoming_houses',
+          );
+    return houses.contains(workspaceId);
   }
 
   @override

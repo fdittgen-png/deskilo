@@ -261,16 +261,19 @@ class JoinableHouse {
     this.welcome = false,
   });
 
-  factory JoinableHouse.fromJson(Map<String, Object?> json) => JoinableHouse(
-    organisationId: json['organisation_id']! as String,
-    organisationName: json['organisation_name'] as String? ?? '',
-    workspaceId: json['workspace_id']! as String,
-    name: json['name'] as String? ?? '',
-    countryCode: json['country_code'] as String? ?? '',
-    currencyCode: json['currency_code'] as String? ?? '',
-    asked: json['request'] == 'pending',
-    welcome: json['welcome'] == true,
-  );
+  factory JoinableHouse.fromJson(Object? raw) {
+    final row = JsonReader.of(raw, context: 'joinable house');
+    return JoinableHouse(
+      organisationId: row.string('organisation_id'),
+      organisationName: row.stringOr('organisation_name'),
+      workspaceId: row.string('workspace_id'),
+      name: row.stringOr('name'),
+      countryCode: row.stringOr('country_code'),
+      currencyCode: row.stringOr('currency_code'),
+      asked: row.stringOrNull('request') == 'pending',
+      welcome: row.isTrue('welcome'),
+    );
+  }
 
   final String organisationId;
   final String organisationName;

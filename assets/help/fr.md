@@ -3496,7 +3496,7 @@ Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre dev
 **Bon à savoir**
 
 - Chaque maison indique son pays, sa devise et votre propre rôle. Qui d'autre en est propriétaire se lit dans la maison elle-même.
-- Un membre d'une maison voit les autres maisons de l'organisation sur Moi, sous **Autres maisons de** l'organisation, et touche **Demander à rejoindre**. Une question dit d'abord ce que cela implique : son profil devient visible pour cette maison, qui est une activité à part entière avec ses propres conditions, prix et devise (#4008).
+- Un membre d'une maison voit les autres maisons de l'organisation sur Moi, sous **Autres maisons de** l'organisation, et touche **Demander à rejoindre**. Une question dit d'abord ce que cela implique : son profil devient visible pour cette maison, qui est une activité à part entière avec ses propres conditions, prix et devise.
 - Dans Moi, les maisons sont regroupées sous le nom de l'organisation : la tête d'abord, puis par pays.
 - Dans une maison, touchez le nom de l'entreprise en haut pour passer à une autre maison de l'organisation.
 - Les montants dans des devises différentes sont affichés côte à côte et jamais additionnés.

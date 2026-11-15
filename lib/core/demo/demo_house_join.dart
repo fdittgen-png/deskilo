@@ -4,7 +4,8 @@
 // join another: the houses the persona is not an active member of are the
 // ones they may ask, and asking makes them a member there (at once when
 // the house welcomes the organisation's members, else waiting for the
-// house). Bruno, the member the Demo looks through, starts outside Milan.
+// house). Bruno, the member the Demo looks through, is no member of the
+// house abroad the owner adds (Kraków): he asks to join it.
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/organisation.dart';
 import 'demo_dataset.dart';

@@ -13856,7 +13856,7 @@ class AppLocalizationsIt extends AppLocalizations {
   String get houseFree => 'Gratuito';
 
   @override
-  String get houseJoinAsk => 'Chiedi di entrare';
+  String get houseJoinAsk => 'Chieda di entrare';
 
   @override
   String houseJoinAsked(String house) {
@@ -13864,19 +13864,19 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get houseJoinConfirmAsk => 'Chiedi';
+  String get houseJoinConfirmAsk => 'Chieda';
 
   @override
-  String get houseJoinConfirmJoin => 'Entra';
+  String get houseJoinConfirmJoin => 'Entri';
 
   @override
   String houseJoinDoneAsked(String house) {
-    return 'La tua richiesta è stata inviata a $house.';
+    return 'La sua richiesta è stata inviata a $house.';
   }
 
   @override
   String houseJoinDoneMember(String house) {
-    return 'Sei membro di $house.';
+    return 'È membro di $house.';
   }
 
   @override
@@ -13886,11 +13886,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get houseJoinSheetApart =>
-      'Le tue prenotazioni e fatture lì restano separate da quelle delle altre case.';
+      'Le sue prenotazioni e fatture lì restano separate da quelle delle altre case.';
 
   @override
   String houseJoinSheetDecides(String house) {
-    return '$house decide sulla tua richiesta.';
+    return '$house decide sulla sua richiesta.';
   }
 
   @override
@@ -13900,7 +13900,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String houseJoinSheetProfile(String house) {
-    return 'Il tuo profilo diventa visibile agli amministratori di $house: il tuo nome, la tua e-mail e ciò che chiede a ogni membro.';
+    return 'Il suo profilo diventa visibile agli amministratori di $house: il suo nome, la sua e-mail e ciò che chiede a ogni membro.';
   }
 
   @override
@@ -13910,11 +13910,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String houseJoinSheetWelcome(String house, String organisation) {
-    return '$house accoglie i membri di $organisation: sarai membro subito.';
+    return '$house accoglie i membri di $organisation: sarà subito membro.';
   }
 
   @override
-  String get houseJoinWelcomes => 'Sarai membro subito';
+  String get houseJoinWelcomes => 'Sarà subito membro';
 
   @override
   String houseJoinWhere(String country, String currency) {
@@ -13985,7 +13985,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String houseWelcomeExplain(String organisation) {
-    return 'Un membro di un\'altra casa di $organisation che lo chiede diventa subito membro qui, con le condizioni di questa casa per un nuovo membro. Disattivato, decidi tu ogni richiesta.';
+    return 'Un membro di un\'altra casa di $organisation che lo chiede diventa subito membro qui, con le condizioni di questa casa per un nuovo membro. Disattivato, decide Lei ogni richiesta.';
   }
 
   @override

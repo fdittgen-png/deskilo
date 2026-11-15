@@ -78,73 +78,74 @@ class MeOtherHouses extends ConsumerWidget {
       ),
     );
   }
-}
 
-/// Says what joining [house] means and, once the person confirms, asks it;
-/// the answer is said in one notice.
-Future<void> _askToJoin(
-  BuildContext context,
-  WidgetRef ref,
-  JoinableHouse house,
-) async {
-  final l10n = context.l10n;
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (context) => AlertDialog(
-      key: const ValueKey('house-join-sheet'),
-      title: Text(l10n.houseJoinSheetTitle(house.name)),
-      content: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.houseJoinSheetProfile(house.name)),
-            const SizedBox(height: AppSpacing.sm),
-            Text(l10n.houseJoinSheetOwn(house.name, house.currencyCode)),
-            const SizedBox(height: AppSpacing.sm),
-            Text(l10n.houseJoinSheetApart),
-            const SizedBox(height: AppSpacing.sm),
-            Text(
-              house.welcome
-                  ? l10n.houseJoinSheetWelcome(
-                      house.name,
-                      house.organisationName,
-                    )
-                  : l10n.houseJoinSheetDecides(house.name),
-            ),
-          ],
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: () => Navigator.of(context).pop(false),
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-        ),
-        FilledButton(
-          key: const ValueKey('house-join-confirm'),
-          onPressed: () => Navigator.of(context).pop(true),
-          child: Text(
-            house.welcome
-                ? l10n.houseJoinConfirmJoin
-                : l10n.houseJoinConfirmAsk,
+  /// Says what joining [house] means and, once the person confirms, asks it;
+  /// the answer is said in one notice.
+  Future<void> _askToJoin(
+    BuildContext context,
+    WidgetRef ref,
+    JoinableHouse house,
+  ) async {
+    final l10n = context.l10n;
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        key: const ValueKey('house-join-sheet'),
+        title: Text(l10n.houseJoinSheetTitle(house.name)),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(l10n.houseJoinSheetProfile(house.name)),
+              const SizedBox(height: AppSpacing.sm),
+              Text(l10n.houseJoinSheetOwn(house.name, house.currencyCode)),
+              const SizedBox(height: AppSpacing.sm),
+              Text(l10n.houseJoinSheetApart),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                house.welcome
+                    ? l10n.houseJoinSheetWelcome(
+                        house.name,
+                        house.organisationName,
+                      )
+                    : l10n.houseJoinSheetDecides(house.name),
+              ),
+            ],
           ),
         ),
-      ],
-    ),
-  );
-  if (confirmed != true || !context.mounted) return;
-  final answer = await ref
-      .read(organisationCommandsProvider)
-      .askToJoin(house.workspaceId);
-  if (!context.mounted) return;
-  if (answer.refused case final refused?) {
-    AppSnack.error(context, organisationRefusalText(l10n, refused));
-    return;
+        actions: [
+          TextButton(
+            key: const ValueKey('house-join-cancel'),
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
+          ),
+          FilledButton(
+            key: const ValueKey('house-join-confirm'),
+            onPressed: () => Navigator.of(context).pop(true),
+            child: Text(
+              house.welcome
+                  ? l10n.houseJoinConfirmJoin
+                  : l10n.houseJoinConfirmAsk,
+            ),
+          ),
+        ],
+      ),
+    );
+    if (confirmed != true || !context.mounted) return;
+    final answer = await ref
+        .read(organisationCommandsProvider)
+        .askToJoin(house.workspaceId);
+    if (!context.mounted) return;
+    if (answer.refused case final refused?) {
+      AppSnack.error(context, organisationRefusalText(l10n, refused));
+      return;
+    }
+    AppSnack.success(
+      context,
+      answer.joined == HouseJoin.member
+          ? l10n.houseJoinDoneMember(house.name)
+          : l10n.houseJoinDoneAsked(house.name),
+    );
   }
-  AppSnack.success(
-    context,
-    answer.joined == HouseJoin.member
-        ? l10n.houseJoinDoneMember(house.name)
-        : l10n.houseJoinDoneAsked(house.name),
-  );
 }

@@ -3496,7 +3496,7 @@ La Sua attività ha sedi all'estero, in un altro paese o in un'altra valuta. Ogn
 **Da sapere**
 
 - Ogni casa mostra il suo paese, la sua valuta e il Suo ruolo. Chi altro ne è titolare si legge dentro la casa stessa.
-- Un membro di una casa vede le altre case dell'organizzazione su Io, sotto **Altre case di** l'organizzazione, e tocca **Chiedi di entrare**. Una domanda dice prima cosa significa: il suo profilo diventa visibile a quella casa, che è un'attività a sé con condizioni, prezzi e valuta propri (#4008).
+- Un membro di una casa vede le altre case dell'organizzazione su Io, sotto **Altre case di** l'organizzazione, e tocca **Chiedi di entrare**. Una domanda dice prima cosa significa: il suo profilo diventa visibile a quella casa, che è un'attività a sé con condizioni, prezzi e valuta propri.
 - In Io, le case sono raggruppate sotto il nome dell'organizzazione: prima la sede, poi per paese.
 - Dentro una casa, tocchi il nome dell'attività in alto per passare a un'altra casa dell'organizzazione.
 - Gli importi in valute diverse sono mostrati uno accanto all'altro e mai sommati.

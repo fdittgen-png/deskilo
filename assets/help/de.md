@@ -3496,7 +3496,7 @@ Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer ander
 **Gut zu wissen**
 
 - Jedes Haus zeigt sein Land, seine Währung und Ihre eigene Rolle dort. Wer ein Haus sonst noch besitzt, steht im Haus selbst.
-- Ein Mitglied eines Hauses sieht die anderen Häuser der Organisation auf Ich unter **Weitere Häuser von** der Organisation und tippt auf **Um Aufnahme bitten**. Eine Frage sagt zuerst, was das bedeutet: Sein Profil wird für dieses Haus sichtbar, ein eigenes Unternehmen mit eigenen Bedingungen, Preisen und eigener Währung (#4008).
+- Ein Mitglied eines Hauses sieht die anderen Häuser der Organisation auf Ich unter **Weitere Häuser von** der Organisation und tippt auf **Um Aufnahme bitten**. Eine Frage sagt zuerst, was das bedeutet: Sein Profil wird für dieses Haus sichtbar, ein eigenes Unternehmen mit eigenen Bedingungen, Preisen und eigener Währung.
 - Unter Ich stehen die Häuser zusammen unter dem Namen der Organisation: zuerst der Hauptsitz, dann nach Land.
 - In einem Haus tippen Sie oben auf den Namen des Unternehmens, um in ein anderes Haus der Organisation zu wechseln.
 - Beträge in verschiedenen Währungen stehen nebeneinander und werden nie addiert.

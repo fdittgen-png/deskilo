@@ -3496,7 +3496,7 @@ Su negocio tiene sedes en el extranjero, en otro país o en otra moneda. Cada un
 **Conviene saber**
 
 - Cada casa muestra su país, su moneda y su propio rol en ella. Quién más es propietario de una casa se ve dentro de esa casa.
-- Un miembro de una casa ve las otras casas de la organización en Yo, bajo **Otras casas de** la organización, y toca **Pedir unirse**. Una pregunta dice antes lo que significa: su perfil se vuelve visible para esa casa, que es un negocio propio con sus propias condiciones, precios y moneda (#4008).
+- Un miembro de una casa ve las otras casas de la organización en Yo, bajo **Otras casas de** la organización, y toca **Pedir unirse**. Una pregunta dice antes lo que significa: su perfil se vuelve visible para esa casa, que es un negocio propio con sus propias condiciones, precios y moneda.
 - En Yo, las casas aparecen juntas bajo el nombre de la organización: primero la sede y después por país.
 - Dentro de una casa, toque el nombre del negocio arriba para pasar a otra casa de la organización.
 - Los importes en monedas distintas se muestran uno al lado del otro y nunca se suman.
