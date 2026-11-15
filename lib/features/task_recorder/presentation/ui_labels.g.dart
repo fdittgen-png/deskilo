@@ -3937,6 +3937,7 @@ Map<String, _Getter> _part10() => {
   'invoicingMoreRegroup': (l) => l.invoicingMoreRegroup,
   'invoicingSearchHint': (l) => l.invoicingSearchHint,
   'invoicingSourceToInvoice': (l) => l.invoicingSourceToInvoice,
+  'invoicingTodoKeep': (l) => l.invoicingTodoKeep,
   'invoicingTools': (l) => l.invoicingTools,
   'journeyMemberValidators': (l) => l.journeyMemberValidators,
   'jpkKrPdGapReconciliation': (l) => l.jpkKrPdGapReconciliation,

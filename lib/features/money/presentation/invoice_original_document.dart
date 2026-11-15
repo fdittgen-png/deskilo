@@ -18,6 +18,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/files/file_names.dart';
 import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
@@ -79,6 +80,27 @@ class InvoiceDocumentFlow {
     return (
       bytes: document.bytes,
       fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
+    );
+  }
+
+  /// The Factur-X file of [invoice]: its stored original where it has one,
+  /// else rendered now as before, for the [seller], [buyer] and [iban] given.
+  Future<({List<int> bytes, String fileName})> facturXFile(
+    Invoice invoice, {
+    required InvoiceParty seller,
+    required InvoiceParty buyer,
+    required String iban,
+  }) async {
+    final original = await facturXOriginal(invoice);
+    if (original != null) return original;
+    if (!context.mounted) return (bytes: const <int>[], fileName: '');
+    return buildFacturXFile(
+      context,
+      ref,
+      invoice,
+      seller: seller,
+      buyer: buyer,
+      iban: iban,
     );
   }
 
@@ -155,7 +177,7 @@ class InvoiceDocumentFlow {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(context.l10n.invoiceOriginalsKeeping(value, total)),
-                const SizedBox(height: 12),
+                const SizedBox(height: AppSpacing.md),
                 LinearProgressIndicator(
                   value: total == 0 ? null : value / total,
                 ),

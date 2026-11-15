@@ -235,11 +235,8 @@ extension GermanAccountingExports on AccountingExportRun {
       if (!context.mounted) return null;
       // #3853 — the stored original, made first if it is missing; an invoice
       // issued before originals were kept renders as before.
-      final pdf = await InvoiceDocumentFlow(context, ref).facturXOriginal(invoice) ??
-          (context.mounted
-              ? await buildFacturXFile(context, ref, invoice,
-                  seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace),)
-              : (bytes: const <int>[], fileName: ''));
+      final pdf = await InvoiceDocumentFlow(context, ref).facturXFile(invoice,
+              seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
       if (pdf.bytes.isEmpty) return null;
       files[pathOf(invoice)] = pdf.bytes;
     }

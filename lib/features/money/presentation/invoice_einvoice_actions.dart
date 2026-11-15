@@ -77,11 +77,7 @@ Future<void> sendEInvoice(
       if (format == EInvoiceFormat.facturX) {
         // #3853 — the stored original leaves, the same bytes as everywhere
         final flow = InvoiceDocumentFlow(context, ref);
-        file = await flow.facturXOriginal(invoice) ??
-            (context.mounted
-                ? await buildFacturXFile(context, ref, invoice,
-                    seller: seller, buyer: buyer, iban: iban)
-                : (bytes: const <int>[], fileName: ''));
+        file = await flow.facturXFile(invoice, seller: seller, buyer: buyer, iban: iban);
       } else {
         // #2358 — the network's own syntax, from the inputs the
         // download uses; #3850 — in the invoice's own language.
@@ -419,11 +415,7 @@ class _EInvoiceExportRun {
     errorText: context.l10n.workspaceGenericError,
     action: () async {
       // #3853 — the stored original, the same bytes as everywhere
-      final file = await InvoiceDocumentFlow(context, ref).facturXOriginal(s.invoice) ??
-          (context.mounted
-              ? await buildFacturXFile(context, ref, s.invoice,
-                  seller: s.seller, buyer: s.buyer, iban: s.iban)
-              : (bytes: const <int>[], fileName: ''));
+      final file = await InvoiceDocumentFlow(context, ref).facturXFile(s.invoice, seller: s.seller, buyer: s.buyer, iban: s.iban);
       if (file.fileName.isEmpty) return;
       final bytes = Uint8List.fromList(file.bytes);
       if (share) {

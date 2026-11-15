@@ -25279,7 +25279,7 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{The original of {count} invoice could not be kept. Open it to see why.} other{The originals of {count} invoices could not be kept. Open one to see why.}}'**
   String invoiceOriginalsCouldNotKeep(int count);
 
-  /// #3853 progress while the originals are kept in turn
+  /// #3853 progress while the originals are kept in turn [not a count: done]
   ///
   /// In en, this message translates to:
   /// **'{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}'**

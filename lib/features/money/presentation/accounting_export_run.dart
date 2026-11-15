@@ -457,11 +457,8 @@ class AccountingExportRun {
         for (final invoice in yearInvoices) {
           // #3853 — the stored original, made first if it is missing; an invoice
           // issued before originals were kept renders as before.
-          final pdf = await InvoiceDocumentFlow(context, ref).facturXOriginal(invoice) ??
-              (context.mounted
-                  ? await buildFacturXFile(context, ref, invoice,
-                      seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace),)
-                  : (bytes: const <int>[], fileName: ''));
+          final pdf = await InvoiceDocumentFlow(context, ref).facturXFile(invoice,
+              seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
           // #1885 — a document that did not render ends the bundle: an
           // archive missing an invoice must never be saved as complete.
           if (pdf.bytes.isEmpty) return;

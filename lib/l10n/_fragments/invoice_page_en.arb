@@ -379,7 +379,7 @@
   },
   "invoiceOriginalsKeeping": "{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}",
   "@invoiceOriginalsKeeping": {
-    "description": "#3853 progress while the originals are kept in turn",
+    "description": "#3853 progress while the originals are kept in turn [not a count: done]",
     "placeholders": {
       "done": {
         "type": "int"

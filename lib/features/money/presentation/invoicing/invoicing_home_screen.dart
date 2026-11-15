@@ -267,9 +267,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
     final period = overview.value?.period;
     final currency = workspace?.currencyCode ?? '';
     // #3853 — the issued invoices whose original waits to be kept
-    final withoutOriginal =
-        // empty-ok: until read, no entry asks to keep originals
-        ref.watch(invoicesWithoutOriginalProvider).value ?? const [];
+    final withoutOriginal = ref.watch(invoicesWithoutOriginalProvider).value ?? const <Invoice>[]; // empty-ok: until read, no entry asks to keep originals
     final data = InvoicingHomeData(
       originalsToKeep: withoutOriginal.length,
       receivables: receivables,
