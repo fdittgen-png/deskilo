@@ -200,3 +200,54 @@ final class InvoiceOriginalFamily extends $Family
   @override
   String toString() => r'invoiceOriginalProvider';
 }
+
+/// #3853 — the invoices of the active business whose original is not kept
+/// yet, for someone who may issue invoices (and so keep them); none for
+/// anyone else.
+
+@ProviderFor(invoicesWithoutOriginal)
+final invoicesWithoutOriginalProvider = InvoicesWithoutOriginalProvider._();
+
+/// #3853 — the invoices of the active business whose original is not kept
+/// yet, for someone who may issue invoices (and so keep them); none for
+/// anyone else.
+
+final class InvoicesWithoutOriginalProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<Invoice>>,
+          List<Invoice>,
+          FutureOr<List<Invoice>>
+        >
+    with $FutureModifier<List<Invoice>>, $FutureProvider<List<Invoice>> {
+  /// #3853 — the invoices of the active business whose original is not kept
+  /// yet, for someone who may issue invoices (and so keep them); none for
+  /// anyone else.
+  InvoicesWithoutOriginalProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoicesWithoutOriginalProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoicesWithoutOriginalHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<Invoice>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<Invoice>> create(Ref ref) {
+    return invoicesWithoutOriginal(ref);
+  }
+}
+
+String _$invoicesWithoutOriginalHash() =>
+    r'8a063928fb940d0a4bbee297aff2bf1ff99d2745';

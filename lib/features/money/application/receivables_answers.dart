@@ -108,6 +108,9 @@ enum TodoKind {
   payOutRefunds,
   rejectedEInvoices,
   issueDrafts,
+
+  /// #3853 — invoices whose original is not kept yet: kept in one action.
+  keepOriginals,
 }
 
 /// One entry of "To do": what to do, for how many, and the money at stake.
@@ -153,8 +156,11 @@ List<Todo> todoOf(
   Iterable<ToInvoice> toInvoice = const [],
   required ReminderMode mode,
   Set<String> holdsUnassigned = const {},
+  int originalsToKeep = 0,
 }) {
   final tallies = {for (final k in TodoKind.values) k: Tally.empty};
+  // #3853 — the originals are not about money: a count alone
+  tallies[TodoKind.keepOriginals] = Tally(originalsToKeep, const {});
   for (final t in toInvoice) {
     tallies[TodoKind.invoiceTheMonth] = tallies[TodoKind.invoiceTheMonth]!.plus(
       t.currency,

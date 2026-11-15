@@ -9511,7 +9511,11 @@
   "invoiceOriginalMismatch": "Copia: l’originale conservato non corrisponde alla sua impronta; questa viene generata ora con le impostazioni di oggi.",
   "invoiceOriginalNotKept": "Copia: questa fattura è stata emessa prima che se ne conservasse l’originale; viene generata ora con le impostazioni di oggi.",
   "invoiceOriginalNotYetKept": "Copia: l’azienda non ha ancora conservato l’originale di questa fattura; viene generata ora con le impostazioni di oggi.",
+  "invoiceOriginalRefused": "Copia: non è stato possibile conservare l’originale di questa fattura. {why}",
   "invoiceOriginalTooLarge": "Copia: l’originale non è stato conservato perché le immagini del layout della fattura lo rendono più grande di quanto possa essere un originale. Usi immagini più piccole.",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{Non è stato possibile conservare l’originale di {count} fattura. La apra per vedere perché.} other{Non è stato possibile conservare gli originali di {count} fatture. Ne apra una per vedere perché.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Conservazione dell’originale: {done} di {total}} other{Conservazione degli originali: {done} di {total}}}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{L’originale di {count} fattura è conservato.} other{Gli originali di {count} fatture sono conservati.}}",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{L’originale di 1 fattura non è ancora stato conservato. La fattura è emessa; il suo originale sarà conservato più tardi.} other{Gli originali di {count} fatture non sono ancora stati conservati. Le fatture sono emesse; i loro originali saranno conservati più tardi.}}",
   "invoicePageApprovalRecorded": "La sua approvazione è registrata; attende gli altri.",
   "@invoicePageApprovalRecorded": {
@@ -10491,6 +10495,8 @@
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
   },
+  "invoicingTodoKeep": "Conservarli",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Conservare l’originale di {count} fattura} other{Conservare gli originali di {count} fatture}}",
   "invoicingTodoMatch": "Abbinare i pagamenti",
   "@invoicingTodoMatch": {
     "description": "#3587 To do: received payments to match"

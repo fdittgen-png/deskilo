@@ -152,6 +152,12 @@ String statusWordsOf(
     button: l.invoicingTodoReview,
     alert: false,
   ),
+  TodoKind.keepOriginals => (
+    icon: Icons.verified_outlined,
+    title: l.invoicingTodoKeepOriginals(todo.tally.count),
+    button: l.invoicingTodoKeep,
+    alert: false,
+  ),
 };
 
 /// Amounts per currency, said one after the other ("CHF 120.00 · EUR 40.00"):

@@ -42,7 +42,11 @@ class TodoRow extends StatelessWidget {
     final (tileBg, tileFg) = alert
         ? (scheme.errorContainer, scheme.onErrorContainer)
         : (scheme.primaryContainer, scheme.onPrimaryContainer);
-    final label = Text(buttonLabel, maxLines: 1);
+    final label = Text(
+      buttonLabel,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
     final button = primary
         ? FilledButton(key: buttonKey, onPressed: onPressed, child: label)
         : FilledButton.tonal(
@@ -78,7 +82,8 @@ class TodoRow extends StatelessWidget {
           ),
         ),
         const SizedBox(width: KitMetrics.gap),
-        button,
+        // a long word at a large text size shortens rather than overflows
+        Flexible(child: button),
       ],
     );
   }

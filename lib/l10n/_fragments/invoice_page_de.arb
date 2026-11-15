@@ -287,5 +287,11 @@
   "invoiceOriginalKept": "Original aufbewahrt am {when} von {who} · SHA-256 {digest}",
   "invoiceCopyWithPaymentStatus": "Kopie mit Zahlungsstatus",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{Das Original einer Rechnung wurde noch nicht aufbewahrt. Die Rechnung ist ausgestellt; ihr Original wird später aufbewahrt.} other{Die Originale von {count} Rechnungen wurden noch nicht aufbewahrt. Die Rechnungen sind ausgestellt; ihre Originale werden später aufbewahrt.}}",
-  "invoiceQuickViewIsPreview": "Vorschau — das Original ist das heruntergeladene PDF."
+  "invoiceQuickViewIsPreview": "Vorschau — das Original ist das heruntergeladene PDF.",
+  "invoiceOriginalRefused": "Kopie: Das Original dieser Rechnung konnte nicht aufbewahrt werden. {why}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{Das Original von {count} Rechnung ist aufbewahrt.} other{Die Originale von {count} Rechnungen sind aufbewahrt.}}",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Das Original von {count} Rechnung aufbewahren} other{Die Originale von {count} Rechnungen aufbewahren}}",
+  "invoicingTodoKeep": "Aufbewahren",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{Das Original von {count} Rechnung konnte nicht aufbewahrt werden. Öffnen Sie sie, um den Grund zu sehen.} other{Die Originale von {count} Rechnungen konnten nicht aufbewahrt werden. Öffnen Sie eine, um den Grund zu sehen.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Original wird aufbewahrt: {done} von {total}} other{Originale werden aufbewahrt: {done} von {total}}}"
 }

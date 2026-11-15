@@ -9511,7 +9511,11 @@
   "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
   "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalRefused": "Copia: no se pudo conservar el original de esta factura. {why}",
   "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{No se pudo conservar el original de {count} factura. Ábrala para ver por qué.} other{No se pudieron conservar los originales de {count} facturas. Abra una para ver por qué.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Conservando el original: {done} de {total}} other{Conservando los originales: {done} de {total}}}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{El original de {count} factura está conservado.} other{Los originales de {count} facturas están conservados.}}",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.} other{Los originales de {count} facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.}}",
   "invoicePageApprovalRecorded": "Su aprobación está registrada; espera a los demás.",
   "@invoicePageApprovalRecorded": {
@@ -10491,6 +10495,8 @@
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
   },
+  "invoicingTodoKeep": "Conservarlos",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Conservar el original de {count} factura} other{Conservar los originales de {count} facturas}}",
   "invoicingTodoMatch": "Conciliar pagos",
   "@invoicingTodoMatch": {
     "description": "#3587 To do: received payments to match"

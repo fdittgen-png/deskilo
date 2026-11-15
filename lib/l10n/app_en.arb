@@ -20524,9 +20524,48 @@
   "@invoiceOriginalNotYetKept": {
     "description": "#3853 snack: nobody who may issue invoices has opened it yet, a copy is shown"
   },
+  "invoiceOriginalRefused": "Copy: the original of this invoice could not be kept. {why}",
+  "@invoiceOriginalRefused": {
+    "description": "#3853 snack: the original could not be kept; the server's words follow",
+    "placeholders": {
+      "why": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.",
   "@invoiceOriginalTooLarge": {
     "description": "#3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)"
+  },
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{The original of {count} invoice could not be kept. Open it to see why.} other{The originals of {count} invoices could not be kept. Open one to see why.}}",
+  "@invoiceOriginalsCouldNotKeep": {
+    "description": "#3853 after keeping the originals from To do: how many could not be kept; each invoice says why when opened",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceOriginalsKeeping": "{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}",
+  "@invoiceOriginalsKeeping": {
+    "description": "#3853 progress while the originals are kept in turn [not a count: done]",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "invoiceOriginalsKeptNow": "{count, plural, one{The original of {count} invoice is kept.} other{The originals of {count} invoices are kept.}}",
+  "@invoiceOriginalsKeptNow": {
+    "description": "#3853 after issuing: the originals kept in the same flow",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoiceOriginalsNotKeptNow": "{count, plural, one{The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.} other{The originals of {count} invoices were not kept yet. The invoices are issued; their originals are kept later.}}",
   "@invoiceOriginalsNotKeptNow": {
@@ -21867,6 +21906,19 @@
   "invoicingTodoFix": "Fix",
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
+  },
+  "invoicingTodoKeep": "Keep them",
+  "@invoicingTodoKeep": {
+    "description": "#3853 To do: the action that keeps the originals, in turn"
+  },
+  "invoicingTodoKeepOriginals": "{count, plural, one{Keep the original of {count} invoice} other{Keep the originals of {count} invoices}}",
+  "@invoicingTodoKeepOriginals": {
+    "description": "#3853 To do: issued invoices whose original is not kept yet",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "invoicingTodoMatch": "Match payments",
   "@invoicingTodoMatch": {
