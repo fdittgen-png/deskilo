@@ -11986,6 +11986,7 @@ const Set<String> uiLabelKeys = {
   'refusalBankMatchSeveralPayments',
   'refusalBankMatchUndoLaterFirst',
   'refusalChangedMeanwhile',
+  'refusalMemberReturnsAsNew',
   'refusalMoneyLocaleLocked',
   'refusalPermission',
   'refusalPersonalHomeHostsNoWorkspace',

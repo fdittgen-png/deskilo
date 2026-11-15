@@ -6953,6 +6953,7 @@ Map<String, _Getter> _part18() => {
   'qrBillPaymentPart': (l) => l.qrBillPaymentPart,
   'readinessStateUnavailable': (l) => l.readinessStateUnavailable,
   'refusalAccountingClosed': (l) => l.refusalAccountingClosed,
+  'refusalMemberReturnsAsNew': (l) => l.refusalMemberReturnsAsNew,
   'refusalStockMove': (l) => l.refusalStockMove,
   'registerPaymentAmount': (l) => l.registerPaymentAmount,
   'reminderOriginLegacy': (l) => l.reminderOriginLegacy,

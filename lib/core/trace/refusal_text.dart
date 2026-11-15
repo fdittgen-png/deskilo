@@ -95,6 +95,10 @@ enum KnownRefusal {
   /// #3824 (0747) — DKG08: an item with stock movements, or a movement,
   /// is kept: the item is deactivated instead.
   stockHistory,
+
+  /// #4008 (0782) — DKM01: a member who left comes back as a new member,
+  /// never by changing their old row (for instance to paused).
+  memberReturnsAsNew,
 }
 
 /// Substrings of server refusals that mean "you may not".
@@ -152,6 +156,8 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG06': KnownRefusal.stockLot,
   'DKG07': KnownRefusal.stockMove,
   'DKG08': KnownRefusal.stockHistory,
+  // #4008 — a member who left (0782).
+  'DKM01': KnownRefusal.memberReturnsAsNew,
 };
 
 /// #3811 — the server's refusal code and its DETAIL, for a screen that reads
@@ -238,5 +244,6 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockLot => l10n.refusalStockLot,
       KnownRefusal.stockMove => l10n.refusalStockMove,
       KnownRefusal.stockHistory => l10n.refusalStockHistory,
+      KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

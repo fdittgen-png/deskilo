@@ -46,6 +46,7 @@ begin
   delete from public.workspace_role_members where member_id = p_member;
 end;
 $fn$;
+revoke execute on function public.member_return_as_new(uuid) from public, anon, authenticated;
 
 create or replace function public.members_return_guard()
 returns trigger language plpgsql set search_path = public as $fn$
