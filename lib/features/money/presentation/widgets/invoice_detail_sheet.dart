@@ -320,7 +320,7 @@ class _InvoiceDetailBody extends ConsumerWidget {
             ),
           ),
         ),
-        InvoiceStatusChip(status: status),
+        invoiceStatusChip(context, status),
       ]),
       // #802/#804 — WHAT this document is. A subscription invoice
       // dated before the month it charges looks like a mistake

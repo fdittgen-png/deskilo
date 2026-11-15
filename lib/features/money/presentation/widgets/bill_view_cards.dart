@@ -58,7 +58,7 @@ class BillInvoiceCard extends StatelessWidget {
                         ?.copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),
-                InvoiceStatusChip(status: settlement.lifecycle),
+                invoiceStatusChip(context, settlement.lifecycle),
               ],
             ),
             const SizedBox(height: 4),

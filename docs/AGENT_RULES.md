@@ -121,6 +121,22 @@ path before a push: the quality job runs the whole suite on every pull
 request, and several local full suites on a shared machine starve each
 other into timeouts. Docs-only changes need only the lint/doc tests.
 
+**A folder run goes to a hosted runner (#4015).** On a shared machine three
+test runs saturate the processor, and a folder of twenty minutes keeps the
+three-file check of somebody else waiting. Locally, run the lint folder and
+the test FILES the change wrote or edited. For the folders `--list` names,
+push the branch and run them on a hosted runner, before the pull request:
+
+```bash
+scripts/branch_check.sh <branch> test/features/workspace test/ux
+```
+
+It dispatches `Tools · Branch check`, waits, and prints one verdict line
+(`BRANCH CHECK: ok -- <n> passed, ...`) and the names of the tests that
+failed. Work on something else meanwhile; the count goes into the receipt
+line like a local one. It gates nothing: the pull request's Quality run stays
+the gate.
+
 ## Code health: measure, never regress (#2491)
 
 `dart run tool/code_health.dart lib out.json` measures every function

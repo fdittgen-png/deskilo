@@ -144,7 +144,7 @@ class MyInvoicesList extends ConsumerWidget {
                   ? const TextStyle(decoration: TextDecoration.lineThrough)
                   : null,
             ),
-            InvoiceStatusChip(status: status),
+            invoiceStatusChip(context, status),
           ],
         ),
         subtitle: journey == null

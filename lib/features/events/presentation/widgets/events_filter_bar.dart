@@ -67,9 +67,10 @@ Widget? eventOutcomeMark(BuildContext context, EventStatus status) {
 
 /// The feed's filter lines (#581): categories, read state with the sort
 /// toggle, and -- when regrouping is on (#598) -- the grouping axis. Every
-/// choice persists through the filter notifier.
-class EventsFilterBar extends ConsumerWidget {
-  const EventsFilterBar({
+/// choice persists through the filter notifier. #3999 — the controls a
+/// filter bar holds, not the kit's FilterBar (the bar's frame).
+class EventsFilterLines extends ConsumerWidget {
+  const EventsFilterLines({
     super.key,
     required this.filter,
     required this.unreadCount,

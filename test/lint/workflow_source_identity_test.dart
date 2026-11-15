@@ -262,7 +262,9 @@ void main() {
     // the e-invoice validators' digest-keyed downloads: 11.
     // 2026-11-09 #3475: the static gates job beside the tests restores the same
     // lockfile-keyed pub cache and the secret-scanner archive stays with it: 12.
-    expect(seen, 12, reason: 'cache steps counted on 2026-11-02: pub x7, '
+    // 2026-11-15 #4015: the branch check restores the same lockfile-keyed pub
+    // cache, so a dispatched folder run starts as fast as a test shard: 13.
+    expect(seen, 13, reason: 'cache steps counted on 2026-11-02: pub x7, '
         'pods, avd — a new one is a deliberate decision, bump with a reason');
   });
 }

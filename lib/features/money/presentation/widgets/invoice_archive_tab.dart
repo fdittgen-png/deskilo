@@ -428,7 +428,7 @@ class _InvoiceArchiveTabState extends ConsumerState<InvoiceArchiveTab> {
                   ? const TextStyle(decoration: TextDecoration.lineThrough)
                   : null,
             ),
-            InvoiceStatusChip(status: status),
+            invoiceStatusChip(context, status),
           ],
         ),
         subtitle: Text([
