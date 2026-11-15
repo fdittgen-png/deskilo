@@ -518,6 +518,108 @@ abstract class AppLocalizations {
   /// **'Exports'**
   String get accountingExportsTitle;
 
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get accountingJournalBank;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'No line break, tab or | here: the exports separate their fields with them.'**
+  String get accountingJournalCharacter;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get accountingJournalCode;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a code.'**
+  String get accountingJournalCodeRequired;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Another journal already has this code.'**
+  String get accountingJournalDuplicate;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get accountingJournalLabel;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a label.'**
+  String get accountingJournalLabelRequired;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Miscellaneous operations'**
+  String get accountingJournalMisc;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get accountingJournalPurchases;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get accountingJournalSales;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Deliveries to a connected accounting system still use the standard codes.'**
+  String get accountingJournalsDeliveries;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'The code and label of each journal, as your accountant\'s software knows them. Every accounting export the app writes uses them.'**
+  String get accountingJournalsIntro;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Only an owner sets the accounting journals.'**
+  String get accountingJournalsNotAllowed;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'The journals were not saved: check the {journal} journal.'**
+  String accountingJournalsRefused(String journal);
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'A changed code also changes the entry numbers of a period you export again.'**
+  String get accountingJournalsRenumber;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Use the standard codes'**
+  String get accountingJournalsStandard;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting journals'**
+  String get accountingJournalsTitle;
+
   /// #3906 Button back to the accounting page.
   ///
   /// In en, this message translates to:

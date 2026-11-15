@@ -47,6 +47,10 @@ enum JournalProblem {
 
 final _forbidden = RegExp(r'[\x00-\x1f\x7f|]');
 
+/// Whether [text] may stand in a journal's code or label: no control
+/// character and no pipe.
+bool journalTextAllowed(String text) => !_forbidden.hasMatch(text);
+
 /// The first problem of [journals], in the server's order (sales, bank,
 /// purchases, misc; code, label, character, duplicate), or null when the
 /// value can be kept.

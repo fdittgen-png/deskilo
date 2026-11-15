@@ -21,6 +21,7 @@ import '../../domain/purchase.dart' show
         purchaseOffsetPermission,
         purchasePayPermission;
 import '../../domain/room_rental.dart' show roomRentalManagePermission;
+import '../widgets/accounting_journals_sheet.dart';
 import '../widgets/accounting_targets_sheet.dart';
 import '../widgets/bank_statements_sheet.dart';
 import '../widgets/book_periods_sheet.dart';
@@ -411,6 +412,11 @@ class MoneyActionSet {
       if (data.invoicingOn && has(['workspaceSettings']))
         door('accounting-hub-identity', Icons.badge_outlined,
             l10n.legalIdentityTitle, '/legal-identity'),
+      // #3470 — the business's journals, the codes every export writes: an
+      // owner's, like the business's other export setting.
+      if (data.invoicingOn && (data.member?.isOwner ?? false))
+        if (data.workspace case final workspace?)
+          AccountingJournalsDoor(workspace: workspace),
       if (data.vatManagementOn && has(['manageBilling']))
         door('accounting-hub-vat', Icons.percent_outlined, l10n.vatTitle,
             '/vat'),
