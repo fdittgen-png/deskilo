@@ -196,7 +196,6 @@
   "purchaseReceiptSubmitted": "Justificatif soumis : il attend son approbation.",
   "purchaseBillSectionSupplier": "Fournisseur et document",
   "purchaseBillSectionAmount": "Montant et taxe",
-  "purchaseBillSectionPayment": "Paiement",
   "purchaseBillSectionAccounting": "Comptabilité",
   "purchaseBillSectionDescription": "Description et article",
   "purchaseBillOptional": "{label} (facultatif)"

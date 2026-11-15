@@ -196,7 +196,6 @@
   "purchaseReceiptSubmitted": "Beleg eingereicht: Er wartet auf die Genehmigung.",
   "purchaseBillSectionSupplier": "Lieferant und Beleg",
   "purchaseBillSectionAmount": "Betrag und Steuer",
-  "purchaseBillSectionPayment": "Zahlung",
   "purchaseBillSectionAccounting": "Buchhaltung",
   "purchaseBillSectionDescription": "Beschreibung und Artikel",
   "purchaseBillOptional": "{label} (optional)"

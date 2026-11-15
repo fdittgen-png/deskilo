@@ -77,7 +77,7 @@ void main() {
       expect(titles, [
         _en.purchaseBillSectionSupplier,
         _en.purchaseBillSectionAmount,
-        _en.purchaseBillSectionPayment,
+        _en.invoicePageMorePayment,
         _en.purchaseBillSectionAccounting,
         _en.purchaseBillSectionDescription,
       ]);
@@ -114,7 +114,7 @@ void main() {
         findsOneWidget,
       );
       expect(
-        within(_en.purchaseBillSectionPayment, 'purchase-due-date'),
+        within(_en.invoicePageMorePayment, 'purchase-due-date'),
         findsOneWidget,
       );
       expect(

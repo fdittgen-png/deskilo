@@ -25530,9 +25530,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseBillSectionDescription => 'Descripción y artículo';
 
   @override
-  String get purchaseBillSectionPayment => 'Pago';
-
-  @override
   String get purchaseBillSectionSupplier => 'Proveedor y documento';
 
   @override

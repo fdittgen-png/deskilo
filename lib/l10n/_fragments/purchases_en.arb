@@ -297,7 +297,6 @@
   },
   "purchaseBillSectionSupplier": "Supplier and document",
   "purchaseBillSectionAmount": "Amount and tax",
-  "purchaseBillSectionPayment": "Payment",
   "purchaseBillSectionAccounting": "Accounting",
   "purchaseBillSectionDescription": "Description and item",
   "purchaseBillOptional": "{label} (optional)",
@@ -305,9 +304,6 @@
     "description": "#4065 — a heading of the supplier-bill form."
   },
   "@purchaseBillSectionAmount": {
-    "description": "#4065 — a heading of the supplier-bill form."
-  },
-  "@purchaseBillSectionPayment": {
     "description": "#4065 — a heading of the supplier-bill form."
   },
   "@purchaseBillSectionAccounting": {

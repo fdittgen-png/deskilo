@@ -7725,7 +7725,6 @@ Map<String, _Getter> _part20() => {
   'privacyOutcomeRestricted': (l) => l.privacyOutcomeRestricted,
   'processMembershipCommerceDesc': (l) => l.processMembershipCommerceDesc,
   'processOperations': (l) => l.processOperations,
-  'purchaseBillSectionPayment': (l) => l.purchaseBillSectionPayment,
   'purchaseEntryWhoPaid': (l) => l.purchaseEntryWhoPaid,
   'purchaseOrderNeedsPrice': (l) => l.purchaseOrderNeedsPrice,
   'purchaseOrderNew': (l) => l.purchaseOrderNew,

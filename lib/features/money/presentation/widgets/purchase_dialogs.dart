@@ -384,7 +384,7 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
                 textInputAction: TextInputAction.next,
               ),
             ]),
-            _section(l10n.purchaseBillSectionPayment, [
+            _section(l10n.invoicePageMorePayment, [
               AppDateField(
                 key: const ValueKey('purchase-due-date'),
                 fieldKey: 'dueDate',

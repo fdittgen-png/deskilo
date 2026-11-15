@@ -40655,12 +40655,6 @@ abstract class AppLocalizations {
   /// #4065 — a heading of the supplier-bill form.
   ///
   /// In en, this message translates to:
-  /// **'Payment'**
-  String get purchaseBillSectionPayment;
-
-  /// #4065 — a heading of the supplier-bill form.
-  ///
-  /// In en, this message translates to:
   /// **'Supplier and document'**
   String get purchaseBillSectionSupplier;
 

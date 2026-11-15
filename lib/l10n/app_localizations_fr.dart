@@ -25644,9 +25644,6 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchaseBillSectionDescription => 'Description et article';
 
   @override
-  String get purchaseBillSectionPayment => 'Paiement';
-
-  @override
   String get purchaseBillSectionSupplier => 'Fournisseur et document';
 
   @override

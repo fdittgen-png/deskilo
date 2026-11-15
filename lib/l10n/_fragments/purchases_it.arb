@@ -196,7 +196,6 @@
   "purchaseReceiptSubmitted": "Ricevuta presentata: è in attesa di approvazione.",
   "purchaseBillSectionSupplier": "Fornitore e documento",
   "purchaseBillSectionAmount": "Importo e imposta",
-  "purchaseBillSectionPayment": "Pagamento",
   "purchaseBillSectionAccounting": "Contabilità",
   "purchaseBillSectionDescription": "Descrizione e articolo",
   "purchaseBillOptional": "{label} (facoltativo)"

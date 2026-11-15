@@ -196,7 +196,6 @@
   "purchaseReceiptSubmitted": "Justificante presentado: espera su aprobación.",
   "purchaseBillSectionSupplier": "Proveedor y documento",
   "purchaseBillSectionAmount": "Importe e impuesto",
-  "purchaseBillSectionPayment": "Pago",
   "purchaseBillSectionAccounting": "Contabilidad",
   "purchaseBillSectionDescription": "Descripción y artículo",
   "purchaseBillOptional": "{label} (opcional)"

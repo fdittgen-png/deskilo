@@ -11692,7 +11692,6 @@ const Set<String> uiLabelKeys = {
   'purchaseBillSectionAccounting',
   'purchaseBillSectionAmount',
   'purchaseBillSectionDescription',
-  'purchaseBillSectionPayment',
   'purchaseBillSectionSupplier',
   'purchaseEntryAdd',
   'purchaseEntryMe',

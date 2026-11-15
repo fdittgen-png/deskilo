@@ -33296,10 +33296,6 @@
   "@purchaseBillSectionDescription": {
     "description": "#4065 — a heading of the supplier-bill form."
   },
-  "purchaseBillSectionPayment": "Payment",
-  "@purchaseBillSectionPayment": {
-    "description": "#4065 — a heading of the supplier-bill form."
-  },
   "purchaseBillSectionSupplier": "Supplier and document",
   "@purchaseBillSectionSupplier": {
     "description": "#4065 — a heading of the supplier-bill form."
