@@ -70,9 +70,8 @@ import '../widgets/calendar_week_strip.dart';
 class CalendarHubScreen extends ConsumerStatefulWidget {
   const CalendarHubScreen({super.key, this.deskAlerts});
 
-  /// #4056 — at the desk, whose own header chooses the view: whether the
-  /// alerts are shown. The hub then draws no view bar of its own, and the
-  /// desk takes a request for the alerts.
+  /// #4056 — at the desk, whose own header chooses the view and takes a
+  /// request for the alerts: whether they are shown (no view bar here).
   final bool? deskAlerts;
 
   @override
@@ -198,6 +197,24 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     }
   }
 
+  /// The bell, /events and a tapped alert ask for the Alerts view; #4056 —
+  /// at the desk its own header takes the request.
+  void _listenForAlerts() {
+    if (widget.deskAlerts != null) return;
+    ref.listen(calendarAlertsRequestProvider, (_, asked) { if (asked) _takeAlertsRequest(); });
+    // A request made before this hub was built (the redirect of /events).
+    if (ref.read(calendarAlertsRequestProvider)) _takeAlertsRequest();
+  }
+
+  /// The phone's view bar; #4056 — none at the desk, whose header chooses.
+  CalendarViewBar? _viewBar(bool alertsOffered) => widget.deskAlerts != null ? null : CalendarViewBar(
+      view: _selection.view, alertsAvailable: alertsOffered, alertsSelected: _alerts && alertsOffered,
+      alertsCount: pendingAlertCount(ref),
+      onAlerts: () { recordTaskStep(ref, RecorderActions.calendarSwitchView, payload: {'view_mode': 'alerts'}); setState(() => _alerts = true); },
+      onView: (CalendarView v) { recordTaskStep(ref, RecorderActions.calendarSwitchView, payload: {'view_mode': v.name}); // #1881 B
+        setState(() { _alerts = false; _selection = _selection.withView(v); }); },
+      onToday: () => _move('today', () => _selection = _selection.withAnchor(_today)));
+
   /// Off the build frame: the request is a provider, the view a setState.
   void _takeAlertsRequest() => Future.microtask(() {
         if (!mounted) return;
@@ -272,13 +289,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         permissions.contains(WorkspacePermission.viewFinances) ||
             permissions.contains(WorkspacePermission.manageMembers);
     final viewsOn = _viewsOn;
-    final desk = widget.deskAlerts != null;
-    // The bell, /events and a tapped alert ask for the Alerts view.
-    ref.listen(calendarAlertsRequestProvider, (_, asked) {
-      if (asked && !desk) _takeAlertsRequest();
-    });
-    // A request made before this hub was built (the redirect of /events).
-    if (!desk && ref.read(calendarAlertsRequestProvider)) _takeAlertsRequest();
+    _listenForAlerts();
     final alertsOffered = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.eventsTab);
@@ -338,30 +349,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         ]),
       );
     }
-    final viewBar = CalendarViewBar(
-        view: _selection.view,
-        alertsAvailable: alertsOffered,
-        alertsSelected: _alerts && alertsOffered,
-        alertsCount: pendingAlertCount(ref),
-        onAlerts: () {
-          recordTaskStep(ref, RecorderActions.calendarSwitchView,
-              payload: {'view_mode': 'alerts'});
-          setState(() => _alerts = true);
-        },
-        onView: (CalendarView v) {
-          recordTaskStep(ref, RecorderActions.calendarSwitchView,
-              payload: {'view_mode': v.name}); // #1881 B
-          setState(() {
-            _alerts = false;
-            _selection = _selection.withView(v);
-          });
-        },
-        onToday: () =>
-            _move('today', () => _selection = _selection.withAnchor(_today)),
-      );
+    final viewBar = _viewBar(alertsOffered);
     final alerts = widget.deskAlerts ?? _alerts;
     final selector = Column(mainAxisSize: MainAxisSize.min, children: [
-      if (!desk) viewBar,
+      ?viewBar,
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
         _picker(page.value),
@@ -372,7 +363,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       // The Alerts view: the switcher stays, the alert feed fills the rest.
       return Scaffold(
         body: Column(children: [
-          if (!desk) viewBar,
+          ?viewBar,
           const Expanded(child: InboxFace(key: ValueKey('calendar-alerts-view'))),
         ]),
       );
