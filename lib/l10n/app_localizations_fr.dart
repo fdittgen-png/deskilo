@@ -27030,6 +27030,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.';
 
   @override
+  String get refusalMemberReturnsAsNew =>
+      'Un membre parti revient comme nouveau membre : rendez-le actif pour l’accueillir de nouveau.';
+
+  @override
   String get refusalMoneyLocaleLocked =>
       'La devise et le pays sont figés dès que l\'espace a émis un document ou enregistré de l\'argent. Rien n\'a été enregistré.';
 

@@ -26721,6 +26721,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This changed in the meantime. Reopen it to see where it stands.';
 
   @override
+  String get refusalMemberReturnsAsNew =>
+      'A member who left comes back as a new member: set them active to welcome them back.';
+
+  @override
   String get refusalMoneyLocaleLocked =>
       'The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.';
 

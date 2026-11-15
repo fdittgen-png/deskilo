@@ -15717,6 +15717,7 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalMemberReturnsAsNew": "Ein ausgetretenes Mitglied kommt als neues Mitglied zurück: Setzen Sie es auf aktiv, um es wieder aufzunehmen.",
   "refusalMoneyLocaleLocked": "Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"
