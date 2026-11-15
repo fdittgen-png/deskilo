@@ -380,7 +380,7 @@ class _QuestionEditorSheetState extends State<QuestionEditorSheet> {
                   controller: WorkspaceFieldsController(),
                   workspaceName: widget.workspaceName,
                   locale: widget.workspaceLocale,
-                  enabled: false,
+                  enabled: false, // field-locked: the question as a member sees it
                 ),
               const SizedBox(height: AppSpacing.lg),
               FilledButton(

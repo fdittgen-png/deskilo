@@ -213,4 +213,26 @@ void main() {
       expect(find.byKey(const ValueKey('template-feature-unavailable-recapitulativeStatement')), findsNothing);
     });
   });
+
+  testWidgets('#4020 — a group already the same is read as text: no box to '
+      'tick, not a control switched off', (tester) async {
+    await _pump(
+      tester,
+      TemplatePreview.fromJson(<String, dynamic>{
+        'compatibility': 'supported',
+        'groups': [
+          {'group': 'documents_operations', 'state': 'matching', 'items': <Object>[]},
+        ],
+      }),
+    );
+    final row = find.byKey(const ValueKey('template-group-documents_operations'));
+    expect(row, findsOneWidget);
+    final tile = find.descendant(of: row, matching: find.byType(ListTile));
+    expect(tester.widget<ListTile>(tile).enabled, isTrue);
+    expect(tester.widget<ListTile>(tile).onTap, isNull);
+    expect(
+      find.descendant(of: row, matching: find.byType(Checkbox)),
+      findsNothing,
+    );
+  });
 }

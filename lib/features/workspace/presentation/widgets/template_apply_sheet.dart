@@ -302,12 +302,13 @@ class _GroupRow extends StatelessWidget {
     final subtitle = [state, ?reason].join(' — ');
     final Widget row;
     if (value == null) {
+      // #4020 — a fact, not a choice switched off: read as text, nothing to
+      // tap.
       row = ListTile(
         contentPadding: EdgeInsets.zero,
         leading: const Icon(Icons.remove_circle_outline),
         title: Text(title),
         subtitle: Text(subtitle),
-        enabled: false,
       );
     } else {
       row = CheckboxListTile(
