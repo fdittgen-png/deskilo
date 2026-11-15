@@ -58,6 +58,12 @@ create policy organisations_select on public.organisations for select using (
 drop policy if exists mcp_delegated_deny on public.organisations;
 create policy mcp_delegated_deny on public.organisations as restrictive for all to authenticated
   using (not public.mcp_is_delegated()) with check (not public.mcp_is_delegated());
+-- a table without a workspace_id is a personal surface (0564): only a native
+-- session of a recognised account reads it
+drop policy if exists personal_native_session on public.organisations;
+create policy personal_native_session on public.organisations as restrictive for all to public
+  using ((select public.personal_native_session()))
+  with check ((select public.personal_native_session()));
 revoke insert, update, delete on public.organisations from anon, authenticated;
 
 -- ── 2. the server writes the organisation of a business ──────────────────
