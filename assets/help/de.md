@@ -5456,6 +5456,7 @@ Sie möchten, dass Ihre Rechnungen nach Ihnen aussehen: Logo, Layout, Wortlaut.
 **Gut zu wissen**
 
 - Die Vorlage ändert nur das PDF. Das XML der E-Rechnung wird nie angetastet.
+- Eine ausgestellte Rechnung behält das Original, mit dem sie ausgestellt wurde: eine später geänderte Vorlage ändert nur die danach ausgestellten Rechnungen. Bilder, die eine Rechnung größer machen, als ein Original sein darf, verhindern, dass ihr Original aufbewahrt wird; verwenden Sie kleinere Bilder.
 - Jede Person mit der Berechtigung, Dokumente zu gestalten, kann das tun.
 - Eine Vorlage, die sich nicht darstellen lässt, blockiert nie ein Dokument: Das eingebaute Layout übernimmt.
 

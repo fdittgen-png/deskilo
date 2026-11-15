@@ -5456,6 +5456,7 @@ Vuole che le Sue fatture Le somiglino: logo, impaginazione, testi.
 **Da sapere**
 
 - Il modello cambia solo il PDF. L'XML della fattura elettronica non viene mai toccato.
+- Una fattura emessa conserva l'originale con cui è stata emessa: un modello cambiato in seguito cambia solo le fatture emesse dopo. Immagini che rendono una fattura più grande di quanto possa essere un originale impediscono di conservarne l'originale; usi immagini più piccole.
 - Chiunque abbia il permesso di progettare i documenti può farlo.
 - Un modello che non si riesce a generare non blocca mai un documento: subentra l'impaginazione integrata.
 
