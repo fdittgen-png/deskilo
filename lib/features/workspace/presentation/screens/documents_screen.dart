@@ -6,23 +6,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
-import '../../../../core/i18n/app_format.dart';
-import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
-import '../../../../core/ui/kit/records_table.dart';
-import '../../../../core/ui/kit/row_menu.dart';
-import '../../../../core/ui/kit/status_chip.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_document.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/documents_table.dart';
 
 /// The workspace DOCUMENT LIBRARY (#500): statutes, guides, financial
 /// statements, minutes — links into whatever drive the workspace uses
@@ -278,22 +272,6 @@ class DocumentsScreen extends ConsumerWidget {
     ref.invalidate(workspaceDocumentsProvider);
   }
 
-  /// #4070 — who may read a document, as a chip: the audience is said on
-  /// every row, as words on a tint.
-  static Widget audienceChip(AppLocalizations l10n, String minRole) =>
-      StatusChip(
-        key: ValueKey('document-audience-$minRole'),
-        label: audienceName(l10n, minRole),
-        tone: minRole == 'member' ? StatusTone.neutral : StatusTone.warn,
-      );
-
-  static String audienceName(AppLocalizations l10n, String minRole) =>
-      switch (minRole) {
-        'owner' => l10n.documentsRoleOwner,
-        'admin' => l10n.documentsRoleAdmin,
-        _ => l10n.documentsRoleMember,
-      };
-
   /// #4070 — Edit audience: one choice of who sees the document.
   Future<void> _editAudience(
     BuildContext context,
@@ -354,41 +332,10 @@ class DocumentsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final format = appFormatOf(context);
-    final documentsAsync = ref.watch(workspaceDocumentsProvider);
     // #2137 — whoever manages the library curates it, through a role too.
     final canCurate = ref
         .watch(myPermissionsProvider)
         .contains(WorkspacePermission.manageDocuments);
-    void open(WorkspaceDocument d) =>
-        ref.read(linkLauncherProvider)(Uri.parse(d.url));
-    // The row menu: Open, Edit audience, Delete (which still asks).
-    final actions = <_DocAction>[
-      _DocAction('open', l10n.financesOpenDocument, Icons.open_in_new, open),
-      if (canCurate) ...[
-        _DocAction(
-          'audience',
-          l10n.documentsEditAudience,
-          Icons.visibility_outlined,
-          (d) => unawaited(_editAudience(context, ref, d)),
-        ),
-        _DocAction(
-          'delete',
-          l10n.commonDelete,
-          Icons.delete_outline,
-          (d) => unawaited(_delete(context, ref, d)),
-          destructive: true,
-        ),
-      ],
-    ];
-    String added(WorkspaceDocument d) => switch (d.system.createdAt) {
-      final at? => format.dates(DateShape.numeric).format(at.toLocal()),
-      null => '',
-    };
-    final empty = EmptyState(
-      icon: Icons.folder_open_outlined,
-      title: l10n.documentsEmpty,
-    );
     return Scaffold(
       appBar: pageBar(
         context,
@@ -405,115 +352,14 @@ class DocumentsScreen extends ConsumerWidget {
             ),
         ],
       ),
-      body: switch (documentsAsync) {
-        AsyncData(value: final documents) => RecordsTable<WorkspaceDocument>(
-          tableId: 'documents',
-          rows: documents,
-          keyOf: (d) => d.id,
-          searchText: (d) => d.title,
-          onOpen: open,
-          empty: empty,
-          chips: [
-            for (final r in WorkspaceDocument.roles)
-              RecordChip<WorkspaceDocument>(
-                id: r,
-                label: audienceName(l10n, r),
-                keeps: (d) => d.minRole == r,
-              ),
-          ],
-          rowActions: (_) => [
-            for (final a in actions)
-              RecordAction<WorkspaceDocument>(
-                id: a.id,
-                label: a.label,
-                icon: a.icon,
-                destructive: a.destructive,
-                onRun: a.run,
-              ),
-          ],
-          columns: [
-            RecordColumn(
-              id: 'name',
-              label: l10n.membersColName,
-              flex: 4,
-              hideable: false,
-              sortKey: (d) => d.title.toLowerCase(),
-              cell: (_, d) => Text(d.title, key: ValueKey('document-${d.id}')),
-            ),
-            RecordColumn(
-              id: 'group',
-              label: l10n.documentsColGroup,
-              flex: 3,
-              sortKey: _shelf,
-              cell: (_, d) => Text(categoryName(l10n, _shelf(d))),
-            ),
-            RecordColumn(
-              id: 'audience',
-              label: l10n.documentsColAudience,
-              flex: 3,
-              cell: (_, d) => audienceChip(l10n, d.minRole),
-            ),
-            RecordColumn(
-              id: 'added',
-              label: l10n.documentsColAdded,
-              flex: 2,
-              sortKey: (d) => d.system.createdAt?.toIso8601String() ?? '',
-              cell: (_, d) => Text(added(d)),
-            ),
-          ],
-          cardBuilder: (context, d) => RowMenu(
-            keyPrefix: 'document-menu-${d.id}',
-            actions: [
-              for (final a in actions)
-                RowAction(
-                  id: a.id,
-                  label: a.label,
-                  icon: a.icon,
-                  destructive: a.destructive,
-                  onSelected: () => a.run(d),
-                ),
-            ],
-            child: ListTile(
-              key: ValueKey('document-${d.id}'),
-              title: Text(d.title),
-              subtitle: Text(
-                [
-                  categoryName(l10n, _shelf(d)),
-                  if (added(d).isNotEmpty) added(d),
-                ].join(' · '),
-              ),
-              trailing: audienceChip(l10n, d.minRole),
-            ),
-          ),
-        ),
-        AsyncError() => Center(
-          child: Text(l10n.workspaceGenericError),
-        ),
-        _ => const LoadingView(),
-      },
+      body: DocumentsTable(
+        read: ref.watch(workspaceDocumentsProvider),
+        canCurate: canCurate,
+        onOpen: (d) => ref.read(linkLauncherProvider)(Uri.parse(d.url)),
+        onEditAudience: (d) => unawaited(_editAudience(context, ref, d)),
+        onDelete: (d) => unawaited(_delete(context, ref, d)),
+        onRetry: () => ref.invalidate(workspaceDocumentsProvider),
+      ),
     );
   }
 }
-
-/// One entry of a document's row menu.
-class _DocAction {
-  const _DocAction(
-    this.id,
-    this.label,
-    this.icon,
-    this.run, {
-    this.destructive = false,
-  });
-
-  final String id;
-  final String label;
-  final IconData icon;
-  final void Function(WorkspaceDocument document) run;
-  final bool destructive;
-}
-
-/// #2327 — the shelf a document is listed under. A category this app does
-/// not know (an older or newer client wrote it) is listed under "other"
-/// rather than not at all: a library with rows must never render blank.
-String _shelf(WorkspaceDocument d) =>
-    WorkspaceDocument.categories.contains(d.category) ? d.category : 'other';

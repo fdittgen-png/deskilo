@@ -14,6 +14,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
 
+/// Bounded pumps: the table and its menus settle in a few frames.
+Future<void> _settle(WidgetTester tester) async {
+  for (var i = 0; i < 8; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
 Future<(FakeWorkspaceRepository, List<Uri>)> pumpDocuments(
   WidgetTester tester, {
   FakeWorkspaceRepository? workspace,
@@ -34,10 +41,10 @@ Future<(FakeWorkspaceRepository, List<Uri>)> pumpDocuments(
       child: const DeskiloApp(),
     ),
   );
-  await tester.pumpAndSettle();
+  await _settle(tester);
   final context = tester.element(find.byType(Scaffold).first);
   unawaited(GoRouter.of(context).push('/documents'));
-  await tester.pumpAndSettle();
+  await _settle(tester);
   return (repo, launched);
 }
 
@@ -70,7 +77,7 @@ void main() {
     expect(find.text('Financial statements'), findsOneWidget);
 
     await tester.tap(find.text('Statuts 2026'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(launched.single.toString(), 'https://example.org/d1');
   });
 
@@ -99,17 +106,17 @@ void main() {
     final (repo, _) = await pumpDocuments(tester);
 
     await tester.tap(find.byKey(const ValueKey('documents-add')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.enterText(
         find.byKey(const ValueKey('document-title')), 'AG Protokoll');
     await tester.enterText(find.byKey(const ValueKey('document-url')),
         'https://drive.example/x');
     await tester.tap(find.byKey(const ValueKey('document-role')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.text('Admins and owners').last);
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('document-save')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
 
     final saved = repo.documents.single;
     expect(saved.title, 'AG Protokoll');
@@ -172,33 +179,33 @@ void main() {
     final (_, launched) = await pumpDocuments(tester, workspace: repo);
 
     await tester.tap(rowMenu('d1'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(const ValueKey('records-action-open')), findsOneWidget);
     expect(
         find.byKey(const ValueKey('records-action-audience')), findsOneWidget);
     expect(find.byKey(const ValueKey('records-action-delete')), findsOneWidget);
 
     await tester.tap(find.byKey(const ValueKey('records-action-open')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(launched.single.toString(), 'https://example.org/d1');
 
     // Delete asks; cancelling keeps the row.
     await tester.tap(rowMenu('d1'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('records-action-delete')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(const ValueKey('document-delete-confirm')),
         findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('documents-cancel-2')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(repo.documents.length, 2);
 
     await tester.tap(rowMenu('d1'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('records-action-delete')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('document-delete-confirm')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(repo.documents.map((d) => d.id), ['d2']);
   });
 
@@ -209,15 +216,15 @@ void main() {
     await pumpDocuments(tester, workspace: repo);
 
     await tester.tap(rowMenu('d1'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('records-action-audience')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('document-audience-edit')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.text('Owners only').last);
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('document-audience-save')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
 
     expect(repo.documents.single.minRole, 'owner');
     expect(
@@ -237,7 +244,7 @@ void main() {
     await pumpDocuments(tester, workspace: repo);
 
     await tester.tap(rowMenu('d1'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(const ValueKey('records-action-open')), findsOneWidget);
     expect(find.byKey(const ValueKey('records-action-audience')), findsNothing);
     expect(find.byKey(const ValueKey('records-action-delete')), findsNothing);
@@ -249,11 +256,11 @@ void main() {
       ..documents.add(doc('d1', 'House rules', minRole: 'admin'));
     await pumpDocuments(tester, workspace: repo);
     await tester.binding.setSurfaceSize(const Size(390, 844));
-    await tester.pumpAndSettle();
+    await _settle(tester);
 
     expect(find.text('Admins and owners'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('document-menu-d1-more')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(find.byKey(const ValueKey('document-menu-d1-audience')),
         findsOneWidget);
     expect(find.byKey(const ValueKey('document-menu-d1-delete')),
