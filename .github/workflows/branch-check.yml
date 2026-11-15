@@ -3,19 +3,23 @@
 
 name: Tools · Branch check
 
-# #4015 — the test folders of a pushed branch, on a hosted runner.
+# #4015 — the test folders of a pushed branch, on hosted runners.
 #
 # Local test runs share one development machine: three runs saturate it, and
 # a folder run of twenty minutes keeps a three-file check waiting. The pull
 # request's Quality run is the gate, but it starts only when the pull request
-# opens. This is one job that runs the folders or files a contributor names,
-# on the pushed branch, before that:
+# opens. This runs the folders or files a contributor names, on the pushed
+# branch, before that:
 #
 #   scripts/branch_check.sh <branch> test/features/workspace test/ux
 #
 # (or `gh workflow run branch-check.yml --ref <branch> -f paths="..."`).
-# The run summary gives the counts and the names of the tests that failed.
-# It gates nothing: the Quality run stays the gate.
+#
+# #4044 — each named path runs on a runner of its own, side by side: eight
+# folders in one job took 35 minutes and nine ran past the job's limit. The
+# first job checks the paths and hands the list on; the run is green only
+# when every path is. Each path's job summary gives its counts and the names
+# of the tests that failed. It gates nothing: the Quality run stays the gate.
 on:
   workflow_dispatch:
     inputs:
@@ -35,16 +39,19 @@ env:
   FLUTTER_VERSION: "3.47.5"
 
 jobs:
-  check:
-    name: branch check
+  paths:
+    name: the paths
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 5
+    outputs:
+      list: ${{ steps.check.outputs.list }}
     steps:
       - uses: actions/checkout@v4
       # The paths never reach a shell as text of the workflow: they come in
       # through the environment and are refused unless each one is a test
-      # path that exists on this branch.
+      # path that exists on this branch. Only this checked list goes on.
       - name: The paths are test paths of this branch
+        id: check
         env:
           PATHS: ${{ inputs.paths }}
         run: |
@@ -52,6 +59,10 @@ jobs:
           read -r -a paths <<< "$PATHS"
           if [ "${#paths[@]}" -eq 0 ]; then
             echo "::error::no path given"
+            exit 2
+          fi
+          if [ "${#paths[@]}" -gt 12 ]; then
+            echo "::error::at most 12 paths in one run"
             exit 2
           fi
           for p in "${paths[@]}"; do
@@ -64,7 +75,20 @@ jobs:
               exit 2
             fi
           done
-          printf '%s\n' "${paths[@]}" > branch-check-paths.txt
+          list=$(printf '%s\n' "${paths[@]}" | sort -u | python3 -c 'import json,sys; print(json.dumps([l.strip() for l in sys.stdin if l.strip()]))')
+          echo "list=$list" >> "$GITHUB_OUTPUT"
+
+  check:
+    name: branch check
+    needs: paths
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        path: ${{ fromJSON(needs.paths.outputs.list) }}
+    steps:
+      - uses: actions/checkout@v4
       # The versions and the cache quality.yml uses: the same toolchain says
       # the same thing.
       - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
@@ -78,22 +102,24 @@ jobs:
           key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
-      - name: Tests of the named paths
+      - name: Tests of this path
         id: tests
+        env:
+          CHECKED_PATH: ${{ matrix.path }}
         run: |
           set +e
-          mapfile -t paths < branch-check-paths.txt
-          flutter test --concurrency "$(nproc)" --file-reporter json:branch-check.jsonl "${paths[@]}"
+          flutter test --concurrency "$(nproc)" --file-reporter json:branch-check.jsonl "$CHECKED_PATH"
           echo "code=$?" >> "$GITHUB_OUTPUT"
       - name: Verdict
         if: always()
         env:
           CODE: ${{ steps.tests.outputs.code }}
-        run: python3 scripts/branch_check_summary.py branch-check.jsonl "${CODE:-1}" | tee -a "$GITHUB_STEP_SUMMARY"
+          CHECKED_PATH: ${{ matrix.path }}
+        run: python3 scripts/branch_check_summary.py branch-check.jsonl "${CODE:-1}" "$CHECKED_PATH" | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: branch-check
+          name: branch-check-${{ strategy.job-index }}
           path: branch-check.jsonl
           if-no-files-found: ignore
           retention-days: 3
