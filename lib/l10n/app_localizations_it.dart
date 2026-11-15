@@ -6340,6 +6340,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get chOptionToTaxDate => 'Opzione efficace dal (AAAA-MM-GG)';
 
   @override
+  String chromeChipWithHint(String label, String hint) {
+    return '$label, $hint';
+  }
+
+  @override
+  String chromeRoleAs(String role) {
+    return 'come $role';
+  }
+
+  @override
   String get coOwnerAction => 'Comproprietà';
 
   @override

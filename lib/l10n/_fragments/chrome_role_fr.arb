@@ -1,0 +1,4 @@
+{
+  "chromeRoleAs": "en tant que {role}",
+  "chromeChipWithHint": "{label}, {hint}"
+}
