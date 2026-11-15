@@ -1,0 +1,16 @@
+{
+  "organisationOverviewTitle": "Vue d’ensemble",
+  "organisationOverviewHouse": "Maison",
+  "organisationOverviewCountry": "Pays",
+  "organisationOverviewCurrency": "Devise",
+  "organisationOverviewHeadName": "{name} (tête)",
+  "organisationOverviewAsOf": "{amount}, à {time}",
+  "organisationOverviewNotPermitted": "Vous ne pouvez pas lire les finances de cette maison",
+  "organisationOverviewNotEnabled": "L’analyse est désactivée dans cette maison",
+  "organisationOverviewTotals": "Totaux par devise",
+  "organisationOverviewTotalLine": "{currency} : facturé {invoiced} · encaissé {collected} · en retard {overdue}",
+  "organisationOverviewIncomplete": "Incomplet, sans : {houses}",
+  "organisationOverviewOneHouse": "Vous êtes membre d’une seule maison de cette organisation : il n’y en a pas d’autre à mettre à côté.",
+  "organisationOverviewNone": "Aucune maison de cette organisation à afficher.",
+  "organisationOverviewCardLine": "{label} : {amount}"
+}

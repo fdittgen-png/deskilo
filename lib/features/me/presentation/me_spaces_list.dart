@@ -19,6 +19,7 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
+import '../../workspace/presentation/screens/organisation_overview_screen.dart';
 import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../../workspace/providers/organisation_providers.dart';
@@ -216,6 +217,11 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           if (name != null) await notifier.renameGroup(id, name);
         },
         onDelete: () => notifier.removeGroup(id),
+        onOverview: switch (organisationOfGroup(id)) {
+          final organisationId? => () =>
+              OrganisationOverviewScreen.open(context, organisationId),
+          null => null,
+        },
       ),
       // #3281: an empty Favorites is only its header; the heart on a space
       // is the way in, no block of explanation is allocated to it.
