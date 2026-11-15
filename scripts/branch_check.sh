@@ -7,10 +7,13 @@
 #   scripts/branch_check.sh <branch> <test path>...
 #
 # Dispatches `Tools · Branch check` on <branch> with the paths, waits for the
-# run and prints its verdict line and the names of the tests that failed
-# (`BRANCH CHECK: ok -- <n> passed, ...` or `BRANCH CHECK: FAILED -- ...`).
-# Exit 0 only when every test passed; 2 for a wrong call; 3 when the run
-# could not be found or read.
+# run and prints its verdict: one total line
+# (`BRANCH CHECK: ok -- <n> passed, <m> skipped (<k> paths)` or
+# `BRANCH CHECK: FAILED -- ...`) and, for a failure, each failing path's own
+# line and the names of its failed tests. Each path runs on a runner of its
+# own (#4044), so the wait is that of the slowest one.
+# Exit 0 only when every test of every path passed; 2 for a wrong call; 3
+# when the run could not be found or read.
 #
 # The branch must be pushed and contain the workflow (merge master once if it
 # is older than #4015). The run gates nothing: the pull request's Quality run
@@ -57,13 +60,13 @@ echo "run $run -- $(gh run view "$run" --json url --jq .url 2>/dev/null)"
 gh run watch "$run" --interval 30 >/dev/null 2>&1
 conclusion=$(gh run view "$run" --json conclusion --jq .conclusion 2>/dev/null)
 
-# The verdict step prints the same lines the run summary shows.
-verdict=$(gh run view "$run" --log 2>/dev/null |
+# Each path's verdict step prints the lines its job summary shows.
+lines=$(gh run view "$run" --log 2>/dev/null |
   sed -n 's/^.*\(BRANCH CHECK: .*\)$/\1/p; s/^.*Z \(- test\/.*\)$/\1/p' |
   awk '!seen[$0]++')
-if [ -z "$verdict" ]; then
+if [ -z "$lines" ]; then
   echo "BRANCH CHECK: FAILED -- no verdict in the log (conclusion: ${conclusion:-unknown}); gh run view $run --log-failed"
   exit 3
 fi
-echo "$verdict"
-[ "$conclusion" = "success" ]
+asked=$(printf '%s\n' "$@" | sort -u | wc -l | tr -d ' ')
+printf '%s\n' "$lines" | python3 "$(dirname "$0")/branch_check_total.py" "$asked" "${conclusion:-unknown}"
