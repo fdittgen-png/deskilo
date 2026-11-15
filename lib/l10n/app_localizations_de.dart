@@ -5894,6 +5894,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDayEmpty => 'Nichts an diesem Tag.';
 
   @override
+  String calendarDecisionsEntry(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Entscheidungen ($count)',
+      one: 'Entscheidungen (1)',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarDeskAll => 'Alle';
 
   @override

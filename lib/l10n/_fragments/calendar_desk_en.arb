@@ -153,5 +153,14 @@
   },
   "@calendarDeskViewLabel": {
     "description": "#4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel."
+  },
+  "calendarDecisionsEntry": "{count, plural, one{Decisions (1)} other{Decisions ({count})}}",
+  "@calendarDecisionsEntry": {
+    "description": "#4055 — on a phone, the pending decisions as one row that opens the Alerts view: calendarDecisionsEntry.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   }
 }

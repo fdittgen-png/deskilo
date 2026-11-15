@@ -26,5 +26,6 @@
   "bookingPriceSubscription": "Abbonamento",
   "bookingPriceOverage": "Mezza giornata extra",
   "calendarDeskRangeLabel": "Periodo",
-  "calendarDeskViewLabel": "Vista"
+  "calendarDeskViewLabel": "Vista",
+  "calendarDecisionsEntry": "{count, plural, one{Decisioni (1)} other{Decisioni ({count})}}"
 }

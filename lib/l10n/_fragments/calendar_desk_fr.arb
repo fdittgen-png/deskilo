@@ -26,5 +26,6 @@
   "bookingPriceSubscription": "Abonnement",
   "bookingPriceOverage": "Demi-journée supplémentaire",
   "calendarDeskRangeLabel": "Période",
-  "calendarDeskViewLabel": "Vue"
+  "calendarDeskViewLabel": "Vue",
+  "calendarDecisionsEntry": "{count, plural, one{Décisions (1)} other{Décisions ({count})}}"
 }

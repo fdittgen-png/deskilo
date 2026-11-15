@@ -126,11 +126,8 @@ class PendingDecisionsSection extends ConsumerWidget {
                     crossAxisAlignment:
                         CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        eventLine(l10n, event, names, targets, currency),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
+                      // #4055 — the whole sentence, wrapped, never cut.
+                      Text(eventLine(l10n, event, names, targets, currency)),
                       Text(
                         switch (eventQuorumProgress(
                           l10n,

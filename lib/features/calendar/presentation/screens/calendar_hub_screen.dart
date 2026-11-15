@@ -343,7 +343,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       return Scaffold(
         body: ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
           _plainSelector(l10n),
           chips,
         ]),
@@ -385,7 +385,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
                   selector,
                   chips,
                 ]),
@@ -397,7 +397,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         }
         return ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
           selector,
           chips,
         ]);
