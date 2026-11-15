@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../core/text/collation.dart';
+import 'organisation_overview.dart';
 import 'workspace.dart';
 
 /// The reader's role in one house.
@@ -164,6 +165,15 @@ enum OrganisationRefusal {
 abstract interface class OrganisationRepository {
   /// Every organisation the reader is a member of a house of, by name.
   Future<List<Organisation>> myOrganisations();
+
+  /// #4007 — the houses of [organisationId] the reader is a member of, side
+  /// by side for the months [fromMonth]..[toMonth] (`YYYY-MM`), with a total
+  /// per currency.
+  Future<OrganisationOverview> overview(
+    String organisationId, {
+    required String fromMonth,
+    required String toMonth,
+  });
 
   /// Makes [headWorkspaceId] the head of a new organisation named [name].
   Future<OrganisationRefusal?> create(String headWorkspaceId, String name);

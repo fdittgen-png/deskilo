@@ -103,6 +103,100 @@ final class MyOrganisationsProvider
 
 String _$myOrganisationsHash() => r'df66c119979f93643268b34614a2aa45ba22ef6f';
 
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+@ProviderFor(organisationOverview)
+final organisationOverviewProvider = OrganisationOverviewFamily._();
+
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+final class OrganisationOverviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<OrganisationOverview>,
+          OrganisationOverview,
+          FutureOr<OrganisationOverview>
+        >
+    with
+        $FutureModifier<OrganisationOverview>,
+        $FutureProvider<OrganisationOverview> {
+  /// #4007 — the houses of [organisationId] side by side for one month.
+  OrganisationOverviewProvider._({
+    required OrganisationOverviewFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'organisationOverviewProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$organisationOverviewHash();
+
+  @override
+  String toString() {
+    return r'organisationOverviewProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<OrganisationOverview> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<OrganisationOverview> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return organisationOverview(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OrganisationOverviewProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$organisationOverviewHash() =>
+    r'e9b7afdb7203b396933c09b13acc53e524564b1b';
+
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+final class OrganisationOverviewFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<OrganisationOverview>,
+          (String, String)
+        > {
+  OrganisationOverviewFamily._()
+    : super(
+        retry: null,
+        name: r'organisationOverviewProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #4007 — the houses of [organisationId] side by side for one month.
+
+  OrganisationOverviewProvider call(String organisationId, String month) =>
+      OrganisationOverviewProvider._(
+        argument: (organisationId, month),
+        from: this,
+      );
+
+  @override
+  String toString() => r'organisationOverviewProvider';
+}
+
 /// The owners' commands; a change reads the organisations again.
 
 @ProviderFor(organisationCommands)
