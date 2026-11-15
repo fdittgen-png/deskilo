@@ -6,6 +6,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -18,10 +19,10 @@ import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
-import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
 import '../../domain/invoice_issue_readiness.dart';
+import '../../domain/invoice_mail.dart' show invoiceEmailKey;
 import '../../providers/money_providers.dart';
 import '../invoice_issue_block_text.dart';
 import '../invoice_original_document.dart';
@@ -69,9 +70,7 @@ Future<void> showInvoiceIssueSheet(
     size: TaskSize.standard,
     sessionKey: ('invoice-issue', workspace.id, replaces?.id),
     builder: (context) => _InvoiceForm(
-      canEmail: ref
-          .read(enabledFeaturesSyncProvider)
-          .contains(WorkspaceFeature.invoiceEmail),
+      canEmail: featureOn(ref.read(enabledFeatureKeysProvider), invoiceEmailKey, byDefault: false),
       countryCode: workspace.countryCode,
       association: ref.read(sellerIsAssociationProvider),
       now: now,
