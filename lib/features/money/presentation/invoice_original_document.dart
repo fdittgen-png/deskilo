@@ -119,14 +119,32 @@ class InvoiceDocumentFlow {
     if (ids.isEmpty) return;
     var kept = 0;
     final done = ValueNotifier<int>(0);
-    if (askedFor) unawaited(_showProgress(done, ids.length));
+    // The progress is closed by the run that opened it, on the navigator it
+    // was opened on, and only while it is still open: a page that left the
+    // tree meanwhile must not leave it up, and a run that ends must never
+    // close the page under it.
+    final navigator = Navigator.of(context, rootNavigator: true);
+    var progressOpen = askedFor;
+    if (askedFor) {
+      unawaited(
+        _showProgress(
+          done,
+          ids.length,
+        ).whenComplete(() => progressOpen = false),
+      );
+    }
+    void closeProgress() {
+      if (progressOpen && navigator.mounted) navigator.pop();
+      progressOpen = false;
+    }
+
     try {
       await readDocumentPolicies(ref);
       // the list as it stands now, with the invoices just issued in it
       ref.invalidate(invoicesProvider);
       final invoices = await ref.read(invoicesProvider.future);
       for (final invoice in invoices.where((i) => ids.contains(i.id))) {
-        if (!context.mounted) return;
+        if (!context.mounted) break;
         // one that is not kept never stops the others
         try {
           final document = await documentOf(invoice);
@@ -150,8 +168,8 @@ class InvoiceDocumentFlow {
         stackTrace: st,
       );
     }
+    closeProgress();
     if (!context.mounted) return;
-    if (askedFor) Navigator.of(context, rootNavigator: true).pop();
     final l10n = context.l10n;
     final notKept = ids.length - kept;
     AppSnack.info(
@@ -169,19 +187,23 @@ class InvoiceDocumentFlow {
       showDialog<void>(
         context: context,
         barrierDismissible: false,
-        builder: (context) => AlertDialog(
-          key: const ValueKey('invoice-originals-keeping'),
-          content: ValueListenableBuilder<int>(
-            valueListenable: done,
-            builder: (context, value, _) => Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(context.l10n.invoiceOriginalsKeeping(value, total)),
-                const SizedBox(height: AppSpacing.md),
-                LinearProgressIndicator(
-                  value: total == 0 ? null : value / total,
-                ),
-              ],
+        // Back and Escape do not close it: the run does, when it ends.
+        builder: (context) => PopScope(
+          canPop: false,
+          child: AlertDialog(
+            key: const ValueKey('invoice-originals-keeping'),
+            content: ValueListenableBuilder<int>(
+              valueListenable: done,
+              builder: (context, value, _) => Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(context.l10n.invoiceOriginalsKeeping(value, total)),
+                  const SizedBox(height: AppSpacing.md),
+                  LinearProgressIndicator(
+                    value: total == 0 ? null : value / total,
+                  ),
+                ],
+              ),
             ),
           ),
         ),
