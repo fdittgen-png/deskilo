@@ -117,6 +117,7 @@ processes that payment under its own privacy policy.
 | Invoices and credit notes | legal documents | the statutory accounting period of the workspace's country | kept, and immutable |
 | Audit and decision trail | proving who approved what | the statutory period | kept |
 | Badge hashes | opening the door | until revoked | revoked immediately |
+| A business's birth record, when it was added to an organisation from its head | where it came from, what was carried, which of the head's owners were added and whether its prices are still to be named | for the life of the business | kept; it names people by account only, as the membership row does |
 | Diagnostic trace | fixing a fault you report | on your device only, 512 KiB, oldest discarded | delete the app, or clear it in Settings |
 | Answers to the space's own questions | a committee role, an emergency contact, a size for a group order — whatever the space asked | while you are a member of that space | deleted |
 | Answers kept under a retention hold | only a question the owner documented a legal obligation for, such as a statutory member register | the period the hold states, readable only by whoever manages personal data in that space | kept until the hold expires, then deleted |
