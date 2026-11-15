@@ -5745,6 +5745,7 @@ Quiere que sus facturas se parezcan a usted: logotipo, maquetación, redacción.
 **Conviene saber**
 
 - La plantilla cambia solo el PDF. El XML de la factura electrónica nunca se toca.
+- Una factura emitida conserva el original con el que se emitió: una plantilla cambiada después solo cambia las facturas emitidas más tarde. Las imágenes que hacen una factura más grande de lo que puede ser un original impiden conservar su original; use imágenes más pequeñas.
 - Puede hacerlo cualquier persona con permiso para diseñar documentos.
 - Una plantilla que no se genera nunca bloquea un documento: entra en juego la maquetación integrada.
 

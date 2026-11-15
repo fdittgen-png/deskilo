@@ -17,6 +17,7 @@ import '../../../core/privacy/recording_providers.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
 import '../domain/member.dart';
+import '../domain/workspace_permission.dart';
 import 'workspace_providers.dart';
 
 part 'member_display_providers.g.dart';
@@ -74,3 +75,20 @@ Future<Map<String, Profile>> memberProfiles(Ref ref) async {
   // Filming mode replaces the people and keeps the page.
   return {for (final p in profiles) p.id: recording ? recordingProfile(p) : p};
 }
+
+/// #3853 — the name of the member whose account is [userId] in the active
+/// workspace, as the names above print it; empty when no member has it.
+@riverpod
+Future<String> accountMemberName(Ref ref, String userId) async {
+  final members = await ref.watch(workspaceMembersProvider.future);
+  final names = await ref.watch(memberNamesProvider.future);
+  for (final m in members) {
+    if (m.userId == userId) return names[m.id] ?? '';
+  }
+  return '';
+}
+
+/// #3853 — whether the person may issue invoices in the active workspace.
+@riverpod
+bool mayIssueInvoices(Ref ref) =>
+    ref.watch(myPermissionsProvider).contains(WorkspacePermission.issueInvoices);

@@ -279,5 +279,13 @@
   },
   "invoicePageMoreRemind": "Mahnung teilen",
   "invoicePageMorePayment": "Zahlung",
-  "invoicePageMoreMatch": "Eine Zahlung zuordnen"
+  "invoicePageMoreMatch": "Eine Zahlung zuordnen",
+  "invoiceOriginalNotKept": "Kopie: Diese Rechnung wurde ausgestellt, bevor ihr Original aufbewahrt wurde; sie wird jetzt mit den heutigen Einstellungen erstellt.",
+  "invoiceOriginalMismatch": "Kopie: Das aufbewahrte Original passt nicht zu seinem Fingerabdruck; diese wird jetzt mit den heutigen Einstellungen erstellt.",
+  "invoiceOriginalTooLarge": "Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Verwenden Sie kleinere Bilder.",
+  "invoiceOriginalNotYetKept": "Kopie: Das Unternehmen hat das Original dieser Rechnung noch nicht aufbewahrt; sie wird jetzt mit den heutigen Einstellungen erstellt.",
+  "invoiceOriginalKept": "Original aufbewahrt am {when} von {who} · SHA-256 {digest}",
+  "invoiceCopyWithPaymentStatus": "Kopie mit Zahlungsstatus",
+  "invoiceOriginalsNotKeptNow": "{count, plural, one{Das Original einer Rechnung wurde noch nicht aufbewahrt. Die Rechnung ist ausgestellt; ihr Original wird später aufbewahrt.} other{Die Originale von {count} Rechnungen wurden noch nicht aufbewahrt. Die Rechnungen sind ausgestellt; ihre Originale werden später aufbewahrt.}}",
+  "invoiceQuickViewIsPreview": "Vorschau — das Original ist das heruntergeladene PDF."
 }
