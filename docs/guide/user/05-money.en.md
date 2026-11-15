@@ -354,6 +354,31 @@ You want everything the space sells and invoices in one place.
 
 **See also:** [Invoicing at a glance](help:user.money.invoicing) · [The Purchases page](help:user.money.purchases)
 
+<!-- anchor: user.money.guest-passes -->
+### Sell and revoke a guest pass
+
+**Audience:** Administrator · Owner
+
+A guest who is not a member takes a place for a day or a few hours, pays at the desk and gets an invoice.
+
+<!-- image: user-money-guest-passes -->
+
+**Steps**
+
+1. Open [Guest passes](app:/money/guest-passes), or **Guest passes** on the [Sales](app:/money/sales) page.
+2. The first time, tap **Add a pass**: its **Name**, **Per day** or **Per hour**, the **Price per unit**, and **On sale**.
+3. Tap **Sell a pass**, choose the **Pass** and the **Place**, the days (**From**, **To**) and the guest's name and contact, and tick **Paid at the desk** if they paid.
+4. **Passes sold** lists each pass with what was **Used**. To take passes back, select them and tap **Revoke**, then confirm.
+
+**Good to know**
+
+- The guest does not become a member; their name and contact are printed on the invoice.
+- Revoking cancels the bookings that have not started yet. The days already started stay, and no money moves: correct the guest's invoice on its page if they are owed money back.
+- **Revoked, invoice not corrected** lists the revoked passes whose invoice still waits for its correction; **Open the invoice** takes you there.
+- An hourly pass is for one day; a day pass lasts 1 to 31 days.
+
+**See also:** [The Sales page](help:user.money.sales) · [Follow one invoice](help:user.invoicing.open)
+
 <!-- anchor: user.money.purchases -->
 ### The Purchases page and Add purchase / expense
 
@@ -614,14 +639,14 @@ You issue and chase the invoices of the whole workspace and want to know where t
 **Steps**
 
 1. Open [Invoicing](app:/invoices).
-2. Read the tabs: **To invoice** lists members still to be invoiced for the month, **Open** the invoices issued and unpaid, and **Archive** those that are closed.
-3. Read the line of four steps under the banner: **To issue**, **To collect**, **To confirm** and **Closed**, with a count for each.
-4. Tap **Month-close wizard** to invoice a month, or **New invoice** for a single one.
-5. Tap the tools icon for the invoice register, reminder rules, the invoice PDF template and **My finances**.
+2. Read **Owed to you**: what is **Overdue** and what is **Not yet due**.
+3. Work down **To do**: each entry opens with **Review**, until it reads **You are all caught up.**
+4. Below, read the customers and their invoices; tap **New** for a single invoice and **More** for the other tools.
 
 **Good to know**
 
-- Invoices are never edited or deleted. A wrong one is marked erroneous and replaced.
-- The full workflow, from month-close to settlement and reminders, is in chapter 08: [Reminder rules](help:user.money.reminders.rules) and [The invoice PDF template](help:user.money.reports.invoice-template) are good places to continue.
+- Invoices are never edited or deleted. A wrong one is corrected with a replacement.
+- The whole routine, from invoicing the month to matching payments and paying out credit notes, is in chapter 08: start with [The Invoicing screen](help:user.invoicing.hub).
 
-**See also:** [Reminder rules](help:user.money.reminders.rules)
+**See also:** [Invoice the month](help:user.invoicing.month) · [Reminder rules](help:user.money.reminders.rules)
+

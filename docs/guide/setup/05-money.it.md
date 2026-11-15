@@ -238,7 +238,7 @@ Decide se una persona preme i pulsanti ogni mese o se ci pensa DesKilo.
 - Ogni tipo di fattura (abbonamento, fine mese) può essere emesso una sola volta per membro e per mese. Le fatture non si possono modificare né eliminare; una fattura sbagliata viene contrassegnata come errata e sostituita.
 - Per impostazione predefinita emettono le fatture il proprietario e i comproprietari. **Gli admin emettono fatture** estende questa facoltà agli amministratori.
 
-**Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub) · [Sollecitare e incassare le fatture aperte](help:user.invoicing.open)
+**Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub) · [Seguire una fattura](help:user.invoicing.open)
 
 <!-- anchor: setup.money.reminders -->
 ### Solleciti di pagamento
