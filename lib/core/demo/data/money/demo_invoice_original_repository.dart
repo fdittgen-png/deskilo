@@ -26,6 +26,12 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
   ) async => _records[invoiceId];
 
   @override
+  Future<Set<String>> keptIn(String workspaceId) async => {
+    for (final e in _records.entries)
+      if (e.value.path.startsWith('$workspaceId/')) e.key,
+  };
+
+  @override
   Future<Uint8List> pdfOf(InvoiceOriginal original) async =>
       _files[original.path] ?? Uint8List(0);
 

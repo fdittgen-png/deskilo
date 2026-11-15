@@ -7,6 +7,7 @@
 // invoice issued before originals were kept, stored bytes that do not match
 // their digest, a reader who may not issue invoices before anyone who may
 // has opened it, and a PDF larger than the store keeps.
+import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:deskilo/core/demo/data/money/demo_invoice_original_repository.dart';
@@ -68,6 +69,8 @@ class _Tampered implements InvoiceOriginalRepository {
   Future<InvoiceOriginal?> originalOf(String ws, String id) =>
       inner.originalOf(ws, id);
   @override
+  Future<Set<String>> keptIn(String ws) => inner.keptIn(ws);
+  @override
   Future<Uint8List> pdfOf(InvoiceOriginal o) async =>
       Uint8List.fromList([...await inner.pdfOf(o), 32]);
   @override
@@ -95,6 +98,64 @@ class _TooLarge extends DemoInvoiceOriginalRepository {
     required String xml,
   }) async =>
       throw const InvoiceOriginalRefused(InvoiceOriginalRefusal.tooLarge);
+}
+
+/// A store where someone else stored first, whose bytes are not those it
+/// recorded.
+class _FirstElsewhere extends DemoInvoiceOriginalRepository {
+  _FirstElsewhere()
+    : super(storedBy: () => null, now: () => DateTime.utc(2026));
+  @override
+  Future<InvoiceOriginal> store({
+    required String workspaceId,
+    required String invoiceId,
+    required Uint8List pdf,
+    required String xml,
+  }) async => InvoiceOriginal(
+    invoiceId: invoiceId,
+    path: 'elsewhere',
+    pdfBytes: 1,
+    pdfSha256: pdfSha256OfBytes(const [1]),
+    xmlSha256: '',
+  );
+  @override
+  Future<Uint8List> pdfOf(InvoiceOriginal original) async =>
+      Uint8List.fromList(const [2]);
+}
+
+/// A store whose server refuses the structured part.
+class _Refused extends DemoInvoiceOriginalRepository {
+  _Refused() : super(storedBy: () => null, now: () => DateTime.utc(2026));
+  @override
+  Future<InvoiceOriginal> store({
+    required String workspaceId,
+    required String invoiceId,
+    required Uint8List pdf,
+    required String xml,
+  }) async => throw const InvoiceOriginalRefused(
+    InvoiceOriginalRefusal.refused,
+    'the structured part does not name this invoice\'s amount due',
+  );
+}
+
+/// A store that refuses the structured part, once [gate] is opened.
+class _RefusedWhenOpened extends _Refused {
+  final gate = Completer<void>();
+  @override
+  Future<InvoiceOriginal> store({
+    required String workspaceId,
+    required String invoiceId,
+    required Uint8List pdf,
+    required String xml,
+  }) async {
+    await gate.future;
+    return super.store(
+      workspaceId: workspaceId,
+      invoiceId: invoiceId,
+      pdf: pdf,
+      xml: xml,
+    );
+  }
 }
 
 /// The document of [invoice], as a person using the app in [locale] opens it.
@@ -325,6 +386,152 @@ void main() {
       mayIssue: false,
     );
     expect(after.source, InvoiceDocumentSource.original);
+  });
+
+  testWidgets('an original someone else stored first is checked by its '
+      'digest too', (tester) async {
+    final (money, invoice) = await _issued();
+    final document = await _open(
+      tester,
+      invoice: invoice,
+      money: money,
+      store: _FirstElsewhere(),
+    );
+    expect(document.source, InvoiceDocumentSource.mismatch);
+  });
+
+  testWidgets('the run the person asked for shows its progress, which Back '
+      'does not close; it closes it itself, leaves the page under it and '
+      'says what could not be kept', (tester) async {
+    final (money, invoice) = await _issued();
+    money.invoices[0] = invoice;
+    final store = _RefusedWhenOpened();
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(
+            money: money,
+            workspace: _business(),
+            invoiceOriginals: store,
+          ),
+          testReadyWorkspaceContext(),
+          currentWorkspaceProvider.overrideWith(
+            (ref) async => _business().workspaces.single,
+          ),
+          myPermissionsProvider.overrideWithValue({
+            WorkspacePermission.issueInvoices,
+          }),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) => TextButton(
+                key: const ValueKey('keep'),
+                onPressed: () => InvoiceDocumentFlow(
+                  context,
+                  ref,
+                ).keep([invoice.id], askedFor: true),
+                child: const Text('keep'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    final progress = find.byKey(const ValueKey('invoice-originals-keeping'));
+    final l10n = await AppLocalizations.delegate.load(const Locale('en'));
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('keep')));
+      await untilReal(() async {
+        await tester.pump();
+        return progress.evaluate().isNotEmpty;
+      }, what: 'the progress of the run');
+      // Back does not close it while the run goes on.
+      await tester.binding.handlePopRoute();
+      await tester.pump();
+      expect(progress, findsOneWidget);
+      store.gate.complete();
+      await untilReal(() async {
+        await tester.pump();
+        return progress.evaluate().isEmpty;
+      }, what: 'the run closing its progress');
+    });
+    await tester.pump();
+    expect(find.byKey(const ValueKey('keep')), findsOneWidget);
+    expect(find.text(l10n.invoiceOriginalsCouldNotKeep(1)), findsOneWidget);
+  });
+
+  testWidgets('a refusal that is not about size says it could not be kept, '
+      'in the server\'s words', (tester) async {
+    final (money, invoice) = await _issued();
+    final document = await _open(
+      tester,
+      invoice: invoice,
+      money: money,
+      store: _Refused(),
+    );
+    expect(document.source, InvoiceDocumentSource.refused);
+    expect(document.why, contains('amount due'));
+  });
+
+  testWidgets('the Factur-X that leaves is the stored original, the same '
+      'bytes as the download', (tester) async {
+    final (money, invoice) = await _issued();
+    final store = _store();
+    final stored = await _open(
+      tester,
+      invoice: invoice,
+      money: money,
+      store: store,
+    );
+    ({List<int> bytes, String fileName})? leaving;
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(
+            money: money,
+            workspace: _business(),
+            invoiceOriginals: store,
+          ),
+          testReadyWorkspaceContext(),
+          currentWorkspaceProvider.overrideWith(
+            (ref) async => _business().workspaces.single,
+          ),
+          myPermissionsProvider.overrideWithValue({
+            WorkspacePermission.issueInvoices,
+          }),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) => TextButton(
+                key: const ValueKey('leave'),
+                onPressed: () async {
+                  await readDocumentPolicies(ref);
+                  if (!context.mounted) return;
+                  leaving = await InvoiceDocumentFlow(
+                    context,
+                    ref,
+                  ).facturXOriginal(invoice);
+                },
+                child: const Text('leave'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('leave')));
+      await untilReal(() => leaving != null, what: 'the Factur-X that leaves');
+    });
+    expect(leaving!.bytes, stored.bytes);
   });
 
   testWidgets('a PDF larger than the store keeps gives a copy that says so', (

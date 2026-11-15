@@ -33,6 +33,11 @@ enum InvoiceDocumentSource {
 
   /// The business has not kept the original yet: rendered now, as a copy.
   notYetKept,
+
+  /// The original could not be kept: the server refused it, in its words
+  /// (the document's `why`), or there was nothing to check it by. Rendered
+  /// now, as a copy, until the fault is fixed.
+  refused,
 }
 
 /// The document of an issued invoice and where its bytes come from.
@@ -40,6 +45,7 @@ typedef InvoiceDocument = ({
   Uint8List bytes,
   String fileName,
   InvoiceDocumentSource source,
+  String why,
 });
 
 /// An invoice rendered now: its PDF and the CII it carries (empty for a
@@ -65,20 +71,27 @@ class InvoiceOriginals {
     InvoiceRender render,
   ) async {
     final name = '${safeFileSlug(invoice.number)}.pdf';
-    Future<InvoiceDocument> copy(InvoiceDocumentSource source) async =>
-        (bytes: (await render(copy: true)).pdf, fileName: name, source: source);
+    Future<InvoiceDocument> copy(
+      InvoiceDocumentSource source, [
+      String why = '',
+    ]) async => (
+      bytes: (await render(copy: true)).pdf,
+      fileName: name,
+      source: source,
+      why: why,
+    );
+    InvoiceDocument original(Uint8List bytes) => (
+      bytes: bytes,
+      fileName: name,
+      source: InvoiceDocumentSource.original,
+      why: '',
+    );
 
     if (!invoice.keepsOriginal) return copy(InvoiceDocumentSource.notKept);
     final kept = await _store.originalOf(invoice.workspaceId, invoice.id);
     if (kept != null) {
       final bytes = await _store.pdfOf(kept);
-      if (kept.holds(bytes)) {
-        return (
-          bytes: bytes,
-          fileName: name,
-          source: InvoiceDocumentSource.original,
-        );
-      }
+      if (kept.holds(bytes)) return original(bytes);
       TraceLogger.instance.warn(
         'money',
         'the stored original of ${invoice.number} does not match its digest',
@@ -87,7 +100,7 @@ class InvoiceOriginals {
     }
     if (!mayIssue) return copy(InvoiceDocumentSource.notYetKept);
     final made = await render(copy: false);
-    if (made.xml.isEmpty) return copy(InvoiceDocumentSource.notYetKept);
+    if (made.xml.isEmpty) return copy(InvoiceDocumentSource.refused);
     try {
       final stored = await _store.store(
         workspaceId: invoice.workspaceId,
@@ -95,15 +108,12 @@ class InvoiceOriginals {
         pdf: made.pdf,
         xml: made.xml,
       );
-      // Two issuers may render at once: the first stored is the original.
-      final bytes = stored.holds(made.pdf)
-          ? made.pdf
-          : await _store.pdfOf(stored);
-      return (
-        bytes: bytes,
-        fileName: name,
-        source: InvoiceDocumentSource.original,
-      );
+      if (stored.holds(made.pdf)) return original(made.pdf);
+      // Two issuers may render at once: the first stored is the original,
+      // checked by its digest like any read.
+      final first = await _store.pdfOf(stored);
+      if (stored.holds(first)) return original(first);
+      return await copy(InvoiceDocumentSource.mismatch);
     } on InvoiceOriginalRefused catch (e, st) {
       TraceLogger.instance.warn(
         'money',
@@ -111,11 +121,9 @@ class InvoiceOriginals {
         error: e,
         stackTrace: st,
       );
-      return copy(
-        e.reason == InvoiceOriginalRefusal.tooLarge
-            ? InvoiceDocumentSource.tooLarge
-            : InvoiceDocumentSource.notYetKept,
-      );
+      return e.reason == InvoiceOriginalRefusal.tooLarge
+          ? copy(InvoiceDocumentSource.tooLarge)
+          : copy(InvoiceDocumentSource.refused, e.message);
     }
   }
 }

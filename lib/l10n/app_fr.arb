@@ -9513,7 +9513,11 @@
   "invoiceOriginalMismatch": "Copie : l’original conservé ne correspond pas à son empreinte ; celle-ci est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalNotKept": "Copie : cette facture a été émise avant que son original soit conservé ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalNotYetKept": "Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
+  "invoiceOriginalRefused": "Copie : l’original de cette facture n’a pas pu être conservé. {why}",
   "invoiceOriginalTooLarge": "Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.",
+  "invoiceOriginalsCouldNotKeep": "{count, plural, one{L’original de {count} facture n’a pas pu être conservé. Ouvrez-la pour voir pourquoi.} other{Les originaux de {count} factures n’ont pas pu être conservés. Ouvrez-en une pour voir pourquoi.}}",
+  "invoiceOriginalsKeeping": "{total, plural, one{Conservation de l’original : {done} sur {total}} other{Conservation des originaux : {done} sur {total}}}",
+  "invoiceOriginalsKeptNow": "{count, plural, one{L’original de {count} facture est conservé.} other{Les originaux de {count} factures sont conservés.}}",
   "invoiceOriginalsNotKeptNow": "{count, plural, one{L’original de {count} facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.} other{Les originaux de {count} factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.}}",
   "invoicePageApprovalRecorded": "Votre approbation est enregistrée ; elle attend les autres.",
   "@invoicePageApprovalRecorded": {
@@ -10493,6 +10497,8 @@
   "@invoicingTodoFix": {
     "description": "#3587 a To do entry's button for a failure"
   },
+  "invoicingTodoKeep": "Les conserver",
+  "invoicingTodoKeepOriginals": "{count, plural, one{Conserver l’original de {count} facture} other{Conserver les originaux de {count} factures}}",
   "invoicingTodoMatch": "Rapprocher des paiements",
   "@invoicingTodoMatch": {
     "description": "#3587 To do: received payments to match"

@@ -133,7 +133,7 @@ void main() {
 
   group('To do', () {
     test('the order: month, reminders by hand, confirm, match, refunds, '
-        'rejected e-invoices, due dates, drafts', () {
+        'rejected e-invoices, due dates, drafts, the originals to keep', () {
       final todo = todoOf(
         [
           _r(id: 'd', stage: ReceivableStage.draft),
@@ -147,11 +147,28 @@ void main() {
         ],
         toInvoice: [(customerId: 'c9', currency: 'EUR', amountMinor: 5000)],
         mode: ReminderMode.byHand,
+        originalsToKeep: 1,
       );
       expect([for (final t in todo) t.kind], TodoKind.values);
       expect(todo[1].tally, const Tally(2, {'EUR': 1000, 'CHF': 2000}));
       expect(todo[4].tally, const Tally(1, {'EUR': 800}));
       expect(todoOf([_r()], mode: ReminderMode.byHand), isEmpty);
+    });
+
+    test('the originals still to keep are the last entry, a count without '
+        'money (#3853)', () {
+      final todo = todoOf(
+        [_r(id: 'd', stage: ReceivableStage.draft)],
+        mode: ReminderMode.byHand,
+        originalsToKeep: 3,
+      );
+      expect(todo.last.kind, TodoKind.keepOriginals);
+      expect(todo.last.tally, const Tally(3, {}));
+      expect(
+        todoOf([_r()], mode: ReminderMode.byHand),
+        isEmpty,
+        reason: 'none to keep, no entry',
+      );
     });
 
     test('reminders that go out by themselves are no entry; a hold stops '

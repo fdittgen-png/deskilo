@@ -9,6 +9,7 @@ import 'dart:typed_data';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/data/paged_fetch.dart';
 import '../domain/invoice_original.dart';
 
 const String _bucket = 'invoice-originals';
@@ -32,6 +33,19 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
         .eq('invoice_id', invoiceId)
         .maybeSingle();
     return row == null ? null : InvoiceOriginal.fromRow(row);
+  }
+
+  @override
+  Future<Set<String>> keptIn(String workspaceId) async {
+    final rows = await fetchAllPages(
+      table: 'invoice_originals',
+      build: () => _client
+          .from('invoice_originals')
+          .select('invoice_id')
+          .eq('workspace_id', workspaceId)
+          .order('invoice_id', ascending: true),
+    );
+    return {for (final r in rows) r['invoice_id']! as String};
   }
 
   @override
