@@ -609,6 +609,7 @@ Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer ander
 3. Tippen Sie auf **Eines meiner Unternehmen hinzufügen**, um ein anderes Unternehmen, dessen Inhaber Sie sind, zu einem Haus der Organisation zu machen.
 4. Tippen Sie neben einem Haus auf **Aus der Organisation nehmen**, um es wieder zu einem eigenständigen Unternehmen zu machen.
 5. Tippen Sie neben einem Haus, dessen Inhaber Sie sind, auf **Zum Hauptsitz machen**. Der Inhaber eines anderen Hauses sieht dort **Die Organisation verlassen**.
+6. Tippen Sie auf **Ein Haus im Ausland hinzufügen**, um ein eigenes Unternehmen in einem anderen Land oder einer anderen Währung anzulegen: Wählen Sie zuerst sein Land; Währung, Zeitzone und die Sprache seiner Dokumente werden daraus vorgeschlagen. Das Formular sagt, was übernommen wird, was inaktiv ankommt und mit Preisen zu versehen ist und was nicht übernommen wird. Tippen Sie auf **Das Haus anlegen**: Sie landen darin, und seine Startseite zeigt einmal, wie es entstand.
 
 **Gut zu wissen**
 

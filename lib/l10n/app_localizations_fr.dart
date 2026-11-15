@@ -13795,6 +13795,101 @@ class AppLocalizationsFr extends AppLocalizations {
   String get holidayWhitMonday => 'Lundi de Pentecôte';
 
   @override
+  String get houseAddCarried =>
+      'Voyagent : les rôles, les règles de réservation et de validation, les rappels, et les fonctionnalités que ce pays propose.';
+
+  @override
+  String get houseAddLanguage => 'Langue de ses documents';
+
+  @override
+  String get houseAddName => 'Nom de la maison';
+
+  @override
+  String get houseAddNotCarried =>
+      'Ne voyagent pas : l’identité, la banque et les instructions de paiement, les lieux, la mise en page des documents et les liens.';
+
+  @override
+  String get houseAddSubmit => 'Créer la maison';
+
+  @override
+  String houseAddTimezone(String zone) {
+    return 'Fuseau horaire : $zone';
+  }
+
+  @override
+  String get houseAddTitle => 'Ajouter une maison à l’étranger';
+
+  @override
+  String get houseAddToPrice =>
+      'Arrivent inactifs, à tarifer : les formules, les services et les forfaits.';
+
+  @override
+  String houseBirthCoOwners(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count propriétaires de la tête ont été ajoutés comme copropriétaires.',
+      one: '1 propriétaire de la tête a été ajouté comme copropriétaire.',
+      zero: 'Aucun copropriétaire ajouté.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthCreated(String head, String date) {
+    return 'Créée à partir de $head le $date.';
+  }
+
+  @override
+  String get houseBirthNotCarried =>
+      'Non repris : la mise en page des documents et les liens. Choisissez ceux de cette maison.';
+
+  @override
+  String houseBirthPackages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count forfaits',
+      one: '1 forfait',
+      zero: 'aucun forfait',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthPlans(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count formules',
+      one: '1 formule',
+      zero: 'aucune formule',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services',
+      one: '1 service',
+      zero: 'aucun service',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseBirthTitle => 'Comment cette maison a commencé';
+
+  @override
+  String houseBirthToPrice(String rows) {
+    return 'Repris, inactifs et à tarifer : $rows.';
+  }
+
+  @override
   String get hubAccountingSubtitle =>
       'Livre comptable, exports et imports, logiciel comptable, relevés bancaires, TVA et identité légale au même endroit';
 
@@ -22633,6 +22728,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette entreprise est déjà dans une organisation.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'La démo ajoute une seule maison à l’étranger : en Pologne, en złoty. Choisissez la Pologne pour l’ajouter.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'L’organisation est désactivée dans cette entreprise : activez-la d’abord dans ses fonctionnalités.';
 
@@ -22643,6 +22742,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get organisationRefusedInNone =>
       'Cette entreprise n’est dans aucune organisation.';
+
+  @override
+  String get organisationRefusedLanguage =>
+      'Les documents parlent anglais, français, allemand, espagnol ou italien.';
 
   @override
   String get organisationRefusedNoName => 'Une organisation a besoin d’un nom.';
@@ -22658,6 +22761,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get organisationRefusedOther =>
       'L’organisation n’a pas pu être modifiée. Réessayez.';
+
+  @override
+  String get organisationRefusedRequestUsed =>
+      'Cette demande a déjà créé une autre entreprise. Rouvrez le formulaire.';
 
   @override
   String get organisationRefusedTwinNeverHead =>

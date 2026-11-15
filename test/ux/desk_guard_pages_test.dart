@@ -393,18 +393,10 @@ final _return = VatDeclaration(
   createdAt: DateTime(2026, 4, 2),
 );
 
-const _wordCut = 'waits for the table at 768 to keep every header and date '
-    'whole';
-
 /// #4022 — the pages the 768 walk found a fault in and the fault; each is
 /// left out of that one width until the page is fixed, and walked at every
 /// other.
-const Map<String, String> _waitsAt768 = {
-  '/invoice-register': '$_wordCut (AMOUNT)',
-  '/services': '$_wordCut (CATEGORY)',
-  '/money/guest-passes': '$_wordCut (the dates)',
-  '/money/accounting/exports': '$_wordCut (FORMAT)',
-};
+const Map<String, String> _waitsAt768 = {};
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [

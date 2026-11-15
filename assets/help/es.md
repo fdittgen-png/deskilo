@@ -3489,6 +3489,7 @@ Su negocio tiene sedes en el extranjero, en otro país o en otra moneda. Cada un
 3. Toque **Añadir uno de mis negocios** para hacer de otro negocio del que es propietario una casa de la organización.
 4. Toque **Sacar de la organización** junto a una casa para que vuelva a ser un negocio independiente.
 5. Toque **Hacerla sede** junto a una casa de la que es propietario para convertirla en la sede. El propietario de otra casa ve **Salir de la organización** junto a ella.
+6. Toque **Añadir una casa en el extranjero** para crear un negocio propio en otro país o en otra moneda: elija primero su país; su moneda, su zona horaria y el idioma de sus documentos se proponen a partir de él. El formulario dice qué viaja, qué llega inactivo para ponerle precio y qué no viaja. Toque **Crear la casa**: llega a ella, y su inicio muestra una vez cómo empezó.
 
 **Conviene saber**
 

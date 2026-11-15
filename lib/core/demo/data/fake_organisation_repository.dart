@@ -14,6 +14,8 @@ class FakeOrganisationRepository implements OrganisationRepository {
   FakeOrganisationRepository({
     List<Organisation> organisations = const [],
     List<OrganisationHouse> businesses = const [],
+    this.createBusiness,
+    this.onlyHouse,
   }) : _organisations = List.of(organisations),
        _source = null,
        _businessSource = null,
@@ -23,10 +25,22 @@ class FakeOrganisationRepository implements OrganisationRepository {
   FakeOrganisationRepository.from(
     Future<List<Organisation>> Function() source, {
     Future<List<OrganisationHouse>> Function()? businesses,
+    this.createBusiness,
+    this.onlyHouse,
   }) : _organisations = [],
        _source = source,
        _businessSource = businesses,
-       _businesses = const [];
+       _businesses = [];
+
+  /// #4005 — makes the house's business where the person's businesses are
+  /// kept, and answers its id; the same request answers the same business.
+  final Future<HouseBirth> Function(HouseRequest request)? createBusiness;
+
+  /// #4005 — the one house the Demo can add (its country and currency); a
+  /// request for another is refused in words, never swapped silently.
+  final ({String country, String currency})? onlyHouse;
+
+  final Map<String, HouseBirth> _births = {};
 
   List<Organisation> _organisations;
   Future<List<Organisation>> Function()? _source;
@@ -155,4 +169,48 @@ class FakeOrganisationRepository implements OrganisationRepository {
     all[i] = _with(all[i], head: headWorkspaceId);
     return null;
   }
+
+  @override
+  Future<({String? workspaceId, OrganisationRefusal? refused})> createHouse(
+    HouseRequest request,
+  ) async {
+    final all = await _kept();
+    final i = all.indexWhere((o) => o.id == request.organisationId);
+    if (i < 0) return (workspaceId: null, refused: OrganisationRefusal.notOwner);
+    final o = all[i];
+    if (o.houseOf(o.headWorkspaceId)?.role != HouseRole.owner) {
+      return (workspaceId: null, refused: OrganisationRefusal.notOwner);
+    }
+    if (!const {'en', 'fr', 'de', 'es', 'it'}.contains(request.language)) {
+      return (workspaceId: null, refused: OrganisationRefusal.language);
+    }
+    final create = createBusiness;
+    if (create == null) {
+      return (workspaceId: null, refused: OrganisationRefusal.other);
+    }
+    if (onlyHouse case final only?
+        when only.country != request.country ||
+            only.currency != request.currency) {
+      return (workspaceId: null, refused: OrganisationRefusal.demoOneHouse);
+    }
+    final birth = await create(request);
+    final id = birth.workspaceId;
+    if (o.houseOf(id) == null) {
+      final house = OrganisationHouse(
+        workspaceId: id,
+        name: request.name,
+        countryCode: request.country,
+        currencyCode: request.currency,
+        role: HouseRole.owner,
+      );
+      _businesses.add(house);
+      all[i] = _with(o, houses: [...o.houses, house]);
+    }
+    _births[id] = birth;
+    return (workspaceId: id, refused: null);
+  }
+
+  @override
+  Future<HouseBirth?> houseBirth(String workspaceId) async =>
+      _births[workspaceId];
 }

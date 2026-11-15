@@ -29,6 +29,22 @@ import '../../providers/money_providers.dart';
 import 'guest_pass_invoice_line.dart';
 import 'guest_pass_revoke.dart';
 
+/// A date column: read whole, so never narrower than [widest] (#4035).
+RecordColumn<GuestPassRecord> _dateColumn(
+  String id,
+  String label,
+  Comparable<Object?> Function(GuestPassRecord) sortKey,
+  String Function(GuestPassRecord) show,
+  String widest,
+) => RecordColumn(
+  id: id,
+  label: label,
+  flex: 2,
+  sortKey: sortKey,
+  sample: widest,
+  cell: (_, p) => Text(show(p)),
+);
+
 /// The passes sold in [workspaceId]; [offers] name them.
 class GuestPassRecords extends ConsumerWidget {
   const GuestPassRecords({
@@ -60,6 +76,7 @@ class GuestPassRecords extends ConsumerWidget {
     int used(GuestPassRecord p) => p.usedAt(now, dayOf);
     String day(DateTime instant) => dates.format(dayOf(instant));
     String lastDay(GuestPassRecord p) => dates.format(p.lastDay(dayOf));
+    final widest = day(DateTime(2026, 12, 28)); // a date's column is as wide
     final offerNames = {for (final o in offers) o.id: o.name};
     final rows = read.value ?? const <GuestPassRecord>[]; // empty-ok: the table shows loading or failed while it is not read
     String holder(GuestPassRecord p) => names[p.memberId] ?? '';
@@ -143,20 +160,9 @@ class GuestPassRecords extends ConsumerWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        RecordColumn(
-          id: 'from',
-          label: l10n.guestPassFrom,
-          flex: 2,
-          sortKey: (p) => p.startsAt,
-          cell: (_, p) => Text(day(p.startsAt)),
-        ),
-        RecordColumn(
-          id: 'to',
-          label: l10n.guestPassTo,
-          flex: 2,
-          sortKey: (p) => p.endsAt,
-          cell: (_, p) => Text(lastDay(p)),
-        ),
+        _dateColumn('from', l10n.guestPassFrom, (p) => p.startsAt,
+            (p) => day(p.startsAt), widest),
+        _dateColumn('to', l10n.guestPassTo, (p) => p.endsAt, lastDay, widest),
         RecordColumn(
           id: 'used',
           label: l10n.guestPassUsed,

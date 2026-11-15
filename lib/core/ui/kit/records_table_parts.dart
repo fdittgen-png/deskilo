@@ -14,52 +14,9 @@ import 'package:flutter/services.dart';
 import '../../l10n/context_l10n.dart';
 import '../../shortcuts/app_shortcuts.dart';
 import '../../theme/app_spacing.dart';
+import 'records_table_cells.dart';
 import 'records_table_model.dart';
 import 'row_menu.dart';
-
-/// The cells of a row (or the header) in their columns.
-Widget _recordCells<T>(
-  List<RecordColumn<T>> columns,
-  List<Widget> cells, {
-  Widget? leading,
-  Widget? trailing,
-  double? lineHeight,
-}) => Row(
-  // #3614 — with [lineHeight], every cell is centred in the row's first
-  // line: a cell that wraps (a state in two parts, #3773) grows downwards
-  // and its neighbours stay level with its first line.
-  crossAxisAlignment: lineHeight == null
-      ? CrossAxisAlignment.center
-      : CrossAxisAlignment.start,
-  children: [
-    ?leading,
-    for (final (i, c) in columns.indexed)
-      Expanded(
-        flex: c.flex,
-        // A gap between neighbours: an end-aligned amount never touches
-        // the column after it.
-        child: Container(
-          constraints: BoxConstraints(minHeight: lineHeight ?? 0),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-          child: Align(
-            heightFactor: 1,
-            alignment: c.numeric
-                ? AlignmentDirectional.centerEnd
-                : AlignmentDirectional.centerStart,
-            child: c.numeric
-                ? DefaultTextStyle.merge(
-                    style: const TextStyle(
-                      fontFeatures: [FontFeature.tabularFigures()],
-                    ),
-                    child: cells[i],
-                  )
-                : cells[i],
-          ),
-        ),
-      ),
-    ?trailing,
-  ],
-);
 
 /// The header: a label per column (a sort control where it sorts), the
 /// box that selects what is shown, and room for the row's actions.
@@ -74,11 +31,15 @@ class RecordsHeader<T> extends StatelessWidget {
     required this.selectable,
     required this.actionsWidth,
     this.dense = false,
+    this.mins = const {},
     super.key,
   });
 
   /// Whether the rows under it are a mouse's short rows.
   final bool dense;
+
+  /// The narrowest width of each column (#4035).
+  final Map<String, double> mins;
 
   final List<RecordColumn<T>> columns;
   final RecordsQuery query;
@@ -120,9 +81,10 @@ class RecordsHeader<T> extends StatelessWidget {
     final all = shown > 0 && selectedShown == shown;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-      child: _recordCells(
+      child: recordCells(
         columns,
         [for (final c in columns) label(c)],
+        mins: mins,
         leading: selectable
             ? Checkbox(
                 key: const ValueKey('records-select-shown'),
@@ -155,8 +117,12 @@ class RecordRow<T> extends StatefulWidget {
     required this.minHeight,
     required this.selectable,
     this.menuKey,
+    this.mins = const {},
     super.key,
   });
+
+  /// The narrowest width of each column (#4035).
+  final Map<String, double> mins;
 
   /// The table's handle on this row's menu: its context-menu key opens the
   /// menu of the row the arrows stand on.
@@ -238,9 +204,10 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
               constraints: BoxConstraints(minHeight: widget.minHeight),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
-                child: _recordCells(
+                child: recordCells(
                   widget.columns,
                   [for (final c in widget.columns) c.cell(context, widget.row)],
+                  mins: widget.mins,
                   lineHeight: widget.minHeight,
                   leading: widget.selectable
                       ? Checkbox(
@@ -490,4 +457,31 @@ class _Tick extends Intent {
 
 class _SelectShown extends Intent {
   const _SelectShown();
+}
+
+/// What a table says when its rows could not be read, with the way to retry.
+class RecordsFailed extends StatelessWidget {
+  const RecordsFailed({required this.onRetry, super.key});
+
+  final VoidCallback? onRetry;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(l10n.recordsFailed, key: const ValueKey('records-failed')),
+          const SizedBox(height: AppSpacing.sm),
+          if (onRetry case final retry?)
+            FilledButton(
+              key: const ValueKey('records-retry'),
+              onPressed: retry,
+              child: Text(l10n.recordsTryAgain),
+            ),
+        ],
+      ),
+    );
+  }
 }

@@ -1,0 +1,104 @@
+{
+  "houseAddTitle": "Add a house abroad",
+  "@houseAddTitle": {
+    "description": "#4005 — a house abroad: houseAddTitle."
+  },
+  "houseAddSubmit": "Create the house",
+  "@houseAddSubmit": {
+    "description": "#4005 — a house abroad: houseAddSubmit."
+  },
+  "houseAddLanguage": "Language of its documents",
+  "@houseAddLanguage": {
+    "description": "#4005 — a house abroad: houseAddLanguage."
+  },
+  "houseAddName": "Name of the house",
+  "@houseAddName": {
+    "description": "#4005 — a house abroad: houseAddName."
+  },
+  "houseAddCarried": "Travels: the roles, the booking and validation rules, the reminders, and the features this country has.",
+  "@houseAddCarried": {
+    "description": "#4005 — a house abroad: houseAddCarried."
+  },
+  "houseAddToPrice": "Arrive inactive, to be priced: the plans, services and packages.",
+  "@houseAddToPrice": {
+    "description": "#4005 — a house abroad: houseAddToPrice."
+  },
+  "houseAddNotCarried": "Does not travel: the identity, the bank and payment instructions, the places, the document layout and links.",
+  "@houseAddNotCarried": {
+    "description": "#4005 — a house abroad: houseAddNotCarried."
+  },
+  "houseBirthTitle": "How this house began",
+  "@houseBirthTitle": {
+    "description": "#4005 — a house abroad: houseBirthTitle."
+  },
+  "houseBirthCreated": "Created from {head} on {date}.",
+  "@houseBirthCreated": {
+    "description": "#4005 — a house abroad: houseBirthCreated.",
+    "placeholders": {
+      "head": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "houseBirthPlans": "{count, plural, =0{no plan} one{1 plan} other{{count} plans}}",
+  "@houseBirthPlans": {
+    "description": "#4005 — a house abroad: houseBirthPlans.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthServices": "{count, plural, =0{no service} one{1 service} other{{count} services}}",
+  "@houseBirthServices": {
+    "description": "#4005 — a house abroad: houseBirthServices.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthPackages": "{count, plural, =0{no package} one{1 package} other{{count} packages}}",
+  "@houseBirthPackages": {
+    "description": "#4005 — a house abroad: houseBirthPackages.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthToPrice": "Carried, inactive and to be priced: {rows}.",
+  "@houseBirthToPrice": {
+    "description": "#4005 — a house abroad: houseBirthToPrice.",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
+  "houseBirthCoOwners": "{count, plural, =0{No co-owner was added.} one{1 owner of the head was added as co-owner.} other{{count} owners of the head were added as co-owners.}}",
+  "@houseBirthCoOwners": {
+    "description": "#4005 — a house abroad: houseBirthCoOwners.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthNotCarried": "Not carried: the document layout and links. Choose this house's own.",
+  "@houseBirthNotCarried": {
+    "description": "#4005 — a house abroad: houseBirthNotCarried."
+  },
+  "houseAddTimezone": "Time zone: {zone}",
+  "@houseAddTimezone": {
+    "description": "#4005 — the house form's time zone button, with the zone chosen.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  }
+}

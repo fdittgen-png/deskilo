@@ -3644,6 +3644,7 @@ La Sua attività ha sedi all'estero, in un altro paese o in un'altra valuta. Ogn
 3. Tocchi **Aggiungere una delle mie attività** per rendere un'altra attività di cui è titolare una casa dell'organizzazione.
 4. Tocchi **Togliere dall’organizzazione** accanto a una casa per renderla di nuovo un'attività indipendente.
 5. Tocchi **Renderla sede** accanto a una casa di cui è titolare per renderla la sede. Il titolare di un'altra casa vede **Lasciare l’organizzazione** accanto a essa.
+6. Tocchi **Aggiungere una casa all’estero** per creare un'attività a sé in un altro paese o in un'altra valuta: scelga prima il paese; valuta, fuso orario e lingua dei documenti vengono proposti da esso. Il modulo dice cosa viaggia, cosa arriva inattivo da prezzare e cosa non viaggia. Tocchi **Creare la casa**: vi arriva, e la sua pagina iniziale mostra una volta come è nata.
 
 **Da sapere**
 

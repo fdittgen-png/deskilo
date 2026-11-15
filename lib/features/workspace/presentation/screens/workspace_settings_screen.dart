@@ -115,7 +115,7 @@ class _WorkspaceSettingsScreenState
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
                   const BusinessKindTile(), // #3549
-                  if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.organisation)&&ref.watch(currentWorkspaceProvider).value!=null)ListTile(key: const ValueKey('workspace-settings-organisation'), title:Text(l10n.organisationTitle),leading:const Icon(Icons.account_tree_outlined),onTap:()=>OrganisationSheet.open(context, ref.read(currentWorkspaceProvider).value!)), // #4006
+                  if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.organisation)&&ref.watch(currentWorkspaceProvider).value!=null)ListTile(key: const ValueKey('workspace-settings-organisation'), title:Text(l10n.organisationTitle),leading:const Icon(Icons.account_tree_outlined),onTap:()=>OrganisationSheet.openAndEnter(context, ref, ref.read(currentWorkspaceProvider).value!)), // #4006, #4005
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,

@@ -56,7 +56,7 @@ void main() {
 
   // #3867 - every space of the one list reads in its own currency: its
   // workspace row, its invoices, its purchase and cost figures.
-  for (final key in DemoSpaceKey.values) {
+  for (final key in DemoSpaceKey.listedAtStart) {
     test('${key.label} reads in ${key.currency}', () async {
       final workspace = fixture.spaceWorkspaces.at(key).workspaces.firstWhere((w) => w.id == key.id);
       expect(workspace.currencyCode, key.currency);

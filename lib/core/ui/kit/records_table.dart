@@ -22,6 +22,7 @@ import '../../theme/app_spacing.dart';
 import '../adaptive/window_class.dart';
 import '../mouse_presence.dart';
 import 'list_detail_open.dart';
+import 'records_table_cells.dart';
 import 'records_table_model.dart';
 import 'records_table_parts.dart';
 import 'records_table_reveal.dart';
@@ -188,7 +189,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       case RecordsState.loading:
         return const Center(child: CircularProgressIndicator());
       case RecordsState.failed:
-        return _failed(context);
+        return RecordsFailed(onRetry: widget.onRetry);
       case RecordsState.ready:
         break;
     }
@@ -220,7 +221,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                 Expanded(
                   child: room == WindowClass.compact
                       ? _cards(shown)
-                      : _table(context, shown, room),
+                      : _table(context, shown, room, box.maxWidth),
                 ),
                 const Divider(height: 1),
                 _footer(shown, room),
@@ -228,25 +229,6 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
             );
           },
         ),
-      ),
-    );
-  }
-
-  Widget _failed(BuildContext context) {
-    final l10n = context.l10n;
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(l10n.recordsFailed, key: const ValueKey('records-failed')),
-          const SizedBox(height: AppSpacing.sm),
-          if (widget.onRetry case final retry?)
-            FilledButton(
-              key: const ValueKey('records-retry'),
-              onPressed: retry,
-              child: Text(l10n.recordsTryAgain),
-            ),
-        ],
       ),
     );
   }
@@ -319,20 +301,32 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
     );
   }
 
-  Widget _table(BuildContext context, List<T> shown, WindowClass room) {
+  Widget _table(
+    BuildContext context,
+    List<T> shown,
+    WindowClass room,
+    double width,
+  ) {
+    final rowHeight = _touch ? kMinInteractiveDimension : recordRowHeight;
     // #3860 — a record open beside the table: its staying columns; #3858 —
-    // the columns the table has room for.
-    final columns = columnsShown(
-      widget.columns,
-      _c.hidden,
-      beside: ListDetailOpen.of(context),
-      room: room,
+    // the columns the table has room for; #4035 — and whose words fit.
+    final (:columns, :mins) = fitRecordColumns(
+      context,
+      columnsShown(
+        widget.columns,
+        _c.hidden,
+        beside: ListDetailOpen.of(context),
+        room: room,
+      ),
+      width -
+          2 * AppSpacing.md -
+          (_selectable ? rowHeight : 0) -
+          recordActionsWidth(rowHeight),
     );
     final selected = _c.selected;
     final selectedShown = shown
         .where((r) => selected.contains(widget.keyOf(r)))
         .length;
-    final rowHeight = _touch ? kMinInteractiveDimension : recordRowHeight;
     T? focusedRow() =>
         shown.isEmpty ? null : shown[_c.focused.clamp(0, shown.length - 1)];
     return Shortcuts(
@@ -381,6 +375,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                 selectable: _selectable,
                 actionsWidth: recordActionsWidth(rowHeight),
                 dense: !_touch,
+                mins: mins,
               ),
               const Divider(height: 1),
               Expanded(
@@ -410,6 +405,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
                         minHeight: rowHeight,
                         selectable: _selectable,
                         menuKey: _menus.putIfAbsent(key, GlobalKey.new),
+                        mins: mins,
                       ),
                     );
                   },
