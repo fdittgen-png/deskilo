@@ -146,7 +146,6 @@ import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
-import 'seed/demo_new_york_seed.dart' show demoNewYorkSalesTaxReturn;
 import 'seed/demo_reachable_seed.dart';
 
 /// The setup guide over each space's own fixture: Pézenas holds what
@@ -175,7 +174,7 @@ DemoSetupRepository _setupGuide(DemoFixture fixture) => DemoSetupRepository(
 /// every other business states nothing (the house is built when first asked).
 FakeSalesTaxRepository _demoSalesTax(DemoFixture fixture) => FakeSalesTaxRepository(
   statedFor: (workspaceId, start, end) => workspaceId == DemoSpaceKey.newYork.id
-      ? demoNewYorkSalesTaxReturn(fixture.newYork.money, start: start, end: end)
+      ? salesTaxReturnOf(fixture.newYork.money.invoices, start: start, end: end)
       : null,
 );
 

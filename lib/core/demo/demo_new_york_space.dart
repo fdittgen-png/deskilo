@@ -111,6 +111,7 @@ class DemoNewYorkData implements DemoSpaceParts {
       siteRentals: const [],
       hourlyBookings: reservations.reservations,
     ));
+    seedDemoNewYorkSalesTax(money, space, now); // #4009
     seedCityUsage(money, reservations.reservations);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(

@@ -1042,9 +1042,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // #4009 — performed in the New York house, in dollars.
   WorkspaceFeature.salesTax: _action(
     _owner,
-    'Ada reads New York\'s sales-tax return of last month in dollars: its '
-    'base is the house\'s invoices of the period, and a period without '
-    'invoices states nothing',
+    'Ada reads New York\'s sales-tax return of last month in dollars, as the '
+    'invoices froze it: three taxed sales with the tax of each jurisdiction, '
+    'and the memberships and bookings outside the tax',
     (w) async {
       final ny = w.house(DemoSpaceKey.newYork);
       final container = ny.container();

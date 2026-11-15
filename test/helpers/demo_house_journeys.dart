@@ -56,10 +56,11 @@ Future<bool> mtdSubmissionJourney(DemoLondonData london) async {
       await submit() is HmrcRefused;
 }
 
-/// Ada reads New York's sales-tax return of the last month, in dollars:
-/// the base is the house's own invoices of the period and the tax each
-/// jurisdiction's rate on it; a period without invoices states nothing, and
-/// the worksheet she keys into the state portal is in dollars.
+/// Ada reads New York's sales-tax return of the last full month, as the
+/// server states it from the house's invoices (0439): what the invoices froze
+/// as taxed, the tax collected per jurisdiction, and what is outside the tax
+/// (a licence to occupy space). Every figure is checked against the invoices
+/// themselves, in dollars, and a period without invoices states nothing.
 Future<bool> salesTaxJourney(
   DemoNewYorkData newYork,
   ProviderContainer container,
@@ -72,14 +73,29 @@ Future<bool> salesTaxJourney(
   final invoices = [
     for (final i in newYork.money.invoices)
       if (i.voidedAt == null &&
-          !i.issuedAt.isBefore(start) &&
-          i.issuedAt.isBefore(end.add(const Duration(days: 1))))
+          !DateTime(i.issuedAt.year, i.issuedAt.month, i.issuedAt.day)
+              .isBefore(start) &&
+          !DateTime(i.issuedAt.year, i.issuedAt.month, i.issuedAt.day)
+              .isAfter(end))
         i,
   ];
-  if (rows.isEmpty || invoices.isEmpty) return false;
-  final taxable = rows.singleWhere((r) => r.line == SalesTaxLine.taxable);
-  final jurisdictions = rows.where((r) => r.line == SalesTaxLine.tax).toList();
-  final net = invoices.fold<int>(0, (sum, i) => sum + i.netCents);
+  final totals = [
+    for (final i in invoices)
+      for (final t in i.vatTotals)
+        if (t.isSalesTax) t,
+  ];
+  int sum(Iterable<int> v) => v.fold(0, (a, b) => a + b);
+  final taxed = totals.where((t) => t.category == 'S').toList();
+  final outside = totals.where((t) => t.category == 'O').toList();
+  final exempt = totals.where((t) => t.category == 'E').toList();
+  Iterable<SalesTaxReturnRow> of(SalesTaxLine l) =>
+      rows.where((r) => r.line == l);
+  final taxable = of(SalesTaxLine.taxable).single;
+  final out = of(SalesTaxLine.outside).single;
+  final jurisdictions = of(SalesTaxLine.tax).toList();
+  final components = [for (final t in taxed) ...t.components];
+  final names = {for (final c in components) c.name};
+  final net = sum(invoices.map((i) => i.netCents));
   final csv = await container
       .read(salesTaxCommandsProvider)
       .worksheetCsv(
@@ -94,16 +110,41 @@ Future<bool> salesTaxJourney(
     end: DateTime(now.year + 5, 2),
   );
   return invoices.every((i) => i.currency == 'USD') &&
-      taxable.baseCents == net &&
-      taxable.invoiceCount == invoices.length &&
-      jurisdictions.length == 3 &&
-      jurisdictions.every((r) => r.baseCents == net) &&
-      taxable.taxCents ==
-          jurisdictions.fold<int>(0, (sum, r) => sum + r.taxCents) &&
-      jurisdictions.every(
-        (r) => (r.baseCents * r.percent / 100).round() == r.taxCents,
+      invoices.isNotEmpty &&
+      invoices.every(
+        (i) => i.vatTotals.isNotEmpty && i.vatTotals.every((t) => t.isSalesTax),
       ) &&
+      taxed.isNotEmpty &&
+      outside.isNotEmpty &&
+      taxable.baseCents == sum(taxed.map((t) => t.netCents)) &&
+      taxable.taxCents == sum(taxed.map((t) => t.vatCents)) &&
+      taxable.invoiceCount == taxed.length &&
+      out.baseCents == sum(outside.map((t) => t.netCents)) &&
+      out.taxCents == 0 &&
+      names.length == 3 &&
+      jurisdictions.length == names.length &&
+      jurisdictions.every(
+        (r) =>
+            r.taxCents ==
+                sum(
+                  components
+                      .where((c) => c.name == r.name)
+                      .map((c) => c.taxCents),
+                ) &&
+            r.baseCents ==
+                sum(
+                  components
+                      .where((c) => c.name == r.name)
+                      .map((c) => c.baseCents),
+                ),
+      ) &&
+      taxable.taxCents == sum(jurisdictions.map((r) => r.taxCents)) &&
+      taxable.baseCents + sum(exempt.map((t) => t.netCents)) + out.baseCents ==
+          sum(totals.map((t) => t.netCents)) &&
+      sum(totals.map((t) => t.netCents)) == net &&
       empty.isEmpty &&
       csv != null &&
-      csv.contains('"NY",taxable');
+      csv.contains('"NY",taxable') &&
+      csv.contains('"NY",outside') &&
+      csv.contains('"New York City"');
 }
