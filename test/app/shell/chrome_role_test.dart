@@ -255,6 +255,27 @@ void main() {
       expect(line(tester), 'DesKilo · Atelier du Marché · as owner');
     });
 
+    testWidgets('the role is announced on a consequential page at any width, '
+        'drawn or not', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await pumpChip(tester, path: '/money', width: 480);
+      await tester.pumpAndSettle();
+      expect(line(tester), isNot(contains('as owner')));
+      expect(
+        find.bySemanticsLabel('Atelier du Marché, Money, as owner'),
+        findsOneWidget,
+      );
+      semantics.dispose();
+    });
+
+    testWidgets('Home announces none', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await pumpChip(tester, path: '/reserve', width: 700);
+      await tester.pumpAndSettle();
+      expect(find.bySemanticsLabel('Atelier du Marché, Money'), findsOneWidget);
+      semantics.dispose();
+    });
+
     testWidgets('Home names none', (tester) async {
       await pumpChip(tester, path: '/reserve', width: 700);
       await tester.pumpAndSettle();

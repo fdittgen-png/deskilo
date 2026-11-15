@@ -163,9 +163,12 @@ class SpaceChip extends ConsumerWidget {
         );
       },
     );
-    // #4019 — one label, "<business>, <page>"; where it switches houses it
+    // #4019 — one label, "<business>, <page>[, <role>]"; where it switches houses it
     // ends with the tooltip's words, and it is a button only then.
-    final label = space == null ? tabTitle : '${space.name}, $tabTitle';
+    // #4019 — a consequential page adds the role whether or not the bar has
+    // room to draw it: a screen reader hears it at any width.
+    final base = space == null ? tabTitle : '${space.name}, $tabTitle';
+    final label = role == null ? base : '$base, $role';
     if (houses.isEmpty) {
       return Semantics(
         container: true,
