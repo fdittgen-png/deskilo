@@ -36,8 +36,17 @@ void seedDemoUseCases({
 /// #3964 — the configuration the reference business exports to a file and a
 /// second business reads: its fee bands, as the tree the server's export hands
 /// back, so the export is the business's own records and not an empty file.
-InMemoryWorkspaceImport demoConfigurationImport(FakeMoneyRepository money) =>
-    InMemoryWorkspaceImport()
+///
+/// #4028 — each business's export states its currency and country, and a
+/// file from a business counting in another currency is fenced on import.
+InMemoryWorkspaceImport demoConfigurationImport(
+        FakeMoneyRepository money, FakeWorkspaceRepository workspaces) =>
+    InMemoryWorkspaceImport(placeOf: (id) {
+      for (final w in workspaces.workspaces) {
+        if (w.id == id) return (currency: w.currencyCode, country: w.countryCode);
+      }
+      return null;
+    })
       ..configurations['ws-1'] = {
         'tables': {
           'fee_bands': [

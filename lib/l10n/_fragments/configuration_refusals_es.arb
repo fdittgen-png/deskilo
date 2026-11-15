@@ -1,0 +1,7 @@
+{
+  "configurationRefusedTitle": "No aplicado",
+  "configurationRefusedPricesFile": "No se aplicaron los precios: este archivo está en {source} y esta empresa cuenta en {target}.",
+  "configurationRefusedTaxFile": "No se aplicaron los tipos de IVA: país de este archivo: {source}; país de esta empresa: {target}.",
+  "configurationRefusedPricesTemplate": "No se aplicaron los precios: esta plantilla está en {source} y esta empresa cuenta en {target}.",
+  "configurationRefusedTaxTemplate": "No se aplicaron los tipos de IVA: país de esta plantilla: {source}; país de esta empresa: {target}."
+}

@@ -4004,6 +4004,11 @@
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "configurationRefusedPricesFile": "No se aplicaron los precios: este archivo está en {source} y esta empresa cuenta en {target}.",
+  "configurationRefusedPricesTemplate": "No se aplicaron los precios: esta plantilla está en {source} y esta empresa cuenta en {target}.",
+  "configurationRefusedTaxFile": "No se aplicaron los tipos de IVA: país de este archivo: {source}; país de esta empresa: {target}.",
+  "configurationRefusedTaxTemplate": "No se aplicaron los tipos de IVA: país de esta plantilla: {source}; país de esta empresa: {target}.",
+  "configurationRefusedTitle": "No aplicado",
   "configureWorkspaceTitle": "Configurar el espacio",
   "connectionCancelled": "La cuenta cambió entretanto, así que se descartó esta respuesta.",
   "connectionChangedIdentity": "Este servidor ya no es el que conectó. Sus acciones están en pausa hasta que lo verifique de nuevo.",
@@ -19173,6 +19178,7 @@
   "shellBarShowAction": "Mostrar la barra de navegación",
   "shellBarShowHint": "Mantenga pulsado para mostrar la barra de navegación",
   "shellBarShownAnnounce": "Barra de navegación visible",
+  "shellOverflowNews": "{more}, alertas nuevas",
   "shellPendingDecisions": "{count, plural, one{1 decisión le espera} other{{count} decisiones le esperan}}",
   "shellReserveButton": "Reservar",
   "shellSwipeCoachMark": "Deslice la barra hacia abajo para la vista de pantalla completa. Deslice hacia arriba, o mantenga pulsado el botón Reservar, para recuperarla.",

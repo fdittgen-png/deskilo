@@ -4004,6 +4004,11 @@
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "configurationRefusedPricesFile": "Preise wurden nicht übernommen: Diese Datei ist in {source}, dieses Unternehmen rechnet in {target}.",
+  "configurationRefusedPricesTemplate": "Preise wurden nicht übernommen: Diese Vorlage ist in {source}, dieses Unternehmen rechnet in {target}.",
+  "configurationRefusedTaxFile": "Steuersätze wurden nicht übernommen: Land dieser Datei: {source}, Land dieses Unternehmens: {target}.",
+  "configurationRefusedTaxTemplate": "Steuersätze wurden nicht übernommen: Land dieser Vorlage: {source}, Land dieses Unternehmens: {target}.",
+  "configurationRefusedTitle": "Nicht übernommen",
   "configureWorkspaceTitle": "Bereich konfigurieren",
   "connectionCancelled": "Das Konto hat sich inzwischen geändert; diese Antwort wurde verworfen.",
   "connectionChangedIdentity": "Dieser Server ist nicht mehr der, den Sie verbunden haben. Seine Aktionen sind angehalten, bis Sie ihn erneut bestätigen.",
@@ -19173,6 +19178,7 @@
   "shellBarShowAction": "Navigationsleiste einblenden",
   "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
   "shellBarShownAnnounce": "Navigationsleiste eingeblendet",
+  "shellOverflowNews": "{more}, neue Hinweise",
   "shellPendingDecisions": "{count, plural, one{1 Entscheidung wartet auf Sie} other{{count} Entscheidungen warten auf Sie}}",
   "shellReserveButton": "Reservieren",
   "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",

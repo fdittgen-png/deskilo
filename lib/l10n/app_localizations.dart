@@ -10373,6 +10373,36 @@ abstract class AppLocalizations {
   /// **'Mention someone'**
   String get composerMention;
 
+  /// #4028 A restored file counts in another currency; source and target are currency codes (EUR, GBP)
+  ///
+  /// In en, this message translates to:
+  /// **'Prices were not applied: this file is in {source} and this business counts in {target}.'**
+  String configurationRefusedPricesFile(String source, String target);
+
+  /// #4028 An applied template counts in another currency; source and target are currency codes (EUR, GBP)
+  ///
+  /// In en, this message translates to:
+  /// **'Prices were not applied: this template is in {source} and this business counts in {target}.'**
+  String configurationRefusedPricesTemplate(String source, String target);
+
+  /// #4028 A restored file comes from another country; source and target are country names
+  ///
+  /// In en, this message translates to:
+  /// **'Tax rates were not applied: this file is from {source} and this business is in {target}.'**
+  String configurationRefusedTaxFile(String source, String target);
+
+  /// #4028 An applied template comes from another country; source and target are country names
+  ///
+  /// In en, this message translates to:
+  /// **'Tax rates were not applied: this template is from {source} and this business is in {target}.'**
+  String configurationRefusedTaxTemplate(String source, String target);
+
+  /// #4028 Title of the dialog that lists what a restored file or an applied template left out
+  ///
+  /// In en, this message translates to:
+  /// **'Not applied'**
+  String get configurationRefusedTitle;
+
   /// #3282 the one drawer entry for the workspace's whole configuration (guide, settings, features, plan).
   ///
   /// In en, this message translates to:
@@ -51407,6 +51437,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Navigation bar shown'**
   String get shellBarShownAnnounce;
+
+  /// #4030 — the name of the bar's overflow button when a control behind it (the inbox) has news; {more} is the platform's word for the button.
+  ///
+  /// In en, this message translates to:
+  /// **'{more}, new alerts'**
+  String shellOverflowNews(String more);
 
   /// Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)
   ///

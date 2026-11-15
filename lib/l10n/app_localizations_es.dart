@@ -6624,6 +6624,29 @@ class AppLocalizationsEs extends AppLocalizations {
   String get composerMention => 'Mencionar a alguien';
 
   @override
+  String configurationRefusedPricesFile(String source, String target) {
+    return 'No se aplicaron los precios: este archivo está en $source y esta empresa cuenta en $target.';
+  }
+
+  @override
+  String configurationRefusedPricesTemplate(String source, String target) {
+    return 'No se aplicaron los precios: esta plantilla está en $source y esta empresa cuenta en $target.';
+  }
+
+  @override
+  String configurationRefusedTaxFile(String source, String target) {
+    return 'No se aplicaron los tipos de IVA: país de este archivo: $source; país de esta empresa: $target.';
+  }
+
+  @override
+  String configurationRefusedTaxTemplate(String source, String target) {
+    return 'No se aplicaron los tipos de IVA: país de esta plantilla: $source; país de esta empresa: $target.';
+  }
+
+  @override
+  String get configurationRefusedTitle => 'No aplicado';
+
+  @override
   String get configureWorkspaceTitle => 'Configurar el espacio';
 
   @override
@@ -32214,6 +32237,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get shellBarShownAnnounce => 'Barra de navegación visible';
+
+  @override
+  String shellOverflowNews(String more) {
+    return '$more, alertas nuevas';
+  }
 
   @override
   String shellPendingDecisions(int count) {

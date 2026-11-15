@@ -15,6 +15,7 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/setup_journey_save.dart';
 import '../../application/toggle_workspace_feature.dart';
 import '../../application/workspace_backup_commands.dart';
+import '../../domain/configuration_refusal.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_import.dart';
@@ -22,6 +23,7 @@ import '../../domain/workspace_permission.dart';
 import '../../domain/workspace_xml.dart';
 import '../../domain/workspace_xml_configuration.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/configuration_refusals_dialog.dart';
 import '../widgets/configuration_transfer_prompt.dart';
 import '../widgets/reset_confirm_dialog.dart';
 import 'workspace_settings_backup.dart';
@@ -100,7 +102,7 @@ class WorkspaceSettingsRestore {
     if (!await _confirm(data, choice)) return;
     if (!context.mounted) return;
 
-    final planKept =
+    final (:planKept, :refused) =
         await _applyConfigurationAndPlan(workspace, data, choice, progress);
     final brandRefused = await host.applyImportedSettings(
         workspace, data, progress,
@@ -113,6 +115,8 @@ class WorkspaceSettingsRestore {
     // Re-seed the form so the imported settings show immediately.
     host.reseed();
     _announce(data, brandRefused: brandRefused, planKept: planKept);
+    // #4028 — what the file could not bring here, said where it is read.
+    await showConfigurationRefusals(context, refused, ConfigurationOrigin.file);
   }
 
   /// The picked file, parsed and placement-checked; null when cancelled
@@ -278,9 +282,10 @@ class WorkspaceSettingsRestore {
   }
 
   /// #916 — the configuration first: it has no reservation hazard and
-  /// must land even when the plan below is refused. True when the plan
-  /// was kept because the space has reservations.
-  Future<bool> _applyConfigurationAndPlan(
+  /// must land even when the plan below is refused. [planKept] when the
+  /// plan was kept because the space has reservations; [refused] what the
+  /// configuration left out (#4028).
+  Future<({bool planKept, List<ConfigurationRefusal> refused})> _applyConfigurationAndPlan(
     Workspace workspace,
     WorkspaceXmlData data,
     ({bool apply, bool switchOn}) choice,
@@ -293,8 +298,9 @@ class WorkspaceSettingsRestore {
           value: true);
     }
     final configuration = data.configuration;
+    var refused = const <ConfigurationRefusal>[];
     if (choice.apply && configuration != null) {
-      await importWorkspaceConfiguration(ref, workspace.id, configuration);
+      refused = await importWorkspaceConfiguration(ref, workspace.id, configuration);
       progress.anythingApplied = true;
     }
     // The floor plan is the step that can refuse (owner check,
@@ -303,7 +309,7 @@ class WorkspaceSettingsRestore {
     final planKept = await importWorkspaceFloorPlan(ref, workspace.id, data,
         keepOnReservations: choice.apply);
     if (!planKept) progress.anythingApplied = true;
-    return planKept;
+    return (planKept: planKept, refused: refused);
   }
 
   /// The outcome on screen: a refused brand colour, then what landed.

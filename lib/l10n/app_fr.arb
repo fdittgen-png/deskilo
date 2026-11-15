@@ -4004,6 +4004,11 @@
   "@composerMention": {
     "description": "workspace groups: rename, description, admins, info"
   },
+  "configurationRefusedPricesFile": "Les prix n'ont pas été appliqués : ce fichier est en {source} et cette entreprise compte en {target}.",
+  "configurationRefusedPricesTemplate": "Les prix n'ont pas été appliqués : ce modèle est en {source} et cette entreprise compte en {target}.",
+  "configurationRefusedTaxFile": "Les taux de TVA n'ont pas été appliqués : pays de ce fichier : {source} ; pays de cette entreprise : {target}.",
+  "configurationRefusedTaxTemplate": "Les taux de TVA n'ont pas été appliqués : pays de ce modèle : {source} ; pays de cette entreprise : {target}.",
+  "configurationRefusedTitle": "Non appliqué",
   "configureWorkspaceTitle": "Configurer l'espace",
   "connectionCancelled": "Le compte a changé entre-temps ; cette réponse a été ignorée.",
   "connectionChangedIdentity": "Ce serveur n’est plus celui que vous avez connecté. Ses actions sont suspendues jusqu’à une nouvelle vérification.",
@@ -19173,6 +19178,7 @@
   "shellBarShowAction": "Afficher la barre de navigation",
   "shellBarShowHint": "Appui long pour afficher la barre de navigation",
   "shellBarShownAnnounce": "Barre de navigation affichée",
+  "shellOverflowNews": "{more}, nouvelles alertes",
   "shellPendingDecisions": "{count, plural, one{{count} décision vous attend} other{{count} décisions vous attendent}}",
   "shellReserveButton": "Réserver",
   "shellSwipeCoachMark": "Balayez la barre vers le bas pour l'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.",

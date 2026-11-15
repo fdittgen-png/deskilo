@@ -15,6 +15,7 @@ import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_setting_seed.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/help/help_hint_providers.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/core/i18n/format_prefs.dart';
@@ -22,6 +23,7 @@ import 'package:deskilo/core/navigation/navigation_style.dart';
 import 'package:deskilo/core/settings/settings.dart';
 import 'package:deskilo/features/profile/providers/profile_providers.dart';
 import 'package:deskilo/features/reservations/application/getting_started_hint.dart';
+import 'package:deskilo/features/workspace/domain/configuration_refusal.dart';
 import 'package:deskilo/features/workspace/domain/notification_lines.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -182,6 +184,33 @@ Future<bool> configurationTransferJourney() async {
         _feeCents(await f.imports.exportConfiguration('ws-2')),
         _feeCents(tree),
       );
+}
+
+/// #4028 — the London house restores the head's file: the head counts in
+/// euros and London in pounds, so the head's fee bands stay out of London,
+/// and the answer says so with both currencies; London's own export states
+/// pounds.
+Future<bool> configurationFromAnotherCurrencyJourney() async {
+  final f = DemoFixture.build()..becomePersona(DemoPersona.owner);
+  final head = _space(f, 'ws-1');
+  final tree = await f.imports.exportConfiguration(head.id);
+  final xml = buildWorkspaceXml(
+    workspace: head,
+    levels: const [],
+    configuration: tree,
+  );
+  final read = parseWorkspaceXml(xml);
+  final refused = await f.imports
+      .importConfiguration(demoLondonSpaceId, read.configuration!);
+  final london = await f.imports.exportConfiguration(demoLondonSpaceId);
+  return _feeCents(tree).isNotEmpty &&
+      refused.any((r) =>
+          r.entity == 'tariffs' &&
+          r.code == ConfigurationRefusalCode.currency &&
+          r.source == head.currencyCode &&
+          r.target == 'GBP') &&
+      (((london['tables'] as Map?)?['fee_bands'] as List?)?.isEmpty ?? true) &&
+      (london['workspace'] as Map?)?['currency_code'] == 'GBP';
 }
 
 /// A hint a person dismisses stays dismissed on the device, and the one

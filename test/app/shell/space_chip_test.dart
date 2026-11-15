@@ -7,12 +7,15 @@
 // overflows; on a roomy bar the ring stays.
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/shell/shell_drawer.dart';
+import 'package:deskilo/app/shell/space_chip.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/workspace_avatar.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
+import '../../helpers/pump_app.dart';
 
 /// The current space; with [branded] it wears a colour and a pattern, so
 /// the chip has its ring.
@@ -81,5 +84,47 @@ void main() {
     expect(_ring, findsOneWidget);
     expect(_avatar, findsOneWidget);
     expect(_name, findsOneWidget);
+  });
+
+  testWidgets('a page name a little too long for its box shrinks; one far '
+      'too long is cut at its own size and still read whole', (tester) async {
+    const title = 'Arbeitsbereichseinstellungen';
+    final page = find.byKey(const ValueKey('space-chip-page'));
+    Future<void> pump(double width) => pumpApp(
+      tester,
+      Scaffold(
+        body: Center(
+          child: SizedBox(
+            width: width,
+            child: const SpaceChip(tabTitle: title),
+          ),
+        ),
+      ),
+      overrides: [currentWorkspaceProvider.overrideWith((ref) async => null)],
+    );
+    await pump(600);
+    await tester.pumpAndSettle();
+    final whole = tester.getSize(page).width;
+
+    // nine tenths of its width: it shrinks, and nothing is cut
+    await pump(whole * 0.9);
+    await tester.pumpAndSettle();
+    expect(
+      find.ancestor(of: page, matching: find.byType(FittedBox)),
+      findsOneWidget,
+    );
+    expect(tester.widget<Text>(page).overflow, isNull);
+
+    // half of its width: shrinking that far would make it smaller than the
+    // text around it, so it keeps its size, is cut, and says its whole name
+    await pump(whole * 0.5);
+    await tester.pumpAndSettle();
+    expect(
+      find.ancestor(of: page, matching: find.byType(FittedBox)),
+      findsNothing,
+    );
+    final cut = tester.widget<Text>(page);
+    expect(cut.overflow, TextOverflow.ellipsis);
+    expect(cut.semanticsLabel, title);
   });
 }

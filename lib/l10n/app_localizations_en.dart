@@ -6584,6 +6584,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get composerMention => 'Mention someone';
 
   @override
+  String configurationRefusedPricesFile(String source, String target) {
+    return 'Prices were not applied: this file is in $source and this business counts in $target.';
+  }
+
+  @override
+  String configurationRefusedPricesTemplate(String source, String target) {
+    return 'Prices were not applied: this template is in $source and this business counts in $target.';
+  }
+
+  @override
+  String configurationRefusedTaxFile(String source, String target) {
+    return 'Tax rates were not applied: this file is from $source and this business is in $target.';
+  }
+
+  @override
+  String configurationRefusedTaxTemplate(String source, String target) {
+    return 'Tax rates were not applied: this template is from $source and this business is in $target.';
+  }
+
+  @override
+  String get configurationRefusedTitle => 'Not applied';
+
+  @override
   String get configureWorkspaceTitle => 'Configure workspace';
 
   @override
@@ -31943,6 +31966,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get shellBarShownAnnounce => 'Navigation bar shown';
+
+  @override
+  String shellOverflowNews(String more) {
+    return '$more, new alerts';
+  }
 
   @override
   String shellPendingDecisions(int count) {
