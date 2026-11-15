@@ -6162,6 +6162,7 @@ Map<String, _Getter> _part16() => {
   'invitationReviewTitle': (l) => l.invitationReviewTitle,
   'invitationRevoked': (l) => l.invitationRevoked,
   'inviteLanguageLabel': (l) => l.inviteLanguageLabel,
+  'invoiceCorrectionKeepsKind': (l) => l.invoiceCorrectionKeepsKind,
   'invoiceCorrectionReasonR2': (l) => l.invoiceCorrectionReasonR2,
   'invoiceEInvoiceIncompleteTitle': (l) => l.invoiceEInvoiceIncompleteTitle,
   'invoiceGapBuyerVatIdFormat': (l) => l.invoiceGapBuyerVatIdFormat,

@@ -68,6 +68,8 @@ String invoiceRefusalText(
   final refusal = refusalCodeOf(error);
   return switch (refusal.code) {
     'DKI07' => l10n.invoiceAlreadyInvoiced,
+    // #3994 — a correction is of the kind of the invoice it replaces.
+    'DKI08' => l10n.invoiceCorrectionKeepsKind,
     'DKI01' when refusal.details == 'invoice_feature_disabled' =>
       l10n.invoiceFeatureDisabled,
     'DKI01' => l10n.invoiceEssentialsRefused,
