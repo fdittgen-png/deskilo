@@ -341,6 +341,7 @@ class _InvoiceRegisterScreenState
         label: l10n.numberSequenceDatePart,
         flex: 2,
         sortKey: (i) => i.issuedAt,
+        sample: view.dateFormat.format(DateTime(2026, 12, 28)), // read whole
         cell: (_, i) => Text(view.dateFormat.format(i.issuedAt)),
       ),
       RecordColumn(
