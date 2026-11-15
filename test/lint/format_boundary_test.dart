@@ -43,7 +43,7 @@ const _allowed = <String, Map<String, Allowed>>{
       1,
       'a machine file: the Italian VAT register states the rate with two decimals',
     ),
-    'lib/features/workspace/domain/workspace_excel.dart': (
+    'lib/features/workspace/domain/workspace_excel_invoices.dart': (
       1,
       'a machine file: the spreadsheet export states the VAT of a rate with two decimals',
     ),

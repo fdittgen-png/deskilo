@@ -32377,6 +32377,9 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get spaceOtherHouses => 'Die anderen Häuser der Organisation';
+
+  @override
   String get spacePreviewPrivacy =>
       'Wenn Sie anfragen, sieht dieser Betrieb Ihren Namen und Ihr Foto. Als Mitglied sehen seine Administratoren die Kontakt- und Rechnungsdaten, die sie zum Abrechnen brauchen.';
 

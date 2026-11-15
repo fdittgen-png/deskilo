@@ -69,6 +69,7 @@ import 'package:deskilo/features/money/providers/usage_read_providers.dart';
 import 'package:deskilo/features/money/providers/vies_providers.dart';
 import 'package:deskilo/features/visits/providers/visits_providers.dart';
 import 'package:deskilo/features/workspace/providers/business_kind_providers.dart';
+import 'package:deskilo/features/workspace/providers/organisation_providers.dart';
 import 'package:deskilo/features/workspace/providers/settings_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_application_providers.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
@@ -133,6 +134,7 @@ import '../webmcp/webmcp_device_switch.dart';
 import 'data/demo_no_backend.dart';
 import 'data/demo_setup_repository.dart';
 import 'data/device_prefs.dart' show DemoDevicePrefs;
+import 'data/fake_organisation_repository.dart';
 import 'data/instance_repository.dart';
 import 'data/mcp_admin_repository.dart';
 import 'data/oauth_consent_repository.dart';
@@ -277,7 +279,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
+      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), organisationRepositoryProvider.overrideWith((ref) => FakeOrganisationRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider.overrideWithValue(fixture.guests),
       ..._demoContacts(fixture), // #2472
