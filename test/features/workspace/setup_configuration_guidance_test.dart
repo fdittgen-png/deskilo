@@ -91,10 +91,16 @@ void main() {
         crumb.length,
         greaterThan('Le Studio › Configure workspace › '.length),
       );
+      // #4074 — the goal's count is named, and so is the step's place.
       expect(
-        find.textContaining('Ready for money · 1 of 2 done'),
+        find.text('This goal: 1 of 2 checks done'),
         findsOneWidget,
       );
+      final place = tester
+          .widget<Text>(find.byKey(const ValueKey('setup-task-position')))
+          .data!;
+      expect(place, startsWith('Step 1 of 1 · '));
+      expect(place.length, greaterThan('Step 1 of 1 · '.length));
       expect(find.text('Waits for another step'), findsOneWidget);
       expect(find.textContaining('Waits for:'), findsOneWidget);
       expect(tester.takeException(), isNull);

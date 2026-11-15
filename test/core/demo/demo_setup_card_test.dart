@@ -26,6 +26,17 @@ String _cardText(WidgetTester tester) => tester
     .map((t) => t.data ?? '')
     .join(' | ');
 
+/// #4074 — the card is a collapsed row below the steps; opens it.
+Future<void> _expand(WidgetTester tester) async {
+  if (find.byKey(const ValueKey('demo-setup-reset')).evaluate().isNotEmpty) {
+    return;
+  }
+  final title = find.text('How the demo works');
+  await tester.ensureVisible(title);
+  await tester.tap(title);
+  await tester.pumpAndSettle();
+}
+
 void main() {
   testWidgets('in the demo the guide explains it, names the space and the '
       'persona, and switches to the space half way and back', (tester) async {
@@ -46,6 +57,12 @@ void main() {
     demo.read(routerProvider).go('/setup');
     await tester.pumpAndSettle();
 
+    // #4074 — the explanation is collapsed below the steps; the first view
+    // is the setup's own two named counts.
+    expect(find.byKey(const ValueKey('demo-house-ws-2')), findsNothing);
+    expect(find.textContaining('All steps: '), findsOneWidget);
+    expect(find.textContaining('This goal: '), findsOneWidget);
+    await _expand(tester);
     expect(_cardText(tester), contains('leaves this device'));
     expect(_cardText(tester), contains('reset the demo'));
     expect(_cardText(tester), contains(demoSpaceName));
@@ -53,12 +70,14 @@ void main() {
     expect(_cardText(tester), isNot(contains('every step')));
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
 
+    await _expand(tester);
     await tester.tap(find.byKey(const ValueKey('demo-house-ws-2')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, demoSecondSpaceId);
     // Entering a house opens it; the guide is one tap away again.
     demo.read(routerProvider).go('/setup');
     await tester.pumpAndSettle();
+    await _expand(tester);
     expect(_cardText(tester), contains(demoSecondSpaceName));
     expect(_cardText(tester), isNot(contains('half way')));
     expect(
@@ -67,6 +86,7 @@ void main() {
       reason: "the guide now reads Leipzig's own status",
     );
 
+    await _expand(tester);
     await tester.tap(find.byKey(const ValueKey('demo-house-ws-1')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, 'ws-1');
@@ -80,12 +100,14 @@ void main() {
     ]) {
       await demo.read(activeWorkspaceIdProvider.notifier).select(id);
       await tester.pumpAndSettle();
+      await _expand(tester);
       expect(_cardText(tester), contains(name));
       expect(_cardText(tester), isNot(contains('every step')));
       expect(_cardText(tester), isNot(contains('half way')));
     }
 
     final before = outer.read(demoSessionControllerProvider).scopeKey;
+    await _expand(tester);
     await tester.tap(find.byKey(const ValueKey('demo-setup-reset')));
     await tester.pumpAndSettle();
     expect(

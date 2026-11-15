@@ -18702,6 +18702,8 @@
   },
   "settlementVatNote": "Les lignes et leur TVA sont reprises des factures regroupées ; la déclaration de TVA compte les originales une seule fois.",
   "setupAdvancedSettings": "Réglages avancés",
+  "setupAllSteps": "Toutes les étapes : {done} sur {total}",
+  "setupAllStepsNote": "Avec les étapes pour plus tard",
   "setupAnswerUnknown": "Je ne sais pas encore",
   "setupAnswerUnknownNote": "Pas encore décidé : {list} restent au choix sûr. Rien n’est activé pour cela ; revenez à cette question ici dès que vous savez.",
   "setupApprovalsApply": "Appliquer cette règle",
@@ -18763,6 +18765,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
+  "setupGoalChecks": "{required, plural, one{Cet objectif : {ready} contrôle sur {required} terminé} other{Cet objectif : {ready} contrôles sur {required} terminés}}",
   "setupGoalLine": "Votre objectif : {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
@@ -19244,6 +19247,7 @@
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "L’ouvrir",
+  "setupStepPosition": "Étape {number} sur {total} · {name}",
   "setupStepPreviewTitle": "Ce que verront vos membres",
   "setupStepTitleAccounting": "Comptabilité",
   "setupStepTitleApprovals": "Validations",
