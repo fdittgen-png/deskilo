@@ -70,7 +70,7 @@ class MeOtherHouses extends ConsumerWidget {
                     )
                   : TextButton(
                       key: ValueKey('house-join-${house.workspaceId}'),
-                      onPressed: () => askToJoinHouse(context, ref, house),
+                      onPressed: () => _askToJoin(context, ref, house),
                       child: Text(l10n.houseJoinAsk),
                     ),
             ),
@@ -82,7 +82,7 @@ class MeOtherHouses extends ConsumerWidget {
 
 /// Says what joining [house] means and, once the person confirms, asks it;
 /// the answer is said in one notice.
-Future<void> askToJoinHouse(
+Future<void> _askToJoin(
   BuildContext context,
   WidgetRef ref,
   JoinableHouse house,

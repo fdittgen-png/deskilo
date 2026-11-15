@@ -3646,10 +3646,12 @@ Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer ander
 5. Tippen Sie neben einem Haus, dessen Inhaber Sie sind, auf **Zum Hauptsitz machen**. Der Inhaber eines anderen Hauses sieht dort **Die Organisation verlassen**.
 6. Tippen Sie auf **Ein Haus im Ausland hinzufügen**, um ein eigenes Unternehmen in einem anderen Land oder einer anderen Währung anzulegen: Wählen Sie zuerst sein Land; Währung, Zeitzone und die Sprache seiner Dokumente werden daraus vorgeschlagen. Das Formular sagt, was übernommen wird, was inaktiv ankommt und mit Preisen zu versehen ist und was nicht übernommen wird. Tippen Sie auf **Das Haus anlegen**: Sie landen darin, und seine Startseite zeigt einmal, wie es entstand.
 7. Im neuen Haus zeigt die Startseite seine erste Aufgabe: zuerst die Steuersätze seines Landes, dann **Ihre Preise festlegen** für die inaktiv angekommenen Leistungen und Pakete. Geben Sie jedem einen Preis (0 macht es kostenlos) und einen Satz und aktivieren Sie es; Beitragsstufen, Dokumentlayout und -links, Zahlungsangaben und Bankkonto legt das Haus selbst fest. Tippen Sie auf **Fertig**, wenn nichts mehr übrig ist.
+8. Schalten Sie in einem Haus, das Ihnen gehört, **Mitglieder der anderen Häuser sind hier willkommen** ein, um ein Mitglied eines anderen Hauses der Organisation auf Anfrage sofort aufzunehmen, zu den Bedingungen dieses Hauses für neue Mitglieder. Aus: Die Anfrage wartet auf Ihre Entscheidung, die das Haus nennt, aus dem die Person kommt.
 
 **Gut zu wissen**
 
 - Jedes Haus zeigt sein Land, seine Währung und Ihre eigene Rolle dort. Wer ein Haus sonst noch besitzt, steht im Haus selbst.
+- Ein Mitglied eines Hauses sieht die anderen Häuser der Organisation auf Ich unter **Weitere Häuser von** der Organisation und tippt auf **Um Aufnahme bitten**. Eine Frage sagt zuerst, was das bedeutet: Sein Profil wird für dieses Haus sichtbar, ein eigenes Unternehmen mit eigenen Bedingungen, Preisen und eigener Währung (#4008).
 - Unter Ich stehen die Häuser zusammen unter dem Namen der Organisation: zuerst der Hauptsitz, dann nach Land.
 - In einem Haus tippen Sie oben auf den Namen des Unternehmens, um in ein anderes Haus der Organisation zu wechseln.
 - Beträge in verschiedenen Währungen stehen nebeneinander und werden nie addiert.

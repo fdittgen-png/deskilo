@@ -3491,10 +3491,12 @@ Your business has sites abroad, in another country or another currency. Each of 
 5. Tap **Make it the head** beside a house you own to make it the head. The owner of another house sees **Leave the organisation** beside that house.
 6. Tap **Add a house abroad** to make a business of its own in another country or currency: choose its country first; its currency, time zone and the language of its documents are proposed from it. The form says what travels, what arrives inactive to be priced, and what does not travel. Tap **Create the house**: you land in it, and its home shows once how it began.
 7. In the new house, its home lists its first task: first its country's tax rates, then **Name your prices** for the services and packages that arrived inactive. Give each a price (0 makes it free) and a rate, and activate it; the fee bands, the document layout and links, and the payment instructions and bank account are the house's own to set. Tap **Done** when nothing is left.
+8. In a house you own, switch on **Members of the other houses are welcome here** to take a member of another house of the organisation at once when they ask, with this house's terms for a new member. Off, the request waits for your decision, which names the house the person comes from.
 
 **Good to know**
 
 - Each house shows its country, its currency and your own role there. Who else owns a house is shown inside that house.
+- A member of one house sees the organisation's other houses on Me, under **Other houses of** the organisation, and taps **Ask to join**. One question first says what joining means: their profile becomes visible to that house, which is a business of its own with its own terms, prices and currency (#4008).
 - On Me, the houses are listed together under the organisation's name: the head first, then by country.
 - Inside a house, tap the business's name at the top to move to another house of the organisation.
 - Amounts in different currencies are shown side by side and never added up.
