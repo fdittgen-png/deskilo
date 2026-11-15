@@ -14879,6 +14879,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Public-sector buyer (Chorus Pro): the code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copy with payment status';
+
+  @override
   String get invoiceCorrectionReason => 'Reason for the correction';
 
   @override
@@ -15741,6 +15744,39 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original kept $when by $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copy: the stored original does not match its fingerprint, so this one is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copy: this invoice was issued before its original was kept, so it is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The originals of $count invoices were not kept yet. The invoices are issued; their originals are kept later.',
+      one: 'The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicePageApprovalRecorded =>
       'Your approval is recorded; it waits for the others.';
 
@@ -16100,6 +16136,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Public-sector buyer (Chorus Pro): the numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Preview — the original is the downloaded PDF.';
 
   @override
   String get invoiceRefundButton => 'Record the refund';

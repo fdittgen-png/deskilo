@@ -11,7 +11,7 @@ import 'credit_providers.dart';
 // The workspace context the guest passes screen reads, through one door.
 export '../../workspace/domain/workspace.dart' show Workspace;
 export '../../workspace/providers/workspace_providers.dart'
-    show currentWorkspaceProvider, myPermissionsProvider;
+    show accountMemberNameProvider, currentWorkspaceProvider, mayIssueInvoicesProvider, myPermissionsProvider;
 
 part 'guest_pass_providers.g.dart';
 

@@ -306,6 +306,7 @@ const Set<String> demoOverriddenProviders = {
   'bookProfileRepositoryProvider', // #1869
   'retentionHoldRepositoryProvider', // #2571
   'bankStatementRepositoryProvider', // #2380
+  'invoiceOriginalRepositoryProvider', // #3853
   'salesTaxRepositoryProvider', // #2362
   'settingsRepositoryProvider', // #2484
   'taxReferenceRepositoryProvider', // #2477

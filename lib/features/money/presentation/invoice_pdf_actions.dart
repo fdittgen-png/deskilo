@@ -26,6 +26,7 @@ import '../providers/money_providers.dart';
 import 'invoice_actions.dart' show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
+import 'invoice_original_document.dart';
 import 'report_defaults.dart';
 import 'report_layout_actions.dart';
 import 'widgets/report_preview.dart';
@@ -120,15 +121,16 @@ InvoicePdfFileOptions invoiceShareOptions(
   BuildContext context,
   WidgetRef ref,
   Invoice invoice,
-  List<Invoice> annexes,
-) => InvoicePdfFileOptions(
+  List<Invoice> annexes, {
+  bool copy = false,
+}) => InvoicePdfFileOptions(
   reference: requireWorkspaceTaxReference(ref),
   // #920 — through layoutImage, so the shipped layouts' `logo`
   // resolves to whatever the owner actually called theirs.
   reportImage: (String name) => layoutImage(ref, name),
   memberTerms: memberTermsFor(ref, invoice.memberId),
   dueAt: invoiceDueAt(ref, invoice),
-  copy: rendersCopy(ref),
+  copy: copy || rendersCopy(ref),
   settledIn: settledStampOf(
     context,
     ref,
@@ -158,10 +160,7 @@ Future<void> downloadInvoicePdf(
       errorText:
           l10n.workspaceGenericError,
       action: () async {
-        final pdf = await buildInvoicePdfFile(
-          context,
-          invoice,
-      invoiceShareOptions(context, ref, invoice, annexes));
+        final pdf = await InvoiceDocumentFlow(context, ref).fileFor(invoice, annexes);
         if (!context.mounted) return;
         await savePdfToDownloads(
           context,
@@ -248,13 +247,12 @@ Future<void> quickViewInvoice(
     }
     final images = await resolveReportImages(ref, report);
     if (!context.mounted) return;
-    await showReportQuickPreview(
-      context,
-      annexes: annexReports,
-      report: report,
-      simulated: false,
-      images: images,
-    );
+    // #3853 — what an invoice that keeps its original shows is a preview
+    final keeps = invoice.keepsOriginal && !proforma;
+    await showReportQuickPreview(context, annexes: annexReports, report: report,
+      simulated: false, images: images,
+      ofOriginal: keeps ? (title: l10n.invoiceQuickViewIsPreview,
+          download: () => downloadInvoicePdf(context, ref, invoice)) : null);
     }, refresh: () => ref.invalidate(invoicesProvider));
 
 
@@ -276,10 +274,7 @@ Future<void> shareInvoicePdf(
       errorText:
           l10n.workspaceGenericError,
       action: () async {
-        final pdf = await buildInvoicePdfFile(
-          context,
-          invoice,
-      invoiceShareOptions(context, ref, invoice, annexes));
+        final pdf = await InvoiceDocumentFlow(context, ref).fileFor(invoice, annexes);
         await ref.read(fileSharerProvider)(
           bytes: Uint8List.fromList(pdf.bytes),
           fileName: pdf.fileName,

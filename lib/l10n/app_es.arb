@@ -8864,6 +8864,7 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",
   "invoiceCorrectionReason": "Motivo de la rectificación",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -9505,6 +9506,12 @@
       }
     }
   },
+  "invoiceOriginalKept": "Original conservado el {when} por {who} · SHA-256 {digest}",
+  "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalsNotKeptNow": "{count, plural, one{El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.} other{Los originales de {count} facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.}}",
   "invoicePageApprovalRecorded": "Su aprobación está registrada; espera a los demás.",
   "@invoicePageApprovalRecorded": {
     "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
@@ -9875,6 +9882,7 @@
   "@invoicePurchaseOrderHint": {
     "description": "#922 chorus pro: invoicePurchaseOrderHint"
   },
+  "invoiceQuickViewIsPreview": "Vista previa: el original es el PDF descargado.",
   "invoiceRefundButton": "Registrar el reembolso",
   "@invoiceRefundButton": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"
