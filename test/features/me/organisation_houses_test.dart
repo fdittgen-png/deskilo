@@ -25,7 +25,7 @@ Workspace _space(String id, String name, String country, String currency) =>
       currencyCode: currency,
       timezone: 'Europe/Paris',
       inviteCode: 'X',
-      environment: 'production',
+      environment: 'prod',
     );
 
 final _head = _space('head', 'Atelier du Marché', 'FR', 'EUR');
@@ -186,6 +186,96 @@ void main() {
         find.byKey(const ValueKey('house-sheet-back-to-me')),
         findsOneWidget,
       );
+    });
+
+    testWidgets('a development twin is not another house: inside a house, '
+        'only the houses of its environment are listed', (tester) async {
+      final londonTwin = _london.copyWith(
+        id: 'ldn-dev',
+        environment: 'dev',
+        pairId: 'pair-ldn',
+      );
+      final zurichTwin = _zurich.copyWith(
+        id: 'zh-dev',
+        environment: 'dev',
+        pairId: 'pair-zh',
+      );
+      final organisation = Organisation(
+        id: 'org',
+        name: 'Atelier du Marché',
+        headWorkspaceId: _head.id,
+        houses: [
+          for (final w in [_head, _london, londonTwin, _zurich, zurichTwin])
+            _house(w),
+        ],
+      );
+      Future<void> pump(Workspace current) => pumpApp(
+        tester,
+        const Scaffold(
+          body: Center(child: SpaceChip(tabTitle: 'Home')),
+        ),
+        overrides: [
+          currentWorkspaceProvider.overrideWith((ref) async => current),
+          myWorkspacesProvider.overrideWith(
+            (ref) async => [..._spaces, londonTwin, zurichTwin],
+          ),
+          myOrganisationsProvider.overrideWith((ref) async => [organisation]),
+        ],
+      );
+      await pump(_london);
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('space-chip-houses')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('house-head')), findsOneWidget);
+      expect(find.byKey(const ValueKey('house-zh')), findsOneWidget);
+      expect(find.byKey(const ValueKey('house-ldn-dev')), findsNothing);
+      expect(find.byKey(const ValueKey('house-zh-dev')), findsNothing);
+    });
+
+    testWidgets('inside a development twin, the other twins are its houses', (
+      tester,
+    ) async {
+      final londonTwin = _london.copyWith(
+        id: 'ldn-dev',
+        environment: 'dev',
+        pairId: 'pair-ldn',
+      );
+      final zurichTwin = _zurich.copyWith(
+        id: 'zh-dev',
+        environment: 'dev',
+        pairId: 'pair-zh',
+      );
+      await pumpApp(
+        tester,
+        const Scaffold(
+          body: Center(child: SpaceChip(tabTitle: 'Home')),
+        ),
+        overrides: [
+          currentWorkspaceProvider.overrideWith((ref) async => londonTwin),
+          myWorkspacesProvider.overrideWith(
+            (ref) async => [..._spaces, londonTwin, zurichTwin],
+          ),
+          myOrganisationsProvider.overrideWith(
+            (ref) async => [
+              Organisation(
+                id: 'org',
+                name: 'Atelier du Marché',
+                headWorkspaceId: _head.id,
+                houses: [
+                  for (final w in [_head, _london, londonTwin, zurichTwin])
+                    _house(w),
+                ],
+              ),
+            ],
+          ),
+        ],
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.byKey(const ValueKey('space-chip-houses')));
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('house-zh-dev')), findsOneWidget);
+      expect(find.byKey(const ValueKey('house-head')), findsNothing);
+      expect(find.byKey(const ValueKey('house-ldn')), findsNothing);
     });
 
     testWidgets('a business in no organisation keeps a chip that is not a '

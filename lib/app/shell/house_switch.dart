@@ -21,16 +21,23 @@ import '../route_classes.dart';
 
 /// The other houses of the organisation [currentId] is a house of, in Me's
 /// order, each as one of the person's businesses; none while either is
-/// being read, or when [currentId] is in no organisation.
+/// being read, or when [currentId] is in no organisation. A business and
+/// its development twin are both in the organisation: only the houses of
+/// the environment the person is in are listed, so no house comes twice
+/// and the twin of the current one is not another house.
 List<Workspace> otherHousesOf(WidgetRef ref, String? currentId) {
   if (currentId == null) return const [];
   final organisations = ref.watch(myOrganisationsProvider).value;
   final spaces = ref.watch(myWorkspacesProvider).value;
   if (organisations == null || spaces == null) return const [];
   final byId = {for (final s in spaces) s.id: s};
+  final current = byId[currentId];
+  if (current == null) return const [];
   return [
     for (final house in Organisation.othersOf(organisations, currentId))
-      ?byId[house.workspaceId],
+      if (byId[house.workspaceId] case final space?
+          when space.env == current.env)
+        space,
   ];
 }
 

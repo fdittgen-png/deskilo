@@ -163,7 +163,6 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       query: _query,
       // #4006 — while the organisations are read, or when they cannot be,
       // every business stays where the person put it.
-      // Until the organisations are read, the person's own layout stays.
       organisations: ref.watch(myOrganisationsProvider).value ?? const [], // empty-ok: the layout
     );
     return Column(

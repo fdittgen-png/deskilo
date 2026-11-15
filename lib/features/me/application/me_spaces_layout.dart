@@ -8,8 +8,6 @@ import '../domain/space_pairs.dart';
 /// they are shown, and — for an organisation (#4006) — its name.
 typedef SpaceGroupRows = ({String id, List<String> keys, String? organisation});
 
-
-
 /// Me › Home's list of my spaces before any widget is built: which rows
 /// there are, which groups show which of them in what order, and what the
 /// person may do with them.
