@@ -5479,6 +5479,7 @@ You want your invoices to look like yours: logo, layout, wording.
 **Good to know**
 
 - The template changes the PDF only. The e-invoice XML is never touched.
+- An issued invoice keeps the original it was issued with: a template changed later changes only the invoices issued after it. Pictures that make an invoice larger than an original may be keep its original from being kept; use smaller pictures.
 - Anyone with permission to design documents can do this.
 - A template that does not render never blocks a document: the built-in layout takes over.
 

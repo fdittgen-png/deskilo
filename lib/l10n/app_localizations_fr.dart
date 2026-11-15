@@ -14997,6 +14997,9 @@ class AppLocalizationsFr extends AppLocalizations {
       'Acheteur public (Chorus Pro) : le code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copie avec l’état du paiement';
+
+  @override
   String get invoiceCorrectionReason => 'Motif de la rectification';
 
   @override
@@ -15872,6 +15875,40 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original conservé le $when par $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copie : l’original conservé ne correspond pas à son empreinte ; celle-ci est rendue maintenant avec les réglages d’aujourd’hui.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copie : cette facture a été émise avant que son original soit conservé ; elle est rendue maintenant avec les réglages d’aujourd’hui.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Les originaux de $count factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.',
+      one:
+          'L’original de $count facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicePageApprovalRecorded =>
       'Votre approbation est enregistrée ; elle attend les autres.';
 
@@ -16235,6 +16272,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Acheteur public (Chorus Pro) : le numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Aperçu — l’original est le PDF téléchargé.';
 
   @override
   String get invoiceRefundButton => 'Enregistrer le remboursement';

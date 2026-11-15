@@ -14926,6 +14926,9 @@ class AppLocalizationsEs extends AppLocalizations {
       'Comprador público (Chorus Pro): el code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copia con el estado del pago';
+
+  @override
   String get invoiceCorrectionReason => 'Motivo de la rectificación';
 
   @override
@@ -15799,6 +15802,39 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original conservado el $when por $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Los originales de $count facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.',
+      one: 'El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicePageApprovalRecorded =>
       'Su aprobación está registrada; espera a los demás.';
 
@@ -16158,6 +16194,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Comprador público (Chorus Pro): el numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Vista previa: el original es el PDF descargado.';
 
   @override
   String get invoiceRefundButton => 'Registrar el reembolso';

@@ -47,7 +47,7 @@ import 'workspace_host_providers.dart';
 import 'workspace_roles_providers.dart';
 
 export 'active_workspace_providers.dart';
-export 'member_display_providers.dart' show memberNamesProvider, memberProfilesProvider;
+export 'member_display_providers.dart' show accountMemberNameProvider, mayIssueInvoicesProvider, memberNamesProvider, memberProfilesProvider;
 export 'operation_context_providers.dart'; // #2561 C1: the contexts
 
 part 'workspace_providers.g.dart';
