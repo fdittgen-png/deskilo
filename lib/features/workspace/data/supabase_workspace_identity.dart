@@ -160,10 +160,16 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
 
   @override
   Future<void> setDocumentAudience(String documentId, String minRole) async {
-    await client
+    final changed = await client
         .from('workspace_documents')
         .update({'min_role': minRole})
-        .eq('id', documentId);
+        .eq('id', documentId)
+        .select('id');
+    // A refused or vanished row changes nothing and raises nothing: say so,
+    // or the page would report a change that did not happen.
+    if (changed.isEmpty) {
+      throw StateError('the document audience was not changed');
+    }
   }
 
   @override

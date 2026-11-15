@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4070 — the document library as a records table: name, group, audience
-// and the day it was added on a desk, a card per document on a phone, and
+// #4070 — the document library as a records table: name, group, where it
+// is stored, audience and the day it was added on a desk, a card per document on a phone, and
 // one row menu (Open, Edit audience, Delete) on both. The page
 // (documents_screen.dart) owns the bar and what each action does.
 import 'package:flutter/material.dart';
@@ -138,6 +138,13 @@ class DocumentsTable extends StatelessWidget {
               Text(DocumentsScreen.categoryName(l10n, _documentShelf(d))),
         ),
         RecordColumn(
+          id: 'provider',
+          label: l10n.documentsProviderLabel,
+          flex: 2,
+          sortKey: (d) => DocumentsScreen.providerName(d.provider),
+          cell: (_, d) => Text(DocumentsScreen.providerName(d.provider)),
+        ),
+        RecordColumn(
           id: 'audience',
           label: l10n.documentsColAudience,
           flex: 3,
@@ -170,6 +177,7 @@ class DocumentsTable extends StatelessWidget {
           subtitle: Text(
             [
               DocumentsScreen.categoryName(l10n, _documentShelf(d)),
+              DocumentsScreen.providerName(d.provider),
               if (added(d).isNotEmpty) added(d),
             ].join(' · '),
           ),

@@ -6,6 +6,8 @@
 // and their answers, badges (one revoked), shared documents, and the
 // conversations of the week. Every value is invented, every link points
 // at example.test (RFC 2606), every date follows the seeded instant.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import '../../../features/workspace/domain/conversation.dart';
 import '../../../features/workspace/domain/member_badge.dart';
 import '../../../features/workspace/domain/member_note.dart';
@@ -173,14 +175,18 @@ void seedDemoBadges(FakeWorkspaceRepository workspaces, DateTime now) {
 }
 
 /// The space's shared paperwork, each a link the visitor can follow.
-void seedDemoDocuments(FakeWorkspaceRepository workspaces) {
-  workspaces.documents.addAll(const [
+void seedDemoDocuments(FakeWorkspaceRepository workspaces, DateTime now) {
+  // #4070: the library says when a document was added.
+  SystemColumns added(int daysAgo) =>
+      SystemColumns(createdAt: now.subtract(Duration(days: daysAgo)));
+  workspaces.documents.addAll([
     WorkspaceDocument(
       id: 'demo-doc-rules',
       workspaceId: 'ws-1',
       title: 'House rules',
       category: 'statutes',
       url: 'https://example.test/atelier/house-rules.pdf',
+      system: added(400),
     ),
     WorkspaceDocument(
       id: 'demo-doc-wifi',
@@ -188,12 +194,14 @@ void seedDemoDocuments(FakeWorkspaceRepository workspaces) {
       title: 'Wi-Fi and printer guide',
       category: 'guides',
       url: 'https://example.test/atelier/wifi.pdf',
+      system: added(120),
     ),
     WorkspaceDocument(
       id: 'demo-doc-insurance',
       workspaceId: 'ws-1',
       title: 'Insurance certificate',
       url: 'https://example.test/atelier/insurance.pdf',
+      system: added(45),
       minRole: 'admin',
     ),
   ]);

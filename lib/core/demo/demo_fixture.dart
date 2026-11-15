@@ -202,7 +202,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoAccessories(accessories, floorPlan);
     seedDemoIdentity(workspaces);
     seedDemoBadges(workspaces, today);
-    seedDemoDocuments(workspaces);
+    seedDemoDocuments(workspaces, today);
     seedDemoConversations(workspaces, today);
     seedDemoNegotiations(money, today);
     seedDemoVatDeclarations(money, today);

@@ -64,7 +64,8 @@ WorkspaceDocument doc(String id, String title,
 
 void main() {
   testWidgets(
-      'documents name their group, open through the link seam (#500)', (tester) async {
+      'documents name their group and where they are stored, open through '
+      'the link seam (#500)', (tester) async {
     final repo = FakeWorkspaceRepository.withWorkspace()
       ..documents.addAll([
         doc('d1', 'Statuts 2026',
@@ -75,6 +76,9 @@ void main() {
 
     expect(find.text('Statutes & legal'), findsOneWidget);
     expect(find.text('Financial statements'), findsOneWidget);
+    // #4070: the table keeps saying where each document is stored.
+    expect(find.text('Google Drive'), findsOneWidget);
+    expect(find.text('OneDrive'), findsOneWidget);
 
     await tester.tap(find.text('Statuts 2026'));
     await _settle(tester);
