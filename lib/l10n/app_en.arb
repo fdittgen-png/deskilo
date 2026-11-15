@@ -7530,6 +7530,15 @@
   "@calendarAlertsCountUnknown": {
     "description": "#4017 — the name of the calendar's Alerts mark when the number of decisions waiting could not be read (no number is shown)."
   },
+  "calendarAlertsNew": "Alerts, {count} new",
+  "@calendarAlertsNew": {
+    "description": "#4021 — the name of the calendar's Alerts control with the number of decisions waiting.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "calendarAllLevels": "All levels",
   "@calendarAllLevels": {
     "description": "First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)"
@@ -7749,6 +7758,14 @@
   "calendarEveryoneTab": "Everyone",
   "@calendarEveryoneTab": {
     "description": "Calendar filter for admins showing all reservations"
+  },
+  "calendarFilters": "Filters",
+  "@calendarFilters": {
+    "description": "#4021 — the calendar's control that holds its secondary filters (the kinds) on a phone, and the title of their sheet."
+  },
+  "calendarFiltersClear": "Clear",
+  "@calendarFiltersClear": {
+    "description": "#4021 — clears the kinds chosen in the calendar's filters sheet."
   },
   "calendarGroupActivity": "Alerts & messages",
   "@calendarGroupActivity": {

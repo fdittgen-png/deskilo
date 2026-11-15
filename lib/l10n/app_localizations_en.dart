@@ -5773,6 +5773,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Alerts: the number waiting could not be read';
 
   @override
+  String calendarAlertsNew(int count) {
+    return 'Alerts, $count new';
+  }
+
+  @override
   String get calendarAllLevels => 'All levels';
 
   @override
@@ -5919,6 +5924,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Everyone';
+
+  @override
+  String get calendarFilters => 'Filters';
+
+  @override
+  String get calendarFiltersClear => 'Clear';
 
   @override
   String get calendarGroupActivity => 'Alerts & messages';

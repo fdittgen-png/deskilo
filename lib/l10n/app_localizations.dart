@@ -9065,6 +9065,12 @@ abstract class AppLocalizations {
   /// **'Alerts: the number waiting could not be read'**
   String get calendarAlertsCountUnknown;
 
+  /// #4021 — the name of the calendar's Alerts control with the number of decisions waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts, {count} new'**
+  String calendarAlertsNew(int count);
+
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
   ///
   /// In en, this message translates to:
@@ -9316,6 +9322,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everyone'**
   String get calendarEveryoneTab;
+
+  /// #4021 — the calendar's control that holds its secondary filters (the kinds) on a phone, and the title of their sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get calendarFilters;
+
+  /// #4021 — clears the kinds chosen in the calendar's filters sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get calendarFiltersClear;
 
   /// Shown as a text in calendar item row (calendar).
   ///

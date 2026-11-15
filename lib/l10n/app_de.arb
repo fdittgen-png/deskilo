@@ -3450,6 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Hinweise: Die Zahl der offenen konnte nicht gelesen werden",
+  "calendarAlertsNew": "Hinweise, {count} neu",
   "calendarAllLevels": "Alle Etagen",
   "calendarCancelFollowing": "Diesen und folgende stornieren",
   "calendarCancelOccurrence": "Diesen Termin stornieren",
@@ -3517,6 +3518,8 @@
     }
   },
   "calendarEveryoneTab": "Alle",
+  "calendarFilters": "Filter",
+  "calendarFiltersClear": "Zurücksetzen",
   "calendarGroupActivity": "Hinweise & Nachrichten",
   "calendarGroupBookings": "Buchungen & Anwesenheit",
   "calendarGroupMoney": "Finanzen",

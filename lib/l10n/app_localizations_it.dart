@@ -5812,6 +5812,11 @@ class AppLocalizationsIt extends AppLocalizations {
       'Avvisi: non è stato possibile leggere quanti sono in attesa';
 
   @override
+  String calendarAlertsNew(int count) {
+    return 'Avvisi, $count nuovi';
+  }
+
+  @override
   String get calendarAllLevels => 'Tutti i piani';
 
   @override
@@ -5959,6 +5964,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Tutti';
+
+  @override
+  String get calendarFilters => 'Filtri';
+
+  @override
+  String get calendarFiltersClear => 'Cancella';
 
   @override
   String get calendarGroupActivity => 'Avvisi e messaggi';

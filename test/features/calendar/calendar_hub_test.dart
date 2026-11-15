@@ -93,8 +93,15 @@ void main() {
   testWidgets('a kind filter narrows the QUERY, not just the list',
       (tester) async {
     final r = await pumpHub(tester);
-    await tester.ensureVisible(find.byKey(const ValueKey('calendar-kind-payment')));
+    // #4021 — the kinds sit in the Filters sheet.
+    await tester.tap(find.byKey(const ValueKey('calendar-filters')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('calendar-kind-payment')));
+    await tester.pumpAndSettle();
+    // Closes the Filters sheet.
+    Navigator.of(
+      tester.element(find.byKey(const ValueKey('calendar-filters-sheet'))),
+    ).pop();
     await tester.pumpAndSettle();
 
     expect(r.calendar.queries.last.kinds, {CalendarKind.payment});
@@ -106,8 +113,15 @@ void main() {
       (tester) async {
     final r = await pumpHub(tester);
     r.calendar.locked = {CalendarKind.message};
-    await tester.ensureVisible(find.byKey(const ValueKey('calendar-kind-message')));
+    // #4021 — the kinds sit in the Filters sheet.
+    await tester.tap(find.byKey(const ValueKey('calendar-filters')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('calendar-kind-message')));
+    await tester.pumpAndSettle();
+    // Closes the Filters sheet.
+    Navigator.of(
+      tester.element(find.byKey(const ValueKey('calendar-filters-sheet'))),
+    ).pop();
     await tester.pumpAndSettle();
 
     expect(find.byKey(const ValueKey('calendar-locked')), findsOneWidget);

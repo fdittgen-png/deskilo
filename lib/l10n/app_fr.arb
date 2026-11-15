@@ -3450,6 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Alertes : le nombre en attente n’a pas pu être lu",
+  "calendarAlertsNew": "Alertes, {count} nouvelles",
   "calendarAllLevels": "Tous les étages",
   "calendarCancelFollowing": "Annuler celle-ci et les suivantes",
   "calendarCancelOccurrence": "Annuler cette occurrence",
@@ -3517,6 +3518,8 @@
     }
   },
   "calendarEveryoneTab": "Tout le monde",
+  "calendarFilters": "Filtres",
+  "calendarFiltersClear": "Effacer",
   "calendarGroupActivity": "Alertes et messages",
   "calendarGroupBookings": "Réservations et présence",
   "calendarGroupMoney": "Finances",

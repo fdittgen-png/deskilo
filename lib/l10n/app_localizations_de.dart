@@ -5820,6 +5820,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'Hinweise: Die Zahl der offenen konnte nicht gelesen werden';
 
   @override
+  String calendarAlertsNew(int count) {
+    return 'Hinweise, $count neu';
+  }
+
+  @override
   String get calendarAllLevels => 'Alle Etagen';
 
   @override
@@ -5967,6 +5972,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Alle';
+
+  @override
+  String get calendarFilters => 'Filter';
+
+  @override
+  String get calendarFiltersClear => 'Zurücksetzen';
 
   @override
   String get calendarGroupActivity => 'Hinweise & Nachrichten';

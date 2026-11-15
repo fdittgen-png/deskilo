@@ -5811,6 +5811,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'Alertas: no se pudo leer cuántas esperan';
 
   @override
+  String calendarAlertsNew(int count) {
+    return 'Alertas, $count nuevas';
+  }
+
+  @override
   String get calendarAllLevels => 'Todas las plantas';
 
   @override
@@ -5958,6 +5963,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Todos';
+
+  @override
+  String get calendarFilters => 'Filtros';
+
+  @override
+  String get calendarFiltersClear => 'Borrar';
 
   @override
   String get calendarGroupActivity => 'Alertas y mensajes';

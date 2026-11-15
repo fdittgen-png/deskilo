@@ -3450,6 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Avvisi: non è stato possibile leggere quanti sono in attesa",
+  "calendarAlertsNew": "Avvisi, {count} nuovi",
   "calendarAllLevels": "Tutti i piani",
   "calendarCancelFollowing": "Annulla questa e le successive",
   "calendarCancelOccurrence": "Annulla questa occorrenza",
@@ -3517,6 +3518,8 @@
     }
   },
   "calendarEveryoneTab": "Tutti",
+  "calendarFilters": "Filtri",
+  "calendarFiltersClear": "Cancella",
   "calendarGroupActivity": "Avvisi e messaggi",
   "calendarGroupBookings": "Prenotazioni e presenza",
   "calendarGroupMoney": "Finanze",
