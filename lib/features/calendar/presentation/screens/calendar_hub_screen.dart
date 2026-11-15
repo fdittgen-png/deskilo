@@ -316,14 +316,9 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
               onOpen: _open,
               onRefresh: () async => ref.invalidate(calendarItemsProvider),
             ),
-      // #4017 — the feed's failure says what kind it is, with Retry; the
-      // rest of the page stays.
-      AsyncError(:final error) => Center(
-          child: ReadFailureBanner(
-            error: error,
-            onRetry: () => ref.invalidate(calendarItemsProvider),
-          ),
-        ),
+      // #4017 — what failed is said, with Retry; the rest of the page stays.
+      AsyncError(:final error) => Center(child: ReadFailureBanner(
+          error: error, onRetry: () => ref.invalidate(calendarItemsProvider))),
       _ => const LoadingView(),
     };
 
