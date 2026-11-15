@@ -329,9 +329,9 @@ class _RoleRow extends StatelessWidget {
     // #3884 -- a role mapped to an account this version cannot read is not
     // an unmapped role: it is said so and cannot be changed from here.
     if (current != null && !accounts.any((a) => a.id == current!.accountId)) {
+      // #4020 — a fact: read as text, with nothing to tap.
       return ListTile(
         key: ValueKey('book-role-${role.wire}'),
-        enabled: false,
         dense: true,
         contentPadding: EdgeInsets.zero,
         title: Text(bookRoleLabel(l10n, role)),

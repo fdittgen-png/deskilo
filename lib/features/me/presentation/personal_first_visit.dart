@@ -309,7 +309,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
                   key: const ValueKey('me-first-visit-search'),
                   controller: _search,
                   label: '',
-                  readOnly: true,
+                  readOnly: true, // field-locked: a door to the search, opened by a tap
                   onTap: discover,
                   hint: l10n.meFindPlaceHint,
                   prefixIcon: const Icon(Icons.search),
