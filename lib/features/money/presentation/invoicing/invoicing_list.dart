@@ -53,12 +53,14 @@ enum InvoicingFilter {
 /// One line per customer, or one per invoice.
 enum InvoicingView { customers, invoices }
 
-/// The chips shown (the legend's Not yet due has no chip of its own).
 /// The wide invoice table: customer · invoice · due · open · status.
 const KitColumns _invoiceColumns = (flex: [4, 3, 2, 3, 4], endFrom: 3);
 
+/// The chips shown. #4059 — Not yet due has one too: on a phone the
+/// summary strip has no line of its own for it.
 const List<InvoicingFilter> _chips = [
   InvoicingFilter.open,
+  InvoicingFilter.notYetDue,
   InvoicingFilter.overdue,
   InvoicingFilter.toConfirm,
   InvoicingFilter.paid,
@@ -247,6 +249,7 @@ class InvoicingList extends StatelessWidget {
                       InvoicingFilter.open => l.invoicingFilterOpen,
                       InvoicingFilter.overdue => l.invoicingFilterOverdue,
                       InvoicingFilter.toConfirm => l.journeyStageConfirm,
+                      InvoicingFilter.notYetDue => l.invoicingOwedNotYetDue,
                       _ => l.invoicingFilterPaid,
                     },
                     key: ValueKey('invoicing-filter-${f.name}'),

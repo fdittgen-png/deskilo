@@ -13,7 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import '../../helpers/screens/invoices.dart' show openInvoice, pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show openInvoice, owedBucketShown, pumpInvoices, seededMoney;
 
 void main() {
   final issued = DateTime.utc(2026, 7);
@@ -131,11 +131,9 @@ void main() {
     // #3587 — the home counts the invoice overdue and its page's bottom
     // bar leads with the due reminder (R1-d).
     expect(
-      find.byWidgetPredicate((w) =>
-          w.key is ValueKey<String> &&
-          (w.key! as ValueKey<String>).value.startsWith('invoicing-owed-') &&
-          (w.key! as ValueKey<String>).value.endsWith('-overdue')),
-      findsOneWidget,
+      // #4059 — the debt card at desk width, the strip below it.
+      owedBucketShown(tester, 'overdue'),
+      isTrue,
     );
     await openInvoice(tester, invoice.id);
     expect(

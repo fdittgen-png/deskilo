@@ -33,6 +33,7 @@ void main() {
     final money = _Repo()..missing['member-1'] = ['buyer_address'];
     await pumpInvoices(tester, money: money);
 
+    await openInvoicingTodo(tester); // #4059
     final entry = find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth'));
     await tester.ensureVisible(entry);
     await tester.tap(entry);

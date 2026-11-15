@@ -121,6 +121,64 @@ Future<FakeMoneyRepository> pumpInvoices(
 
 /// #3587 — the invoicing home's list, one line per invoice (the home
 /// opens by customer). A no-op once already by invoice.
+/// #4059 — what the invoicing home sums up about what is owed: the debt
+/// card at desk width, the summary strip below it.
+final Finder invoicingOwedFigures = find.byWidgetPredicate(
+  (w) =>
+      w.key == const ValueKey('invoicing-owed') ||
+      w.key == const ValueKey('invoicing-summary'),
+);
+
+/// #4059 — whether the invoicing home counts something in [bucket]
+/// (`notYetDue`, `toConfirm`, `overdue`): at desk width the debt card's
+/// legend line; below it the summary strip's counts (not yet due is the
+/// amount due less what is to confirm or overdue).
+bool owedBucketShown(WidgetTester tester, String bucket) {
+  final legend = find.byWidgetPredicate((w) {
+    final key = w.key;
+    return key is ValueKey<String> &&
+        key.value.startsWith('invoicing-owed-') &&
+        key.value.endsWith('-$bucket');
+  });
+  if (find.byKey(const ValueKey('invoicing-owed')).evaluate().isNotEmpty) {
+    return legend.evaluate().isNotEmpty;
+  }
+  int count(String cell) {
+    for (final e in find
+        .byWidgetPredicate((w) =>
+            w.key is ValueKey<String> &&
+            (w.key! as ValueKey<String>).value.startsWith(
+              'invoicing-summary-$cell-count-',
+            ))
+        .evaluate()) {
+      final key = (e.widget.key! as ValueKey<String>).value;
+      return int.parse(key.substring(key.lastIndexOf('-') + 1));
+    }
+    return 0;
+  }
+
+  return switch (bucket) {
+    'toConfirm' => count('confirm') > 0,
+    'overdue' => count('overdue') > 0,
+    _ => count('due') - count('confirm') - count('overdue') > 0,
+  };
+}
+
+/// #4059 — below desk width the to-do list sits under the invoicing home's
+/// summary strip and opens from its To do cell; at desk width it is always
+/// shown, and this does nothing. Call it where a case needs the open to-do.
+Future<void> openInvoicingTodo(WidgetTester tester) async {
+  final cell = find.byKey(const ValueKey('invoicing-summary-review'));
+  if (cell.evaluate().isEmpty) return;
+  if (find.byKey(const ValueKey('invoicing-todo')).evaluate().isNotEmpty) {
+    return;
+  }
+  await tester.ensureVisible(cell);
+  await tester.pumpAndSettle();
+  await tester.tap(cell);
+  await tester.pumpAndSettle();
+}
+
 Future<void> showInvoicesByInvoice(WidgetTester tester) async {
   final toggle = find.byKey(const ValueKey('invoicing-view'));
   if (toggle.evaluate().isEmpty) return;

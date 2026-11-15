@@ -14,6 +14,7 @@ import 'package:go_router/go_router.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/screens/invoices.dart' show invoicingOwedFigures;
 
 Future<void> _pump(
   WidgetTester tester, {
@@ -72,7 +73,7 @@ void main() {
     // reachable at 2x text on a phone without anything overflowing.
     final home = find.byKey(const ValueKey('invoicing-home'));
     expect(home, findsOneWidget);
-    expect(find.byKey(const ValueKey('invoicing-owed')), findsOneWidget);
+    expect(invoicingOwedFigures, findsOneWidget); // #4059
     final scrollable =
         find.descendant(of: home, matching: find.byType(Scrollable)).first;
     Future<void> reach(Finder target) async {
