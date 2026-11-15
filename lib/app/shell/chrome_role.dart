@@ -20,6 +20,7 @@ import '../route_classes.dart';
 /// The reader's role in the current business: the built-in kind and, for a
 /// member holding one of the business's own roles, that role's names by
 /// language.
+@visibleForTesting
 class ChromeRole {
   const ChromeRole(
     this.kind, {
@@ -36,10 +37,13 @@ class ChromeRole {
 }
 
 /// The reader's role here, or null while the membership is unknown.
+@visibleForTesting
 final chromeRoleProvider = Provider<ChromeRole?>((ref) {
   final me = ref.watch(myMemberProvider).value;
   if (me == null) return null;
+  // empty-ok: no roles known means no named role; the built-in words stand
   final roles = ref.watch(workspaceRolesProvider).value ?? const [];
+  // empty-ok: no assignments known means no named role
   final assignments =
       ref.watch(workspaceRoleAssignmentsProvider).value ?? const {};
   if (me.isOwner) return const ChromeRole(HouseRole.owner);
@@ -66,6 +70,7 @@ String _ownName(Map<String, String> names, String locale, String fallback) {
 
 /// "as owner" in the reader's language: the built-in words of the
 /// organisation page, or the role's own name.
+@visibleForTesting
 String chromeRoleWords(AppLocalizations l10n, ChromeRole role, String locale) {
   final word = switch (role.kind) {
     HouseRole.owner => l10n.organisationRoleOwner,

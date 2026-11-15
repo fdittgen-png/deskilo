@@ -9929,6 +9929,12 @@ abstract class AppLocalizations {
   /// **'Option effective from (YYYY-MM-DD)'**
   String get chOptionToTaxDate;
 
+  /// #4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}, {hint}'**
+  String chromeChipWithHint(String label, String hint);
+
   /// #4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.
   ///
   /// In en, this message translates to:

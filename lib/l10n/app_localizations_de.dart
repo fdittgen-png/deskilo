@@ -6349,6 +6349,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get chOptionToTaxDate => 'Option wirksam ab (JJJJ-MM-TT)';
 
   @override
+  String chromeChipWithHint(String label, String hint) {
+    return '$label, $hint';
+  }
+
+  @override
   String chromeRoleAs(String role) {
     return 'als $role';
   }

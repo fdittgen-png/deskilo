@@ -177,7 +177,8 @@ void main() {
         'then the tooltip\'s words, and it is a button', (tester) async {
       final semantics = tester.ensureSemantics();
       await pumpChip(tester, _london);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump();
       final label = 'Atelier London, Home, ${englishL10n.spaceOtherHouses}';
       final node = tester.getSemantics(find.bySemanticsLabel(label));
       // ignore: deprecated_member_use
@@ -194,7 +195,8 @@ void main() {
         'page, and it is not a button', (tester) async {
       final semantics = tester.ensureSemantics();
       await pumpChip(tester, _berlin);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump();
       expect(find.byKey(const ValueKey('space-chip-houses')), findsNothing);
       final node = tester.getSemantics(
         find.bySemanticsLabel('Praxis Berlin, Home'),

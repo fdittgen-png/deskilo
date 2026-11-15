@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
+import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
@@ -163,49 +164,66 @@ class SpaceChip extends ConsumerWidget {
         );
       },
     );
-    // #4019 — one label, "<business>, <page>[, <role>]"; where it switches houses it
-    // ends with the tooltip's words, and it is a button only then.
     // #4019 — a consequential page adds the role whether or not the bar has
     // room to draw it: a screen reader hears it at any width.
     final base = space == null ? tabTitle : '${space.name}, $tabTitle';
-    final label = role == null ? base : '$base, $role';
-    if (houses.isEmpty) {
-      return Semantics(
-        container: true,
-        label: label,
-        excludeSemantics: true,
-        child: chip,
-      );
-    }
-    return Tooltip(
-      message: l10n.spaceOtherHouses,
-      excludeFromSemantics: true,
-      child: Semantics(
-        container: true,
-        button: true,
-        label: '$label, ${l10n.spaceOtherHouses}',
-        excludeSemantics: true,
-        child: InkWell(
-          key: const ValueKey('space-chip-houses'),
-          onTap: () async {
-            final picked = await HouseSheet.open(context, houses);
-            if (picked == null || !context.mounted) return;
-            unawaited(enterSpace(context, ref, picked));
-          },
-          // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(
-              minHeight: kMinInteractiveDimension,
-            ),
-            child: Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: chip,
-            ),
+    return _announced(
+      context,
+      ref,
+      chip: chip,
+      label: role == null ? base : '$base, $role',
+      houses: houses,
+    );
+  }
+}
+
+/// #4019 — the chip as one announcement, business, page and, where it applies, role;
+/// where it switches houses the label ends with the tooltip's words and it is
+/// a button, and only then.
+Widget _announced(
+  BuildContext context,
+  WidgetRef ref, {
+  required Widget chip,
+  required String label,
+  required List<Workspace> houses,
+}) {
+  if (houses.isEmpty) {
+    return Semantics(
+      container: true,
+      label: label,
+      excludeSemantics: true,
+      child: chip,
+    );
+  }
+  final l10n = context.l10n;
+  return Tooltip(
+    message: l10n.spaceOtherHouses,
+    excludeFromSemantics: true,
+    child: Semantics(
+      container: true,
+      button: true,
+      label: l10n.chromeChipWithHint(label, l10n.spaceOtherHouses),
+      excludeSemantics: true,
+      child: InkWell(
+        key: const ValueKey('space-chip-houses'),
+        onTap: () async {
+          final picked = await HouseSheet.open(context, houses);
+          if (picked == null || !context.mounted) return;
+          unawaited(enterSpace(context, ref, picked));
+        },
+        // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(
+            minHeight: kMinInteractiveDimension,
+          ),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: chip,
           ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 /// The same account avatar, in the same position, in both layers.

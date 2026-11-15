@@ -7,5 +7,17 @@
         "type": "String"
       }
     }
+  },
+  "chromeChipWithHint": "{label}, {hint}",
+  "@chromeChipWithHint": {
+    "description": "#4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "hint": {
+        "type": "String"
+      }
+    }
   }
 }
