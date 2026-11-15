@@ -15659,11 +15659,24 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Emetti la fattura · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Controlla di nuovo';
 
   @override
   String get invoiceIssueDeclined =>
       'La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.';
+
+  @override
+  String get invoiceIssueKept =>
+      'La fattura emessa è conservata come originale che non può più essere modificato; la condivide o la scarica dalla fattura.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'La fattura emessa è conservata come originale che non può più essere modificato; la invia per e-mail, la condivide o la scarica dalla fattura.';
 
   @override
   String get invoiceIssueNotFoundYet =>

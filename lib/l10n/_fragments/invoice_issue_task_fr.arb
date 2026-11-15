@@ -1,0 +1,5 @@
+{
+  "invoiceIssueAmount": "Émettre la facture · {amount}",
+  "invoiceIssueKept": "La facture émise est conservée comme un original qui ne peut plus être modifié ; vous la partagez ou la téléchargez depuis la facture.",
+  "invoiceIssueKeptEmail": "La facture émise est conservée comme un original qui ne peut plus être modifié ; vous l’envoyez par e-mail, la partagez ou la téléchargez depuis la facture."
+}

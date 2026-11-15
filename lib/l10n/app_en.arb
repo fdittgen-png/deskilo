@@ -20283,6 +20283,15 @@
       }
     }
   },
+  "invoiceIssueAmount": "Issue invoice · {amount}",
+  "@invoiceIssueAmount": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceIssueCheckAgain": "Check again",
   "@invoiceIssueCheckAgain": {
     "description": "Looks for the invoice in the archive; never sends it again"
@@ -20290,6 +20299,14 @@
   "invoiceIssueDeclined": "The validation was declined or expired. No invoice was issued.",
   "@invoiceIssueDeclined": {
     "description": "Result of a look: the validators declined the held invoice request"
+  },
+  "invoiceIssueKept": "The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.",
+  "@invoiceIssueKept": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept."
+  },
+  "invoiceIssueKeptEmail": "The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.",
+  "@invoiceIssueKeptEmail": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail."
   },
   "invoiceIssueNotFoundYet": "Not found yet. Nothing was sent again.",
   "@invoiceIssueNotFoundYet": {

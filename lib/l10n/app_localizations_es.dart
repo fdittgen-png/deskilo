@@ -15651,11 +15651,24 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Emitir la factura · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Comprobar de nuevo';
 
   @override
   String get invoiceIssueDeclined =>
       'La validación fue rechazada o caducó. No se emitió ninguna factura.';
+
+  @override
+  String get invoiceIssueKept =>
+      'La factura emitida se conserva como un original que ya no puede modificarse; la comparte o la descarga desde la factura.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'La factura emitida se conserva como un original que ya no puede modificarse; la envía por correo, la comparte o la descarga desde la factura.';
 
   @override
   String get invoiceIssueNotFoundYet =>

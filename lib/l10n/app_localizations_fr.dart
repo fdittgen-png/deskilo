@@ -15724,11 +15724,24 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Émettre la facture · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Vérifier à nouveau';
 
   @override
   String get invoiceIssueDeclined =>
       'La validation a été refusée ou a expiré. Aucune facture n\'a été émise.';
+
+  @override
+  String get invoiceIssueKept =>
+      'La facture émise est conservée comme un original qui ne peut plus être modifié ; vous la partagez ou la téléchargez depuis la facture.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'La facture émise est conservée comme un original qui ne peut plus être modifié ; vous l’envoyez par e-mail, la partagez ou la téléchargez depuis la facture.';
 
   @override
   String get invoiceIssueNotFoundYet =>

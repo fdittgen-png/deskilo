@@ -24989,6 +24989,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}'**
   String invoiceIssueAllConfirm(int count, String month, String total);
 
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue invoice · {amount}'**
+  String invoiceIssueAmount(String amount);
+
   /// Looks for the invoice in the archive; never sends it again
   ///
   /// In en, this message translates to:
@@ -25000,6 +25006,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The validation was declined or expired. No invoice was issued.'**
   String get invoiceIssueDeclined;
+
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept.
+  ///
+  /// In en, this message translates to:
+  /// **'The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.'**
+  String get invoiceIssueKept;
+
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.'**
+  String get invoiceIssueKeptEmail;
 
   /// Result of a look that found no invoice
   ///
