@@ -163,6 +163,7 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       query: _query,
       // #4006 — while the organisations are read, or when they cannot be,
       // every business stays where the person put it.
+      // empty-ok: no organisation read yet keeps the person's own layout.
       organisations: ref.watch(myOrganisationsProvider).value ?? const [],
     );
     return Column(
@@ -253,8 +254,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             child: child,
           ),
           itemBuilder: (context, i) => _row(context, prefs, keys, keys[i],
-              layout.rows[keys[i]]!, canDrag ? i : null,
-              housed: organisation != null),
+              layout.rows[keys[i]]!,
+              (index: canDrag ? i : null, housed: organisation != null)),
         ),
     ];
   }
@@ -280,9 +281,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     List<String> groupKeys,
     String key,
     List<Workspace> group,
-    int? dragIndex, {
-    bool housed = false,
-  }) {
+    ({int? index, bool housed}) place,
+  ) {
+    final (index: dragIndex, :housed) = place;
     final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final members = [for (final space in group) (space, _memberOf(space))];

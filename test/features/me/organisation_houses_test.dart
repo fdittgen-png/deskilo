@@ -98,7 +98,7 @@ void main() {
         'by country', () {
       final group = layout.groups.first;
       expect(group.organisation, 'Atelier du Marché');
-      expect(group.id, organisationGroupId('org'));
+      expect(group.id, 'organisation:org');
       expect(
         [for (final k in group.keys) layout.rows[k]!.first.id],
         [

@@ -8,8 +8,7 @@ import '../domain/space_pairs.dart';
 /// they are shown, and — for an organisation (#4006) — its name.
 typedef SpaceGroupRows = ({String id, List<String> keys, String? organisation});
 
-/// The group id of the organisation [id] on Me › Home.
-String organisationGroupId(String id) => 'organisation:$id';
+
 
 /// Me › Home's list of my spaces before any widget is built: which rows
 /// there are, which groups show which of them in what order, and what the
@@ -49,26 +48,8 @@ class MeSpacesLayout {
       for (final key in rows.keys)
         if (!filtered || nameOf(key).toLowerCase().contains(words)) key,
     ];
-    // The row of each house: the row one of its sides is.
-    final rowOfSpace = {
-      for (final MapEntry(:key, :value) in rows.entries)
-        for (final side in value) side.id: key,
-    };
-    final groups = <SpaceGroupRows>[];
     final housed = <String>{};
-    for (final organisation in organisations) {
-      final keys = [
-        for (final house in organisation.byCountry)
-          if (rowOfSpace[house.workspaceId] case final key?)
-            if (housed.add(key) && visible.contains(key)) key,
-      ];
-      if (keys.isEmpty) continue;
-      groups.add((
-        id: organisationGroupId(organisation.id),
-        keys: keys,
-        organisation: organisation.name,
-      ));
-    }
+    final groups = _organisationGroups(organisations, rows, visible, housed);
     for (final id in prefs.groupIds) {
       final keys = prefs.sorted([
         for (final key in visible)
@@ -86,6 +67,35 @@ class MeSpacesLayout {
       // Holding a card moves it only in my own order, with nothing filtered.
       canDrag: prefs.sort == SpaceSort.byHand && !filtered,
     );
+  }
+
+  /// #4006 — one group per organisation, its houses' rows in its order;
+  /// each row taken is added to [housed].
+  static List<SpaceGroupRows> _organisationGroups(
+    List<Organisation> organisations,
+    Map<String, List<Workspace>> rows,
+    List<String> visible,
+    Set<String> housed,
+  ) {
+    // The row of each house: the row one of its sides is.
+    final rowOfSpace = {
+      for (final MapEntry(:key, :value) in rows.entries)
+        for (final side in value) side.id: key,
+    };
+    return [
+      for (final organisation in organisations)
+        if ([
+              for (final house in organisation.byCountry)
+                if (rowOfSpace[house.workspaceId] case final key?)
+                  if (housed.add(key) && visible.contains(key)) key,
+            ]
+            case final keys when keys.isNotEmpty)
+          (
+            id: 'organisation:${organisation.id}',
+            keys: keys,
+            organisation: organisation.name,
+          ),
+    ];
   }
 
   /// Each row's sides, production first, by row key.

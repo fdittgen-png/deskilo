@@ -36,7 +36,7 @@ List<Workspace> otherHousesOf(WidgetRef ref, String? currentId) {
 
 /// Where [space] is and what it counts in: the country's name and the
 /// currency's code.
-String houseLine(BuildContext context, Workspace space) => [
+String _houseLine(BuildContext context, Workspace space) => [
   if (space.countryCode.isNotEmpty)
     localizedCountryName(context.l10n, space.countryCode),
   if (space.currencyCode.isNotEmpty) space.currencyCode,
@@ -71,7 +71,7 @@ class HouseSheet extends StatelessWidget {
               key: ValueKey('house-${space.id}'),
               leading: WorkspaceAvatar(workspace: space),
               title: Text(space.name),
-              subtitle: Text(houseLine(context, space)),
+              subtitle: Text(_houseLine(context, space)),
               onTap: () => Navigator.of(context).pop(space),
             ),
           const Divider(),
