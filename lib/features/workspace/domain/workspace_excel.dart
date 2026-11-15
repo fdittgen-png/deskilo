@@ -16,6 +16,7 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import 'workspace_excel_invoices.dart';
 import 'workspace_overview_sheets.dart';
 
 
@@ -141,7 +142,14 @@ class _ExcelExport {
         _payments(),
         _services(),
         _servicecatalog(),
-        _invoices(),
+        workspaceInvoicesSheet(
+          invoices: invoices,
+          memberName: memberName,
+          transmissionsByInvoice: transmissionsByInvoice,
+          major: major,
+          at: _at,
+          day: _day,
+        ),
       ];
 
   XlsxSheet _levels() =>
@@ -319,28 +327,6 @@ class _ExcelExport {
     ['id', 'name', 'price', 'currency', 'active', 'category', 'duration_minutes', 'description', 'is_public', 'sort_order'], // #3552
     for (final s in services)
       [s.id, s.name, major(s.priceCents), workspace.currencyCode, s.active, if (s.category.isEmpty) null else s.category, s.durationMinutes, if (s.description.isEmpty) null else s.description, s.isPublic, s.sortOrder],
-  ]);
-
-  XlsxSheet _invoices() =>
-      XlsxSheet(name: 'Invoices', totals: 'total', rows: [
-    [
-      'number', 'member', 'period', 'issued_at', 'total', 'currency',
-      'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
-      'net', 'vat', 'vat_by_rate', 'due_on', 'issued_by',
-    ],
-    for (final i in invoices)
-      [
-        i.number, memberName[i.memberId], i.period, _at(i.issuedAt),
-        major(i.totalCents), i.currency, _at(i.voidedAt),
-        if (i.replacesNumber.isEmpty) null else i.replacesNumber, i.detailed,
-        _at(transmissionsByInvoice[i.id]),
-        i.kind.name, i.title, major(i.netCents), major(i.vatCents),
-        [
-          for (final t in i.vatTotals)
-            '${t.percent}%: ${major(t.vatCents).value.toStringAsFixed(2)}',
-        ].join('; '),
-        _day(i.dueOn), i.issuerName,
-      ],
   ]);
 
   /// The member's structured identity cells: a managed profile's own, else
