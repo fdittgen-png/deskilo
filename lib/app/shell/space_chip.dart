@@ -21,6 +21,10 @@ const double _ringSide = 38;
 /// The radius of the space's avatar on the chip.
 const double _avatarRadius = 16;
 
+/// The least the page's name is scaled to before it is cut instead: at
+/// 0.8 a title set at 16 reads like the body text beside it.
+const double _minTitleScale = 0.8;
+
 /// The width [text] takes on one line in [style], as [context] paints it.
 double _lineWidth(BuildContext context, String text, TextStyle? style) {
   final painter = TextPainter(
@@ -112,18 +116,32 @@ class SpaceChip extends ConsumerWidget {
                     ),
                   // #4030 — where even the bar's controls in the menu leave
                   // too little room, the page's name shrinks rather than
-                  // being cut; it is still read whole.
-                  FittedBox(
-                    fit: BoxFit.scaleDown,
-                    alignment: AlignmentDirectional.centerStart,
-                    child: Text(
+                  // being cut — down to [_minTitleScale], no further: a
+                  // name the reader enlarged must not end up smaller than
+                  // the text around it. Beyond that it is cut, and still
+                  // read whole.
+                  if (page * _minTitleScale <= column)
+                    FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: AlignmentDirectional.centerStart,
+                      child: Text(
+                        tabTitle,
+                        key: const ValueKey('space-chip-page'),
+                        maxLines: 1,
+                        softWrap: false,
+                        style: text.titleMedium,
+                      ),
+                    )
+                  else
+                    Text(
                       tabTitle,
                       key: const ValueKey('space-chip-page'),
                       maxLines: 1,
                       softWrap: false,
+                      overflow: TextOverflow.ellipsis,
+                      semanticsLabel: tabTitle,
                       style: text.titleMedium,
                     ),
-                  ),
                 ],
               ),
             ),
