@@ -63,6 +63,30 @@ class RecordColumn<T> {
   final String? sample;
 }
 
+/// The columns drawn: those the person has not hidden and the table has
+/// [room] for, and while a record is open [beside] the table only those
+/// that stay. A table where none would stay keeps all of what the person
+/// left, never an empty table.
+List<RecordColumn<T>> columnsShown<T>(
+  List<RecordColumn<T>> columns,
+  Set<String> hidden, {
+  required bool beside,
+  WindowClass room = WindowClass.extraLarge,
+}) {
+  final chosen = [
+    for (final c in columns)
+      if (!c.hideable ||
+          (!hidden.contains(c.id) && room.index >= c.shownFrom.index))
+        c,
+  ];
+  if (!beside) return chosen;
+  final staying = [
+    for (final c in chosen)
+      if (c.staysBeside || !c.hideable) c,
+  ];
+  return staying.isEmpty ? chosen : staying;
+}
+
 /// The columns of [columns] that fit [available] wide, given each one's
 /// narrowest width [mins] (by id): while they do not, the least needed goes
 /// (#4035) — the one a wider window shows later (`shownFrom`), then the
@@ -88,49 +112,46 @@ List<RecordColumn<T>> columnsFitting<T>(
 
 /// The width of each of [columns] in [available], or null while every
 /// column's share by flex already holds its narrowest width [mins] (the
-/// table lays out by flex alone, as it always did). Otherwise each column
-/// has its narrowest width and the rest is shared by flex: the sum is
-/// [available] (#4035).
+/// table lays out by flex alone, as it always did). Otherwise a column whose
+/// share is too narrow takes its narrowest width and the others share what is
+/// left by flex: the sum is [available] (#4035).
 List<double>? recordColumnWidths<T>(
   List<RecordColumn<T>> columns,
   Map<String, double> mins,
   double available,
 ) {
-  final flex = columns.fold<int>(0, (sum, c) => sum + c.flex);
-  if (columns.isEmpty || flex == 0) return null;
-  final fits = columns.every(
-    (c) => available * c.flex / flex >= (mins[c.id] ?? 0) - 0.01,
+  double min(RecordColumn<T> c) => mins[c.id] ?? 0;
+  final fixed = <RecordColumn<T>>{};
+  var changed = true;
+  while (changed) {
+    changed = false;
+    final free = [
+      for (final c in columns)
+        if (!fixed.contains(c)) c,
+    ];
+    final flex = free.fold<int>(0, (sum, c) => sum + c.flex);
+    final room = available - fixed.fold(0.0, (sum, c) => sum + min(c));
+    if (flex == 0) break;
+    for (final c in free) {
+      if (room * c.flex / flex < min(c) - 0.01) {
+        fixed.add(c);
+        changed = true;
+      }
+    }
+  }
+  if (fixed.isEmpty) return null;
+  final flex = columns.fold<int>(
+    0,
+    (sum, c) => sum + (fixed.contains(c) ? 0 : c.flex),
   );
-  if (fits) return null;
-  final base = columns.fold(0.0, (sum, c) => sum + (mins[c.id] ?? 0));
-  final extra = (available - base).clamp(0.0, double.infinity);
-  return [
-    for (final c in columns) (mins[c.id] ?? 0) + extra * c.flex / flex,
-  ];
-}
+  final room = (available - fixed.fold(0.0, (sum, c) => sum + min(c)))
+      .clamp(0.0, double.infinity);
+  double widthOf(RecordColumn<T> c) {
+    if (fixed.contains(c)) return min(c);
+    return flex == 0 ? 0 : room * c.flex / flex;
+  }
 
-/// The columns drawn: those the person has not hidden and the table has
-/// [room] for, and while a record is open [beside] the table only those
-/// that stay. A table where none would stay keeps all of what the person
-/// left, never an empty table.
-List<RecordColumn<T>> columnsShown<T>(
-  List<RecordColumn<T>> columns,
-  Set<String> hidden, {
-  required bool beside,
-  WindowClass room = WindowClass.extraLarge,
-}) {
-  final chosen = [
-    for (final c in columns)
-      if (!c.hideable ||
-          (!hidden.contains(c.id) && room.index >= c.shownFrom.index))
-        c,
-  ];
-  if (!beside) return chosen;
-  final staying = [
-    for (final c in chosen)
-      if (c.staysBeside || !c.hideable) c,
-  ];
-  return staying.isEmpty ? chosen : staying;
+  return [for (final c in columns) widthOf(c)];
 }
 
 /// One action on a row, declared once: the ⋯ button, the secondary click
