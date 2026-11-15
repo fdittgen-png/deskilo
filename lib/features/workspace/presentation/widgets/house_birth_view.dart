@@ -43,7 +43,9 @@ class HouseBirthView extends StatelessWidget {
         Text(
           l10n.houseBirthToPrice(
             [
-              l10n.houseBirthPlans(birth.plans),
+              // #4042: plans are retired and no new house carries one; a
+              // house born earlier still says how many it was given.
+              if (birth.plans > 0) l10n.houseBirthPlans(birth.plans),
               l10n.houseBirthServices(birth.services),
               l10n.houseBirthPackages(birth.packages),
             ].join(', '),

@@ -24,6 +24,7 @@ import 'invoicing_desk_table.dart';
 import 'invoicing_home_data.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
+import 'invoicing_summary_strip.dart';
 import 'invoicing_words.dart';
 import 'reminder_mode_line.dart';
 
@@ -236,9 +237,15 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                       ),
                       const SizedBox(height: AppSpacing.sm),
                     ],
-                    owed,
-                    const SizedBox(height: AppSpacing.md),
-                    todo,
+                    // #4059 — one compact block; the to-do list opens under it.
+                    InvoicingSummaryStrip(
+                      owed: owedOf(data.receivables, data.today),
+                      toDo: _todos().length,
+                      filter: filter,
+                      onFilter: _choose,
+                      toDoCard: todo,
+                      monthFigures: _monthFigures(context),
+                    ),
                     if (widget.legalNotes case final notes?) ...[
                       const SizedBox(height: AppSpacing.sm),
                       ExpansionTile(
@@ -303,17 +310,6 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       OwedBucket.overdue: l.invoicingOwedOverdue,
     };
     final owed = owedOf(data.receivables, data.today);
-    final month = monthOf(
-      data.receivables,
-      data.today,
-      received: data.received,
-    );
-    List<String> values(Tally t) => t.byCurrency.isEmpty
-        ? [format.moneyIn(data.currency).formatMinor(0)]
-        : [
-            for (final e in t.byCurrency.entries)
-              format.moneyIn(e.key).formatMinor(e.value),
-          ];
     OwedBlock block(OwedInCurrency o) {
       final money = format.moneyIn(o.currency);
       return (
@@ -350,26 +346,47 @@ class _InvoicingHomeState extends State<InvoicingHome> {
               ),
             ]
           : [for (final o in owed) block(o)],
-      figures: [
-        (
-          label: l.invoicingInvoicedIn(data.month),
-          values: values(month.invoiced),
-        ),
-        // No figure is shown that was not read.
-        if (!data.failed.contains(InvoicingSource.payments))
-          (
-            label: l.invoicingReceivedIn(data.month),
-            values: values(month.received),
-          ),
-      ],
+      figures: _monthFigures(context),
     );
   }
 
-  Widget _todoCard(BuildContext context) {
+  /// The month's figures: invoiced, and received when the payments were
+  /// read. #4059 — the debt card's and the summary strip's alike.
+  List<({String label, List<String> values})> _monthFigures(
+    BuildContext context,
+  ) {
     final l = context.l10n;
     final data = widget.data;
     final format = appFormatOf(context);
-    final todo = todoOf(
+    final month = monthOf(
+      data.receivables,
+      data.today,
+      received: data.received,
+    );
+    List<String> values(Tally t) => t.byCurrency.isEmpty
+        ? [format.moneyIn(data.currency).formatMinor(0)]
+        : [
+            for (final e in t.byCurrency.entries)
+              format.moneyIn(e.key).formatMinor(e.value),
+          ];
+    return [
+      (
+        label: l.invoicingInvoicedIn(data.month),
+        values: values(month.invoiced),
+      ),
+      // No figure is shown that was not read.
+      if (!data.failed.contains(InvoicingSource.payments))
+        (
+          label: l.invoicingReceivedIn(data.month),
+          values: values(month.received),
+        ),
+    ];
+  }
+
+  /// The to-dos waiting, as the To do card and the summary count them.
+  List<Todo> _todos() {
+    final data = widget.data;
+    return todoOf(
       data.receivables,
       toInvoice: data.failed.contains(InvoicingSource.toInvoice)
           ? const []
@@ -378,12 +395,20 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       holdsUnassigned: data.holdsUnassigned,
       originalsToKeep: data.originalsToKeep,
     );
+  }
+
+  Widget _todoCard(BuildContext context) {
+    final l = context.l10n;
+    final data = widget.data;
+    final format = appFormatOf(context);
+    final todo = _todos();
     String caption(Todo t) => [
       if (t.kind == TodoKind.invoiceTheMonth)
         l.invoicingCustomerCount(t.tally.count)
       else
         l.invoicingInvoiceCount(t.tally.count),
-      if (t.tally.byCurrency.isNotEmpty) amountsOf(format, t.tally),
+      if (t.tally.byCurrency.isNotEmpty)
+        amountsOf(format, t.tally, credit: l.invoicingCreditAmount),
     ].join(' · ');
     return TodoCard(
       key: const ValueKey('invoicing-todo'),
