@@ -2532,7 +2532,7 @@ routine public.create_invoice_receipted_v1(p_workspace_id uuid, p_member_id uuid
 routine public.create_invoice_replacement_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_replaces uuid, p_request_id uuid, p_detailed boolean, p_kind text, p_buyer_reference text, p_purchase_order text, p_correction_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:2bd5cc408fcc
 routine public.create_managed_member(p_workspace_id uuid, p_identity jsonb, p_access jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7871b90b4b5f
 routine public.create_organisation(p_head uuid, p_name text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9d51c01834e5
-routine public.create_organisation_house_once(p_organisation uuid, p_name text, p_country text, p_currency text, p_timezone text, p_language text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f33bb6999e9e
+routine public.create_organisation_house_once(p_organisation uuid, p_name text, p_country text, p_currency text, p_timezone text, p_language text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1cb60cec7f1e
 routine public.create_reservation(p_workspace_id uuid, p_seat_id uuid, p_office_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean, p_level_id uuid, p_desk_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6e0d3b9dfcce
 routine public.create_reservation_once(p_client_request_id uuid, p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:98d868b4bfc6
 routine public.create_sample_data(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87e5c8c21a8b
@@ -3140,7 +3140,7 @@ routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function |
 routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
 routine public.organisation_feature_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:483b7fc7e5c7
 routine public.organisation_head_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:9879c021f6cb
-routine public.organisation_house_fenced_amounts() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:627c28710b32
+routine public.organisation_house_fenced_amounts() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:cf073b65bd03
 routine public.organisation_owner_check(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:53d89cd293f4
 routine public.organisation_owns(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:f2dc4841d55e
 routine public.organisation_place(p_workspace_id uuid, p_organisation_id uuid) -> void | function | definer | volatile | exec:service_role | body:7e8e491c6304

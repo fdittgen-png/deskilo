@@ -3,9 +3,9 @@
 -- (one table; three functions)
 --
 -- #4005 (decision 0052, point 5) -- the head adds a house abroad in one
--- command. create_organisation_house_once creates the business (with its
--- twin as the head has one), places it in the organisation, and carries the
--- head's configuration in merge mode, fenced:
+-- command. create_organisation_house_once creates the business, places it
+-- in the organisation, and carries the head's configuration in merge mode,
+-- fenced:
 --
 -- * Every priced row arrives INACTIVE, whatever the currency: nothing is
 --   sellable in a new country before its owner has looked at price and tax.
@@ -23,16 +23,24 @@
 --   rate category per row as a hint for "Name your prices".
 -- * Not carried: identity, payment instructions, invitations, sites, the
 --   floor plan, counters, and closure days when the country differs (public
---   holidays are the country's). Carried: role definitions (no assignment),
---   booking rules, validation policies, reminders, the document design and
---   links, and the features the house's country offers.
+--   holidays are the country's). Nor the document design: its bands, texts
+--   and layouts hold words the head's owner typed (a footer with a company
+--   number, a bank account, the head's legal mentions), so the house starts
+--   from its country's default layout. Nor the document links: statutes,
+--   accounts and minutes are the head's own. The birth record says both
+--   were not carried. Carried: role definitions (no assignment), booking
+--   rules, validation policies, reminders, and the features the house's
+--   country offers.
+-- * The house is born without a twin: its owner adds one later with the
+--   twin command, which copies the house as it then stands.
 -- * The caller owns the house as any business they create. The head's other
 --   active owners and co-owners are added once, at birth, as co-owners: a
 --   copy made at birth, not a mirror; nothing later follows from the head.
 -- * organisation_houses is the house's birth record: where it came from,
 --   what was carried, who was added, and whether its prices are still to be
 --   named. It grants nothing and no check reads it for a right.
--- The head's `organisation` feature gates the command; an assistant's token
+-- The language is one the documents speak. The head's `organisation`
+-- feature gates the command; an assistant's token
 -- is refused; the same request id answers the same house, and a request id
 -- the caller used for another business is refused.
 
@@ -69,7 +77,7 @@ returns jsonb language sql immutable set search_path = public as $fn$
            "services": ["price_cents"],
            "packages": ["price_cents"],
            "validation_policies": ["min_amount_cents"],
-           "workspace_documents": [], "closure_days": []}'::jsonb
+           "closure_days": []}'::jsonb
 $fn$;
 revoke execute on function public.organisation_house_fenced_amounts() from public, anon;
 grant execute on function public.organisation_house_fenced_amounts() to authenticated;
@@ -113,6 +121,9 @@ begin
    where o.id = p_organisation;
   perform public.organisation_owner_check(v_head.id);
   perform public.organisation_feature_check(v_head.id);
+  if nullif(btrim(p_language), '') is not null and not public.document_language_supported(btrim(p_language)) then
+    raise exception 'the language is one of en, fr, de, es, it' using errcode = '22023';
+  end if;
 
   -- a request id answers one house: one the caller already used for another
   -- business answers nothing here
@@ -125,15 +136,14 @@ begin
   -- the business, as any the caller creates; the same request answers the same house
   v_house := public.create_workspace_once(
     p_client_request_id, p_name, v_country, v_currency, p_timezone,
-    v_head.environment, v_head.pair_id is not null, null, null);
+    v_head.environment, false, null, null);
   select * into v_existing from public.organisation_houses where workspace_id = v_house;
   if v_existing.workspace_id is not null then
     return jsonb_build_object('workspace_id', v_house, 'carried', v_existing.carried);
   end if;
   update public.workspaces w
      set default_locale = coalesce(nullif(btrim(p_language), ''), w.default_locale)
-   where w.id = v_house
-      or (w.pair_id is not null and w.pair_id = (select x.pair_id from public.workspaces x where x.id = v_house));
+   where w.id = v_house;
   perform public.organisation_place(v_house, p_organisation);
 
   -- the head's other owners, once, as co-owners: a copy at birth, not a mirror
@@ -190,8 +200,7 @@ begin
       'booking_rules', v_cfg->'workspace'->'booking_rules',
       'desk_opacity', v_cfg->'workspace'->'desk_opacity',
       'role_permissions', v_cfg->'workspace'->'role_permissions',
-      'dunning_rules', v_cfg->'workspace'->'dunning_rules',
-      'invoice_pdf_template', v_cfg->'workspace'->'invoice_pdf_template')),
+      'dunning_rules', v_cfg->'workspace'->'dunning_rules')),
     'tables', v_tables), 'merge');
 
   v_carried := jsonb_build_object(
@@ -199,7 +208,8 @@ begin
     'services', jsonb_array_length(v_tables->'services'),
     'packages', jsonb_array_length(v_tables->'packages'),
     'validation_policies', jsonb_array_length(v_tables->'validation_policies'),
-    'workspace_documents', jsonb_array_length(v_tables->'workspace_documents'),
+    'document_design', 'not carried',
+    'document_links', 'not carried',
     'closure_days', coalesce(jsonb_array_length(v_tables->'closure_days'), 0),
     'features', (select count(*) from jsonb_object_keys(v_flags)),
     'amounts_kept', v_same_currency,

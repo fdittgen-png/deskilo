@@ -7,9 +7,10 @@
 -- once as co-owners and a later change in the head is not followed. A
 -- non-owner of the head, the feature off and an assistant are refused; the
 -- same request id answers the same house; every amount column of a carried
--- table is fenced. Rolled back.
+-- table is fenced. A head with a twin gives a house without one; the
+-- head's document design and documents stay with it. Rolled back.
 begin;
-select plan(22);
+select plan(26);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -42,6 +43,16 @@ begin
   -- below 500.00 a request needs no validation
   insert into public.validation_policies (workspace_id, event_type, required_count, admins_may_validate, min_amount_cents)
   values (head, 'lease_change', 1, true, 50000);
+  -- the head has a development twin, and a design and a document of its own
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by, pair_id, environment)
+  values ('HOUSE-HEAD-PARIS (dev)', 'FR', 'EUR', 'Europe/Paris', owner_a, '00000000-0000-4000-8000-0000000040cc', 'dev');
+  insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
+  select id, owner_a, true, true, '2026-01-01' from public.workspaces where name = 'HOUSE-HEAD-PARIS (dev)';
+  update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040cc',
+         invoice_pdf_template = '{"footer": "Atelier SAS - SIRET 123 456 789 00012"}'::jsonb
+   where id = head;
+  insert into public.workspace_documents (workspace_id, title, category, url)
+  values (head, 'Statuts', 'statutes', 'https://example.org/statuts.pdf');
   insert into public.organisations (name, head_workspace_id) values ('Atelier group', head) returning id into org;
   update public.workspaces set organisation_id = org where id = head;
   perform set_config('deskilo.test.head', head::text, false);
@@ -93,6 +104,16 @@ select is((select prices_pending from public.organisation_houses where workspace
 select is((select (is_owner or co_owner = 'active') from public.members
             where workspace_id = pg_temp.id('milan') and user_id = pg_temp.id('co_b')),
   true, 'the head''s co-owner is a co-owner of the house');
+
+select is((select pair_id is null and (select count(*) from public.workspaces x where x.name = 'HOUSE-MILAN') = 1
+             from public.workspaces where id = pg_temp.id('milan')), true,
+  'a head with a twin: the house has none');
+select is((select (position('SIRET' in w.invoice_pdf_template::text) = 0, h.carried ->> 'document_design')::text
+             from public.workspaces w join public.organisation_houses h on h.workspace_id = w.id
+            where w.id = pg_temp.id('milan')),
+  '(t,"not carried")', 'the head''s document design stays with the head');
+select is((select count(*)::int from public.workspace_documents where workspace_id = pg_temp.id('milan')), 0,
+  'and so do its documents');
 
 -- the same request answers the same house
 select pg_temp.as_user('owner_a');
@@ -164,6 +185,10 @@ select throws_ok(format('select public.create_organisation_house_once(%L, %L, %L
     pg_temp.id('org'), 'HOUSE-Y', 'DE', 'EUR', 'Europe/Berlin', 'de', '00000000-0000-4000-8000-0000000040e3'),
   '22023', 'this request id already created another business',
   'a request id used for another business is refused');
+
+select throws_ok(format('select public.create_organisation_house_once(%L, %L, %L, %L, %L, %L, %L)',
+    pg_temp.id('org'), 'HOUSE-Z', 'DE', 'EUR', 'Europe/Berlin', 'xx', gen_random_uuid()),
+  '22023', 'the language is one of en, fr, de, es, it', 'a language the documents do not speak is refused');
 
 -- ── the prices are named ──
 select lives_ok(format('select public.clear_house_prices_pending(%L)', pg_temp.id('milan')),
