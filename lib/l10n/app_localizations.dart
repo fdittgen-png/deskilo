@@ -9065,6 +9065,12 @@ abstract class AppLocalizations {
   /// **'Alerts: the number waiting could not be read'**
   String get calendarAlertsCountUnknown;
 
+  /// #4021 — the name of the calendar's Alerts control with the number of decisions waiting.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Alerts, {count} new} other{Alerts, {count} new}}'**
+  String calendarAlertsNew(int count);
+
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
   ///
   /// In en, this message translates to:
@@ -9316,6 +9322,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Everyone'**
   String get calendarEveryoneTab;
+
+  /// #4021 — the calendar's control that holds its secondary filters (the kinds) on a phone, and the title of their sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Filters'**
+  String get calendarFilters;
+
+  /// #4021 — clears the kinds chosen in the calendar's filters sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Clear'**
+  String get calendarFiltersClear;
 
   /// Shown as a text in calendar item row (calendar).
   ///
@@ -12028,6 +12046,28 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The demo is not available in this workspace.'**
   String get demoEntryUnavailable;
+
+  /// #4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.
+  ///
+  /// In en, this message translates to:
+  /// **'This demo is one organisation: {organisation}, with houses in {countries, plural, one{{countries} country} other{{countries} countries}} and {currencies, plural, one{{currencies} currency} other{{currencies} currencies}}. Each house keeps its own country\'s rules and its own currency; nothing is added across them.'**
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  );
+
+  /// #4009 the Demo first-run card: the heading of the houses a visitor may enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a house'**
+  String get demoOrganisationEnter;
+
+  /// #4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.
+  ///
+  /// In en, this message translates to:
+  /// **'{business} is a business of its own, outside the organisation.'**
+  String demoOrganisationOutside(String business);
 
   /// #1376 demo personas: demoPersonaAdmin
   ///

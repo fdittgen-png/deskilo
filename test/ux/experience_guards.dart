@@ -436,6 +436,10 @@ Set<String> besideTableProblems(WidgetTester tester, {List<String>? details}) {
 const List<Key> informationLineKeys = [
   // Reserve's day line: the day, the hours and their time zone.
   ValueKey('booking-window-summary'),
+  // #4021 — the calendar's filters: the control that counts them and the
+  // line that says which.
+  ValueKey('calendar-filters'),
+  ValueKey('calendar-filter-summary'),
 ];
 
 /// What stays outside the rule inside a title: names and free text people

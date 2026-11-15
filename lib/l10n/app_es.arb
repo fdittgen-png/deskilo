@@ -3450,6 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Alertas: no se pudo leer cuántas esperan",
+  "calendarAlertsNew": "{count, plural, one{Alertas, {count} nueva} other{Alertas, {count} nuevas}}",
   "calendarAllLevels": "Todas las plantas",
   "calendarCancelFollowing": "Cancelar esta y las siguientes",
   "calendarCancelOccurrence": "Cancelar esta ocurrencia",
@@ -3517,6 +3518,8 @@
     }
   },
   "calendarEveryoneTab": "Todos",
+  "calendarFilters": "Filtros",
+  "calendarFiltersClear": "Borrar",
   "calendarGroupActivity": "Alertas y mensajes",
   "calendarGroupBookings": "Reservas y presencia",
   "calendarGroupMoney": "Finanzas",
@@ -4624,6 +4627,34 @@
   "demoEntryUnavailable": "La demo no está disponible en este espacio.",
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
+  },
+  "demoOrganisationBody": "Esta demo es una organización: {organisation}, con casas en {countries, plural, one{{countries} país} other{{countries} países}} y {currencies, plural, one{{currencies} moneda} other{{currencies} monedas}}. Cada casa conserva las reglas de su país y su propia moneda; nada se suma entre ellas.",
+  "@demoOrganisationBody": {
+    "description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      },
+      "countries": {
+        "type": "int"
+      },
+      "currencies": {
+        "type": "int"
+      }
+    }
+  },
+  "demoOrganisationEnter": "Entrar en una casa",
+  "@demoOrganisationEnter": {
+    "description": "#4009 the Demo first-run card: the heading of the houses a visitor may enter."
+  },
+  "demoOrganisationOutside": "{business} es un negocio aparte, fuera de la organización.",
+  "@demoOrganisationOutside": {
+    "description": "#4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "demoPersonaAdmin": "Administrador/a",
   "@demoPersonaAdmin": {

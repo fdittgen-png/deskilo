@@ -192,16 +192,17 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('calendar-today')));
     await tester.pumpAndSettle();
-    // #3603 — beside the desk's navigation the chips scroll: bring it in.
-    await tester.ensureVisible(
-      find.byKey(const ValueKey('calendar-kind-message')),
-    );
-    await tester.pump();
+    // #4021 — the kinds sit in the Filters sheet.
+    await tester.tap(find.byKey(const ValueKey('calendar-filters')));
+    await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('calendar-kind-message')));
     await tester.pumpAndSettle();
-    await tester.ensureVisible(find.byKey(const ValueKey('calendar-kind-all')));
-    await tester.pump();
     await tester.tap(find.byKey(const ValueKey('calendar-kind-all')));
+    await tester.pumpAndSettle();
+    // Closes the Filters sheet.
+    Navigator.of(
+      tester.element(find.byKey(const ValueKey('calendar-filters-sheet'))),
+    ).pop();
     await tester.pumpAndSettle();
     await tester.tap(find.text('Private title'));
     await tester.pumpAndSettle();

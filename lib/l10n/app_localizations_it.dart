@@ -5812,6 +5812,17 @@ class AppLocalizationsIt extends AppLocalizations {
       'Avvisi: non è stato possibile leggere quanti sono in attesa';
 
   @override
+  String calendarAlertsNew(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Avvisi, $count nuovi',
+      one: 'Avvisi, $count nuovo',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarAllLevels => 'Tutti i piani';
 
   @override
@@ -5959,6 +5970,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get calendarEveryoneTab => 'Tutti';
+
+  @override
+  String get calendarFilters => 'Filtri';
+
+  @override
+  String get calendarFiltersClear => 'Cancella';
 
   @override
   String get calendarGroupActivity => 'Avvisi e messaggi';
@@ -7592,6 +7609,35 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get demoEntryUnavailable =>
       'La demo non è disponibile in questo spazio.';
+
+  @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries paesi',
+      one: '$countries paese',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies valute',
+      one: '$currencies valuta',
+    );
+    return 'Questa demo è un’organizzazione: $organisation, con case in $_temp0 e $_temp1. Ogni casa conserva le regole del suo paese e la propria valuta; nulla viene sommato tra loro.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Entra in una casa';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business è un’attività a sé, fuori dall’organizzazione.';
+  }
 
   @override
   String get demoPersonaAdmin => 'Amministratore';

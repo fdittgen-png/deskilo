@@ -273,6 +273,24 @@ void main() {
     }
   });
 
+  testWidgets('#4021 — the calendar\'s Filters label cut fails', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      const SizedBox(
+        width: 60,
+        child: Text(
+          'Filters · 12',
+          key: ValueKey('calendar-filters'),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+    );
+    expect(cutInformationProblems(), {'information cut'});
+  });
+
   testWidgets('a typed name cut in the title and a cut line nobody marked '
       'pass', (tester) async {
     await _pump(

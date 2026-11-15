@@ -112,9 +112,14 @@ class CalendarViewBar extends StatelessWidget {
                                 child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
                               ),
                             ),
-                          final n when n > 0 => Badge.count(
-                              count: n,
-                              child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                          // #4021 — named with its count.
+                          final n when n > 0 => Semantics(
+                              key: const ValueKey('calendar-alerts-count'),
+                              label: l10n.calendarAlertsNew(n),
+                              child: Badge.count(
+                                count: n,
+                                child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                              ),
                             ),
                           _ => iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
                         },

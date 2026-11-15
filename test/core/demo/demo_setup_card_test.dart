@@ -53,9 +53,12 @@ void main() {
     expect(_cardText(tester), isNot(contains('every step')));
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
 
-    await tester.tap(find.byKey(const ValueKey('demo-setup-switch')));
+    await tester.tap(find.byKey(const ValueKey('demo-house-ws-2')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, demoSecondSpaceId);
+    // Entering a house opens it; the guide is one tap away again.
+    demo.read(routerProvider).go('/setup');
+    await tester.pumpAndSettle();
     expect(_cardText(tester), contains(demoSecondSpaceName));
     expect(_cardText(tester), isNot(contains('half way')));
     expect(
@@ -64,9 +67,11 @@ void main() {
       reason: "the guide now reads Leipzig's own status",
     );
 
-    await tester.tap(find.byKey(const ValueKey('demo-setup-switch')));
+    await tester.tap(find.byKey(const ValueKey('demo-house-ws-1')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, 'ws-1');
+    demo.read(routerProvider).go('/setup');
+    await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('setup-guide-all-done')), findsOneWidget);
 
     for (final (id, name) in [

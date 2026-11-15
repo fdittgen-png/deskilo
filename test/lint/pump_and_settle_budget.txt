@@ -35,6 +35,8 @@
 # review {"path":"test/features/workspace/setup_desk_test.dart","before":15,"after":17,"invariant":"#3629 a step the guide opens over itself (a push) is drawn beside the steps, and Back returns to the guide: each settles once before the address and the page are read","cost":"one test, about 1 s locally"}
 # review {"path":"test/features/money/guest_pass_invoice_screen_test.dart","before":0,"after":10,"invariant":"#3837 a revoked pass and its invoice: the page settles, then the selection, the revoke question and its result, the chip and the invoices read again each settle once before the line, the rows or the address are read","cost":"three tests in about 2 s locally"}
 # review {"path":"test/app/desk_members/members_desk_test.dart","before":0,"after":19,"invariant":"#3858 the members desk through its real pages: a row opens a member, the Plan tab opens, a task opens from it or from a selection, a share chip, the date choice and Apply; each step settles once before a line, an outcome or the member is read","cost":"16 tests in about 30 s locally"}
+# review {"path":"test/features/calendar/calendar_hub_test.dart","before":12,"after":16,"invariant":"#4021 the kinds sit in the Filters sheet: each kind test opens it and closes it again before reading the list","cost":"two settles per kind test (the sheet in and out); two tests of about 1 s each"}
+# review {"path":"test/features/task_recorder/calendar_journey_test.dart","before":18,"after":20,"invariant":"#4021 the journey opens the Filters sheet before choosing its kinds and closes it before opening an item","cost":"two settles for the sheet in and out, in one journey test"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -56,7 +58,7 @@
 21 test/features/auth/password_reset_test.dart
 15 test/features/auth/social_sign_in_test.dart
 14 test/features/auth/verification_pending_test.dart
-12 test/features/calendar/calendar_hub_test.dart
+16 test/features/calendar/calendar_hub_test.dart
 12 test/features/calendar/calendar_screen_test.dart
 11 test/features/calendar/day_timeline_test.dart
 18 test/features/directory/account_groups_test.dart
@@ -144,7 +146,7 @@
 17 test/features/search/search_palette_test.dart
 10 test/features/task_recorder/admin_journey_test.dart
 10 test/features/task_recorder/booking_journey_test.dart
-18 test/features/task_recorder/calendar_journey_test.dart
+20 test/features/task_recorder/calendar_journey_test.dart
 11 test/features/task_recorder/guide_booking_journey_test.dart
 17 test/features/task_recorder/guide_draft_screen_test.dart
 10 test/features/task_recorder/guide_go_to_page_test.dart
