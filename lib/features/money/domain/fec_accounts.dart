@@ -88,6 +88,17 @@ class FecJournals {
   final FecJournal bank;
   final FecJournal purchases;
   final FecJournal misc;
+
+  @override
+  bool operator ==(Object other) =>
+      other is FecJournals &&
+      other.sales == sales &&
+      other.bank == bank &&
+      other.purchases == purchases &&
+      other.misc == misc;
+
+  @override
+  int get hashCode => Object.hash(sales, bank, purchases, misc);
 }
 
 /// The accounts a FEC cannot be written without. Defaults follow the
