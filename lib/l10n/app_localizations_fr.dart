@@ -7634,7 +7634,19 @@ class AppLocalizationsFr extends AppLocalizations {
     int countries,
     int currencies,
   ) {
-    return 'Cette démo est une organisation : $organisation, avec des maisons dans $countries pays et $currencies devises. Chaque maison garde les règles de son pays et sa propre devise ; rien n’est additionné entre elles.';
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries pays',
+      one: '$countries pays',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies devises',
+      one: '$currencies devise',
+    );
+    return 'Cette démo est une organisation : $organisation, avec des maisons dans $_temp0 et $_temp1. Chaque maison garde les règles de son pays et sa propre devise ; rien n’est additionné entre elles.';
   }
 
   @override

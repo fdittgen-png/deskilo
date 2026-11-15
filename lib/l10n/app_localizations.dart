@@ -12032,7 +12032,7 @@ abstract class AppLocalizations {
   /// #4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.
   ///
   /// In en, this message translates to:
-  /// **'This demo is one organisation: {organisation}, with houses in {countries} countries and {currencies} currencies. Each house keeps its own country\'s rules and its own currency; nothing is added across them.'**
+  /// **'This demo is one organisation: {organisation}, with houses in {countries, plural, one{{countries} country} other{{countries} countries}} and {currencies, plural, one{{currencies} currency} other{{currencies} currencies}}. Each house keeps its own country\'s rules and its own currency; nothing is added across them.'**
   String demoOrganisationBody(
     String organisation,
     int countries,

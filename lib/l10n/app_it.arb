@@ -4625,7 +4625,7 @@
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
   },
-  "demoOrganisationBody": "Questa demo è un’organizzazione: {organisation}, con case in {countries} paesi e {currencies} valute. Ogni casa conserva le regole del suo paese e la propria valuta; nulla viene sommato tra loro.",
+  "demoOrganisationBody": "Questa demo è un’organizzazione: {organisation}, con case in {countries, plural, one{{countries} paese} other{{countries} paesi}} e {currencies, plural, one{{currencies} valuta} other{{currencies} valute}}. Ogni casa conserva le regole del suo paese e la propria valuta; nulla viene sommato tra loro.",
   "@demoOrganisationBody": {
     "description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.",
     "placeholders": {

@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/shell/space_entry.dart';
-import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/providers/organisation_providers.dart';
 import '../../../features/workspace/providers/workspace_providers.dart';
 import '../../i18n/country_names.dart';
@@ -115,13 +114,21 @@ class _DemoOrganisation extends ConsumerWidget {
             runSpacing: AppSpacing.xs,
             children: [
               for (final (:house, :space) in houses)
-                _EnterButton(
+                OutlinedButton(
                   key: ValueKey('demo-house-${house.workspaceId}'),
-                  space: space,
-                  line: countryAndCurrency(
-                    l10n,
-                    countryCode: house.countryCode,
-                    currencyCode: house.currencyCode,
+                  onPressed: () => enterSpace(context, ref, space),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(space.name),
+                      Text(
+                        countryAndCurrency(
+                          l10n,
+                          countryCode: house.countryCode,
+                          currencyCode: house.currencyCode,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
             ],
@@ -139,20 +146,4 @@ class _DemoOrganisation extends ConsumerWidget {
       ),
     );
   }
-}
-
-class _EnterButton extends ConsumerWidget {
-  const _EnterButton({super.key, required this.space, required this.line});
-
-  final Workspace space;
-  final String line;
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) => OutlinedButton(
-    onPressed: () => enterSpace(context, ref, space),
-    child: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [Text(space.name), Text(line)],
-    ),
-  );
 }
