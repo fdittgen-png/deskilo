@@ -217,7 +217,8 @@ PARENT_ON="$OWNER_CLAIMS select public.set_feature_flags('$WS','{\"moneyTab\":tr
 PERMISSION_OFF="$OWNER_CLAIMS select public.set_role_permission('$WS','member','approveExpenses',false);"
 PERMISSION_ON="$OWNER_CLAIMS select public.set_role_permission('$WS','member','approveExpenses',true);"
 MEMBER_OFF="$CLAIMS select public.leave_workspace('$WS');"
-MEMBER_ON="update public.members set status='active' where id='$MEMBER';"
+# #4008: a member who left comes back as a new member, then is let in
+MEMBER_ON="select public.member_return_as_new('$MEMBER'); update public.members set status='active' where id='$MEMBER';"
 revoke_first feature "$FEATURE_OFF" "$FEATURE_ON"
 revoke_first parent "$PARENT_OFF" "$PARENT_ON"
 revoke_first permission "$PERMISSION_OFF" "$PERMISSION_ON"
