@@ -67,6 +67,7 @@ import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_payment_seed.dart';
 import 'seed/demo_people_seed.dart';
+import 'seed/demo_plan_booking_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
@@ -187,6 +188,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
     seedDemoAnnex(floorPlan, reservations, today); // #2568
     seedDemoMoney(money, today);
+    seedDemoPlanAndRules(workspaces, floorPlan); // #3964
     // #3305 — each member reads their own statement.
     money.accountQueries.statementSource =
         demoStatementSource(workspaces, reservations, 'ws-1',
@@ -448,7 +450,7 @@ class DemoFixture implements DemoSpaceParts {
 
 
 FakeProfileRepository _profilesForSpaces(DemoListings spaces, DateTime today) =>
-    seedDemoVatNumbers(demoProfiles(today: today))..profiles.addAll([
+    seedDemoPhotos(seedDemoVatNumbers(demoProfiles(today: today)))..profiles.addAll([
       for (final p in demoSecondCast)
         if (p.userId.startsWith('user-de-'))
           Profile(id: p.userId, displayName: p.name, countryCode: 'DE'),
