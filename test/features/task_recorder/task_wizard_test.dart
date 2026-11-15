@@ -168,7 +168,8 @@ void main() {
     expect(_key('task-wizard-add-guide'), findsOneWidget);
     expect(_key('task-wizard-record'), findsOneWidget);
     await tester.tap(_key('task-wizard-no-guides-add'));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 500));
     expect(_key('task-wizard-add-from-recording'), findsOneWidget);
     expect(_key('task-wizard-add-from-file'), findsOneWidget);
   });
