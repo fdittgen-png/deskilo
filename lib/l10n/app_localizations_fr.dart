@@ -17105,6 +17105,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String invoicingCreditAmount(String amount) {
+    return 'avoir $amount';
+  }
+
+  @override
   String invoicingCustomerCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -17370,6 +17375,18 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingStatusToMatch => 'Paiement reçu · à rapprocher';
 
   @override
+  String invoicingSummaryToReview(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count à vérifier',
+      one: '1 à vérifier',
+      zero: 'rien à vérifier',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicingTodo => 'À faire';
 
   @override
@@ -17379,7 +17396,7 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingTodoDrafts => 'Émettre les brouillons';
 
   @override
-  String get invoicingTodoFix => 'Corriger';
+  String get invoicingTodoFixRejected => 'Corriger les e-factures';
 
   @override
   String get invoicingTodoKeep => 'Les conserver';
@@ -17421,7 +17438,12 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoicingTodoReminders => 'Partager les relances à la main';
 
   @override
-  String get invoicingTodoReview => 'Voir';
+  String invoicingTodoReviewMonth(String month) {
+    return 'Vérifier $month';
+  }
+
+  @override
+  String get invoicingTodoShareReminders => 'Partager les relances';
 
   @override
   String get invoicingTools => 'Outils de facturation';

@@ -24,6 +24,7 @@ import 'invoicing_desk_table.dart';
 import 'invoicing_home_data.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
+import 'invoicing_summary_strip.dart';
 import 'invoicing_words.dart';
 import 'reminder_mode_line.dart';
 
@@ -141,6 +142,10 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   /// The "To do" entry the list shows, or null for the filter's list.
   TodoKind? _todo;
 
+  /// #4059 — below desk width, whether the to-do list is open under the
+  /// summary.
+  bool _todoOpen = false;
+
   @override
   void initState() {
     super.initState();
@@ -236,9 +241,20 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                       ),
                       const SizedBox(height: AppSpacing.sm),
                     ],
-                    owed,
-                    const SizedBox(height: AppSpacing.md),
-                    todo,
+                    // #4059 — one compact block; the to-do list opens under it.
+                    InvoicingSummaryStrip(
+                      owed: owedOf(data.receivables, data.today),
+                      toReview: _todos().length,
+                      toReviewOpen: _todoOpen,
+                      onOverdue: () =>
+                          _choose(InvoicingFilter.of(OwedBucket.overdue)),
+                      onToReview: () =>
+                          setState(() => _todoOpen = !_todoOpen),
+                    ),
+                    if (_todoOpen) ...[
+                      const SizedBox(height: AppSpacing.sm),
+                      todo,
+                    ],
                     if (widget.legalNotes case final notes?) ...[
                       const SizedBox(height: AppSpacing.sm),
                       ExpansionTile(
@@ -365,11 +381,10 @@ class _InvoicingHomeState extends State<InvoicingHome> {
     );
   }
 
-  Widget _todoCard(BuildContext context) {
-    final l = context.l10n;
+  /// The to-dos waiting, as the To do card and the summary count them.
+  List<Todo> _todos() {
     final data = widget.data;
-    final format = appFormatOf(context);
-    final todo = todoOf(
+    return todoOf(
       data.receivables,
       toInvoice: data.failed.contains(InvoicingSource.toInvoice)
           ? const []
@@ -378,12 +393,20 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       holdsUnassigned: data.holdsUnassigned,
       originalsToKeep: data.originalsToKeep,
     );
+  }
+
+  Widget _todoCard(BuildContext context) {
+    final l = context.l10n;
+    final data = widget.data;
+    final format = appFormatOf(context);
+    final todo = _todos();
     String caption(Todo t) => [
       if (t.kind == TodoKind.invoiceTheMonth)
         l.invoicingCustomerCount(t.tally.count)
       else
         l.invoicingInvoiceCount(t.tally.count),
-      if (t.tally.byCurrency.isNotEmpty) amountsOf(format, t.tally),
+      if (t.tally.byCurrency.isNotEmpty)
+        amountsOf(format, t.tally, credit: l.invoicingCreditAmount),
     ].join(' · ');
     return TodoCard(
       key: const ValueKey('invoicing-todo'),

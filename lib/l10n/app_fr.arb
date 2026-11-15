@@ -10256,6 +10256,7 @@
       }
     }
   },
+  "invoicingCreditAmount": "avoir {amount}",
   "invoicingCustomerCount": "{count, plural, one{{count} client} other{{count} clients}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
@@ -10581,6 +10582,7 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
+  "invoicingSummaryToReview": "{count, plural, =0{rien à vérifier} one{1 à vérifier} other{{count} à vérifier}}",
   "invoicingTodo": "À faire",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -10593,10 +10595,7 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoFix": "Corriger",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
-  },
+  "invoicingTodoFixRejected": "Corriger les e-factures",
   "invoicingTodoKeep": "Les conserver",
   "invoicingTodoKeepOriginals": "{count, plural, one{Conserver l’original de {count} facture} other{Conserver les originaux de {count} factures}}",
   "invoicingTodoMatch": "Rapprocher des paiements",
@@ -10629,10 +10628,8 @@
   "@invoicingTodoReminders": {
     "description": "#3587 To do: the reminder queue (by hand only)"
   },
-  "invoicingTodoReview": "Voir",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
-  },
+  "invoicingTodoReviewMonth": "Vérifier {month}",
+  "invoicingTodoShareReminders": "Partager les relances",
   "invoicingTools": "Outils de facturation",
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
