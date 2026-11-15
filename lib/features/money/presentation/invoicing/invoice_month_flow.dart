@@ -26,6 +26,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/bottom_action_bar.dart';
 import '../../../../core/ui/kit/kit_action_button.dart';
 import '../../../../core/ui/kit/kit_card.dart';
@@ -193,9 +194,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
         canPop: !_state.busy,
         onPopInvokedWithResult: (didPop, _) {
           if (!didPop) {
-            ScaffoldMessenger.maybeOf(context)?.showSnackBar(
-              SnackBar(content: Text(l10n.invoiceMonthLeaveBlocked)),
-            );
+            AppSnack.info(context, l10n.invoiceMonthLeaveBlocked);
           }
         },
         child: child!,

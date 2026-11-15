@@ -11,6 +11,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../application/tax_reference_commands.dart';
@@ -36,7 +37,6 @@ Future<void> showTaxReferenceHistorySheet(
 
       Future<void> act(Future<void> Function() change) async {
         final navigator = Navigator.of(context);
-        final messenger = ScaffoldMessenger.of(context);
         try {
           await change();
         } on Object catch (e, st) {
@@ -46,9 +46,7 @@ Future<void> showTaxReferenceHistorySheet(
             error: e,
             stackTrace: st,
           );
-          messenger.showSnackBar(
-            SnackBar(content: Text(l10n.taxRefActionFailed)),
-          );
+          if (context.mounted) AppSnack.error(context, l10n.taxRefActionFailed);
           return;
         }
         navigator.pop();
