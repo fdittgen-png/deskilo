@@ -1,0 +1,9 @@
+{
+  "bankBatchTitle": "Confirmer ces rapprochements ?",
+  "bankBatchLine": "{amount} le {date}",
+  "bankBatchSettles": "Règle {invoice} de {member}",
+  "bankBatchTotal": "Total en {currency} : {amount}",
+  "bankBatchLineConfirmed": "{invoice} : confirmé",
+  "bankBatchLineRefused": "{invoice} : non confirmé. Rapprochez ce mouvement seul.",
+  "bankBatchResultTitle": "{count, plural, =0{Aucun rapprochement n’a été confirmé} one{1 rapprochement a été confirmé} other{{count} rapprochements ont été confirmés}}"
+}

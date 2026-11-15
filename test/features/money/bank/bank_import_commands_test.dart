@@ -82,10 +82,10 @@ void main() {
     var lines = await bank.fetchLines(id);
     final open = openInvoices(money.invoices, money.invoiceMatchesStore);
     expect(
-      await commands.confirmReferenceMatches(
-        BankWorkList(lines, open, windowDays: 60),
-      ),
-      2,
+      (await commands.confirmReferenceMatches(
+        BankWorkList(lines, open, windowDays: 60).referenceBatch,
+      )).map((l) => l.result),
+      [BankBatchResult.confirmed, BankBatchResult.confirmed],
     );
     lines = await bank.fetchLines(id);
     expect(
@@ -111,9 +111,9 @@ void main() {
           await bank.fetchLines(id),
           openInvoices(money.invoices, money.invoiceMatchesStore),
           windowDays: 60,
-        ),
+        ).referenceBatch,
       ),
-      0,
+      isEmpty,
       reason: 'a settled movement is not confirmed twice',
     );
   });
@@ -190,7 +190,12 @@ void main() {
       windowDays: 60,
     );
     expect(list.items.where((i) => i.referenceMatch != null), hasLength(2));
-    expect(await commands.confirmReferenceMatches(list), 1);
+    // #4053 — one invoice is named twice: the batch carries it once.
+    expect(
+      (await commands.confirmReferenceMatches(list.referenceBatch))
+          .map((l) => l.result),
+      [BankBatchResult.confirmed],
+    );
     final lines = await bank.fetchLines(id);
     expect(lines.map((l) => l.status), [BankLineStatus.matched, BankLineStatus.open]);
   });

@@ -141,11 +141,41 @@ void main() {
     expect(find.text('Confirm 2 matches by reference'), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('bank-confirm-references')));
     await tester.pumpAndSettle();
+    // #4053 — the matches are shown first, then confirmed.
+    await tester.tap(find.byKey(const ValueKey('bank-batch-confirm')));
+    for (var frame = 0; frame < 10; frame++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.text('2 payments matched.'), findsOneWidget);
     expect(find.textContaining('Settles 21000000000313947143000901'), findsOneWidget);
     expect(find.textContaining('Settles 539007547034'), findsOneWidget);
     expect(find.textContaining('To match'), findsOneWidget);
     expect(find.byKey(const ValueKey('bank-confirm-references')), findsNothing);
+  });
+
+  testWidgets('#4053 — at the desk, the first movement that can be matched '
+      'is chosen when the panes open', (tester) async {
+    await bank.importStatement(
+      'ws-1',
+      statement: _statement(),
+      sourceSha256: 'a' * 64,
+      fileName: 'n.xml',
+    );
+    final statement = (await bank.fetchStatements('ws-1')).single;
+    await pump(tester, BankLinesView(
+      workspaceId: 'ws-1',
+      statement: statement,
+      canMatch: true,
+      canReconcile: true,
+      panes: true,
+    ));
+    final first = (await bank.fetchLines(statement.id)).first;
+    expect(find.byKey(const ValueKey('bank-candidates')), findsOneWidget,
+        reason: 'its invoices are shown at once');
+    expect(
+      tester.widget<ListTile>(find.byKey(ValueKey('bank-line-tile-${first.id}'))).selected,
+      isTrue,
+    );
   });
 
   testWidgets('a movement that resembles another statement\'s is declared a '

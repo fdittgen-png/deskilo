@@ -281,3 +281,22 @@ Set<String> _nameWords(String name) => {
   for (final w in name.toUpperCase().split(RegExp(r'[^\p{L}0-9]+', unicode: true)))
     if (w.length >= _nameWordMin && !_legalFormWords.contains(w)) w,
 };
+
+/// #4053 — what confirming one movement of a batch did.
+enum BankBatchResult { confirmed, refused }
+
+/// #4053 — one movement of a confirmed batch and what became of it.
+typedef BankBatchLine = ({BankWorkItem item, BankBatchResult result});
+
+/// #4053 — the amounts of [batch] added per currency, never across them.
+Map<String, int> bankBatchTotals(List<BankWorkItem> batch) {
+  final totals = <String, int>{};
+  for (final item in batch) {
+    totals.update(
+      item.line.currency,
+      (sum) => sum + item.line.amountCents,
+      ifAbsent: () => item.line.amountCents,
+    );
+  }
+  return totals;
+}

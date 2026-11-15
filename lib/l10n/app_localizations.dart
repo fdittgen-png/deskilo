@@ -3565,6 +3565,48 @@ abstract class AppLocalizations {
   /// **'QR reference'**
   String get bankBasisQrReference;
 
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} on {date}'**
+  String bankBatchLine(String amount, String date);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: confirmed'**
+  String bankBatchLineConfirmed(String invoice);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: not confirmed. Match this movement by itself.'**
+  String bankBatchLineRefused(String invoice);
+
+  /// #4053 — how many matches of a batch were confirmed: bankBatchResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No match was confirmed} one{1 match was confirmed} other{{count} matches were confirmed}}'**
+  String bankBatchResultTitle(int count);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchSettles.
+  ///
+  /// In en, this message translates to:
+  /// **'Settles {invoice} of {member}'**
+  String bankBatchSettles(String invoice, String member);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm these matches?'**
+  String get bankBatchTitle;
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total in {currency}: {amount}'**
+  String bankBatchTotal(String currency, String amount);
+
   /// #3616 the bank statement's right pane at the desk before a movement is chosen
   ///
   /// In en, this message translates to:
@@ -15206,6 +15248,18 @@ abstract class AppLocalizations {
   /// **'{actor} submitted an expense of {amount}'**
   String eventExpenseSubmitted(String actor, String amount);
 
+  /// #4008 — a member of one house asks to join another: eventHouseJoinAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'{member} asks to join, from {house}'**
+  String eventHouseJoinAsked(String member, String house);
+
+  /// #4008 — a member of one house asks to join another: eventHouseJoinWelcomed.
+  ///
+  /// In en, this message translates to:
+  /// **'{member} joined from {house}, welcomed by this house\'s setting'**
+  String eventHouseJoinWelcomed(String member, String house);
+
   /// #3672 a new invoice told to its customer
   ///
   /// In en, this message translates to:
@@ -22301,6 +22355,96 @@ abstract class AppLocalizations {
   /// **'Free'**
   String get houseFree;
 
+  /// #4008 — a member of one house asks to join another: houseJoinAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask to join'**
+  String get houseJoinAsk;
+
+  /// #4008 — a member of one house asks to join another: houseJoinAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked, waiting for {house}'**
+  String houseJoinAsked(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinConfirmAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get houseJoinConfirmAsk;
+
+  /// #4008 — a member of one house asks to join another: houseJoinConfirmJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get houseJoinConfirmJoin;
+
+  /// #4008 — a member of one house asks to join another: houseJoinDoneAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request went to {house}.'**
+  String houseJoinDoneAsked(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinDoneMember.
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of {house}.'**
+  String houseJoinDoneMember(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Other houses of {organisation}'**
+  String houseJoinOthers(String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetApart.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings and invoices there are kept apart from the other houses\'.'**
+  String get houseJoinSheetApart;
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetDecides.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} decides on your request.'**
+  String houseJoinSheetDecides(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} is a business of its own, with its own terms, prices and currency ({currency}).'**
+  String houseJoinSheetOwn(String house, String currency);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile becomes visible to the administrators of {house}: your name, your e-mail and what it asks of every member.'**
+  String houseJoinSheetProfile(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join {house}?'**
+  String houseJoinSheetTitle(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} welcomes the members of {organisation}: you will be a member at once.'**
+  String houseJoinSheetWelcome(String house, String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseJoinWelcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be a member at once'**
+  String get houseJoinWelcomes;
+
+  /// #4008 — a member of one house asks to join another: houseJoinWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'{country}, in {currency}'**
+  String houseJoinWhere(String country, String currency);
+
   /// #4005 — a house's first task, naming its prices: houseKindPackage.
   ///
   /// In en, this message translates to:
@@ -22396,6 +22540,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Set {country}\'s tax rates'**
   String houseSetRates(String country);
+
+  /// #4008 — a member of one house asks to join another: houseWelcomeExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'A member of another house of {organisation} who asks becomes a member here at once, with this house\'s terms for a new member. Off, you decide each request.'**
+  String houseWelcomeExplain(String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseWelcomeSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of the other houses are welcome here'**
+  String get houseWelcomeSwitch;
 
   /// the accounting and VAT page and its menu group
   ///
@@ -36297,6 +36453,12 @@ abstract class AppLocalizations {
   /// **'The documents speak English, French, German, Spanish or Italian.'**
   String get organisationRefusedLanguage;
 
+  /// #4008 — a member of one house asks to join another: organisationRefusedNoHouse.
+  ///
+  /// In en, this message translates to:
+  /// **'This business is not a house of an organisation.'**
+  String get organisationRefusedNoHouse;
+
   /// #4006 — the organisation page: organisationRefusedNoName.
   ///
   /// In en, this message translates to:
@@ -36309,11 +36471,23 @@ abstract class AppLocalizations {
   /// **'The new head must be a house of this organisation.'**
   String get organisationRefusedNotAHouse;
 
+  /// #4008 — a member of one house asks to join another: organisationRefusedNotAMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Only a member of a house of this organisation can ask to join another.'**
+  String get organisationRefusedNotAMember;
+
   /// #4006 — the organisation page: organisationRefusedNotOwner.
   ///
   /// In en, this message translates to:
   /// **'Only an owner of this business and of the head may do this.'**
   String get organisationRefusedNotOwner;
+
+  /// #4008 — a member of one house asks to join another: organisationRefusedOnlyAPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'A person asks to join a house; an assistant cannot ask for them.'**
+  String get organisationRefusedOnlyAPerson;
 
   /// #4006 — the organisation page: organisationRefusedOther.
   ///

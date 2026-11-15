@@ -43,9 +43,28 @@ OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
       // #4005 — a house made is one more business of the person's.
       ..invalidate(myWorkspacesProvider)
       // and a birth record read again once its first task closes.
-      ..invalidate(houseBirthProvider);
+      ..invalidate(houseBirthProvider)
+      // #4008 — a house asked, or a house's welcome changed.
+      ..invalidate(joinableHousesProvider)
+      ..invalidate(houseWelcomesProvider);
   },
 );
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+@riverpod
+Future<List<JoinableHouse>> joinableHouses(Ref ref) =>
+    ref.watch(organisationRepositoryProvider).joinableHouses();
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+@riverpod
+Future<bool> houseWelcomes(
+  Ref ref,
+  String organisationId,
+  String workspaceId,
+) => ref
+    .watch(organisationRepositoryProvider)
+    .welcomesMembers(organisationId, workspaceId);
 
 /// #4005 — the birth record of [workspaceId], if it was made as a house.
 @riverpod
