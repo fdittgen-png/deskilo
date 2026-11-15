@@ -68,6 +68,7 @@ import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
 import '../../helpers/demo_plan_booking_journeys.dart';
+import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -162,7 +163,7 @@ const Map<WorkspaceFeature, String> _elsewhere = {};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 15;
+const int _switchOnlyBudget = 5;
 
 /// The features whose scenario is outside the reference business and not
 /// named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -1013,21 +1014,40 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'rolled back',
     (w) => w.f.deployments.journalRows.any((d) => d.rolledBackAt != null),
   ),
-  WorkspaceFeature.configurationTransfer: _toggle('settings in and out'),
-  WorkspaceFeature.configurableSettings: _toggle('the settings catalogue'),
+  // #3964 — the business's configuration travels in a file a second
+  // business reads.
+  WorkspaceFeature.configurationTransfer: _action(
+    _owner,
+    'Ada exports her business to a file and a second business reads it',
+    (_) => configurationTransferJourney(),
+  ),
+  WorkspaceFeature.configurableSettings: _action(
+    _owner,
+    'Ada changes a setting for her business alone; it is refused out of '
+    'bounds and on a guardrail',
+    (_) => settingsJourney(),
+  ),
   WorkspaceFeature.workspaceLibrary: _state(
     _owner,
     'templates to start '
     'from',
     (w) async => (await w.f.workspaces.fetchWorkspaceTemplates()).isNotEmpty,
   ),
-  WorkspaceFeature.instanceWizard: _toggle('the instance wizard'),
+  WorkspaceFeature.instanceWizard: _state(
+    _owner,
+    'the route of the instance wizard stays open where the flag is on and '
+    'leaves where it is off',
+    (_) => instanceWizardState(),
+  ),
   // #2869 — the guide's demo setup states come with #2872.
   // #3963 — the guide's sample-data card holds the Demo's one batch and a fill
   // answers it: the Demo is itself sample data, so it loads no more.
-  WorkspaceFeature.setupGuide: _toggle(
-    'the setup guide; its sample-data card holds the Demo\'s one batch, the '
-    'Demo being sample data itself, and loads no more',
+  WorkspaceFeature.setupGuide: _state(
+    _owner,
+    'the setup guide holds done steps by its own records; its sample-data '
+    'card holds the Demo\'s one batch, the Demo being sample data itself, and '
+    'loads no more',
+    (_) => setupGuideJourney(),
   ),
   WorkspaceFeature.decisionSurface: _state(
     _admin,
@@ -1046,8 +1066,17 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         w.f.events.events.any((e) => e.status == EventStatus.pending) &&
         w.f.money.invoices.isNotEmpty,
   ),
-  WorkspaceFeature.formHelpHints: _toggle('help beside every form'),
-  WorkspaceFeature.memberGettingStarted: _toggle('the getting-started card'),
+  WorkspaceFeature.formHelpHints: _action(
+    _member,
+    'Bruno dismisses a hint and it stays dismissed; the hints come back',
+    (_) => helpHintsJourney(),
+  ),
+  WorkspaceFeature.memberGettingStarted: _action(
+    _member,
+    'the Get started card points Bruno to choosing a time, then to his '
+    'membership once he has booked',
+    (_) => gettingStartedJourney(),
+  ),
   WorkspaceFeature.placeFeedback: _action(
     _member,
     'Bruno rates his seat',
@@ -1059,6 +1088,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'issues a bill',
     (w) => w.f.money.invoices.isNotEmpty,
   ),
+  // A switch, kept: motion is how every screen moves, read once by the app
+  // shell, and has no state or step to perform. Performable when a Demo
+  // step shows a reduced-motion comparison.
   WorkspaceFeature.uiAnimations: _toggle('motion'),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
   // member by name.
@@ -1068,19 +1100,38 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     (w) =>
         w.f.money.invoices.isNotEmpty && w.f.workspaces.workspaces.isNotEmpty,
   ),
-  WorkspaceFeature.regionalFormats: _toggle(
-    "dates and amounts in France's "
-    'formats',
+  WorkspaceFeature.regionalFormats: _action(
+    _member,
+    'Bruno chooses Swiss formats and reads the business in them, its '
+    'currency unchanged',
+    (_) => regionalFormatsJourney(),
   ),
-  WorkspaceFeature.navigationStyle: _toggle('tabs or a menu'),
+  WorkspaceFeature.navigationStyle: _action(
+    _member,
+    'Bruno chooses the menu over the bar, and choosing nothing brings the '
+    'default back',
+    (_) => navigationJourney(),
+  ),
+  // A switch, kept: the personal shell is the installation's answer (the
+  // platform's defaults), not a business's state; performable when the Demo
+  // holds its own installation defaults.
   WorkspaceFeature.personalShell: _toggle('Me as five destinations'),
-  WorkspaceFeature.memberAccountMenu: _toggle(
-    'a member sees "Account" '
-    'instead of Settings',
+  WorkspaceFeature.memberAccountMenu: _state(
+    _member,
+    'a member sees "Account" instead of Settings, an owner and an admin do '
+    'not',
+    (_) => accountMenuJourney(),
   ),
+  // A switch, kept: the mode is this demonstration itself, entered and
+  // reset by demo_entry_test and demo_session_test; there is no step beside it.
   WorkspaceFeature.demoMode: _toggle('this demonstration'),
   // ── integrations ─────────────────────────────────────────────────────
-  WorkspaceFeature.pushNotifications: _toggle('push, inert in the demo'),
+  WorkspaceFeature.pushNotifications: _state(
+    _owner,
+    'the notices the business sends travel on the push channel; the Demo '
+    'registers no device',
+    (_) => pushLinesState(),
+  ),
   // #3963 — the group link is stored and a member reads it.
   WorkspaceFeature.whatsappIntegration: _action(
     _owner,
