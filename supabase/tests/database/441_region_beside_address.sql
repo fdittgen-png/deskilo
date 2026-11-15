@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #3649 (0787) -- an address knows its region, and the region travels with
+-- #3649 (0785) -- an address knows its region, and the region travels with
 -- its address block. A buyer's region is their own block's (the person's
 -- profile, or the managed identity the business keeps); the issuer's earlier
 -- region is used only when that block has none; street and region come

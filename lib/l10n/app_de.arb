@@ -8986,6 +8986,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Kopie mit Zahlungsstatus",
+  "invoiceCorrectionKeepsKind": "Eine Korrektur hat die Art der Rechnung, die sie ersetzt.",
   "invoiceCorrectionReason": "Grund der Berichtigung",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"

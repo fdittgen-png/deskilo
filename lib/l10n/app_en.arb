@@ -20020,6 +20020,10 @@
   "@invoiceCopyWithPaymentStatus": {
     "description": "#3853 the action that prints today's copy with the paid stamp, never the original"
   },
+  "invoiceCorrectionKeepsKind": "A correction is of the kind of the invoice it replaces.",
+  "@invoiceCorrectionKeepsKind": {
+    "description": "#3994 Refusal DKI08: a correction was sent with a kind other than the invoice it replaces"
+  },
   "invoiceCorrectionReason": "Reason for the correction",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"

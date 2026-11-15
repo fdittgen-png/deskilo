@@ -124,7 +124,7 @@ begin
     v_def := pg_get_functiondef(v_fn::regprocedure);
     if position(v_new in v_def) > 0 then continue; end if;
     if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
-      raise exception '% no longer has the shape 0787 extends: %', v_fn, left(v_old, 60) using errcode = 'P0001';
+      raise exception '% no longer has the shape 0785 extends: %', v_fn, left(v_old, 60) using errcode = 'P0001';
     end if;
     execute replace(v_def, v_old, v_new);
   end loop;
@@ -576,4 +576,4 @@ as $registry$
 $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
 
-select public.set_deskilo_schema_version(787);
+select public.set_deskilo_schema_version(785);
