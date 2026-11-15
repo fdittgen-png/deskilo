@@ -59,6 +59,7 @@ import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
+import 'seed/demo_documents_seed.dart';
 import 'seed/demo_einvoice_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
@@ -188,7 +189,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoResources(floorPlan, chargingStations, reservations, today); // #2631
     seedDemoAnnex(floorPlan, reservations, today); // #2568
     seedDemoMoney(money, today);
-    seedDemoPlanAndRules(workspaces, floorPlan); // #3964
+    seedDemoPlanAndRules(workspaces, floorPlan); seedDemoInvoiceTemplate(money); // #3964
     // #3305 — each member reads their own statement.
     money.accountQueries.statementSource =
         demoStatementSource(workspaces, reservations, 'ws-1',
