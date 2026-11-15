@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
@@ -17,7 +16,6 @@ import '../../../events/providers/event_providers.dart';
 import '../../../plan/domain/seat_context.dart';
 import '../../../plan/presentation/widgets/seat_accessory_row.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
-import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../plan/providers/seat_context_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart'
     show RecorderActions;
@@ -53,16 +51,10 @@ class ReservationDetailSheet extends ConsumerWidget {
     final l10n = context.l10n;
     final r = reservation;
     final seatId = r.seatId;
-    final officeId = r.officeId;
     // Self-loading like SeatAccessoryRow: while resolving (or when the
     // target vanished) the location line is simply absent and the jump
     // button disabled — the sheet itself never blocks.
-    final targetAsync = seatId != null
-        ? ref.watch(seatContextProvider(seatId))
-        : officeId != null
-            ? ref.watch(officeContextProvider(officeId))
-            : const AsyncData<SeatContext?>(null);
-    final target = targetAsync.value;
+    final target = watchReservationPlace(ref, r).value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final actions = reservationActionsOf(ref, r);
@@ -317,26 +309,24 @@ Future<void> showReservationDetail(
     recordTaskStep(ref, RecorderActions.back); // #1865
   }
   if (target == null || !context.mounted) return;
-  ref.read(planFocusControllerProvider.notifier).setFocus(
-        PlanFocus(
-          levelId: target.levelId,
-          seatId: reservation.seatId,
-          // #576 — a whole-desk/office/level booking highlights the
-          // SPACE it covers, not nothing.
-          deskId: reservation.deskId,
-          officeId: reservation.officeId,
-          wholeLevel: reservation.levelId != null,
-          at: reservation.startsAt,
-        ),
-      );
-  // The jump must land on a VISIBLE plan: when the detail sheet was
-  // stacked over other sheets (a conversation's message link, the
-  // booking sheet), those would keep covering the plan tab — close
-  // every remaining sheet/dialog first (field report).
-  Navigator.of(context).popUntil((route) =>
-      route is! ModalBottomSheetRoute && route is! RawDialogRoute);
-  context.go('/plan');
+  reservationActionsOf(
+    ref,
+    reservation,
+  ).showOnPlan(context, ref, target.levelId);
 }
+
+/// #4054 — where [r] stands on the plan (its seat's or its office's level
+/// and names), as it is read; none for a booking of a whole level or desk.
+AsyncValue<SeatContext?> watchReservationPlace(WidgetRef ref, Reservation r) {
+  final seatId = r.seatId;
+  final officeId = r.officeId;
+  return seatId != null
+      ? ref.watch(seatContextProvider(seatId))
+      : officeId != null
+      ? ref.watch(officeContextProvider(officeId))
+      : const AsyncData<SeatContext?>(null);
+}
+
 
 /// The actions on [r] as this space reads them. #3843 — the desk calendar's
 /// pane passes [inPane], where a refusal goes ([onRefused]) and what to read

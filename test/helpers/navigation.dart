@@ -3,6 +3,8 @@ import 'dart:async';
 
 import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/app/shell/shell_center_button.dart';
+import 'package:deskilo/features/calendar/presentation/widgets/calendar_view_bar.dart'
+    show CalendarAlertsIcon;
 import 'package:deskilo/features/workspace/presentation/widgets/conversation_thread.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -132,6 +134,14 @@ Future<void> openAlertsTab(WidgetTester tester) async {
       final switcher = find.byKey(const ValueKey('calendar-view-switch'));
       if (switcher.evaluate().isEmpty) {
         await tester.pumpAndSettle();
+        // #4056 — at the desk Alerts is a view of its own, in the desk's
+        // view control: the hub embedded there draws no view bar.
+        final deskAlerts = find.byType(CalendarAlertsIcon);
+        if (deskAlerts.evaluate().isNotEmpty) {
+          await tester.tap(deskAlerts.first);
+          await tester.pumpAndSettle();
+          return;
+        }
         await tester.tap(find.byIcon(Icons.view_agenda_outlined));
         await tester.pumpAndSettle();
       }

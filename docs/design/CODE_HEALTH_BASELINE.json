@@ -700,7 +700,7 @@
     {"id":"lib/core/ui/app_sheet.dart#showAppSheet({required BuildContext context,required WidgetBuilder builder,bool isScrollControlled,bool? showDragHandle,bool useSafeArea,BoxConstraints? constraints,AnimationStyle? sheetAnimationStyle})","cog":0,"cyc":1,"len":26,"params":7},
     {"id":"lib/core/ui/wizard_scaffold.dart#WizardScaffold.build(BuildContext context)","cog":43,"cyc":21,"len":118,"params":1},
     {"id":"lib/features/auth/presentation/oauth_consent_screen.dart#_OAuthConsentScreenState.build(BuildContext context)","cog":31,"cyc":14,"len":77,"params":1},
-    {"id":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart#_CalendarHubScreenState.build(BuildContext context)","cog":29,"cyc":28,"len":151,"params":1},
+    {"id":"lib/features/calendar/presentation/screens/calendar_hub_screen.dart#_CalendarHubScreenState.build(BuildContext context)","cog":25,"cyc":26,"len":127,"params":1},
     {"id":"lib/features/calendar/presentation/widgets/calendar_feed.dart#CalendarFeed.build(BuildContext context,WidgetRef ref)","cog":25,"cyc":25,"len":130,"params":2},
     {"id":"lib/features/calendar/presentation/widgets/calendar_week_strip.dart#CalendarWeekStrip.build(BuildContext context)","cog":33,"cyc":15,"len":95,"params":1},
     {"id":"lib/features/directory/presentation/messenger/account_group_sheet.dart#_GroupSheet.build(BuildContext context,WidgetRef ref)","cog":37,"cyc":31,"len":164,"params":2},

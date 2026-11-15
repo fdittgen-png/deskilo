@@ -36,6 +36,11 @@ abstract final class DeskCalendarMetrics {
   // content-fit: a day cell holds one booking's name and its hours
   static const double minDayWidth = 104;
 
+  /// #4054 — the narrowest the week is drawn beside an open booking: its
+  /// place column and seven readable days. Where the window cannot hold it
+  /// and the narrowest pane, the booking opens as a page.
+  static const double weekMin = placeColumn + 7 * minDayWidth;
+
   /// A booking line in a month cell: as high as a row the mouse hits.
   // content-fit: a line a mouse hits (36) with the booking's name
   static const double monthLine = 36;

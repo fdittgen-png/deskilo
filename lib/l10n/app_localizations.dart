@@ -9167,12 +9167,6 @@ abstract class AppLocalizations {
   /// **'Booking details'**
   String get calendarDeskBooking;
 
-  /// #3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan
-  ///
-  /// In en, this message translates to:
-  /// **'Change, cancel or show on plan'**
-  String get calendarDeskBookingActions;
-
   /// #3626 Column title of the bookings table: when a booking starts
   ///
   /// In en, this message translates to:
@@ -9263,11 +9257,23 @@ abstract class AppLocalizations {
   /// **'New booking'**
   String get calendarDeskNew;
 
+  /// #4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get calendarDeskRangeLabel;
+
   /// #3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}
   ///
   /// In en, this message translates to:
   /// **'{time}, second time: the clocks went back'**
   String calendarDeskRepeatedHour(String time);
+
+  /// #4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get calendarDeskViewLabel;
 
   /// #3626 Tooltip of the button that widens the hours of the day grid
   ///
