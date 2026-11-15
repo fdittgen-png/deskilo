@@ -7,6 +7,7 @@
 // organisation at most, the head is one of its houses and leaves last. Once
 // a command changed something, the Demo keeps its own copy from then on.
 import '../../../features/workspace/domain/organisation.dart';
+import '../../../features/workspace/domain/organisation_overview.dart';
 
 class FakeOrganisationRepository implements OrganisationRepository {
   /// [businesses] are the person's businesses that may become houses, as
@@ -20,6 +21,7 @@ class FakeOrganisationRepository implements OrganisationRepository {
     this.joinableSource,
     this.join,
     Set<String>? welcoming,
+    this.overviewOf,
   }) : _organisations = List.of(organisations),
        _joinable = List.of(joinable),
        _welcoming = welcoming ?? {},
@@ -36,6 +38,7 @@ class FakeOrganisationRepository implements OrganisationRepository {
     this.joinableSource,
     this.join,
     Set<String>? welcoming,
+    this.overviewOf,
   }) : _organisations = [],
        _joinable = [],
        _welcoming = welcoming ?? {},
@@ -73,6 +76,38 @@ class FakeOrganisationRepository implements OrganisationRepository {
   final Future<List<OrganisationHouse>> Function()? _businessSource;
   final List<OrganisationHouse> _businesses;
   int _next = 0;
+
+  /// #4007 — what the overview of an organisation answers for a month;
+  /// without it, the organisation's houses with no figures.
+  final Future<OrganisationOverview> Function(String organisationId, String month)?
+  overviewOf;
+
+  @override
+  Future<OrganisationOverview> overview(
+    String organisationId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async {
+    if (overviewOf case final of?) return of(organisationId, fromMonth);
+    final organisation = (await myOrganisations())
+        .where((o) => o.id == organisationId)
+        .firstOrNull;
+    return OrganisationOverview.ofHouses(
+      organisationId: organisationId,
+      month: fromMonth,
+      houses: [
+        for (final h in [...?organisation?.houses])
+          OverviewHouse(
+            workspaceId: h.workspaceId,
+            name: h.name,
+            countryCode: h.countryCode,
+            currencyCode: h.currencyCode,
+            isHead: h.workspaceId == organisation?.headWorkspaceId,
+            withheld: OverviewWithheld.notEnabled,
+          ),
+      ],
+    );
+  }
 
   @override
   Future<List<Organisation>> myOrganisations() async =>

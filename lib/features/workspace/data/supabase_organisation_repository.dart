@@ -7,6 +7,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
 import '../domain/organisation.dart';
+import '../domain/organisation_overview.dart';
 
 class SupabaseOrganisationRepository implements OrganisationRepository {
   const SupabaseOrganisationRepository(this._client);
@@ -21,6 +22,22 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
         for (final row in rows) Organisation.fromJson(row),
     ];
   }
+
+  @override
+  Future<OrganisationOverview> overview(
+    String organisationId, {
+    required String fromMonth,
+    required String toMonth,
+  }) async => OrganisationOverview.fromJson(
+    await _client.rpc<Object?>(
+      'organisation_overview_v1',
+      params: {
+        'p_organisation': organisationId,
+        'p_from': fromMonth,
+        'p_to': toMonth,
+      },
+    ),
+  );
 
   @override
   Future<OrganisationRefusal?> create(String headWorkspaceId, String name) =>

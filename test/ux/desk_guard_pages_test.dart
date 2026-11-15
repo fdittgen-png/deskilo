@@ -5,6 +5,7 @@
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
 import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
@@ -43,6 +44,7 @@ import 'package:deskilo/features/workspace/domain/bi_saved_view.dart';
 import 'package:deskilo/features/workspace/domain/conversation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/member_note.dart';
+import 'package:deskilo/features/workspace/domain/organisation_overview.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/report_pages.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
@@ -59,6 +61,33 @@ import '../helpers/fake_money_repository.dart';
 import '../helpers/fake_profile_repository.dart';
 import '../helpers/mock_providers.dart';
 import 'experience_guards.dart';
+
+/// #4007 — the organisation the overview page is guarded with: a head in
+/// euros and a house in pounds, both with figures.
+FakeOrganisationRepository _twoHouses() {
+  OverviewHouse house(String id, String name, String country, String currency,
+          {bool head = false}) =>
+      OverviewHouse(
+        workspaceId: id,
+        name: name,
+        countryCode: country,
+        currencyCode: currency,
+        isHead: head,
+        invoiced: const HouseFigure(minor: 125000),
+        collected: const HouseFigure(minor: 98000),
+        overdue: HouseFigure(minor: 12000, asOf: kTestNow),
+      );
+  return FakeOrganisationRepository(
+    overviewOf: (organisation, month) async => OrganisationOverview.ofHouses(
+      organisationId: organisation,
+      month: month,
+      houses: [
+        house('ws-1', 'Atelier du Marché', 'FR', 'EUR', head: true),
+        house('ws-3', 'Camden Yard', 'GB', 'GBP'),
+      ],
+    ),
+  );
+}
 
 Future<void> _open(WidgetTester tester, String path, Size size) async {
   final features = WorkspaceFeature.values.toSet();
@@ -250,6 +279,8 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
       ),
       ...standardTestOverrides(
         money: money,
+        // #4007 — an organisation of two houses in two currencies.
+        organisations: _twoHouses(),
         floorPlan: records ? plan : null,
         reservations: records ? bookings : null,
         biViews: records ? views : null,
@@ -393,25 +424,10 @@ final _return = VatDeclaration(
   createdAt: DateTime(2026, 4, 2),
 );
 
-const _tabTwice = 'waits for the Tab walk at 768 to visit each stop once: it '
-    'reached one twice';
-
 /// #4022 — the pages the 768 walk found a fault in and the fault; each is
 /// left out of that one width until the page is fixed, and walked at every
 /// other.
-const Map<String, String> _waitsAt768 = {
-  '/settings/personal-info': _tabTwice,
-  '/member/member-2': _tabTwice,
-  '/billing': _tabTwice,
-  '/deployment': _tabTwice,
-  '/members/member-2': _tabTwice,
-  '/money?face=payments': _tabTwice,
-  '/settings': _tabTwice,
-  '/features': _tabTwice,
-  '/report-editor': _tabTwice,
-  '/workspace-settings': 'waits for the Tab walk at 768: it reached a stop '
-      'twice and left others out of reach',
-};
+const Map<String, String> _waitsAt768 = {};
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.
 const _pages = [
@@ -507,6 +523,8 @@ const _pages = [
   ('/events', PageKind.document, 'requests', 'events'),
   ('/invoices', PageKind.records, 'money', 'invoices'),
   ('/me', PageKind.dashboard, 'me', 'overview'),
+  // #4007 — an organisation's houses side by side.
+  ('/organisation/demo-organisation-atelier/overview', PageKind.records, 'organisation', 'overview'),
   // #3606 — the first records table.
   ('/invoice-register', PageKind.records, 'money', 'invoice-register'),
   // #3614 — sales at the desk.
@@ -710,6 +728,8 @@ void main() {
               RecordsHeader<PurchaseOrder>,
               RecordRow<PurchaseSummary>,
               RecordsHeader<PurchaseSummary>,
+              RecordRow<OverviewHouse>,
+              RecordsHeader<OverviewHouse>,
             ],
             tableTypes: const [
               KitTableHeader,
@@ -730,6 +750,7 @@ void main() {
               RecordsHeader<LedgerEntry>,
               RecordsHeader<UsageRecord>,
               RecordsHeader<PurchaseOrder>,
+              RecordsHeader<OverviewHouse>,
               RecordsHeader<PurchaseSummary>,
             ],
           ),

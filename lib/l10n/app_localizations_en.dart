@@ -22628,6 +22628,66 @@ class AppLocalizationsEn extends AppLocalizations {
       'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.';
 
   @override
+  String organisationOverviewAsOf(String amount, String time) {
+    return '$amount, as of $time';
+  }
+
+  @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get organisationOverviewCountry => 'Country';
+
+  @override
+  String get organisationOverviewCurrency => 'Currency';
+
+  @override
+  String organisationOverviewHeadName(String name) {
+    return '$name (head)';
+  }
+
+  @override
+  String get organisationOverviewHouse => 'House';
+
+  @override
+  String organisationOverviewIncomplete(String houses) {
+    return 'Incomplete: $houses not counted';
+  }
+
+  @override
+  String get organisationOverviewNone =>
+      'No house of this organisation to show.';
+
+  @override
+  String get organisationOverviewNotEnabled => 'Analysis is off in this house';
+
+  @override
+  String get organisationOverviewNotPermitted =>
+      'You may not read this house\'s finances';
+
+  @override
+  String get organisationOverviewOneHouse =>
+      'You are a member of one house of this organisation: there is no other to set beside it.';
+
+  @override
+  String get organisationOverviewTitle => 'Overview';
+
+  @override
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  ) {
+    return '$currency: invoiced $invoiced · collected $collected · overdue $overdue';
+  }
+
+  @override
+  String get organisationOverviewTotals => 'Totals per currency';
+
+  @override
   String get organisationRefusedAlreadyInOne =>
       'This business is already in an organisation.';
 

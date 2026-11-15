@@ -96,11 +96,15 @@ class MeGroupHeader extends StatelessWidget {
     required this.onToggle,
     required this.onRename,
     required this.onDelete,
+    this.onOverview,
   });
   final String id, title;
   final int count;
   final bool folded, own;
   final VoidCallback onToggle, onRename, onDelete;
+
+  /// #4007 — an organisation's group opens its houses side by side.
+  final VoidCallback? onOverview;
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +167,12 @@ class MeGroupHeader extends StatelessWidget {
               ),
             ),
           ),
+          if (onOverview case final open?)
+            TextButton(
+              key: ValueKey('me-group-overview-$id'),
+              onPressed: open,
+              child: Text(l10n.organisationOverviewTitle),
+            ),
           if (own)
             PopupMenuButton<String>(
               key: ValueKey('me-group-menu-$id'),
