@@ -6338,6 +6338,16 @@ class AppLocalizationsEs extends AppLocalizations {
   String get chOptionToTaxDate => 'Opción efectiva desde (AAAA-MM-DD)';
 
   @override
+  String chromeChipWithHint(String label, String hint) {
+    return '$label, $hint';
+  }
+
+  @override
+  String chromeRoleAs(String role) {
+    return 'como $role';
+  }
+
+  @override
   String get coOwnerAction => 'Copropiedad';
 
   @override
@@ -22694,6 +22704,67 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get organisationNone =>
       'Este negocio no está en ninguna organización. Un negocio en otro país o en otra moneda es una casa propia en la organización de su sede.';
+
+  @override
+  String organisationOverviewAsOf(String amount, String time) {
+    return '$amount, a las $time';
+  }
+
+  @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get organisationOverviewCountry => 'País';
+
+  @override
+  String get organisationOverviewCurrency => 'Moneda';
+
+  @override
+  String organisationOverviewHeadName(String name) {
+    return '$name (sede)';
+  }
+
+  @override
+  String get organisationOverviewHouse => 'Casa';
+
+  @override
+  String organisationOverviewIncomplete(String houses) {
+    return 'Incompleto: $houses sin contar';
+  }
+
+  @override
+  String get organisationOverviewNone =>
+      'Ninguna casa de esta organización que mostrar.';
+
+  @override
+  String get organisationOverviewNotEnabled =>
+      'El análisis está desactivado en esta casa';
+
+  @override
+  String get organisationOverviewNotPermitted =>
+      'No puede leer las finanzas de esta casa';
+
+  @override
+  String get organisationOverviewOneHouse =>
+      'Es miembro de una sola casa de esta organización: no hay otra que poner al lado.';
+
+  @override
+  String get organisationOverviewTitle => 'Vista general';
+
+  @override
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  ) {
+    return '$currency: facturado $invoiced · cobrado $collected · vencido $overdue';
+  }
+
+  @override
+  String get organisationOverviewTotals => 'Totales por moneda';
 
   @override
   String get organisationRefusedAlreadyInOne =>

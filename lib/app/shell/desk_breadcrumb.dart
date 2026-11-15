@@ -14,6 +14,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/theme/app_spacing.dart';
 import '../../core/ui/kit/kit_metrics.dart';
 import 'shell_menu.dart';
 
@@ -42,6 +43,19 @@ double _crumbWidth(
   final width = painter.width.ceilToDouble();
   painter.dispose();
   return width + (crumb.entry != null ? _crumbButtonPadding : 0);
+}
+
+/// How wide [text] is on one line in [style], as [context] paints it.
+double _textWidth(BuildContext context, String text, TextStyle? style) {
+  final painter = TextPainter(
+    text: TextSpan(text: text, style: style),
+    textDirection: Directionality.of(context),
+    textScaler: MediaQuery.textScalerOf(context),
+    maxLines: 1,
+  )..layout();
+  final width = painter.width;
+  painter.dispose();
+  return width;
 }
 
 /// How wide the crumbs are on one line: each part in its style, a crumb that
@@ -99,9 +113,14 @@ class DeskBreadcrumb extends StatelessWidget {
     required this.crumbs,
     required this.router,
     required this.wraps,
+    this.role,
   });
 
   final List<DeskCrumb> crumbs;
+
+  /// #4019 — the reader's role in words ("as owner"), quiet, after the last
+  /// part; left out where the parts would not all fit whole beside it.
+  final String? role;
   final GoRouter router;
 
   /// The page's name takes a second line (#3893).
@@ -142,6 +161,40 @@ class DeskBreadcrumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final words = role;
+    if (words == null) return _crumbRow(context, null);
+    final style = Theme.of(context).textTheme.bodyMedium
+        ?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant);
+    return LayoutBuilder(
+      builder: (context, box) {
+        final taken =
+            AppSpacing.md + _textWidth(context, words, style).ceilToDouble();
+        final fits =
+            !box.maxWidth.isFinite ||
+            crumbsWidth(context, crumbs) + taken <= box.maxWidth;
+        if (!fits) return _crumbRow(context, null);
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: _crumbRow(context, box.maxWidth - taken)),
+            Padding(
+              padding: const EdgeInsetsDirectional.only(start: AppSpacing.md),
+              child: Text(
+                words,
+                key: const ValueKey('desk-crumb-role'),
+                maxLines: 1,
+                softWrap: false,
+                style: style,
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  /// The parts, in [room] when it is given, else in what the bar leaves.
+  Widget _crumbRow(BuildContext context, double? room) {
     final muted = Theme.of(context).colorScheme.onSurfaceVariant;
     return LayoutBuilder(
       builder: (context, box) {
@@ -149,12 +202,9 @@ class DeskBreadcrumb extends StatelessWidget {
           for (final (i, c) in crumbs.indexed)
             _crumbWidth(context, c, last: i == crumbs.length - 1),
         ];
-        final widths = box.maxWidth.isFinite
-            ? crumbWidths(
-                natural,
-                room: box.maxWidth,
-                least: KitMetrics.minTarget,
-              )
+        final width = room ?? box.maxWidth;
+        final widths = width.isFinite
+            ? crumbWidths(natural, room: width, least: KitMetrics.minTarget)
             : natural;
         return Row(
           key: const ValueKey('desk-breadcrumb'),

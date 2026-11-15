@@ -50,6 +50,7 @@ class RouteRule {
     this._chrome,
     this.place,
     this.measure = PageMeasure.framed,
+    this.namesRole = false,
   });
   final String pattern;
   final RouteClass kind;
@@ -67,6 +68,11 @@ class RouteRule {
   /// (page_frame.dart): today's frame unless the route declares its own.
   /// The route table is the only place a page's measure is declared.
   final PageMeasure measure;
+
+  /// #4019 — the role decides what this page lets the reader do: the chrome
+  /// names it ("as owner"). One flag per route; a page every member sees the
+  /// same way does not set it.
+  final bool namesRole;
 
   /// The chrome this route is shown in: declared where it differs from
   /// what its class implies (the kiosk's routes), else derived from it.
@@ -123,7 +129,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/p/:id', RouteClass.publicEntry),
   RouteRule('/connections', RouteClass.nativeAccount),
   RouteRule('/account-messages', RouteClass.nativeAccount),
-  RouteRule('/settings/public-page', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.form),
+  RouteRule('/settings/public-page', RouteClass.workspace, namesRole: true, place: 'drawer-setup-guide', measure: PageMeasure.form),
   RouteRule('/auth', RouteClass.publicEntry),
   // #3235 — the demo entry: public, for a signed-in person too.
   RouteRule('/demo', RouteClass.publicEntry),
@@ -148,13 +154,16 @@ const List<RouteRule> routeRules = [
   RouteRule('/task-workbench', RouteClass.publicEntry),
   RouteRule('/account-activity', RouteClass.nativeAccount),
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
+  // #4007 — an organisation's houses side by side: across businesses, so
+  // the account's own page.
+  RouteRule('/organisation/:id/overview', RouteClass.nativeAccount, measure: PageMeasure.work),
   // The person's own settings (sign-out, status line) and this
   // device's local diagnostics: no workspace decides them, so they open
   // with zero workspaces and while a membership is pending. The workspace
   // sections inside Settings keep their own permissions and flags.
   RouteRule(
     '/settings',
-    RouteClass.nativeAccount,
+    RouteClass.nativeAccount, namesRole: true,
     chrome: RouteChrome.desk,
     place: 'drawer-settings',
     // #3619 — its sections beside the one shown at the desk.
@@ -181,8 +190,8 @@ const List<RouteRule> routeRules = [
   RouteRule('/task-recorder/guide', RouteClass.nativeAccount),
   RouteRule('/task-recorder/recording', RouteClass.nativeAccount),
   RouteRule('/task-workbench/storyboard', RouteClass.publicEntry),
-  RouteRule('/money/repartition', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
-  RouteRule('/money/settlement', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
+  RouteRule('/money/repartition', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
+  RouteRule('/money/settlement', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
   RouteRule('/account-activity/history', RouteClass.nativeAccount),
   RouteRule('/help/support-bundle', RouteClass.publicEntry),
   RouteRule('/server/new-instance/first-start', RouteClass.operator),
@@ -191,11 +200,11 @@ const List<RouteRule> routeRules = [
   RouteRule('/mcp/confirm/:id', RouteClass.nativeAccount),
   RouteRule('/oauth/consent', RouteClass.nativeAccount),
   RouteRule('/assistants', RouteClass.nativeAccount),
-  RouteRule('/assistants/connect', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/assistants/connect', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/database/assistant-approvals', RouteClass.nativeAccount),
   RouteRule('/installation/assistants', RouteClass.nativeAccount),
-  RouteRule('/settings/assistants', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/assistant-setup', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/assistants', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/assistant-setup', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
   // #3603 — workspace routes for authorization, the kiosk's own chrome.
   RouteRule('/kiosk-gate', RouteClass.workspace, chrome: RouteChrome.kiosk, measure: PageMeasure.work),
   RouteRule('/kiosk', RouteClass.workspace, chrome: RouteChrome.kiosk, measure: PageMeasure.work),
@@ -210,7 +219,7 @@ const List<RouteRule> routeRules = [
     measure: PageMeasure.work,
   ),
   RouteRule('/directory', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.directory}', measure: PageMeasure.work),
-  RouteRule('/money', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
+  RouteRule('/money', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
   RouteRule('/reserve', RouteClass.workspace, place: 'drawer-reserve', measure: PageMeasure.work),
   RouteRule('/formats', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/events', RouteClass.workspace, place: 'drawer-events', measure: PageMeasure.work),
@@ -222,11 +231,11 @@ const List<RouteRule> routeRules = [
   RouteRule('/workspace-code', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.reading),
   RouteRule('/nfc-config', RouteClass.workspace, place: 'drawer-nfc-config', measure: PageMeasure.form),
   RouteRule('/badge-kiosks', RouteClass.workspace, place: 'drawer-nfc-config', measure: PageMeasure.form),
-  RouteRule('/payment-config', RouteClass.workspace, place: 'drawer-payment-config', measure: PageMeasure.form),
-  RouteRule('/billing', RouteClass.workspace, place: 'drawer-billing', measure: PageMeasure.form), // #3614: a settings form
+  RouteRule('/payment-config', RouteClass.workspace, namesRole: true, place: 'drawer-payment-config', measure: PageMeasure.form),
+  RouteRule('/billing', RouteClass.workspace, namesRole: true, place: 'drawer-billing', measure: PageMeasure.form), // #3614: a settings form
   RouteRule(
     '/invoices',
-    RouteClass.workspace,
+    RouteClass.workspace, namesRole: true,
     place: 'drawer-invoices',
     measure: PageMeasure.work,
   ),
@@ -234,57 +243,57 @@ const List<RouteRule> routeRules = [
   // #3614 — an open customer beside the list (or their page).
   RouteRule(
     '/invoices/customer/:id',
-    RouteClass.workspace,
+    RouteClass.workspace, namesRole: true,
     place: 'drawer-invoices',
     measure: PageMeasure.work,
   ),
   RouteRule(
     '/invoices/:id',
-    RouteClass.workspace,
+    RouteClass.workspace, namesRole: true,
     place: 'drawer-invoices',
     measure: PageMeasure.work,
   ),
   RouteRule(
     '/invoice-register',
-    RouteClass.workspace,
+    RouteClass.workspace, namesRole: true,
     place: 'drawer-accounting-export',
     // #3606 — a records table: the whole work area.
     measure: PageMeasure.work,
   ),
-  RouteRule('/einvoice-config', RouteClass.workspace, place: 'drawer-legal-identity', measure: PageMeasure.form),
+  RouteRule('/einvoice-config', RouteClass.workspace, namesRole: true, place: 'drawer-legal-identity', measure: PageMeasure.form),
   RouteRule('/documents', RouteClass.workspace, place: 'drawer-documents', measure: PageMeasure.work),
-  RouteRule('/invoicing/wizard', RouteClass.workspace, place: 'drawer-invoices', measure: PageMeasure.work),
-  RouteRule('/member/:memberId', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.reading),
-  RouteRule('/report-editor', RouteClass.workspace, place: 'drawer-reports-templates', measure: PageMeasure.work),
-  RouteRule('/roles', RouteClass.workspace, place: 'drawer-roles', measure: PageMeasure.work),
-  RouteRule('/settings/personal-info', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/payment-terms', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/sites', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form), // #3948: a settings form
-  RouteRule('/money/status', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
-  RouteRule('/money/purchases', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
-  RouteRule('/money/purchases/doc/:id', RouteClass.workspace, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
-  RouteRule('/money/guest-passes', RouteClass.workspace, place: 'drawer-guest-passes', measure: PageMeasure.work), // #3614
-  RouteRule('/money/purchases/approvals', RouteClass.workspace, place: 'drawer-purchase-approvals', measure: PageMeasure.work), // #3615
-  RouteRule('/money/payments', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
-  RouteRule('/money/suppliers', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
-  RouteRule('/money/suppliers/:id', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
-  RouteRule('/money/purchase-orders', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
+  RouteRule('/invoicing/wizard', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work),
+  RouteRule('/member/:memberId', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.reading),
+  RouteRule('/report-editor', RouteClass.workspace, namesRole: true, place: 'drawer-reports-templates', measure: PageMeasure.work),
+  RouteRule('/roles', RouteClass.workspace, namesRole: true, place: 'drawer-roles', measure: PageMeasure.work),
+  RouteRule('/settings/personal-info', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/payment-terms', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/sites', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form), // #3948: a settings form
+  RouteRule('/money/status', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
+  RouteRule('/money/purchases', RouteClass.workspace, namesRole: true, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
+  RouteRule('/money/purchases/doc/:id', RouteClass.workspace, namesRole: true, place: 'drawer-purchases', measure: PageMeasure.work), // #3615
+  RouteRule('/money/guest-passes', RouteClass.workspace, namesRole: true, place: 'drawer-guest-passes', measure: PageMeasure.work), // #3614
+  RouteRule('/money/purchases/approvals', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-approvals', measure: PageMeasure.work), // #3615
+  RouteRule('/money/payments', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work), // #3614
+  RouteRule('/money/suppliers', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
+  RouteRule('/money/suppliers/:id', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
+  RouteRule('/money/purchase-orders', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),
   // #3608 — the order's form, a long task: a page with its own columns.
-  RouteRule('/money/purchase-orders/new', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
-  RouteRule('/money/purchase-orders/order/:id', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work), // #3842
-  RouteRule('/money/purchase-orders/:id/edit', RouteClass.workspace, place: 'drawer-purchase-orders', measure: PageMeasure.work),
-  RouteRule('/suppliers', RouteClass.workspace, place: 'drawer-suppliers', measure: PageMeasure.work),
-  RouteRule('/money/sales', RouteClass.workspace, place: 'drawer-invoices', measure: PageMeasure.work),
-  RouteRule('/money/cash', RouteClass.workspace, place: 'drawer-cash', measure: PageMeasure.work),
-  RouteRule('/money/accounting', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
-  RouteRule('/money/accounting/exports', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
-  RouteRule('/accounting/connected', RouteClass.workspace, place: 'drawer-accounting', measure: PageMeasure.reading), // #3906: a target's sign-in, completed
-  RouteRule('/money/repartition-wizard', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.form),
-  RouteRule('/settings/wording', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/colours', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/settings/roles-of-this-space', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.reading),
-  RouteRule('/settings/what-you-can-do', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.reading),
-  RouteRule('/settings/questions', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/money/purchase-orders/new', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),
+  RouteRule('/money/purchase-orders/order/:id', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work), // #3842
+  RouteRule('/money/purchase-orders/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-purchase-orders', measure: PageMeasure.work),
+  RouteRule('/suppliers', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work),
+  RouteRule('/money/sales', RouteClass.workspace, namesRole: true, place: 'drawer-invoices', measure: PageMeasure.work),
+  RouteRule('/money/cash', RouteClass.workspace, namesRole: true, place: 'drawer-cash', measure: PageMeasure.work),
+  RouteRule('/money/accounting', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.work), // #3616: a dashboard
+  RouteRule('/money/accounting/exports', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.work), // #3616
+  RouteRule('/accounting/connected', RouteClass.workspace, namesRole: true, place: 'drawer-accounting', measure: PageMeasure.reading), // #3906: a target's sign-in, completed
+  RouteRule('/money/repartition-wizard', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.form),
+  RouteRule('/settings/wording', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/colours', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/settings/roles-of-this-space', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.reading),
+  RouteRule('/settings/what-you-can-do', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.reading),
+  RouteRule('/settings/questions', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/attention', RouteClass.workspace, place: 'drawer-events', measure: PageMeasure.work),
   RouteRule('/reservations/period', RouteClass.workspace, place: 'drawer-bi', measure: PageMeasure.work),
   RouteRule(
@@ -297,22 +306,22 @@ const List<RouteRule> routeRules = [
   RouteRule('/setup/levels', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/setup/launch', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/setup/step/:id', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
-  RouteRule('/settings/number-sequences', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/members/managed', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.form),
-  RouteRule('/members/privacy', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work),
-  RouteRule('/members/privacy/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3628
-  RouteRule('/payment-methods', RouteClass.workspace, place: 'drawer-payment-methods', measure: PageMeasure.form),
-  RouteRule('/legal-identity', RouteClass.workspace, place: 'drawer-legal-identity', measure: PageMeasure.form),
-  RouteRule('/deployment', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
-  RouteRule('/vat-declarations', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work),
-  RouteRule('/vat-declarations/:id', RouteClass.workspace, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
-  RouteRule('/vat', RouteClass.workspace, place: 'drawer-vat', measure: PageMeasure.form), // #3948: a settings form
+  RouteRule('/settings/number-sequences', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/members/managed', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.form),
+  RouteRule('/members/privacy', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work),
+  RouteRule('/members/privacy/:id', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work), // #3628
+  RouteRule('/payment-methods', RouteClass.workspace, namesRole: true, place: 'drawer-payment-methods', measure: PageMeasure.form),
+  RouteRule('/legal-identity', RouteClass.workspace, namesRole: true, place: 'drawer-legal-identity', measure: PageMeasure.form),
+  RouteRule('/deployment', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.form),
+  RouteRule('/vat-declarations', RouteClass.workspace, namesRole: true, place: 'drawer-vat-declarations', measure: PageMeasure.work),
+  RouteRule('/vat-declarations/:id', RouteClass.workspace, namesRole: true, place: 'drawer-vat-declarations', measure: PageMeasure.work), // #3616: a long task
+  RouteRule('/vat', RouteClass.workspace, namesRole: true, place: 'drawer-vat', measure: PageMeasure.form), // #3948: a settings form
   RouteRule('/services', RouteClass.workspace, place: 'drawer-services', measure: PageMeasure.work), // #3614
   RouteRule('/accessories', RouteClass.workspace, place: 'drawer-accessories', measure: PageMeasure.work),
-  RouteRule('/features', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),
-  RouteRule('/workspace-settings', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
+  RouteRule('/features', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.work),
+  RouteRule('/workspace-settings', RouteClass.workspace, namesRole: true, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/reports', RouteClass.workspace, place: 'reporting', measure: PageMeasure.work),
-  RouteRule('/validation', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.work),
+  RouteRule('/validation', RouteClass.workspace, namesRole: true, place: 'drawer-settings', measure: PageMeasure.work),
   RouteRule('/availability', RouteClass.workspace, place: 'drawer-availability', measure: PageMeasure.form), // #3892: a settings form
   RouteRule(
     '/bi',
@@ -321,10 +330,10 @@ const List<RouteRule> routeRules = [
     measure: PageMeasure.work,
   ), // #1923
   RouteRule('/bi/report/:id', RouteClass.workspace, place: 'drawer-bi', measure: PageMeasure.work), // #2580
-  RouteRule('/members', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
-  RouteRule('/members/plans', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618; #3943: before '/members/:id', which would take 'plans'
-  RouteRule('/members/plans/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
-  RouteRule('/members/:id', RouteClass.workspace, place: 'drawer-members', measure: PageMeasure.work), // #3618
+  RouteRule('/members', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work), // #3618
+  RouteRule('/members/plans', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work), // #3618; #3943: before '/members/:id', which would take 'plans'
+  RouteRule('/members/plans/:id', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work), // #3618
+  RouteRule('/members/:id', RouteClass.workspace, namesRole: true, place: 'drawer-members', measure: PageMeasure.work), // #3618
   RouteRule('/editor', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
   RouteRule('/editor/level/:levelId', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),
 ];

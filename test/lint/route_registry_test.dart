@@ -67,6 +67,7 @@ const Map<String, String> _notWorkspace = {
   '/privacy': 'entry',
   '/me/formats': 'account — the person\'s own Region & formats, from Me (#3697)',
   '/linked-accounts': 'account',
+  '/organisation/:id/overview': 'account — an organisation\'s houses side by side, across businesses (#4007)',
   '/scan-join': 'account',
   '/mcp/confirm/:id': 'account',
   '/assistants': 'account',

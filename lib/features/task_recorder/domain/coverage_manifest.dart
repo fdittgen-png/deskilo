@@ -150,6 +150,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/business-task-wizard', CoverageStatus.recorder),
   RouteCoverage('/task-workbench', CoverageStatus.recorder),
   RouteCoverage('/account-activity', CoverageStatus.planned, owner: '#1881 B'),
+  RouteCoverage('/organisation/:id/overview', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/linked-accounts',
     CoverageStatus.excluded,
@@ -239,8 +240,7 @@ const List<RouteCoverage> routeCoverage = [
     CoverageStatus.excluded,
     category: ProtectedSurface.provider,
   ),
-  // #2150 — the Connect an assistant page: an assistant surface like its
-  // siblings, excluded with the same category.
+  // #2150 — the Connect an assistant page: excluded as its sibling assistant surfaces are.
   RouteCoverage(
     '/assistants/connect',
     CoverageStatus.excluded,

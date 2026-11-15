@@ -8270,6 +8270,27 @@
   "@chOptionToTaxDate": {
     "description": "#2360: chOptionToTaxDate"
   },
+  "chromeChipWithHint": "{label}, {hint}",
+  "@chromeChipWithHint": {
+    "description": "#4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "hint": {
+        "type": "String"
+      }
+    }
+  },
+  "chromeRoleAs": "as {role}",
+  "@chromeRoleAs": {
+    "description": "#4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
   "coOwnerAction": "Co-ownership",
   "@coOwnerAction": {
     "description": "Member-sheet action opening the co-owner dialog (0058)"
@@ -29601,6 +29622,102 @@
   "organisationNone": "This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.",
   "@organisationNone": {
     "description": "#4006 — the organisation page: organisationNone."
+  },
+  "organisationOverviewAsOf": "{amount}, as of {time}",
+  "@organisationOverviewAsOf": {
+    "description": "#4007 A figure that is a state (overdue today), with the time it was read in the reader's zone",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationOverviewCardLine": "{label}: {amount}",
+  "@organisationOverviewCardLine": {
+    "description": "#4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationOverviewCountry": "Country",
+  "@organisationOverviewCountry": {
+    "description": "#4007 Column of the overview: the house's country"
+  },
+  "organisationOverviewCurrency": "Currency",
+  "@organisationOverviewCurrency": {
+    "description": "#4007 Column of the overview: the house's currency code"
+  },
+  "organisationOverviewHeadName": "{name} (head)",
+  "@organisationOverviewHeadName": {
+    "description": "#4007 A house's name, marked as the head of the organisation",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationOverviewHouse": "House",
+  "@organisationOverviewHouse": {
+    "description": "#4007 Column of the overview: the house"
+  },
+  "organisationOverviewIncomplete": "Incomplete: {houses} not counted",
+  "@organisationOverviewIncomplete": {
+    "description": "#4007 A total that misses houses without figures; houses is a list of names",
+    "placeholders": {
+      "houses": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationOverviewNone": "No house of this organisation to show.",
+  "@organisationOverviewNone": {
+    "description": "#4007 The overview with no house at all"
+  },
+  "organisationOverviewNotEnabled": "Analysis is off in this house",
+  "@organisationOverviewNotEnabled": {
+    "description": "#4007 A house listed without figures: its analysis is switched off"
+  },
+  "organisationOverviewNotPermitted": "You may not read this house's finances",
+  "@organisationOverviewNotPermitted": {
+    "description": "#4007 A house listed without figures: the reader lacks the analysis rights there"
+  },
+  "organisationOverviewOneHouse": "You are a member of one house of this organisation: there is no other to set beside it.",
+  "@organisationOverviewOneHouse": {
+    "description": "#4007 The overview when the reader is a member of a single house"
+  },
+  "organisationOverviewTitle": "Overview",
+  "@organisationOverviewTitle": {
+    "description": "#4007 The organisation's overview: its houses side by side; also the button that opens it"
+  },
+  "organisationOverviewTotalLine": "{currency}: invoiced {invoiced} · collected {collected} · overdue {overdue}",
+  "@organisationOverviewTotalLine": {
+    "description": "#4007 One currency's total line; amounts are formatted in that currency",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      },
+      "invoiced": {
+        "type": "String"
+      },
+      "collected": {
+        "type": "String"
+      },
+      "overdue": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationOverviewTotals": "Totals per currency",
+  "@organisationOverviewTotals": {
+    "description": "#4007 Heading of the totals: one per currency, never added across currencies"
   },
   "organisationRefusedAlreadyInOne": "This business is already in an organisation.",
   "@organisationRefusedAlreadyInOne": {

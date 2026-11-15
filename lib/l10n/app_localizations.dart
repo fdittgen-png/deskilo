@@ -9929,6 +9929,18 @@ abstract class AppLocalizations {
   /// **'Option effective from (YYYY-MM-DD)'**
   String get chOptionToTaxDate;
 
+  /// #4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}, {hint}'**
+  String chromeChipWithHint(String label, String hint);
+
+  /// #4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.
+  ///
+  /// In en, this message translates to:
+  /// **'as {role}'**
+  String chromeRoleAs(String role);
+
   /// Member-sheet action opening the co-owner dialog (0058)
   ///
   /// In en, this message translates to:
@@ -36141,6 +36153,95 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.'**
   String get organisationNone;
+
+  /// #4007 A figure that is a state (overdue today), with the time it was read in the reader's zone
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}, as of {time}'**
+  String organisationOverviewAsOf(String amount, String time);
+
+  /// #4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {amount}'**
+  String organisationOverviewCardLine(String label, String amount);
+
+  /// #4007 Column of the overview: the house's country
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get organisationOverviewCountry;
+
+  /// #4007 Column of the overview: the house's currency code
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get organisationOverviewCurrency;
+
+  /// #4007 A house's name, marked as the head of the organisation
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (head)'**
+  String organisationOverviewHeadName(String name);
+
+  /// #4007 Column of the overview: the house
+  ///
+  /// In en, this message translates to:
+  /// **'House'**
+  String get organisationOverviewHouse;
+
+  /// #4007 A total that misses houses without figures; houses is a list of names
+  ///
+  /// In en, this message translates to:
+  /// **'Incomplete: {houses} not counted'**
+  String organisationOverviewIncomplete(String houses);
+
+  /// #4007 The overview with no house at all
+  ///
+  /// In en, this message translates to:
+  /// **'No house of this organisation to show.'**
+  String get organisationOverviewNone;
+
+  /// #4007 A house listed without figures: its analysis is switched off
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis is off in this house'**
+  String get organisationOverviewNotEnabled;
+
+  /// #4007 A house listed without figures: the reader lacks the analysis rights there
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read this house\'s finances'**
+  String get organisationOverviewNotPermitted;
+
+  /// #4007 The overview when the reader is a member of a single house
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of one house of this organisation: there is no other to set beside it.'**
+  String get organisationOverviewOneHouse;
+
+  /// #4007 The organisation's overview: its houses side by side; also the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get organisationOverviewTitle;
+
+  /// #4007 One currency's total line; amounts are formatted in that currency
+  ///
+  /// In en, this message translates to:
+  /// **'{currency}: invoiced {invoiced} · collected {collected} · overdue {overdue}'**
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  );
+
+  /// #4007 Heading of the totals: one per currency, never added across currencies
+  ///
+  /// In en, this message translates to:
+  /// **'Totals per currency'**
+  String get organisationOverviewTotals;
 
   /// #4006 — the organisation page: organisationRefusedAlreadyInOne.
   ///

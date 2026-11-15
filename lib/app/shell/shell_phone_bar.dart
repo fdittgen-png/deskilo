@@ -23,11 +23,16 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
   const ShellPhoneBar({
     super.key,
     required this.tabTitle,
+    this.path,
     required this.currentIndex,
     required this.collapsible,
   });
 
   final String tabTitle;
+
+  /// #4019 — the page's path: the chip names the role where the page
+  /// declares it.
+  final String? path;
   final int currentIndex;
 
   /// See [ShellTitleBar.collapsible].
@@ -56,7 +61,7 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
         return ShellTitleBar(
           collapsible: collapsible,
           appBar: AppBar(
-            title: SpaceChip(tabTitle: tabTitle),
+            title: SpaceChip(tabTitle: tabTitle, path: path),
             // The account keeps the bar's end; the overflow stands before it.
             actions: fit.overflow.isEmpty
                 ? shown
