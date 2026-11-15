@@ -7,8 +7,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
+import '../../../core/ui/kit/retry_notice.dart';
 import '../../../core/ui/motion.dart';
-import '../../../core/ui/personal_kit/me_notice.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -244,7 +244,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
       if (refused.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-          child: MeNotice(
+          child: RetryNotice(
             key: const ValueKey('directory-portal-directory-unavailable'),
             text: l.discoveryDirectoriesDidNotAnswer(refused.length),
             retryLabel: l.commonRetry,

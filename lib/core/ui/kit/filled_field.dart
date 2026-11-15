@@ -1,21 +1,21 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3545 -- the search field of Me: a surface-coloured field with no border, a
-// quiet hint and icon, so it reads as a place to start, not a disabled box.
+// #3545, #3674 -- a search field that reads as a place to start: the surface
+// colour with no border, a quiet hint and icon, never a disabled box.
 import 'package:flutter/material.dart';
 
 import '../../theme/personal_theme.dart';
 
-/// [child] (a text field) wearing the Me field look.
-class MeFilledField extends StatelessWidget {
-  const MeFilledField({super.key, required this.child});
+/// [child] (a text field) wearing the filled look.
+class FilledField extends StatelessWidget {
+  const FilledField({super.key, required this.child});
 
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final tokens = PersonalTheme.of(context);
+    final scheme = theme.colorScheme;
     const none = OutlineInputBorder(
       borderRadius: PersonalShellMetrics.controlRadiusAll,
       borderSide: BorderSide.none,
@@ -24,15 +24,15 @@ class MeFilledField extends StatelessWidget {
       data: theme.copyWith(
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
-          fillColor: tokens.surface,
+          fillColor: scheme.surface,
           border: none,
           enabledBorder: none,
           focusedBorder: none,
           hintStyle: theme.textTheme.bodyLarge?.copyWith(
-            color: tokens.secondaryText,
+            color: scheme.onSurfaceVariant,
           ),
-          prefixIconColor: tokens.secondaryText,
-          suffixIconColor: tokens.secondaryText,
+          prefixIconColor: scheme.onSurfaceVariant,
+          suffixIconColor: scheme.onSurfaceVariant,
         ),
       ),
       child: child,

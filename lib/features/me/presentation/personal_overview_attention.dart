@@ -19,7 +19,10 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/ui/kit/copy_value.dart';
-import '../../../core/ui/personal_kit/me_kit_metrics.dart';
+import '../../../core/ui/kit/kit_card.dart';
+import '../../../core/ui/kit/kit_metrics.dart';
+import '../../../core/ui/kit/status_chip.dart';
+import '../../../core/ui/kit/tile_row.dart';
 import '../../../core/ui/private_value.dart';
 import '../../directory/domain/inbox_composition.dart';
 import '../../directory/domain/inbox_sources.dart';
@@ -31,9 +34,6 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
-import 'kit/me_quiet_line.dart';
-import 'kit/me_row.dart';
-import 'kit/me_status_chip.dart';
 import 'personal_overview_sections.dart';
 
 /// How many items Needs attention lists before it says how many more wait:
@@ -198,7 +198,7 @@ class NeedsAttentionSection extends ConsumerWidget {
         if (reading)
           const SectionLoading(key: ValueKey('me-overview-attention-loading'))
         else if (settled && items.isEmpty && !partialDocuments && !partialInbox)
-          MeQuietLine(
+          QuietLine(
             l10n.meOverviewAttentionNone,
             key: const ValueKey('me-overview-attention-none'),
           ),
@@ -228,8 +228,8 @@ class _AttentionRow extends ConsumerWidget {
             : l10n.meOverviewAttentionDue(
                 ref.watch(personalFormatProvider).date(d.dueOn!),
               ),
-        MeStatusChip(
-          kind: d.overdue ? MeChipKind.overdue : MeChipKind.toPay,
+        StatusChip(
+          tone: d.overdue ? StatusTone.due : StatusTone.warn,
           label: d.overdue
               ? l10n.meOverviewAttentionOverdue
               : l10n.meOverviewAttentionToPay,
@@ -255,7 +255,7 @@ class _AttentionRow extends ConsumerWidget {
         () => unawaited(openInboxEntry(context, ref, item.conversation!)),
       ),
     };
-    final row = MeRow(
+    final row = TileRow(
       key: ValueKey('me-overview-action-${item.key}'),
       leading: Icon(icon),
       title: title,
@@ -294,7 +294,7 @@ class _Amount extends ConsumerWidget {
         .formatMinor(d.remainingCents);
     return Padding(
       padding: const EdgeInsetsDirectional.only(
-        start: MeKitMetrics.tile + MeKitMetrics.gap,
+        start: KitMetrics.tile + KitMetrics.gap,
       ),
       child: PrivateValue(
         revealKey: ValueKey('me-overview-amount-${item.key}'),
