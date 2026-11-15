@@ -262,8 +262,12 @@ const Map<WorkspaceFeature, String> _elsewhere = {
 };
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
-/// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 4;
+/// falls: a feature gets a state or an action, not another switch. #4009 —
+/// what is left is not a house's to perform, each with its reason at the
+/// entry: siteDocuments (reserved, nothing reads it), uiAnimations (a
+/// per-device motion preference) and personalShell (an installation default
+/// that shapes Me, which stands above every business).
+const int _switchOnlyBudget = 3;
 
 /// The scenarios outside the reference organisation, the ones in a house
 /// not named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -1267,9 +1271,24 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'not',
     (_) => accountMenuJourney(),
   ),
-  // A switch, kept: the mode is this demonstration itself, entered and
-  // reset by demo_entry_test and demo_session_test; there is no step beside it.
-  WorkspaceFeature.demoMode: _toggle('this demonstration'),
+  // #4009 — the mode is this demonstration itself, and what it shows first is
+  // one organisation: the head and its houses in five countries and four
+  // currencies, the Berlin practice outside it. Entered and reset by
+  // demo_entry_test and demo_session_test.
+  WorkspaceFeature.demoMode: _state(
+    _owner,
+    'the demonstration is one organisation: Atelier du Marché with its five '
+    'houses in four currencies, and the Berlin practice outside it',
+    (w) async {
+      final organisation = (await demoOrganisations(w.f.workspaces)).single;
+      return organisation.headWorkspaceId == demoFirstSpaceId &&
+          {for (final h in organisation.houses) h.workspaceId}.containsAll(
+            _organisation,
+          ) &&
+          {for (final h in organisation.houses) h.currencyCode}.length == 4 &&
+          organisation.houseOf(demoPracticeSpaceId) == null;
+    },
+  ),
   // ── integrations ─────────────────────────────────────────────────────
   WorkspaceFeature.pushNotifications: _state(
     _owner,

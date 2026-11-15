@@ -87,6 +87,80 @@ void main() {
     },
   );
 
+  test('every house\'s figures equal that house\'s own data in its own '
+      'currency, and a currency\'s total is only its own houses\'', () async {
+    final f = DemoFixture.build()..becomePersona(DemoPersona.owner);
+    final organisation = (await demoOrganisations(f.workspaces)).single;
+    final last = DateTime(f.seededAt.year, f.seededAt.month - 1);
+    final month = yearMonth(last.year, last.month);
+    final overview = await demoOrganisationOverview(f, organisation.id, month);
+    expect(overview.houses.length, organisation.houses.length);
+
+    final owned = <String, ({int invoiced, int collected})>{};
+    for (final house in overview.houses) {
+      final key = DemoSpaceKey.of(house.workspaceId);
+      final space = f.space(key);
+      expect(house.currencyCode, key.currency, reason: house.workspaceId);
+      if (house.withheld != null) {
+        expect(house.invoiced, isNull, reason: '${house.name} says why');
+        continue;
+      }
+      final own = await DemoFinanceKpiRepository(
+        money: space.money,
+        workspaces: space.workspaces,
+        now: f.seededAt,
+      ).summary(house.workspaceId, fromMonth: month, toMonth: month);
+      final overdue = await DemoOverviewKpiRepository(
+        workspaces: space.workspaces,
+        events: space.events,
+        money: space.money,
+        now: f.seededAt,
+      ).figure(
+        house.workspaceId,
+        'sales.overdue_receivables',
+        fromMonth: month,
+        toMonth: month,
+      );
+      expect(house.invoiced?.minor, own.invoicedMinor, reason: house.name);
+      expect(house.collected?.minor, own.collectedMinor, reason: house.name);
+      expect(house.overdue?.minor, overdue.value, reason: house.name);
+      owned[house.workspaceId] = (
+        invoiced: own.invoicedMinor ?? 0,
+        collected: own.collectedMinor ?? 0,
+      );
+    }
+
+    for (final total in overview.totals) {
+      final inCurrency = [
+        for (final h in overview.houses)
+          if (h.currencyCode == total.currencyCode && h.withheld == null)
+            owned[h.workspaceId]!,
+      ];
+      expect(
+        total.houses,
+        overview.houses.where((h) => h.currencyCode == total.currencyCode).length,
+        reason: total.currencyCode,
+      );
+      expect(
+        total.incomplete,
+        overview.houses.any(
+          (h) => h.currencyCode == total.currencyCode && h.withheld != null,
+        ),
+        reason: 'a total that misses a house says so',
+      );
+      expect(
+        total.invoiced,
+        inCurrency.fold<int>(0, (sum, o) => sum + o.invoiced),
+        reason: '${total.currencyCode}: only its own houses are added',
+      );
+      expect(
+        total.collected,
+        inCurrency.fold<int>(0, (sum, o) => sum + o.collected),
+        reason: total.currencyCode,
+      );
+    }
+  });
+
   test('a person without the finance rights reads the houses named without '
       'figures', () async {
     final f = DemoFixture.build()..becomePersona(DemoPersona.member);
