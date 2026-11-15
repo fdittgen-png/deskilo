@@ -68,6 +68,8 @@ mixin FakeManagedIdentity on FakeWorkspaceState
     otherMembers[i] = otherMembers[i].copyWith(
       managedIdentity: identity.normalized(),
     );
+    // #3674 — and the identity the member page reads back.
+    managedIdentities[memberId] = identity.normalized();
   }
 
   @override
