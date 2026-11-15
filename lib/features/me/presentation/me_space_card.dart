@@ -17,6 +17,7 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/status_colors.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
@@ -71,6 +72,9 @@ class MeSpaceCard extends ConsumerWidget {
     // Green says the space is real, orange says it is one to try things in
     // (#917); the word is on the tile as well, and the colour is a tint, not
     // a block, so the list stays calm.
+    final openLabel = isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness;
+    final named = waiting > 0 &&
+        WindowClass.of(context).index >= WindowClass.expanded.index;
     final tone = isProd
         ? AppEnvironmentColors.productionOf(brightness)
         : AppEnvironmentColors.developmentOf(brightness);
@@ -88,11 +92,13 @@ class MeSpaceCard extends ConsumerWidget {
               if (lastUsed) l10n.meSpaceLastUsed,
               if (waiting > 0) l10n.meSpaceNotifications(waiting),
             ].join(' · '),
-            child: Badge.count(
+            // #4071 — the count is named where it is shown: in words beside the
+            // label from the desk's width, and to a screen reader everywhere
+            // (the badge's bare number is left out of the semantics tree).
+            child: Badge(
               key: ValueKey('me-space-badge-${space.id}'),
-              count: waiting,
-              maxCount: 99,
-              isLabelVisible: waiting > 0,
+              label: ExcludeSemantics(child: Text(waiting > 99 ? '99+' : '$waiting')),
+              isLabelVisible: waiting > 0 && !named,
               backgroundColor: Theme.of(context).colorScheme.primary,
               textColor: Theme.of(context).colorScheme.onPrimary,
               child: FilledButton(
@@ -123,7 +129,13 @@ class MeSpaceCard extends ConsumerWidget {
                       : box.localToGlobal(Offset.zero) & box.size;
                   unawaited(enterSpace(context, ref, space, from: from));
                 },
-                child: Row(
+                child: Semantics(
+                  label: [
+                    openLabel,
+                    if (waiting > 0) l10n.meSpaceNotifications(waiting),
+                  ].join(', '),
+                  excludeSemantics: true,
+                  child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (lastUsed) ...[
@@ -146,13 +158,26 @@ class MeSpaceCard extends ConsumerWidget {
                     ],
                     Flexible(
                       child: Text(
-                        isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness,
+                        openLabel,
                         maxLines: 2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.labelLarge?.strong,
                       ),
                     ),
+                    if (named) ...[
+                      const SizedBox(width: AppSpacing.sm),
+                      Flexible(
+                        child: Text(
+                          l10n.meSpaceNotifications(waiting),
+                          key: ValueKey('me-space-count-${space.id}'),
+                          maxLines: 2,
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.labelSmall,
+                        ),
+                      ),
+                    ],
                   ],
+                ),
                 ),
               ),
             ),
