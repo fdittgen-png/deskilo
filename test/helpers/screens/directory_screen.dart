@@ -17,6 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../fake_floor_plan_repository.dart';
 import '../fake_profile_repository.dart';
 import '../fake_reservation_repository.dart';
+import '../go_route.dart';
 import '../mock_providers.dart';
 
 // A 1×1 transparent PNG for avatar-image tests.
@@ -250,6 +251,7 @@ Future<void> pumpDirectory(
   FakeFloorPlanRepository? floorPlan,
   FakeProfileRepository? profile,
   LinkLauncher? linkLauncher,
+  bool byRoute = false,
 }) async {
   await tester.pumpWidget(
     ProviderScope(
@@ -270,6 +272,11 @@ Future<void> pumpDirectory(
   await tester.pumpAndSettle();
   // #1307 — the directory is the Members destination of the bottom bar;
   // Settings is no longer a second door to it.
+  if (byRoute) {
+    // #4038 — by its route, so the screen is the same in every language.
+    await goToRoute(tester, '/directory');
+    return;
+  }
   await tester.tap(find.text('Members'));
   await tester.pumpAndSettle();
 }

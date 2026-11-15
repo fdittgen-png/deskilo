@@ -159,7 +159,11 @@ class SpaceChip extends ConsumerWidget {
           if (picked == null || !context.mounted) return;
           unawaited(enterSpace(context, ref, picked));
         },
-        child: chip,
+        // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
+          child: Align(alignment: AlignmentDirectional.centerStart, child: chip),
+        ),
       ),
     );
   }

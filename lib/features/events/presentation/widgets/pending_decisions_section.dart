@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/event_sources.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../task_recorder/domain/action_registry.dart';
@@ -183,7 +184,18 @@ class PendingDecisionsSection extends ConsumerWidget {
                 FilledButton.icon(
                   key: ValueKey('pending-decisions-section-event-accept-${event.id}'),
                   style: FilledButton.styleFrom(
-                    visualDensity: VisualDensity.compact,
+                    // The desk's compact density is for the desk window; on
+                    // a touch-sized one the button keeps its 48 dp (#4036).
+                    visualDensity:
+                        WindowClass.of(context).atLeast(WindowClass.expanded)
+                        ? VisualDensity.compact
+                        : VisualDensity.standard,
+                    minimumSize: Size(
+                      64,
+                      WindowClass.of(context).atLeast(WindowClass.expanded)
+                          ? 0
+                          : kMinInteractiveDimension,
+                    ),
                     backgroundColor: AppStatusColors.successOf(
                       Theme.of(context).brightness,
                     ),

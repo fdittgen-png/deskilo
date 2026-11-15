@@ -147,17 +147,6 @@ SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
 /// locale axis: roomy, so every row is built; the walker narrows it to a phone.
 const _localeSize = Size(800, 1600);
 
-/// Rows the locale walk of #4022 found it cannot run: their pump helpers find
-/// their way in by English words (the settings tile, the shell tab), so in
-/// another language the helper, not the screen, fails. They stay off the
-/// locale axis, named, until their helpers find controls by key.
-const Set<String> _localeWaits = {
-  'Members',
-  'Workspace settings',
-  'Workspace reports',
-  'Member directory',
-};
-
 /// THE MATRIX. Rows may be added; a row may not quietly lose an axis.
 /// A screen that belongs here and is missing is the failure mode this
 /// file exists to stop, so a row with six gaps and six reasons is a
@@ -166,9 +155,7 @@ final List<MatrixRow> kMatrix = [
   for (final row in _rows)
     // #4022 — a row with a pump and no locale pump of its own walks the
     // locale axis through its pump at [_localeSize].
-    if (row.localePump == null &&
-        row.pump != null &&
-        !_localeWaits.contains(row.screen))
+    if (row.localePump == null && row.pump != null)
       row.withLocalePump((t) => row.pump!(t, _localeSize))
     else
       row,
@@ -239,7 +226,7 @@ final List<MatrixRow> _rows = [
       pump: (t, size) async {
         // A records table reads its saved columns from the preferences.
         SharedPreferences.setMockInitialValues({});
-        await pumpMembers(t, size: size);
+        await pumpMembers(t, size: size, byRoute: true);
       },
       axes: _all),
   MatrixRow('Settings',
@@ -247,9 +234,9 @@ final List<MatrixRow> _rows = [
   MatrixRow('Workspace administration',
       pump: (t, size) => pumpSettingsAs(t, isAdmin: true, isOwner: true, manage: true, size: size), axes: _all),
   MatrixRow('Workspace settings',
-      pump: (t, size) async { await pumpWorkspaceSettings(t, expand: false, size: size); }, axes: _all),
+      pump: (t, size) async { await pumpWorkspaceSettings(t, expand: false, size: size, byRoute: true); }, axes: _all),
   MatrixRow('Workspace reports',
-      pump: (t, size) async { await pumpWorkspaceSettings(t, reports: true, size: size); }, axes: _all),
+      pump: (t, size) async { await pumpWorkspaceSettings(t, reports: true, size: size, byRoute: true); }, axes: _all),
   // #4022 — the directory's own pump takes no size and needs a seeded
   // repository per case: the row seeds it and sets the viewport itself.
   MatrixRow('Member directory',
@@ -264,6 +251,7 @@ final List<MatrixRow> _rows = [
           reservations: seeded.reservations,
           floorPlan: seeded.floorPlan,
           profile: seeded.profile,
+          byRoute: true,
         );
       },
       axes: _all),

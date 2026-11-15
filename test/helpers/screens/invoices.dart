@@ -109,6 +109,9 @@ Future<FakeMoneyRepository> pumpInvoices(
   // rather than overflow at large text.
   await scrollInMoneyFace(tester, find.byKey(const ValueKey('invoices-button')));
   await tester.ensureVisible(find.byKey(const ValueKey('invoices-button')));
+  // The scroll lands on the next frame: tapping before it taps where the
+  // button was (#4037).
+  await tester.pumpAndSettle();
   await tester.tap(find.byKey(const ValueKey('invoices-button')));
   await tester.pumpAndSettle();
   // #3587 — issuers land on the invoicing home (its own tests drive it);

@@ -283,7 +283,11 @@ class _MoneyFacesViewState extends ConsumerState<MoneyFacesView>
         Expanded(
           child: ListView(
             key: ValueKey('money-face-body-${face.name}'),
-            padding: AppSpacing.gutterAll,
+            // The bottom inset (the floating Reserve button while the bar is
+            // swiped away) is part of the scroll padding: the last control
+            // ends above it at every text size (#4037).
+            padding: AppSpacing.gutterAll +
+                EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
             children: [
               scopeHeader,
               if (monthly) Padding(padding: const EdgeInsets.only(bottom: AppSpacing.lg),
