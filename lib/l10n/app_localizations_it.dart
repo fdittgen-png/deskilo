@@ -5924,10 +5924,27 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskExport => 'Esporta';
 
   @override
+  String calendarDeskFilterChip(String filter, String value) {
+    return '$filter: $value';
+  }
+
+  @override
   String get calendarDeskFilterKind => 'Tipo di posto';
 
   @override
   String get calendarDeskFilterLevel => 'Livello';
+
+  @override
+  String calendarDeskFiltersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filtri · $count',
+      one: 'Filtri · $count',
+      zero: 'Filtri',
+    );
+    return '$_temp0';
+  }
 
   @override
   String calendarDeskFreeDay(String place, String day) {

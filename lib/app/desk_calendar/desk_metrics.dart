@@ -52,6 +52,12 @@ abstract final class DeskCalendarMetrics {
   /// The least height of a month cell: its header and one booking line.
   static const double monthCellMin = monthDayHeader + monthLine;
 
+  /// #4075 — the narrowest a filter of the filter row is drawn on its line:
+  /// its name above "All" and the arrow. Where the four do not fit at this
+  /// width, one Filters control stands for them.
+  // content-fit: the longest filter name of the five languages above "All"
+  static const double filterMin = 160;
+
   /// What one click on the zoom buttons multiplies the hour's width by.
   static const double zoomStep = 1.5;
 
