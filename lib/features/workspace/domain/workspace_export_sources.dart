@@ -387,7 +387,6 @@ const List<ExportSource> workspaceExportSources = [
   ),
   // #2860 — written whole by export_workspace_records (0540).
   ExportSource.everyColumn('sites'),
-  ExportSource.everyColumn('plans'),
   ExportSource.everyColumn('fee_bands'),
   ExportSource.everyColumn('packages'),
   ExportSource.everyColumn('credit_products'),

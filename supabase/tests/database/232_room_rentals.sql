@@ -4,7 +4,7 @@
 -- and the refusal wording of each cause. Real roles; every refusal is followed
 -- by a readback. Hand-written expectations: window 2027-03-01 .. 2027-08-31.
 begin;
-select plan(44);
+select plan(46);
 create function pg_temp.act_as(p_user uuid) returns void language plpgsql as $$
 begin
   perform set_config('request.jwt.claims', jsonb_build_object(
@@ -78,7 +78,8 @@ select pg_temp.act_as(pg_temp.u(1));
 select set_config('t.a', public.create_workspace('Rooms A', 'FR', 'EUR', 'Europe/Paris', 'dev', false, null)::text, true);
 reset role;
 insert into public.plans (id, workspace_id, name) values
-  ('00000000-0000-4000-8000-0000256800d1', current_setting('t.a')::uuid, 'Gold');
+  ('00000000-0000-4000-8000-0000256800d1', current_setting('t.a')::uuid, 'Gold'),
+  ('00000000-0000-4000-8000-0000256800d2', current_setting('t.a')::uuid, 'Silver');
 insert into public.members (workspace_id, user_id, is_owner, is_admin, status, subscription_pct, joined_at, customer_capacity, plan_id) values
  (current_setting('t.a')::uuid, pg_temp.u(2), false, false, 'active', 1, '2026-01-01', 'consumer', '00000000-0000-4000-8000-0000256800d1'),
  (current_setting('t.a')::uuid, pg_temp.u(3), false, false, 'active', 1, '2026-01-01', 'consumer', null),
@@ -127,10 +128,19 @@ select is(pg_temp.book((select id from public.members where user_id = pg_temp.u(
   'office_id', '00000000-0000-4000-8000-0000256800c2', pg_temp.paris('2027-04-12 09:00'), pg_temp.paris('2027-04-12 13:00')),
   'that room is not rented', '5 a draft rental books nothing');
 
+-- #4042: plans are retired; a room whose audience named the Gold plan keeps it
+insert into public.room_rental_audience (workspace_id, rental_id, plan_id)
+values (current_setting('t.a')::uuid, current_setting('t.r')::uuid, '00000000-0000-4000-8000-0000256800d1');
+select is(pg_temp.as_err(pg_temp.u(1), format('select public.set_room_rental_audience_v1(%L, %L, %L)', current_setting('t.a'), current_setting('t.r'),
+  jsonb_build_array(jsonb_build_object('plan_id', '00000000-0000-4000-8000-0000256800d2'))::text)),
+  'a room no longer opens to a plan', '6a a room opens to no new plan');
+select is(pg_temp.as_err(pg_temp.u(1), format('select public.set_room_rental_fees_v1(%L, %L, %L)', current_setting('t.a'), current_setting('t.r'),
+  jsonb_build_array(jsonb_build_object('unit', 'half_day', 'fee_cents', 900, 'plan_id', '00000000-0000-4000-8000-0000256800d2'))::text)),
+  'a room no longer opens to a plan', '6b nor gives a new plan a fee');
 select is(pg_temp.as_json(pg_temp.u(1), format('select public.set_room_rental_audience_v1(%L, %L, %L)', current_setting('t.a'), current_setting('t.r'),
   jsonb_build_array(jsonb_build_object('plan_id', '00000000-0000-4000-8000-0000256800d1'),
                     jsonb_build_object('member_id', (select id from public.members where user_id = pg_temp.u(4) and workspace_id = current_setting('t.a')::uuid)))::text))->>'revision',
-  '2', '6 the audience is a plan and a named member');
+  '2', '6 the audience is the plan it named already and a named member');
 select is(pg_temp.save('active', 2)->>'status', 'active', '7 the rental goes active');
 select is(pg_temp.as_json(pg_temp.u(1), format('select public.set_room_rental_fees_v1(%L, %L, %L)', current_setting('t.a'), current_setting('t.r'),
   jsonb_build_array(jsonb_build_object('unit', 'half_day', 'fee_cents', 1500),
