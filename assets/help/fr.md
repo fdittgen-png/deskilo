@@ -5503,6 +5503,7 @@ Vous voulez que vos factures soient à votre image : logo, mise en page, formula
 **Bon à savoir**
 
 - Le modèle ne change que le PDF. Le XML de la facture électronique n'est jamais modifié.
+- Une facture émise garde l'original avec lequel elle a été émise : un modèle modifié ensuite ne change que les factures émises après. Des images qui rendent une facture plus lourde qu'un original ne peut l'être empêchent de conserver son original ; utilisez des images plus légères.
 - Toute personne autorisée à concevoir des documents peut le faire.
 - Un modèle qui ne s'affiche pas ne bloque jamais un document : la mise en page intégrée prend le relais.
 

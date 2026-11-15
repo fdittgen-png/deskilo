@@ -23,6 +23,7 @@ import '../../application/issue_invoice.dart';
 import '../../domain/invoice_issue_readiness.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_issue_block_text.dart';
+import '../invoice_original_document.dart';
 import 'invoice_correction_reason_field.dart';
 import 'invoice_issue_runner.dart';
 import 'invoice_missing_sales_tax.dart';
@@ -119,6 +120,8 @@ Future<void> showInvoiceIssueSheet(
       correctionReason: result.correctionReason,
       requestId: newRequestId(),
     ),
+    // #3853 — its original is kept in the same flow.
+    afterIssue: (id) => InvoiceDocumentFlow(context, ref).keep([id]),
   );
   ref.invalidate(invoicesProvider);
 }

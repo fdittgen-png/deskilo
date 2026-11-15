@@ -23,6 +23,7 @@ import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
+import '../domain/pinned_pdf.dart';
 import '../domain/report_layout/layout_render.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
@@ -42,6 +43,7 @@ class LayoutPrint {
     this.additionalBody = const [],
     this.lastPage,
     this.paper,
+    this.datedAt,
   });
 
   final String documentTitle;
@@ -54,6 +56,11 @@ class LayoutPrint {
 
   /// The paper of the document; null prints the design on its own page.
   final Paper? paper;
+
+  /// #3853 — the instant an issued document is dated by: its bytes then
+  /// depend on what it says alone, never on when it is rendered. Null for a
+  /// document made now.
+  final DateTime? datedAt;
 }
 
 /// Renders [layoutXml] against [data] into a PDF, printed as [print]
@@ -81,7 +88,7 @@ Future<Uint8List?> tryLayoutPdf({
         if (bytes != null) images[name] = bytes;
       }
     }
-    return await buildLayoutPdf(
+    final bytes = await buildLayoutPdf(
       document: document,
       data: data,
       documentTitle: print.documentTitle,
@@ -95,6 +102,8 @@ Future<Uint8List?> tryLayoutPdf({
       baseFont: await font('assets/fonts/Roboto-Regular.ttf'),
       boldFont: await font('assets/fonts/Roboto-Bold.ttf'),
     );
+    final at = print.datedAt;
+    return at == null ? bytes : pinnedPdf(bytes, at);
   } on LayoutException catch (e, st) {
     TraceLogger.instance.warn(
       'money',
