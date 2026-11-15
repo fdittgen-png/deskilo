@@ -9125,12 +9125,6 @@ abstract class AppLocalizations {
   /// **'Booking details'**
   String get calendarDeskBooking;
 
-  /// #3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan
-  ///
-  /// In en, this message translates to:
-  /// **'Change, cancel or show on plan'**
-  String get calendarDeskBookingActions;
-
   /// #3626 Column title of the bookings table: when a booking starts
   ///
   /// In en, this message translates to:

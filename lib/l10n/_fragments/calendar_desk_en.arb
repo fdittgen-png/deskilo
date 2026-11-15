@@ -43,10 +43,6 @@
   "@calendarDeskBooking": {
     "description": "#3626 Title of the pane that shows one booking beside the desk calendar"
   },
-  "calendarDeskBookingActions": "Change, cancel or show on plan",
-  "@calendarDeskBookingActions": {
-    "description": "#3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan"
-  },
   "calendarDeskModeTable": "All bookings",
   "@calendarDeskModeTable": {
     "description": "#3626 Choice of the desk calendar: all bookings of the period as a table"

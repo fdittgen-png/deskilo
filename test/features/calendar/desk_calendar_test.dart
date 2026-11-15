@@ -145,7 +145,12 @@ void main() {
 
   testWidgets('a click on a booking opens it beside the grid, the address '
       'names it, Escape closes it', (tester) async {
-    await pumpDeskCalendar(tester, query: '?view=week&day=${demoToday()}');
+    // #4054 — a window that holds the week's seven days beside the booking.
+    await pumpDeskCalendar(
+      tester,
+      size: const Size(1920, 1080),
+      query: '?view=week&day=${demoToday()}',
+    );
     final id = _chips(tester).first.booking.id;
     await tester.tap(find.byKey(deskBookingKey(id)));
     await tester.pumpAndSettle();

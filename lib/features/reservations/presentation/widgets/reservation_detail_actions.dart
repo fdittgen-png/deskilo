@@ -4,6 +4,7 @@
 // booking may still be extended or shortened; the sheet decides which show.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -15,6 +16,7 @@ import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../plan/domain/half_day_windows.dart';
+import '../../../plan/providers/plan_focus_controller.dart';
 import '../../../workspace/domain/booking_granularity.dart';
 import '../../application/change_reservation.dart';
 import '../../domain/booking_error_text.dart';
@@ -57,6 +59,30 @@ class ReservationDetailActions {
 
   /// #3843 — where a refusal is said (the pane); else a snack.
   final void Function(String refusal)? onRefused;
+
+  /// #182 — the plan, focused on this booking on [levelId]: every sheet
+  /// still open over it is closed first, so the plan is seen.
+  void showOnPlan(BuildContext context, WidgetRef ref, String levelId) {
+    ref.read(planFocusControllerProvider.notifier).setFocus(
+          PlanFocus(
+            levelId: levelId,
+            seatId: reservation.seatId,
+            // #576 — a whole-desk/office/level booking highlights the
+            // SPACE it covers, not nothing.
+            deskId: reservation.deskId,
+            officeId: reservation.officeId,
+            wholeLevel: reservation.levelId != null,
+            at: reservation.startsAt,
+          ),
+        );
+    // The jump must land on a VISIBLE plan: when the detail sheet was
+    // stacked over other sheets (a conversation's message link, the
+    // booking sheet), those would keep covering the plan tab — close
+    // every remaining sheet/dialog first (field report).
+    Navigator.of(context).popUntil((route) =>
+        route is! ModalBottomSheetRoute && route is! RawDialogRoute);
+    context.go('/plan');
+  }
 
   /// Closes the sheet after an action; a pane stays.
   void _close(BuildContext context) {

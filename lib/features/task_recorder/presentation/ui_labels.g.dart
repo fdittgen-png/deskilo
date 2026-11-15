@@ -87,7 +87,6 @@ Map<String, _Getter> _part0() => {
   'bookRoleRevenue': (l) => l.bookRoleRevenue,
   'bookingNoLongerCheckedIn': (l) => l.bookingNoLongerCheckedIn,
   'bookingOutsideHoursError': (l) => l.bookingOutsideHoursError,
-  'calendarDeskBookingActions': (l) => l.calendarDeskBookingActions,
   'calendarDeskColumnFrom': (l) => l.calendarDeskColumnFrom,
   'calendarDeskExport': (l) => l.calendarDeskExport,
   'calendarEventActionApproved': (l) => l.calendarEventActionApproved,
