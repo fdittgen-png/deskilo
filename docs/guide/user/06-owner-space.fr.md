@@ -609,6 +609,7 @@ Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre dev
 3. Touchez **Ajouter une de mes entreprises** pour faire d'une autre entreprise dont vous êtes propriétaire une maison de l'organisation.
 4. Touchez **Retirer de l’organisation** à côté d'une maison pour en refaire une entreprise indépendante.
 5. Touchez **En faire la tête** à côté d'une maison dont vous êtes propriétaire pour en faire la tête. Le propriétaire d'une autre maison voit **Quitter l’organisation** à côté de celle-ci.
+6. Touchez **Ajouter une maison à l’étranger** pour créer une entreprise à part entière dans un autre pays ou une autre devise : choisissez d'abord son pays ; sa devise, son fuseau horaire et la langue de ses documents en sont proposés. Le formulaire dit ce qui voyage, ce qui arrive inactif à tarifer et ce qui ne voyage pas. Touchez **Créer la maison** : vous y arrivez, et son accueil montre une fois comment elle a commencé.
 
 **Bon à savoir**
 

@@ -42,6 +42,7 @@ import 'seed/demo_book_period_seed.dart';
 import 'seed/demo_city_bank_seed.dart';
 import 'seed/demo_city_books_seed.dart';
 import 'seed/demo_city_purchase_seed.dart';
+import 'seed/demo_house_seed.dart' show demoHouseCountry;
 import 'seed/demo_lease_seed.dart';
 import 'seed/demo_london_seed.dart';
 import 'seed/demo_main_books_seed.dart';
@@ -103,6 +104,7 @@ DemoSpaceStores buildDemoSpaceStores(DemoFixture fixture, DemoSpaceKey key) =>
       DemoSpaceKey.zurich => _trade(fixture, DemoSpaceKey.zurich, demoZurich, fixture.zurich),
       DemoSpaceKey.milan => _trade(fixture, DemoSpaceKey.milan, demoMilan, fixture.milan),
       DemoSpaceKey.practice => _practice(fixture),
+      DemoSpaceKey.house => _house(fixture),
       DemoSpaceKey.twin => _twin(fixture),
     };
 
@@ -164,6 +166,32 @@ DemoSpaceStores _practice(DemoFixture fixture) {
       ),
     ),
     fixture.practice.money,
+  );
+}
+
+/// #4005 — the house abroad's own purchases and books, empty: it is new.
+DemoSpaceStores _house(DemoFixture fixture) {
+  final buying = DemoPurchasing(
+    suppliers: FakeSupplierRepository(),
+    inbox: FakeEInvoiceInboxRepository(),
+    purchases: FakePurchaseRepository(
+      actor: () => fixture.activeMemberId,
+      workspaceId: demoHouseSpaceId,
+    ),
+  );
+  return _empty(
+    fixture,
+    DemoSpaceKey.house,
+    buying,
+    _emptyBooks(
+      fixture,
+      FakeBookProfileRepository(
+        money: fixture.space(DemoSpaceKey.house).money,
+        purchases: buying.purchases,
+        country: demoHouseCountry,
+      ),
+    ),
+    fixture.space(DemoSpaceKey.house).money,
   );
 }
 

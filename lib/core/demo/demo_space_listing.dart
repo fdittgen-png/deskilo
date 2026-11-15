@@ -24,6 +24,16 @@ class DemoSpaceListing {
 
   /// The space's row while the persona is not a member there.
   Workspace? _parked;
+
+  /// #4005 — a space no one sees yet (the house the Demo adds): its row
+  /// stays parked, whoever the persona is, until [reveal].
+  bool dormant = false;
+
+  /// #4005 — the space appears: looked at as [memberId] from now on.
+  void reveal(String memberId) {
+    dormant = false;
+    viewAs(memberId);
+  }
   int _seeding = 0;
 
   /// Looks at the space as [memberId]: their membership becomes "mine" here
@@ -34,7 +44,7 @@ class DemoSpaceListing {
     final mine = rows.where((m) => m.id == memberId).firstOrNull;
     _home.extraMyMemberships.removeWhere((m) => m.workspaceId == id);
     final listed = _home.workspaces.indexWhere((w) => w.id == id);
-    if (mine == null) {
+    if (mine == null || dormant) {
       if (listed >= 0) _parked = _home.workspaces.removeAt(listed);
       return;
     }

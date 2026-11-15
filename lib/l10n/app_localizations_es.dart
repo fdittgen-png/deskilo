@@ -13729,6 +13729,100 @@ class AppLocalizationsEs extends AppLocalizations {
   String get holidayWhitMonday => 'Lunes de Pentecostés';
 
   @override
+  String get houseAddCarried =>
+      'Viajan: los roles, las reglas de reserva y de validación, los recordatorios y las funciones que ofrece este país.';
+
+  @override
+  String get houseAddLanguage => 'Idioma de sus documentos';
+
+  @override
+  String get houseAddName => 'Nombre de la casa';
+
+  @override
+  String get houseAddNotCarried =>
+      'No viajan: la identidad, el banco y las instrucciones de pago, los lugares, el diseño de los documentos y los enlaces.';
+
+  @override
+  String get houseAddSubmit => 'Crear la casa';
+
+  @override
+  String houseAddTimezone(String zone) {
+    return 'Zona horaria: $zone';
+  }
+
+  @override
+  String get houseAddTitle => 'Añadir una casa en el extranjero';
+
+  @override
+  String get houseAddToPrice =>
+      'Llegan inactivos, para ponerles precio: los planes, los servicios y los paquetes.';
+
+  @override
+  String houseBirthCoOwners(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count propietarios de la sede se añadieron como copropietarios.',
+      one: '1 propietario de la sede se añadió como copropietario.',
+      zero: 'No se añadió ningún copropietario.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthCreated(String head, String date) {
+    return 'Creada a partir de $head el $date.';
+  }
+
+  @override
+  String get houseBirthNotCarried =>
+      'No copiados: el diseño de los documentos y los enlaces. Elija los de esta casa.';
+
+  @override
+  String houseBirthPackages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count paquetes',
+      one: '1 paquete',
+      zero: 'ningún paquete',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthPlans(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count planes',
+      one: '1 plan',
+      zero: 'ningún plan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count servicios',
+      one: '1 servicio',
+      zero: 'ningún servicio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseBirthTitle => 'Cómo empezó esta casa';
+
+  @override
+  String houseBirthToPrice(String rows) {
+    return 'Copiados, inactivos y para ponerles precio: $rows.';
+  }
+
+  @override
   String get hubAccountingSubtitle =>
       'Libros, exportaciones e importaciones, software contable, extractos bancarios, IVA e identidad legal en un solo lugar';
 
@@ -22530,6 +22624,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Este negocio ya está en una organización.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'La demo añade una casa en el extranjero: en Polonia, en esloti. Elija Polonia para añadirla.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'La organización está desactivada en este negocio: actívela primero en sus funciones.';
 
@@ -22540,6 +22638,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get organisationRefusedInNone =>
       'Este negocio no está en ninguna organización.';
+
+  @override
+  String get organisationRefusedLanguage =>
+      'Los documentos hablan inglés, francés, alemán, español o italiano.';
 
   @override
   String get organisationRefusedNoName =>
@@ -22556,6 +22658,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get organisationRefusedOther =>
       'No se pudo cambiar la organización. Inténtelo de nuevo.';
+
+  @override
+  String get organisationRefusedRequestUsed =>
+      'Esta solicitud ya creó otro negocio. Vuelva a abrir el formulario.';
 
   @override
   String get organisationRefusedTwinNeverHead =>

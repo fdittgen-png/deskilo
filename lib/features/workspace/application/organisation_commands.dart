@@ -30,6 +30,20 @@ class OrganisationCommands {
     String headWorkspaceId,
   ) => _run(_repository.setHead(organisationId, headWorkspaceId));
 
+  /// #4005 — makes a house abroad; the organisations and the person's
+  /// businesses are read again once it exists.
+  Future<({String? workspaceId, OrganisationRefusal? refused})> createHouse(
+    HouseRequest request,
+  ) async {
+    final answer = await _repository.createHouse(request);
+    if (answer.refused == null) _changed();
+    return answer;
+  }
+
+  /// The birth record of [workspaceId], if it was made as a house.
+  Future<HouseBirth?> houseBirth(String workspaceId) =>
+      _repository.houseBirth(workspaceId);
+
   Future<OrganisationRefusal?> _run(
     Future<OrganisationRefusal?> command,
   ) async {

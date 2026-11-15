@@ -26,5 +26,8 @@
   "organisationRefusedFeatureOff": "Die Organisation ist in diesem Unternehmen aus: Schalten Sie sie zuerst in seinen Funktionen ein.",
   "organisationConfirmLeave": "{house} verlässt {organisation}. Seine Daten bleiben, wie sie sind; seine Mitglieder finden die anderen Häuser nicht mehr in seinem Chip.",
   "organisationConfirmEnd": "{organisation} endet: {head} ist wieder ein eigenständiges Unternehmen.",
-  "organisationConfirmHead": "{house} wird Hauptsitz: Seine Inhaber führen ab jetzt die Organisation."
+  "organisationConfirmHead": "{house} wird Hauptsitz: Seine Inhaber führen ab jetzt die Organisation.",
+  "organisationRefusedLanguage": "Die Dokumente sprechen Englisch, Französisch, Deutsch, Spanisch oder Italienisch.",
+  "organisationRefusedRequestUsed": "Diese Anfrage hat bereits ein anderes Unternehmen angelegt. Öffnen Sie das Formular erneut.",
+  "organisationRefusedDemoOneHouse": "Die Demo fügt ein Haus im Ausland hinzu: in Polen, in Złoty. Wählen Sie Polen, um es hinzuzufügen."
 }

@@ -13738,6 +13738,100 @@ class AppLocalizationsIt extends AppLocalizations {
   String get holidayWhitMonday => 'Lunedì di Pentecoste';
 
   @override
+  String get houseAddCarried =>
+      'Viaggiano: i ruoli, le regole di prenotazione e di convalida, i promemoria e le funzioni che questo paese offre.';
+
+  @override
+  String get houseAddLanguage => 'Lingua dei suoi documenti';
+
+  @override
+  String get houseAddName => 'Nome della casa';
+
+  @override
+  String get houseAddNotCarried =>
+      'Non viaggiano: l’identità, la banca e le istruzioni di pagamento, i luoghi, l’impaginazione dei documenti e i collegamenti.';
+
+  @override
+  String get houseAddSubmit => 'Creare la casa';
+
+  @override
+  String houseAddTimezone(String zone) {
+    return 'Fuso orario: $zone';
+  }
+
+  @override
+  String get houseAddTitle => 'Aggiungere una casa all’estero';
+
+  @override
+  String get houseAddToPrice =>
+      'Arrivano inattivi, da prezzare: i piani, i servizi e i pacchetti.';
+
+  @override
+  String houseBirthCoOwners(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count titolari della sede sono stati aggiunti come contitolari.',
+      one: '1 titolare della sede è stato aggiunto come contitolare.',
+      zero: 'Nessun contitolare aggiunto.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthCreated(String head, String date) {
+    return 'Creata a partire da $head il $date.';
+  }
+
+  @override
+  String get houseBirthNotCarried =>
+      'Non ripresi: l’impaginazione dei documenti e i collegamenti. Scelga quelli di questa casa.';
+
+  @override
+  String houseBirthPackages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count pacchetti',
+      one: '1 pacchetto',
+      zero: 'nessun pacchetto',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthPlans(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count piani',
+      one: '1 piano',
+      zero: 'nessun piano',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count servizi',
+      one: '1 servizio',
+      zero: 'nessun servizio',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseBirthTitle => 'Come è nata questa casa';
+
+  @override
+  String houseBirthToPrice(String rows) {
+    return 'Ripresi, inattivi e da prezzare: $rows.';
+  }
+
+  @override
   String get hubAccountingSubtitle =>
       'Libri, esportazioni e importazioni, software contabile, estratti conto, IVA e identità legale in un unico posto';
 
@@ -22566,6 +22660,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa attività fa già parte di un’organizzazione.';
 
   @override
+  String get organisationRefusedDemoOneHouse =>
+      'La demo aggiunge una casa all’estero: in Polonia, in złoty. Scelga la Polonia per aggiungerla.';
+
+  @override
   String get organisationRefusedFeatureOff =>
       'L’organizzazione è disattivata in questa attività: la attivi prima nelle sue funzioni.';
 
@@ -22576,6 +22674,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get organisationRefusedInNone =>
       'Questa attività non fa parte di alcuna organizzazione.';
+
+  @override
+  String get organisationRefusedLanguage =>
+      'I documenti parlano inglese, francese, tedesco, spagnolo o italiano.';
 
   @override
   String get organisationRefusedNoName =>
@@ -22592,6 +22694,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get organisationRefusedOther =>
       'Non è stato possibile modificare l’organizzazione. Riprovi.';
+
+  @override
+  String get organisationRefusedRequestUsed =>
+      'Questa richiesta ha già creato un’altra attività. Riapra il modulo.';
 
   @override
   String get organisationRefusedTwinNeverHead =>

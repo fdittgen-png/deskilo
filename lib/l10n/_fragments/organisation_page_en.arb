@@ -136,5 +136,17 @@
         "type": "String"
       }
     }
+  },
+  "organisationRefusedLanguage": "The documents speak English, French, German, Spanish or Italian.",
+  "organisationRefusedRequestUsed": "This request already made another business. Open the form again.",
+  "@organisationRefusedLanguage": {
+    "description": "#4005 — refusal: the documents' language is not one the app speaks."
+  },
+  "@organisationRefusedRequestUsed": {
+    "description": "#4005 — refusal: the request id already made another business."
+  },
+  "organisationRefusedDemoOneHouse": "The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.",
+  "@organisationRefusedDemoOneHouse": {
+    "description": "#4005 — in the Demo, a house abroad can only be added in the Demo's own country and currency."
   }
 }

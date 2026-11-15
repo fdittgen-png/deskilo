@@ -2,12 +2,14 @@
 //
 // #4006 — the reader's organisations: read on the personal client, as Me
 // reads the reader's businesses.
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/context_client_providers.dart';
 import '../application/organisation_commands.dart';
 import '../data/supabase_organisation_repository.dart';
 import '../domain/organisation.dart';
+import 'workspace_providers.dart';
 
 part 'organisation_providers.g.dart';
 
@@ -24,5 +26,30 @@ Future<List<Organisation>> myOrganisations(Ref ref) =>
 @Riverpod(keepAlive: true)
 OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
   ref.watch(organisationRepositoryProvider),
-  () => ref.invalidate(myOrganisationsProvider),
+  () {
+    ref
+      ..invalidate(myOrganisationsProvider)
+      // #4005 — a house made is one more business of the person's.
+      ..invalidate(myWorkspacesProvider);
+  },
 );
+
+/// #4005 — the birth record of [workspaceId], if it was made as a house.
+@riverpod
+Future<HouseBirth?> houseBirth(Ref ref, String workspaceId) =>
+    ref.watch(organisationRepositoryProvider).houseBirth(workspaceId);
+
+/// #4005 — the house just made, whose birth record its home shows once.
+@Riverpod(keepAlive: true)
+class PendingHouseBirth extends _$PendingHouseBirth {
+  @override
+  String? build() => null;
+
+  /// The house [workspaceId] was just made; null once it was shown.
+  void set(String? workspaceId) => state = workspaceId;
+}
+
+/// #4005 — the country the house form proposes first: none (the catalogue's
+/// first) unless the installation says which. The Demo proposes the one
+/// house it can add.
+final houseCountryProposalProvider = Provider<String?>((ref) => null);

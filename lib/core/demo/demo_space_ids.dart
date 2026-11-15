@@ -14,3 +14,7 @@ const demoMilanSpaceId = 'ws-6';
 
 /// #3863 — the practice: a business without places.
 const demoPracticeSpaceId = 'ws-7';
+
+/// #4005 — the house abroad the Demo adds: dormant until the visitor adds
+/// it from Settings › Organisation.
+const demoHouseSpaceId = 'ws-9';
