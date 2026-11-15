@@ -4,6 +4,9 @@ import '../../workspace/domain/organisation.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/space_pairs.dart';
 
+/// #4008 — the id of an organisation's group is this and the organisation's.
+const organisationGroupPrefix = 'organisation:';
+
 /// One group of Me › Home as laid out: its id, its rows' keys in the order
 /// they are shown, and — for an organisation (#4006) — its name.
 typedef SpaceGroupRows = ({String id, List<String> keys, String? organisation});
@@ -89,7 +92,7 @@ class MeSpacesLayout {
             ]
             case final keys when keys.isNotEmpty)
           (
-            id: 'organisation:${organisation.id}',
+            id: '$organisationGroupPrefix${organisation.id}',
             keys: keys,
             organisation: organisation.name,
           ),

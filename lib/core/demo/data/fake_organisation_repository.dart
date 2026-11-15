@@ -14,9 +14,15 @@ class FakeOrganisationRepository implements OrganisationRepository {
   FakeOrganisationRepository({
     List<Organisation> organisations = const [],
     List<OrganisationHouse> businesses = const [],
+    List<JoinableHouse> joinable = const [],
     this.createBusiness,
     this.onlyHouse,
+    this.joinableSource,
+    this.join,
+    Set<String>? welcoming,
   }) : _organisations = List.of(organisations),
+       _joinable = List.of(joinable),
+       _welcoming = welcoming ?? {},
        _source = null,
        _businessSource = null,
        _businesses = List.of(businesses);
@@ -27,7 +33,12 @@ class FakeOrganisationRepository implements OrganisationRepository {
     Future<List<OrganisationHouse>> Function()? businesses,
     this.createBusiness,
     this.onlyHouse,
+    this.joinableSource,
+    this.join,
+    Set<String>? welcoming,
   }) : _organisations = [],
+       _joinable = [],
+       _welcoming = welcoming ?? {},
        _source = source,
        _businessSource = businesses,
        _businesses = [];
@@ -41,6 +52,21 @@ class FakeOrganisationRepository implements OrganisationRepository {
   final ({String country, String currency})? onlyHouse;
 
   final Map<String, HouseBirth> _births = {};
+
+  /// #4008 — the houses the person may ask to join, as the Demo states
+  /// them each time they are read (their memberships move with the persona).
+  final Future<List<JoinableHouse>> Function()? joinableSource;
+
+  /// #4008 — makes the person a member of the house (active when [welcome],
+  /// else pending) where the Demo keeps its businesses.
+  final Future<void> Function(String workspaceId, {required bool welcome})?
+  join;
+
+  final List<JoinableHouse> _joinable;
+
+  /// #4008 — the houses whose owners welcome the other houses' members
+  /// (the Demo keeps them on its fixture, whoever the persona is).
+  final Set<String> _welcoming;
 
   List<Organisation> _organisations;
   Future<List<Organisation>> Function()? _source;
@@ -232,6 +258,75 @@ class FakeOrganisationRepository implements OrganisationRepository {
       createdAt: birth.createdAt,
       rateHints: birth.rateHints,
     );
+    return null;
+  }
+
+  @override
+  Future<List<JoinableHouse>> joinableHouses() async => [
+    for (final h in await joinableSource?.call() ?? _joinable)
+      if (_welcoming.contains(h.workspaceId) && !h.welcome)
+        _welcomed(h)
+      else
+        h,
+  ];
+
+  JoinableHouse _welcomed(JoinableHouse h) => JoinableHouse(
+    organisationId: h.organisationId,
+    organisationName: h.organisationName,
+    workspaceId: h.workspaceId,
+    name: h.name,
+    countryCode: h.countryCode,
+    currencyCode: h.currencyCode,
+    asked: h.asked,
+    welcome: true,
+  );
+
+  @override
+  Future<({HouseJoin? joined, OrganisationRefusal? refused})> askToJoin(
+    String workspaceId,
+  ) async {
+    final house = (await joinableHouses())
+        .where((h) => h.workspaceId == workspaceId)
+        .firstOrNull;
+    if (house == null) {
+      return (joined: null, refused: OrganisationRefusal.notAMember);
+    }
+    final joined = house.welcome ? HouseJoin.member : HouseJoin.asked;
+    if (join case final make?) {
+      await make(workspaceId, welcome: house.welcome);
+    } else {
+      final i = _joinable.indexWhere((h) => h.workspaceId == workspaceId);
+      if (joined == HouseJoin.member) {
+        _joinable.removeAt(i);
+      } else {
+        _joinable[i] = house.askedNow();
+      }
+    }
+    return (joined: joined, refused: null);
+  }
+
+  @override
+  Future<bool> welcomesMembers(
+    String organisationId,
+    String workspaceId,
+  ) async => _welcoming.contains(workspaceId);
+
+  @override
+  Future<OrganisationRefusal?> setWelcome(
+    String workspaceId, {
+    required bool on,
+  }) async {
+    // Read as stated, never kept: the Demo's organisations follow the
+    // persona.
+    final house = (await myOrganisations())
+        .map((o) => o.houseOf(workspaceId))
+        .nonNulls
+        .firstOrNull;
+    if (house == null) return OrganisationRefusal.inNone;
+    if (house.role != HouseRole.owner && house.role != HouseRole.coOwner) {
+      return OrganisationRefusal.notOwner;
+    }
+    on ? _welcoming.add(workspaceId) : _welcoming.remove(workspaceId);
     return null;
   }
 }

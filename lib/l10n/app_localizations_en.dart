@@ -9453,6 +9453,16 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String eventHouseJoinAsked(String member, String house) {
+    return '$member asks to join, from $house';
+  }
+
+  @override
+  String eventHouseJoinWelcomed(String member, String house) {
+    return '$member joined from $house, welcomed by this house\'s setting';
+  }
+
+  @override
   String eventInvoiceIssuedLine(String number) {
     return 'New invoice $number';
   }
@@ -13742,6 +13752,72 @@ class AppLocalizationsEn extends AppLocalizations {
   String get houseFree => 'Free';
 
   @override
+  String get houseJoinAsk => 'Ask to join';
+
+  @override
+  String houseJoinAsked(String house) {
+    return 'Asked, waiting for $house';
+  }
+
+  @override
+  String get houseJoinConfirmAsk => 'Ask';
+
+  @override
+  String get houseJoinConfirmJoin => 'Join';
+
+  @override
+  String houseJoinDoneAsked(String house) {
+    return 'Your request went to $house.';
+  }
+
+  @override
+  String houseJoinDoneMember(String house) {
+    return 'You are a member of $house.';
+  }
+
+  @override
+  String houseJoinOthers(String organisation) {
+    return 'Other houses of $organisation';
+  }
+
+  @override
+  String get houseJoinSheetApart =>
+      'Your bookings and invoices there are kept apart from the other houses\'.';
+
+  @override
+  String houseJoinSheetDecides(String house) {
+    return '$house decides on your request.';
+  }
+
+  @override
+  String houseJoinSheetOwn(String house, String currency) {
+    return '$house is a business of its own, with its own terms, prices and currency ($currency).';
+  }
+
+  @override
+  String houseJoinSheetProfile(String house) {
+    return 'Your profile becomes visible to the administrators of $house: your name, your e-mail and what it asks of every member.';
+  }
+
+  @override
+  String houseJoinSheetTitle(String house) {
+    return 'Join $house?';
+  }
+
+  @override
+  String houseJoinSheetWelcome(String house, String organisation) {
+    return '$house welcomes the members of $organisation: you will be a member at once.';
+  }
+
+  @override
+  String get houseJoinWelcomes => 'You will be a member at once';
+
+  @override
+  String houseJoinWhere(String country, String currency) {
+    return '$country, in $currency';
+  }
+
+  @override
   String get houseKindPackage => 'Package';
 
   @override
@@ -13801,6 +13877,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String houseSetRates(String country) {
     return 'Set $country\'s tax rates';
   }
+
+  @override
+  String houseWelcomeExplain(String organisation) {
+    return 'A member of another house of $organisation who asks becomes a member here at once, with this house\'s terms for a new member. Off, you decide each request.';
+  }
+
+  @override
+  String get houseWelcomeSwitch =>
+      'Members of the other houses are welcome here';
 
   @override
   String get hubAccountingSubtitle =>
@@ -22567,6 +22652,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'The documents speak English, French, German, Spanish or Italian.';
 
   @override
+  String get organisationRefusedNoHouse =>
+      'This business is not a house of an organisation.';
+
+  @override
   String get organisationRefusedNoName => 'An organisation needs a name.';
 
   @override
@@ -22574,8 +22663,16 @@ class AppLocalizationsEn extends AppLocalizations {
       'The new head must be a house of this organisation.';
 
   @override
+  String get organisationRefusedNotAMember =>
+      'Only a member of a house of this organisation can ask to join another.';
+
+  @override
   String get organisationRefusedNotOwner =>
       'Only an owner of this business and of the head may do this.';
+
+  @override
+  String get organisationRefusedOnlyAPerson =>
+      'A person asks to join a house; an assistant cannot ask for them.';
 
   @override
   String get organisationRefusedOther =>

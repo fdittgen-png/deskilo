@@ -57,6 +57,25 @@ class DemoSpaceListing {
     _parked = null;
   }
 
+  /// #4008 — the space's row, listed or parked.
+  Workspace? get row =>
+      _home.workspaces.where((w) => w.id == id).firstOrNull ?? _parked;
+
+  /// #4008 — [memberId]'s membership here, if they have one.
+  Member? memberOf(String memberId) => [
+    workspaces.myMember,
+    ...workspaces.otherMembers,
+  ].where((m) => m.id == memberId).firstOrNull;
+
+  /// #4008 — [member] becomes a member here, and the space is looked at as
+  /// them.
+  void join(Member member) {
+    workspaces.otherMembers
+      ..removeWhere((m) => m.id == member.id)
+      ..add(member);
+    viewAs(member.id);
+  }
+
   /// Runs [build] with the space as it was when it was listed (its row in the
   /// list, the cast as seeded), whatever persona is looked through now, and
   /// then looks at the space as [memberId] again: what a space holds does not

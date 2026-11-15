@@ -42,6 +42,7 @@ class DemoTradeCity {
     required this.nameOffset,
     required this.seedColor,
     required this.symbol,
+    this.memberPersonaHere = true,
   });
 
   final String id, prefix, name, countryCode, currency, timezone;
@@ -64,6 +65,12 @@ class DemoTradeCity {
   /// Where the locals' names start in the shared list of invented names.
   final int nameOffset;
   final String seedColor, symbol;
+
+  /// #4008 — whether the member the Demo looks through (Bruno) is a member
+  /// here from the start. Milan leaves him out: he asks to join it from Me,
+  /// as a member of the organisation's other houses (Zurich keeps him: what
+  /// he owes there is the Demo's francs).
+  final bool memberPersonaHere;
 
   List<String> get siteIds => [
     for (var i = 0; i < siteNames.length; i++) '$prefix-site-$i',
@@ -120,7 +127,7 @@ class DemoTradeCity {
     final people = demoCast.take(castHere).toList();
     final members = [
       cast(people[0], owner: true, admin: true),
-      cast(people[1]),
+      if (memberPersonaHere) cast(people[1]),
       cast(people[2], admin: true),
       cast(people[3]),
       cast(people[4]),
@@ -205,4 +212,5 @@ const demoMilan = DemoTradeCity(
   nameOffset: 80,
   seedColor: '#15803D',
   symbol: 'NC',
+  memberPersonaHere: false,
 );

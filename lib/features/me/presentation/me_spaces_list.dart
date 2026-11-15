@@ -25,6 +25,7 @@ import '../../workspace/providers/organisation_providers.dart';
 import '../application/me_spaces_layout.dart';
 import '../providers/space_prefs_provider.dart';
 import 'group_name_dialog.dart';
+import 'me_other_houses.dart';
 import 'me_space_card.dart';
 import 'me_spaces_chrome.dart';
 import 'me_workspace_row.dart';
@@ -255,6 +256,11 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           itemBuilder: (context, i) => _row(context, prefs, keys, keys[i],
               layout.rows[keys[i]]!,
               (index: canDrag ? i : null, housed: organisation != null)),
+        ),
+      // #4008 — the organisation's houses the person may ask to join.
+      if (!folded && organisation != null && id.startsWith(organisationGroupPrefix))
+        MeOtherHouses(
+          organisationId: id.substring(organisationGroupPrefix.length),
         ),
     ];
   }

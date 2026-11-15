@@ -12408,6 +12408,30 @@
       }
     }
   },
+  "eventHouseJoinAsked": "{member} asks to join, from {house}",
+  "@eventHouseJoinAsked": {
+    "description": "#4008 — a member of one house asks to join another: eventHouseJoinAsked.",
+    "placeholders": {
+      "member": {
+        "type": "String"
+      },
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "eventHouseJoinWelcomed": "{member} joined from {house}, welcomed by this house's setting",
+  "@eventHouseJoinWelcomed": {
+    "description": "#4008 — a member of one house asks to join another: eventHouseJoinWelcomed.",
+    "placeholders": {
+      "member": {
+        "type": "String"
+      },
+      "house": {
+        "type": "String"
+      }
+    }
+  },
   "eventInvoiceIssuedLine": "New invoice {number}",
   "@eventInvoiceIssuedLine": {
     "description": "#3672 a new invoice told to its customer",
@@ -18009,6 +18033,125 @@
   "@houseFree": {
     "description": "#4005 — a house's first task, naming its prices: houseFree."
   },
+  "houseJoinAsk": "Ask to join",
+  "@houseJoinAsk": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinAsk."
+  },
+  "houseJoinAsked": "Asked, waiting for {house}",
+  "@houseJoinAsked": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinAsked.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinConfirmAsk": "Ask",
+  "@houseJoinConfirmAsk": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinConfirmAsk."
+  },
+  "houseJoinConfirmJoin": "Join",
+  "@houseJoinConfirmJoin": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinConfirmJoin."
+  },
+  "houseJoinDoneAsked": "Your request went to {house}.",
+  "@houseJoinDoneAsked": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinDoneAsked.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinDoneMember": "You are a member of {house}.",
+  "@houseJoinDoneMember": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinDoneMember.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinOthers": "Other houses of {organisation}",
+  "@houseJoinOthers": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinOthers.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinSheetApart": "Your bookings and invoices there are kept apart from the other houses'.",
+  "@houseJoinSheetApart": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetApart."
+  },
+  "houseJoinSheetDecides": "{house} decides on your request.",
+  "@houseJoinSheetDecides": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetDecides.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinSheetOwn": "{house} is a business of its own, with its own terms, prices and currency ({currency}).",
+  "@houseJoinSheetOwn": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetOwn.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinSheetProfile": "Your profile becomes visible to the administrators of {house}: your name, your e-mail and what it asks of every member.",
+  "@houseJoinSheetProfile": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetProfile.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinSheetTitle": "Join {house}?",
+  "@houseJoinSheetTitle": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetTitle.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinSheetWelcome": "{house} welcomes the members of {organisation}: you will be a member at once.",
+  "@houseJoinSheetWelcome": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinSheetWelcome.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      },
+      "organisation": {
+        "type": "String"
+      }
+    }
+  },
+  "houseJoinWelcomes": "You will be a member at once",
+  "@houseJoinWelcomes": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinWelcomes."
+  },
+  "houseJoinWhere": "{country}, in {currency}",
+  "@houseJoinWhere": {
+    "description": "#4008 — a member of one house asks to join another: houseJoinWhere.",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      },
+      "currency": {
+        "type": "String"
+      }
+    }
+  },
   "houseKindPackage": "Package",
   "@houseKindPackage": {
     "description": "#4005 — a house's first task, naming its prices: houseKindPackage."
@@ -18087,6 +18230,19 @@
         "type": "String"
       }
     }
+  },
+  "houseWelcomeExplain": "A member of another house of {organisation} who asks becomes a member here at once, with this house's terms for a new member. Off, you decide each request.",
+  "@houseWelcomeExplain": {
+    "description": "#4008 — a member of one house asks to join another: houseWelcomeExplain.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      }
+    }
+  },
+  "houseWelcomeSwitch": "Members of the other houses are welcome here",
+  "@houseWelcomeSwitch": {
+    "description": "#4008 — a member of one house asks to join another: houseWelcomeSwitch."
   },
   "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
   "@hubAccountingSubtitle": {
@@ -29626,6 +29782,10 @@
   "@organisationRefusedLanguage": {
     "description": "#4005 — refusal: the documents' language is not one the app speaks."
   },
+  "organisationRefusedNoHouse": "This business is not a house of an organisation.",
+  "@organisationRefusedNoHouse": {
+    "description": "#4008 — a member of one house asks to join another: organisationRefusedNoHouse."
+  },
   "organisationRefusedNoName": "An organisation needs a name.",
   "@organisationRefusedNoName": {
     "description": "#4006 — the organisation page: organisationRefusedNoName."
@@ -29634,9 +29794,17 @@
   "@organisationRefusedNotAHouse": {
     "description": "#4006 — the organisation page: organisationRefusedNotAHouse."
   },
+  "organisationRefusedNotAMember": "Only a member of a house of this organisation can ask to join another.",
+  "@organisationRefusedNotAMember": {
+    "description": "#4008 — a member of one house asks to join another: organisationRefusedNotAMember."
+  },
   "organisationRefusedNotOwner": "Only an owner of this business and of the head may do this.",
   "@organisationRefusedNotOwner": {
     "description": "#4006 — the organisation page: organisationRefusedNotOwner."
+  },
+  "organisationRefusedOnlyAPerson": "A person asks to join a house; an assistant cannot ask for them.",
+  "@organisationRefusedOnlyAPerson": {
+    "description": "#4008 — a member of one house asks to join another: organisationRefusedOnlyAPerson."
   },
   "organisationRefusedOther": "The organisation could not be changed. Try again.",
   "@organisationRefusedOther": {

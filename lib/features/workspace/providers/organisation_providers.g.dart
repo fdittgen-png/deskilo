@@ -154,7 +154,139 @@ final class OrganisationCommandsProvider
 }
 
 String _$organisationCommandsHash() =>
-    r'6f0a61363f12bb9d87efa4c80e6f13d7913a3015';
+    r'c31d198cdd02f8baa099fa01c412241b9d51cc7e';
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+
+@ProviderFor(joinableHouses)
+final joinableHousesProvider = JoinableHousesProvider._();
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+
+final class JoinableHousesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<JoinableHouse>>,
+          List<JoinableHouse>,
+          FutureOr<List<JoinableHouse>>
+        >
+    with
+        $FutureModifier<List<JoinableHouse>>,
+        $FutureProvider<List<JoinableHouse>> {
+  /// #4008 — the houses of the reader's organisations they may ask to join.
+  JoinableHousesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'joinableHousesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$joinableHousesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<JoinableHouse>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<JoinableHouse>> create(Ref ref) {
+    return joinableHouses(ref);
+  }
+}
+
+String _$joinableHousesHash() => r'b9f7981aa4f58504c7b67903a90e13c67db78862';
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+@ProviderFor(houseWelcomes)
+final houseWelcomesProvider = HouseWelcomesFamily._();
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+final class HouseWelcomesProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+  /// members of the organisation's other houses at once.
+  HouseWelcomesProvider._({
+    required HouseWelcomesFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'houseWelcomesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$houseWelcomesHash();
+
+  @override
+  String toString() {
+    return r'houseWelcomesProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return houseWelcomes(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is HouseWelcomesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$houseWelcomesHash() => r'2ea28b7b21514c2e1cabda5b2eedfc96257eda76';
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+final class HouseWelcomesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<bool>, (String, String)> {
+  HouseWelcomesFamily._()
+    : super(
+        retry: null,
+        name: r'houseWelcomesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+  /// members of the organisation's other houses at once.
+
+  HouseWelcomesProvider call(String organisationId, String workspaceId) =>
+      HouseWelcomesProvider._(
+        argument: (organisationId, workspaceId),
+        from: this,
+      );
+
+  @override
+  String toString() => r'houseWelcomesProvider';
+}
 
 /// #4005 — the birth record of [workspaceId], if it was made as a house.
 
