@@ -144,7 +144,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/linked-accounts', RouteClass.nativeAccount),
   // #4007 — an organisation's houses side by side: across businesses, so
   // the account's own page.
-  RouteRule('/organisation/:id/overview', RouteClass.nativeAccount),
+  RouteRule('/organisation/:id/overview', RouteClass.nativeAccount, measure: PageMeasure.work),
   // The person's own settings (sign-out, status line) and this
   // device's local diagnostics: no workspace decides them, so they open
   // with zero workspaces and while a membership is pending. The workspace

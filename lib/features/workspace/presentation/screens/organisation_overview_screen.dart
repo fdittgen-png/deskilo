@@ -34,14 +34,14 @@ class OrganisationOverviewScreen extends ConsumerStatefulWidget {
   final String organisationId;
 
   /// Where the overview of [organisationId] is.
-  static String location(String organisationId) =>
+  static String _location(String organisationId) =>
       '/organisation/$organisationId/overview';
 
   /// Opens the overview of [organisationId].
   static Future<void> open(BuildContext context, String organisationId) =>
       openLocation<void>(
         context,
-        location(organisationId),
+        _location(organisationId),
         orBuild: (_) =>
             OrganisationOverviewScreen(organisationId: organisationId),
       );
@@ -212,6 +212,7 @@ class _OverviewBody extends ConsumerWidget {
                 RecordColumn(
                   id: 'currency',
                   label: l10n.organisationOverviewCurrency,
+                  flex: 2,
                   cell: (_, h) => Text(h.currencyCode),
                 ),
                 RecordColumn(
