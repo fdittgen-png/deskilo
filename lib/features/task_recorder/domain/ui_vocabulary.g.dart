@@ -3503,6 +3503,7 @@ const Set<String> uiKeys = {
   'shell-events-bell',
   'shell-overflow',
   'shell-overflow-button',
+  'shell-overflow-mark',
   'shell-search-button',
   'shell-settings-button',
   'shell-sidebar',
