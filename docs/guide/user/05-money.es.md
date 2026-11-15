@@ -354,6 +354,31 @@ Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
 
 **Véase también:** [La facturación de un vistazo](help:user.money.invoicing) · [La página Compras y Añadir compra / gasto](help:user.money.purchases)
 
+<!-- anchor: user.money.guest-passes -->
+### Vender y revocar un pase de invitado
+
+**Público:** Administrador/a · Propietario
+
+Un invitado que no es miembro ocupa un puesto un día o unas horas, paga en recepción y recibe una factura.
+
+<!-- image: user-money-guest-passes -->
+
+**Pasos**
+
+1. Abra [Pases de invitado](app:/money/guest-passes), o **Pases de invitado** en la página [Ventas](app:/money/sales).
+2. La primera vez, pulse **Añadir un pase**: su **Nombre**, **Por día** o **Por hora**, el **Precio por unidad** y **A la venta**.
+3. Pulse **Vender un pase**, elija el **Pase** y el **Puesto**, los días (**Desde**, **Hasta**) y el nombre y el contacto del invitado, y marque **Pagado en recepción** si ya pagó.
+4. **Pases vendidos** lista cada pase con lo **Usado**. Para retirar pases, selecciónelos, pulse **Revocar** y confirme.
+
+**Conviene saber**
+
+- El invitado no se convierte en miembro; su nombre y su contacto se imprimen en la factura.
+- Revocar anula las reservas que aún no han empezado. Los días ya empezados se quedan, y no se mueve dinero: corrija la factura del invitado en su página si hay que devolverle dinero.
+- **Revocados, factura sin corregir** lista los pases revocados cuya factura aún espera su corrección; **Abrir la factura** le lleva a ella.
+- Un pase por horas vale para un día; un pase por días dura de 1 a 31 días.
+
+**Véase también:** [La página Ventas](help:user.money.sales) · [Seguir una factura](help:user.invoicing.open)
+
 <!-- anchor: user.money.purchases -->
 ### La página Compras y Añadir compra / gasto
 
@@ -607,21 +632,21 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Público:** Administrador/a de facturación · Propietario
 
-Usted emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
+Emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
 
 <p><img src="images/user-money-invoicing.es.jpg" width="280"></p>
 
 **Pasos**
 
 1. Abra [Facturación](app:/invoices).
-2. Lea las pestañas: **Por facturar** enumera los miembros a los que aún falta facturar el mes, **Abiertas** las facturas emitidas y sin pagar, y **Archivo** las que están cerradas.
-3. Lea la línea de cuatro pasos bajo el banner: **Por emitir**, **Por cobrar**, **Por confirmar** y **Cerrada**, con un recuento para cada una.
-4. Pulse **Asistente de cierre mensual** para facturar un mes, o **Nueva factura** para una sola.
-5. Pulse el icono de herramientas para el registro de facturas, las reglas de recordatorio, la plantilla PDF de factura y **Mis finanzas**.
+2. Lea **Por cobrar**: lo que está **Vencido** y lo que está **Aún no vencido**.
+3. Avance por **Pendiente**: cada entrada se abre con **Ver**, hasta que dice **Todo está al día.**
+4. Debajo, lea los clientes y sus facturas; pulse **Nueva** para una sola factura y **Más** para las demás herramientas.
 
 **Conviene saber**
 
-- Las facturas nunca se editan ni se eliminan. Una factura equivocada se marca como errónea y se sustituye.
-- El flujo completo, del cierre mensual al cobro y los recordatorios, está en el capítulo 08: [Reglas de recordatorio](help:user.money.reminders.rules) y [La plantilla PDF de factura](help:user.money.reports.invoice-template) son buenos lugares para continuar.
+- Una factura nunca se edita ni se borra. Una errónea se corrige con una factura sustitutiva.
+- Toda la rutina, desde facturar el mes hasta conciliar los pagos y pagar las notas de crédito, está en el capítulo 08: empiece por [La pantalla de Facturación](help:user.invoicing.hub).
 
-**Véase también:** [Reglas de recordatorio](help:user.money.reminders.rules)
+**Véase también:** [Facturar el mes](help:user.invoicing.month) · [Reglas de recordatorio](help:user.money.reminders.rules)
+
