@@ -18,8 +18,6 @@ import 'lint_sources.dart';
 /// Measured routes no desk guard opens yet, each with the issue that will
 /// guard it (or why it never draws a page of its own).
 const _notGuardedYet = <String, String>{
-  // A long task: its own page over the list (#3608), guarded with its list.
-  '/invoicing/wizard': '#3948 text wider than 760 px at 1024',
   // A record at its address under a guarded list.
   // The purchase orders: guarded by their own leaf.
   // Each had two causes, fixed on two branches (#3946 its Tab order, #3947

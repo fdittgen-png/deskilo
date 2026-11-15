@@ -7,6 +7,7 @@ import '../../../../core/i18n/money_format.dart';
 import '../../../../core/navigation/page_spec.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../events/domain/workspace_event.dart';
@@ -170,10 +171,18 @@ class WizardHint extends StatelessWidget {
 
   final String text;
 
+  // #3948 — a hint is read: it wraps inside the reading measure, at the
+  // start of the step, however wide the step's lists and tables are.
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.only(bottom: AppSpacing.md),
-        child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+        child: Align(
+          alignment: AlignmentDirectional.centerStart,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: kReadingColumnWidth),
+            child: Text(text, style: Theme.of(context).textTheme.bodyMedium),
+          ),
+        ),
       );
 }
 
