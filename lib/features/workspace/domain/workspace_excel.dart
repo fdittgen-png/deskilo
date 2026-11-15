@@ -321,14 +321,12 @@ class _ExcelExport {
       [s.id, s.name, major(s.priceCents), workspace.currencyCode, s.active, if (s.category.isEmpty) null else s.category, s.durationMinutes, if (s.description.isEmpty) null else s.description, s.isPublic, s.sortOrder],
   ]);
 
-  XlsxSheet _invoices() =>
-      XlsxSheet(name: 'Invoices', totals: 'total', rows: [
+  XlsxSheet _invoices() => XlsxSheet(name: 'Invoices', totals: 'total', rows: [
     [
       'number', 'member', 'period', 'issued_at', 'total', 'currency',
       'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
       'net', 'vat', 'vat_by_rate', 'due_on', 'issued_by',
-      // #3989 — what the invoice froze at issue (#3850, #3852).
-      'document_language', 'format_locale', 'paper',
+      'document_language', 'format_locale', 'paper', // #3989: frozen at issue
     ],
     for (final i in invoices)
       [
@@ -341,8 +339,7 @@ class _ExcelExport {
           for (final t in i.vatTotals)
             '${t.percent}%: ${major(t.vatCents).value.toStringAsFixed(2)}',
         ].join('; '),
-        _day(i.dueOn), i.issuerName,
-        i.documentLanguage, i.formatLocale, i.paper,
+        _day(i.dueOn), i.issuerName, i.documentLanguage, i.formatLocale, i.paper,
       ],
   ]);
 

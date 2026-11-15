@@ -9,6 +9,7 @@
 import 'package:meta/meta.dart';
 
 /// One table the workbook reads.
+@visibleForTesting
 class ExportSource {
   const ExportSource(
     this.table, {
