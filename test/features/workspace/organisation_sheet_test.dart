@@ -26,7 +26,7 @@ Workspace _space(String id, String name, String country, String currency) =>
       currencyCode: currency,
       timezone: 'Europe/Paris',
       inviteCode: 'X',
-      environment: 'production',
+      environment: 'prod',
     );
 
 final _head = _space('head', 'Atelier du Marché', 'FR', 'EUR');
@@ -40,17 +40,21 @@ OrganisationHouse _house(Workspace w) => OrganisationHouse(
   role: HouseRole.owner,
 );
 
-Future<FakeOrganisationRepository> _open(WidgetTester tester) async {
-  final repository = FakeOrganisationRepository(
-    businesses: [_house(_head), _house(_london)],
-  );
+Future<FakeOrganisationRepository> _open(
+  WidgetTester tester, {
+  FakeOrganisationRepository? given,
+  Workspace? opened,
+}) async {
+  final repository =
+      given ??
+      FakeOrganisationRepository(businesses: [_house(_head), _house(_london)]);
   await pumpApp(
     tester,
     Scaffold(
       body: Builder(
         builder: (context) => FilledButton(
           key: const ValueKey('open'),
-          onPressed: () => OrganisationSheet.open(context, _head),
+          onPressed: () => OrganisationSheet.open(context, opened ?? _head),
           child: const Text('open'),
         ),
       ),
@@ -120,5 +124,53 @@ void main() {
     await _name(tester, '   ');
     expect(find.text(_en.organisationRefusedNoName), findsOneWidget);
     expect(await repository.myOrganisations(), isEmpty);
+  });
+
+  testWidgets('the head\'s owner makes another house the head', (tester) async {
+    final repository = await _open(tester);
+    await tester.tap(find.byKey(const ValueKey('organisation-create')));
+    await tester.pumpAndSettle();
+    await _name(tester, 'Atelier group');
+    await tester.tap(find.byKey(const ValueKey('organisation-add')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('organisation-candidate-ldn')));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.byKey(const ValueKey('organisation-head-ldn')));
+    await tester.pumpAndSettle();
+    expect((await repository.myOrganisations()).single.headWorkspaceId, 'ldn');
+  });
+
+  testWidgets('a house\'s owner who does not own the head may only leave', (
+    tester,
+  ) async {
+    final organisation = Organisation(
+      id: 'org',
+      name: 'Atelier group',
+      headWorkspaceId: 'head',
+      houses: [
+        OrganisationHouse(
+          workspaceId: 'head',
+          name: _head.name,
+          countryCode: 'FR',
+          currencyCode: 'EUR',
+          role: HouseRole.member,
+        ),
+        _house(_london),
+      ],
+    );
+    final repository = await _open(
+      tester,
+      given: FakeOrganisationRepository(organisations: [organisation]),
+      opened: _london,
+    );
+    expect(find.byKey(const ValueKey('organisation-rename')), findsNothing);
+    expect(find.byKey(const ValueKey('organisation-add')), findsNothing);
+    expect(find.byKey(const ValueKey('organisation-remove-ldn')), findsNothing);
+    expect(find.byKey(const ValueKey('organisation-leave-head')), findsNothing);
+
+    await tester.tap(find.byKey(const ValueKey('organisation-leave-ldn')));
+    await tester.pumpAndSettle();
+    expect((await repository.myOrganisations()).single.houseOf('ldn'), isNull);
   });
 }
