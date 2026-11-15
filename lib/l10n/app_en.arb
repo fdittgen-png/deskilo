@@ -7526,6 +7526,10 @@
       }
     }
   },
+  "calendarAlertsCountUnknown": "Alerts: the number waiting could not be read",
+  "@calendarAlertsCountUnknown": {
+    "description": "#4017 — the name of the calendar's Alerts mark when the number of decisions waiting could not be read (no number is shown)."
+  },
   "calendarAllLevels": "All levels",
   "@calendarAllLevels": {
     "description": "First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)"

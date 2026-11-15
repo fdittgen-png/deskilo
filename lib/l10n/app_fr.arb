@@ -3449,6 +3449,7 @@
       }
     }
   },
+  "calendarAlertsCountUnknown": "Alertes : le nombre en attente n’a pas pu être lu",
   "calendarAllLevels": "Tous les étages",
   "calendarCancelFollowing": "Annuler celle-ci et les suivantes",
   "calendarCancelOccurrence": "Annuler cette occurrence",

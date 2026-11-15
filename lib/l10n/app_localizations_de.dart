@@ -5816,6 +5816,10 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get calendarAlertsCountUnknown =>
+      'Hinweise: Die Zahl der offenen konnte nicht gelesen werden';
+
+  @override
   String get calendarAllLevels => 'Alle Etagen';
 
   @override

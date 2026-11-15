@@ -10,6 +10,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/controls_feed_body.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -468,9 +469,11 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
             );
           },
         ),
-      AsyncError() => Center(
-          child: Text(
-            l10n.workspaceGenericError,
+      // #4017 — what failed is said, with Retry.
+      AsyncError(:final error) => Center(
+          child: ReadFailureBanner(
+            error: error,
+            onRetry: () => ref.invalidate(eventsProvider),
           ),
         ),
       _ => const LoadingView(),

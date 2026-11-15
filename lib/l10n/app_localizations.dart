@@ -9059,6 +9059,12 @@ abstract class AppLocalizations {
   /// **'{days, plural, one{Next day} other{Next {days} days}}'**
   String calendarAgendaRange(int days);
 
+  /// #4017 — the name of the calendar's Alerts mark when the number of decisions waiting could not be read (no number is shown).
+  ///
+  /// In en, this message translates to:
+  /// **'Alerts: the number waiting could not be read'**
+  String get calendarAlertsCountUnknown;
+
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)
   ///
   /// In en, this message translates to:

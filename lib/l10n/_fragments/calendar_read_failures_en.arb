@@ -1,0 +1,6 @@
+{
+  "calendarAlertsCountUnknown": "Alerts: the number waiting could not be read",
+  "@calendarAlertsCountUnknown": {
+    "description": "#4017 — the name of the calendar's Alerts mark when the number of decisions waiting could not be read (no number is shown)."
+  }
+}

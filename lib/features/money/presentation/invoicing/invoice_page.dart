@@ -24,6 +24,7 @@ import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/story.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/scoped_messenger.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/invoice_detail_facts.dart';
 import '../../application/receivables.dart';
@@ -56,7 +57,7 @@ Future<void> openInvoicePage(BuildContext context, String invoiceId) =>
       // Its own messenger: what an action says is said once, on the page,
       // not also on the home under it.
       builder: (_) => Dialog.fullscreen(
-        child: ScaffoldMessenger(child: InvoicePage(invoiceId: invoiceId)),
+        child: ScopedMessenger(child: InvoicePage(invoiceId: invoiceId)),
       ),
     );
 

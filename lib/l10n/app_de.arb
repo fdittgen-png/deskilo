@@ -3449,6 +3449,7 @@
       }
     }
   },
+  "calendarAlertsCountUnknown": "Hinweise: Die Zahl der offenen konnte nicht gelesen werden",
   "calendarAllLevels": "Alle Etagen",
   "calendarCancelFollowing": "Diesen und folgende stornieren",
   "calendarCancelOccurrence": "Diesen Termin stornieren",

@@ -17,6 +17,7 @@ import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/scoped_messenger.dart';
 import '../../domain/bank/bank_records.dart';
 import '../../providers/bank_statement_providers.dart';
 import '../bank_labels.dart';
@@ -215,7 +216,7 @@ class BankStatementsView extends ConsumerWidget {
       showDialog<void>(
         context: context,
         builder: (_) => Dialog.fullscreen(
-          child: ScaffoldMessenger(child: Scaffold(body: SafeArea(child: view))),
+          child: ScopedMessenger(child: Scaffold(body: SafeArea(child: view))),
         ),
       ),
     );

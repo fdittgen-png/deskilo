@@ -93,7 +93,7 @@ class WorkspaceLocaleFields extends ConsumerWidget {
         key: const Key('workspaceSettingsTimezone'),
         controller: timezone,
         enabled: enabled,
-        readOnly: true,
+        readOnly: true, // field-locked: the zone is picked from the list, never typed
         onTap: () async {
           final picked = await showTimeZonePicker(
             context,

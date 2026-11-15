@@ -5769,6 +5769,10 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get calendarAlertsCountUnknown =>
+      'Alerts: the number waiting could not be read';
+
+  @override
   String get calendarAllLevels => 'All levels';
 
   @override

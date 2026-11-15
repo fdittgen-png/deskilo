@@ -5663,6 +5663,7 @@ Map<String, _Getter> _part15() => {
   'bookingRecoveryCommitted': (l) => l.bookingRecoveryCommitted,
   'bookingRecoveryInProgress': (l) => l.bookingRecoveryInProgress,
   'businessKindNameCoworking': (l) => l.businessKindNameCoworking,
+  'calendarAlertsCountUnknown': (l) => l.calendarAlertsCountUnknown,
   'calendarEventActionValidated': (l) => l.calendarEventActionValidated,
   'calendarKindEvent': (l) => l.calendarKindEvent,
   'capabilityStateUnspecified': (l) => l.capabilityStateUnspecified,
