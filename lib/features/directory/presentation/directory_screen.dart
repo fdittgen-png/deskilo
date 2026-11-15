@@ -365,6 +365,33 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     ),
   ]);
 
+  /// #4072 — registering a directory server is an operator's action: it lives
+  /// behind the bar's "Advanced" menu with its full label, not as an
+  /// icon of its own in a visitor's bar.
+  /// #2343 — the dialog opens on this device's own server: the one an
+  /// operator most often wants listed. #2555 — as the personal client names
+  /// it, never the selected workspace's host.
+  Widget _advancedMenu() {
+    final l = context.l10n;
+    return PopupMenuButton<bool>(
+      key: const ValueKey('directory-advanced'),
+      tooltip: l.settingsSectionAdvanced,
+      icon: const Icon(Icons.more_vert),
+      onSelected: (_) => showDialog<void>(
+        context: context,
+        builder: (_) =>
+            DirectoryLinkDialog(initial: ref.read(personalEndpointProvider)),
+      ),
+      itemBuilder: (_) => [
+        PopupMenuItem<bool>(
+          key: const ValueKey('directory-portal-register-directory'),
+          value: true,
+          child: Text(l.portalRegisterDirectory),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -384,21 +411,7 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
         actions: [
           _viewSwitch(map),
           if (ref.watch(authStateProvider).value != null)
-            IconButton(
-              key: const ValueKey('directory-portal-register-directory'),
-              tooltip:
-                  l.portalRegisterDirectory,
-              icon: const Icon(Icons.add_business_outlined),
-              // #2343 — opens on this device's own server: the one an
-              // operator most often wants listed. #2555 — as the personal
-              // client names it, never the selected workspace's host.
-              onPressed: () => showDialog<void>(
-                context: context,
-                builder: (_) => DirectoryLinkDialog(
-                  initial: ref.read(personalEndpointProvider),
-                ),
-              ),
-            ),
+            _advancedMenu(),
         ],
       ),
       body: LayoutBuilder(
