@@ -623,6 +623,8 @@ update public.members set joined_at = now() where id = pg_temp.u(216);
 update public.members set status = 'pending' where id = pg_temp.u(217);
 select pg_temp.applied(217, pg_temp.first(0), p_status => 'active');
 update public.members set status = 'exited' where id = pg_temp.u(218);
+-- #4008: a member who left comes back as a new member, then is let in
+select public.member_return_as_new(pg_temp.u(218));
 select pg_temp.applied(218, pg_temp.first(0), p_status => 'active');
 select pg_temp.applied(219, pg_temp.first(-1), p_status => 'paused');
 select pg_temp.applied(219, pg_temp.first(0), p_status => 'active');
