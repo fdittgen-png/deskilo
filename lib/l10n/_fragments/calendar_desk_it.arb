@@ -26,5 +26,7 @@
   "bookingPriceSubscription": "Abbonamento",
   "bookingPriceOverage": "Mezza giornata extra",
   "calendarDeskRangeLabel": "Periodo",
-  "calendarDeskViewLabel": "Vista"
+  "calendarDeskViewLabel": "Vista",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtri} one{Filtri · {count}} other{Filtri · {count}}}",
+  "calendarDeskFilterChip": "{filter}: {value}"
 }

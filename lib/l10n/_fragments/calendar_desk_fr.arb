@@ -26,5 +26,7 @@
   "bookingPriceSubscription": "Abonnement",
   "bookingPriceOverage": "Demi-journée supplémentaire",
   "calendarDeskRangeLabel": "Période",
-  "calendarDeskViewLabel": "Vue"
+  "calendarDeskViewLabel": "Vue",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtres} one{Filtres · {count}} other{Filtres · {count}}}",
+  "calendarDeskFilterChip": "{filter} : {value}"
 }

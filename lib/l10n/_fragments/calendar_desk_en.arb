@@ -153,5 +153,15 @@
   },
   "@calendarDeskViewLabel": {
     "description": "#4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel."
+  },
+  "calendarDeskFiltersCount": "{count, plural, =0{Filters} one{Filters · {count}} other{Filters · {count}}}",
+  "calendarDeskFilterChip": "{filter}: {value}",
+  "@calendarDeskFiltersCount": {
+    "description": "#4075 — the desk calendar's one filter control where the four filters do not fit the line, with the number in use.",
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "@calendarDeskFilterChip": {
+    "description": "#4075 — a filter in use, as a chip beside the filter control: the filter's name and what it keeps.",
+    "placeholders": {"filter": {"type": "String"}, "value": {"type": "String"}}
   }
 }
