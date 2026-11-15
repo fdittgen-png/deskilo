@@ -116,42 +116,8 @@ class Organisation {
   }
 }
 
-/// Why the server did not change an organisation.
-enum OrganisationRefusal {
-  /// Only an owner of the business (and of the head) may do this.
-  notOwner,
-
-  /// An organisation needs a name.
-  noName,
-
-  /// The business is already in an organisation.
-  alreadyInOne,
-
-  /// The business is in no organisation.
-  inNone,
-
-  /// The head leaves last.
-  headLeavesLast,
-
-  /// Anything else the server said no to.
-  other,
-}
-
-/// The organisations of the reader, and the owners' commands on them
-/// (#4004). Each command answers null once done, else why not.
+/// The organisations of the reader.
 abstract interface class OrganisationRepository {
   /// Every organisation the reader is a member of a house of, by name.
   Future<List<Organisation>> myOrganisations();
-
-  /// Makes [headWorkspaceId] the head of a new organisation named [name].
-  Future<OrganisationRefusal?> create(String headWorkspaceId, String name);
-
-  /// Renames [organisationId].
-  Future<OrganisationRefusal?> rename(String organisationId, String name);
-
-  /// Makes the business [workspaceId] a house of [organisationId].
-  Future<OrganisationRefusal?> add(String organisationId, String workspaceId);
-
-  /// Takes the business [workspaceId] out of its organisation.
-  Future<OrganisationRefusal?> remove(String workspaceId);
 }

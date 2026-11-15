@@ -288,9 +288,6 @@ abstract final class HelpAnchor {
   /// The language the space speaks by default.
   static const workspaceLanguage = 'user.workspace.settings.language';
 
-  /// #4006 — the organisation this business is a house of.
-  static const organisation = 'user.workspace.settings.organisation';
-
   /// The paper the space's documents are printed on (#3852).
   static const workspacePaper = 'user.workspace.settings.paper';
 

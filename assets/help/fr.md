@@ -3476,30 +3476,6 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 **Voir aussi:** [Pays](help:user.workspace.settings.country)
 
-### Organisation
-
-**Public:** Propriétaire
-
-Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre devise. Chacun d'eux est une maison : une entreprise à part entière avec les règles de son pays, sa devise et sa propre comptabilité. Ensemble, elles forment une organisation avec une tête (#4006).
-
-**Étapes**
-
-1. Dans [Espace](app:/workspace-settings), ouvrez **Organisation**.
-2. Si l'entreprise n'est encore dans aucune organisation, touchez **Faire de cette entreprise la tête d’une organisation** et donnez-lui un nom.
-3. Touchez **Ajouter une de mes entreprises** pour faire d'une autre entreprise dont vous êtes propriétaire une maison de l'organisation.
-4. Touchez **Retirer de l’organisation** à côté d'une maison pour en refaire une entreprise indépendante.
-
-**Bon à savoir**
-
-- Chaque maison indique son pays, sa devise et votre propre rôle. Qui d'autre en est propriétaire se lit dans la maison elle-même.
-- Dans Moi, les maisons sont regroupées sous le nom de l'organisation : la tête d'abord, puis par pays.
-- Dans une maison, touchez le nom de l'entreprise en haut pour passer à une autre maison de l'organisation.
-- Les montants dans des devises différentes sont affichés côte à côte et jamais additionnés.
-- La tête part en dernier : retirez d'abord les autres maisons.
-- Seul un propriétaire de l'entreprise et de la tête peut modifier l'organisation.
-
-**Voir aussi:** [Pays](help:user.workspace.settings.country)
-
 ### Adresse d'en-tête
 
 **Public:** Propriétaire · Administrateur·rice avec l'autorisation
