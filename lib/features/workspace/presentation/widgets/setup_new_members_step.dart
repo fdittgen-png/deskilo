@@ -212,7 +212,7 @@ class _Preview extends StatelessWidget {
               controller: answers,
               workspaceName: workspaceName,
               locale: locale,
-              enabled: false,
+              enabled: false, // field-locked: a picture of the join form as a member sees it
             ),
           ),
         ],

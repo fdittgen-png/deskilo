@@ -17,6 +17,7 @@ import 'package:flutter/material.dart' show ScaffoldMessenger;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../core/session/session_source.dart';
+import '../../core/ui/scoped_messenger.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 
 void watchSnackScope(WidgetRef ref) {
@@ -24,6 +25,8 @@ void watchSnackScope(WidgetRef ref) {
     if (before == null || after == null || before == after) return;
     if (!ref.context.mounted) return;
     ScaffoldMessenger.maybeOf(ref.context)?.clearSnackBars();
+    // #4018 — the messengers of their own (full-screen dialogs) too.
+    ref.read(noticeContextProvider.notifier).changed();
   }
 
   ref

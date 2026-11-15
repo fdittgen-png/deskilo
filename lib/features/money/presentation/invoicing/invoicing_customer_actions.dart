@@ -14,6 +14,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/list_detail_route.dart';
+import '../../../../core/ui/scoped_messenger.dart';
 import '../../application/receivables.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
@@ -60,7 +61,7 @@ class CustomerActions {
   Future<void> paymentsToMatch(String customerId) => showDialog<void>(
     context: context,
     builder: (_) => Dialog.fullscreen(
-      child: ScaffoldMessenger(
+      child: ScopedMessenger(
         child: PaymentsToMatchScreen(
           currency: ref.read(invoicingBusinessProvider).currency,
           customerId: customerId,

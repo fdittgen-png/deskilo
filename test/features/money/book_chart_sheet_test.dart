@@ -189,7 +189,17 @@ void main() {
     expect(row, findsOneWidget);
     expect(find.descendant(of: row, matching: find.text(l10n.bookRoleMappedUnreadable)),
         findsOneWidget);
-    expect(tester.widget<ListTile>(row).enabled, isFalse);
+    // #4020 — a fact read as text: not a disabled control, nothing to tap,
+    // no account to pick on that row.
+    expect(tester.widget<ListTile>(row).enabled, isTrue);
+    expect(tester.widget<ListTile>(row).onTap, isNull);
+    expect(
+      find.descendant(
+        of: row,
+        matching: find.byType(DropdownButtonFormField<String>),
+      ),
+      findsNothing,
+    );
     // The other roles stay ordinary, unmapped, selectable rows.
     expect(find.byKey(const ValueKey('book-role-customers')), findsOneWidget);
     expect(find.byType(DropdownButtonFormField<String>), findsWidgets);
