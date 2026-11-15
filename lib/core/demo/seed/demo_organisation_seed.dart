@@ -14,8 +14,8 @@ import '../demo_space_ids.dart';
 import '../demo_spaces.dart';
 
 /// The organisation's name and id in the Demo.
-const demoOrganisationName = 'Atelier du Marché';
-const demoOrganisationId = 'demo-organisation-atelier';
+const _name = 'Atelier du Marché';
+const _id = 'demo-organisation-atelier';
 
 /// The Demo's businesses that belong to no organisation (the twin is a
 /// development environment and is left out by its environment).
@@ -58,8 +58,8 @@ Future<List<Organisation>> demoOrganisations(
   if (houses.isEmpty) return const [];
   return [
     Organisation(
-      id: demoOrganisationId,
-      name: demoOrganisationName,
+      id: _id,
+      name: _name,
       headWorkspaceId: demoFirstSpaceId,
       houses: houses,
     ),
