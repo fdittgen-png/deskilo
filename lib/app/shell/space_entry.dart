@@ -43,6 +43,10 @@ Future<void> enterSpace(
   bool connected = false,
 }) async {
   final router = GoRouter.of(context);
+  // #3286 — a notice of the place the person leaves never shows, nor acts,
+  // in the space they enter. The shell's own watch is not mounted on Me,
+  // so the entry clears it.
+  ScaffoldMessenger.maybeOf(context)?.clearSnackBars();
   final overlay = Overlay.of(context, rootOverlay: true);
   final animate = MotionSettings.enabledOf(context);
   final brand = spaceBrand(space);
