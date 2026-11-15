@@ -19,13 +19,13 @@ import 'fixtures/recording_fixtures.dart';
 Finder _key(String k) => find.byKey(ValueKey(k));
 
 Future<({ProviderContainer container, GuideStore guides, String recordingId})>
-_pump(WidgetTester tester) async {
+_pump(WidgetTester tester, {bool recorded = true}) async {
   tester.view.physicalSize = const Size(800, 2400);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final fixture = await recordFixture(BookingJourney.planConfirmed);
   final recordings = RecorderStore(
-    backend: fixture.backend,
+    backend: recorded ? fixture.backend : MemoryRecorderLogBackend(),
     namespace: canaryNamespace,
   );
   final guides = GuideStore(
@@ -129,5 +129,47 @@ void main() {
     await tester.pumpAndSettle();
     expect(await h.guides.list(), isEmpty);
     expect(_key('task-wizard-no-guides'), findsOneWidget);
+  });
+
+  testWidgets('the guides that come with the app lead, my guides follow', (
+    tester,
+  ) async {
+    await _pump(tester);
+    double top(Finder f) => tester.getTopLeft(f).dy;
+    final builtIn = top(_key('task-wizard-builtin'));
+    final start = top(_key('task-wizard-start-builtin-bookAPlace'));
+    final mine = top(_key('task-wizard-guides'));
+    final recordings = top(_key('task-wizard-recordings'));
+    final tools = top(_key('task-wizard-open-file'));
+    expect(builtIn, lessThan(start));
+    expect(start, lessThan(mine));
+    expect(mine, lessThan(recordings));
+    expect(recordings, lessThan(tools));
+    expect(find.text('Guides that come with the app'), findsOneWidget);
+  });
+
+  testWidgets('an empty list is one muted line with its action as a link', (
+    tester,
+  ) async {
+    await _pump(tester, recorded: false);
+    for (final line in ['task-wizard-no-guides', 'task-wizard-no-recordings']) {
+      expect(_key(line), findsOneWidget);
+      expect(
+        find.descendant(of: _key(line), matching: find.byType(Icon)),
+        findsNothing,
+        reason: '$line is a line, not an icon block',
+      );
+      expect(
+        find.descendant(of: _key(line), matching: find.byType(TextButton)),
+        findsOneWidget,
+      );
+    }
+    // The header actions stay.
+    expect(_key('task-wizard-add-guide'), findsOneWidget);
+    expect(_key('task-wizard-record'), findsOneWidget);
+    await tester.tap(_key('task-wizard-no-guides-add'));
+    await tester.pumpAndSettle();
+    expect(_key('task-wizard-add-from-recording'), findsOneWidget);
+    expect(_key('task-wizard-add-from-file'), findsOneWidget);
   });
 }
