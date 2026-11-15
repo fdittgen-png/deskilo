@@ -240,6 +240,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.kioskEnrolment: _ownerBeta,
   WorkspaceFeature.quickSearch: _ownerBeta,
   WorkspaceFeature.stockManagement: _ownerBeta,
+  WorkspaceFeature.organisation: _ownerBeta,
 };
 
 /// Keys that were registered once and are gone. They stay here so a

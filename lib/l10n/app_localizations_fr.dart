@@ -11373,6 +11373,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureOptInTitle => 'Activer une fonctionnalité expérimentale ?';
 
   @override
+  String get featureOrganisationDesc =>
+      'Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont.';
+
+  @override
+  String get featureOrganisationTitle => 'Organisation d’entreprises';
+
+  @override
   String get featureParkingDesc =>
       'Un parking sur un étage avec des places standard, électriques et accessibles, réservées à la journée. Désactivé : pas de parking.';
 

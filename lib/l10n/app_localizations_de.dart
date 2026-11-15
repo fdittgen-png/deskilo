@@ -11341,6 +11341,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get featureOptInTitle => 'Experimentelle Funktion einschalten?';
 
   @override
+  String get featureOrganisationDesc =>
+      'Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind.';
+
+  @override
+  String get featureOrganisationTitle => 'Organisation von Unternehmen';
+
+  @override
   String get featureParkingDesc =>
       'Ein Parkplatz auf einer Ebene mit Standard-, Elektro- und barrierefreien Stellplätzen, jeweils tageweise gebucht. Aus: kein Parkplatz.';
 

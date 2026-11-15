@@ -1423,6 +1423,10 @@ window.SETUP_L10N={
    "stockManagement": [
     "Stock management",
     "Keep track of goods: where they are, in which unit, from which lot, and every movement between two places. Off: a catalogue item keeps its single shelf count."
+   ],
+   "organisation": [
+    "Organisation of businesses",
+    "This business heads an organisation of the customer's businesses: a site in another country or currency is a house, a business of its own with its country's rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are."
    ]
   },
   "process": {
@@ -3241,6 +3245,10 @@ window.SETUP_L10N={
    "stockManagement": [
     "Gestion des stocks",
     "Suivre les marchandises : où elles sont, dans quelle unité, de quel lot, et chaque mouvement d'un endroit à un autre. Désactivé : un article du catalogue garde son simple compte en rayon."
+   ],
+   "organisation": [
+    "Organisation d’entreprises",
+    "Cette entreprise est à la tête d’une organisation des entreprises du client : un site dans un autre pays ou une autre devise est une maison, une entreprise à part entière avec les règles de son pays. Désactivé : aucune organisation n’est créée ni modifiée depuis cette entreprise ; une maison peut toujours la quitter, et les membres voient toujours où ils sont."
    ]
   },
   "process": {
@@ -5059,6 +5067,10 @@ window.SETUP_L10N={
    "stockManagement": [
     "Lagerverwaltung",
     "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand."
+   ],
+   "organisation": [
+    "Organisation von Unternehmen",
+    "Dieses Unternehmen führt eine Organisation der Unternehmen des Kunden: ein Standort in einem anderen Land oder einer anderen Währung ist ein Haus, ein eigenes Unternehmen mit den Regeln seines Landes. Aus: Von diesem Unternehmen aus wird keine Organisation angelegt oder geändert; ein Haus kann sie weiterhin verlassen, und Mitglieder sehen weiterhin, wo sie sind."
    ]
   },
   "process": {
@@ -6877,6 +6889,10 @@ window.SETUP_L10N={
    "stockManagement": [
     "Gestión de existencias",
     "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería."
+   ],
+   "organisation": [
+    "Organización de empresas",
+    "Esta empresa encabeza una organización de las empresas del cliente: un centro en otro país o en otra moneda es una casa, una empresa propia con las normas de su país. Desactivado: no se crea ni se cambia ninguna organización desde esta empresa; una casa puede seguir saliendo de ella y los miembros siguen viendo dónde están."
    ]
   },
   "process": {
@@ -8695,6 +8711,10 @@ window.SETUP_L10N={
    "stockManagement": [
     "Gestione delle scorte",
     "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale."
+   ],
+   "organisation": [
+    "Organizzazione di aziende",
+    "Questa azienda è a capo di un’organizzazione delle aziende del cliente: una sede in un altro paese o in un’altra valuta è una casa, un’azienda a sé con le regole del suo paese. Disattivato: nessuna organizzazione viene creata o modificata da questa azienda; una casa può sempre lasciarla e i membri vedono sempre dove si trovano."
    ]
   },
   "process": {

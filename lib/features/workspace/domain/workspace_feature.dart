@@ -419,7 +419,11 @@ enum WorkspaceFeature {
   kioskEnrolment,
   quickSearch,
   /// #3824 — the goods ledger (feature_manifest_stock.dart).
-  stockManagement;
+  stockManagement,
+
+  /// #4004 — the head business makes an organisation of a customer's
+  /// businesses (decision 0052).
+  organisation;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

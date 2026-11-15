@@ -638,6 +638,10 @@ window.SETUP_REGISTRY={
   [
    "stockManagement",
    false
+  ],
+  [
+   "organisation",
+   true
   ]
  ],
  "requires": {
@@ -1357,6 +1361,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "placeBooking",
      "multiSite",
+     "organisation",
      "planObjectDelete",
      "planDecor",
      "adminSeatBlocking"
@@ -1723,7 +1728,8 @@ window.SETUP_LEVELS={
       "guestParticipation",
       "meetingRooms",
       "parking",
-      "externalRooms"
+      "externalRooms",
+      "organisation"
      ],
      "needs": {}
     },

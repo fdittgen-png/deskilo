@@ -163,7 +163,7 @@ const Map<WorkspaceFeature, String> _elsewhere = {};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 5;
+const int _switchOnlyBudget = 6;
 
 /// The features whose scenario is outside the reference business and not
 /// named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -1092,6 +1092,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // shell, and has no state or step to perform. Performable when a Demo
   // step shows a reduced-motion comparison.
   WorkspaceFeature.uiAnimations: _toggle('motion'),
+  // #4004 — a switch for now: its screen, the owner opening the
+  // organisation's sheet, is #4006, and the scenario becomes an action there.
+  WorkspaceFeature.organisation: _toggle('its screen is #4006'),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
   // member by name.
   WorkspaceFeature.quickSearch: _action(

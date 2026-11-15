@@ -27,6 +27,9 @@
 -- No authority flows between houses: no trigger gives a role in one house
 -- because of a role in another, and the twin's member mirror is untouched.
 -- An assistant's token is refused on the table and on every command.
+-- Making and changing an organisation is the head business's `organisation`
+-- feature (on for a new business); leaving one and reading it never depend
+-- on it.
 
 -- ── 1. the organisation ──────────────────────────────────────────────────
 create table if not exists public.organisations (
@@ -165,12 +168,25 @@ end;
 $fn$;
 revoke execute on function public.organisation_owner_check(uuid) from public, anon, authenticated;
 
+-- Refuses when the head business has the organisation feature off. Leaving
+-- an organisation and reading it never ask.
+create or replace function public.organisation_feature_check(p_head uuid)
+returns void language plpgsql stable security definer set search_path = public as $fn$
+begin
+  if not coalesce(public.feature_effective(p_head, 'organisation'), false) then
+    raise exception 'the organisation is off in this business' using errcode = '55000';
+  end if;
+end;
+$fn$;
+revoke execute on function public.organisation_feature_check(uuid) from public, anon, authenticated;
+
 create or replace function public.create_organisation(p_head uuid, p_name text)
 returns uuid language plpgsql security definer set search_path = public as $fn$
 declare
   v_id uuid;
 begin
   perform public.organisation_owner_check(p_head);
+  perform public.organisation_feature_check(p_head);
   if length(btrim(coalesce(p_name, ''))) not between 1 and 200 then
     raise exception 'an organisation needs a name' using errcode = '22023';
   end if;
@@ -193,6 +209,7 @@ declare
 begin
   select head_workspace_id into v_head from public.organisations where id = p_organisation;
   perform public.organisation_owner_check(v_head);
+  perform public.organisation_feature_check(v_head);
   perform public.organisation_owner_check(p_business);
   if (select organisation_id from public.workspaces where id = p_business) is not null then
     raise exception 'this business is already in an organisation' using errcode = '22023';
@@ -244,6 +261,8 @@ returns void language plpgsql security definer set search_path = public as $fn$
 begin
   perform public.organisation_owner_check(
     (select head_workspace_id from public.organisations where id = p_organisation));
+  perform public.organisation_feature_check(
+    (select head_workspace_id from public.organisations where id = p_organisation));
   if length(btrim(coalesce(p_name, ''))) not between 1 and 200 then
     raise exception 'an organisation needs a name' using errcode = '22023';
   end if;
@@ -257,6 +276,8 @@ create or replace function public.set_organisation_head(p_organisation uuid, p_h
 returns void language plpgsql security definer set search_path = public as $fn$
 begin
   perform public.organisation_owner_check(
+    (select head_workspace_id from public.organisations where id = p_organisation));
+  perform public.organisation_feature_check(
     (select head_workspace_id from public.organisations where id = p_organisation));
   perform public.organisation_owner_check(p_head);
   if (select organisation_id from public.workspaces where id = p_head) is distinct from p_organisation then
@@ -303,5 +324,178 @@ end;
 $fn$;
 revoke execute on function public.my_organisations_v1() from public, anon;
 grant execute on function public.my_organisations_v1() to authenticated;
+
+-- ── 5. the feature ───────────────────────────────────────────────────────
+-- The server's copy of the feature manifest, with `organisation`
+-- (`dart run tool/build_feature_registry_sql.dart`).
+create or replace function public.feature_registry()
+returns jsonb
+language sql
+immutable
+set search_path = public
+as $registry$
+  select '{
+    "calendarTab": {"parent": null, "default": true, "core": true},
+    "eventsTab": {"parent": null, "default": true, "core": true},
+    "moneyTab": {"parent": null, "default": true, "core": true},
+    "services": {"parent": "moneyTab", "default": true, "core": true},
+    "accessorySupplements": {"parent": "moneyTab", "default": false, "core": false},
+    "onlinePayments": {"parent": "moneyTab", "default": false, "core": false},
+    "invoicing": {"parent": "moneyTab", "default": true, "core": true},
+    "adminInvoicing": {"parent": "invoicing", "default": false, "core": false},
+    "pdfExport": {"parent": null, "default": true, "core": true},
+    "seriesBooking": {"parent": null, "default": true, "core": true},
+    "bookForOthers": {"parent": null, "default": true, "core": true},
+    "pushNotifications": {"parent": null, "default": true, "core": true},
+    "adminSeatBlocking": {"parent": "placeBooking", "default": false, "core": false},
+    "levelBooking": {"parent": "placeBooking", "default": false, "core": false},
+    "adminLevelAssign": {"parent": "levelBooking", "default": false, "core": false},
+    "kioskMode": {"parent": "placeBooking", "default": true, "core": false},
+    "nfcBadges": {"parent": "kioskMode", "default": true, "core": false},
+    "membersDirectory": {"parent": null, "default": true, "core": true},
+    "whatsappIntegration": {"parent": "membersDirectory", "default": true, "core": false},
+    "spaceQrCodes": {"parent": "placeBooking", "default": true, "core": true},
+    "coOwner": {"parent": null, "default": true, "core": false},
+    "autoCheckInOut": {"parent": "placeBooking", "default": false, "core": false},
+    "dataExport": {"parent": null, "default": true, "core": true},
+    "workingHours": {"parent": null, "default": true, "core": true},
+    "invoicePdfTemplate": {"parent": "invoicing", "default": true, "core": false},
+    "invoiceAddressWindow": {"parent": "invoicing", "default": true, "core": false},
+    "memberNotifications": {"parent": null, "default": true, "core": true},
+    "documents": {"parent": null, "default": true, "core": true},
+    "dunning": {"parent": "invoicing", "default": true, "core": false},
+    "memberReports": {"parent": "moneyTab", "default": true, "core": false},
+    "deletionRequests": {"parent": null, "default": true, "core": true},
+    "roleManagement": {"parent": null, "default": true, "core": true},
+    "vatManagement": {"parent": "invoicing", "default": true, "core": false},
+    "vatDeclarations": {"parent": "vatManagement", "default": true, "core": false},
+    "einvoiceCustomerDelivery": {"parent": "invoicing", "default": true, "core": false},
+    "planObjectDelete": {"parent": "placeBooking", "default": true, "core": true},
+    "notificationGrouping": {"parent": "eventsTab", "default": true, "core": true},
+    "bookingPolicies": {"parent": null, "default": true, "core": true},
+    "bookingGate": {"parent": "bookingPolicies", "default": true, "core": true},
+    "nfcSeatTags": {"parent": "placeBooking", "default": true, "core": false},
+    "qrBadges": {"parent": "kioskMode", "default": true, "core": false},
+    "kioskMemberPhotos": {"parent": "kioskMode", "default": true, "core": false},
+    "subscriptionInvoices": {"parent": "invoicing", "default": true, "core": false},
+    "usageInvoices": {"parent": "invoicing", "default": true, "core": false},
+    "invoiceSettlement": {"parent": "invoicing", "default": true, "core": false},
+    "invoiceJourney": {"parent": "invoicing", "default": true, "core": false},
+    "messageGestures": {"parent": null, "default": true, "core": true},
+    "uniqueMonograms": {"parent": null, "default": true, "core": true},
+    "planMemberPhotos": {"parent": "placeBooking", "default": true, "core": false},
+    "regionalFormats": {"parent": null, "default": true, "core": true},
+    "calendarHub": {"parent": "calendarTab", "default": true, "core": true},
+    "calendarViews": {"parent": "calendarHub", "default": true, "core": true},
+    "messagesHub": {"parent": null, "default": true, "core": true},
+    "reportDesigner": {"parent": "invoicePdfTemplate", "default": true, "core": false},
+    "memberPage": {"parent": "membersDirectory", "default": true, "core": true},
+    "invoicingWizard": {"parent": "invoicing", "default": true, "core": false},
+    "expenseRepartition": {"parent": "invoicing", "default": true, "core": false},
+    "settlementFold": {"parent": "invoiceSettlement", "default": true, "core": false},
+    "configurationTransfer": {"parent": "dataExport", "default": true, "core": false},
+    "navigationStyle": {"parent": null, "default": true, "core": true},
+    "demoMode": {"parent": null, "default": true, "core": false},
+    "instanceWizard": {"parent": null, "default": true, "core": false},
+    "dataAccessLog": {"parent": "moneyTab", "default": true, "core": false},
+    "memberDataExport": {"parent": null, "default": true, "core": true},
+    "financeFaces": {"parent": "moneyTab", "default": true, "core": true},
+    "paymentReminders": {"parent": "dunning", "default": true, "core": false},
+    "supplyExpenses": {"parent": "services", "default": true, "core": false},
+    "validationScopes": {"parent": null, "default": true, "core": false},
+    "validationChain": {"parent": null, "default": true, "core": false},
+    "richMessageRefs": {"parent": "memberNotifications", "default": true, "core": true},
+    "calendarValidations": {"parent": "calendarHub", "default": true, "core": false},
+    "usageRecords": {"parent": "invoicing", "default": true, "core": false},
+    "reportDesignExchange": {"parent": "reportDesigner", "default": true, "core": false},
+    "reportLayouts": {"parent": "reportDesigner", "default": true, "core": false},
+    "personalInfo": {"parent": null, "default": true, "core": true},
+    "managedProfiles": {"parent": "membersDirectory", "default": true, "core": false},
+    "numberSequences": {"parent": "invoicing", "default": false, "core": false},
+    "workspaceStatus": {"parent": "invoicing", "default": false, "core": false},
+    "expenseRepartitionWizard": {"parent": "expenseRepartition", "default": false, "core": false},
+    "multiSite": {"parent": "placeBooking", "default": false, "core": false},
+    "siteDocuments": {"parent": "multiSite", "default": false, "core": false},
+    "vatGroups": {"parent": "vatManagement", "default": false, "core": false},
+    "vatRateHistory": {"parent": "vatManagement", "default": false, "core": false},
+    "vatCounterparty": {"parent": "vatManagement", "default": false, "core": false},
+    "environmentPairs": {"parent": null, "default": true, "core": false},
+    "deployments": {"parent": "environmentPairs", "default": true, "core": false},
+    "managedProfileAccess": {"parent": "managedProfiles", "default": false, "core": false},
+    "seatDayTimeline": {"parent": "placeBooking", "default": true, "core": true},
+    "memberPaymentTerms": {"parent": "invoicing", "default": true, "core": false},
+    "usageReport": {"parent": "usageRecords", "default": true, "core": false},
+    "reportTexts": {"parent": "reportDesigner", "default": true, "core": false},
+    "letterStandard": {"parent": "reportLayouts", "default": true, "core": false},
+    "vatReport": {"parent": "vatDeclarations", "default": true, "core": false},
+    "priceNegotiations": {"parent": "moneyTab", "default": true, "core": false},
+    "scheduledExpenses": {"parent": "moneyTab", "default": true, "core": false},
+    "badgeSignIn": {"parent": "nfcBadges", "default": false, "core": false},
+    "formHelpHints": {"parent": null, "default": true, "core": true},
+    "uiAnimations": {"parent": null, "default": true, "core": true},
+    "memberOrigin": {"parent": "membersDirectory", "default": false, "core": false},
+    "memberEnvironments": {"parent": "environmentPairs", "default": false, "core": false},
+    "workspaceLibrary": {"parent": null, "default": false, "core": false},
+    "singleRoomLevelNames": {"parent": "placeBooking", "default": true, "core": true},
+    "publicHolidays": {"parent": null, "default": false, "core": false},
+    "workspaceVocabulary": {"parent": null, "default": false, "core": false},
+    "carnets": {"parent": "invoicing", "default": false, "core": false},
+    "publicListings": {"parent": null, "default": false, "core": true},
+    "workspaceBranding": {"parent": null, "default": false, "core": false},
+    "customRoles": {"parent": null, "default": false, "core": false},
+    "customFields": {"parent": null, "default": false, "core": false},
+    "decisionSurface": {"parent": null, "default": false, "core": false},
+    "recordingPrivacy": {"parent": null, "default": false, "core": false},
+    "memberAccountMenu": {"parent": null, "default": false, "core": false},
+    "mcpAccess": {"parent": null, "default": false, "core": false},
+    "calendarFileExport": {"parent": null, "default": true, "core": true},
+    "memberGettingStarted": {"parent": null, "default": true, "core": true},
+    "placeFeedback": {"parent": "placeBooking", "default": true, "core": true},
+    "spaceInquiries": {"parent": null, "default": true, "core": true},
+    "messageForwarding": {"parent": "memberNotifications", "default": true, "core": true},
+    "captureProtection": {"parent": "memberNotifications", "default": true, "core": true},
+    "holidayImport": {"parent": "publicHolidays", "default": false, "core": false},
+    "capacityKpi": {"parent": "placeBooking", "default": false, "core": false},
+    "accountingBook": {"parent": "invoicing", "default": false, "core": false},
+    "roleAssignment": {"parent": "roleManagement", "default": true, "core": true},
+    "taskRecorder": {"parent": null, "default": false, "core": false},
+    "guestParticipation": {"parent": "placeBooking", "default": false, "core": true},
+    "messageMentions": {"parent": "memberNotifications", "default": true, "core": true},
+    "supplyClassification": {"parent": "vatManagement", "default": true, "core": false},
+    "viesVerification": {"parent": "supplyClassification", "default": true, "core": false},
+    "recapitulativeStatement": {"parent": "vatDeclarations", "default": true, "core": false, "countries": ["@eu"]},
+    "inputVat": {"parent": "vatDeclarations", "default": true, "core": false},
+    "configurableSettings": {"parent": null, "default": true, "core": false},
+    "salesTax": {"parent": "invoicing", "default": true, "core": false},
+    "meetingRooms": {"parent": "placeBooking", "default": false, "core": false},
+    "parking": {"parent": "placeBooking", "default": false, "core": false},
+    "webMcp": {"parent": "mcpAccess", "default": false, "core": false},
+    "purchases": {"parent": "moneyTab", "default": false, "core": false},
+    "premisesLease": {"parent": "scheduledExpenses", "default": false, "core": false},
+    "assetRegister": {"parent": "purchases", "default": false, "core": false},
+    "externalRooms": {"parent": "levelBooking", "default": false, "core": false},
+    "accountingPeriods": {"parent": "accountingBook", "default": false, "core": false},
+    "biReportDesigner": {"parent": null, "default": false, "core": false},
+    "purchaseAnalytics": {"parent": "purchases", "default": false, "core": false},
+    "workspaceOverview": {"parent": null, "default": false, "core": false},
+    "setupGuide": {"parent": null, "default": true, "core": true},
+    "dataReport": {"parent": "dataExport", "default": true, "core": true},
+    "personalShell": {"parent": null, "default": false, "core": false},
+    "foreignCurrencyPurchases": {"parent": "purchases", "default": false, "core": false},
+    "accountingConnectors": {"parent": "accountingBook", "default": false, "core": false},
+    "bankImport": {"parent": "invoicing", "default": false, "core": false},
+    "planDecor": {"parent": "placeBooking", "default": true, "core": true},
+    "mtdSubmission": {"parent": "vatDeclarations", "default": false, "core": false, "countries": ["GB"]},
+    "purchaseOrders": {"parent": "purchases", "default": false, "core": false},
+    "guestPasses": {"parent": "invoicing", "default": false, "core": false},
+    "placeBooking": {"parent": null, "default": true, "core": true},
+    "reminderEmail": {"parent": "dunning", "default": false, "core": false},
+    "invoiceEmail": {"parent": "invoicing", "default": false, "core": false},
+    "kioskEnrolment": {"parent": "kioskMode", "default": true, "core": false},
+    "quickSearch": {"parent": null, "default": true, "core": true},
+    "organisation": {"parent": null, "default": true, "core": true},
+    "stockManagement": {"parent": "services", "default": false, "core": false}
+  }'::jsonb
+$registry$;
 
 select public.set_deskilo_schema_version(775);

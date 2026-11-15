@@ -8,7 +8,7 @@
 -- leaves last; removing a house leaves its data as it was. An assistant's
 -- token is refused. Rolled back.
 begin;
-select plan(20);
+select plan(25);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -16,7 +16,7 @@ declare
   owner_b uuid := '00000000-0000-4000-8000-000000004005';
   member_m uuid := '00000000-0000-4000-8000-000000004006';
   outsider uuid := '00000000-0000-4000-8000-000000004007';
-  w1 uuid; w2 uuid; w3 uuid;
+  w1 uuid; w2 uuid; w3 uuid; w4 uuid;
 begin
   insert into auth.users (id, instance_id, aud, role, email, encrypted_password,
                           email_confirmed_at, created_at, updated_at)
@@ -29,13 +29,16 @@ begin
   values ('ORG-LONDON', 'GB', 'GBP', 'Europe/London', owner_a) returning id into w2;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
   values ('ORG-ZURICH', 'CH', 'CHF', 'Europe/Zurich', owner_b) returning id into w3;
+  insert into public.workspaces (name, country_code, currency_code, timezone, created_by)
+  values ('ORG-MILAN', 'IT', 'EUR', 'Europe/Rome', owner_b) returning id into w4;
   insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
   values (w1, owner_a, true, true, '2026-01-01'), (w2, owner_a, true, true, '2026-01-01'),
-         (w3, owner_b, true, true, '2026-01-01');
+         (w3, owner_b, true, true, '2026-01-01'), (w4, owner_b, true, true, '2026-01-01');
   insert into public.members (workspace_id, user_id, joined_at) values (w2, member_m, '2026-01-01');
   perform set_config('deskilo.test.w1', w1::text, false);
   perform set_config('deskilo.test.w2', w2::text, false);
   perform set_config('deskilo.test.w3', w3::text, false);
+  perform set_config('deskilo.test.w4', w4::text, false);
   perform set_config('deskilo.test.owner_a', owner_a::text, false);
   perform set_config('deskilo.test.owner_b', owner_b::text, false);
   perform set_config('deskilo.test.member_m', member_m::text, false);
@@ -132,7 +135,29 @@ select throws_ok(format('select public.rename_organisation(%L, %L)', pg_temp.id(
 select is((select count(*)::int from public.organisations), 0, 'and reads no organisation');
 reset role;
 
--- ── leaving ──
+-- ── the feature off in the head business ──
+-- test data written as the server: Paris turns the organisation off, and so
+-- does Milan, which would head one of its own
+update public.workspaces set feature_flags = coalesce(feature_flags, '{}'::jsonb) || '{"organisation": false}'::jsonb
+ where id in (pg_temp.id('w1'), pg_temp.id('w4'));
+select pg_temp.as_user('owner_b');
+set local role authenticated;
+select throws_ok(format('select public.create_organisation(%L, %L)', pg_temp.id('w4'), 'Milan group'),
+  '55000', 'the organisation is off in this business', 'with the feature off no organisation is made');
+reset role;
+select pg_temp.as_user('owner_a');
+set local role authenticated;
+select throws_ok(format('select public.add_business_to_organisation(%L, %L)', pg_temp.id('org'), pg_temp.id('w4')),
+  '55000', 'the organisation is off in this business', 'nor given a house');
+select throws_ok(format('select public.rename_organisation(%L, %L)', pg_temp.id('org'), 'Renamed'),
+  '55000', 'the organisation is off in this business', 'nor renamed');
+select throws_ok(format('select public.set_organisation_head(%L, %L)', pg_temp.id('org'), pg_temp.id('w2')),
+  '55000', 'the organisation is off in this business', 'nor given another head');
+select is((select name from public.organisations where id = pg_temp.id('org')), 'Atelier group',
+  'and its owner still reads it');
+reset role;
+
+-- ── leaving (the feature still off: a house always leaves) ──
 select pg_temp.as_user('owner_a');
 set local role authenticated;
 select throws_ok(format('select public.remove_business_from_organisation(%L)', pg_temp.id('w1')),
