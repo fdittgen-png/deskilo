@@ -120,10 +120,10 @@ void main() {
         );
     final sheets = templateWorkbook([
       _i('asso', [
-        rec('tables.plans[Nomade].name', 'tables.plans[].name', 'Nomade'),
+        rec('tables.services[Nomade].name', 'tables.services[].name', 'Nomade'),
         rec(
-          'tables.plans[Nomade].base_fee_cents',
-          'tables.plans[].base_fee_cents',
+          'tables.services[Nomade].price_cents',
+          'tables.services[].price_cents',
           5000,
         ),
         rec(
@@ -162,8 +162,8 @@ void main() {
         sheets.firstWhere((s) => s.name == name).rows;
 
     expect(rows('Catalogs').skip(1), [
-      ['asso', 'plans', 'Nomade', 'name', 'present', 'Nomade'],
-      ['asso', 'plans', 'Nomade', 'base_fee_cents', 'present', 5000],
+      ['asso', 'services', 'Nomade', 'name', 'present', 'Nomade'],
+      ['asso', 'services', 'Nomade', 'price_cents', 'present', 5000],
     ]);
     expect(rows('RolePermissions').skip(1), [
       ['asso', 'admin', 'base', 'manageMembers, viewFinances', 'present'],

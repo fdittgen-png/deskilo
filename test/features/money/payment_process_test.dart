@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_money_repository.dart';
-import '../../helpers/screens/invoices.dart' show pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show invoicingOwedFigures, openInvoicingTodo, pumpInvoices, seededMoney;
 import '../../helpers/screens/money_screen.dart' show pumpMoney, workspaceWithInstructions;
 import '../../helpers/test_clock.dart';
 
@@ -233,9 +233,10 @@ void main() {
     // #3587 — the owed card in place of the stage strip: what is owed is
     // the REMAINING sum; the credit note is the issuer's move (a refund to
     // pay out, in To do), never inflating what members owe.
-    final owed = find.byKey(const ValueKey('invoicing-owed'));
+    final owed = invoicingOwedFigures;
     expect(find.descendant(of: owed, matching: find.text(remaining)),
         findsWidgets);
+    await openInvoicingTodo(tester); // #4059
     expect(
       find.byKey(const ValueKey('invoicing-todo-payOutRefunds')),
       findsOneWidget,

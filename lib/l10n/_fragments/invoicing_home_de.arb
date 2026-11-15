@@ -105,14 +105,6 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoReview": "Ansehen",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
-  },
-  "invoicingTodoFix": "Beheben",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
-  },
   "invoicingFilterOpen": "Offen",
   "@invoicingFilterOpen": {
     "description": "#3587 list filter"
@@ -441,5 +433,10 @@
   "@invoicingColStatus": {
     "description": "#3587 table column"
   },
-  "invoicingUnassignedUnreadable": "Das eingegangene, nicht zugeordnete Geld ist nicht bekannt: Diese Version kann einige Kontobuchungen nicht lesen, und niemand wird erinnert, bis sie gelesen werden. Aktualisieren Sie die App und öffnen Sie die Rechnungen erneut."
+  "invoicingUnassignedUnreadable": "Das eingegangene, nicht zugeordnete Geld ist nicht bekannt: Diese Version kann einige Kontobuchungen nicht lesen, und niemand wird erinnert, bis sie gelesen werden. Aktualisieren Sie die App und öffnen Sie die Rechnungen erneut.",
+  "invoicingTodoReviewMonth": "{month} prüfen",
+  "invoicingTodoShareReminders": "Mahnungen teilen",
+  "invoicingTodoFixRejected": "E-Rechnungen beheben",
+  "invoicingCreditAmount": "Guthaben {amount}",
+  "invoicingSummaryToReview": "{count, plural, =0{nichts zu prüfen} one{1 zu prüfen} other{{count} zu prüfen}}"
 }

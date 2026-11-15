@@ -26,7 +26,7 @@ import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
-import '../../helpers/screens/invoices.dart' show invoicingRow;
+import '../../helpers/screens/invoices.dart' show invoicingRow, owedBucketShown;
 
 Invoice _invoice({
   String id = 'inv-1',
@@ -397,14 +397,6 @@ void main() {
       await tester.pumpAndSettle();
     }
 
-    /// The owed card's legend line of [bucket], whatever the currency.
-    Finder owedBucket(String bucket) => find.byWidgetPredicate((w) {
-          final key = w.key;
-          return key is ValueKey<String> &&
-              key.value.startsWith('invoicing-owed-') &&
-              key.value.endsWith('-$bucket');
-        });
-
     testWidgets(
         'the home: an open invoice is owed, not yet due; its page tells '
         'the story and what is awaited, and has no main action while the '
@@ -414,9 +406,9 @@ void main() {
       await pump(tester, money: money);
 
       // #3587 — the owed card in place of the stage strip.
-      expect(owedBucket('notYetDue'), findsOneWidget);
-      expect(owedBucket('overdue'), findsNothing);
-      expect(owedBucket('toConfirm'), findsNothing);
+      expect(owedBucketShown(tester, 'notYetDue'), isTrue);
+      expect(owedBucketShown(tester, 'overdue'), isFalse);
+      expect(owedBucketShown(tester, 'toConfirm'), isFalse);
 
       await openFromHome(tester, id);
       // #3587 R1-d — the page's story, its last line what is awaited now.
@@ -449,7 +441,7 @@ void main() {
       await pump(tester, money: money);
 
       // #3587 — the owed card counts it overdue (the strip's "1 overdue").
-      expect(owedBucket('overdue'), findsOneWidget);
+      expect(owedBucketShown(tester, 'overdue'), isTrue);
       final action = find.byKey(
         ValueKey('invoicing-customer-action-${money.invoices.single.memberId}'),
       );
@@ -476,7 +468,7 @@ void main() {
         ..events.add(_payment(id: 'e1', status: EventStatus.pending));
       await pump(tester, money: money, events: events);
       // #3587 — the owed card's To confirm in place of the strip's.
-      expect(owedBucket('toConfirm'), findsOneWidget);
+      expect(owedBucketShown(tester, 'toConfirm'), isTrue);
 
       await openFromHome(tester, id);
       // #3587 R1-d — the story names the declaration; the bottom bar
