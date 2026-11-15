@@ -61,7 +61,7 @@ import '../../helpers/demo_analyses.dart';
 const _londonDueItems = 5;
 
 /// Every space of the Demo's one list: their name and id (#3867).
-final _spaces = [for (final key in DemoSpaceKey.values) (key.label, key.id)];
+final _spaces = [for (final key in DemoSpaceKey.listedAtStart) (key.label, key.id)];
 
 /// A container on the Demo looking at space [id], its overview on.
 Future<(ProviderContainer, Workspace)> _open(

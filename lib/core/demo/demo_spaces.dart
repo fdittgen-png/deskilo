@@ -41,6 +41,13 @@ enum DemoSpaceKey {
 
   const DemoSpaceKey(this.id, this.label, this.currency);
 
+  /// #4005 — the spaces a Demo session lists from its start: every one but
+  /// the house abroad, which is dormant until the visitor adds it.
+  static List<DemoSpaceKey> get listedAtStart => [
+    for (final key in values)
+      if (key != house) key,
+  ];
+
   final String id;
   final String label;
   final String currency;

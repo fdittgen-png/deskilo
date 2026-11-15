@@ -19,7 +19,7 @@ String _month(DateTime d) => '${d.year}-${d.month.toString().padLeft(2, '0')}';
 
 void main() {
   final fixture = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
-  for (final key in DemoSpaceKey.values) {
+  for (final key in DemoSpaceKey.listedAtStart) {
     final (name, id, currency) = (key.label, key.id, key.currency);
     // London and New York carry months of bills, orders and receipts; the
     // trade cities bills only; Leipzig and the twin nothing yet.

@@ -157,14 +157,17 @@ class DemoLazySpaces {
 
   /// Every space's coherence problems (builds the spaces not yet built; a
   /// space is checked as it is built, and refused if it is not coherent).
+  /// #4005 — the house abroad is checked once it is added: dormant, it is
+  /// in no list and holds nothing.
   List<String> validateAllSpaces() => [
     for (final key in DemoSpaceKey.values)
-      ...validateDemoFixture(
-        workspaces: space(key).workspaces,
-        plan: space(key).floorPlan,
-        reservations: space(key).reservations,
-        money: space(key).money,
-      ),
+      if (key != DemoSpaceKey.house || !listings.house.dormant)
+        ...validateDemoFixture(
+          workspaces: space(key).workspaces,
+          plan: space(key).floorPlan,
+          reservations: space(key).reservations,
+          money: space(key).money,
+        ),
   ];
 
   /// Who the session is currently acting as (#1565); while a space is being
