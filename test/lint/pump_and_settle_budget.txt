@@ -38,6 +38,7 @@
 # review {"path":"test/features/calendar/calendar_hub_test.dart","before":12,"after":16,"invariant":"#4021 the kinds sit in the Filters sheet: each kind test opens it and closes it again before reading the list","cost":"two settles per kind test (the sheet in and out); two tests of about 1 s each"}
 # review {"path":"test/features/task_recorder/calendar_journey_test.dart","before":18,"after":20,"invariant":"#4021 the journey opens the Filters sheet before choosing its kinds and closes it before opening an item","cost":"two settles for the sheet in and out, in one journey test"}
 # review {"path":"test/features/workspace/organisation_sheet_test.dart","before":0,"after":13,"invariant":"#4006 the organisation page: each command opens its dialog or its picker, is confirmed, and the page reads the organisations again before the next step","cost":"four tests of about 1 s each; every settle waits for the sheet, a dialog, a picker or the read that follows a command"}
+# review {"path":"test/features/workspace/organisation_sheet_test.dart","before":13,"after":19,"invariant":"#4006 every change of the organisation is confirmed first: each command test opens the confirmation and answers it, and one test cancels it","cost":"one settle per confirmation shown and answered; five tests of about 1 s each"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -172,7 +173,7 @@
 18 test/features/workspace/my_badge_test.dart
 41 test/features/workspace/onboarding_flow_test.dart
 16 test/features/workspace/onboarding_handoff_test.dart
-13 test/features/workspace/organisation_sheet_test.dart
+19 test/features/workspace/organisation_sheet_test.dart
 25 test/features/workspace/process_overview_test.dart
 11 test/features/workspace/ref_picker_sheet_filters_test.dart
 12 test/features/workspace/roles_desk_test.dart
