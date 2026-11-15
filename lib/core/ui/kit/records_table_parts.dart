@@ -7,6 +7,7 @@
 // scope, and whether everything is read). A row's actions open in the kit's
 // RowMenu (#3611).
 import 'dart:async';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -24,6 +25,7 @@ Widget _recordCells<T>(
   Widget? leading,
   Widget? trailing,
   double? lineHeight,
+  Map<String, double> mins = const {},
 }) => Row(
   // #3614 — with [lineHeight], every cell is centred in the row's first
   // line: a cell that wraps (a state in two parts, #3773) grows downwards
@@ -33,33 +35,109 @@ Widget _recordCells<T>(
       : CrossAxisAlignment.start,
   children: [
     ?leading,
-    for (final (i, c) in columns.indexed)
-      Expanded(
-        flex: c.flex,
-        // A gap between neighbours: an end-aligned amount never touches
-        // the column after it.
-        child: Container(
-          constraints: BoxConstraints(minHeight: lineHeight ?? 0),
-          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
-          child: Align(
-            heightFactor: 1,
-            alignment: c.numeric
-                ? AlignmentDirectional.centerEnd
-                : AlignmentDirectional.centerStart,
-            child: c.numeric
-                ? DefaultTextStyle.merge(
-                    style: const TextStyle(
-                      fontFeatures: [FontFeature.tabularFigures()],
-                    ),
-                    child: cells[i],
-                  )
-                : cells[i],
-          ),
-        ),
+    // #4035 — a column holds its longest word: where a share by flex would
+    // not, the cells take widths that do (the same in the header and every
+    // row, so they line up); otherwise flex alone decides, as it always did.
+    Expanded(
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final widths = recordColumnWidths(columns, mins, box.maxWidth);
+          return Row(
+            crossAxisAlignment: lineHeight == null
+                ? CrossAxisAlignment.center
+                : CrossAxisAlignment.start,
+            children: [
+              for (final (i, c) in columns.indexed)
+                _recordCell(
+                  c,
+                  cells[i],
+                  lineHeight: lineHeight,
+                  width: widths?[i],
+                ),
+            ],
+          );
+        },
       ),
+    ),
     ?trailing,
   ],
 );
+
+/// One cell in its column: [width] when the table decided it, else its flex.
+Widget _recordCell<T>(
+  RecordColumn<T> c,
+  Widget cell, {
+  double? lineHeight,
+  double? width,
+}) {
+  // A gap between neighbours: an end-aligned amount never touches the column
+  // after it.
+  final box = Container(
+    constraints: BoxConstraints(minHeight: lineHeight ?? 0),
+    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm),
+    child: Align(
+      heightFactor: 1,
+      alignment: c.numeric
+          ? AlignmentDirectional.centerEnd
+          : AlignmentDirectional.centerStart,
+      child: c.numeric
+          ? DefaultTextStyle.merge(
+              style: const TextStyle(
+                fontFeatures: [FontFeature.tabularFigures()],
+              ),
+              child: cell,
+            )
+          : cell,
+    ),
+  );
+  return width == null
+      ? Expanded(flex: c.flex, child: box)
+      : SizedBox(width: width, child: box);
+}
+
+/// The narrowest each of [columns] may be (by id) at the reader's text size
+/// (#4035): its heading's longest word with the room of its sort control, or
+/// its [RecordColumn.sample], whichever is wider, and the cell's side gaps.
+Map<String, double> recordColumnMins<T>(
+  BuildContext context,
+  List<RecordColumn<T>> columns,
+) {
+  final theme = Theme.of(context);
+  final scaler = MediaQuery.textScalerOf(context);
+  final direction = Directionality.of(context);
+  final heading = theme.textTheme.labelSmall;
+  final body = theme.textTheme.bodyMedium;
+  double word(String text, TextStyle? style) {
+    final painter = TextPainter(
+      text: TextSpan(text: text, style: style),
+      textDirection: direction,
+      textScaler: scaler,
+      maxLines: 1,
+    )..layout();
+    final width = painter.width;
+    painter.dispose();
+    return width;
+  }
+
+  double longestWord(String text, TextStyle? style) => text
+      .split(RegExp(r'\s+'))
+      .where((w) => w.isNotEmpty)
+      .fold(0.0, (widest, w) => math.max(widest, word(w, style)));
+
+  return {
+    for (final c in columns)
+      c.id:
+          2 * AppSpacing.sm +
+          math.max(
+            longestWord(c.label.toUpperCase(), heading) +
+                (c.sortKey == null
+                    // the sort button's own padding and its arrow
+                    ? 0
+                    : 2 * AppSpacing.xs + AppSpacing.md + AppSpacing.sm),
+            c.sample == null ? 0 : word(c.sample!, body),
+          ),
+  };
+}
 
 /// The header: a label per column (a sort control where it sorts), the
 /// box that selects what is shown, and room for the row's actions.
@@ -74,11 +152,15 @@ class RecordsHeader<T> extends StatelessWidget {
     required this.selectable,
     required this.actionsWidth,
     this.dense = false,
+    this.mins = const {},
     super.key,
   });
 
   /// Whether the rows under it are a mouse's short rows.
   final bool dense;
+
+  /// The narrowest width of each column (#4035).
+  final Map<String, double> mins;
 
   final List<RecordColumn<T>> columns;
   final RecordsQuery query;
@@ -123,6 +205,7 @@ class RecordsHeader<T> extends StatelessWidget {
       child: _recordCells(
         columns,
         [for (final c in columns) label(c)],
+        mins: mins,
         leading: selectable
             ? Checkbox(
                 key: const ValueKey('records-select-shown'),
@@ -155,8 +238,12 @@ class RecordRow<T> extends StatefulWidget {
     required this.minHeight,
     required this.selectable,
     this.menuKey,
+    this.mins = const {},
     super.key,
   });
+
+  /// The narrowest width of each column (#4035).
+  final Map<String, double> mins;
 
   /// The table's handle on this row's menu: its context-menu key opens the
   /// menu of the row the arrows stand on.
@@ -241,6 +328,7 @@ class _RecordRowState<T> extends State<RecordRow<T>> {
                 child: _recordCells(
                   widget.columns,
                   [for (final c in widget.columns) c.cell(context, widget.row)],
+                  mins: widget.mins,
                   lineHeight: widget.minHeight,
                   leading: widget.selectable
                       ? Checkbox(

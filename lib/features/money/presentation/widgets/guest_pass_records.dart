@@ -148,6 +148,8 @@ class GuestPassRecords extends ConsumerWidget {
           label: l10n.guestPassFrom,
           flex: 2,
           sortKey: (p) => p.startsAt,
+          // A date is read whole: the column is never narrower than one.
+          sample: day(DateTime(2026, 12, 28)),
           cell: (_, p) => Text(day(p.startsAt)),
         ),
         RecordColumn(
@@ -155,6 +157,7 @@ class GuestPassRecords extends ConsumerWidget {
           label: l10n.guestPassTo,
           flex: 2,
           sortKey: (p) => p.endsAt,
+          sample: day(DateTime(2026, 12, 28)),
           cell: (_, p) => Text(lastDay(p)),
         ),
         RecordColumn(

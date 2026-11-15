@@ -395,8 +395,6 @@ final _return = VatDeclaration(
 
 const _tabTwice = 'waits for the Tab walk at 768 to visit each stop once: it '
     'reached one twice';
-const _wordCut = 'waits for the table at 768 to keep every header and date '
-    'whole';
 
 /// #4022 — the pages the 768 walk found a fault in and the fault; each is
 /// left out of that one width until the page is fixed, and walked at every
@@ -413,10 +411,6 @@ const Map<String, String> _waitsAt768 = {
   '/report-editor': _tabTwice,
   '/workspace-settings': 'waits for the Tab walk at 768: it reached a stop '
       'twice and left others out of reach',
-  '/invoice-register': '$_wordCut (AMOUNT)',
-  '/services': '$_wordCut (CATEGORY)',
-  '/money/guest-passes': '$_wordCut (the dates)',
-  '/money/accounting/exports': '$_wordCut (FORMAT)',
 };
 
 /// The pages the guards run on: path, kind, module and screen for a sheet.

@@ -26,6 +26,7 @@ class RecordColumn<T> {
     this.hideable = true,
     this.staysBeside = true,
     this.shownFrom = WindowClass.compact,
+    this.sample,
   });
 
   /// Stable, for the column choice kept on the device.
@@ -54,6 +55,58 @@ class RecordColumn<T> {
   /// the others (an amount is never cut). A column that may not be hidden
   /// is always drawn.
   final WindowClass shownFrom;
+
+  /// #4035 — the widest value the column holds when it is one word a person
+  /// reads whole (a date, a code): the column is never narrower than it, so
+  /// the word is not broken across lines. Headings need none: the table
+  /// measures them.
+  final String? sample;
+}
+
+/// The columns of [columns] that fit [available] wide, given each one's
+/// narrowest width [mins] (by id): while they do not, the least needed goes
+/// (#4035) — the one a wider window shows later (`shownFrom`), then the
+/// right-most; a column that may not be hidden stays. The order is kept.
+List<RecordColumn<T>> columnsFitting<T>(
+  List<RecordColumn<T>> columns,
+  Map<String, double> mins,
+  double available,
+) {
+  final kept = [...columns];
+  double need() => kept.fold(0.0, (sum, c) => sum + (mins[c.id] ?? 0));
+  while (need() > available) {
+    RecordColumn<T>? drop;
+    for (final c in kept) {
+      if (!c.hideable) continue;
+      if (drop == null || c.shownFrom.index >= drop.shownFrom.index) drop = c;
+    }
+    if (drop == null) break;
+    kept.remove(drop);
+  }
+  return kept;
+}
+
+/// The width of each of [columns] in [available], or null while every
+/// column's share by flex already holds its narrowest width [mins] (the
+/// table lays out by flex alone, as it always did). Otherwise each column
+/// has its narrowest width and the rest is shared by flex: the sum is
+/// [available] (#4035).
+List<double>? recordColumnWidths<T>(
+  List<RecordColumn<T>> columns,
+  Map<String, double> mins,
+  double available,
+) {
+  final flex = columns.fold<int>(0, (sum, c) => sum + c.flex);
+  if (columns.isEmpty || flex == 0) return null;
+  final fits = columns.every(
+    (c) => available * c.flex / flex >= (mins[c.id] ?? 0) - 0.01,
+  );
+  if (fits) return null;
+  final base = columns.fold(0.0, (sum, c) => sum + (mins[c.id] ?? 0));
+  final extra = (available - base).clamp(0.0, double.infinity);
+  return [
+    for (final c in columns) (mins[c.id] ?? 0) + extra * c.flex / flex,
+  ];
 }
 
 /// The columns drawn: those the person has not hidden and the table has
