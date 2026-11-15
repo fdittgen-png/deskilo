@@ -5,8 +5,9 @@
 -- currency, with one total per currency and none across them; the figures
 -- equal the house's own analysis; a development twin is no house of its
 -- own. A person with the analysis rights in one house reads its figures
--- and the other named without them. Someone outside, an assistant and the
--- organisation off are refused. Rolled back.
+-- and the other named without them. Someone outside and an assistant are
+-- refused; the organisation switched off in the head changes nothing for
+-- reading. Rolled back.
 begin;
 select plan(15);
 
@@ -141,8 +142,8 @@ reset role;
 update public.workspaces set feature_flags = feature_flags || '{"organisation": false}'::jsonb where id = pg_temp.id('paris');
 select pg_temp.as_user('owner');
 set local role authenticated;
-select throws_ok(format('select public.organisation_overview_v1(%L, %L, %L)', pg_temp.id('org'), '2025-05', '2025-05'),
-  '55000', 'the organisation is off in this business', 'nor with the organisation off in the head');
+select lives_ok(format('select public.organisation_overview_v1(%L, %L, %L)', pg_temp.id('org'), '2025-05', '2025-05'),
+  'with the organisation off in the head a member still reads it: the switch gates changes, not reading');
 reset role;
 
 select * from finish();

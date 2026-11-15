@@ -23,8 +23,9 @@
 -- currency without figures, or a figure the house marks unavailable).
 --
 -- Someone who is a member of no house of the organisation reads nothing;
--- an assistant's token is refused; the head's `organisation` feature gates
--- the page.
+-- an assistant's token is refused. Reading never depends on the head's
+-- `organisation` feature, which gates making and changing an organisation
+-- only (as my_organisations_v1 reads it whatever the switch says).
 
 create or replace function public.organisation_overview_v1(p_organisation uuid, p_from text, p_to text)
 returns jsonb language plpgsql stable security definer set search_path = public as $fn$
@@ -49,7 +50,6 @@ begin
         where w.organisation_id = p_organisation and public.is_member_of(w.id)) then
     raise exception 'only a member of a business of this organisation reads it' using errcode = '42501';
   end if;
-  perform public.organisation_feature_check(v_head);
 
   for v_house in
     select w.id, w.name, upper(w.country_code) as country, upper(w.currency_code) as currency,

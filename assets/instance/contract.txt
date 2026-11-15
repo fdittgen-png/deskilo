@@ -3141,7 +3141,7 @@ routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p
 routine public.organisation_feature_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:483b7fc7e5c7
 routine public.organisation_head_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:9879c021f6cb
 routine public.organisation_house_fenced_amounts() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:cf073b65bd03
-routine public.organisation_overview_v1(p_organisation uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fc31a5829162
+routine public.organisation_overview_v1(p_organisation uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ee3d37a0ae12
 routine public.organisation_owner_check(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:53d89cd293f4
 routine public.organisation_owns(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:f2dc4841d55e
 routine public.organisation_place(p_workspace_id uuid, p_organisation_id uuid) -> void | function | definer | volatile | exec:service_role | body:7e8e491c6304
