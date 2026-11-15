@@ -11,7 +11,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/l10n/lexicon.dart';
 import '../../core/shortcuts/shortcut_scope.dart';
 import '../../features/task_recorder/presentation/route_classification.dart'
-    show taskWizardRoute;
+    show businessTaskWizardRoute;
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../l10n/app_localizations.dart';
@@ -186,7 +186,7 @@ class DrawerEntries {
           'drawer-task-wizard',
           Icons.assistant_navigation,
           l10n.taskWizardTitle,
-          () => go(taskWizardRoute),
+          () => go(businessTaskWizardRoute),
         ),
     ];
   }
@@ -462,7 +462,7 @@ class DrawerEntries {
         'drawer-privacy',
         Icons.shield_outlined,
         l10n.privacyTitle,
-        () => go('/privacy'),
+        () => go('/business-privacy'),
       ),
       // #1598 — the wide shell says the same word as the narrow one: the
       // entry keeps its key and its destination and changes only its

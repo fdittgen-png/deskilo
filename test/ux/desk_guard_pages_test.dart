@@ -484,6 +484,14 @@ const _pages = [
   ),
   // #3954 — the colours page, walked by Tab once at every size.
   ('/settings/colours', PageKind.document, 'settings', 'colours'),
+  // #4057 — Privacy and the task assistant, inside the business's shell.
+  ('/business-privacy', PageKind.document, 'settings', 'business-privacy'),
+  (
+    '/business-task-wizard',
+    PageKind.document,
+    'settings',
+    'business-task-wizard',
+  ),
   // #3947 — a conversation with a message: its menu and header are targets
   // of the kit's size.
   ('/conversation/conv-1', PageKind.document, 'people', 'conversation'),
@@ -614,7 +622,7 @@ const _pages = [
 
 /// #3619 — how many workspace routes the guards above hold; it only rises
 /// (the follow-up guards the rest, the most used modules first).
-const _guardedWorkspaceRoutes = 89;
+const _guardedWorkspaceRoutes = 91;
 
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
