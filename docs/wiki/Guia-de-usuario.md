@@ -3630,6 +3630,31 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 **Véase también:** [País](#país)
 
+<!-- anchor: user.workspace.settings.organisation -->
+### Organización
+
+**Público:** Propietario
+
+Su negocio tiene sedes en el extranjero, en otro país o en otra moneda. Cada una es una casa: un negocio propio con las reglas de su país, su moneda y su propia contabilidad. Juntas forman una organización con una sede (#4006).
+
+**Pasos**
+
+1. En [Espacio](https://fdittgen-png.github.io/deskilo/#/workspace-settings), abra **Organización**.
+2. Si el negocio aún no está en ninguna organización, toque **Hacer de este negocio la sede de una organización** y dele un nombre.
+3. Toque **Añadir uno de mis negocios** para hacer de otro negocio del que es propietario una casa de la organización.
+4. Toque **Sacar de la organización** junto a una casa para que vuelva a ser un negocio independiente.
+
+**Conviene saber**
+
+- Cada casa muestra su país, su moneda y su propio rol en ella. Quién más es propietario de una casa se ve dentro de esa casa.
+- En Yo, las casas aparecen juntas bajo el nombre de la organización: primero la sede y después por país.
+- Dentro de una casa, toque el nombre del negocio arriba para pasar a otra casa de la organización.
+- Los importes en monedas distintas se muestran uno al lado del otro y nunca se suman.
+- La sede sale la última: saque primero las demás casas.
+- Solo un propietario del negocio y de la sede puede cambiar la organización.
+
+**Véase también:** [País](#país)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Dirección del membrete
 

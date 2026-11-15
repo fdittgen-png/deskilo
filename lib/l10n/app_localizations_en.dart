@@ -22099,6 +22099,76 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two workspaces with the same name: one to try things out, one that is real. You own both.';
 
   @override
+  String get organisationAdd => 'Add one of my businesses';
+
+  @override
+  String get organisationAddNone =>
+      'None of your businesses can join: each is already in an organisation.';
+
+  @override
+  String get organisationCreate =>
+      'Make this business the head of an organisation';
+
+  @override
+  String get organisationHead => 'Head';
+
+  @override
+  String get organisationName => 'Name of the organisation';
+
+  @override
+  String get organisationNone =>
+      'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.';
+
+  @override
+  String get organisationRefusedAlreadyInOne =>
+      'This business is already in an organisation.';
+
+  @override
+  String get organisationRefusedHeadLeavesLast =>
+      'The head leaves last: take the other houses out first.';
+
+  @override
+  String get organisationRefusedInNone =>
+      'This business is in no organisation.';
+
+  @override
+  String get organisationRefusedNoName => 'An organisation needs a name.';
+
+  @override
+  String get organisationRefusedNotOwner =>
+      'Only an owner of this business and of the head may do this.';
+
+  @override
+  String get organisationRefusedOther =>
+      'The organisation could not be changed. Try again.';
+
+  @override
+  String get organisationRemove => 'Take out of the organisation';
+
+  @override
+  String get organisationRename => 'Rename the organisation';
+
+  @override
+  String get organisationRoleAdmin => 'administrator';
+
+  @override
+  String get organisationRoleCoOwner => 'co-owner';
+
+  @override
+  String get organisationRoleMember => 'member';
+
+  @override
+  String get organisationRoleOwner => 'owner';
+
+  @override
+  String get organisationTitle => 'Organisation';
+
+  @override
+  String organisationYourRole(String role) {
+    return 'You: $role';
+  }
+
+  @override
   String get overagePolicyBlocked => 'Block further booking';
 
   @override

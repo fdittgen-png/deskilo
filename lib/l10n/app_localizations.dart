@@ -35586,6 +35586,126 @@ abstract class AppLocalizations {
   /// **'Two workspaces with the same name: one to try things out, one that is real. You own both.'**
   String get onboardingWithTwinHint;
 
+  /// #4006 — the organisation page: organisationAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Add one of my businesses'**
+  String get organisationAdd;
+
+  /// #4006 — the organisation page: organisationAddNone.
+  ///
+  /// In en, this message translates to:
+  /// **'None of your businesses can join: each is already in an organisation.'**
+  String get organisationAddNone;
+
+  /// #4006 — the organisation page: organisationCreate.
+  ///
+  /// In en, this message translates to:
+  /// **'Make this business the head of an organisation'**
+  String get organisationCreate;
+
+  /// #4006 — the organisation page: organisationHead.
+  ///
+  /// In en, this message translates to:
+  /// **'Head'**
+  String get organisationHead;
+
+  /// #4006 — the organisation page: organisationName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the organisation'**
+  String get organisationName;
+
+  /// #4006 — the organisation page: organisationNone.
+  ///
+  /// In en, this message translates to:
+  /// **'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.'**
+  String get organisationNone;
+
+  /// #4006 — the organisation page: organisationRefusedAlreadyInOne.
+  ///
+  /// In en, this message translates to:
+  /// **'This business is already in an organisation.'**
+  String get organisationRefusedAlreadyInOne;
+
+  /// #4006 — the organisation page: organisationRefusedHeadLeavesLast.
+  ///
+  /// In en, this message translates to:
+  /// **'The head leaves last: take the other houses out first.'**
+  String get organisationRefusedHeadLeavesLast;
+
+  /// #4006 — the organisation page: organisationRefusedInNone.
+  ///
+  /// In en, this message translates to:
+  /// **'This business is in no organisation.'**
+  String get organisationRefusedInNone;
+
+  /// #4006 — the organisation page: organisationRefusedNoName.
+  ///
+  /// In en, this message translates to:
+  /// **'An organisation needs a name.'**
+  String get organisationRefusedNoName;
+
+  /// #4006 — the organisation page: organisationRefusedNotOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'Only an owner of this business and of the head may do this.'**
+  String get organisationRefusedNotOwner;
+
+  /// #4006 — the organisation page: organisationRefusedOther.
+  ///
+  /// In en, this message translates to:
+  /// **'The organisation could not be changed. Try again.'**
+  String get organisationRefusedOther;
+
+  /// #4006 — the organisation page: organisationRemove.
+  ///
+  /// In en, this message translates to:
+  /// **'Take out of the organisation'**
+  String get organisationRemove;
+
+  /// #4006 — the organisation page: organisationRename.
+  ///
+  /// In en, this message translates to:
+  /// **'Rename the organisation'**
+  String get organisationRename;
+
+  /// #4006 — the organisation page: organisationRoleAdmin.
+  ///
+  /// In en, this message translates to:
+  /// **'administrator'**
+  String get organisationRoleAdmin;
+
+  /// #4006 — the organisation page: organisationRoleCoOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'co-owner'**
+  String get organisationRoleCoOwner;
+
+  /// #4006 — the organisation page: organisationRoleMember.
+  ///
+  /// In en, this message translates to:
+  /// **'member'**
+  String get organisationRoleMember;
+
+  /// #4006 — the organisation page: organisationRoleOwner.
+  ///
+  /// In en, this message translates to:
+  /// **'owner'**
+  String get organisationRoleOwner;
+
+  /// #4006 — the organisation page: organisationTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Organisation'**
+  String get organisationTitle;
+
+  /// #4006 — the organisation page: organisationYourRole.
+  ///
+  /// In en, this message translates to:
+  /// **'You: {role}'**
+  String organisationYourRole(String role);
+
   /// Over-consumption option: the member cannot book past their monthly days
   ///
   /// In en, this message translates to:

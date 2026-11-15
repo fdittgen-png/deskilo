@@ -3476,6 +3476,30 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 **Siehe auch:** [Land](help:user.workspace.settings.country)
 
+### Organisation
+
+**Zielgruppe:** Inhaber
+
+Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer anderen Währung. Jeder davon ist ein Haus: ein eigenes Unternehmen mit den Regeln seines Landes, seiner Währung und seiner eigenen Buchhaltung. Zusammen bilden sie eine Organisation mit einem Hauptsitz (#4006).
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](app:/workspace-settings) die **Organisation**.
+2. Gehört das Unternehmen noch zu keiner Organisation, tippen Sie auf **Dieses Unternehmen zum Hauptsitz einer Organisation machen** und geben Sie ihr einen Namen.
+3. Tippen Sie auf **Eines meiner Unternehmen hinzufügen**, um ein anderes Unternehmen, dessen Inhaber Sie sind, zu einem Haus der Organisation zu machen.
+4. Tippen Sie neben einem Haus auf **Aus der Organisation nehmen**, um es wieder zu einem eigenständigen Unternehmen zu machen.
+
+**Gut zu wissen**
+
+- Jedes Haus zeigt sein Land, seine Währung und Ihre eigene Rolle dort. Wer ein Haus sonst noch besitzt, steht im Haus selbst.
+- Unter Ich stehen die Häuser zusammen unter dem Namen der Organisation: zuerst der Hauptsitz, dann nach Land.
+- In einem Haus tippen Sie oben auf den Namen des Unternehmens, um in ein anderes Haus der Organisation zu wechseln.
+- Beträge in verschiedenen Währungen stehen nebeneinander und werden nie addiert.
+- Der Hauptsitz geht zuletzt: Nehmen Sie zuerst die anderen Häuser heraus.
+- Nur ein Inhaber des Unternehmens und des Hauptsitzes darf die Organisation ändern.
+
+**Siehe auch:** [Land](help:user.workspace.settings.country)
+
 ### Adresse im Briefkopf
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung

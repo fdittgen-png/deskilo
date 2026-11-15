@@ -595,6 +595,31 @@ You want your invoices and letters printed on the paper your country uses.
 
 **See also:** [Country](help:user.workspace.settings.country)
 
+<!-- anchor: user.workspace.settings.organisation -->
+### Organisation
+
+**Audience:** Owner
+
+Your business has sites abroad, in another country or another currency. Each of them is a house: a business of its own with its country's rules, its currency and its own books. Together they form one organisation with one head (#4006).
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Organisation**.
+2. If the business is in no organisation yet, tap **Make this business the head of an organisation** and give it a name.
+3. Tap **Add one of my businesses** to make another business you own a house of the organisation.
+4. Tap **Take out of the organisation** beside a house to make it a business on its own again.
+
+**Good to know**
+
+- Each house shows its country, its currency and your own role there. Who else owns a house is shown inside that house.
+- On Me, the houses are listed together under the organisation's name: the head first, then by country.
+- Inside a house, tap the business's name at the top to move to another house of the organisation.
+- Amounts in different currencies are shown side by side and never added up.
+- The head leaves last: take the other houses out first.
+- Only an owner of the business and of the head may change the organisation.
+
+**See also:** [Country](help:user.workspace.settings.country)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Letterhead address
 

@@ -31,6 +31,7 @@ import '../country_change_confirm.dart';
 import '../excel_export.dart';
 import '../widgets/business_kind_sheet.dart';
 import '../widgets/local_setup_views.dart';
+import '../widgets/organisation_sheet.dart';
 import '../widgets/workspace_form_group.dart';
 import '../widgets/workspace_reports.dart';
 import 'workspace_settings_backup.dart';
@@ -114,6 +115,7 @@ class _WorkspaceSettingsScreenState
                   const HelpHint(HelpHintId.workspaceSettings),
                   const AdminVisibilityTile(),
                   const BusinessKindTile(), // #3549
+                  if((ref.watch(myMemberProvider).value?.actsAsOwner??false)&&ref.watch(currentWorkspaceProvider).value!=null)ListTile(key: const ValueKey('workspace-settings-organisation'), title:Text(l10n.organisationTitle),leading:const Icon(Icons.account_tree_outlined),onTap:()=>OrganisationSheet.open(context, ref.read(currentWorkspaceProvider).value!)), // #4006
                   if(ref.watch(myMemberProvider).value?.actsAsOwner??false)ListTile(key: const ValueKey('workspace-settings-portal-publication'), title:Text(l10n.portalPublication),leading:const Icon(Icons.public),onTap:()=>context.push('/settings/public-page')),
                   ...setupReadinessCards(workspace.id), // #1636 #1656
                   ...WorkspaceParameterTiles(this, _form, _update,
