@@ -29186,6 +29186,111 @@
   "@onboardingWithTwinHint": {
     "description": "#987/#989 environment pairs: onboardingWithTwinHint"
   },
+  "organisationAdd": "Add one of my businesses",
+  "@organisationAdd": {
+    "description": "#4006 — the organisation page: organisationAdd."
+  },
+  "organisationAddNone": "None of your businesses can join: each is already in an organisation.",
+  "@organisationAddNone": {
+    "description": "#4006 — the organisation page: organisationAddNone."
+  },
+  "organisationCreate": "Make this business the head of an organisation",
+  "@organisationCreate": {
+    "description": "#4006 — the organisation page: organisationCreate."
+  },
+  "organisationHead": "Head",
+  "@organisationHead": {
+    "description": "#4006 — the organisation page: organisationHead."
+  },
+  "organisationLeave": "Leave the organisation",
+  "@organisationLeave": {
+    "description": "#4006 — the organisation page: organisationLeave."
+  },
+  "organisationMakeHead": "Make it the head",
+  "@organisationMakeHead": {
+    "description": "#4006 — the organisation page: organisationMakeHead."
+  },
+  "organisationName": "Name of the organisation",
+  "@organisationName": {
+    "description": "#4006 — the organisation page: organisationName."
+  },
+  "organisationNone": "This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.",
+  "@organisationNone": {
+    "description": "#4006 — the organisation page: organisationNone."
+  },
+  "organisationRefusedAlreadyInOne": "This business is already in an organisation.",
+  "@organisationRefusedAlreadyInOne": {
+    "description": "#4006 — the organisation page: organisationRefusedAlreadyInOne."
+  },
+  "organisationRefusedFeatureOff": "The organisation is off in this business: turn it on in its features first.",
+  "@organisationRefusedFeatureOff": {
+    "description": "#4006 — the organisation page: organisationRefusedFeatureOff."
+  },
+  "organisationRefusedHeadLeavesLast": "The head leaves last: take the other houses out first.",
+  "@organisationRefusedHeadLeavesLast": {
+    "description": "#4006 — the organisation page: organisationRefusedHeadLeavesLast."
+  },
+  "organisationRefusedInNone": "This business is in no organisation.",
+  "@organisationRefusedInNone": {
+    "description": "#4006 — the organisation page: organisationRefusedInNone."
+  },
+  "organisationRefusedNoName": "An organisation needs a name.",
+  "@organisationRefusedNoName": {
+    "description": "#4006 — the organisation page: organisationRefusedNoName."
+  },
+  "organisationRefusedNotAHouse": "The new head must be a house of this organisation.",
+  "@organisationRefusedNotAHouse": {
+    "description": "#4006 — the organisation page: organisationRefusedNotAHouse."
+  },
+  "organisationRefusedNotOwner": "Only an owner of this business and of the head may do this.",
+  "@organisationRefusedNotOwner": {
+    "description": "#4006 — the organisation page: organisationRefusedNotOwner."
+  },
+  "organisationRefusedOther": "The organisation could not be changed. Try again.",
+  "@organisationRefusedOther": {
+    "description": "#4006 — the organisation page: organisationRefusedOther."
+  },
+  "organisationRefusedTwinNeverHead": "A test business is never the head.",
+  "@organisationRefusedTwinNeverHead": {
+    "description": "#4006 — the organisation page: organisationRefusedTwinNeverHead."
+  },
+  "organisationRemove": "Take out of the organisation",
+  "@organisationRemove": {
+    "description": "#4006 — the organisation page: organisationRemove."
+  },
+  "organisationRename": "Rename the organisation",
+  "@organisationRename": {
+    "description": "#4006 — the organisation page: organisationRename."
+  },
+  "organisationRoleAdmin": "administrator",
+  "@organisationRoleAdmin": {
+    "description": "#4006 — the organisation page: organisationRoleAdmin."
+  },
+  "organisationRoleCoOwner": "co-owner",
+  "@organisationRoleCoOwner": {
+    "description": "#4006 — the organisation page: organisationRoleCoOwner."
+  },
+  "organisationRoleMember": "member",
+  "@organisationRoleMember": {
+    "description": "#4006 — the organisation page: organisationRoleMember."
+  },
+  "organisationRoleOwner": "owner",
+  "@organisationRoleOwner": {
+    "description": "#4006 — the organisation page: organisationRoleOwner."
+  },
+  "organisationTitle": "Organisation",
+  "@organisationTitle": {
+    "description": "#4006 — the organisation page: organisationTitle."
+  },
+  "organisationYourRole": "You: {role}",
+  "@organisationYourRole": {
+    "description": "#4006 — the organisation page: organisationYourRole.",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
   "overagePolicyBlocked": "Block further booking",
   "@overagePolicyBlocked": {
     "description": "Over-consumption option: the member cannot book past their monthly days"
