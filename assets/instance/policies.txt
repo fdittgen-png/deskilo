@@ -292,6 +292,8 @@ public.offices.offices_select
 public.offices.offices_write
 public.offices.offices_write_sites
 public.opening_hours_history.mcp_delegated_deny
+public.organisations.mcp_delegated_deny
+public.organisations.organisations_select
 public.outgoing_payments.mcp_delegated_deny
 public.outgoing_payments.outgoing_payments_select
 public.packages.mcp_delegated_deny
