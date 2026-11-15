@@ -271,5 +271,7 @@
   "featureInvoiceEmailTitle": "Fatture via e-mail",
   "featureInvoiceEmailDesc": "Una fattura emessa può essere inviata via e-mail dal server, con il mittente dell'azienda, all'indirizzo di contatto del cliente, nella lingua dei suoi documenti. Ogni fattura viene inviata una volta; inviarla di nuovo è un atto deliberato, con una propria traccia. Disattivato: le fatture si condividono o si scaricano come prima.",
   "featureQuickSearchTitle": "Ricerca e tasti",
-  "featureQuickSearchDesc": "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina."
+  "featureQuickSearchDesc": "Ctrl+K (⌘K su un Mac) o il pulsante di ricerca della barra trova una pagina, un'azione o una scheda — un membro, un cliente, una fattura dal suo numero, un fornitore — tra ciò che la persona può aprire; prima gli elementi recenti. ? elenca i tasti della pagina. Disattivato: nessun pulsante di ricerca e nessun tasto dell'app; restano i tasti propri di una pagina.",
+  "featureOrganisationTitle": "Organizzazione di aziende",
+  "featureOrganisationDesc": "Questa azienda è a capo di un’organizzazione delle aziende del cliente: una sede in un altro paese o in un’altra valuta è una casa, un’azienda a sé con le regole del suo paese. Disattivato: nessuna organizzazione viene creata o modificata da questa azienda; una casa può sempre lasciarla e i membri vedono sempre dove si trovano."
 }

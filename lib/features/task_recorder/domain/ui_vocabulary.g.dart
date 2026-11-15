@@ -8531,6 +8531,8 @@ const Set<String> uiLabelKeys = {
   'featureOnlinePaymentsDesc',
   'featureOptInConfirm',
   'featureOptInTitle',
+  'featureOrganisationDesc',
+  'featureOrganisationTitle',
   'featureParkingDesc',
   'featureParkingTitle',
   'featurePaymentRemindersDesc',

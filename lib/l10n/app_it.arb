@@ -7138,6 +7138,8 @@
   "featureOptInConfirm": "Attiva",
   "featureOptInStage": "{feature}: {stage}",
   "featureOptInTitle": "Attivare una funzione sperimentale?",
+  "featureOrganisationDesc": "Questa azienda è a capo di un’organizzazione delle aziende del cliente: una sede in un altro paese o in un’altra valuta è una casa, un’azienda a sé con le regole del suo paese. Disattivato: nessuna organizzazione viene creata o modificata da questa azienda; una casa può sempre lasciarla e i membri vedono sempre dove si trovano.",
+  "featureOrganisationTitle": "Organizzazione di aziende",
   "featureParkingDesc": "Un parcheggio su un piano con posti standard, elettrici e accessibili, prenotati per giorno. Disattivato: nessun parcheggio.",
   "@featureParkingDesc": {
     "description": "#2631 parking: featureParkingDesc"
