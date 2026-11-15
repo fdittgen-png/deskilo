@@ -136,17 +136,10 @@ class DeskiloApp extends ConsumerWidget {
               router: router,
               animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: RoutedBuilder(
-                // #4057 — an imperative pop (the in-app Back from a pushed
-                // page) tells the delegate, not the information provider:
-                // both are heard, or the window keeps the chrome of the
-                // page that was left.
-                listenable: Listenable.merge([
-                  router.routeInformationProvider,
-                  router.routerDelegate,
-                ]),
+                listenable: routeChanges(router),
                 builder: (context) => Consumer(
                   builder: (context, ref, _) {
-                    final path = router.routerDelegate.currentConfiguration.uri.path;
+                    final path = router.routeInformationProvider.value.uri.path;
                     // #3603 — on the desk the window is the desk's, drawn
                     // around the navigator; its page area takes the column
                     // (desk_frame.dart).

@@ -14,6 +14,8 @@ signed-out on  /badge-kiosks -> /auth
 signed-out on  /bi -> /auth
 signed-out on  /bi/report/:id -> /auth
 signed-out on  /billing -> /auth
+signed-out on  /business-privacy -> /auth
+signed-out on  /business-task-wizard -> /auth
 signed-out on  /calendar -> /auth
 signed-out on  /connections -> /auth
 signed-out on  /consent -> /auth
@@ -162,6 +164,8 @@ signed-out off /badge-kiosks -> /auth
 signed-out off /bi -> /auth
 signed-out off /bi/report/:id -> /auth
 signed-out off /billing -> /auth
+signed-out off /business-privacy -> /auth
+signed-out off /business-task-wizard -> /auth
 signed-out off /calendar -> /auth
 signed-out off /connections -> /auth
 signed-out off /consent -> /auth
@@ -310,6 +314,8 @@ no-space on  /badge-kiosks -> /me
 no-space on  /bi -> /me
 no-space on  /bi/report/:id -> /me
 no-space on  /billing -> /me
+no-space on  /business-privacy -> /me
+no-space on  /business-task-wizard -> /me
 no-space on  /calendar -> /me
 no-space on  /connections -> (open)
 no-space on  /consent -> /me
@@ -458,6 +464,8 @@ no-space off /badge-kiosks -> /me
 no-space off /bi -> /me
 no-space off /bi/report/:id -> /me
 no-space off /billing -> /me
+no-space off /business-privacy -> /me
+no-space off /business-task-wizard -> /me
 no-space off /calendar -> /me
 no-space off /connections -> (open)
 no-space off /consent -> /me
@@ -606,6 +614,8 @@ member on  /badge-kiosks -> /calendar
 member on  /bi -> /calendar
 member on  /bi/report/:id -> /calendar
 member on  /billing -> /calendar
+member on  /business-privacy -> (open)
+member on  /business-task-wizard -> /settings
 member on  /calendar -> (open)
 member on  /connections -> (open)
 member on  /consent -> /reserve
@@ -754,6 +764,8 @@ member off /badge-kiosks -> /messages
 member off /bi -> /messages
 member off /bi/report/:id -> /messages
 member off /billing -> /messages
+member off /business-privacy -> (open)
+member off /business-task-wizard -> /settings
 member off /calendar -> /messages
 member off /connections -> (open)
 member off /consent -> /messages
@@ -902,6 +914,8 @@ admin on  /badge-kiosks -> (open)
 admin on  /bi -> /calendar
 admin on  /bi/report/:id -> /calendar
 admin on  /billing -> /calendar
+admin on  /business-privacy -> (open)
+admin on  /business-task-wizard -> /settings
 admin on  /calendar -> (open)
 admin on  /connections -> (open)
 admin on  /consent -> /reserve
@@ -1050,6 +1064,8 @@ admin off /badge-kiosks -> /messages
 admin off /bi -> /messages
 admin off /bi/report/:id -> /messages
 admin off /billing -> /messages
+admin off /business-privacy -> (open)
+admin off /business-task-wizard -> /settings
 admin off /calendar -> /messages
 admin off /connections -> (open)
 admin off /consent -> /messages
@@ -1198,6 +1214,8 @@ owner on  /badge-kiosks -> (open)
 owner on  /bi -> /calendar
 owner on  /bi/report/:id -> /calendar
 owner on  /billing -> (open)
+owner on  /business-privacy -> (open)
+owner on  /business-task-wizard -> /settings
 owner on  /calendar -> (open)
 owner on  /connections -> (open)
 owner on  /consent -> /reserve
@@ -1346,6 +1364,8 @@ owner off /badge-kiosks -> /messages
 owner off /bi -> /messages
 owner off /bi/report/:id -> /messages
 owner off /billing -> /messages
+owner off /business-privacy -> (open)
+owner off /business-task-wizard -> /settings
 owner off /calendar -> /messages
 owner off /connections -> (open)
 owner off /consent -> /messages

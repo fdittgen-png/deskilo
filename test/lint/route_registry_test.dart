@@ -31,6 +31,7 @@ const Map<String, String> _structural = {
   '/plan': 'alias of /reserve',
   '/pending': 'the waiting room exists before a membership, so no flag is read',
   '/workspace-code': 'joining by invitation is infrastructure (#917, #1652)',
+  '/business-privacy': 'Privacy & data from the sidebar, in the shell (#4057)',
   '/features': 'the switch that turns everything back on (#1327)',
   '/workspace-settings': 'the identity every money and date rule reads',
   '/reports': 'its documents section is part of workspace settings (#2301)',
@@ -64,8 +65,6 @@ const Map<String, String> _notWorkspace = {
   '/developer': 'device — local trace diagnostics (#144, #2521)',
   '/help': 'entry',
   '/privacy': 'entry',
-  // #4057 — the same page from a business's sidebar, inside its shell.
-  '/business-privacy': 'account',
   '/me/formats': 'account — the person\'s own Region & formats, from Me (#3697)',
   '/linked-accounts': 'account',
   '/scan-join': 'account',
