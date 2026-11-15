@@ -1,0 +1,9 @@
+{
+  "bankBatchTitle": "¿Confirmar estas conciliaciones?",
+  "bankBatchLine": "{amount} el {date}",
+  "bankBatchSettles": "Liquida {invoice} de {member}",
+  "bankBatchTotal": "Total en {currency}: {amount}",
+  "bankBatchLineConfirmed": "{invoice}: confirmada",
+  "bankBatchLineRefused": "{invoice}: no confirmada. Concilie este movimiento por separado.",
+  "bankBatchResultTitle": "{count, plural, =0{No se confirmó ninguna conciliación} one{Se confirmó 1 conciliación} other{Se confirmaron {count} conciliaciones}}"
+}

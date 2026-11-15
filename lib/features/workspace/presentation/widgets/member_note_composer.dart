@@ -9,6 +9,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/composer_send_keys.dart';
@@ -22,6 +23,7 @@ import '../../domain/member_note_refs.dart';
 import '../../domain/workspace_feature.dart';
 import '../../providers/workspace_providers.dart';
 import '../reference_locale.dart';
+import 'composer_attach_menu.dart';
 import 'note_record_choices.dart';
 import 'note_record_open.dart';
 import 'ref_picker_sheet.dart';
@@ -405,6 +407,43 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final quoted = widget.quoted;
+    final attach = ComposerAttachMenu(
+      kinds: _recordKinds,
+      labelOf: (kind) => _recordLabel(l10n, kind),
+      withMention: widget.mentionCandidates.isNotEmpty,
+      onReservation: _pickReservation,
+      onSpace: _pickSpace,
+      onMention: _pickMention,
+      onRecord: _pickRecord,
+    );
+    // #4060 — at desk width the attach menu, the field and send are one row.
+    final oneRow =
+        widget.referencesAllowed &&
+        WindowClass.of(context).atLeast(WindowClass.expanded);
+    final field = ComposerSendKeys(controller: _body, onSend: _send, child: TextField(
+          key: const ValueKey('member-note-body'),
+          controller: _body,
+          autofocus: widget.autofocus,
+          minLines: 1,
+          maxLines: 5,
+          maxLength: MemberNoteRules.maxLength,
+          onChanged: (text) {
+            widget.onChanged?.call(text);
+            if (widget.compact) setState(() {});
+          },
+          decoration: InputDecoration(
+            labelText: l10n.memberNoteHint,
+            border: const OutlineInputBorder(),
+            // #821 — silent until the limit is near, then it says how
+            // much room is left instead of just stopping the keys.
+            counterText: widget.compact &&
+                    MemberNoteRules.maxLength - _body.text.length <=
+                        _counterFrom
+                ? (l10n.composerCharsLeft(
+                        MemberNoteRules.maxLength - _body.text.length))
+                : '',
+          ),
+        ));
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -443,30 +482,7 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
               ),
             ]),
           ),
-        ComposerSendKeys(controller: _body, onSend: _send, child: TextField(
-          key: const ValueKey('member-note-body'),
-          controller: _body,
-          autofocus: widget.autofocus,
-          minLines: 1,
-          maxLines: 5,
-          maxLength: MemberNoteRules.maxLength,
-          onChanged: (text) {
-            widget.onChanged?.call(text);
-            if (widget.compact) setState(() {});
-          },
-          decoration: InputDecoration(
-            labelText: l10n.memberNoteHint,
-            border: const OutlineInputBorder(),
-            // #821 — silent until the limit is near, then it says how
-            // much room is left instead of just stopping the keys.
-            counterText: widget.compact &&
-                    MemberNoteRules.maxLength - _body.text.length <=
-                        _counterFrom
-                ? (l10n.composerCharsLeft(
-                        MemberNoteRules.maxLength - _body.text.length))
-                : '',
-          ),
-        )),
+        if (!oneRow) field,
         if (!widget.referencesAllowed)
           Row(children: [
             if (widget.mentionCandidates.isNotEmpty)
@@ -493,61 +509,15 @@ class _MemberNoteComposerState extends ConsumerState<MemberNoteComposer> {
             ),
             _sendControl(l10n),
           ])
+        else if (oneRow)
+          Row(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            attach,
+            Expanded(child: field),
+            _sendControl(l10n),
+          ])
         else if (widget.compact)
           Row(children: [
-            PopupMenuButton<String>(
-              key: const ValueKey('composer-attach'),
-              tooltip: l10n.composerAttach,
-              icon: const Icon(Icons.add_circle_outline),
-              onSelected: (value) => switch (value) {
-                'reservation' => _pickReservation(),
-                'space' => _pickSpace(),
-                'mention' => _pickMention(),
-                // #842 — the four new kinds share one picker.
-                _ => _pickRecord(NoteRecordKind.values.byName(value)),
-              },
-              itemBuilder: (context) => [
-                PopupMenuItem(
-                  key: const ValueKey('member-note-ref-reservation'),
-                  value: 'reservation',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.event_available_outlined),
-                    title: Text(
-                        l10n.noteRefReservation),
-                  ),
-                ),
-                PopupMenuItem(
-                  key: const ValueKey('member-note-ref-space'),
-                  value: 'space',
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: const Icon(Icons.chair_outlined),
-                    title: Text(l10n.noteRefSpace),
-                  ),
-                ),
-                for (final kind in _recordKinds)
-                  PopupMenuItem(
-                    key: ValueKey('member-note-ref-${kind.name}'),
-                    value: kind.name,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Icon(noteRecordIcon(kind)),
-                      title: Text(_recordLabel(l10n, kind)),
-                    ),
-                  ),
-                if (widget.mentionCandidates.isNotEmpty)
-                  PopupMenuItem(
-                    key: const ValueKey('member-note-mention'),
-                    value: 'mention',
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: const Icon(Icons.alternate_email),
-                      title: Text(l10n.composerMention),
-                    ),
-                  ),
-              ],
-            ),
+            attach,
             const Spacer(),
             _sendControl(l10n),
           ])

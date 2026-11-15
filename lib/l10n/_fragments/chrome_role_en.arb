@@ -1,0 +1,23 @@
+{
+  "chromeRoleAs": "as {role}",
+  "@chromeRoleAs": {
+    "description": "#4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
+  "chromeChipWithHint": "{label}, {hint}",
+  "@chromeChipWithHint": {
+    "description": "#4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "hint": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -611,10 +611,12 @@ Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre dev
 5. Touchez **En faire la tête** à côté d'une maison dont vous êtes propriétaire pour en faire la tête. Le propriétaire d'une autre maison voit **Quitter l’organisation** à côté de celle-ci.
 6. Touchez **Ajouter une maison à l’étranger** pour créer une entreprise à part entière dans un autre pays ou une autre devise : choisissez d'abord son pays ; sa devise, son fuseau horaire et la langue de ses documents en sont proposés. Le formulaire dit ce qui voyage, ce qui arrive inactif à tarifer et ce qui ne voyage pas. Touchez **Créer la maison** : vous y arrivez, et son accueil montre une fois comment elle a commencé.
 7. Dans la nouvelle maison, l'accueil affiche sa première tâche : d'abord les taux de taxe de son pays, puis **Fixer vos prix** pour les services et forfaits arrivés inactifs. Donnez à chacun un prix (0 le rend gratuit) et un taux, puis activez-le ; les tranches de cotisation, la mise en page et les liens des documents, les instructions de paiement et le compte bancaire sont propres à la maison. Touchez **Terminé** quand il ne reste rien.
+8. Dans une maison dont vous êtes propriétaire, activez **Les membres des autres maisons sont les bienvenus ici** pour accueillir immédiatement un membre d'une autre maison de l'organisation qui le demande, aux conditions de cette maison pour un nouveau membre. Désactivé, la demande attend votre décision, qui nomme la maison d'où vient la personne.
 
 **Bon à savoir**
 
 - Chaque maison indique son pays, sa devise et votre propre rôle. Qui d'autre en est propriétaire se lit dans la maison elle-même.
+- Un membre d'une maison voit les autres maisons de l'organisation sur Moi, sous **Autres maisons de** l'organisation, et touche **Demander à rejoindre**. Une question dit d'abord ce que cela implique : son profil devient visible pour cette maison, qui est une activité à part entière avec ses propres conditions, prix et devise.
 - Dans Moi, les maisons sont regroupées sous le nom de l'organisation : la tête d'abord, puis par pays.
 - Dans une maison, touchez le nom de l'entreprise en haut pour passer à une autre maison de l'organisation.
 - Les montants dans des devises différentes sont affichés côte à côte et jamais additionnés.

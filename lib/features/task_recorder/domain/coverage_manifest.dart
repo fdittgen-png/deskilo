@@ -115,6 +115,11 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.identity,
   ),
   RouteCoverage(
+    '/business-privacy',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.identity,
+  ),
+  RouteCoverage(
     '/server',
     CoverageStatus.excluded,
     category: ProtectedSurface.secrets,
@@ -142,6 +147,7 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/task-recorder', CoverageStatus.recorder),
   RouteCoverage('/task-wizard', CoverageStatus.recorder),
+  RouteCoverage('/business-task-wizard', CoverageStatus.recorder),
   RouteCoverage('/task-workbench', CoverageStatus.recorder),
   RouteCoverage('/account-activity', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage('/organisation/:id/overview', CoverageStatus.planned, owner: '#1881 B'),
@@ -352,10 +358,7 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/member/:memberId', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/report-editor', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/roles',
-    CoverageStatus.recorded,
-  ),
+  RouteCoverage('/roles', CoverageStatus.recorded),
   RouteCoverage(
     '/settings/personal-info',
     CoverageStatus.excluded,
@@ -405,10 +408,7 @@ const List<RouteCoverage> routeCoverage = [
     '/settings/roles-of-this-space',
     CoverageStatus.recorded,
   ),
-  RouteCoverage(
-    '/settings/what-you-can-do',
-    CoverageStatus.recorded,
-  ),
+  RouteCoverage('/settings/what-you-can-do', CoverageStatus.recorded),
   RouteCoverage('/settings/questions', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/attention', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage(
@@ -480,10 +480,7 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/features', CoverageStatus.recorded),
   RouteCoverage('/workspace-settings', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/reports', CoverageStatus.planned, owner: '#1884'),
-  RouteCoverage(
-    '/validation',
-    CoverageStatus.recorded,
-  ),
+  RouteCoverage('/validation', CoverageStatus.recorded),
   RouteCoverage('/availability', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi', CoverageStatus.planned, owner: '#1884'),
   RouteCoverage('/bi/report/:id', CoverageStatus.planned, owner: '#1884'),

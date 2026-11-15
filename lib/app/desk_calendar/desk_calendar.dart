@@ -26,6 +26,12 @@ enum DeskMode {
   /// The dated feed of everything (bookings, payments, alerts…), as on a
   /// phone.
   agenda,
+
+  /// #4056 — the workspace's alerts, a view of the desk's own choice.
+  alerts;
+
+  /// Whether the mode is one of the phone hub's feeds (no period, no grid).
+  bool get isFeed => this == agenda || this == alerts;
 }
 
 /// The address of the desk calendar: `/calendar?view=week&day=2026-11-12
@@ -63,7 +69,7 @@ class DeskCalendarAddress {
       day: day,
       // `/calendar?view=alerts` (where /events lands) is the hub's feed.
       mode: query['view'] == 'alerts'
-          ? DeskMode.agenda
+          ? DeskMode.alerts
           : DeskMode.values.asNameMap()[query['mode']] ?? DeskMode.grid,
       reservationId: res == null || res.isEmpty ? null : res,
     );

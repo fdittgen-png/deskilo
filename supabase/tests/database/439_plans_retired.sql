@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #4042 (0785) -- public.plans is retired: tariffs are fee bands, the
+-- #4042 (0783) -- public.plans is retired: tariffs are fee bands, the
 -- export holds no plan, a configuration that still holds plans applies
 -- everything else and writes no plan, a house carries and fences none, and
 -- a business is priced by its fee bands. Rolled back.

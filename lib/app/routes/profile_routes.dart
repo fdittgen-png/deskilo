@@ -80,6 +80,15 @@ List<RouteBase> profileRoutes(RouteEnv env) {
       ),
     ),
     GoRoute(
+      // #4057 — the same page from a business's sidebar, inside its shell.
+      path: '/business-privacy',
+      builder: (context, state) => PrivacyScreen(
+        myDataPath: env.ref.read(personalShellEnabledProvider)
+            ? meDataRoute(view: MeDataView.profile)
+            : null,
+      ),
+    ),
+    GoRoute(
       // #734 — Region & formats as a screen of its own.
       path: '/formats',
       // #1151 — gated like every feature-owned route.

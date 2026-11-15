@@ -2190,6 +2190,46 @@ class AppLocalizationsEs extends AppLocalizations {
   String get bankBasisQrReference => 'referencia QR';
 
   @override
+  String bankBatchLine(String amount, String date) {
+    return '$amount el $date';
+  }
+
+  @override
+  String bankBatchLineConfirmed(String invoice) {
+    return '$invoice: confirmada';
+  }
+
+  @override
+  String bankBatchLineRefused(String invoice) {
+    return '$invoice: no confirmada. Concilie este movimiento por separado.';
+  }
+
+  @override
+  String bankBatchResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Se confirmaron $count conciliaciones',
+      one: 'Se confirmó 1 conciliación',
+      zero: 'No se confirmó ninguna conciliación',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankBatchSettles(String invoice, String member) {
+    return 'Liquida $invoice de $member';
+  }
+
+  @override
+  String get bankBatchTitle => '¿Confirmar estas conciliaciones?';
+
+  @override
+  String bankBatchTotal(String currency, String amount) {
+    return 'Total en $currency: $amount';
+  }
+
+  @override
   String get bankChooseMovement =>
       'Elija a la izquierda un movimiento de entrada: aquí se listan sus facturas abiertas.';
 
@@ -5851,10 +5891,6 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarDeskBooking => 'Detalles de la reserva';
 
   @override
-  String get calendarDeskBookingActions =>
-      'Cambiar, cancelar o ver en el plano';
-
-  @override
   String get calendarDeskColumnFrom => 'Desde';
 
   @override
@@ -5914,9 +5950,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String get calendarDeskNew => 'Nueva reserva';
 
   @override
+  String get calendarDeskRangeLabel => 'Periodo';
+
+  @override
   String calendarDeskRepeatedHour(String time) {
     return '$time, por segunda vez: los relojes se atrasaron';
   }
+
+  @override
+  String get calendarDeskViewLabel => 'Vista';
 
   @override
   String get calendarDeskZoomIn => 'Ampliar';
@@ -6336,6 +6378,16 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get chOptionToTaxDate => 'Opción efectiva desde (AAAA-MM-DD)';
+
+  @override
+  String chromeChipWithHint(String label, String hint) {
+    return '$label, $hint';
+  }
+
+  @override
+  String chromeRoleAs(String role) {
+    return 'como $role';
+  }
 
   @override
   String get coOwnerAction => 'Copropiedad';
@@ -9514,6 +9566,16 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String eventExpenseSubmitted(String actor, String amount) {
     return '$actor envió un gasto de $amount';
+  }
+
+  @override
+  String eventHouseJoinAsked(String member, String house) {
+    return '$member pide unirse, desde $house';
+  }
+
+  @override
+  String eventHouseJoinWelcomed(String member, String house) {
+    return '$member se unió desde $house, acogido por el ajuste de esta casa';
   }
 
   @override
@@ -13837,6 +13899,72 @@ class AppLocalizationsEs extends AppLocalizations {
   String get houseFree => 'Gratis';
 
   @override
+  String get houseJoinAsk => 'Pedir unirse';
+
+  @override
+  String houseJoinAsked(String house) {
+    return 'Pedido, a la espera de $house';
+  }
+
+  @override
+  String get houseJoinConfirmAsk => 'Pedir';
+
+  @override
+  String get houseJoinConfirmJoin => 'Unirse';
+
+  @override
+  String houseJoinDoneAsked(String house) {
+    return 'Su solicitud se envió a $house.';
+  }
+
+  @override
+  String houseJoinDoneMember(String house) {
+    return 'Es miembro de $house.';
+  }
+
+  @override
+  String houseJoinOthers(String organisation) {
+    return 'Otras casas de $organisation';
+  }
+
+  @override
+  String get houseJoinSheetApart =>
+      'Sus reservas y facturas allí quedan separadas de las de las otras casas.';
+
+  @override
+  String houseJoinSheetDecides(String house) {
+    return '$house decide sobre su solicitud.';
+  }
+
+  @override
+  String houseJoinSheetOwn(String house, String currency) {
+    return '$house es un negocio propio, con sus propias condiciones, precios y moneda ($currency).';
+  }
+
+  @override
+  String houseJoinSheetProfile(String house) {
+    return 'Su perfil se vuelve visible para los administradores de $house: su nombre, su correo y lo que pide a cada miembro.';
+  }
+
+  @override
+  String houseJoinSheetTitle(String house) {
+    return '¿Unirse a $house?';
+  }
+
+  @override
+  String houseJoinSheetWelcome(String house, String organisation) {
+    return '$house acoge a los miembros de $organisation: será miembro al instante.';
+  }
+
+  @override
+  String get houseJoinWelcomes => 'Será miembro al instante';
+
+  @override
+  String houseJoinWhere(String country, String currency) {
+    return '$country, en $currency';
+  }
+
+  @override
   String get houseKindPackage => 'Paquete';
 
   @override
@@ -13897,6 +14025,15 @@ class AppLocalizationsEs extends AppLocalizations {
   String houseSetRates(String country) {
     return 'Fijar los tipos de impuesto de $country';
   }
+
+  @override
+  String houseWelcomeExplain(String organisation) {
+    return 'Un miembro de otra casa de $organisation que lo pide se hace miembro aquí al instante, con las condiciones de esta casa para un nuevo miembro. Desactivado, usted decide cada solicitud.';
+  }
+
+  @override
+  String get houseWelcomeSwitch =>
+      'Los miembros de las otras casas son bienvenidos aquí';
 
   @override
   String get hubAccountingSubtitle =>
@@ -22781,6 +22918,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los documentos hablan inglés, francés, alemán, español o italiano.';
 
   @override
+  String get organisationRefusedNoHouse =>
+      'Este negocio no es una casa de una organización.';
+
+  @override
   String get organisationRefusedNoName =>
       'Una organización necesita un nombre.';
 
@@ -22789,8 +22930,16 @@ class AppLocalizationsEs extends AppLocalizations {
       'La nueva sede debe ser una casa de esta organización.';
 
   @override
+  String get organisationRefusedNotAMember =>
+      'Solo un miembro de una casa de esta organización puede pedir unirse a otra.';
+
+  @override
   String get organisationRefusedNotOwner =>
       'Solo un propietario de este negocio y de la sede puede hacerlo.';
+
+  @override
+  String get organisationRefusedOnlyAPerson =>
+      'Una persona pide unirse a una casa; un asistente no puede pedirlo por ella.';
 
   @override
   String get organisationRefusedOther =>
@@ -26809,6 +26958,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Esto ha cambiado mientras tanto. Vuelva a abrirlo para ver cómo está.';
+
+  @override
+  String get refusalMemberReturnsAsNew =>
+      'Un miembro que se fue vuelve como miembro nuevo: actívelo para darle de nuevo la bienvenida.';
 
   @override
   String get refusalMoneyLocaleLocked =>

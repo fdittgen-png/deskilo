@@ -120,6 +120,68 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
   Future<OrganisationRefusal?> clearPricesPending(String workspaceId) =>
       _command('clear_house_prices_pending', {'p_workspace_id': workspaceId});
 
+  @override
+  Future<List<JoinableHouse>> joinableHouses() async {
+    final rows = await _client.rpc<Object?>('my_organisation_houses_v1');
+    return [
+      for (final row in rows as List? ?? const []) // empty-ok: the server answers [] for none
+        JoinableHouse.fromJson(row),
+    ];
+  }
+
+  @override
+  Future<({HouseJoin? joined, OrganisationRefusal? refused})> askToJoin(
+    String workspaceId,
+  ) async {
+    try {
+      final answer = await _client.rpc<Object?>(
+        'request_house_membership',
+        params: {'p_house': workspaceId},
+      );
+      final status = JsonReader.of(
+        answer is Map ? answer : const <String, Object?>{},
+        context: 'house membership request',
+      ).stringOrNull('status');
+      return (joined: HouseJoin.of(status), refused: null);
+    } on PostgrestException catch (e, st) {
+      if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
+      TraceLogger.instance.warn(
+        'workspace',
+        'house membership request refused',
+        error: e,
+        stackTrace: st,
+      );
+      return (joined: null, refused: refusalOf(e.code, e.message));
+    }
+  }
+
+  @override
+  Future<bool> welcomesMembers(
+    String organisationId,
+    String workspaceId,
+  ) async {
+    final row = await _client
+        .from('organisations')
+        .select('welcoming_houses')
+        .eq('id', organisationId)
+        .maybeSingle();
+    final houses = row == null
+        ? const <Object?>[] // empty-ok: no organisation row welcomes no one
+        : JsonReader.of(row, context: 'organisation').listOrAbsent(
+            'welcoming_houses',
+          );
+    return houses.contains(workspaceId);
+  }
+
+  @override
+  Future<OrganisationRefusal?> setWelcome(
+    String workspaceId, {
+    required bool on,
+  }) => _command('set_house_members_welcome', {
+    'p_house': workspaceId,
+    'p_on': on,
+  });
+
   Future<OrganisationRefusal?> _command(
     String name,
     Map<String, Object?> params,
@@ -142,6 +204,12 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
   /// The refusal the server's [code] and [message] say.
   static OrganisationRefusal refusalOf(String? code, String message) =>
       switch ((code, message)) {
+        (_, 'only a member of a house of this organisation asks to join another') =>
+          OrganisationRefusal.notAMember,
+        (_, 'only a person asks to join a house') =>
+          OrganisationRefusal.onlyAPerson,
+        (_, 'this business is no house of an organisation') =>
+          OrganisationRefusal.noHouse,
         ('42501', _) => OrganisationRefusal.notOwner,
         ('55000', _) => OrganisationRefusal.featureOff,
         (_, 'a development twin is never the head') =>

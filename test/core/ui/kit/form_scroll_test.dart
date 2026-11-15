@@ -6,7 +6,9 @@
 // order they are built (the reading order sorts rows of unequal height
 // twice), a radio group is one Tab stop with the arrows moving inside it,
 // the amount field answers Up and Down itself, and the calendar button of
-// a date field is no stop of the keyboard.
+// a date field is no stop of the keyboard. #4034 — what scrolls is walked
+// as one block where its viewport stands, so the cycle comes round to the
+// bar above it.
 import 'dart:ui' show CheckedState;
 
 import 'package:deskilo/core/ui/form_kit.dart';
@@ -126,6 +128,65 @@ void main() {
       await _tab(tester);
       expect(_focused(), keys.first, reason: 'the cycle closes on the first');
     });
+  });
+
+  // #4034 — a page off the desk: a bar with its help on the right, a tab on
+  // the left under it, and a list that scrolls under both.
+  testWidgets('Tab comes round to the bar, not into a list scrolled under it',
+      (tester) async {
+    tester.view.physicalSize = const Size(768, 600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: FocusTraversalGroup(
+          policy: PageTraversalPolicy(),
+          child: Scaffold(
+            appBar: AppBar(
+              actions: [
+                IconButton(
+                  key: const ValueKey('help'),
+                  icon: const Icon(Icons.help_outline),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            body: Column(
+              children: [
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: TextButton(
+                    key: const ValueKey('tab'),
+                    onPressed: () {},
+                    child: const Text('Tab'),
+                  ),
+                ),
+                Expanded(
+                  child: ListView(
+                    children: [
+                      for (var i = 0; i < 30; i++)
+                        ListTile(
+                          key: ValueKey('row$i'),
+                          title: Text('Row $i'),
+                          onTap: () {},
+                        ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+    final walked = <String?>[];
+    for (var i = 0; i < 32; i++) {
+      await _tab(tester);
+      walked.add(_focused());
+    }
+    expect(walked, ['help', 'tab', for (var i = 0; i < 30; i++) 'row$i']);
+    await _tab(tester);
+    expect(_focused(), 'help', reason: 'the cycle closes on the bar');
   });
 
   group('RadioRow', () {
