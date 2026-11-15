@@ -41,11 +41,8 @@ class ChromeRole {
 final chromeRoleProvider = Provider<ChromeRole?>((ref) {
   final me = ref.watch(myMemberProvider).value;
   if (me == null) return null;
-  // empty-ok: no roles known means no named role; the built-in words stand
-  final roles = ref.watch(workspaceRolesProvider).value ?? const [];
-  // empty-ok: no assignments known means no named role
-  final assignments =
-      ref.watch(workspaceRoleAssignmentsProvider).value ?? const {};
+  final roles = ref.watch(workspaceRolesProvider).value ?? const []; // empty-ok: no roles known, no named role; the built-in words stand
+  final assignments = ref.watch(workspaceRoleAssignmentsProvider).value ?? const {}; // empty-ok: no assignments known, no named role
   if (me.isOwner) return const ChromeRole(HouseRole.owner);
   if (me.coOwner == CoOwnerStatus.active) {
     return const ChromeRole(HouseRole.coOwner);
