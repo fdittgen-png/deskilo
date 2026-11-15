@@ -126,9 +126,9 @@ Future<void> showReportQuickPreview(
   required bool simulated,
   Map<String, Uint8List> images = const {},
   List<QuickPreviewAnnex> annexes = const [],
-  // #3853 — what the preview says it is, and the download it offers
-  String? title,
-  VoidCallback? onDownload,
+  // #3853 — what the preview of an invoice that keeps its original says it
+  // is, and the download of that original it offers
+  ({String title, VoidCallback download})? ofOriginal,
 }) =>
     showDialog<void>(
       context: context,
@@ -145,7 +145,7 @@ Future<void> showReportQuickPreview(
                   padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
                   child: Text(
-                    title ??
+                    ofOriginal?.title ??
                         (simulated
                             ? l10n.reportPreviewSimulated
                             : l10n.reportPreviewTitle),
@@ -179,12 +179,12 @@ Future<void> showReportQuickPreview(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
-                        if (onDownload != null)
+                        if (ofOriginal != null)
                           TextButton(
                             key: const ValueKey('report-preview-download'),
                             onPressed: () {
                               Navigator.of(context).pop();
-                              onDownload();
+                              ofOriginal.download();
                             },
                             child: Text(l10n.invoiceDownload),
                           ),

@@ -286,6 +286,6 @@
   "invoiceOriginalNotYetKept": "Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalKept": "Original conservé le {when} par {who} · SHA-256 {digest}",
   "invoiceCopyWithPaymentStatus": "Copie avec l’état du paiement",
-  "invoiceOriginalsNotKeptNow": "{count, plural, one{L’original d’une facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.} other{Les originaux de {count} factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.}}",
+  "invoiceOriginalsNotKeptNow": "{count, plural, one{L’original de {count} facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.} other{Les originaux de {count} factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.}}",
   "invoiceQuickViewIsPreview": "Aperçu — l’original est le PDF téléchargé."
 }

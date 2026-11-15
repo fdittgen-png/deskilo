@@ -440,7 +440,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
     },
-    documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?, paper: row['paper'] as String?, keepsOriginal: row['keeps_original'] as bool? ?? false,
+    documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?, paper: row['paper'] as String?, keepsOriginal: row['keeps_original'] == true,
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',

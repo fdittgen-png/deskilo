@@ -20,8 +20,10 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
   final Map<String, Uint8List> _files = {};
 
   @override
-  Future<InvoiceOriginal?> originalOf(String invoiceId) async =>
-      _records[invoiceId];
+  Future<InvoiceOriginal?> originalOf(
+    String workspaceId,
+    String invoiceId,
+  ) async => _records[invoiceId];
 
   @override
   Future<Uint8List> pdfOf(InvoiceOriginal original) async =>

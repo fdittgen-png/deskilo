@@ -160,7 +160,7 @@ Future<void> downloadInvoicePdf(
       errorText:
           l10n.workspaceGenericError,
       action: () async {
-        final pdf = await invoiceFileFor(context, ref, invoice, annexes);
+        final pdf = await InvoiceDocumentFlow(context, ref).fileFor(invoice, annexes);
         if (!context.mounted) return;
         await savePdfToDownloads(
           context,
@@ -251,8 +251,8 @@ Future<void> quickViewInvoice(
     final keeps = invoice.keepsOriginal && !proforma;
     await showReportQuickPreview(context, annexes: annexReports, report: report,
       simulated: false, images: images,
-      title: keeps ? l10n.invoiceQuickViewIsPreview : null,
-      onDownload: keeps ? () => downloadInvoicePdf(context, ref, invoice) : null);
+      ofOriginal: keeps ? (title: l10n.invoiceQuickViewIsPreview,
+          download: () => downloadInvoicePdf(context, ref, invoice)) : null);
     }, refresh: () => ref.invalidate(invoicesProvider));
 
 
@@ -274,7 +274,7 @@ Future<void> shareInvoicePdf(
       errorText:
           l10n.workspaceGenericError,
       action: () async {
-        final pdf = await invoiceFileFor(context, ref, invoice, annexes);
+        final pdf = await InvoiceDocumentFlow(context, ref).fileFor(invoice, annexes);
         await ref.read(fileSharerProvider)(
           bytes: Uint8List.fromList(pdf.bytes),
           fileName: pdf.fileName,

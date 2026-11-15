@@ -291,7 +291,7 @@ class InvoiceMoreMenu extends ConsumerWidget {
         (
           'invoice-more-copy-payment-status',
           l.invoiceCopyWithPaymentStatus,
-          () => downloadInvoiceCopyWithPaymentStatus(context, ref, invoice),
+          () => InvoiceDocumentFlow(context, ref).copyWithPaymentStatus(invoice),
         ),
       if (eu)
         (

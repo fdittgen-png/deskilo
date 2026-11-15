@@ -57,14 +57,65 @@ final class InvoiceOriginalRepositoryProvider
 String _$invoiceOriginalRepositoryHash() =>
     r'112f0e1b5268a50ec5508490a50b3c18f3396385';
 
-/// #3853 — the record of [invoiceId]'s stored original, or null when none is
-/// kept yet.
+/// The document of an invoice, from its stored original.
+
+@ProviderFor(invoiceOriginals)
+final invoiceOriginalsProvider = InvoiceOriginalsProvider._();
+
+/// The document of an invoice, from its stored original.
+
+final class InvoiceOriginalsProvider
+    extends
+        $FunctionalProvider<
+          InvoiceOriginals,
+          InvoiceOriginals,
+          InvoiceOriginals
+        >
+    with $Provider<InvoiceOriginals> {
+  /// The document of an invoice, from its stored original.
+  InvoiceOriginalsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceOriginalsProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceOriginalsHash();
+
+  @$internal
+  @override
+  $ProviderElement<InvoiceOriginals> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  InvoiceOriginals create(Ref ref) {
+    return invoiceOriginals(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InvoiceOriginals value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InvoiceOriginals>(value),
+    );
+  }
+}
+
+String _$invoiceOriginalsHash() => r'2daa917e012b809b59e8ef646eea5ef252cb43aa';
+
+/// #3853 — the record of the stored original of the invoice [invoiceId] of
+/// [workspaceId], or null when none is kept yet.
 
 @ProviderFor(invoiceOriginal)
 final invoiceOriginalProvider = InvoiceOriginalFamily._();
 
-/// #3853 — the record of [invoiceId]'s stored original, or null when none is
-/// kept yet.
+/// #3853 — the record of the stored original of the invoice [invoiceId] of
+/// [workspaceId], or null when none is kept yet.
 
 final class InvoiceOriginalProvider
     extends
@@ -74,11 +125,11 @@ final class InvoiceOriginalProvider
           FutureOr<InvoiceOriginal?>
         >
     with $FutureModifier<InvoiceOriginal?>, $FutureProvider<InvoiceOriginal?> {
-  /// #3853 — the record of [invoiceId]'s stored original, or null when none is
-  /// kept yet.
+  /// #3853 — the record of the stored original of the invoice [invoiceId] of
+  /// [workspaceId], or null when none is kept yet.
   InvoiceOriginalProvider._({
     required InvoiceOriginalFamily super.from,
-    required String super.argument,
+    required (String, String) super.argument,
   }) : super(
          retry: null,
          name: r'invoiceOriginalProvider',
@@ -94,7 +145,7 @@ final class InvoiceOriginalProvider
   String toString() {
     return r'invoiceOriginalProvider'
         ''
-        '($argument)';
+        '$argument';
   }
 
   @$internal
@@ -105,8 +156,8 @@ final class InvoiceOriginalProvider
 
   @override
   FutureOr<InvoiceOriginal?> create(Ref ref) {
-    final argument = this.argument as String;
-    return invoiceOriginal(ref, argument);
+    final argument = this.argument as (String, String);
+    return invoiceOriginal(ref, argument.$1, argument.$2);
   }
 
   @override
@@ -120,13 +171,17 @@ final class InvoiceOriginalProvider
   }
 }
 
-String _$invoiceOriginalHash() => r'6b08d8695c4cff60104450574181c3dff9fc0e83';
+String _$invoiceOriginalHash() => r'698126a71fced0e9d98539094487367190b6e300';
 
-/// #3853 — the record of [invoiceId]'s stored original, or null when none is
-/// kept yet.
+/// #3853 — the record of the stored original of the invoice [invoiceId] of
+/// [workspaceId], or null when none is kept yet.
 
 final class InvoiceOriginalFamily extends $Family
-    with $FunctionalFamilyOverride<FutureOr<InvoiceOriginal?>, String> {
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<InvoiceOriginal?>,
+          (String, String)
+        > {
   InvoiceOriginalFamily._()
     : super(
         retry: null,
@@ -136,11 +191,11 @@ final class InvoiceOriginalFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// #3853 — the record of [invoiceId]'s stored original, or null when none is
-  /// kept yet.
+  /// #3853 — the record of the stored original of the invoice [invoiceId] of
+  /// [workspaceId], or null when none is kept yet.
 
-  InvoiceOriginalProvider call(String invoiceId) =>
-      InvoiceOriginalProvider._(argument: invoiceId, from: this);
+  InvoiceOriginalProvider call(String workspaceId, String invoiceId) =>
+      InvoiceOriginalProvider._(argument: (workspaceId, invoiceId), from: this);
 
   @override
   String toString() => r'invoiceOriginalProvider';

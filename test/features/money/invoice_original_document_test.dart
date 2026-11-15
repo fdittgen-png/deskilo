@@ -10,10 +10,10 @@
 import 'dart:typed_data';
 
 import 'package:deskilo/core/demo/data/money/demo_invoice_original_repository.dart';
+import 'package:deskilo/features/money/application/invoice_originals.dart';
 import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/presentation/document_policies.dart';
 import 'package:deskilo/features/money/presentation/invoice_original_document.dart';
-import 'package:deskilo/features/money/providers/invoice_original_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -65,7 +65,8 @@ class _Tampered implements InvoiceOriginalRepository {
   _Tampered(this.inner);
   final InvoiceOriginalRepository inner;
   @override
-  Future<InvoiceOriginal?> originalOf(String id) => inner.originalOf(id);
+  Future<InvoiceOriginal?> originalOf(String ws, String id) =>
+      inner.originalOf(ws, id);
   @override
   Future<Uint8List> pdfOf(InvoiceOriginal o) async =>
       Uint8List.fromList([...await inner.pdfOf(o), 32]);
@@ -113,12 +114,12 @@ Future<InvoiceDocument> _open(
         ...standardTestOverrides(
           money: money,
           workspace: workspace ?? _business(),
+          invoiceOriginals: store,
         ),
         testReadyWorkspaceContext(),
         currentWorkspaceProvider.overrideWith(
           (ref) async => (workspace ?? _business()).workspaces.single,
         ),
-        invoiceOriginalRepositoryProvider.overrideWithValue(store),
         myPermissionsProvider.overrideWithValue({
           if (mayIssue) WorkspacePermission.issueInvoices,
         }),
@@ -134,7 +135,10 @@ Future<InvoiceDocument> _open(
               onPressed: () async {
                 await readDocumentPolicies(ref);
                 if (!context.mounted) return;
-                document = await invoiceDocumentOf(context, ref, invoice);
+                document = await InvoiceDocumentFlow(
+                  context,
+                  ref,
+                ).documentOf(invoice);
               },
               child: const Text('go'),
             ),
@@ -161,8 +165,12 @@ void main() {
       money: money,
       store: _store(),
     );
+    final tick = DateTime.now().second;
     await tester.runAsync(
-      () => Future<void>.delayed(const Duration(milliseconds: 1100)),
+      () => untilReal(
+        () => DateTime.now().second != tick,
+        what: 'the clock to move on',
+      ),
     );
     final second = await _open(
       tester,
@@ -186,7 +194,13 @@ void main() {
       money: money,
       store: store,
     );
-    expect((await store.originalOf(invoice.id))!.holds(stored.bytes), isTrue);
+    expect(
+      (await store.originalOf(
+        invoice.workspaceId,
+        invoice.id,
+      ))!.holds(stored.bytes),
+      isTrue,
+    );
     final later = await _open(
       tester,
       invoice: invoice,
@@ -212,7 +226,7 @@ void main() {
     );
     expect(document.source, InvoiceDocumentSource.notKept);
     expect(document.bytes, isNotEmpty);
-    expect(await store.originalOf(invoice.id), isNull);
+    expect(await store.originalOf(invoice.workspaceId, invoice.id), isNull);
   });
 
   testWidgets('stored bytes that do not match their digest give a copy', (
@@ -242,7 +256,7 @@ void main() {
       mayIssue: false,
     );
     expect(document.source, InvoiceDocumentSource.notYetKept);
-    expect(await store.originalOf(invoice.id), isNull);
+    expect(await store.originalOf(invoice.workspaceId, invoice.id), isNull);
   });
 
   testWidgets('a member who reads first gets the copy that says the business '
@@ -264,12 +278,15 @@ void main() {
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          ...standardTestOverrides(money: money, workspace: _business()),
+          ...standardTestOverrides(
+            money: money,
+            workspace: _business(),
+            invoiceOriginals: store,
+          ),
           testReadyWorkspaceContext(),
           currentWorkspaceProvider.overrideWith(
             (ref) async => _business().workspaces.single,
           ),
-          invoiceOriginalRepositoryProvider.overrideWithValue(store),
           myPermissionsProvider.overrideWithValue({
             WorkspacePermission.issueInvoices,
           }),
@@ -282,7 +299,7 @@ void main() {
               builder: (context, ref, _) => TextButton(
                 key: const ValueKey('keep'),
                 onPressed: () =>
-                    keepInvoiceOriginals(context, ref, [invoice.id]),
+                    InvoiceDocumentFlow(context, ref).keep([invoice.id]),
                 child: const Text('keep'),
               ),
             ),
@@ -294,7 +311,9 @@ void main() {
     await tester.runAsync(() async {
       await tester.tap(find.byKey(const ValueKey('keep')));
       await untilReal(
-        () => store.originalOf(invoice.id).then((o) => o != null),
+        () => store
+            .originalOf(invoice.workspaceId, invoice.id)
+            .then((o) => o != null),
         what: 'the original kept by the issuer\'s flow',
       );
     });

@@ -15902,7 +15902,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           'Les originaux de $count factures n’ont pas encore été conservés. Les factures sont émises ; leurs originaux seront conservés plus tard.',
-      one: 'L’original d’une facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.',
+      one:
+          'L’original de $count facture n’a pas encore été conservé. La facture est émise ; son original sera conservé plus tard.',
     );
     return '$_temp0';
   }

@@ -168,7 +168,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
     if (!mounted) return;
     _state.finished(report);
     // #3853 — the originals of the invoices just issued, in the same flow.
-    unawaited(keepInvoiceOriginals(context, ref, [
+    unawaited(InvoiceDocumentFlow(context, ref).keep([
       for (final member in report.issued) ?report.invoiceOf(member),
     ]));
   }

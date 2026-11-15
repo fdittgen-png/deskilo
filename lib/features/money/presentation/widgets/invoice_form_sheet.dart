@@ -121,7 +121,7 @@ Future<void> showInvoiceIssueSheet(
       requestId: newRequestId(),
     ),
     // #3853 — its original is kept in the same flow.
-    afterIssue: (id) => keepInvoiceOriginals(context, ref, [id]),
+    afterIssue: (id) => InvoiceDocumentFlow(context, ref).keep([id]),
   );
   ref.invalidate(invoicesProvider);
 }

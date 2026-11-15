@@ -19,12 +19,16 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
   final SupabaseClient _client;
 
   @override
-  Future<InvoiceOriginal?> originalOf(String invoiceId) async {
+  Future<InvoiceOriginal?> originalOf(
+    String workspaceId,
+    String invoiceId,
+  ) async {
     final row = await _client
         .from('invoice_originals')
         .select(
           'invoice_id, path, pdf_bytes, pdf_sha256, xml_sha256, created_by_user, created_datetime',
         )
+        .eq('workspace_id', workspaceId)
         .eq('invoice_id', invoiceId)
         .maybeSingle();
     return row == null ? null : InvoiceOriginal.fromRow(row);
@@ -50,20 +54,23 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
             pdf,
             fileOptions: const FileOptions(contentType: 'application/pdf'),
           );
-    } on StorageException catch (e) {
+    } on StorageException catch (e, st) {
       // trace-exempt: each answer becomes a refusal or goes on below.
       switch (e.statusCode) {
         case '409':
           break; // the same file, by its path: record it
         case '413':
-          throw InvoiceOriginalRefused(
-            InvoiceOriginalRefusal.tooLarge,
-            e.message,
+          Error.throwWithStackTrace(
+            InvoiceOriginalRefused(InvoiceOriginalRefusal.tooLarge, e.message),
+            st,
           );
         case '401' || '403':
-          throw InvoiceOriginalRefused(
-            InvoiceOriginalRefusal.notAllowed,
-            e.message,
+          Error.throwWithStackTrace(
+            InvoiceOriginalRefused(
+              InvoiceOriginalRefusal.notAllowed,
+              e.message,
+            ),
+            st,
           );
         default:
           rethrow;
@@ -74,18 +81,21 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
         'store_invoice_original',
         params: {'p_invoice_id': invoiceId, 'p_pdf_sha256': sha, 'p_xml': xml},
       );
-    } on PostgrestException catch (e) {
+    } on PostgrestException catch (e, st) {
       // trace-exempt: each answer becomes a refusal or the record kept.
       if (e.code != '23505') {
-        throw InvoiceOriginalRefused(
-          e.code == '42501'
-              ? InvoiceOriginalRefusal.notAllowed
-              : InvoiceOriginalRefusal.refused,
-          e.message,
+        Error.throwWithStackTrace(
+          InvoiceOriginalRefused(
+            e.code == '42501'
+                ? InvoiceOriginalRefusal.notAllowed
+                : InvoiceOriginalRefusal.refused,
+            e.message,
+          ),
+          st,
         );
       }
     }
-    final kept = await originalOf(invoiceId);
+    final kept = await originalOf(workspaceId, invoiceId);
     if (kept == null) {
       throw const InvoiceOriginalRefused(InvoiceOriginalRefusal.refused);
     }

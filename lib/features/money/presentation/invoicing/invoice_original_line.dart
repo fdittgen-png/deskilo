@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/guest_pass_providers.dart' show accountMemberNameProvider;
 import '../../providers/invoice_original_providers.dart';
 
 /// #3853 — who kept the invoice's original, when, and its SHA-256: the
@@ -19,16 +19,15 @@ class InvoiceOriginalLine extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final kept = ref.watch(invoiceOriginalProvider(invoice.id)).value;
+    final kept = ref
+        .watch(invoiceOriginalProvider(invoice.workspaceId, invoice.id))
+        .value;
     if (kept == null) return const SizedBox.shrink();
-    final members = ref.watch(workspaceMembersProvider).value ?? const [];
-    final names = ref.watch(memberNamesProvider).value ?? const {};
-    final who =
-        [
-          for (final m in members)
-            if (m.userId == kept.storedBy) names[m.id] ?? '',
-        ].firstOrNull ??
-        '';
+    final storedBy = kept.storedBy;
+    final who = storedBy == null
+        ? ''
+        // empty-ok: a name not read yet leaves the line without it
+        : ref.watch(accountMemberNameProvider(storedBy)).value ?? '';
     final at = kept.storedAt;
     return Text(
       context.l10n.invoiceOriginalKept(

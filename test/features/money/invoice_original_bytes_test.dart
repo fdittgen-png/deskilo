@@ -18,6 +18,8 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../helpers/real_async.dart';
+
 pw.Font _ttf(String path) =>
     pw.Font.ttf(ByteData.sublistView(File(path).readAsBytesSync()));
 
@@ -106,7 +108,11 @@ Future<Uint8List> _positioned() async => (await tryLayoutPdf(
 /// Renders [make] twice, a second apart, so the clock has moved between.
 Future<(Uint8List, Uint8List)> _twice(Future<Uint8List> Function() make) async {
   final first = await make();
-  await Future<void>.delayed(const Duration(milliseconds: 1100));
+  final second = DateTime.now().second;
+  await untilReal(
+    () => DateTime.now().second != second,
+    what: 'the clock to move on',
+  );
   return (first, await make());
 }
 

@@ -36,6 +36,7 @@ import 'package:deskilo/core/demo/data/mcp_onboarding_repository.dart';
 import 'package:deskilo/core/demo/data/me_repository.dart';
 import 'package:deskilo/core/demo/data/messenger_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_credit_moves.dart';
+import 'package:deskilo/core/demo/data/money/demo_invoice_original_repository.dart';
 import 'package:deskilo/core/demo/data/money/demo_settlement_reviews.dart';
 import 'package:deskilo/core/demo/data/oauth_consent_repository.dart';
 import 'package:deskilo/core/demo/data/offline_identity_connector.dart';
@@ -105,6 +106,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
+import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart'
     show RecordedPaymentsRepository;
@@ -113,6 +115,7 @@ import 'package:deskilo/features/money/providers/account_activity_providers.dart
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/invoice_original_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
     show recordedPaymentsRepositoryProvider;
@@ -241,6 +244,8 @@ List<Override> formatPinOverrides({String locale = 'en_GB'}) {
 }
 
 List<Override> standardTestOverrides({
+  // #3853 — a test of the stored originals brings its own store.
+  InvoiceOriginalRepository? invoiceOriginals,
   // #3587 — a test of the payments read brings its own; else the Demo's
   // reader over the money fake.
   RecordedPaymentsRepository? recordedPayments,
@@ -358,6 +363,14 @@ List<Override> standardTestOverrides({
   return [
     // No disk in a widget test: a recording lives in memory.
     recorderLogBackendProvider.overrideWithValue(MemoryRecorderLogBackend()),
+    // #3853 — the stored originals of the invoices, in memory.
+    invoiceOriginalRepositoryProvider.overrideWithValue(
+      invoiceOriginals ??
+          DemoInvoiceOriginalRepository(
+            storedBy: () => null,
+            now: () => DateTime.utc(2026),
+          ),
+    ),
     // #1150 — a 24-hour clock for every test: `ClockPref.auto` renders
     // "8:00 AM" under en_US, which is right for that member and wrong for
     // a fixture that pins "08:00". The app honours the preference; the

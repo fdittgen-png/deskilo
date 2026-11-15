@@ -86,8 +86,9 @@ class InvoiceOriginalRefused implements Exception {
 
 /// Where the originals of the invoices are kept.
 abstract interface class InvoiceOriginalRepository {
-  /// The record of [invoiceId]'s original, or null when none is kept.
-  Future<InvoiceOriginal?> originalOf(String invoiceId);
+  /// The record of the original of the invoice [invoiceId] of
+  /// [workspaceId], or null when none is kept.
+  Future<InvoiceOriginal?> originalOf(String workspaceId, String invoiceId);
 
   /// The stored PDF of [original], as it is held.
   Future<Uint8List> pdfOf(InvoiceOriginal original);
