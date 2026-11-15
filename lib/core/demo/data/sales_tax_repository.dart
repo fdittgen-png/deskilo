@@ -5,9 +5,22 @@ import '../../../features/money/domain/sales_tax_return.dart';
 import '../../../features/money/domain/tax_exemption_certificate.dart';
 
 /// #2362 -- the sales-tax summary and the certificates in memory. The demo
-/// issues no sales-tax invoice, so it states nothing unless a test seeds [rows].
+/// issues no sales-tax invoice, so it states nothing unless a test seeds [rows] or a business
+/// states its own ([statedFor]).
 class FakeSalesTaxRepository implements SalesTaxRepository {
+  FakeSalesTaxRepository({this.statedFor});
+
   final List<SalesTaxReturnRow> rows = [];
+
+  /// #4009 -- a business that states its own return (the Demo's New York):
+  /// the rows of its period, or null when the business states nothing and
+  /// [rows] answer.
+  final List<SalesTaxReturnRow>? Function(
+    String workspaceId,
+    DateTime start,
+    DateTime end,
+  )?
+  statedFor;
 
   /// memberId -> its certificates.
   final Map<String, List<TaxExemptionCertificate>> certificates = {};
@@ -18,7 +31,7 @@ class FakeSalesTaxRepository implements SalesTaxRepository {
     String workspaceId, {
     required DateTime start,
     required DateTime end,
-  }) async => List.of(rows);
+  }) async => List.of(statedFor?.call(workspaceId, start, end) ?? rows);
 
   @override
   Future<List<TaxExemptionCertificate>> fetchCertificates(

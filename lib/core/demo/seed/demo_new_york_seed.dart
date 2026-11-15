@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic New York tenant-run coworking workspace.
+import '../../../features/money/domain/sales_tax_return.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
+import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 import '../demo_space_ids.dart';
@@ -125,4 +127,62 @@ void seedNewYorkPeople(FakeWorkspaceRepository space) {
       sortOrder: 4,
     ),
   ]);
+}
+
+/// #4009 -- what New York states for sales tax, one jurisdiction each (the
+/// parts of the city's published combined 8.875 %): the state, the city and
+/// the commuter district.
+const demoNewYorkSalesTaxJurisdictions =
+    <({String level, String name, double percent})>[
+      (level: 'state', name: 'New York State', percent: 4),
+      (level: 'city', name: 'New York City', percent: 4.5),
+      (
+        level: 'district',
+        name: 'Metropolitan Commuter Transportation District',
+        percent: 0.375,
+      ),
+    ];
+
+/// The sales-tax return of New York for `[start, end]`, in dollars: the base
+/// is the net of the house's own invoices issued in the period (a voided one
+/// is out), the tax is each jurisdiction's rate on it, and an empty period
+/// states nothing.
+List<SalesTaxReturnRow> demoNewYorkSalesTaxReturn(
+  FakeMoneyRepository money, {
+  required DateTime start,
+  required DateTime end,
+}) {
+  final inPeriod = [
+    for (final i in money.invoices)
+      if (i.voidedAt == null &&
+          !i.issuedAt.isBefore(start) &&
+          i.issuedAt.isBefore(end.add(const Duration(days: 1))))
+        i,
+  ];
+  if (inPeriod.isEmpty) return const [];
+  final base = inPeriod.fold<int>(0, (sum, i) => sum + i.netCents);
+  final taxes = [
+    for (final j in demoNewYorkSalesTaxJurisdictions)
+      (base * j.percent / 100).round(),
+  ];
+  return [
+    SalesTaxReturnRow(
+      state: 'NY',
+      line: SalesTaxLine.taxable,
+      baseCents: base,
+      taxCents: taxes.fold<int>(0, (a, b) => a + b),
+      invoiceCount: inPeriod.length,
+    ),
+    for (var k = 0; k < taxes.length; k++)
+      SalesTaxReturnRow(
+        state: 'NY',
+        line: SalesTaxLine.tax,
+        level: demoNewYorkSalesTaxJurisdictions[k].level,
+        name: demoNewYorkSalesTaxJurisdictions[k].name,
+        percent: demoNewYorkSalesTaxJurisdictions[k].percent,
+        baseCents: base,
+        taxCents: taxes[k],
+        invoiceCount: inPeriod.length,
+      ),
+  ];
 }

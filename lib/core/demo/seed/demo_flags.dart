@@ -29,8 +29,8 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.mtdSubmission:
-      'UK only: on in the London space (ws-3), where its journey is shown; '
-      'left off in the French and German spaces',
+      'UK only: off in the head, on in the London house (ws-3), where its '
+      'scenario is performed (#4009); left off in the other houses',
   WorkspaceFeature.recordingPrivacy:
       'recording privacy is the mode itself, not a switch beside it: on, '
       'every name the Demo prints is replaced by an invented one from the '

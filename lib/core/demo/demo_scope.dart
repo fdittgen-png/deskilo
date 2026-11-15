@@ -146,6 +146,7 @@ import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
+import 'seed/demo_new_york_seed.dart' show demoNewYorkSalesTaxReturn;
 import 'seed/demo_reachable_seed.dart';
 
 /// The setup guide over each space's own fixture: Pézenas holds what
@@ -168,6 +169,14 @@ DemoSetupRepository _setupGuide(DemoFixture fixture) => DemoSetupRepository(
     );
   },
   acknowledged: {'ws-1': demoMainSpaceMarkedDone},
+);
+
+/// #4009 -- sales tax is stated by the New York house, from its own invoices;
+/// every other business states nothing (the house is built when first asked).
+FakeSalesTaxRepository _demoSalesTax(DemoFixture fixture) => FakeSalesTaxRepository(
+  statedFor: (workspaceId, start, end) => workspaceId == DemoSpaceKey.newYork.id
+      ? demoNewYorkSalesTaxReturn(fixture.newYork.money, start: start, end: end)
+      : null,
 );
 
 DemoSetupBooks _mainSetupBooks(DemoFixture fixture) {
@@ -256,7 +265,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       placeFeedbackRepositoryProvider.overrideWithValue(FakePlaceFeedbackRepository()),
       usagePreparationProvider.overrideWithValue(const FakeUsagePreparation()), // #2590
       viesRepositoryProvider.overrideWithValue(DemoViesRepository(vatIdOf: (memberId) => demoVatIdOf(fixture.profiles, memberId), now: () => fixture.seededAt)), // #2354 #3963
-      salesTaxRepositoryProvider.overrideWithValue(FakeSalesTaxRepository()), // #2362
+      salesTaxRepositoryProvider.overrideWithValue(_demoSalesTax(fixture)), // #2362 #4009
       ...demoCityCommerceOverrides(fixture), // #2358, #2567, #2573
       taxReferenceRepositoryProvider.overrideWithValue(FakeTaxReferenceRepository()), settingsRepositoryProvider.overrideWith((ref) => FakeSettingsRepository.fromLoader(ref.watch(settingsBundleLoaderProvider), seed: demoSettingSeed)), // #2477 #2484 in memory
       profileRepositoryProvider.overrideWithValue(fixture.profiles), memberProfileRepositoryProvider.overrideWithValue(fixture.profiles), // #2564

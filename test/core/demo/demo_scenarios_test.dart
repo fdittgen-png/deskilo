@@ -29,8 +29,13 @@ import 'package:deskilo/core/demo/data/room_rental_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_asset_repository.dart';
 import 'package:deskilo/core/demo/demo_dataset.dart' show demoKioskDevice;
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_london_space.dart';
+import 'package:deskilo/core/demo/demo_new_york_space.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
+import 'package:deskilo/core/demo/demo_space_stores.dart';
+import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
@@ -59,11 +64,13 @@ import 'package:deskilo/features/workspace/domain/member_badge.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import '../../helpers/demo_assistant_journeys.dart';
 import '../../helpers/demo_documents_journeys.dart';
+import '../../helpers/demo_house_journeys.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
@@ -72,28 +79,102 @@ import '../../helpers/demo_settings_shell_journeys.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
-/// Everything a scenario may look at: the session and the repositories
-/// the Demo scope seeds beside it.
-class _World {
-  _World(this.f)
-    : purchasing = seedDemoPurchasing(f.seededAt, money: f.money),
-      lease = seedDemoLease(f.seededAt),
-      commitments = seedDemoCommitments(f.seededAt),
-      assets = seedDemoAssets(f.seededAt),
-      valuations = seedDemoValuations(f.seededAt),
-      books = seedDemoBookPeriods(f.seededAt),
-      rooms = seedDemoRooms(f.seededAt);
+/// One house of the reference organisation, as a check reads it: the parts
+/// the Demo scope seeds for it and the stores it keeps for the session.
+class _House {
+  _House(this.f, this.key);
 
   final DemoFixture f;
-  final DemoPurchasing purchasing;
-  final FakePremisesLeaseRepository lease;
-  final FakeLeaseCommitmentRepository commitments;
-  final FakeWorkspaceAssetRepository assets;
-  final FakeAssetValuationRepository valuations;
-  final FakeBookPeriodRepository books;
-  final FakeRoomRentalRepository rooms;
+  final DemoSpaceKey key;
+
+  DemoSpaceParts get parts => f.space(key);
+  DemoSpaceStores get stores => f.stores.at(key);
+
+  /// London's own parts, with its HMRC door.
+  DemoLondonData get london => f.london;
+
+  /// New York's own parts.
+  DemoNewYorkData get newYork => f.newYork;
+
+  /// The Demo's providers over the session, for a journey that reads through
+  /// them; the caller disposes it.
+  ProviderContainer container() =>
+      ProviderContainer(overrides: demoOverrides(f));
 
   DateTime get now => f.seededAt;
+}
+
+/// Everything a scenario may look at: the session and the repositories
+/// the Demo scope seeds beside it. A world belongs to ONE business
+/// ([business]): it hands out that business and no other, so a check cannot
+/// read a business its scenario does not name (#4009). The head's parts
+/// (`f`, `purchasing`, `bookings` ...) are the default and are refused to a
+/// scenario that happens in a house, which reads its house through [house].
+class _World {
+  _World(DemoFixture f)
+    : business = demoFirstSpaceId,
+      _f = f,
+      _purchasing = seedDemoPurchasing(f.seededAt, money: f.money),
+      _lease = seedDemoLease(f.seededAt),
+      _commitments = seedDemoCommitments(f.seededAt),
+      _assets = seedDemoAssets(f.seededAt),
+      _valuations = seedDemoValuations(f.seededAt),
+      _books = seedDemoBookPeriods(f.seededAt),
+      _rooms = seedDemoRooms(f.seededAt);
+
+  _World._within(_World base, this.business)
+    : _f = base._f,
+      _purchasing = base._purchasing,
+      _lease = base._lease,
+      _commitments = base._commitments,
+      _assets = base._assets,
+      _valuations = base._valuations,
+      _books = base._books,
+      _rooms = base._rooms;
+
+  /// The business this world hands out.
+  final String business;
+
+  final DemoFixture _f;
+  final DemoPurchasing _purchasing;
+  final FakePremisesLeaseRepository _lease;
+  final FakeLeaseCommitmentRepository _commitments;
+  final FakeWorkspaceAssetRepository _assets;
+  final FakeAssetValuationRepository _valuations;
+  final FakeBookPeriodRepository _books;
+  final FakeRoomRentalRepository _rooms;
+
+  /// The same session, looking at [business] only.
+  _World within(String business) => _World._within(this, business);
+
+  T _head<T>(T value) {
+    if (business != demoFirstSpaceId) {
+      throw StateError(
+        'a scenario in $business reads its house through house(), not the '
+        'head',
+      );
+    }
+    return value;
+  }
+
+  /// The house [key] names: only the business of this world.
+  _House house(DemoSpaceKey key) {
+    if (key.id != business) {
+      throw StateError('a scenario in $business may not read ${key.id}');
+    }
+    return _House(_f, key);
+  }
+
+  DemoFixture get f => _head(_f);
+  DemoPurchasing get purchasing => _head(_purchasing);
+  FakePremisesLeaseRepository get lease => _head(_lease);
+  FakeLeaseCommitmentRepository get commitments => _head(_commitments);
+  FakeWorkspaceAssetRepository get assets => _head(_assets);
+  FakeAssetValuationRepository get valuations => _head(_valuations);
+  FakeBookPeriodRepository get books => _head(_books);
+  FakeRoomRentalRepository get rooms => _head(_rooms);
+
+  DateTime get now => _f.seededAt;
   List<Reservation> get bookings => f.reservations.reservations;
   List<Member> get members => [
     f.workspaces.myMember,
@@ -152,31 +233,51 @@ _Scenario _action(
 _Scenario _toggle(String story) =>
     _Scenario(_Kind.toggle, _owner, story, (_) => true);
 
-/// #3959 — the Demo's reference business is Atelier du Marché (`ws-1`): every
-/// feature is on there, with seeded data and a process a persona can perform.
-/// A scenario happens in another business only when the reference business
-/// cannot hold its use case, and says why here. The list only shrinks: an
-/// entry whose scenario is back in the reference business is removed. A
-/// feature left off (`demoFeaturesLeftOff`, e.g. `mtdSubmission`, London's
-/// journey) has no scenario and so no entry.
-const Map<WorkspaceFeature, String> _elsewhere = {};
+/// #4009 — the Demo's reference is an ORGANISATION: the head, Atelier du
+/// Marché (`ws-1`), and its houses in London, New York, Zurich, Milan and
+/// Leipzig. The Berlin practice (`ws-7`) is a business of its own outside it.
+const List<String> _organisation = [
+  demoFirstSpaceId,
+  demoSecondSpaceId,
+  demoLondonSpaceId,
+  demoNewYorkSpaceId,
+  demoZurichSpaceId,
+  demoMilanSpaceId,
+];
+
+/// #3959, #4009 — a scenario happens in the head, where every feature is on
+/// with seeded data and a process a persona can perform, or in a HOUSE when
+/// its feature is tied to that house's country; the entry says which country
+/// and why. The list only shrinks: an entry whose scenario is back in the head
+/// is removed. A scenario in a business outside the organisation fails.
+const Map<WorkspaceFeature, String> _elsewhere = {
+  WorkspaceFeature.mtdSubmission:
+      "the United Kingdom's tax submission: on in the London house (GB) only, "
+          'off in the head and the other houses',
+  WorkspaceFeature.salesTax:
+      "the United States' sales tax: stated by the New York house (US, "
+          'dollars), where a state and a city levy it',
+};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 5;
+const int _switchOnlyBudget = 4;
 
-/// The features whose scenario is outside the reference business and not
-/// named in [elsewhere], and the entries of [elsewhere] that are stale.
+/// The scenarios outside the reference organisation, the ones in a house
+/// not named in [elsewhere], and the entries of [elsewhere] that are stale.
 List<String> _businessProblems(
   Map<WorkspaceFeature, _Scenario> scenarios,
   Map<WorkspaceFeature, String> elsewhere,
 ) => [
   for (final e in scenarios.entries)
-    if (e.value.business != demoFirstSpaceId && !elsewhere.containsKey(e.key))
+    if (!_organisation.contains(e.value.business))
+      '${e.key.name} happens in ${e.value.business}, outside the organisation'
+    else if (e.value.business != demoFirstSpaceId &&
+        !elsewhere.containsKey(e.key))
       '${e.key.name} happens in ${e.value.business}: name the reason',
   for (final f in elsewhere.keys)
     if ((scenarios[f]?.business ?? demoFirstSpaceId) == demoFirstSpaceId)
-      '${f.name} is listed as elsewhere but happens in the reference business',
+      '${f.name} is listed as elsewhere but happens in the head',
 ];
 
 int _switchOnlyCount(Iterable<_Scenario> scenarios) =>
@@ -938,7 +1039,31 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'bills',
     (w) async => (await w.purchases()).isNotEmpty,
   ),
-  WorkspaceFeature.salesTax: _toggle('sales tax where a country has one'),
+  // #4009 — performed in the New York house, in dollars.
+  WorkspaceFeature.salesTax: _action(
+    _owner,
+    'Ada reads New York\'s sales-tax return of last month in dollars: its '
+    'base is the house\'s invoices of the period, and a period without '
+    'invoices states nothing',
+    (w) async {
+      final ny = w.house(DemoSpaceKey.newYork);
+      final container = ny.container();
+      try {
+        return await salesTaxJourney(ny.newYork, container, ny.now);
+      } finally {
+        container.dispose();
+      }
+    },
+    business: demoNewYorkSpaceId,
+  ),
+  // #4009 — performed in the London house; left off in the head.
+  WorkspaceFeature.mtdSubmission: _action(
+    _owner,
+    'Ada connects London to HMRC (simulated sign-in), submits the prepared '
+    'return, reads the Demo receipt, and a second submission is refused',
+    (w) => mtdSubmissionJourney(w.house(DemoSpaceKey.london).london),
+    business: demoLondonSpaceId,
+  ),
   // ── documentsInformation ─────────────────────────────────────────────
   WorkspaceFeature.documents: _state(
     _member,
@@ -1212,10 +1337,30 @@ void main() {
           'data that makes it true in lib/core/demo/seed/',
     );
     expect(
-      _scenarios.keys.where(demoFeaturesLeftOff.containsKey),
+      [
+        for (final f in _scenarios.keys)
+          if (demoFeaturesLeftOff.containsKey(f) &&
+              _scenarios[f]!.business == demoFirstSpaceId)
+            f.name,
+      ],
       isEmpty,
-      reason: 'a feature left off has no scenario to show',
+      reason:
+          'a feature the head leaves off has no scenario in the head; one '
+          'tied to a house is performed there, and the house has it on',
     );
+    for (final f in _scenarios.keys.where(demoFeaturesLeftOff.containsKey)) {
+      final house = world.f.workspaces.workspaces.firstWhere(
+        (w) => w.id == _scenarios[f]!.business,
+      );
+      expect(
+        effectiveFeatures(
+          resolveEnabledFeatures(house.featureFlags),
+          country: house.countryCode,
+        ),
+        contains(f),
+        reason: '${f.name} is performed in ${house.id}, which must have it on',
+      );
+    }
   });
 
   test('the main space has every feature on but the ones left off, and '
@@ -1251,8 +1396,8 @@ void main() {
     expect(byPersona, containsAll(DemoPersona.values));
   });
 
-  test('a scenario outside the reference business is named in _elsewhere, '
-      'and the list holds nothing stale', () {
+  test('a scenario outside the reference organisation is named in '
+      '_elsewhere, and the list holds nothing stale', () {
     expect(_businessProblems(_scenarios, _elsewhere), isEmpty);
   });
 
@@ -1269,16 +1414,27 @@ void main() {
         (_) => true,
         business: demoLondonSpaceId,
       ),
+      WorkspaceFeature.customFields: _action(
+        _owner,
+        'planted',
+        (_) => true,
+        business: demoPracticeSpaceId,
+      ),
     };
     expect(_businessProblems(planted, const {}), [
       'guestPasses happens in $demoLondonSpaceId: name the reason',
+      'customFields happens in $demoPracticeSpaceId, outside the organisation',
     ]);
     expect(
       _businessProblems(planted, {
         WorkspaceFeature.guestPasses: 'x',
         WorkspaceFeature.coOwner: 'stale',
       }),
-      ['coOwner is listed as elsewhere but happens in the reference business'],
+      [
+        'customFields happens in $demoPracticeSpaceId, outside the '
+            'organisation',
+        'coOwner is listed as elsewhere but happens in the head',
+      ],
     );
   });
 
@@ -1290,6 +1446,45 @@ void main() {
           'a feature takes a state or an action, not a switch; when one is '
           'upgraded, lower _switchOnlyBudget to the new count',
     );
+  });
+
+  test('a check reads the business its scenario names, and no other', () async {
+    final inLondon = world.within(demoLondonSpaceId);
+    expect(inLondon.house(DemoSpaceKey.london).key, DemoSpaceKey.london);
+    expect(() => inLondon.house(DemoSpaceKey.newYork), throwsStateError);
+    expect(() => inLondon.f, throwsStateError);
+    expect(() => inLondon.bookings, throwsStateError);
+    expect(() => world.house(DemoSpaceKey.london), throwsStateError);
+    expect(world.house(DemoSpaceKey.home).key, DemoSpaceKey.home);
+    // A planted scenario in London that reads the head, or New York, fails
+    // when it runs; one that reads London passes.
+    final reachesHead = _action(
+      _owner,
+      'planted',
+      (w) => w.bookings.isNotEmpty,
+      business: demoLondonSpaceId,
+    );
+    final reachesNewYork = _action(
+      _owner,
+      'planted',
+      (w) => w.house(DemoSpaceKey.newYork).parts.money.invoices.isNotEmpty,
+      business: demoLondonSpaceId,
+    );
+    final readsLondon = _action(
+      _owner,
+      'planted',
+      (w) => w.house(DemoSpaceKey.london).parts.money.invoices.isNotEmpty,
+      business: demoLondonSpaceId,
+    );
+    expect(
+      () async => reachesHead.check(world.within(reachesHead.business)),
+      throwsStateError,
+    );
+    expect(
+      () async => reachesNewYork.check(world.within(reachesNewYork.business)),
+      throwsStateError,
+    );
+    expect(await readsLondon.check(world.within(readsLondon.business)), isTrue);
   });
 
   test('the budget bites: a planted extra switch is counted', () {
@@ -1305,7 +1500,7 @@ void main() {
       final s = entry.value;
       if (s.kind == _Kind.toggle) continue;
       test('${entry.key.name} — ${s.persona.name}: ${s.story}', () async {
-        expect(await s.check(world), isTrue);
+        expect(await s.check(world.within(s.business)), isTrue);
       });
     }
   });
