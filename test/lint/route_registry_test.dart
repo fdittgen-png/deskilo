@@ -64,6 +64,8 @@ const Map<String, String> _notWorkspace = {
   '/developer': 'device — local trace diagnostics (#144, #2521)',
   '/help': 'entry',
   '/privacy': 'entry',
+  // #4057 — the same page from a business's sidebar, inside its shell.
+  '/business-privacy': 'account',
   '/me/formats': 'account — the person\'s own Region & formats, from Me (#3697)',
   '/linked-accounts': 'account',
   '/scan-join': 'account',

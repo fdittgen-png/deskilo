@@ -115,6 +115,11 @@ const List<RouteCoverage> routeCoverage = [
     category: ProtectedSurface.identity,
   ),
   RouteCoverage(
+    '/business-privacy',
+    CoverageStatus.excluded,
+    category: ProtectedSurface.identity,
+  ),
+  RouteCoverage(
     '/server',
     CoverageStatus.excluded,
     category: ProtectedSurface.secrets,
@@ -142,6 +147,7 @@ const List<RouteCoverage> routeCoverage = [
   ),
   RouteCoverage('/task-recorder', CoverageStatus.recorder),
   RouteCoverage('/task-wizard', CoverageStatus.recorder),
+  RouteCoverage('/business-task-wizard', CoverageStatus.recorder),
   RouteCoverage('/task-workbench', CoverageStatus.recorder),
   RouteCoverage('/account-activity', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(

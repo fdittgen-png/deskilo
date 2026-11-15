@@ -6,10 +6,16 @@
 import 'package:go_router/go_router.dart';
 
 import '../../features/task_recorder/presentation/route_classification.dart'
-    show taskRecorderRoute, taskWizardRoute, taskWorkbenchRoute;
+    show
+        businessTaskWizardRoute,
+        taskRecorderRoute,
+        taskWizardRoute,
+        taskWorkbenchRoute;
 import '../../features/task_recorder/presentation/screens/task_recorder_screen.dart';
 import '../../features/task_recorder/presentation/screens/task_wizard_screen.dart';
 import '../../features/task_recorder/presentation/screens/task_workbench_screen.dart';
+import '../../features/workspace/domain/workspace_feature.dart';
+import '../route_access.dart';
 import '../route_env.dart';
 
 /// Routes of the taskRecorder feature.
@@ -18,6 +24,17 @@ List<RouteBase> taskRecorderRoutes(RouteEnv env) {
     // The task wizard: guides, recordings and tools, one screen.
     GoRoute(
       path: taskWizardRoute,
+      builder: (context, state) => const TaskWizardScreen(),
+    ),
+    // #4057 — the same screen from a business's sidebar, inside its shell.
+    GoRoute(
+      path: businessTaskWizardRoute,
+      redirect: env.guard(
+        const RouteAccess(
+          features: [WorkspaceFeature.taskRecorder],
+          to: '/settings',
+        ),
+      ),
       builder: (context, state) => const TaskWizardScreen(),
     ),
     // #1865 — this account's own recordings on this device. Account-

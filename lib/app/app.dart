@@ -27,6 +27,7 @@ import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'page_frame.dart';
 import 'route_classes.dart';
+import 'routed_builder.dart';
 import 'router.dart';
 import 'search_wiring.dart';
 import 'shell/desk_frame.dart';
@@ -134,11 +135,18 @@ class DeskiloApp extends ConsumerWidget {
             child: LayerChrome(
               router: router,
               animations: animations,
-              child: BootSplash(child: SystemInsetsGuard(child: ListenableBuilder(
-                listenable: router.routeInformationProvider,
-                builder: (context, _) => Consumer(
+              child: BootSplash(child: SystemInsetsGuard(child: RoutedBuilder(
+                // #4057 — an imperative pop (the in-app Back from a pushed
+                // page) tells the delegate, not the information provider:
+                // both are heard, or the window keeps the chrome of the
+                // page that was left.
+                listenable: Listenable.merge([
+                  router.routeInformationProvider,
+                  router.routerDelegate,
+                ]),
+                builder: (context) => Consumer(
                   builder: (context, ref, _) {
-                    final path = router.routeInformationProvider.value.uri.path;
+                    final path = router.routerDelegate.currentConfiguration.uri.path;
                     // #3603 — on the desk the window is the desk's, drawn
                     // around the navigator; its page area takes the column
                     // (desk_frame.dart).

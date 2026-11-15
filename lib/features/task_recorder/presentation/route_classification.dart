@@ -49,6 +49,9 @@ const String taskRecorderRoute = '/task-recorder';
 /// The task wizard: guides, recordings and tools in one place.
 const String taskWizardRoute = '/task-wizard';
 
+/// #4057 — the task wizard as a page of the business whose sidebar opened it.
+const String businessTaskWizardRoute = '/business-task-wizard';
+
 /// #1872 — the local task workbench.
 const String taskWorkbenchRoute = '/task-workbench';
 

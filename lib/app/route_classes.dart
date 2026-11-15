@@ -129,6 +129,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/demo', RouteClass.publicEntry),
   RouteRule('/help', RouteClass.publicEntry),
   RouteRule('/privacy', RouteClass.publicEntry),
+  // #4057 — the same two pages opened from a business's sidebar: a business's
+  // own route, so the desk (sidebar, breadcrumb, the business's theme) stays
+  // around it. `/privacy` and `/task-wizard` stay what they are for Me, the
+  // signed-out pages and a consent step.
+  RouteRule('/business-privacy', RouteClass.workspace, place: 'drawer-privacy', measure: PageMeasure.reading),
+  RouteRule('/business-task-wizard', RouteClass.workspace, place: 'drawer-task-wizard', measure: PageMeasure.work),
   RouteRule('/server', RouteClass.publicEntry),
   RouteRule(kSchemaUpdateRoute, RouteClass.publicEntry),
   RouteRule('/server/new-instance', RouteClass.operator),
