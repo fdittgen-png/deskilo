@@ -11,7 +11,7 @@ In this chapter:
 - VAT: regime, number, rates, groups and the periodic declaration
 - E-invoicing: where the machine-readable invoice is sent
 - The invoice PDF template and the report editor
-- Issuing and closing a month: the Invoicing screen, the month-close wizard, regrouping, shared expenses
+- Issuing and closing a month: the Invoicing screen, invoicing the month, one invoice and one customer, payments and credit notes, the month-close wizard, regrouping, shared expenses
 - Payment reminders
 - The invoice register, accounting exports and business analytics
 
@@ -928,24 +928,52 @@ Your members read their documents in their own language.
 
 **Audience:** Owner · Billing administrator
 
-You see at a glance what to issue, what to collect and what is closed.
+You open Invoicing and see what you are owed, what to do next and every customer's invoices.
 
 <p><img src="images/user-invoicing-hub.en.jpg" width="280"></p>
 
 **Steps**
 
 1. Open [Invoicing](app:/invoices).
-2. Read the strip: **To issue**, **To collect**, **To confirm**, **Closed**.
-3. Work in the three tabs: **To invoice** (members with something tracked, not yet invoiced), **Open** (issued, unpaid) and **Archive** (paid or closed).
-4. Tap the tools icon for the other tools.
+2. Read **Owed to you**: what is **Overdue**, what is **Not yet due**, and what was **Invoiced in** and **Received in** this month.
+3. Work down **To do**: each entry says what to do, for how many, and opens it with **Review**. When nothing is left it reads **You are all caught up.**
+4. Below, choose **Open**, **Overdue**, **To confirm** or **Paid**, and read the list by **Customers** or by **Invoices**. **Search** finds a customer or a number.
+5. Tap **New** for a single invoice, and **More** for **Paid and closed invoices**, **My own invoices**, **Invoice register**, **Invoice PDF template** and **How invoicing works**.
 
 **Good to know**
 
-- You see invoices for the whole workspace. Your own are in your finances, under **My finances**.
-- Invoices are never edited or deleted: a wrong one is marked erroneous and replaced.
-- The **How invoicing works** entry explains who moves at each step.
+- A credit note the business owes is never counted as owed to you: it waits in **Pay out refunds**.
+- Every status is a word as well as a colour: **Due today**, **Payment received · to match**, **Waiting for the customer to confirm**, **On hold**.
+- Your own invoices are in your finances, under **My own invoices**.
+- Invoices are never edited or deleted: a wrong one is corrected with a replacement.
 
-**See also:** [New invoice](help:user.invoicing.new-invoice) · [Open invoices](help:user.invoicing.open)
+**See also:** [Invoice the month](help:user.invoicing.month) · [Follow one invoice](help:user.invoicing.open)
+
+<!-- anchor: user.invoicing.month -->
+### Invoice the month
+
+**Audience:** Owner · Billing administrator
+
+The month just ended has customers still to invoice, and you issue them in one go.
+
+<!-- image: user-invoicing-month -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Invoice** and the month in **To do**, and tap **Review**.
+2. Read the list: every customer with something to invoice is ticked, with the amount. **All** ticks or unticks them together.
+3. A customer marked **Needs a fix** says what is missing. Tap **Fix**, complete it, and come back: the customer is read again.
+4. Tap **Issue** with the count and the amount.
+5. Read what happened (**Issued**, **Waits for a validation** or **Not done**) and tap **Done**.
+
+**Good to know**
+
+- A month whose credits exceed its charges issues a credit note: the business owes it, and it waits in **Pay out refunds**.
+- A detail your business is missing is said once, on top, with one **Fix**; nothing is issued until it is complete.
+- What was not done stays in **To do**, and **Retry for these** tries again without issuing anything twice.
+- **Preview the proforma** shows a customer's invoice before it exists.
+
+**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Pay out a credit note](help:user.invoicing.refunds)
 
 <!-- anchor: user.invoicing.new-invoice -->
 ### Issue an invoice
@@ -958,10 +986,10 @@ You invoice a member for a month.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap **New invoice**, or **Issue** on a row of **To invoice**.
+1. In [Invoicing](app:/invoices), tap **New**. To invoice a whole month, use [Invoice the month](help:user.invoicing.month).
 2. Pick the **Member** and the month. The positions come from what was tracked.
 3. Switch on **Include the detailed annex (check-ins, services, payments)** if you want it.
-4. Tap **Issue invoice**. In **To invoice**, **Invoice all** issues every row.
+4. Tap **Issue invoice**.
 
 **Good to know**
 
@@ -974,27 +1002,126 @@ You invoice a member for a month.
 **See also:** [Month-close wizard](help:user.invoicing.wizard)
 
 <!-- anchor: user.invoicing.open -->
-### Chase and settle open invoices
+### Follow one invoice
 
 **Audience:** Owner · Billing administrator
 
-You follow what is unpaid and close it properly.
+You open an invoice and see where it stands, what happened and the one thing to do now.
 
 <p><img src="images/user-invoicing-open.en.jpg" width="280"></p>
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), open the **Open** tab and tap an invoice.
-2. Use the actions it offers: **Send a reminder**, **Mark as paid** (match a registered payment), **Cancel outstanding amount**, **Mark erroneous**, or share the PDF.
-3. Paid invoices move to **Archive**.
+1. In [Invoicing](app:/invoices), tap a customer, then the invoice (or tap it in the list by **Invoices**).
+2. Read the top: what is open of the total and when it is due, or **Paid in full**.
+3. Read **What happened**: issued, the due date, each reminder, a payment the customer declared, the payment.
+4. Use the action at the bottom: **Share reminder** with its level, **Confirm payment**, **Match the payment** or **Record the refund**.
+5. Tap **More** for the PDF (**View the PDF**, **Download the PDF**, **Share the PDF**), **Hold reminders**, **Match a payment** and the **Corrections**: **Correct with a replacement**, **Cancel this invoice, issued by mistake**, **Write off the rest**.
 
 **Good to know**
 
-- An invoice is paid once a real payment is matched to it. A difference needs a note, or a credit note for the excess.
-- Cancelling an outstanding amount goes through validation.
-- **Mark erroneous** cannot be undone. Do it before payment, never after.
+- **By e-mail** sends the invoice to the customer's contact e-mail, and **Send again** sends it once more. An e-mail the provider accepted is not proof it was read.
+- On hold, no reminder goes out until you release it.
+- A replacement or a cancellation is offered while nothing is matched to the invoice, **Write off the rest** once part of it was paid. An invoice is never edited.
+- A customer who says they paid waits for you: check your bank, then **Confirm payment** or **Not received**.
 
-**See also:** [Reminder rules](help:user.money.reminders.rules) · [Regroup invoices](help:user.invoicing.settlement)
+**See also:** [Share the reminders](help:user.invoicing.reminders) · [Match a payment received](help:user.invoicing.payments)
+
+<!-- anchor: user.invoicing.reminders -->
+### Share the reminders
+
+**Audience:** Owner · Billing administrator
+
+Reminders are shared by hand in your space, and some are due.
+
+<!-- image: user-invoicing-reminders -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Share reminders by hand** in **To do** and tap **Review**.
+2. Each line names the customer, the amount and how late it is, with its level (Reminder 1, …). **Preview** shows the letter.
+3. Tap **Share** on a line and send the letter the way you choose; the button below the list shares the next one.
+4. Where the customer has an e-mail address, **Send by e-mail** sends it; a button at the end e-mails every line that has an address.
+5. Tap **Done** when the queue says what was shared.
+
+**Good to know**
+
+- A reminder is recorded on its invoice only when it was really shared or sent. A share you closed records nothing.
+- If money received is not assigned yet, the queue asks you to check it first (**Check first: money received and not assigned**): the customer may have paid.
+- When reminders go out by themselves, this entry is not in **To do**; **Rules** sets how they work.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules) · [Automatic reminders](help:user.money.reminders.automatic)
+
+<!-- anchor: user.invoicing.payments -->
+### Match a payment received
+
+**Audience:** Owner · Billing administrator
+
+A payment arrived on the account and you say which invoices it pays.
+
+<!-- image: user-invoicing-payments -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Match payments** in **To do** and tap **Review**, then **Match** on the customer.
+2. **Payments to match** shows each payment received with the invoices it may pay; **Same amount** marks the one that fits.
+3. Tap that invoice to match it, or **Assign to invoices** to share one payment over several.
+4. In **Assign to invoices**, tick the invoices and check the amounts; the oldest is paid first. Tap **Assign to invoices** to confirm.
+
+**Good to know**
+
+- What is left of the payment stays as credit for the customer, and the sheet says how much.
+- An invoice paid in part needs a note.
+- A match may wait for a second approval when a rule asks for it.
+- Nothing is recorded when something changed meanwhile: the page reads the payment again and says why.
+
+**See also:** [Follow one invoice](help:user.invoicing.open) · [A customer's page and statement](help:user.invoicing.customer)
+
+<!-- anchor: user.invoicing.refunds -->
+### Pay out a credit note
+
+**Audience:** Owner · Billing administrator
+
+The business owes a customer money back on a credit note, and you record that it was paid out.
+
+<!-- image: user-invoicing-refunds -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Pay out refunds** in **To do** and tap **Review**.
+2. Tap the customer, then the credit note: it reads **Refund owed** and **The business owes this refund**.
+3. Pay the customer back, then tap **Record the refund** and confirm.
+
+**Good to know**
+
+- A credit note is never counted in **Owed to you**.
+- Once recorded, the credit note reads **Refunded** and leaves **To do**.
+
+**See also:** [Invoice the month](help:user.invoicing.month)
+
+<!-- anchor: user.invoicing.customer -->
+### A customer's page and statement
+
+**Audience:** Owner · Billing administrator
+
+You want everything about one customer: what they owe, their invoices and a statement to send them.
+
+<!-- image: user-invoicing-customer -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap the customer.
+2. Read what they **Owes**, or **Nothing owed**, and any credit: payments no invoice has taken yet.
+3. Read **Invoices** and the **Story**: issued, paid, reminders shared, payments declared.
+4. Tap **Statement of account** for the open items as of today, or **Statement for a period** for the movements between two dates with the opening and closing balance.
+
+**Good to know**
+
+- A statement is in one currency; with several, you choose which.
+- With nothing open, there is no statement as of today to print.
+- In a statement for a period, balances before the first recorded day are reconstructed from today's records, and the statement says so.
+
+**See also:** [Match a payment received](help:user.invoicing.payments)
 
 <!-- anchor: user.invoicing.wizard -->
 ### The month-close wizard
@@ -1007,7 +1134,7 @@ One guided path for the money routine: issue, send, remind, register payments, m
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap **Month-close wizard** (or open the [Invoicing wizard](app:/invoicing/wizard)).
+1. In [Invoicing](app:/invoices), tap **More** and **Month-close wizard** (or open the [Invoicing wizard](app:/invoicing/wizard)).
 2. Choose the run: **Start of month** (subscriptions members pay ahead, for the coming month) or **End of month** (usage, consumption and extra charges of the month just ended). The date proposes one.
 3. Follow the steps: **Review**, **Issue**, **Send**, **Remind**, **Payments**, **Match**, **Close**, **Summary**.
 4. Tap **Next** at each step, and **Finish** at the end.
@@ -1031,7 +1158,7 @@ A member has several open invoices and should pay a single one.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Regroup into one invoice**.
+1. In [Invoicing](app:/invoices), tap **More** and **Regroup invoices into one**.
 2. Choose at least two open invoices of the same member.
 3. Confirm. You are asked whether to attach the regrouped invoices.
 
@@ -1053,7 +1180,7 @@ A cost shared by the community is split among members.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Distribute an expense**.
+1. Open [My finances](app:/money) and tap **Distribute an expense**, beside **Purchases**.
 2. Describe **The expense**, then choose **Split by**: **Equal**, **Subscription**, **Usage** or **Custom key**.
 3. Check the **Shares**, untick anyone to **Leave out**, and tap **Book the shares**.
 
@@ -1076,7 +1203,7 @@ You decide when and how often an overdue invoice is chased.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Reminder rules**.
+1. In [Invoicing](app:/invoices), tap **More** and **Reminder rules**.
 2. Set **Number of reminder levels**, **Days until the first reminder** and **Days between reminders**.
 3. Tap **Save**.
 
@@ -1098,7 +1225,7 @@ You want reminders to leave on their own.
 
 **Steps**
 
-1. Open **Reminder rules** in the Invoicing tools.
+1. Open **Reminder rules** from **More** in Invoicing.
 2. Switch **Automatic reminders** on.
 3. Tap **Save**.
 

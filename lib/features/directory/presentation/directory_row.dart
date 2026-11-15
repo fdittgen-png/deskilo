@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../core/ui/personal_kit/me_card.dart';
+import '../../../core/ui/kit/kit_card.dart';
 import '../domain/place_summary.dart';
 import '../domain/public_workspace.dart';
 import 'saved_place_button.dart';
@@ -62,7 +62,7 @@ class DirectoryRow extends StatelessWidget {
               ? Border.all(color: theme.colorScheme.primary, width: 2)
               : null,
         ),
-        child: MeCard(
+        child: KitCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

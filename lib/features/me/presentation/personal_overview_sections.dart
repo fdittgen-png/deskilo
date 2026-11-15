@@ -18,12 +18,12 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
-import '../../../core/ui/personal_kit/me_notice.dart';
+import '../../../core/ui/kit/retry_notice.dart';
+import '../../../core/ui/kit/status_chip.dart';
 import '../application/personal_commitments.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_commitment.dart';
 import 'commitment_words.dart';
-import 'kit/me_status_chip.dart';
 import 'me_data_tab.dart';
 
 /// One section of the Overview: a titled surface, never a button itself.
@@ -97,7 +97,7 @@ class SourceUnavailable extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
     padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-    child: MeNotice(
+    child: RetryNotice(
       text: text,
       retryLabel: context.l10n.commonRetry,
       onRetry: onRetry,
@@ -240,10 +240,10 @@ class _Commitment extends StatelessWidget {
             Expanded(
               child: Text(place, style: theme.textTheme.titleMedium?.strong),
             ),
-            MeStatusChip(
-              kind: c.state == CommitmentState.ongoing
-                  ? MeChipKind.ok
-                  : MeChipKind.neutral,
+            StatusChip(
+              tone: c.state == CommitmentState.ongoing
+                  ? StatusTone.ok
+                  : StatusTone.neutral,
               label: commitmentStateWords(l10n, c.state),
             ),
           ],

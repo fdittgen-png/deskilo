@@ -11,7 +11,7 @@ Dans ce chapitre :
 - La TVA : régime, numéro, taux, groupes et déclaration périodique
 - La facturation électronique : où part la facture lisible par une machine
 - Le modèle PDF de facture et l'éditeur de rapports
-- Émettre et clôturer un mois : l'écran Facturation, l'assistant de clôture, le regroupement, les dépenses partagées
+- Émettre et clôturer un mois : l'écran Facturation, la facturation du mois, une facture et un client, les paiements et les avoirs, l'assistant de clôture, le regroupement, les dépenses partagées
 - Les relances de paiement
 - Le registre des factures, les exports comptables et l'analyse d'activité
 
@@ -928,24 +928,52 @@ Vos membres lisent leurs documents dans leur propre langue.
 
 **Public:** Propriétaire · Administrateur·rice facturation
 
-Vous voyez d'un coup d'œil ce qu'il faut émettre, ce qu'il faut encaisser et ce qui est clos.
+Vous ouvrez la facturation et voyez ce qu'on vous doit, ce qu'il reste à faire et les factures de chaque client.
 
 <p><img src="images/user-invoicing-hub.fr.jpg" width="280"></p>
 
 **Étapes**
 
 1. Ouvrez [Facturation](app:/invoices).
-2. Lisez la bande : **À émettre**, **À encaisser**, **À confirmer**, **Closes**.
-3. Travaillez dans les trois onglets : **À facturer** (membres avec quelque chose de suivi, pas encore facturé), **En cours** (émises, impayées) et **Archives** (payées ou closes).
-4. Touchez l'icône d'outils pour les autres outils.
+2. Lisez **À recevoir** : ce qui est **En retard**, ce qui est **Pas encore échu**, et ce qui a été **Facturé en** et **Encaissé en** ce mois-ci.
+3. Avancez dans **À faire** : chaque entrée dit quoi faire, pour combien, et s'ouvre avec **Voir**. Quand il ne reste rien, elle indique **Tout est à jour.**
+4. En dessous, choisissez **Ouvertes**, **En retard**, **À confirmer** ou **Payées**, et lisez la liste par **Clients** ou par **Factures**. **Rechercher** trouve un client ou un numéro.
+5. Touchez **Nouvelle** pour une seule facture, et **Plus** pour **Factures payées et closes**, **Mes propres factures**, **Registre des factures**, **Modèle PDF des factures** et **Comment fonctionne la facturation**.
 
 **Bon à savoir**
 
-- Vous voyez les factures de tout l'espace. Les vôtres sont dans vos finances, sous **Mes finances**.
-- Les factures ne sont jamais modifiées ni supprimées : une facture erronée est marquée comme telle et remplacée.
-- L'entrée **Comment fonctionne la facturation** explique qui intervient à chaque étape.
+- Un avoir que l'entreprise doit n'est jamais compté dans ce qu'on vous doit : il attend dans **Rembourser les avoirs**.
+- Chaque statut est un mot autant qu'une couleur : **Échéance aujourd’hui**, **Paiement reçu · à rapprocher**, **En attente de la confirmation du client**, **Suspendue**.
+- Vos propres factures sont dans vos finances, sous **Mes propres factures**.
+- Une facture ne se modifie ni ne se supprime : une facture fausse est corrigée par une facture de remplacement.
 
-**Voir aussi:** [Nouvelle facture](help:user.invoicing.new-invoice) · [Factures en cours](help:user.invoicing.open)
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month) · [Suivre une facture](help:user.invoicing.open)
+
+<!-- anchor: user.invoicing.month -->
+### Facturer le mois
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Le mois qui vient de s'achever a des clients encore à facturer, et vous les facturez en une fois.
+
+<!-- image: user-invoicing-month -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Facturer** et le mois dans **À faire**, et touchez **Voir**.
+2. Lisez la liste : chaque client qui a quelque chose à facturer est coché, avec son montant. **Tous** coche ou décoche tout ensemble.
+3. Un client marqué **À compléter** dit ce qui manque. Touchez **Compléter**, complétez, puis revenez : le client est relu.
+4. Touchez **Émettre** avec le nombre et le montant.
+5. Lisez ce qui s'est passé (**Émise**, **Attend une validation** ou **Non fait**) et touchez **Terminé**.
+
+**Bon à savoir**
+
+- Un mois dont les crédits dépassent les frais émet un avoir : l'entreprise le doit, et il attend dans **Rembourser les avoirs**.
+- Une information qui manque à votre entreprise est dite une seule fois, en haut, avec un seul **Compléter** ; rien n'est émis tant qu'elle manque.
+- Ce qui n'a pas été fait reste dans **À faire**, et **Réessayer pour celles-ci** réessaie sans rien émettre deux fois.
+- **Voir la proforma** montre la facture d'un client avant qu'elle n'existe.
+
+**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Rembourser un avoir](help:user.invoicing.refunds)
 
 <!-- anchor: user.invoicing.new-invoice -->
 ### Émettre une facture
@@ -958,10 +986,10 @@ Vous facturez un membre pour un mois.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez **Nouvelle facture**, ou **Facturer** sur une ligne de **À facturer**.
+1. Dans [Facturation](app:/invoices), touchez **Nouvelle**. Pour facturer tout un mois, voyez [Facturer le mois](help:user.invoicing.month).
 2. Choisissez le **Membre** et le mois. Les positions viennent de ce qui a été suivi.
 3. Activez **Inclure l'annexe détaillée (présences, services, paiements)** si vous la souhaitez.
-4. Touchez **Émettre la facture**. Dans **À facturer**, **Tout facturer** émet chaque ligne.
+4. Touchez **Émettre la facture**.
 
 **Bon à savoir**
 
@@ -974,27 +1002,126 @@ Vous facturez un membre pour un mois.
 **Voir aussi:** [Assistant de clôture](help:user.invoicing.wizard)
 
 <!-- anchor: user.invoicing.open -->
-### Relancer et solder les factures en cours
+### Suivre une facture
 
 **Public:** Propriétaire · Administrateur·rice facturation
 
-Vous suivez ce qui est impayé et vous le soldez correctement.
+Vous ouvrez une facture et voyez où elle en est, ce qui s'est passé et la seule chose à faire maintenant.
 
 <p><img src="images/user-invoicing-open.fr.jpg" width="280"></p>
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), ouvrez l'onglet **En cours** et touchez une facture.
-2. Utilisez les actions proposées : **Envoyer un rappel**, **Marquer comme payée** (rapprocher un paiement enregistré), **Annuler le solde restant**, **Marquer comme erronée**, ou partager le PDF.
-3. Les factures payées passent dans **Archives**.
+1. Dans [Facturation](app:/invoices), touchez un client, puis la facture (ou touchez-la dans la liste par **Factures**).
+2. Lisez le haut : ce qui reste dû sur le total et l'échéance, ou **Payée en totalité**.
+3. Lisez **Ce qui s’est passé** : l'émission, l'échéance, chaque relance, un paiement déclaré par le client, le paiement.
+4. Utilisez l'action du bas : **Partager la relance** avec son niveau, **Confirmer le paiement**, **Rapprocher le paiement** ou **Enregistrer le remboursement**.
+5. Touchez **Plus** pour le PDF (**Voir le PDF**, **Télécharger le PDF**, **Partager le PDF**), **Suspendre les relances**, **Rapprocher un paiement** et les **Corrections** : **Corriger par une facture de remplacement**, **Annuler cette facture, émise par erreur**, **Passer le reste en perte**.
 
 **Bon à savoir**
 
-- Une facture est payée dès qu'un vrai paiement lui est rapproché. Un écart demande une note, ou un avoir pour l'excédent.
-- L'annulation d'un solde restant passe par une validation.
-- **Marquer comme erronée** est irréversible. Faites-le avant le paiement, jamais après.
+- **Par e-mail** envoie la facture à l'e-mail de contact du client, et **Renvoyer** l'envoie une fois de plus. Un e-mail accepté par le fournisseur ne prouve pas qu'il a été lu.
+- Suspendue, aucune relance ne part tant que vous ne la levez pas.
+- Le remplacement ou l'annulation sont proposés tant que rien n'est rapproché de la facture, **Passer le reste en perte** dès qu'une partie a été payée. Une facture ne se modifie jamais.
+- Un client qui dit avoir payé attend votre réponse : vérifiez votre banque, puis **Confirmer le paiement** ou **Non reçu**.
 
-**Voir aussi:** [Règles de relance](help:user.money.reminders.rules) · [Regrouper des factures](help:user.invoicing.settlement)
+**Voir aussi:** [Partager les relances](help:user.invoicing.reminders) · [Rapprocher un paiement reçu](help:user.invoicing.payments)
+
+<!-- anchor: user.invoicing.reminders -->
+### Partager les relances
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Dans votre espace, les relances se partagent à la main, et certaines sont dues.
+
+<!-- image: user-invoicing-reminders -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Partager les relances à la main** dans **À faire** et touchez **Voir**.
+2. Chaque ligne nomme le client, le montant et le retard, avec son niveau (Relance 1, …). **Aperçu** montre la lettre.
+3. Touchez **Partager** sur une ligne et envoyez la lettre comme vous le souhaitez ; le bouton sous la liste partage la suivante.
+4. Quand le client a une adresse e-mail, **Envoyer par e-mail** l'envoie ; un bouton à la fin envoie par e-mail chaque ligne qui a une adresse.
+5. Touchez **Terminé** quand la file dit ce qui a été partagé.
+
+**Bon à savoir**
+
+- Une relance n'est enregistrée sur sa facture que si elle a vraiment été partagée ou envoyée. Un partage que vous avez fermé n'enregistre rien.
+- Si de l'argent reçu n'est pas encore affecté, la file vous demande de le vérifier d'abord (**À vérifier d'abord : argent reçu et non affecté**) : le client a peut-être payé.
+- Quand les relances partent d'elles-mêmes, cette entrée n'est pas dans **À faire** ; **Règles** dit comment elles fonctionnent.
+
+**Voir aussi:** [Règles de relance](help:user.money.reminders.rules) · [Relances automatiques](help:user.money.reminders.automatic)
+
+<!-- anchor: user.invoicing.payments -->
+### Rapprocher un paiement reçu
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Un paiement est arrivé sur le compte et vous dites quelles factures il paie.
+
+<!-- image: user-invoicing-payments -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Rapprocher des paiements** dans **À faire** et touchez **Voir**, puis **Rapprocher** sur le client.
+2. **Paiements à rapprocher** montre chaque paiement reçu avec les factures qu'il peut payer ; **Même montant** marque celle qui correspond.
+3. Touchez cette facture pour la rapprocher, ou **Affecter aux factures** pour répartir un paiement sur plusieurs.
+4. Dans **Affecter aux factures**, cochez les factures et vérifiez les montants ; la plus ancienne est payée d'abord. Touchez **Affecter aux factures** pour confirmer.
+
+**Bon à savoir**
+
+- Ce qui reste du paiement reste en avoir pour le client, et la feuille dit combien.
+- Une facture payée en partie demande une note.
+- Un rapprochement peut attendre une seconde approbation quand une règle le demande.
+- Rien n'est enregistré si quelque chose a changé entre-temps : la page relit le paiement et dit pourquoi.
+
+**Voir aussi:** [Suivre une facture](help:user.invoicing.open) · [La page d'un client et son relevé](help:user.invoicing.customer)
+
+<!-- anchor: user.invoicing.refunds -->
+### Rembourser un avoir
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+L'entreprise doit de l'argent à un client sur un avoir, et vous enregistrez qu'il a été remboursé.
+
+<!-- image: user-invoicing-refunds -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Rembourser les avoirs** dans **À faire** et touchez **Voir**.
+2. Touchez le client, puis l'avoir : il indique **Remboursement dû** et **L’entreprise doit ce remboursement**.
+3. Remboursez le client, puis touchez **Enregistrer le remboursement** et confirmez.
+
+**Bon à savoir**
+
+- Un avoir n'est jamais compté dans **À recevoir**.
+- Une fois enregistré, l'avoir indique **Remboursée** et quitte **À faire**.
+
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month)
+
+<!-- anchor: user.invoicing.customer -->
+### La page d'un client et son relevé
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez tout sur un client : ce qu'il doit, ses factures et un relevé à lui envoyer.
+
+<!-- image: user-invoicing-customer -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), touchez le client.
+2. Lisez ce qu'il **Doit**, ou **Rien à payer**, et son avoir éventuel : les paiements qu'aucune facture n'a encore pris.
+3. Lisez les **Factures** et l'**Historique** : émissions, paiements, relances partagées, paiements déclarés.
+4. Touchez **Relevé de compte** pour les éléments ouverts à ce jour, ou **Relevé sur une période** pour les mouvements entre deux dates avec le solde d'ouverture et de clôture.
+
+**Bon à savoir**
+
+- Un relevé est dans une seule devise ; s'il y en a plusieurs, vous choisissez laquelle.
+- S'il n'y a rien d'ouvert, il n'y a pas de relevé à ce jour à imprimer.
+- Dans un relevé sur une période, les soldes avant le premier jour enregistré sont reconstitués à partir des données d'aujourd'hui, et le relevé le dit.
+
+**Voir aussi:** [Rapprocher un paiement reçu](help:user.invoicing.payments)
 
 <!-- anchor: user.invoicing.wizard -->
 ### L'assistant de clôture
@@ -1007,7 +1134,7 @@ Un seul parcours guidé pour la routine financière : émettre, envoyer, relance
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez **Assistant de clôture** (ou ouvrez l'[Assistant de facturation](app:/invoicing/wizard)).
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Assistant de clôture** (ou ouvrez l'[Assistant de facturation](app:/invoicing/wizard)).
 2. Choisissez la passe : **Début de mois** (abonnements que les membres paient d'avance, pour le mois à venir) ou **Fin de mois** (usage, consommation et frais supplémentaires du mois qui vient de s'achever). La date en propose une.
 3. Suivez les étapes : **Revue**, **Émettre**, **Envoyer**, **Relancer**, **Paiements**, **Rapprocher**, **Clôturer**, **Récapitulatif**.
 4. Touchez **Suivant** à chaque étape, et **Terminer** à la fin.
@@ -1031,7 +1158,7 @@ Un membre a plusieurs factures ouvertes et ne doit en payer qu'une.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Regrouper en une facture**.
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Regrouper des factures en une**.
 2. Choisissez au moins deux factures ouvertes du même membre.
 3. Confirmez. On vous demande si vous voulez joindre les factures regroupées.
 
@@ -1053,7 +1180,7 @@ Un coût partagé par la communauté est réparti entre les membres.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Répartir une dépense**.
+1. Ouvrez [Mes finances](app:/money) et touchez **Répartir une dépense**, à côté de **Achats**.
 2. Décrivez **La dépense**, puis choisissez **Répartir selon** : **Parts égales**, **Abonnement**, **Usage** ou **Clé personnalisée**.
 3. Vérifiez les **Parts**, décochez toute personne à **Exclure**, et touchez **Comptabiliser les parts**.
 
@@ -1076,7 +1203,7 @@ Vous décidez quand et à quelle fréquence une facture en retard est relancée.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Règles de relance**.
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Règles de relance**.
 2. Réglez **Nombre de niveaux de relance**, **Jours avant la première relance** et **Jours entre les relances**.
 3. Touchez **Enregistrer**.
 
@@ -1098,7 +1225,7 @@ Vous voulez que les relances partent toutes seules.
 
 **Étapes**
 
-1. Ouvrez **Règles de relance** dans les outils de Facturation.
+1. Ouvrez **Règles de relance** depuis **Plus** dans Facturation.
 2. Activez **Relances automatiques**.
 3. Touchez **Enregistrer**.
 

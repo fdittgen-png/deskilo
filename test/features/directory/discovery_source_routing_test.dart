@@ -304,7 +304,7 @@ void main() {
           of: find.byKey(
             const ValueKey('directory-portal-directory-unavailable-2'),
           ),
-          matching: find.byKey(const ValueKey('me-notice-retry')),
+          matching: find.byKey(const ValueKey('retry-notice-retry')),
         ),
       );
       await tester.pumpAndSettle();

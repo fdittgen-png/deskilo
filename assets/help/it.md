@@ -2622,6 +2622,30 @@ Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
 
 **Vedi anche:** [La fatturazione in sintesi](help:user.money.invoicing) · [La pagina Acquisti e Aggiungi acquisto / spesa](help:user.money.purchases)
 
+### Vendere e revocare un pass ospite
+
+**Destinatari:** Amministratore · Proprietario
+
+Un ospite che non è membro occupa un posto per un giorno o qualche ora, paga all'accoglienza e riceve una fattura.
+
+<!-- image: user-money-guest-passes -->
+
+**Passaggi**
+
+1. Apra [Pass ospite](app:/money/guest-passes), oppure **Pass ospite** nella pagina [Vendite](app:/money/sales).
+2. La prima volta, tocchi **Aggiungere un pass**: il suo **Nome**, **Al giorno** o **All'ora**, il **Prezzo per unità** e **In vendita**.
+3. Tocchi **Vendere un pass**, scelga il **Pass** e il **Posto**, i giorni (**Dalle**, **Alle**) e il nome e il contatto dell'ospite, e spunti **Pagato all'accoglienza** se ha pagato.
+4. **Pass venduti** elenca ogni pass con ciò che è stato **Usato**. Per ritirare dei pass, li selezioni, tocchi **Revoca** e confermi.
+
+**Da sapere**
+
+- L'ospite non diventa membro; il suo nome e il suo contatto sono stampati sulla fattura.
+- Revocare annulla le prenotazioni non ancora iniziate. I giorni già iniziati restano, e nessun denaro si muove: corregga la fattura dell'ospite nella sua pagina se gli spetta un rimborso.
+- **Revocati, fattura non corretta** elenca i pass revocati la cui fattura attende ancora la correzione; **Apri la fattura** la porta lì.
+- Un pass orario vale per un giorno; un pass giornaliero dura da 1 a 31 giorni.
+
+**Vedi anche:** [La pagina Vendite](help:user.money.sales) · [Seguire una fattura](help:user.invoicing.open)
+
 ### La pagina Acquisti e Aggiungi acquisto / spesa
 
 **Destinatari:** Membro · Amministratore · Proprietario
@@ -2863,24 +2887,23 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Destinatari:** Amministratore fatturazione · Proprietario
 
-Emette e sollecita le fatture dell'intero spazio e vuole sapere da dove cominciare.
+Emette e sollecita le fatture di tutto lo spazio e vuole sapere da dove cominciare.
 
 ![](assets/help/images/user-money-invoicing.it.b8fa17aa9.jpg)
 
 **Passaggi**
 
 1. Apra [Fatturazione](app:/invoices).
-2. Legga le schede: **Da fatturare** elenca i membri ancora da fatturare per il mese, **Aperto** le fatture emesse e non pagate, **Archivio** quelle chiuse.
-3. Legga la riga dei quattro passaggi sotto il banner: **Da emettere**, **Da incassare**, **Da confermare** e **Chiuso**, ciascuno con un conteggio.
-4. Tocchi **Assistente di chiusura mensile** per fatturare un mese, oppure **Nuova fattura** per una sola.
-5. Tocchi l'icona degli strumenti per il registro fatture, le regole di sollecito, il modello PDF della fattura e **Le mie finanze**.
+2. Legga **Da incassare**: cosa è **Scaduto** e cosa è **Non ancora scaduto**.
+3. Proceda in **Da fare**: ogni voce si apre con **Vedi**, finché indica **È tutto in ordine.**
+4. Sotto, legga i clienti e le loro fatture; tocchi **Nuova** per una sola fattura e **Altro** per gli altri strumenti.
 
 **Da sapere**
 
-- Le fatture non si modificano né si eliminano mai. Una fattura sbagliata è contrassegnata come errata e sostituita.
-- Il flusso completo, dalla chiusura del mese al saldo e ai solleciti, è nel capitolo 08: [Regole di sollecito](help:user.money.reminders.rules) e [Il modello PDF della fattura](help:user.money.reports.invoice-template) sono buoni punti da cui proseguire.
+- Una fattura non si modifica né si cancella. Una sbagliata si corregge con una fattura sostitutiva.
+- Tutta la routine, dalla fatturazione del mese all'abbinamento dei pagamenti e al pagamento delle note di credito, è nel capitolo 08: cominci da [La schermata Fatturazione](help:user.invoicing.hub).
 
-**Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules)
+**Vedi anche:** [Fatturare il mese](help:user.invoicing.month) · [Regole di sollecito](help:user.money.reminders.rules)
 
 ## Il suo spazio, configurato da Lei (Impostazioni dello spazio)
 
@@ -4658,7 +4681,7 @@ In questo capitolo:
 - IVA: regime, numero, aliquote, gruppi e dichiarazione periodica
 - Fatturazione elettronica: dove viene inviata la fattura leggibile dalle macchine
 - Il modello PDF della fattura e l'editor dei report
-- Emettere e chiudere un mese: la schermata Fatturazione, l'assistente di chiusura mensile, il raggruppamento, le spese condivise
+- Emettere e chiudere un mese: la schermata Fatturazione, la fatturazione del mese, una fattura e un cliente, i pagamenti e le note di credito, l'assistente di chiusura mensile, il raggruppamento, le spese condivise
 - I solleciti di pagamento
 - Il registro fatture, le esportazioni contabili e l'analisi aziendale
 
@@ -5534,24 +5557,51 @@ I Suoi membri leggono i loro documenti nella propria lingua.
 
 **Destinatari:** Proprietario · Amministratore fatturazione
 
-Vede a colpo d'occhio che cosa emettere, che cosa incassare e che cosa è chiuso.
+Apre la fatturazione e vede cosa le è dovuto, cosa resta da fare e le fatture di ogni cliente.
 
 ![](assets/help/images/user-invoicing-hub.it.b8fa17aa9.jpg)
 
 **Passaggi**
 
 1. Apra [Fatturazione](app:/invoices).
-2. Legga la striscia: **Da emettere**, **Da incassare**, **Da confermare**, **Chiuso**.
-3. Lavori nelle tre schede: **Da fatturare** (membri con qualcosa di rilevato, non ancora fatturato), **Aperto** (emesse, non pagate) e **Archivio** (pagate o chiuse).
-4. Tocchi l'icona degli strumenti per gli altri strumenti.
+2. Legga **Da incassare**: cosa è **Scaduto**, cosa è **Non ancora scaduto**, e le cifre **Fatturato a** e **Incassato a** di questo mese.
+3. Proceda in **Da fare**: ogni voce dice cosa fare e per quanti, e si apre con **Vedi**. Quando non resta niente, indica **È tutto in ordine.**
+4. Sotto, scelga **Aperte**, **Scadute**, **Da confermare** o **Pagate**, e legga l'elenco per **Clienti** o per **Fatture**. **Cerca** trova un cliente o un numero.
+5. Tocchi **Nuova** per una sola fattura, e **Altro** per **Fatture pagate e chiuse**, **Le mie fatture**, **Registro delle fatture**, **Modello PDF della fattura** e **Come funziona la fatturazione**.
 
 **Da sapere**
 
-- Vede le fatture dell'intero spazio. Le Sue sono nelle Sue finanze, sotto **Le mie finanze**.
-- Le fatture non si modificano né si eliminano mai: una fattura sbagliata viene segnata come errata e sostituita.
-- La voce **Come funziona la fatturazione** spiega chi si muove a ogni passaggio.
+- Una nota di credito che l'attività deve non conta mai in ciò che le è dovuto: attende in **Pagare i rimborsi**.
+- Ogni stato è una parola oltre che un colore: **Scade oggi**, **Pagamento ricevuto · da abbinare**, **In attesa della conferma del cliente**, **Sospesa**.
+- Le sue fatture sono nelle sue finanze, in **Le mie fatture**.
+- Una fattura non si modifica né si cancella: una sbagliata si corregge con una fattura sostitutiva.
 
-**Vedi anche:** [Nuova fattura](help:user.invoicing.new-invoice) · [Fatture aperte](help:user.invoicing.open)
+**Vedi anche:** [Fatturare il mese](help:user.invoicing.month) · [Seguire una fattura](help:user.invoicing.open)
+
+### Fatturare il mese
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Il mese appena concluso ha clienti ancora da fatturare, e lei li fattura in una volta.
+
+<!-- image: user-invoicing-month -->
+
+**Passaggi**
+
+1. In [Fatturazione](app:/invoices), trovi **Fatturare** e il mese in **Da fare**, e tocchi **Vedi**.
+2. Legga l'elenco: ogni cliente con qualcosa da fatturare è spuntato, con il suo importo. **Tutti** spunta o toglie la spunta a tutti insieme.
+3. Un cliente segnato **Da completare** dice cosa manca. Tocchi **Completa**, completi e torni indietro: il cliente viene riletto.
+4. Tocchi **Emetti** con il numero e l'importo.
+5. Legga cosa è successo (**Emessa**, **Attende una convalida** o **Non fatto**) e tocchi **Fatto**.
+
+**Da sapere**
+
+- Un mese i cui accrediti superano gli addebiti emette una nota di credito: l'attività la deve, e attende in **Pagare i rimborsi**.
+- Un dato che manca alla sua attività è detto una sola volta, in alto, con un solo **Completa**; non si emette niente finché manca.
+- Ciò che non è stato fatto resta in **Da fare**, e **Riprova per queste** riprova senza emettere niente due volte.
+- **Vedi la proforma** mostra la fattura di un cliente prima che esista.
+
+**Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub) · [Pagare una nota di credito](help:user.invoicing.refunds)
 
 ### Emettere una fattura
 
@@ -5563,10 +5613,10 @@ Fattura un mese a un membro.
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), tocchi **Nuova fattura**, oppure **Fattura** su una riga di **Da fatturare**.
+1. In [Fatturazione](app:/invoices), tocchi **Nuova**. Per fatturare un mese intero, veda [Fatturare il mese](help:user.invoicing.month).
 2. Scelga il **Membro** e il mese. Le posizioni derivano da ciò che è stato rilevato.
 3. Attivi **Includi l'allegato dettagliato (presenze, servizi, pagamenti)** se lo desidera.
-4. Tocchi **Emetti fattura**. In **Da fatturare**, **Fattura tutto** emette ogni riga.
+4. Tocchi **Emetti fattura**.
 
 **Da sapere**
 
@@ -5578,27 +5628,122 @@ Fattura un mese a un membro.
 
 **Vedi anche:** [L'assistente di chiusura mensile](help:user.invoicing.wizard)
 
-### Sollecitare e saldare le fatture aperte
+### Seguire una fattura
 
 **Destinatari:** Proprietario · Amministratore fatturazione
 
-Segue ciò che non è pagato e lo chiude correttamente.
+Apre una fattura e vede a che punto è, cosa è successo e l'unica cosa da fare ora.
 
 ![](assets/help/images/user-invoicing-open.it.b8fa17aa9.jpg)
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), apra la scheda **Aperto** e tocchi una fattura.
-2. Usi le azioni che offre: **Invia un promemoria**, **Segna come pagata** (abbina un pagamento registrato), **Annulla il saldo residuo**, **Segna come errata**, oppure condivida il PDF.
-3. Le fatture pagate passano in **Archivio**.
+1. In [Fatturazione](app:/invoices), tocchi un cliente e poi la fattura (oppure la tocchi nell'elenco per **Fatture**).
+2. Legga in alto cosa resta da pagare sul totale e la scadenza, oppure **Pagata per intero**.
+3. Legga **Cosa è successo**: l'emissione, la scadenza, ogni sollecito, un pagamento dichiarato dal cliente, il pagamento.
+4. Usi l'azione in basso: condividere il sollecito con il suo livello, **Conferma il pagamento**, **Abbina il pagamento** o **Registra il rimborso**.
+5. Tocchi **Altro** per il PDF (**Vedi il PDF**, **Scarica il PDF**, **Condividi il PDF**), **Sospendi i solleciti**, **Abbina un pagamento** e le **Correzioni**: **Correggi con una fattura sostitutiva**, **Annulla questa fattura, emessa per errore**, **Stralcia il resto**.
 
 **Da sapere**
 
-- Una fattura è pagata quando le è abbinato un pagamento reale. Una differenza richiede una nota, o una nota di credito per l'eccedenza.
-- L'annullamento di un saldo residuo passa per la convalida.
-- **Segna come errata** non si può annullare. Lo faccia prima del pagamento, mai dopo.
+- **Via e-mail** invia la fattura all'e-mail di contatto del cliente, e **Invia di nuovo** la invia ancora una volta. Un'e-mail accettata dal fornitore non prova che sia stata letta.
+- Sospesa, nessun sollecito parte finché non la riattiva.
+- La sostituzione o l'annullamento sono proposti finché niente è abbinato alla fattura, **Stralcia il resto** appena una parte è stata pagata. Una fattura non si modifica mai.
+- Un cliente che dice di aver pagato attende la sua risposta: controlli la banca, poi **Conferma il pagamento** o **Non ricevuto**.
 
-**Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules) · [Raggruppare le fatture](help:user.invoicing.settlement)
+**Vedi anche:** [Condividere i solleciti](help:user.invoicing.reminders) · [Abbinare un pagamento ricevuto](help:user.invoicing.payments)
+
+### Condividere i solleciti
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Nel suo spazio i solleciti si condividono a mano, e alcuni sono dovuti.
+
+<!-- image: user-invoicing-reminders -->
+
+**Passaggi**
+
+1. In [Fatturazione](app:/invoices), trovi **Condividere i solleciti a mano** in **Da fare** e tocchi **Vedi**.
+2. Ogni riga nomina il cliente, l'importo e il ritardo, con il suo livello (Sollecito 1, …). **Anteprima** mostra la lettera.
+3. Tocchi **Condividi** su una riga e invii la lettera come preferisce; il pulsante sotto l'elenco condivide la successiva.
+4. Se il cliente ha un indirizzo e-mail, **Invia per e-mail** lo invia; un pulsante alla fine invia per e-mail ogni riga che ha un indirizzo.
+5. Tocchi **Fatto** quando l'elenco dice cosa è stato condiviso.
+
+**Da sapere**
+
+- Un sollecito è registrato sulla sua fattura solo quando è stato davvero condiviso o inviato. Una condivisione chiusa non registra niente.
+- Se del denaro ricevuto non è ancora assegnato, l'elenco le chiede di verificarlo prima (**Da verificare prima: denaro ricevuto e non assegnato**): il cliente potrebbe aver pagato.
+- Quando i solleciti partono da soli, questa voce non è in **Da fare**; **Regole** stabilisce come funzionano.
+
+**Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules) · [Solleciti automatici](help:user.money.reminders.automatic)
+
+### Abbinare un pagamento ricevuto
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Un pagamento è arrivato sul conto e lei indica quali fatture paga.
+
+<!-- image: user-invoicing-payments -->
+
+**Passaggi**
+
+1. In [Fatturazione](app:/invoices), trovi **Abbinare i pagamenti** in **Da fare** e tocchi **Vedi**, poi **Abbina** sul cliente.
+2. **Pagamenti da abbinare** mostra ogni pagamento ricevuto con le fatture che può pagare; **Stesso importo** segna quella che corrisponde.
+3. Tocchi quella fattura per abbinarla, oppure **Assegna alle fatture** per ripartire un pagamento su più fatture.
+4. In **Assegna alle fatture**, spunti le fatture e controlli gli importi; la più vecchia è pagata per prima. Tocchi **Assegna alle fatture** per confermare.
+
+**Da sapere**
+
+- Ciò che resta del pagamento rimane come credito del cliente, e il foglio dice quanto.
+- Una fattura pagata in parte richiede una nota.
+- Un abbinamento può attendere una seconda approvazione quando una regola lo chiede.
+- Se nel frattempo qualcosa è cambiato, non si registra niente: la pagina rilegge il pagamento e dice perché.
+
+**Vedi anche:** [Seguire una fattura](help:user.invoicing.open) · [La pagina di un cliente e il suo estratto conto](help:user.invoicing.customer)
+
+### Pagare una nota di credito
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+L'attività deve del denaro a un cliente per una nota di credito, e lei registra che gli è stato rimborsato.
+
+<!-- image: user-invoicing-refunds -->
+
+**Passaggi**
+
+1. In [Fatturazione](app:/invoices), trovi **Pagare i rimborsi** in **Da fare** e tocchi **Vedi**.
+2. Tocchi il cliente e poi la nota di credito: indica **Rimborso dovuto** e **L’attività deve questo rimborso**.
+3. Rimborsi il cliente, poi tocchi **Registra il rimborso** e confermi.
+
+**Da sapere**
+
+- Una nota di credito non conta mai in **Da incassare**.
+- Una volta registrata, la nota di credito indica **Rimborsata** e lascia **Da fare**.
+
+**Vedi anche:** [Fatturare il mese](help:user.invoicing.month)
+
+### La pagina di un cliente e il suo estratto conto
+
+**Destinatari:** Proprietario · Amministratore fatturazione
+
+Vuole tutto su un cliente: cosa deve, le sue fatture e un estratto conto da inviargli.
+
+<!-- image: user-invoicing-customer -->
+
+**Passaggi**
+
+1. In [Fatturazione](app:/invoices), tocchi il cliente.
+2. Legga cosa **Deve**, oppure **Niente da pagare**, e l'eventuale credito: pagamenti che nessuna fattura ha ancora preso.
+3. Legga le **Fatture** e la **Storia**: emissioni, pagamenti, solleciti condivisi, pagamenti dichiarati.
+4. Tocchi **Estratto conto** per le partite aperte a oggi, oppure **Estratto conto di un periodo** per i movimenti tra due date con il saldo iniziale e finale.
+
+**Da sapere**
+
+- Un estratto conto è in una sola valuta; se ce ne sono più, sceglie lei quale.
+- Se non c'è niente di aperto, non c'è un estratto conto a oggi da stampare.
+- In un estratto conto di un periodo, i saldi precedenti al primo giorno registrato sono ricostruiti dai dati di oggi, e l'estratto lo dice.
+
+**Vedi anche:** [Abbinare un pagamento ricevuto](help:user.invoicing.payments)
 
 ### L'assistente di chiusura mensile
 
@@ -5610,7 +5755,7 @@ Un unico percorso guidato per la routine del denaro: emettere, inviare, sollecit
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), tocchi **Assistente di chiusura mensile** (oppure apra l'[Assistente di fatturazione](app:/invoicing/wizard)).
+1. In [Fatturazione](app:/invoices), tocchi **Altro** e **Assistente di chiusura mensile** (oppure apra l'[Assistente di fatturazione](app:/invoicing/wizard)).
 2. Scelga il ciclo: **Inizio mese** (abbonamenti che i membri pagano in anticipo, per il mese a venire) o **Fine mese** (utilizzo, consumi e addebiti extra del mese appena concluso). La data ne propone uno.
 3. Segua i passaggi: **Revisione**, **Emetti**, **Invia**, **Sollecita**, **Pagamenti**, **Abbina**, **Chiudi**, **Riepilogo**.
 4. Tocchi **Avanti** a ogni passaggio e **Fine** alla fine.
@@ -5633,7 +5778,7 @@ Un membro ha più fatture aperte e dovrebbe pagarne una sola.
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), tocchi l'icona degli strumenti e **Raggruppa in una fattura**.
+1. In [Fatturazione](app:/invoices), tocchi **Altro** e **Raggruppare le fatture in una**.
 2. Scelga almeno due fatture aperte dello stesso membro.
 3. Confermi. Le viene chiesto se allegare le fatture raggruppate.
 
@@ -5654,7 +5799,7 @@ Un costo condiviso dalla comunità viene diviso tra i membri.
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), tocchi l'icona degli strumenti e **Ripartisci una spesa**.
+1. Apra [Le mie finanze](app:/money) e tocchi **Ripartisci una spesa**, accanto a **Acquisti**.
 2. Descriva **La spesa**, poi scelga **Ripartire per**: **Quote uguali**, **Abbonamento**, **Utilizzo** o **Chiave personalizzata**.
 3. Controlli le **Quote**, deselezioni chi vuole **Escludere** e tocchi **Registra le quote**.
 
@@ -5676,7 +5821,7 @@ Decide quando e con quale frequenza si sollecita una fattura scaduta.
 
 **Passaggi**
 
-1. In [Fatturazione](app:/invoices), tocchi l'icona degli strumenti e **Regole di sollecito**.
+1. In [Fatturazione](app:/invoices), tocchi **Altro** e **Regole di sollecito**.
 2. Imposti **Numero di livelli di sollecito**, **Giorni fino al primo promemoria** e **Giorni tra i solleciti**.
 3. Tocchi **Salva**.
 
@@ -5697,7 +5842,7 @@ Vuole che i solleciti partano da soli.
 
 **Passaggi**
 
-1. Apra **Regole di sollecito** negli strumenti di Fatturazione.
+1. Apra **Regole di sollecito** da **Altro** in Fatturazione.
 2. Attivi **Solleciti automatici**.
 3. Tocchi **Salva**.
 
@@ -7938,7 +8083,7 @@ Decide se una persona preme i pulsanti ogni mese o se ci pensa DesKilo.
 - Ogni tipo di fattura (abbonamento, fine mese) può essere emesso una sola volta per membro e per mese. Le fatture non si possono modificare né eliminare; una fattura sbagliata viene contrassegnata come errata e sostituita.
 - Per impostazione predefinita emettono le fatture il proprietario e i comproprietari. **Gli admin emettono fatture** estende questa facoltà agli amministratori.
 
-**Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub) · [Sollecitare e incassare le fatture aperte](help:user.invoicing.open)
+**Vedi anche:** [La schermata Fatturazione](help:user.invoicing.hub) · [Seguire una fattura](help:user.invoicing.open)
 
 ### Solleciti di pagamento
 

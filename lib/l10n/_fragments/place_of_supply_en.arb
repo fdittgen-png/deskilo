@@ -32,7 +32,7 @@
   "@supplyClassHelper": {
     "description": "#2354 place of supply: supplyClassHelper"
   },
-  "invoiceMissingBuyerCapacity": "Whether the member is a business or a consumer — a general service to a customer abroad depends on it",
+  "invoiceMissingBuyerCapacity": "Whether the customer is a business or a consumer — a general service to a customer abroad depends on it",
   "@invoiceMissingBuyerCapacity": {
     "description": "#2354 place of supply: invoiceMissingBuyerCapacity"
   },
@@ -116,7 +116,7 @@
   "@viesCheckExplainer": {
     "description": "#2354 VIES evidence: viesCheckExplainer"
   },
-  "invoiceMissingVies": "A valid VIES check of the member's VAT number (needed for reverse charge; if VIES did not answer, try again later)",
+  "invoiceMissingVies": "A valid VIES check of the customer's VAT number (needed for reverse charge; if VIES did not answer, try again later)",
   "@invoiceMissingVies": {
     "description": "#2354 VIES evidence: invoiceMissingVies"
   },

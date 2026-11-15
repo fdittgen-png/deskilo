@@ -15430,22 +15430,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingBuyerAddress =>
-      'The member\'s postal address (a business customer needs one)';
+      'The customer\'s postal address (a business customer needs one)';
 
   @override
   String get invoiceMissingBuyerCapacity =>
-      'Whether the member is a business or a consumer — a general service to a customer abroad depends on it';
+      'Whether the customer is a business or a consumer — a general service to a customer abroad depends on it';
 
   @override
-  String get invoiceMissingBuyerName => 'The member\'s name or company';
+  String get invoiceMissingBuyerName => 'The customer\'s name or company';
 
   @override
   String get invoiceMissingBuyerTaxId =>
-      'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France';
+      'The customer\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France';
 
   @override
   String get invoiceMissingBuyerVatId =>
-      'The member\'s VAT number (needed for reverse charge)';
+      'The customer\'s VAT number (needed for reverse charge)';
 
   @override
   String get invoiceMissingCorrectionReason =>
@@ -15469,35 +15469,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerAddress =>
-      'The workspace\'s postal address (street or city)';
+      'The business\'s postal address (street or city)';
 
   @override
   String get invoiceMissingSellerBnFormat =>
-      'The workspace\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))';
+      'The business\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app';
+      'The business\'s country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app';
 
   @override
   String get invoiceMissingSellerQstNumber =>
-      'The workspace\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)';
+      'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
-      'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)';
+      'The business\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)';
 
   @override
   String get invoiceMissingSellerUidFormat =>
-      'The workspace\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)';
+      'The business\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)';
 
   @override
   String get invoiceMissingSellerVatId =>
-      'The workspace\'s VAT identification number';
+      'The business\'s VAT identification number';
 
   @override
   String get invoiceMissingSellerVatIdFormat =>
-      'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)';
+      'The business\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)';
 
   @override
   String get invoiceMissingTerritoryOutsideVat =>
@@ -15508,11 +15508,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingVatNotRegistered =>
-      'No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory';
+      'No VAT on any line: the business does not charge VAT, but a rate is set on the subscription or an accessory';
 
   @override
   String get invoiceMissingVatRate =>
-      'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)';
+      'A VAT rate in force for the business\'s default rate (it would bill 0 %)';
 
   @override
   String get invoiceMissingVatTreatment =>
@@ -15524,7 +15524,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMissingVies =>
-      'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)';
+      'A valid VIES check of the customer\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)';
 
   @override
   String get invoiceMonthAll => 'All';

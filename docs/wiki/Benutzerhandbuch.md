@@ -123,7 +123,7 @@ Sie müssen nicht erst alles lesen. Wählen Sie den Weg, der zu dem passt, was S
 |---|---|---|
 | Zum ersten Mal als Mitglied | [Konto erstellen oder anmelden](#konto-erstellen-oder-anmelden) → [Einem Workspace beitreten](#einem-workspace-beitreten) → [Einen Platz buchen](#einen-platz-buchen) → [Ihre Abrechnung lesen](#ihre-abrechnung-lesen) → [Ein- und Auschecken](#ein--und-auschecken) | Sie haben gebucht, wissen, was es kostet, und haben sich an- und abgemeldet. |
 | Einen Space in Betrieb nehmen | [Ein paar gemeinsame Plätze](Einrichtungsanleitung#ein-paar-gemeinsame-plätze) → [Räume, Tische und Plätze zeichnen](#räume-tische-und-plätze-zeichnen) → [Arbeitszeiten](#arbeitszeiten) → [Buchungsgrenzen](#buchungsgrenzen) → [Ein Mitglied einladen](#ein-mitglied-einladen) → [Der Kalender-Tab](#der-kalender-tab) | Ein Mitglied, das Sie eingeladen haben, hat gebucht, und Sie sehen die Buchung. |
-| Der erste Monatsabschluss | [Rechnungsstellung im Überblick](#rechnungsstellung-im-überblick) → [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](#was-die-app-ausstellt-und-was-bei-ihrer-steuerberatung-bleibt) → [Der Monatsabschluss-Assistent](#der-monatsabschluss-assistent) → [Offene Rechnungen nachverfolgen und begleichen](#offene-rechnungen-nachverfolgen-und-begleichen) → [Buchhaltungsexporte](#buchhaltungsexporte) | Der Monat ist im Umfang der App abgerechnet, die Zahlungen sind zugeordnet und die Datei liegt bei Ihrer Steuerberatung. |
+| Der erste Monatsabschluss | [Rechnungsstellung im Überblick](#rechnungsstellung-im-überblick) → [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](#was-die-app-ausstellt-und-was-bei-ihrer-steuerberatung-bleibt) → [Der Monatsabschluss-Assistent](#der-monatsabschluss-assistent) → [Offene Rechnungen nachverfolgen und begleichen](#eine-rechnung-verfolgen) → [Buchhaltungsexporte](#buchhaltungsexporte) | Der Monat ist im Umfang der App abgerechnet, die Zahlungen sind zugeordnet und die Datei liegt bei Ihrer Steuerberatung. |
 
 **Gut zu wissen**
 
@@ -2737,6 +2737,31 @@ Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort f
 
 **Siehe auch:** [Rechnungsstellung im Überblick](#rechnungsstellung-im-überblick) · [Die Seite Einkauf und Einkauf / Ausgabe hinzufügen](#die-seite-einkauf-und-einkauf--ausgabe-hinzufügen)
 
+<!-- anchor: user.money.guest-passes -->
+### Einen Gästepass verkaufen und widerrufen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Gast, der kein Mitglied ist, nimmt einen Platz für einen Tag oder einige Stunden, zahlt am Empfang und erhält eine Rechnung.
+
+<!-- image: user-money-guest-passes -->
+
+**Schritte**
+
+1. Öffnen Sie [Gästepässe](https://fdittgen-png.github.io/deskilo/#/money/guest-passes) oder **Gästepässe** auf der Seite [Verkauf](https://fdittgen-png.github.io/deskilo/#/money/sales).
+2. Tippen Sie beim ersten Mal auf **Pass hinzufügen**: sein **Name**, **Pro Tag** oder **Pro Stunde**, der **Preis pro Einheit** und **Im Verkauf**.
+3. Tippen Sie auf **Pass verkaufen**, wählen Sie den **Pass** und den **Platz**, die Tage (**Von**, **Bis**) sowie Namen und Kontakt des Gastes, und haken Sie **Am Empfang bezahlt** an, wenn er bezahlt hat.
+4. **Verkaufte Pässe** listet jeden Pass mit dem, was **Genutzt** wurde. Um Pässe zurückzunehmen, wählen Sie sie aus, tippen Sie auf **Widerrufen** und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Der Gast wird kein Mitglied; sein Name und sein Kontakt stehen auf der Rechnung.
+- Widerrufen storniert die Buchungen, die noch nicht begonnen haben. Die schon begonnenen Tage bleiben, und kein Geld bewegt sich: Korrigieren Sie die Rechnung des Gastes auf ihrer Seite, wenn ihm Geld zurücksteht.
+- **Widerrufen, Rechnung nicht korrigiert** listet die widerrufenen Pässe, deren Rechnung noch auf ihre Korrektur wartet; **Rechnung öffnen** bringt Sie dorthin.
+- Ein Stundenpass gilt für einen Tag; ein Tagespass dauert 1 bis 31 Tage.
+
+**Siehe auch:** [Die Seite Verkauf](#die-seite-verkauf) · [Eine Rechnung verfolgen](#eine-rechnung-verfolgen)
+
 <!-- anchor: user.money.purchases -->
 ### Die Seite Einkauf und Einkauf / Ausgabe hinzufügen
 
@@ -2990,24 +3015,23 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 **Zielgruppe:** Abrechnungsadministrator:in · Inhaber
 
-Sie stellen die Rechnungen des ganzen Workspace aus und verfolgen sie nach und möchten wissen, wo Sie anfangen.
+Sie stellen die Rechnungen des ganzen Arbeitsbereichs aus, mahnen sie und möchten wissen, wo Sie anfangen.
 
 <p><img src="images/user-money-invoicing.de.b8fa17aa9.jpg" width="280"></p>
 
 **Schritte**
 
-1. Öffnen Sie [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
-2. Lesen Sie die Reiter: **Zu berechnen** listet Mitglieder, die für den Monat noch abzurechnen sind, **Offen** die ausgestellten, unbezahlten Rechnungen und **Archiv** die abgeschlossenen.
-3. Lesen Sie die Zeile mit vier Schritten unter dem Banner: **Auszustellen**, **Einzuziehen**, **Zu bestätigen** und **Abgeschlossen**, jeweils mit einer Anzahl.
-4. Tippen Sie auf **Monatsabschluss-Assistent**, um einen Monat abzurechnen, oder auf **Neue Rechnung** für eine einzelne.
-5. Tippen Sie auf das Werkzeugsymbol für das Rechnungsregister, die Mahnregeln, die PDF-Vorlage der Rechnung und **Meine Finanzen**.
+1. Öffnen Sie die [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
+2. Lesen Sie **Offen an Sie**: was **Überfällig** und was **Noch nicht fällig** ist.
+3. Arbeiten Sie **Zu tun** ab: Jeder Eintrag öffnet sich mit **Ansehen**, bis dort **Alles ist erledigt.** steht.
+4. Lesen Sie darunter die Kunden und ihre Rechnungen; tippen Sie auf **Neu** für eine einzelne Rechnung und auf **Mehr** für die anderen Werkzeuge.
 
 **Gut zu wissen**
 
-- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird als fehlerhaft markiert und ersetzt.
-- Der vollständige Ablauf vom Monatsabschluss über den Ausgleich bis zu den Erinnerungen steht in Kapitel 08: [Mahnregeln](#mahnregeln) und [Die PDF-Vorlage der Rechnung](#die-pdf-vorlage-der-rechnung) sind gute Stellen zum Weiterlesen.
+- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird mit einer Ersatzrechnung korrigiert.
+- Der ganze Ablauf, vom Abrechnen des Monats über das Zuordnen der Zahlungen bis zum Auszahlen der Gutschriften, steht in Kapitel 08: Beginnen Sie mit [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung).
 
-**Siehe auch:** [Mahnregeln](#mahnregeln)
+**Siehe auch:** [Den Monat abrechnen](#den-monat-abrechnen) · [Mahnregeln](#mahnregeln)
 
 <!-- anchor: user.space.overview -->
 ## Ihr Space, von Ihnen eingerichtet (Workspace-Einstellungen)
@@ -4886,7 +4910,7 @@ In diesem Kapitel:
 - Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
 - E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
 - Die PDF-Vorlage der Rechnung und der Berichtseditor
-- Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
+- Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, das Abrechnen des Monats, eine Rechnung und ein Kunde, Zahlungen und Gutschriften, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
 - Zahlungserinnerungen
 - Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
 
@@ -5803,24 +5827,52 @@ Ihre Mitglieder lesen ihre Dokumente in ihrer eigenen Sprache.
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-Sie sehen auf einen Blick, was auszustellen, was einzuziehen und was abgeschlossen ist.
+Sie öffnen die Rechnungsstellung und sehen, was Ihnen geschuldet wird, was als Nächstes zu tun ist und die Rechnungen jedes Kunden.
 
 <p><img src="images/user-invoicing-hub.de.b8fa17aa9.jpg" width="280"></p>
 
 **Schritte**
 
-1. Öffnen Sie [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
-2. Lesen Sie den Streifen: **Auszustellen**, **Einzuziehen**, **Zu bestätigen**, **Abgeschlossen**.
-3. Arbeiten Sie in den drei Reitern: **Zu berechnen** (Mitglieder mit erfasster Nutzung, noch nicht abgerechnet), **Offen** (ausgestellt, unbezahlt) und **Archiv** (bezahlt oder abgeschlossen).
-4. Tippen Sie auf das Werkzeugsymbol für die anderen Werkzeuge.
+1. Öffnen Sie die [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices).
+2. Lesen Sie **Offen an Sie**: was **Überfällig** ist, was **Noch nicht fällig** ist, und die Zahlen **Berechnet im** und **Eingegangen im** dieses Monats.
+3. Arbeiten Sie **Zu tun** ab: Jeder Eintrag sagt, was zu tun ist und für wie viele, und öffnet sich mit **Ansehen**. Ist nichts mehr übrig, steht dort **Alles ist erledigt.**
+4. Wählen Sie darunter **Offen**, **Überfällig**, **Zu bestätigen** oder **Bezahlt**, und lesen Sie die Liste nach **Kunden** oder nach **Rechnungen**. **Suchen** findet einen Kunden oder eine Nummer.
+5. Tippen Sie auf **Neu** für eine einzelne Rechnung und auf **Mehr** für **Bezahlte und abgeschlossene Rechnungen**, **Meine eigenen Rechnungen**, **Rechnungsregister**, **PDF-Vorlage der Rechnung** und **So funktioniert die Abrechnung**.
 
 **Gut zu wissen**
 
-- Sie sehen die Rechnungen des gesamten Workspace. Ihre eigenen stehen in Ihren Finanzen, unter **Meine Finanzen**.
-- Rechnungen werden nie bearbeitet oder gelöscht: Eine falsche wird als fehlerhaft markiert und ersetzt.
-- Der Eintrag **So funktioniert die Fakturierung** erklärt, wer bei welchem Schritt am Zug ist.
+- Eine Gutschrift, die der Betrieb schuldet, zählt nie zu dem, was Ihnen geschuldet wird: Sie wartet in **Erstattungen auszahlen**.
+- Jeder Status ist ein Wort und eine Farbe: **Heute fällig**, **Zahlung eingegangen · zuzuordnen**, **Wartet auf die Bestätigung des Kunden**, **Angehalten**.
+- Ihre eigenen Rechnungen finden Sie in Ihren Finanzen unter **Meine eigenen Rechnungen**.
+- Rechnungen werden nie bearbeitet oder gelöscht: Eine falsche wird mit einer Ersatzrechnung korrigiert.
 
-**Siehe auch:** [Neue Rechnung](#eine-rechnung-ausstellen) · [Offene Rechnungen](#offene-rechnungen-nachverfolgen-und-begleichen)
+**Siehe auch:** [Den Monat abrechnen](#den-monat-abrechnen) · [Eine Rechnung verfolgen](#eine-rechnung-verfolgen)
+
+<!-- anchor: user.invoicing.month -->
+### Den Monat abrechnen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Im gerade beendeten Monat sind noch Kunden abzurechnen, und Sie stellen ihre Rechnungen in einem Durchgang aus.
+
+<!-- image: user-invoicing-month -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) unter **Zu tun** den Eintrag mit dem Monat (zum Beispiel „April abrechnen“) und tippen Sie auf **Ansehen**.
+2. Lesen Sie die Liste: Jeder Kunde mit etwas abzurechnen ist angehakt, mit seinem Betrag. **Alle** hakt alle zusammen an oder ab.
+3. Ein Kunde mit **Muss ergänzt werden** sagt, was fehlt. Tippen Sie auf **Ergänzen**, vervollständigen Sie es und kehren Sie zurück: Der Kunde wird neu gelesen.
+4. Tippen Sie auf die Schaltfläche zum Ausstellen mit Anzahl und Betrag.
+5. Lesen Sie, was geschah (**Ausgestellt**, **Wartet auf eine Freigabe** oder **Nicht erledigt**), und tippen Sie auf **Fertig**.
+
+**Gut zu wissen**
+
+- Ein Monat, dessen Gutschriften die Kosten übersteigen, ergibt eine Gutschrift: Der Betrieb schuldet sie, und sie wartet in **Erstattungen auszahlen**.
+- Fehlt eine Angabe Ihres Betriebs, wird das einmal oben gesagt, mit einem einzigen **Ergänzen**; nichts wird ausgestellt, solange sie fehlt.
+- Was nicht erledigt wurde, bleibt in **Zu tun**, und **Für diese wiederholen** versucht es erneut, ohne etwas doppelt auszustellen.
+- **Proforma ansehen** zeigt die Rechnung eines Kunden, bevor es sie gibt.
+
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](#der-bildschirm-rechnungsstellung) · [Eine Gutschrift auszahlen](#eine-gutschrift-auszahlen)
 
 <!-- anchor: user.invoicing.new-invoice -->
 ### Eine Rechnung ausstellen
@@ -5833,10 +5885,10 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Neue Rechnung** oder in einer Zeile von **Zu berechnen** auf **Ausstellen**.
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Neu**. Für einen ganzen Monat siehe [Den Monat abrechnen](#den-monat-abrechnen).
 2. Wählen Sie das **Mitglied** und den Monat. Die Positionen stammen aus dem Erfassten.
 3. Schalten Sie **Detaillierten Anhang aufnehmen (Check-ins, Services, Zahlungen)** ein, wenn Sie ihn wünschen.
-4. Tippen Sie auf **Rechnung ausstellen**. Unter **Zu berechnen** stellt **Alle berechnen** jede Zeile aus.
+4. Tippen Sie auf **Rechnung ausstellen**.
 
 **Gut zu wissen**
 
@@ -5849,27 +5901,126 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 **Siehe auch:** [Monatsabschluss-Assistent](#der-monatsabschluss-assistent)
 
 <!-- anchor: user.invoicing.open -->
-### Offene Rechnungen nachverfolgen und begleichen
+### Eine Rechnung verfolgen
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-Sie verfolgen, was unbezahlt ist, und schließen es sauber ab.
+Sie öffnen eine Rechnung und sehen, wo sie steht, was geschah und das eine, was jetzt zu tun ist.
 
 <p><img src="images/user-invoicing-open.de.b8fa17aa9.jpg" width="280"></p>
 
 **Schritte**
 
-1. Öffnen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) den Reiter **Offen** und tippen Sie auf eine Rechnung.
-2. Nutzen Sie die angebotenen Aktionen: **Zahlungserinnerung senden**, **Als bezahlt markieren** (eine erfasste Zahlung zuordnen), **Restbetrag stornieren**, **Als fehlerhaft markieren** oder das PDF teilen.
-3. Bezahlte Rechnungen wandern ins **Archiv**.
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf einen Kunden und dann auf die Rechnung (oder tippen Sie in der Liste nach **Rechnungen** darauf).
+2. Lesen Sie oben, was vom Gesamtbetrag offen ist und wann es fällig ist, oder **Vollständig bezahlt**.
+3. Lesen Sie **Was geschah**: die Ausstellung, das Fälligkeitsdatum, jede Mahnung, eine vom Kunden gemeldete Zahlung, die Zahlung.
+4. Nutzen Sie die Aktion unten: die Mahnung mit ihrer Stufe teilen, **Zahlung bestätigen**, **Zahlung zuordnen** oder **Erstattung erfassen**.
+5. Tippen Sie auf **Mehr** für das PDF (**PDF ansehen**, **PDF herunterladen**, **PDF teilen**), **Mahnungen anhalten**, **Eine Zahlung zuordnen** und die **Korrekturen**: **Mit einer Ersatzrechnung korrigieren**, **Diese Rechnung stornieren, irrtümlich ausgestellt**, **Den Rest abschreiben**.
 
 **Gut zu wissen**
 
-- Eine Rechnung gilt als bezahlt, sobald ihr eine echte Zahlung zugeordnet ist. Eine Differenz braucht eine Notiz oder, bei einem Überschuss, eine Gutschrift.
-- Das Stornieren eines Restbetrags läuft über die Validierung.
-- **Als fehlerhaft markieren** lässt sich nicht rückgängig machen. Tun Sie es vor der Zahlung, nie danach.
+- **Per E-Mail** sendet die Rechnung an die Kontakt-E-Mail des Kunden, und **Erneut senden** sendet sie noch einmal. Eine vom Anbieter angenommene E-Mail beweist nicht, dass sie gelesen wurde.
+- Ist sie angehalten, geht keine Mahnung hinaus, bis Sie sie freigeben.
+- Ersetzen oder Stornieren wird angeboten, solange der Rechnung nichts zugeordnet ist, **Den Rest abschreiben**, sobald ein Teil bezahlt wurde. Eine Rechnung wird nie bearbeitet.
+- Ein Kunde, der eine Zahlung meldet, wartet auf Sie: Prüfen Sie Ihre Bank, dann **Zahlung bestätigen** oder **Nicht erhalten**.
 
-**Siehe auch:** [Mahnregeln](#mahnregeln) · [Rechnungen zusammenfassen](#rechnungen-zu-einer-zusammenfassen)
+**Siehe auch:** [Mahnungen teilen](#mahnungen-teilen) · [Eine eingegangene Zahlung zuordnen](#eine-eingegangene-zahlung-zuordnen)
+
+<!-- anchor: user.invoicing.reminders -->
+### Mahnungen teilen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+In Ihrem Raum werden Mahnungen von Hand geteilt, und einige sind fällig.
+
+<!-- image: user-invoicing-reminders -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) unter **Zu tun** **Mahnungen von Hand teilen** und tippen Sie auf **Ansehen**.
+2. Jede Zeile nennt den Kunden, den Betrag und den Verzug, mit ihrer Stufe (Mahnung 1, …). **Vorschau** zeigt das Schreiben.
+3. Tippen Sie in einer Zeile auf **Teilen** und senden Sie das Schreiben auf dem Weg Ihrer Wahl; die Schaltfläche unter der Liste teilt die nächste.
+4. Hat der Kunde eine E-Mail-Adresse, sendet **Per E-Mail senden** sie; eine Schaltfläche am Ende sendet jede Zeile mit Adresse per E-Mail.
+5. Tippen Sie auf **Fertig**, wenn die Liste sagt, was geteilt wurde.
+
+**Gut zu wissen**
+
+- Eine Mahnung wird nur dann an ihrer Rechnung erfasst, wenn sie wirklich geteilt oder gesendet wurde. Ein geschlossenes Teilen erfasst nichts.
+- Ist eingegangenes Geld noch nicht zugeordnet, bittet die Liste Sie, es zuerst zu prüfen (**Zuerst prüfen: Geld eingegangen und nicht zugeordnet**): Der Kunde hat vielleicht bezahlt.
+- Gehen die Mahnungen von selbst hinaus, steht dieser Eintrag nicht in **Zu tun**; **Regeln** legt fest, wie sie funktionieren.
+
+**Siehe auch:** [Mahnregeln](#mahnregeln) · [Automatische Mahnungen](#automatische-mahnungen)
+
+<!-- anchor: user.invoicing.payments -->
+### Eine eingegangene Zahlung zuordnen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Eine Zahlung ist auf dem Konto eingegangen, und Sie sagen, welche Rechnungen sie bezahlt.
+
+<!-- image: user-invoicing-payments -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) unter **Zu tun** **Zahlungen zuordnen**, tippen Sie auf **Ansehen** und dann beim Kunden auf **Zuordnen**.
+2. **Zahlungen zuordnen** zeigt jede eingegangene Zahlung mit den Rechnungen, die sie bezahlen kann; **Gleicher Betrag** kennzeichnet die passende.
+3. Tippen Sie auf diese Rechnung, um sie zuzuordnen, oder auf **Rechnungen zuordnen**, um eine Zahlung auf mehrere zu verteilen.
+4. Haken Sie in **Rechnungen zuordnen** die Rechnungen an und prüfen Sie die Beträge; die älteste wird zuerst bezahlt. Tippen Sie zur Bestätigung auf **Rechnungen zuordnen**.
+
+**Gut zu wissen**
+
+- Was von der Zahlung übrig bleibt, bleibt als Guthaben des Kunden, und das Blatt sagt, wie viel.
+- Eine teilweise bezahlte Rechnung braucht eine Notiz.
+- Eine Zuordnung kann auf eine zweite Freigabe warten, wenn eine Regel es verlangt.
+- Hat sich inzwischen etwas geändert, wird nichts erfasst: Die Seite liest die Zahlung neu und sagt, warum.
+
+**Siehe auch:** [Eine Rechnung verfolgen](#eine-rechnung-verfolgen) · [Die Seite eines Kunden und sein Kontoauszug](#die-seite-eines-kunden-und-sein-kontoauszug)
+
+<!-- anchor: user.invoicing.refunds -->
+### Eine Gutschrift auszahlen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Der Betrieb schuldet einem Kunden Geld aus einer Gutschrift, und Sie erfassen, dass es ausgezahlt wurde.
+
+<!-- image: user-invoicing-refunds -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) unter **Zu tun** **Erstattungen auszahlen** und tippen Sie auf **Ansehen**.
+2. Tippen Sie auf den Kunden und dann auf die Gutschrift: Dort steht **Erstattung offen** und **Der Betrieb schuldet diese Erstattung**.
+3. Zahlen Sie dem Kunden den Betrag aus, tippen Sie dann auf **Erstattung erfassen** und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Eine Gutschrift zählt nie zu **Offen an Sie**.
+- Einmal erfasst, steht bei der Gutschrift **Erstattet**, und sie verlässt **Zu tun**.
+
+**Siehe auch:** [Den Monat abrechnen](#den-monat-abrechnen)
+
+<!-- anchor: user.invoicing.customer -->
+### Die Seite eines Kunden und sein Kontoauszug
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten alles zu einem Kunden: was er schuldet, seine Rechnungen und einen Kontoauszug zum Versenden.
+
+<!-- image: user-invoicing-customer -->
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf den Kunden.
+2. Lesen Sie, was er **Schuldet**, oder **Nichts offen**, und ein Guthaben: Zahlungen, die noch keine Rechnung genommen hat.
+3. Lesen Sie die **Rechnungen** und den **Verlauf**: Ausstellungen, Zahlungen, geteilte Mahnungen, gemeldete Zahlungen.
+4. Tippen Sie auf **Kontoübersicht** für die offenen Posten zum heutigen Tag oder auf **Kontoauszug für einen Zeitraum** für die Bewegungen zwischen zwei Daten mit Anfangs- und Endsaldo.
+
+**Gut zu wissen**
+
+- Ein Kontoauszug ist in einer Währung; gibt es mehrere, wählen Sie eine.
+- Ist nichts offen, gibt es keine Kontoübersicht zum heutigen Tag zu drucken.
+- In einem Kontoauszug für einen Zeitraum werden Salden vor dem ersten erfassten Tag aus den heutigen Daten rekonstruiert, und der Auszug sagt es.
+
+**Siehe auch:** [Eine eingegangene Zahlung zuordnen](#eine-eingegangene-zahlung-zuordnen)
 
 <!-- anchor: user.invoicing.wizard -->
 ### Der Monatsabschluss-Assistent
@@ -5882,7 +6033,7 @@ Ein geführter Weg für die Geldroutine: ausstellen, senden, mahnen, Zahlungen e
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Monatsabschluss-Assistent** (oder öffnen Sie den [Assistenten zur Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoicing/wizard)).
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Mehr** und **Monatsabschluss-Assistent** (oder öffnen Sie den [Assistenten zur Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoicing/wizard)).
 2. Wählen Sie den Lauf: **Monatsanfang** (Abos, die Mitglieder im Voraus für den kommenden Monat zahlen) oder **Monatsende** (Nutzung, Verbrauch und Zusatzkosten des gerade beendeten Monats). Das Datum schlägt einen vor.
 3. Folgen Sie den Schritten: **Prüfen**, **Ausstellen**, **Senden**, **Mahnen**, **Zahlungen**, **Zuordnen**, **Abschließen**, **Zusammenfassung**.
 4. Tippen Sie bei jedem Schritt auf **Weiter** und am Ende auf **Fertig**.
@@ -5906,7 +6057,7 @@ Ein Mitglied hat mehrere offene Rechnungen und soll nur eine bezahlen.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Zu einer Rechnung zusammenfassen**.
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Mehr** und auf **Rechnungen zu einer zusammenfassen**.
 2. Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.
 3. Bestätigen Sie. Sie werden gefragt, ob die zusammengefassten Rechnungen angehängt werden sollen.
 
@@ -5915,7 +6066,7 @@ Ein Mitglied hat mehrere offene Rechnungen und soll nur eine bezahlen.
 - Die neue Rechnung ist, was geschuldet und angemahnt wird. Die Originale bleiben dahinter lesbar.
 - Zeilen und Umsatzsteuer werden übernommen; die Umsatzsteuererklärung zählt die Originale nur einmal.
 
-**Siehe auch:** [Offene Rechnungen](#offene-rechnungen-nachverfolgen-und-begleichen)
+**Siehe auch:** [Offene Rechnungen](#eine-rechnung-verfolgen)
 
 <!-- anchor: user.invoicing.shared-expense -->
 ### Eine gemeinsame Ausgabe verteilen
@@ -5928,7 +6079,7 @@ Ein Kostenpunkt, den die Gemeinschaft teilt, wird auf die Mitglieder aufgeteilt.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Ausgabe verteilen**.
+1. Öffnen Sie [Meine Finanzen](https://fdittgen-png.github.io/deskilo/#/money) und tippen Sie neben **Einkäufe** auf **Ausgabe verteilen**.
 2. Beschreiben Sie **Die Ausgabe** und wählen Sie dann **Verteilen nach**: **Gleich**, **Abo**, **Nutzung** oder **Eigener Schlüssel**.
 3. Prüfen Sie die **Anteile**, wählen Sie jemanden ab, um ihn **Ausnehmen**, und tippen Sie auf **Anteile buchen**.
 
@@ -5951,7 +6102,7 @@ Sie entscheiden, wann und wie oft eine überfällige Rechnung angemahnt wird.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf das Werkzeugsymbol und auf **Mahnregeln**.
+1. Tippen Sie in der [Rechnungsstellung](https://fdittgen-png.github.io/deskilo/#/invoices) auf **Mehr** und auf **Mahnregeln**.
 2. Legen Sie die **Anzahl der Mahnstufen**, die **Tage bis zur ersten Erinnerung** und die **Tage zwischen den Mahnungen** fest.
 3. Tippen Sie auf **Speichern**.
 
@@ -5973,7 +6124,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 
 **Schritte**
 
-1. Öffnen Sie die **Mahnregeln** in den Werkzeugen der Rechnungsstellung.
+1. Öffnen Sie die **Mahnregeln** über **Mehr** in der Rechnungsstellung.
 2. Schalten Sie **Automatische Mahnungen** ein.
 3. Tippen Sie auf **Speichern**.
 
