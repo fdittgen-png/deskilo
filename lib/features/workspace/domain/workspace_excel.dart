@@ -16,9 +16,8 @@ import '../../profile/domain/profile.dart';
 import '../../reservations/domain/reservation.dart';
 import 'member.dart';
 import 'workspace.dart';
+import 'workspace_excel_invoices.dart';
 import 'workspace_overview_sheets.dart';
-
-part 'workspace_excel_invoices.dart';
 
 
 /// The data export's workbook (#395): one tab per dataset, one row per
@@ -143,7 +142,12 @@ class _ExcelExport {
         _payments(),
         _services(),
         _servicecatalog(),
-        invoicesSheet(),
+        workspaceInvoicesSheet(
+          invoices: invoices,
+          memberName: memberName,
+          transmissionsByInvoice: transmissionsByInvoice,
+          major: major,
+        ),
       ];
 
   XlsxSheet _levels() =>
