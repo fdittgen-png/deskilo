@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/shell/shell_destinations.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/event_providers.dart';
 import 'pending_decisions_section.dart';
@@ -21,19 +22,31 @@ class CalendarDecisions extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final features = ref.watch(enabledFeaturesSyncProvider);
     if (!decisionSignalOnCalendar(features)) return const SizedBox.shrink();
-    final pending = ref.watch(myPendingEventsProvider).value ?? const [];
-    if (pending.isEmpty) return const SizedBox.shrink();
+    // #4017 — a failed read is said in the section's place, with Retry;
+    // never "nothing to decide".
+    final section = switch (ref.watch(myPendingEventsProvider)) {
+      AsyncValue(hasValue: true, :final value?) when value.isNotEmpty =>
+        PendingDecisionsSection(pending: value, recorded: true),
+      AsyncValue(hasValue: false, :final error?) => ReadFailureBanner(
+        error: error,
+        onRetry: () => ref.invalidate(myPendingEventsProvider),
+      ),
+      _ => null,
+    };
+    if (section == null) return const SizedBox.shrink();
     return Column(
       mainAxisSize: MainAxisSize.min,
-      children: [
-        PendingDecisionsSection(pending: pending, recorded: true),
-        const Divider(height: 1),
-      ],
+      children: [section, const Divider(height: 1)],
     );
   }
 }
 
 /// How many decisions wait on this member — the number the calendar's Alerts
-/// view and its destination badge show.
-int pendingAlertCount(WidgetRef ref) =>
-    ref.watch(myPendingEventCountProvider).value ?? 0;
+/// view and its destination badge show. #4017 — null when the read failed:
+/// the count is unknown, never 0.
+int? pendingAlertCount(WidgetRef ref) =>
+    switch (ref.watch(myPendingEventCountProvider)) {
+      AsyncValue(hasValue: true, :final value?) => value,
+      AsyncValue(hasError: true) => null,
+      _ => 0, // still reading: no badge yet
+    };
