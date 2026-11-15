@@ -280,6 +280,9 @@ class FakeBankStatementRepository implements BankStatementRepository {
     required String note,
   }) async {
     final line = _line(lineId);
+    if (!mayMatch(lineId)) {
+      throw StateError('this movement already settles an invoice');
+    }
     if (line.status == BankLineStatus.review) {
       throw StateError('review this movement first');
     }
@@ -415,6 +418,10 @@ class FakeBankStatementRepository implements BankStatementRepository {
   DateTime? booksClosedThrough; // #2380, the last day the books are closed
   String Function() actingMemberId = () => 'member-1'; // the active persona
   bool Function() mayUnmatch = () => true; // issueInvoices
+
+  /// #4053 — whether [lineId] may be matched now: another hand may have
+  /// settled it since the list was read.
+  bool Function(String lineId) mayMatch = (_) => true;
 
   @override
   Future<BankLineStatus?> unmatchIn(

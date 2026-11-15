@@ -59,6 +59,9 @@ void main() {
     await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('bank-confirm-references')));
     await _settle(tester);
+    // #4053 — the matches are shown first, then confirmed.
+    await tester.tap(find.byKey(const ValueKey('bank-batch-confirm')));
+    await _settle(tester);
 
     final matched = (await bank.fetchLines(statement.id))
         .where((l) => l.status == BankLineStatus.matched)

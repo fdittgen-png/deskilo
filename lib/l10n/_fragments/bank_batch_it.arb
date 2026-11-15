@@ -1,0 +1,9 @@
+{
+  "bankBatchTitle": "Confermare questi abbinamenti?",
+  "bankBatchLine": "{amount} il {date}",
+  "bankBatchSettles": "Salda {invoice} di {member}",
+  "bankBatchTotal": "Totale in {currency}: {amount}",
+  "bankBatchLineConfirmed": "{invoice}: confermata",
+  "bankBatchLineRefused": "{invoice}: non confermata. Abbini questo movimento da solo.",
+  "bankBatchResultTitle": "{count, plural, =0{Nessuno dei {total} abbinamenti è stato confermato} one{1 dei {total} abbinamenti è stato confermato} other{{count} dei {total} abbinamenti sono stati confermati}}"
+}

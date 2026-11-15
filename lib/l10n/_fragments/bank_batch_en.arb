@@ -1,0 +1,72 @@
+{
+  "bankBatchTitle": "Confirm these matches?",
+  "@bankBatchTitle": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchTitle."
+  },
+  "bankBatchLine": "{amount} on {date}",
+  "@bankBatchLine": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchLine.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "bankBatchSettles": "Settles {invoice} of {member}",
+  "@bankBatchSettles": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchSettles.",
+    "placeholders": {
+      "invoice": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      }
+    }
+  },
+  "bankBatchTotal": "Total in {currency}: {amount}",
+  "@bankBatchTotal": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchTotal.",
+    "placeholders": {
+      "currency": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "bankBatchLineConfirmed": "{invoice}: confirmed",
+  "@bankBatchLineConfirmed": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchLineConfirmed.",
+    "placeholders": {
+      "invoice": {
+        "type": "String"
+      }
+    }
+  },
+  "bankBatchLineRefused": "{invoice}: not confirmed. Match this movement by itself.",
+  "@bankBatchLineRefused": {
+    "description": "#4053 — the matches by reference shown before they are confirmed: bankBatchLineRefused.",
+    "placeholders": {
+      "invoice": {
+        "type": "String"
+      }
+    }
+  },
+  "bankBatchResultTitle": "{count, plural, =0{None of the {total} matches was confirmed} one{1 of the {total} matches was confirmed} other{{count} of the {total} matches were confirmed}}",
+  "@bankBatchResultTitle": {
+    "description": "#4053 — how many matches of a batch were confirmed: bankBatchResultTitle.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  }
+}
