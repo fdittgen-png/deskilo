@@ -47,6 +47,7 @@ class SafTWriter {
     required this.profile,
     required this.ledgerAccounts,
     this.bookPostings,
+    this.journalCode,
     required this.reference,
   });
 
@@ -64,6 +65,8 @@ class SafTWriter {
   /// #2365 — a local book's postings: the ledger section is then the book's
   /// own entries, every journal, instead of the derived sales cycle.
   final List<Posting>? bookPostings;
+  final String Function(PostingJournal journal)? journalCode;
+  String _code(PostingJournal j) => journalCode?.call(j) ?? j.code;
 
   final TaxReferenceSet reference; // for a document with no frozen breakdown
   List<InvoiceVatTotal> _breakdown(Invoice i) =>
@@ -298,14 +301,14 @@ class SafTWriter {
   List<(String, String, List<SafTLedgerTransaction>)>? get _journals {
     final accounts = ledgerAccounts;
     return switch (bookPostings) {
-      final posted? => safTPostedJournals(posted),
+      final posted? => safTPostedJournals(posted, journalCode: journalCode),
       null when accounts != null => [
         // Two journals, matching what the FEC writes: sales and bank.
-        ('VE', 'Sales', [
+        (_code(PostingJournal.sales), 'Sales', [
           ...safTSalesTransactions(live, accounts),
           ...safTWriteOffs(settled, accounts),
         ]),
-        ('BQ', 'Bank', [
+        (_code(PostingJournal.bank), 'Bank', [
           ...safTNettedReceipts(live, accounts),
           ...safTSettlements(settled, accounts),
         ]),

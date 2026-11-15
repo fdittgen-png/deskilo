@@ -13,9 +13,11 @@ import 'package:meta/meta.dart';
 
 import '../../../core/data/unreadable_rows.dart';
 import '../domain/accounting_format.dart';
+import '../domain/accounting_journals.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
 import '../domain/datev_creditors.dart';
+import '../domain/fec_accounts.dart' show FecJournals;
 import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';
 
@@ -184,12 +186,17 @@ AccountingInterchangeV1 interchangeOf(JournalPosted books) =>
 
 /// The generic journal CSV of [read], one row per posting line, written
 /// from its validated envelope; what stops it passes through.
-GenericJournal journalFileOf(GenericJournal read) {
+GenericJournal journalFileOf(GenericJournal read, {FecJournals? journals}) {
   if (read is! JournalPosted) return read;
   final envelope = interchangeOf(read);
   final problems = envelope.validate();
   return problems.isEmpty
-      ? JournalFile(buildGenericJournalCsv(envelope))
+      ? JournalFile(
+          buildGenericJournalCsv(
+            envelope,
+            journalCode: journalCodeOf(journals),
+          ),
+        )
       : JournalInterchangeRefused(problems);
 }
 
@@ -203,13 +210,14 @@ final CustomerIdRule _fecPartyRule = accountingTargets
 /// entry the engine converted at its document's recorded rate carries its
 /// original amount (Montantdevise / Idevise); an entry still in another
 /// currency than the book's is refused rather than written in it.
-GenericJournal postedFecOf(JournalPosted books) {
+GenericJournal postedFecOf(JournalPosted books, {FecJournals? journals}) {
   final fec = buildFecFromPostings(
     books.postings,
     accountNames: books.accountNames,
     parties: books.parties,
     partyRule: _fecPartyRule,
     functionalCurrency: books.functionalCurrency,
+    journals: journals,
   );
   if (fec.blockers.isNotEmpty) return JournalRefused(fec.blockers);
   final contract = checkFecImportContract(
@@ -256,8 +264,8 @@ DatevPurchases? datevPurchasesOf(GenericJournal? read, int creditorBase) =>
     };
 
 /// [read]'s posted FEC: the file, or why there is none.
-GenericJournal postedFecFileOf(GenericJournal read) =>
-    read is JournalPosted ? postedFecOf(read) : read;
+GenericJournal postedFecFileOf(GenericJournal read, {FecJournals? journals}) =>
+    read is JournalPosted ? postedFecOf(read, journals: journals) : read;
 
 class GenericJournalExport {
   const GenericJournalExport(this._books);

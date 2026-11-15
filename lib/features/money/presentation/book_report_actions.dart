@@ -14,7 +14,9 @@ import '../../../core/time/clock.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../core/ui/print_or_retry.dart';
 import '../../../l10n/app_localizations.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../application/generic_journal_export.dart';
+import '../domain/accounting_journals.dart';
 import '../domain/book_reports.dart';
 import '../domain/report_kind.dart';
 import 'invoice_documents.dart';
@@ -63,6 +65,11 @@ class BookReportPrint {
       accountNames: books.accountNames,
       parties: books.parties,
       functionalCurrency: books.functionalCurrency,
+      // #3470 — the business's journals head the books.
+      journals: accountingJournalsOf(
+        ref.read(currentWorkspaceProvider).value?.accountingJournals ??
+            const {},
+      ),
     );
     if (ledger.unconverted.isNotEmpty) {
       AppSnack.error(

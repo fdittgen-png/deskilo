@@ -31,18 +31,12 @@
 //     in Montantdevise / Idevise. Without a recorded rate the file is not
 //     written.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'accounting_journals.dart';
 import 'accounting_target.dart';
 import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
 import 'posting_fx.dart';
-
-const _journalLabels = {
-  PostingJournal.sales: 'Ventes',
-  PostingJournal.bank: 'Banque',
-  PostingJournal.purchases: 'Achats',
-  PostingJournal.other: 'Opérations diverses',
-};
 
 // The FEC is a French file: its labels are French, as the arrêté reads them.
 const _kindLabels = {
@@ -132,6 +126,7 @@ PostedFecResult buildFecFromPostings(
   CustomerIdRule partyRule = const CustomerIdRule(),
   String? functionalCurrency,
   Map<String, FxRate> rates = const {},
+  FecJournals? journals,
 }) {
   if (functionalCurrency != null && !isEuroFormatCurrency(functionalCurrency)) {
     return (
@@ -143,6 +138,7 @@ PostedFecResult buildFecFromPostings(
     accountNames: accountNames,
     parties: parties,
     partyRule: partyRule,
+    books: journals ?? FecJournals.installed(),
   );
   final rows = file.rows(postings, functionalCurrency, rates);
   if (file.blockers.isNotEmpty) {
@@ -156,9 +152,13 @@ class _PostedFec {
     required this.accountNames,
     required this.parties,
     required this.partyRule,
+    required this.books,
   });
 
   final Map<String, String> accountNames;
+
+  /// #3470 — the business's journals.
+  final FecJournals books;
   final Map<String, PostingParty> parties;
   final CustomerIdRule partyRule;
   final blockers = <FecBlocker>{};
@@ -232,7 +232,7 @@ class _PostedFec {
         continue;
       }
       final ref = _reference(p);
-      final base = '${p.journal.code}-$ref';
+      final base = '${journalFor(books, p.journal).code}-$ref';
       final n = seen[base] = (seen[base] ?? 0) + 1;
       final number = n == 1 ? base : '$base-$n';
       for (final (line, original) in lines) {
@@ -253,8 +253,8 @@ class _PostedFec {
     final third = _lettered.contains(l.role);
     final letter = third && open['${l.accountCode}|$ref'] == 0;
     return [
-      p.journal.code,
-      _journalLabels[p.journal]!,
+      journalFor(books, p.journal).code,
+      journalFor(books, p.journal).label,
       number,
       ymd(p.date),
       l.accountCode,

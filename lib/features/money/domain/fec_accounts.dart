@@ -135,6 +135,20 @@ class FecAccounts {
   /// declaration's.
   FecJournals get journals => _givenJournals ?? FecJournals.installed();
 
+  /// #3470 -- these accounts, writing the business's [journals].
+  FecAccounts withJournals(FecJournals journals) => FecAccounts(
+    customers: _givenCustomers,
+    revenue: _givenRevenue,
+    bank: _givenBank,
+    vat: _givenVat,
+    expenses: _givenExpenses,
+    vatPending: _givenVatPending,
+    writeOff: _givenWriteOff,
+    chartCountry: _givenCountry,
+    journals: journals,
+    reference: reference,
+  );
+
   /// #3429 -- the country whose chart the defaults are rows of: given, else
   /// what the installed FEC format declares (the plan comptable général).
   String get chartCountry =>

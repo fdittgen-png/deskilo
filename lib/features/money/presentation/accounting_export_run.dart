@@ -25,6 +25,7 @@ import '../application/jurisdiction/installed_vat_filings.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_connection.dart';
+import '../domain/accounting_journals.dart';
 import '../domain/accounting_targets_saft.dart';
 import '../domain/accounting_view.dart';
 import '../domain/archive_bundle.dart';
@@ -235,7 +236,7 @@ class AccountingExportRun {
       case ExportKind.saftFinancial:
         await safTFinancialExport();
       case ExportKind.genericJournal:
-        await exportGenericJournal(context, () async => journalFileOf(posted!), save: saveJournal);
+        await exportGenericJournal(context, () async => journalFileOf(posted!, journals: journals), save: saveJournal);
       case ExportKind.bcJournal: await bcJournalExport(stem: 'business central');
       case ExportKind.sage50CaJournal: await sage50CaJournalExport(stem: 'sage 50 journal');
     }
@@ -252,7 +253,11 @@ class AccountingExportRun {
   }
 
   FecExportActions get fecActions =>
-      FecExportActions(context, ref, (workspaceId: workspace.id, currency: workspace.currencyCode, legalId: company.legalId, development: development));
+      FecExportActions(context, ref, (workspaceId: workspace.id, currency: workspace.currencyCode, legalId: company.legalId, development: development, journals: journals));
+
+  /// #3470 — the business's journals, read once for every file this run
+  /// writes.
+  FecJournals get journals => accountingJournalsOf(workspace.accountingJournals);
 
   String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
@@ -269,6 +274,7 @@ class AccountingExportRun {
           : FecAccounts(vat: workspace.vatAccount),
     );
     if (accounts == null || !context.mounted) return;
+    final booked = accounts.withJournals(journals);
     await runGuarded(
       context,
       domain: 'money',
@@ -281,7 +287,7 @@ class AccountingExportRun {
           invoices: exported,
           matches: matches,
           company: company,
-          accounts: accounts,
+          accounts: booked,
           lineText: invoiceLineTextOfBooks(words, exported,
               liveAssociation: association),
           customersLabel: l10n.fecAccountCustomers,
@@ -318,7 +324,7 @@ class AccountingExportRun {
           fallbackDescription: l10n.featureInvoicing,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
           ledgerAccounts: accounts, bookPostings: posted,
-          reference: taxReference));
+          reference: taxReference, journalCode: journalCodeOf(journals)));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
     if (posted case final journal?) {
       return exportGenericJournal(context,
@@ -478,7 +484,7 @@ class AccountingExportRun {
           workspaceName: workspace.name,
           source: books.revisions, currencyCode: workspace.currencyCode,
         ));
-        final fecAccounts = workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount);
+        final fecAccounts = (workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount)).withJournals(journals);
         if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
           reference: taxReference,

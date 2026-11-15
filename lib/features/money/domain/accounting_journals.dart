@@ -5,12 +5,29 @@
 // be kept (the same rules the server holds: set_accounting_journals, 0773).
 // A value is whole or refused whole; an invalid code is never cleaned into
 // another journal.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show PostingJournal;
+
 import 'fec_accounts.dart';
 
 /// The journals the business's exports write: the stored ones when the
 /// business set them, else the country add-on's defaults.
 FecJournals accountingJournalsOf(Map<String, Object?> stored) =>
     FecJournals.fromJson(stored) ?? FecJournals.installed();
+
+/// The business's journal of the posting engine's [journal] (its own
+/// `PostingJournal.code` is the engine's internal key).
+FecJournal journalFor(FecJournals journals, PostingJournal journal) =>
+    switch (journal) {
+      PostingJournal.sales => journals.sales,
+      PostingJournal.bank => journals.bank,
+      PostingJournal.purchases => journals.purchases,
+      PostingJournal.other => journals.misc,
+    };
+
+/// The code the business's [journals] give a posting journal, for the
+/// writers that take a function; null [journals]: the engine's own codes.
+String Function(PostingJournal)? journalCodeOf(FecJournals? journals) =>
+    journals == null ? null : (j) => journalFor(journals, j).code;
 
 /// What is wrong with a journal of a value.
 enum JournalProblem {
