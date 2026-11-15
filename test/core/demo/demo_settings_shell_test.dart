@@ -29,6 +29,11 @@ void main() {
     () async => expect(await configurationTransferJourney(), isTrue),
   );
   test(
+    'a file from a business in another currency leaves its prices out and '
+    'says why (#4028)',
+    () async => expect(await configurationFromAnotherCurrencyJourney(), isTrue),
+  );
+  test(
     'a dismissed hint stays dismissed and the hints come back',
     () async => expect(await helpHintsJourney(), isTrue),
   );

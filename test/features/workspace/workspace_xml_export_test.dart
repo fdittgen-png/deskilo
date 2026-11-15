@@ -9,6 +9,7 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
+import 'package:deskilo/features/workspace/domain/configuration_refusal.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
 import 'package:deskilo/features/workspace/providers/workspace_import_providers.dart';
@@ -180,7 +181,7 @@ class _ConfigurationOnlyRepository implements WorkspaceImportRepository {
       };
 
   @override
-  Future<void> importConfiguration(
+  Future<List<ConfigurationRefusal>> importConfiguration(
           String workspaceId, Map<String, Object?> configuration) async =>
       throw UnimplementedError();
 

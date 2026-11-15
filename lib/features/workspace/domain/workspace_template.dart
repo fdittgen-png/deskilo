@@ -9,6 +9,8 @@
 // decides who may see a template; it shows what the server returned.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import 'configuration_refusal.dart';
+
 /// Who may see a template. Wire values by name.
 enum TemplateVisibility {
   /// Ships with the product; belongs to nobody.
@@ -199,9 +201,14 @@ class TemplateApplyResult {
     this.prices = TemplatePriceOutcome.none,
     this.validationBlocked = const [],
     this.status = TemplateApplyStatus.applied,
+    this.refused = const [],
   });
   final TemplatePriceOutcome prices;
   final List<String> validationBlocked;
+
+  /// #4028 — what the template left out: its prices when its business
+  /// counts in another currency, its tax rates when it is in another country.
+  final List<ConfigurationRefusal> refused;
 
   /// #1658 — applied, replayed, or refused as stale/conflicting (0282).
   final TemplateApplyStatus status;
@@ -220,6 +227,7 @@ class TemplateApplyResult {
               : const []))
             '$t',
         ],
+        refused: ConfigurationRefusal.listFrom(result),
       );
 }
 

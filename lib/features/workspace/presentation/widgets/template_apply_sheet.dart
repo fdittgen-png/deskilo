@@ -19,6 +19,7 @@ import '../../domain/workspace_template.dart';
 import '../../providers/workspace_providers.dart';
 import '../feature_names.dart';
 import '../process_names.dart';
+import 'configuration_refusals_dialog.dart';
 import 'local_setup_views.dart';
 import 'template_group_label.dart';
 
@@ -157,6 +158,10 @@ class _TemplateApplySheetState extends ConsumerState<TemplateApplySheet> {
                 .join(', ')),
     ];
     if (notes.isNotEmpty) AppSnack.info(context, notes.join('\n'));
+    // #4028 — prices or rates the template could not bring here.
+    await showConfigurationRefusals(
+        context, result.refused, ConfigurationOrigin.template);
+    if (!mounted) return;
     Navigator.of(context).pop(count);
   }
 

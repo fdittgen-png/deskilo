@@ -2692,6 +2692,7 @@ Map<String, _Getter> _part7() => {
   'capabilityRefundApprovals': (l) => l.capabilityRefundApprovals,
   'coloursPatternSolid': (l) => l.coloursPatternSolid,
   'compareCurrencies': (l) => l.compareCurrencies,
+  'configurationRefusedTitle': (l) => l.configurationRefusedTitle,
   'consentWhoTitle': (l) => l.consentWhoTitle,
   'consumptionAdd': (l) => l.consumptionAdd,
   'conversationMute': (l) => l.conversationMute,

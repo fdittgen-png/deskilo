@@ -1,0 +1,7 @@
+{
+  "configurationRefusedTitle": "Nicht übernommen",
+  "configurationRefusedPricesFile": "Preise wurden nicht übernommen: Diese Datei ist in {source}, dieses Unternehmen rechnet in {target}.",
+  "configurationRefusedTaxFile": "Steuersätze wurden nicht übernommen: Land dieser Datei: {source}, Land dieses Unternehmens: {target}.",
+  "configurationRefusedPricesTemplate": "Preise wurden nicht übernommen: Diese Vorlage ist in {source}, dieses Unternehmen rechnet in {target}.",
+  "configurationRefusedTaxTemplate": "Steuersätze wurden nicht übernommen: Land dieser Vorlage: {source}, Land dieses Unternehmens: {target}."
+}
