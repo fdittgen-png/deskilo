@@ -163,59 +163,11 @@ class OrganisationSheet extends ConsumerWidget {
             ),
           ] else ...[
             for (final house in organisation.byCountry)
-              ListTile(
-                key: ValueKey('organisation-house-${house.workspaceId}'),
-                contentPadding: EdgeInsets.zero,
-                title: Text(
-                  house.workspaceId == organisation.headWorkspaceId
-                      ? '${house.name} · ${l10n.organisationHead}'
-                      : house.name,
-                ),
-                subtitle: Text(
-                  [
-                    if (house.countryCode.isNotEmpty)
-                      localizedCountryName(l10n, house.countryCode),
-                    if (house.currencyCode.isNotEmpty) house.currencyCode,
-                    l10n.organisationYourRole(_roleText(l10n, house.role)),
-                  ].join(' · '),
-                ),
-                trailing: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (headOwner &&
-                        house.workspaceId != organisation.headWorkspaceId &&
-                        house.role == HouseRole.owner)
-                      IconButton(
-                        key: ValueKey('organisation-head-${house.workspaceId}'),
-                        tooltip: l10n.organisationMakeHead,
-                        icon: const Icon(Icons.star_outline),
-                        onPressed: () => _done(
-                          context,
-                          commands.setHead(organisation.id, house.workspaceId),
-                        ),
-                      ),
-                    if (headOwner)
-                      IconButton(
-                        key: ValueKey(
-                          'organisation-remove-${house.workspaceId}',
-                        ),
-                        tooltip: l10n.organisationRemove,
-                        icon: const Icon(Icons.logout),
-                        onPressed: () =>
-                            _done(context, commands.remove(house.workspaceId)),
-                      )
-                    else if (house.role == HouseRole.owner)
-                      IconButton(
-                        key: ValueKey(
-                          'organisation-leave-${house.workspaceId}',
-                        ),
-                        tooltip: l10n.organisationLeave,
-                        icon: const Icon(Icons.logout),
-                        onPressed: () =>
-                            _done(context, commands.remove(house.workspaceId)),
-                      ),
-                  ],
-                ),
+              _HouseRow(
+                house: house,
+                organisation: organisation,
+                headOwner: headOwner,
+                onCommand: (command) => _done(context, command),
               ),
             const FormGap(),
             if (headOwner)
@@ -277,6 +229,73 @@ class OrganisationSheet extends ConsumerWidget {
     await _done(
       context,
       ref.read(organisationCommandsProvider).add(organisation.id, picked.id),
+    );
+  }
+}
+
+/// One house of the organisation: its name (the head says so), its country,
+/// currency and the reader's role, and what the reader may do with it — the
+/// head's owner makes another house of theirs the head or takes a house out;
+/// a house's own owner may only leave.
+class _HouseRow extends ConsumerWidget {
+  const _HouseRow({
+    required this.house,
+    required this.organisation,
+    required this.headOwner,
+    required this.onCommand,
+  });
+
+  final OrganisationHouse house;
+  final Organisation organisation;
+  final bool headOwner;
+  final void Function(Future<OrganisationRefusal?> command) onCommand;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final commands = ref.read(organisationCommandsProvider);
+    final id = house.workspaceId;
+    final isHead = id == organisation.headWorkspaceId;
+    final owns = house.role == HouseRole.owner;
+    return ListTile(
+      key: ValueKey('organisation-house-$id'),
+      contentPadding: EdgeInsets.zero,
+      title: Text(
+        isHead ? '${house.name} · ${l10n.organisationHead}' : house.name,
+      ),
+      subtitle: Text(
+        [
+          if (house.countryCode.isNotEmpty)
+            localizedCountryName(l10n, house.countryCode),
+          if (house.currencyCode.isNotEmpty) house.currencyCode,
+          l10n.organisationYourRole(_roleText(l10n, house.role)),
+        ].join(' · '),
+      ),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (headOwner && !isHead && owns)
+            IconButton(
+              key: ValueKey('organisation-head-$id'),
+              tooltip: l10n.organisationMakeHead,
+              icon: const Icon(Icons.star_outline),
+              onPressed: () => onCommand(commands.setHead(organisation.id, id)),
+            ),
+          if (headOwner || owns)
+            IconButton(
+              key: ValueKey(
+                headOwner
+                    ? 'organisation-remove-$id'
+                    : 'organisation-leave-$id',
+              ),
+              tooltip: headOwner
+                  ? l10n.organisationRemove
+                  : l10n.organisationLeave,
+              icon: const Icon(Icons.logout),
+              onPressed: () => onCommand(commands.remove(id)),
+            ),
+        ],
+      ),
     );
   }
 }
