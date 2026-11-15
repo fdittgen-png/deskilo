@@ -22562,6 +22562,62 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa attività non fa parte di alcuna organizzazione. Un’attività in un altro paese o in un’altra valuta è una casa a sé nell’organizzazione della sua sede.';
 
   @override
+  String organisationOverviewAsOf(String amount, String time) {
+    return '$amount, alle $time';
+  }
+
+  @override
+  String get organisationOverviewCountry => 'Paese';
+
+  @override
+  String get organisationOverviewCurrency => 'Valuta';
+
+  @override
+  String organisationOverviewHeadName(String name) {
+    return '$name (sede)';
+  }
+
+  @override
+  String get organisationOverviewHouse => 'Casa';
+
+  @override
+  String organisationOverviewIncomplete(String houses) {
+    return 'Incompleto: $houses non conteggiate';
+  }
+
+  @override
+  String get organisationOverviewNone =>
+      'Nessuna casa di questa organizzazione da mostrare.';
+
+  @override
+  String get organisationOverviewNotEnabled =>
+      'L’analisi è disattivata in questa casa';
+
+  @override
+  String get organisationOverviewNotPermitted =>
+      'Non può leggere le finanze di questa casa';
+
+  @override
+  String get organisationOverviewOneHouse =>
+      'Lei è membro di una sola casa di questa organizzazione: non ce n’è un’altra da affiancare.';
+
+  @override
+  String get organisationOverviewTitle => 'Panoramica';
+
+  @override
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  ) {
+    return '$currency: fatturato $invoiced · incassato $collected · scaduto $overdue';
+  }
+
+  @override
+  String get organisationOverviewTotals => 'Totali per valuta';
+
+  @override
   String get organisationRefusedAlreadyInOne =>
       'Questa attività fa già parte di un’organizzazione.';
 

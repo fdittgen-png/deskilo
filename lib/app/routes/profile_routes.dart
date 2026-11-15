@@ -19,6 +19,7 @@ import '../../features/profile/presentation/screens/schema_update_screen.dart';
 import '../../features/profile/presentation/screens/settings_screen.dart';
 import '../../features/profile/presentation/widgets/regional_formats_section.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
+import '../../features/workspace/presentation/screens/organisation_overview_screen.dart';
 import '../route_access.dart';
 import '../route_env.dart';
 import '../schema_gate.dart';
@@ -106,6 +107,13 @@ List<RouteBase> profileRoutes(RouteEnv env) {
         ),
       ),
       builder: (context, state) => const PersonalInfoScreen(),
+    ),
+    // #4007 — an organisation's houses side by side: it spans businesses,
+    // so it is the account's own page, never one business's.
+    GoRoute(
+      path: '/organisation/:id/overview',
+      builder: (context, state) =>
+          OrganisationOverviewScreen(organisationId: state.pathParameters['id']!),
     ),
     // #1312 — where a server older than this app sends every route.
     GoRoute(

@@ -26,6 +26,7 @@ import '../../domain/organisation.dart';
 import '../../domain/workspace.dart';
 import '../../providers/organisation_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../screens/organisation_overview_screen.dart';
 import 'organisation_name_dialog.dart';
 
 String _roleText(AppLocalizations l10n, HouseRole role) => switch (role) {
@@ -185,6 +186,14 @@ class OrganisationSheet extends ConsumerWidget {
                 onCommand: (command) => _done(context, command),
               ),
             const FormGap(),
+            // #4007 — the houses side by side, for whoever reads this page.
+            OutlinedButton.icon(
+              key: const ValueKey('organisation-overview'),
+              icon: const Icon(Icons.table_chart_outlined),
+              label: Text(l10n.organisationOverviewTitle),
+              onPressed: () =>
+                  OrganisationOverviewScreen.open(context, organisation.id),
+            ),
             if (headOwner)
               OutlinedButton.icon(
                 key: const ValueKey('organisation-add'),
