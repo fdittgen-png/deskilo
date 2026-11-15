@@ -30,6 +30,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../core/ui/scoped_messenger.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
@@ -363,7 +364,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
   /// Full screen, with its own messenger, so what it says is said there.
   Future<void> _fullScreen(Widget child) => showDialog<void>(
     context: context,
-    builder: (_) => Dialog.fullscreen(child: ScaffoldMessenger(child: child)),
+    builder: (_) => Dialog.fullscreen(child: ScopedMessenger(child: child)),
   );
 
   /// The reminders shared by hand, the customers holding money we have not
@@ -388,7 +389,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
       builder: (_) => Dialog.fullscreen(
         // Its own messenger: what the month says is said once, here, not
         // also on the home under it.
-        child: ScaffoldMessenger(
+        child: ScopedMessenger(
           child: InvoiceMonthFlow(
             period: period ?? overview.period,
             entries: overview.toInvoice,
