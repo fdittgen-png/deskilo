@@ -30,7 +30,9 @@ OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
     ref
       ..invalidate(myOrganisationsProvider)
       // #4005 — a house made is one more business of the person's.
-      ..invalidate(myWorkspacesProvider);
+      ..invalidate(myWorkspacesProvider)
+      // and a birth record read again once its first task closes.
+      ..invalidate(houseBirthProvider);
   },
 );
 

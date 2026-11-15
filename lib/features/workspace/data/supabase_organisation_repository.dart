@@ -99,6 +99,10 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
     return row == null ? null : HouseBirth.fromJson(row);
   }
 
+  @override
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId) =>
+      _command('clear_house_prices_pending', {'p_workspace_id': workspaceId});
+
   Future<OrganisationRefusal?> _command(
     String name,
     Map<String, Object?> params,

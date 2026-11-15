@@ -154,7 +154,7 @@ final class OrganisationCommandsProvider
 }
 
 String _$organisationCommandsHash() =>
-    r'b60bf640ee96ccbce8c803e0fdf146cf208684f7';
+    r'6f0a61363f12bb9d87efa4c80e6f13d7913a3015';
 
 /// #4005 — the birth record of [workspaceId], if it was made as a house.
 

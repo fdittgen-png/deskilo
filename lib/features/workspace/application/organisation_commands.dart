@@ -40,6 +40,10 @@ class OrganisationCommands {
     return answer;
   }
 
+  /// #4005 — the house's prices are named: its first task closes.
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId) =>
+      _run(_repository.clearPricesPending(workspaceId));
+
   /// The birth record of [workspaceId], if it was made as a house.
   Future<HouseBirth?> houseBirth(String workspaceId) =>
       _repository.houseBirth(workspaceId);

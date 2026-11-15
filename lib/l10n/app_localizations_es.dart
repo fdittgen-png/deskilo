@@ -13729,6 +13729,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get holidayWhitMonday => 'Lunes de Pentecostés';
 
   @override
+  String get houseActivate => 'Activar';
+
+  @override
   String get houseAddCarried =>
       'Viajan: los roles, las reglas de reserva y de validación, los recordatorios y las funciones que ofrece este país.';
 
@@ -13820,6 +13823,79 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String houseBirthToPrice(String rows) {
     return 'Copiados, inactivos y para ponerles precio: $rows.';
+  }
+
+  @override
+  String get houseDone => 'Hecho';
+
+  @override
+  String houseFirstSale(String country) {
+    return 'Antes de su primera venta en $country';
+  }
+
+  @override
+  String get houseFree => 'Gratis';
+
+  @override
+  String get houseKindPackage => 'Paquete';
+
+  @override
+  String get houseKindService => 'Servicio';
+
+  @override
+  String get houseLater => 'Terminaré más tarde';
+
+  @override
+  String houseNamePrices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ponga sus precios ($count pendientes)',
+      one: 'Ponga sus precios (1 pendiente)',
+      zero: 'Ponga sus precios (ninguno pendiente)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseNamePricesAfterRates => 'Fije primero los tipos de impuesto.';
+
+  @override
+  String houseNoVat(String country) {
+    return '$country no tiene IVA: no hay nada que fijar aquí.';
+  }
+
+  @override
+  String get houseOwnFeeBands => 'Los tramos de cuota';
+
+  @override
+  String get houseOwnLayout => 'El diseño de los documentos';
+
+  @override
+  String get houseOwnLinks => 'Los enlaces de los documentos';
+
+  @override
+  String get houseOwnPayment =>
+      'Las instrucciones de pago y la cuenta bancaria';
+
+  @override
+  String get houseOwnTitle => 'Propios de esta casa';
+
+  @override
+  String get housePriceRequired => 'Indique un precio; 0 lo hace gratuito.';
+
+  @override
+  String get housePricesTitle => 'Ponga sus precios';
+
+  @override
+  String get houseRateLabel => 'Tipo';
+
+  @override
+  String get houseRateRequired => 'Elija un tipo.';
+
+  @override
+  String houseSetRates(String country) {
+    return 'Fijar los tipos de impuesto de $country';
   }
 
   @override

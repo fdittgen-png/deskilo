@@ -13795,6 +13795,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get holidayWhitMonday => 'Lundi de Pentecôte';
 
   @override
+  String get houseActivate => 'Activer';
+
+  @override
   String get houseAddCarried =>
       'Voyagent : les rôles, les règles de réservation et de validation, les rappels, et les fonctionnalités que ce pays propose.';
 
@@ -13887,6 +13890,80 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String houseBirthToPrice(String rows) {
     return 'Repris, inactifs et à tarifer : $rows.';
+  }
+
+  @override
+  String get houseDone => 'Terminé';
+
+  @override
+  String houseFirstSale(String country) {
+    return 'Avant votre première vente en $country';
+  }
+
+  @override
+  String get houseFree => 'Gratuit';
+
+  @override
+  String get houseKindPackage => 'Forfait';
+
+  @override
+  String get houseKindService => 'Service';
+
+  @override
+  String get houseLater => 'Je terminerai plus tard';
+
+  @override
+  String houseNamePrices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Fixer vos prix ($count restants)',
+      one: 'Fixer vos prix (1 restant)',
+      zero: 'Fixer vos prix (aucun restant)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseNamePricesAfterRates =>
+      'Définissez d’abord les taux de taxe.';
+
+  @override
+  String houseNoVat(String country) {
+    return '$country n’a pas de TVA : rien à définir ici.';
+  }
+
+  @override
+  String get houseOwnFeeBands => 'Les tranches de cotisation';
+
+  @override
+  String get houseOwnLayout => 'La mise en page des documents';
+
+  @override
+  String get houseOwnLinks => 'Les liens des documents';
+
+  @override
+  String get houseOwnPayment =>
+      'Les instructions de paiement et le compte bancaire';
+
+  @override
+  String get houseOwnTitle => 'Propres à cette maison';
+
+  @override
+  String get housePriceRequired => 'Indiquez un prix ; 0 le rend gratuit.';
+
+  @override
+  String get housePricesTitle => 'Fixer vos prix';
+
+  @override
+  String get houseRateLabel => 'Taux';
+
+  @override
+  String get houseRateRequired => 'Choisissez un taux.';
+
+  @override
+  String houseSetRates(String country) {
+    return 'Définir les taux de taxe de $country';
   }
 
   @override

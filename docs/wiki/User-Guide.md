@@ -3645,6 +3645,7 @@ Your business has sites abroad, in another country or another currency. Each of 
 4. Tap **Take out of the organisation** beside a house to make it a business on its own again.
 5. Tap **Make it the head** beside a house you own to make it the head. The owner of another house sees **Leave the organisation** beside that house.
 6. Tap **Add a house abroad** to make a business of its own in another country or currency: choose its country first; its currency, time zone and the language of its documents are proposed from it. The form says what travels, what arrives inactive to be priced, and what does not travel. Tap **Create the house**: you land in it, and its home shows once how it began.
+7. In the new house, its home lists its first task: first its country's tax rates, then **Name your prices** for the services and packages that arrived inactive. Give each a price (0 makes it free) and a rate, and activate it; the fee bands, the document layout and links, and the payment instructions and bank account are the house's own to set. Tap **Done** when nothing is left.
 
 **Good to know**
 

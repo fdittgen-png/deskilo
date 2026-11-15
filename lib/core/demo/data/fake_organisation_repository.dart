@@ -213,4 +213,25 @@ class FakeOrganisationRepository implements OrganisationRepository {
   @override
   Future<HouseBirth?> houseBirth(String workspaceId) async =>
       _births[workspaceId];
+
+  @override
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId) async {
+    final birth = _births[workspaceId];
+    if (birth == null) return OrganisationRefusal.notOwner;
+    _births[workspaceId] = HouseBirth(
+      workspaceId: birth.workspaceId,
+      headWorkspaceId: birth.headWorkspaceId,
+      plans: birth.plans,
+      services: birth.services,
+      packages: birth.packages,
+      validationPolicies: birth.validationPolicies,
+      features: birth.features,
+      amountsKept: birth.amountsKept,
+      coOwnersAdded: birth.coOwnersAdded,
+      pricesPending: false,
+      createdAt: birth.createdAt,
+      rateHints: birth.rateHints,
+    );
+    return null;
+  }
 }
