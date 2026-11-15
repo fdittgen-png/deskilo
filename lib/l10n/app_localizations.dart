@@ -52565,7 +52565,7 @@ abstract class AppLocalizations {
   /// **'No other movements this month: the figures above are the whole statement.'**
   String get statementDeskNoMovements;
 
-  /// #4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month.
+  /// #4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month. [not a count: used]
   ///
   /// In en, this message translates to:
   /// **'{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}'**

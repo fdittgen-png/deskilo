@@ -23,7 +23,7 @@
   },
   "statementDeskUsed": "{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}",
   "@statementDeskUsed": {
-    "description": "#4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month.",
+    "description": "#4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month. [not a count: used]",
     "placeholders": {
       "used": {
         "type": "int"

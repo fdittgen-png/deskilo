@@ -33135,7 +33135,7 @@ class AppLocalizationsFr extends AppLocalizations {
       allowance,
       locale: localeName,
       other: '$allowance demi-journées',
-      one: '1 demi-journée',
+      one: '$allowance demi-journée',
     );
     return '$used sur $_temp0';
   }
