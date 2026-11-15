@@ -8416,6 +8416,7 @@
   "houseAddName": "Nombre de la casa",
   "houseAddNotCarried": "No viajan: la identidad, el banco y las instrucciones de pago, los lugares, el diseño de los documentos y los enlaces.",
   "houseAddSubmit": "Crear la casa",
+  "houseAddTimezone": "Zona horaria: {zone}",
   "houseAddTitle": "Añadir una casa en el extranjero",
   "houseAddToPrice": "Llegan inactivos, para ponerles precio: los planes, los servicios y los paquetes.",
   "houseBirthCoOwners": "{count, plural, =0{No se añadió ningún copropietario.} one{1 propietario de la sede se añadió como copropietario.} other{{count} propietarios de la sede se añadieron como copropietarios.}}",

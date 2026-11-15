@@ -13,5 +13,6 @@
   "houseBirthPackages": "{count, plural, =0{nessun pacchetto} one{1 pacchetto} other{{count} pacchetti}}",
   "houseBirthToPrice": "Ripresi, inattivi e da prezzare: {rows}.",
   "houseBirthCoOwners": "{count, plural, =0{Nessun contitolare aggiunto.} one{1 titolare della sede è stato aggiunto come contitolare.} other{{count} titolari della sede sono stati aggiunti come contitolari.}}",
-  "houseBirthNotCarried": "Non ripresi: l’impaginazione dei documenti e i collegamenti. Scelga quelli di questa casa."
+  "houseBirthNotCarried": "Non ripresi: l’impaginazione dei documenti e i collegamenti. Scelga quelli di questa casa.",
+  "houseAddTimezone": "Fuso orario: {zone}"
 }

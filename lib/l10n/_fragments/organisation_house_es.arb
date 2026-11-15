@@ -13,5 +13,6 @@
   "houseBirthPackages": "{count, plural, =0{ningún paquete} one{1 paquete} other{{count} paquetes}}",
   "houseBirthToPrice": "Copiados, inactivos y para ponerles precio: {rows}.",
   "houseBirthCoOwners": "{count, plural, =0{No se añadió ningún copropietario.} one{1 propietario de la sede se añadió como copropietario.} other{{count} propietarios de la sede se añadieron como copropietarios.}}",
-  "houseBirthNotCarried": "No copiados: el diseño de los documentos y los enlaces. Elija los de esta casa."
+  "houseBirthNotCarried": "No copiados: el diseño de los documentos y los enlaces. Elija los de esta casa.",
+  "houseAddTimezone": "Zona horaria: {zone}"
 }

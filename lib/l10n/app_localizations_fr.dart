@@ -13789,6 +13789,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get houseAddSubmit => 'Créer la maison';
 
   @override
+  String houseAddTimezone(String zone) {
+    return 'Fuseau horaire : $zone';
+  }
+
+  @override
   String get houseAddTitle => 'Ajouter une maison à l’étranger';
 
   @override

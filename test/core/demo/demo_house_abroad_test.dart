@@ -35,7 +35,7 @@ void main() {
     name: 'Atelier Kraków',
     country: country,
     currency: country == 'PL' ? demoHouseCurrency : 'EUR',
-    timezone: demoHouseTimezone,
+    timezone: 'Europe/Warsaw',
     language: 'en',
     requestId: id,
   );

@@ -19,29 +19,32 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/currency_field.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/master_data_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/organisation.dart';
 import '../../providers/organisation_providers.dart';
 import 'organisation_sheet.dart' show organisationRefusalText;
 
 /// The languages a house's documents may speak: the app's own.
-List<String> get houseLanguages => [
+List<String> get _houseLanguages => [
   for (final l in AppLocalizations.supportedLocales) l.languageCode,
 ];
 
 /// The documents' language proposed for [country]: the language the
 /// country's first format locale pairs with it, when the documents speak it;
 /// English otherwise.
+@visibleForTesting
 String proposedHouseLanguage(String country) {
   final paired = kFormatLocales
       .where((l) => l.endsWith('_${country.toUpperCase()}'))
       .map((l) => l.split('_').first)
       .firstOrNull;
-  return paired != null && houseLanguages.contains(paired) ? paired : 'en';
+  return paired != null && _houseLanguages.contains(paired) ? paired : 'en';
 }
 
 /// The values a change of country from [from] to [to] leaves: each one the
 /// person has not changed follows the new country; one they chose stays.
+@visibleForTesting
 ({String currency, String timezone, String language}) houseProposalAfter(
   Country from,
   Country to, {
@@ -71,11 +74,13 @@ abstract final class AddHouseForm {
     var country = proposed == null
         ? CountryCatalog.countries.first
         : CountryCatalog.byCode(proposed);
-    var language = proposedHouseLanguage(country.code);
+    final language = proposedHouseLanguage(country.code);
     var timezone = country.defaultTimezone;
     final fields = FormControllers({
       'name': '',
+      'country': country.code,
       'currency': country.currencyCode,
+      'language': language,
     });
     String? created;
     final done = await showAppFormSheet(
@@ -96,7 +101,7 @@ abstract final class AddHouseForm {
             country: country.code,
             currency: fields['currency'].text.trim().toUpperCase(),
             timezone: timezone,
-            language: language,
+            language: fields['language'].text,
             requestId: requestId,
           ));
           if (answer.refused case final refused?) {
@@ -106,30 +111,31 @@ abstract final class AddHouseForm {
           return null;
         },
         builder: (context, refresh) => [
-          DropdownButtonFormField<String>(
-            key: const ValueKey('house-add-country'),
-            initialValue: country.code,
-            decoration: InputDecoration(labelText: l10n.workspaceCountryLabel),
-            items: [
+          MasterDataField(
+            controller: fields['country'],
+            label: l10n.workspaceCountryLabel,
+            fieldKey: 'country',
+            textKey: const ValueKey('house-add-country'),
+            options: [
               for (final c in CountryCatalog.countries)
-                DropdownMenuItem(
-                  value: c.code,
-                  child: Text(localizedCountryName(l10n, c.code)),
+                MasterDataOption(
+                  code: c.code,
+                  name: localizedCountryName(l10n, c.code),
                 ),
             ],
             onChanged: (code) {
-              if (code == null) return;
+              if (!CountryCatalog.isKnown(code)) return;
               final next = CountryCatalog.byCode(code);
               final proposal = houseProposalAfter(
                 country,
                 next,
                 currency: fields['currency'].text,
                 timezone: timezone,
-                language: language,
+                language: fields['language'].text,
               );
               fields['currency'].text = proposal.currency;
+              fields['language'].text = proposal.language;
               timezone = proposal.timezone;
-              language = proposal.language;
               country = next;
               refresh();
             },
@@ -145,7 +151,7 @@ abstract final class AddHouseForm {
           OutlinedButton.icon(
             key: const ValueKey('house-add-timezone'),
             icon: const Icon(Icons.schedule),
-            label: Text('${l10n.workspaceTimezoneLabel}: $timezone'),
+            label: Text(l10n.houseAddTimezone(timezone)),
             onPressed: () async {
               final picked = await showTimeZonePicker(
                 context,
@@ -158,22 +164,18 @@ abstract final class AddHouseForm {
             },
           ),
           const FormGap(),
-          DropdownButtonFormField<String>(
-            key: ValueKey('house-add-language-$language'),
-            initialValue: language,
-            decoration: InputDecoration(labelText: l10n.houseAddLanguage),
-            items: [
-              for (final code in houseLanguages)
-                DropdownMenuItem(
-                  value: code,
-                  child: Text(localizedLanguageName(l10n, code)),
+          MasterDataField(
+            controller: fields['language'],
+            label: l10n.houseAddLanguage,
+            fieldKey: 'language',
+            textKey: const ValueKey('house-add-language'),
+            options: [
+              for (final code in _houseLanguages)
+                MasterDataOption(
+                  code: code,
+                  name: localizedLanguageName(l10n, code),
                 ),
             ],
-            onChanged: (code) {
-              if (code == null) return;
-              language = code;
-              refresh();
-            },
           ),
           const FormGap(),
           AppTextField(

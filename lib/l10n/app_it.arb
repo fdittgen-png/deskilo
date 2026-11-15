@@ -8416,6 +8416,7 @@
   "houseAddName": "Nome della casa",
   "houseAddNotCarried": "Non viaggiano: l’identità, la banca e le istruzioni di pagamento, i luoghi, l’impaginazione dei documenti e i collegamenti.",
   "houseAddSubmit": "Creare la casa",
+  "houseAddTimezone": "Fuso orario: {zone}",
   "houseAddTitle": "Aggiungere una casa all’estero",
   "houseAddToPrice": "Arrivano inattivi, da prezzare: i piani, i servizi e i pacchetti.",
   "houseBirthCoOwners": "{count, plural, =0{Nessun contitolare aggiunto.} one{1 titolare della sede è stato aggiunto come contitolare.} other{{count} titolari della sede sono stati aggiunti come contitolari.}}",

@@ -19,12 +19,12 @@ import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 import '../demo_space_ids.dart';
 
-const demoHouseName = 'Atelier Kraków';
+const _houseName = 'Atelier Kraków';
 
 /// The house's country and currency.
 const demoHouseCountry = 'PL';
 const demoHouseCurrency = 'PLN';
-const demoHouseTimezone = 'Europe/Warsaw';
+const _houseTimezone = 'Europe/Warsaw';
 
 /// The house's features: a new business's, without places — neither its
 /// sites nor its floor plan travel from the head, so it has none yet.
@@ -45,10 +45,10 @@ Map<String, bool> _houseFlags() {
 Workspace demoHouseSpace() => Workspace(
   id: demoHouseSpaceId,
   rolePermissions: everydayMatrix(),
-  name: demoHouseName,
+  name: _houseName,
   countryCode: demoHouseCountry,
   currencyCode: demoHouseCurrency,
-  timezone: demoHouseTimezone,
+  timezone: _houseTimezone,
   inviteCode: 'KRAKOW2026',
   featureFlags: _houseFlags(),
   environment: 'prod',

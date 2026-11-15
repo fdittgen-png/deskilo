@@ -13723,6 +13723,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get houseAddSubmit => 'Crear la casa';
 
   @override
+  String houseAddTimezone(String zone) {
+    return 'Zona horaria: $zone';
+  }
+
+  @override
   String get houseAddTitle => 'Añadir una casa en el extranjero';
 
   @override

@@ -17854,6 +17854,15 @@
   "@houseAddSubmit": {
     "description": "#4005 — a house abroad: houseAddSubmit."
   },
+  "houseAddTimezone": "Time zone: {zone}",
+  "@houseAddTimezone": {
+    "description": "#4005 — the house form's time zone button, with the zone chosen.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
   "houseAddTitle": "Add a house abroad",
   "@houseAddTitle": {
     "description": "#4005 — a house abroad: houseAddTitle."

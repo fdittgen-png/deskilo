@@ -22169,6 +22169,12 @@ abstract class AppLocalizations {
   /// **'Create the house'**
   String get houseAddSubmit;
 
+  /// #4005 — the house form's time zone button, with the zone chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone: {zone}'**
+  String houseAddTimezone(String zone);
+
   /// #4005 — a house abroad: houseAddTitle.
   ///
   /// In en, this message translates to:

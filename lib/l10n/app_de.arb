@@ -8416,6 +8416,7 @@
   "houseAddName": "Name des Hauses",
   "houseAddNotCarried": "Wird nicht übernommen: die Identität, die Bank und die Zahlungsangaben, die Orte, das Dokumentlayout und die Links.",
   "houseAddSubmit": "Das Haus anlegen",
+  "houseAddTimezone": "Zeitzone: {zone}",
   "houseAddTitle": "Ein Haus im Ausland hinzufügen",
   "houseAddToPrice": "Kommen inaktiv an, mit Preisen zu versehen: die Tarife, Leistungen und Pakete.",
   "houseBirthCoOwners": "{count, plural, =0{Kein Mitinhaber hinzugefügt.} one{1 Inhaber des Hauptsitzes wurde als Mitinhaber hinzugefügt.} other{{count} Inhaber des Hauptsitzes wurden als Mitinhaber hinzugefügt.}}",

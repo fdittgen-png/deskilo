@@ -186,15 +186,7 @@ class OrganisationSheet extends ConsumerWidget {
         padding: AppSpacing.lgAll,
         children: [
           title,
-          if (birth != null) ...[
-            const FormGap(),
-            HouseBirthView(
-              birth: birth,
-              head:
-                  organisation?.houseOf(birth.headWorkspaceId ?? '')?.name ??
-                  '',
-            ),
-          ],
+          ..._birthOf(birth, organisation),
           const FormGap(),
           if (organisation == null) ...[
             Text(l10n.organisationNone),
@@ -223,41 +215,61 @@ class OrganisationSheet extends ConsumerWidget {
               ),
             const FormGap(),
             if (headOwner)
-              OutlinedButton.icon(
-                key: const ValueKey('organisation-add'),
-                icon: const Icon(Icons.add),
-                label: Text(l10n.organisationAdd),
-                onPressed: () => _add(
-                  context,
-                  ref,
-                  owned,
-                  spaces,
-                  organisations,
-                  organisation,
-                ),
+              ..._headActions(
+                context,
+                ref,
+                owned,
+                spaces,
+                organisations,
+                organisation,
               ),
-            if (headOwner) ...[
-              const FormGap.small(),
-              OutlinedButton.icon(
-                key: const ValueKey('organisation-add-house'),
-                icon: const Icon(Icons.public),
-                label: Text(l10n.houseAddTitle),
-                onPressed: () async {
-                  final id = await AddHouseForm.open(
-                    context,
-                    ref,
-                    organisation,
-                  );
-                  if (id != null && context.mounted) {
-                    Navigator.of(context).pop(id);
-                  }
-                },
-              ),
-            ],
           ],
         ],
       ),
     );
+  }
+
+  /// #4005 — how this business began, when it was made as a house.
+  List<Widget> _birthOf(HouseBirth? birth, Organisation? organisation) => [
+    if (birth != null) ...[
+      const FormGap(),
+      HouseBirthView(
+        birth: birth,
+        head: organisation?.houseOf(birth.headWorkspaceId ?? '')?.name ?? '',
+      ),
+    ],
+  ];
+
+  /// What the head's owner does: add one of their businesses, or a house
+  /// abroad (the sheet then answers the house made).
+  List<Widget> _headActions(
+    BuildContext context,
+    WidgetRef ref,
+    Set<String> owned,
+    List<Workspace> spaces,
+    List<Organisation> organisations,
+    Organisation organisation,
+  ) {
+    final l10n = context.l10n;
+    return [
+      OutlinedButton.icon(
+        key: const ValueKey('organisation-add'),
+        icon: const Icon(Icons.add),
+        label: Text(l10n.organisationAdd),
+        onPressed: () =>
+            _add(context, ref, owned, spaces, organisations, organisation),
+      ),
+      const FormGap.small(),
+      OutlinedButton.icon(
+        key: const ValueKey('organisation-add-house'),
+        icon: const Icon(Icons.public),
+        label: Text(l10n.houseAddTitle),
+        onPressed: () async {
+          final id = await AddHouseForm.open(context, ref, organisation);
+          if (id != null && context.mounted) Navigator.of(context).pop(id);
+        },
+      ),
+    ];
   }
 
   /// Offers the person's businesses in no organisation (one side of a

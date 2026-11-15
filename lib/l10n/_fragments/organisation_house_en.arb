@@ -91,5 +91,14 @@
   "houseBirthNotCarried": "Not carried: the document layout and links. Choose this house's own.",
   "@houseBirthNotCarried": {
     "description": "#4005 — a house abroad: houseBirthNotCarried."
+  },
+  "houseAddTimezone": "Time zone: {zone}",
+  "@houseAddTimezone": {
+    "description": "#4005 — the house form's time zone button, with the zone chosen.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
   }
 }

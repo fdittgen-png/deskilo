@@ -13628,6 +13628,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get houseAddSubmit => 'Create the house';
 
   @override
+  String houseAddTimezone(String zone) {
+    return 'Time zone: $zone';
+  }
+
+  @override
   String get houseAddTitle => 'Add a house abroad';
 
   @override
