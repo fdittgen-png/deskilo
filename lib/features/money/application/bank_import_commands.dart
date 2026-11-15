@@ -114,18 +114,38 @@ class BankImportCommands {
   /// invoice for exactly what it still owes, each invoice once
   /// ([BankWorkList.referenceBatch]), one after the other; answers how many
   /// the server took.
-  Future<int> confirmReferenceMatches(BankWorkList list) async {
-    var confirmed = 0;
-    for (final item in list.referenceBatch) {
+  /// #4053 — confirms exactly the movements of [batch] (the ones the
+  /// person was shown) against the invoice each names, and says per
+  /// movement what became of it: one refused does not stop the others.
+  Future<List<BankBatchLine>> confirmReferenceMatches(
+    List<BankWorkItem> batch,
+  ) async => [
+    for (final item in batch)
+      (item: item, result: await _confirmOne(item)),
+  ];
+
+  Future<BankBatchResult> _confirmOne(BankWorkItem item) async {
+    final match = item.referenceMatch;
+    if (match == null) return BankBatchResult.refused;
+    try {
       await _repository.matchLine(
         item.line.id,
-        invoiceId: item.referenceMatch!.invoice.id,
+        invoiceId: match.invoice.id,
         resolution: 'exact',
         note: '',
       );
-      confirmed++;
+      return BankBatchResult.confirmed;
+      // The repositories refuse a movement in their own way (a server
+      // refusal, the Demo's state error): each is one line refused.
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'a reference match of the batch was refused',
+        error: e,
+        stackTrace: st,
+      );
+      return BankBatchResult.refused;
     }
-    return confirmed;
   }
 
   Future<BankLineStatus?> review(StoredBankLine line, {required bool duplicate}) =>

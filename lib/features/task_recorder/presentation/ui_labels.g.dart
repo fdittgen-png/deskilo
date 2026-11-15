@@ -1932,6 +1932,7 @@ Map<String, _Getter> _part5() => {
   'badgeDeleteConfirm': (l) => l.badgeDeleteConfirm,
   'badgeSavePdf': (l) => l.badgeSavePdf,
   'bankBasisQrReference': (l) => l.bankBasisQrReference,
+  'bankBatchTitle': (l) => l.bankBatchTitle,
   'bankCsvDate': (l) => l.bankCsvDate,
   'bankCsvTitle': (l) => l.bankCsvTitle,
   'bankOutTitle': (l) => l.bankOutTitle,

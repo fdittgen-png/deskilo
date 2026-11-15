@@ -2173,6 +2173,46 @@ class AppLocalizationsEn extends AppLocalizations {
   String get bankBasisQrReference => 'QR reference';
 
   @override
+  String bankBatchLine(String amount, String date) {
+    return '$amount on $date';
+  }
+
+  @override
+  String bankBatchLineConfirmed(String invoice) {
+    return '$invoice: confirmed';
+  }
+
+  @override
+  String bankBatchLineRefused(String invoice) {
+    return '$invoice: not confirmed. Match this movement by itself.';
+  }
+
+  @override
+  String bankBatchResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count matches were confirmed',
+      one: '1 match was confirmed',
+      zero: 'No match was confirmed',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankBatchSettles(String invoice, String member) {
+    return 'Settles $invoice of $member';
+  }
+
+  @override
+  String get bankBatchTitle => 'Confirm these matches?';
+
+  @override
+  String bankBatchTotal(String currency, String amount) {
+    return 'Total in $currency: $amount';
+  }
+
+  @override
   String get bankChooseMovement =>
       'Choose a movement of money in on the left: its open invoices are listed here.';
 
