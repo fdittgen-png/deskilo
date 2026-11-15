@@ -103,5 +103,38 @@
   "organisationRefusedFeatureOff": "The organisation is off in this business: turn it on in its features first.",
   "@organisationRefusedFeatureOff": {
     "description": "#4006 — the organisation page: organisationRefusedFeatureOff."
+  },
+  "organisationConfirmLeave": "{house} leaves {organisation}. Its data stays as it is; its members no longer find the other houses in its chip.",
+  "@organisationConfirmLeave": {
+    "description": "#4006 — the confirm of the organisation page: organisationConfirmLeave.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      },
+      "organisation": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationConfirmEnd": "{organisation} ends: {head} is a business of its own again.",
+  "@organisationConfirmEnd": {
+    "description": "#4006 — the confirm of the organisation page: organisationConfirmEnd.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      },
+      "head": {
+        "type": "String"
+      }
+    }
+  },
+  "organisationConfirmHead": "{house} becomes the head: its owners manage the organisation from now on.",
+  "@organisationConfirmHead": {
+    "description": "#4006 — the confirm of the organisation page: organisationConfirmHead.",
+    "placeholders": {
+      "house": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -35842,6 +35842,24 @@ abstract class AppLocalizations {
   /// **'None of your businesses can join: each is already in an organisation.'**
   String get organisationAddNone;
 
+  /// #4006 — the confirm of the organisation page: organisationConfirmEnd.
+  ///
+  /// In en, this message translates to:
+  /// **'{organisation} ends: {head} is a business of its own again.'**
+  String organisationConfirmEnd(String organisation, String head);
+
+  /// #4006 — the confirm of the organisation page: organisationConfirmHead.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} becomes the head: its owners manage the organisation from now on.'**
+  String organisationConfirmHead(String house);
+
+  /// #4006 — the confirm of the organisation page: organisationConfirmLeave.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} leaves {organisation}. Its data stays as it is; its members no longer find the other houses in its chip.'**
+  String organisationConfirmLeave(String house, String organisation);
+
   /// #4006 — the organisation page: organisationCreate.
   ///
   /// In en, this message translates to:

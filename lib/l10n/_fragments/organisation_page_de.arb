@@ -23,5 +23,8 @@
   "organisationLeave": "Die Organisation verlassen",
   "organisationRefusedNotAHouse": "Der neue Hauptsitz muss ein Haus dieser Organisation sein.",
   "organisationRefusedTwinNeverHead": "Ein Testunternehmen ist nie der Hauptsitz.",
-  "organisationRefusedFeatureOff": "Die Organisation ist in diesem Unternehmen aus: Schalten Sie sie zuerst in seinen Funktionen ein."
+  "organisationRefusedFeatureOff": "Die Organisation ist in diesem Unternehmen aus: Schalten Sie sie zuerst in seinen Funktionen ein.",
+  "organisationConfirmLeave": "{house} verlässt {organisation}. Seine Daten bleiben, wie sie sind; seine Mitglieder finden die anderen Häuser nicht mehr in seinem Chip.",
+  "organisationConfirmEnd": "{organisation} endet: {head} ist wieder ein eigenständiges Unternehmen.",
+  "organisationConfirmHead": "{house} wird Hauptsitz: Seine Inhaber führen ab jetzt die Organisation."
 }

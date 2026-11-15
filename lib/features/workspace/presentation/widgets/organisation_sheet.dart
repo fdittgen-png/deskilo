@@ -21,6 +21,7 @@ import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
+import '../../domain/member.dart';
 import '../../domain/organisation.dart';
 import '../../domain/workspace.dart';
 import '../../providers/organisation_providers.dart';
@@ -105,6 +106,19 @@ class OrganisationSheet extends ConsumerWidget {
     final organisation = organisations
         .where((o) => o.houseOf(workspace.id) != null)
         .firstOrNull;
+    // Only a business the person owns can join: the memberships Me reads.
+    final owned = {
+      for (final m in ref.watch(myMembershipsProvider).value ?? const <Member>[]) // empty-ok: none offered until the memberships are read
+        if (m.isOwner) m.workspaceId,
+    };
+    // One row per house: a business and its development twin are two houses
+    // on the server, and the page shows those of this business's own
+    // environment.
+    final houses = organisation == null
+        ? const <OrganisationHouse>[]
+        : housesInEnvironment(organisation.byCountry, workspace, {
+            for (final s in spaces) s.id: s,
+          });
     // The head's owner manages the organisation; a house's owner may only
     // take their own house out.
     final headOwner =
@@ -162,11 +176,12 @@ class OrganisationSheet extends ConsumerWidget {
               child: Text(l10n.organisationCreate),
             ),
           ] else ...[
-            for (final house in organisation.byCountry)
+            for (final house in houses)
               _HouseRow(
                 house: house,
                 organisation: organisation,
                 headOwner: headOwner,
+                alone: houses.length == 1,
                 onCommand: (command) => _done(context, command),
               ),
             const FormGap(),
@@ -176,7 +191,7 @@ class OrganisationSheet extends ConsumerWidget {
                 icon: const Icon(Icons.add),
                 label: Text(l10n.organisationAdd),
                 onPressed: () =>
-                    _add(context, ref, spaces, organisations, organisation),
+                    _add(context, ref, owned, spaces, organisations, organisation),
               ),
           ],
         ],
@@ -189,6 +204,7 @@ class OrganisationSheet extends ConsumerWidget {
   Future<void> _add(
     BuildContext context,
     WidgetRef ref,
+    Set<String> owned,
     List<Workspace> spaces,
     List<Organisation> organisations,
     Organisation organisation,
@@ -196,7 +212,8 @@ class OrganisationSheet extends ConsumerWidget {
     final l10n = context.l10n;
     final candidates = [
       for (final s in spaces)
-        if (!organisations.any((o) => o.houseOf(s.id) != null) &&
+        if (owned.contains(s.id) &&
+            !organisations.any((o) => o.houseOf(s.id) != null) &&
             !(s.isDevelopment && s.pairId.isNotEmpty))
           s,
     ];
@@ -242,12 +259,16 @@ class _HouseRow extends ConsumerWidget {
     required this.house,
     required this.organisation,
     required this.headOwner,
+    required this.alone,
     required this.onCommand,
   });
 
   final OrganisationHouse house;
   final Organisation organisation;
   final bool headOwner;
+
+  /// The only house left: taking it out ends the organisation.
+  final bool alone;
   final void Function(Future<OrganisationRefusal?> command) onCommand;
 
   @override
@@ -279,7 +300,15 @@ class _HouseRow extends ConsumerWidget {
               key: ValueKey('organisation-head-$id'),
               tooltip: l10n.organisationMakeHead,
               icon: const Icon(Icons.star_outline),
-              onPressed: () => onCommand(commands.setHead(organisation.id, id)),
+              onPressed: () async {
+                final agreed = await confirmOrganisationChange(
+                  context,
+                  text: l10n.organisationConfirmHead(house.name),
+                  action: l10n.organisationMakeHead,
+                  destructive: false,
+                );
+                if (agreed) onCommand(commands.setHead(organisation.id, id));
+              },
             ),
           if (headOwner || owns)
             IconButton(
@@ -292,7 +321,24 @@ class _HouseRow extends ConsumerWidget {
                   ? l10n.organisationRemove
                   : l10n.organisationLeave,
               icon: const Icon(Icons.logout),
-              onPressed: () => onCommand(commands.remove(id)),
+              onPressed: () async {
+                final agreed = await confirmOrganisationChange(
+                  context,
+                  text: isHead && alone
+                      ? l10n.organisationConfirmEnd(
+                          organisation.name,
+                          house.name,
+                        )
+                      : l10n.organisationConfirmLeave(
+                          house.name,
+                          organisation.name,
+                        ),
+                  action: headOwner
+                      ? l10n.organisationRemove
+                      : l10n.organisationLeave,
+                );
+                if (agreed) onCommand(commands.remove(id));
+              },
             ),
         ],
       ),

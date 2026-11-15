@@ -23,5 +23,8 @@
   "organisationLeave": "Lasciare l’organizzazione",
   "organisationRefusedNotAHouse": "La nuova sede deve essere una casa di questa organizzazione.",
   "organisationRefusedTwinNeverHead": "Un’attività di prova non è mai la sede.",
-  "organisationRefusedFeatureOff": "L’organizzazione è disattivata in questa attività: la attivi prima nelle sue funzioni."
+  "organisationRefusedFeatureOff": "L’organizzazione è disattivata in questa attività: la attivi prima nelle sue funzioni.",
+  "organisationConfirmLeave": "{house} lascia {organisation}. I suoi dati restano come sono; i suoi membri non trovano più le altre case nel suo chip.",
+  "organisationConfirmEnd": "{organisation} termina: {head} torna a essere un’attività a sé.",
+  "organisationConfirmHead": "{house} diventa la sede: da ora i suoi titolari gestiscono l’organizzazione."
 }

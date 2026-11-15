@@ -5,6 +5,7 @@
 // house out; the head leaves last, and the refusal is said; each house says
 // its country, its currency and the reader's own role.
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
+import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/organisation.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/presentation/widgets/organisation_sheet.dart';
@@ -44,6 +45,7 @@ Future<FakeOrganisationRepository> _open(
   WidgetTester tester, {
   FakeOrganisationRepository? given,
   Workspace? opened,
+  List<Workspace> twins = const [],
 }) async {
   final repository =
       given ??
@@ -62,7 +64,22 @@ Future<FakeOrganisationRepository> _open(
     size: const Size(390, 1200),
     overrides: [
       organisationRepositoryProvider.overrideWithValue(repository),
-      myWorkspacesProvider.overrideWith((ref) async => [_head, _london]),
+      myWorkspacesProvider.overrideWith(
+        (ref) async => [_head, _london, ...twins],
+      ),
+      myMembershipsProvider.overrideWith(
+        (ref) async => [
+          for (final w in [_head, _london])
+            Member(
+              id: 'm-${w.id}',
+              workspaceId: w.id,
+              userId: 'u-1',
+              isAdmin: true,
+              isOwner: true,
+              status: MemberStatus.active,
+            ),
+        ],
+      ),
     ],
   );
   await tester.tap(find.byKey(const ValueKey('open')));
@@ -102,10 +119,14 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('organisation-remove-head')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('organisation-confirm-go')));
+    await tester.pumpAndSettle();
     expect(find.text(_en.organisationRefusedHeadLeavesLast), findsOneWidget);
     expect((await repository.myOrganisations()).single.houses, hasLength(2));
 
     await tester.tap(find.byKey(const ValueKey('organisation-remove-ldn')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('organisation-confirm-go')));
     await tester.pumpAndSettle();
     expect(
       [
@@ -137,6 +158,8 @@ void main() {
     await tester.pumpAndSettle();
 
     await tester.tap(find.byKey(const ValueKey('organisation-head-ldn')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('organisation-confirm-go')));
     await tester.pumpAndSettle();
     expect((await repository.myOrganisations()).single.headWorkspaceId, 'ldn');
   });
@@ -171,6 +194,69 @@ void main() {
 
     await tester.tap(find.byKey(const ValueKey('organisation-leave-ldn')));
     await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('organisation-confirm-go')));
+    await tester.pumpAndSettle();
     expect((await repository.myOrganisations()).single.houseOf('ldn'), isNull);
+  });
+
+  testWidgets('a business and its twin are one row; taking a house out asks '
+      'first, and Cancel keeps it', (tester) async {
+    final twin = Workspace(
+      id: 'head-dev',
+      name: _head.name,
+      countryCode: 'FR',
+      currencyCode: 'EUR',
+      timezone: 'Europe/Paris',
+      inviteCode: 'X',
+      // The default environment is development: the twin.
+      pairId: 'pair-head',
+    );
+    final organisation = Organisation(
+      id: 'org',
+      name: 'Atelier group',
+      headWorkspaceId: 'head',
+      houses: [
+        _house(_head),
+        OrganisationHouse(
+          workspaceId: twin.id,
+          name: twin.name,
+          countryCode: 'FR',
+          currencyCode: 'EUR',
+          role: HouseRole.owner,
+        ),
+        _house(_london),
+      ],
+    );
+    final repository = await _open(
+      tester,
+      given: FakeOrganisationRepository(organisations: [organisation]),
+      twins: [twin],
+    );
+    expect(
+      find.byKey(const ValueKey('organisation-house-head')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('organisation-house-ldn')),
+      findsOneWidget,
+    );
+    expect(
+      find.byKey(const ValueKey('organisation-house-head-dev')),
+      findsNothing,
+    );
+
+    await tester.tap(find.byKey(const ValueKey('organisation-remove-ldn')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(_en.organisationConfirmLeave(_london.name, 'Atelier group')),
+      findsOneWidget,
+    );
+    await tester.tap(find.byKey(const ValueKey('organisation-confirm-cancel')));
+    await tester.pumpAndSettle();
+    expect(
+      (await repository.myOrganisations()).single.houseOf('ldn'),
+      isNotNull,
+      reason: 'Cancel changes nothing',
+    );
   });
 }

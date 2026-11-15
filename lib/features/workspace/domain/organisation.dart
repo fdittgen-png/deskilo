@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../core/text/collation.dart';
+import 'workspace.dart';
 
 /// The reader's role in one house.
 enum HouseRole {
@@ -115,6 +116,18 @@ class Organisation {
     return const [];
   }
 }
+
+/// #4006 — the houses of [houses] in the environment of [current]: on the
+/// server a business and its development twin are two houses; to the
+/// person they are one. A house not among [spaces] (not read yet) stays.
+List<OrganisationHouse> housesInEnvironment(
+  Iterable<OrganisationHouse> houses,
+  Workspace current,
+  Map<String, Workspace> spaces,
+) => [
+  for (final house in houses)
+    if ((spaces[house.workspaceId]?.env ?? current.env) == current.env) house,
+];
 
 /// Why the server did not change an organisation.
 enum OrganisationRefusal {

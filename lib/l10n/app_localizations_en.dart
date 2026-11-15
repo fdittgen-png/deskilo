@@ -22316,6 +22316,21 @@ class AppLocalizationsEn extends AppLocalizations {
       'None of your businesses can join: each is already in an organisation.';
 
   @override
+  String organisationConfirmEnd(String organisation, String head) {
+    return '$organisation ends: $head is a business of its own again.';
+  }
+
+  @override
+  String organisationConfirmHead(String house) {
+    return '$house becomes the head: its owners manage the organisation from now on.';
+  }
+
+  @override
+  String organisationConfirmLeave(String house, String organisation) {
+    return '$house leaves $organisation. Its data stays as it is; its members no longer find the other houses in its chip.';
+  }
+
+  @override
   String get organisationCreate =>
       'Make this business the head of an organisation';
 

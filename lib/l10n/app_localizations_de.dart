@@ -22528,6 +22528,21 @@ class AppLocalizationsDe extends AppLocalizations {
       'Keines Ihrer Unternehmen kann beitreten: Jedes gehört bereits zu einer Organisation.';
 
   @override
+  String organisationConfirmEnd(String organisation, String head) {
+    return '$organisation endet: $head ist wieder ein eigenständiges Unternehmen.';
+  }
+
+  @override
+  String organisationConfirmHead(String house) {
+    return '$house wird Hauptsitz: Seine Inhaber führen ab jetzt die Organisation.';
+  }
+
+  @override
+  String organisationConfirmLeave(String house, String organisation) {
+    return '$house verlässt $organisation. Seine Daten bleiben, wie sie sind; seine Mitglieder finden die anderen Häuser nicht mehr in seinem Chip.';
+  }
+
+  @override
   String get organisationCreate =>
       'Dieses Unternehmen zum Hauptsitz einer Organisation machen';
 
