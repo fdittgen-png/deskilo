@@ -15,6 +15,7 @@ class ExportSource {
     required this.sheets,
     required this.columns,
     this.partial,
+    this.headers = const {},
   }) : everyColumn = false;
 
   /// #2860 — a table `export_workspace_records` (0540) writes whole: every
@@ -23,6 +24,7 @@ class ExportSource {
       : sheets = const [],
         columns = const {},
         partial = null,
+        headers = const {},
         everyColumn = true;
 
   /// The `public.<table>` the rows come from.
@@ -33,6 +35,13 @@ class ExportSource {
 
   /// The table's columns whose values reach a sheet.
   final Set<String> columns;
+
+  /// #3989 — the name a column goes by on its sheet where it is not the
+  /// column's own: `total_cents` is the sheet's `total`, a member id is its
+  /// `member`, a field of the Overview is a row named so. The coverage lint
+  /// reads the sheet the writer builds and fails on a declared column that
+  /// neither its own name nor this name finds there.
+  final Map<String, String> headers;
 
   /// Null when every row of the table is written; otherwise which rows are,
   /// as a sentence. A partial source is counted until it carries every row.
@@ -47,6 +56,12 @@ class ExportSource {
 const List<ExportSource> workspaceExportSources = [
   ExportSource(
     'workspaces',
+    headers: {
+      'country_code': 'country',
+      'currency_code': 'currency',
+      'invite_code': 'workspace_code',
+      'feature_flags': 'feature',
+    },
     sheets: ['Overview', 'Features'],
     columns: {
       'id',
@@ -67,11 +82,20 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'levels',
+    headers: {
+      'price_cents': 'price',
+    },
     sheets: ['Levels'],
     columns: {'id', 'name', 'sort_order', 'bookable_as_whole', 'price_cents'},
   ),
   ExportSource(
     'offices',
+    headers: {
+      'level_id': 'level',
+      'w': 'width',
+      'h': 'height',
+      'price_cents': 'price',
+    },
     sheets: ['Offices', 'Desks'],
     columns: {
       'id',
@@ -89,6 +113,12 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'desks',
+    headers: {
+      'office_id': 'office',
+      'w': 'width',
+      'h': 'height',
+      'price_cents': 'price',
+    },
     sheets: ['Desks', 'Seats'],
     columns: {
       'id',
@@ -104,6 +134,9 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'seats',
+    headers: {
+      'desk_id': 'desk',
+    },
     sheets: ['Seats'],
     columns: {
       'id',
@@ -124,6 +157,14 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'members',
+    headers: {
+      'id': 'member_id',
+      'user_id': 'name',
+      'is_owner': 'owner',
+      'is_admin': 'admin',
+      'is_kiosk': 'kiosk',
+      'managed_identity': 'first_name',
+    },
     sheets: ['Users'],
     columns: {
       'id',
@@ -144,6 +185,11 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'profiles',
+    headers: {
+      'display_name': 'name',
+      'country_code': 'country',
+      'whatsapp_typed': 'whatsapp',
+    },
     sheets: ['Users'],
     columns: {
       'display_name',
@@ -167,6 +213,13 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'reservations',
+    headers: {
+      'member_id': 'member',
+      'seat_id': 'space',
+      'desk_id': 'space',
+      'office_id': 'space',
+      'level_id': 'space',
+    },
     sheets: ['Reservations', 'Check-ins'],
     columns: {
       'id',
@@ -186,6 +239,11 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'ledger_entries',
+    headers: {
+      'member_id': 'member',
+      'amount_cents': 'amount',
+      'created_at': 'recorded_at',
+    },
     sheets: ['Ledger', 'Payments', 'Services'],
     columns: {
       'id',
@@ -201,6 +259,12 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'payment_intents',
+    headers: {
+      'member_id': 'member',
+      'amount_cents': 'amount',
+      'created_at': 'recorded_at',
+      'status': 'state',
+    },
     sheets: ['Payments'],
     columns: {
       'member_id',
@@ -217,6 +281,11 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'events',
+    headers: {
+      'subject_member_id': 'subject',
+      'actor_member_id': 'actor',
+      'payload': 'details',
+    },
     sheets: ['Events', 'Decisions', 'Payments', 'Services'],
     columns: {
       'id',
@@ -232,6 +301,10 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'event_decisions',
+    headers: {
+      'member_id': 'decided_by',
+      'decided_by_system': 'by_system',
+    },
     sheets: ['Decisions'],
     columns: {
       'event_id',
@@ -243,6 +316,9 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'services',
+    headers: {
+      'price_cents': 'price',
+    },
     sheets: ['Service catalog'],
     columns: {
       'id', 'name', 'price_cents', 'active',
@@ -255,7 +331,17 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'invoices',
-    sheets: ['Invoices'],
+    headers: {
+      'id': 'number',
+      'member_id': 'member',
+      'total_cents': 'total',
+      'replaces_number': 'replaces',
+      'details': 'detailed',
+      'vat_totals': 'vat_by_rate',
+      'lines': 'line',
+      'issuer_name': 'issued_by',
+    },
+    sheets: ['Invoices', 'Invoice lines'],
     columns: {
       'id',
       'number',
@@ -281,11 +367,18 @@ const List<ExportSource> workspaceExportSources = [
   ),
   ExportSource(
     'invoice_maturities',
+    headers: {
+      'invoice_id': 'number',
+    },
     sheets: ['Invoices'],
     columns: {'invoice_id', 'due_on'},
   ),
   ExportSource(
     'invoice_transmissions',
+    headers: {
+      'invoice_id': 'number',
+      'sent_at': 'last_sent_at',
+    },
     sheets: ['Invoices'],
     columns: {'invoice_id', 'sent_at'},
     partial: 'the last sending time of each invoice only',

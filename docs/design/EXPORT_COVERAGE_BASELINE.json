@@ -223,5 +223,13 @@
     "workspace_licences",
     "workspace_mcp_policies",
     "workspace_public_pages"
+  ],
+  "declaredNotWritten": [
+    "services.inventory_unit",
+    "services.purchasable",
+    "services.sellable",
+    "services.shelf_life_days",
+    "services.stockable",
+    "services.tracking"
   ]
 }

@@ -327,6 +327,8 @@ class _ExcelExport {
       'number', 'member', 'period', 'issued_at', 'total', 'currency',
       'voided_at', 'replaces', 'detailed', 'last_sent_at', 'kind', 'title',
       'net', 'vat', 'vat_by_rate', 'due_on', 'issued_by',
+      // #3989 — what the invoice froze at issue (#3850, #3852).
+      'document_language', 'format_locale', 'paper',
     ],
     for (final i in invoices)
       [
@@ -340,6 +342,7 @@ class _ExcelExport {
             '${t.percent}%: ${major(t.vatCents).value.toStringAsFixed(2)}',
         ].join('; '),
         _day(i.dueOn), i.issuerName,
+        i.documentLanguage, i.formatLocale, i.paper,
       ],
   ]);
 

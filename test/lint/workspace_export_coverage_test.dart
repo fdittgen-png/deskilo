@@ -19,9 +19,11 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_sources.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../helpers/mock_providers.dart';
 import 'export_schema.dart';
 import 'lint_sources.dart';
 
@@ -429,6 +431,43 @@ void main() {
     expect(declared, server);
   });
 
+  test('a declared column the sheet does not write is found (#3989)', () {
+    final written = _writtenNames();
+    // The real sources: every column is written but the ones the baseline
+    // names (and the invoice's three are written now).
+    final invoices = declaredNotWritten(
+      workspaceExportSources.where((s) => s.table == 'invoices'),
+      written,
+    );
+    expect(invoices, isEmpty);
+    // Planted: a source declares a column its sheet has no header for, and a
+    // source points a column at a header the sheet does not have.
+    const planted = [
+      ExportSource(
+        'invoices',
+        sheets: ['Invoices'],
+        columns: {'number', 'ghost_column', 'total_cents', 'lost'},
+        headers: {'total_cents': 'total', 'lost': 'not_a_header'},
+      ),
+    ];
+    expect(declaredNotWritten(planted, written), [
+      'invoices.ghost_column',
+      'invoices.lost',
+    ]);
+    // A header the sheet lost is found too: the same source over a workbook
+    // whose Invoices sheet no longer has `total`.
+    final without = {
+      ...written,
+      'Invoices': written['Invoices']!.difference({'total'}),
+    };
+    expect(declaredNotWritten(planted, without), contains('invoices.total_cents'));
+    // An alias of a column the source does not declare is stale.
+    for (final s in workspaceExportSources) {
+      expect(s.columns.containsAll(s.headers.keys), isTrue,
+          reason: '${s.table} renames a column it does not declare');
+    }
+  });
+
   test('the column replay sees what the export needs (#2859)', () {
     final schema = replaySchema();
     for (final source in workspaceExportSources) {
@@ -465,6 +504,11 @@ Map<String, List<String>> _openItems() {
             // The export is of one workspace: its id is the whole file's.
             .difference(const {'workspace_id'})
             .difference(_notExportedColumns[source.table] ?? const {})),
+    // #3989 — columns a source declares that its sheets do not write.
+    'declaredNotWritten': declaredNotWritten(
+      workspaceExportSources,
+      _writtenNames(),
+    ),
     'partialSources': sorted([
       for (final s in workspaceExportSources)
         if (s.partial != null) s.table,
@@ -484,6 +528,68 @@ Map<String, List<String>> _openItems() {
     ]),
   };
 }
+
+/// What the workbook's writers put on each sheet, read from the writers
+/// themselves (never from a list kept beside them): the header row of every
+/// sheet they build over empty inputs, and, for a sheet of `field` / `value`
+/// rows (the Overview), the fields it writes.
+Map<String, Set<String>> _writtenNames() {
+  final workspace = FakeWorkspaceRepository.withWorkspace().workspaces.single;
+  final sheets = [
+    ...buildWorkspaceExcelExport(
+      workspace: workspace,
+      enabledFeatures: const {},
+      levels: const [],
+      plansByLevel: const {},
+      members: const [],
+      profilesByUserId: const {},
+      reservations: const [],
+      ledger: const [],
+      pendingEvents: const [],
+      paymentIntents: const [],
+      services: const [],
+      invoices: const [],
+      transmissionsByInvoice: const {},
+    ),
+    ...buildWorkspaceExcelDetailSheets(
+      WorkspaceExportDetails(
+        workspace: workspace,
+        levels: const [],
+        plansByLevel: const {},
+        memberName: const {},
+        ledger: const [],
+        events: const [],
+        decisions: const {},
+        invoices: const [],
+      ),
+    ),
+  ];
+  return {
+    for (final sheet in sheets)
+      sheet.name: {
+        for (final h in sheet.rows.first) '$h',
+        if (sheet.rows.first.join(',') == 'field,value')
+          for (final row in sheet.rows.skip(1)) '${row.first}',
+      },
+  };
+}
+
+/// `table.column` of every column [sources] declare that none of their sheets
+/// write under the column's own name or the one the source gives it
+/// (`headers`), sorted.
+List<String> declaredNotWritten(
+  Iterable<ExportSource> sources,
+  Map<String, Set<String>> written,
+) =>
+    [
+      for (final source in sources)
+        if (!source.everyColumn)
+          for (final column in source.columns)
+            if (!{
+              for (final sheet in source.sheets) ...?written[sheet],
+            }.contains(source.headers[column] ?? column))
+              '${source.table}.$column',
+    ]..sort();
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {

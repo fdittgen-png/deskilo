@@ -11,6 +11,7 @@ import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_sources.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -200,5 +201,69 @@ void main() {
         .map((r) => (r[5]! as XlsxAmount).value)
         .fold(0.0, (a, b) => a + b);
     expect(signed, 157.5);
+  });
+
+  // #3989 — the Invoices sheet writes what each invoice froze at issue: its
+  // document language, its format locale and its paper; empty for an invoice
+  // issued before they were recorded.
+  test('the Invoices sheet writes the language, the locale and the paper each '
+      'invoice froze, empty before they were recorded', () {
+    final workspace = FakeWorkspaceRepository.withWorkspace().workspaces.single;
+    Invoice invoice(String id, {String? lang, String? locale, String? paper}) =>
+        Invoice(
+          id: id,
+          workspaceId: 'ws-1',
+          memberId: 'member-1',
+          number: 'INV-$id',
+          issuedAt: DateTime.utc(2026, 3, 31),
+          period: '2026-03',
+          title: 'March',
+          lines: const [],
+          totalCents: 12345,
+          currency: 'EUR',
+          memberName: 'Me',
+          memberAddress: '',
+          workspaceName: 'Space',
+          workspaceAddress: '',
+          issuerName: 'Ada',
+          signature: 'x',
+          documentLanguage: lang,
+          formatLocale: locale,
+          paper: paper,
+        );
+    final sheets = buildWorkspaceExcelExport(
+      workspace: workspace,
+      enabledFeatures: const {},
+      levels: const [],
+      plansByLevel: const {},
+      members: const [],
+      profilesByUserId: const {},
+      reservations: const [],
+      ledger: const [],
+      pendingEvents: const [],
+      paymentIntents: const [],
+      services: const [],
+      invoices: [
+        invoice('new', lang: 'de', locale: 'de_CH', paper: 'Letter'),
+        invoice('old'),
+      ],
+      transmissionsByInvoice: const {},
+    );
+    final rows = sheets.singleWhere((s) => s.name == 'Invoices').rows;
+    Map<String, Object?> row(int i) =>
+        Map.fromIterables(rows.first.cast<String>(), rows[i]);
+    expect(rows.first, containsAll(['document_language', 'format_locale', 'paper']));
+    expect(
+      [row(1)['document_language'], row(1)['format_locale'], row(1)['paper']],
+      ['de', 'de_CH', 'Letter'],
+    );
+    expect(
+      [row(2)['document_language'], row(2)['format_locale'], row(2)['paper']],
+      [null, null, null],
+      reason: 'issued before they were recorded: empty, not a guess',
+    );
+    // The amount keeps its currency beside it.
+    expect(row(1)['currency'], 'EUR');
+    expect((row(1)['total']! as XlsxAmount).value, 123.45);
   });
 }
