@@ -12029,6 +12029,28 @@ abstract class AppLocalizations {
   /// **'The demo is not available in this workspace.'**
   String get demoEntryUnavailable;
 
+  /// #4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.
+  ///
+  /// In en, this message translates to:
+  /// **'This demo is one organisation: {organisation}, with houses in {countries} countries and {currencies} currencies. Each house keeps its own country\'s rules and its own currency; nothing is added across them.'**
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  );
+
+  /// #4009 the Demo first-run card: the heading of the houses a visitor may enter.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a house'**
+  String get demoOrganisationEnter;
+
+  /// #4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.
+  ///
+  /// In en, this message translates to:
+  /// **'{business} is a business of its own, outside the organisation.'**
+  String demoOrganisationOutside(String business);
+
   /// #1376 demo personas: demoPersonaAdmin
   ///
   /// In en, this message translates to:

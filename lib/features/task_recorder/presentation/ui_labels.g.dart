@@ -872,6 +872,7 @@ Map<String, _Getter> _part2() => {
   'datevVoucherLinks': (l) => l.datevVoucherLinks,
   'decorKitchen': (l) => l.decorKitchen,
   'decorPillar': (l) => l.decorPillar,
+  'demoOrganisationEnter': (l) => l.demoOrganisationEnter,
   'deployEntityDocumentDesign': (l) => l.deployEntityDocumentDesign,
   'deployEntityFloorPlan': (l) => l.deployEntityFloorPlan,
   'deploymentKindConfiguration': (l) => l.deploymentKindConfiguration,

@@ -7629,6 +7629,23 @@ class AppLocalizationsFr extends AppLocalizations {
       'La démo n\'est pas disponible dans cet espace.';
 
   @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    return 'Cette démo est une organisation : $organisation, avec des maisons dans $countries pays et $currencies devises. Chaque maison garde les règles de son pays et sa propre devise ; rien n’est additionné entre elles.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Entrer dans une maison';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business est une entreprise à part, hors de l’organisation.';
+  }
+
+  @override
   String get demoPersonaAdmin => 'Un administrateur';
 
   @override

@@ -4625,6 +4625,34 @@
   "@demoEntryUnavailable": {
     "description": "#3235 demo visit: demoEntryUnavailable"
   },
+  "demoOrganisationBody": "Diese Demo ist eine Organisation: {organisation}, mit Häusern in {countries} Ländern und {currencies} Währungen. Jedes Haus behält die Regeln seines Landes und seine eigene Währung; nichts wird über sie hinweg addiert.",
+  "@demoOrganisationBody": {
+    "description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.",
+    "placeholders": {
+      "organisation": {
+        "type": "String"
+      },
+      "countries": {
+        "type": "int"
+      },
+      "currencies": {
+        "type": "int"
+      }
+    }
+  },
+  "demoOrganisationEnter": "Ein Haus betreten",
+  "@demoOrganisationEnter": {
+    "description": "#4009 the Demo first-run card: the heading of the houses a visitor may enter."
+  },
+  "demoOrganisationOutside": "{business} ist ein eigener Betrieb außerhalb der Organisation.",
+  "@demoOrganisationOutside": {
+    "description": "#4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
   "demoPersonaAdmin": "Administrator:in",
   "@demoPersonaAdmin": {
     "description": "#1376 demo personas: demoPersonaAdmin"

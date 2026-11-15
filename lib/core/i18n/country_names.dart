@@ -69,3 +69,15 @@ String localizedLanguageName(AppLocalizations l10n, String code) =>
       'ja' => l10n.languageNameJA,
       _ => code,
     };
+
+/// Where a business is and what it counts in, as a house is listed (#4006,
+/// #4009): the country's name and the currency's code, `Switzerland · CHF`;
+/// whichever is unknown is left out.
+String countryAndCurrency(
+  AppLocalizations l10n, {
+  required String countryCode,
+  required String currencyCode,
+}) => [
+  if (countryCode.isNotEmpty) localizedCountryName(l10n, countryCode),
+  if (currencyCode.isNotEmpty) currencyCode,
+].join(' · ');

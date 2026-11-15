@@ -133,5 +133,11 @@
   "demoProviderPageTitle": "Page de paiement (démonstration)",
   "demoProviderPageBody": "Cette page tient lieu de celle d'un prestataire de paiement : rien n'est débité et rien ne quitte cet appareil. Choisissez la réponse du prestataire.",
   "demoProviderPagePay": "Payer",
-  "demoProviderPageNoAnswer": "Le prestataire ne répond pas"
+  "demoProviderPageNoAnswer": "Le prestataire ne répond pas",
+  "demoOrganisationBody": "Cette démo est une organisation : {organisation}, avec des maisons dans {countries} pays et {currencies} devises. Chaque maison garde les règles de son pays et sa propre devise ; rien n’est additionné entre elles.",
+  "@demoOrganisationBody": {"description": "#4009 the Demo first-run card: the Demo is one organisation of houses in several countries and currencies.", "placeholders": {"organisation": {"type": "String"}, "countries": {"type": "int"}, "currencies": {"type": "int"}}},
+  "demoOrganisationEnter": "Entrer dans une maison",
+  "@demoOrganisationEnter": {"description": "#4009 the Demo first-run card: the heading of the houses a visitor may enter."},
+  "demoOrganisationOutside": "{business} est une entreprise à part, hors de l’organisation.",
+  "@demoOrganisationOutside": {"description": "#4009 the Demo first-run card: the one Demo business outside the organisation, named as a business of its own.", "placeholders": {"business": {"type": "String"}}}
 }
