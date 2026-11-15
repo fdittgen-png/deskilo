@@ -51422,6 +51422,12 @@ abstract class AppLocalizations {
   /// **'Options for {name}'**
   String spaceOptions(String name);
 
+  /// #4006 — the tooltip of the business chip inside a house of an organisation: a tap lists the organisation's other houses.
+  ///
+  /// In en, this message translates to:
+  /// **'The other houses of the organisation'**
+  String get spaceOtherHouses;
+
   /// #3545 F: the line under the actions of a space's public page: what asking to join shares
   ///
   /// In en, this message translates to:

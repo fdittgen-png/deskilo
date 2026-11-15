@@ -32179,6 +32179,9 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get spaceOtherHouses => 'Le altre case dell’organizzazione';
+
+  @override
   String get spacePreviewPrivacy =>
       'Quando lo richiede, questa attività vede il suo nome e la sua foto. Una volta socio, i suoi amministratori vedono i dati di contatto e di fatturazione necessari per fatturarle.';
 

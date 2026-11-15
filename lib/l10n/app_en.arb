@@ -41389,6 +41389,10 @@
       }
     }
   },
+  "spaceOtherHouses": "The other houses of the organisation",
+  "@spaceOtherHouses": {
+    "description": "#4006 — the tooltip of the business chip inside a house of an organisation: a tap lists the organisation's other houses."
+  },
   "spacePreviewPrivacy": "When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.",
   "@spacePreviewPrivacy": {
     "description": "#3545 F: the line under the actions of a space's public page: what asking to join shares"

@@ -32293,6 +32293,9 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get spaceOtherHouses => 'Les autres maisons de l’organisation';
+
+  @override
   String get spacePreviewPrivacy =>
       'Quand vous demandez, cette entreprise voit votre nom et votre photo. Une fois membre, ses administrateurs voient les coordonnées de contact et de facturation dont ils ont besoin pour vous facturer.';
 

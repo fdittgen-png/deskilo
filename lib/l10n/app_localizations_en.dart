@@ -31879,6 +31879,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get spaceOtherHouses => 'The other houses of the organisation';
+
+  @override
   String get spacePreviewPrivacy =>
       'When you ask, this business sees your name and photo. Once you are a member, its administrators see the contact and billing details they need to invoice you.';
 
