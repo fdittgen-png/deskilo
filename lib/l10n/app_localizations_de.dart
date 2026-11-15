@@ -5860,10 +5860,6 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDeskBooking => 'Buchungsdetails';
 
   @override
-  String get calendarDeskBookingActions =>
-      'Ändern, stornieren oder im Plan zeigen';
-
-  @override
   String get calendarDeskColumnFrom => 'Von';
 
   @override

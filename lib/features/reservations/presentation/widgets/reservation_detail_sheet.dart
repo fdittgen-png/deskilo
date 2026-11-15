@@ -53,16 +53,10 @@ class ReservationDetailSheet extends ConsumerWidget {
     final l10n = context.l10n;
     final r = reservation;
     final seatId = r.seatId;
-    final officeId = r.officeId;
     // Self-loading like SeatAccessoryRow: while resolving (or when the
     // target vanished) the location line is simply absent and the jump
     // button disabled — the sheet itself never blocks.
-    final targetAsync = seatId != null
-        ? ref.watch(seatContextProvider(seatId))
-        : officeId != null
-            ? ref.watch(officeContextProvider(officeId))
-            : const AsyncData<SeatContext?>(null);
-    final target = targetAsync.value;
+    final target = watchReservationPlace(ref, r).value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
     final actions = reservationActionsOf(ref, r);
@@ -317,6 +311,29 @@ Future<void> showReservationDetail(
     recordTaskStep(ref, RecorderActions.back); // #1865
   }
   if (target == null || !context.mounted) return;
+  showReservationOnPlan(context, ref, reservation, target);
+}
+
+/// #4054 — where [r] stands on the plan (its seat's or its office's level
+/// and names), as it is read; none for a booking of a whole level or desk.
+AsyncValue<SeatContext?> watchReservationPlace(WidgetRef ref, Reservation r) {
+  final seatId = r.seatId;
+  final officeId = r.officeId;
+  return seatId != null
+      ? ref.watch(seatContextProvider(seatId))
+      : officeId != null
+      ? ref.watch(officeContextProvider(officeId))
+      : const AsyncData<SeatContext?>(null);
+}
+
+/// #182 — the plan, focused on [reservation] at [target]'s level: every
+/// sheet still open over it is closed first, so the plan is seen.
+void showReservationOnPlan(
+  BuildContext context,
+  WidgetRef ref,
+  Reservation reservation,
+  SeatContext target,
+) {
   ref.read(planFocusControllerProvider.notifier).setFocus(
         PlanFocus(
           levelId: target.levelId,

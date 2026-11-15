@@ -5852,10 +5852,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskBooking => 'Dettagli della prenotazione';
 
   @override
-  String get calendarDeskBookingActions =>
-      'Modifica, annulla o mostra sulla pianta';
-
-  @override
   String get calendarDeskColumnFrom => 'Dal';
 
   @override
