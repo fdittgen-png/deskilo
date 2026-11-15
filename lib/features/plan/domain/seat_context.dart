@@ -23,10 +23,15 @@ class SeatContext {
 
   /// "Level · Office · Desk · Seat" (skipping empty/absent parts) — the
   /// location line of the reservation detail sheet.
-  String get locationLine => [levelName, officeName, deskName, seatName]
-      .whereType<String>()
-      .where((name) => name.isNotEmpty)
-      .join(' · ');
+  /// #4054 — each name once: a seat named as its room ("Boardroom ·
+  /// Boardroom table · Boardroom") is not said again.
+  String get locationLine {
+    final said = <String>{};
+    return [levelName, officeName, deskName, seatName]
+        .whereType<String>()
+        .where((name) => name.isNotEmpty && said.add(name.trim().toLowerCase()))
+        .join(' · ');
+  }
 
   @override
   bool operator ==(Object other) =>

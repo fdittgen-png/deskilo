@@ -43,10 +43,6 @@
   "@calendarDeskBooking": {
     "description": "#3626 Title of the pane that shows one booking beside the desk calendar"
   },
-  "calendarDeskBookingActions": "Change, cancel or show on plan",
-  "@calendarDeskBookingActions": {
-    "description": "#3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan"
-  },
   "calendarDeskModeTable": "All bookings",
   "@calendarDeskModeTable": {
     "description": "#3626 Choice of the desk calendar: all bookings of the period as a table"
@@ -149,5 +145,13 @@
   "bookingPriceOverage": "Extra half-day",
   "@bookingPriceOverage": {
     "description": "#3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)"
+  },
+  "calendarDeskRangeLabel": "Range",
+  "calendarDeskViewLabel": "View",
+  "@calendarDeskRangeLabel": {
+    "description": "#4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel."
+  },
+  "@calendarDeskViewLabel": {
+    "description": "#4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel."
   }
 }

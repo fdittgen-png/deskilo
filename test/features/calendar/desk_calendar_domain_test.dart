@@ -87,10 +87,11 @@ void main() {
       }
     });
 
-    test('the alerts address is the feed', () {
+    // #4056 — the desk's own Alerts view.
+    test('the alerts address is the Alerts view', () {
       expect(
         DeskCalendarAddress.parse(const {'view': 'alerts'}, today: today).mode,
-        DeskMode.agenda,
+        DeskMode.alerts,
       );
     });
 

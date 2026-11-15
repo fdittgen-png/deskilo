@@ -5892,10 +5892,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskBooking => 'Dettagli della prenotazione';
 
   @override
-  String get calendarDeskBookingActions =>
-      'Modifica, annulla o mostra sulla pianta';
-
-  @override
   String get calendarDeskColumnFrom => 'Dal';
 
   @override
@@ -5955,9 +5951,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskNew => 'Nuova prenotazione';
 
   @override
+  String get calendarDeskRangeLabel => 'Periodo';
+
+  @override
   String calendarDeskRepeatedHour(String time) {
     return '$time, per la seconda volta: gli orologi sono tornati indietro';
   }
+
+  @override
+  String get calendarDeskViewLabel => 'Vista';
 
   @override
   String get calendarDeskZoomIn => 'Ingrandisci';

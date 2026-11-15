@@ -7647,10 +7647,6 @@
   "@calendarDeskBooking": {
     "description": "#3626 Title of the pane that shows one booking beside the desk calendar"
   },
-  "calendarDeskBookingActions": "Change, cancel or show on plan",
-  "@calendarDeskBookingActions": {
-    "description": "#3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan"
-  },
   "calendarDeskColumnFrom": "From",
   "@calendarDeskColumnFrom": {
     "description": "#3626 Column title of the bookings table: when a booking starts"
@@ -7743,6 +7739,10 @@
   "@calendarDeskNew": {
     "description": "#3626 The desk calendar's button that opens New booking beside the grid"
   },
+  "calendarDeskRangeLabel": "Range",
+  "@calendarDeskRangeLabel": {
+    "description": "#4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel."
+  },
   "calendarDeskRepeatedHour": "{time}, second time: the clocks went back",
   "@calendarDeskRepeatedHour": {
     "description": "#3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}",
@@ -7751,6 +7751,10 @@
         "type": "String"
       }
     }
+  },
+  "calendarDeskViewLabel": "View",
+  "@calendarDeskViewLabel": {
+    "description": "#4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel."
   },
   "calendarDeskZoomIn": "Zoom in",
   "@calendarDeskZoomIn": {

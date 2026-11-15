@@ -10,7 +10,6 @@
   "calendarDeskColumnState": "Estado",
   "calendarDeskExport": "Exportar",
   "calendarDeskBooking": "Detalles de la reserva",
-  "calendarDeskBookingActions": "Cambiar, cancelar o ver en el plano",
   "calendarDeskModeTable": "Todas las reservas",
   "calendarDeskZoomIn": "Ampliar",
   "calendarDeskZoomOut": "Reducir",
@@ -25,5 +24,7 @@
   "bookingPriceCarnet": "Bono",
   "bookingPriceFree": "Gratis",
   "bookingPriceSubscription": "Suscripción",
-  "bookingPriceOverage": "Media jornada extra"
+  "bookingPriceOverage": "Media jornada extra",
+  "calendarDeskRangeLabel": "Periodo",
+  "calendarDeskViewLabel": "Vista"
 }
