@@ -109,7 +109,7 @@ begin
     v_old := $a$    'workspace', jsonb_build_object(
       'address', coalesce(w.address, ''),$a$;
     if position(v_old in v_exp) = 0 then
-      raise exception 'export_workspace_configuration no longer has the workspace shape 0779 extends';
+      raise exception 'export_workspace_configuration no longer has the workspace shape 0779 extends' using errcode = 'P0001';
     end if;
     execute replace(v_exp, v_old, $a$    'workspace', jsonb_build_object(
       -- #4028: the source's currency and country, facts an import compares
@@ -132,7 +132,7 @@ begin
          then jsonb_build_object('refused', v_fence->'refused') else '{}'::jsonb end;$a$)) v(o, n)
     loop
       if (length(v_imp) - length(replace(v_imp, v_old, ''))) / length(v_old) <> 1 then
-        raise exception 'import_workspace_configuration no longer has the shape 0779 extends: %', left(v_old, 60);
+        raise exception 'import_workspace_configuration no longer has the shape 0779 extends: %', left(v_old, 60) using errcode = 'P0001';
       end if;
       v_imp := replace(v_imp, v_old, v_new);
     end loop;
@@ -158,7 +158,7 @@ begin$a$),
                                'refused', coalesce(v_imported->'refused', '[]'::jsonb),$a$)) v(o, n)
     loop
       if (length(v_apply) - length(replace(v_apply, v_old, ''))) / length(v_old) <> 1 then
-        raise exception 'apply_workspace_template no longer has the shape 0779 extends: %', left(v_old, 60);
+        raise exception 'apply_workspace_template no longer has the shape 0779 extends: %', left(v_old, 60) using errcode = 'P0001';
       end if;
       v_apply := replace(v_apply, v_old, v_new);
     end loop;

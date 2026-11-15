@@ -15,7 +15,7 @@ import '../../domain/configuration_refusal.dart';
 enum ConfigurationOrigin { file, template }
 
 /// One sentence per reason [refused] holds.
-List<String> configurationRefusalLines(
+List<String> _configurationRefusalLines(
   AppLocalizations l10n,
   List<ConfigurationRefusal> refused,
   ConfigurationOrigin origin,
@@ -48,7 +48,7 @@ Future<void> showConfigurationRefusals(
 ) async {
   if (refused.isEmpty) return;
   final l10n = context.l10n;
-  final lines = configurationRefusalLines(l10n, refused, origin);
+  final lines = _configurationRefusalLines(l10n, refused, origin);
   await showDialog<void>(
     context: context,
     builder: (dialogContext) => AlertDialog(

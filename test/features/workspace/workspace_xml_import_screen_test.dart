@@ -534,9 +534,8 @@ void main() {
         find.text('Tax rates were not applied: this file is from France and '
             'this business is in Italy.'),
         findsOneWidget);
-    await tester.tap(find.byKey(const Key('configurationRefusalsOk')));
-    await tester.pumpAndSettle();
-    expect(find.byKey(const Key('configurationRefusals')), findsNothing);
+    expect(find.byKey(const Key('configurationRefusalsOk')), findsOneWidget,
+        reason: 'it stays until it is read');
     expect(importRepository.configurations, [kTestConfiguration]);
   });
 
