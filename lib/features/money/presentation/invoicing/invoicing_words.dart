@@ -104,7 +104,7 @@ String statusWordsOf(
 }
 
 /// A "To do" entry's icon, title and button, [month] naming the month to
-/// invoice.
+/// invoice. #4059 — each button names the task it opens.
 ({IconData icon, String title, String button, bool alert}) todoWordsOf(
   AppLocalizations l,
   Todo todo,
@@ -113,43 +113,43 @@ String statusWordsOf(
   TodoKind.invoiceTheMonth => (
     icon: Icons.description_outlined,
     title: l.invoicingTodoMonth(month),
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoReviewMonth(month),
     alert: false,
   ),
   TodoKind.shareReminders => (
     icon: Icons.notifications_outlined,
     title: l.invoicingTodoReminders,
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoShareReminders,
     alert: false,
   ),
   TodoKind.confirmPayments => (
     icon: Icons.payments_outlined,
     title: l.invoicingTodoConfirm,
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoConfirm,
     alert: false,
   ),
   TodoKind.matchPayments => (
     icon: Icons.link,
     title: l.invoicingTodoMatch,
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoMatch,
     alert: false,
   ),
   TodoKind.payOutRefunds => (
     icon: Icons.undo,
     title: l.invoicingTodoRefunds,
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoRefunds,
     alert: false,
   ),
   TodoKind.rejectedEInvoices => (
     icon: Icons.error_outline,
     title: l.invoicingTodoRejected(todo.tally.count),
-    button: l.invoicingTodoFix,
+    button: l.invoicingTodoFixRejected,
     alert: true,
   ),
   TodoKind.issueDrafts => (
     icon: Icons.edit_note_outlined,
     title: l.invoicingTodoDrafts,
-    button: l.invoicingTodoReview,
+    button: l.invoicingTodoDrafts,
     alert: false,
   ),
   TodoKind.keepOriginals => (
@@ -161,8 +161,16 @@ String statusWordsOf(
 };
 
 /// Amounts per currency, said one after the other ("CHF 120.00 · EUR 40.00"):
-/// never added across currencies.
-String amountsOf(AppFormat format, Tally tally) => [
+/// never added across currencies. #4059 — a negative one is named for what
+/// it is by [credit] ("credit 30.00"), never a bare minus.
+String amountsOf(
+  AppFormat format,
+  Tally tally, {
+  String Function(String amount)? credit,
+}) => [
   for (final e in tally.byCurrency.entries)
-    format.moneyIn(e.key).formatMinor(e.value),
+    if (e.value < 0 && credit != null)
+      credit(format.moneyIn(e.key).formatMinor(-e.value))
+    else
+      format.moneyIn(e.key).formatMinor(e.value),
 ].join(' · ');

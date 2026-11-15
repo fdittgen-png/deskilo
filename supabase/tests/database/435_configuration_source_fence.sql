@@ -131,28 +131,28 @@ select set_config('deskilo.fence.r_milan', public.import_workspace_configuration
   current_setting('deskilo.fence.export')::jsonb, 'merge')::text, false);
 select is(pg_temp.refused(current_setting('deskilo.fence.r_milan')::jsonb), 'vat',
   'into another country in the same currency only the rates are refused');
-select is((select (base_fee_cents, (select count(*) from public.vat_rates r
-                                     where r.workspace_id = pg_temp.ws('milan') and r.label = 'TVA 20 % fence'))::text
-             from public.plans where workspace_id = pg_temp.ws('milan') and name = 'Resident fence'),
-  '(25000,0)', 'the prices are applied, the rates are not');
+select is((select (price_cents, (select count(*) from public.vat_rates r
+                                  where r.workspace_id = pg_temp.ws('milan') and r.label = 'TVA 20 % fence'))::text
+             from public.services where workspace_id = pg_temp.ws('milan') and name = 'Coffee fence'),
+  '(250,0)', 'the prices are applied, the rates are not');
 
 -- ── as before ──
 select set_config('deskilo.fence.r_lyon', public.import_workspace_configuration(pg_temp.ws('lyon'),
   current_setting('deskilo.fence.export')::jsonb, 'merge')::text, false);
 select is((select (current_setting('deskilo.fence.r_lyon')::jsonb ? 'refused',
                    (select count(*) from public.vat_rates where workspace_id = pg_temp.ws('lyon') and label = 'TVA 20 % fence'),
-                   (select count(*) from public.plans where workspace_id = pg_temp.ws('lyon') and name = 'Resident fence'))::text),
+                   (select count(*) from public.services where workspace_id = pg_temp.ws('lyon') and name = 'Coffee fence'))::text),
   '(f,1,1)', 'the same currency and country: everything applied, nothing refused');
 select set_config('deskilo.fence.r_leeds', public.import_workspace_configuration(pg_temp.ws('leeds'),
   jsonb_set(current_setting('deskilo.fence.export')::jsonb, '{workspace}',
     (current_setting('deskilo.fence.export')::jsonb->'workspace') - 'currency_code' - 'country_code'), 'merge')::text, false);
 select is((select (current_setting('deskilo.fence.r_leeds')::jsonb ? 'refused',
-                   (select count(*) from public.plans where workspace_id = pg_temp.ws('leeds') and name = 'Resident fence'))::text),
+                   (select count(*) from public.services where workspace_id = pg_temp.ws('leeds') and name = 'Coffee fence'))::text),
   '(f,1)', 'a payload that states neither applies as before');
 select lives_ok(format('select public.deploy_entities(%L, %L, array[%L, %L, %L])',
     pg_temp.ws('paris'), pg_temp.ws('paris_prod'), 'vat', 'tariffs', 'services'),
   'a deployment inside a pair');
-select is((select count(*)::int from public.plans where workspace_id = pg_temp.ws('paris_prod') and name = 'Resident fence')
+select is((select count(*)::int from public.services where workspace_id = pg_temp.ws('paris_prod') and name = 'Coffee fence')
         + (select count(*)::int from public.vat_rates where workspace_id = pg_temp.ws('paris_prod') and label = 'TVA 20 % fence'), 2,
   'carries prices and rates as before');
 

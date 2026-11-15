@@ -378,7 +378,6 @@ Object? _cell(TemplateFieldRecord? f) => f == null
     : _state(f.disposition, f.absent);
 
 const _catalogTables = [
-  'plans',
   'fee_bands',
   'credit_products',
   'packages',
