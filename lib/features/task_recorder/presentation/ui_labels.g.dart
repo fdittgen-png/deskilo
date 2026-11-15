@@ -8377,6 +8377,7 @@ Map<String, _Getter> _part22() => {
   'negotiationProposeTitle': (l) => l.negotiationProposeTitle,
   'newMemberDefaultsUnset': (l) => l.newMemberDefaultsUnset,
   'onboardingSummaryBillingOn': (l) => l.onboardingSummaryBillingOn,
+  'organisationRefusedDemoOneHouse': (l) => l.organisationRefusedDemoOneHouse,
   'overviewGroupPeople': (l) => l.overviewGroupPeople,
   'overviewLayoutConflict': (l) => l.overviewLayoutConflict,
   'payConfigSettlementHandle': (l) => l.payConfigSettlementHandle,

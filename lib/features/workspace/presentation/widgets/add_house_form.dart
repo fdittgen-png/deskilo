@@ -67,7 +67,10 @@ abstract final class AddHouseForm {
     final l10n = context.l10n;
     final commands = ref.read(organisationCommandsProvider);
     final requestId = newRequestId();
-    var country = CountryCatalog.countries.first;
+    final proposed = ref.read(houseCountryProposalProvider);
+    var country = proposed == null
+        ? CountryCatalog.countries.first
+        : CountryCatalog.byCode(proposed);
     var language = proposedHouseLanguage(country.code);
     var timezone = country.defaultTimezone;
     final fields = FormControllers({
