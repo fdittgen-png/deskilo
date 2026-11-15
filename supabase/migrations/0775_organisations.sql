@@ -91,7 +91,10 @@ create trigger workspaces_pair_immutable
   for each row execute function public.workspaces_pair_immutable();
 
 -- A business made by a caller is in no organisation, unless it is the twin
--- of one that is: the twin carries its business's organisation.
+-- of one that is: the twin carries its business's organisation. It writes
+-- the column whatever the insert says, for every role: a house created from
+-- the head (#4005) is placed with organisation_place AFTER its insert, never
+-- by passing organisation_id, or it silently lands in no organisation.
 create or replace function public.workspaces_organisation_at_birth()
 returns trigger language plpgsql security definer set search_path = public as $fn$
 begin
@@ -174,6 +177,19 @@ end;
 $fn$;
 revoke execute on function public.organisation_owner_check(uuid) from public, anon, authenticated;
 
+-- Refuses a development twin as the head: the head is the production side
+-- of its pair, so the head and its twin never turn on the twin.
+create or replace function public.organisation_head_check(p_head uuid)
+returns void language plpgsql stable security definer set search_path = public as $fn$
+begin
+  if exists (select 1 from public.workspaces w
+              where w.id = p_head and w.pair_id is not null and w.environment is distinct from 'prod') then
+    raise exception 'a development twin is never the head' using errcode = '22023';
+  end if;
+end;
+$fn$;
+revoke execute on function public.organisation_head_check(uuid) from public, anon, authenticated;
+
 -- Refuses when the head business has the organisation feature off. Leaving
 -- an organisation and reading it never ask.
 create or replace function public.organisation_feature_check(p_head uuid)
@@ -193,6 +209,7 @@ declare
 begin
   perform public.organisation_owner_check(p_head);
   perform public.organisation_feature_check(p_head);
+  perform public.organisation_head_check(p_head);
   if length(btrim(coalesce(p_name, ''))) not between 1 and 200 then
     raise exception 'an organisation needs a name' using errcode = '22023';
   end if;
@@ -286,6 +303,7 @@ begin
   perform public.organisation_feature_check(
     (select head_workspace_id from public.organisations where id = p_organisation));
   perform public.organisation_owner_check(p_head);
+  perform public.organisation_head_check(p_head);
   if (select organisation_id from public.workspaces where id = p_head) is distinct from p_organisation then
     raise exception 'the new head is not a house of this organisation' using errcode = '22023';
   end if;
@@ -952,5 +970,488 @@ as $registry$
   ]$json$::jsonb
 $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
+
+-- ── 7. the builtin template writes `organisation` ────────────────────────
+-- (dart run tool/build_builtin_templates.dart)
+insert into public.workspace_templates
+  (key, name, description, sort_order, visibility, schema_version, template_version,
+   tags, entities, configuration, floor_plan)
+values (
+  'association_fr',
+  'Association de coworking (France)',
+  'Pour une association de coworking en France : demi-journées de 7 h à 13 h et de 13 h à 19 h du lundi au vendredi, jours fériés de l''année et de la suivante, cotisations à 50 % et 100 %, deux carnets prépayés pour qui ne cotise pas, les rôles du bureau, un calendrier où se prennent les validations, les mots de l''association, et deux étages prêts à réserver.',
+  1,
+  'builtin',
+  1,
+  1,
+  array['association', 'coworking', 'france'],
+  array['identity', 'tariffs', 'credit_products', 'floor_plan', 'booking_rules', 'closure_days', 'lexicon', 'workspace_roles', 'features'],
+  $cfg${
+  "workspace": {
+    "default_locale": "fr",
+    "vat_regime": "not_subject",
+    "booking_rules": {
+      "granularity": "half_day",
+      "open_weekdays": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "work_start_minutes": 420,
+      "half_boundary_minutes": 780,
+      "work_end_minutes": 1140,
+      "max_series_days": 180,
+      "advance_horizon_days": 90,
+      "max_duration_minutes": 1440,
+      "min_duration_minutes": 30
+    },
+    "subscription_levels": {
+      "allow_custom": false,
+      "extra_levels": [],
+      "enabled_presets": [
+        50,
+        100
+      ]
+    },
+    "feature_flags": {
+      "accessorySupplements": false,
+      "accountingBook": false,
+      "accountingConnectors": false,
+      "accountingPeriods": false,
+      "adminInvoicing": false,
+      "adminLevelAssign": false,
+      "adminSeatBlocking": false,
+      "assetRegister": false,
+      "autoCheckInOut": false,
+      "badgeSignIn": false,
+      "bankImport": false,
+      "biReportDesigner": false,
+      "bookForOthers": true,
+      "bookingGate": true,
+      "bookingPolicies": true,
+      "calendarFileExport": true,
+      "calendarHub": true,
+      "calendarTab": true,
+      "calendarValidations": true,
+      "calendarViews": true,
+      "capacityKpi": false,
+      "captureProtection": true,
+      "carnets": true,
+      "coOwner": false,
+      "configurableSettings": false,
+      "configurationTransfer": false,
+      "customFields": false,
+      "customRoles": true,
+      "dataAccessLog": false,
+      "dataExport": true,
+      "dataReport": true,
+      "decisionSurface": false,
+      "deletionRequests": true,
+      "demoMode": false,
+      "deployments": false,
+      "documents": true,
+      "dunning": false,
+      "einvoiceCustomerDelivery": false,
+      "environmentPairs": false,
+      "eventsTab": false,
+      "expenseRepartition": false,
+      "expenseRepartitionWizard": false,
+      "externalRooms": false,
+      "financeFaces": true,
+      "foreignCurrencyPurchases": false,
+      "formHelpHints": true,
+      "guestParticipation": false,
+      "guestPasses": false,
+      "holidayImport": false,
+      "inputVat": false,
+      "instanceWizard": false,
+      "invoiceAddressWindow": false,
+      "invoiceEmail": false,
+      "invoiceJourney": false,
+      "invoicePdfTemplate": false,
+      "invoiceSettlement": false,
+      "invoicing": true,
+      "invoicingWizard": false,
+      "kioskEnrolment": false,
+      "kioskMemberPhotos": false,
+      "kioskMode": false,
+      "letterStandard": false,
+      "levelBooking": false,
+      "managedProfileAccess": false,
+      "managedProfiles": false,
+      "mcpAccess": false,
+      "meetingRooms": false,
+      "memberAccountMenu": false,
+      "memberDataExport": true,
+      "memberEnvironments": false,
+      "memberGettingStarted": true,
+      "memberNotifications": true,
+      "memberOrigin": false,
+      "memberPage": false,
+      "memberPaymentTerms": false,
+      "memberReports": false,
+      "membersDirectory": false,
+      "messageForwarding": true,
+      "messageGestures": true,
+      "messageMentions": true,
+      "messagesHub": true,
+      "moneyTab": true,
+      "mtdSubmission": false,
+      "multiSite": false,
+      "navigationStyle": true,
+      "nfcBadges": false,
+      "nfcSeatTags": false,
+      "notificationGrouping": false,
+      "numberSequences": false,
+      "onlinePayments": false,
+      "organisation": true,
+      "parking": false,
+      "paymentReminders": false,
+      "pdfExport": true,
+      "personalInfo": true,
+      "personalShell": false,
+      "placeBooking": true,
+      "placeFeedback": true,
+      "planDecor": true,
+      "planMemberPhotos": false,
+      "planObjectDelete": true,
+      "premisesLease": false,
+      "priceNegotiations": false,
+      "publicHolidays": false,
+      "publicListings": false,
+      "purchaseAnalytics": false,
+      "purchaseOrders": false,
+      "purchases": false,
+      "pushNotifications": true,
+      "qrBadges": false,
+      "quickSearch": true,
+      "recapitulativeStatement": false,
+      "recordingPrivacy": false,
+      "regionalFormats": true,
+      "reminderEmail": false,
+      "reportDesignExchange": false,
+      "reportDesigner": false,
+      "reportLayouts": false,
+      "reportTexts": false,
+      "richMessageRefs": true,
+      "roleAssignment": true,
+      "roleManagement": true,
+      "salesTax": false,
+      "scheduledExpenses": false,
+      "seatDayTimeline": true,
+      "seriesBooking": true,
+      "services": true,
+      "settlementFold": false,
+      "setupGuide": true,
+      "singleRoomLevelNames": true,
+      "siteDocuments": false,
+      "spaceInquiries": true,
+      "spaceQrCodes": true,
+      "stockManagement": false,
+      "subscriptionInvoices": false,
+      "supplyClassification": false,
+      "supplyExpenses": false,
+      "taskRecorder": false,
+      "uiAnimations": true,
+      "uniqueMonograms": true,
+      "usageInvoices": false,
+      "usageRecords": false,
+      "usageReport": false,
+      "validationChain": false,
+      "validationScopes": false,
+      "vatCounterparty": false,
+      "vatDeclarations": false,
+      "vatGroups": false,
+      "vatManagement": false,
+      "vatRateHistory": false,
+      "vatReport": false,
+      "viesVerification": false,
+      "webMcp": false,
+      "whatsappIntegration": false,
+      "workingHours": true,
+      "workspaceBranding": false,
+      "workspaceLibrary": false,
+      "workspaceOverview": false,
+      "workspaceStatus": false,
+      "workspaceVocabulary": true
+    },
+    "lexicon": {
+      "fr": {
+        "spaceKindSeat": "Place",
+        "spaceKindLevel": "Étage",
+        "shellReserveButton": "Réservations"
+      }
+    }
+  },
+  "tables": {
+    "fee_bands": [
+      {
+        "from_pct": 0,
+        "to_pct": 50,
+        "fee_cents": 5000,
+        "overage_fee_cents": 0
+      },
+      {
+        "from_pct": 50,
+        "to_pct": 100,
+        "fee_cents": 10000,
+        "overage_fee_cents": 0
+      }
+    ],
+    "workspace_roles": [
+      {
+        "key": "tresorier",
+        "names": {
+          "fr": "Trésorier·ère",
+          "en": "Treasurer",
+          "de": "Kassenwart",
+          "es": "Tesorero/a",
+          "it": "Tesoriere"
+        },
+        "permissions": [
+          "viewFinances",
+          "issueInvoices",
+          "manageBilling",
+          "approveExpenses",
+          "exportData"
+        ],
+        "sort_order": 1,
+        "active": true
+      },
+      {
+        "key": "secretaire",
+        "names": {
+          "fr": "Secrétaire",
+          "en": "Secretary",
+          "de": "Schriftführer",
+          "es": "Secretario/a",
+          "it": "Segretario"
+        },
+        "permissions": [
+          "manageMembers",
+          "manageDocuments",
+          "viewPersonalData"
+        ],
+        "sort_order": 2,
+        "active": true
+      },
+      {
+        "key": "referent_salle",
+        "names": {
+          "fr": "Référent·e de salle",
+          "en": "Room steward",
+          "de": "Raumverantwortlicher",
+          "es": "Responsable de sala",
+          "it": "Referente di sala"
+        },
+        "permissions": [
+          "manageReservations",
+          "manageValidation",
+          "operateKiosk"
+        ],
+        "sort_order": 3,
+        "active": true
+      }
+    ],
+    "credit_products": [
+      {
+        "name": "Carnet 10 demi-journées",
+        "half_days": 10,
+        "price_cents": 5000,
+        "validity_months": null,
+        "active": true,
+        "sort_order": 1
+      },
+      {
+        "name": "Carnet 20 demi-journées",
+        "half_days": 20,
+        "price_cents": 8000,
+        "validity_months": null,
+        "active": true,
+        "sort_order": 2
+      }
+    ]
+  },
+  "holidays": {
+    "years": 2
+  }
+}$cfg$::jsonb,
+  $tpl$[
+  {
+    "name": "Rez-de-chaussée",
+    "sort_order": 0,
+    "bookable_as_whole": false,
+    "price_cents": 0,
+    "background_path": "",
+    "site": null,
+    "images": [],
+    "offices": [
+      {
+        "name": "Salle principale",
+        "color": 0,
+        "bookable_as_whole": true,
+        "price_cents": 0,
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 24,
+        "desks": [
+          {
+            "name": "Table 1",
+            "x": 2,
+            "y": 2,
+            "w": 14,
+            "h": 8,
+            "bookable_as_whole": true,
+            "price_cents": 0,
+            "seats": [
+              {
+                "name": "A1",
+                "x": 4,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              },
+              {
+                "name": "A2",
+                "x": 12,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              }
+            ]
+          },
+          {
+            "name": "Table 2",
+            "x": 22,
+            "y": 2,
+            "w": 14,
+            "h": 8,
+            "bookable_as_whole": true,
+            "price_cents": 0,
+            "seats": [
+              {
+                "name": "B1",
+                "x": 24,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              },
+              {
+                "name": "B2",
+                "x": 32,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Étage",
+    "sort_order": 1,
+    "bookable_as_whole": false,
+    "price_cents": 0,
+    "background_path": "",
+    "site": null,
+    "images": [],
+    "offices": [
+      {
+        "name": "Salle du haut",
+        "color": 0,
+        "bookable_as_whole": true,
+        "price_cents": 0,
+        "x": 0,
+        "y": 0,
+        "w": 40,
+        "h": 24,
+        "desks": [
+          {
+            "name": "Table 3",
+            "x": 2,
+            "y": 2,
+            "w": 14,
+            "h": 8,
+            "bookable_as_whole": true,
+            "price_cents": 0,
+            "seats": [
+              {
+                "name": "C1",
+                "x": 4,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              },
+              {
+                "name": "C2",
+                "x": 12,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              }
+            ]
+          },
+          {
+            "name": "Table 4",
+            "x": 22,
+            "y": 2,
+            "w": 14,
+            "h": 8,
+            "bookable_as_whole": true,
+            "price_cents": 0,
+            "seats": [
+              {
+                "name": "D1",
+                "x": 24,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              },
+              {
+                "name": "D2",
+                "x": 32,
+                "y": 4,
+                "orientation": "n",
+                "chair": "standard",
+                "amenities": [],
+                "accessories": []
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]$tpl$::jsonb
+)
+on conflict (key) where owner_workspace_id is null do update
+  set name = excluded.name,
+      description = excluded.description,
+      sort_order = excluded.sort_order,
+      schema_version = excluded.schema_version,
+      template_version = public.workspace_templates.template_version + 1,
+      tags = excluded.tags,
+      entities = excluded.entities,
+      configuration = excluded.configuration,
+      floor_plan = excluded.floor_plan;
 
 select public.set_deskilo_schema_version(775);

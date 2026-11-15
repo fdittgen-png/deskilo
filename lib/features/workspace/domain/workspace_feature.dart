@@ -420,10 +420,7 @@ enum WorkspaceFeature {
   quickSearch,
   /// #3824 — the goods ledger (feature_manifest_stock.dart).
   stockManagement,
-
-  /// #4004 — the head business makes an organisation of a customer's
-  /// businesses (decision 0052).
-  organisation;
+  organisation; // #4004 (feature_manifest_organisation.dart)
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
@@ -522,9 +519,7 @@ class FeatureManifestEntry {
 }
 
 /// The declarative feature registry, in DISPLAY order: children follow their parent.
-const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {
-  ..._manifest1, ..._manifest2, ..._manifest3, ...stockFeatureManifest,
-};
+const Map<WorkspaceFeature, FeatureManifestEntry> featureManifest = {..._manifest1, ..._manifest2, ..._manifest3, ...stockFeatureManifest, ...organisationFeatureManifest};
 
 /// #2566 — a flag nobody has chosen is what a NEW workspace stores for it:
 /// a core flag follows `defaultOn`, a platform flag is off. SQL twin:

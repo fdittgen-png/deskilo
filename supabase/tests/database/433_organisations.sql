@@ -8,7 +8,7 @@
 -- leaves last; removing a house leaves its data as it was. An assistant's
 -- token is refused. Rolled back.
 begin;
-select plan(25);
+select plan(28);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -113,6 +113,14 @@ select throws_ok(format('update public.workspaces set organisation_id = null whe
   '42501', null, 'only the server writes the organisation of a business');
 reset role;
 
+-- ── the head is the production side ──
+select pg_temp.as_user('owner_a');
+set local role authenticated;
+select throws_ok(format('select public.set_organisation_head(%L, %L)', pg_temp.id('org'),
+    (select id from public.workspaces where name = 'ORG-LONDON (dev)')),
+  '22023', 'a development twin is never the head', 'a development twin never becomes the head');
+reset role;
+
 -- ── who reads it ──
 select pg_temp.as_user('member_m');
 set local role authenticated;
@@ -122,6 +130,13 @@ select is(jsonb_array_length(public.my_organisations_v1() -> 0 -> 'houses'), 1,
   'and is shown only the houses they are a member of');
 select is(public.my_organisations_v1() -> 0 -> 'houses' -> 0 ->> 'role', 'member',
   'with their role there');
+-- the names the app reads (Organisation.fromJson): a rename fails here
+select is((select string_agg(k, ',' order by k) from jsonb_object_keys(public.my_organisations_v1() -> 0) k),
+  'head_workspace_id,houses,id,name', 'an organisation carries id, name, head_workspace_id and houses');
+select is((select string_agg(k, ',' order by k)
+             from jsonb_object_keys(public.my_organisations_v1() -> 0 -> 'houses' -> 0) k),
+  'country_code,currency_code,name,role,workspace_id',
+  'a house carries workspace_id, name, country_code, currency_code and role');
 reset role;
 select pg_temp.as_user('outsider');
 set local role authenticated;
