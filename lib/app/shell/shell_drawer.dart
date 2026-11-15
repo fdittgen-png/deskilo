@@ -29,12 +29,14 @@ import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_rail.dart';
+import 'house_switch.dart';
 import 'purchase_approval_badge.dart';
 import 'shell_destinations.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_drawer_tiles.dart';
 import 'shell_menu.dart';
 import 'shell_nav_groups.dart';
+import 'space_entry.dart';
 
 part 'shell_drawer.g.dart';
 
@@ -231,6 +233,8 @@ class ShellDrawer extends ConsumerWidget {
         path: path,
         badgeOf: badgeOf,
         onBackToMe: backToMe,
+        houses: otherHousesOf(ref, workspace?.id),
+        onHouse: (house) => unawaited(enterSpace(context, ref, house)),
       );
     }
     // #3603 — a group is open while it or one of its sub-groups is current.

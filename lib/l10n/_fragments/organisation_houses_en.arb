@@ -1,0 +1,6 @@
+{
+  "spaceOtherHouses": "The other houses of the organisation",
+  "@spaceOtherHouses": {
+    "description": "#4006 — the tooltip of the business chip inside a house of an organisation: a tap lists the organisation's other houses."
+  }
+}

@@ -3326,6 +3326,7 @@ Map<String, _Getter> _part8() => {
   'setupStepOpenScreen': (l) => l.setupStepOpenScreen,
   'shellBarShownAnnounce': (l) => l.shellBarShownAnnounce,
   'siteVatId': (l) => l.siteVatId,
+  'spaceOtherHouses': (l) => l.spaceOtherHouses,
   'subprocessPhysicalAccessDesc': (l) => l.subprocessPhysicalAccessDesc,
   'suppliersBankHistory': (l) => l.suppliersBankHistory,
   'suppliersBankIban': (l) => l.suppliersBankIban,
