@@ -661,6 +661,11 @@ const Map<String, Set<String>> _notExportedColumns = {
     // a calendar, a display preference like their clock, never a fact of
     // the workspace.
     'week_start',
+    // #3649 — the region of the person's address: the workbook carries the
+    // address as one composed column, which takes the region when the
+    // address is laid out per country (#3649, leaf 1); the person's own
+    // export carries it now.
+    'subdivision',
   },
   'workspaces': {
     // #3850 — whether the document language 0753 gave the business still
