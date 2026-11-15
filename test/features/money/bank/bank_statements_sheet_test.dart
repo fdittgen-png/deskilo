@@ -143,7 +143,9 @@ void main() {
     await tester.pumpAndSettle();
     // #4053 — the matches are shown first, then confirmed.
     await tester.tap(find.byKey(const ValueKey('bank-batch-confirm')));
-    await tester.pumpAndSettle();
+    for (var frame = 0; frame < 10; frame++) {
+      await tester.pump(const Duration(milliseconds: 100));
+    }
     expect(find.text('2 payments matched.'), findsOneWidget);
     expect(find.textContaining('Settles 21000000000313947143000901'), findsOneWidget);
     expect(find.textContaining('Settles 539007547034'), findsOneWidget);

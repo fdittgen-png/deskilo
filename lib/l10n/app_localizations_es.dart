@@ -2205,13 +2205,13 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String bankBatchResultTitle(int count, int total) {
+  String bankBatchResultTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: 'Se confirmaron $count de las $total conciliaciones',
-      one: 'Se confirmó 1 de las $total conciliaciones',
-      zero: 'No se confirmó ninguna de las $total conciliaciones',
+      other: 'Se confirmaron $count conciliaciones',
+      one: 'Se confirmó 1 conciliación',
+      zero: 'No se confirmó ninguna conciliación',
     );
     return '$_temp0';
   }

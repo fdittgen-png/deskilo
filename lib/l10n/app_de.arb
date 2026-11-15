@@ -922,7 +922,7 @@
   "bankBatchLine": "{amount} am {date}",
   "bankBatchLineConfirmed": "{invoice}: bestätigt",
   "bankBatchLineRefused": "{invoice}: nicht bestätigt. Ordnen Sie diese Bewegung einzeln zu.",
-  "bankBatchResultTitle": "{count, plural, =0{Keine der {total} Zuordnungen wurde bestätigt} one{1 von {total} Zuordnungen wurde bestätigt} other{{count} von {total} Zuordnungen wurden bestätigt}}",
+  "bankBatchResultTitle": "{count, plural, =0{Keine Zuordnung wurde bestätigt} one{1 Zuordnung wurde bestätigt} other{{count} Zuordnungen wurden bestätigt}}",
   "bankBatchSettles": "Begleicht {invoice} von {member}",
   "bankBatchTitle": "Diese Zuordnungen bestätigen?",
   "bankBatchTotal": "Summe in {currency}: {amount}",

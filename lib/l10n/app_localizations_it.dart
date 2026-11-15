@@ -2202,13 +2202,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String bankBatchResultTitle(int count, int total) {
+  String bankBatchResultTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count dei $total abbinamenti sono stati confermati',
-      one: '1 dei $total abbinamenti è stato confermato',
-      zero: 'Nessuno dei $total abbinamenti è stato confermato',
+      other: '$count abbinamenti sono stati confermati',
+      one: '1 abbinamento è stato confermato',
+      zero: 'Nessun abbinamento è stato confermato',
     );
     return '$_temp0';
   }

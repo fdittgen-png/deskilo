@@ -109,7 +109,7 @@ void main() {
     await _settle(tester);
 
     expect(find.byKey(const ValueKey('bank-batch-result')), findsOneWidget);
-    expect(find.text('1 of the 2 matches was confirmed'), findsOneWidget);
+    expect(find.text('1 match was confirmed'), findsOneWidget);
     final line = find.byKey(ValueKey('bank-batch-result-${refused.id}'));
     expect(
       find.descendant(of: line, matching: find.textContaining('not confirmed')),

@@ -5,5 +5,5 @@
   "bankBatchTotal": "Total en {currency} : {amount}",
   "bankBatchLineConfirmed": "{invoice} : confirmé",
   "bankBatchLineRefused": "{invoice} : non confirmé. Rapprochez ce mouvement seul.",
-  "bankBatchResultTitle": "{count, plural, =0{Aucun des {total} rapprochements n’a été confirmé} one{1 des {total} rapprochements a été confirmé} other{{count} des {total} rapprochements ont été confirmés}}"
+  "bankBatchResultTitle": "{count, plural, =0{Aucun rapprochement n’a été confirmé} one{1 rapprochement a été confirmé} other{{count} rapprochements ont été confirmés}}"
 }

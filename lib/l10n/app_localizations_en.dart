@@ -2188,13 +2188,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String bankBatchResultTitle(int count, int total) {
+  String bankBatchResultTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count of the $total matches were confirmed',
-      one: '1 of the $total matches was confirmed',
-      zero: 'None of the $total matches was confirmed',
+      other: '$count matches were confirmed',
+      one: '1 match was confirmed',
+      zero: 'No match was confirmed',
     );
     return '$_temp0';
   }

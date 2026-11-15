@@ -2209,13 +2209,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String bankBatchResultTitle(int count, int total) {
+  String bankBatchResultTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count von $total Zuordnungen wurden bestätigt',
-      one: '1 von $total Zuordnungen wurde bestätigt',
-      zero: 'Keine der $total Zuordnungen wurde bestätigt',
+      other: '$count Zuordnungen wurden bestätigt',
+      one: '1 Zuordnung wurde bestätigt',
+      zero: 'Keine Zuordnung wurde bestätigt',
     );
     return '$_temp0';
   }

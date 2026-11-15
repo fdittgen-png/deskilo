@@ -2213,13 +2213,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String bankBatchResultTitle(int count, int total) {
+  String bankBatchResultTitle(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
       locale: localeName,
-      other: '$count des $total rapprochements ont été confirmés',
-      one: '1 des $total rapprochements a été confirmé',
-      zero: 'Aucun des $total rapprochements n’a été confirmé',
+      other: '$count rapprochements ont été confirmés',
+      one: '1 rapprochement a été confirmé',
+      zero: 'Aucun rapprochement n’a été confirmé',
     );
     return '$_temp0';
   }

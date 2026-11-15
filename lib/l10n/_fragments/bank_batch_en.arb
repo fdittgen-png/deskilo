@@ -57,14 +57,11 @@
       }
     }
   },
-  "bankBatchResultTitle": "{count, plural, =0{None of the {total} matches was confirmed} one{1 of the {total} matches was confirmed} other{{count} of the {total} matches were confirmed}}",
+  "bankBatchResultTitle": "{count, plural, =0{No match was confirmed} one{1 match was confirmed} other{{count} matches were confirmed}}",
   "@bankBatchResultTitle": {
     "description": "#4053 — how many matches of a batch were confirmed: bankBatchResultTitle.",
     "placeholders": {
       "count": {
-        "type": "int"
-      },
-      "total": {
         "type": "int"
       }
     }

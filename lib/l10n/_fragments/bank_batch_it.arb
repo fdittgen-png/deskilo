@@ -5,5 +5,5 @@
   "bankBatchTotal": "Totale in {currency}: {amount}",
   "bankBatchLineConfirmed": "{invoice}: confermata",
   "bankBatchLineRefused": "{invoice}: non confermata. Abbini questo movimento da solo.",
-  "bankBatchResultTitle": "{count, plural, =0{Nessuno dei {total} abbinamenti è stato confermato} one{1 dei {total} abbinamenti è stato confermato} other{{count} dei {total} abbinamenti sono stati confermati}}"
+  "bankBatchResultTitle": "{count, plural, =0{Nessun abbinamento è stato confermato} one{1 abbinamento è stato confermato} other{{count} abbinamenti sono stati confermati}}"
 }

@@ -36,7 +36,7 @@ Future<void> showBankBatchResult(
         .length;
     return AlertDialog(
       key: const ValueKey('bank-batch-result'),
-      title: Text(l10n.bankBatchResultTitle(confirmed, lines.length)),
+      title: Text(l10n.bankBatchResultTitle(confirmed)),
       content: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,

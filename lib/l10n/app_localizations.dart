@@ -3586,8 +3586,8 @@ abstract class AppLocalizations {
   /// #4053 — how many matches of a batch were confirmed: bankBatchResultTitle.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, =0{None of the {total} matches was confirmed} one{1 of the {total} matches was confirmed} other{{count} of the {total} matches were confirmed}}'**
-  String bankBatchResultTitle(int count, int total);
+  /// **'{count, plural, =0{No match was confirmed} one{1 match was confirmed} other{{count} matches were confirmed}}'**
+  String bankBatchResultTitle(int count);
 
   /// #4053 — the matches by reference shown before they are confirmed: bankBatchSettles.
   ///
