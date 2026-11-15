@@ -48,7 +48,12 @@ class RoomAudiencePickers extends ConsumerWidget {
       onRetry: () => ref.invalidate(roomPlansProvider(workspaceId)),
     );
     if (standIn != null) return standIn;
-    final plans = plansRead.requireValue;
+    // #4042 — plans are retired: a room offers none to add; the plans it
+    // names already are shown so they can be taken away.
+    final plans = [
+      for (final p in plansRead.requireValue)
+        if (planIds.contains(p.id)) p,
+    ];
     final members = ref.watch(audienceMembersProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

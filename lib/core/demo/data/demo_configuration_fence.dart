@@ -13,7 +13,7 @@ import 'package:deskilo/features/workspace/domain/configuration_refusal.dart';
 /// and what each carries: its tables and its business-level keys.
 const Map<String, ({List<String> tables, List<String> keys})> _priced = {
   'tariffs': (
-    tables: ['fee_bands', 'plans'],
+    tables: ['fee_bands'],
     keys: ['subscription_levels', 'billing_rules'],
   ),
   'services': (tables: ['services'], keys: []),
