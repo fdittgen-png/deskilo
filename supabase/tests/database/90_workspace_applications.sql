@@ -63,7 +63,8 @@ set local role anon;
 select throws_ok($$select public.my_workspace_applications()$$,'42501',null,'anonymous requests cannot enumerate applications');
 reset role;
 -- Rejoining preserves the old request and starts a distinct validation event.
-update public.members set status='pending' where id='00000000-0000-4000-8000-0000000300c3';
+-- #4008: a member who left comes back as a new member, pending
+select public.member_return_as_new('00000000-0000-4000-8000-0000000300c3');
 update public.validation_policies set required_count=1 where workspace_id='00000000-0000-4000-8000-0000000300b1';
 insert into public.events(id,workspace_id,type,action,actor_member_id,subject_member_id,payload,status)
 values('00000000-0000-4000-8000-0000000300d2','00000000-0000-4000-8000-0000000300b1','member_join','submitted',
