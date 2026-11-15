@@ -1190,6 +1190,12 @@ constraint opening_hours_history.opening_hours_history_pkey PRIMARY KEY (id)
 constraint opening_hours_history.opening_hours_history_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint opening_hours_history.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint opening_hours_history.system_company_present CHECK ((company_id IS NOT NULL))
+constraint organisation_houses.organisation_houses_head_workspace_id_fkey FOREIGN KEY (head_workspace_id) REFERENCES workspaces(id) ON DELETE SET NULL
+constraint organisation_houses.organisation_houses_organisation_id_fkey FOREIGN KEY (organisation_id) REFERENCES organisations(id) ON DELETE SET NULL
+constraint organisation_houses.organisation_houses_pkey PRIMARY KEY (workspace_id)
+constraint organisation_houses.organisation_houses_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint organisation_houses.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint organisation_houses.system_company_present CHECK ((company_id IS NOT NULL))
 constraint organisations.organisations_head_workspace_id_fkey FOREIGN KEY (head_workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint organisations.organisations_name_check CHECK (((length(btrim(name)) >= 1) AND (length(btrim(name)) <= 200)))
 constraint organisations.organisations_pkey PRIMARY KEY (id)
@@ -2491,6 +2497,7 @@ routine public.claim_instance_ownership() -> jsonb | function | definer | volati
 routine public.clear_accounting_credentials(p_connection_id uuid) -> void | function | definer | volatile | exec:service_role | body:4cf41c55f64c
 routine public.clear_badge_pin() -> void | function | definer | volatile | exec:authenticated,service_role | body:257813721688
 routine public.clear_einvoice_credentials(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:be4d94655dfd
+routine public.clear_house_prices_pending(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:5d8dd363552a
 routine public.clear_payment_provider(p_workspace_id uuid, p_provider text) -> void | function | definer | volatile | exec:authenticated,service_role | body:bbe6fd0c9971
 routine public.clear_readiness_acknowledgement(p_workspace_id uuid, p_section text) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:d3e2b466bbba
 routine public.clear_sample_data(p_workspace_id uuid, p_batch_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2cefebff1c3c
@@ -2525,6 +2532,7 @@ routine public.create_invoice_receipted_v1(p_workspace_id uuid, p_member_id uuid
 routine public.create_invoice_replacement_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_replaces uuid, p_request_id uuid, p_detailed boolean, p_kind text, p_buyer_reference text, p_purchase_order text, p_correction_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:2bd5cc408fcc
 routine public.create_managed_member(p_workspace_id uuid, p_identity jsonb, p_access jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7871b90b4b5f
 routine public.create_organisation(p_head uuid, p_name text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9d51c01834e5
+routine public.create_organisation_house_once(p_organisation uuid, p_name text, p_country text, p_currency text, p_timezone text, p_language text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:f33bb6999e9e
 routine public.create_reservation(p_workspace_id uuid, p_seat_id uuid, p_office_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean, p_level_id uuid, p_desk_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6e0d3b9dfcce
 routine public.create_reservation_once(p_client_request_id uuid, p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:98d868b4bfc6
 routine public.create_sample_data(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87e5c8c21a8b
@@ -3132,6 +3140,7 @@ routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function |
 routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
 routine public.organisation_feature_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:483b7fc7e5c7
 routine public.organisation_head_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:9879c021f6cb
+routine public.organisation_house_fenced_amounts() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:627c28710b32
 routine public.organisation_owner_check(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:53d89cd293f4
 routine public.organisation_owns(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:f2dc4841d55e
 routine public.organisation_place(p_workspace_id uuid, p_organisation_id uuid) -> void | function | definer | volatile | exec:service_role | body:7e8e491c6304
@@ -4011,6 +4020,7 @@ trigger offices.offices_area_guard CREATE TRIGGER offices_area_guard BEFORE INSE
 trigger offices.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.offices REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger offices.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.offices FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger opening_hours_history.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.opening_hours_history FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger organisation_houses.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisation_houses FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger organisations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.organisations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger outgoing_payments.outgoing_payments_guard CREATE TRIGGER outgoing_payments_guard BEFORE DELETE OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION outgoing_payments_guard()
 trigger outgoing_payments.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.outgoing_payments FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
