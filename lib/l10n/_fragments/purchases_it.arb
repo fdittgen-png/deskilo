@@ -193,5 +193,11 @@
   "purchaseReceiptSubmit": "Presentare la ricevuta",
   "purchaseReceiptAmount": "Inserisca un importo positivo su ogni riga.",
   "purchaseReceiptDeductible": "La quota detraibile di ogni riga tassata è compresa tra 0 e 100 %.",
-  "purchaseReceiptSubmitted": "Ricevuta presentata: è in attesa di approvazione."
+  "purchaseReceiptSubmitted": "Ricevuta presentata: è in attesa di approvazione.",
+  "purchaseBillSectionSupplier": "Fornitore e documento",
+  "purchaseBillSectionAmount": "Importo e imposta",
+  "purchaseBillSectionPayment": "Pagamento",
+  "purchaseBillSectionAccounting": "Contabilità",
+  "purchaseBillSectionDescription": "Descrizione e articolo",
+  "purchaseBillOptional": "{label} (facoltativo)"
 }

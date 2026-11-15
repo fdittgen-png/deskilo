@@ -3,7 +3,9 @@
 // #3286 — a form with problems says how many, takes the focus to the first
 // field with one (and again on request), keeps each sentence under its own
 // field.
+import 'package:deskilo/core/ui/form_error_summary.dart';
 import 'package:deskilo/core/ui/form_kit.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -85,5 +87,31 @@ void main() {
     await tester.enterText(find.byKey(const ValueKey('name')), 'Ada');
     await tester.pumpAndSettle();
     expect(find.text('1 field needs your attention'), findsOneWidget);
+  });
+
+  testWidgets('#4065 — named problems: one link per field, no "go to the '
+      'first", each link calls its own way there', (tester) async {
+    final went = <String>[];
+    await tester.pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Scaffold(
+          body: FormErrorSummary(
+            count: 2,
+            onGoToFirst: () => went.add('first'),
+            problems: [
+              (key: const ValueKey('p-a'), label: 'Total', onGo: () => went.add('a')),
+              (key: const ValueKey('p-b'), label: 'Due date', onGo: () => went.add('b')),
+            ],
+          ),
+        ),
+      ),
+    );
+    expect(find.byKey(const ValueKey('form-error-summary-go')), findsNothing);
+    expect(find.text('Total'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('p-b')));
+    await tester.tap(find.byKey(const ValueKey('p-a')));
+    expect(went, ['b', 'a']);
   });
 }

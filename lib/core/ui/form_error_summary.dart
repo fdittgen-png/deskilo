@@ -12,11 +12,15 @@ import '../l10n/context_l10n.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
 
+/// #4065 — a field the summary names, and how to reach it.
+typedef FormProblem = ({Key key, String label, VoidCallback onGo});
+
 class FormErrorSummary extends StatelessWidget {
   const FormErrorSummary({
     super.key,
     required this.count,
     required this.onGoToFirst,
+    this.problems = const [],
   });
 
   /// How many fields have a problem; the summary shows nothing for none.
@@ -25,11 +29,20 @@ class FormErrorSummary extends StatelessWidget {
   /// Moves the focus to the first field with a problem.
   final VoidCallback onGoToFirst;
 
+  /// #4065 — the fields with a problem, each named by its label: a link
+  /// that moves the focus to it. Where given, they stand for the one
+  /// "Go to the first problem".
+  final List<FormProblem> problems;
+
   @override
   Widget build(BuildContext context) {
     if (count == 0) return const SizedBox.shrink();
     final l10n = context.l10n;
     final scheme = Theme.of(context).colorScheme;
+    final link = TextButton.styleFrom(
+      minimumSize: const Size(48, 48),
+      foregroundColor: scheme.onErrorContainer,
+    );
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: Semantics(
@@ -51,15 +64,20 @@ class FormErrorSummary extends StatelessWidget {
                   l10n.formErrorSummaryTitle(count),
                   style: TextStyle(color: scheme.onErrorContainer),
                 ),
-                TextButton(
-                  key: const ValueKey('form-error-summary-go'),
-                  style: TextButton.styleFrom(
-                    minimumSize: const Size(48, 48),
-                    foregroundColor: scheme.onErrorContainer,
+                if (problems.isEmpty)
+                  TextButton(
+                    key: const ValueKey('form-error-summary-go'),
+                    style: link,
+                    onPressed: onGoToFirst,
+                    child: Text(l10n.formErrorSummaryGoTo),
                   ),
-                  onPressed: onGoToFirst,
-                  child: Text(l10n.formErrorSummaryGoTo),
-                ),
+                for (final p in problems)
+                  TextButton(
+                    key: p.key,
+                    style: link,
+                    onPressed: p.onGo,
+                    child: Text(p.label),
+                  ),
               ],
             ),
           ),

@@ -8,10 +8,10 @@ import '../../../../core/format/decimal_input.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/adaptive/task_choice.dart';
 import '../../../../core/ui/adaptive/task_surface.dart';
+import '../../../../core/ui/form_error_summary.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/purchase_order_commands.dart';
@@ -68,10 +68,18 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   PurchaseBillDraft? _attempted;
   String _requestId = newRequestId();
 
+  /// #4065 — the focus of each field the summary names.
+  final Map<String, FocusNode> _focus = {};
+
+  FocusNode _nodeFor(String key) => _focus.putIfAbsent(key, FocusNode.new);
+
   @override
   void dispose() {
     for (final c in [_reference, _description, _gross, _tax]) {
       c.dispose();
+    }
+    for (final node in _focus.values) {
+      node.dispose();
     }
     super.dispose();
   }
@@ -79,30 +87,60 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
   /// The bill's currency: the one picked for it, else the space's.
   String get _currency => _money.currency ?? appFormatOf(context).currencyCode;
 
-  PurchaseBillDraft? _draft() {
+  double? get _quantity =>
+      parseDecimalInput(_item.quantity, grouping: false)?.toDouble();
+
+  /// #4065 — the fields the bill is refused for, in the form's order: the
+  /// summary names them, and nothing is saved while any remains.
+  List<String> _problems() {
     final format = appFormatOf(context);
     final gross = format
         .readAmount(_gross.text, currency: _currency, allowNegative: false)
         .minor;
-    final taxRead =
+    final tax =
         format.readAmount(_tax.text, currency: _currency, allowNegative: false);
-    final tax = taxRead.minor;
-    if (gross == null || gross <= 0) return null;
-    if (taxRead.problem != null || (tax != null && tax > gross)) return null;
-    if (_invoiceDate.problem != null || _dueDate.problem != null) return null;
-    // Another currency than the space's is captured with its rate.
-    if (_money.currency != null && _money.rate == null) return null;
-    // #3294 — an item is bought in a quantity above zero.
-    PurchaseItem? item;
-    if (_item.itemId case final id?) {
-      final quantity = parseDecimalInput(_item.quantity, grouping: false)?.toDouble();
-      if (quantity == null || quantity <= 0) return null;
-      item = PurchaseItem(
+    final taxMinor = tax.minor;
+    return [
+      if (_invoiceDate.problem != null) 'invoiceDate',
+      // Another currency than the space's is captured with its rate.
+      if (_money.currency != null && _money.rate == null) 'fxRate',
+      if (gross == null || gross <= 0) 'gross',
+      if (tax.problem != null ||
+          (taxMinor != null && gross != null && taxMinor > gross))
+        'tax',
+      if (_dueDate.problem != null) 'dueDate',
+      // #3294 — an item is bought in a quantity above zero.
+      if (_item.itemId != null && !((_quantity ?? 0) > 0)) 'quantity',
+    ];
+  }
+
+  /// The label a problem is named by in the summary.
+  String _problemLabel(AppLocalizations l10n, String key) => switch (key) {
+    'invoiceDate' => l10n.purchasesInvoiceDate,
+    'fxRate' => l10n.purchasesFxTitle,
+    'gross' => l10n.purchasesGross,
+    'tax' => l10n.purchasesTaxField,
+    'dueDate' => l10n.purchasesDueDate,
+    _ => l10n.purchasesQuantity,
+  };
+
+  PurchaseBillDraft? _draft() {
+    if (_problems().isNotEmpty) return null;
+    final format = appFormatOf(context);
+    final gross = format
+        .readAmount(_gross.text, currency: _currency, allowNegative: false)
+        .minor!;
+    final tax = format
+        .readAmount(_tax.text, currency: _currency, allowNegative: false)
+        .minor;
+    final item = switch (_item.itemId) {
+      final id? => PurchaseItem(
         serviceId: id,
-        quantity: quantity,
+        quantity: _quantity!,
         unit: _item.unit.trim(),
-      );
-    }
+      ),
+      null => null,
+    };
     return PurchaseBillDraft(
       grossCents: gross,
       supplierId: _supplierId,
@@ -188,7 +226,11 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
       child: DropdownButtonFormField<String?>(
         key: const ValueKey('purchase-supplier'),
         initialValue: _supplierId,
-        decoration: InputDecoration(labelText: l10n.purchasesSupplier),
+        // #4065 — as wide as its section; a long name is cut, not the field.
+        isExpanded: true,
+        decoration: InputDecoration(
+          labelText: l10n.purchaseBillOptional(l10n.purchasesSupplier),
+        ),
         items: [
           DropdownMenuItem<String?>(
             child: Text(l10n.purchasesNoSupplier),
@@ -196,12 +238,75 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
           for (final s in suppliers)
             DropdownMenuItem<String?>(
               value: s.id,
-              child: Text('${s.number} · ${s.name}'),
+              child: Text(
+                '${s.number} · ${s.name}',
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
         ],
         onChanged: _pickSupplier,
       ),
     );
+
+  /// #4065 — what is in error, at the top: each field named, a link to it.
+  List<Widget> _summary(AppLocalizations l10n) {
+    if (!_invalid) return const [];
+    final problems = _problems();
+    return [
+      FormErrorSummary(
+        count: problems.length,
+        onGoToFirst: () => _nodeFor(problems.first).requestFocus(),
+        problems: [
+          for (final p in problems)
+            (
+              key: ValueKey('purchase-problem-$p'),
+              label: _problemLabel(l10n, p),
+              onGo: () => _nodeFor(p).requestFocus(),
+            ),
+        ],
+      ),
+      Text(
+        l10n.purchasesInvalid,
+        key: const ValueKey('purchase-invalid'),
+        style: TextStyle(color: Theme.of(context).colorScheme.error),
+      ),
+    ];
+  }
+
+  /// #4065 — what the bill is for and where its cost belongs.
+  Widget _accounting(AppLocalizations l10n) => _section(l10n.purchaseBillSectionAccounting, [
+    // #2576 — what it is for, in plain words; no tax class or
+    // useful life is asked of whoever submits.
+    DropdownButtonFormField<String>(
+      key: const ValueKey('purchase-purpose'),
+      initialValue: _purpose,
+      isExpanded: true,
+      decoration: InputDecoration(labelText: l10n.purchasesPurpose),
+      items: [
+        for (final p in purchasePurposes)
+          DropdownMenuItem(value: p, child: Text(purchasePurposeLabel(l10n, p))),
+      ],
+      onChanged: (v) => _purpose = v ?? _purpose,
+    ),
+    // #2573 — where its cost belongs.
+    PurchasePlaceField(
+      fieldKey: 'purchase-place',
+      workspaceId: widget.workspaceId,
+      value: _place,
+      onChanged: (p) => _place = p,
+    ),
+  ]);
+
+  /// #4065 — one heading of the form and its fields, the kit's gap between.
+  Widget _section(String title, List<Widget> fields) => FormSection(
+    title: title,
+    children: [
+      for (final (i, field) in fields.indexed) ...[
+        if (i > 0) const FormGap(),
+        field,
+      ],
+    ],
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -212,112 +317,102 @@ class _BillDialogState extends ConsumerState<_BillDialog> {
               const <Supplier>[])
         if (s.isActive) s,
     ];
+    final optional = l10n.purchaseBillOptional;
     return TaskChoice(
       title: l10n.purchasesAddBill,
-      content: Column(
-          // #3782 — the form kit's gap between every field.
-          spacing: AppSpacing.md,
+      content: FormErrorsScope(
+        errors: const {},
+        onEdit: (_) {},
+        focusNodeFor: _nodeFor,
+        child: Column(
           mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _supplierField(l10n, suppliers),
-            PurchaseBillOrderField(
-              workspaceId: widget.workspaceId,
-              supplierId: _supplierId,
-              orderId: _orderId,
-              // recorder-key-exempt: a data callback; the dropdown is keyed.
-              onChanged: _takeOrder,
-            ),
-            // #2576 — what it is for, in plain words; no tax class or useful
-            // life is asked of whoever submits.
-            DropdownButtonFormField<String>(
-              key: const ValueKey('purchase-purpose'),
-              initialValue: _purpose,
-              isExpanded: true,
-              decoration: InputDecoration(labelText: l10n.purchasesPurpose),
-              items: [
-                for (final p in purchasePurposes)
-                  DropdownMenuItem(value: p, child: Text(purchasePurposeLabel(l10n, p))),
-              ],
-              onChanged: (v) => _purpose = v ?? _purpose,
-            ),
-            // #2573 — where its cost belongs.
-            PurchasePlaceField(
-              fieldKey: 'purchase-place',
-              workspaceId: widget.workspaceId,
-              value: _place,
-              onChanged: (p) => _place = p,
-            ),
-            AppTextField(
-              key: const ValueKey('purchase-reference'),
-              controller: _reference,
-              label: l10n.purchasesReference,
-              maxLength: 200,
-            ),
-            AppTextField(
-              key: const ValueKey('purchase-description'),
-              controller: _description,
-              label: l10n.purchasesDescription,
-              maxLength: 500,
-            ),
-            // #3294 — the item the line bought, with the purchase figures on.
-            PurchaseItemFields(
-              // recorder-key-exempt: a data callback; the fields are keyed.
-              onChanged: (entry) => _item = entry,
-            ),
-            // A bill in another currency, with its rate (when switched on).
-            PurchaseCurrencyFields(
-              // recorder-key-exempt: a data callback; the fields are keyed.
-              onChanged: (m) => setState(() => _money = m),
-            ),
-            AppAmountField(
-              key: const ValueKey('purchase-gross'),
-              controller: _gross,
-              label: l10n.purchasesGross,
-              currency: _currency,
-              allowNegative: false,
-              showProblem: _invalid,
-              textInputAction: TextInputAction.next,
-            ),
-            AppAmountField(
-              key: const ValueKey('purchase-tax'),
-              controller: _tax,
-              label: l10n.purchasesTaxField,
-              helper: l10n.purchasesTaxFieldHelper,
-              currency: _currency,
-              allowNegative: false,
-              showProblem: _invalid,
-              textInputAction: TextInputAction.next,
-            ),
-            AppDateField(
-              key: const ValueKey('purchase-invoice-date'),
-              label: l10n.purchasesInvoiceDate,
-              value: _invoiceDate.date,
-              pickerHelpText: l10n.purchasesPickDate,
-              showProblem: _invalid,
-              textInputAction: TextInputAction.next,
-              onChanged: (d) => _invoiceDate = d,
-            ),
-            AppDateField(
-              key: const ValueKey('purchase-due-date'),
-              label: l10n.purchasesDueDate,
-              value: _dueDate.date,
-              pickerHelpText: l10n.purchasesPickDate,
-              showProblem: _invalid,
-              onChanged: (d) => _dueDate = d,
-              onSubmitted: (_) => _save(),
-            ),
-            if (_invalid)
-              Padding(
-                padding: const EdgeInsets.only(top: AppSpacing.sm),
-                child: Text(
-                  l10n.purchasesInvalid,
-                  key: const ValueKey('purchase-invalid'),
-                  style: TextStyle(color: Theme.of(context).colorScheme.error),
-                ),
+            ..._summary(l10n),
+            _section(l10n.purchaseBillSectionSupplier, [
+              _supplierField(l10n, suppliers),
+              AppTextField(
+                key: const ValueKey('purchase-reference'),
+                controller: _reference,
+                label: optional(l10n.purchasesReference),
+                maxLength: 200,
               ),
+              AppDateField(
+                key: const ValueKey('purchase-invoice-date'),
+                fieldKey: 'invoiceDate',
+                label: optional(l10n.purchasesInvoiceDate),
+                value: _invoiceDate.date,
+                pickerHelpText: l10n.purchasesPickDate,
+                showProblem: _invalid,
+                textInputAction: TextInputAction.next,
+                onChanged: (d) => _invoiceDate = d,
+              ),
+              PurchaseBillOrderField(
+                workspaceId: widget.workspaceId,
+                supplierId: _supplierId,
+                orderId: _orderId,
+                // recorder-key-exempt: a data callback; the dropdown is keyed.
+                onChanged: _takeOrder,
+              ),
+            ]),
+            _section(l10n.purchaseBillSectionAmount, [
+              // A bill in another currency, with its rate (when switched on);
+              // otherwise each amount names the space's currency.
+              PurchaseCurrencyFields(
+                // recorder-key-exempt: a data callback; the fields are keyed.
+                onChanged: (m) => setState(() => _money = m),
+              ),
+              AppAmountField(
+                key: const ValueKey('purchase-gross'),
+                fieldKey: 'gross',
+                controller: _gross,
+                label: l10n.purchasesGross,
+                currency: _currency,
+                allowNegative: false,
+                showProblem: _invalid,
+                textInputAction: TextInputAction.next,
+              ),
+              AppAmountField(
+                key: const ValueKey('purchase-tax'),
+                fieldKey: 'tax',
+                controller: _tax,
+                label: optional(l10n.purchasesTaxField),
+                helper: l10n.purchasesTaxFieldHelper,
+                currency: _currency,
+                allowNegative: false,
+                showProblem: _invalid,
+                textInputAction: TextInputAction.next,
+              ),
+            ]),
+            _section(l10n.purchaseBillSectionPayment, [
+              AppDateField(
+                key: const ValueKey('purchase-due-date'),
+                fieldKey: 'dueDate',
+                label: optional(l10n.purchasesDueDate),
+                value: _dueDate.date,
+                pickerHelpText: l10n.purchasesPickDate,
+                showProblem: _invalid,
+                onChanged: (d) => _dueDate = d,
+                onSubmitted: (_) => _save(),
+              ),
+            ]),
+            _accounting(l10n),
+            _section(l10n.purchaseBillSectionDescription, [
+              AppTextField(
+                key: const ValueKey('purchase-description'),
+                controller: _description,
+                label: optional(l10n.purchasesDescription),
+                maxLength: 500,
+              ),
+              // #3294 — the item the line bought, with the purchase figures on.
+              PurchaseItemFields(
+                // recorder-key-exempt: a data callback; the fields are keyed.
+                onChanged: (entry) => _item = entry,
+              ),
+            ]),
           ],
         ),
+      ),
       actions: [
         TextButton(
           key: const ValueKey('purchase-cancel'),

@@ -193,5 +193,11 @@
   "purchaseReceiptSubmit": "Beleg einreichen",
   "purchaseReceiptAmount": "Geben Sie auf jeder Position einen positiven Betrag ein.",
   "purchaseReceiptDeductible": "Der abziehbare Anteil jeder besteuerten Position liegt zwischen 0 und 100 %.",
-  "purchaseReceiptSubmitted": "Beleg eingereicht: Er wartet auf die Genehmigung."
+  "purchaseReceiptSubmitted": "Beleg eingereicht: Er wartet auf die Genehmigung.",
+  "purchaseBillSectionSupplier": "Lieferant und Beleg",
+  "purchaseBillSectionAmount": "Betrag und Steuer",
+  "purchaseBillSectionPayment": "Zahlung",
+  "purchaseBillSectionAccounting": "Buchhaltung",
+  "purchaseBillSectionDescription": "Beschreibung und Artikel",
+  "purchaseBillOptional": "{label} (optional)"
 }
