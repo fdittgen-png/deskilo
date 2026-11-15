@@ -12,6 +12,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../fake_money_repository.dart';
+import '../go_route.dart';
 import '../mock_providers.dart';
 import '../settings_sections.dart';
 import '../shell_bar.dart';
@@ -23,6 +24,7 @@ Future<FakeWorkspaceRepository> pumpMembers(
   FakeNfcUidReader? nfc,
   Map<String, dynamic> featureFlags = const {},
   Size size = const Size(800, 2200),
+  bool byRoute = false,
 }) async {
   // The settings list grew (Help + Linked accounts, 0051): keep the
   // Members & plans entry on-stage in the lazy list.
@@ -55,14 +57,19 @@ Future<FakeWorkspaceRepository> pumpMembers(
     ),
   );
   await tester.pumpAndSettle();
-  await tapShellBarControl(tester, 'shell-settings-button');
-  await tester.pumpAndSettle();
-  await showWorkspaceSettings(tester);
-  await revealInSettings(tester, find.text('Members & plans'));
-  await tester.ensureVisible(find.text('Members & plans'));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text('Members & plans'));
-  await tester.pumpAndSettle();
+  if (byRoute) {
+    // #4038 — by its route, so the screen is the same in every language.
+    await goToRoute(tester, '/members');
+  } else {
+    await tapShellBarControl(tester, 'shell-settings-button');
+    await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
+    await revealInSettings(tester, find.text('Members & plans'));
+    await tester.ensureVisible(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Members & plans'));
+    await tester.pumpAndSettle();
+  }
   expect(find.byType(MembersScreen), findsOneWidget);
   return workspace;
 }
