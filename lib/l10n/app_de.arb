@@ -19145,6 +19145,7 @@
   "shellBarShowAction": "Navigationsleiste einblenden",
   "shellBarShowHint": "Lange drücken, um die Navigationsleiste einzublenden",
   "shellBarShownAnnounce": "Navigationsleiste eingeblendet",
+  "shellOverflowNews": "{more}, neue Hinweise",
   "shellPendingDecisions": "{count, plural, one{1 Entscheidung wartet auf Sie} other{{count} Entscheidungen warten auf Sie}}",
   "shellReserveButton": "Reservieren",
   "shellSwipeCoachMark": "Wischen Sie die Leiste nach unten für die Vollbildansicht. Nach oben wischen oder die Reservieren-Taste lange drücken, um sie zurückzuholen.",

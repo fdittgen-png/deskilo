@@ -32185,6 +32185,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get shellBarShownAnnounce => 'Navigationsleiste eingeblendet';
 
   @override
+  String shellOverflowNews(String more) {
+    return '$more, neue Hinweise';
+  }
+
+  @override
   String shellPendingDecisions(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

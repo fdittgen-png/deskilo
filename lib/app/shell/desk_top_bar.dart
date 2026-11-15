@@ -59,7 +59,10 @@ class DeskTopBar extends StatelessWidget implements PreferredSizeWidget {
             ? shown
             : [
                 ...shown.take(shown.length - 1),
-                ShellOverflow(entries: [for (final c in fit.overflow) c.entry!]),
+                ShellOverflow(
+                  entries: [for (final c in fit.overflow) c.entry!],
+                  attention: fit.overflow.any((c) => c.attention),
+                ),
                 if (shown.isNotEmpty) shown.last,
               ],
       );

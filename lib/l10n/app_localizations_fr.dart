@@ -32256,6 +32256,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get shellBarShownAnnounce => 'Barre de navigation affichée';
 
   @override
+  String shellOverflowNews(String more) {
+    return '$more, nouvelles alertes';
+  }
+
+  @override
   String shellPendingDecisions(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,

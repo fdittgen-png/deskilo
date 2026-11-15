@@ -41278,6 +41278,15 @@
   "@shellBarShownAnnounce": {
     "description": "Screen-reader announcement when the bar comes back (#1173)"
   },
+  "shellOverflowNews": "{more}, new alerts",
+  "@shellOverflowNews": {
+    "description": "#4030 — the name of the bar's overflow button when a control behind it (the inbox) has news; {more} is the platform's word for the button.",
+    "placeholders": {
+      "more": {
+        "type": "String"
+      }
+    }
+  },
   "shellPendingDecisions": "{count, plural, one{1 decision awaits you} other{{count} decisions await you}}",
   "@shellPendingDecisions": {
     "description": "Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)",

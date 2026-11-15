@@ -110,13 +110,19 @@ class SpaceChip extends ConsumerWidget {
                       overflow: TextOverflow.ellipsis,
                       style: text.labelLarge,
                     ),
-                  Text(
-                    tabTitle,
-                    key: const ValueKey('space-chip-page'),
-                    maxLines: 1,
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,
-                    style: text.titleMedium,
+                  // #4030 — where even the bar's controls in the menu leave
+                  // too little room, the page's name shrinks rather than
+                  // being cut; it is still read whole.
+                  FittedBox(
+                    fit: BoxFit.scaleDown,
+                    alignment: AlignmentDirectional.centerStart,
+                    child: Text(
+                      tabTitle,
+                      key: const ValueKey('space-chip-page'),
+                      maxLines: 1,
+                      softWrap: false,
+                      style: text.titleMedium,
+                    ),
                   ),
                 ],
               ),

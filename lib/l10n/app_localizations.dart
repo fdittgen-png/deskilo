@@ -51240,6 +51240,12 @@ abstract class AppLocalizations {
   /// **'Navigation bar shown'**
   String get shellBarShownAnnounce;
 
+  /// #4030 — the name of the bar's overflow button when a control behind it (the inbox) has news; {more} is the platform's word for the button.
+  ///
+  /// In en, this message translates to:
+  /// **'{more}, new alerts'**
+  String shellOverflowNews(String more);
+
   /// Read after the Reserve button's label while the bars are swiped away and decisions are pending (#1322)
   ///
   /// In en, this message translates to:

@@ -19145,6 +19145,7 @@
   "shellBarShowAction": "Afficher la barre de navigation",
   "shellBarShowHint": "Appui long pour afficher la barre de navigation",
   "shellBarShownAnnounce": "Barre de navigation affichée",
+  "shellOverflowNews": "{more}, nouvelles alertes",
   "shellPendingDecisions": "{count, plural, one{{count} décision vous attend} other{{count} décisions vous attendent}}",
   "shellReserveButton": "Réserver",
   "shellSwipeCoachMark": "Balayez la barre vers le bas pour l'affichage plein écran. Balayez vers le haut, ou appuyez longuement sur le bouton Réserver, pour la faire revenir.",

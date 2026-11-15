@@ -9,6 +9,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/row_menu.dart';
 import 'shell_app_bar.dart';
 import 'shell_title_bar.dart';
@@ -63,6 +64,7 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
                     ...shown.take(shown.length - 1),
                     ShellOverflow(
                       entries: [for (final c in fit.overflow) c.entry!],
+                      attention: fit.overflow.any((c) => c.attention),
                     ),
                     shown.last,
                   ],
@@ -92,11 +94,29 @@ class ShellPhoneBar extends ConsumerWidget implements PreferredSizeWidget {
     final leading = Scaffold.maybeOf(context)?.hasDrawer ?? false
         ? theme.leadingWidth ?? kToolbarHeight
         : 0.0;
-    final spacing = theme.titleSpacing ?? NavigationToolbar.kMiddleSpacing;
-    final padding = theme.actionsPadding?.horizontal ?? 0;
-    final room = width - leading - 2 * spacing - padding - title.ceil();
-    return room <= 0 ? 0 : (room / shellControlExtent).floor();
+    return shellBarSlots(
+      width: width,
+      titleWidth: title,
+      leading: leading,
+      spacing: theme.titleSpacing ?? NavigationToolbar.kMiddleSpacing,
+      padding: theme.actionsPadding?.horizontal ?? 0,
+    );
   }
+}
+
+/// #4030 — how many controls a bar [width] wide holds beside a title
+/// [titleWidth] wide painted whole, after the [leading] button, the
+/// toolbar's [spacing] on either side of its title and its actions'
+/// [padding].
+int shellBarSlots({
+  required double width,
+  required double titleWidth,
+  double leading = 0,
+  double spacing = NavigationToolbar.kMiddleSpacing,
+  double padding = 0,
+}) {
+  final room = width - leading - 2 * spacing - padding - titleWidth.ceil();
+  return room <= 0 ? 0 : (room / shellControlExtent).floor();
 }
 
 /// The controls [slots] buttons wide: every one when they fit; else the
@@ -129,9 +149,17 @@ fitShellControls(
 /// The one overflow button: the kit's row menu, opened from a toolbar-sized
 /// button. A screen reader reaches each entry as an action of the button.
 class ShellOverflow extends StatefulWidget {
-  const ShellOverflow({super.key, required this.entries});
+  const ShellOverflow({
+    super.key,
+    required this.entries,
+    this.attention = false,
+  });
 
   final List<RowAction> entries;
+
+  /// #4030 — a control behind it has news: the button carries a mark and
+  /// says so, so attention is never hidden behind a menu without a sign.
+  final bool attention;
 
   @override
   State<ShellOverflow> createState() => ShellOverflowState();
@@ -153,8 +181,16 @@ class ShellOverflowState extends State<ShellOverflow> {
       child: Builder(
         builder: (button) => IconButton(
           key: const ValueKey('shell-overflow-button'),
-          icon: const Icon(Icons.more_vert),
-          tooltip: MaterialLocalizations.of(context).moreButtonTooltip,
+          icon: Badge(
+            key: const ValueKey('shell-overflow-mark'),
+            isLabelVisible: widget.attention,
+            child: const Icon(Icons.more_vert),
+          ),
+          tooltip: widget.attention
+              ? context.l10n.shellOverflowNews(
+                  MaterialLocalizations.of(context).moreButtonTooltip,
+                )
+              : MaterialLocalizations.of(context).moreButtonTooltip,
           onPressed: () => unawaited(_menu.currentState?.open(anchor: button)),
         ),
       ),
