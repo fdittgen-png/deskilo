@@ -1,0 +1,54 @@
+{
+  "configurationRefusedTitle": "Not applied",
+  "@configurationRefusedTitle": {
+    "description": "#4028 Title of the dialog that lists what a restored file or an applied template left out"
+  },
+  "configurationRefusedPricesFile": "Prices were not applied: this file is in {source} and this business counts in {target}.",
+  "@configurationRefusedPricesFile": {
+    "description": "#4028 A restored file counts in another currency; source and target are currency codes (EUR, GBP)",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "configurationRefusedTaxFile": "Tax rates were not applied: this file is from {source} and this business is in {target}.",
+  "@configurationRefusedTaxFile": {
+    "description": "#4028 A restored file comes from another country; source and target are country names",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "configurationRefusedPricesTemplate": "Prices were not applied: this template is in {source} and this business counts in {target}.",
+  "@configurationRefusedPricesTemplate": {
+    "description": "#4028 An applied template counts in another currency; source and target are currency codes (EUR, GBP)",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  },
+  "configurationRefusedTaxTemplate": "Tax rates were not applied: this template is from {source} and this business is in {target}.",
+  "@configurationRefusedTaxTemplate": {
+    "description": "#4028 An applied template comes from another country; source and target are country names",
+    "placeholders": {
+      "source": {
+        "type": "String"
+      },
+      "target": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -11,8 +11,10 @@ import 'dart:typed_data' show Uint8List;
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/badge/app_badge.dart';
 import 'package:deskilo/core/cache/cache_store.dart';
+import 'package:deskilo/core/demo/data/demo_configuration_fence.dart';
 import 'package:deskilo/core/scan/front_camera.dart';
 import 'package:deskilo/core/storage/active_workspace_store.dart';
+import 'package:deskilo/features/workspace/domain/configuration_refusal.dart';
 import 'package:deskilo/features/workspace/domain/workspace_export_bundle.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
 import 'package:deskilo/features/workspace/domain/workspace_xml.dart';
@@ -174,6 +176,13 @@ class FakeWorkspaceFiles implements WorkspaceFilesRepository {
 /// exported and hands it back: enough for the journey that shows what an
 /// export looks like, and nothing that could reach a project.
 class InMemoryWorkspaceImport implements WorkspaceImportRepository {
+  InMemoryWorkspaceImport({this.placeOf});
+
+  /// #4028 — the currency and country of a Demo business: its export
+  /// states them, and an import into another one is fenced as the
+  /// server fences it (0779).
+  final ({String currency, String country})? Function(String workspaceId)? placeOf;
+
   final Map<String, Map<String, Object?>> configurations = {};
   final List<String> importedPlans = [];
 
@@ -183,12 +192,31 @@ class InMemoryWorkspaceImport implements WorkspaceImportRepository {
   }
 
   @override
-  Future<Map<String, Object?>> exportConfiguration(String workspaceId) async =>
-      configurations[workspaceId] ?? const {};
+  Future<Map<String, Object?>> exportConfiguration(String workspaceId) async {
+    final tree = configurations[workspaceId] ?? const <String, Object?>{};
+    final place = placeOf?.call(workspaceId);
+    if (place == null) return tree;
+    return {
+      ...tree,
+      'workspace': {
+        ...?(tree['workspace'] as Map?)?.cast<String, Object?>(),
+        'currency_code': place.currency,
+        'country_code': place.country,
+      },
+    };
+  }
 
   @override
-  Future<void> importConfiguration(
+  Future<List<ConfigurationRefusal>> importConfiguration(
       String workspaceId, Map<String, Object?> configuration) async {
-    configurations[workspaceId] = configuration;
+    final place = placeOf?.call(workspaceId);
+    if (place == null) {
+      configurations[workspaceId] = configuration;
+      return const [];
+    }
+    final fenced = fenceDemoConfiguration(configuration,
+        currency: place.currency, country: place.country);
+    configurations[workspaceId] = fenced.configuration;
+    return fenced.refused;
   }
 }

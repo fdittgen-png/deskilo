@@ -2,6 +2,7 @@
 import 'package:meta/meta.dart';
 import '../../plan/domain/floor_plan_rules.dart';
 import '../../plan/domain/grid_geometry.dart';
+import 'configuration_refusal.dart';
 import 'workspace_xml.dart';
 
 /// The exact message the `import_floor_plan` RPC (migration 0023) raises
@@ -81,8 +82,9 @@ abstract interface class WorkspaceImportRepository {
 
   /// Applies a configuration tree (#916). Unlike the floor plan this is
   /// never refused over reservations — nothing transactional is
-  /// touched. Owner-only.
-  Future<void> importConfiguration(
+  /// touched. Owner-only. #4028 — answers what it left out: prices from
+  /// another currency, tax rates from another country.
+  Future<List<ConfigurationRefusal>> importConfiguration(
       String workspaceId, Map<String, Object?> configuration);
 }
 

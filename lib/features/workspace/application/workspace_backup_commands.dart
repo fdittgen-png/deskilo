@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/data/server_error.dart';
 import '../../../core/trace/trace_logger.dart';
+import '../domain/configuration_refusal.dart';
 import '../domain/workspace_import.dart';
 import '../domain/workspace_xml.dart';
 import '../providers/workspace_import_providers.dart';
@@ -19,8 +20,8 @@ Future<Map<String, Object?>> exportWorkspaceConfiguration(
     ref.read(workspaceImportRepositoryProvider).exportConfiguration(workspaceId);
 
 /// Applies an imported configuration tree; never refused over
-/// reservations.
-Future<void> importWorkspaceConfiguration(WidgetRef ref, String workspaceId,
+/// reservations. Answers what it left out (#4028).
+Future<List<ConfigurationRefusal>> importWorkspaceConfiguration(WidgetRef ref, String workspaceId,
         Map<String, Object?> configuration) =>
     ref
         .read(workspaceImportRepositoryProvider)

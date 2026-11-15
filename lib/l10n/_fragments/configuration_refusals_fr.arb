@@ -1,0 +1,7 @@
+{
+  "configurationRefusedTitle": "Non appliqué",
+  "configurationRefusedPricesFile": "Les prix n'ont pas été appliqués : ce fichier est en {source} et cette entreprise compte en {target}.",
+  "configurationRefusedTaxFile": "Les taux de TVA n'ont pas été appliqués : pays de ce fichier : {source} ; pays de cette entreprise : {target}.",
+  "configurationRefusedPricesTemplate": "Les prix n'ont pas été appliqués : ce modèle est en {source} et cette entreprise compte en {target}.",
+  "configurationRefusedTaxTemplate": "Les taux de TVA n'ont pas été appliqués : pays de ce modèle : {source} ; pays de cette entreprise : {target}."
+}

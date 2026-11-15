@@ -260,7 +260,7 @@ class DemoFixture implements DemoSpaceParts {
       ),
       biViews: demoBiViews(),
       files: FakeWorkspaceFiles(),
-      imports: demoConfigurationImport(money),
+      imports: demoConfigurationImport(money, workspaces),
       fields: fields,
       roles: roles,
       realtime: FakeRealtimeSync(),
