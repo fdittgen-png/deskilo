@@ -215,6 +215,9 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         setState(() { _alerts = false; _selection = _selection.withView(v); }); },
       onToday: () => _move('today', () => _selection = _selection.withAnchor(_today)));
 
+  /// #4055 — on a phone, where the calendar holds the alerts, the decisions are one row that opens them.
+  CalendarDecisions _decisions(bool alertsOffered) => CalendarDecisions(openAlerts: widget.deskAlerts == null && alertsOffered ? () => ref.read(calendarAlertsRequestProvider.notifier).request() : null);
+
   /// Off the build frame: the request is a provider, the view a setState.
   void _takeAlertsRequest() => Future.microtask(() {
         if (!mounted) return;
@@ -343,7 +346,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       return Scaffold(
         body: ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          _decisions(alertsOffered), // #1306, #4055
           _plainSelector(l10n),
           chips,
         ]),
@@ -385,7 +388,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          _decisions(alertsOffered), // #1306, #4055
                   selector,
                   chips,
                 ]),
@@ -397,7 +400,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         }
         return ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          const CalendarDecisions(), // #1306 — when the bell is off
+          _decisions(alertsOffered), // #1306, #4055
           selector,
           chips,
         ]);
