@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #4004 (0775) -- the organisation of a customer's businesses. An owner of
+-- #4004 (0775-0777) -- the organisation of a customer's businesses. An owner of
 -- two businesses makes one organisation of them; someone who owns only one
 -- of the two is refused; the members of a house read the organisation's
 -- name, someone outside reads nothing. Only the server writes a business's
@@ -76,7 +76,9 @@ select 'ORG-LONDON (dev)', 'GB', 'GBP', 'Europe/London', pg_temp.id('owner_a'),
        '00000000-0000-4000-8000-0000000040aa', 'dev';
 insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
 select id, pg_temp.id('owner_a'), true, true, '2026-01-01' from public.workspaces where name = 'ORG-LONDON (dev)';
-update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040aa' where id = pg_temp.id('w2');
+-- London is the production half of its pair
+update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040aa', environment = 'prod'
+ where id = pg_temp.id('w2');
 select is((select organisation_id from public.workspaces where name = 'ORG-LONDON (dev)'), pg_temp.id('org'),
   'a twin follows its business into the organisation');
 
