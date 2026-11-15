@@ -147,6 +147,8 @@ class _ExcelExport {
           memberName: memberName,
           transmissionsByInvoice: transmissionsByInvoice,
           major: major,
+          at: _at,
+          day: _day,
         ),
       ];
 

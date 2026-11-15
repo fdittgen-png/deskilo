@@ -2,21 +2,20 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 
-import '../../../core/time/workspace_time.dart';
-
 /// The Invoices sheet of the workbook: one row per invoice, with what it froze
 /// at issue (#3850, #3852): its document language, its format locale and its
 /// paper, empty for an invoice issued before they were recorded (#3989).
-/// [major] writes an amount in the workspace currency's major units.
+/// [major] writes an amount in the workspace currency's major units, [at] an
+/// instant at the workspace's wall clock and [day] a calendar day, as every
+/// sheet of the workbook does.
 XlsxSheet workspaceInvoicesSheet({
   required List<Invoice> invoices,
   required Map<String, String> memberName,
   required Map<String, DateTime> transmissionsByInvoice,
   required XlsxAmount Function(int cents) major,
+  required DateTime? Function(DateTime? instant) at,
+  required XlsxDate? Function(DateTime? day) day,
 }) {
-  DateTime? at(DateTime? instant) =>
-      instant == null ? null : WorkspaceTime.wall(instant);
-  XlsxDate? day(DateTime? d) => d == null ? null : XlsxDate(d);
   return XlsxSheet(
     name: 'Invoices',
     totals: 'total',
