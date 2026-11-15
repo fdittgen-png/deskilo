@@ -13,6 +13,7 @@ import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
 import '../core/shortcuts/shortcut_scope.dart';
 import '../core/ui/app_scroll_behavior.dart';
+import '../core/ui/kit/form_scroll.dart';
 import '../core/ui/kit/page_title.dart';
 import '../core/ui/system_insets_guard.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
@@ -189,7 +190,10 @@ class DeskiloApp extends ConsumerWidget {
                       child: desk
                           ? DeskFrame(router: router, path: path, child: page)
                           // #3604 — the measure its route declares.
-                          : framePage(path, page, inside: false),
+                          : FocusTraversalGroup(
+                              policy: PageTraversalPolicy(),
+                              child: framePage(path, page, inside: false),
+                            ),
                     ),
                     ),
                     );
