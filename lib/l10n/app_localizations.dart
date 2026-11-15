@@ -25261,11 +25261,35 @@ abstract class AppLocalizations {
   /// **'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.'**
   String get invoiceOriginalNotYetKept;
 
+  /// #3853 snack: the original could not be kept; the server's words follow
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the original of this invoice could not be kept. {why}'**
+  String invoiceOriginalRefused(String why);
+
   /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
   ///
   /// In en, this message translates to:
   /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
   String get invoiceOriginalTooLarge;
+
+  /// #3853 after keeping the originals from To do: how many could not be kept; each invoice says why when opened
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of {count} invoice could not be kept. Open it to see why.} other{The originals of {count} invoices could not be kept. Open one to see why.}}'**
+  String invoiceOriginalsCouldNotKeep(int count);
+
+  /// #3853 progress while the originals are kept in turn
+  ///
+  /// In en, this message translates to:
+  /// **'{total, plural, one{Keeping the original: {done} of {total}} other{Keeping the originals: {done} of {total}}}'**
+  String invoiceOriginalsKeeping(int done, int total);
+
+  /// #3853 after issuing: the originals kept in the same flow
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of {count} invoice is kept.} other{The originals of {count} invoices are kept.}}'**
+  String invoiceOriginalsKeptNow(int count);
 
   /// #3853 after issuing: how many originals could not be kept in the same flow; the invoices stay issued
   ///
@@ -26850,6 +26874,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Fix'**
   String get invoicingTodoFix;
+
+  /// #3853 To do: the action that keeps the originals, in turn
+  ///
+  /// In en, this message translates to:
+  /// **'Keep them'**
+  String get invoicingTodoKeep;
+
+  /// #3853 To do: issued invoices whose original is not kept yet
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Keep the original of {count} invoice} other{Keep the originals of {count} invoices}}'**
+  String invoicingTodoKeepOriginals(int count);
 
   /// #3587 To do: received payments to match
   ///

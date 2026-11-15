@@ -90,6 +90,9 @@ abstract interface class InvoiceOriginalRepository {
   /// [workspaceId], or null when none is kept.
   Future<InvoiceOriginal?> originalOf(String workspaceId, String invoiceId);
 
+  /// The invoices of [workspaceId] whose original is kept.
+  Future<Set<String>> keptIn(String workspaceId);
+
   /// The stored PDF of [original], as it is held.
   Future<Uint8List> pdfOf(InvoiceOriginal original);
 

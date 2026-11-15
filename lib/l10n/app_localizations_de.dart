@@ -15858,8 +15858,48 @@ class AppLocalizationsDe extends AppLocalizations {
       'Kopie: Das Unternehmen hat das Original dieser Rechnung noch nicht aufbewahrt; sie wird jetzt mit den heutigen Einstellungen erstellt.';
 
   @override
+  String invoiceOriginalRefused(String why) {
+    return 'Kopie: Das Original dieser Rechnung konnte nicht aufbewahrt werden. $why';
+  }
+
+  @override
   String get invoiceOriginalTooLarge =>
       'Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Verwenden Sie kleinere Bilder.';
+
+  @override
+  String invoiceOriginalsCouldNotKeep(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Die Originale von $count Rechnungen konnten nicht aufbewahrt werden. Öffnen Sie eine, um den Grund zu sehen.',
+      one:
+          'Das Original von $count Rechnung konnte nicht aufbewahrt werden. Öffnen Sie sie, um den Grund zu sehen.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeeping(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: 'Originale werden aufbewahrt: $done von $total',
+      one: 'Original wird aufbewahrt: $done von $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Die Originale von $count Rechnungen sind aufbewahrt.',
+      one: 'Das Original von $count Rechnung ist aufbewahrt.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceOriginalsNotKeptNow(int count) {
@@ -16860,6 +16900,20 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoicingTodoFix => 'Beheben';
+
+  @override
+  String get invoicingTodoKeep => 'Aufbewahren';
+
+  @override
+  String invoicingTodoKeepOriginals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Die Originale von $count Rechnungen aufbewahren',
+      one: 'Das Original von $count Rechnung aufbewahren',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingTodoMatch => 'Zahlungen zuordnen';

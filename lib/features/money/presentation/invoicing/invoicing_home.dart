@@ -21,10 +21,13 @@ import '../../../../l10n/app_localizations.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
 import 'invoicing_desk_table.dart';
+import 'invoicing_home_data.dart';
 import 'invoicing_home_parts.dart';
 import 'invoicing_list.dart';
 import 'invoicing_words.dart';
 import 'reminder_mode_line.dart';
+
+export 'invoicing_home_data.dart';
 
 /// A source the home reads that can fail on its own; what it fed is not
 /// shown while it is missing.
@@ -57,49 +60,6 @@ enum InvoicingSource {
     declarations,
     rules,
   };
-}
-
-/// What the home shows: the receivables on [today], the month [toInvoice],
-/// the payments [received], the reminder [mode] and the sources that
-/// [failed]. [currency] is the workspace's (what an empty card says in).
-@immutable
-class InvoicingHomeData {
-  const InvoicingHomeData({
-    required this.receivables,
-    required this.today,
-    required this.month,
-    required this.currency,
-    required this.mode,
-    this.toInvoice = const [],
-    this.toInvoiceMonth = '',
-    this.received = const [],
-    this.failed = const {},
-    this.holdsUnassigned = const {},
-    this.creditsKnown = true,
-  });
-
-  final List<Receivable> receivables;
-  final DateTime today;
-
-  /// The current month in words ("November").
-  final String month;
-
-  /// The month still to invoice in words ("October").
-  final String toInvoiceMonth;
-  final String currency;
-  final ReminderMode mode;
-  final List<ToInvoice> toInvoice;
-  final List<ReceivedPayment> received;
-  final Set<InvoicingSource> failed;
-
-  /// The customers who hold money received and not assigned
-  /// (`holdsUnassignedMoney`): matched first, never reminded.
-  final Set<String> holdsUnassigned;
-
-  /// Whether the customers' credits were read. Until then nobody is known
-  /// to hold money, so no reminder is offered and "Share reminders by
-  /// hand" says it is checking the received payments.
-  final bool creditsKnown;
 }
 
 /// What the home's controls do; the screen wires the existing flows.
@@ -416,10 +376,15 @@ class _InvoicingHomeState extends State<InvoicingHome> {
           : data.toInvoice,
       mode: data.mode,
       holdsUnassigned: data.holdsUnassigned,
+      originalsToKeep: data.originalsToKeep,
     );
-    String caption(Todo t) => t.kind == TodoKind.invoiceTheMonth
-        ? '${l.invoicingCustomerCount(t.tally.count)} · ${amountsOf(format, t.tally)}'
-        : '${l.invoicingInvoiceCount(t.tally.count)} · ${amountsOf(format, t.tally)}';
+    String caption(Todo t) => [
+      if (t.kind == TodoKind.invoiceTheMonth)
+        l.invoicingCustomerCount(t.tally.count)
+      else
+        l.invoicingInvoiceCount(t.tally.count),
+      if (t.tally.byCurrency.isNotEmpty) amountsOf(format, t.tally),
+    ].join(' · ');
     return TodoCard(
       key: const ValueKey('invoicing-todo'),
       title: l.invoicingTodo,
@@ -478,6 +443,7 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       data.receivables,
       mode: data.mode,
       holdsUnassigned: data.holdsUnassigned,
+      originalsToKeep: data.originalsToKeep,
     ).firstWhere(
       (t) => t.kind == kind,
       orElse: () => (kind: kind, tally: Tally.empty),

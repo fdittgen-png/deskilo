@@ -28,6 +28,7 @@ import 'e_invoice_identity.dart';
 import 'gobd_procedure_document.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
+import 'invoice_original_document.dart';
 import 'widgets/export_accounts_dialogs.dart';
 
 /// #2375 — the DATEV and GoBD exports of [AccountingExportRun].
@@ -232,14 +233,13 @@ extension GermanAccountingExports on AccountingExportRun {
     final files = <String, List<int>>{};
     for (final invoice in invoices) {
       if (!context.mounted) return null;
-      final pdf = await buildFacturXFile(
-        context,
-        ref,
-        invoice,
-        seller: sellerOf(invoice, workspace),
-        buyer: buyerOf(invoice, workspace),
-        iban: workspaceIban(workspace),
-      );
+      // #3853 — the stored original, made first if it is missing; an invoice
+      // issued before originals were kept renders as before.
+      final pdf = await InvoiceDocumentFlow(context, ref).facturXOriginal(invoice) ??
+          (context.mounted
+              ? await buildFacturXFile(context, ref, invoice,
+                  seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace),)
+              : (bytes: const <int>[], fileName: ''));
       if (pdf.bytes.isEmpty) return null;
       files[pathOf(invoice)] = pdf.bytes;
     }

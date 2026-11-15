@@ -15892,8 +15892,48 @@ class AppLocalizationsFr extends AppLocalizations {
       'Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.';
 
   @override
+  String invoiceOriginalRefused(String why) {
+    return 'Copie : l’original de cette facture n’a pas pu être conservé. $why';
+  }
+
+  @override
   String get invoiceOriginalTooLarge =>
       'Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.';
+
+  @override
+  String invoiceOriginalsCouldNotKeep(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Les originaux de $count factures n’ont pas pu être conservés. Ouvrez-en une pour voir pourquoi.',
+      one:
+          'L’original de $count facture n’a pas pu être conservé. Ouvrez-la pour voir pourquoi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeeping(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: 'Conservation des originaux : $done sur $total',
+      one: 'Conservation de l’original : $done sur $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Les originaux de $count factures sont conservés.',
+      one: 'L’original de $count facture est conservé.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceOriginalsNotKeptNow(int count) {
@@ -16895,6 +16935,20 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoicingTodoFix => 'Corriger';
+
+  @override
+  String get invoicingTodoKeep => 'Les conserver';
+
+  @override
+  String invoicingTodoKeepOriginals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Conserver les originaux de $count factures',
+      one: 'Conserver l’original de $count facture',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingTodoMatch => 'Rapprocher des paiements';

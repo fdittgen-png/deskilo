@@ -60,6 +60,7 @@ import 'e_invoice_identity.dart';
 import 'export_year_books.dart';
 import 'invoice_actions.dart';
 import 'invoice_documents.dart';
+import 'invoice_original_document.dart';
 import 'report_strings_l10n.dart';
 import 'vat_report_actions.dart';
 import 'vat_tax_point_labels.dart';
@@ -454,14 +455,13 @@ class AccountingExportRun {
         };
         final vouchers = <String, Map<String, List<int>>>{};
         for (final invoice in yearInvoices) {
-          final pdf = await buildFacturXFile(
-            context,
-            ref,
-            invoice,
-            seller: sellerOf(invoice, workspace),
-            buyer: buyerOf(invoice, workspace),
-            iban: workspaceIban(workspace),
-          );
+          // #3853 — the stored original, made first if it is missing; an invoice
+          // issued before originals were kept renders as before.
+          final pdf = await InvoiceDocumentFlow(context, ref).facturXOriginal(invoice) ??
+              (context.mounted
+                  ? await buildFacturXFile(context, ref, invoice,
+                      seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace),)
+                  : (bytes: const <int>[], fileName: ''));
           // #1885 — a document that did not render ends the bundle: an
           // archive missing an invoice must never be saved as complete.
           if (pdf.bytes.isEmpty) return;

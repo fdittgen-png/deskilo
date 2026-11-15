@@ -38,6 +38,7 @@ import 'invoice_actions.dart'
     show requireWorkspaceTaxReference, workspaceTaxReference;
 import 'invoice_document_locale.dart';
 import 'invoice_documents.dart';
+import 'invoice_original_document.dart';
 import 'invoice_pdf_actions.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/einvoice_environment_picker.dart';
@@ -74,14 +75,13 @@ Future<void> sendEInvoice(
     action: () async {
       final ({List<int> bytes, String fileName}) file;
       if (format == EInvoiceFormat.facturX) {
-        file = await buildFacturXFile(
-          context,
-          ref,
-          invoice,
-          seller: seller,
-          buyer: buyer,
-          iban: iban,
-        );
+        // #3853 — the stored original leaves, the same bytes as everywhere
+        final flow = InvoiceDocumentFlow(context, ref);
+        file = await flow.facturXOriginal(invoice) ??
+            (context.mounted
+                ? await buildFacturXFile(context, ref, invoice,
+                    seller: seller, buyer: buyer, iban: iban)
+                : (bytes: const <int>[], fileName: ''));
       } else {
         // #2358 — the network's own syntax, from the inputs the
         // download uses; #3850 — in the invoice's own language.
@@ -418,14 +418,12 @@ class _EInvoiceExportRun {
     message: 'factur-x export failed',
     errorText: context.l10n.workspaceGenericError,
     action: () async {
-      final file = await buildFacturXFile(
-        context,
-        ref,
-        s.invoice,
-        seller: s.seller,
-        buyer: s.buyer,
-        iban: s.iban,
-      );
+      // #3853 — the stored original, the same bytes as everywhere
+      final file = await InvoiceDocumentFlow(context, ref).facturXOriginal(s.invoice) ??
+          (context.mounted
+              ? await buildFacturXFile(context, ref, s.invoice,
+                  seller: s.seller, buyer: s.buyer, iban: s.iban)
+              : (bytes: const <int>[], fileName: ''));
       if (file.fileName.isEmpty) return;
       final bytes = Uint8List.fromList(file.bytes);
       if (share) {

@@ -15702,8 +15702,48 @@ class AppLocalizationsEn extends AppLocalizations {
       'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.';
 
   @override
+  String invoiceOriginalRefused(String why) {
+    return 'Copy: the original of this invoice could not be kept. $why';
+  }
+
+  @override
   String get invoiceOriginalTooLarge =>
       'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+
+  @override
+  String invoiceOriginalsCouldNotKeep(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The originals of $count invoices could not be kept. Open one to see why.',
+      one:
+          'The original of $count invoice could not be kept. Open it to see why.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeeping(int done, int total) {
+    String _temp0 = intl.Intl.pluralLogic(
+      total,
+      locale: localeName,
+      other: 'Keeping the originals: $done of $total',
+      one: 'Keeping the original: $done of $total',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String invoiceOriginalsKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'The originals of $count invoices are kept.',
+      one: 'The original of $count invoice is kept.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String invoiceOriginalsNotKeptNow(int count) {
@@ -16697,6 +16737,20 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoicingTodoFix => 'Fix';
+
+  @override
+  String get invoicingTodoKeep => 'Keep them';
+
+  @override
+  String invoicingTodoKeepOriginals(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Keep the originals of $count invoices',
+      one: 'Keep the original of $count invoice',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicingTodoMatch => 'Match payments';

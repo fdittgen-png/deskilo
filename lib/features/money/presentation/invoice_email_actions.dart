@@ -30,6 +30,7 @@ import '../providers/invoice_mail_providers.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
 import 'invoice_journey.dart' show invoiceRemainingCents;
+import 'invoice_original_document.dart';
 import 'invoice_pdf_actions.dart';
 import 'mail_refusal_text.dart';
 
@@ -62,16 +63,13 @@ class InvoiceEmailFlow {
 
   InvoiceMailCommands get _commands => ref.read(invoiceMailCommandsProvider);
 
-  /// The document share and download give. The annexes are asked as they
-  /// ask them; null when the person cancelled.
+  /// The document share and download give: the invoice's stored original,
+  /// made first if it is missing (#3853). The annexes are asked as they ask
+  /// them; null when the person cancelled.
   Future<({List<int> bytes, String fileName})?> _document(Invoice invoice) async {
     final annexes = await askRegroupedAnnexes(context, ref, invoice);
     if (annexes == null || !context.mounted) return null;
-    return buildInvoicePdfFile(
-      context,
-      invoice,
-      invoiceShareOptions(context, ref, invoice, annexes),
-    );
+    return InvoiceDocumentFlow(context, ref).fileFor(invoice, annexes);
   }
 
   /// Sends [invoice] as [kind]: the first e-mail, or "send again".
