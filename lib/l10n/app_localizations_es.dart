@@ -19576,6 +19576,39 @@ class AppLocalizationsEs extends AppLocalizations {
   String get mcpRemoveWorkspace => 'Quitar este espacio';
 
   @override
+  String mcpRequestAsked(String client, String workspace, String when) {
+    return 'Solicitada por $client en $workspace, $when';
+  }
+
+  @override
+  String get mcpRequestConfirmed => 'Confirmada';
+
+  @override
+  String get mcpRequestExpired => 'Caducada';
+
+  @override
+  String get mcpRequestOpen => 'Abrir';
+
+  @override
+  String get mcpRequestRefused => 'Rechazada';
+
+  @override
+  String get mcpRequestRevoked => 'Retirada';
+
+  @override
+  String get mcpRequestUnknown => 'Respuesta ilegible';
+
+  @override
+  String get mcpRequestsAnsweredTitle => 'Respondidas recientemente';
+
+  @override
+  String get mcpRequestsUnavailable =>
+      'No se pudieron leer las solicitudes de sus asistentes. Vuelva a abrir esta página más tarde.';
+
+  @override
+  String get mcpRequestsWaitingTitle => 'Pendiente de su confirmación';
+
+  @override
   String get mcpReviewApprove => 'Aprobar';
 
   @override

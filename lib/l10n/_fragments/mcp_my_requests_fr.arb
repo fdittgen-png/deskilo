@@ -1,0 +1,12 @@
+{
+  "mcpRequestsWaitingTitle": "En attente de votre confirmation",
+  "mcpRequestsAnsweredTitle": "Répondues récemment",
+  "mcpRequestOpen": "Ouvrir",
+  "mcpRequestAsked": "Demandée par {client} dans {workspace}, {when}",
+  "mcpRequestConfirmed": "Confirmée",
+  "mcpRequestRefused": "Refusée",
+  "mcpRequestExpired": "Expirée",
+  "mcpRequestRevoked": "Retirée",
+  "mcpRequestUnknown": "Réponse illisible",
+  "mcpRequestsUnavailable": "Les demandes de vos assistants n'ont pas pu être lues. Rouvrez cette page plus tard."
+}
