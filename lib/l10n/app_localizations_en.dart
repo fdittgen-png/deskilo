@@ -13634,6 +13634,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get houseActivate => 'Activate';
+
+  @override
   String get houseAddCarried =>
       'Travels: the roles, the booking and validation rules, the reminders, and the features this country has.';
 
@@ -13725,6 +13728,81 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String houseBirthToPrice(String rows) {
     return 'Carried, inactive and to be priced: $rows.';
+  }
+
+  @override
+  String get houseDone => 'Done';
+
+  @override
+  String houseFirstSale(String country) {
+    return 'Before your first sale in $country';
+  }
+
+  @override
+  String get houseFree => 'Free';
+
+  @override
+  String get houseKindPackage => 'Package';
+
+  @override
+  String get houseKindService => 'Service';
+
+  @override
+  String get houseLater => 'I will finish later';
+
+  @override
+  String houseNamePrices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Name your prices ($count left)',
+      one: 'Name your prices (1 left)',
+      zero: 'Name your prices (none left)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseNamePricesAfterRates => 'First set the tax rates.';
+
+  @override
+  String houseNoVat(String country) {
+    return '$country has no VAT: nothing to set here.';
+  }
+
+  @override
+  String get houseOwnFeeBands => 'The fee bands';
+
+  @override
+  String get houseOwnLayout => 'The document layout';
+
+  @override
+  String get houseOwnLinks => 'The document links';
+
+  @override
+  String get houseOwnPayment => 'The payment instructions and the bank account';
+
+  @override
+  String get houseOwnTitle => 'This house\'s own to set';
+
+  @override
+  String get housePriceLabel => 'Price';
+
+  @override
+  String get housePriceRequired => 'Name a price; 0 makes it free.';
+
+  @override
+  String get housePricesTitle => 'Name your prices';
+
+  @override
+  String get houseRateLabel => 'Rate';
+
+  @override
+  String get houseRateRequired => 'Choose a rate.';
+
+  @override
+  String houseSetRates(String country) {
+    return 'Set $country\'s tax rates';
   }
 
   @override

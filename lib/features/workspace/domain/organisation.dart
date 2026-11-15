@@ -202,6 +202,10 @@ abstract interface class OrganisationRepository {
   /// #4005 — the birth record of [workspaceId], or none when it was not
   /// created as a house.
   Future<HouseBirth?> houseBirth(String workspaceId);
+
+  /// #4005 — the house [workspaceId]'s prices are named: its first task
+  /// closes.
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId);
 }
 
 /// #4005 — a house abroad to create: its name, country, currency, time zone

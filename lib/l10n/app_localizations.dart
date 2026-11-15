@@ -22169,6 +22169,12 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #4005 — a house's first task, naming its prices: houseActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get houseActivate;
+
   /// #4005 — a house abroad: houseAddCarried.
   ///
   /// In en, this message translates to:
@@ -22264,6 +22270,126 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Carried, inactive and to be priced: {rows}.'**
   String houseBirthToPrice(String rows);
+
+  /// #4005 — a house's first task, naming its prices: houseDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get houseDone;
+
+  /// #4005 — a house's first task, naming its prices: houseFirstSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Before your first sale in {country}'**
+  String houseFirstSale(String country);
+
+  /// #4005 — a house's first task, naming its prices: houseFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get houseFree;
+
+  /// #4005 — a house's first task, naming its prices: houseKindPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get houseKindPackage;
+
+  /// #4005 — a house's first task, naming its prices: houseKindService.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get houseKindService;
+
+  /// #4005 — a house's first task, naming its prices: houseLater.
+  ///
+  /// In en, this message translates to:
+  /// **'I will finish later'**
+  String get houseLater;
+
+  /// #4005 — a house's first task, naming its prices: houseNamePrices.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Name your prices (none left)} one{Name your prices (1 left)} other{Name your prices ({count} left)}}'**
+  String houseNamePrices(int count);
+
+  /// #4005 — a house's first task, naming its prices: houseNamePricesAfterRates.
+  ///
+  /// In en, this message translates to:
+  /// **'First set the tax rates.'**
+  String get houseNamePricesAfterRates;
+
+  /// #4005 — a house's first task, naming its prices: houseNoVat.
+  ///
+  /// In en, this message translates to:
+  /// **'{country} has no VAT: nothing to set here.'**
+  String houseNoVat(String country);
+
+  /// #4005 — a house's first task, naming its prices: houseOwnFeeBands.
+  ///
+  /// In en, this message translates to:
+  /// **'The fee bands'**
+  String get houseOwnFeeBands;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'The document layout'**
+  String get houseOwnLayout;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'The document links'**
+  String get houseOwnLinks;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'The payment instructions and the bank account'**
+  String get houseOwnPayment;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This house\'s own to set'**
+  String get houseOwnTitle;
+
+  /// #4005 — a house's first task, naming its prices: housePriceLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Price'**
+  String get housePriceLabel;
+
+  /// #4005 — a house's first task, naming its prices: housePriceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name a price; 0 makes it free.'**
+  String get housePriceRequired;
+
+  /// #4005 — a house's first task, naming its prices: housePricesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name your prices'**
+  String get housePricesTitle;
+
+  /// #4005 — a house's first task, naming its prices: houseRateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get houseRateLabel;
+
+  /// #4005 — a house's first task, naming its prices: houseRateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a rate.'**
+  String get houseRateRequired;
+
+  /// #4005 — a house's first task, naming its prices: houseSetRates.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {country}\'s tax rates'**
+  String houseSetRates(String country);
 
   /// the accounting and VAT page and its menu group
   ///

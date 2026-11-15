@@ -1,0 +1,23 @@
+{
+  "houseFirstSale": "Antes de su primera venta en {country}",
+  "houseSetRates": "Fijar los tipos de impuesto de {country}",
+  "houseNoVat": "{country} no tiene IVA: no hay nada que fijar aquí.",
+  "houseNamePrices": "{count, plural, =0{Ponga sus precios (ninguno pendiente)} one{Ponga sus precios (1 pendiente)} other{Ponga sus precios ({count} pendientes)}}",
+  "houseNamePricesAfterRates": "Fije primero los tipos de impuesto.",
+  "housePricesTitle": "Ponga sus precios",
+  "housePriceLabel": "Precio",
+  "houseRateLabel": "Tipo",
+  "housePriceRequired": "Indique un precio; 0 lo hace gratuito.",
+  "houseRateRequired": "Elija un tipo.",
+  "houseActivate": "Activar",
+  "houseFree": "Gratis",
+  "houseOwnTitle": "Propios de esta casa",
+  "houseOwnFeeBands": "Los tramos de cuota",
+  "houseOwnLayout": "El diseño de los documentos",
+  "houseOwnLinks": "Los enlaces de los documentos",
+  "houseOwnPayment": "Las instrucciones de pago y la cuenta bancaria",
+  "houseDone": "Hecho",
+  "houseLater": "Terminaré más tarde",
+  "houseKindService": "Servicio",
+  "houseKindPackage": "Paquete"
+}

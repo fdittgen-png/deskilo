@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../app/house/house_prices.dart';
 import '../../../../app/shell/space_entry.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -233,6 +234,8 @@ class OrganisationSheet extends ConsumerWidget {
   List<Widget> _birthOf(HouseBirth? birth, Organisation? organisation) => [
     if (birth != null) ...[
       const FormGap(),
+      // #4005 — the house's own first task, while its prices are unnamed.
+      HousePricesCard(workspace: workspace),
       HouseBirthView(
         birth: birth,
         head: organisation?.houseOf(birth.headWorkspaceId ?? '')?.name ?? '',

@@ -1,0 +1,106 @@
+{
+  "houseFirstSale": "Before your first sale in {country}",
+  "@houseFirstSale": {
+    "description": "#4005 — a house's first task, naming its prices: houseFirstSale.",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "houseSetRates": "Set {country}'s tax rates",
+  "@houseSetRates": {
+    "description": "#4005 — a house's first task, naming its prices: houseSetRates.",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "houseNoVat": "{country} has no VAT: nothing to set here.",
+  "@houseNoVat": {
+    "description": "#4005 — a house's first task, naming its prices: houseNoVat.",
+    "placeholders": {
+      "country": {
+        "type": "String"
+      }
+    }
+  },
+  "houseNamePrices": "{count, plural, =0{Name your prices (none left)} one{Name your prices (1 left)} other{Name your prices ({count} left)}}",
+  "@houseNamePrices": {
+    "description": "#4005 — a house's first task, naming its prices: houseNamePrices.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseNamePricesAfterRates": "First set the tax rates.",
+  "@houseNamePricesAfterRates": {
+    "description": "#4005 — a house's first task, naming its prices: houseNamePricesAfterRates."
+  },
+  "housePricesTitle": "Name your prices",
+  "@housePricesTitle": {
+    "description": "#4005 — a house's first task, naming its prices: housePricesTitle."
+  },
+  "housePriceLabel": "Price",
+  "@housePriceLabel": {
+    "description": "#4005 — a house's first task, naming its prices: housePriceLabel."
+  },
+  "houseRateLabel": "Rate",
+  "@houseRateLabel": {
+    "description": "#4005 — a house's first task, naming its prices: houseRateLabel."
+  },
+  "housePriceRequired": "Name a price; 0 makes it free.",
+  "@housePriceRequired": {
+    "description": "#4005 — a house's first task, naming its prices: housePriceRequired."
+  },
+  "houseRateRequired": "Choose a rate.",
+  "@houseRateRequired": {
+    "description": "#4005 — a house's first task, naming its prices: houseRateRequired."
+  },
+  "houseActivate": "Activate",
+  "@houseActivate": {
+    "description": "#4005 — a house's first task, naming its prices: houseActivate."
+  },
+  "houseFree": "Free",
+  "@houseFree": {
+    "description": "#4005 — a house's first task, naming its prices: houseFree."
+  },
+  "houseOwnTitle": "This house's own to set",
+  "@houseOwnTitle": {
+    "description": "#4005 — a house's first task, naming its prices: houseOwnTitle."
+  },
+  "houseOwnFeeBands": "The fee bands",
+  "@houseOwnFeeBands": {
+    "description": "#4005 — a house's first task, naming its prices: houseOwnFeeBands."
+  },
+  "houseOwnLayout": "The document layout",
+  "@houseOwnLayout": {
+    "description": "#4005 — a house's first task, naming its prices: houseOwnLayout."
+  },
+  "houseOwnLinks": "The document links",
+  "@houseOwnLinks": {
+    "description": "#4005 — a house's first task, naming its prices: houseOwnLinks."
+  },
+  "houseOwnPayment": "The payment instructions and the bank account",
+  "@houseOwnPayment": {
+    "description": "#4005 — a house's first task, naming its prices: houseOwnPayment."
+  },
+  "houseDone": "Done",
+  "@houseDone": {
+    "description": "#4005 — a house's first task, naming its prices: houseDone."
+  },
+  "houseLater": "I will finish later",
+  "@houseLater": {
+    "description": "#4005 — a house's first task, naming its prices: houseLater."
+  },
+  "houseKindService": "Service",
+  "@houseKindService": {
+    "description": "#4005 — a house's first task, naming its prices: houseKindService."
+  },
+  "houseKindPackage": "Package",
+  "@houseKindPackage": {
+    "description": "#4005 — a house's first task, naming its prices: houseKindPackage."
+  }
+}

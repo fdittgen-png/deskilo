@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../app/house/house_prices.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -137,6 +138,8 @@ class _WorkspaceOverviewScreenState
         padding: AppSpacing.gutterAll,
         children: [
           ?setup,
+          // #4005 — a house's own first task, while its prices are unnamed.
+          if (workspace != null) HousePricesCard(workspace: workspace),
           heading(l10n.overviewNeedsAttention, 'overview-attention'),
           if (workspace != null &&
               modules.any((m) => m.id == _pendingActions))
