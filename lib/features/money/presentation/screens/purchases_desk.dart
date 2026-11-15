@@ -38,36 +38,39 @@ const String _purchasesPath = '/money/purchases';
 /// Where a document opens: `/money/purchases/doc/<id>`.
 const String purchaseDocPath = '/money/purchases/doc';
 
-/// What a row can say of its supplier (#4067): a name, that the purchase has
-/// none, or that the suppliers could not be read.
-enum _SupplierState { named, none, unread, loading }
+/// One row: the document, its supplier's name (empty when it has none or the
+/// name is not known) and what is still open of it (null while the payables
+/// are not read).
+typedef _Row = ({PurchaseSummary doc, String supplier, int? open});
 
-/// One row: the document, its supplier's name (empty unless
-/// [_SupplierState.named]) and what is still open of it (null while the
-/// payables are not read).
-typedef _Row = ({
-  PurchaseSummary doc,
-  String supplier,
-  _SupplierState supplierState,
-  int? open,
-});
+/// How the suppliers' list was read, which says why a name may be missing
+/// (#4067).
+enum _SuppliersRead { loading, read, failed }
 
 /// The supplier of a row: its name, or one muted line that says why there is
 /// none; never a blank.
-Widget _supplierText(BuildContext context, AppLocalizations l, _Row r) {
-  final (:text, :muted) = switch (r.supplierState) {
-    _SupplierState.named => (text: r.supplier, muted: false),
-    _SupplierState.none => (text: l.scheduleNoSupplier, muted: true),
-    _SupplierState.unread => (text: l.purchasesSupplierNotRead, muted: true),
-    _SupplierState.loading => (text: '', muted: false),
-  };
+Widget _supplierText(
+  BuildContext context,
+  AppLocalizations l,
+  _Row r,
+  _SuppliersRead read,
+) {
+  final String? line = r.supplier.isNotEmpty
+      ? null
+      : r.doc.supplierId == null
+      ? l.scheduleNoSupplier
+      : switch (read) {
+          _SuppliersRead.loading => '',
+          _SuppliersRead.read || _SuppliersRead.failed =>
+            l.purchasesSupplierNotRead,
+        };
   final theme = Theme.of(context);
   return Text(
-    text,
+    line ?? r.supplier,
     overflow: TextOverflow.ellipsis,
-    style: muted
-        ? TextStyle(color: theme.colorScheme.onSurfaceVariant)
-        : null,
+    style: line == null || line.isEmpty
+        ? null
+        : TextStyle(color: theme.colorScheme.onSurfaceVariant),
   );
 }
 
@@ -132,13 +135,6 @@ class PurchasesDesk extends ConsumerWidget {
         (
           doc: d,
           supplier: suppliers[d.supplierId] ?? '',
-          supplierState: d.supplierId == null
-              ? _SupplierState.none
-              : suppliers.containsKey(d.supplierId)
-              ? _SupplierState.named
-              : supplierRead.isLoading
-              ? _SupplierState.loading
-              : _SupplierState.unread,
           open: payables == null ? null : open[d.id] ?? 0,
         ),
     ];
@@ -162,6 +158,11 @@ class PurchasesDesk extends ConsumerWidget {
         Expanded(
           child: _PurchasesTable(
             rows: rows,
+            suppliersRead: switch (supplierRead) {
+              AsyncData() => _SuppliersRead.read,
+              AsyncError() => _SuppliersRead.failed,
+              _ => _SuppliersRead.loading,
+            },
             state: switch (purchases) {
               AsyncData() => RecordsState.ready,
               AsyncError() => RecordsState.failed,
@@ -182,6 +183,7 @@ class PurchasesDesk extends ConsumerWidget {
 class _PurchasesTable extends StatelessWidget {
   const _PurchasesTable({
     required this.rows,
+    required this.suppliersRead,
     required this.state,
     required this.onRetry,
     required this.today,
@@ -189,6 +191,7 @@ class _PurchasesTable extends StatelessWidget {
   });
 
   final List<_Row> rows;
+  final _SuppliersRead suppliersRead;
   final RecordsState state;
   final VoidCallback onRetry;
 
@@ -252,7 +255,7 @@ class _PurchasesTable extends StatelessWidget {
           flex: 4,
           hideable: false,
           sortKey: (r) => r.supplier.toLowerCase(),
-          cell: (context, r) => _supplierText(context, l, r),
+          cell: (context, r) => _supplierText(context, l, r, suppliersRead),
         ),
         RecordColumn(
           id: 'category',
@@ -323,7 +326,7 @@ class _PurchasesTable extends StatelessWidget {
         ),
       ],
       cardBuilder: (context, r) => ListTile(
-        title: _supplierText(context, l, r),
+        title: _supplierText(context, l, r, suppliersRead),
         subtitle: Text(r.doc.category),
         trailing: Text(figure(r, r.doc.grossCents)),
       ),
