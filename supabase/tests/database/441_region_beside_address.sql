@@ -8,7 +8,7 @@
 -- code; a managed identity keeps it; erasure clears it; a claimed profile
 -- carries it; a site's region travels in a configuration. Rolled back.
 begin;
-select plan(13);
+select plan(14);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -16,7 +16,7 @@ declare
   up uuid := '00000000-0000-4000-8000-000000036492';
   uq uuid := '00000000-0000-4000-8000-000000036493';
   uc uuid := '00000000-0000-4000-8000-000000036494';
-  ws uuid; mp uuid; mq uuid; m1 uuid; m2 uuid; mc uuid;
+  ws uuid; mp uuid; mq uuid; m1 uuid; m2 uuid; mc uuid; other uuid;
 begin
   insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
   select u,'00000000-0000-0000-0000-000000000000','authenticated','authenticated','region-'||right(u::text,4)||'@deskilo.test','',now(),now(),now()
@@ -50,7 +50,13 @@ begin
   values (ws, 'REGION3649', false, uo, now() + interval '1 day', mc);
   delete from public.fee_bands where workspace_id = ws;
   insert into public.fee_bands(workspace_id,from_pct,to_pct,fee_cents,overage_fee_cents) values (ws,0,100,3500,1000);
-  insert into public.sites(workspace_id, name, country_code, subdivision) values (ws, 'Annex', 'IT', 'MI');
+  insert into public.sites(workspace_id, name, street, city, country_code, subdivision)
+  values (ws, 'Annex', 'Via Brera 7', 'Milano', 'IT', 'MI');
+  -- a second business, in another country, the configuration is applied to
+  insert into public.workspaces(name,country_code,currency_code,timezone,created_by)
+   values ('Region 3649 Lugano','CH','CHF','Europe/Zurich',uo) returning id into other;
+  insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (other,uo,true,true,'2026-01-01');
+  perform set_config('deskilo.r.other', other::text, false);
   perform set_config('deskilo.r.ws', ws::text, false);
   perform set_config('deskilo.r.mp', mp::text, false);
   perform set_config('deskilo.r.mq', mq::text, false);
@@ -125,6 +131,15 @@ select public.import_workspace_configuration(current_setting('deskilo.r.ws')::uu
 reset role;
 select is((select subdivision from public.sites where workspace_id = current_setting('deskilo.r.ws')::uuid and name = 'Annex'), 'MI',
   'and comes back with it');
+-- into a business of another country and currency the fence (0779) keeps
+-- sites: a site travels whole, its region with its street
+set local role authenticated;
+select public.import_workspace_configuration(current_setting('deskilo.r.other')::uuid,
+  current_setting('deskilo.r.cfg')::jsonb, 'merge');
+reset role;
+select is((select (street, country_code, subdivision)::text from public.sites
+            where workspace_id = current_setting('deskilo.r.other')::uuid and name = 'Annex'),
+  '("Via Brera 7",IT,MI)', 'into another country a site arrives whole, its region with its address');
 
 select * from finish();
 rollback;
