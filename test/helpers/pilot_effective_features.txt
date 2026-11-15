@@ -28,6 +28,7 @@ messagesHub
 moneyTab
 navigationStyle
 notificationGrouping
+organisation
 pdfExport
 personalInfo
 placeBooking

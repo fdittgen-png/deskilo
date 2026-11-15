@@ -295,6 +295,9 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         // #3610 — search and keys, beside the motion: how the app is used.
         WorkspaceFeature.quickSearch,
         WorkspaceFeature.regionalFormats,
+        // #4004 — on from the first level, like the feature itself: an owner
+        // who never makes an organisation sees nothing of it.
+        WorkspaceFeature.organisation,
         WorkspaceFeature.navigationStyle,
         WorkspaceFeature.memberAccountMenu,
         WorkspaceFeature.demoMode,

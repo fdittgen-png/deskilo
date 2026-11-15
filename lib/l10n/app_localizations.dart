@@ -18459,6 +18459,18 @@ abstract class AppLocalizations {
   /// **'Switch on an experimental feature?'**
   String get featureOptInTitle;
 
+  /// #4004 what the organisation feature does, and what it does when off
+  ///
+  /// In en, this message translates to:
+  /// **'This business heads an organisation of the customer\'s businesses: a site in another country or currency is a house, a business of its own with its country\'s rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are.'**
+  String get featureOrganisationDesc;
+
+  /// #4004 the feature that makes an organisation of a customer's businesses
+  ///
+  /// In en, this message translates to:
+  /// **'Organisation of businesses'**
+  String get featureOrganisationTitle;
+
   /// #2631 parking: featureParkingDesc
   ///
   /// In en, this message translates to:
