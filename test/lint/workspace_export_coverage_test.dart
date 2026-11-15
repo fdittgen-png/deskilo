@@ -79,6 +79,7 @@ const Map<String, String> _notExported = {
   'member_period_terms': 'the terms each subscription invoice was computed with (#3858): derived from the invoices and the members\' plans, personal data returned by export_my_data to the member it belongs to; the workbook carries the invoices',
   'provenance_envelopes': 'server-written evidence of how each durable result of this installation was produced (#3336): insert-only, derived from the results themselves and their producers, not portable configuration',
   'capability_states': 'the operator\'s decision to admit or stop new work of a capability on this installation (#3336): an operational state of this installation, not portable configuration — a space decides again from its feature choice',
+  'invoice_originals': 'the record of each issued invoice\'s stored original (#3853): its PDF is a file in the invoice-originals bucket, which a workbook cell cannot hold; the year archive carries each one as that invoice\'s file, and the invoices themselves are exported',
   'invoice_transmission_artifacts': 'service-only copy of the exact e-invoice bytes prepared for a provider (#3335): a delivery fact of this installation, never client-readable, not portable configuration',
   'badge_auth_attempts': 'service-only attack signals, including token hashes and unknown tags; never disclose credential probes in a workspace workbook (#3091)',
   'workspace_favorites': 'a person\'s own favourite workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
@@ -486,6 +487,12 @@ Map<String, List<String>> _openItems() {
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'invoices': {
+    // #3853 — whether this installation keeps the invoice's stored original:
+    // a fact of this installation's store, which the original's own record
+    // states; the invoice's own facts are exported.
+    'keeps_original',
+  },
   'invoice_transmissions': {
     // #3335 — the dispatch bookkeeping of an e-invoice submission (its
     // business key, binding, owner, generation, deadline,

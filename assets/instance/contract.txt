@@ -744,6 +744,14 @@ constraint invoice_maturities.invoice_maturities_terms_days_check CHECK (((terms
 constraint invoice_maturities.invoice_maturities_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint invoice_maturities.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint invoice_maturities.system_company_present CHECK ((company_id IS NOT NULL))
+constraint invoice_originals.invoice_originals_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
+constraint invoice_originals.invoice_originals_path_key UNIQUE (path)
+constraint invoice_originals.invoice_originals_pdf_bytes_check CHECK ((pdf_bytes > 0))
+constraint invoice_originals.invoice_originals_pdf_sha256_check CHECK ((pdf_sha256 ~ '^[0-9a-f]{64}$'::text))
+constraint invoice_originals.invoice_originals_pkey PRIMARY KEY (invoice_id)
+constraint invoice_originals.invoice_originals_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint invoice_originals.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint invoice_originals.system_company_present CHECK ((company_id IS NOT NULL))
 constraint invoice_reminders.invoice_reminders_invoice_id_fkey FOREIGN KEY (invoice_id) REFERENCES invoices(id) ON DELETE CASCADE
 constraint invoice_reminders.invoice_reminders_invoice_id_same_workspace FOREIGN KEY (workspace_id, invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE CASCADE
 constraint invoice_reminders.invoice_reminders_pkey PRIMARY KEY (id)
@@ -1340,7 +1348,7 @@ constraint profiles.profiles_whatsapp_check CHECK (((whatsapp = ''::text) OR (wh
 constraint profiles.profiles_whatsapp_typed_check CHECK ((char_length(whatsapp_typed) <= 40))
 constraint profiles.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint provenance_envelopes.provenance_envelopes_pkey PRIMARY KEY (result_kind, result_id)
-constraint provenance_envelopes.provenance_envelopes_result_kind_check CHECK ((result_kind = ANY (ARRAY['invoice'::text, 'book_export'::text, 'file_delivery'::text, 'accounting_delivery'::text, 'transmission'::text])))
+constraint provenance_envelopes.provenance_envelopes_result_kind_check CHECK ((result_kind = ANY (ARRAY['invoice'::text, 'book_export'::text, 'file_delivery'::text, 'accounting_delivery'::text, 'transmission'::text, 'invoice_original'::text])))
 constraint provenance_envelopes.provenance_envelopes_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint provenance_envelopes.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint provenance_envelopes.system_company_present CHECK ((company_id IS NOT NULL))
@@ -2705,6 +2713,7 @@ routine public.invoice_issuer_country(p_workspace_id uuid, p_legal_snapshot json
 routine public.invoice_issuing_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | invoker | stable | exec:service_role | body:789ffb6de6d5
 routine public.invoice_issuing_site(p_workspace_id uuid, p_parties jsonb) -> uuid | function | definer | stable | exec:service_role | body:f7f4dd0596a0
 routine public.invoice_issuing_site_stamp() -> trigger | function | definer | volatile | exec:service_role | body:dcede61f9c59
+routine public.invoice_keeps_original_stamp() -> trigger | function | invoker | volatile | exec:service_role | body:082fadb3bfc3
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
 routine public.invoice_legal_language_freeze() -> trigger | function | definer | volatile | exec:service_role | body:61638cc259bf
 routine public.invoice_legal_paper_freeze() -> trigger | function | definer | volatile | exec:service_role | body:c90f7f5e0358
@@ -2723,6 +2732,11 @@ routine public.invoice_matches_at(p_workspace_id uuid, p_cutoff timestamp with t
 routine public.invoice_maturity_freeze() -> trigger | function | definer | volatile | exec:service_role | body:672663a00f93
 routine public.invoice_member_match_payments_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_match_payments | function | definer | stable | exec:service_role | body:17d3198d31d7
 routine public.invoice_member_matches_at(p_workspace_id uuid, p_member_id uuid, p_cutoff timestamp with time zone) -> SETOF invoice_matches | function | definer | stable | exec:service_role | body:baa2177b8137
+routine public.invoice_original_invoice(p_name text) -> uuid | function | invoker | immutable | exec:authenticated,service_role | body:d0f1e82ce0d7
+routine public.invoice_original_issuer(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:67abcc34dfb1
+routine public.invoice_original_may_upload(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6b22104a894e
+routine public.invoice_original_xml_max_bytes() -> integer | function | invoker | immutable | exec:authenticated,service_role | body:770442338eed
+routine public.invoice_originals_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:8caacaa7487f
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
@@ -3168,7 +3182,7 @@ routine public.protect_membership_fact() -> trigger | function | invoker | volat
 routine public.provenance_clip_declared(p_declared jsonb) -> jsonb | function | invoker | immutable | exec:service_role | body:af9380507c7a
 routine public.provenance_envelope_v1(p_workspace_id uuid, p_kind text, p_result_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:eb9468570257
 routine public.provenance_envelopes_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:2b9925871c78
-routine public.provenance_modules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d66e5856ed0a
+routine public.provenance_modules() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:2aa574581e98
 routine public.provider_clearing_lines(p_issuer_site_id uuid, p_day date, p_paid bigint, p_split jsonb) -> jsonb | function | definer | stable | exec:service_role | body:252017bdbe34
 routine public.provider_receipt_split(p_invoice_id uuid, p_ledger_id uuid, p_paid bigint) -> jsonb | function | definer | stable | exec:service_role | body:967f7e0ed737
 routine public.provider_settlement_cost_set(p_workspace_id uuid, p_provider text, p_settlement_id text) -> jsonb | function | definer | stable | exec:service_role | body:88b65c6d46d1
@@ -3562,6 +3576,7 @@ routine public.stock_record(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, 
 routine public.stock_take(p_workspace_id uuid, p_item_id uuid, p_location_id uuid, p_quantity numeric) -> TABLE(lot_id uuid, quantity numeric) | function | definer | stable | exec:service_role | body:c4ba4a851a37
 routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:2a3077980693
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:360eeecc0bea
+routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:516b15a47957
 routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text, p_by uuid) -> boolean | function | definer | volatile | exec:service_role | body:c233f4937fef
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
@@ -3868,6 +3883,8 @@ trigger invoice_matches.invoice_matches_history CREATE TRIGGER invoice_matches_h
 trigger invoice_matches.invoice_matches_refuse_moved CREATE TRIGGER invoice_matches_refuse_moved BEFORE INSERT OR UPDATE OF payment_ledger_id, credit_ledger_id ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION refuse_match_of_moved_credit()
 trigger invoice_matches.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_matches FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_maturities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_maturities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger invoice_originals.invoice_originals_no_update CREATE TRIGGER invoice_originals_no_update BEFORE UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION invoice_originals_immutable()
+trigger invoice_originals.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_originals FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_reminders.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_reminders FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmission_artifacts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.invoice_transmission_artifacts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger invoice_transmissions.invoice_transmissions_sync_phase CREATE TRIGGER invoice_transmissions_sync_phase BEFORE INSERT OR UPDATE ON public.invoice_transmissions FOR EACH ROW EXECUTE FUNCTION invoice_transmissions_sync_phase()
@@ -3877,6 +3894,7 @@ trigger invoice_transmissions.zz_system_columns_stamp CREATE TRIGGER zz_system_c
 trigger invoices.book_period_void_guard CREATE TRIGGER book_period_void_guard BEFORE UPDATE OF voided_at ON public.invoices FOR EACH ROW EXECUTE FUNCTION book_period_void_guard()
 trigger invoices.invoice_issued_notice CREATE TRIGGER invoice_issued_notice AFTER INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_issued_notice()
 trigger invoices.invoice_issuing_site_stamp CREATE TRIGGER invoice_issuing_site_stamp BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_issuing_site_stamp()
+trigger invoices.invoice_keeps_original_stamp CREATE TRIGGER invoice_keeps_original_stamp BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_keeps_original_stamp()
 trigger invoices.invoice_legal_freeze CREATE TRIGGER invoice_legal_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_freeze()
 trigger invoices.invoice_legal_language_freeze CREATE TRIGGER invoice_legal_language_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_language_freeze()
 trigger invoices.invoice_legal_paper_freeze CREATE TRIGGER invoice_legal_paper_freeze BEFORE INSERT ON public.invoices FOR EACH ROW EXECUTE FUNCTION invoice_legal_paper_freeze()
