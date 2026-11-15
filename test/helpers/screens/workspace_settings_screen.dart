@@ -14,6 +14,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../fake_floor_plan_repository.dart';
 import '../fake_money_repository.dart';
+import '../go_route.dart';
 import '../mock_providers.dart';
 import '../section_jump.dart';
 import '../settings_sections.dart';
@@ -32,6 +33,7 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
   bool reports = false,
   Size size = const Size(800, 4600),
   Locale? deviceLocale,
+  bool byRoute = false,
 }) async {
   // The settings form grew past the default 800px test viewport (#155,
   // three more payment fields in #192, the WhatsApp-group section in
@@ -62,13 +64,18 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     ),
   );
   await tester.pumpAndSettle();
-  await tapShellBarControl(tester, 'shell-settings-button');
-  await tester.pumpAndSettle();
-  await showWorkspaceSettings(tester);
-  await revealInSettings(tester, find.text('Workspace'));
-  await tester.ensureVisible(find.text('Workspace'));
-  await tester.pumpAndSettle();
-  await tester.tap(find.text('Workspace'));
+  if (byRoute) {
+    // #4038 — by its route, so the screen is the same in every language.
+    await goToRoute(tester, reports ? '/reports' : '/workspace-settings');
+  } else {
+    await tapShellBarControl(tester, 'shell-settings-button');
+    await tester.pumpAndSettle();
+    await showWorkspaceSettings(tester);
+    await revealInSettings(tester, find.text('Workspace'));
+    await tester.ensureVisible(find.text('Workspace'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Workspace'));
+  }
   if (settle) {
     await tester.pumpAndSettle();
   } else {
@@ -78,16 +85,18 @@ Future<FakeWorkspaceRepository> pumpWorkspaceSettings(
     await tester.pump(const Duration(milliseconds: 400));
   }
   if (reports) {
-    await tapSection(tester, 'workspace-section-payments');
-    await tester.pumpAndSettle();
-    final reportsLink = find.descendant(
-      of: find.byKey(const Key('workspaceSettingsReports')),
-      matching: find.text('Reports'),
-    );
-    await tester.ensureVisible(reportsLink);
-    await tester.pumpAndSettle();
-    await tester.tap(reportsLink);
-    await tester.pumpAndSettle();
+    if (!byRoute) {
+      await tapSection(tester, 'workspace-section-payments');
+      await tester.pumpAndSettle();
+      final reportsLink = find.descendant(
+        of: find.byKey(const Key('workspaceSettingsReports')),
+        matching: find.text('Reports'),
+      );
+      await tester.ensureVisible(reportsLink);
+      await tester.pumpAndSettle();
+      await tester.tap(reportsLink);
+      await tester.pumpAndSettle();
+    }
     final documents = find.byKey(const ValueKey('workspace-section-documents'));
     if (documents.evaluate().isEmpty) {
       // #3617 — at the desk the reports are a table, and the document tools

@@ -125,6 +125,11 @@ void main() {
         'Me › Home',
         'Me › To pay',
         'Me › Invoices',
+        // #4038 — opened by route, not by a word.
+        'Members',
+        'Workspace settings',
+        'Workspace reports',
+        'Member directory',
       },
     );
   });
