@@ -36,6 +36,7 @@ import '../../application/issue_invoice.dart';
 import '../../application/issue_month.dart';
 import '../../application/issue_month_readiness.dart';
 import '../../providers/money_providers.dart';
+import '../invoice_original_document.dart';
 import '../invoice_proforma.dart';
 import '../period_label.dart';
 import 'invoice_month_parts.dart';
@@ -164,7 +165,12 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
     ref
       ..invalidate(invoicesProvider)
       ..invalidate(invoicingOverviewProvider);
-    if (mounted) _state.finished(report);
+    if (!mounted) return;
+    _state.finished(report);
+    // #3853 — the originals of the invoices just issued, in the same flow.
+    unawaited(keepInvoiceOriginals(context, ref, [
+      for (final member in report.issued) ?report.invoiceOf(member),
+    ]));
   }
 
   Future<void> _proforma(String memberId) async {

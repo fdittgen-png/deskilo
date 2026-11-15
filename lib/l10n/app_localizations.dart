@@ -25258,7 +25258,7 @@ abstract class AppLocalizations {
   /// #3853 snack: nobody who may issue invoices has opened it yet, a copy is shown
   ///
   /// In en, this message translates to:
-  /// **'Copy: the business keeps the original once it opens this invoice.'**
+  /// **'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.'**
   String get invoiceOriginalNotYetKept;
 
   /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
@@ -25266,6 +25266,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
   String get invoiceOriginalTooLarge;
+
+  /// #3853 after issuing: how many originals could not be kept in the same flow; the invoices stay issued
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.} other{The originals of {count} invoices were not kept yet. The invoices are issued; their originals are kept later.}}'**
+  String invoiceOriginalsNotKeptNow(int count);
 
   /// #3587 message after Confirm when the declared payment still waits for other approvers
   ///
@@ -25872,6 +25878,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public-sector buyer (Chorus Pro): the numéro d\'engagement.'**
   String get invoicePurchaseOrderHint;
+
+  /// #3853 the quick view of an invoice that keeps an original: what is shown is a preview
+  ///
+  /// In en, this message translates to:
+  /// **'Preview — the original is the downloaded PDF.'**
+  String get invoiceQuickViewIsPreview;
 
   /// Negative invoices are credit notes the workspace refunds (#508)
   ///

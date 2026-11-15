@@ -283,7 +283,9 @@
   "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
   "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
-  "invoiceOriginalNotYetKept": "Copia: la empresa conserva el original en cuanto abre esta factura.",
+  "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalKept": "Original conservado el {when} por {who} · SHA-256 {digest}",
-  "invoiceCopyWithPaymentStatus": "Copia con el estado del pago"
+  "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",
+  "invoiceOriginalsNotKeptNow": "{count, plural, one{El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.} other{Los originales de {count} facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.}}",
+  "invoiceQuickViewIsPreview": "Vista previa: el original es el PDF descargado."
 }

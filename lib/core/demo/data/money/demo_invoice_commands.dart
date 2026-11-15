@@ -104,6 +104,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
       replacesNumber: replacesNumber,
       detailed: detailed,
       kind: kind,
+      // #3853 — an invoice issued now keeps its original, as on the server.
+      keepsOriginal: true,
       detailLedger: detailed
           ? [
               for (final entry in _m.ledger)

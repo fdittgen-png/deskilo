@@ -15699,11 +15699,23 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceOriginalNotYetKept =>
-      'Copy: the business keeps the original once it opens this invoice.';
+      'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.';
 
   @override
   String get invoiceOriginalTooLarge =>
       'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The originals of $count invoices were not kept yet. The invoices are issued; their originals are kept later.',
+      one: 'The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicePageApprovalRecorded =>
@@ -16065,6 +16077,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Public-sector buyer (Chorus Pro): the numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Preview — the original is the downloaded PDF.';
 
   @override
   String get invoiceRefundButton => 'Record the refund';

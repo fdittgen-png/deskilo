@@ -15816,11 +15816,23 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceOriginalNotYetKept =>
-      'Copia: la empresa conserva el original en cuanto abre esta factura.';
+      'Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.';
 
   @override
   String get invoiceOriginalTooLarge =>
       'Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Los originales de $count facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.',
+      one: 'El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get invoicePageApprovalRecorded =>
@@ -16182,6 +16194,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Comprador público (Chorus Pro): el numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Vista previa: el original es el PDF descargado.';
 
   @override
   String get invoiceRefundButton => 'Registrar el reembolso';

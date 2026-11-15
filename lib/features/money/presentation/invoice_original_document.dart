@@ -32,6 +32,7 @@ import '../../workspace/providers/workspace_tax_reference.dart';
 import '../domain/e_invoice_routing.dart';
 import '../domain/invoice_original.dart';
 import '../providers/invoice_original_providers.dart';
+import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart' show invoiceShareOptions;
@@ -205,3 +206,37 @@ String Function(AppLocalizations)? _whyACopy(InvoiceDocumentSource source) =>
         l10n,
       ) => l10n.invoiceOriginalNotYetKept,
     };
+
+/// #3853 — keeps the originals of the invoices just issued, in turn, in the
+/// same flow and without a tap. An invoice whose original is not kept now
+/// stays issued and is kept later; how many is said in words.
+Future<void> keepInvoiceOriginals(
+  BuildContext context,
+  WidgetRef ref,
+  Iterable<String> invoiceIds,
+) async {
+  final ids = invoiceIds.toSet();
+  if (ids.isEmpty) return;
+  var notKept = ids.length;
+  try {
+    await readDocumentPolicies(ref);
+    // the list as it stands now, with the invoices just issued in it
+    ref.invalidate(invoicesProvider);
+    final invoices = await ref.read(invoicesProvider.future);
+    for (final invoice in invoices.where((i) => ids.contains(i.id))) {
+      if (!context.mounted) return;
+      final document = await invoiceDocumentOf(context, ref, invoice);
+      if (document.source == InvoiceDocumentSource.original) notKept--;
+    }
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn(
+      'money',
+      'the originals of the invoices just issued were not all kept',
+      error: e,
+      stackTrace: st,
+    );
+  }
+  if (notKept > 0 && context.mounted) {
+    AppSnack.info(context, context.l10n.invoiceOriginalsNotKeptNow(notKept));
+  }
+}
