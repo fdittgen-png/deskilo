@@ -115,19 +115,20 @@ String? fecAuxAccount(String collective, String number, CustomerIdRule rule) {
 ///
 /// [parties] names the third party of each document; [partyRule] is what a
 /// party's number may look like (the FEC target's customer id rule). An
-/// entry whose currency is not [functionalCurrency] is converted at its
-/// document's rate in [rates]. Every party and document that stops the
-/// file is named in the result's blockers. A book kept in another currency
-/// than the euro is refused whole.
+/// entry whose currency is not the book's [currency] is converted at its
+/// document's rate in that currency's rates. Every party and document that
+/// stops the file is named in the result's blockers. A book kept in another
+/// currency than the euro is refused whole. [journals] name the journals
+/// (the country add-on's when none, #3470).
 PostedFecResult buildFecFromPostings(
   List<Posting> postings, {
   required Map<String, String> accountNames,
   Map<String, PostingParty> parties = const {},
   CustomerIdRule partyRule = const CustomerIdRule(),
-  String? functionalCurrency,
-  Map<String, FxRate> rates = const {},
+  ({String code, Map<String, FxRate> rates})? currency,
   FecJournals? journals,
 }) {
+  final functionalCurrency = currency?.code;
   if (functionalCurrency != null && !isEuroFormatCurrency(functionalCurrency)) {
     return (
       file: '',
@@ -140,7 +141,11 @@ PostedFecResult buildFecFromPostings(
     partyRule: partyRule,
     books: journals ?? FecJournals.installed(),
   );
-  final rows = file.rows(postings, functionalCurrency, rates);
+  final rows = file.rows(
+    postings,
+    functionalCurrency,
+    currency?.rates ?? const {},
+  );
   if (file.blockers.isNotEmpty) {
     return (file: '', blockers: file.blockers.toList());
   }

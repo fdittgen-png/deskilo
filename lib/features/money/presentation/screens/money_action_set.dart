@@ -412,11 +412,10 @@ class MoneyActionSet {
       if (data.invoicingOn && has(['workspaceSettings']))
         door('accounting-hub-identity', Icons.badge_outlined,
             l10n.legalIdentityTitle, '/legal-identity'),
-      // #3470 — the business's journals, the codes every export writes: an
-      // owner's, like the business's other export setting.
-      if (data.invoicingOn && (data.member?.isOwner ?? false))
-        if (data.workspace case final workspace?)
-          AccountingJournalsDoor(workspace: workspace),
+      ...AccountingJournalsDoor.of(
+        data,
+        onKept: () => ref.invalidate(currentWorkspaceProvider),
+      ),
       if (data.vatManagementOn && has(['manageBilling']))
         door('accounting-hub-vat', Icons.percent_outlined, l10n.vatTitle,
             '/vat'),

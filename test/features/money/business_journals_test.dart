@@ -14,7 +14,6 @@ import 'package:deskilo/features/money/domain/book_ledger.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/fec_postings.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
-import 'package:deskilo/features/workspace/domain/workspace_identity_repository.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
@@ -235,18 +234,17 @@ void main() {
     test('the Demo keeps a whole value and refuses one that is not', () async {
       final workspaces = FakeWorkspaceRepository.withWorkspace();
       final id = workspaces.workspaces.first.id;
-      await workspaces.setAccountingJournals(id, _business.toJson());
+      expect(
+        await workspaces.setAccountingJournals(id, _business.toJson()),
+        isNull,
+      );
       expect(
         workspaces.workspaces.first.accountingJournals,
         _business.toJson(),
       );
-      await expectLater(
-        workspaces.setAccountingJournals(id, withSales('BNP').toJson()),
-        throwsA(
-          isA<AccountingJournalsRefused>()
-              .having((r) => r.problem, 'problem', 'duplicate')
-              .having((r) => r.role, 'role', 'bank'),
-        ),
+      expect(
+        await workspaces.setAccountingJournals(id, withSales('BNP').toJson()),
+        (problem: 'duplicate', role: 'bank', notAllowed: false),
       );
       expect(
         workspaces.workspaces.first.accountingJournals,

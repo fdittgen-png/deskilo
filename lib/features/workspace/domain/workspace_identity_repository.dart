@@ -66,8 +66,8 @@ abstract class WorkspaceIdentityRepository {
 
   /// #3470 — owner-only: the business's accounting journals, all four
   /// (`{role: {code, label}}`), or `{}` for the defaults. A value that is not
-  /// whole is refused whole ([AccountingJournalsRefused]), never cleaned.
-  Future<void> setAccountingJournals(
+  /// whole is refused whole, never cleaned: null once kept, else why not.
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
     String workspaceId,
     Map<String, Object?> journals,
   );
@@ -136,17 +136,11 @@ abstract class WorkspaceIdentityRepository {
   Future<void> setDeskOpacity(String workspaceId, int opacity);
 }
 
-/// #3470 — the server refused the journals: not whole ([problem] and the
-/// journal it is about), or not the caller's to set ([notAllowed]).
-class AccountingJournalsRefused implements Exception {
-  const AccountingJournalsRefused({
-    this.problem = '',
-    this.role = '',
-    this.notAllowed = false,
-  });
-
-  /// 'shape', 'code', 'label', 'character' or 'duplicate'.
-  final String problem;
-  final String role;
-  final bool notAllowed;
-}
+/// #3470 — why the server did not keep the journals: not whole (`problem`:
+/// 'shape', 'code', 'label', 'character' or 'duplicate', and the journal
+/// `role` it is about), or not the caller's to set (`notAllowed`).
+typedef AccountingJournalsRefusal = ({
+  String problem,
+  String role,
+  bool notAllowed,
+});

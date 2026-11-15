@@ -254,10 +254,7 @@ class AccountingExportRun {
 
   FecExportActions get fecActions =>
       FecExportActions(context, ref, (workspaceId: workspace.id, currency: workspace.currencyCode, legalId: company.legalId, development: development, journals: journals));
-
-  /// #3470 — the business's journals, read once for every file this run
-  /// writes.
-  FecJournals get journals => accountingJournalsOf(workspace.accountingJournals);
+  FecJournals get journals => accountingJournalsOf(workspace.accountingJournals); // #3470: one read for every file
 
   String named(String stem) => '${safeFileSlug('$stem ${workspace.name} $label')}.${format.extension}';
 
@@ -274,7 +271,6 @@ class AccountingExportRun {
           : FecAccounts(vat: workspace.vatAccount),
     );
     if (accounts == null || !context.mounted) return;
-    final booked = accounts.withJournals(journals);
     await runGuarded(
       context,
       domain: 'money',
@@ -287,7 +283,7 @@ class AccountingExportRun {
           invoices: exported,
           matches: matches,
           company: company,
-          accounts: booked,
+          accounts: accounts.withJournals(journals),
           lineText: invoiceLineTextOfBooks(words, exported,
               liveAssociation: association),
           customersLabel: l10n.fecAccountCustomers,
@@ -323,8 +319,7 @@ class AccountingExportRun {
           lineText: invoiceLineTextOfBooks(words, exported, liveAssociation: association),
           fallbackDescription: l10n.featureInvoicing,
           profile: portugal ? SafTProfile.portugal : SafTProfile.generic,
-          ledgerAccounts: accounts, bookPostings: posted,
-          reference: taxReference, journalCode: journalCodeOf(journals)));
+          ledgerAccounts: accounts, bookPostings: posted, reference: taxReference, journalCode: journalCodeOf(journals)));
     // #2365 — a local book's ledger is its postings; no mapping is asked.
     if (posted case final journal?) {
       return exportGenericJournal(context,

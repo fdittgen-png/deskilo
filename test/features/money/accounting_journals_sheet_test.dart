@@ -22,7 +22,7 @@ Future<FakeWorkspaceRepository> _open(WidgetTester tester) async {
     Consumer(
       builder: (context, ref, _) => FilledButton(
         key: const ValueKey('open'),
-        onPressed: () => showAccountingJournalsSheet(
+        onPressed: () => AccountingJournalsDoor.open(
           context,
           ref,
           workspaceId: workspaces.workspaces.first.id,

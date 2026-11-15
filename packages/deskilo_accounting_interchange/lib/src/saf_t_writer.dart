@@ -298,24 +298,21 @@ class SafTWriter {
 
   /// The journals of the general ledger: the local book's, the two the
   /// FEC writes (sales and bank) when there is a mapping, else none.
-  List<(String, String, List<SafTLedgerTransaction>)>? get _journals {
-    final accounts = ledgerAccounts;
-    return switch (bookPostings) {
-      final posted? => safTPostedJournals(posted, journalCode: journalCode),
-      null when accounts != null => [
-        // Two journals, matching what the FEC writes: sales and bank.
-        (_code(PostingJournal.sales), 'Sales', [
-          ...safTSalesTransactions(live, accounts),
-          ...safTWriteOffs(settled, accounts),
-        ]),
-        (_code(PostingJournal.bank), 'Bank', [
-          ...safTNettedReceipts(live, accounts),
-          ...safTSettlements(settled, accounts),
-        ]),
-      ],
-      null => null,
-    };
-  }
+  List<(String, String, List<SafTLedgerTransaction>)>? get _journals =>
+      switch ((bookPostings, ledgerAccounts)) {
+        (final p?, _) => safTPostedJournals(p, journalCode: journalCode),
+        (null, final accounts?) => [
+          (_code(PostingJournal.sales), 'Sales', [
+            ...safTSalesTransactions(live, accounts),
+            ...safTWriteOffs(settled, accounts),
+          ]),
+          (_code(PostingJournal.bank), 'Bank', [
+            ...safTNettedReceipts(live, accounts),
+            ...safTSettlements(settled, accounts),
+          ]),
+        ],
+        _ => null,
+      };
 
   void generalLedger() {
     // ── General ledger: the postings, when there is a mapping ─────────

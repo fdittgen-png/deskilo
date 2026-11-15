@@ -9,6 +9,7 @@ import 'dart:typed_data';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace_branding.dart';
 import '../domain/workspace_document.dart';
@@ -89,7 +90,7 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   }
 
   @override
-  Future<void> setAccountingJournals(
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
     String workspaceId,
     Map<String, Object?> journals,
   ) async {
@@ -98,19 +99,23 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
         'set_accounting_journals',
         params: {'p_workspace_id': workspaceId, 'p_journals': journals},
       );
-    } on PostgrestException catch (e) {
-      // trace-exempt: rethrown as the refusal the form says in words.
-      if (e.code == '42501') {
-        throw const AccountingJournalsRefused(notAllowed: true);
-      }
-      if (e.code != '22023') rethrow;
+      return null;
+    } on PostgrestException catch (e, st) {
+      if (e.code != '42501' && e.code != '22023') rethrow;
+      TraceLogger.instance.warn(
+        'workspace',
+        'accounting journals refused',
+        error: e,
+        stackTrace: st,
+      );
       final why = JsonReader.orEmpty(
-        _decoded(e.details),
+        e.code == '22023' ? _decoded(e.details) : null,
         context: 'accounting_journals.refusal',
       );
-      throw AccountingJournalsRefused(
+      return (
         problem: why.textOrAbsent('problem') ?? 'shape',
         role: why.textOrAbsent('role') ?? '',
+        notAllowed: e.code == '42501',
       );
     }
   }

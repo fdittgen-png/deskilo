@@ -51,7 +51,6 @@ lib/features/workspace/presentation/member_vat_treatment.dart :: 3 :: the UNCL53
 packages/deskilo_accounting_interchange/lib/src/jpk_kr_pd_validation.dart :: 1 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/saf_t_financial.dart :: 8 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/saf_t_financial_xml.dart :: 2 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
-packages/deskilo_accounting_interchange/lib/src/saf_t_writer.dart :: 2 :: a standard's own country field in an accounting export file (JPK, SAF-T): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/sage.dart :: 3 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/sage_documents.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/sage_postings.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package

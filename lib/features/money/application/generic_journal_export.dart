@@ -216,7 +216,10 @@ GenericJournal postedFecOf(JournalPosted books, {FecJournals? journals}) {
     accountNames: books.accountNames,
     parties: books.parties,
     partyRule: _fecPartyRule,
-    functionalCurrency: books.functionalCurrency,
+    currency: switch (books.functionalCurrency) {
+      final code? => (code: code, rates: const {}),
+      null => null,
+    },
     journals: journals,
   );
   if (fec.blockers.isNotEmpty) return JournalRefused(fec.blockers);

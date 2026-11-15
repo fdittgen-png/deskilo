@@ -250,7 +250,12 @@ class FecExportActions {
       return BookReportPrint(
         context,
         ref,
-      ).show(kindId: kindId, books: books, letterhead: letterhead);
+      ).show(
+        kindId: kindId,
+        books: books,
+        letterhead: letterhead,
+        journals: scope.journals,
+      );
     }
     await exportGenericJournal(
       context,

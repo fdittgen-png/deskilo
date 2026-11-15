@@ -106,24 +106,25 @@ mixin FakeWorkspaceIdentity on FakeWorkspaceState
 
   /// #3470 — the server's rules: whole or refused whole.
   @override
-  Future<void> setAccountingJournals(
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
     String workspaceId,
     Map<String, Object?> journals,
   ) async {
     if (journals.isNotEmpty) {
       final value = FecJournals.fromJson(journals);
       if (value == null) {
-        throw const AccountingJournalsRefused(problem: 'shape');
+        return (problem: 'shape', role: '', notAllowed: false);
       }
       if (journalsProblem(value) case (:final role, :final problem)) {
-        throw AccountingJournalsRefused(problem: problem.name, role: role);
+        return (problem: problem.name, role: role, notAllowed: false);
       }
     }
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
-    if (i < 0) return;
+    if (i < 0) return (problem: '', role: '', notAllowed: true);
     workspaces[i] = workspaces[i].copyWith(
       accountingJournals: Map.of(journals),
     );
+    return null;
   }
 
   @override
