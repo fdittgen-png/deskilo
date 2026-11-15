@@ -155,6 +155,12 @@ enum OrganisationRefusal {
   /// The organisation is off in this business (its feature).
   featureOff,
 
+  /// #4005 — the documents do not speak that language.
+  language,
+
+  /// #4005 — this request already made another business.
+  requestUsed,
+
   /// Anything else the server said no to.
   other,
 }
@@ -182,4 +188,74 @@ abstract interface class OrganisationRepository {
     String organisationId,
     String headWorkspaceId,
   );
+
+  /// #4005 — creates a house abroad of [request]'s organisation, carrying
+  /// the head's configuration; the same request answers the same house.
+  Future<({String? workspaceId, OrganisationRefusal? refused})> createHouse(
+    HouseRequest request,
+  );
+
+  /// #4005 — the birth record of [workspaceId], or none when it was not
+  /// created as a house.
+  Future<HouseBirth?> houseBirth(String workspaceId);
+}
+
+/// #4005 — a house abroad to create: its name, country, currency, time zone
+/// and document language, and the request id one opened form keeps.
+typedef HouseRequest = ({
+  String organisationId,
+  String name,
+  String country,
+  String currency,
+  String timezone,
+  String language,
+  String requestId,
+});
+
+/// #4005 — where a house came from and what came with it: the counts of
+/// what was carried (priced rows inactive, to be priced), whether the
+/// amounts were kept (the same currency), the head's owners added as
+/// co-owners, and whether its prices are still to be named.
+class HouseBirth {
+  const HouseBirth({
+    required this.workspaceId,
+    required this.headWorkspaceId,
+    required this.plans,
+    required this.services,
+    required this.packages,
+    required this.validationPolicies,
+    required this.features,
+    required this.amountsKept,
+    required this.coOwnersAdded,
+    required this.pricesPending,
+    this.createdAt,
+  });
+
+  factory HouseBirth.fromJson(Object? raw) {
+    final row = JsonReader.of(raw, context: 'organisation house');
+    final carried = row.objectOrAbsent('carried');
+    return HouseBirth(
+      workspaceId: row.string('workspace_id'),
+      headWorkspaceId: row.stringOrNull('head_workspace_id'),
+      plans: carried.intOrAbsent('plans') ?? 0,
+      services: carried.intOrAbsent('services') ?? 0,
+      packages: carried.intOrAbsent('packages') ?? 0,
+      validationPolicies: carried.intOrAbsent('validation_policies') ?? 0,
+      features: carried.intOrAbsent('features') ?? 0,
+      amountsKept: carried.isTrue('amounts_kept'),
+      coOwnersAdded: row.listOrAbsent('co_owners_added').length,
+      pricesPending: row.isTrue('prices_pending'),
+      createdAt: row.dateTimeOrNull('created_at'),
+    );
+  }
+
+  final String workspaceId;
+
+  /// The head it was created from; none once that business is gone.
+  final String? headWorkspaceId;
+  final int plans, services, packages, validationPolicies, features;
+  final bool amountsKept;
+  final int coOwnersAdded;
+  final bool pricesPending;
+  final DateTime? createdAt;
 }

@@ -1,0 +1,17 @@
+{
+  "houseAddTitle": "Aggiungere una casa all’estero",
+  "houseAddSubmit": "Creare la casa",
+  "houseAddLanguage": "Lingua dei suoi documenti",
+  "houseAddName": "Nome della casa",
+  "houseAddCarried": "Viaggiano: i ruoli, le regole di prenotazione e di convalida, i promemoria e le funzioni che questo paese offre.",
+  "houseAddToPrice": "Arrivano inattivi, da prezzare: i piani, i servizi e i pacchetti.",
+  "houseAddNotCarried": "Non viaggiano: l’identità, la banca e le istruzioni di pagamento, i luoghi, l’impaginazione dei documenti e i collegamenti.",
+  "houseBirthTitle": "Come è nata questa casa",
+  "houseBirthCreated": "Creata a partire da {head} il {date}.",
+  "houseBirthPlans": "{count, plural, =0{nessun piano} one{1 piano} other{{count} piani}}",
+  "houseBirthServices": "{count, plural, =0{nessun servizio} one{1 servizio} other{{count} servizi}}",
+  "houseBirthPackages": "{count, plural, =0{nessun pacchetto} one{1 pacchetto} other{{count} pacchetti}}",
+  "houseBirthToPrice": "Ripresi, inattivi e da prezzare: {rows}.",
+  "houseBirthCoOwners": "{count, plural, =0{Nessun contitolare aggiunto.} one{1 titolare della sede è stato aggiunto come contitolare.} other{{count} titolari della sede sono stati aggiunti come contitolari.}}",
+  "houseBirthNotCarried": "Non ripresi: l’impaginazione dei documenti e i collegamenti. Scelga quelli di questa casa."
+}

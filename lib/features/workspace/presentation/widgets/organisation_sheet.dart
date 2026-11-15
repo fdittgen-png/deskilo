@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../app/shell/space_entry.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
 import '../../../../core/i18n/country_names.dart';
@@ -26,6 +27,8 @@ import '../../domain/organisation.dart';
 import '../../domain/workspace.dart';
 import '../../providers/organisation_providers.dart';
 import '../../providers/workspace_providers.dart';
+import 'add_house_form.dart';
+import 'house_birth_view.dart';
 import 'organisation_name_dialog.dart';
 
 String _roleText(AppLocalizations l10n, HouseRole role) => switch (role) {
@@ -35,7 +38,7 @@ String _roleText(AppLocalizations l10n, HouseRole role) => switch (role) {
   HouseRole.member => l10n.organisationRoleMember,
 };
 
-String _refusalText(
+String organisationRefusalText(
   AppLocalizations l10n,
   OrganisationRefusal r,
 ) => switch (r) {
@@ -47,6 +50,8 @@ String _refusalText(
   OrganisationRefusal.notAHouse => l10n.organisationRefusedNotAHouse,
   OrganisationRefusal.twinNeverHead => l10n.organisationRefusedTwinNeverHead,
   OrganisationRefusal.featureOff => l10n.organisationRefusedFeatureOff,
+  OrganisationRefusal.language => l10n.organisationRefusedLanguage,
+  OrganisationRefusal.requestUsed => l10n.organisationRefusedRequestUsed,
   OrganisationRefusal.other => l10n.organisationRefusedOther,
 };
 
@@ -57,13 +62,30 @@ class OrganisationSheet extends ConsumerWidget {
   final Workspace workspace;
 
   /// Opens the sheet of [workspace]'s organisation.
-  static Future<void> open(BuildContext context, Workspace workspace) =>
-      showAppSheet<void>(
+  /// The id of a house made from it, if one was.
+  static Future<String?> open(BuildContext context, Workspace workspace) =>
+      showAppSheet<String>(
         context: context,
         showDragHandle: true,
         isScrollControlled: true,
         builder: (_) => OrganisationSheet(workspace: workspace),
       );
+
+  /// #4005 — opens the sheet; when a house abroad was made from it, the
+  /// person lands in that house, whose home shows its birth record once.
+  static Future<void> openAndEnter(
+    BuildContext context,
+    WidgetRef ref,
+    Workspace workspace,
+  ) async {
+    final id = await open(context, workspace);
+    if (id == null || !context.mounted) return;
+    final spaces = await ref.read(myWorkspacesProvider.future);
+    final house = spaces.where((s) => s.id == id).firstOrNull;
+    if (house == null || !context.mounted) return;
+    ref.read(pendingHouseBirthProvider.notifier).set(id);
+    await enterSpace(context, ref, house);
+  }
 
   Future<String?> _askName(BuildContext context, String title, String now) =>
       showDialog<String>(
@@ -77,7 +99,7 @@ class OrganisationSheet extends ConsumerWidget {
   ) async {
     final refused = await command;
     if (refused != null && context.mounted) {
-      AppSnack.error(context, _refusalText(context.l10n, refused));
+      AppSnack.error(context, organisationRefusalText(context.l10n, refused));
     }
   }
 
@@ -108,7 +130,11 @@ class OrganisationSheet extends ConsumerWidget {
         .firstOrNull;
     // Only a business the person owns can join: the memberships Me reads.
     final owned = {
-      for (final m in ref.watch(myMembershipsProvider).value ?? const <Member>[]) // empty-ok: none offered until the memberships are read
+      for (final m
+          in ref.watch(myMembershipsProvider).value ??
+              const <
+                Member
+              >[]) // empty-ok: none offered until the memberships are read
         if (m.isOwner) m.workspaceId,
     };
     // One row per house: a business and its development twin are two houses
@@ -124,6 +150,7 @@ class OrganisationSheet extends ConsumerWidget {
     final headOwner =
         organisation?.houseOf(organisation.headWorkspaceId)?.role ==
         HouseRole.owner;
+    final birth = ref.watch(houseBirthProvider(workspace.id)).value;
     final title = Row(
       children: [
         Expanded(
@@ -158,6 +185,15 @@ class OrganisationSheet extends ConsumerWidget {
         padding: AppSpacing.lgAll,
         children: [
           title,
+          if (birth != null) ...[
+            const FormGap(),
+            HouseBirthView(
+              birth: birth,
+              head:
+                  organisation?.houseOf(birth.headWorkspaceId ?? '')?.name ??
+                  '',
+            ),
+          ],
           const FormGap(),
           if (organisation == null) ...[
             Text(l10n.organisationNone),
@@ -190,9 +226,33 @@ class OrganisationSheet extends ConsumerWidget {
                 key: const ValueKey('organisation-add'),
                 icon: const Icon(Icons.add),
                 label: Text(l10n.organisationAdd),
-                onPressed: () =>
-                    _add(context, ref, owned, spaces, organisations, organisation),
+                onPressed: () => _add(
+                  context,
+                  ref,
+                  owned,
+                  spaces,
+                  organisations,
+                  organisation,
+                ),
               ),
+            if (headOwner) ...[
+              const FormGap.small(),
+              OutlinedButton.icon(
+                key: const ValueKey('organisation-add-house'),
+                icon: const Icon(Icons.public),
+                label: Text(l10n.houseAddTitle),
+                onPressed: () async {
+                  final id = await AddHouseForm.open(
+                    context,
+                    ref,
+                    organisation,
+                  );
+                  if (id != null && context.mounted) {
+                    Navigator.of(context).pop(id);
+                  }
+                },
+              ),
+            ],
           ],
         ],
       ),

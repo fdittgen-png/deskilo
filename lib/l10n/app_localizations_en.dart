@@ -13611,6 +13611,95 @@ class AppLocalizationsEn extends AppLocalizations {
   String get holidayWhitMonday => 'Whit Monday';
 
   @override
+  String get houseAddCarried =>
+      'Travels: the roles, the booking and validation rules, the reminders, and the features this country has.';
+
+  @override
+  String get houseAddLanguage => 'Language of its documents';
+
+  @override
+  String get houseAddName => 'Name of the house';
+
+  @override
+  String get houseAddNotCarried =>
+      'Does not travel: the identity, the bank and payment instructions, the places, the document layout and links.';
+
+  @override
+  String get houseAddSubmit => 'Create the house';
+
+  @override
+  String get houseAddTitle => 'Add a house abroad';
+
+  @override
+  String get houseAddToPrice =>
+      'Arrive inactive, to be priced: the plans, services and packages.';
+
+  @override
+  String houseBirthCoOwners(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count owners of the head were added as co-owners.',
+      one: '1 owner of the head was added as co-owner.',
+      zero: 'No co-owner was added.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthCreated(String head, String date) {
+    return 'Created from $head on $date.';
+  }
+
+  @override
+  String get houseBirthNotCarried =>
+      'Not carried: the document layout and links. Choose this house\'s own.';
+
+  @override
+  String houseBirthPackages(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count packages',
+      one: '1 package',
+      zero: 'no package',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthPlans(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count plans',
+      one: '1 plan',
+      zero: 'no plan',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String houseBirthServices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count services',
+      one: '1 service',
+      zero: 'no service',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseBirthTitle => 'How this house began';
+
+  @override
+  String houseBirthToPrice(String rows) {
+    return 'Carried, inactive and to be priced: $rows.';
+  }
+
+  @override
   String get hubAccountingSubtitle =>
       'Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place';
 
@@ -22367,6 +22456,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This business is in no organisation.';
 
   @override
+  String get organisationRefusedLanguage =>
+      'The documents speak English, French, German, Spanish or Italian.';
+
+  @override
   String get organisationRefusedNoName => 'An organisation needs a name.';
 
   @override
@@ -22380,6 +22473,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get organisationRefusedOther =>
       'The organisation could not be changed. Try again.';
+
+  @override
+  String get organisationRefusedRequestUsed =>
+      'This request already made another business. Open the form again.';
 
   @override
   String get organisationRefusedTwinNeverHead =>
