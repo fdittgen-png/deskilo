@@ -8,10 +8,12 @@ import 'package:go_router/go_router.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
+import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
+import 'chrome_role.dart';
 import 'house_switch.dart';
 import 'space_entry.dart';
 
@@ -47,8 +49,12 @@ double _lineWidth(BuildContext context, String text, TextStyle? style) {
 /// is dropped where it would crowd the name out, and the business's line
 /// is left out where it cannot be read whole — the drawer names it.
 class SpaceChip extends ConsumerWidget {
-  const SpaceChip({super.key, required this.tabTitle});
+  const SpaceChip({super.key, required this.tabTitle, this.path});
   final String tabTitle;
+
+  /// #4019 — the page's path: where it declares that the role decides it,
+  /// the business's line names the role too.
+  final String? path;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -58,6 +64,7 @@ class SpaceChip extends ConsumerWidget {
     final brand = space == null ? null : spaceBrand(space);
     final avatarSide = brand != null ? _ringSide : 2 * _avatarRadius;
     final houses = otherHousesOf(ref, space?.id);
+    final role = chromeRoleFor(context, ref, path);
     final chip = LayoutBuilder(
       builder: (context, constraints) {
         final page = _lineWidth(context, tabTitle, text.titleMedium);
@@ -67,9 +74,17 @@ class SpaceChip extends ConsumerWidget {
         final column =
             constraints.maxWidth -
             (withAvatar ? avatarSide + AppSpacing.sm : 0);
-        final business = space == null
+        final plain = space == null ? null : '${l10n.appTitle} · ${space.name}';
+        // #4019 — the role joins the business's line only where the whole
+        // line is still read; never at the price of the page's name.
+        final withRole = plain == null || role == null
             ? null
-            : '${l10n.appTitle} · ${space.name}';
+            : '$plain · $role';
+        final business =
+            withRole != null &&
+                _lineWidth(context, withRole, text.labelLarge) <= column
+            ? withRole
+            : plain;
         final showBusiness =
             business != null &&
             _lineWidth(context, business, text.labelLarge) <= column;
@@ -149,9 +164,46 @@ class SpaceChip extends ConsumerWidget {
         );
       },
     );
-    if (houses.isEmpty) return chip;
-    return Tooltip(
-      message: l10n.spaceOtherHouses,
+    // #4019 — a consequential page adds the role whether or not the bar has
+    // room to draw it: a screen reader hears it at any width.
+    final base = space == null ? tabTitle : '${space.name}, $tabTitle';
+    return _announced(
+      context,
+      ref,
+      chip: chip,
+      label: role == null ? base : '$base, $role',
+      houses: houses,
+    );
+  }
+}
+
+/// #4019 — the chip as one announcement, business, page and, where it applies, role;
+/// where it switches houses the label ends with the tooltip's words and it is
+/// a button, and only then.
+Widget _announced(
+  BuildContext context,
+  WidgetRef ref, {
+  required Widget chip,
+  required String label,
+  required List<Workspace> houses,
+}) {
+  if (houses.isEmpty) {
+    return Semantics(
+      container: true,
+      label: label,
+      excludeSemantics: true,
+      child: chip,
+    );
+  }
+  final l10n = context.l10n;
+  return Tooltip(
+    message: l10n.spaceOtherHouses,
+    excludeFromSemantics: true,
+    child: Semantics(
+      container: true,
+      button: true,
+      label: l10n.chromeChipWithHint(label, l10n.spaceOtherHouses),
+      excludeSemantics: true,
       child: InkWell(
         key: const ValueKey('space-chip-houses'),
         onTap: () async {
@@ -161,12 +213,17 @@ class SpaceChip extends ConsumerWidget {
         },
         // The tap is a whole target: the chip is 44 high, the tap 48 (#4036).
         child: ConstrainedBox(
-          constraints: const BoxConstraints(minHeight: kMinInteractiveDimension),
-          child: Align(alignment: AlignmentDirectional.centerStart, child: chip),
+          constraints: const BoxConstraints(
+            minHeight: kMinInteractiveDimension,
+          ),
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: chip,
+          ),
         ),
       ),
-    );
-  }
+    ),
+  );
 }
 
 /// The same account avatar, in the same position, in both layers.

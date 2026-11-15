@@ -24,7 +24,13 @@ class SettingsTaskSection extends StatelessWidget {
         controller: controller,
         expansionAnimationStyle: AnimationStyle(duration: motionDuration(context, kThemeAnimationDuration)),
         maintainState: true, initiallyExpanded: initiallyExpanded,
-        title: Text(title), children: children),
+        title: Text(title), children: [
+          // #4034 — a closed section's rows stay mounted, not reached by Tab.
+          if (controller case final open?) ListenableBuilder(listenable: open,
+            builder: (context, _) => ExcludeFocus(excluding: !open.isExpanded,
+              child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: children)))
+          else ...children,
+        ]),
     ),
   );
 }

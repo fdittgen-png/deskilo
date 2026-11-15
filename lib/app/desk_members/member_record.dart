@@ -13,6 +13,7 @@ import '../../core/i18n/format_controller.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../core/time/clock.dart';
+import '../../core/ui/kit/form_scroll.dart';
 import '../../features/members/presentation/screens/member_page.dart';
 import '../../features/members/presentation/widgets/member_money_card.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
@@ -97,10 +98,12 @@ class MemberRecord extends ConsumerWidget {
     );
     // #3891 — the bar then the body, stated: by reading order a body
     // scrolled up would come before the bar its Tab cycle starts with.
+    // #4034 — and within the bar, its own order: the page's, which keeps
+    // a body scrolled under the bar out of the bar's bands.
     return DefaultTabController(
       length: tabs.length,
       child: FocusTraversalGroup(
-        policy: OrderedTraversalPolicy(),
+        policy: OrderedTraversalPolicy(secondary: PageTraversalPolicy()),
         child: Scaffold(
         key: const ValueKey('member-record'),
         appBar: PreferredSize(
