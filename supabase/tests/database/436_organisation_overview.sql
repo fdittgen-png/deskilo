@@ -9,7 +9,7 @@
 -- refused; the organisation switched off in the head changes nothing for
 -- reading. Rolled back.
 begin;
-select plan(15);
+select plan(17);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -109,6 +109,13 @@ select is((pg_temp.house(current_setting('deskilo.ov.view')::jsonb, 'OVERVIEW-ZU
 select is((select string_agg((t->>'currency') || '=' || (t->'invoiced'->>'minor'), ',' order by t->>'currency')
              from jsonb_array_elements(current_setting('deskilo.ov.view')::jsonb->'totals') t),
   'CHF=90000,EUR=150000', 'one total per currency, nothing converted');
+select is((select (jsonb_typeof(f->'invoiced'->'minor'), jsonb_typeof(f->'collected'->'minor'), jsonb_typeof(f->'overdue'->'minor'))::text
+             from (select pg_temp.house(current_setting('deskilo.ov.view')::jsonb, 'OVERVIEW-PARIS')->'figures' f) x),
+  '(number,number,number)', 'a house''s amounts are numbers');
+select is((select (jsonb_typeof(t->'invoiced'->'minor'), jsonb_typeof(t->'collected'->'minor'), jsonb_typeof(t->'overdue'->'minor'),
+                   t->'overdue'->>'kind', t->'overdue' ? 'as_of')::text
+             from jsonb_array_elements(current_setting('deskilo.ov.view')::jsonb->'totals') t where t->>'currency' = 'EUR'),
+  '(number,number,number,state,t)', 'so are a total''s, and its overdue says as of when');
 select is((select count(*)::int from jsonb_object_keys(current_setting('deskilo.ov.view')::jsonb) k
             where k ~ '(invoiced|collected|overdue|total_minor)'), 0,
   'and no sum across currencies');

@@ -18,6 +18,7 @@
 -- the caller may not read is listed without them and says why
 -- (`not_permitted`, or `not_enabled` when its analysis is off).
 --
+-- Every amount is a number of minor units, in a house and in a total.
 -- Totals are per currency: nothing is converted and nothing is added
 -- across currencies. A total says when it is incomplete (a house of that
 -- currency without figures, or a figure the house marks unavailable).
@@ -79,11 +80,11 @@ begin
         -- for the months asked, or a state as of when it was read
         v_figures := jsonb_build_object(
           'invoiced', case when v_fin is not null then jsonb_build_object(
-            'minor', v_fin->'invoiced_minor', 'kind', 'period', 'from', p_from, 'to', p_to) end,
+            'minor', to_jsonb((v_fin->>'invoiced_minor')::bigint), 'kind', 'period', 'from', p_from, 'to', p_to) end,
           'collected', case when v_fin is not null then jsonb_build_object(
-            'minor', v_fin->'collected_minor', 'kind', 'period', 'from', p_from, 'to', p_to) end,
+            'minor', to_jsonb((v_fin->>'collected_minor')::bigint), 'kind', 'period', 'from', p_from, 'to', p_to) end,
           'overdue', case when v_overdue is not null then jsonb_build_object(
-            'minor', v_overdue->'value', 'kind', 'state', 'as_of', v_overdue->'computed_at') end,
+            'minor', to_jsonb((v_overdue->>'value')::bigint), 'kind', 'state', 'as_of', v_overdue->'computed_at') end,
           'quality', coalesce(v_fin->'quality', '[]'::jsonb) || coalesce(v_overdue->'quality', '[]'::jsonb),
           'reasons', coalesce(v_fin->'reasons', '[]'::jsonb) || coalesce(v_overdue->'reasons', '[]'::jsonb));
       end if;
@@ -119,9 +120,9 @@ begin
     'houses', v_houses,
     'totals', coalesce((select jsonb_agg(
                  t.value || jsonb_build_object(
-                   'invoiced', jsonb_build_object('minor', t.value->>'invoiced', 'kind', 'period', 'from', p_from, 'to', p_to),
-                   'collected', jsonb_build_object('minor', t.value->>'collected', 'kind', 'period', 'from', p_from, 'to', p_to),
-                   'overdue', jsonb_build_object('minor', t.value->>'overdue', 'kind', 'state'))
+                   'invoiced', jsonb_build_object('minor', t.value->'invoiced', 'kind', 'period', 'from', p_from, 'to', p_to),
+                   'collected', jsonb_build_object('minor', t.value->'collected', 'kind', 'period', 'from', p_from, 'to', p_to),
+                   'overdue', jsonb_build_object('minor', t.value->'overdue', 'kind', 'state', 'as_of', now()))
                  order by t.key)
                from jsonb_each(v_totals) t), '[]'::jsonb),
     'computed_at', now());
