@@ -67,7 +67,7 @@ is fixed, not rerun.
 | Tools · Add iOS TestFlight tester | `ios-testers.yml` | invite one person |
 | Tools · Dev APK (sideload) | `dev-apk.yml` | a one-off APK from any ref |
 | Tools · Database preview | `db-preview.yml` | what `quality · database` will say about a migration, before its pull request opens: the replay from empty, the policies, the effective contract and the database tests in one job of about eight minutes; uploads the contract and the policy list ready to commit (#3751) |
-| Tools · Branch check | `branch-check.yml` | the test folders or files a contributor names, on a pushed branch and a hosted runner, before the pull request opens: `scripts/branch_check.sh <branch> <test path>...` prints the counts and the names of the tests that failed; gates nothing (#4015) |
+| Tools · Branch check | `branch-check.yml` | the test folders or files a contributor names, on a pushed branch and a hosted runner, before the pull request opens: `scripts/branch_check.sh <branch> <test path>...` prints the total and the names of the tests that failed; each named path runs on a runner of its own (#4044); gates nothing (#4015) |
 
 ## Dependency maintenance and workflow audit
 

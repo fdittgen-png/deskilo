@@ -131,9 +131,12 @@ push the branch and run them on a hosted runner, before the pull request:
 scripts/branch_check.sh <branch> test/features/workspace test/ux
 ```
 
-It dispatches `Tools · Branch check`, waits, and prints one verdict line
-(`BRANCH CHECK: ok -- <n> passed, ...`) and the names of the tests that
-failed. Work on something else meanwhile; the count goes into the receipt
+It dispatches `Tools · Branch check`, waits, and prints one total line
+(`BRANCH CHECK: ok -- <n> passed, <m> skipped (<k> paths)`) and, for a
+failure, each failing path's line with the names of its failed tests. Each
+named path runs on a runner of its own (#4044), so name the folders apart
+(`test/ux test/a11y`, not their parent) and the wait is that of the slowest
+one; at most twelve paths in one run. Work on something else meanwhile; the count goes into the receipt
 line like a local one. It gates nothing: the pull request's Quality run stays
 the gate.
 

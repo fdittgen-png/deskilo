@@ -3,12 +3,13 @@
 #
 # #4015 -- the verdict of a branch check, from the test runner's JSON stream.
 #
-#   scripts/branch_check_summary.py <stream.jsonl> <exit code of the run>
+#   scripts/branch_check_summary.py <stream.jsonl> <exit code of the run> [path]
 #
-# Prints one verdict line and, when tests failed, their names (file first):
+# Prints one verdict line and, when tests failed, their names (file first).
+# With [path] (#4044: one job per named path) the line ends with it:
 #
-#   BRANCH CHECK: ok -- 1234 passed, 3 skipped
-#   BRANCH CHECK: FAILED -- 1230 passed, 4 failed, 3 skipped (exit 1)
+#   BRANCH CHECK: ok -- 1234 passed, 3 skipped [test/ux]
+#   BRANCH CHECK: FAILED -- 1230 passed, 4 failed, 3 skipped (exit 1) [test/ux]
 #   - test/features/x_test.dart: the name of the test
 #
 # A stream that is missing or has no test in it is a failure with its reason:
@@ -19,6 +20,7 @@ import sys
 
 def main() -> int:
     path, code = sys.argv[1], sys.argv[2]
+    of = f" [{sys.argv[3]}]" if len(sys.argv) > 3 and sys.argv[3] else ""
     suites, tests, failed = {}, {}, []
     passed = skipped = 0
     try:
@@ -50,15 +52,18 @@ def main() -> int:
                     else:
                         failed.append(tests.get(event["testID"], ("?", "?")))
     except OSError as error:
-        print(f"BRANCH CHECK: FAILED -- no test stream ({error.strerror}); exit {code}")
+        print(
+            f"BRANCH CHECK: FAILED -- no test stream ({error.strerror}); "
+            f"exit {code}{of}"
+        )
         return 0
     if code == "0" and not failed and passed > 0:
-        print(f"BRANCH CHECK: ok -- {passed} passed, {skipped} skipped")
+        print(f"BRANCH CHECK: ok -- {passed} passed, {skipped} skipped{of}")
         return 0
     reason = "no test ran" if passed == 0 and not failed else f"{len(failed)} failed"
     print(
         f"BRANCH CHECK: FAILED -- {passed} passed, {reason}, "
-        f"{skipped} skipped (exit {code})"
+        f"{skipped} skipped (exit {code}){of}"
     )
     for suite, name in failed[:200]:
         print(f"- {suite}: {name}")
