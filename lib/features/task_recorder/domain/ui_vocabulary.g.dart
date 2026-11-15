@@ -4824,6 +4824,7 @@ const List<String> uiKeyPatterns = [
   'ny-fee-match-{}',
   'ny-rent-match-{}',
   'ny-rent-{}',
+  'ny-sale-{}-{}',
   'occurrence-amount-{}',
   'occurrence-confirm-{}',
   'occurrence-reason-{}',
