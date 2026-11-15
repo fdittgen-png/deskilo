@@ -5,8 +5,25 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import '../../../core/jurisdiction/installed_accounting_formats.dart';
 import '../../../core/vat/tax_reference_active.dart';
 
+/// #3470 -- one journal: the code the books know it by, and its label. Plain
+/// strings, so the journals travel without the jurisdiction contract.
+class FecJournal {
+  const FecJournal({required this.code, required this.label});
+
+  final String code;
+  final String label;
+
+  @override
+  bool operator ==(Object other) =>
+      other is FecJournal && other.code == code && other.label == label;
+
+  @override
+  int get hashCode => Object.hash(code, label);
+}
+
 /// #3429 -- the journals a FEC writes, as the installed FEC format declares
 /// them (`AccountingFormatContribution.journals`): code and label per role.
+/// #3470: or as the business set them, read through [FecJournals.fromJson].
 class FecJournals {
   const FecJournals({
     required this.sales,
@@ -18,9 +35,10 @@ class FecJournals {
   /// The journals of the installed FEC declaration.
   factory FecJournals.installed() {
     final declared = accountingFormatOf('fec').journals;
-    AccountingJournal of(String role) =>
-        declared[role] ??
-        (throw StateError('the FEC declaration has no $role journal'));
+    FecJournal of(String role) => switch (declared[role]) {
+      final AccountingJournal j => FecJournal(code: j.code, label: j.label),
+      null => throw StateError('the FEC declaration has no $role journal'),
+    };
     return FecJournals(
       sales: of('sales'),
       bank: of('bank'),
@@ -29,10 +47,47 @@ class FecJournals {
     );
   }
 
-  final AccountingJournal sales;
-  final AccountingJournal bank;
-  final AccountingJournal purchases;
-  final AccountingJournal misc;
+  /// #3470 -- the roles, in the order a form and a stored value list them.
+  static const roles = ['sales', 'bank', 'purchases', 'misc'];
+
+  /// The business's journals as stored (`{role: {code, label}}`), or null
+  /// when nothing is stored or the value is not whole: then the defaults
+  /// apply. A stored value was refused whole on its way in, never cleaned.
+  static FecJournals? fromJson(Object? json) {
+    if (json is! Map || json.isEmpty) return null;
+    FecJournal? of(String role) => switch (json[role]) {
+      {'code': final String code, 'label': final String label} =>
+        FecJournal(code: code, label: label),
+      _ => null,
+    };
+    final [sales, bank, purchases, misc] = [for (final r in roles) of(r)];
+    if (sales == null || bank == null || purchases == null || misc == null) {
+      return null;
+    }
+    return FecJournals(
+      sales: sales,
+      bank: bank,
+      purchases: purchases,
+      misc: misc,
+    );
+  }
+
+  Map<String, Object?> toJson() => {
+    for (final (role, j) in byRole) role: {'code': j.code, 'label': j.label},
+  };
+
+  /// The four journals with their role, in [roles] order.
+  List<(String, FecJournal)> get byRole => [
+    ('sales', sales),
+    ('bank', bank),
+    ('purchases', purchases),
+    ('misc', misc),
+  ];
+
+  final FecJournal sales;
+  final FecJournal bank;
+  final FecJournal purchases;
+  final FecJournal misc;
 }
 
 /// The accounts a FEC cannot be written without. Defaults follow the

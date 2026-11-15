@@ -3,8 +3,10 @@
 // #2597 -- the workspace's identity: locale, legal, payment, documents, lexicon, branding and emblem, as one mixin composed into
 // `SupabaseWorkspaceRepository` (the part-file bodies and their `_xxxImpl`
 // forwarders are gone).
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/payment_instructions.dart';
@@ -84,6 +86,43 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
     await updateWorkspaceRow(workspaceId, {
       'subscription_vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
     });
+  }
+
+  @override
+  Future<void> setAccountingJournals(
+    String workspaceId,
+    Map<String, Object?> journals,
+  ) async {
+    try {
+      await client.rpc<Object?>(
+        'set_accounting_journals',
+        params: {'p_workspace_id': workspaceId, 'p_journals': journals},
+      );
+    } on PostgrestException catch (e) {
+      // trace-exempt: rethrown as the refusal the form says in words.
+      if (e.code == '42501') {
+        throw const AccountingJournalsRefused(notAllowed: true);
+      }
+      if (e.code != '22023') rethrow;
+      final why = JsonReader.orEmpty(
+        _decoded(e.details),
+        context: 'accounting_journals.refusal',
+      );
+      throw AccountingJournalsRefused(
+        problem: why.textOrAbsent('problem') ?? 'shape',
+        role: why.textOrAbsent('role') ?? '',
+      );
+    }
+  }
+
+  static Object? _decoded(Object? details) {
+    if (details is! String) return details;
+    try {
+      return jsonDecode(details);
+    } on FormatException {
+      // trace-exempt: an unreadable detail is read as "not whole".
+      return null;
+    }
   }
 
   @override

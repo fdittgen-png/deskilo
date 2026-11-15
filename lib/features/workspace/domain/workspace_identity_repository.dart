@@ -64,6 +64,14 @@ abstract class WorkspaceIdentityRepository {
   /// to the workspace default.
   Future<void> setSubscriptionVatRate(String workspaceId, String vatRateId);
 
+  /// #3470 — owner-only: the business's accounting journals, all four
+  /// (`{role: {code, label}}`), or `{}` for the defaults. A value that is not
+  /// whole is refused whole ([AccountingJournalsRefused]), never cleaned.
+  Future<void> setAccountingJournals(
+    String workspaceId,
+    Map<String, Object?> journals,
+  );
+
   /// The document library (#500, 0099) — RLS already trims rows to
   /// what the caller's role may see.
   Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId);
@@ -126,4 +134,19 @@ abstract class WorkspaceIdentityRepository {
   /// Owner-only: set the desk fill opacity percentage (0040), clamped
   /// 20..100 server-side. Lower = more translucent desks.
   Future<void> setDeskOpacity(String workspaceId, int opacity);
+}
+
+/// #3470 — the server refused the journals: not whole ([problem] and the
+/// journal it is about), or not the caller's to set ([notAllowed]).
+class AccountingJournalsRefused implements Exception {
+  const AccountingJournalsRefused({
+    this.problem = '',
+    this.role = '',
+    this.notAllowed = false,
+  });
+
+  /// 'shape', 'code', 'label', 'character' or 'duplicate'.
+  final String problem;
+  final String role;
+  final bool notAllowed;
 }
