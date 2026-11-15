@@ -78,7 +78,9 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
           const SizedBox(height: AppSpacing.md),
           ...widget.children,
         ])
-      : Card(
+      // #4034 — the jump lands on the group, around its controls (as a
+      // settings section's does): a focus of its own, never a stop.
+      : Focus(focusNode: _headingFocus, child: Card(
     margin: const EdgeInsets.only(bottom: AppSpacing.md),
     child: ExpansionTile(key: ValueKey('workspace-group-${widget.id}'),
       controller: _controller, maintainState: true,
@@ -89,12 +91,16 @@ class _WorkspaceFormGroupState extends State<WorkspaceFormGroup> {
       expansionAnimationStyle: AnimationStyle(duration: motionDuration(context, kThemeAnimationDuration)),
       onExpansionChanged: (open) { if (!open) FocusScope.of(context).unfocus(); setState(() {}); },
       initiallyExpanded: widget.initiallyExpanded,
-      leading: Icon(widget.icon), title: Focus(focusNode: _headingFocus, child: Text(widget.title)),
+      leading: Icon(widget.icon), title: Text(widget.title),
       childrenPadding: AppSpacing.gutterAll,
-      children: [TickerMode(enabled: _controller.isExpanded,
+      // #4034 — a closed group's fields stay mounted, not reached by Tab;
+      // read from the controller as it changes (the tile opens it itself).
+      children: [ListenableBuilder(listenable: _controller,
+        builder: (context, _) => ExcludeFocus(excluding: !_controller.isExpanded,
+        child: TickerMode(enabled: _controller.isExpanded,
         child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: widget.children))]),
-  );
+          children: widget.children))))]),
+  ));
 }
 
 /// Shortcuts stay visible; content remains one draft-preserving form.
