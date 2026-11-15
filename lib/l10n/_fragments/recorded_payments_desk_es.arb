@@ -3,5 +3,10 @@
   "recordedPaymentsColMatched": "Conciliado el",
   "statementDeskColLine": "Línea",
   "usageColBilled": "Facturado",
-  "moneyReportsForMonth": "Informes de {month}"
+  "moneyReportsForMonth": "Informes de {month}",
+  "statementDeskUsed": "{used} de {allowance, plural, one{1 media jornada} other{{allowance} medias jornadas}}",
+  "statementDeskBalanceOwed": "Debido: usted debe este importe",
+  "statementDeskBalanceCredit": "A favor: este importe es a su favor",
+  "statementDeskBalanceSettled": "Saldado: no se debe nada",
+  "statementDeskNoMovements": "Ningún otro movimiento este mes: las cifras de arriba son todo el extracto."
 }

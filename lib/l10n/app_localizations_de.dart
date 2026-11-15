@@ -33078,7 +33078,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceYoursNow => 'Von Ihnen für dieses Zeitfenster reserviert.';
 
   @override
+  String get statementDeskBalanceCredit =>
+      'Guthaben: dieser Betrag steht Ihnen zu';
+
+  @override
+  String get statementDeskBalanceOwed =>
+      'Geschuldet: Sie schulden diesen Betrag';
+
+  @override
+  String get statementDeskBalanceSettled => 'Ausgeglichen: nichts ist offen';
+
+  @override
   String get statementDeskColLine => 'Posten';
+
+  @override
+  String get statementDeskNoMovements =>
+      'Keine weiteren Bewegungen in diesem Monat: die Zahlen oben sind die ganze Abrechnung.';
+
+  @override
+  String statementDeskUsed(int used, int allowance) {
+    String _temp0 = intl.Intl.pluralLogic(
+      allowance,
+      locale: localeName,
+      other: '$allowance Halbtagen',
+      one: '1 Halbtag',
+    );
+    return '$used von $_temp0';
+  }
 
   @override
   String get statusAwaiting => 'Offen';

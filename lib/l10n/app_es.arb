@@ -19481,7 +19481,12 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Reservado por usted para esta franja.",
+  "statementDeskBalanceCredit": "A favor: este importe es a su favor",
+  "statementDeskBalanceOwed": "Debido: usted debe este importe",
+  "statementDeskBalanceSettled": "Saldado: no se debe nada",
   "statementDeskColLine": "Línea",
+  "statementDeskNoMovements": "Ningún otro movimiento este mes: las cifras de arriba son todo el extracto.",
+  "statementDeskUsed": "{used} de {allowance, plural, one{1 media jornada} other{{allowance} medias jornadas}}",
   "statusAwaiting": "Pendiente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

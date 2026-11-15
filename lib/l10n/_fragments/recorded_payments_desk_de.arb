@@ -3,5 +3,10 @@
   "recordedPaymentsColMatched": "Zugeordnet am",
   "statementDeskColLine": "Posten",
   "usageColBilled": "Abgerechnet",
-  "moneyReportsForMonth": "Berichte für {month}"
+  "moneyReportsForMonth": "Berichte für {month}",
+  "statementDeskUsed": "{used} von {allowance, plural, one{1 Halbtag} other{{allowance} Halbtagen}}",
+  "statementDeskBalanceOwed": "Geschuldet: Sie schulden diesen Betrag",
+  "statementDeskBalanceCredit": "Guthaben: dieser Betrag steht Ihnen zu",
+  "statementDeskBalanceSettled": "Ausgeglichen: nichts ist offen",
+  "statementDeskNoMovements": "Keine weiteren Bewegungen in diesem Monat: die Zahlen oben sind die ganze Abrechnung."
 }
