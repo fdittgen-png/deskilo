@@ -16,6 +16,7 @@ import 'package:deskilo/features/plan/domain/level.dart';
 import 'package:deskilo/features/plan/domain/office.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/plan/providers/floor_plan_providers.dart';
+import 'package:deskilo/features/workspace/domain/configuration_refusal.dart';
 import 'package:deskilo/features/workspace/domain/setup_levels.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_import.dart';
@@ -59,10 +60,14 @@ class RecordingImportRepository implements WorkspaceImportRepository {
   Future<Map<String, Object?>> exportConfiguration(String workspaceId) async =>
       exported;
 
+  /// #4028 — what [importConfiguration] answers it left out.
+  List<ConfigurationRefusal> refused = const [];
+
   @override
-  Future<void> importConfiguration(
+  Future<List<ConfigurationRefusal>> importConfiguration(
       String workspaceId, Map<String, Object?> configuration) async {
     configurations.add(configuration);
+    return refused;
   }
 }
 
@@ -484,6 +489,55 @@ void main() {
     expect(importRepository.configurations, [kTestConfiguration]);
     expect(importRepository.calls, hasLength(1), reason: 'then the plan');
     expect(find.text('Workspace imported.'), findsOneWidget);
+  });
+
+  testWidgets(
+      '#4028 — a file from another currency and country: what it left out is '
+      'said in a dialog that stays until it is read', (tester) async {
+    final importRepository = RecordingImportRepository()
+      ..refused = const [
+        ConfigurationRefusal(
+            entity: 'tariffs',
+            code: ConfigurationRefusalCode.currency,
+            source: 'EUR',
+            target: 'GBP'),
+        ConfigurationRefusal(
+            entity: 'services',
+            code: ConfigurationRefusalCode.currency,
+            source: 'EUR',
+            target: 'GBP'),
+        ConfigurationRefusal(
+            entity: 'vat',
+            code: ConfigurationRefusalCode.country,
+            source: 'FR',
+            target: 'IT'),
+      ];
+    final floorPlan = CountingFloorPlanRepository()..seedSmallPlan();
+    await pumpWorkspaceSettings(
+      tester,
+      picker: (_) async =>
+          xmlFile(importableXml(configuration: kTestConfiguration)),
+      importRepository: importRepository,
+      workspaceRepository: FakeWorkspaceRepository.withWorkspace(),
+      floorPlan: floorPlan,
+    );
+    await tapImportTile(tester);
+    await confirmImport(tester);
+
+    expect(find.byKey(const Key('configurationRefusals')), findsOneWidget);
+    expect(
+        find.text('Prices were not applied: this file is in EUR and this '
+            'business counts in GBP.'),
+        findsOneWidget,
+        reason: 'two priced entities, one sentence');
+    expect(
+        find.text('Tax rates were not applied: this file is from France and '
+            'this business is in Italy.'),
+        findsOneWidget);
+    await tester.tap(find.byKey(const Key('configurationRefusalsOk')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('configurationRefusals')), findsNothing);
+    expect(importRepository.configurations, [kTestConfiguration]);
   });
 
   testWidgets(

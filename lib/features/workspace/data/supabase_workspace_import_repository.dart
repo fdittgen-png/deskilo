@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../domain/configuration_refusal.dart';
 import '../domain/workspace_import.dart';
 import '../domain/workspace_xml.dart';
 
@@ -39,11 +40,11 @@ class SupabaseWorkspaceImportRepository implements WorkspaceImportRepository {
   }
 
   @override
-  Future<void> importConfiguration(
+  Future<List<ConfigurationRefusal>> importConfiguration(
     String workspaceId,
     Map<String, Object?> configuration,
   ) async {
-    await _client.rpc<dynamic>('import_workspace_configuration', params: {
+    final result = await _client.rpc<dynamic>('import_workspace_configuration', params: {
       'p_workspace_id': workspaceId,
       'p_configuration': configuration,
       // #1276 — the mode is named rather than inherited. This path is the
@@ -52,5 +53,6 @@ class SupabaseWorkspaceImportRepository implements WorkspaceImportRepository {
       // Template application is merge, and it goes through its own RPC.
       'p_mode': 'mirror',
     });
+    return ConfigurationRefusal.listFrom(result);
   }
 }

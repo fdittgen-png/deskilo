@@ -20,7 +20,8 @@ const _template = WorkspaceTemplate(
   entities: ['floor_plan', 'features'],
 );
 
-Future<void> _pump(WidgetTester tester, TemplatePreview preview, {String? country}) async {
+Future<void> _pump(WidgetTester tester, TemplatePreview preview,
+    {String? country, TemplateApplyResult? result}) async {
   tester.view.physicalSize = const Size(800, 1200);
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
@@ -29,6 +30,7 @@ Future<void> _pump(WidgetTester tester, TemplatePreview preview, {String? countr
       : FakeWorkspaceRepository.withWorkspace())
     ..templates.add(_template)
     ..templatePreviews['tpl-1'] = preview;
+  if (result != null) workspace.templateApplyResult = result;
   if (country != null) {
     workspace.workspaces[0] = workspace.workspaces[0].copyWith(countryCode: country);
   }
@@ -87,6 +89,38 @@ void main() {
     );
     // The button still counts the server's items — the view adds none.
     expect(find.text('Apply 2 changes'), findsOneWidget);
+  });
+
+  testWidgets('#4028 — a template from a business in another currency: '
+      'the sheet says its prices were not applied before it closes', (tester) async {
+    await _pump(
+      tester,
+      TemplatePreview.fromJson(<String, dynamic>{
+        'compatibility': 'supported',
+        'groups': [
+          {
+            'group': 'space',
+            'state': 'new',
+            'items': [<String, Object?>{}, <String, Object?>{}],
+          },
+        ],
+      }),
+      result: TemplateApplyResult.fromResult({
+        'refused': [
+          {'entity': 'services', 'code': 'currency', 'source': 'EUR', 'target': 'GBP'},
+        ],
+      }),
+    );
+    await tester.tap(find.text('Apply 2 changes'));
+    await tester.pumpAndSettle();
+
+    expect(
+        find.text('Prices were not applied: this template is in EUR and this '
+            'business counts in GBP.'),
+        findsOneWidget);
+    await tester.tap(find.byKey(const Key('configurationRefusalsOk')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const Key('configurationRefusals')), findsNothing);
   });
 
   testWidgets('no feature item, no process view', (tester) async {

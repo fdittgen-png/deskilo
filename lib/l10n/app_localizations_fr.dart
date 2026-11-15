@@ -6658,6 +6658,29 @@ class AppLocalizationsFr extends AppLocalizations {
   String get composerMention => 'Mentionner quelqu’un';
 
   @override
+  String configurationRefusedPricesFile(String source, String target) {
+    return 'Les prix n\'ont pas été appliqués : ce fichier est en $source et cette entreprise compte en $target.';
+  }
+
+  @override
+  String configurationRefusedPricesTemplate(String source, String target) {
+    return 'Les prix n\'ont pas été appliqués : ce modèle est en $source et cette entreprise compte en $target.';
+  }
+
+  @override
+  String configurationRefusedTaxFile(String source, String target) {
+    return 'Les taux de TVA n\'ont pas été appliqués : pays de ce fichier : $source ; pays de cette entreprise : $target.';
+  }
+
+  @override
+  String configurationRefusedTaxTemplate(String source, String target) {
+    return 'Les taux de TVA n\'ont pas été appliqués : pays de ce modèle : $source ; pays de cette entreprise : $target.';
+  }
+
+  @override
+  String get configurationRefusedTitle => 'Non appliqué';
+
+  @override
   String get configureWorkspaceTitle => 'Configurer l\'espace';
 
   @override
