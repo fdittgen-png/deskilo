@@ -133,10 +133,10 @@ Future<({Uint8List pdf, String xml})> _render(
   required bool copy,
 }) async {
   final reference = requireWorkspaceTaxReference(ref);
-  final workspace = ref.read(currentWorkspaceProvider).value;
+  final workspace = await ref.read(currentWorkspaceProvider.future);
   var xml = '';
   Uint8List? icc;
-  if (!copy && workspace != null) {
+  if (!copy && workspace != null && context.mounted) {
     xml = facturXmlOf(
       context,
       ref,
