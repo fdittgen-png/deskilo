@@ -15292,6 +15292,7 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesSupplierNotRead": "Non letto",
   "purchasesTabDocuments": "Documenti",
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"

@@ -26077,6 +26077,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchasesSupplier => 'Supplier';
 
   @override
+  String get purchasesSupplierNotRead => 'Not read';
+
+  @override
   String get purchasesTabDocuments => 'Documents';
 
   @override

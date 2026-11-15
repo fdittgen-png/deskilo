@@ -31,7 +31,6 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../application/workbench_import.dart';
@@ -48,6 +47,7 @@ import '../recorder_pages.dart';
 import '../route_classification.dart';
 import 'guide_draft_screen.dart';
 import 'recording_review_screen.dart';
+import 'task_wizard_empty_line.dart';
 import 'task_wizard_section_header.dart';
 import 'task_workbench_screen.dart' show refusalText;
 
@@ -76,22 +76,8 @@ class TaskWizardScreen extends ConsumerWidget {
           ),
           const SizedBox(height: AppSpacing.lg),
           TaskWizardSectionHeader(
-            key: const ValueKey('task-wizard-guides'),
-            title: l10n.taskWizardGuides,
-            action: FilledButton.tonalIcon(
-              key: const ValueKey('task-wizard-add-guide'),
-              onPressed: () => _addGuide(context, ref),
-              icon: const Icon(Icons.library_add_outlined),
-              label: Text(l10n.taskWizardAddGuide),
-            ),
-          ),
-          const _MyGuides(),
-          Padding(
-            padding: const EdgeInsets.only(top: AppSpacing.md),
-            child: Text(
-              l10n.taskWizardBuiltIn,
-              style: text.titleSmall,
-            ),
+            key: const ValueKey('task-wizard-builtin'),
+            title: l10n.taskWizardBuiltIn,
           ),
           for (final g in BuiltinGuide.values)
             ListTile(
@@ -114,6 +100,18 @@ class TaskWizardScreen extends ConsumerWidget {
                 style: text.bodySmall,
               ),
             ),
+          const SizedBox(height: AppSpacing.lg),
+          TaskWizardSectionHeader(
+            key: const ValueKey('task-wizard-guides'),
+            title: l10n.taskWizardGuides,
+            action: FilledButton.tonalIcon(
+              key: const ValueKey('task-wizard-add-guide'),
+              onPressed: () => _addGuide(context, ref),
+              icon: const Icon(Icons.library_add_outlined),
+              label: Text(l10n.taskWizardAddGuide),
+            ),
+          ),
+          const _MyGuides(),
           const SizedBox(height: AppSpacing.lg),
           TaskWizardSectionHeader(
             key: const ValueKey('task-wizard-recordings'),
@@ -400,10 +398,12 @@ class _MyGuides extends ConsumerWidget {
     final l10n = context.l10n;
     final guides = ref.watch(myGuidesProvider).value ?? const <StoredGuide>[];
     if (guides.isEmpty) {
-      return EmptyState(
+      return TaskWizardEmptyLine(
         key: const ValueKey('task-wizard-no-guides'),
-        icon: Icons.route_outlined,
-        title: l10n.taskWizardNoGuides,
+        text: l10n.taskWizardNoGuides,
+        actionKey: const ValueKey('task-wizard-no-guides-add'),
+        actionLabel: l10n.taskWizardAddGuide,
+        onAction: () => unawaited(_addGuide(context, ref)),
       );
     }
     return Column(
@@ -514,11 +514,12 @@ class _Recordings extends ConsumerWidget {
     final recordings =
         ref.watch(myRecordingsProvider).value ?? const <StoredRecording>[];
     if (recordings.isEmpty) {
-      return EmptyState(
+      return TaskWizardEmptyLine(
         key: const ValueKey('task-wizard-no-recordings'),
-        icon: Icons.history,
-        title:
-            l10n.taskRecorderNoRecordings,
+        text: l10n.taskRecorderNoRecordings,
+        actionKey: const ValueKey('task-wizard-no-recordings-record'),
+        actionLabel: l10n.taskRecorderRecordATask,
+        onAction: () => unawaited(context.push<void>(taskRecorderRoute)),
       );
     }
     return Column(
