@@ -2524,7 +2524,7 @@ routine public.create_invoice(p_workspace_id uuid, p_member_id uuid, p_period te
 routine public.create_invoice_receipted_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_request_id uuid, p_kind text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:eba62f2781e6
 routine public.create_invoice_replacement_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_replaces uuid, p_request_id uuid, p_detailed boolean, p_kind text, p_buyer_reference text, p_purchase_order text, p_correction_reason text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:2bd5cc408fcc
 routine public.create_managed_member(p_workspace_id uuid, p_identity jsonb, p_access jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:7871b90b4b5f
-routine public.create_organisation(p_head uuid, p_name text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8de82b47edb6
+routine public.create_organisation(p_head uuid, p_name text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:9d51c01834e5
 routine public.create_reservation(p_workspace_id uuid, p_seat_id uuid, p_office_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean, p_level_id uuid, p_desk_id uuid) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:6e0d3b9dfcce
 routine public.create_reservation_once(p_client_request_id uuid, p_workspace_id uuid, p_seat_id uuid, p_desk_id uuid, p_office_id uuid, p_level_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_check_in boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:98d868b4bfc6
 routine public.create_sample_data(p_workspace_id uuid, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:87e5c8c21a8b
@@ -2616,7 +2616,7 @@ routine public.feature_effective(p_workspace_id uuid, p_key text) -> boolean | f
 routine public.feature_effective_in(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:f36e5aa82a04
 routine public.feature_operation_allowed(p_workspace uuid, p_feature text, p_operation text) -> boolean | function | definer | stable | exec:service_role | body:084f4cf0e3a0
 routine public.feature_raw(p_flags jsonb, p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:3f29a2e68fc1
-routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:e32d09701964
+routine public.feature_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ae671a3ab28d
 routine public.federation_answer_wait() -> interval | function | definer | stable | exec: | body:ecc7c683d6e9
 routine public.federation_envelope_headers(p_purpose text, p_target uuid, p_event uuid, p_path text, p_body jsonb) -> jsonb | function | definer | volatile | exec: | body:dc4baaa18342
 routine public.federation_inbox_accept(p_method text, p_path text, p_headers jsonb, p_body_b64 text) -> jsonb | function | definer | volatile | exec:service_role | body:9eb383212bb9
@@ -3131,7 +3131,8 @@ routine public.operator_set_mcp_endpoint(p_url text) -> jsonb | function | defin
 routine public.operator_set_mcp_runtime(p_enabled boolean) -> jsonb | function | definer | volatile | exec:service_role | body:46902c960cbd
 routine public.operator_set_personal_home(p_kind text, p_url text, p_key text, p_installation_id uuid) -> jsonb | function | definer | volatile | exec:service_role | body:862bc3e5136b
 routine public.organisation_feature_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:483b7fc7e5c7
-routine public.organisation_owner_check(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:544e786e63f2
+routine public.organisation_head_check(p_head uuid) -> void | function | definer | stable | exec:service_role | body:9879c021f6cb
+routine public.organisation_owner_check(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:53d89cd293f4
 routine public.organisation_owns(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:f2dc4841d55e
 routine public.organisation_place(p_workspace_id uuid, p_organisation_id uuid) -> void | function | definer | volatile | exec:service_role | body:7e8e491c6304
 routine public.outgoing_payments_guard() -> trigger | function | invoker | volatile | exec:service_role | body:e6f8fab9892d
@@ -3508,7 +3509,7 @@ routine public.set_member_vat_treatment(p_member_id uuid, p_treatment text, p_re
 routine public.set_message_forward_lock(p_kind text, p_message_id uuid, p_locked boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:0af773e28797
 routine public.set_my_about(p_profession text, p_bio text) -> void | function | definer | volatile | exec:authenticated,service_role | body:db713fc7e16b
 routine public.set_number_sequence(p_workspace_id uuid, p_journal text, p_prefix text, p_suffix text, p_date_part text, p_digits integer, p_reset text, p_next_value bigint) -> void | function | definer | volatile | exec:authenticated,service_role | body:fd0b9cb1c2f7
-routine public.set_organisation_head(p_organisation uuid, p_head uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:ef219e006eae
+routine public.set_organisation_head(p_organisation uuid, p_head uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:8732a0d954f6
 routine public.set_participant_admin(p_conversation_id uuid, p_member_id uuid, p_admin boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:619987e97aef
 routine public.set_payment_credentials(p_workspace_id uuid, p_provider text, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:3f1eef036dde
 routine public.set_personal_preferences(p_patch jsonb, p_workspace_id uuid, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:6bb92534836b
@@ -3629,7 +3630,7 @@ routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_de
 routine public.template_blocked_validations(p_tables jsonb, p_selected text[]) -> jsonb | function | invoker | immutable | exec:service_role | body:c094ee38e47a
 routine public.template_compatibility(p_template workspace_templates, p_groups text[]) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:99d317191047
 routine public.template_customizations(p_workspace_id uuid, p_template workspace_templates, p_groups jsonb) -> jsonb | function | definer | stable | exec:service_role | body:9906b0d4a427
-routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:9c0ecd2eddb8
+routine public.template_field_registry() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:0c5dbeb12d83
 routine public.template_local_needs(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:680fc4d8017c
 routine public.template_local_slot_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:41d51bce65a7
 routine public.template_outline(p_template_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e7a5648e8753
