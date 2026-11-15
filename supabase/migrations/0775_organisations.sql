@@ -517,8 +517,8 @@ as $registry$
     "invoiceEmail": {"parent": "invoicing", "default": false, "core": false},
     "kioskEnrolment": {"parent": "kioskMode", "default": true, "core": false},
     "quickSearch": {"parent": null, "default": true, "core": true},
-    "organisation": {"parent": null, "default": true, "core": true},
-    "stockManagement": {"parent": "services", "default": false, "core": false}
+    "stockManagement": {"parent": "services", "default": false, "core": false},
+    "organisation": {"parent": null, "default": true, "core": true}
   }'::jsonb
 $registry$;
 revoke execute on function public.feature_registry() from public, anon;
