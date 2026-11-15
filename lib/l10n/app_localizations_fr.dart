@@ -26372,6 +26372,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchasesSupplier => 'Fournisseur';
 
   @override
+  String get purchasesSupplierNotRead => 'Non lu';
+
+  @override
   String get purchasesTabDocuments => 'Documents';
 
   @override

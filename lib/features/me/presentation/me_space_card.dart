@@ -17,7 +17,9 @@ import '../../../core/theme/app_typography.dart';
 import '../../../core/theme/status_colors.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/adaptive/window_class.dart';
 import '../../../core/ui/app_snack.dart';
+import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
@@ -50,6 +52,26 @@ class MeSpaceCard extends ConsumerWidget {
   bool get _hasAccess =>
       member?.status == MemberStatus.active || _pending;
 
+  String _tooltip(
+    AppLocalizations l10n, {
+    required String environment,
+    required bool demo,
+    required String? status,
+    required int waiting,
+  }) => [
+    space.name,
+    environment,
+    if (demo)
+      l10n.meDemoSessionBadgeHint
+    else if (space.isDevelopment)
+      l10n.meTestBusinessHint
+    else
+      l10n.uxRealSpaceHint,
+    ?status,
+    if (lastUsed) l10n.meSpaceLastUsed,
+    if (waiting > 0) l10n.meSpaceNotifications(waiting),
+  ].join(' · ');
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
@@ -71,6 +93,9 @@ class MeSpaceCard extends ConsumerWidget {
     // Green says the space is real, orange says it is one to try things in
     // (#917); the word is on the tile as well, and the colour is a tint, not
     // a block, so the list stays calm.
+    final openLabel = isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness;
+    final named = waiting > 0 &&
+        WindowClass.of(context).index >= WindowClass.expanded.index;
     final tone = isProd
         ? AppEnvironmentColors.productionOf(brightness)
         : AppEnvironmentColors.developmentOf(brightness);
@@ -80,19 +105,14 @@ class MeSpaceCard extends ConsumerWidget {
         padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
         child: Builder(
           builder: (buttonContext) => Tooltip(
-            message: [
-              space.name,
-              environment,
-              if (demo) l10n.meDemoSessionBadgeHint else if (space.isDevelopment) l10n.meTestBusinessHint else l10n.uxRealSpaceHint,
-              ?status,
-              if (lastUsed) l10n.meSpaceLastUsed,
-              if (waiting > 0) l10n.meSpaceNotifications(waiting),
-            ].join(' · '),
-            child: Badge.count(
+            message: _tooltip(l10n, environment: environment, demo: demo, status: status, waiting: waiting),
+            // #4071 — the count is named where it is shown: in words beside the
+            // label from the desk's width, and to a screen reader everywhere
+            // (the badge's bare number is left out of the semantics tree).
+            child: Badge(
               key: ValueKey('me-space-badge-${space.id}'),
-              count: waiting,
-              maxCount: 99,
-              isLabelVisible: waiting > 0,
+              label: ExcludeSemantics(child: Text(waiting > 99 ? '99+' : '$waiting')),
+              isLabelVisible: waiting > 0 && !named,
               backgroundColor: Theme.of(context).colorScheme.primary,
               textColor: Theme.of(context).colorScheme.onPrimary,
               child: FilledButton(
@@ -123,41 +143,92 @@ class MeSpaceCard extends ConsumerWidget {
                       : box.localToGlobal(Offset.zero) & box.size;
                   unawaited(enterSpace(context, ref, space, from: from));
                 },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    if (lastUsed) ...[
-                      Icon(
-                        Icons.history,
-                        size: 16,
-                        key: ValueKey('me-space-last-${space.id}'),
-                      ),
-                      const SizedBox(width: AppSpacing.xs),
-                    ] else ...[
-                      Container(
-                        width: 8,
-                        height: 8,
-                        decoration: BoxDecoration(
-                          color: tone,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      const SizedBox(width: AppSpacing.sm),
-                    ],
-                    Flexible(
-                      child: Text(
-                        isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness,
-                        maxLines: 2,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.labelLarge?.strong,
-                      ),
-                    ),
-                  ],
+                child: _SpaceButtonLabel(
+                  spaceId: space.id,
+                  openLabel: openLabel,
+                  waiting: waiting,
+                  named: named,
+                  lastUsed: lastUsed,
+                  tone: tone,
                 ),
               ),
             ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// What the button of one side says: its label, the dot or the "last used"
+/// mark, and (from the desk's width) the count in words (#4071). A screen
+/// reader gets the label and the named count as one phrase.
+class _SpaceButtonLabel extends StatelessWidget {
+  const _SpaceButtonLabel({
+    required this.spaceId,
+    required this.openLabel,
+    required this.waiting,
+    required this.named,
+    required this.lastUsed,
+    required this.tone,
+  });
+
+  final String spaceId;
+  final String openLabel;
+  final int waiting;
+  final bool named;
+  final bool lastUsed;
+  final Color tone;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final text = Theme.of(context).textTheme;
+    return Semantics(
+      label: [
+        openLabel,
+        if (waiting > 0) l10n.meSpaceNotifications(waiting),
+      ].join(', '),
+      excludeSemantics: true,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (lastUsed) ...[
+            Icon(
+              Icons.history,
+              size: 16,
+              key: ValueKey('me-space-last-$spaceId'),
+            ),
+            const SizedBox(width: AppSpacing.xs),
+          ] else ...[
+            Container(
+              width: 8,
+              height: 8,
+              decoration: BoxDecoration(color: tone, shape: BoxShape.circle),
+            ),
+            const SizedBox(width: AppSpacing.sm),
+          ],
+          Flexible(
+            child: Text(
+              openLabel,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              style: text.labelLarge?.strong,
+            ),
+          ),
+          if (named) ...[
+            const SizedBox(width: AppSpacing.sm),
+            Flexible(
+              child: Text(
+                l10n.meSpaceNotifications(waiting),
+                key: ValueKey('me-space-count-$spaceId'),
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: text.labelSmall,
+              ),
+            ),
+          ],
+        ],
       ),
     );
   }
