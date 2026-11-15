@@ -25,5 +25,7 @@
   "bookingPriceCarnet": "Carnet",
   "bookingPriceFree": "Gratuit",
   "bookingPriceSubscription": "Abonnement",
-  "bookingPriceOverage": "Demi-journée supplémentaire"
+  "bookingPriceOverage": "Demi-journée supplémentaire",
+  "calendarDeskRangeLabel": "Période",
+  "calendarDeskViewLabel": "Vue"
 }

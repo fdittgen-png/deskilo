@@ -5942,9 +5942,15 @@ class AppLocalizationsFr extends AppLocalizations {
   String get calendarDeskNew => 'Nouvelle réservation';
 
   @override
+  String get calendarDeskRangeLabel => 'Période';
+
+  @override
   String calendarDeskRepeatedHour(String time) {
     return '$time, une seconde fois : les horloges ont reculé';
   }
+
+  @override
+  String get calendarDeskViewLabel => 'Vue';
 
   @override
   String get calendarDeskZoomIn => 'Agrandir';

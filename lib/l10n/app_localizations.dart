@@ -9221,11 +9221,23 @@ abstract class AppLocalizations {
   /// **'New booking'**
   String get calendarDeskNew;
 
+  /// #4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get calendarDeskRangeLabel;
+
   /// #3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}
   ///
   /// In en, this message translates to:
   /// **'{time}, second time: the clocks went back'**
   String calendarDeskRepeatedHour(String time);
+
+  /// #4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get calendarDeskViewLabel;
 
   /// #3626 Tooltip of the button that widens the hours of the day grid
   ///

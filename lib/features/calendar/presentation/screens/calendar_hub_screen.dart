@@ -68,7 +68,12 @@ import '../widgets/calendar_week_strip.dart';
 /// server allows for THAT member; a kind the server declines comes back
 /// LOCKED and is shown as such (#719).
 class CalendarHubScreen extends ConsumerStatefulWidget {
-  const CalendarHubScreen({super.key});
+  const CalendarHubScreen({super.key, this.deskAlerts});
+
+  /// #4056 — at the desk, whose own header chooses the view: whether the
+  /// alerts are shown. The hub then draws no view bar of its own, and the
+  /// desk takes a request for the alerts.
+  final bool? deskAlerts;
 
   @override
   ConsumerState<CalendarHubScreen> createState() => _CalendarHubScreenState();
@@ -267,12 +272,13 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         permissions.contains(WorkspacePermission.viewFinances) ||
             permissions.contains(WorkspacePermission.manageMembers);
     final viewsOn = _viewsOn;
+    final desk = widget.deskAlerts != null;
     // The bell, /events and a tapped alert ask for the Alerts view.
     ref.listen(calendarAlertsRequestProvider, (_, asked) {
-      if (asked) _takeAlertsRequest();
+      if (asked && !desk) _takeAlertsRequest();
     });
     // A request made before this hub was built (the redirect of /events).
-    if (ref.read(calendarAlertsRequestProvider)) _takeAlertsRequest();
+    if (!desk && ref.read(calendarAlertsRequestProvider)) _takeAlertsRequest();
     final alertsOffered = ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.eventsTab);
@@ -353,19 +359,20 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         onToday: () =>
             _move('today', () => _selection = _selection.withAnchor(_today)),
       );
+    final alerts = widget.deskAlerts ?? _alerts;
     final selector = Column(mainAxisSize: MainAxisSize.min, children: [
-      viewBar,
+      if (!desk) viewBar,
       _stepBar(l10n),
       if (_selection.view != CalendarView.agenda) ...[
         _picker(page.value),
         const CalendarLegend(),
       ],
     ]);
-    if (_alerts && alertsOffered) {
+    if (alerts && alertsOffered) {
       // The Alerts view: the switcher stays, the alert feed fills the rest.
       return Scaffold(
         body: Column(children: [
-          viewBar,
+          if (!desk) viewBar,
           const Expanded(child: InboxFace(key: ValueKey('calendar-alerts-view'))),
         ]),
       );
