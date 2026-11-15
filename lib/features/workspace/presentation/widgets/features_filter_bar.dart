@@ -5,7 +5,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import 'feature_maturity_badge.dart';
 
-/// The Features screen's filter line (#1190).
+/// The Features screen's filter line (#1190). #3999 — the controls a
+/// filter bar holds (search, changed, maturity), not the kit's FilterBar,
+/// which is the bar's frame.
 ///
 /// The screen lists 102 switches at roughly 230 px each — about eight
 /// per screen, so thirteen screens of scrolling. An owner looking for
@@ -16,8 +18,8 @@ import 'feature_maturity_badge.dart';
 /// second is the more useful of the two and the harder to answer by
 /// eye, since a switch at its default looks exactly like one that was
 /// deliberately set there.
-class FeaturesFilterBar extends StatelessWidget {
-  const FeaturesFilterBar({
+class FeaturesFilterLine extends StatelessWidget {
+  const FeaturesFilterLine({
     super.key,
     required this.controller,
     required this.onQuery,

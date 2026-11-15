@@ -30,12 +30,7 @@ Map<String, String> widgetsIn(Iterable<File> files) => {
 
 /// RATCHET: twins older than the one kit, each with the issue that resolves
 /// it. Only shrinks.
-const _olderTwins = {
-  'InvoiceStatusChip': '#3999',
-  '_DirectoryStatusChip': '#3999',
-  'FeaturesFilterBar': '#3999',
-  'EventsFilterBar': '#3999',
-};
+const _olderTwins = <String, String>{};
 
 /// The widgets of [elsewhere] whose name is a kit widget's with a prefix.
 List<String> twins(Set<String> kit, Map<String, String> elsewhere) => [
