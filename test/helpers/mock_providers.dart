@@ -24,6 +24,7 @@ import 'package:deskilo/core/demo/data/auth_repository.dart';
 import 'package:deskilo/core/demo/data/company_lookup_repository.dart';
 import 'package:deskilo/core/demo/data/connected_installations.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/finance_kpi_repository.dart'
     show DemoRecordedPaymentsRepository;
 import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
@@ -164,6 +165,7 @@ import 'package:deskilo/features/workspace/providers/item_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/kiosk_device_providers.dart';
 import 'package:deskilo/features/workspace/providers/kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/local_setup_providers.dart';
+import 'package:deskilo/features/workspace/providers/organisation_providers.dart';
 import 'package:deskilo/features/workspace/providers/sales_kpi_providers.dart';
 import 'package:deskilo/features/workspace/providers/template_search_providers.dart';
 import 'package:deskilo/features/workspace/providers/vendor_kpi_providers.dart';
@@ -448,6 +450,9 @@ List<Override> standardTestOverrides({
       workspaceAccessRepositoryProvider.overrideWith((ref) => meFake),
       linkedMeRepositoryProvider
           .overrideWith((ref) => linkedMe ?? FakeLinkedMeRepository()),
+      // #4006 — the person's organisations, none unless a test gives some.
+      organisationRepositoryProvider
+          .overrideWith((ref) => FakeOrganisationRepository()),
       guestParticipationRepositoryProvider
           .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),

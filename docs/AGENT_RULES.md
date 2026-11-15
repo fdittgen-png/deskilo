@@ -601,6 +601,19 @@ Connecting grants no membership, role or assistant eligibility. Demo and
 tests never reach a real sign-in (`OfflineIdentityConnector`). Do not add a
 flag that a person without a membership could never have switched.
 
+## Seeing an organisation's houses has no feature flag; managing one does (#4006)
+
+Me's grouping of an organisation's houses, the country and currency on every
+business's line, and the list of the other houses in the chip's sheet and on
+the desk's rail belong to the PERSON's layer. They show the businesses the
+person is already an active member of. Like joining a business, they appear
+when the server says an organisation exists, and no single business's flag
+could switch off what the person sees across all of them. Creating and
+managing an organisation (Settings › Organisation, and adding a house) is the
+head business's decision and is flagged (`organisation`, #4004). The server
+refuses each command when the head has the feature off. Do not add a flag to
+the personal view of houses the person already belongs to.
+
 ## Validation domains grow in FOUR places (#767/#769)
 
 A new server-side validation domain (`events_type_check` +

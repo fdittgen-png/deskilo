@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../core/storage/space_prefs_store.dart';
+import '../../workspace/domain/organisation.dart';
 import '../../workspace/domain/workspace.dart';
 import '../domain/space_pairs.dart';
 
-/// One group of Me › Home as laid out: its id and its rows' keys, in the
-/// order they are shown.
-typedef SpaceGroupRows = ({String id, List<String> keys});
+/// One group of Me › Home as laid out: its id, its rows' keys in the order
+/// they are shown, and — for an organisation (#4006) — its name.
+typedef SpaceGroupRows = ({String id, List<String> keys, String? organisation});
 
 /// Me › Home's list of my spaces before any widget is built: which rows
 /// there are, which groups show which of them in what order, and what the
@@ -21,12 +22,15 @@ class MeSpacesLayout {
 
   /// [spaces] in [prefs]' groups and order, filtered by [query]. Rows nobody
   /// placed keep the order they come in, the last used one ([lastUsedId])
-  /// first.
+  /// first. #4006 — the houses of each of [organisations] come first, as
+  /// one group under the organisation's name, the head first and then by
+  /// country; they are in none of the person's own groups.
   factory MeSpacesLayout.of({
     required SpacePrefs prefs,
     required List<Workspace> spaces,
     required String? lastUsedId,
     required String query,
+    List<Organisation> organisations = const [],
   }) {
     final rows = {
       for (final sides in pairSides([
@@ -42,15 +46,16 @@ class MeSpacesLayout {
       for (final key in rows.keys)
         if (!filtered || nameOf(key).toLowerCase().contains(words)) key,
     ];
-    final groups = <SpaceGroupRows>[];
+    final housed = <String>{};
+    final groups = _organisationGroups(organisations, rows, visible, housed);
     for (final id in prefs.groupIds) {
       final keys = prefs.sorted([
         for (final key in visible)
-          if (prefs.groupIdOf(key) == id) key,
+          if (prefs.groupIdOf(key) == id && !housed.contains(key)) key,
       ], nameOf);
       // A search shows only the groups it found something in.
       if (filtered && keys.isEmpty) continue;
-      groups.add((id: id, keys: keys));
+      groups.add((id: id, keys: keys, organisation: null));
     }
     return MeSpacesLayout._(
       rows: rows,
@@ -60,6 +65,35 @@ class MeSpacesLayout {
       // Holding a card moves it only in my own order, with nothing filtered.
       canDrag: prefs.sort == SpaceSort.byHand && !filtered,
     );
+  }
+
+  /// #4006 — one group per organisation, its houses' rows in its order;
+  /// each row taken is added to [housed].
+  static List<SpaceGroupRows> _organisationGroups(
+    List<Organisation> organisations,
+    Map<String, List<Workspace>> rows,
+    List<String> visible,
+    Set<String> housed,
+  ) {
+    // The row of each house: the row one of its sides is.
+    final rowOfSpace = {
+      for (final MapEntry(:key, :value) in rows.entries)
+        for (final side in value) side.id: key,
+    };
+    return [
+      for (final organisation in organisations)
+        if ([
+              for (final house in organisation.byCountry)
+                if (rowOfSpace[house.workspaceId] case final key?)
+                  if (housed.add(key) && visible.contains(key)) key,
+            ]
+            case final keys when keys.isNotEmpty)
+          (
+            id: 'organisation:${organisation.id}',
+            keys: keys,
+            organisation: organisation.name,
+          ),
+    ];
   }
 
   /// Each row's sides, production first, by row key.

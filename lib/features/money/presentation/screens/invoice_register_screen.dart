@@ -374,8 +374,9 @@ class _InvoiceRegisterScreenState
         id: 'status',
         label: l10n.invoiceRegisterStatus,
         flex: 2,
-        cell: (_, i) => InvoiceStatusChip(
-          status: invoiceLifecycleOf(i, view.matches[i.id]),
+        cell: (_, i) => invoiceStatusChip(
+          context,
+          invoiceLifecycleOf(i, view.matches[i.id]),
         ),
       ),
       // #956 — the fingerprint, checked on demand.
@@ -407,8 +408,9 @@ class _InvoiceRegisterScreenState
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Text(format.moneyIn(i.currency).formatMinor(i.totalCents)),
-            InvoiceStatusChip(
-              status: invoiceLifecycleOf(i, view.matches[i.id]),
+            invoiceStatusChip(
+              context,
+              invoiceLifecycleOf(i, view.matches[i.id]),
             ),
           ],
         ),

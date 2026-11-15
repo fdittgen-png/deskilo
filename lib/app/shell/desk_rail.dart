@@ -10,6 +10,8 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
+import '../../features/workspace/domain/workspace.dart';
+import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_nav_groups.dart';
 
@@ -22,6 +24,8 @@ class DeskRail extends StatelessWidget {
     required this.path,
     required this.badgeOf,
     required this.onBackToMe,
+    this.houses = const [],
+    this.onHouse,
     super.key,
   });
 
@@ -31,6 +35,10 @@ class DeskRail extends StatelessWidget {
   final String path;
   final int Function(DrawerEntry) badgeOf;
   final VoidCallback onBackToMe;
+
+  /// #4006 — the other houses of the organisation, one tap away.
+  final List<Workspace> houses;
+  final ValueChanged<Workspace>? onHouse;
 
   bool _current(DrawerEntry e) => entryIsCurrent(e, path);
 
@@ -58,6 +66,13 @@ class DeskRail extends StatelessWidget {
               label: context.l10n.spaceBackToMe,
               onTap: onBackToMe,
             ),
+            for (final house in houses)
+              _RailItem(
+                key: ValueKey('rail-house-${house.id}'),
+                icon: WorkspaceAvatar(workspace: house, radius: 12),
+                label: house.name,
+                onTap: onHouse == null ? null : () => onHouse!(house),
+              ),
             const Divider(),
             for (final e in destinations) item(e),
             const Divider(),

@@ -32254,6 +32254,9 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get spaceOtherHouses => 'Las demás casas de la organización';
+
+  @override
   String get spacePreviewPrivacy =>
       'Cuando lo solicite, este negocio verá su nombre y su foto. Una vez miembro, sus administradores verán los datos de contacto y facturación que necesitan para facturarle.';
 

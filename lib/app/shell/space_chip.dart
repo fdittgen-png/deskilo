@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -10,6 +12,8 @@ import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
+import 'house_switch.dart';
+import 'space_entry.dart';
 
 /// The side of the ring a branded space's avatar wears on the chip.
 const double _ringSide = 38;
@@ -33,7 +37,8 @@ double _lineWidth(BuildContext context, String text, TextStyle? style) {
   return width;
 }
 
-/// Workspace identity, deliberately not a workspace switcher. The page's
+/// Workspace identity, not a workspace switcher — except, #4006, between the
+/// houses of one organisation: a tap opens their sheet. The page's
 /// name comes first and is never cut where the box can hold it: the avatar
 /// is dropped where it would crowd the name out, and the business's line
 /// is left out where it cannot be read whole — the drawer names it.
@@ -48,7 +53,8 @@ class SpaceChip extends ConsumerWidget {
     final text = Theme.of(context).textTheme;
     final brand = space == null ? null : spaceBrand(space);
     final avatarSide = brand != null ? _ringSide : 2 * _avatarRadius;
-    return LayoutBuilder(
+    final houses = otherHousesOf(ref, space?.id);
+    final chip = LayoutBuilder(
       builder: (context, constraints) {
         final page = _lineWidth(context, tabTitle, text.titleMedium);
         final withAvatar =
@@ -118,6 +124,19 @@ class SpaceChip extends ConsumerWidget {
           ],
         );
       },
+    );
+    if (houses.isEmpty) return chip;
+    return Tooltip(
+      message: l10n.spaceOtherHouses,
+      child: InkWell(
+        key: const ValueKey('space-chip-houses'),
+        onTap: () async {
+          final picked = await HouseSheet.open(context, houses);
+          if (picked == null || !context.mounted) return;
+          unawaited(enterSpace(context, ref, picked));
+        },
+        child: chip,
+      ),
     );
   }
 }
