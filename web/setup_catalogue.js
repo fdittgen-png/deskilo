@@ -1996,7 +1996,8 @@ window.SETUP_LEVELS={
       "memberGettingStarted",
       "setupGuide",
       "dataReport",
-      "quickSearch"
+      "quickSearch",
+      "organisation"
      ],
      "needs": {}
     },
