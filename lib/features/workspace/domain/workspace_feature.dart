@@ -420,7 +420,8 @@ enum WorkspaceFeature {
   quickSearch,
   /// #3824 — the goods ledger (feature_manifest_stock.dart).
   stockManagement,
-  organisation; // #4004 (feature_manifest_organisation.dart)
+  /// #4004 — the organisation of a customer's businesses.
+  organisation;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;
