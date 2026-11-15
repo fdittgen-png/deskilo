@@ -47,6 +47,7 @@ class SafTWriter {
     required this.profile,
     required this.ledgerAccounts,
     this.bookPostings,
+    this.journalCode,
     required this.reference,
   });
 
@@ -64,6 +65,8 @@ class SafTWriter {
   /// #2365 — a local book's postings: the ledger section is then the book's
   /// own entries, every journal, instead of the derived sales cycle.
   final List<Posting>? bookPostings;
+  final String Function(PostingJournal journal)? journalCode;
+  String _code(PostingJournal j) => journalCode?.call(j) ?? j.code;
 
   final TaxReferenceSet reference; // for a document with no frozen breakdown
   List<InvoiceVatTotal> _breakdown(Invoice i) =>
@@ -295,24 +298,21 @@ class SafTWriter {
 
   /// The journals of the general ledger: the local book's, the two the
   /// FEC writes (sales and bank) when there is a mapping, else none.
-  List<(String, String, List<SafTLedgerTransaction>)>? get _journals {
-    final accounts = ledgerAccounts;
-    return switch (bookPostings) {
-      final posted? => safTPostedJournals(posted),
-      null when accounts != null => [
-        // Two journals, matching what the FEC writes: sales and bank.
-        ('VE', 'Sales', [
-          ...safTSalesTransactions(live, accounts),
-          ...safTWriteOffs(settled, accounts),
-        ]),
-        ('BQ', 'Bank', [
-          ...safTNettedReceipts(live, accounts),
-          ...safTSettlements(settled, accounts),
-        ]),
-      ],
-      null => null,
-    };
-  }
+  List<(String, String, List<SafTLedgerTransaction>)>? get _journals =>
+      switch ((bookPostings, ledgerAccounts)) {
+        (final p?, _) => safTPostedJournals(p, journalCode: journalCode),
+        (null, final accounts?) => [
+          (_code(PostingJournal.sales), 'Sales', [
+            ...safTSalesTransactions(live, accounts),
+            ...safTWriteOffs(settled, accounts),
+          ]),
+          (_code(PostingJournal.bank), 'Bank', [
+            ...safTNettedReceipts(live, accounts),
+            ...safTSettlements(settled, accounts),
+          ]),
+        ],
+        _ => null,
+      };
 
   void generalLedger() {
     // ── General ledger: the postings, when there is a mapping ─────────

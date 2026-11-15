@@ -5,6 +5,8 @@
 // with whether it is on (Features) instead of one cell of stored keys. The
 // stable keys stay in the cells; the workbook's localisation pass turns the
 // field, process and feature keys into the reader's words.
+import 'dart:convert';
+
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'workspace.dart';
 import 'workspace_process.dart';
@@ -33,6 +35,13 @@ List<XlsxSheet> workspaceOverviewSheets(
         ('city', workspace.city),
         // #3852 — empty: the paper follows the country.
         ('paper', workspace.paper ?? ''),
+        // #3470 — empty: the country add-on's journals.
+        (
+          'accounting_journals',
+          workspace.accountingJournals.isEmpty
+              ? ''
+              : jsonEncode(workspace.accountingJournals),
+        ),
         ('id', workspace.id),
       ])
         [field, value],

@@ -6160,6 +6160,30 @@ Toutes les factures dans une seule liste triable.
 
 **Voir aussi:** [Exports comptables](#exports-comptables)
 
+<!-- anchor: user.money.accounting-journals -->
+### Vos journaux comptables
+
+**Public:** Propriétaire
+
+Le logiciel de votre comptable connaît vos journaux sous ses propres codes, et vous voulez que chaque export les utilise.
+
+<!-- image: user-money-accounting-journals -->
+
+**Étapes**
+
+1. Ouvrez [Comptabilité et TVA](https://fdittgen-png.github.io/deskilo/#/money/accounting) et touchez **Journaux comptables**.
+2. Pour **Ventes**, **Banque**, **Achats** et **Opérations diverses**, saisissez le **Code** et le **Libellé** qu'utilise votre comptable.
+3. Touchez **Enregistrer**. **Utiliser les codes standard** remet les codes standard du pays.
+
+**Bon à savoir**
+
+- Chaque export comptable de l'application les utilise : le FEC, le journal générique, les grands livres SAF-T et les livres imprimés.
+- Un code n'a ni saut de ligne, ni tabulation, ni |, et deux journaux n'ont jamais le même code ; le formulaire dit quel champ corriger.
+- Un code modifié change aussi les numéros d'écriture d'une période exportée à nouveau.
+- Les envois vers un logiciel comptable connecté utilisent toujours les codes standard.
+
+**Voir aussi:** [Exports comptables](#exports-comptables)
+
 <!-- anchor: user.invoicing.accounting-export -->
 ### Exports comptables
 

@@ -250,6 +250,66 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingExportsTitle => 'Exporte';
 
   @override
+  String get accountingJournalBank => 'Bank';
+
+  @override
+  String get accountingJournalCharacter =>
+      'Kein Zeilenumbruch, Tabulator oder | hier: Die Exporte trennen ihre Felder damit.';
+
+  @override
+  String get accountingJournalCode => 'Code';
+
+  @override
+  String get accountingJournalCodeRequired => 'Geben Sie einen Code ein.';
+
+  @override
+  String get accountingJournalDuplicate =>
+      'Ein anderes Journal hat diesen Code bereits.';
+
+  @override
+  String get accountingJournalLabel => 'Bezeichnung';
+
+  @override
+  String get accountingJournalLabelRequired =>
+      'Geben Sie eine Bezeichnung ein.';
+
+  @override
+  String get accountingJournalMisc => 'Sonstige Buchungen';
+
+  @override
+  String get accountingJournalPurchases => 'Einkauf';
+
+  @override
+  String get accountingJournalSales => 'Verkauf';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'Code und Bezeichnung jedes Journals, so wie die Software Ihrer Steuerberatung sie kennt. Jeder Buchhaltungsexport der App verwendet sie.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Nur ein Inhaber legt die Buchungsjournale fest.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'Die Journale wurden nicht gespeichert: Prüfen Sie das Journal $journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.';
+
+  @override
+  String get accountingJournalsStandard => 'Standardcodes verwenden';
+
+  @override
+  String get accountingJournalsTitle => 'Buchungsjournale';
+
+  @override
   String get accountingSignInBack => 'Zurück zur Buchhaltung';
 
   @override

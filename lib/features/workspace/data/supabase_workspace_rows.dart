@@ -72,6 +72,10 @@ mixin SupabaseWorkspaceRows {
     city: row['city'] as String? ?? '',
     postalCode: row['postal_code'] as String? ?? '',
     vatAccount: row['vat_account'] as String? ?? '',
+    accountingJournals: JsonReader.orEmpty(
+      row['accounting_journals'],
+      context: 'workspace.accounting_journals',
+    ).json,
     subscriptionVatRateId: row['subscription_vat_rate_id'] as String? ?? '',
     invoiceLegal: row['invoice_legal'] as Map<String, dynamic>? ?? const {},
     defaultLocale: row['default_locale'] as String? ?? '',

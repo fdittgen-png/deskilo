@@ -260,7 +260,7 @@ void main() {
       parties: const {
         'b-chf': PostingParty(kind: 'supplier', number: '23', name: 'Léman SA'),
       },
-      functionalCurrency: 'EUR',
+      currency: (code: 'EUR', rates: const {}),
     );
     expect(fec.blockers, isEmpty);
     final rows = fec.file.trim().split('\r\n').skip(1).toList();

@@ -5877,6 +5877,29 @@ Alle Rechnungen in einer sortierbaren Liste.
 
 **Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
 
+### Ihre Buchungsjournale
+
+**Zielgruppe:** Inhaber
+
+Die Software Ihrer Steuerberatung kennt Ihre Journale unter eigenen Codes, und jeder Export soll sie verwenden.
+
+<!-- image: user-money-accounting-journals -->
+
+**Schritte**
+
+1. Öffnen Sie [Buchhaltung & MwSt](app:/money/accounting) und tippen Sie auf **Buchungsjournale**.
+2. Geben Sie für **Verkauf**, **Bank**, **Einkauf** und **Sonstige Buchungen** den **Code** und die **Bezeichnung** ein, die Ihre Steuerberatung verwendet.
+3. Tippen Sie auf **Speichern**. **Standardcodes verwenden** stellt die Standardcodes des Landes wieder her.
+
+**Gut zu wissen**
+
+- Jeder Buchhaltungsexport der App verwendet sie: der FEC, das allgemeine Journal, die SAF-T-Hauptbücher und die gedruckten Bücher.
+- Ein Code hat keinen Zeilenumbruch, keinen Tabulator und kein |, und zwei Journale teilen nie einen Code; das Formular sagt, welches Feld zu korrigieren ist.
+- Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.
+- Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
+
 ### Buchhaltungsexporte
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in

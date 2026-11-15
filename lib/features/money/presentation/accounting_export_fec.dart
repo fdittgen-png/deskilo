@@ -34,6 +34,7 @@ typedef FecExportScope = ({
   String currency,
   String legalId,
   bool development,
+  FecJournals journals,
 });
 
 /// The formats of [country] the space may choose: the books printed from
@@ -93,7 +94,7 @@ class FecExportActions {
     final year = posted is JournalPosted ? posted.year : null;
     await exportGenericJournal(
       context,
-      () async => postedFecFileOf(posted),
+      () async => postedFecFileOf(posted, journals: scope.journals),
       save: (content) async {
         final period = year!;
         await save(
@@ -125,7 +126,7 @@ class FecExportActions {
     YearDocumentFec documents,
   ) async {
     if (posted case final JournalPosted books) {
-      final written = postedFecOf(books);
+      final written = postedFecOf(books, journals: scope.journals);
       if (written is JournalFile) {
         return (
           fec: written.content,
@@ -249,7 +250,12 @@ class FecExportActions {
       return BookReportPrint(
         context,
         ref,
-      ).show(kindId: kindId, books: books, letterhead: letterhead);
+      ).show(
+        kindId: kindId,
+        books: books,
+        letterhead: letterhead,
+        journals: scope.journals,
+      );
     }
     await exportGenericJournal(
       context,
