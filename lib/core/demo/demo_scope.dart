@@ -148,6 +148,7 @@ import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
+import 'seed/demo_organisation_seed.dart';
 import 'seed/demo_reachable_seed.dart';
 
 /// The setup guide over each space's own fixture: Pézenas holds what
@@ -279,7 +280,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), organisationRepositoryProvider.overrideWith((ref) => FakeOrganisationRepository()), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
+      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), organisationRepositoryProvider.overrideWith((ref) => FakeOrganisationRepository.from(() => demoOrganisations(fixture.workspaces))), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider.overrideWithValue(fixture.guests),
       ..._demoContacts(fixture), // #2472
