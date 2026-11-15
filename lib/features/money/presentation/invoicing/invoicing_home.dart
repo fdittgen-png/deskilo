@@ -142,10 +142,6 @@ class _InvoicingHomeState extends State<InvoicingHome> {
   /// The "To do" entry the list shows, or null for the filter's list.
   TodoKind? _todo;
 
-  /// #4059 — below desk width, whether the to-do list is open under the
-  /// summary.
-  bool _todoOpen = false;
-
   @override
   void initState() {
     super.initState();
@@ -245,16 +241,11 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                     InvoicingSummaryStrip(
                       owed: owedOf(data.receivables, data.today),
                       toDo: _todos().length,
-                      toDoOpen: _todoOpen,
                       filter: filter,
                       onFilter: _choose,
-                      onToDo: () => setState(() => _todoOpen = !_todoOpen),
+                      toDoCard: todo,
                       monthFigures: _monthFigures(context),
                     ),
-                    if (_todoOpen) ...[
-                      const SizedBox(height: AppSpacing.sm),
-                      todo,
-                    ],
                     if (widget.legalNotes case final notes?) ...[
                       const SizedBox(height: AppSpacing.sm),
                       ExpansionTile(

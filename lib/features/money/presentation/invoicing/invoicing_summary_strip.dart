@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../application/receivables.dart';
@@ -24,14 +25,13 @@ import 'invoicing_words.dart';
 // content-fit: "Amount due" and a five-figure amount at text 1.0
 const double _cellMin = 150;
 
-class InvoicingSummaryStrip extends StatelessWidget {
+class InvoicingSummaryStrip extends StatefulWidget {
   const InvoicingSummaryStrip({
     required this.owed,
     required this.toDo,
     required this.filter,
     required this.onFilter,
-    required this.onToDo,
-    required this.toDoOpen,
+    required this.toDoCard,
     required this.monthFigures,
     super.key,
   });
@@ -49,10 +49,19 @@ class InvoicingSummaryStrip extends StatelessWidget {
   /// The list's filter now: its cell is marked.
   final InvoicingFilter filter;
   final ValueChanged<InvoicingFilter> onFilter;
-  final VoidCallback onToDo;
 
+  /// The to-do list, shown under the strip while its cell is open.
+  final Widget toDoCard;
+
+  @override
+  State<InvoicingSummaryStrip> createState() => _InvoicingSummaryStripState();
+}
+
+class _InvoicingSummaryStripState extends State<InvoicingSummaryStrip> {
   /// Whether the to-do list is open under the strip.
-  final bool toDoOpen;
+  bool _toDoOpen = false;
+
+  List<OwedInCurrency> get owed => widget.owed;
 
   Tally _tally(OwedBucket? bucket) => Tally(
     owed.fold(
@@ -87,50 +96,70 @@ class InvoicingSummaryStrip extends StatelessWidget {
         count: l.invoicingInvoiceCount(tally.count),
         countKey: ValueKey('invoicing-summary-$key-count-${tally.count}'),
         amounts: amountsOf(format, tally),
-        selected: filter == own,
-        onTap: () => onFilter(own),
+        selected: widget.filter == own,
+        onTap: () => widget.onFilter(own),
       );
     }
 
-    return KitCard(
-      key: const ValueKey('invoicing-summary'),
-      child: LayoutBuilder(
-        builder: (context, box) {
-          final columns = box.maxWidth >= 4 * _cellMin + 3 * AppSpacing.sm
-              ? 4
-              : 2;
-          final width =
-              (box.maxWidth - (columns - 1) * AppSpacing.sm) / columns;
-          final cells = Wrap(
-            spacing: AppSpacing.sm,
-            runSpacing: AppSpacing.sm,
-            children: [
-              for (final cell in [
-                money('due', l.invoicingOwed, null),
-                money('confirm', l.journeyStageConfirm, OwedBucket.toConfirm),
-                money('overdue', l.invoicingOwedOverdue, OwedBucket.overdue),
-                _Cell(
-                  key: const ValueKey('invoicing-summary-review'),
-                  id: 'review',
-                  label: l.invoicingTodo,
-                  count: l.invoicingSummaryToReview(toDo),
-                  selected: toDoOpen,
-                  onTap: toDo == 0 ? null : onToDo,
-                ),
-              ])
-                SizedBox(width: width, child: cell),
-            ],
-          );
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              cells,
-              const SizedBox(height: AppSpacing.sm),
-              _MonthLine(figures: monthFigures),
-            ],
-          );
-        },
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        KitCard(
+          key: const ValueKey('invoicing-summary'),
+          child: LayoutBuilder(
+            builder: (context, box) {
+              final columns = box.maxWidth >= 4 * _cellMin + 3 * AppSpacing.sm
+                  ? 4
+                  : 2;
+              final width =
+                  (box.maxWidth - (columns - 1) * AppSpacing.sm) / columns;
+              final cells = Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
+                children: [
+                  for (final cell in [
+                    money('due', l.invoicingOwed, null),
+                    money(
+                      'confirm',
+                      l.journeyStageConfirm,
+                      OwedBucket.toConfirm,
+                    ),
+                    money(
+                      'overdue',
+                      l.invoicingOwedOverdue,
+                      OwedBucket.overdue,
+                    ),
+                    _Cell(
+                      key: const ValueKey('invoicing-summary-review'),
+                      id: 'review',
+                      label: l.invoicingTodo,
+                      count: l.invoicingSummaryToReview(widget.toDo),
+                      selected: _toDoOpen,
+                      onTap: widget.toDo == 0
+                          ? null
+                          : () => setState(() => _toDoOpen = !_toDoOpen),
+                    ),
+                  ])
+                    SizedBox(width: width, child: cell),
+                ],
+              );
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  cells,
+                  const SizedBox(height: AppSpacing.sm),
+                  _MonthLine(figures: widget.monthFigures),
+                ],
+              );
+            },
+          ),
+        ),
+        if (_toDoOpen) ...[
+          const SizedBox(height: AppSpacing.sm),
+          widget.toDoCard,
+        ],
+      ],
     );
   }
 }
@@ -195,7 +224,7 @@ class _Cell extends StatelessWidget {
       button: onTap != null,
       child: Material(
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          borderRadius: AppRadius.mdAll,
           side: BorderSide(
             color: selected ? scheme.primary : scheme.outlineVariant,
             width: selected ? 2 : 1,
