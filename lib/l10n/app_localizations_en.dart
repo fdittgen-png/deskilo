@@ -22309,6 +22309,109 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two workspaces with the same name: one to try things out, one that is real. You own both.';
 
   @override
+  String get organisationAdd => 'Add one of my businesses';
+
+  @override
+  String get organisationAddNone =>
+      'None of your businesses can join: each is already in an organisation.';
+
+  @override
+  String organisationConfirmEnd(String organisation, String head) {
+    return '$organisation ends: $head is a business of its own again.';
+  }
+
+  @override
+  String organisationConfirmHead(String house) {
+    return '$house becomes the head: its owners manage the organisation from now on.';
+  }
+
+  @override
+  String organisationConfirmLeave(String house, String organisation) {
+    return '$house leaves $organisation. Its data stays as it is; its members no longer find the other houses in its chip.';
+  }
+
+  @override
+  String get organisationCreate =>
+      'Make this business the head of an organisation';
+
+  @override
+  String get organisationHead => 'Head';
+
+  @override
+  String get organisationLeave => 'Leave the organisation';
+
+  @override
+  String get organisationMakeHead => 'Make it the head';
+
+  @override
+  String get organisationName => 'Name of the organisation';
+
+  @override
+  String get organisationNone =>
+      'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.';
+
+  @override
+  String get organisationRefusedAlreadyInOne =>
+      'This business is already in an organisation.';
+
+  @override
+  String get organisationRefusedFeatureOff =>
+      'The organisation is off in this business: turn it on in its features first.';
+
+  @override
+  String get organisationRefusedHeadLeavesLast =>
+      'The head leaves last: take the other houses out first.';
+
+  @override
+  String get organisationRefusedInNone =>
+      'This business is in no organisation.';
+
+  @override
+  String get organisationRefusedNoName => 'An organisation needs a name.';
+
+  @override
+  String get organisationRefusedNotAHouse =>
+      'The new head must be a house of this organisation.';
+
+  @override
+  String get organisationRefusedNotOwner =>
+      'Only an owner of this business and of the head may do this.';
+
+  @override
+  String get organisationRefusedOther =>
+      'The organisation could not be changed. Try again.';
+
+  @override
+  String get organisationRefusedTwinNeverHead =>
+      'A test business is never the head.';
+
+  @override
+  String get organisationRemove => 'Take out of the organisation';
+
+  @override
+  String get organisationRename => 'Rename the organisation';
+
+  @override
+  String get organisationRoleAdmin => 'administrator';
+
+  @override
+  String get organisationRoleCoOwner => 'co-owner';
+
+  @override
+  String get organisationRoleMember => 'member';
+
+  @override
+  String get organisationRoleOwner => 'owner';
+
+  @override
+  String get organisationTitle => 'Organisation';
+
+  @override
+  String organisationYourRole(String role) {
+    return 'You: $role';
+  }
+
+  @override
   String get overagePolicyBlocked => 'Block further booking';
 
   @override

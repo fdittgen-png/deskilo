@@ -21,6 +21,7 @@ import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
 import 'package:deskilo/core/demo/data/premises_lease_repository.dart';
@@ -40,6 +41,7 @@ import 'package:deskilo/core/demo/seed/demo_asset_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_book_period_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_flags.dart';
 import 'package:deskilo/core/demo/seed/demo_lease_seed.dart';
+import 'package:deskilo/core/demo/seed/demo_organisation_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_order_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/demo/seed/demo_room_seed.dart';
@@ -261,7 +263,7 @@ const Map<WorkspaceFeature, String> _elsewhere = {
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 5;
+const int _switchOnlyBudget = 4;
 
 /// The scenarios outside the reference organisation, the ones in a house
 /// not named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -1217,9 +1219,24 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
   // shell, and has no state or step to perform. Performable when a Demo
   // step shows a reduced-motion comparison.
   WorkspaceFeature.uiAnimations: _toggle('motion'),
-  // #4004 — a switch for now: its screen, the owner opening the
-  // organisation's sheet, is #4006, and the scenario becomes an action there.
-  WorkspaceFeature.organisation: _toggle('its screen is #4006'),
+  // #4006 — the owner opens the organisation's sheet and adds the Berlin
+  // practice, the business of hers outside it, through the Demo's own
+  // commands: it is a house afterwards.
+  WorkspaceFeature.organisation: _action(
+    _owner,
+    'Ada adds the Berlin practice to her organisation',
+    (w) async {
+      final organisations = FakeOrganisationRepository.from(
+        () => demoOrganisations(w.f.workspaces),
+        businesses: () => demoBusinessesAsHouses(w.f.workspaces),
+      );
+      final before = (await organisations.myOrganisations()).single;
+      if (before.houseOf(demoPracticeSpaceId) != null) return false;
+      final refused = await organisations.add(before.id, demoPracticeSpaceId);
+      final after = (await organisations.myOrganisations()).single;
+      return refused == null && after.houseOf(demoPracticeSpaceId) != null;
+    },
+  ),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a
   // member by name.
   WorkspaceFeature.quickSearch: _action(
