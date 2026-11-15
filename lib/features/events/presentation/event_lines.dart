@@ -314,5 +314,17 @@ String _noticeOrFallbackLine(
           paymentInstructionsFieldLabel(l10n, '$f') ?? '$f',
     ].join(', '),
   ),
+  // #4008 — a member of another house of the organisation: from where,
+  // and whether this house's welcome decided it.
+  EventType.memberJoin when event.payload['from_workspace_name'] is String =>
+    event.payload['by'] == 'house_welcome'
+        ? l10n.eventHouseJoinWelcomed(
+            actor,
+            '${event.payload['from_workspace_name']}',
+          )
+        : l10n.eventHouseJoinAsked(
+            actor,
+            '${event.payload['from_workspace_name']}',
+          ),
   _ => eventFallbackLine(l10n, event),
 };

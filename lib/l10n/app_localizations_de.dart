@@ -9552,6 +9552,16 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String eventHouseJoinAsked(String member, String house) {
+    return '$member bittet um Aufnahme, aus $house';
+  }
+
+  @override
+  String eventHouseJoinWelcomed(String member, String house) {
+    return '$member ist aus $house beigetreten, aufgenommen durch die Einstellung dieses Hauses';
+  }
+
+  @override
   String eventInvoiceIssuedLine(String number) {
     return 'Neue Rechnung $number';
   }
@@ -13879,6 +13889,72 @@ class AppLocalizationsDe extends AppLocalizations {
   String get houseFree => 'Kostenlos';
 
   @override
+  String get houseJoinAsk => 'Um Aufnahme bitten';
+
+  @override
+  String houseJoinAsked(String house) {
+    return 'Angefragt, $house entscheidet';
+  }
+
+  @override
+  String get houseJoinConfirmAsk => 'Anfragen';
+
+  @override
+  String get houseJoinConfirmJoin => 'Beitreten';
+
+  @override
+  String houseJoinDoneAsked(String house) {
+    return 'Ihre Anfrage ging an $house.';
+  }
+
+  @override
+  String houseJoinDoneMember(String house) {
+    return 'Sie sind Mitglied von $house.';
+  }
+
+  @override
+  String houseJoinOthers(String organisation) {
+    return 'Weitere Häuser von $organisation';
+  }
+
+  @override
+  String get houseJoinSheetApart =>
+      'Ihre Buchungen und Rechnungen dort bleiben von denen der anderen Häuser getrennt.';
+
+  @override
+  String houseJoinSheetDecides(String house) {
+    return '$house entscheidet über Ihre Anfrage.';
+  }
+
+  @override
+  String houseJoinSheetOwn(String house, String currency) {
+    return '$house ist ein eigenes Unternehmen mit eigenen Bedingungen, Preisen und eigener Währung ($currency).';
+  }
+
+  @override
+  String houseJoinSheetProfile(String house) {
+    return 'Ihr Profil wird für die Administratoren von $house sichtbar: Ihr Name, Ihre E-Mail und was es von jedem Mitglied verlangt.';
+  }
+
+  @override
+  String houseJoinSheetTitle(String house) {
+    return '$house beitreten?';
+  }
+
+  @override
+  String houseJoinSheetWelcome(String house, String organisation) {
+    return '$house heißt die Mitglieder von $organisation willkommen: Sie werden sofort Mitglied.';
+  }
+
+  @override
+  String get houseJoinWelcomes => 'Sie werden sofort Mitglied';
+
+  @override
+  String houseJoinWhere(String country, String currency) {
+    return '$country, in $currency';
+  }
+
+  @override
   String get houseKindPackage => 'Paket';
 
   @override
@@ -13940,6 +14016,15 @@ class AppLocalizationsDe extends AppLocalizations {
   String houseSetRates(String country) {
     return 'Die Steuersätze für $country festlegen';
   }
+
+  @override
+  String houseWelcomeExplain(String organisation) {
+    return 'Ein Mitglied eines anderen Hauses von $organisation, das anfragt, wird hier sofort Mitglied, zu den Bedingungen dieses Hauses für neue Mitglieder. Aus: Sie entscheiden über jede Anfrage.';
+  }
+
+  @override
+  String get houseWelcomeSwitch =>
+      'Mitglieder der anderen Häuser sind hier willkommen';
 
   @override
   String get hubAccountingSubtitle =>
@@ -22853,6 +22938,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Dokumente sprechen Englisch, Französisch, Deutsch, Spanisch oder Italienisch.';
 
   @override
+  String get organisationRefusedNoHouse =>
+      'Dieses Unternehmen ist kein Haus einer Organisation.';
+
+  @override
   String get organisationRefusedNoName =>
       'Eine Organisation braucht einen Namen.';
 
@@ -22861,8 +22950,16 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der neue Hauptsitz muss ein Haus dieser Organisation sein.';
 
   @override
+  String get organisationRefusedNotAMember =>
+      'Nur ein Mitglied eines Hauses dieser Organisation kann um Aufnahme in ein anderes bitten.';
+
+  @override
   String get organisationRefusedNotOwner =>
       'Nur ein Inhaber dieses Unternehmens und des Hauptsitzes darf das.';
+
+  @override
+  String get organisationRefusedOnlyAPerson =>
+      'Eine Person bittet selbst um Aufnahme in ein Haus; ein Assistent kann das nicht für sie tun.';
 
   @override
   String get organisationRefusedOther =>
