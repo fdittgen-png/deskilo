@@ -1,0 +1,19 @@
+{
+  "@@locale": "es",
+  "documentsColGroup": "Grupo",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
+  "documentsColAudience": "Visible para",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColAdded": "Añadido",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsEditAudience": "Cambiar la visibilidad",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
+  }
+}

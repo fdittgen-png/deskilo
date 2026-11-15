@@ -8284,7 +8284,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsCategoryStatutes => 'Statutes & legal';
 
   @override
+  String get documentsColAdded => 'Added';
+
+  @override
+  String get documentsColAudience => 'Audience';
+
+  @override
+  String get documentsColGroup => 'Group';
+
+  @override
   String get documentsDelete => 'Remove document?';
+
+  @override
+  String get documentsEditAudience => 'Edit audience';
 
   @override
   String get documentsEmpty =>

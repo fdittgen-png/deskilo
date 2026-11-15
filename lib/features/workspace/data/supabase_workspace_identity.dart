@@ -159,6 +159,14 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   }
 
   @override
+  Future<void> setDocumentAudience(String documentId, String minRole) async {
+    await client
+        .from('workspace_documents')
+        .update({'min_role': minRole})
+        .eq('id', documentId);
+  }
+
+  @override
   Future<void> setWorkspaceLanguage(String workspaceId, String locale) async {
     // Owner-only via workspaces_update RLS; 0096 caps at 5 chars.
     await updateWorkspaceRow(workspaceId, {'default_locale': locale.trim()});

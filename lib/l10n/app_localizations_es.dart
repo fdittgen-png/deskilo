@@ -8330,7 +8330,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get documentsCategoryStatutes => 'Estatutos y legal';
 
   @override
+  String get documentsColAdded => 'Añadido';
+
+  @override
+  String get documentsColAudience => 'Visible para';
+
+  @override
+  String get documentsColGroup => 'Grupo';
+
+  @override
   String get documentsDelete => '¿Quitar el documento?';
+
+  @override
+  String get documentsEditAudience => 'Cambiar la visibilidad';
 
   @override
   String get documentsEmpty =>

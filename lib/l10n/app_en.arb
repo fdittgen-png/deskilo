@@ -10922,9 +10922,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Added",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Audience",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Group",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Remove document?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Edit audience",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "No document yet. Link your statutes, guides and statements from any drive.",
   "@documentsEmpty": {
