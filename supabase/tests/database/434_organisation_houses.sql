@@ -9,7 +9,7 @@
 -- same request id answers the same house; every amount column of a carried
 -- table is fenced. Rolled back.
 begin;
-select plan(21);
+select plan(22);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -151,6 +151,19 @@ set local role authenticated;
 select throws_ok(format('select public.create_organisation_house_once(%L, %L, %L, %L, %L, %L, %L)',
     pg_temp.id('org'), 'HOUSE-X', 'DE', 'EUR', 'Europe/Berlin', 'de', gen_random_uuid()),
   '55000', 'the organisation is off in this business', 'nor with the organisation off in the head');
+
+reset role;
+update public.workspaces set feature_flags = feature_flags || '{"organisation": true}'::jsonb
+ where id = pg_temp.id('head');
+-- a request id already used for another business answers no house
+select pg_temp.as_user('owner_a');
+set local role authenticated;
+select public.create_workspace_once('00000000-0000-4000-8000-0000000040e3', 'HOUSE-PLAIN', 'DE', 'EUR',
+  'Europe/Berlin', 'prod', false, null, null);
+select throws_ok(format('select public.create_organisation_house_once(%L, %L, %L, %L, %L, %L, %L)',
+    pg_temp.id('org'), 'HOUSE-Y', 'DE', 'EUR', 'Europe/Berlin', 'de', '00000000-0000-4000-8000-0000000040e3'),
+  '22023', 'this request id already created another business',
+  'a request id used for another business is refused');
 
 -- ── the prices are named ──
 select lives_ok(format('select public.clear_house_prices_pending(%L)', pg_temp.id('milan')),

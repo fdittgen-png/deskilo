@@ -33,7 +33,8 @@
 --   what was carried, who was added, and whether its prices are still to be
 --   named. It grants nothing and no check reads it for a right.
 -- The head's `organisation` feature gates the command; an assistant's token
--- is refused; the same request id answers the same house.
+-- is refused; the same request id answers the same house, and a request id
+-- the caller used for another business is refused.
 
 -- ── 1. the birth record of a house ───────────────────────────────────────
 create table if not exists public.organisation_houses (
@@ -105,12 +106,21 @@ declare
   v_added uuid[];
   v_carried jsonb;
   v_existing public.organisation_houses;
+  v_prior uuid;
 begin
   select w.* into v_head from public.workspaces w
     join public.organisations o on o.head_workspace_id = w.id
    where o.id = p_organisation;
   perform public.organisation_owner_check(v_head.id);
   perform public.organisation_feature_check(v_head.id);
+
+  -- a request id answers one house: one the caller already used for another
+  -- business answers nothing here
+  select r.created_workspace_id into v_prior from public.workspace_creation_requests r
+   where r.created_by = auth.uid() and r.client_request_id = p_client_request_id;
+  if found and not exists (select 1 from public.organisation_houses h where h.workspace_id = v_prior) then
+    raise exception 'this request id already created another business' using errcode = '22023';
+  end if;
 
   -- the business, as any the caller creates; the same request answers the same house
   v_house := public.create_workspace_once(
