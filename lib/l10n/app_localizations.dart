@@ -3565,6 +3565,48 @@ abstract class AppLocalizations {
   /// **'QR reference'**
   String get bankBasisQrReference;
 
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} on {date}'**
+  String bankBatchLine(String amount, String date);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: confirmed'**
+  String bankBatchLineConfirmed(String invoice);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: not confirmed. Match this movement by itself.'**
+  String bankBatchLineRefused(String invoice);
+
+  /// #4053 — how many matches of a batch were confirmed: bankBatchResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No match was confirmed} one{1 match was confirmed} other{{count} matches were confirmed}}'**
+  String bankBatchResultTitle(int count);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchSettles.
+  ///
+  /// In en, this message translates to:
+  /// **'Settles {invoice} of {member}'**
+  String bankBatchSettles(String invoice, String member);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm these matches?'**
+  String get bankBatchTitle;
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total in {currency}: {amount}'**
+  String bankBatchTotal(String currency, String amount);
+
   /// #3616 the bank statement's right pane at the desk before a movement is chosen
   ///
   /// In en, this message translates to:

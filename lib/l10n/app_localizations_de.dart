@@ -2194,6 +2194,46 @@ class AppLocalizationsDe extends AppLocalizations {
   String get bankBasisQrReference => 'QR-Referenz';
 
   @override
+  String bankBatchLine(String amount, String date) {
+    return '$amount am $date';
+  }
+
+  @override
+  String bankBatchLineConfirmed(String invoice) {
+    return '$invoice: bestätigt';
+  }
+
+  @override
+  String bankBatchLineRefused(String invoice) {
+    return '$invoice: nicht bestätigt. Ordnen Sie diese Bewegung einzeln zu.';
+  }
+
+  @override
+  String bankBatchResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count Zuordnungen wurden bestätigt',
+      one: '1 Zuordnung wurde bestätigt',
+      zero: 'Keine Zuordnung wurde bestätigt',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankBatchSettles(String invoice, String member) {
+    return 'Begleicht $invoice von $member';
+  }
+
+  @override
+  String get bankBatchTitle => 'Diese Zuordnungen bestätigen?';
+
+  @override
+  String bankBatchTotal(String currency, String amount) {
+    return 'Summe in $currency: $amount';
+  }
+
+  @override
   String get bankChooseMovement =>
       'Wählen Sie links einen Zahlungseingang: seine offenen Rechnungen stehen dann hier.';
 

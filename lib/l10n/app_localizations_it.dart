@@ -2187,6 +2187,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankBasisQrReference => 'riferimento QR';
 
   @override
+  String bankBatchLine(String amount, String date) {
+    return '$amount il $date';
+  }
+
+  @override
+  String bankBatchLineConfirmed(String invoice) {
+    return '$invoice: confermata';
+  }
+
+  @override
+  String bankBatchLineRefused(String invoice) {
+    return '$invoice: non confermata. Abbini questo movimento da solo.';
+  }
+
+  @override
+  String bankBatchResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count abbinamenti sono stati confermati',
+      one: '1 abbinamento è stato confermato',
+      zero: 'Nessun abbinamento è stato confermato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankBatchSettles(String invoice, String member) {
+    return 'Salda $invoice di $member';
+  }
+
+  @override
+  String get bankBatchTitle => 'Confermare questi abbinamenti?';
+
+  @override
+  String bankBatchTotal(String currency, String amount) {
+    return 'Totale in $currency: $amount';
+  }
+
+  @override
   String get bankChooseMovement =>
       'Scelga a sinistra un movimento in entrata: qui sono elencate le sue fatture aperte.';
 
