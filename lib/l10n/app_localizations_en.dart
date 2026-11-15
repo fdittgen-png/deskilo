@@ -14820,6 +14820,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Public-sector buyer (Chorus Pro): the code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copy with payment status';
+
+  @override
   String get invoiceCorrectionReason => 'Reason for the correction';
 
   @override
@@ -15680,6 +15683,27 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original kept $when by $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copy: the stored original does not match its fingerprint, so this one is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copy: this invoice was issued before its original was kept, so it is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copy: the business keeps the original once it opens this invoice.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
 
   @override
   String get invoicePageApprovalRecorded =>

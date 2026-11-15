@@ -19359,6 +19359,10 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCopyWithPaymentStatus": "Copy with payment status",
+  "@invoiceCopyWithPaymentStatus": {
+    "description": "#3853 the action that prints today's copy with the paid stamp, never the original"
+  },
   "invoiceCorrectionReason": "Reason for the correction",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -20415,6 +20419,37 @@
         "type": "int"
       }
     }
+  },
+  "invoiceOriginalKept": "Original kept {when} by {who} · SHA-256 {digest}",
+  "@invoiceOriginalKept": {
+    "description": "#3853 the invoice page: who stored the original, when, and its digest",
+    "placeholders": {
+      "when": {
+        "type": "String"
+      },
+      "who": {
+        "type": "String"
+      },
+      "digest": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceOriginalMismatch": "Copy: the stored original does not match its fingerprint, so this one is rendered now from today's settings.",
+  "@invoiceOriginalMismatch": {
+    "description": "#3853 snack: the stored original does not match its digest, a copy is shown"
+  },
+  "invoiceOriginalNotKept": "Copy: this invoice was issued before its original was kept, so it is rendered now from today's settings.",
+  "@invoiceOriginalNotKept": {
+    "description": "#3853 snack: the PDF shown is a copy, the invoice keeps no original"
+  },
+  "invoiceOriginalNotYetKept": "Copy: the business keeps the original once it opens this invoice.",
+  "@invoiceOriginalNotYetKept": {
+    "description": "#3853 snack: nobody who may issue invoices has opened it yet, a copy is shown"
+  },
+  "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.",
+  "@invoiceOriginalTooLarge": {
+    "description": "#3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)"
   },
   "invoicePageApprovalRecorded": "Your approval is recorded; it waits for the others.",
   "@invoicePageApprovalRecorded": {

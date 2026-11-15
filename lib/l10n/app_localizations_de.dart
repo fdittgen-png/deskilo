@@ -14963,6 +14963,9 @@ class AppLocalizationsDe extends AppLocalizations {
       'Öffentlicher Auftraggeber (Chorus Pro): der code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Kopie mit Zahlungsstatus';
+
+  @override
   String get invoiceCorrectionReason => 'Grund der Berichtigung';
 
   @override
@@ -15836,6 +15839,27 @@ class AppLocalizationsDe extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original aufbewahrt am $when von $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Kopie: Das aufbewahrte Original passt nicht zu seinem Fingerabdruck; diese wird jetzt mit den heutigen Einstellungen erstellt.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Kopie: Diese Rechnung wurde ausgestellt, bevor ihr Original aufbewahrt wurde; sie wird jetzt mit den heutigen Einstellungen erstellt.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Kopie: Das Unternehmen bewahrt das Original auf, sobald es diese Rechnung öffnet.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Verwenden Sie kleinere Bilder.';
 
   @override
   String get invoicePageApprovalRecorded =>

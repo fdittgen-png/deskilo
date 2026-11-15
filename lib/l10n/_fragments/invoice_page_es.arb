@@ -279,5 +279,11 @@
   },
   "invoicePageMoreRemind": "Compartir un recordatorio",
   "invoicePageMorePayment": "Pago",
-  "invoicePageMoreMatch": "Conciliar un pago"
+  "invoicePageMoreMatch": "Conciliar un pago",
+  "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalNotYetKept": "Copia: la empresa conserva el original en cuanto abre esta factura.",
+  "invoiceOriginalKept": "Original conservado el {when} por {who} · SHA-256 {digest}",
+  "invoiceCopyWithPaymentStatus": "Copia con el estado del pago"
 }

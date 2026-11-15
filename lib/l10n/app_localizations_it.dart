@@ -14934,6 +14934,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Acquirente pubblico (Chorus Pro): il code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copia con lo stato del pagamento';
+
+  @override
   String get invoiceCorrectionReason => 'Motivo della rettifica';
 
   @override
@@ -15809,6 +15812,27 @@ class AppLocalizationsIt extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Originale conservato il $when da $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copia: l’originale conservato non corrisponde alla sua impronta; questa viene generata ora con le impostazioni di oggi.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copia: questa fattura è stata emessa prima che se ne conservasse l’originale; viene generata ora con le impostazioni di oggi.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copia: l’azienda conserva l’originale non appena apre questa fattura.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copia: l’originale non è stato conservato perché le immagini del layout della fattura lo rendono più grande di quanto possa essere un originale. Usi immagini più piccole.';
 
   @override
   String get invoicePageApprovalRecorded =>

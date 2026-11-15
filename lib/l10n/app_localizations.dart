@@ -23935,6 +23935,12 @@ abstract class AppLocalizations {
   /// **'Public-sector buyer (Chorus Pro): the code service exécutant.'**
   String get invoiceBuyerReferenceHint;
 
+  /// #3853 the action that prints today's copy with the paid stamp, never the original
+  ///
+  /// In en, this message translates to:
+  /// **'Copy with payment status'**
+  String get invoiceCopyWithPaymentStatus;
+
   /// #2440: invoiceCorrectionReason
   ///
   /// In en, this message translates to:
@@ -25230,6 +25236,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days, plural, one{{days} day} other{{days} days}}'**
   String invoiceOpenAge(int days);
+
+  /// #3853 the invoice page: who stored the original, when, and its digest
+  ///
+  /// In en, this message translates to:
+  /// **'Original kept {when} by {who} · SHA-256 {digest}'**
+  String invoiceOriginalKept(String when, String who, String digest);
+
+  /// #3853 snack: the stored original does not match its digest, a copy is shown
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the stored original does not match its fingerprint, so this one is rendered now from today\'s settings.'**
+  String get invoiceOriginalMismatch;
+
+  /// #3853 snack: the PDF shown is a copy, the invoice keeps no original
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: this invoice was issued before its original was kept, so it is rendered now from today\'s settings.'**
+  String get invoiceOriginalNotKept;
+
+  /// #3853 snack: nobody who may issue invoices has opened it yet, a copy is shown
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the business keeps the original once it opens this invoice.'**
+  String get invoiceOriginalNotYetKept;
+
+  /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
+  String get invoiceOriginalTooLarge;
 
   /// #3587 message after Confirm when the declared payment still waits for other approvers
   ///

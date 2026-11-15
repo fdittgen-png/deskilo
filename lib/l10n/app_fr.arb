@@ -8847,6 +8847,7 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCopyWithPaymentStatus": "Copie avec l’état du paiement",
   "invoiceCorrectionReason": "Motif de la rectification",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -9488,6 +9489,11 @@
       }
     }
   },
+  "invoiceOriginalKept": "Original conservé le {when} par {who} · SHA-256 {digest}",
+  "invoiceOriginalMismatch": "Copie : l’original conservé ne correspond pas à son empreinte ; celle-ci est rendue maintenant avec les réglages d’aujourd’hui.",
+  "invoiceOriginalNotKept": "Copie : cette facture a été émise avant que son original soit conservé ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
+  "invoiceOriginalNotYetKept": "Copie : l’entreprise conserve l’original dès qu’elle ouvre cette facture.",
+  "invoiceOriginalTooLarge": "Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.",
   "invoicePageApprovalRecorded": "Votre approbation est enregistrée ; elle attend les autres.",
   "@invoicePageApprovalRecorded": {
     "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
