@@ -60,14 +60,12 @@ import 'seed/demo_city_people_seed.dart';
 import 'seed/demo_commerce_seed.dart';
 import 'seed/demo_decision_seed.dart';
 import 'seed/demo_documents_seed.dart';
-import 'seed/demo_einvoice_seed.dart';
 import 'seed/demo_flags.dart';
 import 'seed/demo_history_seed.dart';
 import 'seed/demo_money_finish.dart';
 import 'seed/demo_money_seed.dart';
 import 'seed/demo_network_seed.dart';
 import 'seed/demo_newcomers_seed.dart';
-import 'seed/demo_payment_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_plan_booking_seed.dart';
 import 'seed/demo_reachable_seed.dart';
@@ -200,8 +198,6 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoNewcomers(workspaces, money, reservations, today); // #3674
     seedDemoYearOfResources(reservations, workspaces, today);
     finishDemoMoney(money, today);
-    seedDemoOnlinePayments(money, today); // #3961
-    seedDemoEInvoiceChannel(money, today); // #3963
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
     seedDemoDecisions(events, today);

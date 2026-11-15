@@ -4,7 +4,9 @@
 // invoices, their VAT, the register's order and the plan prices the live
 // statement charges.
 import '../data/money_repository.dart';
+import 'demo_einvoice_seed.dart';
 import 'demo_money_seed.dart' show alignDemoBandsWithPlans;
+import 'demo_payment_seed.dart';
 import 'demo_year_seed.dart' show applyDemoVat, seedDemoYearOfMoney;
 
 /// #3601 — the register of a month reads with the other members' invoices
@@ -28,10 +30,13 @@ void _orderDemoRegister(FakeMoneyRepository money, {String owner = 'member-1'}) 
 }
 
 /// The last steps of the Demo's money: the year of invoices, their VAT, the
-/// register's order and the plan prices the live statement charges (#3601).
+/// register's order and the plan prices the live statement charges (#3601),
+/// then the online payments and the e-invoice channel.
 void finishDemoMoney(FakeMoneyRepository money, DateTime now) {
   seedDemoYearOfMoney(money, now);
   applyDemoVat(money);
   _orderDemoRegister(money);
   alignDemoBandsWithPlans(money, now);
+  seedDemoOnlinePayments(money, now); // #3961
+  seedDemoEInvoiceChannel(money, now); // #3963
 }
