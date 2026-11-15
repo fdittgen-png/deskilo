@@ -3,10 +3,13 @@
 // #2597 -- the workspace's identity: locale, legal, payment, documents, lexicon, branding and emblem, as one mixin composed into
 // `SupabaseWorkspaceRepository` (the part-file bodies and their `_xxxImpl`
 // forwarders are gone).
+import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/payment_instructions.dart';
 import '../domain/workspace_branding.dart';
 import '../domain/workspace_document.dart';
@@ -84,6 +87,47 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
     await updateWorkspaceRow(workspaceId, {
       'subscription_vat_rate_id': vatRateId.isEmpty ? null : vatRateId,
     });
+  }
+
+  @override
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
+    String workspaceId,
+    Map<String, Object?> journals,
+  ) async {
+    try {
+      await client.rpc<Object?>(
+        'set_accounting_journals',
+        params: {'p_workspace_id': workspaceId, 'p_journals': journals},
+      );
+      return null;
+    } on PostgrestException catch (e, st) {
+      if (e.code != '42501' && e.code != '22023') rethrow;
+      TraceLogger.instance.warn(
+        'workspace',
+        'accounting journals refused',
+        error: e,
+        stackTrace: st,
+      );
+      final why = JsonReader.orEmpty(
+        e.code == '22023' ? _decoded(e.details) : null,
+        context: 'accounting_journals.refusal',
+      );
+      return (
+        problem: why.textOrAbsent('problem') ?? 'shape',
+        role: why.textOrAbsent('role') ?? '',
+        notAllowed: e.code == '42501',
+      );
+    }
+  }
+
+  static Object? _decoded(Object? details) {
+    if (details is! String) return details;
+    try {
+      return jsonDecode(details);
+    } on FormatException {
+      // trace-exempt: an unreadable detail is read as "not whole".
+      return null;
+    }
   }
 
   @override

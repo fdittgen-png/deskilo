@@ -250,6 +250,65 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingJournalBank => 'Bank';
+
+  @override
+  String get accountingJournalCharacter =>
+      'No line break, tab or | here: the exports separate their fields with them.';
+
+  @override
+  String get accountingJournalCode => 'Code';
+
+  @override
+  String get accountingJournalCodeRequired => 'Enter a code.';
+
+  @override
+  String get accountingJournalDuplicate =>
+      'Another journal already has this code.';
+
+  @override
+  String get accountingJournalLabel => 'Label';
+
+  @override
+  String get accountingJournalLabelRequired => 'Enter a label.';
+
+  @override
+  String get accountingJournalMisc => 'Miscellaneous operations';
+
+  @override
+  String get accountingJournalPurchases => 'Purchases';
+
+  @override
+  String get accountingJournalSales => 'Sales';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Deliveries to a connected accounting system still use the standard codes.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'The code and label of each journal, as your accountant\'s software knows them. Every accounting export the app writes uses them.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Only an owner sets the accounting journals.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'The journals were not saved: check the $journal journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'A changed code also changes the entry numbers of a period you export again.';
+
+  @override
+  String get accountingJournalsStandard => 'Use the standard codes';
+
+  @override
+  String get accountingJournalsTitle => 'Accounting journals';
+
+  @override
   String get accountingSignInBack => 'Back to Accounting';
 
   @override
@@ -14827,6 +14886,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Public-sector buyer (Chorus Pro): the code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copy with payment status';
+
+  @override
   String get invoiceCorrectionReason => 'Reason for the correction';
 
   @override
@@ -15689,6 +15751,39 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Original kept $when by $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copy: the stored original does not match its fingerprint, so this one is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copy: this invoice was issued before its original was kept, so it is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'The originals of $count invoices were not kept yet. The invoices are issued; their originals are kept later.',
+      one: 'The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicePageApprovalRecorded =>
       'Your approval is recorded; it waits for the others.';
 
@@ -16048,6 +16143,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Public-sector buyer (Chorus Pro): the numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Preview — the original is the downloaded PDF.';
 
   @override
   String get invoiceRefundButton => 'Record the refund';

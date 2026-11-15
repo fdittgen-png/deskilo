@@ -250,6 +250,65 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingExportsTitle => 'Esportazioni';
 
   @override
+  String get accountingJournalBank => 'Banca';
+
+  @override
+  String get accountingJournalCharacter =>
+      'Niente a capo, tabulazioni né | qui: le esportazioni separano i loro campi con essi.';
+
+  @override
+  String get accountingJournalCode => 'Codice';
+
+  @override
+  String get accountingJournalCodeRequired => 'Inserisca un codice.';
+
+  @override
+  String get accountingJournalDuplicate =>
+      'Un altro registro ha già questo codice.';
+
+  @override
+  String get accountingJournalLabel => 'Descrizione';
+
+  @override
+  String get accountingJournalLabelRequired => 'Inserisca una descrizione.';
+
+  @override
+  String get accountingJournalMisc => 'Operazioni diverse';
+
+  @override
+  String get accountingJournalPurchases => 'Acquisti';
+
+  @override
+  String get accountingJournalSales => 'Vendite';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Gli invii a un sistema contabile collegato usano ancora i codici standard.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'Il codice e la descrizione di ogni registro, come li conosce il software del suo commercialista. Ogni esportazione contabile dell\'app li usa.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Solo un proprietario imposta i registri contabili.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'I registri non sono stati salvati: controlli il registro $journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.';
+
+  @override
+  String get accountingJournalsStandard => 'Usa i codici standard';
+
+  @override
+  String get accountingJournalsTitle => 'Registri contabili';
+
+  @override
   String get accountingSignInBack => 'Torna a Contabilità';
 
   @override
@@ -14941,6 +15000,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Acquirente pubblico (Chorus Pro): il code service exécutant.';
 
   @override
+  String get invoiceCopyWithPaymentStatus => 'Copia con lo stato del pagamento';
+
+  @override
   String get invoiceCorrectionReason => 'Motivo della rettifica';
 
   @override
@@ -15818,6 +15880,39 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String invoiceOriginalKept(String when, String who, String digest) {
+    return 'Originale conservato il $when da $who · SHA-256 $digest';
+  }
+
+  @override
+  String get invoiceOriginalMismatch =>
+      'Copia: l’originale conservato non corrisponde alla sua impronta; questa viene generata ora con le impostazioni di oggi.';
+
+  @override
+  String get invoiceOriginalNotKept =>
+      'Copia: questa fattura è stata emessa prima che se ne conservasse l’originale; viene generata ora con le impostazioni di oggi.';
+
+  @override
+  String get invoiceOriginalNotYetKept =>
+      'Copia: l’azienda non ha ancora conservato l’originale di questa fattura; viene generata ora con le impostazioni di oggi.';
+
+  @override
+  String get invoiceOriginalTooLarge =>
+      'Copia: l’originale non è stato conservato perché le immagini del layout della fattura lo rendono più grande di quanto possa essere un originale. Usi immagini più piccole.';
+
+  @override
+  String invoiceOriginalsNotKeptNow(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          'Gli originali di $count fatture non sono ancora stati conservati. Le fatture sono emesse; i loro originali saranno conservati più tardi.',
+      one: 'L’originale di 1 fattura non è ancora stato conservato. La fattura è emessa; il suo originale sarà conservato più tardi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicePageApprovalRecorded =>
       'La sua approvazione è registrata; attende gli altri.';
 
@@ -16180,6 +16275,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get invoicePurchaseOrderHint =>
       'Acquirente pubblico (Chorus Pro): il numéro d\'engagement.';
+
+  @override
+  String get invoiceQuickViewIsPreview =>
+      'Anteprima: l’originale è il PDF scaricato.';
 
   @override
   String get invoiceRefundButton => 'Registra il rimborso';

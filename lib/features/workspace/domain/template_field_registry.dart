@@ -168,6 +168,10 @@ List<TemplateFieldSpec> _workspaceColumns() => [
       for (final c in ['address', 'street', 'postal_code', 'city', 'vat_id', 'legal_id',
         'tax_exemption_reason', 'vat_account', 'invoice_legal', 'whatsapp_group'])
         _f('workspace.$c', 'identity', _text, p: _never, reason: _ownIdentity),
+      // #3470 — the business's journals follow its accountant, like the VAT
+      // account above.
+      _f('workspace.accounting_journals', 'identity', TemplateFieldType.map,
+          p: _never, reason: _ownIdentity),
       _f('workspace.default_locale', 'identity', TemplateFieldType.locale, absent: _product),
       // #3852 — absent or empty follows the country; one the target's
       // country does not allow leaves the target's own.

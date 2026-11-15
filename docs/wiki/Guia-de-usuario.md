@@ -123,7 +123,7 @@ No necesita leerlo todo primero. Elija el recorrido que corresponde a lo que qui
 |---|---|---|
 | Primera vez como miembro | [Crear una cuenta o iniciar sesión](#crear-una-cuenta-o-iniciar-sesión) → [Unirse a un espacio](#unirse-a-un-espacio) → [Reservar una plaza](#reservar-una-plaza) → [Consulte su extracto](#consulte-su-extracto) → [Registrar la llegada y la salida](#registrar-la-llegada-y-la-salida) | Ha reservado, sabe lo que cuesta y ha registrado su entrada y su salida. |
 | Poner un espacio en servicio | [Unos pocos lugares compartidos](Guia-de-puesta-en-marcha#unos-pocos-lugares-compartidos) → [Dibujar salas, mesas y asientos](#dibujar-salas-mesas-y-asientos) → [Horario de trabajo](#horario-de-trabajo) → [Límites de reserva](#límites-de-reserva) → [Invite a un miembro](#invite-a-un-miembro) → [La pestaña Calendario](#la-pestaña-calendario) | Un miembro al que invitó ha reservado y usted ve la reserva. |
-| El primer cierre de mes | [La facturación de un vistazo](#la-facturación-de-un-vistazo) → [Lo que emite la aplicación y lo que queda en manos de su gestor](#lo-que-emite-la-aplicación-y-lo-que-queda-en-manos-de-su-gestor) → [El asistente de cierre mensual](#el-asistente-de-cierre-mensual) → [Reclamar y saldar facturas abiertas](#reclamar-y-saldar-facturas-abiertas) → [Exportaciones contables](#exportaciones-contables) | El mes está facturado dentro de lo que admite la aplicación, los pagos están conciliados y el archivo está en manos de su gestor. |
+| El primer cierre de mes | [La facturación de un vistazo](#la-facturación-de-un-vistazo) → [Lo que emite la aplicación y lo que queda en manos de su gestor](#lo-que-emite-la-aplicación-y-lo-que-queda-en-manos-de-su-gestor) → [El asistente de cierre mensual](#el-asistente-de-cierre-mensual) → [Reclamar y saldar facturas abiertas](#seguir-una-factura) → [Exportaciones contables](#exportaciones-contables) | El mes está facturado dentro de lo que admite la aplicación, los pagos están conciliados y el archivo está en manos de su gestor. |
 
 **Conviene saber**
 
@@ -2737,6 +2737,31 @@ Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
 
 **Véase también:** [La facturación de un vistazo](#la-facturación-de-un-vistazo) · [La página Compras y Añadir compra / gasto](#la-página-compras-y-añadir-compra--gasto)
 
+<!-- anchor: user.money.guest-passes -->
+### Vender y revocar un pase de invitado
+
+**Público:** Administrador/a · Propietario
+
+Un invitado que no es miembro ocupa un puesto un día o unas horas, paga en recepción y recibe una factura.
+
+<!-- image: user-money-guest-passes -->
+
+**Pasos**
+
+1. Abra [Pases de invitado](https://fdittgen-png.github.io/deskilo/#/money/guest-passes), o **Pases de invitado** en la página [Ventas](https://fdittgen-png.github.io/deskilo/#/money/sales).
+2. La primera vez, pulse **Añadir un pase**: su **Nombre**, **Por día** o **Por hora**, el **Precio por unidad** y **A la venta**.
+3. Pulse **Vender un pase**, elija el **Pase** y el **Puesto**, los días (**Desde**, **Hasta**) y el nombre y el contacto del invitado, y marque **Pagado en recepción** si ya pagó.
+4. **Pases vendidos** lista cada pase con lo **Usado**. Para retirar pases, selecciónelos, pulse **Revocar** y confirme.
+
+**Conviene saber**
+
+- El invitado no se convierte en miembro; su nombre y su contacto se imprimen en la factura.
+- Revocar anula las reservas que aún no han empezado. Los días ya empezados se quedan, y no se mueve dinero: corrija la factura del invitado en su página si hay que devolverle dinero.
+- **Revocados, factura sin corregir** lista los pases revocados cuya factura aún espera su corrección; **Abrir la factura** le lleva a ella.
+- Un pase por horas vale para un día; un pase por días dura de 1 a 31 días.
+
+**Véase también:** [La página Ventas](#la-página-ventas) · [Seguir una factura](#seguir-una-factura)
+
 <!-- anchor: user.money.purchases -->
 ### La página Compras y Añadir compra / gasto
 
@@ -2990,24 +3015,23 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 **Público:** Administrador/a de facturación · Propietario
 
-Usted emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
+Emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
 
 <p><img src="images/user-money-invoicing.es.b8fa17aa9.jpg" width="280"></p>
 
 **Pasos**
 
 1. Abra [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices).
-2. Lea las pestañas: **Por facturar** enumera los miembros a los que aún falta facturar el mes, **Abiertas** las facturas emitidas y sin pagar, y **Archivo** las que están cerradas.
-3. Lea la línea de cuatro pasos bajo el banner: **Por emitir**, **Por cobrar**, **Por confirmar** y **Cerrada**, con un recuento para cada una.
-4. Pulse **Asistente de cierre mensual** para facturar un mes, o **Nueva factura** para una sola.
-5. Pulse el icono de herramientas para el registro de facturas, las reglas de recordatorio, la plantilla PDF de factura y **Mis finanzas**.
+2. Lea **Por cobrar**: lo que está **Vencido** y lo que está **Aún no vencido**.
+3. Avance por **Pendiente**: cada entrada se abre con **Ver**, hasta que dice **Todo está al día.**
+4. Debajo, lea los clientes y sus facturas; pulse **Nueva** para una sola factura y **Más** para las demás herramientas.
 
 **Conviene saber**
 
-- Las facturas nunca se editan ni se eliminan. Una factura equivocada se marca como errónea y se sustituye.
-- El flujo completo, del cierre mensual al cobro y los recordatorios, está en el capítulo 08: [Reglas de recordatorio](#reglas-de-recordatorio) y [La plantilla PDF de factura](#la-plantilla-pdf-de-factura) son buenos lugares para continuar.
+- Una factura nunca se edita ni se borra. Una errónea se corrige con una factura sustitutiva.
+- Toda la rutina, desde facturar el mes hasta conciliar los pagos y pagar las notas de crédito, está en el capítulo 08: empiece por [La pantalla de Facturación](#la-pantalla-de-facturación).
 
-**Véase también:** [Reglas de recordatorio](#reglas-de-recordatorio)
+**Véase también:** [Facturar el mes](#facturar-el-mes) · [Reglas de recordatorio](#reglas-de-recordatorio)
 
 <!-- anchor: user.space.overview -->
 ## Su espacio, configurado por usted (Ajustes del espacio)
@@ -4886,7 +4910,7 @@ En este capítulo:
 - IVA: régimen, número, tipos, grupos y la declaración periódica
 - Facturación electrónica: adónde se envía la factura legible por máquina
 - La plantilla PDF de factura y el editor de informes
-- Emitir y cerrar un mes: la pantalla de Facturación, el asistente de cierre mensual, la reagrupación, los gastos compartidos
+- Emitir y cerrar un mes: la pantalla de Facturación, facturar el mes, una factura y un cliente, los pagos y las notas de crédito, el asistente de cierre mensual, la reagrupación, los gastos compartidos
 - Recordatorios de pago
 - El registro de facturas, las exportaciones contables y el análisis de negocio
 
@@ -5721,6 +5745,7 @@ Quiere que sus facturas se parezcan a usted: logotipo, maquetación, redacción.
 **Conviene saber**
 
 - La plantilla cambia solo el PDF. El XML de la factura electrónica nunca se toca.
+- Una factura emitida conserva el original con el que se emitió: una plantilla cambiada después solo cambia las facturas emitidas más tarde. Las imágenes que hacen una factura más grande de lo que puede ser un original impiden conservar su original; use imágenes más pequeñas.
 - Puede hacerlo cualquier persona con permiso para diseñar documentos.
 - Una plantilla que no se genera nunca bloquea un documento: entra en juego la maquetación integrada.
 
@@ -5802,24 +5827,52 @@ Sus miembros leen sus documentos en su propio idioma.
 
 **Público:** Propietario · Administrador/a de facturación
 
-Ve de un vistazo qué hay que emitir, qué hay que cobrar y qué está cerrado.
+Abre la facturación y ve lo que le deben, lo que queda por hacer y las facturas de cada cliente.
 
 <p><img src="images/user-invoicing-hub.es.b8fa17aa9.jpg" width="280"></p>
 
 **Pasos**
 
 1. Abra [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices).
-2. Lea la franja: **Por emitir**, **Por cobrar**, **Por confirmar**, **Cerrada**.
-3. Trabaje en las tres pestañas: **Por facturar** (miembros con algo registrado, aún sin facturar), **Abiertas** (emitidas, sin pagar) y **Archivo** (pagadas o cerradas).
-4. Pulse el icono de herramientas para ver las demás herramientas.
+2. Lea **Por cobrar**: lo que está **Vencido**, lo que está **Aún no vencido**, y las cifras **Facturado en** y **Cobrado en** de este mes.
+3. Avance por **Pendiente**: cada entrada dice qué hacer y para cuántos, y se abre con **Ver**. Cuando no queda nada, dice **Todo está al día.**
+4. Debajo, elija **Abiertas**, **Vencidas**, **Por confirmar** o **Pagadas**, y lea la lista por **Clientes** o por **Facturas**. **Buscar** encuentra un cliente o un número.
+5. Pulse **Nueva** para una sola factura, y **Más** para **Facturas pagadas y cerradas**, **Mis propias facturas**, **Registro de facturas**, **Plantilla PDF de factura** y **Cómo funciona la facturación**.
 
 **Conviene saber**
 
-- Ve las facturas de todo el espacio. Las suyas están en sus finanzas, bajo **Mis finanzas**.
-- Las facturas nunca se editan ni se eliminan: una equivocada se marca como errónea y se sustituye.
-- La entrada **Cómo funciona la facturación** explica quién actúa en cada paso.
+- Una nota de crédito que la empresa debe nunca cuenta como lo que le deben: espera en **Pagar reembolsos**.
+- Cada estado es una palabra además de un color: **Vence hoy**, **Pago recibido · por conciliar**, **Esperando la confirmación del cliente**, **En pausa**.
+- Sus propias facturas están en sus finanzas, en **Mis propias facturas**.
+- Una factura nunca se edita ni se borra: una errónea se corrige con una factura sustitutiva.
 
-**Véase también:** [Nueva factura](#emitir-una-factura) · [Facturas abiertas](#reclamar-y-saldar-facturas-abiertas)
+**Véase también:** [Facturar el mes](#facturar-el-mes) · [Seguir una factura](#seguir-una-factura)
+
+<!-- anchor: user.invoicing.month -->
+### Facturar el mes
+
+**Público:** Propietario · Administrador/a de facturación
+
+El mes que acaba de terminar tiene clientes por facturar, y los factura de una vez.
+
+<!-- image: user-invoicing-month -->
+
+**Pasos**
+
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), busque **Facturar** y el mes en **Pendiente**, y pulse **Ver**.
+2. Lea la lista: cada cliente con algo por facturar está marcado, con su importe. **Todos** marca o desmarca todos a la vez.
+3. Un cliente marcado **Hay que completarlo** dice lo que falta. Pulse **Completar**, complételo y vuelva: el cliente se lee de nuevo.
+4. Pulse **Emitir** con el número y el importe.
+5. Lea lo que pasó (**Emitida**, **Espera una validación** o **No hecho**) y pulse **Hecho**.
+
+**Conviene saber**
+
+- Un mes cuyos abonos superan sus cargos emite una nota de crédito: la empresa la debe, y espera en **Pagar reembolsos**.
+- Un dato que falta a su empresa se dice una sola vez, arriba, con un solo **Completar**; no se emite nada mientras falte.
+- Lo que no se hizo queda en **Pendiente**, y **Reintentar para estas** lo intenta de nuevo sin emitir nada dos veces.
+- **Ver la proforma** muestra la factura de un cliente antes de que exista.
+
+**Véase también:** [La pantalla de Facturación](#la-pantalla-de-facturación) · [Pagar una nota de crédito](#pagar-una-nota-de-crédito)
 
 <!-- anchor: user.invoicing.new-invoice -->
 ### Emitir una factura
@@ -5832,10 +5885,10 @@ Factura un mes a un miembro.
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Nueva factura**, o **Emitir** en una fila de **Por facturar**.
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Nueva**. Para facturar un mes entero, vea [Facturar el mes](#facturar-el-mes).
 2. Elija el **Miembro** y el mes. Las partidas proceden de lo registrado.
 3. Active **Incluir el anexo detallado (asistencias, servicios, pagos)** si lo desea.
-4. Pulse **Emitir factura**. En **Por facturar**, **Facturar todo** emite todas las filas.
+4. Pulse **Emitir factura**.
 
 **Conviene saber**
 
@@ -5848,27 +5901,126 @@ Factura un mes a un miembro.
 **Véase también:** [Asistente de cierre mensual](#el-asistente-de-cierre-mensual)
 
 <!-- anchor: user.invoicing.open -->
-### Reclamar y saldar facturas abiertas
+### Seguir una factura
 
 **Público:** Propietario · Administrador/a de facturación
 
-Hace seguimiento de lo que está sin pagar y lo cierra como es debido.
+Abre una factura y ve en qué punto está, lo que pasó y lo único que hay que hacer ahora.
 
 <p><img src="images/user-invoicing-open.es.b8fa17aa9.jpg" width="280"></p>
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), abra la pestaña **Abiertas** y pulse una factura.
-2. Use las acciones que ofrece: **Enviar un recordatorio**, **Marcar como pagada** (concilia un pago registrado), **Anular el saldo pendiente**, **Marcar como errónea**, o comparta el PDF.
-3. Las facturas pagadas pasan a **Archivo**.
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse un cliente y después la factura (o púlsela en la lista por **Facturas**).
+2. Lea arriba lo que queda pendiente del total y cuándo vence, o **Pagada por completo**.
+3. Lea **Lo que pasó**: la emisión, el vencimiento, cada recordatorio, un pago que el cliente declaró, el pago.
+4. Use la acción de abajo: compartir el recordatorio con su nivel, **Confirmar el pago**, **Conciliar el pago** o **Registrar el reembolso**.
+5. Pulse **Más** para el PDF (**Ver el PDF**, **Descargar el PDF**, **Compartir el PDF**), **Pausar los recordatorios**, **Conciliar un pago** y las **Correcciones**: **Corregir con una factura sustitutiva**, **Anular esta factura, emitida por error**, **Dar por perdido el resto**.
 
 **Conviene saber**
 
-- Una factura está pagada cuando se le ha conciliado un pago real. Una diferencia necesita una nota, o una factura rectificativa por el exceso.
-- Anular un saldo pendiente pasa por validación.
-- **Marcar como errónea** no se puede deshacer. Hágalo antes del pago, nunca después.
+- **Por correo** envía la factura al correo de contacto del cliente, y **Volver a enviar** la envía una vez más. Un correo aceptado por el proveedor no prueba que se haya leído.
+- En pausa, no sale ningún recordatorio hasta que la reanude.
+- La sustitución o la anulación se ofrecen mientras no haya nada conciliado con la factura, **Dar por perdido el resto** en cuanto se haya pagado una parte. Una factura nunca se edita.
+- Un cliente que dice haber pagado espera su respuesta: compruebe su banco y después **Confirmar el pago** o **No recibido**.
 
-**Véase también:** [Reglas de recordatorio](#reglas-de-recordatorio) · [Agrupar facturas](#agrupar-facturas-en-una)
+**Véase también:** [Compartir los recordatorios](#compartir-los-recordatorios) · [Conciliar un pago recibido](#conciliar-un-pago-recibido)
+
+<!-- anchor: user.invoicing.reminders -->
+### Compartir los recordatorios
+
+**Público:** Propietario · Administrador/a de facturación
+
+En su espacio los recordatorios se comparten a mano, y algunos están pendientes.
+
+<!-- image: user-invoicing-reminders -->
+
+**Pasos**
+
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), busque **Compartir recordatorios a mano** en **Pendiente** y pulse **Ver**.
+2. Cada línea nombra al cliente, el importe y el retraso, con su nivel (Recordatorio 1, …). **Vista previa** muestra la carta.
+3. Pulse **Compartir** en una línea y envíe la carta como prefiera; el botón bajo la lista comparte la siguiente.
+4. Si el cliente tiene dirección de correo, **Enviar por correo** la envía; un botón al final envía por correo cada línea que tiene dirección.
+5. Pulse **Hecho** cuando la lista diga lo que se compartió.
+
+**Conviene saber**
+
+- Un recordatorio solo se registra en su factura cuando se compartió o se envió de verdad. Un envío que cerró no registra nada.
+- Si hay dinero recibido aún sin asignar, la lista le pide comprobarlo primero (**Compruebe primero: dinero recibido y no asignado**): puede que el cliente ya haya pagado.
+- Cuando los recordatorios salen solos, esta entrada no está en **Pendiente**; **Reglas** define cómo funcionan.
+
+**Véase también:** [Reglas de recordatorio](#reglas-de-recordatorio) · [Recordatorios automáticos](#recordatorios-automáticos)
+
+<!-- anchor: user.invoicing.payments -->
+### Conciliar un pago recibido
+
+**Público:** Propietario · Administrador/a de facturación
+
+Ha llegado un pago a la cuenta y usted indica qué facturas paga.
+
+<!-- image: user-invoicing-payments -->
+
+**Pasos**
+
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), busque **Conciliar pagos** en **Pendiente** y pulse **Ver**, y después **Conciliar** en el cliente.
+2. **Pagos por conciliar** muestra cada pago recibido con las facturas que puede pagar; **Mismo importe** marca la que coincide.
+3. Pulse esa factura para conciliarla, o **Asignar a facturas** para repartir un pago entre varias.
+4. En **Asignar a facturas**, marque las facturas y compruebe los importes; la más antigua se paga primero. Pulse **Asignar a facturas** para confirmar.
+
+**Conviene saber**
+
+- Lo que queda del pago se queda como saldo a favor del cliente, y la hoja dice cuánto.
+- Una factura pagada en parte necesita una nota.
+- Una conciliación puede esperar una segunda aprobación cuando una regla lo pide.
+- No se registra nada si algo cambió entretanto: la página vuelve a leer el pago y dice por qué.
+
+**Véase también:** [Seguir una factura](#seguir-una-factura) · [La página de un cliente y su estado de cuenta](#la-página-de-un-cliente-y-su-estado-de-cuenta)
+
+<!-- anchor: user.invoicing.refunds -->
+### Pagar una nota de crédito
+
+**Público:** Propietario · Administrador/a de facturación
+
+La empresa debe dinero a un cliente por una nota de crédito, y usted registra que se le devolvió.
+
+<!-- image: user-invoicing-refunds -->
+
+**Pasos**
+
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), busque **Pagar reembolsos** en **Pendiente** y pulse **Ver**.
+2. Pulse el cliente y después la nota de crédito: indica **Reembolso pendiente** y **La empresa debe este reembolso**.
+3. Devuelva el dinero al cliente, pulse **Registrar el reembolso** y confirme.
+
+**Conviene saber**
+
+- Una nota de crédito nunca cuenta en **Por cobrar**.
+- Una vez registrada, la nota de crédito indica **Reembolsada** y sale de **Pendiente**.
+
+**Véase también:** [Facturar el mes](#facturar-el-mes)
+
+<!-- anchor: user.invoicing.customer -->
+### La página de un cliente y su estado de cuenta
+
+**Público:** Propietario · Administrador/a de facturación
+
+Quiere todo sobre un cliente: lo que debe, sus facturas y un estado de cuenta para enviarle.
+
+<!-- image: user-invoicing-customer -->
+
+**Pasos**
+
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse el cliente.
+2. Lea lo que **Debe**, o **Nada pendiente**, y su saldo a favor si lo hay: pagos que ninguna factura ha tomado aún.
+3. Lea las **Facturas** y el **Historial**: emisiones, pagos, recordatorios compartidos, pagos declarados.
+4. Pulse **Estado de cuenta** para las partidas abiertas a fecha de hoy, o **Extracto de un periodo** para los movimientos entre dos fechas con el saldo inicial y final.
+
+**Conviene saber**
+
+- Un estado de cuenta está en una sola moneda; si hay varias, usted elige cuál.
+- Si no hay nada abierto, no hay estado de cuenta a fecha de hoy que imprimir.
+- En un extracto de un periodo, los saldos anteriores al primer día registrado se reconstruyen a partir de los datos de hoy, y el extracto lo indica.
+
+**Véase también:** [Conciliar un pago recibido](#conciliar-un-pago-recibido)
 
 <!-- anchor: user.invoicing.wizard -->
 ### El asistente de cierre mensual
@@ -5881,7 +6033,7 @@ Un único recorrido guiado para la rutina del dinero: emitir, enviar, recordar, 
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Asistente de cierre mensual** (o abra el [Asistente de facturación](https://fdittgen-png.github.io/deskilo/#/invoicing/wizard)).
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Más** y **Asistente de cierre mensual** (o abra el [Asistente de facturación](https://fdittgen-png.github.io/deskilo/#/invoicing/wizard)).
 2. Elija la ejecución: **Inicio de mes** (suscripciones que los miembros pagan por adelantado, para el mes siguiente) o **Fin de mes** (uso, consumo y cargos extra del mes que acaba de terminar). La fecha propone una.
 3. Siga los pasos: **Revisión**, **Emitir**, **Enviar**, **Recordar**, **Pagos**, **Conciliar**, **Cerrar**, **Resumen**.
 4. Pulse **Siguiente** en cada paso y **Terminar** al final.
@@ -5905,7 +6057,7 @@ Un miembro tiene varias facturas abiertas y debería pagar una sola.
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse el icono de herramientas y **Agrupar en una factura**.
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Más** y **Agrupar facturas en una**.
 2. Elija al menos dos facturas abiertas del mismo miembro.
 3. Confirme. Se le pregunta si desea adjuntar las facturas agrupadas.
 
@@ -5914,7 +6066,7 @@ Un miembro tiene varias facturas abiertas y debería pagar una sola.
 - La nueva factura es la que se debe y se reclama. Las originales siguen siendo legibles detrás de ella.
 - Las líneas y el IVA se trasladan; la declaración de IVA cuenta las originales una sola vez.
 
-**Véase también:** [Facturas abiertas](#reclamar-y-saldar-facturas-abiertas)
+**Véase también:** [Facturas abiertas](#seguir-una-factura)
 
 <!-- anchor: user.invoicing.shared-expense -->
 ### Repartir un gasto compartido
@@ -5927,7 +6079,7 @@ Un coste compartido por la comunidad se divide entre los miembros.
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse el icono de herramientas y **Repartir un gasto**.
+1. Abra [Mis finanzas](https://fdittgen-png.github.io/deskilo/#/money) y pulse **Repartir un gasto**, junto a **Compras**.
 2. Describa **El gasto** y después elija **Repartir por**: **Partes iguales**, **Suscripción**, **Uso** o **Clave propia**.
 3. Compruebe las **Partes**, desmarque a quien quiera **Excluir** y pulse **Contabilizar las partes**.
 
@@ -5950,7 +6102,7 @@ Decide cuándo y con qué frecuencia se reclama una factura vencida.
 
 **Pasos**
 
-1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse el icono de herramientas y **Reglas de recordatorio**.
+1. En [Facturación](https://fdittgen-png.github.io/deskilo/#/invoices), pulse **Más** y **Reglas de recordatorio**.
 2. Defina **Número de niveles de recordatorio**, **Días hasta el primer recordatorio** y **Días entre recordatorios**.
 3. Pulse **Guardar**.
 
@@ -5972,7 +6124,7 @@ Quiere que los recordatorios salgan solos.
 
 **Pasos**
 
-1. Abra **Reglas de recordatorio** en las herramientas de Facturación.
+1. Abra **Reglas de recordatorio** desde **Más** en Facturación.
 2. Active **Recordatorios automáticos**.
 3. Pulse **Guardar**.
 
@@ -6005,6 +6157,30 @@ Todas las facturas en una sola lista ordenable.
 
 - Los miembros ven las suyas; quienes emiten facturas ven las del espacio.
 - La exportación contable empieza aquí.
+
+**Véase también:** [Exportaciones contables](#exportaciones-contables)
+
+<!-- anchor: user.money.accounting-journals -->
+### Sus diarios contables
+
+**Público:** Propietario
+
+El programa de su gestor conoce sus diarios por sus propios códigos, y usted quiere que cada exportación los use.
+
+<!-- image: user-money-accounting-journals -->
+
+**Pasos**
+
+1. Abra [Contabilidad e IVA](https://fdittgen-png.github.io/deskilo/#/money/accounting) y pulse **Diarios contables**.
+2. Para **Ventas**, **Banco**, **Compras** y **Operaciones diversas**, introduzca el **Código** y la **Descripción** que usa su gestor.
+3. Pulse **Guardar**. **Usar los códigos estándar** vuelve a poner los códigos estándar del país.
+
+**Conviene saber**
+
+- Cada exportación contable de la aplicación los usa: el FEC, el diario genérico, los libros mayores SAF-T y los libros impresos.
+- Un código no tiene saltos de línea, tabuladores ni |, y dos diarios nunca comparten código; el formulario indica qué campo corregir.
+- Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.
+- Los envíos a un sistema contable conectado siguen usando los códigos estándar.
 
 **Véase también:** [Exportaciones contables](#exportaciones-contables)
 

@@ -13,11 +13,14 @@ import 'invoice_unknown_outcome_dialog.dart';
 /// validation, refused in the server's words, or UNKNOWN — in which case the
 /// dialog offers only to look for the invoice, never to send it again.
 /// Returns whether the invoice is known to exist (the caller refreshes).
+/// #3853 — [afterIssue] runs once the invoice exists, in the same flow: it
+/// keeps the invoice's original.
 Future<bool> runInvoiceIssue(
   BuildContext context,
   InvoiceIssuance issuance,
-  InvoiceIssueAttempt attempt,
-) async {
+  InvoiceIssueAttempt attempt, {
+  Future<void> Function(String invoiceId)? afterIssue,
+}) async {
   final l10n = context.l10n;
   var outcome = await issuance.issue(attempt);
   if (outcome is InvoiceIssueUnknown) {
@@ -32,8 +35,9 @@ Future<bool> runInvoiceIssue(
   }
   if (!context.mounted) return false;
   switch (outcome) {
-    case InvoiceIssued():
+    case InvoiceIssued(:final invoiceId):
       AppSnack.success(context, l10n.invoiceIssued);
+      await afterIssue?.call(invoiceId);
       return true;
     case InvoiceIssueHeld():
       AppSnack.info(context, l10n.validationSentForApproval);

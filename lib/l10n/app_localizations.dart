@@ -518,6 +518,108 @@ abstract class AppLocalizations {
   /// **'Exports'**
   String get accountingExportsTitle;
 
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Bank'**
+  String get accountingJournalBank;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'No line break, tab or | here: the exports separate their fields with them.'**
+  String get accountingJournalCharacter;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Code'**
+  String get accountingJournalCode;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a code.'**
+  String get accountingJournalCodeRequired;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Another journal already has this code.'**
+  String get accountingJournalDuplicate;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Label'**
+  String get accountingJournalLabel;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a label.'**
+  String get accountingJournalLabelRequired;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Miscellaneous operations'**
+  String get accountingJournalMisc;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Purchases'**
+  String get accountingJournalPurchases;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Sales'**
+  String get accountingJournalSales;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Deliveries to a connected accounting system still use the standard codes.'**
+  String get accountingJournalsDeliveries;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'The code and label of each journal, as your accountant\'s software knows them. Every accounting export the app writes uses them.'**
+  String get accountingJournalsIntro;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Only an owner sets the accounting journals.'**
+  String get accountingJournalsNotAllowed;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'The journals were not saved: check the {journal} journal.'**
+  String accountingJournalsRefused(String journal);
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'A changed code also changes the entry numbers of a period you export again.'**
+  String get accountingJournalsRenumber;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Use the standard codes'**
+  String get accountingJournalsStandard;
+
+  /// #3470 business journals
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting journals'**
+  String get accountingJournalsTitle;
+
   /// #3906 Button back to the accounting page.
   ///
   /// In en, this message translates to:
@@ -23947,6 +24049,12 @@ abstract class AppLocalizations {
   /// **'Public-sector buyer (Chorus Pro): the code service exécutant.'**
   String get invoiceBuyerReferenceHint;
 
+  /// #3853 the action that prints today's copy with the paid stamp, never the original
+  ///
+  /// In en, this message translates to:
+  /// **'Copy with payment status'**
+  String get invoiceCopyWithPaymentStatus;
+
   /// #2440: invoiceCorrectionReason
   ///
   /// In en, this message translates to:
@@ -25243,6 +25351,42 @@ abstract class AppLocalizations {
   /// **'{days, plural, one{{days} day} other{{days} days}}'**
   String invoiceOpenAge(int days);
 
+  /// #3853 the invoice page: who stored the original, when, and its digest
+  ///
+  /// In en, this message translates to:
+  /// **'Original kept {when} by {who} · SHA-256 {digest}'**
+  String invoiceOriginalKept(String when, String who, String digest);
+
+  /// #3853 snack: the stored original does not match its digest, a copy is shown
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the stored original does not match its fingerprint, so this one is rendered now from today\'s settings.'**
+  String get invoiceOriginalMismatch;
+
+  /// #3853 snack: the PDF shown is a copy, the invoice keeps no original
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: this invoice was issued before its original was kept, so it is rendered now from today\'s settings.'**
+  String get invoiceOriginalNotKept;
+
+  /// #3853 snack: nobody who may issue invoices has opened it yet, a copy is shown
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the business has not kept the original of this invoice yet, so it is rendered now from today\'s settings.'**
+  String get invoiceOriginalNotYetKept;
+
+  /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
+  ///
+  /// In en, this message translates to:
+  /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
+  String get invoiceOriginalTooLarge;
+
+  /// #3853 after issuing: how many originals could not be kept in the same flow; the invoices stay issued
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{The original of 1 invoice was not kept yet. The invoice is issued; its original is kept later.} other{The originals of {count} invoices were not kept yet. The invoices are issued; their originals are kept later.}}'**
+  String invoiceOriginalsNotKeptNow(int count);
+
   /// #3587 message after Confirm when the declared payment still waits for other approvers
   ///
   /// In en, this message translates to:
@@ -25848,6 +25992,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public-sector buyer (Chorus Pro): the numéro d\'engagement.'**
   String get invoicePurchaseOrderHint;
+
+  /// #3853 the quick view of an invoice that keeps an original: what is shown is a preview
+  ///
+  /// In en, this message translates to:
+  /// **'Preview — the original is the downloaded PDF.'**
+  String get invoiceQuickViewIsPreview;
 
   /// Negative invoices are credit notes the workspace refunds (#508)
   ///

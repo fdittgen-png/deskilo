@@ -31,18 +31,12 @@
 //     in Montantdevise / Idevise. Without a recorded rate the file is not
 //     written.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+import 'accounting_journals.dart';
 import 'accounting_target.dart';
 import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
 import 'posting_fx.dart';
-
-const _journalLabels = {
-  PostingJournal.sales: 'Ventes',
-  PostingJournal.bank: 'Banque',
-  PostingJournal.purchases: 'Achats',
-  PostingJournal.other: 'Opérations diverses',
-};
 
 // The FEC is a French file: its labels are French, as the arrêté reads them.
 const _kindLabels = {
@@ -121,18 +115,20 @@ String? fecAuxAccount(String collective, String number, CustomerIdRule rule) {
 ///
 /// [parties] names the third party of each document; [partyRule] is what a
 /// party's number may look like (the FEC target's customer id rule). An
-/// entry whose currency is not [functionalCurrency] is converted at its
-/// document's rate in [rates]. Every party and document that stops the
-/// file is named in the result's blockers. A book kept in another currency
-/// than the euro is refused whole.
+/// entry whose currency is not the book's [currency] is converted at its
+/// document's rate in that currency's rates. Every party and document that
+/// stops the file is named in the result's blockers. A book kept in another
+/// currency than the euro is refused whole. [journals] name the journals
+/// (the country add-on's when none, #3470).
 PostedFecResult buildFecFromPostings(
   List<Posting> postings, {
   required Map<String, String> accountNames,
   Map<String, PostingParty> parties = const {},
   CustomerIdRule partyRule = const CustomerIdRule(),
-  String? functionalCurrency,
-  Map<String, FxRate> rates = const {},
+  ({String code, Map<String, FxRate> rates})? currency,
+  FecJournals? journals,
 }) {
+  final functionalCurrency = currency?.code;
   if (functionalCurrency != null && !isEuroFormatCurrency(functionalCurrency)) {
     return (
       file: '',
@@ -143,8 +139,13 @@ PostedFecResult buildFecFromPostings(
     accountNames: accountNames,
     parties: parties,
     partyRule: partyRule,
+    books: journals ?? FecJournals.installed(),
   );
-  final rows = file.rows(postings, functionalCurrency, rates);
+  final rows = file.rows(
+    postings,
+    functionalCurrency,
+    currency?.rates ?? const {},
+  );
   if (file.blockers.isNotEmpty) {
     return (file: '', blockers: file.blockers.toList());
   }
@@ -156,9 +157,13 @@ class _PostedFec {
     required this.accountNames,
     required this.parties,
     required this.partyRule,
+    required this.books,
   });
 
   final Map<String, String> accountNames;
+
+  /// #3470 — the business's journals.
+  final FecJournals books;
   final Map<String, PostingParty> parties;
   final CustomerIdRule partyRule;
   final blockers = <FecBlocker>{};
@@ -232,7 +237,7 @@ class _PostedFec {
         continue;
       }
       final ref = _reference(p);
-      final base = '${p.journal.code}-$ref';
+      final base = '${journalFor(books, p.journal).code}-$ref';
       final n = seen[base] = (seen[base] ?? 0) + 1;
       final number = n == 1 ? base : '$base-$n';
       for (final (line, original) in lines) {
@@ -253,8 +258,8 @@ class _PostedFec {
     final third = _lettered.contains(l.role);
     final letter = third && open['${l.accountCode}|$ref'] == 0;
     return [
-      p.journal.code,
-      _journalLabels[p.journal]!,
+      journalFor(books, p.journal).code,
+      journalFor(books, p.journal).label,
       number,
       ymd(p.date),
       l.accountCode,

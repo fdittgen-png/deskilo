@@ -64,6 +64,14 @@ abstract class WorkspaceIdentityRepository {
   /// to the workspace default.
   Future<void> setSubscriptionVatRate(String workspaceId, String vatRateId);
 
+  /// #3470 — owner-only: the business's accounting journals, all four
+  /// (`{role: {code, label}}`), or `{}` for the defaults. A value that is not
+  /// whole is refused whole, never cleaned: null once kept, else why not.
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
+    String workspaceId,
+    Map<String, Object?> journals,
+  );
+
   /// The document library (#500, 0099) — RLS already trims rows to
   /// what the caller's role may see.
   Future<List<WorkspaceDocument>> fetchDocuments(String workspaceId);
@@ -127,3 +135,12 @@ abstract class WorkspaceIdentityRepository {
   /// 20..100 server-side. Lower = more translucent desks.
   Future<void> setDeskOpacity(String workspaceId, int opacity);
 }
+
+/// #3470 — why the server did not keep the journals: not whole (`problem`:
+/// 'shape', 'code', 'label', 'character' or 'duplicate', and the journal
+/// `role` it is about), or not the caller's to set (`notAllowed`).
+typedef AccountingJournalsRefusal = ({
+  String problem,
+  String role,
+  bool notAllowed,
+});

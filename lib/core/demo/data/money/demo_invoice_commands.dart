@@ -112,7 +112,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
       replacesInvoiceId: replacesId,
       replacesNumber: replacesNumber,
       detailed: detailed,
-      kind: kind,
+      kind: kind, keepsOriginal: true, // #3853 kept from issue, as on the server
       detailLedger: detailed
           ? [
               for (final entry in _m.ledger)

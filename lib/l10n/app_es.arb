@@ -185,6 +185,23 @@
   "accountingExportsFingerprint": "Huella",
   "accountingExportsRows": "Filas",
   "accountingExportsTitle": "Exportaciones",
+  "accountingJournalBank": "Banco",
+  "accountingJournalCharacter": "Sin saltos de línea, tabuladores ni | aquí: las exportaciones separan sus campos con ellos.",
+  "accountingJournalCode": "Código",
+  "accountingJournalCodeRequired": "Introduzca un código.",
+  "accountingJournalDuplicate": "Otro diario ya tiene este código.",
+  "accountingJournalLabel": "Descripción",
+  "accountingJournalLabelRequired": "Introduzca una descripción.",
+  "accountingJournalMisc": "Operaciones diversas",
+  "accountingJournalPurchases": "Compras",
+  "accountingJournalSales": "Ventas",
+  "accountingJournalsDeliveries": "Los envíos a un sistema contable conectado siguen usando los códigos estándar.",
+  "accountingJournalsIntro": "El código y la descripción de cada diario, tal como los conoce el programa de su gestor. Cada exportación contable de la aplicación los usa.",
+  "accountingJournalsNotAllowed": "Solo un propietario define los diarios contables.",
+  "accountingJournalsRefused": "Los diarios no se guardaron: revise el diario {journal}.",
+  "accountingJournalsRenumber": "Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.",
+  "accountingJournalsStandard": "Usar los códigos estándar",
+  "accountingJournalsTitle": "Diarios contables",
   "accountingSignInBack": "Volver a Contabilidad",
   "accountingSignInCompleting": "Completando el inicio de sesión…",
   "accountingSignInConnected": "La conexión está hecha. Su estado se muestra en Contabilidad.",
@@ -8849,6 +8866,7 @@
   "@invoiceBuyerReferenceHint": {
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
+  "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",
   "invoiceCorrectionReason": "Motivo de la rectificación",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -9490,6 +9508,12 @@
       }
     }
   },
+  "invoiceOriginalKept": "Original conservado el {when} por {who} · SHA-256 {digest}",
+  "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
+  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalsNotKeptNow": "{count, plural, one{El original de 1 factura aún no se ha conservado. La factura está emitida; su original se conservará más tarde.} other{Los originales de {count} facturas aún no se han conservado. Las facturas están emitidas; sus originales se conservarán más tarde.}}",
   "invoicePageApprovalRecorded": "Su aprobación está registrada; espera a los demás.",
   "@invoicePageApprovalRecorded": {
     "description": "#3587 message after Confirm when the declared payment still waits for other approvers"
@@ -9860,6 +9884,7 @@
   "@invoicePurchaseOrderHint": {
     "description": "#922 chorus pro: invoicePurchaseOrderHint"
   },
+  "invoiceQuickViewIsPreview": "Vista previa: el original es el PDF descargado.",
   "invoiceRefundButton": "Registrar el reembolso",
   "@invoiceRefundButton": {
     "description": "Negative invoices are credit notes the workspace refunds (#508)"

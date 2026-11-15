@@ -7,6 +7,8 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'accounting_format.dart';
+import 'accounting_journals.dart';
+import 'fec_accounts.dart' show FecJournals;
 import 'fec_postings.dart';
 
 /// One account's totals over the period.
@@ -83,7 +85,8 @@ class BookLedger {
     this.accountNames = const {},
     this.parties = const {},
     this.functionalCurrency,
-  }) {
+    FecJournals? journals,
+  }) : journals = journals ?? FecJournals.installed() {
     final seen = <String, int>{};
     for (final p in postings) {
       final lines = inBookCurrency(p, functionalCurrency, null);
@@ -91,7 +94,7 @@ class BookLedger {
         unconverted.add(pieceOf(p));
         continue;
       }
-      final base = '${p.journal.code}-${pieceOf(p)}';
+      final base = '${codeOf(p.journal)}-${pieceOf(p)}';
       final n = seen[base] = (seen[base] ?? 0) + 1;
       final entry = n == 1 ? base : '$base-$n';
       for (final (line, _) in lines) {
@@ -104,6 +107,13 @@ class BookLedger {
   final Map<String, String> accountNames;
   final Map<String, PostingParty> parties;
   final String? functionalCurrency;
+
+  /// #3470 — the business's journals: the code each entry and heading
+  /// carries.
+  final FecJournals journals;
+
+  /// The business's code of the posting engine's [journal].
+  String codeOf(PostingJournal journal) => journalFor(journals, journal).code;
 
   /// The documents left out: in another currency than the book's, with
   /// no recorded rate. A report with any is not printed.

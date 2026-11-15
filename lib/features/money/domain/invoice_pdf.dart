@@ -13,6 +13,7 @@ import 'address_window.dart';
 import 'invoice_pdf_sheet.dart';
 import 'invoice_pdf_style.dart';
 import 'invoice_report.dart';
+import 'pinned_pdf.dart';
 import 'report_block_widgets.dart';
 
 
@@ -396,7 +397,9 @@ Future<Uint8List> buildInvoicePdf(InvoicePdfRequest request) async {
       watermarkOverride: annex.watermark,
     ).addTo(doc);
   }
-  return doc.save();
+  // #3853 — the bytes depend only on the invoice: its issue instant, never
+  // the moment it is rendered.
+  return pinnedPdf(await doc.save(), request.invoice.issuedAt);
 }
 
 /// The document with its metadata; a Factur-X also carries the colour
@@ -420,6 +423,7 @@ pw.Document _pdfDocument(InvoicePdfRequest request) {
             creator: _producer,
             producer: _producer,
             subject: periodLabel,
+            creationDate: invoice.issuedAt.toUtc(),
             invoiceRdf: PdfaFacturxRdf().create(
               conformanceLevel: 'EN 16931',
             ),

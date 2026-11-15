@@ -23,6 +23,7 @@
 // and performing it.
 import '../../workspace/domain/workspace_repository.dart';
 import '../domain/address_window.dart';
+import '../domain/fec_accounts.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_template_repository.dart';
 
@@ -85,4 +86,15 @@ class LegalIdentity {
       invoiceLegal: request.invoiceLegal,
     );
   }
+
+  /// #3470 — keeps the business's accounting journals for [workspaceId]; the
+  /// country add-on's own are kept as none, so the business keeps following
+  /// the defaults. Null once kept, else why the server did not keep them.
+  Future<({String problem, String role, bool notAllowed})?> saveJournals(
+    String workspaceId,
+    FecJournals journals,
+  ) => _workspace.setAccountingJournals(
+    workspaceId,
+    journals == FecJournals.installed() ? const {} : journals.toJson(),
+  );
 }
