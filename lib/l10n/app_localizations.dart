@@ -9068,7 +9068,7 @@ abstract class AppLocalizations {
   /// #4021 — the name of the calendar's Alerts control with the number of decisions waiting.
   ///
   /// In en, this message translates to:
-  /// **'Alerts, {count} new'**
+  /// **'{count, plural, one{Alerts, {count} new} other{Alerts, {count} new}}'**
   String calendarAlertsNew(int count);
 
   /// First chip of the timeline level selector: stacks every level's rows under level-name headers on one shared axis (#221)

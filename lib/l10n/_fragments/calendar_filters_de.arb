@@ -1,5 +1,5 @@
 {
   "calendarFilters": "Filter",
   "calendarFiltersClear": "Zurücksetzen",
-  "calendarAlertsNew": "Hinweise, {count} neu"
+  "calendarAlertsNew": "{count, plural, one{Hinweise, {count} neu} other{Hinweise, {count} neu}}"
 }

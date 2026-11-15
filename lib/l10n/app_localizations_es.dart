@@ -5812,7 +5812,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String calendarAlertsNew(int count) {
-    return 'Alertas, $count nuevas';
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Alertas, $count nuevas',
+      one: 'Alertas, $count nueva',
+    );
+    return '$_temp0';
   }
 
   @override

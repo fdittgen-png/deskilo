@@ -3450,7 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Avvisi: non è stato possibile leggere quanti sono in attesa",
-  "calendarAlertsNew": "Avvisi, {count} nuovi",
+  "calendarAlertsNew": "{count, plural, one{Avvisi, {count} nuovo} other{Avvisi, {count} nuovi}}",
   "calendarAllLevels": "Tutti i piani",
   "calendarCancelFollowing": "Annulla questa e le successive",
   "calendarCancelOccurrence": "Annulla questa occorrenza",

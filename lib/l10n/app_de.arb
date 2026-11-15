@@ -3450,7 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Hinweise: Die Zahl der offenen konnte nicht gelesen werden",
-  "calendarAlertsNew": "Hinweise, {count} neu",
+  "calendarAlertsNew": "{count, plural, one{Hinweise, {count} neu} other{Hinweise, {count} neu}}",
   "calendarAllLevels": "Alle Etagen",
   "calendarCancelFollowing": "Diesen und folgende stornieren",
   "calendarCancelOccurrence": "Diesen Termin stornieren",

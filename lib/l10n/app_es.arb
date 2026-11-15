@@ -3450,7 +3450,7 @@
     }
   },
   "calendarAlertsCountUnknown": "Alertas: no se pudo leer cuántas esperan",
-  "calendarAlertsNew": "Alertas, {count} nuevas",
+  "calendarAlertsNew": "{count, plural, one{Alertas, {count} nueva} other{Alertas, {count} nuevas}}",
   "calendarAllLevels": "Todas las plantas",
   "calendarCancelFollowing": "Cancelar esta y las siguientes",
   "calendarCancelOccurrence": "Cancelar esta ocurrencia",
