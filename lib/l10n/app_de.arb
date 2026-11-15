@@ -9314,8 +9314,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Rechnung ausstellen · {amount}",
   "invoiceIssueCheckAgain": "Erneut prüfen",
   "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
+  "invoiceIssueKept": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie teilen oder laden sie von der Rechnung aus herunter.",
+  "invoiceIssueKeptEmail": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie senden sie per E-Mail, teilen oder laden sie von der Rechnung aus herunter.",
   "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoiceIssueOne": "Berechnen",
   "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
