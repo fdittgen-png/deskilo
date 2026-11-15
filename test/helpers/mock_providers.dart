@@ -246,6 +246,8 @@ List<Override> formatPinOverrides({String locale = 'en_GB'}) {
 }
 
 List<Override> standardTestOverrides({
+  /// #4007 — the person's organisations; none unless a test gives some.
+  FakeOrganisationRepository? organisations,
   // #3853 — a test of the stored originals brings its own store.
   InvoiceOriginalRepository? invoiceOriginals,
   // #3587 — a test of the payments read brings its own; else the Demo's
@@ -452,7 +454,7 @@ List<Override> standardTestOverrides({
           .overrideWith((ref) => linkedMe ?? FakeLinkedMeRepository()),
       // #4006 — the person's organisations, none unless a test gives some.
       organisationRepositoryProvider
-          .overrideWith((ref) => FakeOrganisationRepository()),
+          .overrideWith((ref) => organisations ?? FakeOrganisationRepository()),
       guestParticipationRepositoryProvider
           .overrideWithValue(guestVisits ?? FakeGuestParticipationRepository()),
       accountContactRepositoryProvider.overrideWith((ref,source)=>contacts??FakeAccountContactRepository()),

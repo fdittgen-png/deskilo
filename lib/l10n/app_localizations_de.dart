@@ -22798,6 +22798,67 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieses Unternehmen gehört zu keiner Organisation. Ein Unternehmen in einem anderen Land oder einer anderen Währung ist ein eigenes Haus in der Organisation seines Hauptsitzes.';
 
   @override
+  String organisationOverviewAsOf(String amount, String time) {
+    return '$amount, Stand $time';
+  }
+
+  @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get organisationOverviewCountry => 'Land';
+
+  @override
+  String get organisationOverviewCurrency => 'Währung';
+
+  @override
+  String organisationOverviewHeadName(String name) {
+    return '$name (Hauptsitz)';
+  }
+
+  @override
+  String get organisationOverviewHouse => 'Haus';
+
+  @override
+  String organisationOverviewIncomplete(String houses) {
+    return 'Unvollständig: $houses nicht mitgezählt';
+  }
+
+  @override
+  String get organisationOverviewNone =>
+      'Kein Haus dieser Organisation anzuzeigen.';
+
+  @override
+  String get organisationOverviewNotEnabled =>
+      'Die Analyse ist in diesem Haus ausgeschaltet';
+
+  @override
+  String get organisationOverviewNotPermitted =>
+      'Sie dürfen die Finanzen dieses Hauses nicht lesen';
+
+  @override
+  String get organisationOverviewOneHouse =>
+      'Sie sind Mitglied eines einzigen Hauses dieser Organisation: Es gibt kein anderes, das daneben stünde.';
+
+  @override
+  String get organisationOverviewTitle => 'Übersicht';
+
+  @override
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  ) {
+    return '$currency: fakturiert $invoiced · eingenommen $collected · überfällig $overdue';
+  }
+
+  @override
+  String get organisationOverviewTotals => 'Summen je Währung';
+
+  @override
   String get organisationRefusedAlreadyInOne =>
       'Dieses Unternehmen gehört bereits zu einer Organisation.';
 

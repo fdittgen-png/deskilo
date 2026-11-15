@@ -1,0 +1,16 @@
+{
+  "organisationOverviewTitle": "Panoramica",
+  "organisationOverviewHouse": "Casa",
+  "organisationOverviewCountry": "Paese",
+  "organisationOverviewCurrency": "Valuta",
+  "organisationOverviewHeadName": "{name} (sede)",
+  "organisationOverviewAsOf": "{amount}, alle {time}",
+  "organisationOverviewNotPermitted": "Non può leggere le finanze di questa casa",
+  "organisationOverviewNotEnabled": "L’analisi è disattivata in questa casa",
+  "organisationOverviewTotals": "Totali per valuta",
+  "organisationOverviewTotalLine": "{currency}: fatturato {invoiced} · incassato {collected} · scaduto {overdue}",
+  "organisationOverviewIncomplete": "Incompleto: {houses} non conteggiate",
+  "organisationOverviewOneHouse": "Lei è membro di una sola casa di questa organizzazione: non ce n’è un’altra da affiancare.",
+  "organisationOverviewNone": "Nessuna casa di questa organizzazione da mostrare.",
+  "organisationOverviewCardLine": "{label}: {amount}"
+}

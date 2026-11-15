@@ -1,0 +1,16 @@
+{
+  "organisationOverviewTitle": "Übersicht",
+  "organisationOverviewHouse": "Haus",
+  "organisationOverviewCountry": "Land",
+  "organisationOverviewCurrency": "Währung",
+  "organisationOverviewHeadName": "{name} (Hauptsitz)",
+  "organisationOverviewAsOf": "{amount}, Stand {time}",
+  "organisationOverviewNotPermitted": "Sie dürfen die Finanzen dieses Hauses nicht lesen",
+  "organisationOverviewNotEnabled": "Die Analyse ist in diesem Haus ausgeschaltet",
+  "organisationOverviewTotals": "Summen je Währung",
+  "organisationOverviewTotalLine": "{currency}: fakturiert {invoiced} · eingenommen {collected} · überfällig {overdue}",
+  "organisationOverviewIncomplete": "Unvollständig: {houses} nicht mitgezählt",
+  "organisationOverviewOneHouse": "Sie sind Mitglied eines einzigen Hauses dieser Organisation: Es gibt kein anderes, das daneben stünde.",
+  "organisationOverviewNone": "Kein Haus dieser Organisation anzuzeigen.",
+  "organisationOverviewCardLine": "{label}: {amount}"
+}
