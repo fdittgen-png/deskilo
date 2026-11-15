@@ -9314,8 +9314,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Emetti la fattura · {amount}",
   "invoiceIssueCheckAgain": "Controlla di nuovo",
   "invoiceIssueDeclined": "La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.",
+  "invoiceIssueKept": "La fattura emessa è conservata come originale che non può più essere modificato; la condivide o la scarica dalla fattura.",
+  "invoiceIssueKeptEmail": "La fattura emessa è conservata come originale che non può più essere modificato; la invia per e-mail, la condivide o la scarica dalla fattura.",
   "invoiceIssueNotFoundYet": "Non ancora trovata. Non è stato reinviato nulla.",
   "invoiceIssueOne": "Fattura",
   "invoiceIssueUnknownBody": "La fattura è stata inviata ma la risposta non è arrivata, quindi potrebbe già esistere. Non viene reinviato nulla. Controlla di nuovo per cercarla.",
@@ -15722,6 +15725,7 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Nel frattempo è cambiato. Lo riapra per vedere a che punto è.",
+  "refusalMemberReturnsAsNew": "Un membro che è uscito ritorna come nuovo membro: lo renda attivo per riaccoglierlo.",
   "refusalMoneyLocaleLocked": "La valuta e il paese sono fissati non appena lo spazio ha emesso un documento o registrato denaro. Non è stato salvato nulla.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"

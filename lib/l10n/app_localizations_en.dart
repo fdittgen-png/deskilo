@@ -15664,11 +15664,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Issue invoice · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Check again';
 
   @override
   String get invoiceIssueDeclined =>
       'The validation was declined or expired. No invoice was issued.';
+
+  @override
+  String get invoiceIssueKept =>
+      'The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.';
 
   @override
   String get invoiceIssueNotFoundYet =>
@@ -26784,6 +26797,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'This changed in the meantime. Reopen it to see where it stands.';
+
+  @override
+  String get refusalMemberReturnsAsNew =>
+      'A member who left comes back as a new member: set them active to welcome them back.';
 
   @override
   String get refusalMoneyLocaleLocked =>

@@ -15818,11 +15818,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Rechnung ausstellen · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Erneut prüfen';
 
   @override
   String get invoiceIssueDeclined =>
       'Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.';
+
+  @override
+  String get invoiceIssueKept =>
+      'Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie teilen oder laden sie von der Rechnung aus herunter.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie senden sie per E-Mail, teilen oder laden sie von der Rechnung aus herunter.';
 
   @override
   String get invoiceIssueNotFoundYet =>
@@ -27053,6 +27066,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
+
+  @override
+  String get refusalMemberReturnsAsNew =>
+      'Ein ausgetretenes Mitglied kommt als neues Mitglied zurück: Setzen Sie es auf aktiv, um es wieder aufzunehmen.';
 
   @override
   String get refusalMoneyLocaleLocked =>

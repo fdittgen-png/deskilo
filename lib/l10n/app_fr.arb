@@ -9314,8 +9314,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Émettre la facture · {amount}",
   "invoiceIssueCheckAgain": "Vérifier à nouveau",
   "invoiceIssueDeclined": "La validation a été refusée ou a expiré. Aucune facture n'a été émise.",
+  "invoiceIssueKept": "La facture émise est conservée comme un original qui ne peut plus être modifié ; vous la partagez ou la téléchargez depuis la facture.",
+  "invoiceIssueKeptEmail": "La facture émise est conservée comme un original qui ne peut plus être modifié ; vous l’envoyez par e-mail, la partagez ou la téléchargez depuis la facture.",
   "invoiceIssueNotFoundYet": "Introuvable pour l'instant. Rien n'a été renvoyé.",
   "invoiceIssueOne": "Facturer",
   "invoiceIssueUnknownBody": "La facture a été envoyée mais la réponse n'est pas arrivée : elle existe peut-être déjà. Rien n'est renvoyé. Vérifiez à nouveau pour la chercher.",
@@ -15722,6 +15725,7 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Cet élément a changé entre-temps. Rouvrez-le pour voir où il en est.",
+  "refusalMemberReturnsAsNew": "Un membre parti revient comme nouveau membre : rendez-le actif pour l’accueillir de nouveau.",
   "refusalMoneyLocaleLocked": "La devise et le pays sont figés dès que l'espace a émis un document ou enregistré de l'argent. Rien n'a été enregistré.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"

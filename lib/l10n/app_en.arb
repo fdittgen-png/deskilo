@@ -20510,6 +20510,15 @@
       }
     }
   },
+  "invoiceIssueAmount": "Issue invoice · {amount}",
+  "@invoiceIssueAmount": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceIssueCheckAgain": "Check again",
   "@invoiceIssueCheckAgain": {
     "description": "Looks for the invoice in the archive; never sends it again"
@@ -20517,6 +20526,14 @@
   "invoiceIssueDeclined": "The validation was declined or expired. No invoice was issued.",
   "@invoiceIssueDeclined": {
     "description": "Result of a look: the validators declined the held invoice request"
+  },
+  "invoiceIssueKept": "The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.",
+  "@invoiceIssueKept": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept."
+  },
+  "invoiceIssueKeptEmail": "The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.",
+  "@invoiceIssueKeptEmail": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail."
   },
   "invoiceIssueNotFoundYet": "Not found yet. Nothing was sent again.",
   "@invoiceIssueNotFoundYet": {
@@ -35170,6 +35187,10 @@
   "refusalChangedMeanwhile": "This changed in the meantime. Reopen it to see where it stands.",
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
+  },
+  "refusalMemberReturnsAsNew": "A member who left comes back as a new member: set them active to welcome them back.",
+  "@refusalMemberReturnsAsNew": {
+    "description": "#4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member"
   },
   "refusalMoneyLocaleLocked": "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.",
   "@refusalMoneyLocaleLocked": {

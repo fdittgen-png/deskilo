@@ -1,0 +1,19 @@
+{
+  "invoiceIssueAmount": "Issue invoice · {amount}",
+  "@invoiceIssueAmount": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "invoiceIssueKept": "The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.",
+  "@invoiceIssueKept": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept."
+  },
+  "invoiceIssueKeptEmail": "The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.",
+  "@invoiceIssueKeptEmail": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail."
+  }
+}

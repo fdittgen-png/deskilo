@@ -9314,8 +9314,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Rechnung ausstellen · {amount}",
   "invoiceIssueCheckAgain": "Erneut prüfen",
   "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
+  "invoiceIssueKept": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie teilen oder laden sie von der Rechnung aus herunter.",
+  "invoiceIssueKeptEmail": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie senden sie per E-Mail, teilen oder laden sie von der Rechnung aus herunter.",
   "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoiceIssueOne": "Berechnen",
   "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
@@ -15722,6 +15725,7 @@
     "description": "#2380 (0660) Refusal DKB07: the first payment of an invoice is undone after its later payments."
   },
   "refusalChangedMeanwhile": "Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.",
+  "refusalMemberReturnsAsNew": "Ein ausgetretenes Mitglied kommt als neues Mitglied zurück: Setzen Sie es auf aktiv, um es wieder aufzunehmen.",
   "refusalMoneyLocaleLocked": "Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"

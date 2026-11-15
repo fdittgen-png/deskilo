@@ -224,7 +224,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/formats', RouteClass.workspace, place: 'drawer-settings', measure: PageMeasure.form),
   RouteRule('/events', RouteClass.workspace, place: 'drawer-events', measure: PageMeasure.work),
   RouteRule('/plan', RouteClass.workspace, place: 'drawer-reserve', measure: PageMeasure.work),
-  RouteRule('/conversation/:conversationId', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}', measure: PageMeasure.work),
+  RouteRule('/conversation/:conversationId', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.messages}', measure: PageMeasure.reading),
   RouteRule('/res/:id', RouteClass.workspace, place: 'drawer-tab-${ShellBranch.calendar}', measure: PageMeasure.reading),
   RouteRule('/space/:kind/:id', RouteClass.workspace, place: 'drawer-reserve', measure: PageMeasure.reading),
   RouteRule('/library', RouteClass.workspace, place: 'drawer-setup-guide', measure: PageMeasure.work),

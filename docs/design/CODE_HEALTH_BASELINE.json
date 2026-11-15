@@ -79,7 +79,7 @@
 
       "lib/features/workspace/presentation/widgets/conversation_thread.dart": 623,
 
-      "lib/features/workspace/presentation/widgets/member_note_composer.dart": 598,
+      "lib/features/workspace/presentation/widgets/member_note_composer.dart": 588,
 
       "lib/features/workspace/presentation/widgets/ref_picker_sheet.dart": 501,
 
@@ -883,7 +883,7 @@
     {"id":"lib/features/workspace/presentation/widgets/feature_switch_flow.dart#switchWorkspaceFeature(BuildContext context,WidgetRef ref,{required Workspace workspace,required Set<WorkspaceFeature> enabled,required WorkspaceFeature feature,required bool value,required Map<WorkspaceFeature, FeatureAssessment> assessments})","cog":22,"cyc":19,"len":131,"params":7},
     {"id":"lib/features/workspace/presentation/widgets/group_info_sheet.dart#_GroupInfoSheet.build(BuildContext context,WidgetRef ref)","cog":34,"cyc":33,"len":185,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/invite_sheet.dart#buildInvitationMessage({required Workspace workspace,required String code,required InviteRole role,required String languageCode,String firstName,String lastName,String phone,bool monospaceCode,BackendEndpoint? target})","cog":6,"cyc":7,"len":53,"params":9},
-    {"id":"lib/features/workspace/presentation/widgets/member_note_composer.dart#_MemberNoteComposerState.build(BuildContext context)","cog":28,"cyc":18,"len":194,"params":1},
+    {"id":"lib/features/workspace/presentation/widgets/member_note_composer.dart#_MemberNoteComposerState.build(BuildContext context)","cog":23,"cyc":15,"len":162,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/member_note_sheet.dart#showMemberNoteSheet(BuildContext context,WidgetRef ref,{required MemberNote note,required String title,String? replyToMemberId,String replyToName,Future<void> Function()? onDelete})","cog":7,"cyc":5,"len":81,"params":7},
     {"id":"lib/features/workspace/presentation/widgets/note_record_choices.dart#noteRecordChoices(WidgetRef ref,BuildContext context,NoteRecordKind kind)","cog":42,"cyc":35,"len":175,"params":3},
     {"id":"lib/features/workspace/presentation/widgets/process_overview.dart#_ProcessOverviewState.build(BuildContext context)","cog":35,"cyc":15,"len":125,"params":1},
