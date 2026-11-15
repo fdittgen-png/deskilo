@@ -5808,6 +5808,10 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get calendarAlertsCountUnknown =>
+      'Avvisi: non è stato possibile leggere quanti sono in attesa';
+
+  @override
   String get calendarAllLevels => 'Tutti i piani';
 
   @override

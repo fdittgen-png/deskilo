@@ -36,15 +36,37 @@ final _shapes = [
     ),
   ),
   LiteralKind('asData?.value ??', RegExp(r'\.asData\?\.value\s*\?\?')),
+  // #4017 — a count read from a provider and shown as 0 when the read
+  // failed: "nothing to decide" when the server did not answer.
+  LiteralKind('read value ?? 0', RegExp(r'\)\.value\s*\?\?\s*0\b')),
 ];
 
 /// The ceiling per area, as measured on 11 Nov 2026 (it only falls).
+/// #4017 — every area has one, measured on 15 Nov 2026 with `?? 0` counted.
 const _ceilings = <String, int>{
+  'lib/app': 6,
+  'lib/core': 3,
+  'lib/features/auth': 2,
+  'lib/features/calendar': 10,
+  'lib/features/directory': 19,
+  'lib/features/editor': 0,
+  'lib/features/events': 19,
+  'lib/features/help': 1,
+  'lib/features/kiosk': 5,
+  'lib/features/mcp': 3,
   'lib/features/money': 0,
   // #3742 widened the shapes (a default object in place of an unread
   // value); #3749 removed the five places they found in Me.
-  'lib/features/me': 14,
+  // #4017 counts `?? 0` on a read too: the unread notes' count is the 15th.
+  'lib/features/me': 15,
+  'lib/features/members': 19,
+  'lib/features/plan': 2,
+  'lib/features/profile': 7,
   'lib/features/reservations': 28,
+  'lib/features/search': 0,
+  'lib/features/task_recorder': 4,
+  'lib/features/visits': 1,
+  'lib/features/workspace': 53,
 };
 
 int _count(String area) {
@@ -64,6 +86,17 @@ int _count(String area) {
 }
 
 void main() {
+  test('every area of lib/ has a ceiling (#4017)', () {
+    final areas = {
+      'lib/app',
+      'lib/core',
+      for (final f in filesUnder(['lib/features']))
+        f.path.split(RegExp(r'[/\\]')).take(3).join('/'),
+    };
+    expect(areas.difference(_ceilings.keys.toSet()), isEmpty,
+        reason: 'a new area gets its ceiling here, at its measured count');
+  });
+
   for (final entry in _ceilings.entries) {
     test('${entry.key}: invented empty answers only fall (#3680)', () {
       final actual = _count(entry.key);
@@ -90,6 +123,7 @@ void main() {
       'final r = ref.watch(p).value ?? DunningRules.defaults;',
       'final r = ref.watch(p).value ?? const DunningRules();',
       'final r = ref.watch(p).asData?.value ?? x;',
+      'int count(WidgetRef ref) => ref.watch(p).value ?? 0;',
     ];
     for (final line in planted) {
       expect(_shapes.any((k) => k.pattern.hasMatch(line)), isTrue, reason: line);

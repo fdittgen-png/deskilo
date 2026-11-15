@@ -31,8 +31,9 @@ class CalendarViewBar extends StatelessWidget {
   final bool alertsSelected;
   final VoidCallback? onAlerts;
 
-  /// What waits for a decision — shown on the Alerts segment.
-  final int alertsCount;
+  /// What waits for a decision — shown on the Alerts segment. #4017 — null
+  /// when it could not be read: a mark without a number, named unknown.
+  final int? alertsCount;
 
   static const _alerts = '__alerts__';
 
@@ -103,12 +104,20 @@ class CalendarViewBar extends StatelessWidget {
                     if (alertsAvailable)
                       ButtonSegment(
                         value: _alerts,
-                        icon: alertsCount > 0
-                            ? Badge.count(
-                                count: alertsCount,
+                        icon: switch (alertsCount) {
+                          null => Semantics(
+                              key: const ValueKey('calendar-alerts-unknown'),
+                              label: l10n.calendarAlertsCountUnknown,
+                              child: Badge(
                                 child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
-                              )
-                            : iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                              ),
+                            ),
+                          final n when n > 0 => Badge.count(
+                              count: n,
+                              child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                            ),
+                          _ => iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                        },
                         label: labelFor(_alerts, l10n.calendarViewAlerts),
                         tooltip: l10n.calendarViewAlerts,
                       ),
