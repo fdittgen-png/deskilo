@@ -43,17 +43,16 @@ class _HomeAction extends StatelessWidget {
   final String route;
 
   @override
-  Widget build(BuildContext context) => Expanded(
-    child: OutlinedButton.icon(
-      key: ValueKey(actionKey),
-      style: OutlinedButton.styleFrom(
-        minimumSize: const Size.fromHeight(48),
-        shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
-      ),
-      icon: Icon(icon),
-      label: Text(label, overflow: TextOverflow.ellipsis),
-      onPressed: () => context.push(route),
+  Widget build(BuildContext context) => OutlinedButton.icon(
+    key: ValueKey(actionKey),
+    style: OutlinedButton.styleFrom(
+      minimumSize: const Size(0, 48),
+      shape: const RoundedRectangleBorder(borderRadius: AppRadius.lgAll),
     ),
+    icon: Icon(icon),
+    // #4078 — the label is whole: it wraps, never an ellipsis.
+    label: Text(label),
+    onPressed: () => context.push(route),
   );
 }
 
@@ -148,7 +147,11 @@ class MeHomeTab extends ConsumerWidget {
               // #1835 — my guest visits: beside my spaces, never among them.
               const MyVisitsSection(),
               const SizedBox(height: AppSpacing.md),
-              Row(
+              // #4078 — side by side where both fit, else one under the
+              // other: each label is whole.
+              Wrap(
+                spacing: AppSpacing.sm,
+                runSpacing: AppSpacing.sm,
                 children: [
                   _HomeAction(
                     actionKey: 'me-home-join',
@@ -156,7 +159,6 @@ class MeHomeTab extends ConsumerWidget {
                     label: l10n.meJoinSpace,
                     route: '/onboarding?join=1',
                   ),
-                  const SizedBox(width: AppSpacing.sm),
                   _HomeAction(
                     actionKey: 'me-home-create',
                     icon: Icons.add_business_outlined,

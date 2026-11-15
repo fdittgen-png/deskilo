@@ -327,6 +327,8 @@ class PurchaseOrderForm {
           ),
       ],
     ),
+    // #4078 — the label stands above its field, never against it.
+    const FormGap.small(),
     DropdownButtonFormField<String?>(
       key: ValueKey('purchase-order-item-$i'),
       initialValue: itemIds[i],
