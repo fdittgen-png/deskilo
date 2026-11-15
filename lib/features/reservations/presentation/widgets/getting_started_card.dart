@@ -12,6 +12,7 @@ import '../../../../core/help/help_hint_providers.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/presentation/widgets/setup_resume_banner.dart';
 import '../../application/getting_started_hint.dart';
 import '../getting_started_copy.dart';
@@ -226,24 +227,7 @@ class GettingStartedCard extends ConsumerWidget {
                 crossAxisAlignment: WrapCrossAlignment.center,
                 spacing: AppSpacing.xs,
                 children: [
-                  TextButton(
-                    key: const ValueKey('getting-started-dismiss'),
-                    style: TextButton.styleFrom(
-                      // #4022 — on the card's own colour, not the primary:
-                      // in the dark theme the primary reads at about 2:1.
-                      foregroundColor: scheme.onSecondaryContainer,
-                      minimumSize: const Size(
-                        kMinInteractiveDimension,
-                        kMinInteractiveDimension,
-                      ),
-                    ),
-                    onPressed: seenKey == null
-                        ? null
-                        : () => ref
-                              .read(dismissedHelpHintsProvider.notifier)
-                              .dismiss(seenKey),
-                    child: Text(l10n.gettingStartedNotNow),
-                  ),
+                  _dismissButton(ref, seenKey, scheme, l10n),
                   FilledButton.tonal(
                     key: const ValueKey('getting-started-primary'),
                     style: FilledButton.styleFrom(
@@ -264,6 +248,28 @@ class GettingStartedCard extends ConsumerWidget {
     );
   }
 
+
+  /// "Not now": on the card's own colour, not the primary, which reads at
+  /// about 2:1 on it in the dark theme (#4022).
+  Widget _dismissButton(
+    WidgetRef ref,
+    String? seenKey,
+    ColorScheme scheme,
+    AppLocalizations l10n,
+  ) => TextButton(
+    key: const ValueKey('getting-started-dismiss'),
+    style: TextButton.styleFrom(
+      foregroundColor: scheme.onSecondaryContainer,
+      minimumSize: const Size(
+        kMinInteractiveDimension,
+        kMinInteractiveDimension,
+      ),
+    ),
+    onPressed: seenKey == null
+        ? null
+        : () => ref.read(dismissedHelpHintsProvider.notifier).dismiss(seenKey),
+    child: Text(l10n.gettingStartedNotNow),
+  );
 }
 
 /// Which environment the space is, under its title; #3282 — the Demo is
