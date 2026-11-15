@@ -110,6 +110,7 @@ class ShellScreen extends ConsumerWidget {
       appBar: ShellPhoneBar(
         collapsible: !webShell && navs.isNotEmpty,
         tabTitle: tabTitle,
+        path: path,
         currentIndex: navigationShell.currentIndex,
       ),
       // #611 — the tab switch fades the incoming branch in. The

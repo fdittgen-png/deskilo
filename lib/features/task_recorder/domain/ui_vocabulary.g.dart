@@ -1060,6 +1060,7 @@ const Set<String> uiKeys = {
   'desk-bookings',
   'desk-bookings-table',
   'desk-breadcrumb',
+  'desk-crumb-role',
   'desk-day-scroll',
   'desk-export',
   'desk-mode',
