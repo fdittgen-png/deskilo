@@ -119,6 +119,7 @@ void main() {
             data: data,
             images: const {},
           ),
+          kind: 'bank_reconciliation',
           pageLabel: 'Page',
           mandatoryNotices: notices,
         ),

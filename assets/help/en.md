@@ -3448,6 +3448,7 @@ You want your invoices and letters printed on the paper your country uses.
 - In Switzerland only A4 is offered: an invoice ends on a payment part printed on A4.
 - On US Letter the address is printed where the design puts it; no window envelope is promised for US Letter.
 - An invoice keeps the paper it was issued on. Changing the paper changes the invoices issued after it.
+- A letter, a reminder, a statement or a report is printed on the paper chosen when you print it.
 - If you move the space to a country that does not use the paper you chose, the space follows that country's usual paper.
 
 **See also:** [Country](help:user.workspace.settings.country)

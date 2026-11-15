@@ -60,11 +60,14 @@ import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import '../../helpers/demo_assistant_journeys.dart';
+import '../../helpers/demo_documents_journeys.dart';
 import '../../helpers/demo_outbox_journeys.dart';
 import '../../helpers/demo_pass_einvoice_journeys.dart';
 import '../../helpers/demo_payment_journeys.dart';
+import '../../helpers/demo_plan_booking_journeys.dart';
 import '../../helpers/demo_vies_export_journeys.dart';
 import '../../helpers/demo_whatsapp_journeys.dart';
 
@@ -159,7 +162,7 @@ const Map<WorkspaceFeature, String> _elsewhere = {};
 
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch.
-const int _switchOnlyBudget = 34;
+const int _switchOnlyBudget = 15;
 
 /// The features whose scenario is outside the reference business and not
 /// named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -294,7 +297,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
         w.f.workspaces.badges.any((b) => b.kind == BadgeKind.qr) &&
         w.f.workspaces.badges.any((b) => b.revokedAt != null),
   ),
-  WorkspaceFeature.kioskMemberPhotos: _toggle('the kiosk shows faces'),
+  WorkspaceFeature.kioskMemberPhotos: _state(_kiosk, 'the wall tablet greets Bruno, whose photo is on his profile and in the store', (_) => kioskPhotoState()),
   WorkspaceFeature.badgeSignIn: _state(
     _kiosk,
     "Ada's badge signs her in",
@@ -309,7 +312,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       today: w.f.seededAt,
     ).held.any((d) => d.name == demoKioskDevice.name && !d.revoked),
   ),
-  WorkspaceFeature.spaceQrCodes: _toggle('every place prints its QR code'),
+  WorkspaceFeature.spaceQrCodes: _action(_member, 'a place\'s QR code is read and brings the member to that place', (_) => spaceQrAction()),
   // ── spaceManagement ──────────────────────────────────────────────────
   WorkspaceFeature.placeBooking: _state(
     _member,
@@ -322,16 +325,16 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'two sites',
     (w) => w.f.workspaces.sites.length >= 2,
   ),
-  WorkspaceFeature.siteDocuments: _toggle('reserved flag (internal)'),
-  WorkspaceFeature.planObjectDelete: _toggle('the plan editor deletes'),
-  WorkspaceFeature.planDecor: _toggle('the plan editor draws shapes'),
+  WorkspaceFeature.siteDocuments: _toggle('reserved: no implementation reads this flag'),
+  WorkspaceFeature.planObjectDelete: _action(_owner, 'Ada deletes a drawn object of the plan; it is gone and the seats stay', (_) => planDeleteAction()),
+  WorkspaceFeature.planDecor: _state(_owner, 'the ground floor carries a couch and a table drawn under its seats', (_) => planDecorState()),
   WorkspaceFeature.adminSeatBlocking: _action(
     _admin,
     'Chiara blocks a seat '
     'for maintenance',
     (w) => w.f.floorPlan.seats.length > 1,
   ),
-  WorkspaceFeature.workingHours: _toggle('the day runs 9 to 18'),
+  WorkspaceFeature.workingHours: _state(_owner, 'the working day runs eight to six, an hour longer than the product\'s', (_) => workingHoursState()),
   WorkspaceFeature.publicHolidays: _state(
     _member,
     'public holidays close '
@@ -362,17 +365,14 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return kpi.reservedSeatHours > 0 && kpi.offeredSeatHours > 0;
     },
   ),
-  WorkspaceFeature.planMemberPhotos: _toggle('the plan shows who sits where'),
+  WorkspaceFeature.planMemberPhotos: _state(_member, 'a held seat of the plan shows its occupant\'s photo', (_) => planPhotoState()),
   WorkspaceFeature.uniqueMonograms: _state(
     _member,
     'every avatar has its '
     'own letters',
     (w) => w.f.workspaces.memberNames.length > 1,
   ),
-  WorkspaceFeature.singleRoomLevelNames: _toggle(
-    'a one-room level reads as '
-    'the room',
-  ),
+  WorkspaceFeature.singleRoomLevelNames: _state(_member, 'the ground floor has one room only, read by the level\'s name', (_) => singleRoomState()),
   WorkspaceFeature.workspaceVocabulary: _action(
     _owner,
     'Ada renames '
@@ -437,7 +437,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a whole level',
     (w) => w.f.floorPlan.levels.any((l) => l.bookableAsWhole),
   ),
-  WorkspaceFeature.bookingPolicies: _toggle('booking rules apply'),
+  WorkspaceFeature.bookingPolicies: _state(_owner, 'the booking rules are the workspace\'s own: two places, ten hours, walk-up outside the day', (_) => bookingPoliciesState()),
   WorkspaceFeature.bookingGate: _state(
     _member,
     'a closed day refuses a '
@@ -482,7 +482,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'decisions on one calendar',
     (w) => w.f.calendar.items.length > 10,
   ),
-  WorkspaceFeature.calendarViews: _toggle('agenda, week and month'),
+  WorkspaceFeature.calendarViews: _action(_member, 'Bruno finds the same booking in the day, the week and the month', (_) => calendarViewsAction()),
   WorkspaceFeature.calendarValidations: _state(
     _admin,
     'pending decisions on '
@@ -560,7 +560,7 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'message to the studio group',
     (w) => w.f.workspaces.conversations.length >= 2,
   ),
-  WorkspaceFeature.captureProtection: _toggle('a message may forbid copies'),
+  WorkspaceFeature.captureProtection: _action(_member, 'a screenshot of a thread is recorded in the thread', (_) => captureAction()),
   WorkspaceFeature.messageMentions: _state(
     _owner,
     'the studio group to '
@@ -950,13 +950,13 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'a bill as PDF',
     (w) => w.f.money.invoices.isNotEmpty,
   ),
-  WorkspaceFeature.invoicePdfTemplate: _toggle('the bill layout'),
-  WorkspaceFeature.invoiceAddressWindow: _toggle('the envelope window'),
-  WorkspaceFeature.letterStandard: _toggle('the letter standard'),
-  WorkspaceFeature.reportDesignExchange: _toggle('layouts in and out'),
-  WorkspaceFeature.reportLayouts: _toggle('positioned layouts'),
-  WorkspaceFeature.reportTexts: _toggle('the texts of a report'),
-  WorkspaceFeature.reportDesigner: _toggle('the report designer'),
+  WorkspaceFeature.invoicePdfTemplate: _state(_owner, 'an issued invoice prints with the owner\'s template: letterhead, lines in euros, footer', (_) => invoiceTemplateState()),
+  WorkspaceFeature.invoiceAddressWindow: _state(_owner, 'the recipient sits in the window of the envelope, on A4', (_) => addressWindowState()),
+  WorkspaceFeature.letterStandard: _state(_owner, 'a statement prints as a standard letter, a designed kind keeps its design', (_) => letterStandardState()),
+  WorkspaceFeature.reportDesignExchange: _action(_owner, 'a design leaves as its exchange file and comes back equal', (_) => exchangeAction()),
+  WorkspaceFeature.reportLayouts: _state(_owner, 'a positioned layout is saved for the usage statement and is the one that prints', (_) => layoutState()),
+  WorkspaceFeature.reportTexts: _action(_owner, 'Ada changes a text of the report and reads it in the printed footer', (_) => reportTextAction()),
+  WorkspaceFeature.reportDesigner: _action(_owner, 'the designer opens the design, a line is edited and saved', (_) => designerEditAction()),
   // #3963 — the analysis export is made from the Demo's own figures, in
   // euros; what the Demo does not answer is left out and said. The sample-data
   // card holds the Demo's one batch and loads no more: the Demo is sample data.
@@ -993,8 +993,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'data',
     (w) => w.bookings.any((r) => r.memberId == 'member-2'),
   ),
-  WorkspaceFeature.dataExport: _toggle('the whole space as a workbook'),
-  WorkspaceFeature.dataReport: _toggle('the whole space as a printed report'),
+  WorkspaceFeature.dataExport: _action(_owner, 'the whole space as a workbook, written from the Demo\'s own rows', (_) => dataExportAction()),
+  WorkspaceFeature.dataReport: _state(_owner, 'the whole space as a printed report: every section holds the Demo\'s records', (_) => dataReportState()),
   // ── operations ───────────────────────────────────────────────────────
   WorkspaceFeature.workspaceStatus: _state(
     _owner,
@@ -1143,6 +1143,7 @@ bool _somethingToInvoice(_World w) {
 }
 
 void main() {
+  setUpAll(() => initializeDateFormatting('fr'));
   final world = _World(DemoFixture.build());
 
   test('every feature of the registry has a scenario, or a reason it '

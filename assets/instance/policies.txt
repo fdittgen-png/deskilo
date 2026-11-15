@@ -184,6 +184,8 @@ public.invoice_matches.invoice_matches_select
 public.invoice_matches.mcp_delegated_deny
 public.invoice_maturities.invoice_maturities_select
 public.invoice_maturities.mcp_delegated_deny
+public.invoice_originals.invoice_originals_select
+public.invoice_originals.mcp_delegated_deny
 public.invoice_reminders.invoice_reminders_select
 public.invoice_reminders.mcp_delegated_deny
 public.invoice_transmission_artifacts.mcp_delegated_deny
@@ -555,5 +557,7 @@ storage.objects.floor_plans_insert_sites
 storage.objects.floor_plans_select
 storage.objects.floor_plans_update
 storage.objects.floor_plans_update_sites
+storage.objects.invoice_originals_insert
+storage.objects.invoice_originals_select
 storage.objects.mcp_delegated_deny
 storage.objects.personal_native_session
