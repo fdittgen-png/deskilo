@@ -2,7 +2,7 @@
 -- risk: transforming
 -- (the template field registry is restated with one field less)
 --
--- #3997 (second of two files, after 0782) -- the template field registry
+-- #3997 (second of two files, after 0783) -- the template field registry
 -- no longer carries `workspace.feature_flags.siteDocuments`: the flag is
 -- retired. A configuration that still names it is read as before; the
 -- field is not one a template carries any more. Apart so each file fits the
@@ -453,4 +453,4 @@ as $registry$
 $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
 
-select public.set_deskilo_schema_version(783);
+select public.set_deskilo_schema_version(784);
