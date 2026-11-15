@@ -5,6 +5,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/backend/context_client_providers.dart';
+import '../application/organisation_commands.dart';
 import '../data/supabase_organisation_repository.dart';
 import '../domain/organisation.dart';
 
@@ -18,3 +19,10 @@ OrganisationRepository organisationRepository(Ref ref) =>
 @riverpod
 Future<List<Organisation>> myOrganisations(Ref ref) =>
     ref.watch(organisationRepositoryProvider).myOrganisations();
+
+/// The owners' commands; a change reads the organisations again.
+@Riverpod(keepAlive: true)
+OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
+  ref.watch(organisationRepositoryProvider),
+  () => ref.invalidate(myOrganisationsProvider),
+);

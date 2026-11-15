@@ -18,6 +18,9 @@
 //   labeledTapTargetGuideline  every tappable thing has a name a screen
 //                              reader can say
 //   textContrastGuideline      4.5:1 for body text, as rendered
+//
+// #4022 — and the same four in the dark theme, the system's brightness set
+// before the screen is built.
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -49,6 +52,21 @@ void main() {
       // what the screen actually painted with it.
       await expectLater(tester, meetsGuideline(textContrastGuideline));
 
+      handle.dispose();
+    });
+  }
+
+  for (final row in matrixRowsFor(MatrixAxis.dark)) {
+    testWidgets('${row.screen} meets the accessibility guidelines in the dark',
+        (tester) async {
+      tester.platformDispatcher.platformBrightnessTestValue = Brightness.dark;
+      addTearDown(tester.platformDispatcher.clearPlatformBrightnessTestValue);
+      final handle = tester.ensureSemantics();
+      await row.pump!(tester, _roomy);
+      await expectLater(tester, meetsGuideline(androidTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(iOSTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(labeledTapTargetGuideline));
+      await expectLater(tester, meetsGuideline(textContrastGuideline));
       handle.dispose();
     });
   }

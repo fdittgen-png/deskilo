@@ -3630,6 +3630,32 @@ Vuole che le sue fatture e lettere siano stampate sulla carta che usa il suo pae
 
 **Vedi anche:** [Paese](#paese)
 
+<!-- anchor: user.workspace.settings.organisation -->
+### Organizzazione
+
+**Destinatari:** Proprietario
+
+La Sua attività ha sedi all'estero, in un altro paese o in un'altra valuta. Ognuna di esse è una casa: un'attività a sé con le regole del suo paese, la sua valuta e la sua contabilità. Insieme formano un'organizzazione con una sede.
+
+**Passaggi**
+
+1. In [Spazio di lavoro](https://fdittgen-png.github.io/deskilo/#/workspace-settings), apra **Organizzazione**.
+2. Se l'attività non fa ancora parte di alcuna organizzazione, tocchi **Rendere questa attività la sede di un’organizzazione** e le dia un nome.
+3. Tocchi **Aggiungere una delle mie attività** per rendere un'altra attività di cui è titolare una casa dell'organizzazione.
+4. Tocchi **Togliere dall’organizzazione** accanto a una casa per renderla di nuovo un'attività indipendente.
+5. Tocchi **Renderla sede** accanto a una casa di cui è titolare per renderla la sede. Il titolare di un'altra casa vede **Lasciare l’organizzazione** accanto a essa.
+
+**Da sapere**
+
+- Ogni casa mostra il suo paese, la sua valuta e il Suo ruolo. Chi altro ne è titolare si legge dentro la casa stessa.
+- In Io, le case sono raggruppate sotto il nome dell'organizzazione: prima la sede, poi per paese.
+- Dentro una casa, tocchi il nome dell'attività in alto per passare a un'altra casa dell'organizzazione.
+- Gli importi in valute diverse sono mostrati uno accanto all'altro e mai sommati.
+- La sede esce per ultima: tolga prima le altre case.
+- Solo un titolare dell'attività e della sede può modificare l'organizzazione.
+
+**Vedi anche:** [Paese](#paese)
+
 <!-- anchor: user.workspace.settings.address -->
 ### Indirizzo dell'intestazione
 

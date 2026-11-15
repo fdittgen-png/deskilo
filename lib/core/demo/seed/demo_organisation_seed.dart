@@ -65,3 +65,26 @@ Future<List<Organisation>> demoOrganisations(
     ),
   ];
 }
+
+/// #4006 — every production business of the Demo the person is an active
+/// member of, as the house it would be: what an owner may add to an
+/// organisation (the Berlin practice among them).
+Future<List<OrganisationHouse>> demoBusinessesAsHouses(
+  FakeWorkspaceRepository home,
+) async {
+  final businesses = await home.fetchMyWorkspaces();
+  final memberships = await home.fetchMyMembers();
+  return [
+    for (final business in businesses)
+      if (business.environment == 'prod')
+        for (final m in memberships)
+          if (m.workspaceId == business.id && m.status == MemberStatus.active)
+            OrganisationHouse(
+              workspaceId: business.id,
+              name: business.name,
+              countryCode: business.countryCode,
+              currencyCode: business.currencyCode,
+              role: _roleOf(m),
+            ),
+  ];
+}

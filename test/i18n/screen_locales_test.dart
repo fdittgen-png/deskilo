@@ -103,7 +103,7 @@ void main() {
     expect(await exceptionAt(tester, const Locale('de'), labelRow, size: const Size(120, 740)), isNotNull);
   });
 
-  test('the locale axis names the nine screens it has always walked', () {
+  test('the locale axis names the screens it walks', () {
     expect(
       matrixRowsFor(MatrixAxis.locales).map((r) => r.screen).toSet(),
       {
@@ -116,6 +116,15 @@ void main() {
         'Process overview',
         'Accessories',
         'Level canvas',
+        // #4022 — the rows that had no locale pump of their own.
+        'Create workspace',
+        'Sign in',
+        'Calendar hub',
+        'Settings',
+        'Workspace administration',
+        'Me › Home',
+        'Me › To pay',
+        'Me › Invoices',
       },
     );
   });

@@ -9,6 +9,7 @@
 import 'dart:async';
 
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
@@ -418,7 +419,7 @@ void main() {
   for (final dark in [false, true]) {
     for (final scale in guardScales) {
       for (final width in guardWidths) {
-        testWidgets('${width < 900 ? 'the sheet' : 'the desk dialog'} keeps '
+        testWidgets('${width < WindowClass.mediumMinWidth ? 'the sheet' : 'the desk dialog'} keeps '
             'the rules at $width px, ×$scale, ${dark ? 'dark' : 'light'}', (
           tester,
         ) async {
@@ -430,10 +431,10 @@ void main() {
             mode: dark ? ThemeMode.dark : ThemeMode.light,
           );
           expect(
-            find.byType(width < 900 ? BottomSheet : Dialog),
+            find.byType(width < WindowClass.mediumMinWidth ? BottomSheet : Dialog),
             findsOneWidget,
           );
-          expect(find.byType(width < 900 ? Dialog : BottomSheet), findsNothing);
+          expect(find.byType(width < WindowClass.mediumMinWidth ? Dialog : BottomSheet), findsNothing);
           expect(guardProblems(tester, width: width), isEmpty);
           // The two rows carry the invoice number in their names.
           expect(find.bySemanticsLabel('Pay invoice INV-older'), findsWidgets);

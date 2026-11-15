@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../core/text/collation.dart';
+import 'workspace.dart';
 
 /// The reader's role in one house.
 enum HouseRole {
@@ -116,8 +117,69 @@ class Organisation {
   }
 }
 
-/// The organisations of the reader.
+/// #4006 — the houses of [houses] in the environment of [current]: on the
+/// server a business and its development twin are two houses; to the
+/// person they are one. A house not among [spaces] (not read yet) stays.
+List<OrganisationHouse> housesInEnvironment(
+  Iterable<OrganisationHouse> houses,
+  Workspace current,
+  Map<String, Workspace> spaces,
+) => [
+  for (final house in houses)
+    if ((spaces[house.workspaceId]?.env ?? current.env) == current.env) house,
+];
+
+/// Why the server did not change an organisation.
+enum OrganisationRefusal {
+  /// Only an owner of the business (and of the head) may do this.
+  notOwner,
+
+  /// An organisation needs a name.
+  noName,
+
+  /// The business is already in an organisation.
+  alreadyInOne,
+
+  /// The business is in no organisation.
+  inNone,
+
+  /// The head leaves last.
+  headLeavesLast,
+
+  /// The new head is not a house of this organisation.
+  notAHouse,
+
+  /// A development twin is never the head.
+  twinNeverHead,
+
+  /// The organisation is off in this business (its feature).
+  featureOff,
+
+  /// Anything else the server said no to.
+  other,
+}
+
+/// The organisations of the reader, and the owners' commands on them
+/// (#4004). Each command answers null once done, else why not.
 abstract interface class OrganisationRepository {
   /// Every organisation the reader is a member of a house of, by name.
   Future<List<Organisation>> myOrganisations();
+
+  /// Makes [headWorkspaceId] the head of a new organisation named [name].
+  Future<OrganisationRefusal?> create(String headWorkspaceId, String name);
+
+  /// Renames [organisationId].
+  Future<OrganisationRefusal?> rename(String organisationId, String name);
+
+  /// Makes the business [workspaceId] a house of [organisationId].
+  Future<OrganisationRefusal?> add(String organisationId, String workspaceId);
+
+  /// Takes the business [workspaceId] out of its organisation.
+  Future<OrganisationRefusal?> remove(String workspaceId);
+
+  /// Makes the house [headWorkspaceId] the head of [organisationId].
+  Future<OrganisationRefusal?> setHead(
+    String organisationId,
+    String headWorkspaceId,
+  );
 }

@@ -21,10 +21,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
 import '../helpers/screens/calendar_hub.dart' as calendar;
+import '../helpers/screens/directory_screen.dart'
+    show pumpDirectory, seedDirectory;
 import '../helpers/screens/events.dart' show pumpEvents;
 import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/invoices.dart' show pumpInvoices;
 import '../helpers/screens/level_canvas.dart' show pumpCanvas;
+import '../helpers/screens/me_rows.dart'
+    show pumpMeHome, pumpMeInvoices, pumpMeToPay;
 import '../helpers/screens/members_screen.dart' show pumpMembers;
 import '../helpers/screens/money_faces.dart' show pumpFaces;
 import '../helpers/screens/onboarding_layout.dart' show pumpOnboardingLayout;
@@ -35,11 +39,12 @@ import '../helpers/screens/validation_settings.dart'
     show pumpValidationSettings;
 import '../helpers/screens/workspace_settings_screen.dart' show pumpWorkspaceSettings;
 
-/// The seven conditions the product claims to support: 360 dp (the phone
+/// The eight conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,
 /// Tab traversal, Flutter's WCAG guidelines (tap targets, labels,
-/// contrast as rendered), the same final state with motion off, and (#2601)
-/// the screen narrowed to a phone in each of the other four languages.
+/// contrast as rendered), the same final state with motion off, (#4022) the
+/// same guidelines in the dark theme, and (#2601) the screen narrowed to a
+/// phone in each of the other four languages.
 /// `test/i18n/screen_locales_test.dart` walks [locales]; it is the only
 /// list of those screens now, so a screen is added once, here.
 enum MatrixAxis {
@@ -49,6 +54,7 @@ enum MatrixAxis {
   keyboard,
   semantics,
   reducedMotion,
+  dark,
   locales,
 }
 
@@ -106,6 +112,15 @@ class MatrixRow {
       {..._gaps, if (localePump == null) MatrixAxis.locales: _noLocaleWalk};
 
   bool covers(MatrixAxis axis) => axes.contains(axis);
+
+  /// This row with [localePump], the locale axis it walks (#4022).
+  MatrixRow withLocalePump(ScreenPump localePump) => MatrixRow(
+        screen,
+        pump: pump,
+        localePump: localePump,
+        axes: _axes,
+        gaps: _gaps,
+      );
 }
 
 /// Every axis — the default for a screen whose helper honours a size.
@@ -116,14 +131,8 @@ const _all = {
   MatrixAxis.keyboard,
   MatrixAxis.semantics,
   MatrixAxis.reducedMotion,
+  MatrixAxis.dark,
 };
-
-/// Nothing measured, for one stated reason.
-Map<MatrixAxis, String> _unmeasured(String why) =>
-    {
-      for (final a in MatrixAxis.values)
-        if (a != MatrixAxis.locales) a: why,
-    };
 
 /// Wrap a pump that sets no viewport of its own.
 SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
@@ -134,11 +143,38 @@ SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
       await pump(tester);
     };
 
+/// The viewport a row without a `localePump` of its own is built at for the
+/// locale axis: roomy, so every row is built; the walker narrows it to a phone.
+const _localeSize = Size(800, 1600);
+
+/// Rows the locale walk of #4022 found it cannot run: their pump helpers find
+/// their way in by English words (the settings tile, the shell tab), so in
+/// another language the helper, not the screen, fails. They stay off the
+/// locale axis, named, until their helpers find controls by key.
+const Set<String> _localeWaits = {
+  'Members',
+  'Workspace settings',
+  'Workspace reports',
+  'Member directory',
+};
+
 /// THE MATRIX. Rows may be added; a row may not quietly lose an axis.
 /// A screen that belongs here and is missing is the failure mode this
 /// file exists to stop, so a row with six gaps and six reasons is a
 /// better pull request than leaving the screen out.
 final List<MatrixRow> kMatrix = [
+  for (final row in _rows)
+    // #4022 — a row with a pump and no locale pump of its own walks the
+    // locale axis through its pump at [_localeSize].
+    if (row.localePump == null &&
+        row.pump != null &&
+        !_localeWaits.contains(row.screen))
+      row.withLocalePump((t) => row.pump!(t, _localeSize))
+    else
+      row,
+];
+
+final List<MatrixRow> _rows = [
   MatrixRow('Create workspace',
       pump: (t, size) => pumpOnboardingLayout(t, size: size), axes: _all),
   MatrixRow('Reserve hub',
@@ -189,6 +225,7 @@ final List<MatrixRow> kMatrix = [
         MatrixAxis.largeText,
         MatrixAxis.semantics,
         MatrixAxis.reducedMotion,
+        MatrixAxis.dark,
       },
       gaps: const {
         MatrixAxis.keyboard: 'the canvas is a painter with no focusable '
@@ -213,9 +250,27 @@ final List<MatrixRow> kMatrix = [
       pump: (t, size) async { await pumpWorkspaceSettings(t, expand: false, size: size); }, axes: _all),
   MatrixRow('Workspace reports',
       pump: (t, size) async { await pumpWorkspaceSettings(t, reports: true, size: size); }, axes: _all),
+  // #4022 — the directory's own pump takes no size and needs a seeded
+  // repository per case: the row seeds it and sets the viewport itself.
   MatrixRow('Member directory',
-      gaps: _unmeasured('pumpDirectory takes no size and needs a seeded '
-          'repository per case — #1582 (2026-09-20)')),
+      pump: (t, size) async {
+        t.view.physicalSize = size;
+        t.view.devicePixelRatio = 1;
+        addTearDown(t.view.reset);
+        final seeded = seedDirectory();
+        await pumpDirectory(
+          t,
+          workspace: seeded.workspace,
+          reservations: seeded.reservations,
+          floorPlan: seeded.floorPlan,
+          profile: seeded.profile,
+        );
+      },
+      axes: _all),
+  // #4022 — Me: the home, what is still to pay and the paid invoices.
+  MatrixRow('Me › Home', pump: pumpMeHome, axes: _all),
+  MatrixRow('Me › To pay', pump: pumpMeToPay, axes: _all),
+  MatrixRow('Me › Invoices', pump: pumpMeInvoices, axes: _all),
 ];
 
 /// Rows whose [axis] is asserted somewhere in this folder.
