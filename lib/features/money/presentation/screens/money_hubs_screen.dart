@@ -169,11 +169,7 @@ class AccountingHubScreen extends ConsumerWidget {
                 numbers: data.numberSequencesOn,
               ),
             ),
-            const SizedBox(height: AppSpacing.lg),
-            Text(
-              context.l10n.accountingStatusAllBooks,
-              style: Theme.of(context).textTheme.titleSmall,
-            ),
+            // #4066 — the doors follow the Reference block.
             const SizedBox(height: AppSpacing.sm),
           ],
           for (final door in doors) ...[

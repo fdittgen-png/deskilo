@@ -340,9 +340,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 
   @override
-  String get accountingStatusAllBooks => 'Alles in der Buchhaltung';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure oder mehr';
   }
@@ -354,10 +351,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Bücher abgeschlossen bis';
 
   @override
+  String get accountingStatusDue => 'Zu erledigen';
+
+  @override
   String get accountingStatusLastExport => 'Letzter Export';
 
   @override
   String get accountingStatusNotRead => 'Konnte nicht gelesen werden';
+
+  @override
+  String get accountingStatusReference => 'Referenz';
+
+  @override
+  String get accountingStatusToFile => 'Einzureichen';
+
+  @override
+  String get accountingStatusToMatch => 'Abzugleichen';
 
   @override
   String get accountingStatusVatToFile => 'Abzugebende Umsatzsteuererklärung';
