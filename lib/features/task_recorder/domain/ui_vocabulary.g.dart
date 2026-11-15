@@ -1104,6 +1104,7 @@ const Set<String> uiKeys = {
   'developer-filter-errors',
   'developer-filter-warnings',
   'development-banner',
+  'directory-advanced',
   'directory-bookmark-',
   'directory-carousel',
   'directory-clear-search',
