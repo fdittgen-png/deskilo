@@ -31,7 +31,8 @@ const _screenFloor = 21;
 // #1974: member/settings forms and the reports destination add measured cells.
 // #2601: the locale axis is part of the matrix; its nine screens are cells.
 // #4022: the member directory and three Me screens add 24 measured cells.
-const _cellFloor = 134;
+// #4022: the dark axis adds a measured cell to every row.
+const _cellFloor = 155;
 
 /// Every gap reason carries the issue that owns it and the date it was
 /// written, so a reason cannot rot unnoticed into a permanent excuse.

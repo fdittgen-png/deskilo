@@ -58,6 +58,11 @@ class _DevelopmentStrip extends StatelessWidget {
     final ink = development ? AppEnvironmentColors.developmentOf(
         Theme.of(context).brightness) : AppEnvironmentColors.productionOf(
         Theme.of(context).brightness);
+    // #4022 — white only on a dark strip: the dark theme's strip is a light
+    // green or amber, where white text reads at about 2:1.
+    final onInk = ThemeData.estimateBrightnessForColor(ink) == Brightness.dark
+        ? Colors.white
+        : Colors.black87;
     return Material(
       key: ValueKey(development ? 'development-banner' : 'production-banner'),
       color: ink,
@@ -72,7 +77,7 @@ class _DevelopmentStrip extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(development ? Icons.construction_outlined : Icons.workspaces_outline,
-                  size: 14, color: Colors.white),
+                  size: 14, color: onInk),
               const SizedBox(width: AppSpacing.sm),
               Flexible(
                 child: Text(
@@ -85,7 +90,7 @@ class _DevelopmentStrip extends StatelessWidget {
                       .textTheme
                       .labelSmall
                       ?.emphasised
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: onInk),
                 ),
               ),
             ],

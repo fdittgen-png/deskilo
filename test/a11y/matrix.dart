@@ -39,11 +39,12 @@ import '../helpers/screens/validation_settings.dart'
     show pumpValidationSettings;
 import '../helpers/screens/workspace_settings_screen.dart' show pumpWorkspaceSettings;
 
-/// The seven conditions the product claims to support: 360 dp (the phone
+/// The eight conditions the product claims to support: 360 dp (the phone
 /// most members hold), a wide web/tablet surface, twice the text size,
 /// Tab traversal, Flutter's WCAG guidelines (tap targets, labels,
-/// contrast as rendered), the same final state with motion off, and (#2601)
-/// the screen narrowed to a phone in each of the other four languages.
+/// contrast as rendered), the same final state with motion off, (#4022) the
+/// same guidelines in the dark theme, and (#2601) the screen narrowed to a
+/// phone in each of the other four languages.
 /// `test/i18n/screen_locales_test.dart` walks [locales]; it is the only
 /// list of those screens now, so a screen is added once, here.
 enum MatrixAxis {
@@ -53,6 +54,7 @@ enum MatrixAxis {
   keyboard,
   semantics,
   reducedMotion,
+  dark,
   locales,
 }
 
@@ -120,6 +122,7 @@ const _all = {
   MatrixAxis.keyboard,
   MatrixAxis.semantics,
   MatrixAxis.reducedMotion,
+  MatrixAxis.dark,
 };
 
 /// Wrap a pump that sets no viewport of its own.
@@ -186,6 +189,7 @@ final List<MatrixRow> kMatrix = [
         MatrixAxis.largeText,
         MatrixAxis.semantics,
         MatrixAxis.reducedMotion,
+        MatrixAxis.dark,
       },
       gaps: const {
         MatrixAxis.keyboard: 'the canvas is a painter with no focusable '

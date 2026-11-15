@@ -229,6 +229,9 @@ class GettingStartedCard extends ConsumerWidget {
                   TextButton(
                     key: const ValueKey('getting-started-dismiss'),
                     style: TextButton.styleFrom(
+                      // #4022 — on the card's own colour, not the primary:
+                      // in the dark theme the primary reads at about 2:1.
+                      foregroundColor: scheme.onSecondaryContainer,
                       minimumSize: const Size(
                         kMinInteractiveDimension,
                         kMinInteractiveDimension,
