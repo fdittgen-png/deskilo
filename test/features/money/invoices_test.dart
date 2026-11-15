@@ -10,6 +10,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/core/ui/form_sheet.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -395,9 +396,10 @@ void main() {
     // The issue sheet's preview (the page under it lists the old lines).
     expect(
       find.descendant(
+        // #4058 — a task: whatever its container, the form is its shell.
         of: find.ancestor(
           of: find.byKey(const ValueKey('invoice-submit')),
-          matching: find.byType(BottomSheet),
+          matching: find.byType(SheetShell),
         ),
         matching: find.textContaining(RegExp(r'^Subscription \w+ 50%$')),
       ),

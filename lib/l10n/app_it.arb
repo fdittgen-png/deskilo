@@ -9313,8 +9313,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Emetti la fattura · {amount}",
   "invoiceIssueCheckAgain": "Controlla di nuovo",
   "invoiceIssueDeclined": "La convalida è stata rifiutata o è scaduta. Nessuna fattura è stata emessa.",
+  "invoiceIssueKept": "La fattura emessa è conservata come originale che non può più essere modificato; la condivide o la scarica dalla fattura.",
+  "invoiceIssueKeptEmail": "La fattura emessa è conservata come originale che non può più essere modificato; la invia per e-mail, la condivide o la scarica dalla fattura.",
   "invoiceIssueNotFoundYet": "Non ancora trovata. Non è stato reinviato nulla.",
   "invoiceIssueOne": "Fattura",
   "invoiceIssueUnknownBody": "La fattura è stata inviata ma la risposta non è arrivata, quindi potrebbe già esistere. Non viene reinviato nulla. Controlla di nuovo per cercarla.",

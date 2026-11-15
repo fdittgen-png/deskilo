@@ -9313,8 +9313,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Emitir la factura · {amount}",
   "invoiceIssueCheckAgain": "Comprobar de nuevo",
   "invoiceIssueDeclined": "La validación fue rechazada o caducó. No se emitió ninguna factura.",
+  "invoiceIssueKept": "La factura emitida se conserva como un original que ya no puede modificarse; la comparte o la descarga desde la factura.",
+  "invoiceIssueKeptEmail": "La factura emitida se conserva como un original que ya no puede modificarse; la envía por correo, la comparte o la descarga desde la factura.",
   "invoiceIssueNotFoundYet": "Aún no se encuentra. No se volvió a enviar nada.",
   "invoiceIssueOne": "Facturar",
   "invoiceIssueUnknownBody": "La factura se envió pero la respuesta no llegó, así que puede que ya exista. No se vuelve a enviar nada. Compruebe de nuevo para buscarla.",
