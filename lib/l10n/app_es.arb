@@ -8986,6 +8986,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",
+  "invoiceCorrectionKeepsKind": "Una corrección es del mismo tipo que la factura que sustituye.",
   "invoiceCorrectionReason": "Motivo de la rectificación",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"

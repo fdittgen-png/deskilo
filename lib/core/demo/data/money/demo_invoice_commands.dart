@@ -34,6 +34,19 @@ class DemoInvoiceCommands implements InvoiceCommands {
         address: '1 Rue Test, 34120 Pézenas',
       );
 
+  /// #3994 (0784) — a correction is of the kind of the invoice it
+  /// replaces: sent as full it takes that kind, another kind is refused.
+  InvoiceKind _correctionKind(String? replacesId, InvoiceKind kind) {
+    final replaced = _m.invoices.where((i) => i.id == replacesId).firstOrNull;
+    final own = replaced?.kind.correctionKind ?? InvoiceKind.full;
+    if (own == InvoiceKind.full || kind == own) return kind;
+    if (kind == InvoiceKind.full) return own;
+    throw const PostgrestException(
+      message: 'a correction is of the kind of the invoice it replaces',
+      code: 'DKI08',
+    );
+  }
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
@@ -46,11 +59,11 @@ class DemoInvoiceCommands implements InvoiceCommands {
     String purchaseOrder = '',
     String correctionReason = '',
   }) async {
+    kind = _correctionKind(replacesId, kind); // #3994 (0784)
     _m.lastCorrectionReason = correctionReason;
     _m.lastBuyerReference = buyerReference;
     _m.lastPurchaseOrder = purchaseOrder;
-    // Server contract (0067/0142): one ACTIVE invoice per member, month
-    // and KIND — a full invoice blocks both kinds.
+    // Server contract (0067/0142): one ACTIVE invoice per member, month and KIND; a full one blocks both.
     if (_m.invoices.any(
       (i) =>
           i.memberId == memberId &&

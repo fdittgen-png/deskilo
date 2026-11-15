@@ -76,6 +76,12 @@ void main() {
         l10n.invoiceEssentialsRefused,
         reason: language,
       );
+      // #3994 — a correction of another kind than the invoice it replaces.
+      expect(
+        invoiceRefusalText(l10n, _refused('DKI08')),
+        l10n.invoiceCorrectionKeepsKind,
+        reason: language,
+      );
     }
     final en = lookupAppLocalizations(const Locale('en'));
     expect(

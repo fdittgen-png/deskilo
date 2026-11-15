@@ -31,4 +31,11 @@ enum InvoiceKind {
   /// The reader needs telling: an invoice dated 28 August for September
   /// otherwise looks like a mistake.
   bool get isInAdvance => this == InvoiceKind.subscription;
+
+  /// #3994 — the kind a correction of this invoice is issued as: the same
+  /// for a subscription or a usage invoice, else a full invoice (0784).
+  InvoiceKind get correctionKind =>
+      this == InvoiceKind.subscription || this == InvoiceKind.usage
+      ? this
+      : InvoiceKind.full;
 }

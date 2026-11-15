@@ -24551,6 +24551,12 @@ abstract class AppLocalizations {
   /// **'Copy with payment status'**
   String get invoiceCopyWithPaymentStatus;
 
+  /// #3994 Refusal DKI08: a correction was sent with a kind other than the invoice it replaces
+  ///
+  /// In en, this message translates to:
+  /// **'A correction is of the kind of the invoice it replaces.'**
+  String get invoiceCorrectionKeepsKind;
+
   /// #2440: invoiceCorrectionReason
   ///
   /// In en, this message translates to:

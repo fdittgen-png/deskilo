@@ -91,10 +91,10 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
         replacesId: replaces?.id,
+        kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
         correctionReason: correctionReason,
       ),
-      // Only preselect a member the dropdown actually offers — the wrong
-      // invoice may target a member who has left since.
+      // Only preselect a member the dropdown offers: the wrong invoice's member may have left.
       initialMemberId:
           members.any((m) => m.id == (memberId ?? replaces?.memberId))
               ? (memberId ?? replaces?.memberId)
@@ -106,8 +106,7 @@ Future<void> showInvoiceIssueSheet(
   );
   if (result == null || !context.mounted) return;
 
-  // The context is captured here: a workspace picked later never receives
-  // this command, nor the look for its answer.
+  // The context is captured here: a later workspace never receives this command or its look.
   await runInvoiceIssue(
     context,
     InvoiceIssuance(
@@ -120,6 +119,7 @@ Future<void> showInvoiceIssueSheet(
       memberId: result.memberId,
       period: result.period,
       replacesId: replaces?.id,
+      kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
       detailed: result.detailed,
       buyerReference: result.buyerReference,
       purchaseOrder: result.purchaseOrder,
