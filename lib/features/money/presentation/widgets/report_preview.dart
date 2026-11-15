@@ -126,6 +126,9 @@ Future<void> showReportQuickPreview(
   required bool simulated,
   Map<String, Uint8List> images = const {},
   List<QuickPreviewAnnex> annexes = const [],
+  // #3853 — what the preview says it is, and the download it offers
+  String? title,
+  VoidCallback? onDownload,
 }) =>
     showDialog<void>(
       context: context,
@@ -142,9 +145,10 @@ Future<void> showReportQuickPreview(
                   padding: const EdgeInsets.fromLTRB(
                       AppSpacing.lg, AppSpacing.md, AppSpacing.lg, 0),
                   child: Text(
-                    simulated
-                        ? (l10n.reportPreviewSimulated)
-                        : (l10n.reportPreviewTitle),
+                    title ??
+                        (simulated
+                            ? l10n.reportPreviewSimulated
+                            : l10n.reportPreviewTitle),
                     style: Theme.of(context).textTheme.labelMedium,
                   ),
                 ),
@@ -172,11 +176,25 @@ Future<void> showReportQuickPreview(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         right: AppSpacing.sm, bottom: AppSpacing.xs),
-                    child: TextButton(
-                      key: const ValueKey('report-preview-directory-close'),
-                      onPressed: () => Navigator.of(context).pop(),
-                      child: Text(
-                          l10n.directoryClose),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (onDownload != null)
+                          TextButton(
+                            key: const ValueKey('report-preview-download'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              onDownload();
+                            },
+                            child: Text(l10n.invoiceDownload),
+                          ),
+                        TextButton(
+                          key: const ValueKey('report-preview-directory-close'),
+                          onPressed: () => Navigator.of(context).pop(),
+                          child: Text(
+                              l10n.directoryClose),
+                        ),
+                      ],
                     ),
                   ),
                 ),

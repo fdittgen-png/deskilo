@@ -12,3 +12,9 @@ part 'invoice_original_providers.g.dart';
 @Riverpod(keepAlive: true)
 InvoiceOriginalRepository invoiceOriginalRepository(Ref ref) =>
     SupabaseInvoiceOriginalRepository(ref.watch(moneyClientProvider));
+
+/// #3853 — the record of [invoiceId]'s stored original, or null when none is
+/// kept yet.
+@riverpod
+Future<InvoiceOriginal?> invoiceOriginal(Ref ref, String invoiceId) =>
+    ref.watch(invoiceOriginalRepositoryProvider).originalOf(invoiceId);

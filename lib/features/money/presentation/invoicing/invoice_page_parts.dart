@@ -23,6 +23,7 @@ import '../invoice_proforma.dart';
 import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
 import '../widgets/invoice_detail_sheet.dart' as sheet show InvoiceAction;
+import 'invoice_original_line.dart';
 import 'invoicing_words.dart';
 
 /// The invoice's existing actions, run with the page's context.
@@ -197,6 +198,7 @@ class InvoicePdfCard extends ConsumerWidget {
                   l.invoicePagePdfHint,
                   style: TextStyle(color: theme.colorScheme.onSurfaceVariant),
                 ),
+                if (invoice.keepsOriginal) InvoiceOriginalLine(invoice: invoice),
               ],
             ),
           ),

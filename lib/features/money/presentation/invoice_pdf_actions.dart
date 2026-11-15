@@ -247,13 +247,12 @@ Future<void> quickViewInvoice(
     }
     final images = await resolveReportImages(ref, report);
     if (!context.mounted) return;
-    await showReportQuickPreview(
-      context,
-      annexes: annexReports,
-      report: report,
-      simulated: false,
-      images: images,
-    );
+    // #3853 — what an invoice that keeps its original shows is a preview
+    final keeps = invoice.keepsOriginal && !proforma;
+    await showReportQuickPreview(context, annexes: annexReports, report: report,
+      simulated: false, images: images,
+      title: keeps ? l10n.invoiceQuickViewIsPreview : null,
+      onDownload: keeps ? () => downloadInvoicePdf(context, ref, invoice) : null);
     }, refresh: () => ref.invalidate(invoicesProvider));
 
 
