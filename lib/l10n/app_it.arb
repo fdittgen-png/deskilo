@@ -19190,6 +19190,7 @@
   "shellBarShowAction": "Mostra la barra di navigazione",
   "shellBarShowHint": "Tenga premuto per mostrare la barra di navigazione",
   "shellBarShownAnnounce": "Barra di navigazione visibile",
+  "shellOverflowNews": "{more}, nuovi avvisi",
   "shellPendingDecisions": "{count, plural, one{1 decisione la aspetta} other{{count} decisioni la aspettano}}",
   "shellReserveButton": "Prenota",
   "shellSwipeCoachMark": "Scorra la barra verso il basso per la vista a schermo intero. Scorra verso l’alto, o tenga premuto il pulsante Prenota, per riportarla.",

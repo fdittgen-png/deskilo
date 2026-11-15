@@ -1,0 +1,11 @@
+{
+  "shellOverflowNews": "{more}, new alerts",
+  "@shellOverflowNews": {
+    "description": "#4030 — the name of the bar's overflow button when a control behind it (the inbox) has news; {more} is the platform's word for the button.",
+    "placeholders": {
+      "more": {
+        "type": "String"
+      }
+    }
+  }
+}

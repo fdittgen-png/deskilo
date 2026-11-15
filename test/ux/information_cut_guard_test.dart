@@ -59,22 +59,19 @@ void main() {
   }
 
   // #4021 — the calendar on a phone, at its narrowest and with larger text,
-  // in the longest of the five languages.
-  for (final width in const [320.0, 390.0]) {
-    for (final scale in const [1.0, 1.3]) {
-      testWidgets(
-        '/calendar at ${width.toInt()} with text $scale in de: no '
-        'title or information line is cut',
-        // #4030 — at 320 with text 1.3 the shared phone bar keeps its
-        // controls and cuts the title; the fitting rule is decided there.
-        skip: width == 320 && scale == 1.3,
-        (tester) async {
+  // in the longest of the five languages; #4030 — every tab's bar at 320.
+  for (final path in _tabs) {
+    for (final width
+        in path == '/calendar' ? const [320.0, 390.0] : const [320.0]) {
+      for (final scale in const [1.0, 1.3]) {
+        testWidgets('$path at ${width.toInt()} with text $scale in de: no '
+            'title or information line is cut', (tester) async {
           tester.platformDispatcher.textScaleFactorTestValue = scale;
           addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
           final features = WorkspaceFeature.values.toSet();
           await pumpRoute(
             tester,
-            '/calendar',
+            path,
             size: Size(width, 900),
             overrides: [
               ...standardTestOverrides(
@@ -94,8 +91,8 @@ void main() {
             reason: details.join('\n'),
           );
           expect(tester.takeException(), isNull);
-        },
-      );
+        });
+      }
     }
   }
 }
