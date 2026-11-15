@@ -9372,20 +9372,20 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Mitglied",
-  "invoiceMissingBuyerAddress": "Die Postanschrift des Mitglieds (bei Unternehmen erforderlich)",
+  "invoiceMissingBuyerAddress": "Die Postanschrift des Kunden (bei Unternehmen erforderlich)",
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
-  "invoiceMissingBuyerCapacity": "Ob das Mitglied Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab",
-  "invoiceMissingBuyerName": "Der Name oder die Firma des Mitglieds",
+  "invoiceMissingBuyerCapacity": "Ob der Kunde Unternehmer oder Verbraucher ist – davon hängt eine allgemeine Dienstleistung an einen Kunden im Ausland ab",
+  "invoiceMissingBuyerName": "Der Name oder die Firma des Kunden",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerTaxId": "Die Steuerkennung des Mitglieds: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich",
+  "invoiceMissingBuyerTaxId": "Die Steuerkennung des Kunden: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
   },
-  "invoiceMissingBuyerVatId": "Die USt-IdNr. des Mitglieds (für das Reverse-Charge-Verfahren erforderlich)",
+  "invoiceMissingBuyerVatId": "Die USt-IdNr. des Kunden (für das Reverse-Charge-Verfahren erforderlich)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
   },
@@ -9409,32 +9409,32 @@
   "@invoiceMissingSalesTaxTaxability": {
     "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
-  "invoiceMissingSellerAddress": "Die Postanschrift des Arbeitsbereichs (Straße oder Ort)",
+  "invoiceMissingSellerAddress": "Die Postanschrift des Betriebs (Straße oder Ort)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerBnFormat": "Die GST/HST-Geschäftsnummer des Arbeitsbereichs mit RT-Konto im Format 123456789 RT0001 (ETA s. 169(4))",
+  "invoiceMissingSellerBnFormat": "Die GST/HST-Geschäftsnummer des Betriebs mit RT-Konto im Format 123456789 RT0001 (ETA s. 169(4))",
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Das Land des Arbeitsbereichs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich, die Schweiz oder Kanada sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
-  "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Arbeitsbereichs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
+  "invoiceMissingSellerCountry": "Das Land des Betriebs muss ein Mitgliedstaat der Europäischen Union, das Vereinigte Königreich, die Schweiz oder Kanada sein, um hier auszustellen — andere Länder werden außerhalb der App ausgestellt",
+  "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Betriebs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Arbeitsbereichs (das Feld Registrierung trägt die Steuernummer)",
+  "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Betriebs (das Feld Registrierung trägt die Steuernummer)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
-  "invoiceMissingSellerUidFormat": "Die UID des Arbeitsbereichs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)",
+  "invoiceMissingSellerUidFormat": "Die UID des Betriebs im Schweizer Format: CHE-123.456.789 gefolgt von MWST (TVA, IVA), mit gültiger Prüfziffer (Art. 26 MWSTG)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
   },
-  "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Arbeitsbereichs",
+  "invoiceMissingSellerVatId": "Die Umsatzsteuer-Identifikationsnummer des Betriebs",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
-  "invoiceMissingSellerVatIdFormat": "Die Umsatzsteuer-Registriernummer des Workspace im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)",
+  "invoiceMissingSellerVatIdFormat": "Die Umsatzsteuer-Registriernummer des Betriebs im Format der HMRC: GB oder XI, gefolgt von neun oder zwölf Ziffern (VAT Notice 700)",
   "@invoiceMissingSellerVatIdFormat": {
     "description": "#2359: invoiceMissingSellerVatIdFormat"
   },
@@ -9446,11 +9446,11 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
-  "invoiceMissingVatNotRegistered": "Keine MwSt. auf den Positionen: der Raum berechnet keine MwSt., aber für das Abonnement oder ein Zubehör ist ein Satz eingestellt",
-  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Arbeitsbereichs (sonst würde 0 % berechnet)",
+  "invoiceMissingVatNotRegistered": "Keine MwSt. auf den Positionen: der Betrieb berechnet keine MwSt., aber für das Abonnement oder ein Zubehör ist ein Satz eingestellt",
+  "invoiceMissingVatRate": "Ein gültiger Steuersatz für den Standardsatz des Betriebs (sonst würde 0 % berechnet)",
   "invoiceMissingVatTreatment": "Rechnungen mit Reverse Charge, Ausfuhr oder Steuerbefreiung müssen mit Ihrer Buchhaltung außerhalb der App geprüft und ausgestellt werden. Kontoauszüge bleiben verfügbar.",
   "invoiceMissingVatZeroLine": "Ein MwSt.-Satz für jede Leistung: eine Leistung wird mit 0 % berechnet, ohne Export, Befreiung oder Reverse Charge als Grund",
-  "invoiceMissingVies": "Eine gültige VIES-Prüfung der USt-IdNr. des Mitglieds (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)",
+  "invoiceMissingVies": "Eine gültige VIES-Prüfung der USt-IdNr. des Kunden (für die Steuerschuldnerschaft des Empfängers nötig; hat VIES nicht geantwortet, versuchen Sie es später erneut)",
   "invoiceMonthAll": "Alle",
   "invoiceMonthBusinessFix": "Die Angaben Ihres Betriebs sind unvollständig: {missing}",
   "invoiceMonthCheckAgain": "Erneut prüfen",

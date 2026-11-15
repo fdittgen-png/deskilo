@@ -1,32 +1,55 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3587 R1-a -- the kit's card: the surface on the canvas, a hairline
-// border, no shadow.
+// border, no shadow. #3674: Me's card too — the hero tone is the primary
+// colour with its own text and icons; the colours come from the ambient
+// scheme, which under the personal theme is the personal tokens.
 import 'package:flutter/material.dart';
 
 import '../../theme/app_radius.dart';
 import 'kit_metrics.dart';
 
+/// How a card looks.
+enum KitCardTone {
+  /// The surface on the canvas, with a hairline border.
+  normal,
+
+  /// The one card a page leads with: the primary colour, no border.
+  hero,
+}
+
 class KitCard extends StatelessWidget {
   const KitCard({
     super.key,
     required this.child,
+    this.tone = KitCardTone.normal,
     this.padding = const EdgeInsets.all(KitMetrics.cardPadding),
   });
 
   final Widget child;
+  final KitCardTone tone;
   final EdgeInsetsGeometry padding;
 
   @override
   Widget build(BuildContext context) {
     final scheme = Theme.of(context).colorScheme;
+    final hero = tone == KitCardTone.hero;
+    final inside = Padding(padding: padding, child: child);
     return DecoratedBox(
       decoration: BoxDecoration(
-        color: scheme.surface,
+        color: hero ? scheme.primary : scheme.surface,
         borderRadius: AppRadius.xlAll,
-        border: Border.all(color: scheme.outlineVariant),
+        border: hero ? null : Border.all(color: scheme.outlineVariant),
       ),
-      child: Padding(padding: padding, child: child),
+      child: hero
+          ? DefaultTextStyle.merge(
+              style: TextStyle(color: scheme.onPrimary),
+              child: IconTheme.merge(
+                data: IconThemeData(color: scheme.onPrimary),
+                child: inside,
+              ),
+            )
+          : inside,
     );
   }
 }
@@ -40,11 +63,15 @@ class KitLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return Text(
-      text.toUpperCase(),
-      style: theme.textTheme.labelSmall?.copyWith(
-        color: theme.colorScheme.onSurfaceVariant,
-        letterSpacing: 0.6,
+    // #3674 — a label heads what it labels, for a screen reader too.
+    return Semantics(
+      header: true,
+      child: Text(
+        text.toUpperCase(),
+        style: theme.textTheme.labelSmall?.copyWith(
+          color: theme.colorScheme.onSurfaceVariant,
+          letterSpacing: 0.6,
+        ),
       ),
     );
   }

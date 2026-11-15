@@ -17,7 +17,7 @@ import '../../../core/theme/personal_theme.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/kit/copy_value.dart';
-import '../../../core/ui/personal_kit/me_card.dart';
+import '../../../core/ui/kit/kit_card.dart';
 import '../../../core/ui/server_label.dart';
 import '../../auth/providers/auth_providers.dart';
 import '../domain/public_workspace.dart';
@@ -254,7 +254,7 @@ class PublicWorkspaceView extends ConsumerWidget {
           hasContacts)
         Padding(
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
-          child: MeCard(
+          child: KitCard(
             key: const ValueKey('public-workspace-contact-card'),
             padding: AppSpacing.smAll,
             child: Column(

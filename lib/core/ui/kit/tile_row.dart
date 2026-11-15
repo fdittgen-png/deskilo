@@ -1,15 +1,16 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3545 step 0 -- a row of Me: a leading tile, a title, an optional second
-// line and a trailing chip or action. The whole row is one button when it has
-// [onTap]; its [semanticLabel] is required and says what and where.
+// #3545 step 0, #3674 -- a row with a leading tile: a title, an optional
+// second line and a trailing chip or action. The whole row is one button when
+// it has [onTap]; its [semanticLabel] is required and says what and where.
+// A row that shows an amount and a status is a `TwoLineRow`.
 import 'package:flutter/material.dart';
 
-import '../../../../core/theme/personal_theme.dart';
-import '../../../../core/ui/personal_kit/me_kit_metrics.dart';
+import '../../theme/personal_theme.dart';
+import 'kit_metrics.dart';
 
-class MeRow extends StatelessWidget {
-  const MeRow({
+class TileRow extends StatelessWidget {
+  const TileRow({
     super.key,
     required this.title,
     required this.semanticLabel,
@@ -25,34 +26,34 @@ class MeRow extends StatelessWidget {
   /// What a screen reader says for the whole row.
   final String semanticLabel;
 
-  /// The icon (or initial) shown inside the 36 dp tile.
+  /// The icon (or initial) shown inside the leading tile.
   final Widget? leading;
   final Widget? trailing;
   final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
-    final tokens = PersonalTheme.of(context);
     final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
     final content = ConstrainedBox(
-      constraints: const BoxConstraints(minHeight: MeKitMetrics.minTarget),
+      constraints: const BoxConstraints(minHeight: KitMetrics.minTarget),
       child: Row(
         children: [
           if (leading != null) ...[
             Container(
-              width: MeKitMetrics.tile,
-              height: MeKitMetrics.tile,
+              width: KitMetrics.tile,
+              height: KitMetrics.tile,
               alignment: Alignment.center,
               decoration: BoxDecoration(
-                color: tokens.primaryTint,
+                color: scheme.primaryContainer,
                 borderRadius: PersonalShellMetrics.controlRadiusAll,
               ),
               child: IconTheme.merge(
-                data: IconThemeData(color: tokens.primary, size: 20),
+                data: IconThemeData(color: scheme.primary, size: 20),
                 child: leading!,
               ),
             ),
-            const SizedBox(width: MeKitMetrics.gap),
+            const SizedBox(width: KitMetrics.gap),
           ],
           Expanded(
             child: Column(
@@ -61,20 +62,22 @@ class MeRow extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: theme.textTheme.titleSmall?.copyWith(color: tokens.text),
+                  style: theme.textTheme.titleSmall?.copyWith(
+                    color: scheme.onSurface,
+                  ),
                 ),
                 if (subtitle != null)
                   Text(
                     subtitle!,
                     style: theme.textTheme.bodySmall?.copyWith(
-                      color: tokens.secondaryText,
+                      color: scheme.onSurfaceVariant,
                     ),
                   ),
               ],
             ),
           ),
           if (trailing != null) ...[
-            const SizedBox(width: MeKitMetrics.gap),
+            const SizedBox(width: KitMetrics.gap),
             trailing!,
           ],
         ],
@@ -90,7 +93,7 @@ class MeRow extends StatelessWidget {
       child: onTap == null
           ? content
           : InkWell(
-              key: const ValueKey<String>('me-row-tap'),
+              key: const ValueKey<String>('tile-row-tap'),
               borderRadius: PersonalShellMetrics.controlRadiusAll,
               onTap: onTap,
               child: content,

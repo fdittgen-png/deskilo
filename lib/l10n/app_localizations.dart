@@ -24904,31 +24904,31 @@ abstract class AppLocalizations {
   /// #1916 invoice essentials: invoiceMissingBuyerAddress
   ///
   /// In en, this message translates to:
-  /// **'The member\'s postal address (a business customer needs one)'**
+  /// **'The customer\'s postal address (a business customer needs one)'**
   String get invoiceMissingBuyerAddress;
 
   /// #2354 place of supply: invoiceMissingBuyerCapacity
   ///
   /// In en, this message translates to:
-  /// **'Whether the member is a business or a consumer — a general service to a customer abroad depends on it'**
+  /// **'Whether the customer is a business or a consumer — a general service to a customer abroad depends on it'**
   String get invoiceMissingBuyerCapacity;
 
   /// #1916 invoice essentials: invoiceMissingBuyerName
   ///
   /// In en, this message translates to:
-  /// **'The member\'s name or company'**
+  /// **'The customer\'s name or company'**
   String get invoiceMissingBuyerName;
 
   /// #2356: invoiceMissingBuyerTaxId
   ///
   /// In en, this message translates to:
-  /// **'The member\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
+  /// **'The customer\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France'**
   String get invoiceMissingBuyerTaxId;
 
   /// #1916 invoice essentials: invoiceMissingBuyerVatId
   ///
   /// In en, this message translates to:
-  /// **'The member\'s VAT number (needed for reverse charge)'**
+  /// **'The customer\'s VAT number (needed for reverse charge)'**
   String get invoiceMissingBuyerVatId;
 
   /// #2440: invoiceMissingCorrectionReason
@@ -24964,49 +24964,49 @@ abstract class AppLocalizations {
   /// #1916 invoice essentials: invoiceMissingSellerAddress
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s postal address (street or city)'**
+  /// **'The business\'s postal address (street or city)'**
   String get invoiceMissingSellerAddress;
 
   /// #2361: invoiceMissingSellerBnFormat
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))'**
+  /// **'The business\'s GST/HST business number with its RT account, as 123456789 RT0001 (ETA s. 169(4))'**
   String get invoiceMissingSellerBnFormat;
 
   /// Shown as a text in invoice missing sales tax (money).
   ///
   /// In en, this message translates to:
-  /// **'The workspace country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app'**
+  /// **'The business\'s country must be a member state of the European Union, the United Kingdom, Switzerland or Canada for issuing here — other countries are issued outside the app'**
   String get invoiceMissingSellerCountry;
 
   /// #2361: invoiceMissingSellerQstNumber
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
+  /// **'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
   String get invoiceMissingSellerQstNumber;
 
   /// #2356: invoiceMissingSellerTaxNumber
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
+  /// **'The business\'s VAT number or tax number (the registration field holds the Steuernummer or the NIF)'**
   String get invoiceMissingSellerTaxNumber;
 
   /// #2360: invoiceMissingSellerUidFormat
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)'**
+  /// **'The business\'s UID in the Swiss format: CHE-123.456.789 followed by MWST (TVA, IVA), with a valid check digit (art. 26 MWSTG)'**
   String get invoiceMissingSellerUidFormat;
 
   /// #1916 invoice essentials: invoiceMissingSellerVatId
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s VAT identification number'**
+  /// **'The business\'s VAT identification number'**
   String get invoiceMissingSellerVatId;
 
   /// #2359: invoiceMissingSellerVatIdFormat
   ///
   /// In en, this message translates to:
-  /// **'The workspace\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)'**
+  /// **'The business\'s VAT registration number in HMRC\'s format: GB or XI followed by nine or twelve digits (VAT Notice 700)'**
   String get invoiceMissingSellerVatIdFormat;
 
   /// #2363 VAT registers (ES, IT): invoiceMissingTerritoryOutsideVat
@@ -25024,13 +25024,13 @@ abstract class AppLocalizations {
   /// #1917 essentials key vat_charged_not_registered (0393)
   ///
   /// In en, this message translates to:
-  /// **'No VAT on any line: the workspace does not charge VAT, but a rate is set on the subscription or an accessory'**
+  /// **'No VAT on any line: the business does not charge VAT, but a rate is set on the subscription or an accessory'**
   String get invoiceMissingVatNotRegistered;
 
   /// Shown as a text in invoice missing sales tax (money).
   ///
   /// In en, this message translates to:
-  /// **'A VAT rate in force for the workspace\'s default rate (it would bill 0 %)'**
+  /// **'A VAT rate in force for the business\'s default rate (it would bill 0 %)'**
   String get invoiceMissingVatRate;
 
   /// Shown as a text in invoice missing sales tax (money).
@@ -25048,7 +25048,7 @@ abstract class AppLocalizations {
   /// #2354 VIES evidence: invoiceMissingVies
   ///
   /// In en, this message translates to:
-  /// **'A valid VIES check of the member\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
+  /// **'A valid VIES check of the customer\'s VAT number (needed for reverse charge; if VIES did not answer, try again later)'**
   String get invoiceMissingVies;
 
   /// #3587 R1-e: the select-all row of the month list
