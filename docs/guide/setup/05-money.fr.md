@@ -238,7 +238,7 @@ Vous décidez si une personne appuie sur les boutons chaque mois ou si DesKilo s
 - Chaque type de facture (abonnement, fin de mois) ne peut être émis qu'une fois par membre et par mois. Une facture ne se modifie ni ne se supprime ; une facture erronée est marquée comme telle et remplacée.
 - Par défaut, le propriétaire et les copropriétaires émettent les factures. **Les admins émettent des factures** étend ce droit aux administrateurs.
 
-**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Relancer et solder les factures ouvertes](help:user.invoicing.open)
+**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Suivre une facture](help:user.invoicing.open)
 
 <!-- anchor: setup.money.reminders -->
 ### Relances de paiement

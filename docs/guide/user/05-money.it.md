@@ -354,6 +354,31 @@ Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
 
 **Vedi anche:** [La fatturazione in sintesi](help:user.money.invoicing) · [La pagina Acquisti e Aggiungi acquisto / spesa](help:user.money.purchases)
 
+<!-- anchor: user.money.guest-passes -->
+### Vendere e revocare un pass ospite
+
+**Destinatari:** Amministratore · Proprietario
+
+Un ospite che non è membro occupa un posto per un giorno o qualche ora, paga all'accoglienza e riceve una fattura.
+
+<!-- image: user-money-guest-passes -->
+
+**Passaggi**
+
+1. Apra [Pass ospite](app:/money/guest-passes), oppure **Pass ospite** nella pagina [Vendite](app:/money/sales).
+2. La prima volta, tocchi **Aggiungere un pass**: il suo **Nome**, **Al giorno** o **All'ora**, il **Prezzo per unità** e **In vendita**.
+3. Tocchi **Vendere un pass**, scelga il **Pass** e il **Posto**, i giorni (**Dalle**, **Alle**) e il nome e il contatto dell'ospite, e spunti **Pagato all'accoglienza** se ha pagato.
+4. **Pass venduti** elenca ogni pass con ciò che è stato **Usato**. Per ritirare dei pass, li selezioni, tocchi **Revoca** e confermi.
+
+**Da sapere**
+
+- L'ospite non diventa membro; il suo nome e il suo contatto sono stampati sulla fattura.
+- Revocare annulla le prenotazioni non ancora iniziate. I giorni già iniziati restano, e nessun denaro si muove: corregga la fattura dell'ospite nella sua pagina se gli spetta un rimborso.
+- **Revocati, fattura non corretta** elenca i pass revocati la cui fattura attende ancora la correzione; **Apri la fattura** la porta lì.
+- Un pass orario vale per un giorno; un pass giornaliero dura da 1 a 31 giorni.
+
+**Vedi anche:** [La pagina Vendite](help:user.money.sales) · [Seguire una fattura](help:user.invoicing.open)
+
 <!-- anchor: user.money.purchases -->
 ### La pagina Acquisti e Aggiungi acquisto / spesa
 
@@ -607,21 +632,21 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 **Destinatari:** Amministratore fatturazione · Proprietario
 
-Emette e sollecita le fatture dell'intero spazio e vuole sapere da dove cominciare.
+Emette e sollecita le fatture di tutto lo spazio e vuole sapere da dove cominciare.
 
 <p><img src="images/user-money-invoicing.it.jpg" width="280"></p>
 
 **Passaggi**
 
 1. Apra [Fatturazione](app:/invoices).
-2. Legga le schede: **Da fatturare** elenca i membri ancora da fatturare per il mese, **Aperto** le fatture emesse e non pagate, **Archivio** quelle chiuse.
-3. Legga la riga dei quattro passaggi sotto il banner: **Da emettere**, **Da incassare**, **Da confermare** e **Chiuso**, ciascuno con un conteggio.
-4. Tocchi **Assistente di chiusura mensile** per fatturare un mese, oppure **Nuova fattura** per una sola.
-5. Tocchi l'icona degli strumenti per il registro fatture, le regole di sollecito, il modello PDF della fattura e **Le mie finanze**.
+2. Legga **Da incassare**: cosa è **Scaduto** e cosa è **Non ancora scaduto**.
+3. Proceda in **Da fare**: ogni voce si apre con **Vedi**, finché indica **È tutto in ordine.**
+4. Sotto, legga i clienti e le loro fatture; tocchi **Nuova** per una sola fattura e **Altro** per gli altri strumenti.
 
 **Da sapere**
 
-- Le fatture non si modificano né si eliminano mai. Una fattura sbagliata è contrassegnata come errata e sostituita.
-- Il flusso completo, dalla chiusura del mese al saldo e ai solleciti, è nel capitolo 08: [Regole di sollecito](help:user.money.reminders.rules) e [Il modello PDF della fattura](help:user.money.reports.invoice-template) sono buoni punti da cui proseguire.
+- Una fattura non si modifica né si cancella. Una sbagliata si corregge con una fattura sostitutiva.
+- Tutta la routine, dalla fatturazione del mese all'abbinamento dei pagamenti e al pagamento delle note di credito, è nel capitolo 08: cominci da [La schermata Fatturazione](help:user.invoicing.hub).
 
-**Vedi anche:** [Regole di sollecito](help:user.money.reminders.rules)
+**Vedi anche:** [Fatturare il mese](help:user.invoicing.month) · [Regole di sollecito](help:user.money.reminders.rules)
+

@@ -1511,7 +1511,7 @@ Sie entscheiden, ob jemand jeden Monat die Knöpfe drückt oder DesKilo das übe
 - Jede Rechnungsart (Abo, Monatsabschluss) kann pro Mitglied und Monat einmal ausgestellt werden. Rechnungen lassen sich weder bearbeiten noch löschen; eine falsche wird als fehlerhaft markiert und ersetzt.
 - Standardmäßig stellen der Inhaber und die Mitinhaber Rechnungen aus. **Admins stellen Rechnungen aus** erweitert das auf die Administratoren.
 
-**Siehe auch:** [Der Bildschirm Rechnungsstellung](Benutzerhandbuch#der-bildschirm-rechnungsstellung) · [Offene Rechnungen nachfassen und abschließen](Benutzerhandbuch#offene-rechnungen-nachverfolgen-und-begleichen)
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](Benutzerhandbuch#der-bildschirm-rechnungsstellung) · [Eine Rechnung verfolgen](Benutzerhandbuch#eine-rechnung-verfolgen)
 
 <!-- anchor: setup.money.reminders -->
 ### Zahlungserinnerungen

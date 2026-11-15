@@ -354,6 +354,31 @@ Vous voulez trouver au même endroit tout ce que l'espace vend et facture.
 
 **Voir aussi:** [La facturation en un coup d'œil](help:user.money.invoicing) · [La page Achats et Ajouter un achat / une dépense](help:user.money.purchases)
 
+<!-- anchor: user.money.guest-passes -->
+### Vendre et révoquer un pass invité
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un invité qui n'est pas membre prend une place pour une journée ou quelques heures, paie à l'accueil et reçoit une facture.
+
+<!-- image: user-money-guest-passes -->
+
+**Étapes**
+
+1. Ouvrez [Pass invités](app:/money/guest-passes), ou **Pass invités** sur la page [Ventes](app:/money/sales).
+2. La première fois, touchez **Ajouter un pass** : son **Nom**, **Par jour** ou **Par heure**, le **Prix par unité**, et **En vente**.
+3. Touchez **Vendre un pass**, choisissez le **Pass** et la **Place**, les jours (**De**, **À**) et le nom et le contact de l'invité, et cochez **Payé à l'accueil** s'il a payé.
+4. **Pass vendus** liste chaque pass avec ce qui a été **Utilisé**. Pour reprendre des pass, sélectionnez-les et touchez **Révoquer**, puis confirmez.
+
+**Bon à savoir**
+
+- L'invité ne devient pas membre ; son nom et son contact sont imprimés sur la facture.
+- Révoquer annule les réservations qui n'ont pas encore commencé. Les jours déjà commencés restent, et aucun argent ne bouge : corrigez la facture de l'invité sur sa page s'il doit être remboursé.
+- **Révoqués, facture non corrigée** liste les pass révoqués dont la facture attend encore sa correction ; **Ouvrir la facture** vous y mène.
+- Un pass à l'heure vaut pour une journée ; un pass à la journée dure de 1 à 31 jours.
+
+**Voir aussi:** [La page Ventes](help:user.money.sales) · [Suivre une facture](help:user.invoicing.open)
+
 <!-- anchor: user.money.purchases -->
 ### La page Achats et Ajouter un achat / une dépense
 
@@ -607,21 +632,21 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 
 **Public:** Administrateur·rice facturation · Propriétaire
 
-Vous émettez et relancez les factures de tout l'espace et vous voulez savoir par où commencer.
+Vous émettez et relancez les factures de tout l'espace et voulez savoir par où commencer.
 
 <p><img src="images/user-money-invoicing.fr.jpg" width="280"></p>
 
 **Étapes**
 
 1. Ouvrez [Facturation](app:/invoices).
-2. Lisez les onglets : **À facturer** liste les membres à facturer pour le mois, **En cours** les factures émises et impayées, et **Archives** celles qui sont closes.
-3. Lisez la ligne de quatre étapes sous la bannière : **À émettre**, **À encaisser**, **À confirmer** et **Closes**, avec un nombre pour chacune.
-4. Touchez **Assistant de clôture** pour facturer un mois, ou **Nouvelle facture** pour une seule.
-5. Touchez l'icône d'outils pour le registre des factures, les règles de rappel, le modèle PDF de facture et **Mes finances**.
+2. Lisez **À recevoir** : ce qui est **En retard** et ce qui est **Pas encore échu**.
+3. Avancez dans **À faire** : chaque entrée s'ouvre avec **Voir**, jusqu'à ce qu'elle indique **Tout est à jour.**
+4. En dessous, lisez les clients et leurs factures ; touchez **Nouvelle** pour une seule facture et **Plus** pour les autres outils.
 
 **Bon à savoir**
 
-- Les factures ne sont jamais modifiées ni supprimées. Une facture erronée est marquée comme telle et remplacée.
-- Le processus complet, de la clôture du mois au règlement et aux rappels, est décrit au chapitre 08 : [Règles de rappel](help:user.money.reminders.rules) et [Le modèle PDF de facture](help:user.money.reports.invoice-template) sont de bons endroits pour poursuivre.
+- Une facture ne se modifie ni ne se supprime. Une facture fausse est corrigée par une facture de remplacement.
+- Toute la routine, de la facturation du mois au rapprochement des paiements et au remboursement des avoirs, est au chapitre 08 : commencez par [L'écran Facturation](help:user.invoicing.hub).
 
-**Voir aussi:** [Règles de rappel](help:user.money.reminders.rules)
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month) · [Règles de relance](help:user.money.reminders.rules)
+
