@@ -4805,6 +4805,7 @@ const List<String> uiKeyPatterns = [
   'me-ref-{}',
   'me-section-{}',
   'me-space-badge-{}',
+  'me-space-count-{}',
   'me-space-last-{}',
   'me-space-pair-{}',
   'me-space-{}',
