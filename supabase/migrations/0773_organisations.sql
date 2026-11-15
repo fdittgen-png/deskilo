@@ -137,11 +137,28 @@ create trigger workspaces_organisation_of_pair
   execute function public.workspaces_organisation_of_pair();
 
 -- ── 3. the commands ──────────────────────────────────────────────────────
--- Refuses an assistant's token and anyone who does not own [p_workspace_id].
+-- Whether the caller owns [p_workspace_id] and its twin: a command moves
+-- both halves of a pair, so it asks the owner of both.
+create or replace function public.organisation_owns(p_workspace_id uuid)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select p_workspace_id is not null
+     and not public.mcp_is_delegated()
+     and not exists (
+       select 1 from public.workspaces w
+        where (w.id = p_workspace_id
+               or (w.pair_id is not null
+                   and w.pair_id = (select x.pair_id from public.workspaces x where x.id = p_workspace_id)))
+          and not coalesce(public.is_owner_of(w.id), false))
+     and exists (select 1 from public.workspaces where id = p_workspace_id);
+$fn$;
+revoke execute on function public.organisation_owns(uuid) from public, anon, authenticated;
+
+-- Refuses an assistant's token and anyone who does not own [p_workspace_id]
+-- and its twin.
 create or replace function public.organisation_owner_check(p_workspace_id uuid)
 returns void language plpgsql stable security definer set search_path = public as $fn$
 begin
-  if public.mcp_is_delegated() or not coalesce(public.is_owner_of(p_workspace_id), false) then
+  if not public.organisation_owns(p_workspace_id) then
     raise exception 'only an owner of this business may do this' using errcode = '42501';
   end if;
 end;
@@ -198,15 +215,11 @@ begin
   if v_org.id is null then
     raise exception 'this business is in no organisation' using errcode = '22023';
   end if;
-  if public.mcp_is_delegated()
-     or not (coalesce(public.is_owner_of(v_org.head_workspace_id), false)
-             or coalesce(public.is_owner_of(p_business), false)) then
-    raise exception 'only an owner of this business may do this' using errcode = '42501';
-  end if;
   select pair_id into v_pair from public.workspaces where id = v_org.head_workspace_id;
   if p_business = v_org.head_workspace_id
      or (v_pair is not null and p_business in (select id from public.workspaces where pair_id = v_pair)) then
-    -- the head and its twin leave last
+    -- the head and its twin leave last, by an owner of the head
+    perform public.organisation_owner_check(v_org.head_workspace_id);
     if exists (select 1 from public.workspaces w
                 where w.organisation_id = v_org.id and w.id <> v_org.head_workspace_id
                   and (v_pair is null or w.pair_id is distinct from v_pair)) then
@@ -215,6 +228,10 @@ begin
     perform public.organisation_place(v_org.head_workspace_id, null);
     delete from public.organisations where id = v_org.id;
     return;
+  end if;
+  -- a house leaves by an owner of the head, or by an owner of the house
+  if not (public.organisation_owns(v_org.head_workspace_id) or public.organisation_owns(p_business)) then
+    raise exception 'only an owner of this business may do this' using errcode = '42501';
   end if;
   perform public.organisation_place(p_business, null);
 end;

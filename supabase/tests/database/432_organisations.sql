@@ -8,7 +8,7 @@
 -- leaves last; removing a house leaves its data as it was. An assistant's
 -- token is refused. Rolled back.
 begin;
-select plan(18);
+select plan(20);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -71,11 +71,29 @@ select is(pg_temp.org_of('w2'), pg_temp.id('org'), 'and so is the business its o
 insert into public.workspaces (name, country_code, currency_code, timezone, created_by, pair_id, environment)
 select 'ORG-LONDON (dev)', 'GB', 'GBP', 'Europe/London', pg_temp.id('owner_a'),
        '00000000-0000-4000-8000-0000000040aa', 'dev';
+insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
+select id, pg_temp.id('owner_a'), true, true, '2026-01-01' from public.workspaces where name = 'ORG-LONDON (dev)';
 update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040aa' where id = pg_temp.id('w2');
 select is((select organisation_id from public.workspaces where name = 'ORG-LONDON (dev)'), pg_temp.id('org'),
   'a twin follows its business into the organisation');
 
 -- ── who is refused ──
+-- test data written as the server: Zurich's development twin, owned by A
+-- while Zurich itself is owned by B
+insert into public.workspaces (name, country_code, currency_code, timezone, created_by, pair_id, environment)
+select 'ORG-ZURICH (dev)', 'CH', 'CHF', 'Europe/Zurich', pg_temp.id('owner_a'),
+       '00000000-0000-4000-8000-0000000040bb', 'dev';
+update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040bb' where id = pg_temp.id('w3');
+insert into public.members (workspace_id, user_id, is_owner, is_admin, joined_at)
+select id, pg_temp.id('owner_a'), true, true, '2026-01-01' from public.workspaces where name = 'ORG-ZURICH (dev)';
+select pg_temp.as_user('owner_a');
+set local role authenticated;
+select throws_ok(format('select public.add_business_to_organisation(%L, %L)', pg_temp.id('org'),
+    (select id from public.workspaces where name = 'ORG-ZURICH (dev)')),
+  '42501', 'only an owner of this business may do this', 'an owner of a twin alone moves no pair');
+reset role;
+select is(pg_temp.org_of('w3'), null::uuid, 'and the business it twins stays out');
+
 select pg_temp.as_user('owner_b');
 set local role authenticated;
 select throws_ok(format('select public.add_business_to_organisation(%L, %L)', pg_temp.id('org'), pg_temp.id('w3')),
