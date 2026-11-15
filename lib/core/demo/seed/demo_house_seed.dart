@@ -55,11 +55,12 @@ Workspace demoHouseSpace() => Workspace(
   city: 'Kraków',
 );
 
-/// Ada, who adds the house, owns it; the cast's second person is added
-/// once at birth as its co-owner (what the server does).
+/// Ada, who adds the house, owns it; Chiara, who runs the day at the head,
+/// is added once at birth as its co-owner. #4008 — Bruno, the member the
+/// Demo looks through, is not a member of the house: he asks to join it.
 void seedHousePeople(FakeWorkspaceRepository space) {
   final owner = demoCast.first;
-  final coOwner = demoCast[1];
+  final coOwner = demoCast[2];
   space
     ..myMember = Member(
       id: owner.memberId,
