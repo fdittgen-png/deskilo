@@ -2289,6 +2289,7 @@ constraint workspace_templates.workspace_templates_regional_shape CHECK (((jsonb
 constraint workspace_templates.workspace_templates_visibility_check CHECK ((visibility = ANY (ARRAY['builtin'::text, 'private'::text, 'shared'::text, 'public'::text])))
 constraint workspaces.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint workspaces.system_company_present CHECK ((company_id IS NOT NULL))
+constraint workspaces.workspaces_accounting_journals_whole CHECK ((accounting_journals_problem(accounting_journals) IS NULL))
 constraint workspaces.workspaces_address_check CHECK ((char_length(address) <= 400))
 constraint workspaces.workspaces_city_check CHECK ((char_length(city) <= 60))
 constraint workspaces.workspaces_country_code_check CHECK ((country_code ~ '^[A-Z]{2}$'::text))
@@ -2345,6 +2346,7 @@ routine public.accounting_connector_member(p_workspace_id uuid, p_permission tex
 routine public.accounting_credentials_resolved(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fd972c886c6e
 routine public.accounting_delivery_json(d accounting_deliveries) -> jsonb | function | definer | stable | exec:service_role | body:0753a6267fb5
 routine public.accounting_idempotency_key(p_identity text) -> text | function | invoker | immutable | exec:service_role | body:acda5f1ff2aa
+routine public.accounting_journals_problem(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:ec6cf1395ee5
 routine public.accounting_map_key_valid(p_kind text, p_key text) -> boolean | function | invoker | immutable | exec:service_role | body:e1c8f8aa4d27
 routine public.accounting_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:cede8c7c67d0
 routine public.accounting_secret_keys(p_connection_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:5889e4ff7a19
@@ -3451,6 +3453,7 @@ routine public.set_account_group_admin(p_group uuid, p_user uuid, p_admin boolea
 routine public.set_account_group_meta(p_group uuid, p_title text, p_description text, p_announce_only boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:39e68f6fc324
 routine public.set_accounting_credentials(p_connection_id uuid, p_secrets jsonb, p_patch jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:be713559c0be
 routine public.set_accounting_credentials_leased(p_connection_id uuid, p_holder text, p_secrets jsonb, p_patch jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:7c5b066306b2
+routine public.set_accounting_journals(p_workspace_id uuid, p_journals jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:91aeb273d290
 routine public.set_accounting_token_v1(p_connection_id uuid, p_token text, p_remote_tenant_id text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:629cbab79411
 routine public.set_badge_auth_enabled(p_badge_id uuid, p_enabled boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:f95d9a791a21
 routine public.set_badge_pin(p_pin text) -> void | function | definer | volatile | exec:authenticated,service_role | body:4c71a08327d0
