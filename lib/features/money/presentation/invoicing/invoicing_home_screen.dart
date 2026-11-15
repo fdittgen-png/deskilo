@@ -27,6 +27,7 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/storage/pane_width_store.dart';
 import '../../../../core/time/clock.dart';
+import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
@@ -123,12 +124,23 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             icon: Icon(_searchOpen ? Icons.search_off : Icons.search),
             onPressed: () => setState(() => _searchOpen = !_searchOpen),
           ),
-          OutlinedButton.icon(
-            key: const ValueKey('invoicing-new'),
-            onPressed: () => showInvoiceIssueSheet(context, ref),
-            icon: const Icon(Icons.add),
-            label: Text(l.invoicingNew),
-          ),
+          // On a phone the action is its icon, named by its tooltip: the
+          // labelled button and the search and menu beside it do not fit at
+          // 320 dp and twice the text (#4037).
+          if (WindowClass.of(context) == WindowClass.compact)
+            IconButton(
+              key: const ValueKey('invoicing-new'),
+              tooltip: l.invoicingNew,
+              onPressed: () => showInvoiceIssueSheet(context, ref),
+              icon: const Icon(Icons.add),
+            )
+          else
+            OutlinedButton.icon(
+              key: const ValueKey('invoicing-new'),
+              onPressed: () => showInvoiceIssueSheet(context, ref),
+              icon: const Icon(Icons.add),
+              label: Text(l.invoicingNew),
+            ),
           _moreMenu(context),
         ],
       ),

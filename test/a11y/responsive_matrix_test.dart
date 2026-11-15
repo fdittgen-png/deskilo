@@ -36,13 +36,6 @@ const _tablet = Size(1200, 900);
 const _smallPhone = Size(320, 800);
 const _phones = [_phone, _smallPhone];
 
-/// #4022 — rows the 320 dp walk found a fault in, and the fault. Each is left
-/// out of that one measurement until the screen is fixed.
-const Map<String, String> _waitsAt320LargeText = {
-  'Invoices': 'waits for the invoices button of the money face to stay '
-      'reachable at 320 dp and twice the text: scrolled into view it sits '
-      'under the bottom bar, and a tap misses it',
-};
 
 /// What the screen offers, as a screen reader would read it — labels
 /// rather than child counts, because a state that differs only in how
@@ -88,9 +81,6 @@ void main() {
 
   for (final row in matrixRowsFor(MatrixAxis.largeText)) {
     for (final size in _phones) {
-      if (size == _smallPhone && _waitsAt320LargeText.containsKey(row.screen)) {
-        continue;
-      }
       testWidgets(
           '${row.screen} holds at twice the text size, '
           '${size.width.toInt()} dp', (tester) async {

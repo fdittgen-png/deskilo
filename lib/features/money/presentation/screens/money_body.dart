@@ -135,7 +135,10 @@ class _ClassicColumn extends StatelessWidget {
               const VerticalDivider(width: 1),
               Expanded(
                 child: ListView(
-                  padding: AppSpacing.mdAll,
+                  padding: AppSpacing.mdAll +
+                      EdgeInsets.only(
+                        bottom: MediaQuery.paddingOf(context).bottom,
+                      ),
                   children: billChildren,
                 ),
               ),
@@ -143,7 +146,10 @@ class _ClassicColumn extends StatelessWidget {
           );
         }
         return ListView(
-          padding: AppSpacing.mdAll,
+          // The bottom inset joins the padding: the last control ends above
+          // the floating Reserve button (#4037).
+          padding: AppSpacing.mdAll +
+              EdgeInsets.only(bottom: MediaQuery.paddingOf(context).bottom),
           children: [
             // #606 — contextual how-to; gated inside the widget.
             const HelpHint(HelpHintId.money),
