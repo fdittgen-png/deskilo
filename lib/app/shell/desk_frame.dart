@@ -19,6 +19,7 @@ import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/page_title.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../route_classes.dart';
 import 'chrome_role.dart';
 import 'desk_breadcrumb.dart';
 import 'desk_scaffold.dart';
@@ -131,10 +132,15 @@ String _branchLocation(List<List<String>> tabs, int branch) =>
     permanent: true,
     tabs: tabs,
   ).crumbsOf(path);
+  // #4060 — a conversation is a page outside the tabs whose place is
+  // Messages, even where that entry is folded into the calendar hub: its
+  // crumb says so, and the person's name follows it.
   final tabTitle = path == '/workspace-overview'
       ? l10n.overviewTitle
       : branch >= 0
       ? tabTitles[branch]
+      : placeOf(path) == 'drawer-tab-${ShellBranch.messages}'
+      ? tabTitles[ShellBranch.messages]
       : null;
   return (
     crumbs: crumbs.isEmpty && tabTitle != null

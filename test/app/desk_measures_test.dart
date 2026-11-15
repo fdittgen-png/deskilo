@@ -41,7 +41,7 @@ const _measured = <(String, PageMeasure, String)>[
   ('/formats', _form, '/formats'),
   ('/events', _work, ''),
   ('/plan', _work, ''),
-  ('/conversation/:conversationId', _work, ''),
+  ('/conversation/:conversationId', _reading, ''),
   ('/res/:id', _reading, ''),
   ('/space/:kind/:id', _reading, ''),
   ('/library', _work, '/library'),
