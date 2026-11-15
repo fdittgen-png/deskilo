@@ -292,6 +292,8 @@ public.offices.offices_select
 public.offices.offices_write
 public.offices.offices_write_sites
 public.opening_hours_history.mcp_delegated_deny
+public.organisation_houses.mcp_delegated_deny
+public.organisation_houses.organisation_houses_select
 public.organisations.mcp_delegated_deny
 public.organisations.organisations_select
 public.organisations.personal_native_session
