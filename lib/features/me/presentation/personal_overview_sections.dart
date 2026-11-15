@@ -240,11 +240,15 @@ class _Commitment extends StatelessWidget {
             Expanded(
               child: Text(place, style: theme.textTheme.titleMedium?.strong),
             ),
-            StatusChip(
-              tone: c.state == CommitmentState.ongoing
-                  ? StatusTone.ok
-                  : StatusTone.neutral,
-              label: commitmentStateWords(l10n, c.state),
+            // Flexible: at twice the text on a narrow phone the state word
+            // gives way instead of pushing the row past the edge (#4022).
+            Flexible(
+              child: StatusChip(
+                tone: c.state == CommitmentState.ongoing
+                    ? StatusTone.ok
+                    : StatusTone.neutral,
+                label: commitmentStateWords(l10n, c.state),
+              ),
             ),
           ],
         ),

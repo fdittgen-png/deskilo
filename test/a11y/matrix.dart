@@ -21,10 +21,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../helpers/screens/accessories_screen.dart' show pumpAccessories;
 import '../helpers/screens/calendar_hub.dart' as calendar;
+import '../helpers/screens/directory_screen.dart'
+    show pumpDirectory, seedDirectory;
 import '../helpers/screens/events.dart' show pumpEvents;
 import '../helpers/screens/features.dart' show pumpFeatures;
 import '../helpers/screens/invoices.dart' show pumpInvoices;
 import '../helpers/screens/level_canvas.dart' show pumpCanvas;
+import '../helpers/screens/me_rows.dart'
+    show pumpMeHome, pumpMeInvoices, pumpMeToPay;
 import '../helpers/screens/members_screen.dart' show pumpMembers;
 import '../helpers/screens/money_faces.dart' show pumpFaces;
 import '../helpers/screens/onboarding_layout.dart' show pumpOnboardingLayout;
@@ -118,13 +122,6 @@ const _all = {
   MatrixAxis.reducedMotion,
 };
 
-/// Nothing measured, for one stated reason.
-Map<MatrixAxis, String> _unmeasured(String why) =>
-    {
-      for (final a in MatrixAxis.values)
-        if (a != MatrixAxis.locales) a: why,
-    };
-
 /// Wrap a pump that sets no viewport of its own.
 SizedPump _sized(Future<void> Function(WidgetTester tester) pump) =>
     (tester, size) async {
@@ -213,9 +210,27 @@ final List<MatrixRow> kMatrix = [
       pump: (t, size) async { await pumpWorkspaceSettings(t, expand: false, size: size); }, axes: _all),
   MatrixRow('Workspace reports',
       pump: (t, size) async { await pumpWorkspaceSettings(t, reports: true, size: size); }, axes: _all),
+  // #4022 — the directory's own pump takes no size and needs a seeded
+  // repository per case: the row seeds it and sets the viewport itself.
   MatrixRow('Member directory',
-      gaps: _unmeasured('pumpDirectory takes no size and needs a seeded '
-          'repository per case — #1582 (2026-09-20)')),
+      pump: (t, size) async {
+        t.view.physicalSize = size;
+        t.view.devicePixelRatio = 1;
+        addTearDown(t.view.reset);
+        final seeded = seedDirectory();
+        await pumpDirectory(
+          t,
+          workspace: seeded.workspace,
+          reservations: seeded.reservations,
+          floorPlan: seeded.floorPlan,
+          profile: seeded.profile,
+        );
+      },
+      axes: _all),
+  // #4022 — Me: the home, what is still to pay and the paid invoices.
+  MatrixRow('Me › Home', pump: pumpMeHome, axes: _all),
+  MatrixRow('Me › To pay', pump: pumpMeToPay, axes: _all),
+  MatrixRow('Me › Invoices', pump: pumpMeInvoices, axes: _all),
 ];
 
 /// Rows whose [axis] is asserted somewhere in this folder.
