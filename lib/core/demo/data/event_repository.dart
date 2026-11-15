@@ -70,11 +70,17 @@ class FakeEventRepository implements EventRepository {
 
   var _nextDecisionId = 1;
 
+  /// #4017 — the Demo's failure switch for this read: while on, the events
+  /// cannot be read, as when the server does not answer, so a walk can show
+  /// what the person sees then.
+  bool failReads = false;
+
   @override
   Future<List<WorkspaceEvent>> fetchEvents(
     String workspaceId, {
     int limit = 100,
   }) async {
+    if (failReads) throw StateError('the events could not be read');
     return events
         .where((e) => e.workspaceId == workspaceId && _mayRead(e))
         .toList()
