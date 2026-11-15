@@ -1,5 +1,6 @@
 {
   "@@locale": "fr",
   "purchasesWithoutReceipt": "Sans justificatif",
-  "purchasesReceiptColumn": "Justificatif"
+  "purchasesReceiptColumn": "Justificatif",
+  "purchasesSupplierNotRead": "Non lu"
 }

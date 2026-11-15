@@ -1790,6 +1790,7 @@ Map<String, _Getter> _part4() => {
   'purchaseReceiptIntro': (l) => l.purchaseReceiptIntro,
   'purchasesLegacyTag': (l) => l.purchasesLegacyTag,
   'purchasesRejectReason': (l) => l.purchasesRejectReason,
+  'purchasesSupplierNotRead': (l) => l.purchasesSupplierNotRead,
   'questionEditorKeyHelp': (l) => l.questionEditorKeyHelp,
   'questionEditorMin': (l) => l.questionEditorMin,
   'readinessAreaPricing': (l) => l.readinessAreaPricing,

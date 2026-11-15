@@ -41808,6 +41808,12 @@ abstract class AppLocalizations {
   /// **'Supplier'**
   String get purchasesSupplier;
 
+  /// #4067 the purchases table: the supplier cell when the suppliers could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Not read'**
+  String get purchasesSupplierNotRead;
+
   /// #2574 purchase payables
   ///
   /// In en, this message translates to:

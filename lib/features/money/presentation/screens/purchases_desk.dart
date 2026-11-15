@@ -24,6 +24,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/records_table.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
@@ -37,9 +38,38 @@ const String _purchasesPath = '/money/purchases';
 /// Where a document opens: `/money/purchases/doc/<id>`.
 const String purchaseDocPath = '/money/purchases/doc';
 
-/// One row: the document, its supplier's name and what is still open of
-/// it (null while the payables are not read).
-typedef _Row = ({PurchaseSummary doc, String supplier, int? open});
+/// What a row can say of its supplier (#4067): a name, that the purchase has
+/// none, or that the suppliers could not be read.
+enum _SupplierState { named, none, unread, loading }
+
+/// One row: the document, its supplier's name (empty unless
+/// [_SupplierState.named]) and what is still open of it (null while the
+/// payables are not read).
+typedef _Row = ({
+  PurchaseSummary doc,
+  String supplier,
+  _SupplierState supplierState,
+  int? open,
+});
+
+/// The supplier of a row: its name, or one muted line that says why there is
+/// none; never a blank.
+Widget _supplierText(BuildContext context, AppLocalizations l, _Row r) {
+  final (:text, :muted) = switch (r.supplierState) {
+    _SupplierState.named => (text: r.supplier, muted: false),
+    _SupplierState.none => (text: l.scheduleNoSupplier, muted: true),
+    _SupplierState.unread => (text: l.purchasesSupplierNotRead, muted: true),
+    _SupplierState.loading => (text: '', muted: false),
+  };
+  final theme = Theme.of(context);
+  return Text(
+    text,
+    overflow: TextOverflow.ellipsis,
+    style: muted
+        ? TextStyle(color: theme.colorScheme.onSurfaceVariant)
+        : null,
+  );
+}
 
 /// The purchases table, with the open document beside it.
 class PurchasesDesk extends ConsumerWidget {
@@ -85,9 +115,10 @@ class PurchasesDesk extends ConsumerWidget {
     final payables = ref
         .watch(payablesProvider(workspaceId))
         .value; // empty-ok: an unread payable leaves the open column empty
+    final supplierRead = ref.watch(suppliersProvider(workspaceId));
     final suppliers = {
       for (final s
-          in ref.watch(suppliersProvider(workspaceId)).value ?? // empty-ok: a name is a label; an unread one is left blank
+          in supplierRead.value ?? // empty-ok: an unread supplier is said as "not read" on its row
               const <Supplier>[])
         s.id: s.name,
     };
@@ -101,6 +132,13 @@ class PurchasesDesk extends ConsumerWidget {
         (
           doc: d,
           supplier: suppliers[d.supplierId] ?? '',
+          supplierState: d.supplierId == null
+              ? _SupplierState.none
+              : suppliers.containsKey(d.supplierId)
+              ? _SupplierState.named
+              : supplierRead.isLoading
+              ? _SupplierState.loading
+              : _SupplierState.unread,
           open: payables == null ? null : open[d.id] ?? 0,
         ),
     ];
@@ -214,7 +252,7 @@ class _PurchasesTable extends StatelessWidget {
           flex: 4,
           hideable: false,
           sortKey: (r) => r.supplier.toLowerCase(),
-          cell: (_, r) => Text(r.supplier, overflow: TextOverflow.ellipsis),
+          cell: (context, r) => _supplierText(context, l, r),
         ),
         RecordColumn(
           id: 'category',
@@ -285,7 +323,7 @@ class _PurchasesTable extends StatelessWidget {
         ),
       ],
       cardBuilder: (context, r) => ListTile(
-        title: Text(r.supplier, overflow: TextOverflow.ellipsis),
+        title: _supplierText(context, l, r),
         subtitle: Text(r.doc.category),
         trailing: Text(figure(r, r.doc.grossCents)),
       ),
