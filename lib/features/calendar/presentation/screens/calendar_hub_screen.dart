@@ -215,6 +215,9 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         setState(() { _alerts = false; _selection = _selection.withView(v); }); },
       onToday: () => _move('today', () => _selection = _selection.withAnchor(_today)));
 
+  /// #4055 — the decisions' one row on a phone opens the Alerts view.
+  void _openAlerts() => ref.read(calendarAlertsRequestProvider.notifier).request();
+
   /// Off the build frame: the request is a provider, the view a setState.
   void _takeAlertsRequest() => Future.microtask(() {
         if (!mounted) return;
@@ -343,7 +346,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       return Scaffold(
         body: ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
+          CalendarDecisions(openAlerts: widget.deskAlerts == null && alertsOffered ? _openAlerts : null), // #1306, #4055
           _plainSelector(l10n),
           chips,
         ]),
@@ -385,7 +388,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
               child: SingleChildScrollView(
                 child: Column(children: [
                   const HelpHint(HelpHintId.calendar),
-          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
+          CalendarDecisions(openAlerts: widget.deskAlerts == null && alertsOffered ? _openAlerts : null), // #1306, #4055
                   selector,
                   chips,
                 ]),
@@ -397,7 +400,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         }
         return ControlsFeedBody(feed: feed, controls: [
           const HelpHint(HelpHintId.calendar),
-          CalendarDecisions(entry: widget.deskAlerts == null), // #1306, #4055
+          CalendarDecisions(openAlerts: widget.deskAlerts == null && alertsOffered ? _openAlerts : null), // #1306, #4055
           selector,
           chips,
         ]);
