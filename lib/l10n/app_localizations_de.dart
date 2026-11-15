@@ -22521,6 +22521,110 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zwei Räume gleichen Namens: einer zum Ausprobieren, einer, der echt ist. Beide gehören Ihnen.';
 
   @override
+  String get organisationAdd => 'Eines meiner Unternehmen hinzufügen';
+
+  @override
+  String get organisationAddNone =>
+      'Keines Ihrer Unternehmen kann beitreten: Jedes gehört bereits zu einer Organisation.';
+
+  @override
+  String organisationConfirmEnd(String organisation, String head) {
+    return '$organisation endet: $head ist wieder ein eigenständiges Unternehmen.';
+  }
+
+  @override
+  String organisationConfirmHead(String house) {
+    return '$house wird Hauptsitz: Seine Inhaber führen ab jetzt die Organisation.';
+  }
+
+  @override
+  String organisationConfirmLeave(String house, String organisation) {
+    return '$house verlässt $organisation. Seine Daten bleiben, wie sie sind; seine Mitglieder finden die anderen Häuser nicht mehr in seinem Chip.';
+  }
+
+  @override
+  String get organisationCreate =>
+      'Dieses Unternehmen zum Hauptsitz einer Organisation machen';
+
+  @override
+  String get organisationHead => 'Hauptsitz';
+
+  @override
+  String get organisationLeave => 'Die Organisation verlassen';
+
+  @override
+  String get organisationMakeHead => 'Zum Hauptsitz machen';
+
+  @override
+  String get organisationName => 'Name der Organisation';
+
+  @override
+  String get organisationNone =>
+      'Dieses Unternehmen gehört zu keiner Organisation. Ein Unternehmen in einem anderen Land oder einer anderen Währung ist ein eigenes Haus in der Organisation seines Hauptsitzes.';
+
+  @override
+  String get organisationRefusedAlreadyInOne =>
+      'Dieses Unternehmen gehört bereits zu einer Organisation.';
+
+  @override
+  String get organisationRefusedFeatureOff =>
+      'Die Organisation ist in diesem Unternehmen aus: Schalten Sie sie zuerst in seinen Funktionen ein.';
+
+  @override
+  String get organisationRefusedHeadLeavesLast =>
+      'Der Hauptsitz geht zuletzt: Nehmen Sie zuerst die anderen Häuser heraus.';
+
+  @override
+  String get organisationRefusedInNone =>
+      'Dieses Unternehmen gehört zu keiner Organisation.';
+
+  @override
+  String get organisationRefusedNoName =>
+      'Eine Organisation braucht einen Namen.';
+
+  @override
+  String get organisationRefusedNotAHouse =>
+      'Der neue Hauptsitz muss ein Haus dieser Organisation sein.';
+
+  @override
+  String get organisationRefusedNotOwner =>
+      'Nur ein Inhaber dieses Unternehmens und des Hauptsitzes darf das.';
+
+  @override
+  String get organisationRefusedOther =>
+      'Die Organisation konnte nicht geändert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get organisationRefusedTwinNeverHead =>
+      'Ein Testunternehmen ist nie der Hauptsitz.';
+
+  @override
+  String get organisationRemove => 'Aus der Organisation nehmen';
+
+  @override
+  String get organisationRename => 'Organisation umbenennen';
+
+  @override
+  String get organisationRoleAdmin => 'Administrator';
+
+  @override
+  String get organisationRoleCoOwner => 'Mitinhaber';
+
+  @override
+  String get organisationRoleMember => 'Mitglied';
+
+  @override
+  String get organisationRoleOwner => 'Inhaber';
+
+  @override
+  String get organisationTitle => 'Organisation';
+
+  @override
+  String organisationYourRole(String role) {
+    return 'Sie: $role';
+  }
+
+  @override
   String get overagePolicyBlocked => 'Weitere Buchung sperren';
 
   @override

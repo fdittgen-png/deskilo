@@ -34,10 +34,12 @@ List<Workspace> otherHousesOf(WidgetRef ref, String? currentId) {
   final current = byId[currentId];
   if (current == null) return const [];
   return [
-    for (final house in Organisation.othersOf(organisations, currentId))
-      if (byId[house.workspaceId] case final space?
-          when space.env == current.env)
-        space,
+    for (final house in housesInEnvironment(
+      Organisation.othersOf(organisations, currentId),
+      current,
+      byId,
+    ))
+      ?byId[house.workspaceId],
   ];
 }
 
