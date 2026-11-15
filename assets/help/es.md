@@ -3448,6 +3448,7 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 - En Suiza solo se ofrece A4: una factura termina con una sección de pago impresa en A4.
 - En Carta EE. UU., la dirección se imprime donde la sitúa el diseño; no se garantiza un sobre con ventana para Carta EE. UU.
 - Una factura conserva el papel con el que se emitió. Cambiar de papel cambia las facturas emitidas después.
+- Una carta, un recordatorio, un extracto o un informe se imprime en el papel elegido en el momento de imprimirlo.
 - Si el espacio pasa a un país que no usa el papel elegido, sigue el papel habitual de ese país.
 
 **Véase también:** [País](help:user.workspace.settings.country)

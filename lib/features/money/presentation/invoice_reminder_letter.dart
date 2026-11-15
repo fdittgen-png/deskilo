@@ -19,6 +19,7 @@ import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_report.dart';
 import '../domain/report_data_letters.dart';
+import '../domain/report_kind.dart';
 import 'invoice_document_locale.dart';
 import 'invoice_documents.dart'
     show
@@ -30,6 +31,7 @@ import 'invoice_documents.dart'
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
 import 'report_image_resolve.dart';
+import 'report_layout_actions.dart' show businessPaperOf;
 
 /// The document language of [invoice]'s customer (#496): their preference
 /// → the business's document language → its country's (#3850). The reminder
@@ -114,7 +116,9 @@ buildReminderPdfFile(
     reference: reference,
     draftBands: draftBands,
   );
-  final report = letter.report;
+  // #3852 — a reminder is a letter written today: the business's paper.
+  final report = letter.report.onPaper(
+      reportKindById('r$level', reminderLevels: level)?.printedOn(businessPaperOf(ref)));
   final title = letter.title;
   final l10n = letter.l10n;
   final pageLabel = l10n.invoicePdfPage;

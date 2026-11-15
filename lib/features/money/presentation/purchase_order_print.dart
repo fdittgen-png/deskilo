@@ -93,6 +93,7 @@ class PurchaseOrderPrint {
         data: doc.data,
         images: const {},
       ),
+      kind: 'purchase_order',
       pageLabel: l10nForLanguage(_locale.language).invoicePdfPage,
       watermark: developmentMark(context, ref),
     );

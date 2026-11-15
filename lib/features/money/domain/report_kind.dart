@@ -70,6 +70,11 @@ class ReportKind {
   /// paper is never scaled to it.
   final List<Paper> papers;
 
+  /// #3852 — the paper this kind is printed on for a business whose
+  /// documents are printed on [business]: that paper when the kind declares
+  /// it, else null, its design's own.
+  Paper? printedOn(Paper business) => papers.contains(business) ? business : null;
+
   bool get isReminder => slot is ReportReminderSlot;
 }
 

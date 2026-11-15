@@ -29,6 +29,7 @@ class BankReconciliationPdf {
       data: data,
       images: const {},
     ),
+    kind: 'bank_reconciliation',
     pageLabel: context.l10n.invoicePdfPage,
     watermark: developmentMark(context, ref),
     mandatoryNotices: mandatoryNotices,

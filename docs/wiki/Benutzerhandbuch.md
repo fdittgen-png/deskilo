@@ -3601,6 +3601,7 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 - In der Schweiz wird nur A4 angeboten: Eine Rechnung endet mit einem Zahlteil auf A4.
 - Auf US Letter steht die Anschrift dort, wo das Layout sie platziert; ein Fensterumschlag wird für US Letter nicht zugesichert.
 - Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde. Ein anderes Papier gilt für die danach ausgestellten Rechnungen.
+- Ein Brief, eine Mahnung, ein Kontoauszug oder ein Bericht wird auf dem Papier gedruckt, das beim Drucken gewählt ist.
 - Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.
 
 **Siehe auch:** [Land](#land)
