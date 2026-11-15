@@ -3,8 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
-import '../../../core/theme/app_radius.dart';
-import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/kit/status_chip.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/billing_rules.dart';
 
@@ -130,60 +129,24 @@ String invoiceLifecycleLabel(AppLocalizations l10n, InvoiceLifecycle status) =>
       InvoiceLifecycle.erroneous => l10n.invoiceVoidedChip,
     };
 
-/// The lifecycle as a compact chip. Replaces the dot-joined status words
-/// that used to hide inside a row's grey subtitle line.
-class InvoiceStatusChip extends StatelessWidget {
-  const InvoiceStatusChip({super.key, required this.status});
+/// #3999 — the kit's tone of [status]: open says nothing to act on, waiting
+/// for validation is information, paid or refunded is done, a part paid or a
+/// remainder cancelled is a warning, an erroneous document is due.
+StatusTone invoiceLifecycleTone(InvoiceLifecycle status) => switch (status) {
+  InvoiceLifecycle.open => StatusTone.neutral,
+  InvoiceLifecycle.awaitingValidation => StatusTone.info,
+  InvoiceLifecycle.paid || InvoiceLifecycle.refunded => StatusTone.ok,
+  InvoiceLifecycle.partiallyPaid ||
+  InvoiceLifecycle.remainderCancelled => StatusTone.warn,
+  InvoiceLifecycle.erroneous => StatusTone.due,
+};
 
-  final InvoiceLifecycle status;
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final colors = Theme.of(context).colorScheme;
-    final label = invoiceLifecycleLabel(l10n, status);
-    final (Color background, Color foreground) = switch (status) {
-      InvoiceLifecycle.open => (
-          colors.surfaceContainerHighest,
-          colors.onSurfaceVariant,
-        ),
-      InvoiceLifecycle.awaitingValidation => (
-          colors.primaryContainer,
-          colors.onPrimaryContainer,
-        ),
-      InvoiceLifecycle.paid || InvoiceLifecycle.refunded => (
-          colors.secondaryContainer,
-          colors.onSecondaryContainer,
-        ),
-      InvoiceLifecycle.partiallyPaid ||
-      InvoiceLifecycle.remainderCancelled => (
-          colors.tertiaryContainer,
-          colors.onTertiaryContainer,
-        ),
-      InvoiceLifecycle.erroneous => (
-          colors.errorContainer,
-          colors.onErrorContainer,
-        ),
-    };
-    return Container(
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.sm,
-        vertical: 2,
-      ),
-      decoration: BoxDecoration(
-        color: background,
-        borderRadius: AppRadius.smAll,
-      ),
-      child: Text(
-        label,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: foreground),
-      ),
+/// The status chip of an invoice in [status]: its word on its tone.
+StatusChip invoiceStatusChip(BuildContext context, InvoiceLifecycle status) =>
+    StatusChip(
+      label: invoiceLifecycleLabel(context.l10n, status),
+      tone: invoiceLifecycleTone(status),
     );
-  }
-}
 
 /// #802/#804 — what a document CHARGES FOR, in the reader's language.
 ///
