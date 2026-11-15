@@ -29,6 +29,7 @@ class ShellBarControl {
     required this.rank,
     required this.button,
     this.entry,
+    this.attention = false,
   });
 
   /// The button's key.
@@ -40,12 +41,17 @@ class ShellBarControl {
   final Widget button;
 
   /// The entry behind the overflow button, with the button's own label;
-  /// null for a control that never leaves the bar (the inbox, the account).
+  /// null for a control that never leaves the bar (the way back to Me).
   final RowAction? entry;
+
+  /// #4030 — it has something new to say: the overflow button carries the
+  /// mark while this control is behind it.
+  final bool attention;
 }
 
 /// The order of priority of the bar's controls, most needed first: the
-/// inbox and the way back to the account never leave the bar; the settings
+/// way back to the account never leaves the bar; the inbox leaves it last
+/// (#4030), its news then marked on the overflow button; the settings
 /// door is opened daily; a space is scanned on site; the editor is a tool
 /// of the few who draw the plan.
 /// #3610 — the bar's search button.
@@ -148,28 +154,39 @@ List<ShellBarControl> shellBarControls(
         onPressed: () => ShortcutHost.openSearch(context),
       ),
     if (features.contains(WorkspaceFeature.eventsTab))
-      ShellBarControl(
-        id: 'shell-events-bell',
-        rank: _ShellBarRank.inbox.index,
-        button: IconButton(
-          key: const ValueKey('shell-events-bell'),
-          icon: attention.total == 0
-              ? const Icon(Icons.inbox_outlined)
-              : Badge.count(
-                  count: attention.total,
-                  maxCount: 99,
-                  child: const Icon(Icons.inbox_outlined),
-                ),
-          tooltip:
-              l10n.titleDashDetail(
-                  lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents),
-                  l10n.uxAttentionSummary(attention.updates, attention.pending),
-                ),
-          // The /events path lands on the alerts (the calendar's Alerts
-          // view when the hub holds them).
-          onPressed: () => context.go('/events'),
-        ),
-      ),
+      () {
+        final label = l10n.titleDashDetail(
+          lexiconText(context, key: 'tabEvents', fallback: l10n.tabEvents),
+          l10n.uxAttentionSummary(attention.updates, attention.pending),
+        );
+        // The /events path lands on the alerts (the calendar's Alerts view
+        // when the hub holds them).
+        void open() => context.go('/events');
+        return ShellBarControl(
+          id: 'shell-events-bell',
+          rank: _ShellBarRank.inbox.index,
+          attention: attention.total > 0,
+          button: IconButton(
+            key: const ValueKey('shell-events-bell'),
+            icon: attention.total == 0
+                ? const Icon(Icons.inbox_outlined)
+                : Badge.count(
+                    count: attention.total,
+                    maxCount: 99,
+                    child: const Icon(Icons.inbox_outlined),
+                  ),
+            tooltip: label,
+            onPressed: open,
+          ),
+          // #4030 — the inbox may leave a narrow bar too, last of all.
+          entry: RowAction(
+            id: 'shell-events-bell',
+            label: label,
+            icon: Icons.inbox_outlined,
+            onSelected: open,
+          ),
+        );
+      }(),
     // #1598 — the SAME destination under two names. Hiding an
     // entry is not access control: /settings already shows a
     // member only what their permissions earn, and every
