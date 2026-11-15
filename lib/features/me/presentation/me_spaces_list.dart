@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/backend/backend_settings.dart';
+import '../../../core/i18n/country_names.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/storage/space_prefs_store.dart';
 import '../../../core/theme/app_radius.dart';
@@ -20,6 +21,7 @@ import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
 import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
+import '../../workspace/providers/organisation_providers.dart';
 import '../application/me_spaces_layout.dart';
 import '../providers/space_prefs_provider.dart';
 import 'group_name_dialog.dart';
@@ -159,6 +161,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       spaces: widget.spaces,
       lastUsedId: widget.lastUsedId,
       query: _query,
+      // #4006 — while the organisations are read, or when they cannot be,
+      // every business stays where the person put it.
+      organisations: ref.watch(myOrganisationsProvider).value ?? const [],
     );
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -194,12 +199,14 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
   ) {
     final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
-    final (:id, :keys) = group;
+    final (:id, :keys, :organisation) = group;
     final folded = prefs.folded.contains(id);
+    // #4006 — an organisation's houses keep the organisation's order.
+    final canDrag = layout.canDrag && organisation == null;
     return [
       MeGroupHeader(
         id: id,
-        title: _groupName(l10n, prefs, id),
+        title: organisation ?? _groupName(l10n, prefs, id),
         count: keys.length,
         folded: folded,
         own: prefs.groups.any((g) => g.id == id),
@@ -246,7 +253,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             child: child,
           ),
           itemBuilder: (context, i) => _row(context, prefs, keys, keys[i],
-              layout.rows[keys[i]]!, layout.canDrag ? i : null),
+              layout.rows[keys[i]]!, canDrag ? i : null,
+              housed: organisation != null),
         ),
     ];
   }
@@ -272,8 +280,9 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
     List<String> groupKeys,
     String key,
     List<Workspace> group,
-    int? dragIndex,
-  ) {
+    int? dragIndex, {
+    bool housed = false,
+  }) {
     final l10n = context.l10n;
     final notifier = ref.read(spacePrefsProvider.notifier);
     final members = [for (final space in group) (space, _memberOf(space))];
@@ -287,7 +296,8 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
         rating: prefs.ratings[key],
         onFavorite: () => notifier.toggleFavorite(key),
         onRate: (stars) => notifier.rate(key, stars),
-        onMoveToGroup: () => _pickGroup(context, key),
+        // #4006 — a house stays in its organisation, in its order.
+        onMoveToGroup: housed ? null : () => _pickGroup(context, key),
         hostedOn: _hostedOn(l10n),
         leave: [
           for (final (space, member) in members)
@@ -298,10 +308,10 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
               onLeave: () => confirmLeaveSpace(context, ref, space, member),
             ),
         ],
-        onUp: prefs.moved(groupKeys, key, -1) == null
+        onUp: housed || prefs.moved(groupKeys, key, -1) == null
             ? null
             : () => notifier.move(groupKeys, key, -1),
-        onDown: prefs.moved(groupKeys, key, 1) == null
+        onDown: housed || prefs.moved(groupKeys, key, 1) == null
             ? null
             : () => notifier.move(groupKeys, key, 1),
       ),
@@ -314,6 +324,10 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
       name: group.first.name,
       lastUsed: group.any((s) => s.id == widget.lastUsedId),
       detail: {
+        // #4006 — where the business is and what it counts in.
+        if (group.first.countryCode.isNotEmpty)
+          localizedCountryName(l10n, group.first.countryCode),
+        if (group.first.currencyCode.isNotEmpty) group.first.currencyCode,
         for (final (_, member) in members)
           if (member != null)
             if (member.status == MemberStatus.pending) l10n.meSpacePending else memberRoleLabel(l10n, member),

@@ -369,6 +369,7 @@ const Set<String> demoOverriddenProviders = {
   'directoryLocationMemoryProvider', // #3684 — the places the map found, device-local
   'meRepositoryProvider', // #1823
   'linkedMeRepositoryProvider',
+  'organisationRepositoryProvider', // #4006
   'workspaceHostRepositoryProvider',
   'workspaceAccessRepositoryProvider', // #2563
   'workspaceExportRepositoryProvider', // #2557 C3
