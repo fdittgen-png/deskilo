@@ -161,6 +161,23 @@ mixin FakeWorkspaceIdentity on FakeWorkspaceState
   }
 
   @override
+  Future<void> setDocumentAudience(String documentId, String minRole) async {
+    final i = documents.indexWhere((d) => d.id == documentId);
+    if (i < 0) return;
+    final d = documents[i];
+    documents[i] = WorkspaceDocument(
+      id: d.id,
+      workspaceId: d.workspaceId,
+      title: d.title,
+      category: d.category,
+      provider: d.provider,
+      url: d.url,
+      minRole: minRole,
+      system: d.system,
+    );
+  }
+
+  @override
   Future<void> setWorkspaceLanguage(String workspaceId, String locale) async {
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;

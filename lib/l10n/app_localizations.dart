@@ -13167,11 +13167,35 @@ abstract class AppLocalizations {
   /// **'Statutes & legal'**
   String get documentsCategoryStatutes;
 
+  /// #4070 document library: documentsColAdded
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get documentsColAdded;
+
+  /// #4070 document library: documentsColAudience
+  ///
+  /// In en, this message translates to:
+  /// **'Audience'**
+  String get documentsColAudience;
+
+  /// #4070 document library: documentsColGroup
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get documentsColGroup;
+
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
   /// **'Remove document?'**
   String get documentsDelete;
+
+  /// #4070 document library: documentsEditAudience
+  ///
+  /// In en, this message translates to:
+  /// **'Edit audience'**
+  String get documentsEditAudience;
 
   /// Workspace document library (#500)
   ///

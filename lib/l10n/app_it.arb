@@ -5119,9 +5119,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Aggiunto",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Visibile a",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Gruppo",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Rimuovere il documento?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Modifica la visibilità",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "Nessun documento. Colleghi statuto, guide e bilanci da qualsiasi drive.",
   "@documentsEmpty": {
