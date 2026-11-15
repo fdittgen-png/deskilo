@@ -59,7 +59,7 @@ packages/deskilo_invoice_model/lib/src/invoice.dart :: 2 :: UNCL5305 category co
 packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 7 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_invoice_model/lib/src/invoice_ubl.dart :: 10 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 1 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
-packages/deskilo_money_kernel/lib/src/posting.dart :: 2 :: an account-role key table of the posting engine, not a country decision
+packages/deskilo_money_kernel/lib/src/posting.dart :: 2 :: the posting engine's internal journal keys; the codes the exports write are the business's accounting journals, read through accountingJournalsOf (#3470)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 4 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/ca.dart :: 1 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue/ch.dart :: 2 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)

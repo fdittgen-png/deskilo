@@ -276,6 +276,7 @@
   "user.money.reminders.rules": "Règles de relance",
   "user.money.reminders.automatic": "Relances automatiques",
   "user.invoicing.register": "Le registre des factures",
+  "user.money.accounting-journals": "Vos journaux comptables",
   "user.invoicing.accounting-export": "Exports comptables",
   "user.invoicing.transfers": "Transferts : le lien numérique vers votre système comptable",
   "user.invoicing.records-location": "Où les registres sont conservés",

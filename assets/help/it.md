@@ -5731,6 +5731,29 @@ Tutte le fatture in un unico elenco ordinabile.
 
 **Vedi anche:** [Esportazioni contabili](help:user.invoicing.accounting-export)
 
+### I suoi registri contabili
+
+**Destinatari:** Proprietario
+
+Il software del suo commercialista conosce i suoi registri con codici propri, e lei vuole che ogni esportazione li usi.
+
+<!-- image: user-money-accounting-journals -->
+
+**Passaggi**
+
+1. Apra [Contabilità e IVA](app:/money/accounting) e tocchi **Registri contabili**.
+2. Per **Vendite**, **Banca**, **Acquisti** e **Operazioni diverse**, inserisca il **Codice** e la **Descrizione** che usa il suo commercialista.
+3. Tocchi **Salva**. **Usa i codici standard** rimette i codici standard del paese.
+
+**Da sapere**
+
+- Ogni esportazione contabile dell'app li usa: il FEC, il giornale generico, i libri mastri SAF-T e i libri stampati.
+- Un codice non ha a capo, tabulazioni né |, e due registri non condividono mai un codice; il modulo dice quale campo correggere.
+- Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.
+- Gli invii a un sistema contabile collegato usano ancora i codici standard.
+
+**Vedi anche:** [Esportazioni contabili](help:user.invoicing.accounting-export)
+
 ### Esportazioni contabili
 
 **Destinatari:** Proprietario · Amministratore fatturazione
