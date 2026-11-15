@@ -2,6 +2,7 @@
 //
 // #4006 — the reader's organisations and the owners' commands on them, over
 // the server's read and commands (#4004).
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/trace/trace_logger.dart';
@@ -57,6 +58,47 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
     'p_head': headWorkspaceId,
   });
 
+  @override
+  Future<({String? workspaceId, OrganisationRefusal? refused})> createHouse(
+    HouseRequest request,
+  ) async {
+    try {
+      final answer = await _client.rpc<Object?>(
+        'create_organisation_house_once',
+        params: {
+          'p_organisation': request.organisationId,
+          'p_name': request.name,
+          'p_country': request.country,
+          'p_currency': request.currency,
+          'p_timezone': request.timezone,
+          'p_language': request.language,
+          'p_client_request_id': request.requestId,
+        },
+      );
+      final id = JsonReader.of(answer, context: 'house').string('workspace_id');
+      return (workspaceId: id, refused: null);
+    } on PostgrestException catch (e, st) {
+      if (!const {'42501', '22023', '55000'}.contains(e.code)) rethrow;
+      TraceLogger.instance.warn(
+        'workspace',
+        'house refused',
+        error: e,
+        stackTrace: st,
+      );
+      return (workspaceId: null, refused: refusalOf(e.code, e.message));
+    }
+  }
+
+  @override
+  Future<HouseBirth?> houseBirth(String workspaceId) async {
+    final row = await _client
+        .from('organisation_houses')
+        .select()
+        .eq('workspace_id', workspaceId)
+        .maybeSingle();
+    return row == null ? null : HouseBirth.fromJson(row);
+  }
+
   Future<OrganisationRefusal?> _command(
     String name,
     Map<String, Object?> params,
@@ -91,6 +133,10 @@ class SupabaseOrganisationRepository implements OrganisationRepository {
         (_, 'this business is in no organisation') =>
           OrganisationRefusal.inNone,
         (_, 'the head leaves last') => OrganisationRefusal.headLeavesLast,
+        (_, 'the language is one of en, fr, de, es, it') =>
+          OrganisationRefusal.language,
+        (_, 'this request id already created another business') =>
+          OrganisationRefusal.requestUsed,
         _ => OrganisationRefusal.other,
       };
 }

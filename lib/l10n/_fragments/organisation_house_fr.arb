@@ -1,0 +1,18 @@
+{
+  "houseAddTitle": "Ajouter une maison à l’étranger",
+  "houseAddSubmit": "Créer la maison",
+  "houseAddLanguage": "Langue de ses documents",
+  "houseAddName": "Nom de la maison",
+  "houseAddCarried": "Voyagent : les rôles, les règles de réservation et de validation, les rappels, et les fonctionnalités que ce pays propose.",
+  "houseAddToPrice": "Arrivent inactifs, à tarifer : les formules, les services et les forfaits.",
+  "houseAddNotCarried": "Ne voyagent pas : l’identité, la banque et les instructions de paiement, les lieux, la mise en page des documents et les liens.",
+  "houseBirthTitle": "Comment cette maison a commencé",
+  "houseBirthCreated": "Créée à partir de {head} le {date}.",
+  "houseBirthPlans": "{count, plural, =0{aucune formule} one{1 formule} other{{count} formules}}",
+  "houseBirthServices": "{count, plural, =0{aucun service} one{1 service} other{{count} services}}",
+  "houseBirthPackages": "{count, plural, =0{aucun forfait} one{1 forfait} other{{count} forfaits}}",
+  "houseBirthToPrice": "Repris, inactifs et à tarifer : {rows}.",
+  "houseBirthCoOwners": "{count, plural, =0{Aucun copropriétaire ajouté.} one{1 propriétaire de la tête a été ajouté comme copropriétaire.} other{{count} propriétaires de la tête ont été ajoutés comme copropriétaires.}}",
+  "houseBirthNotCarried": "Non repris : la mise en page des documents et les liens. Choisissez ceux de cette maison.",
+  "houseAddTimezone": "Fuseau horaire : {zone}"
+}

@@ -17886,6 +17886,108 @@
   "@holidayWhitMonday": {
     "description": "#1274 public holiday name, keyed by what public_holidays() returns"
   },
+  "houseAddCarried": "Travels: the roles, the booking and validation rules, the reminders, and the features this country has.",
+  "@houseAddCarried": {
+    "description": "#4005 — a house abroad: houseAddCarried."
+  },
+  "houseAddLanguage": "Language of its documents",
+  "@houseAddLanguage": {
+    "description": "#4005 — a house abroad: houseAddLanguage."
+  },
+  "houseAddName": "Name of the house",
+  "@houseAddName": {
+    "description": "#4005 — a house abroad: houseAddName."
+  },
+  "houseAddNotCarried": "Does not travel: the identity, the bank and payment instructions, the places, the document layout and links.",
+  "@houseAddNotCarried": {
+    "description": "#4005 — a house abroad: houseAddNotCarried."
+  },
+  "houseAddSubmit": "Create the house",
+  "@houseAddSubmit": {
+    "description": "#4005 — a house abroad: houseAddSubmit."
+  },
+  "houseAddTimezone": "Time zone: {zone}",
+  "@houseAddTimezone": {
+    "description": "#4005 — the house form's time zone button, with the zone chosen.",
+    "placeholders": {
+      "zone": {
+        "type": "String"
+      }
+    }
+  },
+  "houseAddTitle": "Add a house abroad",
+  "@houseAddTitle": {
+    "description": "#4005 — a house abroad: houseAddTitle."
+  },
+  "houseAddToPrice": "Arrive inactive, to be priced: the plans, services and packages.",
+  "@houseAddToPrice": {
+    "description": "#4005 — a house abroad: houseAddToPrice."
+  },
+  "houseBirthCoOwners": "{count, plural, =0{No co-owner was added.} one{1 owner of the head was added as co-owner.} other{{count} owners of the head were added as co-owners.}}",
+  "@houseBirthCoOwners": {
+    "description": "#4005 — a house abroad: houseBirthCoOwners.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthCreated": "Created from {head} on {date}.",
+  "@houseBirthCreated": {
+    "description": "#4005 — a house abroad: houseBirthCreated.",
+    "placeholders": {
+      "head": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "houseBirthNotCarried": "Not carried: the document layout and links. Choose this house's own.",
+  "@houseBirthNotCarried": {
+    "description": "#4005 — a house abroad: houseBirthNotCarried."
+  },
+  "houseBirthPackages": "{count, plural, =0{no package} one{1 package} other{{count} packages}}",
+  "@houseBirthPackages": {
+    "description": "#4005 — a house abroad: houseBirthPackages.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthPlans": "{count, plural, =0{no plan} one{1 plan} other{{count} plans}}",
+  "@houseBirthPlans": {
+    "description": "#4005 — a house abroad: houseBirthPlans.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthServices": "{count, plural, =0{no service} one{1 service} other{{count} services}}",
+  "@houseBirthServices": {
+    "description": "#4005 — a house abroad: houseBirthServices.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "houseBirthTitle": "How this house began",
+  "@houseBirthTitle": {
+    "description": "#4005 — a house abroad: houseBirthTitle."
+  },
+  "houseBirthToPrice": "Carried, inactive and to be priced: {rows}.",
+  "@houseBirthToPrice": {
+    "description": "#4005 — a house abroad: houseBirthToPrice.",
+    "placeholders": {
+      "rows": {
+        "type": "String"
+      }
+    }
+  },
   "hubAccountingSubtitle": "Books, exports and imports, accounting software, bank statements, VAT and legal identity in one place",
   "@hubAccountingSubtitle": {
     "description": "the accounting and VAT page and its menu group"
@@ -29404,6 +29506,10 @@
   "@organisationRefusedAlreadyInOne": {
     "description": "#4006 — the organisation page: organisationRefusedAlreadyInOne."
   },
+  "organisationRefusedDemoOneHouse": "The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.",
+  "@organisationRefusedDemoOneHouse": {
+    "description": "#4005 — in the Demo, a house abroad can only be added in the Demo's own country and currency."
+  },
   "organisationRefusedFeatureOff": "The organisation is off in this business: turn it on in its features first.",
   "@organisationRefusedFeatureOff": {
     "description": "#4006 — the organisation page: organisationRefusedFeatureOff."
@@ -29415,6 +29521,10 @@
   "organisationRefusedInNone": "This business is in no organisation.",
   "@organisationRefusedInNone": {
     "description": "#4006 — the organisation page: organisationRefusedInNone."
+  },
+  "organisationRefusedLanguage": "The documents speak English, French, German, Spanish or Italian.",
+  "@organisationRefusedLanguage": {
+    "description": "#4005 — refusal: the documents' language is not one the app speaks."
   },
   "organisationRefusedNoName": "An organisation needs a name.",
   "@organisationRefusedNoName": {
@@ -29431,6 +29541,10 @@
   "organisationRefusedOther": "The organisation could not be changed. Try again.",
   "@organisationRefusedOther": {
     "description": "#4006 — the organisation page: organisationRefusedOther."
+  },
+  "organisationRefusedRequestUsed": "This request already made another business. Open the form again.",
+  "@organisationRefusedRequestUsed": {
+    "description": "#4005 — refusal: the request id already made another business."
   },
   "organisationRefusedTwinNeverHead": "A test business is never the head.",
   "@organisationRefusedTwinNeverHead": {

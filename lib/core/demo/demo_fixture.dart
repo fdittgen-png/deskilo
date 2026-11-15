@@ -42,6 +42,7 @@ import 'data/workspace_repository.dart';
 import 'data/workspace_roles_repository.dart';
 import 'demo_clock.dart';
 import 'demo_dataset.dart';
+import 'demo_house_space.dart';
 import 'demo_lazy_spaces.dart';
 import 'demo_london_space.dart';
 import 'demo_new_york_space.dart';
@@ -353,6 +354,15 @@ class DemoFixture implements DemoSpaceParts {
   /// #3863 — the practice in Berlin, the one business without places.
   DemoPracticeData get practice => _spaces.practice;
 
+  /// #4005 — the house abroad the Demo adds (dormant until [revealHouse]).
+  DemoHouseData get house => _spaces.house;
+
+  /// #4005 — the house appears: its row, and the persona as its owner.
+  void revealHouse() => _spaces.listings.house.reveal(actor.memberId);
+
+  /// Whether the house has been added in this session.
+  bool get houseRevealed => !_spaces.listings.house.dormant;
+
   /// #3302 — the main space's development twin, with stores of its own.
   DemoTwinData get twin => _spaces.twin;
 
@@ -434,9 +444,10 @@ class DemoFixture implements DemoSpaceParts {
     zurich: DemoTradeCityData.list(city: demoZurich, home: home),
     milan: DemoTradeCityData.list(city: demoMilan, home: home),
     practice: DemoPracticeData.list(home: home),
+    house: DemoHouseData.list(home: home),
   );
   final twin = DemoTwinData.list(home: home, productionPlan: floorPlan, productionRoles: roles);
-  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, twin.listing]) {
+  for (final listing in [listings.leipzig, listings.london, listings.newYork, listings.zurich, listings.milan, listings.practice, listings.house, twin.listing]) {
     listing.viewAs(memberId);
   }
   return (listings, twin);

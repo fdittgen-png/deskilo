@@ -62,7 +62,7 @@ void main() {
     // The switcher still lists them all, from their rows alone.
     expect(
       fixture.workspaces.workspaces.map((w) => w.id).toSet(),
-      DemoSpaceKey.values.map((k) => k.id).toSet(),
+      DemoSpaceKey.listedAtStart.map((k) => k.id).toSet(),
     );
   });
 
@@ -109,7 +109,7 @@ void main() {
     final backward = DemoFixture.build();
     final viewedAsMember = DemoFixture.build()
       ..becomePersona(DemoPersona.member);
-    const keys = DemoSpaceKey.values;
+    final keys = DemoSpaceKey.listedAtStart;
     final inOrder = <DemoSpaceKey, List<Object>>{};
     for (final key in keys) {
       inOrder[key] = await _figures(forward, key);

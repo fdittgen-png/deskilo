@@ -38,6 +38,7 @@ import '../../l10n/app_localizations.dart';
 import '../webmcp_confirmation_sheet.dart';
 import '../webmcp_confirmations.dart';
 import '../webmcp_wiring.dart';
+import 'house_birth_notice.dart';
 import 'shell_session.dart';
 import 'snack_scope.dart';
 
@@ -54,6 +55,7 @@ void watchShellEffects(WidgetRef ref, AppLocalizations l10n) {
   _announceWebMcpActions(ref, l10n);
   _askWebMcpConfirmations(ref);
   watchSnackScope(ref);
+  watchHouseBirthNotice(ref);
 }
 
 /// #2504 — an assistant's request that needs the person: the sheet opens,

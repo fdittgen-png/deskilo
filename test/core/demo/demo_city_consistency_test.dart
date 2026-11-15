@@ -13,10 +13,10 @@ void main() {
     final fixture = DemoFixture.build(now: DateTime.utc(2026, 11, 2, 10));
     expect(
       {for (final w in fixture.workspaces.workspaces) w.id},
-      {for (final key in DemoSpaceKey.values) key.id},
+      {for (final key in DemoSpaceKey.listedAtStart) key.id},
       reason: 'a space in the fixture but not in DemoSpaceKey (or the reverse)',
     );
-    for (final key in DemoSpaceKey.values) {
+    for (final key in DemoSpaceKey.listedAtStart) {
       final row = fixture.spaceWorkspaces.at(key).workspaces.singleWhere((w) => w.id == key.id);
       expect(row.currencyCode, key.currency, reason: key.label);
       expect(DemoSpaceKey.of(key.id), key);

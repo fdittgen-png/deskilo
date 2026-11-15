@@ -35,9 +35,18 @@ enum DemoSpaceKey {
   milan(demoMilanSpaceId, 'Milan', 'EUR'),
   // #3863 — the one Demo business without places (Berlin, a practice).
   practice(demoPracticeSpaceId, 'the Berlin practice', 'EUR'),
+  // #4005 — the house abroad the Demo adds, dormant until it is added.
+  house(demoHouseSpaceId, 'Kraków', 'PLN'),
   twin(demoTwinSpaceId, 'the development twin', 'EUR');
 
   const DemoSpaceKey(this.id, this.label, this.currency);
+
+  /// #4005 — the spaces a Demo session lists from its start: every one but
+  /// the house abroad, which is dormant until the visitor adds it.
+  static List<DemoSpaceKey> get listedAtStart => [
+    for (final key in values)
+      if (key != house) key,
+  ];
 
   final String id;
   final String label;
@@ -99,6 +108,7 @@ class DemoSpaces<T> {
   T get zurich => at(DemoSpaceKey.zurich);
   T get milan => at(DemoSpaceKey.milan);
   T get practice => at(DemoSpaceKey.practice);
+  T get house => at(DemoSpaceKey.house);
   T get twin => at(DemoSpaceKey.twin);
 }
 

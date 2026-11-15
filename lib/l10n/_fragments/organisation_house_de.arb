@@ -1,0 +1,18 @@
+{
+  "houseAddTitle": "Ein Haus im Ausland hinzufügen",
+  "houseAddSubmit": "Das Haus anlegen",
+  "houseAddLanguage": "Sprache seiner Dokumente",
+  "houseAddName": "Name des Hauses",
+  "houseAddCarried": "Wird übernommen: die Rollen, die Buchungs- und Freigaberegeln, die Erinnerungen und die Funktionen, die dieses Land bietet.",
+  "houseAddToPrice": "Kommen inaktiv an, mit Preisen zu versehen: die Tarife, Leistungen und Pakete.",
+  "houseAddNotCarried": "Wird nicht übernommen: die Identität, die Bank und die Zahlungsangaben, die Orte, das Dokumentlayout und die Links.",
+  "houseBirthTitle": "Wie dieses Haus entstand",
+  "houseBirthCreated": "Angelegt aus {head} am {date}.",
+  "houseBirthPlans": "{count, plural, =0{kein Tarif} one{1 Tarif} other{{count} Tarife}}",
+  "houseBirthServices": "{count, plural, =0{keine Leistung} one{1 Leistung} other{{count} Leistungen}}",
+  "houseBirthPackages": "{count, plural, =0{kein Paket} one{1 Paket} other{{count} Pakete}}",
+  "houseBirthToPrice": "Übernommen, inaktiv und mit Preisen zu versehen: {rows}.",
+  "houseBirthCoOwners": "{count, plural, =0{Kein Mitinhaber hinzugefügt.} one{1 Inhaber des Hauptsitzes wurde als Mitinhaber hinzugefügt.} other{{count} Inhaber des Hauptsitzes wurden als Mitinhaber hinzugefügt.}}",
+  "houseBirthNotCarried": "Nicht übernommen: das Dokumentlayout und die Links. Wählen Sie die dieses Hauses.",
+  "houseAddTimezone": "Zeitzone: {zone}"
+}

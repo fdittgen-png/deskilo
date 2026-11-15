@@ -22169,6 +22169,102 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #4005 — a house abroad: houseAddCarried.
+  ///
+  /// In en, this message translates to:
+  /// **'Travels: the roles, the booking and validation rules, the reminders, and the features this country has.'**
+  String get houseAddCarried;
+
+  /// #4005 — a house abroad: houseAddLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Language of its documents'**
+  String get houseAddLanguage;
+
+  /// #4005 — a house abroad: houseAddName.
+  ///
+  /// In en, this message translates to:
+  /// **'Name of the house'**
+  String get houseAddName;
+
+  /// #4005 — a house abroad: houseAddNotCarried.
+  ///
+  /// In en, this message translates to:
+  /// **'Does not travel: the identity, the bank and payment instructions, the places, the document layout and links.'**
+  String get houseAddNotCarried;
+
+  /// #4005 — a house abroad: houseAddSubmit.
+  ///
+  /// In en, this message translates to:
+  /// **'Create the house'**
+  String get houseAddSubmit;
+
+  /// #4005 — the house form's time zone button, with the zone chosen.
+  ///
+  /// In en, this message translates to:
+  /// **'Time zone: {zone}'**
+  String houseAddTimezone(String zone);
+
+  /// #4005 — a house abroad: houseAddTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a house abroad'**
+  String get houseAddTitle;
+
+  /// #4005 — a house abroad: houseAddToPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Arrive inactive, to be priced: the plans, services and packages.'**
+  String get houseAddToPrice;
+
+  /// #4005 — a house abroad: houseBirthCoOwners.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No co-owner was added.} one{1 owner of the head was added as co-owner.} other{{count} owners of the head were added as co-owners.}}'**
+  String houseBirthCoOwners(int count);
+
+  /// #4005 — a house abroad: houseBirthCreated.
+  ///
+  /// In en, this message translates to:
+  /// **'Created from {head} on {date}.'**
+  String houseBirthCreated(String head, String date);
+
+  /// #4005 — a house abroad: houseBirthNotCarried.
+  ///
+  /// In en, this message translates to:
+  /// **'Not carried: the document layout and links. Choose this house\'s own.'**
+  String get houseBirthNotCarried;
+
+  /// #4005 — a house abroad: houseBirthPackages.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no package} one{1 package} other{{count} packages}}'**
+  String houseBirthPackages(int count);
+
+  /// #4005 — a house abroad: houseBirthPlans.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no plan} one{1 plan} other{{count} plans}}'**
+  String houseBirthPlans(int count);
+
+  /// #4005 — a house abroad: houseBirthServices.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{no service} one{1 service} other{{count} services}}'**
+  String houseBirthServices(int count);
+
+  /// #4005 — a house abroad: houseBirthTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'How this house began'**
+  String get houseBirthTitle;
+
+  /// #4005 — a house abroad: houseBirthToPrice.
+  ///
+  /// In en, this message translates to:
+  /// **'Carried, inactive and to be priced: {rows}.'**
+  String houseBirthToPrice(String rows);
+
   /// the accounting and VAT page and its menu group
   ///
   /// In en, this message translates to:
@@ -35932,6 +36028,12 @@ abstract class AppLocalizations {
   /// **'This business is already in an organisation.'**
   String get organisationRefusedAlreadyInOne;
 
+  /// #4005 — in the Demo, a house abroad can only be added in the Demo's own country and currency.
+  ///
+  /// In en, this message translates to:
+  /// **'The Demo adds one house abroad: in Poland, in złoty. Choose Poland to add it.'**
+  String get organisationRefusedDemoOneHouse;
+
   /// #4006 — the organisation page: organisationRefusedFeatureOff.
   ///
   /// In en, this message translates to:
@@ -35949,6 +36051,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business is in no organisation.'**
   String get organisationRefusedInNone;
+
+  /// #4005 — refusal: the documents' language is not one the app speaks.
+  ///
+  /// In en, this message translates to:
+  /// **'The documents speak English, French, German, Spanish or Italian.'**
+  String get organisationRefusedLanguage;
 
   /// #4006 — the organisation page: organisationRefusedNoName.
   ///
@@ -35973,6 +36081,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The organisation could not be changed. Try again.'**
   String get organisationRefusedOther;
+
+  /// #4005 — refusal: the request id already made another business.
+  ///
+  /// In en, this message translates to:
+  /// **'This request already made another business. Open the form again.'**
+  String get organisationRefusedRequestUsed;
 
   /// #4006 — the organisation page: organisationRefusedTwinNeverHead.
   ///
