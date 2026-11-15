@@ -103,6 +103,100 @@ final class MyOrganisationsProvider
 
 String _$myOrganisationsHash() => r'df66c119979f93643268b34614a2aa45ba22ef6f';
 
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+@ProviderFor(organisationOverview)
+final organisationOverviewProvider = OrganisationOverviewFamily._();
+
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+final class OrganisationOverviewProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<OrganisationOverview>,
+          OrganisationOverview,
+          FutureOr<OrganisationOverview>
+        >
+    with
+        $FutureModifier<OrganisationOverview>,
+        $FutureProvider<OrganisationOverview> {
+  /// #4007 — the houses of [organisationId] side by side for one month.
+  OrganisationOverviewProvider._({
+    required OrganisationOverviewFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'organisationOverviewProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$organisationOverviewHash();
+
+  @override
+  String toString() {
+    return r'organisationOverviewProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<OrganisationOverview> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<OrganisationOverview> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return organisationOverview(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is OrganisationOverviewProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$organisationOverviewHash() =>
+    r'e9b7afdb7203b396933c09b13acc53e524564b1b';
+
+/// #4007 — the houses of [organisationId] side by side for one month.
+
+final class OrganisationOverviewFamily extends $Family
+    with
+        $FunctionalFamilyOverride<
+          FutureOr<OrganisationOverview>,
+          (String, String)
+        > {
+  OrganisationOverviewFamily._()
+    : super(
+        retry: null,
+        name: r'organisationOverviewProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #4007 — the houses of [organisationId] side by side for one month.
+
+  OrganisationOverviewProvider call(String organisationId, String month) =>
+      OrganisationOverviewProvider._(
+        argument: (organisationId, month),
+        from: this,
+      );
+
+  @override
+  String toString() => r'organisationOverviewProvider';
+}
+
 /// The owners' commands; a change reads the organisations again.
 
 @ProviderFor(organisationCommands)
@@ -154,7 +248,139 @@ final class OrganisationCommandsProvider
 }
 
 String _$organisationCommandsHash() =>
-    r'b60bf640ee96ccbce8c803e0fdf146cf208684f7';
+    r'c31d198cdd02f8baa099fa01c412241b9d51cc7e';
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+
+@ProviderFor(joinableHouses)
+final joinableHousesProvider = JoinableHousesProvider._();
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+
+final class JoinableHousesProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<List<JoinableHouse>>,
+          List<JoinableHouse>,
+          FutureOr<List<JoinableHouse>>
+        >
+    with
+        $FutureModifier<List<JoinableHouse>>,
+        $FutureProvider<List<JoinableHouse>> {
+  /// #4008 — the houses of the reader's organisations they may ask to join.
+  JoinableHousesProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'joinableHousesProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$joinableHousesHash();
+
+  @$internal
+  @override
+  $FutureProviderElement<List<JoinableHouse>> $createElement(
+    $ProviderPointer pointer,
+  ) => $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<List<JoinableHouse>> create(Ref ref) {
+    return joinableHouses(ref);
+  }
+}
+
+String _$joinableHousesHash() => r'b9f7981aa4f58504c7b67903a90e13c67db78862';
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+@ProviderFor(houseWelcomes)
+final houseWelcomesProvider = HouseWelcomesFamily._();
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+final class HouseWelcomesProvider
+    extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
+    with $FutureModifier<bool>, $FutureProvider<bool> {
+  /// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+  /// members of the organisation's other houses at once.
+  HouseWelcomesProvider._({
+    required HouseWelcomesFamily super.from,
+    required (String, String) super.argument,
+  }) : super(
+         retry: null,
+         name: r'houseWelcomesProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$houseWelcomesHash();
+
+  @override
+  String toString() {
+    return r'houseWelcomesProvider'
+        ''
+        '$argument';
+  }
+
+  @$internal
+  @override
+  $FutureProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $FutureProviderElement(pointer);
+
+  @override
+  FutureOr<bool> create(Ref ref) {
+    final argument = this.argument as (String, String);
+    return houseWelcomes(ref, argument.$1, argument.$2);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is HouseWelcomesProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$houseWelcomesHash() => r'2ea28b7b21514c2e1cabda5b2eedfc96257eda76';
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+
+final class HouseWelcomesFamily extends $Family
+    with $FunctionalFamilyOverride<FutureOr<bool>, (String, String)> {
+  HouseWelcomesFamily._()
+    : super(
+        retry: null,
+        name: r'houseWelcomesProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+  /// members of the organisation's other houses at once.
+
+  HouseWelcomesProvider call(String organisationId, String workspaceId) =>
+      HouseWelcomesProvider._(
+        argument: (organisationId, workspaceId),
+        from: this,
+      );
+
+  @override
+  String toString() => r'houseWelcomesProvider';
+}
 
 /// #4005 — the birth record of [workspaceId], if it was made as a house.
 

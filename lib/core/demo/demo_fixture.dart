@@ -50,6 +50,7 @@ import 'demo_outward_edges.dart';
 import 'demo_persona.dart';
 import 'demo_practice_space.dart';
 import 'demo_second_space.dart';
+import 'demo_space_listing.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_stores.dart';
 import 'demo_trade_city_space.dart';
@@ -353,6 +354,13 @@ class DemoFixture implements DemoSpaceParts {
 
   /// #3863 — the practice in Berlin, the one business without places.
   DemoPracticeData get practice => _spaces.practice;
+
+  /// #4008 — the houses whose owners welcome the members of the
+  /// organisation's other houses at once.
+  final Set<String> houseWelcomes = {};
+
+  /// #4008 — the listing of every space beside the main one.
+  List<DemoSpaceListing> get listings => _spaces.everyListing;
 
   /// #4005 — the house abroad the Demo adds (dormant until [revealHouse]).
   DemoHouseData get house => _spaces.house;

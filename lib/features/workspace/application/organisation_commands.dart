@@ -40,9 +40,30 @@ class OrganisationCommands {
     return answer;
   }
 
+  /// #4005 — the house's prices are named: its first task closes.
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId) =>
+      _run(_repository.clearPricesPending(workspaceId));
+
   /// The birth record of [workspaceId], if it was made as a house.
   Future<HouseBirth?> houseBirth(String workspaceId) =>
       _repository.houseBirth(workspaceId);
+
+  /// #4008 — asks the house [workspaceId] to take the reader; the houses,
+  /// the organisations and the person's businesses are read again.
+  Future<({HouseJoin? joined, OrganisationRefusal? refused})> askToJoin(
+    String workspaceId,
+  ) async {
+    final answer = await _repository.askToJoin(workspaceId);
+    if (answer.refused == null) _changed();
+    return answer;
+  }
+
+  /// #4008 — the house's owner says whether it welcomes the members of the
+  /// organisation's other houses at once.
+  Future<OrganisationRefusal?> setWelcome(
+    String workspaceId, {
+    required bool on,
+  }) => _run(_repository.setWelcome(workspaceId, on: on));
 
   Future<OrganisationRefusal?> _run(
     Future<OrganisationRefusal?> command,

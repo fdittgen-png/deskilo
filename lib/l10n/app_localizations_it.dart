@@ -2187,6 +2187,46 @@ class AppLocalizationsIt extends AppLocalizations {
   String get bankBasisQrReference => 'riferimento QR';
 
   @override
+  String bankBatchLine(String amount, String date) {
+    return '$amount il $date';
+  }
+
+  @override
+  String bankBatchLineConfirmed(String invoice) {
+    return '$invoice: confermata';
+  }
+
+  @override
+  String bankBatchLineRefused(String invoice) {
+    return '$invoice: non confermata. Abbini questo movimento da solo.';
+  }
+
+  @override
+  String bankBatchResultTitle(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count abbinamenti sono stati confermati',
+      one: '1 abbinamento è stato confermato',
+      zero: 'Nessun abbinamento è stato confermato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String bankBatchSettles(String invoice, String member) {
+    return 'Salda $invoice di $member';
+  }
+
+  @override
+  String get bankBatchTitle => 'Confermare questi abbinamenti?';
+
+  @override
+  String bankBatchTotal(String currency, String amount) {
+    return 'Totale in $currency: $amount';
+  }
+
+  @override
   String get bankChooseMovement =>
       'Scelga a sinistra un movimento in entrata: qui sono elencate le sue fatture aperte.';
 
@@ -5852,10 +5892,6 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskBooking => 'Dettagli della prenotazione';
 
   @override
-  String get calendarDeskBookingActions =>
-      'Modifica, annulla o mostra sulla pianta';
-
-  @override
   String get calendarDeskColumnFrom => 'Dal';
 
   @override
@@ -5915,9 +5951,15 @@ class AppLocalizationsIt extends AppLocalizations {
   String get calendarDeskNew => 'Nuova prenotazione';
 
   @override
+  String get calendarDeskRangeLabel => 'Periodo';
+
+  @override
   String calendarDeskRepeatedHour(String time) {
     return '$time, per la seconda volta: gli orologi sono tornati indietro';
   }
+
+  @override
+  String get calendarDeskViewLabel => 'Vista';
 
   @override
   String get calendarDeskZoomIn => 'Ingrandisci';
@@ -6338,6 +6380,16 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get chOptionToTaxDate => 'Opzione efficace dal (AAAA-MM-GG)';
+
+  @override
+  String chromeChipWithHint(String label, String hint) {
+    return '$label, $hint';
+  }
+
+  @override
+  String chromeRoleAs(String role) {
+    return 'come $role';
+  }
 
   @override
   String get coOwnerAction => 'Comproprietà';
@@ -9520,6 +9572,16 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String eventExpenseSubmitted(String actor, String amount) {
     return '$actor ha inviato una spesa di $amount';
+  }
+
+  @override
+  String eventHouseJoinAsked(String member, String house) {
+    return '$member chiede di entrare, da $house';
+  }
+
+  @override
+  String eventHouseJoinWelcomed(String member, String house) {
+    return '$member è entrato da $house, accolto dall\'impostazione di questa casa';
   }
 
   @override
@@ -13731,6 +13793,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get holidayWhitMonday => 'Lunedì di Pentecoste';
 
   @override
+  String get houseActivate => 'Attivare';
+
+  @override
   String get houseAddCarried =>
       'Viaggiano: i ruoli, le regole di prenotazione e di convalida, i promemoria e le funzioni che questo paese offre.';
 
@@ -13823,6 +13888,154 @@ class AppLocalizationsIt extends AppLocalizations {
   String houseBirthToPrice(String rows) {
     return 'Ripresi, inattivi e da prezzare: $rows.';
   }
+
+  @override
+  String get houseDone => 'Fatto';
+
+  @override
+  String houseFirstSale(String country) {
+    return 'Prima della sua prima vendita in $country';
+  }
+
+  @override
+  String get houseFree => 'Gratuito';
+
+  @override
+  String get houseJoinAsk => 'Chieda di entrare';
+
+  @override
+  String houseJoinAsked(String house) {
+    return 'Richiesto, in attesa di $house';
+  }
+
+  @override
+  String get houseJoinConfirmAsk => 'Chieda';
+
+  @override
+  String get houseJoinConfirmJoin => 'Entri';
+
+  @override
+  String houseJoinDoneAsked(String house) {
+    return 'La sua richiesta è stata inviata a $house.';
+  }
+
+  @override
+  String houseJoinDoneMember(String house) {
+    return 'È membro di $house.';
+  }
+
+  @override
+  String houseJoinOthers(String organisation) {
+    return 'Altre case di $organisation';
+  }
+
+  @override
+  String get houseJoinSheetApart =>
+      'Le sue prenotazioni e fatture lì restano separate da quelle delle altre case.';
+
+  @override
+  String houseJoinSheetDecides(String house) {
+    return '$house decide sulla sua richiesta.';
+  }
+
+  @override
+  String houseJoinSheetOwn(String house, String currency) {
+    return '$house è un\'attività a sé, con condizioni, prezzi e valuta propri ($currency).';
+  }
+
+  @override
+  String houseJoinSheetProfile(String house) {
+    return 'Il suo profilo diventa visibile agli amministratori di $house: il suo nome, la sua e-mail e ciò che chiede a ogni membro.';
+  }
+
+  @override
+  String houseJoinSheetTitle(String house) {
+    return 'Entrare in $house?';
+  }
+
+  @override
+  String houseJoinSheetWelcome(String house, String organisation) {
+    return '$house accoglie i membri di $organisation: sarà subito membro.';
+  }
+
+  @override
+  String get houseJoinWelcomes => 'Sarà subito membro';
+
+  @override
+  String houseJoinWhere(String country, String currency) {
+    return '$country, in $currency';
+  }
+
+  @override
+  String get houseKindPackage => 'Pacchetto';
+
+  @override
+  String get houseKindService => 'Servizio';
+
+  @override
+  String get houseLater => 'Finirò più tardi';
+
+  @override
+  String houseNamePrices(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Stabilire i prezzi ($count rimasti)',
+      one: 'Stabilire i prezzi (1 rimasto)',
+      zero: 'Stabilire i prezzi (nessuno rimasto)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get houseNamePricesAfterRates => 'Imposti prima le aliquote fiscali.';
+
+  @override
+  String houseNoVat(String country) {
+    return '$country non ha IVA: qui non c’è nulla da impostare.';
+  }
+
+  @override
+  String get houseOwnFeeBands => 'Le fasce di quota';
+
+  @override
+  String get houseOwnLayout => 'L’impaginazione dei documenti';
+
+  @override
+  String get houseOwnLinks => 'I collegamenti dei documenti';
+
+  @override
+  String get houseOwnPayment =>
+      'Le istruzioni di pagamento e il conto bancario';
+
+  @override
+  String get houseOwnTitle => 'Propri di questa casa';
+
+  @override
+  String get housePriceRequired => 'Indichi un prezzo; 0 lo rende gratuito.';
+
+  @override
+  String get housePricesTitle => 'Stabilire i prezzi';
+
+  @override
+  String get houseRateLabel => 'Aliquota';
+
+  @override
+  String get houseRateRequired => 'Scelga un’aliquota.';
+
+  @override
+  String houseSetRates(String country) {
+    return 'Impostare le aliquote fiscali di $country';
+  }
+
+  @override
+  String houseWelcomeExplain(String organisation) {
+    return 'Un membro di un\'altra casa di $organisation che lo chiede diventa subito membro qui, con le condizioni di questa casa per un nuovo membro. Disattivato, decide Lei ogni richiesta.';
+  }
+
+  @override
+  String get houseWelcomeSwitch =>
+      'I membri delle altre case sono i benvenuti qui';
 
   @override
   String get hubAccountingSubtitle =>
@@ -22649,6 +22862,67 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa attività non fa parte di alcuna organizzazione. Un’attività in un altro paese o in un’altra valuta è una casa a sé nell’organizzazione della sua sede.';
 
   @override
+  String organisationOverviewAsOf(String amount, String time) {
+    return '$amount, alle $time';
+  }
+
+  @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
+  String get organisationOverviewCountry => 'Paese';
+
+  @override
+  String get organisationOverviewCurrency => 'Valuta';
+
+  @override
+  String organisationOverviewHeadName(String name) {
+    return '$name (sede)';
+  }
+
+  @override
+  String get organisationOverviewHouse => 'Casa';
+
+  @override
+  String organisationOverviewIncomplete(String houses) {
+    return 'Incompleto: $houses non conteggiate';
+  }
+
+  @override
+  String get organisationOverviewNone =>
+      'Nessuna casa di questa organizzazione da mostrare.';
+
+  @override
+  String get organisationOverviewNotEnabled =>
+      'L’analisi è disattivata in questa casa';
+
+  @override
+  String get organisationOverviewNotPermitted =>
+      'Non può leggere le finanze di questa casa';
+
+  @override
+  String get organisationOverviewOneHouse =>
+      'Lei è membro di una sola casa di questa organizzazione: non ce n’è un’altra da affiancare.';
+
+  @override
+  String get organisationOverviewTitle => 'Panoramica';
+
+  @override
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  ) {
+    return '$currency: fatturato $invoiced · incassato $collected · scaduto $overdue';
+  }
+
+  @override
+  String get organisationOverviewTotals => 'Totali per valuta';
+
+  @override
   String get organisationRefusedAlreadyInOne =>
       'Questa attività fa già parte di un’organizzazione.';
 
@@ -22673,6 +22947,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'I documenti parlano inglese, francese, tedesco, spagnolo o italiano.';
 
   @override
+  String get organisationRefusedNoHouse =>
+      'Questa attività non è una casa di un\'organizzazione.';
+
+  @override
   String get organisationRefusedNoName =>
       'Un’organizzazione ha bisogno di un nome.';
 
@@ -22681,8 +22959,16 @@ class AppLocalizationsIt extends AppLocalizations {
       'La nuova sede deve essere una casa di questa organizzazione.';
 
   @override
+  String get organisationRefusedNotAMember =>
+      'Solo un membro di una casa di questa organizzazione può chiedere di entrare in un\'altra.';
+
+  @override
   String get organisationRefusedNotOwner =>
       'Solo un titolare di questa attività e della sede può farlo.';
+
+  @override
+  String get organisationRefusedOnlyAPerson =>
+      'Una persona chiede di entrare in una casa; un assistente non può chiederlo al suo posto.';
 
   @override
   String get organisationRefusedOther =>
@@ -26694,6 +26980,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get refusalChangedMeanwhile =>
       'Nel frattempo è cambiato. Lo riapra per vedere a che punto è.';
+
+  @override
+  String get refusalMemberReturnsAsNew =>
+      'Un membro che è uscito ritorna come nuovo membro: lo renda attivo per riaccoglierlo.';
 
   @override
   String get refusalMoneyLocaleLocked =>

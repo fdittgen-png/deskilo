@@ -146,7 +146,9 @@ import 'data/workbook_origin_repository.dart';
 import 'demo_city_commerce_overrides.dart';
 import 'demo_fixture.dart';
 import 'demo_guest_pass_overrides.dart';
+import 'demo_house_join.dart';
 import 'demo_house_reveal.dart';
+import 'demo_organisation_overview.dart';
 import 'demo_space_pick.dart';
 import 'demo_space_routing.dart';
 import 'seed/demo_house_seed.dart' show demoHouseCountry, demoHouseCurrency;
@@ -282,7 +284,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       publicDiscoveryRepositoryProvider.overrideWith((ref)=>directory),
       publicationRepositoryProvider.overrideWith((ref)=>directory),
       directoryParticipantRepositoryProvider.overrideWith((ref)=>directory),
-      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), organisationRepositoryProvider.overrideWith((ref) => FakeOrganisationRepository.from(() => demoOrganisations(fixture.workspaces), businesses: () => demoBusinessesAsHouses(fixture.workspaces), createBusiness: (r) => revealDemoHouse(fixture, name: r.name), onlyHouse: (country: demoHouseCountry, currency: demoHouseCurrency))), houseCountryProposalProvider.overrideWithValue(demoHouseCountry), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
+      meRepositoryProvider.overrideWith((ref) => _demoMe(fixture)), linkedMeRepositoryProvider.overrideWith((ref) => FakeLinkedMeRepository()), organisationRepositoryProvider.overrideWith((ref) => FakeOrganisationRepository.from(() => demoOrganisations(fixture.workspaces), businesses: () => demoBusinessesAsHouses(fixture.workspaces), createBusiness: (r) => revealDemoHouse(fixture, name: r.name), onlyHouse: (country: demoHouseCountry, currency: demoHouseCurrency), joinableSource: () => demoJoinableHouses(fixture), join: (id, {required welcome}) => demoJoinHouse(fixture, id, welcome: welcome), welcoming: fixture.houseWelcomes, overviewOf: (organisation, month) => demoOrganisationOverview(fixture, organisation, month))), houseCountryProposalProvider.overrideWithValue(demoHouseCountry), workspaceAccessRepositoryProvider.overrideWith((ref) => FakeMeRepository()), workspaceExportRepositoryProvider.overrideWith((ref) => demoWorkspaceExports(fixture)), // #1823, #2563, #2557 C3
       // #1835 — the visitor's own visits, in memory (#2327: seeded).
       guestParticipationRepositoryProvider.overrideWithValue(fixture.guests),
       ..._demoContacts(fixture), // #2472

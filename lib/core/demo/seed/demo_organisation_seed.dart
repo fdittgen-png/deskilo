@@ -28,7 +28,8 @@ HouseRole _roleOf(Member m) {
   return HouseRole.member;
 }
 
-bool _isHouse(String workspaceId, String environment) =>
+/// #4008 — whether [workspaceId] is a house of the Demo's organisation.
+bool demoIsHouse(String workspaceId, String environment) =>
     environment == 'prod' &&
     DemoSpaceKey.values.any(
       (k) => k.id == workspaceId && !_outside.contains(k),
@@ -44,7 +45,7 @@ Future<List<Organisation>> demoOrganisations(
   final memberships = await home.fetchMyMembers();
   final houses = [
     for (final business in businesses)
-      if (_isHouse(business.id, business.environment))
+      if (demoIsHouse(business.id, business.environment))
         for (final m in memberships)
           if (m.workspaceId == business.id && m.status == MemberStatus.active)
             OrganisationHouse(

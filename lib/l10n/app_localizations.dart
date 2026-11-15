@@ -3565,6 +3565,48 @@ abstract class AppLocalizations {
   /// **'QR reference'**
   String get bankBasisQrReference;
 
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLine.
+  ///
+  /// In en, this message translates to:
+  /// **'{amount} on {date}'**
+  String bankBatchLine(String amount, String date);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineConfirmed.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: confirmed'**
+  String bankBatchLineConfirmed(String invoice);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchLineRefused.
+  ///
+  /// In en, this message translates to:
+  /// **'{invoice}: not confirmed. Match this movement by itself.'**
+  String bankBatchLineRefused(String invoice);
+
+  /// #4053 — how many matches of a batch were confirmed: bankBatchResultTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{No match was confirmed} one{1 match was confirmed} other{{count} matches were confirmed}}'**
+  String bankBatchResultTitle(int count);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchSettles.
+  ///
+  /// In en, this message translates to:
+  /// **'Settles {invoice} of {member}'**
+  String bankBatchSettles(String invoice, String member);
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm these matches?'**
+  String get bankBatchTitle;
+
+  /// #4053 — the matches by reference shown before they are confirmed: bankBatchTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total in {currency}: {amount}'**
+  String bankBatchTotal(String currency, String amount);
+
   /// #3616 the bank statement's right pane at the desk before a movement is chosen
   ///
   /// In en, this message translates to:
@@ -9125,12 +9167,6 @@ abstract class AppLocalizations {
   /// **'Booking details'**
   String get calendarDeskBooking;
 
-  /// #3626 Button in the booking pane that opens the booking's sheet: edit, extend, cancel, show on the plan
-  ///
-  /// In en, this message translates to:
-  /// **'Change, cancel or show on plan'**
-  String get calendarDeskBookingActions;
-
   /// #3626 Column title of the bookings table: when a booking starts
   ///
   /// In en, this message translates to:
@@ -9221,11 +9257,23 @@ abstract class AppLocalizations {
   /// **'New booking'**
   String get calendarDeskNew;
 
+  /// #4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Range'**
+  String get calendarDeskRangeLabel;
+
   /// #3626 Accessibility label of an hour mark of the day grid that is the second time the clock shows that hour (the clocks went back). Placeholders: {time}
   ///
   /// In en, this message translates to:
   /// **'{time}, second time: the clocks went back'**
   String calendarDeskRepeatedHour(String time);
+
+  /// #4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'View'**
+  String get calendarDeskViewLabel;
 
   /// #3626 Tooltip of the button that widens the hours of the day grid
   ///
@@ -9928,6 +9976,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Option effective from (YYYY-MM-DD)'**
   String get chOptionToTaxDate;
+
+  /// #4019 — the chip's announcement where it switches houses: the label, then the tooltip's words.
+  ///
+  /// In en, this message translates to:
+  /// **'{label}, {hint}'**
+  String chromeChipWithHint(String label, String hint);
+
+  /// #4019 — the chrome names the reader's role on a page the role decides: 'as owner', 'as administrator', 'as accountant'.
+  ///
+  /// In en, this message translates to:
+  /// **'as {role}'**
+  String chromeRoleAs(String role);
 
   /// Member-sheet action opening the co-owner dialog (0058)
   ///
@@ -15193,6 +15253,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{actor} submitted an expense of {amount}'**
   String eventExpenseSubmitted(String actor, String amount);
+
+  /// #4008 — a member of one house asks to join another: eventHouseJoinAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'{member} asks to join, from {house}'**
+  String eventHouseJoinAsked(String member, String house);
+
+  /// #4008 — a member of one house asks to join another: eventHouseJoinWelcomed.
+  ///
+  /// In en, this message translates to:
+  /// **'{member} joined from {house}, welcomed by this house\'s setting'**
+  String eventHouseJoinWelcomed(String member, String house);
 
   /// #3672 a new invoice told to its customer
   ///
@@ -22157,6 +22229,12 @@ abstract class AppLocalizations {
   /// **'Whit Monday'**
   String get holidayWhitMonday;
 
+  /// #4005 — a house's first task, naming its prices: houseActivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Activate'**
+  String get houseActivate;
+
   /// #4005 — a house abroad: houseAddCarried.
   ///
   /// In en, this message translates to:
@@ -22252,6 +22330,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Carried, inactive and to be priced: {rows}.'**
   String houseBirthToPrice(String rows);
+
+  /// #4005 — a house's first task, naming its prices: houseDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get houseDone;
+
+  /// #4005 — a house's first task, naming its prices: houseFirstSale.
+  ///
+  /// In en, this message translates to:
+  /// **'Before your first sale in {country}'**
+  String houseFirstSale(String country);
+
+  /// #4005 — a house's first task, naming its prices: houseFree.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get houseFree;
+
+  /// #4008 — a member of one house asks to join another: houseJoinAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask to join'**
+  String get houseJoinAsk;
+
+  /// #4008 — a member of one house asks to join another: houseJoinAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Asked, waiting for {house}'**
+  String houseJoinAsked(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinConfirmAsk.
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get houseJoinConfirmAsk;
+
+  /// #4008 — a member of one house asks to join another: houseJoinConfirmJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join'**
+  String get houseJoinConfirmJoin;
+
+  /// #4008 — a member of one house asks to join another: houseJoinDoneAsked.
+  ///
+  /// In en, this message translates to:
+  /// **'Your request went to {house}.'**
+  String houseJoinDoneAsked(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinDoneMember.
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of {house}.'**
+  String houseJoinDoneMember(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinOthers.
+  ///
+  /// In en, this message translates to:
+  /// **'Other houses of {organisation}'**
+  String houseJoinOthers(String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetApart.
+  ///
+  /// In en, this message translates to:
+  /// **'Your bookings and invoices there are kept apart from the other houses\'.'**
+  String get houseJoinSheetApart;
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetDecides.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} decides on your request.'**
+  String houseJoinSheetDecides(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetOwn.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} is a business of its own, with its own terms, prices and currency ({currency}).'**
+  String houseJoinSheetOwn(String house, String currency);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetProfile.
+  ///
+  /// In en, this message translates to:
+  /// **'Your profile becomes visible to the administrators of {house}: your name, your e-mail and what it asks of every member.'**
+  String houseJoinSheetProfile(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Join {house}?'**
+  String houseJoinSheetTitle(String house);
+
+  /// #4008 — a member of one house asks to join another: houseJoinSheetWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'{house} welcomes the members of {organisation}: you will be a member at once.'**
+  String houseJoinSheetWelcome(String house, String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseJoinWelcomes.
+  ///
+  /// In en, this message translates to:
+  /// **'You will be a member at once'**
+  String get houseJoinWelcomes;
+
+  /// #4008 — a member of one house asks to join another: houseJoinWhere.
+  ///
+  /// In en, this message translates to:
+  /// **'{country}, in {currency}'**
+  String houseJoinWhere(String country, String currency);
+
+  /// #4005 — a house's first task, naming its prices: houseKindPackage.
+  ///
+  /// In en, this message translates to:
+  /// **'Package'**
+  String get houseKindPackage;
+
+  /// #4005 — a house's first task, naming its prices: houseKindService.
+  ///
+  /// In en, this message translates to:
+  /// **'Service'**
+  String get houseKindService;
+
+  /// #4005 — a house's first task, naming its prices: houseLater.
+  ///
+  /// In en, this message translates to:
+  /// **'I will finish later'**
+  String get houseLater;
+
+  /// #4005 — a house's first task, naming its prices: houseNamePrices.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Name your prices (none left)} one{Name your prices (1 left)} other{Name your prices ({count} left)}}'**
+  String houseNamePrices(int count);
+
+  /// #4005 — a house's first task, naming its prices: houseNamePricesAfterRates.
+  ///
+  /// In en, this message translates to:
+  /// **'First set the tax rates.'**
+  String get houseNamePricesAfterRates;
+
+  /// #4005 — a house's first task, naming its prices: houseNoVat.
+  ///
+  /// In en, this message translates to:
+  /// **'{country} has no VAT: nothing to set here.'**
+  String houseNoVat(String country);
+
+  /// #4005 — a house's first task, naming its prices: houseOwnFeeBands.
+  ///
+  /// In en, this message translates to:
+  /// **'The fee bands'**
+  String get houseOwnFeeBands;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnLayout.
+  ///
+  /// In en, this message translates to:
+  /// **'The document layout'**
+  String get houseOwnLayout;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnLinks.
+  ///
+  /// In en, this message translates to:
+  /// **'The document links'**
+  String get houseOwnLinks;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'The payment instructions and the bank account'**
+  String get houseOwnPayment;
+
+  /// #4005 — a house's first task, naming its prices: houseOwnTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'This house\'s own to set'**
+  String get houseOwnTitle;
+
+  /// #4005 — a house's first task, naming its prices: housePriceRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name a price; 0 makes it free.'**
+  String get housePriceRequired;
+
+  /// #4005 — a house's first task, naming its prices: housePricesTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Name your prices'**
+  String get housePricesTitle;
+
+  /// #4005 — a house's first task, naming its prices: houseRateLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Rate'**
+  String get houseRateLabel;
+
+  /// #4005 — a house's first task, naming its prices: houseRateRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a rate.'**
+  String get houseRateRequired;
+
+  /// #4005 — a house's first task, naming its prices: houseSetRates.
+  ///
+  /// In en, this message translates to:
+  /// **'Set {country}\'s tax rates'**
+  String houseSetRates(String country);
+
+  /// #4008 — a member of one house asks to join another: houseWelcomeExplain.
+  ///
+  /// In en, this message translates to:
+  /// **'A member of another house of {organisation} who asks becomes a member here at once, with this house\'s terms for a new member. Off, you decide each request.'**
+  String houseWelcomeExplain(String organisation);
+
+  /// #4008 — a member of one house asks to join another: houseWelcomeSwitch.
+  ///
+  /// In en, this message translates to:
+  /// **'Members of the other houses are welcome here'**
+  String get houseWelcomeSwitch;
 
   /// the accounting and VAT page and its menu group
   ///
@@ -36010,6 +36304,95 @@ abstract class AppLocalizations {
   /// **'This business is in no organisation. A business in another country or another currency is a house of its own in the organisation of its head.'**
   String get organisationNone;
 
+  /// #4007 A figure that is a state (overdue today), with the time it was read in the reader's zone
+  ///
+  /// In en, this message translates to:
+  /// **'{amount}, as of {time}'**
+  String organisationOverviewAsOf(String amount, String time);
+
+  /// #4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {amount}'**
+  String organisationOverviewCardLine(String label, String amount);
+
+  /// #4007 Column of the overview: the house's country
+  ///
+  /// In en, this message translates to:
+  /// **'Country'**
+  String get organisationOverviewCountry;
+
+  /// #4007 Column of the overview: the house's currency code
+  ///
+  /// In en, this message translates to:
+  /// **'Currency'**
+  String get organisationOverviewCurrency;
+
+  /// #4007 A house's name, marked as the head of the organisation
+  ///
+  /// In en, this message translates to:
+  /// **'{name} (head)'**
+  String organisationOverviewHeadName(String name);
+
+  /// #4007 Column of the overview: the house
+  ///
+  /// In en, this message translates to:
+  /// **'House'**
+  String get organisationOverviewHouse;
+
+  /// #4007 A total that misses houses without figures; houses is a list of names
+  ///
+  /// In en, this message translates to:
+  /// **'Incomplete: {houses} not counted'**
+  String organisationOverviewIncomplete(String houses);
+
+  /// #4007 The overview with no house at all
+  ///
+  /// In en, this message translates to:
+  /// **'No house of this organisation to show.'**
+  String get organisationOverviewNone;
+
+  /// #4007 A house listed without figures: its analysis is switched off
+  ///
+  /// In en, this message translates to:
+  /// **'Analysis is off in this house'**
+  String get organisationOverviewNotEnabled;
+
+  /// #4007 A house listed without figures: the reader lacks the analysis rights there
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read this house\'s finances'**
+  String get organisationOverviewNotPermitted;
+
+  /// #4007 The overview when the reader is a member of a single house
+  ///
+  /// In en, this message translates to:
+  /// **'You are a member of one house of this organisation: there is no other to set beside it.'**
+  String get organisationOverviewOneHouse;
+
+  /// #4007 The organisation's overview: its houses side by side; also the button that opens it
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get organisationOverviewTitle;
+
+  /// #4007 One currency's total line; amounts are formatted in that currency
+  ///
+  /// In en, this message translates to:
+  /// **'{currency}: invoiced {invoiced} · collected {collected} · overdue {overdue}'**
+  String organisationOverviewTotalLine(
+    String currency,
+    String invoiced,
+    String collected,
+    String overdue,
+  );
+
+  /// #4007 Heading of the totals: one per currency, never added across currencies
+  ///
+  /// In en, this message translates to:
+  /// **'Totals per currency'**
+  String get organisationOverviewTotals;
+
   /// #4006 — the organisation page: organisationRefusedAlreadyInOne.
   ///
   /// In en, this message translates to:
@@ -36046,6 +36429,12 @@ abstract class AppLocalizations {
   /// **'The documents speak English, French, German, Spanish or Italian.'**
   String get organisationRefusedLanguage;
 
+  /// #4008 — a member of one house asks to join another: organisationRefusedNoHouse.
+  ///
+  /// In en, this message translates to:
+  /// **'This business is not a house of an organisation.'**
+  String get organisationRefusedNoHouse;
+
   /// #4006 — the organisation page: organisationRefusedNoName.
   ///
   /// In en, this message translates to:
@@ -36058,11 +36447,23 @@ abstract class AppLocalizations {
   /// **'The new head must be a house of this organisation.'**
   String get organisationRefusedNotAHouse;
 
+  /// #4008 — a member of one house asks to join another: organisationRefusedNotAMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Only a member of a house of this organisation can ask to join another.'**
+  String get organisationRefusedNotAMember;
+
   /// #4006 — the organisation page: organisationRefusedNotOwner.
   ///
   /// In en, this message translates to:
   /// **'Only an owner of this business and of the head may do this.'**
   String get organisationRefusedNotOwner;
+
+  /// #4008 — a member of one house asks to join another: organisationRefusedOnlyAPerson.
+  ///
+  /// In en, this message translates to:
+  /// **'A person asks to join a house; an assistant cannot ask for them.'**
+  String get organisationRefusedOnlyAPerson;
 
   /// #4006 — the organisation page: organisationRefusedOther.
   ///
@@ -42624,6 +43025,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
+
+  /// #4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member
+  ///
+  /// In en, this message translates to:
+  /// **'A member who left comes back as a new member: set them active to welcome them back.'**
+  String get refusalMemberReturnsAsNew;
 
   /// #2332: refusalMoneyLocaleLocked
   ///

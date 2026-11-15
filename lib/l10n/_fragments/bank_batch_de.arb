@@ -1,0 +1,9 @@
+{
+  "bankBatchTitle": "Diese Zuordnungen bestätigen?",
+  "bankBatchLine": "{amount} am {date}",
+  "bankBatchSettles": "Begleicht {invoice} von {member}",
+  "bankBatchTotal": "Summe in {currency}: {amount}",
+  "bankBatchLineConfirmed": "{invoice}: bestätigt",
+  "bankBatchLineRefused": "{invoice}: nicht bestätigt. Ordnen Sie diese Bewegung einzeln zu.",
+  "bankBatchResultTitle": "{count, plural, =0{Keine Zuordnung wurde bestätigt} one{1 Zuordnung wurde bestätigt} other{{count} Zuordnungen wurden bestätigt}}"
+}

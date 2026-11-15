@@ -104,25 +104,10 @@ class CalendarViewBar extends StatelessWidget {
                     if (alertsAvailable)
                       ButtonSegment(
                         value: _alerts,
-                        icon: switch (alertsCount) {
-                          null => Semantics(
-                              key: const ValueKey('calendar-alerts-unknown'),
-                              label: l10n.calendarAlertsCountUnknown,
-                              child: Badge(
-                                child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
-                              ),
-                            ),
-                          // #4021 — named with its count.
-                          final n when n > 0 => Semantics(
-                              key: const ValueKey('calendar-alerts-count'),
-                              label: l10n.calendarAlertsNew(n),
-                              child: Badge.count(
-                                count: n,
-                                child: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
-                              ),
-                            ),
-                          _ => iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
-                        },
+                        icon: CalendarAlertsIcon(
+                          count: alertsCount,
+                          icon: iconFor(_alerts, Icons.notifications_outlined, l10n.calendarViewAlerts),
+                        ),
                         label: labelFor(_alerts, l10n.calendarViewAlerts),
                         tooltip: l10n.calendarViewAlerts,
                       ),
@@ -148,5 +133,33 @@ class CalendarViewBar extends StatelessWidget {
           ),
         ]),
     );
+  }
+}
+
+/// #4021 — the alerts' icon, named with how many are new (#4056 — the
+/// hub's view bar and the desk's view choice draw it alike). [count] is
+/// null while it cannot be known.
+class CalendarAlertsIcon extends StatelessWidget {
+  const CalendarAlertsIcon({super.key, required this.count, required this.icon});
+
+  final int? count;
+  final Widget icon;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    return switch (count) {
+      null => Semantics(
+        key: const ValueKey('calendar-alerts-unknown'),
+        label: l10n.calendarAlertsCountUnknown,
+        child: Badge(child: icon),
+      ),
+      final n when n > 0 => Semantics(
+        key: const ValueKey('calendar-alerts-count'),
+        label: l10n.calendarAlertsNew(n),
+        child: Badge.count(count: n, child: icon),
+      ),
+      _ => icon,
+    };
   }
 }

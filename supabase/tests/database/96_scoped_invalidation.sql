@@ -201,6 +201,9 @@ select ok((select s.revoked_at is not null from public.mcp_connection_scopes s j
             where c.local_user_id = '00000000-0000-4000-8000-0000001631a4' and s.workspace_id = current_setting('t.a')::uuid),
   'leaving A revokes P''s consent to A');
 select is(pg_temp.cap('00000000-0000-4000-8000-0000001631a3', 'claude-1631', 'a'), 'completed', 'H is untouched');
+-- #4008: a member who left comes back as a new member, then is let in
+select public.member_return_as_new((select id from public.members
+  where workspace_id = current_setting('t.a')::uuid and user_id = '00000000-0000-4000-8000-0000001631a4'));
 update public.members set status = 'active'
  where workspace_id = current_setting('t.a')::uuid and user_id = '00000000-0000-4000-8000-0000001631a4';
 select is(pg_temp.cap('00000000-0000-4000-8000-0000001631a4', 'claude-1631', 'a'), 'no_consent',

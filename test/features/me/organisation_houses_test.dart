@@ -6,6 +6,7 @@
 // house, the chip lists the organisation's other houses and nothing else.
 import 'package:deskilo/app/shell/house_switch.dart';
 import 'package:deskilo/app/shell/space_chip.dart';
+import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/storage/space_prefs_store.dart';
 import 'package:deskilo/features/me/application/me_spaces_layout.dart';
 import 'package:deskilo/features/workspace/domain/organisation.dart';
@@ -13,6 +14,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/organisation_providers.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/pump_app.dart';
@@ -169,6 +171,40 @@ void main() {
         myOrganisationsProvider.overrideWith((ref) async => [_organisation]),
       ],
     );
+
+    // #4019 — the chip is announced as what it is.
+    testWidgets('where it switches houses, one label: the business, the page, '
+        'then the tooltip\'s words, and it is a button', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await pumpChip(tester, _london);
+      await tester.pump();
+      await tester.pump();
+      final label = 'Atelier London, Home, ${englishL10n.spaceOtherHouses}';
+      final node = tester.getSemantics(find.bySemanticsLabel(label));
+      // ignore: deprecated_member_use
+      expect(node.hasFlag(SemanticsFlag.isButton), isTrue);
+      expect(
+        find.bySemanticsLabel(englishL10n.spaceOtherHouses),
+        findsNothing,
+        reason: 'the tooltip is not announced a second time',
+      );
+      semantics.dispose();
+    });
+
+    testWidgets('outside an organisation, one label: the business and the '
+        'page, and it is not a button', (tester) async {
+      final semantics = tester.ensureSemantics();
+      await pumpChip(tester, _berlin);
+      await tester.pump();
+      await tester.pump();
+      expect(find.byKey(const ValueKey('space-chip-houses')), findsNothing);
+      final node = tester.getSemantics(
+        find.bySemanticsLabel('Praxis Berlin, Home'),
+      );
+      // ignore: deprecated_member_use
+      expect(node.hasFlag(SemanticsFlag.isButton), isFalse);
+      semantics.dispose();
+    });
 
     testWidgets('inside a house, a tap lists the other houses with their '
         'country and currency, and the way back to Me', (tester) async {

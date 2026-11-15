@@ -9,6 +9,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../app/house/house_prices.dart';
 import '../../../../app/shell/space_entry.dart';
 import '../../../../core/help/help_anchors.dart';
 import '../../../../core/help/help_dot.dart';
@@ -27,6 +28,7 @@ import '../../domain/organisation.dart';
 import '../../domain/workspace.dart';
 import '../../providers/organisation_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../screens/organisation_overview_screen.dart';
 import 'add_house_form.dart';
 import 'house_birth_view.dart';
 import 'organisation_name_dialog.dart';
@@ -53,6 +55,9 @@ String organisationRefusalText(
   OrganisationRefusal.language => l10n.organisationRefusedLanguage,
   OrganisationRefusal.requestUsed => l10n.organisationRefusedRequestUsed,
   OrganisationRefusal.demoOneHouse => l10n.organisationRefusedDemoOneHouse,
+  OrganisationRefusal.notAMember => l10n.organisationRefusedNotAMember,
+  OrganisationRefusal.onlyAPerson => l10n.organisationRefusedOnlyAPerson,
+  OrganisationRefusal.noHouse => l10n.organisationRefusedNoHouse,
   OrganisationRefusal.other => l10n.organisationRefusedOther,
 };
 
@@ -213,7 +218,17 @@ class OrganisationSheet extends ConsumerWidget {
                 alone: houses.length == 1,
                 onCommand: (command) => _done(context, command),
               ),
+            // #4008 — this house's own welcome, set by its owners.
+            _HouseWelcome(organisation: organisation, workspace: workspace),
             const FormGap(),
+            // #4007 — the houses side by side, for whoever reads this page.
+            OutlinedButton.icon(
+              key: const ValueKey('organisation-overview'),
+              icon: const Icon(Icons.table_chart_outlined),
+              label: Text(l10n.organisationOverviewTitle),
+              onPressed: () =>
+                  OrganisationOverviewScreen.open(context, organisation.id),
+            ),
             if (headOwner)
               ..._headActions(
                 context,
@@ -233,6 +248,8 @@ class OrganisationSheet extends ConsumerWidget {
   List<Widget> _birthOf(HouseBirth? birth, Organisation? organisation) => [
     if (birth != null) ...[
       const FormGap(),
+      // #4005 — the house's own first task, while its prices are unnamed.
+      HousePricesCard(workspace: workspace),
       HouseBirthView(
         birth: birth,
         head: organisation?.houseOf(birth.headWorkspaceId ?? '')?.name ?? '',
@@ -415,6 +432,48 @@ class _HouseRow extends ConsumerWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+/// #4008 — whether this house welcomes the members of the organisation's
+/// other houses at once: its owners' switch, with what it does; nothing for
+/// anyone else, nor for a business that is no house of [organisation].
+class _HouseWelcome extends ConsumerWidget {
+  const _HouseWelcome({required this.organisation, required this.workspace});
+
+  final Organisation organisation;
+  final Workspace workspace;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final role = organisation.houseOf(workspace.id)?.role;
+    if (role != HouseRole.owner && role != HouseRole.coOwner) {
+      return const SizedBox.shrink();
+    }
+    final l10n = context.l10n;
+    final on = ref
+        .watch(houseWelcomesProvider(organisation.id, workspace.id))
+        .value;
+    return SwitchListTile(
+      key: const ValueKey('house-welcome'),
+      contentPadding: EdgeInsets.zero,
+      value: on ?? false,
+      title: Text(l10n.houseWelcomeSwitch),
+      subtitle: Text(l10n.houseWelcomeExplain(organisation.name)),
+      onChanged: on == null
+          ? null
+          : (value) async {
+              final refused = await ref
+                  .read(organisationCommandsProvider)
+                  .setWelcome(workspace.id, on: value);
+              if (refused != null && context.mounted) {
+                AppSnack.error(
+                  context,
+                  organisationRefusalText(l10n, refused),
+                );
+              }
+            },
     );
   }
 }

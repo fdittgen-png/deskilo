@@ -3490,10 +3490,13 @@ La Sua attività ha sedi all'estero, in un altro paese o in un'altra valuta. Ogn
 4. Tocchi **Togliere dall’organizzazione** accanto a una casa per renderla di nuovo un'attività indipendente.
 5. Tocchi **Renderla sede** accanto a una casa di cui è titolare per renderla la sede. Il titolare di un'altra casa vede **Lasciare l’organizzazione** accanto a essa.
 6. Tocchi **Aggiungere una casa all’estero** per creare un'attività a sé in un altro paese o in un'altra valuta: scelga prima il paese; valuta, fuso orario e lingua dei documenti vengono proposti da esso. Il modulo dice cosa viaggia, cosa arriva inattivo da prezzare e cosa non viaggia. Tocchi **Creare la casa**: vi arriva, e la sua pagina iniziale mostra una volta come è nata.
+7. Nella nuova casa, la pagina iniziale mostra il suo primo compito: prima le aliquote fiscali del suo paese, poi **Stabilire i prezzi** per i servizi e i pacchetti arrivati inattivi. Dia a ciascuno un prezzo (0 lo rende gratuito) e un'aliquota, e lo attivi; le fasce di quota, l'impaginazione e i collegamenti dei documenti, le istruzioni di pagamento e il conto bancario sono propri della casa. Tocchi **Fatto** quando non resta nulla.
+8. In una casa di cui è proprietario, attivi **I membri delle altre case sono i benvenuti qui** per accogliere subito un membro di un'altra casa dell'organizzazione che lo chiede, con le condizioni di questa casa per un nuovo membro. Disattivato, la richiesta attende la sua decisione, che indica la casa da cui proviene la persona.
 
 **Da sapere**
 
 - Ogni casa mostra il suo paese, la sua valuta e il Suo ruolo. Chi altro ne è titolare si legge dentro la casa stessa.
+- Un membro di una casa vede le altre case dell'organizzazione su Io, sotto **Altre case di** l'organizzazione, e tocca **Chiedi di entrare**. Una domanda dice prima cosa significa: il suo profilo diventa visibile a quella casa, che è un'attività a sé con condizioni, prezzi e valuta propri.
 - In Io, le case sono raggruppate sotto il nome dell'organizzazione: prima la sede, poi per paese.
 - Dentro una casa, tocchi il nome dell'attività in alto per passare a un'altra casa dell'organizzazione.
 - Gli importi in valute diverse sono mostrati uno accanto all'altro e mai sommati.

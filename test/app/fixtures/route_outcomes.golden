@@ -14,6 +14,8 @@ signed-out on  /badge-kiosks -> /auth
 signed-out on  /bi -> /auth
 signed-out on  /bi/report/:id -> /auth
 signed-out on  /billing -> /auth
+signed-out on  /business-privacy -> /auth
+signed-out on  /business-task-wizard -> /auth
 signed-out on  /calendar -> /auth
 signed-out on  /connections -> /auth
 signed-out on  /consent -> /auth
@@ -93,6 +95,7 @@ signed-out on  /money/suppliers/:id -> /auth
 signed-out on  /nfc-config -> /auth
 signed-out on  /oauth/consent -> /auth
 signed-out on  /onboarding -> /auth
+signed-out on  /organisation/:id/overview -> /auth
 signed-out on  /p/:id -> (open)
 signed-out on  /payment-config -> /auth
 signed-out on  /payment-methods -> /auth
@@ -162,6 +165,8 @@ signed-out off /badge-kiosks -> /auth
 signed-out off /bi -> /auth
 signed-out off /bi/report/:id -> /auth
 signed-out off /billing -> /auth
+signed-out off /business-privacy -> /auth
+signed-out off /business-task-wizard -> /auth
 signed-out off /calendar -> /auth
 signed-out off /connections -> /auth
 signed-out off /consent -> /auth
@@ -241,6 +246,7 @@ signed-out off /money/suppliers/:id -> /auth
 signed-out off /nfc-config -> /auth
 signed-out off /oauth/consent -> /auth
 signed-out off /onboarding -> /auth
+signed-out off /organisation/:id/overview -> /auth
 signed-out off /p/:id -> (open)
 signed-out off /payment-config -> /auth
 signed-out off /payment-methods -> /auth
@@ -310,6 +316,8 @@ no-space on  /badge-kiosks -> /me
 no-space on  /bi -> /me
 no-space on  /bi/report/:id -> /me
 no-space on  /billing -> /me
+no-space on  /business-privacy -> /me
+no-space on  /business-task-wizard -> /me
 no-space on  /calendar -> /me
 no-space on  /connections -> (open)
 no-space on  /consent -> /me
@@ -389,6 +397,7 @@ no-space on  /money/suppliers/:id -> /me
 no-space on  /nfc-config -> /me
 no-space on  /oauth/consent -> (open)
 no-space on  /onboarding -> (open)
+no-space on  /organisation/:id/overview -> (open)
 no-space on  /p/:id -> (open)
 no-space on  /payment-config -> /me
 no-space on  /payment-methods -> /me
@@ -458,6 +467,8 @@ no-space off /badge-kiosks -> /me
 no-space off /bi -> /me
 no-space off /bi/report/:id -> /me
 no-space off /billing -> /me
+no-space off /business-privacy -> /me
+no-space off /business-task-wizard -> /me
 no-space off /calendar -> /me
 no-space off /connections -> (open)
 no-space off /consent -> /me
@@ -537,6 +548,7 @@ no-space off /money/suppliers/:id -> /me
 no-space off /nfc-config -> /me
 no-space off /oauth/consent -> (open)
 no-space off /onboarding -> (open)
+no-space off /organisation/:id/overview -> (open)
 no-space off /p/:id -> (open)
 no-space off /payment-config -> /me
 no-space off /payment-methods -> /me
@@ -606,6 +618,8 @@ member on  /badge-kiosks -> /calendar
 member on  /bi -> /calendar
 member on  /bi/report/:id -> /calendar
 member on  /billing -> /calendar
+member on  /business-privacy -> (open)
+member on  /business-task-wizard -> /settings
 member on  /calendar -> (open)
 member on  /connections -> (open)
 member on  /consent -> /reserve
@@ -685,6 +699,7 @@ member on  /money/suppliers/:id -> /calendar
 member on  /nfc-config -> /calendar
 member on  /oauth/consent -> (open)
 member on  /onboarding -> (open)
+member on  /organisation/:id/overview -> (open)
 member on  /p/:id -> (open)
 member on  /payment-config -> /calendar
 member on  /payment-methods -> /calendar
@@ -754,6 +769,8 @@ member off /badge-kiosks -> /messages
 member off /bi -> /messages
 member off /bi/report/:id -> /messages
 member off /billing -> /messages
+member off /business-privacy -> (open)
+member off /business-task-wizard -> /settings
 member off /calendar -> /messages
 member off /connections -> (open)
 member off /consent -> /messages
@@ -833,6 +850,7 @@ member off /money/suppliers/:id -> /messages
 member off /nfc-config -> /messages
 member off /oauth/consent -> (open)
 member off /onboarding -> (open)
+member off /organisation/:id/overview -> (open)
 member off /p/:id -> (open)
 member off /payment-config -> /messages
 member off /payment-methods -> /messages
@@ -902,6 +920,8 @@ admin on  /badge-kiosks -> (open)
 admin on  /bi -> /calendar
 admin on  /bi/report/:id -> /calendar
 admin on  /billing -> /calendar
+admin on  /business-privacy -> (open)
+admin on  /business-task-wizard -> /settings
 admin on  /calendar -> (open)
 admin on  /connections -> (open)
 admin on  /consent -> /reserve
@@ -981,6 +1001,7 @@ admin on  /money/suppliers/:id -> (open)
 admin on  /nfc-config -> (open)
 admin on  /oauth/consent -> (open)
 admin on  /onboarding -> (open)
+admin on  /organisation/:id/overview -> (open)
 admin on  /p/:id -> (open)
 admin on  /payment-config -> /calendar
 admin on  /payment-methods -> /calendar
@@ -1050,6 +1071,8 @@ admin off /badge-kiosks -> /messages
 admin off /bi -> /messages
 admin off /bi/report/:id -> /messages
 admin off /billing -> /messages
+admin off /business-privacy -> (open)
+admin off /business-task-wizard -> /settings
 admin off /calendar -> /messages
 admin off /connections -> (open)
 admin off /consent -> /messages
@@ -1129,6 +1152,7 @@ admin off /money/suppliers/:id -> /messages
 admin off /nfc-config -> /messages
 admin off /oauth/consent -> (open)
 admin off /onboarding -> (open)
+admin off /organisation/:id/overview -> (open)
 admin off /p/:id -> (open)
 admin off /payment-config -> /messages
 admin off /payment-methods -> /messages
@@ -1198,6 +1222,8 @@ owner on  /badge-kiosks -> (open)
 owner on  /bi -> /calendar
 owner on  /bi/report/:id -> /calendar
 owner on  /billing -> (open)
+owner on  /business-privacy -> (open)
+owner on  /business-task-wizard -> /settings
 owner on  /calendar -> (open)
 owner on  /connections -> (open)
 owner on  /consent -> /reserve
@@ -1277,6 +1303,7 @@ owner on  /money/suppliers/:id -> (open)
 owner on  /nfc-config -> (open)
 owner on  /oauth/consent -> (open)
 owner on  /onboarding -> (open)
+owner on  /organisation/:id/overview -> (open)
 owner on  /p/:id -> (open)
 owner on  /payment-config -> /calendar
 owner on  /payment-methods -> (open)
@@ -1346,6 +1373,8 @@ owner off /badge-kiosks -> /messages
 owner off /bi -> /messages
 owner off /bi/report/:id -> /messages
 owner off /billing -> /messages
+owner off /business-privacy -> (open)
+owner off /business-task-wizard -> /settings
 owner off /calendar -> /messages
 owner off /connections -> (open)
 owner off /consent -> /messages
@@ -1425,6 +1454,7 @@ owner off /money/suppliers/:id -> /messages
 owner off /nfc-config -> /messages
 owner off /oauth/consent -> (open)
 owner off /onboarding -> (open)
+owner off /organisation/:id/overview -> (open)
 owner off /p/:id -> (open)
 owner off /payment-config -> /messages
 owner off /payment-methods -> /messages

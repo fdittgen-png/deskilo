@@ -8,6 +8,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show JsonReader;
 
 import '../../../core/text/collation.dart';
+import 'organisation_overview.dart';
 import 'workspace.dart';
 
 /// The reader's role in one house.
@@ -165,6 +166,15 @@ enum OrganisationRefusal {
   /// currency, and says which.
   demoOneHouse,
 
+  /// #4008 — only a member of a house of the organisation asks another.
+  notAMember,
+
+  /// #4008 — a person asks; an assistant's token does not.
+  onlyAPerson,
+
+  /// #4008 — the business is no house of an organisation.
+  noHouse,
+
   /// Anything else the server said no to.
   other,
 }
@@ -174,6 +184,15 @@ enum OrganisationRefusal {
 abstract interface class OrganisationRepository {
   /// Every organisation the reader is a member of a house of, by name.
   Future<List<Organisation>> myOrganisations();
+
+  /// #4007 — the houses of [organisationId] the reader is a member of, side
+  /// by side for the months [fromMonth]..[toMonth] (`YYYY-MM`), with a total
+  /// per currency.
+  Future<OrganisationOverview> overview(
+    String organisationId, {
+    required String fromMonth,
+    required String toMonth,
+  });
 
   /// Makes [headWorkspaceId] the head of a new organisation named [name].
   Future<OrganisationRefusal?> create(String headWorkspaceId, String name);
@@ -202,6 +221,90 @@ abstract interface class OrganisationRepository {
   /// #4005 — the birth record of [workspaceId], or none when it was not
   /// created as a house.
   Future<HouseBirth?> houseBirth(String workspaceId);
+
+  /// #4005 — the house [workspaceId]'s prices are named: its first task
+  /// closes.
+  Future<OrganisationRefusal?> clearPricesPending(String workspaceId);
+
+  /// #4008 — the houses of the reader's organisations they are not a member
+  /// of, and whether they asked.
+  Future<List<JoinableHouse>> joinableHouses();
+
+  /// #4008 — asks the house [workspaceId] to take the reader, who is a
+  /// member of another house of its organisation.
+  Future<({HouseJoin? joined, OrganisationRefusal? refused})> askToJoin(
+    String workspaceId,
+  );
+
+  /// #4008 — whether the house [workspaceId] of [organisationId] welcomes
+  /// the members of the organisation's other houses at once.
+  Future<bool> welcomesMembers(String organisationId, String workspaceId);
+
+  /// #4008 — the house [workspaceId]'s owner says whether it welcomes the
+  /// members of the other houses at once.
+  Future<OrganisationRefusal?> setWelcome(String workspaceId, {required bool on});
+}
+
+/// #4008 — what asking a house answered: a member there at once (the house
+/// welcomes the organisation's members), or a request the house decides.
+enum HouseJoin {
+  member,
+  asked;
+
+  /// From the member status the server answers.
+  static HouseJoin of(String? status) =>
+      status == 'active' || status == 'paused' ? member : asked;
+}
+
+/// #4008 — a house of one of the reader's organisations they are not a
+/// member of: its country and currency, whether the reader asked it, and
+/// whether it welcomes the members of the other houses at once.
+class JoinableHouse {
+  const JoinableHouse({
+    required this.organisationId,
+    required this.organisationName,
+    required this.workspaceId,
+    required this.name,
+    required this.countryCode,
+    required this.currencyCode,
+    this.asked = false,
+    this.welcome = false,
+  });
+
+  factory JoinableHouse.fromJson(Object? raw) {
+    final row = JsonReader.of(raw, context: 'joinable house');
+    return JoinableHouse(
+      organisationId: row.string('organisation_id'),
+      organisationName: row.stringOr('organisation_name'),
+      workspaceId: row.string('workspace_id'),
+      name: row.stringOr('name'),
+      countryCode: row.stringOr('country_code'),
+      currencyCode: row.stringOr('currency_code'),
+      asked: row.stringOrNull('request') == 'pending',
+      welcome: row.isTrue('welcome'),
+    );
+  }
+
+  final String organisationId;
+  final String organisationName;
+  final String workspaceId;
+  final String name;
+  final String countryCode;
+  final String currencyCode;
+  final bool asked;
+  final bool welcome;
+
+  /// The same house, asked.
+  JoinableHouse askedNow() => JoinableHouse(
+    organisationId: organisationId,
+    organisationName: organisationName,
+    workspaceId: workspaceId,
+    name: name,
+    countryCode: countryCode,
+    currencyCode: currencyCode,
+    asked: true,
+    welcome: welcome,
+  );
 }
 
 /// #4005 — a house abroad to create: its name, country, currency, time zone

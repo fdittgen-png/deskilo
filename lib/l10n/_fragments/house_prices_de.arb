@@ -1,0 +1,22 @@
+{
+  "houseFirstSale": "Vor Ihrem ersten Verkauf in {country}",
+  "houseSetRates": "Die Steuersätze für {country} festlegen",
+  "houseNoVat": "{country} hat keine Mehrwertsteuer: Hier ist nichts festzulegen.",
+  "houseNamePrices": "{count, plural, =0{Ihre Preise festlegen (keiner übrig)} one{Ihre Preise festlegen (1 übrig)} other{Ihre Preise festlegen ({count} übrig)}}",
+  "houseNamePricesAfterRates": "Legen Sie zuerst die Steuersätze fest.",
+  "housePricesTitle": "Ihre Preise festlegen",
+  "houseRateLabel": "Satz",
+  "housePriceRequired": "Geben Sie einen Preis an; 0 macht es kostenlos.",
+  "houseRateRequired": "Wählen Sie einen Satz.",
+  "houseActivate": "Aktivieren",
+  "houseFree": "Kostenlos",
+  "houseOwnTitle": "Von diesem Haus selbst festzulegen",
+  "houseOwnFeeBands": "Die Beitragsstufen",
+  "houseOwnLayout": "Das Dokumentlayout",
+  "houseOwnLinks": "Die Dokumentlinks",
+  "houseOwnPayment": "Die Zahlungsangaben und das Bankkonto",
+  "houseDone": "Fertig",
+  "houseLater": "Ich mache später weiter",
+  "houseKindService": "Leistung",
+  "houseKindPackage": "Paket"
+}

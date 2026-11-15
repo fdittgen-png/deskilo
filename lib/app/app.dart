@@ -13,6 +13,7 @@ import '../core/motion/motion.dart';
 import '../core/privacy/recording_banner.dart';
 import '../core/shortcuts/shortcut_scope.dart';
 import '../core/ui/app_scroll_behavior.dart';
+import '../core/ui/kit/form_scroll.dart';
 import '../core/ui/kit/page_title.dart';
 import '../core/ui/system_insets_guard.dart';
 import '../features/profile/providers/personal_appearance_providers.dart';
@@ -27,6 +28,7 @@ import 'boot_splash.dart';
 import 'notification_tap_routing.dart';
 import 'page_frame.dart';
 import 'route_classes.dart';
+import 'routed_builder.dart';
 import 'router.dart';
 import 'search_wiring.dart';
 import 'shell/desk_frame.dart';
@@ -134,9 +136,9 @@ class DeskiloApp extends ConsumerWidget {
             child: LayerChrome(
               router: router,
               animations: animations,
-              child: BootSplash(child: SystemInsetsGuard(child: ListenableBuilder(
-                listenable: router.routeInformationProvider,
-                builder: (context, _) => Consumer(
+              child: BootSplash(child: SystemInsetsGuard(child: RoutedBuilder(
+                router: router,
+                builder: (context) => Consumer(
                   builder: (context, ref, _) {
                     final path = router.routeInformationProvider.value.uri.path;
                     // #3603 — on the desk the window is the desk's, drawn
@@ -189,7 +191,7 @@ class DeskiloApp extends ConsumerWidget {
                       child: desk
                           ? DeskFrame(router: router, path: path, child: page)
                           // #3604 — the measure its route declares.
-                          : framePage(path, page, inside: false),
+                          : _offDesk(path, page),
                     ),
                     ),
                     );
@@ -206,3 +208,10 @@ class DeskiloApp extends ConsumerWidget {
     );
   }
 }
+
+/// #3604 — off the desk, [page] in the measure its route declares; #4034 —
+/// walked by Tab as the desk's page area is ([PageTraversalPolicy]).
+Widget _offDesk(String path, Widget page) => FocusTraversalGroup(
+  policy: PageTraversalPolicy(),
+  child: framePage(path, page, inside: false),
+);

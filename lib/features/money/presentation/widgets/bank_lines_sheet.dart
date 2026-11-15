@@ -28,6 +28,7 @@ import '../../providers/bank_statement_providers.dart';
 import '../../providers/money_providers.dart';
 import '../bank_labels.dart';
 import '../bank_reconciliation_words.dart';
+import 'bank_batch_dialog.dart';
 import 'bank_line_dialogs.dart';
 import 'bank_reconciliation_button.dart';
 
@@ -94,16 +95,26 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
     return ok;
   }
 
-  Future<void> _confirmAll(BankWorkList list) async {
-    var confirmed = 0;
+  /// #4053 — the matches by reference are shown first; confirming writes
+  /// exactly those, and a result that is not whole is said per movement.
+  Future<void> _confirmAll(List<BankWorkItem> batch) async {
+    if (!await showBankBatchDialog(context, batch) || !mounted) return;
+    var lines = const <BankBatchLine>[];
     final ok = await _guarded(
       'bank reference matches failed',
-      () async => confirmed = await ref
+      () async => lines = await ref
           .read(bankImportCommandsProvider)
-          .confirmReferenceMatches(list),
+          .confirmReferenceMatches(batch),
     );
     if (!ok || !mounted) return;
-    AppSnack.success(context, context.l10n.bankConfirmedReferences(confirmed));
+    if (lines.every((l) => l.result == BankBatchResult.confirmed)) {
+      AppSnack.success(
+        context,
+        context.l10n.bankConfirmedReferences(lines.length),
+      );
+      return;
+    }
+    await showBankBatchResult(context, lines);
   }
 
   bool _actionable(StoredBankLine line) => switch (line.status) {
@@ -255,7 +266,7 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
         if (batch.isNotEmpty) ...[
           FilledButton.icon(
             key: const ValueKey('bank-confirm-references'),
-            onPressed: _busy ? null : () => _confirmAll(list),
+            onPressed: _busy ? null : () => _confirmAll(batch),
             icon: const Icon(Icons.done_all),
             label: Text(l10n.bankConfirmReferences(batch.length)),
           ),
@@ -266,6 +277,12 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
     );
   }
 
+  /// #4053 — the movement chosen at the desk: the one the person chose, or
+  /// on opening the first that can be matched.
+  String? _chosenIn(BankWorkList list) =>
+      _chosen ??
+      list.items.where((i) => _matchable(i.line)).firstOrNull?.line.id;
+
   Widget _lines(BankWorkList list) => ListView.builder(
     itemCount: list.items.length,
     itemBuilder: (_, i) {
@@ -274,7 +291,7 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
       return _LineTile(
         key: ValueKey('bank-line-${item.line.id}'),
         item: item,
-        selected: widget.panes && item.line.id == _chosen,
+        selected: widget.panes && item.line.id == _chosenIn(list),
         onTap: !open
             ? null
             : widget.panes && _matchable(item.line)
@@ -288,8 +305,9 @@ class _BankLinesViewState extends ConsumerState<BankLinesView> {
   /// chosen, its suggestions first.
   Widget _panes(BankWorkList list) {
     final l10n = context.l10n;
+    final chosen = _chosenIn(list);
     final item = list.items
-        .where((i) => i.line.id == _chosen && _matchable(i.line))
+        .where((i) => i.line.id == chosen && _matchable(i.line))
         .firstOrNull;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.stretch,

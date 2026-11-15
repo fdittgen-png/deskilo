@@ -19,12 +19,14 @@ import '../../../l10n/app_localizations.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/presentation/member_labels.dart';
+import '../../workspace/presentation/screens/organisation_overview_screen.dart';
 import '../../workspace/presentation/widgets/brand_swatch.dart';
 import '../../workspace/presentation/widgets/workspace_avatar.dart';
 import '../../workspace/providers/organisation_providers.dart';
 import '../application/me_spaces_layout.dart';
 import '../providers/space_prefs_provider.dart';
 import 'group_name_dialog.dart';
+import 'me_other_houses.dart';
 import 'me_space_card.dart';
 import 'me_spaces_chrome.dart';
 import 'me_workspace_row.dart';
@@ -216,6 +218,11 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
           if (name != null) await notifier.renameGroup(id, name);
         },
         onDelete: () => notifier.removeGroup(id),
+        onOverview: switch (organisationOfGroup(id)) {
+          final organisationId? => () =>
+              OrganisationOverviewScreen.open(context, organisationId),
+          null => null,
+        },
       ),
       // #3281: an empty Favorites is only its header; the heart on a space
       // is the way in, no block of explanation is allocated to it.
@@ -256,6 +263,10 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
               layout.rows[keys[i]]!,
               (index: canDrag ? i : null, housed: organisation != null)),
         ),
+      // #4008 — the organisation's houses the person may ask to join.
+      if (!folded && organisation != null)
+        if (organisationOfGroup(id) case final organisationId?)
+          MeOtherHouses(organisationId: organisationId),
     ];
   }
 

@@ -9,6 +9,7 @@ import '../../../core/backend/context_client_providers.dart';
 import '../application/organisation_commands.dart';
 import '../data/supabase_organisation_repository.dart';
 import '../domain/organisation.dart';
+import '../domain/organisation_overview.dart';
 import 'workspace_providers.dart';
 
 part 'organisation_providers.g.dart';
@@ -22,6 +23,16 @@ OrganisationRepository organisationRepository(Ref ref) =>
 Future<List<Organisation>> myOrganisations(Ref ref) =>
     ref.watch(organisationRepositoryProvider).myOrganisations();
 
+/// #4007 — the houses of [organisationId] side by side for one month.
+@riverpod
+Future<OrganisationOverview> organisationOverview(
+  Ref ref,
+  String organisationId,
+  String month,
+) => ref
+    .watch(organisationRepositoryProvider)
+    .overview(organisationId, fromMonth: month, toMonth: month);
+
 /// The owners' commands; a change reads the organisations again.
 @Riverpod(keepAlive: true)
 OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
@@ -30,9 +41,30 @@ OrganisationCommands organisationCommands(Ref ref) => OrganisationCommands(
     ref
       ..invalidate(myOrganisationsProvider)
       // #4005 — a house made is one more business of the person's.
-      ..invalidate(myWorkspacesProvider);
+      ..invalidate(myWorkspacesProvider)
+      // and a birth record read again once its first task closes.
+      ..invalidate(houseBirthProvider)
+      // #4008 — a house asked, or a house's welcome changed.
+      ..invalidate(joinableHousesProvider)
+      ..invalidate(houseWelcomesProvider);
   },
 );
+
+/// #4008 — the houses of the reader's organisations they may ask to join.
+@riverpod
+Future<List<JoinableHouse>> joinableHouses(Ref ref) =>
+    ref.watch(organisationRepositoryProvider).joinableHouses();
+
+/// #4008 — whether the house [workspaceId] of [organisationId] welcomes the
+/// members of the organisation's other houses at once.
+@riverpod
+Future<bool> houseWelcomes(
+  Ref ref,
+  String organisationId,
+  String workspaceId,
+) => ref
+    .watch(organisationRepositoryProvider)
+    .welcomesMembers(organisationId, workspaceId);
 
 /// #4005 — the birth record of [workspaceId], if it was made as a house.
 @riverpod

@@ -3490,10 +3490,13 @@ Su negocio tiene sedes en el extranjero, en otro país o en otra moneda. Cada un
 4. Toque **Sacar de la organización** junto a una casa para que vuelva a ser un negocio independiente.
 5. Toque **Hacerla sede** junto a una casa de la que es propietario para convertirla en la sede. El propietario de otra casa ve **Salir de la organización** junto a ella.
 6. Toque **Añadir una casa en el extranjero** para crear un negocio propio en otro país o en otra moneda: elija primero su país; su moneda, su zona horaria y el idioma de sus documentos se proponen a partir de él. El formulario dice qué viaja, qué llega inactivo para ponerle precio y qué no viaja. Toque **Crear la casa**: llega a ella, y su inicio muestra una vez cómo empezó.
+7. En la nueva casa, su inicio muestra su primera tarea: primero los tipos de impuesto de su país y después **Ponga sus precios** para los servicios y paquetes que llegaron inactivos. Dé a cada uno un precio (0 lo hace gratuito) y un tipo, y actívelo; los tramos de cuota, el diseño y los enlaces de los documentos, las instrucciones de pago y la cuenta bancaria son propios de la casa. Toque **Hecho** cuando no quede nada.
+8. En una casa de la que es propietario, active **Los miembros de las otras casas son bienvenidos aquí** para acoger al instante a un miembro de otra casa de la organización que lo pida, con las condiciones de esta casa para un nuevo miembro. Desactivado, la solicitud espera su decisión, que nombra la casa de la que viene la persona.
 
 **Conviene saber**
 
 - Cada casa muestra su país, su moneda y su propio rol en ella. Quién más es propietario de una casa se ve dentro de esa casa.
+- Un miembro de una casa ve las otras casas de la organización en Yo, bajo **Otras casas de** la organización, y toca **Pedir unirse**. Una pregunta dice antes lo que significa: su perfil se vuelve visible para esa casa, que es un negocio propio con sus propias condiciones, precios y moneda.
 - En Yo, las casas aparecen juntas bajo el nombre de la organización: primero la sede y después por país.
 - Dentro de una casa, toque el nombre del negocio arriba para pasar a otra casa de la organización.
 - Los importes en monedas distintas se muestran uno al lado del otro y nunca se suman.

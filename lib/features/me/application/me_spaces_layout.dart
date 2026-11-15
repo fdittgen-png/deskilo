@@ -8,6 +8,15 @@ import '../domain/space_pairs.dart';
 /// they are shown, and — for an organisation (#4006) — its name.
 typedef SpaceGroupRows = ({String id, List<String> keys, String? organisation});
 
+/// #4006 — an organisation's group id is this prefix and the organisation's.
+const _organisationGroup = 'organisation:';
+
+/// #4007 — the organisation a group of Me shows, or none for another group.
+String? organisationOfGroup(String groupId) =>
+    groupId.startsWith(_organisationGroup)
+        ? groupId.substring(_organisationGroup.length)
+        : null;
+
 /// Me › Home's list of my spaces before any widget is built: which rows
 /// there are, which groups show which of them in what order, and what the
 /// person may do with them.
@@ -89,7 +98,7 @@ class MeSpacesLayout {
             ]
             case final keys when keys.isNotEmpty)
           (
-            id: 'organisation:${organisation.id}',
+            id: '$_organisationGroup${organisation.id}',
             keys: keys,
             organisation: organisation.name,
           ),

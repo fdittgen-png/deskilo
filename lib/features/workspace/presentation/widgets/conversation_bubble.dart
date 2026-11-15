@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math' show min;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -7,6 +9,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/page_measures.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/kit/row_menu.dart';
 import '../../../directory/domain/message_marks.dart';
@@ -231,6 +234,13 @@ class ConversationBubble extends ConsumerWidget {
         ),
       );
 
+  /// The widest the bubble is drawn: 78 % of the room its thread gives it,
+  /// at most [kReadingColumnWidth] (#4060).
+  double _maxWidth(BuildContext context) => min(
+    MediaQuery.sizeOf(context).width * 0.78,
+    kReadingColumnWidth,
+  );
+
   Widget _bubble(BuildContext context, WidgetRef ref, ThemeData theme) {
     final l10n = context.l10n;
     final when = timeOnly
@@ -245,9 +255,9 @@ class ConversationBubble extends ConsumerWidget {
             horizontal: AppSpacing.md,
             vertical: AppSpacing.sm,
           ),
-          constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.78,
-          ),
+          // #4060 — at most 78 % of the column the thread is drawn in, and
+          // never past the reading measure: a line stays readable.
+          constraints: BoxConstraints(maxWidth: _maxWidth(context)),
           decoration: BoxDecoration(
             color: mine
                 ? theme.colorScheme.primaryContainer
