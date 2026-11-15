@@ -943,6 +943,7 @@ const Set<String> uiKeys = {
   'demo-office-garage',
   'demo-office-meeting',
   'demo-office-studio',
+  'demo-organisation-atelier',
   'demo-outgoing-1',
   'demo-pair',
   'demo-pass-london-day',
