@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: additive
--- (one column; six functions; one trigger)
+-- (one column; seven functions; one trigger; one anchored patch)
 --
 -- #4008 (decision 0052, point 7) -- a member of one house asks to join
 -- another house of the same organisation, without a code and without
@@ -12,12 +12,19 @@
 --   creates (the house's defaults for a new member, its own member number)
 --   and the same join decision, naming the house the person comes from. A
 --   member already there, or already asking, gets the state they are in. An
---   exited member asks again as a new member would and the house always
---   decides, whatever its welcome. Their row stays (its number and its
---   documents hang on it): what says who the person is and their history is
---   kept, every right and term goes back to a new member's, as
---   house_member_return_columns() names them; pgTAP 437 fails when a column
---   of members is in neither list.
+--   exited member asks again and the house always decides, whatever its
+--   welcome.
+-- * A person who left a business and comes back is a new member of it, on
+--   every way of coming back: asking a house of the organisation, joining
+--   with the business's code, or accepting a new invitation. One function,
+--   member_return_as_new, makes the returning row what a first-time member
+--   of that business gets: every right and term back to a new member's, the
+--   role rows cleared, the business's defaults for a new member. It keeps
+--   who the person is and their history (the row, its number, the documents
+--   that hang on it), as house_member_return_columns() names them; pgTAP 437
+--   fails when a column of members is in neither list. The join then goes
+--   through the business's decision exactly as a first-time join does on
+--   that path.
 -- * The welcome is each HOUSE's own, never the head's: an owner of a house
 --   says whether members of the organisation's other houses are welcome
 --   there (off by default). When on, the request is accepted at once with
@@ -118,6 +125,34 @@ returns jsonb language sql immutable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.house_member_return_columns() from public, anon, authenticated;
 
+-- A row that was exited comes back as a first-time member's: pending, the
+-- business's terms for a new member, every other right and term back to the
+-- column's default, the role rows cleared. A row that is not exited is left
+-- as it is.
+create or replace function public.member_return_as_new(p_member uuid)
+returns void language plpgsql security definer set search_path = public as $fn$
+declare
+  v_ws uuid;
+  v_defaults jsonb;
+begin
+  select m.workspace_id into v_ws from public.members m where m.id = p_member and m.status = 'exited';
+  if v_ws is null then return; end if;
+  select coalesce(w.billing_rules->'new_member_defaults', '{}'::jsonb)
+    into v_defaults from public.workspaces w where w.id = v_ws;
+  -- in one statement: pending, the business's terms for a new member, and
+  -- every other right and term back to the column's default
+  execute format('update public.members set status = %L, subscription_pct = $2, overage_policy = $3%s where id = $1',
+    'pending',
+    (select coalesce(string_agg(format(', %I = default', c), ''), '')
+       from jsonb_array_elements_text(public.house_member_return_columns()->'reset') c
+      where c not in ('status', 'subscription_pct', 'overage_policy')))
+    using p_member, coalesce((v_defaults->>'subscription_pct')::int, 100),
+          coalesce(v_defaults->>'overage_policy', 'blocked');
+  delete from public.workspace_role_members where member_id = p_member;
+end;
+$fn$;
+revoke execute on function public.member_return_as_new(uuid) from public, anon, authenticated;
+
 create or replace function public.request_house_membership(p_house uuid)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
 declare
@@ -167,16 +202,7 @@ begin
     -- members new to it, not for someone it let go
     v_status := 'pending';
     v_id := v_member.id;
-    -- in one statement: pending, the house's terms for a new member, and
-    -- every other right and term back to the column's default
-    execute format('update public.members set status = %L, subscription_pct = $2, overage_policy = $3%s where id = $1',
-      'pending',
-      (select coalesce(string_agg(format(', %I = default', c), ''), '')
-         from jsonb_array_elements_text(public.house_member_return_columns()->'reset') c
-        where c not in ('status', 'subscription_pct', 'overage_policy')))
-      using v_id, coalesce((v_defaults->>'subscription_pct')::int, 100),
-            coalesce(v_defaults->>'overage_policy', 'blocked');
-    delete from public.workspace_role_members where member_id = v_id;
+    perform public.member_return_as_new(v_id);
   else
     v_status := case when v_welcome then 'active' else 'pending' end;
     insert into public.members (workspace_id, user_id, is_admin, status, origin,
@@ -243,5 +269,41 @@ end;
 $fn$;
 revoke execute on function public.my_organisation_houses_v1() from public, anon;
 grant execute on function public.my_organisation_houses_v1() to authenticated;
+
+-- ── 4. joining with a code or an invitation, after having left ─────────
+do $migration$
+declare
+  v_def text := pg_get_functiondef('public.join_workspace(text)'::regprocedure);
+  v_old text;
+  v_new text;
+begin
+  if position('member_return_as_new' in v_def) = 0 then
+    for v_old, v_new in select * from (values
+      ($a$  v_defaults jsonb;
+begin$a$, $a$  v_defaults jsonb;
+  v_returning uuid;
+begin$a$),
+      ($a$    select coalesce(billing_rules->'new_member_defaults', '{}'::jsonb)
+      into v_defaults from public.workspaces where id = ws_id;$a$,
+       $a$    select coalesce(billing_rules->'new_member_defaults', '{}'::jsonb)
+      into v_defaults from public.workspaces where id = ws_id;
+    -- #4008: a person who left this business and comes back is a new member
+    -- of it, with what this way of joining gives a first-time member
+    select m.id into v_returning from public.members m
+     where m.workspace_id = ws_id and m.user_id = auth.uid() and m.status = 'exited';
+    if v_returning is not null then
+      perform public.member_return_as_new(v_returning);
+      update public.members set is_admin = v_admin where id = v_returning;
+    end if;$a$)) v(o, n)
+    loop
+      if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
+        raise exception 'join_workspace no longer has the shape 0781 extends: %', left(v_old, 60) using errcode = 'P0001';
+      end if;
+      v_def := replace(v_def, v_old, v_new);
+    end loop;
+    execute v_def;
+  end if;
+end
+$migration$;
 
 select public.set_deskilo_schema_version(781);
