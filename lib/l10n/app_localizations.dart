@@ -9158,7 +9158,7 @@ abstract class AppLocalizations {
   /// #4055 — on a phone, the pending decisions as one row that opens the Alerts view: calendarDecisionsEntry.
   ///
   /// In en, this message translates to:
-  /// **'{count, plural, one{Decisions (1)} other{Decisions ({count})}}'**
+  /// **'{count, plural, one{Decisions ({count})} other{Decisions ({count})}}'**
   String calendarDecisionsEntry(int count);
 
   /// #3626 The desk calendar's filter choice that keeps everything (every level, kind, member or state)

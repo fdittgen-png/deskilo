@@ -5918,7 +5918,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Décisions ($count)',
-      one: 'Décisions (1)',
+      one: 'Décisions ($count)',
     );
     return '$_temp0';
   }

@@ -27,5 +27,5 @@
   "bookingPriceOverage": "Media jornada extra",
   "calendarDeskRangeLabel": "Periodo",
   "calendarDeskViewLabel": "Vista",
-  "calendarDecisionsEntry": "{count, plural, one{Decisiones (1)} other{Decisiones ({count})}}"
+  "calendarDecisionsEntry": "{count, plural, one{Decisiones ({count})} other{Decisiones ({count})}}"
 }

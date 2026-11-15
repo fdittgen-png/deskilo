@@ -5852,7 +5852,7 @@ class AppLocalizationsEn extends AppLocalizations {
       count,
       locale: localeName,
       other: 'Decisions ($count)',
-      one: 'Decisions (1)',
+      one: 'Decisions ($count)',
     );
     return '$_temp0';
   }

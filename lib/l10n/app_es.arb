@@ -3475,7 +3475,7 @@
     "description": "#718/#719 - calendar hub"
   },
   "calendarDayEmpty": "Nada ese día.",
-  "calendarDecisionsEntry": "{count, plural, one{Decisiones (1)} other{Decisiones ({count})}}",
+  "calendarDecisionsEntry": "{count, plural, one{Decisiones ({count})} other{Decisiones ({count})}}",
   "calendarDeskAll": "Todos",
   "calendarDeskBooking": "Detalles de la reserva",
   "calendarDeskColumnFrom": "Desde",

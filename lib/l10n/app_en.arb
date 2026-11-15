@@ -7639,7 +7639,7 @@
   "@calendarDayEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar), and 1 other place."
   },
-  "calendarDecisionsEntry": "{count, plural, one{Decisions (1)} other{Decisions ({count})}}",
+  "calendarDecisionsEntry": "{count, plural, one{Decisions ({count})} other{Decisions ({count})}}",
   "@calendarDecisionsEntry": {
     "description": "#4055 — on a phone, the pending decisions as one row that opens the Alerts view: calendarDecisionsEntry.",
     "placeholders": {

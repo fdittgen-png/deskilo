@@ -27,5 +27,5 @@
   "bookingPriceOverage": "Zusätzlicher Halbtag",
   "calendarDeskRangeLabel": "Zeitraum",
   "calendarDeskViewLabel": "Ansicht",
-  "calendarDecisionsEntry": "{count, plural, one{Entscheidungen (1)} other{Entscheidungen ({count})}}"
+  "calendarDecisionsEntry": "{count, plural, one{Entscheidungen ({count})} other{Entscheidungen ({count})}}"
 }
