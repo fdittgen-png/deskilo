@@ -30,11 +30,7 @@ import '../../features/reservations/presentation/widgets/booking_range_text.dart
 import '../../features/reservations/presentation/widgets/calendar_file_button.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
 import '../../features/reservations/presentation/widgets/reservation_detail_sheet.dart'
-    show
-        ownBookingOffers,
-        reservationActionsOf,
-        showReservationOnPlan,
-        watchReservationPlace;
+    show ownBookingOffers, reservationActionsOf, watchReservationPlace;
 import '../../features/reservations/presentation/widgets/reservation_status_note.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart'
@@ -166,7 +162,10 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
             key: _deskPaneOnPlanKey,
             icon: const Icon(Icons.map_outlined),
             label: Text(l10n.calendarShowOnPlan),
-            onPressed: () => showReservationOnPlan(context, ref, r, target),
+            onPressed: () => reservationActionsOf(
+              ref,
+              r,
+            ).showOnPlan(context, ref, target),
           ),
         if (r.memberId == ref.watch(myMemberProvider).value?.id &&
             ref
