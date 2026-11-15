@@ -7,7 +7,7 @@
 -- explicit other kind is refused (DKI08). A month with one full invoice is
 -- corrected as before. Rolled back.
 begin;
-select plan(7);
+select plan(8);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -33,12 +33,24 @@ begin
    (ws,mm,'2026-09-09 13:00+02','2026-09-09 17:00+02','completed','desk');
   perform set_config('deskilo.k.ws', ws::text, false);
   perform set_config('deskilo.k.m', mm::text, false);
+  perform set_config('deskilo.k.um', um::text, false);
   perform set_config('request.jwt.claims', json_build_object('sub',uo,'role','authenticated')::text, false);
 end;
 $seed$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 select pg_temp.seed();
 
+-- what [p_sql] raises when the member (no right to issue) runs it
+create or replace function pg_temp.as_member(p_sql text) returns text language plpgsql as $$
+begin
+  perform set_config('request.jwt.claims',
+    json_build_object('sub', current_setting('deskilo.k.um'), 'role', 'authenticated')::text, true);
+  execute p_sql;
+  return 'no error';
+exception when others then
+  return sqlstate;
+end
+$$;
 create or replace function pg_temp.kind_of(p_id text) returns text language sql as $$
   select kind from public.invoices where id = p_id::uuid
 $$;
@@ -69,6 +81,14 @@ select throws_ok(format('select public.create_invoice(%L, %L, %L, %L, false, %L)
   'DKI08', 'a correction is of the kind of the invoice it replaces', 'a correction of another kind is refused');
 select is((select voided_at is null from public.invoices where id = current_setting('deskilo.k.sub')::uuid), true,
   'and the invoice it named is not touched');
+
+-- someone without the right to issue learns nothing of the invoice named
+select is(pg_temp.as_member(format('select public.create_invoice(%L, %L, %L, %L, false, %L)',
+    current_setting('deskilo.k.ws'), current_setting('deskilo.k.m'), '2026-09', current_setting('deskilo.k.sub'), 'usage'))
+    not in ('DKI08', 'no error'), true,
+  'a person without the right to issue is refused before the invoice is read');
+select set_config('request.jwt.claims',
+  json_build_object('sub', '00000000-0000-4000-8000-000000039941', 'role', 'authenticated')::text, false);
 
 -- a month with one full invoice, as before
 select set_config('deskilo.k.aug', public.create_invoice(current_setting('deskilo.k.ws')::uuid,
