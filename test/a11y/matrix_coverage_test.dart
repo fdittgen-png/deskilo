@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'matrix.dart';
 
 /// Screens named in the matrix, measured or not. RATCHET: up only.
-const _screenFloor = 18;
+const _screenFloor = 21;
 
 /// Screen × axis cells actually asserted. RATCHET: up only.
 ///
@@ -30,7 +30,10 @@ const _screenFloor = 18;
 // #1653: Create workspace adds six measured cells.
 // #1974: member/settings forms and the reports destination add measured cells.
 // #2601: the locale axis is part of the matrix; its nine screens are cells.
-const _cellFloor = 110;
+// #4022: the member directory and three Me screens add 24 measured cells.
+// #4022: the dark axis adds a measured cell to every row.
+// #4022: eight more rows walk the locale axis.
+const _cellFloor = 163;
 
 /// Every gap reason carries the issue that owns it and the date it was
 /// written, so a reason cannot rot unnoticed into a permanent excuse.

@@ -20,8 +20,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
 
-/// The widths the guards walk: two phones and a wide window.
-const List<double> guardWidths = [320, 390, 1280];
+/// The widths the guards walk: two phones, a tablet held upright (#4022) and a
+/// wide window.
+const List<double> guardWidths = [320, 390, 768, 1280];
 
 /// The text scales the guards walk.
 const List<double> guardScales = [1.0, 1.3];
@@ -190,6 +191,7 @@ Future<void> loadRealFonts() async {
 
 /// The desk's window sizes, beside [guardWidths].
 const List<Size> deskGuardSizes = [
+  Size(768, 1024), // #4022 — a tablet held upright
   Size(1024, 768),
   Size(1440, 900),
   Size(1920, 1080),
