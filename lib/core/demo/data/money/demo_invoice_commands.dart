@@ -25,6 +25,15 @@ class DemoInvoiceCommands implements InvoiceCommands {
   /// space issues invoices in and the only one a payment settles (#3671).
   String currency = 'EUR';
 
+  /// Distinguishable snapshots for the archive filters, unless the session
+  /// names its buyers (the Demo does, #3674).
+  ({String name, String address}) _buyerOf(String memberId) =>
+      _m.invoiceQueries.buyers.of?.call(memberId) ??
+      (
+        name: memberId == 'member-1' ? 'Flo' : 'Ana',
+        address: '1 Rue Test, 34120 Pézenas',
+      );
+
   @override
   Future<String> createInvoice({
     required String workspaceId,
@@ -80,6 +89,7 @@ class DemoInvoiceCommands implements InvoiceCommands {
     }
     // #3292 — numbered by the space's invoice series and dated by its clock,
     // exactly as the numbering preview reads them.
+    final buyer = _buyerOf(memberId);
     final series = demoSeriesOf(_m, 'invoice');
     final counter = series.nextValue;
     final invoice = Invoice(
@@ -93,9 +103,8 @@ class DemoInvoiceCommands implements InvoiceCommands {
       lines: lines,
       totalCents: lines.fold(0, (sum, l) => sum + l.amountCents),
       currency: currency,
-      // Distinguishable snapshots for the archive filters.
-      memberName: memberId == 'member-1' ? 'Flo' : 'Ana',
-      memberAddress: '1 Rue Test, 34120 Pézenas',
+      memberName: buyer.name,
+      memberAddress: buyer.address,
       workspaceName: 'Test Space',
       workspaceAddress: '2 Place du Marché, 34120 Pézenas',
       issuerName: 'Flo',

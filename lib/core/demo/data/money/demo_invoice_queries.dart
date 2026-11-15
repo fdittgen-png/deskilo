@@ -7,6 +7,7 @@ import 'package:deskilo/features/money/domain/reminder_evidence.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../money_repository.dart';
+import 'demo_buyers.dart';
 
 /// #2591 — the demo's invoice reads, answered from one space's in-memory
 /// money store ([FakeMoneyRepository]); every other port of that space reads
@@ -15,6 +16,9 @@ class DemoInvoiceQueries implements InvoiceQueries {
   DemoInvoiceQueries(this._m, {this.ownOnlyFor});
 
   final FakeMoneyRepository _m;
+
+  /// #3674 — the session's customers (empty in a test fake).
+  final buyers = DemoBuyers();
 
   /// The member whose OWN invoices are all the reader may see, or null when
   /// the reader sees the whole register (the server's `invoices_select`,
@@ -48,6 +52,8 @@ class DemoInvoiceQueries implements InvoiceQueries {
     for (final key in _m.invoiceMissing)
       // #2440 — the server stops asking once a reason is given.
       if (key != 'correction_reason' || correctionReason.isEmpty) key,
+    // #3674 — and what this customer's own details leave missing.
+    ...?buyers.missing?.call(memberId),
   ];
   Future<CommandReceipt> _outcome(String workspaceId, String requestId) async {
     final id = _m.invoiceReceipts['$workspaceId|$requestId'];
@@ -118,7 +124,10 @@ class DemoInvoiceQueries implements InvoiceQueries {
   /// from the period's statement + confirmed ledger charges — nothing
   /// is accepted from the caller.
   List<InvoiceLine> derivedLines(String memberId, String period) {
-    final s = _m.statements[period] ?? _m.statement.copyWith(period: period);
+    final s =
+        buyers.months['$memberId|$period'] ??
+        _m.statements[period] ??
+        _m.statement.copyWith(period: period);
     return [
       if (s.feeCents > 0)
         InvoiceLine(

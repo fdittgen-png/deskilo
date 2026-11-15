@@ -8,6 +8,7 @@ import 'package:deskilo/core/demo/data/reservation_repository.dart';
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
 import 'package:deskilo/core/demo/demo_dataset.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/seed/demo_newcomers_seed.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
@@ -22,8 +23,14 @@ void main() {
       for (final m in fixture.workspaces.otherMembers) m.id,
     };
 
-    // #2327 — the cast and the space's kiosk tablet.
-    expect(memberIds, hasLength(demoMemberships.length));
+    // #2327 — the cast and the space's kiosk tablet; #3674 — and the two
+    // customers who joined last month.
+    expect(
+      memberIds,
+      hasLength(
+        demoMemberships.length + [demoStudioNord, demoFaridHaddad].length,
+      ),
+    );
     for (final reservation in fixture.reservations.reservations) {
       expect(memberIds, contains(reservation.memberId),
           reason: 'a booking by nobody');

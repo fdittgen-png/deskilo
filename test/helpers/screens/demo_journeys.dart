@@ -24,8 +24,9 @@ Future<DemoJourney> pumpDemo(
   WidgetTester tester, {
   DemoPersona persona = initialDemoPersona,
   bool openHub = true,
+  Size size = const Size(800, 1400),
 }) async {
-  tester.view.physicalSize = const Size(800, 1400);
+  tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
 
