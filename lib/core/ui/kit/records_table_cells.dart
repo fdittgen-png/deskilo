@@ -39,7 +39,7 @@ Widget recordCells<T>(
                 : CrossAxisAlignment.start,
             children: [
               for (final (i, c) in columns.indexed)
-                recordCell(
+                _recordCell(
                   c,
                   cells[i],
                   lineHeight: lineHeight,
@@ -55,7 +55,7 @@ Widget recordCells<T>(
 );
 
 /// One cell in its column: [width] when the table decided it, else its flex.
-Widget recordCell<T>(
+Widget _recordCell<T>(
   RecordColumn<T> c,
   Widget cell, {
   double? lineHeight,
@@ -89,7 +89,7 @@ Widget recordCell<T>(
 /// The narrowest each of [columns] may be (by id) at the reader's text size
 /// (#4035): its heading's longest word with the room of its sort control, or
 /// its [RecordColumn.sample], whichever is wider, and the cell's side gaps.
-Map<String, double> recordColumnMins<T>(
+Map<String, double> _recordColumnMins<T>(
   BuildContext context,
   List<RecordColumn<T>> columns,
 ) {
@@ -137,6 +137,6 @@ Map<String, double> recordColumnMins<T>(
   List<RecordColumn<T>> wanted,
   double available,
 ) {
-  final mins = recordColumnMins(context, wanted);
+  final mins = _recordColumnMins(context, wanted);
   return (columns: columnsFitting(wanted, mins, available), mins: mins);
 }
