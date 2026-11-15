@@ -24,6 +24,7 @@ import '../../core/i18n/country_names.dart';
 import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/adaptive/task_surface.dart';
 import '../../core/ui/form_kit.dart';
+import '../../core/ui/master_data_field.dart';
 import '../../core/vat/tax_reference_active.dart';
 import '../../features/money/domain/house_prices.dart';
 import '../../features/money/domain/service_item.dart';
@@ -142,12 +143,12 @@ class HousePricesPage extends ConsumerStatefulWidget {
 
 class _HousePricesPageState extends ConsumerState<HousePricesPage> {
   final _prices = <String, TextEditingController>{};
-  final _rates = <String, String?>{};
+  final _rates = <String, TextEditingController>{};
   final _problems = <String, String>{};
 
   @override
   void dispose() {
-    for (final c in _prices.values) {
+    for (final c in [..._prices.values, ..._rates.values]) {
       c.dispose();
     }
     super.dispose();
@@ -175,7 +176,10 @@ class _HousePricesPageState extends ConsumerState<HousePricesPage> {
       currency: widget.workspace.currencyCode,
       allowNegative: false,
     );
-    final rate = _rates[row.id];
+    final rate = switch (_rates[row.id]?.text.trim()) {
+      final id? when rates.any((r) => r.id == id) => id,
+      _ => null,
+    };
     final problem = read.minor == null
         ? l10n.housePriceRequired
         : rates.isNotEmpty && rate == null
@@ -242,7 +246,9 @@ class _HousePricesPageState extends ConsumerState<HousePricesPage> {
     for (final row in rows) {
       _rates.putIfAbsent(
         row.id,
-        () => proposedHouseRate(row, widget.birth.rateHints, rates)?.id,
+        () => TextEditingController(
+          text: proposedHouseRate(row, widget.birth.rateHints, rates)?.id ?? '',
+        ),
       );
     }
     final own = [
@@ -267,9 +273,8 @@ class _HousePricesPageState extends ConsumerState<HousePricesPage> {
               currency: widget.workspace.currencyCode,
               price: _price(row),
               rates: rates,
-              rate: _rates[row.id],
+              rate: _rates[row.id]!,
               problem: _problems[row.id],
-              onRate: (id) => setState(() => _rates[row.id] = id),
               onActivate: () => _activate(row, rates),
             ),
             const FormGap(),
@@ -319,7 +324,6 @@ class _HouseRowEditor extends StatelessWidget {
     required this.rates,
     required this.rate,
     required this.problem,
-    required this.onRate,
     required this.onActivate,
   });
 
@@ -327,9 +331,8 @@ class _HouseRowEditor extends StatelessWidget {
   final String currency;
   final TextEditingController price;
   final List<VatRate> rates;
-  final String? rate;
+  final TextEditingController rate;
   final String? problem;
-  final ValueChanged<String?> onRate;
   final VoidCallback onActivate;
 
   @override
@@ -355,15 +358,15 @@ class _HouseRowEditor extends StatelessWidget {
         ),
         if (rates.isNotEmpty) ...[
           const FormGap.small(),
-          DropdownButtonFormField<String>(
-            key: ValueKey('house-rate-${row.id}'),
-            initialValue: rate,
-            decoration: InputDecoration(labelText: l10n.houseRateLabel),
-            items: [
+          MasterDataField(
+            controller: rate,
+            label: l10n.houseRateLabel,
+            fieldKey: 'rate-${row.id}',
+            textKey: ValueKey('house-rate-${row.id}'),
+            options: [
               for (final r in rates)
-                DropdownMenuItem(value: r.id, child: Text(r.label)),
+                MasterDataOption(code: r.id, name: r.label),
             ],
-            onChanged: onRate,
           ),
         ],
         const FormGap.small(),
