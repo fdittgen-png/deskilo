@@ -24,5 +24,7 @@
   "bookingPriceCarnet": "Mehrfachkarte",
   "bookingPriceFree": "Kostenlos",
   "bookingPriceSubscription": "Abo",
-  "bookingPriceOverage": "Zusätzlicher Halbtag"
+  "bookingPriceOverage": "Zusätzlicher Halbtag",
+  "calendarDeskRangeLabel": "Zeitraum",
+  "calendarDeskViewLabel": "Ansicht"
 }

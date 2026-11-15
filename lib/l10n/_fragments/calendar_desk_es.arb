@@ -24,5 +24,7 @@
   "bookingPriceCarnet": "Bono",
   "bookingPriceFree": "Gratis",
   "bookingPriceSubscription": "Suscripción",
-  "bookingPriceOverage": "Media jornada extra"
+  "bookingPriceOverage": "Media jornada extra",
+  "calendarDeskRangeLabel": "Periodo",
+  "calendarDeskViewLabel": "Vista"
 }

@@ -6,6 +6,8 @@
 // reload or a link opens the same thing; the keys T, ← →, D / W / M and N come
 // from the registry. Below the large window class the calendar branch draws
 // the phone's hub instead (unchanged).
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +22,12 @@ import '../../core/theme/app_spacing.dart';
 import '../../core/time/clock.dart';
 import '../../core/ui/loading_view.dart';
 import '../../features/calendar/presentation/screens/calendar_hub_screen.dart';
+import '../../features/calendar/presentation/widgets/calendar_view_bar.dart'
+    show CalendarAlertsIcon;
 import '../../features/calendar/providers/calendar_view_request.dart';
+import '../../features/events/presentation/widgets/calendar_decisions.dart'
+    show pendingAlertCount;
+import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_calendar.dart';
 import 'desk_calendar_body.dart';
@@ -46,14 +53,20 @@ class DeskCalendarPage extends ConsumerWidget {
     if (calendar == null) return const LoadingView();
     final today = calendar.dateOf(ref.watch(clockProvider).now());
     final parsed = DeskCalendarAddress.parse(query, today: today);
-    // The bell and a link to the alerts ask for the hub's Alerts view.
-    final alerts = ref.watch(calendarAlertsRequestProvider);
-    final address = alerts && parsed.mode != DeskMode.agenda
-        ? parsed.copyWith(mode: DeskMode.agenda)
-        : parsed;
     void go(DeskCalendarAddress next) => context.go(next.location);
+    // The bell and a link to the alerts ask for the alerts: #4056 — the
+    // desk's own Alerts view, taken once, off the build frame.
+    final alerts = ref.watch(calendarAlertsRequestProvider);
+    final address = alerts ? parsed.copyWith(mode: DeskMode.alerts) : parsed;
+    if (alerts) {
+      scheduleMicrotask(() {
+        if (!context.mounted) return;
+        ref.read(calendarAlertsRequestProvider.notifier).consume();
+        if (parsed.mode != DeskMode.alerts) go(address);
+      });
+    }
     return ShortcutScope(
-      handlers: address.mode == DeskMode.agenda ? const {} : {
+      handlers: address.mode.isFeed ? const {} : {
         AppShortcutId.today: () => go(address.copyWith(day: today)),
         AppShortcutId.previousPeriod: () => go(
           address.copyWith(
@@ -73,8 +86,10 @@ class DeskCalendarPage extends ConsumerWidget {
           children: [
             _Header(address: address, today: today, go: go),
             Expanded(
-              child: address.mode == DeskMode.agenda
-                  ? const CalendarHubScreen()
+              child: address.mode.isFeed
+                  ? CalendarHubScreen(
+                      deskAlerts: address.mode == DeskMode.alerts,
+                    )
                   : DeskCalendarBody(address: address, calendar: calendar),
             ),
           ],
@@ -107,7 +122,10 @@ class _Header extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = ref.watch(appFormatProvider);
-    final agenda = address.mode == DeskMode.agenda;
+    final agenda = address.mode.isFeed;
+    final alertsOffered = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.eventsTab);
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.lg,
@@ -149,6 +167,12 @@ class _Header extends ConsumerWidget {
               onPressed: () => go(address.copyWith(day: today)),
               child: Text(l10n.calendarToday),
             ),
+            // #4056 — each choice says what it chooses, on screen and to a
+            // screen reader.
+            Text(
+              l10n.calendarDeskRangeLabel,
+              style: Theme.of(context).textTheme.labelMedium,
+            ),
             SegmentedButton<DeskView>(
               key: _deskViewKey,
               showSelectedIcon: false,
@@ -170,6 +194,10 @@ class _Header extends ConsumerWidget {
               onSelectionChanged: (s) => go(address.copyWith(view: s.first)),
             ),
           ],
+          Text(
+            l10n.calendarDeskViewLabel,
+            style: Theme.of(context).textTheme.labelMedium,
+          ),
           SegmentedButton<DeskMode>(
             key: _deskModeKey,
             showSelectedIcon: false,
@@ -189,6 +217,15 @@ class _Header extends ConsumerWidget {
                 icon: const Icon(Icons.view_agenda_outlined),
                 label: Text(l10n.calendarViewAgenda),
               ),
+              if (alertsOffered)
+                ButtonSegment(
+                  value: DeskMode.alerts,
+                  icon: CalendarAlertsIcon(
+                    count: pendingAlertCount(ref),
+                    icon: const Icon(Icons.notifications_outlined),
+                  ),
+                  label: Text(l10n.calendarViewAlerts),
+                ),
             ],
             selected: {address.mode},
             onSelectionChanged: (s) => go(address.copyWith(mode: s.first)),

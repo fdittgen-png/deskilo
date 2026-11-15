@@ -145,5 +145,13 @@
   "bookingPriceOverage": "Extra half-day",
   "@bookingPriceOverage": {
     "description": "#3843 A booking of a month with extra half-days beyond the allowance: it counts toward them (no amount of its own)"
+  },
+  "calendarDeskRangeLabel": "Range",
+  "calendarDeskViewLabel": "View",
+  "@calendarDeskRangeLabel": {
+    "description": "#4056 — the desk calendar's choice of range (day, week, month): calendarDeskRangeLabel."
+  },
+  "@calendarDeskViewLabel": {
+    "description": "#4056 — the desk calendar's choice of view (grid, list, agenda, alerts): calendarDeskViewLabel."
   }
 }

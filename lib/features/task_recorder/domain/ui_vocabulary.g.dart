@@ -7230,6 +7230,8 @@ const Set<String> uiLabelKeys = {
   'calendarDeskFilterLevel',
   'calendarDeskModeTable',
   'calendarDeskNew',
+  'calendarDeskRangeLabel',
+  'calendarDeskViewLabel',
   'calendarDeskZoomIn',
   'calendarDeskZoomOut',
   'calendarEventActionApproved',
