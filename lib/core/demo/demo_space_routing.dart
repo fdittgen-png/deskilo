@@ -26,6 +26,7 @@ import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
 import '../../features/money/providers/guest_pass_providers.dart';
 import '../../features/money/providers/hmrc_providers.dart';
+import '../../features/money/providers/invoice_original_providers.dart';
 import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/recorded_payments_providers.dart';
 import '../../features/money/providers/settlement_review_providers.dart';
@@ -44,6 +45,7 @@ import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
+import 'data/money/demo_invoice_original_repository.dart';
 import 'data/money/demo_settlement_reviews.dart';
 import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
@@ -110,7 +112,13 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
   final myReservations = _myReservations(fixture);
   // #3865 — each space's last bank statement lives on the fixture.
   final banks = demoMapSpaces(fixture.stores, (s) => s.bank);
+  // #3853 — the stored originals, one store for the Demo's invoices.
+  final originals = DemoInvoiceOriginalRepository(
+    storedBy: () => fixture.auth.currentUserId,
+    now: () => fixture.seededAt,
+  );
   return [
+    invoiceOriginalRepositoryProvider.overrideWith((ref) => originals),
     workspaceRepositoryProvider.overrideWith((ref) => open(ref).workspaces),
     floorPlanRepositoryProvider.overrideWith((ref) => open(ref).floorPlan),
     // #2631 — rooms, parking areas and chargers live in memory.

@@ -344,9 +344,9 @@ sealed class Invoice with _$Invoice implements SystemStamped {
     /// Null on an invoice issued before 0349: legacy, evidence unknown.
     /// Read it through [legalClauses].
     Map<String, Object?>? legalSnapshot,
-    /// #3850 (0753), #3852 (0768) -- the language, its `fr_CH` pair and the paper (`A4` | `Letter`) frozen at issue; null before them or on a draft (A4).
+    /// #3850 (0753), #3852 (0768) -- the language, its `fr_CH` pair and the paper (`A4` | `Letter`) frozen at issue; null before them or on a draft (A4). #3853 (0772) -- whether a stored original is kept: false before it.
     String? documentLanguage,
-    String? formatLocale, String? paper,
+    String? formatLocale, String? paper, @Default(false) bool keepsOriginal,
     /// #992 — the server's stamp on this row.
     @Default(SystemColumns.none) SystemColumns system,
   }) = _Invoice;
@@ -440,7 +440,7 @@ sealed class Invoice with _$Invoice implements SystemStamped {
       final Map<dynamic, dynamic> json => json.cast<String, Object?>(),
       _ => null,
     },
-    documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?, paper: row['paper'] as String?,
+    documentLanguage: row['document_language'] as String?, formatLocale: row['format_locale'] as String?, paper: row['paper'] as String?, keepsOriginal: row['keeps_original'] as bool? ?? false,
     totalCents: (row['total_cents'] as num).toInt(),
     currency: row['currency'] as String,
     memberName: row['member_name'] as String? ?? '',
