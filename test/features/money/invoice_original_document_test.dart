@@ -165,11 +165,11 @@ void main() {
       money: money,
       store: _store(),
     );
-    final tick = DateTime.now().second;
+    final waited = Stopwatch()..start();
     await tester.runAsync(
       () => untilReal(
-        () => DateTime.now().second != tick,
-        what: 'the clock to move on',
+        () => waited.elapsedMilliseconds > 1000,
+        what: 'a second to pass',
       ),
     );
     final second = await _open(

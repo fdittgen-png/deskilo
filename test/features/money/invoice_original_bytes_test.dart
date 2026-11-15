@@ -108,10 +108,10 @@ Future<Uint8List> _positioned() async => (await tryLayoutPdf(
 /// Renders [make] twice, a second apart, so the clock has moved between.
 Future<(Uint8List, Uint8List)> _twice(Future<Uint8List> Function() make) async {
   final first = await make();
-  final second = DateTime.now().second;
+  final waited = Stopwatch()..start();
   await untilReal(
-    () => DateTime.now().second != second,
-    what: 'the clock to move on',
+    () => waited.elapsedMilliseconds > 1000,
+    what: 'a second to pass',
   );
   return (first, await make());
 }
