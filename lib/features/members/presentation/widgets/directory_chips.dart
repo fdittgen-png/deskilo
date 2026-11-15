@@ -31,14 +31,14 @@ Widget? directoryPresenceChip(
   final theme = Theme.of(context);
   final key = ValueKey('$keyPrefix-${card.member.id}');
   if (card.online) {
-    return _DirectoryStatusChip(
+    return _DirectoryPill(
       chipKey: key,
       label: l10n.directoryOnline,
       foreground: AppStatusColors.successOf(theme.brightness),
       outlined: true,
     );
   }
-  return _DirectoryStatusChip(
+  return _DirectoryPill(
     chipKey: key,
     label: relativeLastSeen(l10n, card.now, card.presence.lastSeenAt!),
     foreground: theme.colorScheme.onSurfaceVariant,
@@ -76,7 +76,7 @@ Widget? directoryReservationChip(
   final seatName = card.seatName;
   final key = ValueKey('$keyPrefix-${card.member.id}');
   return switch (info) {
-    CheckedInNow() => _DirectoryStatusChip(
+    CheckedInNow() => _DirectoryPill(
       chipKey: key,
       label: seatName.isEmpty
           ? (l10n.directoryCheckedIn)
@@ -84,7 +84,7 @@ Widget? directoryReservationChip(
       foreground: AppStatusColors.onSuccessOf(brightness),
       background: AppStatusColors.successOf(brightness),
     ),
-    ReservedNow() => _DirectoryStatusChip(
+    ReservedNow() => _DirectoryPill(
       chipKey: key,
       label: seatName.isEmpty
           ? (l10n.directoryReservedNow)
@@ -92,7 +92,7 @@ Widget? directoryReservationChip(
       foreground: theme.colorScheme.primary,
       outlined: true,
     ),
-    UpcomingReservation() => _DirectoryStatusChip(
+    UpcomingReservation() => _DirectoryPill(
       chipKey: key,
       label: _directoryUpcomingLabel(
           appFormatOf(context), info.reservation, seatName),
@@ -114,13 +114,13 @@ Widget? directoryRoleBadge(
   final theme = Theme.of(context);
   final key = ValueKey('directory-role-${card.member.id}');
   final chip = switch (card.role) {
-    DirectoryRole.owner => _DirectoryStatusChip(
+    DirectoryRole.owner => _DirectoryPill(
       chipKey: key,
       label: l10n.memberRoleOwner,
       foreground: theme.colorScheme.onPrimary,
       background: theme.colorScheme.primary,
     ),
-    DirectoryRole.admin => _DirectoryStatusChip(
+    DirectoryRole.admin => _DirectoryPill(
       chipKey: key,
       label: l10n.memberRoleAdmin,
       foreground: theme.colorScheme.primary,
@@ -190,11 +190,12 @@ class DirectoryReservationTile extends StatelessWidget {
   }
 }
 
-/// Small pill chip: filled ([background] set), outlined, or bare muted
-/// text — state is never conveyed by color alone (spec §11), the label
-/// always spells it out.
-class _DirectoryStatusChip extends StatelessWidget {
-  const _DirectoryStatusChip({
+/// Small pill: filled ([background] set), outlined, or bare muted text —
+/// state is never conveyed by color alone (spec §11), the label always
+/// spells it out. #3999 — not the kit's StatusChip: there a tone is a tint;
+/// here the fill or the outline is the second channel of the state.
+class _DirectoryPill extends StatelessWidget {
+  const _DirectoryPill({
     required this.chipKey,
     required this.label,
     required this.foreground,

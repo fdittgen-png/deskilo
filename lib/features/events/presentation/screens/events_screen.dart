@@ -357,7 +357,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
                   PendingDecisionsSection(pending: facts.matchingPending),
                   const Divider(),
                 ],
-                EventsFilterBar(
+                EventsFilterLines(
                   filter: facts.filter,
                   unreadCount: facts.unreadCount,
                   groupingOn: facts.groupingOn,

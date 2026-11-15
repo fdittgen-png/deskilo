@@ -129,7 +129,7 @@ class _FeaturesScreenState extends ConsumerState<FeaturesScreen> {
                     ),
                   )
                 else ...[
-                  FeaturesFilterBar(
+                  FeaturesFilterLine(
                     controller: _search,
                     onQuery: (value) => setState(() => _query = value.trim()),
                     changedOnly: _changedOnly,
