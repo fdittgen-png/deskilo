@@ -5,6 +5,8 @@
 import 'dart:async';
 import 'dart:typed_data' show Uint8List;
 
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
+import 'package:deskilo/features/money/domain/fec_accounts.dart' show FecJournals;
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
@@ -100,6 +102,29 @@ mixin FakeWorkspaceIdentity on FakeWorkspaceState
     final i = workspaces.indexWhere((w) => w.id == workspaceId);
     if (i < 0) return;
     workspaces[i] = workspaces[i].copyWith(subscriptionVatRateId: vatRateId);
+  }
+
+  /// #3470 — the server's rules: whole or refused whole.
+  @override
+  Future<AccountingJournalsRefusal?> setAccountingJournals(
+    String workspaceId,
+    Map<String, Object?> journals,
+  ) async {
+    if (journals.isNotEmpty) {
+      final value = FecJournals.fromJson(journals);
+      if (value == null) {
+        return (problem: 'shape', role: '', notAllowed: false);
+      }
+      if (journalsProblem(value) case (:final role, :final problem)) {
+        return (problem: problem.name, role: role, notAllowed: false);
+      }
+    }
+    final i = workspaces.indexWhere((w) => w.id == workspaceId);
+    if (i < 0) return (problem: '', role: '', notAllowed: true);
+    workspaces[i] = workspaces[i].copyWith(
+      accountingJournals: Map.of(journals),
+    );
+    return null;
   }
 
   @override

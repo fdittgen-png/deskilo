@@ -211,7 +211,7 @@ Map<String, Object?> _journalsReportData(
     rows.add(
       _row(
         kind: _Kind.heading,
-        label: '${t.journal.code} ${words.journal(t.journal)}',
+        label: '${books.codeOf(t.journal)} ${words.journal(t.journal)}',
       ),
     );
     for (final e in books.entriesOf(t.journal)) {
@@ -235,7 +235,7 @@ Map<String, Object?> _journalsReportData(
     rows.add(
       _row(
         kind: _Kind.total,
-        label: '${words.total} ${t.journal.code}',
+        label: '${words.total} ${books.codeOf(t.journal)}',
         debit: f.money(t.debit),
         credit: f.money(t.credit),
       ),
@@ -245,7 +245,7 @@ Map<String, Object?> _journalsReportData(
   for (final t in totals) {
     rows.add(
       _row(
-        label: '${t.journal.code} ${words.journal(t.journal)}',
+        label: '${books.codeOf(t.journal)} ${words.journal(t.journal)}',
         detail: '${t.entries}',
         debit: f.money(t.debit),
         credit: f.money(t.credit),

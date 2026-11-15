@@ -21,6 +21,7 @@ import '../../domain/purchase.dart' show
         purchaseOffsetPermission,
         purchasePayPermission;
 import '../../domain/room_rental.dart' show roomRentalManagePermission;
+import '../widgets/accounting_journals_sheet.dart';
 import '../widgets/accounting_targets_sheet.dart';
 import '../widgets/bank_statements_sheet.dart';
 import '../widgets/book_periods_sheet.dart';
@@ -411,6 +412,10 @@ class MoneyActionSet {
       if (data.invoicingOn && has(['workspaceSettings']))
         door('accounting-hub-identity', Icons.badge_outlined,
             l10n.legalIdentityTitle, '/legal-identity'),
+      ...AccountingJournalsDoor.of(
+        data,
+        onKept: () => ref.invalidate(currentWorkspaceProvider),
+      ),
       if (data.vatManagementOn && has(['manageBilling']))
         door('accounting-hub-vat', Icons.percent_outlined, l10n.vatTitle,
             '/vat'),

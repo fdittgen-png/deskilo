@@ -250,6 +250,65 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingExportsTitle => 'Esportazioni';
 
   @override
+  String get accountingJournalBank => 'Banca';
+
+  @override
+  String get accountingJournalCharacter =>
+      'Niente a capo, tabulazioni né | qui: le esportazioni separano i loro campi con essi.';
+
+  @override
+  String get accountingJournalCode => 'Codice';
+
+  @override
+  String get accountingJournalCodeRequired => 'Inserisca un codice.';
+
+  @override
+  String get accountingJournalDuplicate =>
+      'Un altro registro ha già questo codice.';
+
+  @override
+  String get accountingJournalLabel => 'Descrizione';
+
+  @override
+  String get accountingJournalLabelRequired => 'Inserisca una descrizione.';
+
+  @override
+  String get accountingJournalMisc => 'Operazioni diverse';
+
+  @override
+  String get accountingJournalPurchases => 'Acquisti';
+
+  @override
+  String get accountingJournalSales => 'Vendite';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Gli invii a un sistema contabile collegato usano ancora i codici standard.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'Il codice e la descrizione di ogni registro, come li conosce il software del suo commercialista. Ogni esportazione contabile dell\'app li usa.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Solo un proprietario imposta i registri contabili.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'I registri non sono stati salvati: controlli il registro $journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.';
+
+  @override
+  String get accountingJournalsStandard => 'Usa i codici standard';
+
+  @override
+  String get accountingJournalsTitle => 'Registri contabili';
+
+  @override
   String get accountingSignInBack => 'Torna a Contabilità';
 
   @override

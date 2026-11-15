@@ -251,6 +251,64 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingJournalBank => 'Banque';
+
+  @override
+  String get accountingJournalCharacter =>
+      'Pas de saut de ligne, de tabulation ni de | ici : les exports séparent leurs champs avec.';
+
+  @override
+  String get accountingJournalCode => 'Code';
+
+  @override
+  String get accountingJournalCodeRequired => 'Saisissez un code.';
+
+  @override
+  String get accountingJournalDuplicate => 'Un autre journal a déjà ce code.';
+
+  @override
+  String get accountingJournalLabel => 'Libellé';
+
+  @override
+  String get accountingJournalLabelRequired => 'Saisissez un libellé.';
+
+  @override
+  String get accountingJournalMisc => 'Opérations diverses';
+
+  @override
+  String get accountingJournalPurchases => 'Achats';
+
+  @override
+  String get accountingJournalSales => 'Ventes';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Les envois vers un logiciel comptable connecté utilisent toujours les codes standard.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'Le code et le libellé de chaque journal, tels que le logiciel de votre comptable les connaît. Chaque export comptable de l\'application les utilise.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Seul un propriétaire règle les journaux comptables.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'Les journaux n\'ont pas été enregistrés : vérifiez le journal $journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'Un code modifié change aussi les numéros d\'écriture d\'une période exportée à nouveau.';
+
+  @override
+  String get accountingJournalsStandard => 'Utiliser les codes standard';
+
+  @override
+  String get accountingJournalsTitle => 'Journaux comptables';
+
+  @override
   String get accountingSignInBack => 'Retour à Comptabilité';
 
   @override

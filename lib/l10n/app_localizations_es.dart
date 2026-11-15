@@ -251,6 +251,64 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountingExportsTitle => 'Exportaciones';
 
   @override
+  String get accountingJournalBank => 'Banco';
+
+  @override
+  String get accountingJournalCharacter =>
+      'Sin saltos de línea, tabuladores ni | aquí: las exportaciones separan sus campos con ellos.';
+
+  @override
+  String get accountingJournalCode => 'Código';
+
+  @override
+  String get accountingJournalCodeRequired => 'Introduzca un código.';
+
+  @override
+  String get accountingJournalDuplicate => 'Otro diario ya tiene este código.';
+
+  @override
+  String get accountingJournalLabel => 'Descripción';
+
+  @override
+  String get accountingJournalLabelRequired => 'Introduzca una descripción.';
+
+  @override
+  String get accountingJournalMisc => 'Operaciones diversas';
+
+  @override
+  String get accountingJournalPurchases => 'Compras';
+
+  @override
+  String get accountingJournalSales => 'Ventas';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Los envíos a un sistema contable conectado siguen usando los códigos estándar.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'El código y la descripción de cada diario, tal como los conoce el programa de su gestor. Cada exportación contable de la aplicación los usa.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Solo un propietario define los diarios contables.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'Los diarios no se guardaron: revise el diario $journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.';
+
+  @override
+  String get accountingJournalsStandard => 'Usar los códigos estándar';
+
+  @override
+  String get accountingJournalsTitle => 'Diarios contables';
+
+  @override
   String get accountingSignInBack => 'Volver a Contabilidad';
 
   @override

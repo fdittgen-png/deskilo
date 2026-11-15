@@ -213,7 +213,7 @@ void main() {
       [chf],
       accountNames: const {},
       parties: party,
-      functionalCurrency: 'EUR',
+      currency: (code: 'EUR', rates: const {}),
     );
     expect(refused.blockers, [
       const FecBlocker(FecBlock.missingRate, 'INV-CHF-1 (CHF)'),
@@ -222,8 +222,7 @@ void main() {
       [chf],
       accountNames: const {},
       parties: party,
-      functionalCurrency: 'EUR',
-      rates: {'chf-1': rate},
+      currency: (code: 'EUR', rates: {'chf-1': rate}),
     );
     final lines = [
       for (final l in fec.file.split('\r\n').skip(1)) l.split('\t'),
@@ -254,7 +253,7 @@ void main() {
         set.postings,
         accountNames: const {},
         parties: parties,
-        functionalCurrency: currency,
+        currency: (code: currency, rates: const {}),
       );
       expect(fec.file, isEmpty);
       expect(fec.blockers, [FecBlocker(FecBlock.currency, currency)]);

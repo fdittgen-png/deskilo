@@ -325,6 +325,79 @@
   "@accountingExportsTitle": {
     "description": "#3616 the export history page title (short: the top bar holds it)"
   },
+  "accountingJournalBank": "Bank",
+  "@accountingJournalBank": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalCharacter": "No line break, tab or | here: the exports separate their fields with them.",
+  "@accountingJournalCharacter": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalCode": "Code",
+  "@accountingJournalCode": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalCodeRequired": "Enter a code.",
+  "@accountingJournalCodeRequired": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalDuplicate": "Another journal already has this code.",
+  "@accountingJournalDuplicate": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalLabel": "Label",
+  "@accountingJournalLabel": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalLabelRequired": "Enter a label.",
+  "@accountingJournalLabelRequired": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalMisc": "Miscellaneous operations",
+  "@accountingJournalMisc": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalPurchases": "Purchases",
+  "@accountingJournalPurchases": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalSales": "Sales",
+  "@accountingJournalSales": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsDeliveries": "Deliveries to a connected accounting system still use the standard codes.",
+  "@accountingJournalsDeliveries": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsIntro": "The code and label of each journal, as your accountant's software knows them. Every accounting export the app writes uses them.",
+  "@accountingJournalsIntro": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsNotAllowed": "Only an owner sets the accounting journals.",
+  "@accountingJournalsNotAllowed": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsRefused": "The journals were not saved: check the {journal} journal.",
+  "@accountingJournalsRefused": {
+    "description": "#3470 business journals",
+    "placeholders": {
+      "journal": {
+        "type": "String"
+      }
+    }
+  },
+  "accountingJournalsRenumber": "A changed code also changes the entry numbers of a period you export again.",
+  "@accountingJournalsRenumber": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsStandard": "Use the standard codes",
+  "@accountingJournalsStandard": {
+    "description": "#3470 business journals"
+  },
+  "accountingJournalsTitle": "Accounting journals",
+  "@accountingJournalsTitle": {
+    "description": "#3470 business journals"
+  },
   "accountingSignInBack": "Back to Accounting",
   "@accountingSignInBack": {
     "description": "#3906 Button back to the accounting page."

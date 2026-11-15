@@ -22,6 +22,9 @@ abstract final class HelpAnchor {
   static const moneyPurchases = 'user.money.purchases';
   static const moneyCash = 'user.money.cash';
 
+  /// #3470 — the business's accounting journals, every export's codes.
+  static const moneyAccountingJournals = 'user.money.accounting-journals';
+
   /// #3527 — an expense's VAT: rate, deductible share, fixed asset and a
   /// purchase from a supplier abroad.
   static const moneyExpenseVat = 'user.money.expenses.vat';

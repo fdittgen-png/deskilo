@@ -16,6 +16,7 @@ import '../../../core/ui/print_or_retry.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/book_reports.dart';
+import '../domain/fec_accounts.dart';
 import '../domain/report_kind.dart';
 import 'invoice_documents.dart';
 import 'report_actions.dart';
@@ -53,6 +54,7 @@ class BookReportPrint {
     required String kindId,
     required JournalPosted books,
     required Map<String, Object?> letterhead,
+    FecJournals? journals,
   }) => printOrRetry(context, 'book report', () async {
     await readDocumentPolicies(ref); // #3742 — the template and rules, read
     if (!context.mounted) return;
@@ -63,6 +65,8 @@ class BookReportPrint {
       accountNames: books.accountNames,
       parties: books.parties,
       functionalCurrency: books.functionalCurrency,
+      // #3470 — the business's journals head the books.
+      journals: journals,
     );
     if (ledger.unconverted.isNotEmpty) {
       AppSnack.error(
