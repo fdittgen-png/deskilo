@@ -359,6 +359,8 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
         signature: proforma ? '' : invoice.signature,
         lastPage: qrPage,
         paper: paper,
+        // #3853 — an issued invoice is dated by its issue, a proforma by now
+        datedAt: proforma ? null : invoice.issuedAt,
       ),
       font: _asset,
       image: options.reportImage,
