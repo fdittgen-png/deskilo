@@ -492,8 +492,9 @@ void main() {
   });
 
   testWidgets(
-      '#4028 — a file from another currency and country: what it left out is '
-      'said in a dialog that stays until it is read', (tester) async {
+      '#4028 — a restore (the importer\'s mirror) of a file from another '
+      'currency and country: what it left out is said in a dialog that stays '
+      'until it is read', (tester) async {
     final importRepository = RecordingImportRepository()
       ..refused = const [
         ConfigurationRefusal(

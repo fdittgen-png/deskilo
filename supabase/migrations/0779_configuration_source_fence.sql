@@ -12,7 +12,9 @@
 --   priced entities refused (every entity that requires `vat`: tariffs,
 --   services, packages, accessories, credit products), with a reason naming
 --   both currencies; a validation threshold is an amount too, so the target
---   keeps its own. A payload that states another country has `vat`
+--   keeps its own per event type, in 'merge' and in 'mirror' (which deletes
+--   and re-inserts the policies), and a policy new to it asks for every
+--   amount. A payload that states another country has `vat`
 --   refused the same way. The other entities are applied.
 -- * A payload that states neither applies as before; a business and its
 --   own twin share both, so deployments inside a pair are unaffected.
@@ -74,17 +76,25 @@ begin
     end if;
   end loop;
 
-  -- a validation threshold is an amount: in another currency the target keeps its own
+  -- a validation threshold is an amount: in another currency each policy
+  -- carries the target's own threshold for its event type, so a mirror that
+  -- deletes and re-inserts the policies keeps it too; a policy the target
+  -- does not have yet arrives with none (every amount asks)
   if v_src_currency is not null and v_src_currency is distinct from v_currency
      and jsonb_typeof(v_t->'validation_policies') = 'array'
      and exists (select 1 from jsonb_array_elements(v_t->'validation_policies') e where e.value ? 'min_amount_cents') then
     v_t := jsonb_set(v_t, '{validation_policies}',
-      (select coalesce(jsonb_agg(e.value - 'min_amount_cents' order by e.ordinality), '[]'::jsonb)
-         from jsonb_array_elements(v_t->'validation_policies') with ordinality e));
+      (select coalesce(jsonb_agg(case when own.min_amount_cents is not null
+                                      then e.value || jsonb_build_object('min_amount_cents', own.min_amount_cents)
+                                      else e.value - 'min_amount_cents' end
+                                 order by e.ordinality), '[]'::jsonb)
+         from jsonb_array_elements(v_t->'validation_policies') with ordinality e
+         left join public.validation_policies own
+           on own.workspace_id = p_workspace_id and own.event_type = e.value->>'event_type'));
     v_refused := v_refused || jsonb_build_array(jsonb_build_object(
       'entity', 'validation_rules', 'field', 'min_amount_cents', 'code', 'currency',
       'source', v_src_currency, 'target', v_currency,
-      'reason', format('a validation threshold in %s is not one in %s: this business keeps its own',
+      'reason', format('a validation threshold in %s is not one in %s: this business keeps its own, and a policy new to it asks for every amount',
                        v_src_currency, v_currency)));
   end if;
 

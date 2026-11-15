@@ -4,12 +4,13 @@
 -- currency or country. The export states its source's currency and
 -- country. EUR into GBP: the priced entities are refused with a reason
 -- naming both currencies, the target keeps its validation threshold, the
--- rest is applied. FR into IT in euros: `vat` is refused, the prices are
+-- rest is applied; in 'mirror' (a restore from a file) the business's own
+-- prices, fee bands, rates and threshold stay. FR into IT in euros: `vat` is refused, the prices are
 -- applied. The same currency and country, a payload that states neither,
 -- and a deployment inside a pair apply as before. A template states its
 -- owner business's currency at apply time. Rolled back.
 begin;
-select plan(17);
+select plan(21);
 
 create or replace function pg_temp.act_as(p_user uuid) returns void language plpgsql as $act$
 begin
@@ -41,6 +42,8 @@ select set_config('deskilo.fence.' || k,
                ('lyon', 'FR', 'EUR', 'Europe/Paris', 'dev'),
                ('leeds', 'GB', 'GBP', 'Europe/London', 'dev'),
                ('bristol', 'GB', 'GBP', 'Europe/London', 'dev'),
+               ('york', 'GB', 'GBP', 'Europe/London', 'dev'),
+               ('hull', 'GB', 'GBP', 'Europe/London', 'dev'),
                ('paris_prod', 'FR', 'EUR', 'Europe/Paris', 'prod')) v(k, c, cur, tz, env);
 reset role;
 
@@ -56,6 +59,20 @@ update public.workspaces set booking_rules = booking_rules || '{"granularity": "
 insert into public.validation_policies (workspace_id, event_type, required_count, admins_may_validate, min_amount_cents)
 values (pg_temp.ws('paris'), 'lease_change', 1, true, 50000),
        (pg_temp.ws('london'), 'lease_change', 1, true, 7000);
+-- York's own prices, rate and threshold, which a restore in mirror must keep
+insert into public.vat_rates (workspace_id, label, percent, category, is_default, active)
+values (pg_temp.ws('york'), 'VAT 20 % York', 20, 'S', false, true);
+insert into public.plans (workspace_id, name, base_fee_cents, included_half_days, overage_fee_cents, active)
+values (pg_temp.ws('york'), 'York plan', 18000, 20, 1200, true);
+insert into public.services (workspace_id, name, price_cents, active)
+values (pg_temp.ws('york'), 'York tea', 180, true);
+insert into public.packages (workspace_id, name, days, price_cents, active)
+values (pg_temp.ws('york'), 'York ten', 10, 15000, true);
+delete from public.fee_bands where workspace_id = pg_temp.ws('york');
+insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage_fee_cents)
+values (pg_temp.ws('york'), 0, 100, 4000, 0);
+insert into public.validation_policies (workspace_id, event_type, required_count, admins_may_validate, min_amount_cents)
+values (pg_temp.ws('york'), 'lease_change', 1, true, 9000);
 -- Paris's production half
 update public.workspaces set pair_id = '00000000-0000-4000-8000-0000000040f1'
  where id in (pg_temp.ws('paris'), pg_temp.ws('paris_prod'));
@@ -86,6 +103,28 @@ select is((select min_amount_cents from public.validation_policies
   'the target keeps its own validation threshold');
 select is((select (currency_code, country_code)::text from public.workspaces where id = pg_temp.ws('london')), '(GBP,GB)',
   'the import never writes the source''s currency or country');
+
+-- ── a restore from a file is a mirror ──
+select set_config('deskilo.fence.r_york', public.import_workspace_configuration(pg_temp.ws('york'),
+  current_setting('deskilo.fence.export')::jsonb, 'mirror')::text, false);
+select is(pg_temp.refused(current_setting('deskilo.fence.r_york')::jsonb), 'services,tariffs,validation_rules,vat',
+  'a mirror names the same refusals');
+select is((select (
+    (select count(*) from public.plans where workspace_id = pg_temp.ws('york') and name = 'York plan' and active),
+    (select count(*) from public.services where workspace_id = pg_temp.ws('york') and name = 'York tea' and active),
+    (select count(*) from public.packages where workspace_id = pg_temp.ws('york') and name = 'York ten' and active),
+    (select string_agg(fee_cents::text, ',') from public.fee_bands where workspace_id = pg_temp.ws('york')),
+    (select count(*) from public.vat_rates where workspace_id = pg_temp.ws('york') and label = 'VAT 20 % York' and active),
+    (select count(*) from public.plans where workspace_id = pg_temp.ws('york') and name = 'Resident fence'))::text),
+  '(1,1,1,4000,1,0)', 'a mirror keeps the business''s own prices, fee bands and rates, and brings none');
+select is((select min_amount_cents from public.validation_policies
+            where workspace_id = pg_temp.ws('york') and event_type = 'lease_change'), 9000,
+  'a mirror that re-writes the policies keeps the business''s own threshold');
+select set_config('deskilo.fence.r_hull', public.import_workspace_configuration(pg_temp.ws('hull'),
+  current_setting('deskilo.fence.export')::jsonb, 'mirror')::text, false);
+select is((select min_amount_cents from public.validation_policies
+            where workspace_id = pg_temp.ws('hull') and event_type = 'lease_change'), 0,
+  'a policy new to the business arrives with no threshold: every amount asks');
 
 -- ── FR into IT, in euros ──
 select set_config('deskilo.fence.r_milan', public.import_workspace_configuration(pg_temp.ws('milan'),
