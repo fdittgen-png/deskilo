@@ -137,7 +137,7 @@ class DeskiloApp extends ConsumerWidget {
               router: router,
               animations: animations,
               child: BootSplash(child: SystemInsetsGuard(child: RoutedBuilder(
-                listenable: routeChanges(router),
+                router: router,
                 builder: (context) => Consumer(
                   builder: (context, ref, _) {
                     final path = router.routeInformationProvider.value.uri.path;
