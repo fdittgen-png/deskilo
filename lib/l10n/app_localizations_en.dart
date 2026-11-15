@@ -11348,6 +11348,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get featureOptInTitle => 'Switch on an experimental feature?';
 
   @override
+  String get featureOrganisationDesc =>
+      'This business heads an organisation of the customer\'s businesses: a site in another country or currency is a house, a business of its own with its country\'s rules. Off: no organisation is made or changed from this business; a house still leaves one, and members still see where they are.';
+
+  @override
+  String get featureOrganisationTitle => 'Organisation of businesses';
+
+  @override
   String get featureParkingDesc =>
       'A parking area on a level with standard, electric and accessible slots, each booked per day. Off: no parking.';
 

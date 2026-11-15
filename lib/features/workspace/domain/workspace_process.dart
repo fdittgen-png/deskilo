@@ -232,6 +232,9 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('configuration', [
       WorkspaceFeature.workspaceStatus,
       WorkspaceFeature.environmentPairs,
+      // #4004 — beside the twins: the businesses a customer runs, each
+      // country or currency a house of its own in the organisation.
+      WorkspaceFeature.organisation,
       WorkspaceFeature.deployments,
       WorkspaceFeature.configurationTransfer,
       // #2484 — beside the other ways an administrator shapes the workspace.

@@ -158,6 +158,7 @@
         "notificationGrouping": false,
         "numberSequences": false,
         "onlinePayments": false,
+        "organisation": true,
         "parking": false,
         "paymentReminders": false,
         "pdfExport": true,

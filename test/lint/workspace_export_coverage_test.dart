@@ -82,6 +82,7 @@ const Map<String, String> _notExported = {
   'provenance_envelopes': 'server-written evidence of how each durable result of this installation was produced (#3336): insert-only, derived from the results themselves and their producers, not portable configuration',
   'capability_states': 'the operator\'s decision to admit or stop new work of a capability on this installation (#3336): an operational state of this installation, not portable configuration — a space decides again from its feature choice',
   'invoice_originals': 'the record of each issued invoice\'s stored original (#3853): its PDF is a file in the invoice-originals bucket, which a workbook cell cannot hold; the year archive carries each one as that invoice\'s file, and the invoices themselves are exported',
+  'organisations': 'a customer\'s businesses grouped under one head (#4004): a link between businesses of this installation, never one business\'s own data; an export is of one business, and its owners set the organisation up again',
   'invoice_transmission_artifacts': 'service-only copy of the exact e-invoice bytes prepared for a provider (#3335): a delivery fact of this installation, never client-readable, not portable configuration',
   'badge_auth_attempts': 'service-only attack signals, including token hashes and unknown tags; never disclose credential probes in a workspace workbook (#3091)',
   'workspace_favorites': 'a person\'s own favourite workspaces (#2185): personal data returned by export_my_data to the person it belongs to, not a workspace\'s portable configuration',
@@ -668,5 +669,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     // host the row was born on and recomputable from it; a workbook that
     // moves between installations must not carry it as data.
     'network_id',
+    // #4004 — the organisation this business is a house of on this
+    // installation: a link to other businesses, which an export of one does
+    // not carry; its owners set the organisation up again.
+    'organisation_id',
   },
 };

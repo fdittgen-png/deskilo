@@ -638,6 +638,10 @@ window.SETUP_REGISTRY={
   [
    "stockManagement",
    false
+  ],
+  [
+   "organisation",
+   true
   ]
  ],
  "requires": {
@@ -1582,6 +1586,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "workspaceStatus",
      "environmentPairs",
+     "organisation",
      "deployments",
      "configurationTransfer",
      "configurableSettings",
@@ -1991,7 +1996,8 @@ window.SETUP_LEVELS={
       "memberGettingStarted",
       "setupGuide",
       "dataReport",
-      "quickSearch"
+      "quickSearch",
+      "organisation"
      ],
      "needs": {}
     },

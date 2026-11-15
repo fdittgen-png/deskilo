@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'workspace_feature.dart';
 
+export 'feature_manifest_organisation.dart';
+
 /// #3824 — the stock flags of epic #3823, in display order, after the
 /// registry's three parts (`feature_manifest_part1-3.dart`): the goods
 /// ledger and, leaf by leaf, every stock flag under it.

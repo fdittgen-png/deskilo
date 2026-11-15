@@ -1986,6 +1986,12 @@
       ]
     },
     {
+      "key": "organisation",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "parking",
       "maturity": "beta",
       "lifecycle": "active",
