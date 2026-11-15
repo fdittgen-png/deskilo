@@ -13295,6 +13295,7 @@
   "organisationName": "Nome dell’organizzazione",
   "organisationNone": "Questa attività non fa parte di alcuna organizzazione. Un’attività in un altro paese o in un’altra valuta è una casa a sé nell’organizzazione della sua sede.",
   "organisationOverviewAsOf": "{amount}, alle {time}",
+  "organisationOverviewCardLine": "{label}: {amount}",
   "organisationOverviewCountry": "Paese",
   "organisationOverviewCurrency": "Valuta",
   "organisationOverviewHeadName": "{name} (sede)",

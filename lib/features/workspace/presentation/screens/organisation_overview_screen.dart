@@ -148,18 +148,35 @@ class _OverviewBody extends ConsumerWidget {
 
   final OrganisationOverview overview;
 
+  /// Opens [house]: its own analysis when the reader may read it, else its
+  /// home. The tap stands only for the account it was made in.
+  Future<void> _open(
+    BuildContext context,
+    WidgetRef ref,
+    OverviewHouse house,
+  ) async {
+    final router = GoRouter.of(context);
+    final principal = ref.read(sessionStateProvider).value;
+    await ref
+        .read(activeWorkspaceIdProvider.notifier)
+        .select(house.workspaceId);
+    if (!context.mounted) return;
+    if (ref.read(sessionStateProvider).value != principal) return;
+    router.go(house.withheld == null ? '/bi' : kDefaultHome);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final format = appFormatOf(context);
-    String money(OverviewHouse h, HouseFigure? f) =>
+    String figureText(OverviewHouse h, HouseFigure? f) =>
         f == null ? '—' : format.moneyIn(h.currencyCode).formatMinor(f.minor);
     String overdue(OverviewHouse h) => switch (h.overdue) {
       final f? when f.asOf != null => l10n.organisationOverviewAsOf(
-        money(h, f),
+        figureText(h, f),
         format.time(f.asOf!),
       ),
-      final f => money(h, f),
+      final f => figureText(h, f),
     };
     Widget amount(OverviewHouse h, String text) =>
         Text(h.withheld == null ? text : '', textAlign: TextAlign.end);
@@ -182,12 +199,12 @@ class _OverviewBody extends ConsumerWidget {
               rows: overview.houses,
               keyOf: (h) => h.workspaceId,
               searchText: (h) => h.name,
-              onOpen: (h) => _openHouse(context, ref, h),
+              onOpen: (h) => _open(context, ref, h),
               empty: Center(child: Text(l10n.organisationOverviewNone)),
               cardBuilder: (context, h) => _HouseCard(
                 house: h,
-                invoiced: money(h, h.invoiced),
-                collected: money(h, h.collected),
+                invoiced: figureText(h, h.invoiced),
+                collected: figureText(h, h.collected),
                 overdue: overdue(h),
               ),
               columns: [
@@ -221,7 +238,7 @@ class _OverviewBody extends ConsumerWidget {
                   flex: 2,
                   numeric: true,
                   cell: (_, h) => h.withheld == null
-                      ? amount(h, money(h, h.invoiced))
+                      ? amount(h, figureText(h, h.invoiced))
                       : Text(
                           _withheldText(l10n, h.withheld!),
                           key: ValueKey('withheld-${h.workspaceId}'),
@@ -232,7 +249,7 @@ class _OverviewBody extends ConsumerWidget {
                   label: l10n.biFinanceCollected,
                   flex: 2,
                   numeric: true,
-                  cell: (_, h) => amount(h, money(h, h.collected)),
+                  cell: (_, h) => amount(h, figureText(h, h.collected)),
                 ),
                 RecordColumn(
                   id: 'overdue',
@@ -294,9 +311,24 @@ class _HouseCard extends StatelessWidget {
           if (withheld != null)
             Text(_withheldText(l10n, withheld))
           else ...[
-            Text('${l10n.biFinanceInvoiced}: $invoiced'),
-            Text('${l10n.biFinanceCollected}: $collected'),
-            Text('${l10n.overviewOverdueTitle}: $overdue'),
+            Text(
+              l10n.organisationOverviewCardLine(
+                l10n.biFinanceInvoiced,
+                invoiced,
+              ),
+            ),
+            Text(
+              l10n.organisationOverviewCardLine(
+                l10n.biFinanceCollected,
+                collected,
+              ),
+            ),
+            Text(
+              l10n.organisationOverviewCardLine(
+                l10n.overviewOverdueTitle,
+                overdue,
+              ),
+            ),
           ],
         ],
       ),
@@ -354,19 +386,4 @@ class _Totals extends StatelessWidget {
       ],
     );
   }
-}
-
-/// Opens [house]: its own analysis when the reader may read it, else its
-/// home. The tap stands only for the account it was made in.
-Future<void> _openHouse(
-  BuildContext context,
-  WidgetRef ref,
-  OverviewHouse house,
-) async {
-  final router = GoRouter.of(context);
-  final principal = ref.read(sessionStateProvider).value;
-  await ref.read(activeWorkspaceIdProvider.notifier).select(house.workspaceId);
-  if (!context.mounted) return;
-  if (ref.read(sessionStateProvider).value != principal) return;
-  router.go(house.withheld == null ? '/bi' : kDefaultHome);
 }

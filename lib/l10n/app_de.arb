@@ -13295,6 +13295,7 @@
   "organisationName": "Name der Organisation",
   "organisationNone": "Dieses Unternehmen gehört zu keiner Organisation. Ein Unternehmen in einem anderen Land oder einer anderen Währung ist ein eigenes Haus in der Organisation seines Hauptsitzes.",
   "organisationOverviewAsOf": "{amount}, Stand {time}",
+  "organisationOverviewCardLine": "{label}: {amount}",
   "organisationOverviewCountry": "Land",
   "organisationOverviewCurrency": "Währung",
   "organisationOverviewHeadName": "{name} (Hauptsitz)",

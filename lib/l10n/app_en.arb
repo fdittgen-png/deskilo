@@ -29412,6 +29412,18 @@
       }
     }
   },
+  "organisationOverviewCardLine": "{label}: {amount}",
+  "@organisationOverviewCardLine": {
+    "description": "#4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "organisationOverviewCountry": "Country",
   "@organisationOverviewCountry": {
     "description": "#4007 Column of the overview: the house's country"

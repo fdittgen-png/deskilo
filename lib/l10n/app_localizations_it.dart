@@ -22567,6 +22567,11 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label: $amount';
+  }
+
+  @override
   String get organisationOverviewCountry => 'Paese';
 
   @override

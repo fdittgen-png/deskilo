@@ -13295,6 +13295,7 @@
   "organisationName": "Nombre de la organización",
   "organisationNone": "Este negocio no está en ninguna organización. Un negocio en otro país o en otra moneda es una casa propia en la organización de su sede.",
   "organisationOverviewAsOf": "{amount}, a las {time}",
+  "organisationOverviewCardLine": "{label}: {amount}",
   "organisationOverviewCountry": "País",
   "organisationOverviewCurrency": "Moneda",
   "organisationOverviewHeadName": "{name} (sede)",

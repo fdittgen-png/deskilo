@@ -5806,6 +5806,7 @@ const Set<String> uiRoutes = {
   '/task-wizard',
   '/task-workbench',
   '/account-activity',
+  '/organisation/:id/overview',
   '/linked-accounts',
   '/discover/workspace',
   '/account-messages/thread',

@@ -22634,6 +22634,11 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String organisationOverviewCardLine(String label, String amount) {
+    return '$label : $amount';
+  }
+
+  @override
   String get organisationOverviewCountry => 'Pays';
 
   @override
@@ -22649,7 +22654,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String organisationOverviewIncomplete(String houses) {
-    return 'Incomplet : $houses non compté(s)';
+    return 'Incomplet, sans : $houses';
   }
 
   @override

@@ -11,5 +11,6 @@
   "organisationOverviewTotalLine": "{currency}: facturado {invoiced} · cobrado {collected} · vencido {overdue}",
   "organisationOverviewIncomplete": "Incompleto: {houses} sin contar",
   "organisationOverviewOneHouse": "Es miembro de una sola casa de esta organización: no hay otra que poner al lado.",
-  "organisationOverviewNone": "Ninguna casa de esta organización que mostrar."
+  "organisationOverviewNone": "Ninguna casa de esta organización que mostrar.",
+  "organisationOverviewCardLine": "{label}: {amount}"
 }

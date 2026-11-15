@@ -144,6 +144,8 @@ const List<RouteCoverage> routeCoverage = [
   RouteCoverage('/task-wizard', CoverageStatus.recorder),
   RouteCoverage('/task-workbench', CoverageStatus.recorder),
   RouteCoverage('/account-activity', CoverageStatus.planned, owner: '#1881 B'),
+  // #4007 — an organisation's houses side by side: a read, no action.
+  RouteCoverage('/organisation/:id/overview', CoverageStatus.planned, owner: '#1881 B'),
   RouteCoverage(
     '/linked-accounts',
     CoverageStatus.excluded,

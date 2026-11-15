@@ -93,6 +93,7 @@ signed-out on  /money/suppliers/:id -> /auth
 signed-out on  /nfc-config -> /auth
 signed-out on  /oauth/consent -> /auth
 signed-out on  /onboarding -> /auth
+signed-out on  /organisation/:id/overview -> /auth
 signed-out on  /p/:id -> (open)
 signed-out on  /payment-config -> /auth
 signed-out on  /payment-methods -> /auth
@@ -241,6 +242,7 @@ signed-out off /money/suppliers/:id -> /auth
 signed-out off /nfc-config -> /auth
 signed-out off /oauth/consent -> /auth
 signed-out off /onboarding -> /auth
+signed-out off /organisation/:id/overview -> /auth
 signed-out off /p/:id -> (open)
 signed-out off /payment-config -> /auth
 signed-out off /payment-methods -> /auth
@@ -389,6 +391,7 @@ no-space on  /money/suppliers/:id -> /me
 no-space on  /nfc-config -> /me
 no-space on  /oauth/consent -> (open)
 no-space on  /onboarding -> (open)
+no-space on  /organisation/:id/overview -> (open)
 no-space on  /p/:id -> (open)
 no-space on  /payment-config -> /me
 no-space on  /payment-methods -> /me
@@ -537,6 +540,7 @@ no-space off /money/suppliers/:id -> /me
 no-space off /nfc-config -> /me
 no-space off /oauth/consent -> (open)
 no-space off /onboarding -> (open)
+no-space off /organisation/:id/overview -> (open)
 no-space off /p/:id -> (open)
 no-space off /payment-config -> /me
 no-space off /payment-methods -> /me
@@ -685,6 +689,7 @@ member on  /money/suppliers/:id -> /calendar
 member on  /nfc-config -> /calendar
 member on  /oauth/consent -> (open)
 member on  /onboarding -> (open)
+member on  /organisation/:id/overview -> (open)
 member on  /p/:id -> (open)
 member on  /payment-config -> /calendar
 member on  /payment-methods -> /calendar
@@ -833,6 +838,7 @@ member off /money/suppliers/:id -> /messages
 member off /nfc-config -> /messages
 member off /oauth/consent -> (open)
 member off /onboarding -> (open)
+member off /organisation/:id/overview -> (open)
 member off /p/:id -> (open)
 member off /payment-config -> /messages
 member off /payment-methods -> /messages
@@ -981,6 +987,7 @@ admin on  /money/suppliers/:id -> (open)
 admin on  /nfc-config -> (open)
 admin on  /oauth/consent -> (open)
 admin on  /onboarding -> (open)
+admin on  /organisation/:id/overview -> (open)
 admin on  /p/:id -> (open)
 admin on  /payment-config -> /calendar
 admin on  /payment-methods -> /calendar
@@ -1129,6 +1136,7 @@ admin off /money/suppliers/:id -> /messages
 admin off /nfc-config -> /messages
 admin off /oauth/consent -> (open)
 admin off /onboarding -> (open)
+admin off /organisation/:id/overview -> (open)
 admin off /p/:id -> (open)
 admin off /payment-config -> /messages
 admin off /payment-methods -> /messages
@@ -1277,6 +1285,7 @@ owner on  /money/suppliers/:id -> (open)
 owner on  /nfc-config -> (open)
 owner on  /oauth/consent -> (open)
 owner on  /onboarding -> (open)
+owner on  /organisation/:id/overview -> (open)
 owner on  /p/:id -> (open)
 owner on  /payment-config -> /calendar
 owner on  /payment-methods -> (open)
@@ -1425,6 +1434,7 @@ owner off /money/suppliers/:id -> /messages
 owner off /nfc-config -> /messages
 owner off /oauth/consent -> (open)
 owner off /onboarding -> (open)
+owner off /organisation/:id/overview -> (open)
 owner off /p/:id -> (open)
 owner off /payment-config -> /messages
 owner off /payment-methods -> /messages

@@ -82,5 +82,17 @@
   "organisationOverviewNone": "No house of this organisation to show.",
   "@organisationOverviewNone": {
     "description": "#4007 The overview with no house at all"
+  },
+  "organisationOverviewCardLine": "{label}: {amount}",
+  "@organisationOverviewCardLine": {
+    "description": "#4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
   }
 }

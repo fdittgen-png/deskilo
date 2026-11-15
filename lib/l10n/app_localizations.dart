@@ -35932,6 +35932,12 @@ abstract class AppLocalizations {
   /// **'{amount}, as of {time}'**
   String organisationOverviewAsOf(String amount, String time);
 
+  /// #4007 One line of a house's card on a phone: a figure's name and its amount in the house's currency
+  ///
+  /// In en, this message translates to:
+  /// **'{label}: {amount}'**
+  String organisationOverviewCardLine(String label, String amount);
+
   /// #4007 Column of the overview: the house's country
   ///
   /// In en, this message translates to:
