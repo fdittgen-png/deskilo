@@ -52535,11 +52535,41 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #4068 Note under the balance tile when the balance is positive (a credit).
+  ///
+  /// In en, this message translates to:
+  /// **'Credit: this amount is in your favour'**
+  String get statementDeskBalanceCredit;
+
+  /// #4068 Note under the balance tile when the balance is negative (owed).
+  ///
+  /// In en, this message translates to:
+  /// **'Owed: you owe this amount'**
+  String get statementDeskBalanceOwed;
+
+  /// #4068 Note under the balance tile when the balance is zero.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled: nothing is owed'**
+  String get statementDeskBalanceSettled;
+
   /// #3627 Column header of the month's statement lines at the desk.
   ///
   /// In en, this message translates to:
   /// **'Line'**
   String get statementDeskColLine;
+
+  /// #4068 Shown in place of the lines table when the month has no line beyond the subscription and the payments the tiles already show.
+  ///
+  /// In en, this message translates to:
+  /// **'No other movements this month: the figures above are the whole statement.'**
+  String get statementDeskNoMovements;
+
+  /// #4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month.
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}'**
+  String statementDeskUsed(int used, int allowance);
 
   /// #934 workspace status / repartition wizard: statusAwaiting
   ///

@@ -32694,7 +32694,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceYoursNow => 'Reserved by you for this slot.';
 
   @override
+  String get statementDeskBalanceCredit =>
+      'Credit: this amount is in your favour';
+
+  @override
+  String get statementDeskBalanceOwed => 'Owed: you owe this amount';
+
+  @override
+  String get statementDeskBalanceSettled => 'Settled: nothing is owed';
+
+  @override
   String get statementDeskColLine => 'Line';
+
+  @override
+  String get statementDeskNoMovements =>
+      'No other movements this month: the figures above are the whole statement.';
+
+  @override
+  String statementDeskUsed(int used, int allowance) {
+    String _temp0 = intl.Intl.pluralLogic(
+      allowance,
+      locale: localeName,
+      other: '$allowance half-days',
+      one: '1 half-day',
+    );
+    return '$used of $_temp0';
+  }
 
   @override
   String get statusAwaiting => 'Awaiting';

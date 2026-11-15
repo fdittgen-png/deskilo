@@ -15,6 +15,22 @@ import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/statement.dart';
 
+/// The one line under the balance: owed, a credit, or settled — by the
+/// statement's own sign rule (negative is owed), the figure itself unchanged.
+String _balanceNote(AppLocalizations l, int balanceCents) => balanceCents < 0
+    ? l.statementDeskBalanceOwed
+    : balanceCents > 0
+    ? l.statementDeskBalanceCredit
+    : l.statementDeskBalanceSettled;
+
+/// Whether the month has a line the tiles do not already show: the
+/// subscription and the payments and credits are tiles of their own.
+bool _hasMovements(List<StatementLine> lines) => lines.any(
+  (line) =>
+      line.kind != StatementLineKind.subscription &&
+      line.kind != StatementLineKind.credits,
+);
+
 /// What a line of the month is, and the tile it belongs to.
 enum StatementLineKind { subscription, overage, supplement, credits }
 
@@ -98,18 +114,19 @@ class _StatementDeskState extends State<StatementDesk> {
             KpiTile(
               label: l.bookReportBalance,
               figure: money.formatMinor(s.balanceCents),
+              note: _balanceNote(l, s.balanceCents),
               figureKey: const ValueKey('statement-desk-balance'),
             ),
             KpiTile(
               label: l.entitlementTitle,
-              figure: '${s.usedHalfDays} / $allowance',
+              figure: l.statementDeskUsed(s.usedHalfDays, allowance),
               figureKey: const ValueKey('statement-desk-used'),
               tapKey: const ValueKey('statement-desk-tile-overage'),
               onTap: () => _choose(StatementLineKind.overage),
             ),
             KpiTile(
               label: l.ledgerCategorySubscription,
-              figure: money.formatMinor(s.feeCents),
+              figure: money.formatMinor(-s.feeCents),
               tapKey: const ValueKey('statement-desk-tile-subscription'),
               onTap: () => _choose(StatementLineKind.subscription),
             ),
@@ -123,7 +140,16 @@ class _StatementDeskState extends State<StatementDesk> {
         ),
         const SizedBox(height: dashboardGap * 2),
         Expanded(
-          child: RecordsTable<StatementLine>(
+          child: !_hasMovements(lines)
+              ? Center(
+                  child: Text(
+                    l.statementDeskNoMovements,
+                    key: const ValueKey('statement-desk-no-movements'),
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
+                )
+              : RecordsTable<StatementLine>(
             key: const ValueKey('statement-desk-lines'),
             tableId: 'statement-lines',
             rows: shown,

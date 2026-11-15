@@ -32969,7 +32969,32 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spaceYoursNow => 'Reservado por usted para esta franja.';
 
   @override
+  String get statementDeskBalanceCredit =>
+      'A favor: este importe es a su favor';
+
+  @override
+  String get statementDeskBalanceOwed => 'Debido: usted debe este importe';
+
+  @override
+  String get statementDeskBalanceSettled => 'Saldado: no se debe nada';
+
+  @override
   String get statementDeskColLine => 'Línea';
+
+  @override
+  String get statementDeskNoMovements =>
+      'Ningún otro movimiento este mes: las cifras de arriba son todo el extracto.';
+
+  @override
+  String statementDeskUsed(int used, int allowance) {
+    String _temp0 = intl.Intl.pluralLogic(
+      allowance,
+      locale: localeName,
+      other: '$allowance medias jornadas',
+      one: '1 media jornada',
+    );
+    return '$used de $_temp0';
+  }
 
   @override
   String get statusAwaiting => 'Pendiente';

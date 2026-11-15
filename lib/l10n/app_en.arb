@@ -42493,9 +42493,37 @@
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
+  "statementDeskBalanceCredit": "Credit: this amount is in your favour",
+  "@statementDeskBalanceCredit": {
+    "description": "#4068 Note under the balance tile when the balance is positive (a credit)."
+  },
+  "statementDeskBalanceOwed": "Owed: you owe this amount",
+  "@statementDeskBalanceOwed": {
+    "description": "#4068 Note under the balance tile when the balance is negative (owed)."
+  },
+  "statementDeskBalanceSettled": "Settled: nothing is owed",
+  "@statementDeskBalanceSettled": {
+    "description": "#4068 Note under the balance tile when the balance is zero."
+  },
   "statementDeskColLine": "Line",
   "@statementDeskColLine": {
     "description": "#3627 Column header of the month's statement lines at the desk."
+  },
+  "statementDeskNoMovements": "No other movements this month: the figures above are the whole statement.",
+  "@statementDeskNoMovements": {
+    "description": "#4068 Shown in place of the lines table when the month has no line beyond the subscription and the payments the tiles already show."
+  },
+  "statementDeskUsed": "{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}",
+  "@statementDeskUsed": {
+    "description": "#4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month.",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "allowance": {
+        "type": "int"
+      }
+    }
   },
   "statusAwaiting": "Awaiting",
   "@statusAwaiting": {

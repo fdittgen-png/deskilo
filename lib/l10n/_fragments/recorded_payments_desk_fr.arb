@@ -3,5 +3,10 @@
   "recordedPaymentsColMatched": "Rapproché le",
   "statementDeskColLine": "Ligne",
   "usageColBilled": "Facturé",
-  "moneyReportsForMonth": "Rapports de {month}"
+  "moneyReportsForMonth": "Rapports de {month}",
+  "statementDeskUsed": "{used} sur {allowance, plural, one{1 demi-journée} other{{allowance} demi-journées}}",
+  "statementDeskBalanceOwed": "Dû : vous devez ce montant",
+  "statementDeskBalanceCredit": "Avoir : ce montant est en votre faveur",
+  "statementDeskBalanceSettled": "Soldé : rien n'est dû",
+  "statementDeskNoMovements": "Aucun autre mouvement ce mois-ci : les chiffres ci-dessus forment tout le relevé."
 }
