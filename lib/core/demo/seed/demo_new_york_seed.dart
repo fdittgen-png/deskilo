@@ -132,7 +132,7 @@ void seedNewYorkPeople(FakeWorkspaceRepository space) {
 /// #4009 -- what New York states for sales tax, one jurisdiction each (the
 /// parts of the city's published combined 8.875 %): the state, the city and
 /// the commuter district.
-const demoNewYorkSalesTaxJurisdictions =
+const _jurisdictions =
     <({String level, String name, double percent})>[
       (level: 'state', name: 'New York State', percent: 4),
       (level: 'city', name: 'New York City', percent: 4.5),
@@ -162,7 +162,7 @@ List<SalesTaxReturnRow> demoNewYorkSalesTaxReturn(
   if (inPeriod.isEmpty) return const [];
   final base = inPeriod.fold<int>(0, (sum, i) => sum + i.netCents);
   final taxes = [
-    for (final j in demoNewYorkSalesTaxJurisdictions)
+    for (final j in _jurisdictions)
       (base * j.percent / 100).round(),
   ];
   return [
@@ -177,9 +177,9 @@ List<SalesTaxReturnRow> demoNewYorkSalesTaxReturn(
       SalesTaxReturnRow(
         state: 'NY',
         line: SalesTaxLine.tax,
-        level: demoNewYorkSalesTaxJurisdictions[k].level,
-        name: demoNewYorkSalesTaxJurisdictions[k].name,
-        percent: demoNewYorkSalesTaxJurisdictions[k].percent,
+        level: _jurisdictions[k].level,
+        name: _jurisdictions[k].name,
+        percent: _jurisdictions[k].percent,
         baseCents: base,
         taxCents: taxes[k],
         invoiceCount: inPeriod.length,
