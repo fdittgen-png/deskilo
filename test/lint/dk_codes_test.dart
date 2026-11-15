@@ -12,6 +12,9 @@ import 'lint_sources.dart';
 /// Codes the app does not read, each with its reason. A name here must be
 /// raised by some migration and read by no app file.
 const _notForTheApp = <String, String>{
+  'DKP02':
+      'the app offers no plan to add to a room since plans are retired '
+      '(#4042); a room keeps the plans it named already',
   'DKI02':
       'a dry-run marker: create_invoice_readiness raises it inside its '
       'own block and catches it there (0416)',

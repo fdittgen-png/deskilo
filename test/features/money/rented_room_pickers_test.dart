@@ -75,11 +75,12 @@ Future<FakeRoomRentalRepository> _open(WidgetTester tester) async {
 }
 
 void main() {
-  testWidgets('a plan and two members are the rental audience', (tester) async {
+  testWidgets('two members are the rental audience; no plan is offered (#4042)', (
+    tester,
+  ) async {
     final repo = await _open(tester);
-    await tester.ensureVisible(find.text('Also open to these plans'));
-    await tester.tap(find.byKey(const ValueKey('room-rent-plan-plan-flex')));
-    await tester.pump();
+    expect(find.byKey(const ValueKey('room-rent-plan-plan-flex')), findsNothing);
+    expect(find.text('Also open to these plans'), findsNothing);
     for (final name in ['Ada Lovelace', 'Bo Peep']) {
       await tester.ensureVisible(
         find.byKey(const ValueKey('room-rent-member-add')),
@@ -97,9 +98,7 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('room-rent-save')));
     await _settle(tester);
     final loft = (await repo.fetchOverview('ws')).rentals.last;
-    expect(loft.audience.map((e) => e.planId).whereType<String>(), [
-      'plan-flex',
-    ]);
+    expect(loft.audience.map((e) => e.planId).whereType<String>(), isEmpty);
     expect(loft.audience.map((e) => e.memberId).whereType<String>().toSet(), {
       'm-ada',
       'm-bo',
