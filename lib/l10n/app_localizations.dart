@@ -43044,6 +43044,12 @@ abstract class AppLocalizations {
   /// **'This changed in the meantime. Reopen it to see where it stands.'**
   String get refusalChangedMeanwhile;
 
+  /// #4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member
+  ///
+  /// In en, this message translates to:
+  /// **'A member who left comes back as a new member: set them active to welcome them back.'**
+  String get refusalMemberReturnsAsNew;
+
   /// #2332: refusalMoneyLocaleLocked
   ///
   /// In en, this message translates to:

@@ -35153,6 +35153,10 @@
   "@refusalChangedMeanwhile": {
     "description": "#1305 Shown when an invoice changed state before the action reached the server"
   },
+  "refusalMemberReturnsAsNew": "A member who left comes back as a new member: set them active to welcome them back.",
+  "@refusalMemberReturnsAsNew": {
+    "description": "#4008 Refusal DKM01: a member who left cannot be paused or otherwise changed back; setting them active brings them back as a new member"
+  },
   "refusalMoneyLocaleLocked": "The currency and the country are fixed once this space has issued a document or recorded money. Nothing was saved.",
   "@refusalMoneyLocaleLocked": {
     "description": "#2332: refusalMoneyLocaleLocked"

@@ -27044,6 +27044,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Das hat sich inzwischen geändert. Öffnen Sie es erneut, um den aktuellen Stand zu sehen.';
 
   @override
+  String get refusalMemberReturnsAsNew =>
+      'Ein ausgetretenes Mitglied kommt als neues Mitglied zurück: Setzen Sie es auf aktiv, um es wieder aufzunehmen.';
+
+  @override
   String get refusalMoneyLocaleLocked =>
       'Währung und Land stehen fest, sobald dieser Space ein Dokument ausgestellt oder Geld erfasst hat. Es wurde nichts gespeichert.';
 
