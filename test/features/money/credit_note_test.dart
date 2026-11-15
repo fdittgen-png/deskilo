@@ -9,7 +9,7 @@ import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../helpers/screens/invoices.dart' show closeInvoicePage, invoicingRow, openInvoice, pumpInvoices, seededMoney;
+import '../../helpers/screens/invoices.dart' show closeInvoicePage, invoicingRow, openInvoice, openInvoicingTodo, pumpInvoices, seededMoney;
 
 void main() {
   testWidgets(
@@ -23,6 +23,7 @@ void main() {
 
     // #3587 — the home's To do names the refund to pay out; the credit
     // note's sheet offers no reminder and no member-payment match.
+    await openInvoicingTodo(tester); // #4059
     final refund = find.byKey(const ValueKey('invoicing-todo-payOutRefunds'));
     expect(refund, findsOneWidget);
     await openInvoice(tester, invoice.id);

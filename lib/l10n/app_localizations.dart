@@ -27101,6 +27101,12 @@ abstract class AppLocalizations {
   /// **'{customers} · {invoices}'**
   String invoicingCountLine(String customers, String invoices);
 
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingCreditAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'credit {amount}'**
+  String invoicingCreditAmount(String amount);
+
   /// #3587 how many customers
   ///
   /// In en, this message translates to:
@@ -27473,6 +27479,12 @@ abstract class AppLocalizations {
   /// **'Payment received · to match'**
   String get invoicingStatusToMatch;
 
+  /// #4059 — the compact summary's count of to-dos: invoicingSummaryToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{nothing to review} one{1 to review} other{{count} to review}}'**
+  String invoicingSummaryToReview(int count);
+
   /// #3587 the To do card's heading
   ///
   /// In en, this message translates to:
@@ -27491,11 +27503,11 @@ abstract class AppLocalizations {
   /// **'Issue drafts'**
   String get invoicingTodoDrafts;
 
-  /// #3587 a To do entry's button for a failure
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoFixRejected.
   ///
   /// In en, this message translates to:
-  /// **'Fix'**
-  String get invoicingTodoFix;
+  /// **'Fix the e-invoices'**
+  String get invoicingTodoFixRejected;
 
   /// #3853 To do: the action that keeps the originals, in turn
   ///
@@ -27539,11 +27551,17 @@ abstract class AppLocalizations {
   /// **'Share reminders by hand'**
   String get invoicingTodoReminders;
 
-  /// #3587 a To do entry's button
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoReviewMonth.
   ///
   /// In en, this message translates to:
-  /// **'Review'**
-  String get invoicingTodoReview;
+  /// **'Review {month}'**
+  String invoicingTodoReviewMonth(String month);
+
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoShareReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Share reminders'**
+  String get invoicingTodoShareReminders;
 
   /// invoicing hub vs my finances
   ///
