@@ -19,6 +19,7 @@ import '../../application/receivables.dart';
 import '../../domain/invoice_line_text.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_actions.dart';
+import '../invoice_original_document.dart';
 import '../invoice_proforma.dart';
 import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
@@ -285,6 +286,13 @@ class InvoiceMoreMenu extends ConsumerWidget {
         l.invoicePageMoreShare,
         _run(context, ref, sheet.InvoiceAction.sharePdf),
       ),
+      // #3853 — today's copy with the payment status, never the original.
+      if (invoice.keepsOriginal)
+        (
+          'invoice-more-copy-payment-status',
+          l.invoiceCopyWithPaymentStatus,
+          () => downloadInvoiceCopyWithPaymentStatus(context, ref, invoice),
+        ),
       if (eu)
         (
           'invoice-more-einvoice',

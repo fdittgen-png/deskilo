@@ -35,7 +35,7 @@ import '../providers/invoice_original_providers.dart';
 import '../providers/money_providers.dart';
 import 'e_invoice_identity.dart';
 import 'invoice_documents.dart';
-import 'invoice_pdf_actions.dart' show invoiceShareOptions;
+import 'invoice_pdf_actions.dart' show invoiceShareOptions, savePdfToDownloads;
 import 'report_layout_actions.dart';
 
 /// Where the bytes of an invoice's document come from.
@@ -239,4 +239,28 @@ Future<void> keepInvoiceOriginals(
   if (notKept > 0 && context.mounted) {
     AppSnack.info(context, context.l10n.invoiceOriginalsNotKeptNow(notKept));
   }
+}
+
+/// #3853 — today's copy of [invoice] with its payment status: rendered now,
+/// stamped as a copy and with the paid stamp, saved for the person who asks.
+/// It is never stored or sent as the original.
+Future<void> downloadInvoiceCopyWithPaymentStatus(
+  BuildContext context,
+  WidgetRef ref,
+  Invoice invoice,
+) async {
+  await readDocumentPolicies(ref);
+  if (!context.mounted) return;
+  final made = await buildInvoicePdfFile(
+    context,
+    invoice,
+    invoiceShareOptions(context, ref, invoice, const [], copy: true),
+  );
+  if (!context.mounted) return;
+  await savePdfToDownloads(
+    context,
+    ref,
+    bytes: Uint8List.fromList(made.bytes),
+    fileName: made.fileName,
+  );
 }

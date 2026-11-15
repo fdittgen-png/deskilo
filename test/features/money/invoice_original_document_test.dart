@@ -245,6 +245,69 @@ void main() {
     expect(await store.originalOf(invoice.id), isNull);
   });
 
+  testWidgets('a member who reads first gets the copy that says the business '
+      'has not kept the original yet; after the issuer\'s flow, the original', (
+    tester,
+  ) async {
+    final (money, invoice) = await _issued();
+    money.invoices[0] = invoice;
+    final store = _store();
+    final before = await _open(
+      tester,
+      invoice: invoice,
+      money: money,
+      store: store,
+      mayIssue: false,
+    );
+    expect(before.source, InvoiceDocumentSource.notYetKept);
+    // the issuer's flow right after issue, without a tap
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          ...standardTestOverrides(money: money, workspace: _business()),
+          testReadyWorkspaceContext(),
+          currentWorkspaceProvider.overrideWith(
+            (ref) async => _business().workspaces.single,
+          ),
+          invoiceOriginalRepositoryProvider.overrideWithValue(store),
+          myPermissionsProvider.overrideWithValue({
+            WorkspacePermission.issueInvoices,
+          }),
+        ],
+        child: MaterialApp(
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          supportedLocales: AppLocalizations.supportedLocales,
+          home: Scaffold(
+            body: Consumer(
+              builder: (context, ref, _) => TextButton(
+                key: const ValueKey('keep'),
+                onPressed: () =>
+                    keepInvoiceOriginals(context, ref, [invoice.id]),
+                child: const Text('keep'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pump();
+    await tester.runAsync(() async {
+      await tester.tap(find.byKey(const ValueKey('keep')));
+      await untilReal(
+        () => store.originalOf(invoice.id).then((o) => o != null),
+        what: 'the original kept by the issuer\'s flow',
+      );
+    });
+    final after = await _open(
+      tester,
+      invoice: invoice,
+      money: money,
+      store: store,
+      mayIssue: false,
+    );
+    expect(after.source, InvoiceDocumentSource.original);
+  });
+
   testWidgets('a PDF larger than the store keeps gives a copy that says so', (
     tester,
   ) async {
