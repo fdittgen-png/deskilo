@@ -79,6 +79,82 @@ class FakeSalesTaxRepository implements SalesTaxRepository {
 
 typedef _Entry = ({String id, InvoiceVatTotal total});
 
+int _base(Iterable<_Entry> v) => v.fold(0, (a, e) => a + e.total.netCents);
+
+int _count(Iterable<_Entry> v) => {for (final e in v) e.id}.length;
+
+SalesTaxReturnRow _plain(String state, SalesTaxLine line, List<_Entry> v) =>
+    SalesTaxReturnRow(
+      state: state,
+      line: line,
+      baseCents: _base(v),
+      taxCents: 0,
+      invoiceCount: _count(v),
+    );
+
+/// The taxed sales of a state and the tax collected on them, then the tax of
+/// each jurisdiction its invoices froze, in the order of its name.
+List<SalesTaxReturnRow> _taxedRows(String state, List<_Entry> taxed) {
+  final byJurisdiction =
+      <(String, String, double), List<({String id, VatComponent c})>>{};
+  for (final e in taxed) {
+    for (final c in e.total.components) {
+      (byJurisdiction[(c.level, c.name, c.percent)] ??= []).add((
+        id: e.id,
+        c: c,
+      ));
+    }
+  }
+  final keys = byJurisdiction.keys.toList()
+    ..sort((a, b) => a.$2.compareTo(b.$2));
+  return [
+    SalesTaxReturnRow(
+      state: state,
+      line: SalesTaxLine.taxable,
+      baseCents: _base(taxed),
+      taxCents: taxed.fold(0, (a, e) => a + e.total.vatCents),
+      invoiceCount: _count(taxed),
+    ),
+    for (final key in keys)
+      SalesTaxReturnRow(
+        state: state,
+        line: SalesTaxLine.tax,
+        level: key.$1,
+        name: key.$2,
+        percent: key.$3,
+        baseCents: byJurisdiction[key]!.fold(0, (a, e) => a + e.c.baseCents),
+        taxCents: byJurisdiction[key]!.fold(0, (a, e) => a + e.c.taxCents),
+        invoiceCount: {for (final e in byJurisdiction[key]!) e.id}.length,
+      ),
+  ];
+}
+
+/// One state's rows: taxed, then exempt by statute, by certificate, then
+/// outside the tax; a kind none of the invoices froze has no row.
+List<SalesTaxReturnRow> _stateRows(String state, List<_Entry> mine) {
+  List<_Entry> of(String category, [String basis = '']) => [
+    for (final e in mine)
+      if (e.total.category == category &&
+          (basis.isEmpty ||
+              (e.total.exemptionBasis.isEmpty
+                      ? 'statute'
+                      : e.total.exemptionBasis) ==
+                  basis))
+        e,
+  ];
+  final taxed = of('S');
+  final statute = of('E', 'statute');
+  final certificate = of('E', 'certificate');
+  final outside = of('O');
+  return [
+    if (taxed.isNotEmpty) ..._taxedRows(state, taxed),
+    if (statute.isNotEmpty) _plain(state, SalesTaxLine.exemptStatute, statute),
+    if (certificate.isNotEmpty)
+      _plain(state, SalesTaxLine.exemptCertificate, certificate),
+    if (outside.isNotEmpty) _plain(state, SalesTaxLine.outside, outside),
+  ];
+}
+
 /// The sales-tax return of `[start, end]` stated from [invoices] as the
 /// server's `sales_tax_return` does (0439): the invoices issued in the period
 /// and not voided, their totals that froze a jurisdiction, per state the taxed
@@ -99,85 +175,12 @@ List<SalesTaxReturnRow> salesTaxReturnOf(
         for (final t in i.vatTotals)
           if (t.isSalesTax) (id: i.id, total: t),
   ];
-  int base(Iterable<_Entry> v) => v.fold(0, (a, e) => a + e.total.netCents);
-  int count(Iterable<_Entry> v) => {for (final e in v) e.id}.length;
-  SalesTaxReturnRow plain(
-    String state,
-    SalesTaxLine line,
-    Iterable<_Entry> v,
-  ) => SalesTaxReturnRow(
-    state: state,
-    line: line,
-    baseCents: base(v),
-    taxCents: 0,
-    invoiceCount: count(v),
-  );
-  final rows = <SalesTaxReturnRow>[];
   final states = {for (final e in entries) e.total.state}.toList()..sort();
-  for (final state in states) {
-    final mine = [
-      for (final e in entries)
-        if (e.total.state == state) e,
-    ];
-    final taxed = mine.where((e) => e.total.category == 'S').toList();
-    if (taxed.isNotEmpty) {
-      rows.add(
-        SalesTaxReturnRow(
-          state: state,
-          line: SalesTaxLine.taxable,
-          baseCents: base(taxed),
-          taxCents: taxed.fold(0, (a, e) => a + e.total.vatCents),
-          invoiceCount: count(taxed),
-        ),
-      );
-      final byJurisdiction =
-          <(String, String, double), List<({String id, VatComponent c})>>{};
-      for (final e in taxed) {
-        for (final c in e.total.components) {
-          (byJurisdiction[(c.level, c.name, c.percent)] ??= []).add((
-            id: e.id,
-            c: c,
-          ));
-        }
-      }
-      final keys = byJurisdiction.keys.toList()
-        ..sort((a, b) => a.$2.compareTo(b.$2));
-      for (final key in keys) {
-        final v = byJurisdiction[key]!;
-        rows.add(
-          SalesTaxReturnRow(
-            state: state,
-            line: SalesTaxLine.tax,
-            level: key.$1,
-            name: key.$2,
-            percent: key.$3,
-            baseCents: v.fold(0, (a, e) => a + e.c.baseCents),
-            taxCents: v.fold(0, (a, e) => a + e.c.taxCents),
-            invoiceCount: {for (final e in v) e.id}.length,
-          ),
-        );
-      }
-    }
-    for (final (basis, line) in const [
-      ('statute', SalesTaxLine.exemptStatute),
-      ('certificate', SalesTaxLine.exemptCertificate),
-    ]) {
-      final exempt = mine
-          .where(
-            (e) =>
-                e.total.category == 'E' &&
-                (e.total.exemptionBasis.isEmpty
-                        ? 'statute'
-                        : e.total.exemptionBasis) ==
-                    basis,
-          )
-          .toList();
-      if (exempt.isNotEmpty) rows.add(plain(state, line, exempt));
-    }
-    final outside = mine.where((e) => e.total.category == 'O').toList();
-    if (outside.isNotEmpty) {
-      rows.add(plain(state, SalesTaxLine.outside, outside));
-    }
-  }
-  return rows;
+  return [
+    for (final state in states)
+      ..._stateRows(state, [
+        for (final e in entries)
+          if (e.total.state == state) e,
+      ]),
+  ];
 }
