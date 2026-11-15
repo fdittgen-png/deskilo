@@ -244,12 +244,12 @@ class _InvoicingHomeState extends State<InvoicingHome> {
                     // #4059 — one compact block; the to-do list opens under it.
                     InvoicingSummaryStrip(
                       owed: owedOf(data.receivables, data.today),
-                      toReview: _todos().length,
-                      toReviewOpen: _todoOpen,
-                      onOverdue: () =>
-                          _choose(InvoicingFilter.of(OwedBucket.overdue)),
-                      onToReview: () =>
-                          setState(() => _todoOpen = !_todoOpen),
+                      toDo: _todos().length,
+                      toDoOpen: _todoOpen,
+                      filter: filter,
+                      onFilter: _choose,
+                      onToDo: () => setState(() => _todoOpen = !_todoOpen),
+                      monthFigures: _monthFigures(context),
                     ),
                     if (_todoOpen) ...[
                       const SizedBox(height: AppSpacing.sm),
@@ -319,17 +319,6 @@ class _InvoicingHomeState extends State<InvoicingHome> {
       OwedBucket.overdue: l.invoicingOwedOverdue,
     };
     final owed = owedOf(data.receivables, data.today);
-    final month = monthOf(
-      data.receivables,
-      data.today,
-      received: data.received,
-    );
-    List<String> values(Tally t) => t.byCurrency.isEmpty
-        ? [format.moneyIn(data.currency).formatMinor(0)]
-        : [
-            for (final e in t.byCurrency.entries)
-              format.moneyIn(e.key).formatMinor(e.value),
-          ];
     OwedBlock block(OwedInCurrency o) {
       final money = format.moneyIn(o.currency);
       return (
@@ -366,19 +355,41 @@ class _InvoicingHomeState extends State<InvoicingHome> {
               ),
             ]
           : [for (final o in owed) block(o)],
-      figures: [
-        (
-          label: l.invoicingInvoicedIn(data.month),
-          values: values(month.invoiced),
-        ),
-        // No figure is shown that was not read.
-        if (!data.failed.contains(InvoicingSource.payments))
-          (
-            label: l.invoicingReceivedIn(data.month),
-            values: values(month.received),
-          ),
-      ],
+      figures: _monthFigures(context),
     );
+  }
+
+  /// The month's figures: invoiced, and received when the payments were
+  /// read. #4059 — the debt card's and the summary strip's alike.
+  List<({String label, List<String> values})> _monthFigures(
+    BuildContext context,
+  ) {
+    final l = context.l10n;
+    final data = widget.data;
+    final format = appFormatOf(context);
+    final month = monthOf(
+      data.receivables,
+      data.today,
+      received: data.received,
+    );
+    List<String> values(Tally t) => t.byCurrency.isEmpty
+        ? [format.moneyIn(data.currency).formatMinor(0)]
+        : [
+            for (final e in t.byCurrency.entries)
+              format.moneyIn(e.key).formatMinor(e.value),
+          ];
+    return [
+      (
+        label: l.invoicingInvoicedIn(data.month),
+        values: values(month.invoiced),
+      ),
+      // No figure is shown that was not read.
+      if (!data.failed.contains(InvoicingSource.payments))
+        (
+          label: l.invoicingReceivedIn(data.month),
+          values: values(month.received),
+        ),
+    ];
   }
 
   /// The to-dos waiting, as the To do card and the summary count them.

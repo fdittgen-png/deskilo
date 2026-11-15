@@ -18,6 +18,8 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
+import '../../helpers/screens/invoices.dart'
+    show invoicingOwedFigures, openInvoicingTodo;
 
 final _today = DateTime(2026, 11, 10);
 
@@ -126,7 +128,7 @@ void main() {
     await _pump(tester, _data(failed: {InvoicingSource.payments}));
 
     expect(find.byKey(const ValueKey('invoicing-failed-payments')), findsOne);
-    expect(find.byKey(const ValueKey('invoicing-owed')), findsOne);
+    expect(invoicingOwedFigures, findsOne);
     expect(find.byKey(const ValueKey('invoicing-list')), findsOne);
   });
 
@@ -242,6 +244,7 @@ void main() {
       'offered and the entry says it is checking', (tester) async {
     final opened = <TodoKind>[];
     await _pump(tester, _data(creditsKnown: false), onTodo: opened.add);
+    await openInvoicingTodo(tester); // #4059
 
     expect(find.text('Checking received payments…'), findsOne);
     final entry = find.byKey(const ValueKey('invoicing-todo-shareReminders'));
@@ -270,6 +273,7 @@ void main() {
       'the reminders by hand open their queue', (tester) async {
     final opened = <TodoKind>[];
     await _pump(tester, _data(), onTodo: opened.add);
+    await openInvoicingTodo(tester); // #4059
     final l = AppLocalizations.of(tester.element(find.byType(InvoicingHome)))!;
     final todo = todoOf(_sample, mode: ReminderMode.byHand);
     expect(

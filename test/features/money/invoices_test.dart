@@ -54,6 +54,7 @@ FakeWorkspaceRepository _reader() {
 
 /// #3587 — the To do's "Invoice {month}" entry: the month's flow.
 Future<void> openTheMonth(WidgetTester tester) async {
+  await openInvoicingTodo(tester); // #4059
   final entry = find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth'));
   await tester.ensureVisible(entry);
   await tester.tap(entry);
@@ -950,7 +951,7 @@ void main() {
 
     // #3587 — the home: the invoice is owed and on the open list;
     // remind and match from its sheet.
-    expect(find.byKey(const ValueKey('invoicing-owed')), findsOneWidget);
+    expect(invoicingOwedFigures, findsOneWidget);
     final row = await invoicingRow(tester, invoice.id);
     expect(row, findsOneWidget);
     expect(find.byKey(const ValueKey('invoicing-filter-open')), findsOneWidget);
@@ -1113,11 +1114,8 @@ void main() {
     // page over the home: closed first.
     await closeInvoicePage(tester);
     expect(
-      find.byWidgetPredicate((w) =>
-          w.key is ValueKey<String> &&
-          (w.key! as ValueKey<String>).value.startsWith('invoicing-owed-') &&
-          (w.key! as ValueKey<String>).value.endsWith('-toConfirm')),
-      findsOneWidget,
+      owedBucketShown(tester, 'toConfirm'),
+      isTrue,
       reason: 'the pending match awaits validation',
     );
     await openInvoice(tester, invoice.id);

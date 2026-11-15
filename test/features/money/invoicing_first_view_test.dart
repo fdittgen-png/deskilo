@@ -3,6 +3,8 @@
 // #4059 — below desk width the invoicing home sums up in one compact block,
 // so its first customer starts inside the first view; each to-do's button
 // names its task; a negative amount is named, never a bare minus.
+import 'dart:ui' show Tristate;
+
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
@@ -57,6 +59,30 @@ void main() {
         lessThan(tester.getRect(home).bottom),
         reason: 'the first customer is in the first view',
       );
+      // The month's figures stay, under the cells.
+      expect(
+        find.byKey(const ValueKey('invoicing-summary-month')),
+        findsOneWidget,
+      );
+      // Not yet due is reachable: a chip of the list.
+      expect(
+        find.byKey(const ValueKey('invoicing-filter-notYetDue')),
+        findsOneWidget,
+      );
+      // A chosen cell is marked by more than colour and announced as such.
+      final overdue = find.byKey(const ValueKey('invoicing-summary-overdue'));
+      final semantics = tester.ensureSemantics();
+      await tester.tap(overdue);
+      await tester.pumpAndSettle();
+      expect(
+        find.descendant(of: overdue, matching: find.byIcon(Icons.check)),
+        findsOneWidget,
+      );
+      expect(
+        tester.getSemantics(overdue).flagsCollection.isSelected,
+        Tristate.isTrue,
+      );
+      semantics.dispose();
     });
   }
 

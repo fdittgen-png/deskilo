@@ -1,10 +1,14 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4059 — below desk width, what the invoicing home sums up is one compact
-// block: the amount due, the part of it overdue, and what is to review,
-// each with its count and its amounts side by side per currency (never
-// added across currencies). The first records then start in the first view.
-// Overdue chooses the overdue filter; To review opens the to-do list.
+// block: the amount due, the part of it to confirm, the part overdue, and
+// what is to do, each with its count and its amounts side by side per
+// currency (never added across currencies). The first records then start in
+// the first view. Amount due clears the filter, To confirm and Overdue
+// choose theirs, To do opens the to-do list under the strip. Where four
+// cells do not fit one row they wrap to two rows of two: no text shrinks
+// and no label is cut. Not by the window's height: a layout that follows the
+// height would change while the list loads.
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/format_controller.dart';
@@ -13,74 +17,144 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/kit/kit_card.dart';
 import '../../application/receivables.dart';
 import '../../application/receivables_answers.dart';
+import 'invoicing_list.dart';
 import 'invoicing_words.dart';
+
+/// The narrowest a cell is laid out at: a label and an amount on a line.
+// content-fit: "Amount due" and a five-figure amount at text 1.0
+const double _cellMin = 150;
 
 class InvoicingSummaryStrip extends StatelessWidget {
   const InvoicingSummaryStrip({
     required this.owed,
-    required this.toReview,
-    required this.onOverdue,
-    required this.onToReview,
-    required this.toReviewOpen,
+    required this.toDo,
+    required this.filter,
+    required this.onFilter,
+    required this.onToDo,
+    required this.toDoOpen,
+    required this.monthFigures,
     super.key,
   });
+
+  /// The month's figures (invoiced, and received when it was read), as the
+  /// debt card says them: one plain line under the cells.
+  final List<({String label, List<String> values})> monthFigures;
 
   /// What is owed, one entry per currency.
   final List<OwedInCurrency> owed;
 
   /// The to-dos waiting, counted.
-  final int toReview;
-  final VoidCallback onOverdue;
-  final VoidCallback onToReview;
+  final int toDo;
+
+  /// The list's filter now: its cell is marked.
+  final InvoicingFilter filter;
+  final ValueChanged<InvoicingFilter> onFilter;
+  final VoidCallback onToDo;
 
   /// Whether the to-do list is open under the strip.
-  final bool toReviewOpen;
+  final bool toDoOpen;
+
+  Tally _tally(OwedBucket? bucket) => Tally(
+    owed.fold(
+      0,
+      (sum, o) =>
+          sum +
+          (bucket == null
+              ? o.buckets.values.fold(0, (s, b) => s + b.count)
+              : o.buckets[bucket]?.count ?? 0),
+    ),
+    {
+      for (final o in owed)
+        if (bucket == null ? o.totalMinor : o.buckets[bucket]?.minor ?? 0
+            case final minor when minor != 0)
+          o.currency: minor,
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
     final format = appFormatOf(context);
-    Tally tally(
-      int Function(OwedInCurrency o) minor,
-      int Function(OwedInCurrency o) count,
-    ) => Tally(owed.fold(0, (sum, o) => sum + count(o)), {
-      for (final o in owed)
-        if (minor(o) != 0) o.currency: minor(o),
-    });
-    final due = tally(
-      (o) => o.totalMinor,
-      (o) => o.buckets.values.fold(0, (sum, b) => sum + b.count),
-    );
-    final overdue = tally(
-      (o) => o.buckets[OwedBucket.overdue]?.minor ?? 0,
-      (o) => o.buckets[OwedBucket.overdue]?.count ?? 0,
-    );
+    Widget money(String key, String label, OwedBucket? bucket) {
+      final tally = _tally(bucket);
+      final own = bucket == null
+          ? InvoicingFilter.open
+          : InvoicingFilter.of(bucket);
+      return _Cell(
+        key: ValueKey('invoicing-summary-$key'),
+        id: key,
+        label: label,
+        count: l.invoicingInvoiceCount(tally.count),
+        countKey: ValueKey('invoicing-summary-$key-count-${tally.count}'),
+        amounts: amountsOf(format, tally),
+        selected: filter == own,
+        onTap: () => onFilter(own),
+      );
+    }
+
     return KitCard(
       key: const ValueKey('invoicing-summary'),
+      child: LayoutBuilder(
+        builder: (context, box) {
+          final columns = box.maxWidth >= 4 * _cellMin + 3 * AppSpacing.sm
+              ? 4
+              : 2;
+          final width =
+              (box.maxWidth - (columns - 1) * AppSpacing.sm) / columns;
+          final cells = Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.sm,
+            children: [
+              for (final cell in [
+                money('due', l.invoicingOwed, null),
+                money('confirm', l.journeyStageConfirm, OwedBucket.toConfirm),
+                money('overdue', l.invoicingOwedOverdue, OwedBucket.overdue),
+                _Cell(
+                  key: const ValueKey('invoicing-summary-review'),
+                  id: 'review',
+                  label: l.invoicingTodo,
+                  count: l.invoicingSummaryToReview(toDo),
+                  selected: toDoOpen,
+                  onTap: toDo == 0 ? null : onToDo,
+                ),
+              ])
+                SizedBox(width: width, child: cell),
+            ],
+          );
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              cells,
+              const SizedBox(height: AppSpacing.sm),
+              _MonthLine(figures: monthFigures),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+/// The month's figures on one line that wraps rather than cuts, read by a
+/// screen reader as one sentence; not a control.
+class _MonthLine extends StatelessWidget {
+  const _MonthLine({required this.figures});
+
+  final List<({String label, List<String> values})> figures;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return MergeSemantics(
       child: Wrap(
-        spacing: AppSpacing.lg,
-        runSpacing: AppSpacing.sm,
+        key: const ValueKey('invoicing-summary-month'),
+        spacing: AppSpacing.sm,
+        runSpacing: AppSpacing.xs,
         children: [
-          _Cell(
-            key: const ValueKey('invoicing-summary-due'),
-            label: l.invoicingOwed,
-            count: l.invoicingInvoiceCount(due.count),
-            amounts: amountsOf(format, due),
-          ),
-          _Cell(
-            key: const ValueKey('invoicing-summary-overdue'),
-            label: l.invoicingOwedOverdue,
-            count: l.invoicingInvoiceCount(overdue.count),
-            amounts: amountsOf(format, overdue),
-            onTap: overdue.count == 0 ? null : onOverdue,
-          ),
-          _Cell(
-            key: const ValueKey('invoicing-summary-review'),
-            label: l.invoicingTodo,
-            count: l.invoicingSummaryToReview(toReview),
-            onTap: toReview == 0 ? null : onToReview,
-            open: toReviewOpen,
-          ),
+          for (final f in figures) ...[
+            Text(f.label, style: theme.textTheme.bodySmall),
+            Text(f.values.join(' · '), style: theme.textTheme.labelLarge),
+          ],
         ],
       ),
     );
@@ -89,56 +163,76 @@ class InvoicingSummaryStrip extends StatelessWidget {
 
 class _Cell extends StatelessWidget {
   const _Cell({
+    required this.id,
     required this.label,
     required this.count,
+    required this.selected,
+    this.countKey,
     this.amounts = '',
     this.onTap,
-    this.open,
     super.key,
   });
 
+  /// Names the cell (`invoicing-summary-<id>`) and its tap.
+  final String id;
   final String label;
   final String count;
-  final String amounts;
-  final VoidCallback? onTap;
 
-  /// For a cell that opens something below: whether it is open.
-  final bool? open;
+  /// The count's key, which names the number it says.
+  final Key? countKey;
+  final String amounts;
+
+  /// Marked by a check and a border, and announced as selected.
+  final bool selected;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final body = Padding(
-      padding: const EdgeInsets.all(AppSpacing.xs),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label, style: theme.textTheme.labelMedium),
-          if (amounts.isNotEmpty)
-            Text(amounts, style: theme.textTheme.titleSmall),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(count, style: theme.textTheme.bodySmall),
-              if (open case final isOpen?)
-                Icon(isOpen ? Icons.expand_less : Icons.expand_more, size: 18),
-            ],
+    final scheme = theme.colorScheme;
+    return Semantics(
+      selected: selected,
+      button: onTap != null,
+      child: Material(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(AppSpacing.sm),
+          side: BorderSide(
+            color: selected ? scheme.primary : scheme.outlineVariant,
+            width: selected ? 2 : 1,
           ),
-        ],
+        ),
+        clipBehavior: Clip.antiAlias,
+        color: Colors.transparent,
+        child: InkWell(
+          key: ValueKey('invoicing-summary-$id-tap'),
+          onTap: onTap,
+          child: ConstrainedBox(
+            constraints: const BoxConstraints(
+              minHeight: kMinInteractiveDimension,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(AppSpacing.sm),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(label, style: theme.textTheme.labelMedium),
+                      ),
+                      if (selected) const Icon(Icons.check, size: 18),
+                    ],
+                  ),
+                  if (amounts.isNotEmpty)
+                    Text(amounts, style: theme.textTheme.titleSmall),
+                  Text(count, key: countKey, style: theme.textTheme.bodySmall),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
-    final tap = onTap;
-    return tap == null
-        ? body
-        : InkWell(
-            onTap: tap,
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(
-                minHeight: kMinInteractiveDimension,
-              ),
-              child: body,
-            ),
-          );
   }
 }
