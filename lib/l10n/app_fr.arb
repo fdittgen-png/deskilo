@@ -5118,9 +5118,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Ajouté le",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Public",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Groupe",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Retirer le document ?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Modifier la visibilité",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "Aucun document. Liez vos statuts, guides et états depuis n'importe quel drive.",
   "@documentsEmpty": {

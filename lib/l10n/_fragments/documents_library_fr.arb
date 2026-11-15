@@ -1,0 +1,19 @@
+{
+  "@@locale": "fr",
+  "documentsColGroup": "Groupe",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
+  "documentsColAudience": "Public",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColAdded": "Ajouté le",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsEditAudience": "Modifier la visibilité",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
+  }
+}

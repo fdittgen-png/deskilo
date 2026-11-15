@@ -82,6 +82,10 @@ abstract class WorkspaceIdentityRepository {
   /// Admin/owner: delete a library document.
   Future<void> deleteDocument(String documentId);
 
+  /// Admin/owner: change who sees a library document ('member', 'admin' or
+  /// 'owner').
+  Future<void> setDocumentAudience(String documentId, String minRole);
+
   /// Owner-only (workspaces_update RLS): set the workspace's language
   /// (0096, e.g. 'fr'); '' clears it.
   Future<void> setWorkspaceLanguage(String workspaceId, String locale);

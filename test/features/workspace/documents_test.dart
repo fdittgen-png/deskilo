@@ -14,6 +14,13 @@ import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
 
+/// Bounded pumps: the table and its menus settle in a few frames.
+Future<void> _settle(WidgetTester tester) async {
+  for (var i = 0; i < 8; i++) {
+    await tester.pump(const Duration(milliseconds: 100));
+  }
+}
+
 Future<(FakeWorkspaceRepository, List<Uri>)> pumpDocuments(
   WidgetTester tester, {
   FakeWorkspaceRepository? workspace,
@@ -34,10 +41,10 @@ Future<(FakeWorkspaceRepository, List<Uri>)> pumpDocuments(
       child: const DeskiloApp(),
     ),
   );
-  await tester.pumpAndSettle();
+  await _settle(tester);
   final context = tester.element(find.byType(Scaffold).first);
   unawaited(GoRouter.of(context).push('/documents'));
-  await tester.pumpAndSettle();
+  await _settle(tester);
   return (repo, launched);
 }
 
@@ -57,8 +64,7 @@ WorkspaceDocument doc(String id, String title,
 
 void main() {
   testWidgets(
-      'documents group by category, open through the link seam, and '
-      'carry the provider branding (#500)', (tester) async {
+      'documents name their group, open through the link seam (#500)', (tester) async {
     final repo = FakeWorkspaceRepository.withWorkspace()
       ..documents.addAll([
         doc('d1', 'Statuts 2026',
@@ -69,11 +75,9 @@ void main() {
 
     expect(find.text('Statutes & legal'), findsOneWidget);
     expect(find.text('Financial statements'), findsOneWidget);
-    expect(find.text('Google Drive'), findsOneWidget);
-    expect(find.text('OneDrive'), findsOneWidget);
 
     await tester.tap(find.text('Statuts 2026'));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     expect(launched.single.toString(), 'https://example.org/d1');
   });
 
@@ -102,17 +106,17 @@ void main() {
     final (repo, _) = await pumpDocuments(tester);
 
     await tester.tap(find.byKey(const ValueKey('documents-add')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.enterText(
         find.byKey(const ValueKey('document-title')), 'AG Protokoll');
     await tester.enterText(find.byKey(const ValueKey('document-url')),
         'https://drive.example/x');
     await tester.tap(find.byKey(const ValueKey('document-role')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.text('Admins and owners').last);
-    await tester.pumpAndSettle();
+    await _settle(tester);
     await tester.tap(find.byKey(const ValueKey('document-save')));
-    await tester.pumpAndSettle();
+    await _settle(tester);
 
     final saved = repo.documents.single;
     expect(saved.title, 'AG Protokoll');
@@ -120,4 +124,146 @@ void main() {
     expect(saved.minRole, 'admin');
   });
 
+  Finder rowMenu(String id) => find.descendant(
+        of: find.byKey(ValueKey('records-row-$id')),
+        matching: find.byKey(const ValueKey('records-action-more')),
+      );
+
+  testWidgets(
+      '#4070 Add document is a labelled button in the bar, and every row '
+      'says its audience', (tester) async {
+    final repo = FakeWorkspaceRepository.withWorkspace()
+      ..documents.addAll([
+        doc('d1', 'House rules'),
+        doc('d2', 'Board only', minRole: 'admin'),
+        doc('d3', 'Owner secrets', minRole: 'owner'),
+      ]);
+    await pumpDocuments(tester, workspace: repo);
+
+    final add = find.byKey(const ValueKey('documents-add'));
+    expect(add, findsOneWidget);
+    expect(
+      find.descendant(of: add, matching: find.text('Add a document')),
+      findsOneWidget,
+    );
+    expect(find.byType(FloatingActionButton), findsNothing);
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-row-d1')),
+        matching: find.text('Every member'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-row-d2')),
+        matching: find.text('Admins and owners'),
+      ),
+      findsOneWidget,
+    );
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-row-d3')),
+        matching: find.text('Owners only'),
+      ),
+      findsOneWidget,
+    );
+    expect(find.byIcon(Icons.delete_outline), findsNothing);
+  });
+
+  testWidgets(
+      '#4070 the row menu holds Open, Edit audience and Delete; Delete '
+      'still asks', (tester) async {
+    final repo = FakeWorkspaceRepository.withWorkspace()
+      ..documents.addAll([doc('d1', 'House rules'), doc('d2', 'Fire plan')]);
+    final (_, launched) = await pumpDocuments(tester, workspace: repo);
+
+    await tester.tap(rowMenu('d1'));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('records-action-open')), findsOneWidget);
+    expect(
+        find.byKey(const ValueKey('records-action-audience')), findsOneWidget);
+    expect(find.byKey(const ValueKey('records-action-delete')), findsOneWidget);
+
+    await tester.tap(find.byKey(const ValueKey('records-action-open')));
+    await _settle(tester);
+    expect(launched.single.toString(), 'https://example.org/d1');
+
+    // Delete asks; cancelling keeps the row.
+    await tester.tap(rowMenu('d1'));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('records-action-delete')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('document-delete-confirm')),
+        findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('documents-cancel-2')));
+    await _settle(tester);
+    expect(repo.documents.length, 2);
+
+    await tester.tap(rowMenu('d1'));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('records-action-delete')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('document-delete-confirm')));
+    await _settle(tester);
+    expect(repo.documents.map((d) => d.id), ['d2']);
+  });
+
+  testWidgets('#4070 Edit audience changes who sees the document',
+      (tester) async {
+    final repo = FakeWorkspaceRepository.withWorkspace()
+      ..documents.add(doc('d1', 'House rules'));
+    await pumpDocuments(tester, workspace: repo);
+
+    await tester.tap(rowMenu('d1'));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('records-action-audience')));
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('document-audience-edit')));
+    await _settle(tester);
+    await tester.tap(find.text('Owners only').last);
+    await _settle(tester);
+    await tester.tap(find.byKey(const ValueKey('document-audience-save')));
+    await _settle(tester);
+
+    expect(repo.documents.single.minRole, 'owner');
+    expect(
+      find.descendant(
+        of: find.byKey(const ValueKey('records-row-d1')),
+        matching: find.text('Owners only'),
+      ),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('#4070 a member only opens; the menu has no curation',
+      (tester) async {
+    final repo = FakeWorkspaceRepository.withWorkspace()
+      ..documents.add(doc('d1', 'House rules'));
+    repo.myMember = repo.myMember.copyWith(isOwner: false, isAdmin: false);
+    await pumpDocuments(tester, workspace: repo);
+
+    await tester.tap(rowMenu('d1'));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('records-action-open')), findsOneWidget);
+    expect(find.byKey(const ValueKey('records-action-audience')), findsNothing);
+    expect(find.byKey(const ValueKey('records-action-delete')), findsNothing);
+  });
+
+  testWidgets('#4070 on a phone the row is a card with the same menu',
+      (tester) async {
+    final repo = FakeWorkspaceRepository.withWorkspace()
+      ..documents.add(doc('d1', 'House rules', minRole: 'admin'));
+    await pumpDocuments(tester, workspace: repo);
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    await _settle(tester);
+
+    expect(find.text('Admins and owners'), findsOneWidget);
+    await tester.tap(find.byKey(const ValueKey('document-menu-d1-more')));
+    await _settle(tester);
+    expect(find.byKey(const ValueKey('document-menu-d1-audience')),
+        findsOneWidget);
+    expect(find.byKey(const ValueKey('document-menu-d1-delete')),
+        findsOneWidget);
+  });
 }

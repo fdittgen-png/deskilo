@@ -8336,7 +8336,19 @@ class AppLocalizationsIt extends AppLocalizations {
   String get documentsCategoryStatutes => 'Statuto e legale';
 
   @override
+  String get documentsColAdded => 'Aggiunto';
+
+  @override
+  String get documentsColAudience => 'Visibile a';
+
+  @override
+  String get documentsColGroup => 'Gruppo';
+
+  @override
   String get documentsDelete => 'Rimuovere il documento?';
+
+  @override
+  String get documentsEditAudience => 'Modifica la visibilità';
 
   @override
   String get documentsEmpty =>
