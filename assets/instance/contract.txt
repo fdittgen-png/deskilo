@@ -2779,7 +2779,7 @@ routine public.issue_my_badge(p_workspace_id uuid, p_label text) -> jsonb | func
 routine public.issuing_gate_of(p_country text) -> jsonb | function | definer | stable | exec:service_role | body:3f66c6bb9542
 routine public.issuing_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:817af7b50436
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad163de0b3f1
-routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8c5d5fe02470
+routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:b5fbc20f13c7
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
 routine public.jurisdiction_removal_facts_installation_v1(p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:147ea81a7e33
 routine public.jurisdiction_removal_facts_of(p_workspace_id uuid, p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:50e9fafb2f07
@@ -3015,6 +3015,7 @@ routine public.member_profile_projection(p_subject uuid, p_purposes text[], p_vi
 routine public.member_profile_purposes(p_workspace uuid, p_subject uuid) -> text[] | function | definer | stable | exec:service_role | body:60fbc840b60d
 routine public.member_profiles(p_workspace_id uuid, p_user_ids uuid[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d0cab9b779f4
 routine public.member_quota_shortfall(p_member_id uuid, p_at timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:eb514affa38f
+routine public.member_return_as_new(p_member uuid) -> void | function | definer | volatile | exec:service_role | body:81f2780625ef
 routine public.member_rows_rebalance_credits() -> trigger | function | definer | volatile | exec:service_role | body:ce0cc1f9212d
 routine public.member_share_as_of(p_member_id uuid, p_day date, p_current integer) -> integer | function | definer | stable | exec:service_role | body:6f723e876a8f
 routine public.member_share_at_once(p_member_id uuid, p_pct integer, p_actor uuid, p_event uuid) -> jsonb | function | definer | volatile | exec:service_role | body:baa772f7536b
@@ -3335,7 +3336,7 @@ routine public.reorder_levels(p_workspace_id uuid, p_level_ids uuid[], p_expecte
 routine public.replace_fee_bands(p_workspace_id uuid, p_bands jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:5dab0722816c
 routine public.report_image_names(p_workspace_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:0d0dafdd6573
 routine public.request_guest_visit(p_workspace_id uuid, p_site_id uuid, p_starts_at timestamp with time zone, p_ends_at timestamp with time zone, p_client_request_id uuid, p_message text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:50e24d8f05cb
-routine public.request_house_membership(p_house uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fcc87ecebe4e
+routine public.request_house_membership(p_house uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ef4040d74590
 routine public.request_invoice_issue(p_workspace_id uuid, p_member_id uuid, p_period text, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:497bbdf8767a
 routine public.request_invoice_issue_v1(p_workspace_id uuid, p_member_id uuid, p_period text, p_request_id uuid, p_kind text, p_detailed boolean, p_allow_zero boolean, p_buyer_reference text, p_purchase_order text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:16ccdcd46131
 routine public.request_invoice_void(p_invoice_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:45f6b7cdf8e6
