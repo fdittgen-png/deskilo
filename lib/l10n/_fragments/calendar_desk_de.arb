@@ -26,5 +26,6 @@
   "bookingPriceSubscription": "Abo",
   "bookingPriceOverage": "Zusätzlicher Halbtag",
   "calendarDeskRangeLabel": "Zeitraum",
-  "calendarDeskViewLabel": "Ansicht"
+  "calendarDeskViewLabel": "Ansicht",
+  "calendarDecisionsEntry": "{count, plural, one{Entscheidungen ({count})} other{Entscheidungen ({count})}}"
 }

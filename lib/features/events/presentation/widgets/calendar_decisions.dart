@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../app/shell/shell_destinations.dart';
+import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/event_providers.dart';
@@ -16,17 +17,32 @@ import 'pending_decisions_section.dart';
 /// The Calendar badge counts exactly these, so tapping the badge opens the
 /// content it counts. Nothing pending, or the bell still on: nothing here.
 class CalendarDecisions extends ConsumerWidget {
-  const CalendarDecisions({super.key});
+  const CalendarDecisions({super.key, this.openAlerts});
+
+  /// #4055 — on a phone, where the calendar's own controls come first: the
+  /// decisions are one row, "Decisions (n)", that calls this to open the
+  /// Alerts view. None (at the desk, or where the calendar has no Alerts
+  /// view), they stay listed here.
+  final VoidCallback? openAlerts;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final features = ref.watch(enabledFeaturesSyncProvider);
     if (!decisionSignalOnCalendar(features)) return const SizedBox.shrink();
+    final open = openAlerts;
     // #4017 — a failed read is said in the section's place, with Retry;
     // never "nothing to decide".
     final section = switch (ref.watch(myPendingEventsProvider)) {
       AsyncValue(hasValue: true, :final value?) when value.isNotEmpty =>
-        PendingDecisionsSection(pending: value, recorded: true),
+        open != null
+            ? ListTile(
+                key: const ValueKey('calendar-decisions-entry'),
+                leading: const Icon(Icons.how_to_vote_outlined),
+                title: Text(context.l10n.calendarDecisionsEntry(value.length)),
+                trailing: const Icon(Icons.chevron_right),
+                onTap: open,
+              )
+            : PendingDecisionsSection(pending: value, recorded: true),
       AsyncValue(hasValue: false, :final error?) => ReadFailureBanner(
         error: error,
         onRetry: () => ref.invalidate(myPendingEventsProvider),

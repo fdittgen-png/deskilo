@@ -587,6 +587,7 @@ const Set<String> uiKeys = {
   'calendar-alerts-view',
   'calendar-cancel-following',
   'calendar-date-button',
+  'calendar-decisions-entry',
   'calendar-empty-line',
   'calendar-feed',
   'calendar-file-cancel',

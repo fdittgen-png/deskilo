@@ -3475,6 +3475,7 @@
     "description": "#718/#719 - calendar hub"
   },
   "calendarDayEmpty": "Niente in questo giorno.",
+  "calendarDecisionsEntry": "{count, plural, one{Decisioni ({count})} other{Decisioni ({count})}}",
   "calendarDeskAll": "Tutti",
   "calendarDeskBooking": "Dettagli della prenotazione",
   "calendarDeskColumnFrom": "Dal",
