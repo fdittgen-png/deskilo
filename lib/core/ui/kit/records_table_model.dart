@@ -26,6 +26,7 @@ class RecordColumn<T> {
     this.hideable = true,
     this.staysBeside = true,
     this.shownFrom = WindowClass.compact,
+    this.sample,
   });
 
   /// Stable, for the column choice kept on the device.
@@ -54,6 +55,12 @@ class RecordColumn<T> {
   /// the others (an amount is never cut). A column that may not be hidden
   /// is always drawn.
   final WindowClass shownFrom;
+
+  /// #4035 — the widest value the column holds when it is one word a person
+  /// reads whole (a date, a code): the column is never narrower than it, so
+  /// the word is not broken across lines. Headings need none: the table
+  /// measures them.
+  final String? sample;
 }
 
 /// The columns drawn: those the person has not hidden and the table has
@@ -78,6 +85,73 @@ List<RecordColumn<T>> columnsShown<T>(
       if (c.staysBeside || !c.hideable) c,
   ];
   return staying.isEmpty ? chosen : staying;
+}
+
+/// The columns of [columns] that fit [available] wide, given each one's
+/// narrowest width [mins] (by id): while they do not, the least needed goes
+/// (#4035) — the one a wider window shows later (`shownFrom`), then the
+/// right-most; a column that may not be hidden stays. The order is kept.
+List<RecordColumn<T>> columnsFitting<T>(
+  List<RecordColumn<T>> columns,
+  Map<String, double> mins,
+  double available,
+) {
+  final kept = [...columns];
+  double need() => kept.fold(0.0, (sum, c) => sum + (mins[c.id] ?? 0));
+  while (need() > available) {
+    RecordColumn<T>? drop;
+    for (final c in kept) {
+      if (!c.hideable) continue;
+      if (drop == null || c.shownFrom.index >= drop.shownFrom.index) drop = c;
+    }
+    if (drop == null) break;
+    kept.remove(drop);
+  }
+  return kept;
+}
+
+/// The width of each of [columns] in [available], or null while every
+/// column's share by flex already holds its narrowest width [mins] (the
+/// table lays out by flex alone, as it always did). Otherwise a column whose
+/// share is too narrow takes its narrowest width and the others share what is
+/// left by flex: the sum is [available] (#4035).
+List<double>? recordColumnWidths<T>(
+  List<RecordColumn<T>> columns,
+  Map<String, double> mins,
+  double available,
+) {
+  double min(RecordColumn<T> c) => mins[c.id] ?? 0;
+  final fixed = <RecordColumn<T>>{};
+  var changed = true;
+  while (changed) {
+    changed = false;
+    final free = [
+      for (final c in columns)
+        if (!fixed.contains(c)) c,
+    ];
+    final flex = free.fold<int>(0, (sum, c) => sum + c.flex);
+    final room = available - fixed.fold(0.0, (sum, c) => sum + min(c));
+    if (flex == 0) break;
+    for (final c in free) {
+      if (room * c.flex / flex < min(c) - 0.01) {
+        fixed.add(c);
+        changed = true;
+      }
+    }
+  }
+  if (fixed.isEmpty) return null;
+  final flex = columns.fold<int>(
+    0,
+    (sum, c) => sum + (fixed.contains(c) ? 0 : c.flex),
+  );
+  final room = (available - fixed.fold(0.0, (sum, c) => sum + min(c)))
+      .clamp(0.0, double.infinity);
+  double widthOf(RecordColumn<T> c) {
+    if (fixed.contains(c)) return min(c);
+    return flex == 0 ? 0 : room * c.flex / flex;
+  }
+
+  return [for (final c in columns) widthOf(c)];
 }
 
 /// One action on a row, declared once: the ⋯ button, the secondary click
