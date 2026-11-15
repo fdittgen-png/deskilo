@@ -159,6 +159,20 @@ mixin SupabaseWorkspaceIdentity on SupabaseWorkspaceRows
   }
 
   @override
+  Future<void> setDocumentAudience(String documentId, String minRole) async {
+    final changed = await client
+        .from('workspace_documents')
+        .update({'min_role': minRole})
+        .eq('id', documentId)
+        .select('id');
+    // A refused or vanished row changes nothing and raises nothing: say so,
+    // or the page would report a change that did not happen.
+    if (changed.isEmpty) {
+      throw StateError('the document audience was not changed');
+    }
+  }
+
+  @override
   Future<void> setWorkspaceLanguage(String workspaceId, String locale) async {
     // Owner-only via workspaces_update RLS; 0096 caps at 5 chars.
     await updateWorkspaceRow(workspaceId, {'default_locale': locale.trim()});

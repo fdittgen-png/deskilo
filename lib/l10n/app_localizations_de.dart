@@ -8354,7 +8354,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get documentsCategoryStatutes => 'Satzung & Rechtliches';
 
   @override
+  String get documentsColAdded => 'Hinzugefügt';
+
+  @override
+  String get documentsColAudience => 'Sichtbar für';
+
+  @override
+  String get documentsColGroup => 'Gruppe';
+
+  @override
   String get documentsDelete => 'Dokument entfernen?';
+
+  @override
+  String get documentsEditAudience => 'Sichtbarkeit ändern';
 
   @override
   String get documentsEmpty =>

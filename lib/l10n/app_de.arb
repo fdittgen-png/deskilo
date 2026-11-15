@@ -5118,9 +5118,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Hinzugefügt",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Sichtbar für",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Gruppe",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Dokument entfernen?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Sichtbarkeit ändern",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "Noch kein Dokument. Verlinken Sie Satzung, Anleitungen und Berichte aus jedem Drive.",
   "@documentsEmpty": {
