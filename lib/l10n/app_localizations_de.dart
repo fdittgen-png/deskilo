@@ -11762,13 +11762,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Einraum-Etagen nach der Etage benennen';
 
   @override
-  String get featureSiteDocuments => 'Standorte auf Belegen';
-
-  @override
-  String get featureSiteDocumentsDesc =>
-      'Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg.';
-
-  @override
   String get featureSpaceInquiriesDesc =>
       'Eine angemeldete Person, die die veröffentlichte Seite findet, kann den Gastgebern schreiben: den Eigentümern und den Administratoren, die öffentliche Kontakte sein wollen. Die Gastgeber werden vor dem Schreiben genannt, und nur diese Person und die Gastgeber lesen das Gespräch. Aus entfernt die Schaltfläche und die Ansicht Anfragen, sodass niemand eine neue Anfrage beginnt; offene bleiben im Posteingang der Gastgeber, um sie zu beantworten und zu schließen.';
 

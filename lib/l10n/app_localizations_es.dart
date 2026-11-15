@@ -11737,13 +11737,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Nombrar por la planta una planta de una sola sala';
 
   @override
-  String get featureSiteDocuments => 'Sedes en los documentos';
-
-  @override
-  String get featureSiteDocumentsDesc =>
-      'Los documentos nombran la sede a la que se refieren: la dirección y el registro de la sede de referencia del socio como vendedor, y las demás sedes utilizadas en el mes en el detalle. Desactivado: la dirección del espacio en todos los documentos.';
-
-  @override
   String get featureSpaceInquiriesDesc =>
       'Una persona con sesión iniciada que encuentra la página publicada puede escribir a los anfitriones: los propietarios y los administradores que eligieron ser contactos públicos. Los anfitriones se nombran antes de escribir, y solo esa persona y los anfitriones leen la conversación. Desactivado, desaparecen el botón y la vista Consultas, así que nadie abre una consulta nueva; las abiertas siguen en la bandeja de los anfitriones para responderlas y cerrarlas.';
 

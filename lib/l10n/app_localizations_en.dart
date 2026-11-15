@@ -11657,13 +11657,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'Name a single-room level by the level';
 
   @override
-  String get featureSiteDocuments => 'Sites on documents';
-
-  @override
-  String get featureSiteDocumentsDesc =>
-      'Documents name the site they concern: the member\'s home site\'s address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document.';
-
-  @override
   String get featureSpaceInquiriesDesc =>
       'A signed-in person who finds the published page can write to the hosts: the owners, and the administrators who chose to be public contacts. The hosts are named before anyone writes, and only that person and the hosts read the conversation. Off removes the button and the Inquiries view, so nobody starts a new inquiry; open ones stay in the hosts\' inbox to answer and close.';
 

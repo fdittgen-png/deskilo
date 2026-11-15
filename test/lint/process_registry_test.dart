@@ -48,7 +48,7 @@ void main() {
   });
   test('internal classification requires a reason', () {
     expect(validateProcessRegistry(workspaceProcesses,
-      internal: {WorkspaceFeature.siteDocuments: ''}).join(),
-      contains('siteDocuments: internal reason missing'));
+      internal: {WorkspaceFeature.personalShell: ''}).join(),
+      contains('personalShell: internal reason missing'));
   });
 }

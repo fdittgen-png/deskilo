@@ -11744,13 +11744,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Chiamare con il piano un piano a stanza unica';
 
   @override
-  String get featureSiteDocuments => 'Sedi sui documenti';
-
-  @override
-  String get featureSiteDocumentsDesc =>
-      'I documenti indicano la sede interessata: l\'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l\'indirizzo dello spazio su tutti i documenti.';
-
-  @override
   String get featureSpaceInquiriesDesc =>
       'Una persona connessa che trova la pagina pubblicata può scrivere agli host: i proprietari e gli amministratori che hanno scelto di essere contatti pubblici. Gli host vengono nominati prima di scrivere, e solo quella persona e gli host leggono la conversazione. Disattivato, il pulsante e la vista Richieste scompaiono, quindi nessuno apre una nuova richiesta; quelle aperte restano nella posta degli host per rispondere e chiuderle.';
 
