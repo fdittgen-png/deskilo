@@ -19,7 +19,7 @@ import '../../domain/workspace_document.dart';
 import '../screens/documents_screen.dart' show DocumentsScreen;
 
 /// Who may read a document, as words on a tint: said on every row.
-Widget audienceChip(AppLocalizations l10n, String minRole) => StatusChip(
+Widget _audienceChip(AppLocalizations l10n, String minRole) => StatusChip(
   key: ValueKey('document-audience-$minRole'),
   label: audienceName(l10n, minRole),
   tone: minRole == 'member' ? StatusTone.neutral : StatusTone.warn,
@@ -35,7 +35,7 @@ String audienceName(AppLocalizations l10n, String minRole) => switch (minRole) {
 /// #2327 — the shelf a document is listed under. A category this app does
 /// not know (an older or newer client wrote it) is listed under "other"
 /// rather than not at all: a library with rows must never render blank.
-String documentShelf(WorkspaceDocument d) =>
+String _documentShelf(WorkspaceDocument d) =>
     WorkspaceDocument.categories.contains(d.category) ? d.category : 'other';
 
 /// The library's rows.
@@ -133,15 +133,15 @@ class DocumentsTable extends StatelessWidget {
           id: 'group',
           label: l10n.documentsColGroup,
           flex: 3,
-          sortKey: documentShelf,
+          sortKey: _documentShelf,
           cell: (_, d) =>
-              Text(DocumentsScreen.categoryName(l10n, documentShelf(d))),
+              Text(DocumentsScreen.categoryName(l10n, _documentShelf(d))),
         ),
         RecordColumn(
           id: 'audience',
           label: l10n.documentsColAudience,
           flex: 3,
-          cell: (_, d) => audienceChip(l10n, d.minRole),
+          cell: (_, d) => _audienceChip(l10n, d.minRole),
         ),
         RecordColumn(
           id: 'added',
@@ -169,11 +169,11 @@ class DocumentsTable extends StatelessWidget {
           title: Text(d.title),
           subtitle: Text(
             [
-              DocumentsScreen.categoryName(l10n, documentShelf(d)),
+              DocumentsScreen.categoryName(l10n, _documentShelf(d)),
               if (added(d).isNotEmpty) added(d),
             ].join(' · '),
           ),
-          trailing: audienceChip(l10n, d.minRole),
+          trailing: _audienceChip(l10n, d.minRole),
         ),
       ),
     );
