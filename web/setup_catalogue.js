@@ -1361,7 +1361,6 @@ window.SETUP_PROCESSES=[
     "features": [
      "placeBooking",
      "multiSite",
-     "organisation",
      "planObjectDelete",
      "planDecor",
      "adminSeatBlocking"
@@ -1587,6 +1586,7 @@ window.SETUP_PROCESSES=[
     "features": [
      "workspaceStatus",
      "environmentPairs",
+     "organisation",
      "deployments",
      "configurationTransfer",
      "configurableSettings",
@@ -1728,8 +1728,7 @@ window.SETUP_LEVELS={
       "guestParticipation",
       "meetingRooms",
       "parking",
-      "externalRooms",
-      "organisation"
+      "externalRooms"
      ],
      "needs": {}
     },

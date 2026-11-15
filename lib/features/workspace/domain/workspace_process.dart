@@ -68,9 +68,6 @@ const workspaceProcesses = <WorkspaceProcess>[
       // #3550 — the places themselves: the parent of every place flag.
       WorkspaceFeature.placeBooking,
       WorkspaceFeature.multiSite,
-      // #4004 — beside the sites: another country or currency is a house,
-      // a business of its own in the organisation.
-      WorkspaceFeature.organisation,
       WorkspaceFeature.planObjectDelete,
       WorkspaceFeature.planDecor,
       WorkspaceFeature.adminSeatBlocking,
@@ -235,6 +232,9 @@ const workspaceProcesses = <WorkspaceProcess>[
     WorkspaceSubprocess('configuration', [
       WorkspaceFeature.workspaceStatus,
       WorkspaceFeature.environmentPairs,
+      // #4004 — beside the twins: the businesses a customer runs, each
+      // country or currency a house of its own in the organisation.
+      WorkspaceFeature.organisation,
       WorkspaceFeature.deployments,
       WorkspaceFeature.configurationTransfer,
       // #2484 — beside the other ways an administrator shapes the workspace.

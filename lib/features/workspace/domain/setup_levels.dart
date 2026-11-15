@@ -85,8 +85,6 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.adminLevelAssign,
         WorkspaceFeature.adminSeatBlocking,
         WorkspaceFeature.multiSite,
-        // #4004 — beside the sites: a house abroad is a business of its own.
-        WorkspaceFeature.organisation,
         WorkspaceFeature.publicHolidays,
         WorkspaceFeature.holidayImport,
       },

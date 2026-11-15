@@ -178,6 +178,7 @@
         "pushNotifications": true,
         "qrBadges": false,
         "quickSearch": true,
+        "organisation": true,
         "recapitulativeStatement": false,
         "recordingPrivacy": false,
         "regionalFormats": true,
