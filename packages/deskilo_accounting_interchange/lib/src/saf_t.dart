@@ -49,6 +49,7 @@ String buildSafTFile(SafTRequest request) => SafTWriter(
   ledgerAccounts: request.ledgerAccounts,
   bookPostings: request.bookPostings,
   reference: request.reference,
+  journalCode: request.journalCode,
 ).write();
 
 /// #2492 — what one SAF-T file is built from.
@@ -65,6 +66,7 @@ class SafTRequest {
     this.profile = SafTProfile.generic,
     this.ledgerAccounts,
     this.bookPostings,
+    this.journalCode,
     required this.reference,
   });
 
@@ -101,6 +103,10 @@ class SafTRequest {
   /// #2365 — a local book's postings: the ledger section is the book's own
   /// entries, every journal, and [ledgerAccounts] is not asked for.
   final List<Posting>? bookPostings;
+
+  /// #3470 — the code the business's books give a journal; null: the
+  /// posting engine's own codes.
+  final String Function(PostingJournal journal)? journalCode;
 
   /// The tax reference the file is built on: the workspace's own.
   final TaxReferenceSet reference;

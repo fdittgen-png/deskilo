@@ -282,6 +282,7 @@
   "user.money.reminders.rules": "Reglas de recordatorio",
   "user.money.reminders.automatic": "Recordatorios automáticos",
   "user.invoicing.register": "El registro de facturas",
+  "user.money.accounting-journals": "Sus diarios contables",
   "user.invoicing.accounting-export": "Exportaciones contables",
   "user.invoicing.transfers": "Transferencias: el vínculo digital con su sistema contable",
   "user.invoicing.records-location": "Dónde se conservan los registros",

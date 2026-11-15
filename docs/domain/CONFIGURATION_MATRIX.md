@@ -60,6 +60,7 @@ configuration.
 | invoice_pdf_template | `workspaces.invoice_pdf_template` jsonb | B | yes | replace | #548 | `report_designer_test` |
 | invoice_legal, vat_regime, vat_id, legal_id, tax_exemption_reason, vat_account | `workspaces.*` | A | **no** — legal identity is the space's own | replace | — | `vat_regime_test` |
 | address, street, city, postal_code | `workspaces.*` | A | no — identity | replace | — | — |
+| accounting_journals | `workspaces.accounting_journals` jsonb | A | **no** — the codes of the business's own accountant, like the VAT account | replace | #3470 | `business_journals_test` |
 | default_locale | `workspaces.default_locale` | B | yes | replace | — | `workspace_language_test` |
 | paper | `workspaces.paper` | B | yes — empty follows the country; a paper the target's country does not allow leaves the target's own | replace | #3852 | `428_document_paper` |
 | document_language_confirmed | `workspaces.document_language_confirmed` | E | never — whether this space's administrator has confirmed the document language 0753 gave it; saving the language sets it | — | #3850 | `415_document_language` |

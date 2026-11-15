@@ -120,6 +120,11 @@ sealed class Workspace with _$Workspace implements SystemStamped, SpaceSide {
     /// app books nothing itself.
     @Default('') String vatAccount,
 
+    /// #3470 — the business's accounting journals as stored (`{role: {code,
+    /// label}}`); empty = the country add-on's defaults. Every accounting
+    /// export reads them through `accountingJournalsOf`.
+    @Default({}) Map<String, Object?> accountingJournals,
+
     /// The subscription tariff's VAT rate (#542, 0109) — fee bands and
     /// overage tax at this rate; '' = the workspace default rate.
     @Default('') String subscriptionVatRateId,

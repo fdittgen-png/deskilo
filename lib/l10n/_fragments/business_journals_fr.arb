@@ -1,0 +1,19 @@
+{
+  "accountingJournalsTitle": "Journaux comptables",
+  "accountingJournalsIntro": "Le code et le libellé de chaque journal, tels que le logiciel de votre comptable les connaît. Chaque export comptable de l'application les utilise.",
+  "accountingJournalSales": "Ventes",
+  "accountingJournalBank": "Banque",
+  "accountingJournalPurchases": "Achats",
+  "accountingJournalMisc": "Opérations diverses",
+  "accountingJournalCode": "Code",
+  "accountingJournalLabel": "Libellé",
+  "accountingJournalCodeRequired": "Saisissez un code.",
+  "accountingJournalLabelRequired": "Saisissez un libellé.",
+  "accountingJournalCharacter": "Pas de saut de ligne, de tabulation ni de | ici : les exports séparent leurs champs avec.",
+  "accountingJournalDuplicate": "Un autre journal a déjà ce code.",
+  "accountingJournalsDeliveries": "Les envois vers un logiciel comptable connecté utilisent toujours les codes standard.",
+  "accountingJournalsRenumber": "Un code modifié change aussi les numéros d'écriture d'une période exportée à nouveau.",
+  "accountingJournalsStandard": "Utiliser les codes standard",
+  "accountingJournalsNotAllowed": "Seul un propriétaire règle les journaux comptables.",
+  "accountingJournalsRefused": "Les journaux n'ont pas été enregistrés : vérifiez le journal {journal}."
+}

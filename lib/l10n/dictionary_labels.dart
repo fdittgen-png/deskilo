@@ -146,6 +146,7 @@ extension DictionaryLabels on AppLocalizations {
     'vat_treatment' => exportColumnNameVatTreatment,
     'voided_at' => exportColumnNameVoidedAt,
     'whatsapp' => whatsappTitle,
+    'accounting_journals' => accountingJournalsTitle,
     'width' => exportColumnNameWidth,
     'workspace_code' => exportColumnNameWorkspaceCode,
     'x' => exportColumnNameX,

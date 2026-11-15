@@ -1,0 +1,19 @@
+{
+  "accountingJournalsTitle": "Buchungsjournale",
+  "accountingJournalsIntro": "Code und Bezeichnung jedes Journals, so wie die Software Ihrer Steuerberatung sie kennt. Jeder Buchhaltungsexport der App verwendet sie.",
+  "accountingJournalSales": "Verkauf",
+  "accountingJournalBank": "Bank",
+  "accountingJournalPurchases": "Einkauf",
+  "accountingJournalMisc": "Sonstige Buchungen",
+  "accountingJournalCode": "Code",
+  "accountingJournalLabel": "Bezeichnung",
+  "accountingJournalCodeRequired": "Geben Sie einen Code ein.",
+  "accountingJournalLabelRequired": "Geben Sie eine Bezeichnung ein.",
+  "accountingJournalCharacter": "Kein Zeilenumbruch, Tabulator oder | hier: Die Exporte trennen ihre Felder damit.",
+  "accountingJournalDuplicate": "Ein anderes Journal hat diesen Code bereits.",
+  "accountingJournalsDeliveries": "Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.",
+  "accountingJournalsRenumber": "Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.",
+  "accountingJournalsStandard": "Standardcodes verwenden",
+  "accountingJournalsNotAllowed": "Nur ein Inhaber legt die Buchungsjournale fest.",
+  "accountingJournalsRefused": "Die Journale wurden nicht gespeichert: Prüfen Sie das Journal {journal}."
+}

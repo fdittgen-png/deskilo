@@ -5877,6 +5877,29 @@ Todas las facturas en una sola lista ordenable.
 
 **Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export)
 
+### Sus diarios contables
+
+**Público:** Propietario
+
+El programa de su gestor conoce sus diarios por sus propios códigos, y usted quiere que cada exportación los use.
+
+<!-- image: user-money-accounting-journals -->
+
+**Pasos**
+
+1. Abra [Contabilidad e IVA](app:/money/accounting) y pulse **Diarios contables**.
+2. Para **Ventas**, **Banco**, **Compras** y **Operaciones diversas**, introduzca el **Código** y la **Descripción** que usa su gestor.
+3. Pulse **Guardar**. **Usar los códigos estándar** vuelve a poner los códigos estándar del país.
+
+**Conviene saber**
+
+- Cada exportación contable de la aplicación los usa: el FEC, el diario genérico, los libros mayores SAF-T y los libros impresos.
+- Un código no tiene saltos de línea, tabuladores ni |, y dos diarios nunca comparten código; el formulario indica qué campo corregir.
+- Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.
+- Los envíos a un sistema contable conectado siguen usando los códigos estándar.
+
+**Véase también:** [Exportaciones contables](help:user.invoicing.accounting-export)
+
 ### Exportaciones contables
 
 **Público:** Propietario · Administrador/a de facturación

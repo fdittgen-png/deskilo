@@ -38,12 +38,16 @@ String _amount(AccountingAmount a) => a.minor == 0 ? '' : a.toDecimalString();
 /// The rows of [postings], one list per posting, in their order: entries
 /// numbered per journal (`VE-0001`, `BQ-0001`, ...), amounts in major units
 /// with a point, the tax code the rate group of a tax line.
-List<List<List<String>>> _postingRows(List<Posting> postings) {
+List<List<List<String>>> _postingRows(
+  List<Posting> postings,
+  String Function(PostingJournal journal)? journalCode,
+) {
   final next = <PostingJournal, int>{};
   final out = <List<List<String>>>[];
   for (final p in postings) {
     final n = next[p.journal] = (next[p.journal] ?? 0) + 1;
-    final number = '${p.journal.code}-${n.toString().padLeft(4, '0')}';
+    final code = journalCode?.call(p.journal) ?? p.journal.code;
+    final number = '$code-${n.toString().padLeft(4, '0')}';
     out.add([
       for (final l in p.lines)
         [
@@ -67,11 +71,16 @@ List<List<List<String>>> _postingRows(List<Posting> postings) {
 
 String _line(List<String> row) => row.map(csvCell).join(',');
 
-/// The journal of [envelope]'s postings, in their order.
-String buildGenericJournalCsv(AccountingInterchangeV1 envelope) {
+/// The journal of [envelope]'s postings, in their order; [journalCode] is
+/// the code the business's books give a journal (#3470), else the engine's.
+String buildGenericJournalCsv(
+  AccountingInterchangeV1 envelope, {
+  String Function(PostingJournal journal)? journalCode,
+}) {
   final rows = [
     _header,
-    for (final posting in _postingRows(envelope.postings)) ...posting,
+    for (final posting in _postingRows(envelope.postings, journalCode))
+      ...posting,
   ];
   return '${rows.map(_line).join('\r\n')}\r\n';
 }
@@ -80,8 +89,11 @@ String buildGenericJournalCsv(AccountingInterchangeV1 envelope) {
 /// (its kind, document and day), each with the sha256 of its own rows as
 /// the file writes them. A closed period written again gives the same
 /// digests, which is what lets a re-delivery change nothing.
-List<FileDocument> genericJournalDocuments(List<Posting> postings) {
-  final rows = _postingRows(postings);
+List<FileDocument> genericJournalDocuments(
+  List<Posting> postings, {
+  String Function(PostingJournal journal)? journalCode,
+}) {
+  final rows = _postingRows(postings, journalCode);
   final byEvent = <String, ({Posting first, StringBuffer text})>{};
   for (var i = 0; i < postings.length; i++) {
     final p = postings[i];

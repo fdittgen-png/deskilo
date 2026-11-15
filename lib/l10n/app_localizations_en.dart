@@ -250,6 +250,65 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingExportsTitle => 'Exports';
 
   @override
+  String get accountingJournalBank => 'Bank';
+
+  @override
+  String get accountingJournalCharacter =>
+      'No line break, tab or | here: the exports separate their fields with them.';
+
+  @override
+  String get accountingJournalCode => 'Code';
+
+  @override
+  String get accountingJournalCodeRequired => 'Enter a code.';
+
+  @override
+  String get accountingJournalDuplicate =>
+      'Another journal already has this code.';
+
+  @override
+  String get accountingJournalLabel => 'Label';
+
+  @override
+  String get accountingJournalLabelRequired => 'Enter a label.';
+
+  @override
+  String get accountingJournalMisc => 'Miscellaneous operations';
+
+  @override
+  String get accountingJournalPurchases => 'Purchases';
+
+  @override
+  String get accountingJournalSales => 'Sales';
+
+  @override
+  String get accountingJournalsDeliveries =>
+      'Deliveries to a connected accounting system still use the standard codes.';
+
+  @override
+  String get accountingJournalsIntro =>
+      'The code and label of each journal, as your accountant\'s software knows them. Every accounting export the app writes uses them.';
+
+  @override
+  String get accountingJournalsNotAllowed =>
+      'Only an owner sets the accounting journals.';
+
+  @override
+  String accountingJournalsRefused(String journal) {
+    return 'The journals were not saved: check the $journal journal.';
+  }
+
+  @override
+  String get accountingJournalsRenumber =>
+      'A changed code also changes the entry numbers of a period you export again.';
+
+  @override
+  String get accountingJournalsStandard => 'Use the standard codes';
+
+  @override
+  String get accountingJournalsTitle => 'Accounting journals';
+
+  @override
   String get accountingSignInBack => 'Back to Accounting';
 
   @override
