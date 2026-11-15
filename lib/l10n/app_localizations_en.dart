@@ -7564,6 +7564,35 @@ class AppLocalizationsEn extends AppLocalizations {
       'The demo is not available in this workspace.';
 
   @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries countries',
+      one: '$countries country',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies currencies',
+      one: '$currencies currency',
+    );
+    return 'This demo is one organisation: $organisation, with houses in $_temp0 and $_temp1. Each house keeps its own country\'s rules and its own currency; nothing is added across them.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Enter a house';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business is a business of its own, outside the organisation.';
+  }
+
+  @override
   String get demoPersonaAdmin => 'An administrator';
 
   @override

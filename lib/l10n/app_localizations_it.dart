@@ -7611,6 +7611,35 @@ class AppLocalizationsIt extends AppLocalizations {
       'La demo non è disponibile in questo spazio.';
 
   @override
+  String demoOrganisationBody(
+    String organisation,
+    int countries,
+    int currencies,
+  ) {
+    String _temp0 = intl.Intl.pluralLogic(
+      countries,
+      locale: localeName,
+      other: '$countries paesi',
+      one: '$countries paese',
+    );
+    String _temp1 = intl.Intl.pluralLogic(
+      currencies,
+      locale: localeName,
+      other: '$currencies valute',
+      one: '$currencies valuta',
+    );
+    return 'Questa demo è un’organizzazione: $organisation, con case in $_temp0 e $_temp1. Ogni casa conserva le regole del suo paese e la propria valuta; nulla viene sommato tra loro.';
+  }
+
+  @override
+  String get demoOrganisationEnter => 'Entra in una casa';
+
+  @override
+  String demoOrganisationOutside(String business) {
+    return '$business è un’attività a sé, fuori dall’organizzazione.';
+  }
+
+  @override
   String get demoPersonaAdmin => 'Amministratore';
 
   @override
