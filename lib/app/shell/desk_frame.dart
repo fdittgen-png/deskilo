@@ -132,17 +132,15 @@ String _branchLocation(List<List<String>> tabs, int branch) =>
     permanent: true,
     tabs: tabs,
   ).crumbsOf(path);
-  // #4060 — a page outside the tabs that declares a tab as its place (a
-  // conversation: Messages) is named under that tab.
-  final placed = int.tryParse(
-    (placeOf(path) ?? '').replaceFirst('drawer-tab-', ''),
-  );
+  // #4060 — a conversation is a page outside the tabs whose place is
+  // Messages, even where that entry is folded into the calendar hub: its
+  // crumb says so, and the person's name follows it.
   final tabTitle = path == '/workspace-overview'
       ? l10n.overviewTitle
       : branch >= 0
       ? tabTitles[branch]
-      : placed != null && placed >= 0 && placed < tabTitles.length
-      ? tabTitles[placed]
+      : placeOf(path) == 'drawer-tab-${ShellBranch.messages}'
+      ? tabTitles[ShellBranch.messages]
       : null;
   return (
     crumbs: crumbs.isEmpty && tabTitle != null
