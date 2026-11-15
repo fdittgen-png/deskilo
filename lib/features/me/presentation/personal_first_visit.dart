@@ -15,8 +15,10 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/ui/form_kit.dart';
-import '../../../core/ui/personal_kit/me_card.dart';
-import '../../../core/ui/personal_kit/me_filled_field.dart';
+import '../../../core/ui/kit/filled_field.dart';
+import '../../../core/ui/kit/kit_card.dart';
+import '../../../core/ui/kit/status_chip.dart';
+import '../../../core/ui/kit/tile_row.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../profile/domain/profile.dart';
 import '../../profile/providers/profile_providers.dart';
@@ -29,9 +31,6 @@ import '../domain/greeting.dart';
 import '../domain/my_spaces.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
-import 'kit/me_row.dart';
-import 'kit/me_section_label.dart';
-import 'kit/me_status_chip.dart';
 import 'me_shell.dart';
 import 'personal_overview_attention.dart';
 
@@ -153,15 +152,15 @@ class _FirstStepsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final tokens = PersonalTheme.of(context);
-    return MeCard(
+    return KitCard(
       key: const ValueKey('me-getting-started'),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          MeSectionLabel(l10n.meStartedTitle),
+          KitLabel(l10n.meStartedTitle),
           const SizedBox(height: AppSpacing.xs),
           for (final row in startedRows(facts))
-            MeRow(
+            TileRow(
               key: ValueKey('me-started-${row.step.name}'),
               title: _stepLabel(l10n, row.step),
               semanticLabel: switch (row.state) {
@@ -186,12 +185,12 @@ class _FirstStepsCard extends StatelessWidget {
                     : tokens.primary,
               ),
               trailing: switch (row.state) {
-                StartedState.done => MeStatusChip(
-                  kind: MeChipKind.ok,
+                StartedState.done => StatusChip(
+                  tone: StatusTone.ok,
                   label: l10n.meStartedDone,
                 ),
-                StartedState.next => MeStatusChip(
-                  kind: MeChipKind.neutral,
+                StartedState.next => StatusChip(
+                  tone: StatusTone.neutral,
                   label: l10n.meStartedNext,
                 ),
                 StartedState.later => null,
@@ -219,9 +218,9 @@ class FirstStepsRow extends StatelessWidget {
     final left = rows.where((r) => r.state != StartedState.done).toList();
     final next = rows.firstWhere((r) => r.state == StartedState.next).step;
     final text = l10n.meStartedLeft(left.length, _stepLabel(l10n, next));
-    return MeCard(
+    return KitCard(
       key: const ValueKey('me-first-steps-row'),
-      child: MeRow(
+      child: TileRow(
         key: const ValueKey('me-first-steps-open'),
         title: text,
         semanticLabel: text,
@@ -292,9 +291,9 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
           ),
         ),
         const SizedBox(height: AppSpacing.lg),
-        MeCard(
+        KitCard(
           key: const ValueKey('me-first-visit-hero'),
-          tone: MeCardTone.hero,
+          tone: KitCardTone.hero,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -305,7 +304,7 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
                 ),
               ),
               const SizedBox(height: AppSpacing.md),
-              MeFilledField(
+              FilledField(
                 child: AppTextField(
                   key: const ValueKey('me-first-visit-search'),
                   controller: _search,
@@ -333,8 +332,8 @@ class _FirstVisitState extends ConsumerState<PersonalFirstVisit> {
           ),
         ),
         const SizedBox(height: AppSpacing.md),
-        MeCard(
-          child: MeRow(
+        KitCard(
+          child: TileRow(
             key: const ValueKey('me-first-visit-invitation'),
             title: l10n.meInvitationTitle,
             subtitle: l10n.meInvitationBody,

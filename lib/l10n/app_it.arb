@@ -9389,20 +9389,20 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Membro",
-  "invoiceMissingBuyerAddress": "L'indirizzo postale del socio (obbligatorio per un'azienda)",
+  "invoiceMissingBuyerAddress": "L'indirizzo postale del cliente (obbligatorio per un'azienda)",
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
-  "invoiceMissingBuyerCapacity": "Se il membro è un'impresa o un consumatore: ne dipende un servizio generico a un cliente estero",
-  "invoiceMissingBuyerName": "Il nome o la ragione sociale del socio",
+  "invoiceMissingBuyerCapacity": "Se il cliente è un'impresa o un consumatore: ne dipende un servizio generico a un cliente estero",
+  "invoiceMissingBuyerName": "Il nome o la ragione sociale del cliente",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerTaxId": "L'identificativo fiscale del membro: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia",
+  "invoiceMissingBuyerTaxId": "L'identificativo fiscale del cliente: il NIF di un cliente impresa in Spagna, il codice fiscale o la partita IVA di un cliente in Italia, il SIREN di un cliente impresa in Francia",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
   },
-  "invoiceMissingBuyerVatId": "La partita IVA del socio (necessaria per il reverse charge)",
+  "invoiceMissingBuyerVatId": "La partita IVA del cliente (necessaria per il reverse charge)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
   },
@@ -9426,32 +9426,32 @@
   "@invoiceMissingSalesTaxTaxability": {
     "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
-  "invoiceMissingSellerAddress": "L'indirizzo postale dello spazio (via o città)",
+  "invoiceMissingSellerAddress": "L'indirizzo postale dell'attività (via o città)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerBnFormat": "Il numero d'impresa GST/HST dello spazio con il conto RT, nel formato 123456789 RT0001 (ETA s. 169(4))",
+  "invoiceMissingSellerBnFormat": "Il numero d'impresa GST/HST dell'attività con il conto RT, nel formato 123456789 RT0001 (ETA s. 169(4))",
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Il paese dello spazio deve essere uno Stato membro dell'Unione europea, il Regno Unito, la Svizzera o il Canada per emettere qui — gli altri paesi si emettono fuori dall'app",
-  "invoiceMissingSellerQstNumber": "Il numero di registrazione QST dello spazio, di Revenu Québec, nel formato 1234567890 TQ0001, nell'identità legale (la fattura applica la QST)",
+  "invoiceMissingSellerCountry": "Il paese dell'attività deve essere uno Stato membro dell'Unione europea, il Regno Unito, la Svizzera o il Canada per emettere qui — gli altri paesi si emettono fuori dall'app",
+  "invoiceMissingSellerQstNumber": "Il numero di registrazione QST dell'attività, di Revenu Québec, nel formato 1234567890 TQ0001, nell'identità legale (la fattura applica la QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerTaxNumber": "La partita IVA o il codice fiscale dello spazio (il campo di registrazione riporta il numero fiscale)",
+  "invoiceMissingSellerTaxNumber": "La partita IVA o il codice fiscale dell'attività (il campo di registrazione riporta il numero fiscale)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
-  "invoiceMissingSellerUidFormat": "Il numero IDI dello spazio nel formato svizzero: CHE-123.456.789 seguito da IVA (MWST, TVA), con una cifra di controllo valida (art. 26 LIVA)",
+  "invoiceMissingSellerUidFormat": "Il numero IDI dell'attività nel formato svizzero: CHE-123.456.789 seguito da IVA (MWST, TVA), con una cifra di controllo valida (art. 26 LIVA)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
   },
-  "invoiceMissingSellerVatId": "Il numero di partita IVA dello spazio",
+  "invoiceMissingSellerVatId": "Il numero di partita IVA dell'attività",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
-  "invoiceMissingSellerVatIdFormat": "Il numero di partita IVA dello spazio nel formato dell'HMRC: GB o XI seguito da nove o dodici cifre (VAT Notice 700)",
+  "invoiceMissingSellerVatIdFormat": "Il numero di partita IVA dell'attività nel formato dell'HMRC: GB o XI seguito da nove o dodici cifre (VAT Notice 700)",
   "@invoiceMissingSellerVatIdFormat": {
     "description": "#2359: invoiceMissingSellerVatIdFormat"
   },
@@ -9463,11 +9463,11 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
-  "invoiceMissingVatNotRegistered": "Nessuna IVA sulle righe: lo spazio non applica l'IVA, ma un'aliquota è impostata sull'abbonamento o su un accessorio",
-  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dello spazio (altrimenti si fatturerebbe lo 0 %)",
+  "invoiceMissingVatNotRegistered": "Nessuna IVA sulle righe: l'attività non applica l'IVA, ma un'aliquota è impostata sull'abbonamento o su un accessorio",
+  "invoiceMissingVatRate": "Un'aliquota IVA in vigore per l'aliquota predefinita dell'attività (altrimenti si fatturerebbe lo 0 %)",
   "invoiceMissingVatTreatment": "Le fatture con inversione contabile, di esportazione o esenti devono essere verificate ed emesse fuori dall’app con il proprio commercialista. Gli estratti conto restano disponibili.",
   "invoiceMissingVatZeroLine": "Un'aliquota IVA per ogni addebito: un addebito è fatturato allo 0 % senza esportazione, esenzione o inversione contabile che lo spieghi",
-  "invoiceMissingVies": "Una verifica VIES valida della partita IVA del membro (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
+  "invoiceMissingVies": "Una verifica VIES valida della partita IVA del cliente (necessaria per l'inversione contabile; se VIES non ha risposto, riprovi più tardi)",
   "invoiceMonthAll": "Tutti",
   "invoiceMonthBusinessFix": "I dati della sua attività sono incompleti: {missing}",
   "invoiceMonthCheckAgain": "Controlla di nuovo",

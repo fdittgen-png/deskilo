@@ -15602,22 +15602,22 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingBuyerAddress =>
-      'La dirección postal del miembro (obligatoria para una empresa)';
+      'La dirección postal del cliente (obligatoria para una empresa)';
 
   @override
   String get invoiceMissingBuyerCapacity =>
-      'Si el miembro es una empresa o un consumidor: de ello depende un servicio general a un cliente en el extranjero';
+      'Si el cliente es una empresa o un consumidor: de ello depende un servicio general a un cliente en el extranjero';
 
   @override
-  String get invoiceMissingBuyerName => 'El nombre o la empresa del miembro';
+  String get invoiceMissingBuyerName => 'El nombre o la empresa del cliente';
 
   @override
   String get invoiceMissingBuyerTaxId =>
-      'El identificador fiscal del miembro: el NIF de un cliente empresarial en España, el codice fiscale o la partita IVA de un cliente en Italia, el SIREN de un cliente empresarial en Francia';
+      'El identificador fiscal del cliente: el NIF de un cliente empresarial en España, el codice fiscale o la partita IVA de un cliente en Italia, el SIREN de un cliente empresarial en Francia';
 
   @override
   String get invoiceMissingBuyerVatId =>
-      'El número de IVA del miembro (necesario para la inversión del sujeto pasivo)';
+      'El número de IVA del cliente (necesario para la inversión del sujeto pasivo)';
 
   @override
   String get invoiceMissingCorrectionReason =>
@@ -15641,35 +15641,35 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerAddress =>
-      'La dirección postal del espacio (calle o ciudad)';
+      'La dirección postal de la empresa (calle o ciudad)';
 
   @override
   String get invoiceMissingSellerBnFormat =>
-      'El número de empresa GST/HST del espacio con su cuenta RT, con el formato 123456789 RT0001 (ETA s. 169(4))';
+      'El número de empresa GST/HST de la empresa con su cuenta RT, con el formato 123456789 RT0001 (ETA s. 169(4))';
 
   @override
   String get invoiceMissingSellerCountry =>
-      'El país del espacio debe ser un Estado miembro de la Unión Europea, el Reino Unido, Suiza o Canadá para emitir aquí — los demás países se emiten fuera de la aplicación';
+      'El país de la empresa debe ser un Estado miembro de la Unión Europea, el Reino Unido, Suiza o Canadá para emitir aquí — los demás países se emiten fuera de la aplicación';
 
   @override
   String get invoiceMissingSellerQstNumber =>
-      'El número de registro del QST del espacio, de Revenu Québec, con el formato 1234567890 TQ0001, en la identidad legal (la factura cobra el QST)';
+      'El número de registro del QST de la empresa, de Revenu Québec, con el formato 1234567890 TQ0001, en la identidad legal (la factura cobra el QST)';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
-      'El número de IVA o el NIF del espacio (el campo de registro lleva el NIF)';
+      'El número de IVA o el NIF de la empresa (el campo de registro lleva el NIF)';
 
   @override
   String get invoiceMissingSellerUidFormat =>
-      'El UID del espacio en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)';
+      'El UID de la empresa en el formato suizo: CHE-123.456.789 seguido de MWST (TVA, IVA), con un dígito de control válido (art. 26 LIVA suiza)';
 
   @override
   String get invoiceMissingSellerVatId =>
-      'El número de identificación fiscal (IVA) del espacio';
+      'El número de identificación fiscal (IVA) de la empresa';
 
   @override
   String get invoiceMissingSellerVatIdFormat =>
-      'El número de registro de IVA del espacio en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)';
+      'El número de registro de IVA de la empresa en el formato de la HMRC: GB o XI seguido de nueve o doce dígitos (VAT Notice 700)';
 
   @override
   String get invoiceMissingTerritoryOutsideVat =>
@@ -15680,11 +15680,11 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingVatNotRegistered =>
-      'Ningún IVA en las líneas: el espacio no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio';
+      'Ningún IVA en las líneas: la empresa no cobra IVA, pero hay un tipo configurado en la suscripción o en un accesorio';
 
   @override
   String get invoiceMissingVatRate =>
-      'Un tipo de IVA vigente para el tipo por defecto del espacio (si no, se facturaría 0 %)';
+      'Un tipo de IVA vigente para el tipo por defecto de la empresa (si no, se facturaría 0 %)';
 
   @override
   String get invoiceMissingVatTreatment =>
@@ -15696,7 +15696,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingVies =>
-      'Una comprobación VIES válida del número de IVA del miembro (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)';
+      'Una comprobación VIES válida del número de IVA del cliente (necesaria para la inversión del sujeto pasivo; si VIES no respondió, inténtelo más tarde)';
 
   @override
   String get invoiceMonthAll => 'Todos';

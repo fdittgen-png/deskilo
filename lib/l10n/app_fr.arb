@@ -9389,20 +9389,20 @@
     "description": "#1913 dunning holds: invoiceMaturityReview"
   },
   "invoiceMemberLabel": "Membre",
-  "invoiceMissingBuyerAddress": "L'adresse postale du membre (obligatoire pour un client professionnel)",
+  "invoiceMissingBuyerAddress": "L'adresse postale du client (obligatoire pour un client professionnel)",
   "@invoiceMissingBuyerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerAddress"
   },
-  "invoiceMissingBuyerCapacity": "Si le membre est une entreprise ou un consommateur — une prestation générale à un client à l'étranger en dépend",
-  "invoiceMissingBuyerName": "Le nom ou la société du membre",
+  "invoiceMissingBuyerCapacity": "Si le client est une entreprise ou un consommateur — une prestation générale à un client à l'étranger en dépend",
+  "invoiceMissingBuyerName": "Le nom ou la société du client",
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerTaxId": "L'identifiant fiscal du membre : le NIF d'un client professionnel en Espagne, le codice fiscale ou la partita IVA d'un client en Italie, le SIREN d'un client professionnel en France",
+  "invoiceMissingBuyerTaxId": "L'identifiant fiscal du client : le NIF d'un client professionnel en Espagne, le codice fiscale ou la partita IVA d'un client en Italie, le SIREN d'un client professionnel en France",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
   },
-  "invoiceMissingBuyerVatId": "Le numéro de TVA du membre (requis pour l'autoliquidation)",
+  "invoiceMissingBuyerVatId": "Le numéro de TVA du client (requis pour l'autoliquidation)",
   "@invoiceMissingBuyerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerVatId"
   },
@@ -9426,32 +9426,32 @@
   "@invoiceMissingSalesTaxTaxability": {
     "description": "#2362 sales tax: invoiceMissingSalesTaxTaxability"
   },
-  "invoiceMissingSellerAddress": "L'adresse postale de l'espace (rue ou ville)",
+  "invoiceMissingSellerAddress": "L'adresse postale de l'entreprise (rue ou ville)",
   "@invoiceMissingSellerAddress": {
     "description": "#1916 invoice essentials: invoiceMissingSellerAddress"
   },
-  "invoiceMissingSellerBnFormat": "Le numéro d'entreprise de TPS/TVH de l'espace avec son compte RT, sous la forme 123456789 RT0001 (LTA, par. 169(4))",
+  "invoiceMissingSellerBnFormat": "Le numéro d'entreprise de TPS/TVH de l'entreprise avec son compte RT, sous la forme 123456789 RT0001 (LTA, par. 169(4))",
   "@invoiceMissingSellerBnFormat": {
     "description": "#2361: invoiceMissingSellerBnFormat"
   },
-  "invoiceMissingSellerCountry": "Le pays de l'espace doit être un État membre de l'Union européenne, le Royaume-Uni, la Suisse ou le Canada pour émettre ici — les autres pays sont émis hors de l'application",
-  "invoiceMissingSellerQstNumber": "Le numéro d'inscription à la TVQ de l'espace délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l'identité légale (la facture perçoit la TVQ)",
+  "invoiceMissingSellerCountry": "Le pays de l'entreprise doit être un État membre de l'Union européenne, le Royaume-Uni, la Suisse ou le Canada pour émettre ici — les autres pays sont émis hors de l'application",
+  "invoiceMissingSellerQstNumber": "Le numéro d'inscription à la TVQ de l'entreprise délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l'identité légale (la facture perçoit la TVQ)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'espace (le champ d'immatriculation porte la Steuernummer ou le NIF)",
+  "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'entreprise (le champ d'immatriculation porte la Steuernummer ou le NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
   },
-  "invoiceMissingSellerUidFormat": "L'IDE de l'espace au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)",
+  "invoiceMissingSellerUidFormat": "L'IDE de l'entreprise au format suisse : CHE-123.456.789 suivi de TVA (MWST, IVA), avec un chiffre de contrôle valide (art. 26 LTVA)",
   "@invoiceMissingSellerUidFormat": {
     "description": "#2360: invoiceMissingSellerUidFormat"
   },
-  "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'espace",
+  "invoiceMissingSellerVatId": "Le numéro d'identification TVA de l'entreprise",
   "@invoiceMissingSellerVatId": {
     "description": "#1916 invoice essentials: invoiceMissingSellerVatId"
   },
-  "invoiceMissingSellerVatIdFormat": "Le numéro d'immatriculation TVA du workspace au format de l'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)",
+  "invoiceMissingSellerVatIdFormat": "Le numéro d'immatriculation TVA de l'entreprise au format de l'HMRC : GB ou XI suivi de neuf ou douze chiffres (VAT Notice 700)",
   "@invoiceMissingSellerVatIdFormat": {
     "description": "#2359: invoiceMissingSellerVatIdFormat"
   },
@@ -9463,11 +9463,11 @@
   "@invoiceMissingTitle": {
     "description": "#1916 invoice essentials: invoiceMissingTitle"
   },
-  "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'espace ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire",
-  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'espace (sinon 0 % serait facturé)",
+  "invoiceMissingVatNotRegistered": "Aucune TVA sur les lignes : l'entreprise ne facture pas la TVA, mais un taux est réglé sur l'abonnement ou un accessoire",
+  "invoiceMissingVatRate": "Un taux de TVA en vigueur pour le taux par défaut de l'entreprise (sinon 0 % serait facturé)",
   "invoiceMissingVatTreatment": "Les factures en autoliquidation, à l’export ou exonérées doivent être vérifiées et émises hors de l’application avec votre comptable. Les relevés restent disponibles.",
   "invoiceMissingVatZeroLine": "Un taux de TVA pour chaque prestation : une prestation est facturée à 0 % sans export, exonération ni autoliquidation qui l'explique",
-  "invoiceMissingVies": "Une vérification VIES valide du numéro de TVA du membre (requise pour l'autoliquidation ; si VIES n'a pas répondu, réessayez plus tard)",
+  "invoiceMissingVies": "Une vérification VIES valide du numéro de TVA du client (requise pour l'autoliquidation ; si VIES n'a pas répondu, réessayez plus tard)",
   "invoiceMonthAll": "Tous",
   "invoiceMonthBusinessFix": "Les informations de votre entreprise sont incomplètes : {missing}",
   "invoiceMonthCheckAgain": "Vérifier à nouveau",

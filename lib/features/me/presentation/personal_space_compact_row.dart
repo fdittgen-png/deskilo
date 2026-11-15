@@ -11,10 +11,10 @@ import 'package:go_router/go_router.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
+import '../../../core/ui/kit/tile_row.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/personal_spaces_view.dart';
 import '../domain/personal_workspace_refs.dart';
-import 'kit/me_row.dart';
 import 'personal_space_card.dart';
 
 class PersonalSpaceCompactRow extends ConsumerWidget {
@@ -53,7 +53,7 @@ class PersonalSpaceCompactRow extends ConsumerWidget {
     return Padding(
       key: ValueKey('my-space-$id'),
       padding: const EdgeInsets.only(bottom: AppSpacing.sm),
-      child: MeRow(
+      child: TileRow(
         key: ValueKey('my-space-row-$id'),
         leading: Text(
           name.characters.firstOrNull?.toUpperCase() ?? '',
