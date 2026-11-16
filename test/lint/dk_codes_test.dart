@@ -30,8 +30,6 @@ const _notForTheApp = <String, String>{
   'DKR03':
       'an operator\'s refusal: only a personal home names itself as one '
       '(0565)',
-  'DKC13': 'no screen takes a declaration back yet (#4140); My finances '
-      'reads it next',
 };
 
 final _raised = RegExp(r"errcode\s*=\s*'(DK[A-Z0-9]{3})'");
