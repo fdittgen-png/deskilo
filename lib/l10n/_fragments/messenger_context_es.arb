@@ -34,7 +34,6 @@
   "messengerWriteToHosts": "Escribir a los anfitriones",
   "messengerHostsIntro": "Su mensaje lo leen estos anfitriones del negocio:",
   "messengerHostsNone": "En este negocio nadie responde mensajes ahora mismo.",
-  "messengerInquirySend": "Enviar consulta",
   "messengerInquiriesTitle": "Consultas",
   "messengerInquiriesEmpty": "Aún no hay consultas.",
   "messengerInquiryClose": "Cerrar consulta",
