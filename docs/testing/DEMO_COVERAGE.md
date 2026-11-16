@@ -112,6 +112,7 @@ none: it is read as reassurance.
 | The journeys, end to end on the real screens — mounted as `DeskiloRoot` with `demoEntry` entered, so they run on the production Demo composition and its own overrides | `test/ux/demo_journeys_test.dart` |
 | The retired blur cannot come back | `test/lint/no_render_tree_blur_test.dart` |
 | A payment attempt that cannot be checked at its provider is told to those who read the finances (#4136): Bruno paid last month's open bill online at Mollie, and the reconciliation could not reach Mollie. Ada, the owner, finds in her events which payment (its reference and amount), Bruno's name, the provider and the reason in words; the row opens Bruno's account. Bruno, whom it names, does not read it. Told once per attempt; the line says when the attempt was read again, paid or ended. | `test/core/demo/demo_attempt_notice_test.dart`, `test/features/events/payment_attempt_unreadable_entry_test.dart` |
+| A decision needs the right to read the event (#4146): in the Demo, an administrator whose rights do not read an expense is refused the decision, one whose rights read it decides, and the owner always decides; the wall tablet decides nothing. | `test/core/demo/demo_decision_reading_rule_test.dart`, `test/core/demo/demo_persona_accountability_test.dart` |
 
 ## What the suite deliberately does not do
 
