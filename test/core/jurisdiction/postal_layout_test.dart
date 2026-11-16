@@ -4,6 +4,7 @@
 // below the street come from the country's postal layout, a domestic letter
 // leaves the country out and one abroad names it in the reader's language.
 // France and Germany print exactly what they printed before.
+// #3649 (3a) -- Spain and Ireland print the region's name, the others its code.
 import 'package:deskilo/core/jurisdiction/installed_postal_layouts.dart';
 import 'package:deskilo/core/jurisdiction/jurisdiction_resolver.dart';
 import 'package:deskilo/features/profile/domain/personal_info.dart';
@@ -63,7 +64,7 @@ final Map<String, (PersonalInfo, String)> _addresses = {
   ),
   'ES': (
     _at('ES', 'Calle Mayor 1', '28013', 'Madrid', 'M'),
-    'Calle Mayor 1\n28013 Madrid\nM',
+    'Calle Mayor 1\n28013 Madrid\nMadrid',
   ),
   'GB': (
     _at('GB', '10 Downing Street', 'sw1a 2aa', 'London'),
@@ -71,7 +72,7 @@ final Map<String, (PersonalInfo, String)> _addresses = {
   ),
   'IE': (
     _at('IE', '1 Main Street', 'd02 x285', 'Dublin', 'D'),
-    '1 Main Street\nDublin\nD\nD02 X285',
+    '1 Main Street\nDublin\nDublin\nD02 X285',
   ),
   'PL': (
     _at('PL', 'ul. Marszałkowska 1', '00-624', 'Warszawa'),
@@ -167,6 +168,22 @@ void main() {
             .render(postalCode: '34120', city: 'Pézenas', capitals: false),
         ['34120 Pézenas'],
       );
+    },
+  );
+
+  test(
+    'a region is a code its country has, required where its post needs one',
+    () {
+      final us = postalLayoutOf('US');
+      expect(us.regionRefusal(' ny '), isNull);
+      expect(us.regionRefusal(''), RegionRefusal.missing);
+      expect(us.regionRefusal('ZZ'), RegionRefusal.unknown);
+      expect(us.regionRefusal('New York'), RegionRefusal.notACode);
+      expect(postalLayoutOf('ES').regionRefusal(''), isNull);
+      expect(postalLayoutOf('FR').regionRefusal(''), isNull);
+      // A country with no list of its own takes any code.
+      expect(postalLayoutOf('AT').regionRefusal('9'), isNull);
+      expect(regionCode(' mi '), 'MI');
     },
   );
 

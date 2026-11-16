@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/country/country_catalog.dart';
 import '../../../../core/i18n/country_names.dart';
+import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/theme/app_radius.dart';
@@ -17,6 +18,7 @@ import '../../../../core/ui/phone_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
+import 'address_region_field.dart';
 
 /// Edits a [PersonalInfo]; [onSave] receives the normalized value.
 /// Every field carries a `personal-info-<field>` key for tests.
@@ -77,6 +79,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
   late final TextEditingController _vat;
   late final TextEditingController _legal;
   String? _country;
+  // #3649 -- the region's code, and why it cannot be saved.
+  late String _region;
+  String? _regionError;
   // #912 — how this person asks to be addressed.
   late Courtesy _courtesy;
 
@@ -91,6 +96,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     _street = TextEditingController(text: i.street);
     _postal = TextEditingController(text: i.postalCode);
     _city = TextEditingController(text: i.city);
+    _region = i.subdivision;
     _phone = TextEditingController(text: i.phone);
     _phoneCountry = TextEditingController(text: i.countryCode);
     _email = TextEditingController(text: i.email);
@@ -141,8 +147,45 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         return;
       }
     }
+    final region = _regionProblem();
+    if (region != null) {
+      _setRegion(_region, error: region);
+      return;
+    }
     await widget.onSave(_value);
   }
+
+  /// #3649 -- the region is checked once the address is edited: an address
+  /// stored before its country asked for one keeps saving as it is.
+  String? _regionProblem() {
+    final now = _value;
+    final before = widget.initial.normalized();
+    final edited =
+        now.street != before.street ||
+        now.postalCode != before.postalCode ||
+        now.city != before.city ||
+        now.subdivision != before.subdivision ||
+        now.countryCode != before.countryCode;
+    if (!edited) return null;
+    final refusal = postalLayoutOf(now.countryCode).regionRefusal(now.subdivision);
+    return refusal == null ? null : regionRefusalText(context.l10n, refusal);
+  }
+
+  /// A new country keeps the region only when it has one by that code.
+  void _setCountry(String? country) {
+    final names = postalLayoutOf(country ?? '').region?.names ?? const {};
+    final keep = names.isEmpty || names.containsKey(_region);
+    _setRegion(keep ? _region : '', country: country);
+  }
+
+  /// The one place the address's country and region change, with why the
+  /// region cannot be saved when it cannot.
+  void _setRegion(String region, {String? country, String? error}) =>
+      setState(() {
+        if (country != null) _country = country;
+        _region = region;
+        _regionError = error;
+      });
 
   PersonalInfo get _value => PersonalInfo(
     courtesy: _courtesy,
@@ -152,6 +195,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     street: _street.text,
     postalCode: _postal.text,
     city: _city.text,
+    subdivision: _region,
     countryCode: _country ?? '',
     phone: _phone.text,
     email: _email.text,
@@ -207,6 +251,38 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       },
     ),
   );
+
+  /// The country, then the region its addresses have (#3649).
+  List<Widget> _countryAndRegion(AppLocalizations l10n) => [
+    Padding(
+      padding: const EdgeInsets.only(bottom: AppSpacing.md),
+      child: DropdownButtonFormField<String>(
+        key: const ValueKey('personal-info-country'),
+        initialValue: _country,
+        decoration: InputDecoration(
+          labelText: l10n.workspaceCountryLabel,
+          border: const OutlineInputBorder(),
+        ),
+        items: [
+          for (final c in CountryCatalog.countries)
+            DropdownMenuItem(
+              value: c.code,
+              child: Text(localizedCountryName(l10n, c.code)),
+            ),
+        ],
+        onChanged: widget.saving ? null : _setCountry,
+      ),
+    ),
+    AddressRegionField(
+      key: ValueKey('personal-info-region-$_country'),
+      fieldKey: 'personal-info-region',
+      country: _country ?? '',
+      value: _region,
+      error: _regionError,
+      enabled: !widget.saving,
+      onChanged: _setRegion,
+    ),
+  ];
 
   /// #3281 — the one Company field; on my own profile it says it is the
   /// account-wide value, not a workspace's question.
@@ -330,27 +406,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
             ),
           ],
         ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: AppSpacing.md),
-          child: DropdownButtonFormField<String>(
-            key: const ValueKey('personal-info-country'),
-            initialValue: _country,
-            decoration: InputDecoration(
-              labelText: l10n.workspaceCountryLabel,
-              border: const OutlineInputBorder(),
-            ),
-            items: [
-              for (final c in CountryCatalog.countries)
-                DropdownMenuItem(
-                  value: c.code,
-                  child: Text(localizedCountryName(l10n, c.code)),
-                ),
-            ],
-            onChanged: widget.saving
-                ? null
-                : (v) => setState(() => _country = v),
-          ),
-        ),
+        ..._countryAndRegion(l10n),
         _phoneField(l10n),
         _field(
           _email,

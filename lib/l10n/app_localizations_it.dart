@@ -904,6 +904,33 @@ class AppLocalizationsIt extends AppLocalizations {
   String get addressNone => 'Nessun indirizzo';
 
   @override
+  String get addressRegionCanton => 'Cantone';
+
+  @override
+  String get addressRegionCounty => 'Contea';
+
+  @override
+  String get addressRegionMissing =>
+      'Un indirizzo in questo paese richiede la sua regione.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Indichi la regione con il suo codice: fino a 10 lettere, cifre o trattini.';
+
+  @override
+  String get addressRegionProvince => 'Provincia';
+
+  @override
+  String get addressRegionRegion => 'Regione';
+
+  @override
+  String get addressRegionState => 'Stato';
+
+  @override
+  String get addressRegionUnknown =>
+      'Questo paese non ha una regione con questo codice.';
+
+  @override
   String get addressSaved => 'Indirizzo salvato';
 
   @override

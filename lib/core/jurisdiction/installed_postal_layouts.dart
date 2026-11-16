@@ -59,7 +59,7 @@ extension PostalLines on PostalLayout {
         capitals && postalCodeInCapitals,
       ),
       PostalPart.city => _cased(city, capitals && cityInCapitals),
-      PostalPart.region => region.trim(),
+      PostalPart.region => regionText(region),
     };
     return [
       for (final line in lines)
@@ -67,6 +67,44 @@ extension PostalLines on PostalLayout {
     ].where((l) => l.isNotEmpty).toList();
   }
 }
+
+/// Helpers for the region field of a layout: one place says how a region is
+/// stored and whether an address of a country may hold it.
+extension RegionOfLayout on PostalLayout {
+  /// What the address prints for the region [code]: its name where the
+  /// country's post prints names, else the code.
+  String regionText(String code) {
+    final c = regionCode(code);
+    final field = region;
+    if (field == null || !field.printsName) return c;
+    return field.names[c] ?? c;
+  }
+
+  /// Why [code] cannot be the region of an address in this country, or null.
+  RegionRefusal? regionRefusal(String code) {
+    final c = regionCode(code);
+    final field = region;
+    if (c.isEmpty) {
+      return field != null && field.required ? RegionRefusal.missing : null;
+    }
+    if (!_regionShape.hasMatch(c)) return RegionRefusal.notACode;
+    if (field == null) return null;
+    if (field.names.isNotEmpty && !field.names.containsKey(c)) {
+      return RegionRefusal.unknown;
+    }
+    return null;
+  }
+}
+
+/// Why a region cannot be stored.
+enum RegionRefusal { missing, notACode, unknown }
+
+/// A region as it is stored: its code, trimmed and in upper case -- what both
+/// editors of an address write.
+String regionCode(String input) => input.trim().toUpperCase();
+
+/// The shape the database holds (`subdivision_code`, 0785).
+final RegExp _regionShape = RegExp(r'^[A-Z0-9-]{1,10}$');
 
 String _cased(String value, bool upper) =>
     upper ? value.trim().toUpperCase() : value.trim();

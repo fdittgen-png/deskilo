@@ -7,7 +7,6 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/app/shell/shell_bottom_bar.dart';
 import 'package:deskilo/core/realtime/realtime_providers.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_pdf.dart';
@@ -27,6 +26,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/fake_realtime_sync.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/shell_tab.dart';
 
 /// The band whose `(fromPct, toPct]` interval contains [pct] — the same
 /// inclusive-upper lookup the statement SQL uses to pick a member's fee.
@@ -67,7 +67,7 @@ Future<FakeMoneyRepository> pumpMoney(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('My finances'));
+  await tester.tap(shellTab('My finances'));
   await tester.pumpAndSettle();
   return money;
 }
@@ -438,12 +438,7 @@ void main() {
       // the open position — the charge is no longer pending. (Popping the
       // feed landed on the Money tab whose title duplicates the nav label,
       // so tap the nav destination itself.)
-      await tester.tap(
-        find.descendant(
-          of: find.byType(ShellBottomBar),
-          matching: find.text('My finances'),
-        ),
-      );
+      await tester.tap(shellTab('My finances'));
       await tester.pumpAndSettle();
       expect(find.text('Open positions'), findsNothing);
 
@@ -459,12 +454,7 @@ void main() {
       await tester.pumpAndSettle();
       // The restored session may already sit on the Money tab (its title
       // then duplicates the nav label) — tap the nav destination itself.
-      await tester.tap(
-        find.descendant(
-          of: find.byType(ShellBottomBar),
-          matching: find.text('My finances'),
-        ),
-      );
+      await tester.tap(shellTab('My finances'));
       await tester.pumpAndSettle();
       expect(find.text('Consumed services'), findsOneWidget);
       expect(find.text('Coffee ×2'), findsOneWidget);

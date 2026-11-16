@@ -906,6 +906,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addressNone => 'Keine Adresse';
 
   @override
+  String get addressRegionCanton => 'Kanton';
+
+  @override
+  String get addressRegionCounty => 'County';
+
+  @override
+  String get addressRegionMissing =>
+      'Eine Adresse in diesem Land braucht ihre Region.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Geben Sie die Region als Code ein: bis zu 10 Buchstaben, Ziffern oder Bindestriche.';
+
+  @override
+  String get addressRegionProvince => 'Provinz';
+
+  @override
+  String get addressRegionRegion => 'Region';
+
+  @override
+  String get addressRegionState => 'Bundesstaat';
+
+  @override
+  String get addressRegionUnknown =>
+      'Dieses Land hat keine Region mit diesem Code.';
+
+  @override
   String get addressSaved => 'Adresse gespeichert';
 
   @override

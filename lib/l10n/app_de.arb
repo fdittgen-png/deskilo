@@ -356,6 +356,38 @@
   "acctTransfersTitle": "Übertragungen",
   "acctWhoUnknown": "jemand, der nicht mehr im Space ist",
   "addressNone": "Keine Adresse",
+  "addressRegionCanton": "Kanton",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionCounty": "County",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionMissing": "Eine Adresse in diesem Land braucht ihre Region.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Geben Sie die Region als Code ein: bis zu 10 Buchstaben, Ziffern oder Bindestriche.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionProvince": "Provinz",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionRegion": "Region",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionState": "Bundesstaat",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionUnknown": "Dieses Land hat keine Region mit diesem Code.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  },
   "addressSaved": "Adresse gespeichert",
   "addressTitle": "Adresse",
   "addressVatIdLabel": "Umsatzsteuer-ID (wenn Sie als Unternehmen abrechnen)",

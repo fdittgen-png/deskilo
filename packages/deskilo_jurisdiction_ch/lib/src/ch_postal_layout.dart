@@ -3,8 +3,10 @@
 // #3649 -- how an address in Switzerland is written below its street: the postal code, then the locality as written (Swiss Post).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import 'ch_regions.dart';
+
 /// Bumped in the same commit as any change of how this layout writes an address.
-const chPostalLayoutImplementationVersion = '1';
+const chPostalLayoutImplementationVersion = '2';
 
 /// The postal layout of Switzerland.
 class ChPostalLayout extends PostalLayoutContribution {
@@ -24,5 +26,6 @@ class ChPostalLayout extends PostalLayoutContribution {
     lines: [
       [PostalPart.postalCode, PostalPart.city],
     ],
+    region: RegionField(kind: RegionKind.canton, names: chRegions),
   );
 }
