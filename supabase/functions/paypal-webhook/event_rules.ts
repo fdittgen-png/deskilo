@@ -14,6 +14,20 @@ export function orderIdOf(resource: Record<string, unknown>): string {
   );
 }
 
+/** #3917 -- the order an event may attach to an intent still waiting for
+ * one: an order event's own id, any other event's related order; never a
+ * reversal's, and never a guess from another id (a capture's or a refund's).
+ * '' when the event names none. */
+export function attachableOrderId(type: unknown, resource: Record<string, unknown>): string {
+  if (isReversalEvent(type)) return "";
+  if (typeof type === "string" && type.startsWith("CHECKOUT.ORDER.")) {
+    return typeof resource.id === "string" ? resource.id : "";
+  }
+  const related = ((resource.supplementary_data as Record<string, unknown> | undefined)
+    ?.related_ids as Record<string, unknown> | undefined)?.order_id;
+  return typeof related === "string" ? related : "";
+}
+
 /** #3905 -- the capture a refund-shaped resource belongs to: its `up` link
  * (`…/v2/payments/captures/<id>`); null when the resource names none. */
 export function captureIdOf(resource: Record<string, unknown>): string | null {

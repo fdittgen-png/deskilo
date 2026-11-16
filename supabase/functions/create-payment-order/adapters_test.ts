@@ -4,6 +4,7 @@
 // injected: no network, and no provider body ever reaches an error.
 import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import { ORDER_ADAPTERS } from "./adapters.ts";
+import { withIntent } from "./mollie.ts";
 import { failureOutcome, ProviderRefusal } from "./outcome.ts";
 import { parsePaymentOrderRequest } from "./request.ts";
 import type { AdapterDeps, OrderInput } from "./types.ts";
@@ -13,6 +14,7 @@ const order: OrderInput = {
   currency: "EUR",
   reference: "PAY-2026-0001",
   key: "deskilo-intent-7",
+  intentId: "00000000-0000-4000-8000-000000003917",
 };
 
 function deps(
@@ -123,4 +125,57 @@ Deno.test("the request: workspace currency wins, a disagreeing body is refused",
       body: { error: "invalid_request" },
     });
   }
+});
+
+Deno.test("#3917: every order carries its intent's own id back to the notifications", async () => {
+  const stripe: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.stripe(
+    { secret_key: "sk", return_url: "https://r" },
+    order,
+    deps(Response.json({ id: "cs_1", url: "https://pay" }), stripe),
+  );
+  assertEquals(
+    (stripe[0].init.body as URLSearchParams).get("metadata[deskilo_intent]"),
+    order.intentId,
+  );
+  assertEquals((stripe[0].init.body as URLSearchParams).get("client_reference_id"), order.reference);
+
+  const mollie: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.mollie(
+    { api_key: "test_k", return_url: "https://r", webhook_url: "https://hooks.example.test/mollie?site=a" },
+    order,
+    deps(Response.json({ id: "tr_1", _links: { checkout: { href: "https://c" } } }), mollie),
+  );
+  const m = JSON.parse(mollie[0].init.body as string);
+  assertEquals(m.metadata, { reference: order.reference, deskilo_intent: order.intentId });
+  const hook = new URL(m.webhookUrl);
+  assertEquals(hook.searchParams.get("intent"), order.intentId);
+  assertEquals(hook.searchParams.get("site"), "a", "the address keeps its own query");
+
+  const paypal: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.paypal(
+    { client_id: "c", client_secret: "s", env: "sandbox", return_url: "https://r" },
+    order,
+    {
+      transport: (url, init) => {
+        paypal.push({ url, init });
+        return Promise.resolve(
+          paypal.length === 1
+            ? Response.json({ access_token: "t" })
+            : Response.json({ id: "o1", links: [{ rel: "approve", href: "https://a" }] }),
+        );
+      },
+      env: () => undefined,
+    },
+  );
+  const unit = JSON.parse(paypal[1].init.body as string).purchase_units[0];
+  assertEquals(unit.custom_id, order.intentId);
+  assertEquals(unit.description, order.reference, "the reference alone: the payer reads it");
+});
+
+Deno.test("#3917: an overriding webhook address that already names an intent names this one, once", () => {
+  const url = withIntent("https://hooks.example.test/mollie?intent=old&site=a", "new");
+  const params = new URL(url).searchParams;
+  assertEquals(params.getAll("intent"), ["new"]);
+  assertEquals(params.get("site"), "a");
 });

@@ -36,7 +36,9 @@ export const createPaypalOrder: OrderAdapter = async (cfg, order, deps) => {
           currency_code: order.currency,
           value: toMajor(order.amountCents, order.currency),
         },
-        custom_id: order.reference,
+        // #3917 -- the capture's notifications carry it back.
+        custom_id: order.intentId,
+        description: order.reference,
       }],
       application_context: {
         return_url: cfg.return_url,
