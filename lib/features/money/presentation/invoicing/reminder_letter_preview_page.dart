@@ -45,7 +45,7 @@ class ReminderLetterPreviewPage extends StatelessWidget {
               child: FittedBox(
                 fit: BoxFit.fitWidth,
                 child: Container(
-                  width: ReportPage.width,
+                  width: ReportPage.widthOf(report.paper),
                   color: ReportPage.paper,
                   padding: ReportPage.margins,
                   child: ReportBlocksView(report: report, images: images),

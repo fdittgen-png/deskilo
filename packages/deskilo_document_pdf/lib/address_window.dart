@@ -13,17 +13,10 @@ const double _mm = 72 / 25.4;
 /// The address field, in page coordinates.
 ///
 /// 45 mm from the top (50 mm is the outer limit an aperture tolerates)
-/// and a 85 × 40 mm rectangle. The width and height are the APERTURE:
-/// everything drawn must fit inside them or it is behind cardboard.
+/// and a 85 × 40 mm rectangle ([AddressWindowMillimetres.fieldOn]). The width
+/// and height are the APERTURE: everything drawn must fit inside them or it
+/// is behind cardboard.
 const double addressWindowTop = addressWindowTopMm * _mm;
-const double addressWindowWidth = addressWindowWidthMm * _mm;
-const double addressWindowHeight = addressWindowHeightMm * _mm;
-
-/// Where the document's own content resumes — 90 mm, below BOTH the
-/// field and the tolerance band under it. The invoice identification
-/// (the word "Facture", the number, the dates) starts here, so this is
-/// the first line of the body and not a matter of taste.
-const double addressWindowFlowResume = addressWindowFlowResumeMm * _mm;
 
 /// The page margin: 20 mm from the top and left edges, which is where
 /// the sender block sits. The letterhead therefore has the 25 mm

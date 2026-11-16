@@ -4,13 +4,14 @@
 //
 // Renders the CURRENT (unsaved) layout XML against the same data the
 // band preview uses, resolves the images it names from the library, and
-// shows one A4 sheet through the mirror. A layout that cannot be read
+// shows one sheet of the document's paper through the mirror. A layout that cannot be read
 // says where and why, in the dialog — the same message `check` prints —
 // rather than showing a blank page.
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/layout_model.dart';
 import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -27,11 +28,15 @@ Future<void> showLayoutQuickPreview(
   WidgetRef ref, {
   required String layoutXml,
   required Map<String, Object?> data,
+
+  /// #4119 -- the paper the document is printed on; null keeps the design's own.
+  Paper? paper,
 }) async {
   final l10n = context.l10n;
   LayoutDocument document;
   try {
-    document = renderLayoutDocument(layoutXml, data);
+    final made = renderLayoutDocument(layoutXml, data);
+    document = paper == null ? made : made.onPaper(paper);
   } on LayoutException catch (e, st) {
     // trace-exempt: an unreadable layout is shown to the designer with
     // its element path — the same words `check` prints — not traced.
