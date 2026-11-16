@@ -57,7 +57,7 @@ const Map<String, McpOperationSpec> mcpOperations = {
       'limit': McpField(McpFieldType.integer, min: 1, max: 100),
       'cursor': McpField(McpFieldType.text, maxLength: 400),
     },
-    output: ['items', 'reservation_id', 'seat_id', 'desk_id', 'office_id', 'level_id', 'label', 'starts_at', 'ends_at', 'status', 'next_cursor'], group: 'own',
+    output: ['items', 'reservation_id', 'seat_id', 'desk_id', 'office_id', 'level_id', 'label', 'starts_at', 'ends_at', 'status', 'next_cursor', 'unreadable'], group: 'own',
   ),
   'get_place': McpOperationSpec(
     id: 'get_place', rpc: null, handler: true, dispatch: true,
