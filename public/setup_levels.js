@@ -21,33 +21,60 @@ const levelIds=p=>(LEVELS.processes.find(x=>x.key===p)?.levels||[]).map(l=>l.id)
 const levelRank=(p,id)=>levelIds(p).indexOf(id);
 // The first rule of each process that holds: a rule without questions
 // always does — recommendSetupLevels, read from the same rules.
-function recommendLevels(answers){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>!x.any.length||x.any.some(q=>answers[q]===true));out[p]={level:r.level,reason:r.reason}}return out}
+// A rule may hold only for a business that books places (places:true) or books
+// none (places:false) — recommendSetupLevels(booksPlaces:) (#3702).
+function recommendLevels(answers,booksPlaces=!!S.features.placeBooking){const out={};for(const[p,rules]of Object.entries(LEVELS.rules)){const r=rules.find(x=>(x.places===undefined||x.places===booksPlaces)&&(!x.any.length||x.any.some(q=>answers[q]===true)));out[p]={level:r.level,reason:r.reason}}return out}
+// The processes whose rules name a question: one answer recomputes only these.
+const processesNaming=q=>new Set(Object.entries(LEVELS.rules).filter(([,rules])=>rules.some(r=>r.any.includes(q))).map(([p])=>p));
 // Each process's level as the switches say: the highest whose switches and
 // every lower level's are all ticked — currentSetupLevels.
-function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]))break;reached=l.id}out[pr.key]=reached}return out}
+function levelsNow(){const out={};for(const pr of LEVELS.processes){let reached=pr.levels[0].id;for(const l of pr.levels){if(!l.features.every(k=>S.features[k]||!availableHere(k)))break;reached=l.id}out[pr.key]=reached}return out}
+// #3300 — a switch the country does not offer is neither ticked nor
+// unticked by a level and never holds one back.
 // A level ticks its switches and every lower level's, and unticks the
 // higher ones' — setupFeatureDelta. The expert view keeps every switch.
 // applyLevels sets the switches of each [process, level] pair in a copy of
 // them and writes it once, with `also`.
 function applyLevels(pairs,also=[]){const f={...S.features};let used=false;
- for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f)f[k]=i<=r}));used=true}
+ for(const[p,id]of pairs){const pr=LEVELS.processes.find(x=>x.key===p);if(!pr)continue;const r=levelRank(p,id);pr.levels.forEach((l,i)=>l.features.forEach(k=>{if(k in f&&availableHere(k))f[k]=i<=r}));used=true}
  setMany([...also,['features',f],...(used?[['journey.used',true]]:[])])}
-function applyLevel(p,id){applyLevels([[p,id]])}
+const chosenLevels=new Map();
+function applyLevel(p,id){chosenLevels.set(p,id);applyLevels([[p,id]])}
 // #3076 — the questions open from what the space already does: a question
 // is yes where its evidence level is reached (setupQuestionEvidence) until
-// the owner has answered; "not sure yet" is no for now, and says so.
+// the owner has answered; unresolved choices preserve the previous value.
 function answersFromLevels(now){const out={};for(const q of LEVELS.questions){const e=LEVELS.evidence[q];out[q]=!!e&&levelRank(e.process,now[e.process])>=levelRank(e.process,e.level)}return out}
 const shownAnswers=()=>S.journey.used?S.journey.answers:answersFromLevels(levelsNow());
 const unknownQs=new Set();
-function markUnknown(q){answerQuestion(q,false);unknownQs.add(q)}
-function unknownNote(q){if(!unknownQs.has(q))return'';const a=shownAnswers(),yes=recommendLevels({...a,[q]:true}),no=recommendLevels({...a,[q]:false});
- return JT('setupAnswerUnknownNote',{list:LEVELS.processes.filter(pr=>yes[pr.key].level!==no[pr.key].level).map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+no[pr.key].level)).join(T('listSep'))})}
-function questionRows(){return LEVELS.questions.flatMap(q=>[checkbox(jw('question',q),null,shownAnswers()[q]===true,v=>answerQuestion(q,v)),
+function markUnknown(q){unknownQs.add(q)}
+function unknownNote(q){return unknownQs.has(q)?JT('setupChoicesNeedsDecision'):''}
+const questionGroups=[
+ ['bookings','setupChoicesBookings',['approve_bookings','several_rooms_or_sites','public_page']],
+ ['money','setupChoicesMoney',['members_owe_money','issue_invoices','pay_online','vat_registered']],
+ ['operations','setupChoicesOperations',['association','keep_books','tracks_purchases','door_tablet','organised']]
+];
+const openQuestionGroups=new Set(['bookings']);
+function questionRows(){return questionGroups.map(([id,title,questions])=>{
+ const d=h('details',{class:'adv',...(openQuestionGroups.has(id)?{open:''}:{})},h('summary',{},JT(title)),
+ ...questions.flatMap(q=>[checkbox(jw('question',q),null,shownAnswers()[q]===true,v=>answerQuestion(q,v)),
  chip(JT('setupAnswerUnknown'),unknownQs.has(q),o=>{if(o)markUnknown(q);else unknownQs.delete(q)}),
- ...(unknownQs.has(q)?[h('p',{class:'hint'},unknownNote(q))]:[])])}
+ ...(unknownQs.has(q)?[h('p',{class:'hint'},unknownNote(q))]:[])]));
+ d.ontoggle=()=>{d.open?openQuestionGroups.add(id):openQuestionGroups.delete(id)};return d})}
+let levelsAdvancedOpen=false;
+function advancedLevels(now,rec,preset){const d=h('details',{class:'adv',...(levelsAdvancedOpen?{open:''}:{})},h('summary',{},JT('setupChoicesAdvanced')),
+ h('p',{},JT('setupLevelsPresets')),
+ h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
+ ...(chosenLevels.size?[h('p',{class:'hint'},JT('setupChoicesManual')),h('button',{class:'btn ghost',type:'button',onclick:()=>{chosenLevels.clear();applyLevels(Object.entries(recommendLevels(shownAnswers())).map(([p,r])=>[p,r.level]));render()}},JT('setupChoicesReset'))]:[]),
+ ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)));
+ d.ontoggle=()=>{levelsAdvancedOpen=d.open};return d}
+// A recomputed level is never set below what a level that stays needs
+// (holdRecomputedAtNeeds): money is not lowered under invoices while tax stays at vat.
+function holdAtNeeds(pairs,named){const vec={...levelsNow()};pairs.forEach(([p,l])=>{vec[p]=l});
+ for(const pr of LEVELS.processes){if(named.has(pr.key))continue;pr.levels.slice(0,levelRank(pr.key,vec[pr.key])+1).forEach(l=>{for(const[np,min]of Object.entries(l.needs||{}))if(named.has(np)&&levelRank(np,vec[np])<levelRank(np,min))vec[np]=min})}
+ return pairs.map(([p])=>[p,vec[p]])}
 function answerQuestion(q,v){unknownQs.delete(q);const a={...shownAnswers(),[q]:v},rec=recommendLevels(a);
- applyLevels(Object.entries(rec).map(([p,r])=>[p,r.level]),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
-function applyPreset(name){applyLevels(Object.entries(LEVELS.presets[name]||{}))}
+ const named=processesNaming(q);applyLevels(holdAtNeeds(Object.entries(rec).filter(([p])=>named.has(p)).map(([p,r])=>[p,chosenLevels.get(p)??r.level]),named),[['journey.answers',Object.fromEntries(Object.entries(a).filter(([,x])=>x))]])}
+function applyPreset(name){chosenLevels.clear();for(const[p,l]of Object.entries(LEVELS.presets[name]||{}))chosenLevels.set(p,l);applyLevels([...chosenLevels])}
 const presetOf=now=>Object.keys(LEVELS.presets).find(n=>LEVELS.processes.every(pr=>LEVELS.presets[n][pr.key]===now[pr.key]))||'';
 // What a vector lacks: each chosen level (and those below it) whose needs
 // another process does not meet — setupVectorGaps.
@@ -67,5 +94,5 @@ function obligationsCard(lbl){const rows=OBLIGATIONS[S.country]||[];
 function levelSelect(pr,now,rec){const s=h('select');for(const l of pr.levels)s.append(h('option',{value:l.id},jw('level',pr.key+'_'+l.id)));s.value=now[pr.key];
  s.onchange=()=>{applyLevel(pr.key,s.value);render()};s.setAttribute('aria-label',jw('process',pr.key));
  const why=S.journey.used&&rec[pr.key]&&rec[pr.key].level===now[pr.key]?jw('reason',rec[pr.key].reason):'';
- return h('div',{},h('label',{},jw('process',pr.key)),s,why?h('p',{class:'hint'},why):null)}
+ return h('div',{},h('label',{},jw('process',pr.key)),s,h('p',{class:'hint'},jw('outcome',pr.key+'_'+now[pr.key])),why?h('p',{class:'hint'},why):null)}
 

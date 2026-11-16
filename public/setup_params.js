@@ -52,6 +52,8 @@ const DIR_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','opt
 // #2556 — the inbox's page per source (messaging.inbox_page_size, 1..100).
 const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}]];
 // #2578 — rows per page of a figure's detail (bi.detail_page_size, 10..200).
+// #3648 — the day a week starts on where a member chose none (locale.default_week_start).
+const WEEK_START=[['locale','weekStartLocale'],['monday','weekStartMonday'],['sunday','weekStartSunday'],['saturday','weekStartSaturday']];
 const BI_DETAIL_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}],['200','optEntries',{n:200}]];
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
@@ -63,6 +65,9 @@ const FED_ANSWER_WAIT=[['30','optSeconds',{n:30}],['60','optOneMinute'],['120','
 // purchase.supplier_lookup_timeout_seconds 3..30 s and
 // purchase.supplier_lookup_per_minute 1..120).
 const SUP_LOOKUP_WAIT=[['5','optSeconds',{n:5}],['10','optSeconds',{n:10}],['15','optSeconds',{n:15}],['30','optSeconds',{n:30}]];
+// #3675 — where badge sign-in works (workspace setting
+// security.badge_signin_where), while kiosk enrolment is on.
+const BADGE_WHERE=[['enrolled_kiosks','badgeWhereKiosks'],['any_device','badgeWhereAnyDevice']];
 const SUP_LOOKUP_RATE=[['5','optPerMinute',{n:5}],['10','optPerMinute',{n:10}],['20','optPerMinute',{n:20}],['60','optPerMinute',{n:60}],['120','optPerMinute',{n:120}]];
 // #2571 — a US space's own longer retention (workspace setting
 // retention.us_years, 0..30 years; it extends the rule, never shortens it).
@@ -92,6 +97,13 @@ const GRAN=[['half_day','granHalfDay'],['full_day','granFullDay'],['hours','gran
 const granName=v=>{const g=GRAN.find(x=>x[0]===v);return g?T(g[1]):''};
 const LANGS=[['','langSenderApp'],['fr'],['en'],['de'],['es'],['it']];
 const langOpts=()=>LANGS.map(([v,k])=>[v,k?T(k):ENDONYMS[v]]);
+// #3852 — the paper choices of the country's row: '' follows the country,
+// then the papers it allows when there are several; the hint says why when
+// there is one only.
+const paperName=p=>T(p==='Letter'?'identityPaperLetter':'identityPaperA4');
+const paperCountry=()=>COUNTRIES.find(c=>c[0]===(S&&S.country))||['','','','','A4',['A4','Letter']];
+const paperOpts=()=>{const c=paperCountry();return[['',T('identityPaperFollows',{paper:paperName(c[4]),country:countryName(c[0])})],...(c[5].length>1?c[5].map(p=>[p,paperName(p)]):[])]};
+const paperHint=()=>{const c=paperCountry();return c[5].length>1?T('identityPaperHint'):T(PAYMENT_SLIP_COUNTRIES.includes(c[0])?'identityPaperOnlySlip':'identityPaperOnly',{paper:paperName(c[5][0])})};
 const VAT_GROUPS=[['standard','vatGroupStandard'],['intermediate','vatGroupIntermediate'],['reduced','vatGroupReduced'],['super_reduced','vatGroupSuperReduced'],['zero','vatGroupZero'],['exempt','vatGroupExempt'],['not_subject','vatGroupNotSubject'],['deposit','vatGroupDeposit'],['excise','vatGroupExcise']];
 // ISO weekday numbers; the short names come from the browser, in the page language.
 const WD=['1','2','3','4','5','6','7'];
@@ -112,6 +124,7 @@ const PARAM_META=[
  ['name','identityName','text'],['environment','identityEnvironment','enum',()=>ENVIRONMENTS.map(x=>x[0])],
  ['country','identityCountry','enum',()=>COUNTRIES.map(c=>c[0])],['currency','identityCurrency','enum',()=>CURRENCIES.slice()],
  ['timezone','identityTimezone','enum',()=>TIMEZONES.slice()],['language','identityLanguage','enum',()=>LANGS.map(x=>x[0])],
+ ['paper','identityPaper','enum',()=>['','A4','Letter']],
  ['network.roles','networkRoles','enum',()=>NETWORK_ROLES.map(x=>x[0])],['network.homeUrl','networkHomeUrl','text'],['network.homeKey','networkHomeKey','text'],
  ['address','identityAddress','text'],['brandColor','identityBrandColor','color'],
  ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],
@@ -122,13 +135,16 @@ const PARAM_META=[
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],
  ['bi.detailPageSize','biDetailPageSize','enum',()=>BI_DETAIL_PAGE.map(x=>x[0]),{needs:'moneyTab'}],
  ['badgeSecurity.failureLimit','badgeFailureLimit','num',{min:1,max:50}],
+ ['badgeSecurity.signinWhere','badgeSigninWhere','enum',()=>BADGE_WHERE.map(x=>x[0]),{needs:'badgeSignIn'}],
+ // #3824 — whether a move may leave less than nothing at a place (workspace setting stock.allow_negative).
+ ['stock.allowNegative','stockAllowNegative','bool',null,{needs:'stockManagement'}],
  ['supplierLookup.timeout','supLookupWait','enum',()=>SUP_LOOKUP_WAIT.map(x=>x[0])],
  ['supplierLookup.perMinute','supLookupRate','enum',()=>SUP_LOOKUP_RATE.map(x=>x[0])],
  ['retention.usYears','retUsYears','enum',()=>RET_US_YEARS.map(x=>x[0])],
  ['bank.maxBytes','bankMaxBytes','enum',()=>BANK_MAX_BYTES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.maxLines','bankMaxLines','enum',()=>BANK_MAX_LINES.map(x=>x[0]),{needs:'bankImport'}],
  ['bank.matchWindow','bankMatchWindow','enum',()=>BANK_WINDOW.map(x=>x[0]),{needs:'bankImport'}],
- ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['region.currency','regionCurrency','enum',REGION_CURRENCIES],['region.country','regionCountry','enum',()=>COUNTRIES.map(c=>c[0])],['region.locale','regionLocale','enum',()=>FORMAT_LOCALES.slice()],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
+ ['records.hostingCountry','recordsHostingCountry','enum',()=>['',...COUNTRIES.map(c=>c[0])]],['records.craReference','recordsCraReference','text'],['region.currency','regionCurrency','enum',REGION_CURRENCIES],['region.country','regionCountry','enum',()=>COUNTRIES.map(c=>c[0])],['region.locale','regionLocale','enum',()=>FORMAT_LOCALES.slice()],['region.weekStart','regionWeekStart','enum',()=>WEEK_START.map(x=>x[0])],['map.tiles','mapTiles','text'],['map.geocoder','mapGeocoder','text'],
  ['whatsapp','membersWhatsapp','text',null,{needs:'whatsappIntegration'}],
  ['weekdays','availOpenDays','days'],
  ['granularity','availGranularity','enum',(s=S)=>(on('workingHours',s)?GRAN:GRAN.filter(([v])=>v==='half_day'||v==='full_day')).map(x=>x[0])],
@@ -148,18 +164,33 @@ const PARAM_META=[
  ['landTax.option','legalOptionToTax','bool'],['landTax.date','legalOptionDate','date'],['landTax.ref','legalOptionRef','text'],['landTax.bare','legalBareLetting','bool'],['landTax.qst','legalQstNumber','text'],['landTax.quick','legalQuickMethod','bool'],
  ['freeLevel','billingFreeLevel','bool'],
  ['pay.iban','payIbanIntl','text'],['pay.qr_iban','payQrIban','text'],['pay.reference','payReference','text'],['pay.wero','payWero','text'],['pay.lydia','payLydia','text'],['pay.wise','payWise','text'],
+ ['businessKind','identityBusinessKind','enum',()=>['coworking','studio','practice','salon','service']],
  ['org','legalOrg','enum',()=>['association','company']],['customerCapacity','legalCustomerCapacity','enum',()=>['','business','consumer']],
  ['vatRegime','legalVatRegime','enum',()=>['not_subject','exempt','registered']],['vatExigibility','legalVatExigibility','enum',()=>VATEXIGIBILITY.map(x=>x[0])],
  ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
  ['numbering.reset','numReset','enum',(s=S)=>resetsFor(s)],
  ['memberNumbering.prefix','fieldPrefix','text'],['memberNumbering.digits','fieldDigits','int',{min:1}],
- ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],
+ ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],['subdivision','fieldRegion','text'],
  ['mentions.legalForm','mentionLegalForm','text'],['mentions.terms','mentionTerms','text'],['mentions.penalty','mentionPenalty','text'],['mentions.recovery','mentionRecovery','text'],['mentions.escompte','mentionEscompte','text'],['mentions.insurance','mentionInsurance','text'],['mentions.special','mentionSpecial','text'],
  ['reminders.levels','dunningLevels','int',{min:0},{needs:'dunning'}],['reminders.firstDays','dunningFirstDays','int',{min:0},{needs:'dunning'}],['reminders.betweenDays','dunningBetweenDays','int',{min:0},{needs:'dunning'}],
  ['reminders.automatic','dunningAutomatic','bool',null,{needs:'paymentReminders'}],
  ['validation.required','rolesRequired','int',{min:1}],['validation.ownerSignOff','rolesOwnerAlways','bool'],
  ['autoValidate.owner','rolesAutoOwner','bool'],['autoValidate.admin','rolesAutoAdmin','bool'],
 ];
+// #3904 — the answers marked secret (the e-invoice tokens) stay in this tab:
+// what the page keeps in the browser's storage carries them empty, so after a
+// reload they are not set until typed again or imported from the file.
+const SECRET_PATHS=PARAM_META.filter(m=>m[4]&&m[4].secret).map(m=>m[0]);
+function persistable(s){
+ if(!s||typeof s!=='object')return s;
+ const out=JSON.parse(JSON.stringify(s));
+ for(const path of SECRET_PATHS){const keys=path.split('.');const last=keys.pop();
+  const o=keys.reduce((a,k)=>a&&typeof a==='object'?a[k]:undefined,out);
+  if(o&&typeof o==='object'&&last in o)o[last]=''}
+ return out}
+// Answers kept by an earlier version of the page lose their secrets before
+// the page reads them.
+try{const kept=localStorage.getItem(LS);if(kept)localStorage.setItem(LS,JSON.stringify(persistable(JSON.parse(kept))))}catch(e){}
 // Answers the tools do not set one by one, and why. Lists of records
 // (floor plan, members, tariffs, rates) and the permission matrix are
 // edited in the UI; the VAT rates are offered through seedVatRates.
@@ -178,7 +209,7 @@ const PARAM_EXCLUDED={
 // never read by the app (secrets never travel). Keyed by the answer's path;
 // what is not listed is applied by the import. The review step lists every
 // 'app' and 'file' answer as what remains to do in the app.
-const DEST={name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
+const DEST={businessKind:'app',name:'app',environment:'app',network:'app',enrolment:'app',directory:'app',federation:'app',inbox:'app',supplierLookup:'app',badgeSecurity:'app',stock:'app',retention:'app',bank:'app',records:'app',map:'app',region:'app',bi:'app',members:'app',einvoice:'file'};
 const DEST_TEXT={import:['destImport','destImportHint'],app:['destApp','destAppHint'],file:['destFile','destFileHint']};
 const destOf=path=>DEST[String(path||'').split('.')[0]]||'import';
 // Where each answer lives in the app, and the guide section that explains it
@@ -187,7 +218,9 @@ const HELP={
  identity:['helpAppIdentity','user.space.overview'],
  region:['helpAppRegion','user.workspace.settings.currency-timezone'],
  language:['helpAppLanguage','user.workspace.settings.language'],
+ paper:['helpAppPaper','user.workspace.settings.paper'],
  features:['helpAppFeatures','user.features.processes'],
+ businessKind:['helpAppBusinessKind','user.workspace.settings.business-kind'],
  availability:['helpAppAvailability','user.workspace.availability.open-weekdays'],
  hours:['helpAppHours','user.workspace.availability.working-hours'],
  booking:['helpAppBooking','user.workspace.availability.policies'],

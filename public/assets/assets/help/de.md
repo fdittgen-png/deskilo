@@ -408,6 +408,31 @@ Sie sind in einem Space und möchten einen Bildschirm erreichen. Alles liegt in 
 
 **Siehe auch:** [Navigationsstil](help:user.profile.settings.navigation) · [Ich: Ihr Zuhause und Ihre Spaces](help:user.me.home)
 
+### Der Überblick über den Raum
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zahlen, die Sie lesen dürfen.
+
+<!-- image: user-start-workspace-overview -->
+
+**Schritte**
+
+1. Öffnen Sie [Überblick](app:/workspace-overview).
+2. Lesen Sie **Zu erledigen**: was auf Sie wartet, und eine Zeile, die die Anfragen zählt, über die im Raum noch niemand entschieden hat. „Nichts wartet auf Sie“ heißt, dass nichts ansteht.
+3. Lesen Sie **Kennzahlen**, gruppiert nach **Kapazität**, **Verkauf**, **Einkauf**, **Geld** und **Personen**. Tippen Sie auf eine Kachel, um zu öffnen, woher ihre Zahl kommt.
+4. Tippen Sie auf **Anpassen**, um die gewünschten Kacheln in Ihrer Reihenfolge anzuheften.
+5. Tippen Sie auf **Alle Kennzahlen** für die vollständige Analyseseite.
+
+**Gut zu wissen**
+
+- Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
+- **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
+- **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.
+- Der Inhaber schaltet die Seite unter den Funktionen als **Überblick über den Raum** ein. Ist sie aus, bleiben die Aufmerksamkeitsliste und die Analyseseite, wie sie sind.
+
+**Siehe auch:** [Sich zurechtfinden](help:user.start.navigation)
+
 ### Die Karte „Erste Schritte“ und die Tipps
 
 **Zielgruppe:** Alle
@@ -1834,6 +1859,7 @@ Sie möchten sich durch Scannen Ihres Badges anmelden, statt Ihre E-Mail einzuti
 - Die Zeile lautet **Noch keine PIN** oder **PIN gesetzt**.
 - Nur Sie können sie festlegen, und niemand, auch kein Inhaber, kann sie wieder auslesen.
 - **PIN ändern** ersetzt sie; **PIN entfernen** schaltet die Badge-Anmeldung für alle Ihre Badges aus.
+- Ein Badge meldet Sie in seinem eigenen Bereich an. Wer einen anderen Bereich besitzt oder verwaltet, meldet sich mit dem Passwort an, nicht mit dem Badge.
 
 **Siehe auch:** [Ihr Badge](help:user.profile.settings.badge)
 
@@ -2064,6 +2090,25 @@ Sie möchten Punkt für Punkt entscheiden, wer Ihren Namen, Ihre Kurzbiografie, 
 - **Alle Angemeldeten** wird nur für manche Einträge angeboten, etwa **Name und Foto** und **Beruf und Kurzprofil**. **WhatsApp und E-Mail** und **Heute im Space** gehen nie über Ihre eigenen Spaces hinaus.
 
 **Siehe auch:** [Öffentliches Profil](help:user.privacy.public-profile) · [Wer meine Daten sehen kann](help:user.privacy.visibility)
+
+### Was ein Betrieb sieht, dem Sie beitreten
+
+**Zielgruppe:** Alle
+
+Sie möchten wissen, was ein Betrieb über Sie erfährt, wenn Sie den Beitritt anfragen, und sobald Sie Mitglied sind.
+
+**Schritte**
+
+1. Öffnen Sie [Ich](app:/me?tab=me) und scrollen Sie zu **Datenschutz**.
+2. Tippen Sie auf **Was ein Betrieb sieht, dem Sie beitreten**.
+
+**Gut zu wissen**
+
+- Wenn Sie den Beitritt anfragen, sieht der Betrieb Ihren Namen und Ihr Foto. Ihre E-Mail-Adresse wird mit der Anfrage nicht gezeigt.
+- Als Mitglied sehen alle im Bereich Ihren Namen und Ihr Foto. Ihre WhatsApp-Nummer, Ihr Status und wann Sie zuletzt da waren folgen Ihrer Wahl unter **Wer mich sieht**.
+- Die Administratoren, die Ihnen Rechnungen stellen oder das Mitgliederverzeichnis führen, sehen, was sie zum Abrechnen brauchen: Name, Firma, Adresse, Telefon, E-Mail, USt-IdNr., rechtliche Kennung und bevorzugte Sprache. Ihren Geburtstag sehen, wenn Sie ihn angegeben haben, nur die, die das Mitgliederverzeichnis führen.
+
+**Siehe auch:** [Wählen, wer mich sieht](help:user.privacy.audiences)
 
 ### Ein öffentliches Profil veröffentlichen
 
@@ -2509,6 +2554,28 @@ Sie haben etwas für den Raum bezahlt und möchten, dass der Workspace es Ihnen 
 
 **Siehe auch:** [Eine Ausgabe genehmigen oder ablehnen](help:user.money.expense.approve)
 
+### Die Umsatzsteuer einer Ausgabe
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Eine Ausgabe enthält Umsatzsteuer, und der Raum soll den richtigen Teil davon abziehen.
+
+**Schritte**
+
+1. Wählen Sie im Ausgabenformular, oder in **Geplante Ausgaben**, die **Umsatzsteuer auf diese Ausgabe**: einen Satz, oder **Ohne Umsatzsteuer**.
+2. Geben Sie den **Abziehbarer Anteil (%)** ein: 100, außer ein Teil der Ausgabe ist privat oder dient einer steuerfreien Tätigkeit.
+3. Schalten Sie **Ein Anlagegut** ein für Ausstattung, die der Raum behält und abschreibt.
+4. Für eine im Ausland gekaufte Leistung ohne Steuer Ihres Landes schalten Sie **Bei einem Lieferanten im Ausland gekauft** ein. Der eingegebene Betrag ist dann die Bemessungsgrundlage: Der Raum schuldet darauf die Bezugsteuer und zieht seinen Anteil ab.
+
+**Gut zu wissen**
+
+- Die Felder erscheinen, wenn der Raum umsatzsteuerpflichtig ist und **Vorsteuer** eingeschaltet ist.
+- **Bei einem Lieferanten im Ausland gekauft** erscheint nur, wenn die Abrechnung Ihres Landes ein Feld für diese Steuer hat, zum Beispiel die Schweizer Abrechnung (Ziffer 383).
+- Eine geplante Ausgabe fragt einmal, und jedes Vorkommen übernimmt die Antwort.
+- Die abziehbare Steuer zählt im Monat, in dem die Ausgabe genehmigt wird.
+
+**Siehe auch:** [Eine Ausgabe einreichen](help:user.money.expense) · [Die Schweizer Abrechnung: Ziffern 205 und 383](help:user.money.vat.ch-return)
+
 ### Eine Ausgabe genehmigen oder ablehnen
 
 **Zielgruppe:** Administrator:in · Inhaber
@@ -2531,6 +2598,246 @@ Eine Ausgabe wartet, und Sie entscheiden, ob der Workspace sie bezahlt.
 - **Finanzmeldungen** in Finanzen erscheint nur, wenn die Funktion **Ereignis-Tab** eingeschaltet ist.
 
 **Siehe auch:** [Finanzmeldungen](help:user.money.alerts)
+
+### Die Seite Verkauf
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort finden.
+
+<!-- image: user-money-sales -->
+
+**Schritte**
+
+1. Öffnen Sie [Verkauf](app:/money/sales), oder tippen Sie in [Meine Finanzen](app:/money) auf **Verkauf**.
+2. Tippen Sie auf **Leistungen**, um zu ändern, was Mitglieder kaufen können. Die Zeile erscheint, wenn Sie die Leistungen verwalten dürfen.
+3. Tippen Sie auf **Rechnungen**, um Rechnungen auszustellen und zu verfolgen.
+4. Tippen Sie auf **Gästepässe** für die am Empfang verkauften Pässe, wenn der Raum welche verkauft.
+5. Tippen Sie auf **Rechnungsregister** für die Liste aller ausgestellten Rechnungen, oder auf **Tarife und Pakete**, um die Preise zu ändern. **Tarife und Pakete** erscheint, wenn Sie die Abrechnungsregeln verwalten dürfen.
+
+**Gut zu wissen**
+
+- Jede Zeile öffnet den Bildschirm, den sie immer geöffnet hat, mit denselben Rechten. Die Seite fasst sie nur zusammen.
+- Die Seite erscheint, wenn die Rechnungsstellung im Raum eingeschaltet ist und Sie Administrator:in sind.
+
+**Siehe auch:** [Rechnungsstellung im Überblick](help:user.money.invoicing) · [Die Seite Einkauf und Einkauf / Ausgabe hinzufügen](help:user.money.purchases)
+
+### Einen Gästepass verkaufen und widerrufen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Gast, der kein Mitglied ist, nimmt einen Platz für einen Tag oder einige Stunden, zahlt am Empfang und erhält eine Rechnung.
+
+<!-- image: user-money-guest-passes -->
+
+**Schritte**
+
+1. Öffnen Sie [Gästepässe](app:/money/guest-passes) oder **Gästepässe** auf der Seite [Verkauf](app:/money/sales).
+2. Tippen Sie beim ersten Mal auf **Pass hinzufügen**: sein **Name**, **Pro Tag** oder **Pro Stunde**, der **Preis pro Einheit** und **Im Verkauf**.
+3. Tippen Sie auf **Pass verkaufen**, wählen Sie den **Pass** und den **Platz**, die Tage (**Von**, **Bis**) sowie Namen und Kontakt des Gastes, und haken Sie **Am Empfang bezahlt** an, wenn er bezahlt hat.
+4. **Verkaufte Pässe** listet jeden Pass mit dem, was **Genutzt** wurde. Um Pässe zurückzunehmen, wählen Sie sie aus, tippen Sie auf **Widerrufen** und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Der Gast wird kein Mitglied; sein Name und sein Kontakt stehen auf der Rechnung.
+- Widerrufen storniert die Buchungen, die noch nicht begonnen haben. Die schon begonnenen Tage bleiben, und kein Geld bewegt sich: Korrigieren Sie die Rechnung des Gastes auf ihrer Seite, wenn ihm Geld zurücksteht.
+- **Widerrufen, Rechnung nicht korrigiert** listet die widerrufenen Pässe, deren Rechnung noch auf ihre Korrektur wartet; **Rechnung öffnen** bringt Sie dorthin.
+- Ein Stundenpass gilt für einen Tag; ein Tagespass dauert 1 bis 31 Tage.
+
+**Siehe auch:** [Die Seite Verkauf](help:user.money.sales) · [Eine Rechnung verfolgen](help:user.invoicing.open)
+
+### Die Seite Einkauf und Einkauf / Ausgabe hinzufügen
+
+**Zielgruppe:** Mitglied · Administrator:in · Inhaber
+
+Sie haben etwas für den Raum gekauft, oder ein Lieferant hat eine Rechnung geschickt, und Sie möchten es erfassen.
+
+<!-- image: user-money-purchases -->
+
+**Schritte**
+
+1. Öffnen Sie [Einkauf](app:/money/purchases), oder tippen Sie in [Meine Finanzen](app:/money) auf **Einkauf**.
+2. Tippen Sie auf **Einkauf / Ausgabe hinzufügen**.
+3. Wenn Sie Lieferantenrechnungen erfassen dürfen, beantworten Sie **Wer hat bezahlt?**:
+   - **Ich habe selbst bezahlt**: Das Ausgabenformular öffnet sich. Nach der Genehmigung schuldet der Raum Ihnen den Betrag.
+   - **Noch nicht bezahlt**: eine Lieferantenrechnung, die der Raum noch bezahlen muss.
+   - **Der Raum hat schon bezahlt**: Erfassen Sie die Rechnung. Nach der Genehmigung erfassen Sie ihre Zahlung unter **Zu zahlen**.
+4. Füllen Sie das Formular aus, das sich öffnet, und speichern Sie es.
+
+**Gut zu wissen**
+
+- Ohne das Recht, Lieferantenrechnungen zu erfassen, entfällt die Frage, und das Ausgabenformular öffnet sich.
+- Die übrigen Schaltflächen der Seite öffnen **Lieferanten**, **Einkäufe** (die Liste der Einkaufsbelege), den Mietvertrag, die Ausstattung und die angemieteten Räume, jeweils wenn der Raum sie nutzt.
+- **Einkäufe** listet Lieferantenrechnungen und die Belege, die Mitglieder für den Raum bezahlt haben, jeweils ein Beleg. Die Reiter heißen **Belege** und **Zu zahlen**.
+
+**Siehe auch:** [Eine Ausgabe einreichen](help:user.money.expense) · [Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung](help:user.money.purchases.bills)
+
+### Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Ein Lieferant hat eine Rechnung geschickt, und der Raum soll sie schulden, mit der Genehmigung einer zweiten Person.
+
+**Schritte**
+
+1. Tippen Sie in **Einkäufe** auf **Lieferantenrechnung hinzufügen**, oder nutzen Sie **Einkauf / Ausgabe hinzufügen**.
+2. Wählen Sie den **Lieferant** und geben Sie die **Rechnungsnummer**, die Positionen und den Betrag **Gesamt** ein. Eine unvollständig gespeicherte Rechnung bleibt ein Entwurf: „Ein Entwurf: Reichen Sie ihn zur Genehmigung ein, wenn er vollständig ist.“
+3. Tippen Sie auf **Zur Genehmigung einreichen**.
+4. Eine andere Person öffnet [Lieferantenrechnungen zur Genehmigung](app:/money/purchases/approvals) und tippt auf **Genehmigen**, oder auf **Ablehnen** mit Begründung.
+5. Nach der Genehmigung schuldet der Raum dem Lieferanten die Rechnung, bis sie bezahlt ist.
+
+**Gut zu wissen**
+
+- Eine Rechnung braucht ihren Lieferanten und einen Betrag, bevor sie eingereicht werden kann.
+- Wer eine Rechnung eingereicht hat, kann nicht über sie entscheiden. In den Einstellungen des Raums erlaubt **Rechnungen, die eine Person freigeben darf, unter (Währungseinheiten)** dieser Person, kleine Rechnungen zu genehmigen, wenn sie Ausgaben genehmigen darf. 0 behält die Regel bei, dass eine andere Person jede Rechnung genehmigt. Ablehnen braucht immer eine andere Person.
+- Jeder Beleg zeigt seine Genehmigung, seine Begleichung (**Unbezahlt**, **Teilweise beglichen**, **Beglichen**, **Nichts geschuldet**) und seinen Buchhaltungsstand getrennt.
+- Eine Rechnung zu erfassen braucht **Lieferantenrechnungen erfassen**. Über sie zu entscheiden braucht **Ausgaben genehmigen**.
+
+**Siehe auch:** [Was der Raum schuldet: Zu zahlen](help:user.money.purchases.to-pay) · [Lieferantensalden](help:user.money.suppliers.balance)
+
+### Was der Raum schuldet: Zu zahlen
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten sehen, was der Raum noch schuldet, und erfassen, was bezahlt wurde.
+
+**Schritte**
+
+1. Öffnen Sie in **Einkäufe** den Reiter **Zu zahlen**, oder öffnen Sie [Geld](app:/money/cash) und tippen Sie auf **Zu zahlen**.
+2. Lesen Sie **Lieferanten geschuldet** für genehmigte Rechnungen und **Den Mitgliedern geschuldet** für die Erstattungen genehmigter Belege.
+3. Tippen Sie in einer Zeile auf **Zahlung erfassen**. Geben Sie den **Gezahlter Betrag**, das Datum (**Bezahlt am**), die **Zahlungsart** und, wenn Sie möchten, eine **Referenz (optional)** ein.
+4. Für ein Mitglied, das dem Raum ebenfalls Geld schuldet, tippen Sie stattdessen auf **Mit einer Rechnung verrechnen**. Wählen Sie die **Rechnung**: Die Forderung begleicht diese offene Rechnung, statt ausgezahlt zu werden.
+5. Um eine Lieferantengutschrift anzuwenden, tippen Sie bei der Gutschrift auf **Auf die Rechnung anwenden**.
+
+**Gut zu wissen**
+
+- Erfassen Sie nur Geld, das tatsächlich gezahlt wurde. Die Zahlung wird von Ihnen gemeldet; die Bank bestätigt sie nicht.
+- Eine falsche Zahlung wird nie gelöscht. Tippen Sie auf **Stornieren** und nennen Sie den Grund. Eine Zahlung, die schon einer Rechnung zugeordnet ist, kann nicht storniert werden.
+- Eine Verrechnung lässt Umsatz und Umsatzsteuer der Rechnung unverändert; nur ihre Zahlung wird erklärt.
+- Eine Gutschrift wendet eine andere Person an als die, die sie erfasst hat, und zwar auf eine genehmigte Rechnung desselben Lieferanten, die noch mindestens diesen Betrag schuldet.
+- In den Einstellungen des Raums bedeutet **Zahlungen, die eine zweite Person erfasst, ab (Währungseinheiten)**: Eine Zahlung ab diesem Betrag kann nicht von der Person erfasst werden, die die bezahlte Rechnung genehmigt hat. 0 schaltet die Regel aus.
+- Eine Zahlung zu erfassen braucht **Zahlungen an Mitglieder erfassen**; eine Verrechnung braucht **Rechnungen ausstellen & Zahlungen zuordnen**.
+
+**Siehe auch:** [Die Seite Geld](help:user.money.cash)
+
+### Der Mietvertrag der Räume
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum mietet seine Räumlichkeiten, und Sie möchten Miete und Nebenkosten einmal erfassen, mit ihrem Verlauf.
+
+<!-- image: user-money-purchases-lease -->
+
+**Schritte**
+
+1. Öffnen Sie [Einkauf](app:/money/purchases) und tippen Sie auf **Mietvertrag**.
+2. Tippen Sie auf **Mietvertrag hinzufügen**. Wählen Sie den **Vermieter (ein Lieferant)**, schreiben Sie die **Räume (Adresse)** und den **Beginn**. Ergänzen Sie **Fest bis**, **Kündigungsfrist in Monaten**, die **Kaution** und eine **Indexierung (Notiz)**, wenn der Vertrag sie vorsieht.
+3. Tippen Sie unter **Miete und Nebenkosten** auf **Neuer Betrag**. Wählen Sie die **Kostenart** (**Miete**, **Nebenkostenvorauszahlung** oder **Andere Kosten**), den **Betrag**, den Rhythmus (**Zahlung**) und den Starttag (**Ab**).
+4. Ändert sich die Miete, fügen Sie ab ihrem Datum einen **Neuer Betrag** hinzu. Er ersetzt den geltenden Betrag; der frühere bleibt im Verlauf.
+5. Um den Vertrag zu beenden, tippen Sie auf **Kündigen**. Geben Sie **Gekündigt am**, **Der Vertrag endet am** und **Warum endet er?** ein.
+6. Rechnet der Vermieter die Nebenkosten des Jahres ab, tippen Sie auf **Nebenkosten abrechnen**. Geben Sie den Zeitraum, den **Abgerechneter Betrag** und den Zahltag (**Fällig am**) ein.
+
+**Gut zu wissen**
+
+- Erfassen Sie den Vermieter zuerst als Lieferanten.
+- Nach der Kündigung enden die geplanten Beträge am Vertragsende. Bereits vorgelegte Fälligkeiten bleiben erhalten.
+- Eine Abrechnung zieht die im Zeitraum gezahlten Vorauszahlungen ab: Ein Saldo ist am gewählten Tag fällig, ein Überschuss wird als Gutschrift erfasst. Ein Zeitraum wird nur einmal abgerechnet.
+- Den Vertrag zu erfassen braucht **Mietvertrag der Räume erfassen**; der Raum muss **Mietvertrag der Räume** eingeschaltet haben.
+
+**Siehe auch:** [Mietfälligkeiten und die Rechnungen, die sie decken](help:user.money.purchases.commitments) · [Lieferantensalden](help:user.money.suppliers.balance)
+
+### Mietfälligkeiten und die Rechnungen, die sie decken
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Mietvertrag oder ein gemieteter Raum erwartet jeden Monat Miete, und Sie möchten jeden Monat der Rechnung des Vermieters zuordnen, ohne die Kosten doppelt zu zählen.
+
+**Schritte**
+
+1. Tippen Sie in **Mietvertrag** oder **Gemietete Räume** auf **Fälligkeiten**.
+2. Lesen Sie jeden Monat: **Erwartet**, **Teilweise zugeordnet** oder **Zugeordnet**.
+3. Tippen Sie bei einem Monat auf **Rechnung zuordnen**. Wählen Sie die **Rechnung** und die **Zeile der Rechnung** und geben Sie den **Gedeckter Betrag** ein.
+4. Weicht die Rechnung von dem ab, was der Monat erwartet, tippen Sie auf **Abweichung akzeptieren** und schreiben Sie **Warum die Rechnung abweicht**.
+5. Eine falsche Zuordnung machen Sie mit **Rückgängig** und Begründung rückgängig.
+
+**Gut zu wissen**
+
+- Eine einem Monat zugeordnete Rechnung ersetzt dessen Erwartung; sie fügt nie zweite Kosten hinzu.
+- Zuordnen lassen sich nur offene oder genehmigte Lieferantenrechnungen des Vermieters, bis zu dem, was der Monat noch erwartet.
+- Eine akzeptierte Abweichung geht an die Validierenden: Nichts ändert sich, bevor sie entscheiden.
+
+**Siehe auch:** [Der Mietvertrag der Räume](help:user.money.purchases.lease) · [Gemietete Räume](help:user.money.purchases.rented-rooms)
+
+### Gemietete Räume
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum mietet Räume bei einem Vermieter, und Mitglieder sollen sie nur während der Miete buchen, und nur die Mitglieder, die Sie wählen.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Schritte**
+
+1. Markieren Sie im Grundriss die Etage als gemietet: Unter **Etagen** steht „Gemietete Etage: Ihre Räume sind nur innerhalb einer Miete buchbar“.
+2. Öffnen Sie [Einkauf](app:/money/purchases), tippen Sie auf **Gemietete Räume** und bei einem Raum auf **Diesen Raum mieten**.
+3. Wählen Sie den **Vermieter**, den **Erster Tag** und, wenn die Miete endet, den **Letzter Tag (optional)**. Geben Sie die **Monatliche Kosten für den Space** und die **Gebühr pro Halbtag für ein Mitglied (optional)** ein.
+4. Wählen Sie, wer buchen darf: **Für alle Mitglieder offen**, oder **Zusätzlich offen für diese Mitglieder**, **Zusätzlich offen für diese Rollen** oder **Zusätzlich offen für diese Tarife**, jeweils mit eigener Gebühr, wenn Sie möchten.
+5. Setzen Sie den **Status** auf **Aktiv: buchbar** und tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Ein gemieteter Raum ist nur während seiner Mietzeit buchbar, und nur für die gewählten Personen. Sonst sieht ihn niemand.
+- Solange der Status **Entwurf: nicht buchbar** ist, kann niemand buchen. Ist die Miete **Beendet**, ist der Raum bis zu einer neuen Miete nicht buchbar.
+- Die monatlichen Kosten erscheinen unter **Fälligkeiten**, um sie den Rechnungen des Vermieters zuzuordnen.
+- Gemietete Räume zu verwalten braucht **Standorte verwalten und den Grundriss bearbeiten**; der Raum muss **Gemietete Räume** eingeschaltet haben.
+
+**Siehe auch:** [Mietfälligkeiten und die Rechnungen, die sie decken](help:user.money.purchases.commitments)
+
+### Das Anlagenverzeichnis
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Der Raum hat langlebige Ausstattung gekauft, und Sie möchten sie erfassen und so behandeln, wie Ihre Steuerberatung entscheidet.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Schritte**
+
+1. Klassifizieren Sie die Zeile beim Einkauf als langlebige Ausstattung.
+2. Öffnen Sie [Einkauf](app:/money/purchases), tippen Sie auf **Anlagen** und dann auf **Anlage erfassen**. Wählen Sie die **Einkaufszeile** und geben Sie die **Bezeichnung der Anlage** ein.
+3. Tippen Sie auf **Behandlung festlegen**. Wählen Sie **Als Anlage aktivieren** oder **Als Aufwand buchen**, schreiben Sie die **Grundlage der Entscheidung** und ergänzen Sie **Nutzungsbereit seit** nur, wenn Sie es wissen.
+4. Um die Zahlen Ihrer Steuerberatung festzuhalten, tippen Sie auf **Bewertungen des Steuerberaters** und **Datei importieren** (oder **Einen Vermögenswert erfassen**). Prüfen Sie die Vorschau und tippen Sie auf **Bestätigen**.
+
+**Gut zu wissen**
+
+- Jedes Stück zeigt seinen Stand: **Behandlung offen**, **Aktiviert, in Gebrauch**, **Als Aufwand gebucht** oder **Ausgeschieden**.
+- Die Kosten stehen fest, sobald der abziehbare Vorsteueranteil des Einkaufs qualifiziert ist.
+- Bewertungen sind nur Belege: Aus ihnen wird nichts gebucht, und eine leere Zahl bleibt unbekannt. Ein späterer Stapel ersetzt den früheren und sagt, warum.
+- Erfassen braucht **Lieferantenrechnungen erfassen**; Behandlung und Bewertungen brauchen **Tarife und Abrechnungsregeln verwalten** und **Workspace-Finanzen einsehen**.
+
+**Siehe auch:** [Eine Lieferantenrechnung, von der Erfassung bis zur Genehmigung](help:user.money.purchases.bills)
+
+### Die Seite Geld
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Sie möchten das erfasste Geld sehen, das hereinkam und hinausging, und was noch zu zahlen ist.
+
+<!-- image: user-money-cash -->
+
+**Schritte**
+
+1. Öffnen Sie [Geld](app:/money/cash), oder tippen Sie in [Meine Finanzen](app:/money) auf **Geld**.
+2. Tippen Sie auf **Ein- und Ausgänge nach Monat** für die erfassten Zahlungen, Monat für Monat.
+3. Tippen Sie auf **Zu zahlen** für das, was der Raum noch schuldet.
+4. Tippen Sie auf **Kontoauszüge**, um einen Auszug zu importieren und seine Zeilen zuzuordnen, wenn der Raum sie nutzt.
+
+**Gut zu wissen**
+
+- Die Seite zeigt erfasste Zahlungen, keinen abgestimmten Kontostand.
+- Sie erscheint für Administrator:innen, wenn der Raumstatus oder der Einkauf eingeschaltet ist.
+
+**Siehe auch:** [Was der Raum schuldet: Zu zahlen](help:user.money.purchases.to-pay)
 
 ### Lieferantensalden
 
@@ -2580,24 +2887,23 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 **Zielgruppe:** Abrechnungsadministrator:in · Inhaber
 
-Sie stellen die Rechnungen des ganzen Workspace aus und verfolgen sie nach und möchten wissen, wo Sie anfangen.
+Sie stellen die Rechnungen des ganzen Arbeitsbereichs aus, mahnen sie und möchten wissen, wo Sie anfangen.
 
 ![](assets/help/images/user-money-invoicing.de.b8fa17aa9.jpg)
 
 **Schritte**
 
-1. Öffnen Sie [Rechnungsstellung](app:/invoices).
-2. Lesen Sie die Reiter: **Zu berechnen** listet Mitglieder, die für den Monat noch abzurechnen sind, **Offen** die ausgestellten, unbezahlten Rechnungen und **Archiv** die abgeschlossenen.
-3. Lesen Sie die Zeile mit vier Schritten unter dem Banner: **Auszustellen**, **Einzuziehen**, **Zu bestätigen** und **Abgeschlossen**, jeweils mit einer Anzahl.
-4. Tippen Sie auf **Monatsabschluss-Assistent**, um einen Monat abzurechnen, oder auf **Neue Rechnung** für eine einzelne.
-5. Tippen Sie auf das Werkzeugsymbol für das Rechnungsregister, die Mahnregeln, die PDF-Vorlage der Rechnung und **Meine Finanzen**.
+1. Öffnen Sie die [Rechnungsstellung](app:/invoices).
+2. Lesen Sie **Offen an Sie**: was **Überfällig** und was **Noch nicht fällig** ist.
+3. Arbeiten Sie **Zu tun** ab: Jeder Eintrag öffnet sich mit **Ansehen**, bis dort **Alles ist erledigt.** steht.
+4. Lesen Sie darunter die Kunden und ihre Rechnungen; tippen Sie auf **Neu** für eine einzelne Rechnung und auf **Mehr** für die anderen Werkzeuge.
 
 **Gut zu wissen**
 
-- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird als fehlerhaft markiert und ersetzt.
-- Der vollständige Ablauf vom Monatsabschluss über den Ausgleich bis zu den Erinnerungen steht in Kapitel 08: [Mahnregeln](help:user.money.reminders.rules) und [Die PDF-Vorlage der Rechnung](help:user.money.reports.invoice-template) sind gute Stellen zum Weiterlesen.
+- Rechnungen werden nie bearbeitet oder gelöscht. Eine falsche wird mit einer Ersatzrechnung korrigiert.
+- Der ganze Ablauf, vom Abrechnen des Monats über das Zuordnen der Zahlungen bis zum Auszahlen der Gutschriften, steht in Kapitel 08: Beginnen Sie mit [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub).
 
-**Siehe auch:** [Mahnregeln](help:user.money.reminders.rules)
+**Siehe auch:** [Den Monat abrechnen](help:user.invoicing.month) · [Mahnregeln](help:user.money.reminders.rules)
 
 ## Ihr Space, von Ihnen eingerichtet (Workspace-Einstellungen)
 
@@ -3057,6 +3363,30 @@ Sie möchten eine einzelne Funktion ein- oder ausschalten.
 
 **Siehe auch:** [Ganze Prozesse ein- oder ausschalten](help:user.features.processes)
 
+### Was für ein Unternehmen ist es?
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space und möchten, dass die App dazu passt. Der Einrichtungsleitfaden fragt es im ersten Schritt; hier können Sie es später ändern.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Schritte**
+
+1. Öffnen Sie [Workspace](app:/workspace-settings).
+2. Tippen Sie auf **Was für ein Unternehmen ist es?**, wählen Sie eine Art und kreuzen Sie darunter weitere Arten an, wenn das Unternehmen mehreres ist (optional).
+3. Lesen Sie, was sie **Schaltet ein** und **Schaltet aus**, und tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.
+- Eine Art ohne Plätze schaltet alles rund um Plätze aus — Sitzplätze, Raumplan, Kiosk, Räume. **Alle anzeigen** listet jede Funktion.
+- Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
+- Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
+- Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
+
+**Siehe auch:** [Funktionen](help:user.features.processes)
+
 ### Land
 
 **Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
@@ -3120,6 +3450,60 @@ Sie möchten, dass Einladungen und Dokumente die Sprache Ihrer Gemeinschaft spre
 - Sie ist nicht Ihre eigene App-Sprache. Diese ändert nur, was Sie sehen, und liegt in Ihren persönlichen Einstellungen.
 
 **Siehe auch:** [Einladungstext](help:user.workspace.settings.invitation-message)
+
+### Papier der Dokumente
+
+**Zielgruppe:** Inhaber · Administrator:in mit Berechtigung
+
+Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, das Ihr Land verwendet.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](app:/workspace-settings) unter **Allgemeine Angaben** das **Papier der Dokumente**.
+2. Behalten Sie das in Ihrem Land übliche Papier, oder wählen Sie ein anderes, das es erlaubt.
+3. Tippen Sie auf **Speichern**.
+
+**Gut zu wissen**
+
+- Die USA und Kanada drucken auf US Letter; die anderen Länder auf A4, außer Sie wählen US Letter.
+- In der Schweiz wird nur A4 angeboten: Eine Rechnung endet mit einem Zahlteil auf A4.
+- Auf US Letter steht die Anschrift für einen US-Fensterumschlag #10 (4 1/8 × 9 1/2 Zoll, ein Fenster links): Falten Sie den Brief in drei Teile, das Adressfeld nach außen, und schieben Sie ihn unten in den Umschlag. Ein Fenster links und eines rechts bedeuten beide dieses eine Fenster; der Empfänger hat Platz für fünf Zeilen; eine längere Anschrift steht stattdessen vollständig am Anfang des Textes, und das Fenster bleibt leer.
+- Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde. Ein anderes Papier gilt für die danach ausgestellten Rechnungen.
+- Ein Brief, eine Mahnung, ein Kontoauszug oder ein Bericht wird auf dem Papier gedruckt, das beim Drucken gewählt ist.
+- Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.
+
+**Siehe auch:** [Land](help:user.workspace.settings.country)
+
+### Organisation
+
+**Zielgruppe:** Inhaber
+
+Ihr Unternehmen hat Standorte im Ausland, in einem anderen Land oder einer anderen Währung. Jeder davon ist ein Haus: ein eigenes Unternehmen mit den Regeln seines Landes, seiner Währung und seiner eigenen Buchhaltung. Zusammen bilden sie eine Organisation mit einem Hauptsitz.
+
+**Schritte**
+
+1. Öffnen Sie in [Workspace](app:/workspace-settings) die **Organisation**.
+2. Gehört das Unternehmen noch zu keiner Organisation, tippen Sie auf **Dieses Unternehmen zum Hauptsitz einer Organisation machen** und geben Sie ihr einen Namen.
+3. Tippen Sie auf **Eines meiner Unternehmen hinzufügen**, um ein anderes Unternehmen, dessen Inhaber Sie sind, zu einem Haus der Organisation zu machen.
+4. Tippen Sie neben einem Haus auf **Aus der Organisation nehmen**, um es wieder zu einem eigenständigen Unternehmen zu machen.
+5. Tippen Sie neben einem Haus, dessen Inhaber Sie sind, auf **Zum Hauptsitz machen**. Der Inhaber eines anderen Hauses sieht dort **Die Organisation verlassen**.
+6. Tippen Sie auf **Ein Haus im Ausland hinzufügen**, um ein eigenes Unternehmen in einem anderen Land oder einer anderen Währung anzulegen: Wählen Sie zuerst sein Land; Währung, Zeitzone und die Sprache seiner Dokumente werden daraus vorgeschlagen. Das Formular sagt, was übernommen wird, was inaktiv ankommt und mit Preisen zu versehen ist und was nicht übernommen wird. Tippen Sie auf **Das Haus anlegen**: Sie landen darin, und seine Startseite zeigt einmal, wie es entstand.
+7. Im neuen Haus zeigt die Startseite seine erste Aufgabe: zuerst die Steuersätze seines Landes, dann **Ihre Preise festlegen** für die inaktiv angekommenen Leistungen und Pakete. Geben Sie jedem einen Preis (0 macht es kostenlos) und einen Satz und aktivieren Sie es; Beitragsstufen, Dokumentlayout und -links, Zahlungsangaben und Bankkonto legt das Haus selbst fest. Tippen Sie auf **Fertig**, wenn nichts mehr übrig ist.
+8. Schalten Sie in einem Haus, das Ihnen gehört, **Mitglieder der anderen Häuser sind hier willkommen** ein, um ein Mitglied eines anderen Hauses der Organisation auf Anfrage sofort aufzunehmen, zu den Bedingungen dieses Hauses für neue Mitglieder. Aus: Die Anfrage wartet auf Ihre Entscheidung, die das Haus nennt, aus dem die Person kommt.
+
+**Gut zu wissen**
+
+- Jedes Haus zeigt sein Land, seine Währung und Ihre eigene Rolle dort. Wer ein Haus sonst noch besitzt, steht im Haus selbst.
+- Ein Mitglied eines Hauses sieht die anderen Häuser der Organisation auf Ich unter **Weitere Häuser von** der Organisation und tippt auf **Um Aufnahme bitten**. Eine Frage sagt zuerst, was das bedeutet: Sein Profil wird für dieses Haus sichtbar, ein eigenes Unternehmen mit eigenen Bedingungen, Preisen und eigener Währung.
+- Unter Ich stehen die Häuser zusammen unter dem Namen der Organisation: zuerst der Hauptsitz, dann nach Land.
+- In einem Haus tippen Sie oben auf den Namen des Unternehmens, um in ein anderes Haus der Organisation zu wechseln.
+- Beträge in verschiedenen Währungen stehen nebeneinander und werden nie addiert.
+- Der Hauptsitz geht zuletzt: Nehmen Sie zuerst die anderen Häuser heraus.
+- Nur ein Inhaber des Unternehmens und des Hauptsitzes darf die Organisation ändern.
+
+**Siehe auch:** [Land](help:user.workspace.settings.country)
 
 ### Adresse im Briefkopf
 
@@ -3838,6 +4222,7 @@ Ein Neuzugang wartet auf Ihre Entscheidung oder ein Mitglied macht eine Pause, u
 - Die Entscheidung über ein neues Mitglied kann auch über die Validierungsregeln getroffen werden, wie unter [Validierungsregeln](help:user.validation.overview) beschrieben.
 - Das Pausieren ist Inhabern vorbehalten und behält den gesamten Verlauf.
 - Ein Mitglied, das gegangen ist, zeigt **Ausgetreten** und kann nicht pausiert werden.
+- Eine Pause und eine Änderung des Anteils zählen in ganzen Monaten, ab dem ersten Monat, dessen erster Tag auf ihr Datum oder danach fällt; nichts wird anteilig berechnet. Ein bereits abgerechneter Monat behält, was seine Rechnung sagt; eine Änderung zählt ab dem ersten noch nicht abgerechneten Monat. Ein ab dem Monatsersten pausierter Monat schuldet keine Abonnementgebühr und enthält keine Halbtage; eine Pause ab dem 15. lässt diesen Monat voll berechnet und macht den nächsten frei. Der Reiter **Tarif** eines Mitglieds listet die geplanten Änderungen mit den berechneten und freien Monaten und der ersten Abrechnung, auf der eine Änderung des Anteils erscheint. Beim Ändern eines Tarifs wählen Sie **So bald wie möglich** oder **Ab dem Ersten eines Monats**; eine Pause nimmt den Tag, an dem sie beginnt, und, falls bekannt, den Tag **Wieder aktiv am**. Vor dem Anwenden sagt die Aufgabe, was die Änderung an Geld bedeutet und wie viele Buchungen in die freien Monate fallen; ein nicht mögliches Datum wird mit dem frühesten möglichen abgelehnt.
 
 **Siehe auch:** [Ein Mitglied einladen](help:user.members.invite)
 
@@ -4171,7 +4556,7 @@ Der Preis einer Einheit, brutto: Das Mitglied zahlt genau diesen Betrag, und die
 
 #### Leistungsort einer Leistung
 
-Wo die Umsatzsteuer auf diese Leistung geschuldet wird. **Mit den Räumlichkeiten verbunden**, die Voreinstellung, behält Ihre Umsatzsteuer für jeden Kunden: Ein Arbeitsplatz, ein Büro, ein Raum und alles, was vor Ort genutzt wird, werden dort besteuert, wo das Gebäude liegt. Wählen Sie **Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)** nur für das, was nicht an das Gebäude gebunden ist, etwa Postbearbeitung oder ein virtuelles Büro: Für ein Unternehmen in einem anderen EU-Land fällt diese Position dann unter die Steuerschuldnerschaft des Empfängers, für ein Unternehmen außerhalb der EU ist sie nicht steuerbar; ein Verbraucher zahlt weiterhin Ihre Umsatzsteuer. Jede erfasste Leistung behält die Wahl, die bei ihrer Erfassung galt. Das Feld erscheint, wenn Sie Umsatzsteuer berechnen und die Funktion **Leistungsort je Leistung** eingeschaltet ist.
+Wo die Umsatzsteuer auf diese Leistung geschuldet wird. **Mit den Räumlichkeiten verbunden**, die Voreinstellung eines Betriebs, der Plätze bucht, behält Ihre Umsatzsteuer für jeden Kunden: Ein Arbeitsplatz, ein Büro, ein Raum und alles, was vor Ort genutzt wird, werden dort besteuert, wo das Gebäude liegt. Wählen Sie **Allgemeine Dienstleistung (nicht mit den Räumlichkeiten verbunden)** nur für das, was nicht an das Gebäude gebunden ist, etwa Postbearbeitung oder ein virtuelles Büro: Für ein Unternehmen in einem anderen EU-Land fällt diese Position dann unter die Steuerschuldnerschaft des Empfängers, für ein Unternehmen außerhalb der EU ist sie nicht steuerbar; ein Verbraucher zahlt weiterhin Ihre Umsatzsteuer. Jede erfasste Leistung behält die Wahl, die bei ihrer Erfassung galt. Ein Betrieb, der keine Plätze bucht, beginnt eine neue Leistung dagegen als allgemeine Dienstleistung, eine Voreinstellung, die Sie bestätigen: Jede Wahl in der Liste sagt, wie sie besteuert wird. Eine bestehende Leistung behält ihre Klasse, wenn Sie die Platzbuchung ein- oder ausschalten. Das Feld erscheint, wenn Sie Umsatzsteuer berechnen und die Funktion **Leistungsort je Leistung** eingeschaltet ist oder Ihr Betrieb keine Plätze bucht.
 
 #### Aktiv
 
@@ -4253,6 +4638,10 @@ Sie möchten, dass Mitglieder eine offene Rechnung online auf Ihr eigenes Anbiet
 
 Die Schlüssel stammen aus dem eigenen Dashboard des Anbieters: **Client-ID**, **Secret**, **Umgebung**, **Webhook-ID** und **Rückkehr-URL** für PayPal; **Secret Key**, **Webhook-Signaturgeheimnis** und **Rückkehr-URL** für Stripe; **API-Schlüssel** und **Rückkehr-URL** für Mollie und Wero. Halten Sie Test- und Live-Schlüssel getrennt: Alle Schlüssel, die Sie eingeben, müssen zum selben Modus gehören.
 
+Ein Produktionsbereich nimmt Zahlungen nur mit Live-Schlüsseln an: Mit Testschlüsseln wird die Online-Zahlung eines Mitglieds abgelehnt. Für Stripe hört der Webhook-Endpunkt auch auf **charge.dispute.created** und **charge.refunded**: Eine Zahlung, die der Anbieter rückgängig macht (eine Erstattung oder ein Widerspruch), wird dann als rückgängig gemacht markiert, und Sie berichtigen den Saldo des Mitglieds. Solange niemand, der die Finanzen sieht, sie unter **Vom Anbieter rückgängig gemacht** auf dem Zahlungsbildschirm als **Angesehen** markiert hat, nennt die Übersicht, wie viele Rückbuchungen warten.
+
+Eine Installation, die Zahlungen nur probt, kann `DESKILO_ALLOW_TEST_PAYMENTS=true` in der Umgebung ihrer Funktionen setzen: Dann werden Bestellungen mit Testschlüsseln eröffnet und Ereignisse im Testmodus verarbeitet; auf einer Installation, die echte Zahlungen annimmt, darf diese Einstellung nie gesetzt sein.
+
 Geheimnisse werden auf dem Server gespeichert und nie wieder angezeigt. Ein gespeichertes zeigt **Gesetzt — leer lassen zum Behalten**; geben Sie einen neuen Wert ein, um es zu ersetzen.
 
 ### Geplante Ausgaben
@@ -4321,7 +4710,7 @@ In diesem Kapitel:
 - Umsatzsteuer: Regime, Nummer, Sätze, Gruppen und die periodische Erklärung
 - E-Rechnung: wohin die maschinenlesbare Rechnung gesendet wird
 - Die PDF-Vorlage der Rechnung und der Berichtseditor
-- Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
+- Einen Monat ausstellen und abschließen: der Bildschirm Rechnungsstellung, das Abrechnen des Monats, eine Rechnung und ein Kunde, Zahlungen und Gutschriften, der Monatsabschluss-Assistent, das Zusammenfassen, gemeinsame Ausgaben
 - Zahlungserinnerungen
 - Das Rechnungsregister, Buchhaltungsexporte und Business-Analysen
 
@@ -4842,6 +5231,28 @@ Eine Gruppe sagt, um welche Art von Satz es sich handelt, damit die Rechnung ihn
 
 **Siehe auch:** [Die Sätze festlegen](help:user.money.vat.rates)
 
+### Die Schweizer Abrechnung: Ziffern 205 und 383
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Ihr Raum ist in der Schweiz, und Sie möchten die optierten Leistungen und die Bezugsteuer in den richtigen Ziffern haben.
+
+**Schritte**
+
+1. Schalten Sie in [Rechtliche Identität & E-Rechnung](app:/legal-identity) unter **Vermietung und Option (Schweiz)** **Wir vermieten nur Räume** ein, wenn Sie Räume ohne Dienstleistungen vermieten. Schalten Sie dann **Wir haben optiert (Art. 22 MWSTG)** ein, wenn Sie optiert haben, und geben Sie **Option wirksam ab (JJJJ-MM-TT)** ein.
+2. Erfassen Sie eine im Ausland gekaufte Ausgabe mit eingeschaltetem **Bei einem Lieferanten im Ausland gekauft**.
+3. Öffnen Sie [Umsatzsteuer-Voranmeldung](app:/vat-declarations) und bereiten Sie die Periode vor.
+4. Laden Sie **MWST-Abrechnung, eCH-0217-XML (Upload ins ePortal)** herunter und laden Sie die Datei im ePortal hoch.
+
+**Gut zu wissen**
+
+- Ziffer 205 ist der Teil Ihres Umsatzes (Ziffer 200), der eine reine Vermietung ist und versteuert wird, weil Sie optiert haben. Die Liegenschaftszeilen der Rechnung bestimmen diesen Teil. Die Abrechnung zählt ihn weiterhin in Ziffer 200.
+- Ziffer 383 ist die Bezugsteuer. Sie wird als geschuldete Steuer deklariert, und ihr abziehbarer Anteil zählt zur Vorsteuer. Sie gehört nicht zum Umsatz.
+- In der eCH-0217-Datei stehen die optierten Leistungen als `opted`, die Bezugsteuer als ein Element `acquisitionTax` je Satz.
+- Wer als Betreiber:in die Felder in **Steuer-Referenzdaten** bearbeitet, nennt die zusätzlichen Zeilen eines Felds in **Weitere Zeilenkategorien, die sie zusammenzählt (durch Komma getrennt, z. B. acquisition)**. Ziffer 383 trägt `acquisition`.
+
+**Siehe auch:** [Die Umsatzsteuer-Voranmeldung vorbereiten](help:user.money.vat.declaration) · [Die Umsatzsteuer einer Ausgabe](help:user.money.expenses.vat)
+
 ### Einen Satz per Gesetz ändern
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
@@ -4914,6 +5325,7 @@ Sie sagen DesKilo, wohin es Ihre Rechnungen als maschinenlesbare Dateien senden 
 - Der Token wird auf dem Server gespeichert und nie wieder angezeigt.
 - Die gültige Datei ist eine Rechnung nach EN 16931. Ob Ihr Land eine Plattform verlangt und welche, klären Sie mit Ihrer Buchhaltung.
 - Die Datei zu übermitteln ist der zweite von drei Schritten: siehe [Was die App ausstellt und was bei Ihrer Steuerberatung bleibt](help:user.invoicing.scope).
+- In Italien wird keine Rechnung ausgestellt, bevor die nationale Plattform (das SdI) ein Dokument des Bereichs angenommen hat. **Testdokument senden** im Schritt E-Rechnung des Einrichtungsleitfadens: Die Proforma des laufenden Monats eines Mitglieds geht mit einer Testnummer an die Testumgebung der Plattform, mit deren Test-Zugangsdaten. Nichts wird ausgestellt, nummeriert oder gebucht. Sobald die Plattform es annimmt, stellt der Bereich aus; neue Zugangsdaten oder eine andere Identität des Verkäufers verlangen einen neuen Test.
 
 **Siehe auch:** [Eine E-Rechnung senden](help:user.money.einvoice.send) · [Rechtliche Identität](help:user.money.legal.identity)
 
@@ -5076,6 +5488,7 @@ Sie möchten eine ausgestellte Rechnung in ihrer maschinenlesbaren Form übergeb
 - Fehlt etwas, listet das Blatt es auf. **Rechtliche Identität vervollständigen** führt Sie zum Bildschirm, der es behebt.
 - Eine Rechnung, die signiert wurde, bevor Sie Ihre Identität vervollständigt haben, behält, womit sie ausgestellt wurde. Markieren Sie sie als fehlerhaft und stellen Sie eine Ersatzrechnung aus, wenn es darauf ankommt.
 - Welchen Weg ein Kunde nutzen muss, hängt von Ihrem Land und vom Kunden ab. Klären Sie das mit Ihrer Buchhaltung.
+- Geht die Antwort der Plattform verloren, nachdem das Dokument möglicherweise gesendet wurde, zeigt die Rechnung **Ergebnis unbekannt** und **Senden** wird nicht mehr angeboten. Prüfen Sie den Eintrag der Plattform, tippen Sie dann auf **Festhalten, was passiert ist** und geben Sie an, was Sie gefunden haben, woher Sie sicher sind und was Sie geprüft haben. Wer Rechnungen ausstellen darf, kann das einmal tun; dabei wird nichts gesendet.
 
 **Siehe auch:** [Die E-Rechnungs-Plattform](help:user.money.einvoice.overview) · [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub)
 
@@ -5095,6 +5508,7 @@ Sie möchten, dass Ihre Rechnungen nach Ihnen aussehen: Logo, Layout, Wortlaut.
 **Gut zu wissen**
 
 - Die Vorlage ändert nur das PDF. Das XML der E-Rechnung wird nie angetastet.
+- Eine ausgestellte Rechnung behält das Original, mit dem sie ausgestellt wurde: eine später geänderte Vorlage ändert nur die danach ausgestellten Rechnungen. Bilder, die eine Rechnung größer machen, als ein Original sein darf, verhindern, dass ihr Original aufbewahrt wird; verwenden Sie kleinere Bilder.
 - Jede Person mit der Berechtigung, Dokumente zu gestalten, kann das tun.
 - Eine Vorlage, die sich nicht darstellen lässt, blockiert nie ein Dokument: Das eingebaute Layout übernimmt.
 
@@ -5172,24 +5586,51 @@ Ihre Mitglieder lesen ihre Dokumente in ihrer eigenen Sprache.
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-Sie sehen auf einen Blick, was auszustellen, was einzuziehen und was abgeschlossen ist.
+Sie öffnen die Rechnungsstellung und sehen, was Ihnen geschuldet wird, was als Nächstes zu tun ist und die Rechnungen jedes Kunden.
 
 ![](assets/help/images/user-invoicing-hub.de.b8fa17aa9.jpg)
 
 **Schritte**
 
-1. Öffnen Sie [Rechnungsstellung](app:/invoices).
-2. Lesen Sie den Streifen: **Auszustellen**, **Einzuziehen**, **Zu bestätigen**, **Abgeschlossen**.
-3. Arbeiten Sie in den drei Reitern: **Zu berechnen** (Mitglieder mit erfasster Nutzung, noch nicht abgerechnet), **Offen** (ausgestellt, unbezahlt) und **Archiv** (bezahlt oder abgeschlossen).
-4. Tippen Sie auf das Werkzeugsymbol für die anderen Werkzeuge.
+1. Öffnen Sie die [Rechnungsstellung](app:/invoices).
+2. Lesen Sie **Offen an Sie**: was **Überfällig** ist, was **Noch nicht fällig** ist, und die Zahlen **Berechnet im** und **Eingegangen im** dieses Monats.
+3. Arbeiten Sie **Zu tun** ab: Jeder Eintrag sagt, was zu tun ist und für wie viele, und öffnet sich mit **Ansehen**. Ist nichts mehr übrig, steht dort **Alles ist erledigt.**
+4. Wählen Sie darunter **Offen**, **Überfällig**, **Zu bestätigen** oder **Bezahlt**, und lesen Sie die Liste nach **Kunden** oder nach **Rechnungen**. **Suchen** findet einen Kunden oder eine Nummer.
+5. Tippen Sie auf **Neu** für eine einzelne Rechnung und auf **Mehr** für **Bezahlte und abgeschlossene Rechnungen**, **Meine eigenen Rechnungen**, **Rechnungsregister**, **PDF-Vorlage der Rechnung** und **So funktioniert die Abrechnung**.
 
 **Gut zu wissen**
 
-- Sie sehen die Rechnungen des gesamten Workspace. Ihre eigenen stehen in Ihren Finanzen, unter **Meine Finanzen**.
-- Rechnungen werden nie bearbeitet oder gelöscht: Eine falsche wird als fehlerhaft markiert und ersetzt.
-- Der Eintrag **So funktioniert die Fakturierung** erklärt, wer bei welchem Schritt am Zug ist.
+- Eine Gutschrift, die der Betrieb schuldet, zählt nie zu dem, was Ihnen geschuldet wird: Sie wartet in **Erstattungen auszahlen**.
+- Jeder Status ist ein Wort und eine Farbe: **Heute fällig**, **Zahlung eingegangen · zuzuordnen**, **Wartet auf die Bestätigung des Kunden**, **Angehalten**.
+- Ihre eigenen Rechnungen finden Sie in Ihren Finanzen unter **Meine eigenen Rechnungen**.
+- Rechnungen werden nie bearbeitet oder gelöscht: Eine falsche wird mit einer Ersatzrechnung korrigiert.
 
-**Siehe auch:** [Neue Rechnung](help:user.invoicing.new-invoice) · [Offene Rechnungen](help:user.invoicing.open)
+**Siehe auch:** [Den Monat abrechnen](help:user.invoicing.month) · [Eine Rechnung verfolgen](help:user.invoicing.open)
+
+### Den Monat abrechnen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Im gerade beendeten Monat sind noch Kunden abzurechnen, und Sie stellen ihre Rechnungen in einem Durchgang aus.
+
+<!-- image: user-invoicing-month -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](app:/invoices) unter **Zu tun** den Eintrag mit dem Monat (zum Beispiel „April abrechnen“) und tippen Sie auf **Ansehen**.
+2. Lesen Sie die Liste: Jeder Kunde mit etwas abzurechnen ist angehakt, mit seinem Betrag. **Alle** hakt alle zusammen an oder ab.
+3. Ein Kunde mit **Muss ergänzt werden** sagt, was fehlt. Tippen Sie auf **Ergänzen**, vervollständigen Sie es und kehren Sie zurück: Der Kunde wird neu gelesen.
+4. Tippen Sie auf die Schaltfläche zum Ausstellen mit Anzahl und Betrag.
+5. Lesen Sie, was geschah (**Ausgestellt**, **Wartet auf eine Freigabe** oder **Nicht erledigt**), und tippen Sie auf **Fertig**.
+
+**Gut zu wissen**
+
+- Ein Monat, dessen Gutschriften die Kosten übersteigen, ergibt eine Gutschrift: Der Betrieb schuldet sie, und sie wartet in **Erstattungen auszahlen**.
+- Fehlt eine Angabe Ihres Betriebs, wird das einmal oben gesagt, mit einem einzigen **Ergänzen**; nichts wird ausgestellt, solange sie fehlt.
+- Was nicht erledigt wurde, bleibt in **Zu tun**, und **Für diese wiederholen** versucht es erneut, ohne etwas doppelt auszustellen.
+- **Proforma ansehen** zeigt die Rechnung eines Kunden, bevor es sie gibt.
+
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub) · [Eine Gutschrift auszahlen](help:user.invoicing.refunds)
 
 ### Eine Rechnung ausstellen
 
@@ -5201,10 +5642,10 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Neue Rechnung** oder in einer Zeile von **Zu berechnen** auf **Ausstellen**.
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Neu**. Für einen ganzen Monat siehe [Den Monat abrechnen](help:user.invoicing.month).
 2. Wählen Sie das **Mitglied** und den Monat. Die Positionen stammen aus dem Erfassten.
 3. Schalten Sie **Detaillierten Anhang aufnehmen (Check-ins, Services, Zahlungen)** ein, wenn Sie ihn wünschen.
-4. Tippen Sie auf **Rechnung ausstellen**. Unter **Zu berechnen** stellt **Alle berechnen** jede Zeile aus.
+4. Tippen Sie auf **Rechnung ausstellen**.
 
 **Gut zu wissen**
 
@@ -5216,27 +5657,122 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 
 **Siehe auch:** [Monatsabschluss-Assistent](help:user.invoicing.wizard)
 
-### Offene Rechnungen nachverfolgen und begleichen
+### Eine Rechnung verfolgen
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
 
-Sie verfolgen, was unbezahlt ist, und schließen es sauber ab.
+Sie öffnen eine Rechnung und sehen, wo sie steht, was geschah und das eine, was jetzt zu tun ist.
 
 ![](assets/help/images/user-invoicing-open.de.b8fa17aa9.jpg)
 
 **Schritte**
 
-1. Öffnen Sie in der [Rechnungsstellung](app:/invoices) den Reiter **Offen** und tippen Sie auf eine Rechnung.
-2. Nutzen Sie die angebotenen Aktionen: **Zahlungserinnerung senden**, **Als bezahlt markieren** (eine erfasste Zahlung zuordnen), **Restbetrag stornieren**, **Als fehlerhaft markieren** oder das PDF teilen.
-3. Bezahlte Rechnungen wandern ins **Archiv**.
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf einen Kunden und dann auf die Rechnung (oder tippen Sie in der Liste nach **Rechnungen** darauf).
+2. Lesen Sie oben, was vom Gesamtbetrag offen ist und wann es fällig ist, oder **Vollständig bezahlt**.
+3. Lesen Sie **Was geschah**: die Ausstellung, das Fälligkeitsdatum, jede Mahnung, eine vom Kunden gemeldete Zahlung, die Zahlung.
+4. Nutzen Sie die Aktion unten: die Mahnung mit ihrer Stufe teilen, **Zahlung bestätigen**, **Zahlung zuordnen** oder **Erstattung erfassen**.
+5. Tippen Sie auf **Mehr** für das PDF (**PDF ansehen**, **PDF herunterladen**, **PDF teilen**), **Mahnungen anhalten**, **Eine Zahlung zuordnen** und die **Korrekturen**: **Mit einer Ersatzrechnung korrigieren**, **Diese Rechnung stornieren, irrtümlich ausgestellt**, **Den Rest abschreiben**.
 
 **Gut zu wissen**
 
-- Eine Rechnung gilt als bezahlt, sobald ihr eine echte Zahlung zugeordnet ist. Eine Differenz braucht eine Notiz oder, bei einem Überschuss, eine Gutschrift.
-- Das Stornieren eines Restbetrags läuft über die Validierung.
-- **Als fehlerhaft markieren** lässt sich nicht rückgängig machen. Tun Sie es vor der Zahlung, nie danach.
+- **Per E-Mail** sendet die Rechnung an die Kontakt-E-Mail des Kunden, und **Erneut senden** sendet sie noch einmal. Eine vom Anbieter angenommene E-Mail beweist nicht, dass sie gelesen wurde.
+- Ist sie angehalten, geht keine Mahnung hinaus, bis Sie sie freigeben.
+- Ersetzen oder Stornieren wird angeboten, solange der Rechnung nichts zugeordnet ist, **Den Rest abschreiben**, sobald ein Teil bezahlt wurde. Eine Rechnung wird nie bearbeitet.
+- Ein Kunde, der eine Zahlung meldet, wartet auf Sie: Prüfen Sie Ihre Bank, dann **Zahlung bestätigen** oder **Nicht erhalten**.
 
-**Siehe auch:** [Mahnregeln](help:user.money.reminders.rules) · [Rechnungen zusammenfassen](help:user.invoicing.settlement)
+**Siehe auch:** [Mahnungen teilen](help:user.invoicing.reminders) · [Eine eingegangene Zahlung zuordnen](help:user.invoicing.payments)
+
+### Mahnungen teilen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+In Ihrem Raum werden Mahnungen von Hand geteilt, und einige sind fällig.
+
+<!-- image: user-invoicing-reminders -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](app:/invoices) unter **Zu tun** **Mahnungen von Hand teilen** und tippen Sie auf **Ansehen**.
+2. Jede Zeile nennt den Kunden, den Betrag und den Verzug, mit ihrer Stufe (Mahnung 1, …). **Vorschau** zeigt das Schreiben.
+3. Tippen Sie in einer Zeile auf **Teilen** und senden Sie das Schreiben auf dem Weg Ihrer Wahl; die Schaltfläche unter der Liste teilt die nächste.
+4. Hat der Kunde eine E-Mail-Adresse, sendet **Per E-Mail senden** sie; eine Schaltfläche am Ende sendet jede Zeile mit Adresse per E-Mail.
+5. Tippen Sie auf **Fertig**, wenn die Liste sagt, was geteilt wurde.
+
+**Gut zu wissen**
+
+- Eine Mahnung wird nur dann an ihrer Rechnung erfasst, wenn sie wirklich geteilt oder gesendet wurde. Ein geschlossenes Teilen erfasst nichts.
+- Ist eingegangenes Geld noch nicht zugeordnet, bittet die Liste Sie, es zuerst zu prüfen (**Zuerst prüfen: Geld eingegangen und nicht zugeordnet**): Der Kunde hat vielleicht bezahlt.
+- Gehen die Mahnungen von selbst hinaus, steht dieser Eintrag nicht in **Zu tun**; **Regeln** legt fest, wie sie funktionieren.
+
+**Siehe auch:** [Mahnregeln](help:user.money.reminders.rules) · [Automatische Mahnungen](help:user.money.reminders.automatic)
+
+### Eine eingegangene Zahlung zuordnen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Eine Zahlung ist auf dem Konto eingegangen, und Sie sagen, welche Rechnungen sie bezahlt.
+
+<!-- image: user-invoicing-payments -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](app:/invoices) unter **Zu tun** **Zahlungen zuordnen**, tippen Sie auf **Ansehen** und dann beim Kunden auf **Zuordnen**.
+2. **Zahlungen zuordnen** zeigt jede eingegangene Zahlung mit den Rechnungen, die sie bezahlen kann; **Gleicher Betrag** kennzeichnet die passende.
+3. Tippen Sie auf diese Rechnung, um sie zuzuordnen, oder auf **Rechnungen zuordnen**, um eine Zahlung auf mehrere zu verteilen.
+4. Haken Sie in **Rechnungen zuordnen** die Rechnungen an und prüfen Sie die Beträge; die älteste wird zuerst bezahlt. Tippen Sie zur Bestätigung auf **Rechnungen zuordnen**.
+
+**Gut zu wissen**
+
+- Was von der Zahlung übrig bleibt, bleibt als Guthaben des Kunden, und das Blatt sagt, wie viel.
+- Eine teilweise bezahlte Rechnung braucht eine Notiz.
+- Eine Zuordnung kann auf eine zweite Freigabe warten, wenn eine Regel es verlangt.
+- Hat sich inzwischen etwas geändert, wird nichts erfasst: Die Seite liest die Zahlung neu und sagt, warum.
+
+**Siehe auch:** [Eine Rechnung verfolgen](help:user.invoicing.open) · [Die Seite eines Kunden und sein Kontoauszug](help:user.invoicing.customer)
+
+### Eine Gutschrift auszahlen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Der Betrieb schuldet einem Kunden Geld aus einer Gutschrift, und Sie erfassen, dass es ausgezahlt wurde.
+
+<!-- image: user-invoicing-refunds -->
+
+**Schritte**
+
+1. Suchen Sie in der [Rechnungsstellung](app:/invoices) unter **Zu tun** **Erstattungen auszahlen** und tippen Sie auf **Ansehen**.
+2. Tippen Sie auf den Kunden und dann auf die Gutschrift: Dort steht **Erstattung offen** und **Der Betrieb schuldet diese Erstattung**.
+3. Zahlen Sie dem Kunden den Betrag aus, tippen Sie dann auf **Erstattung erfassen** und bestätigen Sie.
+
+**Gut zu wissen**
+
+- Eine Gutschrift zählt nie zu **Offen an Sie**.
+- Einmal erfasst, steht bei der Gutschrift **Erstattet**, und sie verlässt **Zu tun**.
+
+**Siehe auch:** [Den Monat abrechnen](help:user.invoicing.month)
+
+### Die Seite eines Kunden und sein Kontoauszug
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten alles zu einem Kunden: was er schuldet, seine Rechnungen und einen Kontoauszug zum Versenden.
+
+<!-- image: user-invoicing-customer -->
+
+**Schritte**
+
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf den Kunden.
+2. Lesen Sie, was er **Schuldet**, oder **Nichts offen**, und ein Guthaben: Zahlungen, die noch keine Rechnung genommen hat.
+3. Lesen Sie die **Rechnungen** und den **Verlauf**: Ausstellungen, Zahlungen, geteilte Mahnungen, gemeldete Zahlungen.
+4. Tippen Sie auf **Kontoübersicht** für die offenen Posten zum heutigen Tag oder auf **Kontoauszug für einen Zeitraum** für die Bewegungen zwischen zwei Daten mit Anfangs- und Endsaldo.
+
+**Gut zu wissen**
+
+- Ein Kontoauszug ist in einer Währung; gibt es mehrere, wählen Sie eine.
+- Ist nichts offen, gibt es keine Kontoübersicht zum heutigen Tag zu drucken.
+- In einem Kontoauszug für einen Zeitraum werden Salden vor dem ersten erfassten Tag aus den heutigen Daten rekonstruiert, und der Auszug sagt es.
+
+**Siehe auch:** [Eine eingegangene Zahlung zuordnen](help:user.invoicing.payments)
 
 ### Der Monatsabschluss-Assistent
 
@@ -5248,7 +5784,7 @@ Ein geführter Weg für die Geldroutine: ausstellen, senden, mahnen, Zahlungen e
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Monatsabschluss-Assistent** (oder öffnen Sie den [Assistenten zur Rechnungsstellung](app:/invoicing/wizard)).
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Mehr** und **Monatsabschluss-Assistent** (oder öffnen Sie den [Assistenten zur Rechnungsstellung](app:/invoicing/wizard)).
 2. Wählen Sie den Lauf: **Monatsanfang** (Abos, die Mitglieder im Voraus für den kommenden Monat zahlen) oder **Monatsende** (Nutzung, Verbrauch und Zusatzkosten des gerade beendeten Monats). Das Datum schlägt einen vor.
 3. Folgen Sie den Schritten: **Prüfen**, **Ausstellen**, **Senden**, **Mahnen**, **Zahlungen**, **Zuordnen**, **Abschließen**, **Zusammenfassung**.
 4. Tippen Sie bei jedem Schritt auf **Weiter** und am Ende auf **Fertig**.
@@ -5271,7 +5807,7 @@ Ein Mitglied hat mehrere offene Rechnungen und soll nur eine bezahlen.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf das Werkzeugsymbol und auf **Zu einer Rechnung zusammenfassen**.
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Mehr** und auf **Rechnungen zu einer zusammenfassen**.
 2. Wählen Sie mindestens zwei offene Rechnungen desselben Mitglieds.
 3. Bestätigen Sie. Sie werden gefragt, ob die zusammengefassten Rechnungen angehängt werden sollen.
 
@@ -5292,7 +5828,7 @@ Ein Kostenpunkt, den die Gemeinschaft teilt, wird auf die Mitglieder aufgeteilt.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf das Werkzeugsymbol und auf **Ausgabe verteilen**.
+1. Öffnen Sie [Meine Finanzen](app:/money) und tippen Sie neben **Einkäufe** auf **Ausgabe verteilen**.
 2. Beschreiben Sie **Die Ausgabe** und wählen Sie dann **Verteilen nach**: **Gleich**, **Abo**, **Nutzung** oder **Eigener Schlüssel**.
 3. Prüfen Sie die **Anteile**, wählen Sie jemanden ab, um ihn **Ausnehmen**, und tippen Sie auf **Anteile buchen**.
 
@@ -5314,7 +5850,7 @@ Sie entscheiden, wann und wie oft eine überfällige Rechnung angemahnt wird.
 
 **Schritte**
 
-1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf das Werkzeugsymbol und auf **Mahnregeln**.
+1. Tippen Sie in der [Rechnungsstellung](app:/invoices) auf **Mehr** und auf **Mahnregeln**.
 2. Legen Sie die **Anzahl der Mahnstufen**, die **Tage bis zur ersten Erinnerung** und die **Tage zwischen den Mahnungen** fest.
 3. Tippen Sie auf **Speichern**.
 
@@ -5335,7 +5871,7 @@ Sie möchten, dass Mahnungen von selbst hinausgehen.
 
 **Schritte**
 
-1. Öffnen Sie die **Mahnregeln** in den Werkzeugen der Rechnungsstellung.
+1. Öffnen Sie die **Mahnregeln** über **Mehr** in der Rechnungsstellung.
 2. Schalten Sie **Automatische Mahnungen** ein.
 3. Tippen Sie auf **Speichern**.
 
@@ -5370,6 +5906,29 @@ Alle Rechnungen in einer sortierbaren Liste.
 
 **Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
 
+### Ihre Buchungsjournale
+
+**Zielgruppe:** Inhaber
+
+Die Software Ihrer Steuerberatung kennt Ihre Journale unter eigenen Codes, und jeder Export soll sie verwenden.
+
+<!-- image: user-money-accounting-journals -->
+
+**Schritte**
+
+1. Öffnen Sie [Buchhaltung & MwSt](app:/money/accounting) und tippen Sie auf **Buchungsjournale**.
+2. Geben Sie für **Verkauf**, **Bank**, **Einkauf** und **Sonstige Buchungen** den **Code** und die **Bezeichnung** ein, die Ihre Steuerberatung verwendet.
+3. Tippen Sie auf **Speichern**. **Standardcodes verwenden** stellt die Standardcodes des Landes wieder her.
+
+**Gut zu wissen**
+
+- Jeder Buchhaltungsexport der App verwendet sie: der FEC, das allgemeine Journal, die SAF-T-Hauptbücher und die gedruckten Bücher.
+- Ein Code hat keinen Zeilenumbruch, keinen Tabulator und kein |, und zwei Journale teilen nie einen Code; das Formular sagt, welches Feld zu korrigieren ist.
+- Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.
+- Übermittlungen an Pennylane und Business Central verwenden diese Codes ebenfalls; das Journal muss dort unter demselben Code bestehen.
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
+
 ### Buchhaltungsexporte
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
@@ -5393,6 +5952,67 @@ Sie übergeben Ihrer Buchhaltung die Rechnungen und Zahlungen des Jahres.
 
 **Siehe auch:** [Steuerkonto](help:user.money.vat.account) · [Das Rechnungsregister](help:user.invoicing.register)
 
+### Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie führen Ihre Umsatzsteueraufzeichnungen in einem anderen Buchhaltungssystem und müssen zeigen, wie die Zahlen dorthin gelangt sind, zum Beispiel für das britische Making Tax Digital.
+
+**Schritte**
+
+1. Öffnen Sie [Buchhaltung & MwSt](app:/money/accounting) und tippen Sie auf **Buchhaltungssysteme**.
+2. Lesen Sie **Übertragungen**: jede ausgegebene Datei und jedes an eine Verbindung gelieferte Dokument der Periode, jeweils mit dem SHA-256 des Übertragenen.
+3. Geben Sie die **Buchhaltungs-CSV** an Ihre Steuerberatung. Ihr `report.json` zitiert die Übertragungsliste des Jahres.
+
+**Gut zu wissen**
+
+- Eine digitale Verbindung ist eine in **Übertragungen** erfasste Datei oder Lieferung über eine Verbindung. Zahlen von Hand in das andere System abzutippen, ist keine digitale Verbindung.
+- Der SHA-256 belegt, dass die Datei, die das andere System erhielt, die von DesKilo ausgegebene ist.
+- Eine leere Liste sagt: „In diesem Zeitraum wurde nichts übergeben oder übermittelt.“
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export) · [Wo die Aufzeichnungen aufbewahrt werden](help:user.invoicing.records-location)
+
+### Wo die Aufzeichnungen aufbewahrt werden
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in · Betreiber:in
+
+Manche Länder schreiben vor, wo ein Unternehmen seine Bücher aufbewahrt, und Sie möchten wissen, was die App zu Ihren angibt.
+
+**Schritte**
+
+1. Öffnen Sie [Rechtliche Identität & E-Rechnung](app:/legal-identity) und gehen Sie zum Abschnitt **Buchführung**.
+2. Lesen Sie **Wo die Aufzeichnungen aufbewahrt werden**, neben den Aufbewahrungsfristen.
+3. Für ein kanadisches Unternehmen, dessen Aufzeichnungen außerhalb Kanadas liegen, tragen Sie **CRA-Genehmigung zur Aufbewahrung außerhalb Kanadas** in den Einstellungen des Raums unter **Aufbewahrungsort der Aufzeichnungen** ein.
+
+**Gut zu wissen**
+
+- Der oder die Betreiber:in der Installation gibt **Land, in dem diese Installation ihre Daten aufbewahrt** an, wie es der Hosting-Vertrag nennt. Die App errät es nie. Ist es nicht angegeben, sagt die Kachel das und nennt keinen Ort.
+- Kanada verlangt die Bücher in Kanada, außer die CRA genehmigt einen anderen Ort; Deutschland verlangt elektronische Bücher in der EU. Die Kachel warnt, wenn das angegebene Land nicht passt.
+- Ein britisches, irisches, kanadisches oder US-Archiv enthält seine Tabellen mit einer `tables/README.txt`, die jede Tabelle und Spalte auf Englisch beschreibt und sagt, wo die Aufzeichnungen aufbewahrt werden.
+
+**Siehe auch:** [Übertragungen: die digitale Verbindung zu Ihrem Buchhaltungssystem](help:user.invoicing.transfers)
+
+### Neue Buchhaltungsarbeit stoppen
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten, dass Ihre Buchhaltungsanbindungen keine neue Arbeit mehr annehmen, zum Beispiel beim Wechsel der Buchhaltung, ohne zu verlieren, was bereits gesendet wurde.
+
+**Schritte**
+
+1. Öffnen Sie **Buchhaltungssysteme** und lesen Sie die Karte **Neue Buchhaltungsarbeit**: Sie zeigt, ob die Anbindungen **Aktiv**, in **Wartung** oder **Stillgelegt** sind.
+2. Zum Pausieren tippen Sie auf **Neue Arbeit stoppen**. Um wieder Arbeit anzunehmen, tippen Sie auf **Neue Arbeit wieder zulassen**.
+3. Die Inhaberin oder der Inhaber kann aus der Wartung **Anbindungen stilllegen** und aus dem stillgelegten Zustand **Für die Wartung wieder öffnen** wählen. Beides verlangt einen **Grund**.
+
+**Gut zu wissen**
+
+- Solange nichts Neues angenommen wird, können Sie den Verlauf weiter lesen, eine Verbindung widerrufen und bereits begonnene Lieferungen beenden.
+- Das Stilllegen wird abgelehnt, solange Lieferungen laufen; beenden oder klären Sie sie zuerst.
+- Die Karte sehen nur Personen, die die Anbindungen verwalten; nur die Inhaberin oder der Inhaber sieht Stilllegen und Wiedereröffnen.
+- Ohne eigene Entscheidung folgt die Karte der Einstellung der Buchhaltungsanbindungen.
+
+**Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
+
 ### Business-Analysen
 
 **Zielgruppe:** Inhaber · Abrechnungsadministrator:in
@@ -5413,6 +6033,29 @@ Sie sehen sich an, wie der Workspace abschneidet.
 - Der laufende Zeitraum ist unvollständig; seine Zahlen ändern sich noch.
 
 **Siehe auch:** [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub)
+
+### Kosten, Fälligkeiten und geteilte Kosten in der Analyse
+
+**Zielgruppe:** Inhaber · Abrechnungsadministrator:in
+
+Sie möchten die Einkaufsseite der Analyse: was der Raum ausgegeben hat, noch schuldet und noch zu zahlen erwartet, und wie geteilte Kosten auf jede Ressource fallen.
+
+**Schritte**
+
+1. Öffnen Sie [Geschäftsanalyse](app:/bi) und wählen Sie die Monate.
+2. Lesen Sie **Betriebsaufwand (erfasst)**, **Fakturiert abzüglich erfasstem Betriebsaufwand**, **Bilanzielle Abschreibungen (erfasst)** und **Angeschaffte Ausstattung (aktiviert)**.
+3. Lesen Sie **Ausgezahlt (erfasst)**, **Noch abzurechnen (Verträge)** und **Voraussichtlich zu zahlen (offen + Verträge)** für die Geldseite.
+4. Lesen Sie **Geteilte Kosten nach Ressource** und tippen Sie auf **Verteilungsregeln**, um festzulegen, wie eine Einkaufskategorie auf Etagen und Büros verteilt wird.
+5. Wählen Sie in einer Regel die **Einkaufskategorie** (oder **Eine Einkaufszeile**), die **Gewichte (ganze Zahlen; leer oder 0: kein Anteil)**, die **Grundlage (warum diese Gewichte)** und **Gültig ab**, dann speichern. **Regel beenden** beendet sie ab diesem Monat.
+
+**Gut zu wissen**
+
+- Die Zahlen sagen, was sie zählen. **Fakturiert abzüglich erfasstem Betriebsaufwand** ist kein Gewinn: Abschreibungen, Löhne und Bankgebühren fehlen. **Ausgezahlt (erfasst)** sind erfasste Zahlungen, kein abgestimmter Kontostand.
+- Abschreibungen sind nur bekannt, wenn bestätigte Buchwerte Ihrer Steuerberatung genau die gewählten Monate abdecken; sonst unbekannt, nie 0.
+- Kosten, die keine Regel verteilt, bleiben unverteilt, nie gleichmäßig geteilt. Die Verteilung ist eine Analyse: Kein Mitglied wird belastet und kein Beleg ändert sich.
+- Verteilungsregeln brauchen **Tarife und Abrechnungsregeln verwalten**.
+
+**Siehe auch:** [Business-Analysen](help:user.invoicing.bi) · [Das Anlagenverzeichnis](help:user.money.purchases.equipment)
 
 ## Erweitert
 
@@ -6122,6 +6765,8 @@ Sie möchten das Ganze überblicken, bevor Sie etwas auswählen. DesKilo glieder
 
 **Zielgruppe:** Inhaber · Mitinhaber · Administrator:in
 
+Der Einrichtungsleitfaden bleibt nach der Einrichtung im Menü des Arbeitsbereichs erreichbar. Die Übersicht nennt den Arbeitsbereich, das gewählte Ziel und die verbleibenden Pflichtaufgaben. Öffnen Sie die Ergebnisdetails, um die einzelnen Meilensteine zu sehen. Die empfohlene Aktion führt zu einer Aufgabe, die Sie jetzt erledigen können; Aufgaben, die auf einen anderen Schritt oder den Betreiber warten, sind entsprechend gekennzeichnet. Eine nicht verfügbare Prüfung bedeutet nicht, dass die Aufgabe erledigt ist. Der Fortschritt beruht auf gespeicherten Einstellungen: Das Öffnen einer Aufgabe schließt sie nicht ab. Jede Aufgabe zeigt weiterhin Arbeitsbereich, Ziel und Status sowie das nächste Ziel.
+
 Sie möchten den kürzesten Weg zu einem Space, den man buchen kann. Die App führt eine Bereitschaftsliste namens **Einrichtung dieses Workspace** und sagt Inhabern auf dem Bildschirm Reservieren unter *Bevor hier jemand buchen kann*, was noch fehlt.
 
 *Was vor der ersten Buchung da sein muss*
@@ -6593,6 +7238,8 @@ Zum Zeitpunkt dieses Textes stehen die meisten Funktionen auf **Nicht bewertet**
 
 **Zielgruppe:** Inhaber · Mitinhaber
 
+Wählen Sie den Funktionsumfang mit den Fragen zu Buchungen, Geld und täglichem Betrieb. Prüfen und Übernehmen bleiben beim Scrollen sichtbar. Prüfen Sie die Anzahl der betroffenen Einstellungen und ihre konkreten Folgen vor dem Übernehmen; allein das Antworten ändert den Arbeitsbereich nicht. Detaillierte Prozessstufen und Schnellstarts stehen im erweiterten Abschnitt. Eine bewusst gewählte Stufe bleibt beim Beantworten weiterer Fragen erhalten; mit der Aktion für empfohlene Stufen kehren Sie zu den Empfehlungen zurück. „Noch nicht sicher“ behält die bisherige Antwort bei und verhindert das Übernehmen, bis Sie sie geklärt haben. Der Offline-Fragebogen verwendet dieselbe Regel und sperrt den Export bei ungeklärten Antworten.
+
 Sie möchten nicht hundert Dinge entscheiden. Hier sind drei realistische Ausgangspunkte; jeder nennt genau, was an ist. Wählen Sie den nächstliegenden und passen Sie ihn dann an.
 
 Der erste braucht keine Vorlage. Der zweite ist die fertige Vorlage der App. Der dritte wird aus den Funktionen selbst zusammengesetzt. Sie sind nach dem benannt, was sie bieten, nicht nach einer Größe.
@@ -6803,7 +7450,7 @@ Sie möchten einen Ort, der für die wichtigsten Funktionen sagt, was Mitglieder
 | **Mitgliederfotos auf dem Plan** | Fotos der Belegenden auf den Plätzen. | | Niemand |
 | **Wortwahl des Arbeitsbereichs** | Die eigenen Begriffe des Spaces für einige Beschriftungen. | | Inhaber |
 | **Farben des Arbeitsbereichs** | Die Markenfarbe und die Raumfarben. | | Inhaber |
-| **Öffentlicher Workspace-Eintrag** | Eine öffentliche Seite mit dem, was Sie zeigen möchten. | | Inhaber |
+| **Öffentlicher Workspace-Eintrag** | Eine öffentliche Seite mit dem, was Sie zeigen möchten, und wo Sie auf der Karte sind. | | Inhaber |
 
 *Buchungen und Nutzung*
 
@@ -7488,7 +8135,7 @@ Sie entscheiden, ob jemand jeden Monat die Knöpfe drückt oder DesKilo das übe
 - Jede Rechnungsart (Abo, Monatsabschluss) kann pro Mitglied und Monat einmal ausgestellt werden. Rechnungen lassen sich weder bearbeiten noch löschen; eine falsche wird als fehlerhaft markiert und ersetzt.
 - Standardmäßig stellen der Inhaber und die Mitinhaber Rechnungen aus. **Admins stellen Rechnungen aus** erweitert das auf die Administratoren.
 
-**Siehe auch:** [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub) · [Offene Rechnungen nachfassen und abschließen](help:user.invoicing.open)
+**Siehe auch:** [Der Bildschirm Rechnungsstellung](help:user.invoicing.hub) · [Eine Rechnung verfolgen](help:user.invoicing.open)
 
 ### Zahlungserinnerungen
 
@@ -7708,7 +8355,7 @@ Push gehört nicht von selbst zur App. Betreiben Sie Ihren Space auf der gemeins
 1. Legen Sie ein Firebase-Projekt an und bauen Sie die App damit. Ohne das bleibt die App bei lokalen Benachrichtigungen, und ein Mitglied sieht **Diese Version hat keine Push-Benachrichtigungen**. Die für F-Droid vorbereitete Version hat gar kein Push ([F-Droid-Status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. Fügen Sie für iPhone und Mac dem Firebase-Projekt einen Apple-Push-Schlüssel hinzu.
 3. Hinterlegen Sie den Dienstkonto-Schlüssel von Firebase als Geheimnis des Servers und stellen Sie die Push-Funktion bereit.
-4. Verweisen Sie bei einer eigenen Installation die Zeile `push_config` Ihrer Datenbank auf die URL und den Schlüssel Ihrer eigenen Push-Funktion. Sie ist mit der Adresse der Referenzinstallation vorbelegt.
+4. Bei einer eigenen Installation setzt der Builder die Zeile `push_config` Ihrer Datenbank auf die URL und den Schlüssel Ihrer eigenen Push-Funktion, und der Doctor prüft sie. `dart run tool/instance.dart push --ref <ref>` setzt sie erneut. Der Builder setzt dort, wo die Funktionen bereitgestellt werden, außerdem die Funktionseinstellung `DESKILO_APP_URL` auf die Web-Adresse Ihrer App, damit die Funktionen, die zur App zurückverlinken (die Assistenten-Schnittstelle und die Buchhaltungs-Anmeldung), ihre Links bilden können; der Doctor meldet sie, wenn sie fehlt oder eine andere Adresse trägt, und `dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>` setzt sie erneut.
 5. Testen Sie mit zwei Konten, wie im [Testplan](help:setup.notify.test) beschrieben.
 
 **Gut zu wissen**
@@ -7716,7 +8363,7 @@ Push gehört nicht von selbst zur App. Betreiben Sie Ihren Space auf der gemeins
 - Ohne die Schritte 1 bis 4 wird nichts gepusht, was die Schalter auch sagen. Der Feed, die Glocke und die Nachrichten funktionieren weiterhin.
 - Die ausführliche Checkliste ist für den Betreiber: siehe [Plattformen](help:user.advanced.platforms) und [Ihr eigener Server](help:user.advanced.own-server).
 - Der Push-Text enthält nie einen Namen oder eine Uhrzeit: Das ist Absicht, aus Datenschutzgründen.
-- Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als `deskilo_push_shared_secret`, danach als `PUSH_SHARED_SECRET` für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Noch nicht eingerichtete Installationen behalten den bisherigen Versand mit einer Warnung; konfigurierte Installationen verweigern Aufrufe ohne Geheimnis oder Dienstzugangsdaten. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.
+- Hinterlegen Sie das Push-Geheimnis pro Installation: Speichern Sie denselben privaten Zufallswert zuerst in Vault als `deskilo_push_shared_secret`, danach als `PUSH_SHARED_SECRET` für die Push-Funktion. Testen Sie anschließend eine Nachricht und eine Zahlungserinnerung. Ohne das Geheimnis nimmt die Push-Funktion nur die Dienstzugangsdaten an: Nachrichten und Erinnerungen werden erst versendet, wenn das Geheimnis hinterlegt ist. Kopieren Sie das Geheimnis niemals in die App oder die Setup-XML.
 
 **Siehe auch:** [Push-Benachrichtigungen auf diesem Gerät](help:user.privacy.push)
 

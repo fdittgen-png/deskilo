@@ -4,7 +4,8 @@
 // the page reads back — the typed <configuration> tree, the <setup>
 // answers and profile, readTree(), the frozen reader of the files a page
 // before #2925 wrote, and migrate(), every rule an older questionnaire is
-// read by. Loaded after web/setup.html's own script.
+// read by. Loaded after setup_main.js, the page's own script; its last
+// line starts the page (#3915).
 'use strict';
 // #2331 — a stored role row REPLACES the app's defaults, so the page offers
 // every permission. The ten a page older than #2331 never offered: an
@@ -131,7 +132,9 @@ function bookingRules(){const w=workHours(),policies=on('bookingPolicies');
 function legalConfig(){const m=S.mentions,lt=S.landTax,reg=registered();
  const out={legal_form:m.legalForm||'',registration:m.register||'',payment_terms:m.terms||'',late_penalty:m.penalty||'',
   recovery_indemnity:m.recovery||'',escompte:m.escompte||'',insurance:m.insurance||'',special_mentions:m.special||'',
-  seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:S.vatExigibility};
+  seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:S.vatExigibility,
+  // #3649 — the region of the space's address, as its code.
+  subdivision:String(S.subdivision||'').trim().toUpperCase()};
  if(S.vatExigibility==='invoice')out.vat_exigibility='invoice';
  if(S.vatExigibility==='cash')out.vat_exigibility='payment';
  // #2357 — how often the return is filed: a stored parameter now.
@@ -149,7 +152,7 @@ function workspaceConfig(){
  const qst=registered()&&S.country==='CA'?S.landTax.qst.trim():'';
  const ws={
   address:S.address||'',street:S.street||'',postal_code:S.postal||'',city:S.city||'',
-  default_locale:S.language||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:Math.min(100,Math.max(20,int(S.deskOpacity,100))),
+  default_locale:S.language||'',paper:S.paper||'',whatsapp_group:on('whatsappIntegration')?(S.whatsapp||''):'',desk_opacity:Math.min(100,Math.max(20,int(S.deskOpacity,100))),
   invitation_templates:Object.fromEntries(Object.entries(S.invites).filter(([,v])=>String(v).trim()).map(([k,v])=>[k,String(v).trim()])),
   // #2331 — the column's own words: the page says "registered", the
   // workspaces row (and every issuing guard) says "vat_registered". The
@@ -163,7 +166,7 @@ function workspaceConfig(){
  // names). Written only while the page asks for it; a role row REPLACES
  // the app's defaults for that role, which is why the page offers all of them.
  if(on('roleManagement'))ws.role_permissions=Object.fromEntries(Object.keys(PERM_DEFAULTS).map(role=>[role,PERMS.filter(p=>(S.perms[role]||[]).includes(p))]));
- if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),first_after_days:int(S.reminders.firstDays,14),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
+ if(on('dunning'))ws.dunning_rules={levels:int(S.reminders.levels,1),...(termStated()?{first_after_days:int(S.reminders.firstDays,14)}:{}),between_days:int(S.reminders.betweenDays,14),automatic:on('paymentReminders')&&S.reminders.automatic===true};
  return ws;
 }
 // #2331 — the two series the page asks for (only while invoicing as a
@@ -191,7 +194,7 @@ function tablesConfig(){
  // and ''): a null made the import refuse the whole configuration.
  if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
    category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:'standard',outside_base:false,exemption_reason:'',valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
- if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',
+ if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',subdivision:String(x.subdivision||'').trim().toUpperCase(),
    legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
  return t;
 }
@@ -346,3 +349,10 @@ ans.sites=[...le.querySelectorAll('site')].map(st=>({name:st.getAttribute('name'
  ans.members=[...su.querySelectorAll('members > member')].map(m=>({name:m.getAttribute('name'),email:m.getAttribute('email'),role:m.getAttribute('role'),pct:m.getAttribute('subscription-pct'),overage:m.getAttribute('overage-policy')||'blocked',wholeSpaces:m.getAttribute('may-reserve-whole-spaces')==='true',simultaneous:m.getAttribute('simultaneous-reservations')||'',limit:m.getAttribute('reservation-limit')||''}));
  return ans;
 }
+// #3889 -- the reminders' delay is the business's own term when somebody wrote
+// it: the person typed it here, or the answers carry a value other than the
+// page's starting one (a saved or imported answer). An untouched default is
+// left out, so the business keeps the platform's default to review.
+function termStated(){return S.reminders.firstDaysStated===true||int(S.reminders.firstDays,REMINDER_DEFAULTS.firstDays)!==REMINDER_DEFAULTS.firstDays}
+// #3915 — every script of the page has loaded: start it.
+boot();

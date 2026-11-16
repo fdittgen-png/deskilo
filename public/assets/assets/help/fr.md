@@ -408,6 +408,31 @@ Vous êtes dans un espace et voulez atteindre un écran. Tout est dans un seul m
 
 **Voir aussi:** [Style de navigation](help:user.profile.settings.navigation) · [Moi : votre accueil et vos espaces](help:user.me.home)
 
+### La vue d'ensemble de l'espace
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffres que vous pouvez lire.
+
+<!-- image: user-start-workspace-overview -->
+
+**Étapes**
+
+1. Ouvrez [Vue d'ensemble](app:/workspace-overview).
+2. Lisez **À traiter** : ce qui vous attend, et une ligne qui compte les demandes que personne n'a encore décidées dans l'espace. « Rien ne vous attend » signifie qu'il n'y a rien.
+3. Lisez **Indicateurs clés**, groupés en **Capacité**, **Ventes**, **Achats**, **Trésorerie** et **Personnes**. Touchez une tuile pour ouvrir l'endroit d'où vient son chiffre.
+4. Touchez **Personnaliser** pour épingler les tuiles que vous voulez, dans votre ordre.
+5. Touchez **Tous les indicateurs** pour la page d'analyse complète.
+
+**Bon à savoir**
+
+- Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
+- **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
+- **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.
+- Le ou la propriétaire active la page sous **Vue d'ensemble de l'espace** parmi les fonctionnalités. Désactivée, la liste d'attention et la page d'analyse restent telles quelles.
+
+**Voir aussi:** [S'orienter dans l'application](help:user.start.navigation)
+
 ### La carte Premiers pas et les astuces
 
 **Public:** Tout le monde
@@ -1834,6 +1859,7 @@ Vous voulez vous connecter en scannant votre badge plutôt qu'en saisissant votr
 - La ligne indique **Pas encore de code** ou **Code défini**.
 - Vous seul pouvez le définir, et personne, pas même un propriétaire, ne peut le relire.
 - **Modifier le code** le remplace ; **Supprimer le code** désactive la connexion par badge pour tous vos badges.
+- Un badge vous connecte à son propre espace. Le propriétaire ou l'administrateur d'un autre espace se connecte avec son mot de passe, pas avec le badge.
 
 **Voir aussi:** [Votre badge](help:user.profile.settings.badge)
 
@@ -2064,6 +2090,25 @@ Vous voulez décider, élément par élément, qui voit votre nom, votre présen
 - **Toute personne connectée** n'est proposé que pour certains éléments, comme **Nom et photo** et **Métier et présentation**. **WhatsApp et e-mail** et **Présent dans l'espace aujourd'hui** ne vont jamais au-delà de vos propres espaces.
 
 **Voir aussi:** [Profil public](help:user.privacy.public-profile) · [Qui peut voir mes données](help:user.privacy.visibility)
+
+### Ce que voit une entreprise que vous rejoignez
+
+**Public:** Tout le monde
+
+Vous voulez savoir ce qu'une entreprise apprend de vous quand vous demandez à la rejoindre, et une fois membre.
+
+**Étapes**
+
+1. Ouvrez [Moi](app:/me?tab=me) et faites défiler jusqu'à **Confidentialité**.
+2. Touchez **Ce que voit une entreprise que vous rejoignez**.
+
+**Bon à savoir**
+
+- Quand vous demandez à la rejoindre, l'entreprise voit votre nom et votre photo. Votre adresse e-mail n'accompagne pas la demande.
+- Une fois membre, tout le monde dans l'espace voit votre nom et votre photo. Votre numéro WhatsApp, votre statut et votre dernière présence suivent vos choix dans **Qui me voit**.
+- Les administrateurs qui vous facturent ou tiennent le registre des membres voient ce dont ils ont besoin pour vous facturer : nom, société, adresse, téléphone, e-mail, numéro de TVA, identifiant légal et langue préférée. Votre date d'anniversaire, si vous l'avez indiquée, n'est vue que par ceux qui tiennent le registre des membres.
+
+**Voir aussi:** [Choisir qui me voit](help:user.privacy.audiences)
 
 ### Publier un profil public
 
@@ -2509,6 +2554,28 @@ Vous avez payé quelque chose pour l'espace et vous voulez que l'espace vous rem
 
 **Voir aussi:** [Approuver ou refuser une dépense](help:user.money.expense.approve)
 
+### La TVA d'une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Une dépense contient de la TVA, et vous voulez que l'espace en déduise la bonne part.
+
+**Étapes**
+
+1. Dans le formulaire de dépense, ou dans **Dépenses programmées**, choisissez la **TVA sur cette dépense** : un taux, ou **Sans TVA**.
+2. Saisissez la **Part déductible (%)** : 100, sauf si une partie de la dépense est privée ou sert une activité exonérée.
+3. Activez **Une immobilisation** pour un équipement que l'espace garde et amortit.
+4. Pour un service acheté à l'étranger sans TVA de votre pays, activez **Acheté auprès d'un fournisseur à l'étranger**. Le montant saisi est alors la base : l'espace doit l'impôt sur les acquisitions sur ce montant et en déduit sa part.
+
+**Bon à savoir**
+
+- Les champs apparaissent quand l'espace est assujetti à la TVA et que **TVA déductible** est activée.
+- **Acheté auprès d'un fournisseur à l'étranger** n'apparaît que si la déclaration de votre pays a une case pour cet impôt, par exemple le décompte suisse (chiffre 383).
+- Une dépense programmée pose la question une fois, et chaque occurrence reprend la réponse.
+- La TVA déductible compte dans le mois où la dépense est approuvée.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Le décompte suisse : chiffres 205 et 383](help:user.money.vat.ch-return)
+
 ### Approuver ou refuser une dépense
 
 **Public:** Administrateur·rice · Propriétaire
@@ -2531,6 +2598,246 @@ Une dépense attend et vous décidez si l'espace la paie.
 - **Alertes financières** dans Finances n'apparaît que lorsque la fonction **Onglet Événements** est activée.
 
 **Voir aussi:** [Les alertes financières](help:user.money.alerts)
+
+### La page Ventes
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez trouver au même endroit tout ce que l'espace vend et facture.
+
+<!-- image: user-money-sales -->
+
+**Étapes**
+
+1. Ouvrez [Ventes](app:/money/sales), ou touchez **Ventes** dans [Mes finances](app:/money).
+2. Touchez **Services** pour changer ce que les membres peuvent acheter. La ligne apparaît si vous pouvez gérer les services.
+3. Touchez **Factures** pour émettre et suivre les factures.
+4. Touchez **Pass invités** pour les pass vendus à l'accueil, si l'espace en vend.
+5. Touchez **Registre des factures** pour la liste de toutes les factures émises, ou **Tarifs et forfaits** pour changer les prix. **Tarifs et forfaits** apparaît si vous pouvez gérer les règles de facturation.
+
+**Bon à savoir**
+
+- Chaque ligne ouvre l'écran qu'elle a toujours ouvert, avec les mêmes droits. La page ne fait que les rassembler.
+- La page apparaît quand la facturation est activée dans l'espace et que vous êtes administrateur·rice.
+
+**Voir aussi:** [La facturation en un coup d'œil](help:user.money.invoicing) · [La page Achats et Ajouter un achat / une dépense](help:user.money.purchases)
+
+### Vendre et révoquer un pass invité
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un invité qui n'est pas membre prend une place pour une journée ou quelques heures, paie à l'accueil et reçoit une facture.
+
+<!-- image: user-money-guest-passes -->
+
+**Étapes**
+
+1. Ouvrez [Pass invités](app:/money/guest-passes), ou **Pass invités** sur la page [Ventes](app:/money/sales).
+2. La première fois, touchez **Ajouter un pass** : son **Nom**, **Par jour** ou **Par heure**, le **Prix par unité**, et **En vente**.
+3. Touchez **Vendre un pass**, choisissez le **Pass** et la **Place**, les jours (**De**, **À**) et le nom et le contact de l'invité, et cochez **Payé à l'accueil** s'il a payé.
+4. **Pass vendus** liste chaque pass avec ce qui a été **Utilisé**. Pour reprendre des pass, sélectionnez-les et touchez **Révoquer**, puis confirmez.
+
+**Bon à savoir**
+
+- L'invité ne devient pas membre ; son nom et son contact sont imprimés sur la facture.
+- Révoquer annule les réservations qui n'ont pas encore commencé. Les jours déjà commencés restent, et aucun argent ne bouge : corrigez la facture de l'invité sur sa page s'il doit être remboursé.
+- **Révoqués, facture non corrigée** liste les pass révoqués dont la facture attend encore sa correction ; **Ouvrir la facture** vous y mène.
+- Un pass à l'heure vaut pour une journée ; un pass à la journée dure de 1 à 31 jours.
+
+**Voir aussi:** [La page Ventes](help:user.money.sales) · [Suivre une facture](help:user.invoicing.open)
+
+### La page Achats et Ajouter un achat / une dépense
+
+**Public:** Membre · Administrateur·rice · Propriétaire
+
+Vous avez acheté quelque chose pour l'espace, ou un fournisseur a envoyé une facture, et vous voulez l'enregistrer.
+
+<!-- image: user-money-purchases -->
+
+**Étapes**
+
+1. Ouvrez [Achats](app:/money/purchases), ou touchez **Achats** dans [Mes finances](app:/money).
+2. Touchez **Ajouter un achat / une dépense**.
+3. Si vous pouvez saisir les factures fournisseur, répondez à **Qui a payé ?** :
+   - **J'ai payé moi-même** : le formulaire de dépense s'ouvre. Une fois la dépense approuvée, l'espace vous la doit.
+   - **Pas encore payé** : une facture fournisseur que l'espace doit encore payer.
+   - **L'espace a déjà payé** : saisissez la facture. Une fois approuvée, enregistrez son paiement depuis **À payer**.
+4. Remplissez le formulaire qui s'ouvre et enregistrez-le.
+
+**Bon à savoir**
+
+- Sans le droit de saisir les factures fournisseur, la question est sautée et le formulaire de dépense s'ouvre.
+- Les autres boutons de la page ouvrent **Fournisseurs**, **Achats** (la liste des pièces d'achat), le bail, l'équipement et les salles louées, chacun quand l'espace s'en sert.
+- **Achats** liste les factures fournisseur et les justificatifs que les membres ont payés pour l'espace, une pièce chacun. Les onglets sont **Documents** et **À payer**.
+
+**Voir aussi:** [Soumettre une dépense](help:user.money.expense) · [Une facture fournisseur, de la saisie à l'approbation](help:user.money.purchases.bills)
+
+### Une facture fournisseur, de la saisie à l'approbation
+
+**Public:** Administrateur·rice · Propriétaire
+
+Un fournisseur a envoyé une facture et vous voulez que l'espace la doive, avec l'approbation d'une seconde personne.
+
+**Étapes**
+
+1. Dans **Achats**, touchez **Ajouter une facture fournisseur**, ou passez par **Ajouter un achat / une dépense**.
+2. Choisissez le **Fournisseur** et saisissez le **Numéro de facture**, les lignes et le **Total**. Une facture enregistrée incomplète reste un brouillon : « Un brouillon : envoyez-le pour approbation une fois complet. »
+3. Touchez **Envoyer pour approbation**.
+4. Une autre personne ouvre [Factures fournisseurs à approuver](app:/money/purchases/approvals) et touche **Approuver**, ou **Refuser** en donnant la raison.
+5. Une fois approuvée, la facture est due au fournisseur jusqu'à son paiement.
+
+**Bon à savoir**
+
+- Une facture a besoin de son fournisseur et d'un montant avant d'être envoyée.
+- La personne qui a envoyé une facture ne peut pas la décider. Dans les paramètres de l'espace, **Factures qu'une seule personne peut approuver en dessous de (unités monétaires)** lui permet d'approuver les petites factures, si elle peut approuver les dépenses. 0 garde la règle : une autre personne approuve chaque facture. Un refus demande toujours une autre personne.
+- Chaque pièce montre à part son approbation, son règlement (**Non réglé**, **Réglé en partie**, **Réglé**, **Rien de dû**) et son état comptable.
+- Saisir une facture demande **Saisir les factures fournisseur**. La décider demande **Approuver les dépenses**.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay) · [Soldes des fournisseurs](help:user.money.suppliers.balance)
+
+### Ce que l'espace doit : À payer
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir ce que l'espace doit encore, et enregistrer ce qui a été payé.
+
+**Étapes**
+
+1. Dans **Achats**, ouvrez l'onglet **À payer**, ou ouvrez [Trésorerie](app:/money/cash) et touchez **À payer**.
+2. Lisez **Dû aux fournisseurs** pour les factures approuvées et **Dû aux membres** pour les remboursements des justificatifs approuvés.
+3. Touchez **Enregistrer le paiement** sur une ligne. Saisissez le **Montant versé**, la date (**Payé le**), le **Mode de paiement** et, si vous le souhaitez, une **Référence (facultatif)**.
+4. Pour un membre qui doit aussi de l'argent à l'espace, touchez plutôt **Compenser avec une facture**. Choisissez la **Facture** : la créance règle cette facture ouverte au lieu d'être versée.
+5. Pour appliquer un avoir fournisseur, touchez **Appliquer à sa facture** sur l'avoir.
+
+**Bon à savoir**
+
+- N'enregistrez que de l'argent réellement versé. Le paiement est déclaré par vous ; il n'est pas confirmé par la banque.
+- Un paiement erroné n'est jamais supprimé. Touchez **Annuler** et donnez la raison. Un paiement déjà appliqué à une facture ne peut pas être annulé.
+- Une compensation garde les ventes et la TVA de la facture ; seul son paiement est expliqué.
+- Un avoir est appliqué par une autre personne que celle qui l'a saisi, à une facture approuvée du même fournisseur qui doit encore au moins ce montant.
+- Dans les paramètres de l'espace, **Paiements enregistrés par une seconde personne à partir de (unités monétaires)** signifie qu'un paiement d'au moins ce montant ne peut pas être enregistré par la personne qui a approuvé la facture qu'il paie. 0 désactive la règle.
+- Enregistrer un paiement demande **Enregistrer les paiements aux membres** ; une compensation demande **Émettre les factures et rapprocher les paiements**.
+
+**Voir aussi:** [La page Trésorerie](help:user.money.cash)
+
+### Le bail des locaux
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace loue ses locaux, et vous voulez enregistrer une seule fois le loyer et les charges qu'il doit, avec leur historique.
+
+<!-- image: user-money-purchases-lease -->
+
+**Étapes**
+
+1. Ouvrez [Achats](app:/money/purchases) et touchez **Bail des locaux**.
+2. Touchez **Ajouter un bail**. Choisissez le **Bailleur (un fournisseur)**, écrivez les **Locaux (adresse)** et la date de **Début**. Ajoutez **Ferme jusqu’au**, **Préavis en mois**, le **Dépôt de garantie** et une **Indexation (note)** si le bail en prévoit.
+3. Sous **Loyer et charges**, touchez **Nouveau montant**. Choisissez la **Charge** (**Loyer**, **Provision sur charges** ou **Autre charge**), le **Montant**, la fréquence (**Payé**) et la date de départ (**À partir du**).
+4. Quand le loyer change, ajoutez un **Nouveau montant** à sa date. Il remplace le montant en vigueur ; l'ancien reste dans l'historique.
+5. Pour mettre fin au bail, touchez **Donner congé**. Saisissez **Congé donné le**, **Le bail se termine le** et **Pourquoi se termine-t-il ?**.
+6. Quand le bailleur facture les charges de l'année, touchez **Régulariser les charges**. Saisissez la période, le **Montant facturé** et le jour de paiement (**Échéance le**).
+
+**Bon à savoir**
+
+- Enregistrez d'abord le bailleur comme fournisseur.
+- Après le congé, les montants programmés s'arrêtent au jour de fin du bail. Les échéances déjà présentées sont conservées.
+- Une régularisation déduit les provisions payées sur la période : un solde est dû au jour choisi, un excédent est enregistré comme crédit. Une période n'est régularisée qu'une fois.
+- Enregistrer le bail demande **Enregistrer le bail des locaux** ; l'espace doit avoir activé **Bail des locaux**.
+
+**Voir aussi:** [Les échéances de loyer et les factures qui les règlent](help:user.money.purchases.commitments) · [Soldes des fournisseurs](help:user.money.suppliers.balance)
+
+### Les échéances de loyer et les factures qui les règlent
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Le bail ou une salle louée attend un loyer chaque mois, et vous voulez rapprocher chaque mois de la facture du bailleur, sans compter le coût deux fois.
+
+**Étapes**
+
+1. Dans **Bail des locaux** ou **Salles louées**, touchez **Échéances**.
+2. Lisez chaque mois : **Attendu**, **En partie rapproché** ou **Rapproché**.
+3. Touchez **Rapprocher une facture** sur un mois. Choisissez la **Facture** et la **Ligne de la facture**, puis saisissez le **Montant couvert**.
+4. Si la facture diffère de ce que le mois attend, touchez **Accepter l'écart** et écrivez **Pourquoi la facture diffère**.
+5. Un rapprochement erroné s'annule avec **Annuler** et sa raison.
+
+**Bon à savoir**
+
+- Une facture rapprochée d'un mois remplace l'attente de ce mois ; elle n'ajoute jamais un second coût.
+- Seules les factures fournisseur du bailleur, en attente ou approuvées, se rapprochent, jusqu'à ce que le mois attend encore.
+- Un écart accepté part aux validateurs : rien ne change avant leur décision.
+
+**Voir aussi:** [Le bail des locaux](help:user.money.purchases.lease) · [Salles louées](help:user.money.purchases.rented-rooms)
+
+### Salles louées
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace loue des salles à un bailleur, et vous voulez que les membres ne les réservent que pendant la location, et seulement ceux que vous choisissez.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Étapes**
+
+1. Dans le plan, marquez l'étage comme loué : sous **Étages**, il indique « Étage loué : ses salles ne se réservent que dans une location ».
+2. Ouvrez [Achats](app:/money/purchases), touchez **Salles louées**, puis **Louer cette salle** sur une salle.
+3. Choisissez le **Bailleur**, le **Premier jour** et, si la location se termine, le **Dernier jour (facultatif)**. Saisissez le **Coût mensuel pour l'espace** et le **Tarif par demi-journée pour un membre (facultatif)**.
+4. Choisissez qui peut réserver : **Ouverte à tous les membres**, ou **Aussi ouverte à ces membres**, **Aussi ouverte à ces rôles** ou **Aussi ouverte à ces formules**, chacun avec son propre tarif si vous le souhaitez.
+5. Mettez l'**État** sur **Active : réservable** et touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Une salle louée ne se réserve que pendant sa période de location, et seulement par les personnes choisies. Personne d'autre ne la voit.
+- Tant que l'état est **Brouillon : non réservable**, personne ne peut la réserver. Une fois la location **Terminée**, la salle n'est plus réservable jusqu'à une nouvelle location.
+- Le coût mensuel apparaît dans **Échéances**, à rapprocher des factures du bailleur.
+- Gérer les salles louées demande **Gérer les sites et modifier le plan** ; l'espace doit avoir activé **Salles louées**.
+
+**Voir aussi:** [Les échéances de loyer et les factures qui les règlent](help:user.money.purchases.commitments)
+
+### Le registre des équipements
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+L'espace a acheté un équipement durable, et vous voulez l'enregistrer et le traiter comme votre expert-comptable le décide.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Étapes**
+
+1. Sur l'achat, classez la ligne comme équipement durable.
+2. Ouvrez [Achats](app:/money/purchases), touchez **Équipements** puis **Enregistrer un équipement**. Choisissez la **Ligne d'achat** et donnez le **Nom de l'équipement**.
+3. Touchez **Décider du traitement**. Choisissez **Immobiliser comme équipement** ou **Passer en charge**, écrivez le **Fondement de la décision**, et ajoutez **Mise en service le** seulement si vous la connaissez.
+4. Pour garder les chiffres de votre expert-comptable, touchez **Valorisations de l'expert-comptable** puis **Importer un fichier** (ou **Saisir un bien**). Vérifiez l'aperçu et touchez **Confirmer**.
+
+**Bon à savoir**
+
+- Chaque équipement montre son état : **En attente de traitement**, **Immobilisé, en service**, **Passé en charge** ou **Sorti de l'actif**.
+- Le coût est connu une fois la part de TVA déductible de l'achat qualifiée.
+- Les valorisations sont des pièces justificatives : rien n'est comptabilisé à partir d'elles, et un chiffre vide reste inconnu. Un lot ultérieur remplace le précédent et dit pourquoi.
+- Enregistrer demande **Saisir les factures fournisseur** ; décider du traitement et les valorisations demandent **Gérer les tarifs et règles de facturation** et **Consulter les finances de l'espace**.
+
+**Voir aussi:** [Une facture fournisseur, de la saisie à l'approbation](help:user.money.purchases.bills)
+
+### La page Trésorerie
+
+**Public:** Administrateur·rice · Propriétaire
+
+Vous voulez voir l'argent enregistré en entrée et en sortie, et ce qui reste à payer.
+
+<!-- image: user-money-cash -->
+
+**Étapes**
+
+1. Ouvrez [Trésorerie](app:/money/cash), ou touchez **Trésorerie** dans [Mes finances](app:/money).
+2. Touchez **Entrées et sorties par mois** pour les paiements enregistrés, mois par mois.
+3. Touchez **À payer** pour ce que l'espace doit encore.
+4. Touchez **Relevés bancaires** pour importer un relevé et rapprocher ses lignes, si l'espace s'en sert.
+
+**Bon à savoir**
+
+- La page montre des paiements enregistrés, pas un solde bancaire rapproché.
+- Elle apparaît pour les administrateur·rices quand l'état de l'espace ou les achats sont activés.
+
+**Voir aussi:** [Ce que l'espace doit : À payer](help:user.money.purchases.to-pay)
 
 ### Soldes des fournisseurs
 
@@ -2580,24 +2887,23 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 
 **Public:** Administrateur·rice facturation · Propriétaire
 
-Vous émettez et relancez les factures de tout l'espace et vous voulez savoir par où commencer.
+Vous émettez et relancez les factures de tout l'espace et voulez savoir par où commencer.
 
 ![](assets/help/images/user-money-invoicing.fr.b8fa17aa9.jpg)
 
 **Étapes**
 
 1. Ouvrez [Facturation](app:/invoices).
-2. Lisez les onglets : **À facturer** liste les membres à facturer pour le mois, **En cours** les factures émises et impayées, et **Archives** celles qui sont closes.
-3. Lisez la ligne de quatre étapes sous la bannière : **À émettre**, **À encaisser**, **À confirmer** et **Closes**, avec un nombre pour chacune.
-4. Touchez **Assistant de clôture** pour facturer un mois, ou **Nouvelle facture** pour une seule.
-5. Touchez l'icône d'outils pour le registre des factures, les règles de rappel, le modèle PDF de facture et **Mes finances**.
+2. Lisez **À recevoir** : ce qui est **En retard** et ce qui est **Pas encore échu**.
+3. Avancez dans **À faire** : chaque entrée s'ouvre avec **Voir**, jusqu'à ce qu'elle indique **Tout est à jour.**
+4. En dessous, lisez les clients et leurs factures ; touchez **Nouvelle** pour une seule facture et **Plus** pour les autres outils.
 
 **Bon à savoir**
 
-- Les factures ne sont jamais modifiées ni supprimées. Une facture erronée est marquée comme telle et remplacée.
-- Le processus complet, de la clôture du mois au règlement et aux rappels, est décrit au chapitre 08 : [Règles de rappel](help:user.money.reminders.rules) et [Le modèle PDF de facture](help:user.money.reports.invoice-template) sont de bons endroits pour poursuivre.
+- Une facture ne se modifie ni ne se supprime. Une facture fausse est corrigée par une facture de remplacement.
+- Toute la routine, de la facturation du mois au rapprochement des paiements et au remboursement des avoirs, est au chapitre 08 : commencez par [L'écran Facturation](help:user.invoicing.hub).
 
-**Voir aussi:** [Règles de rappel](help:user.money.reminders.rules)
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month) · [Règles de relance](help:user.money.reminders.rules)
 
 ## Votre espace, configuré par vous (Réglages de l'espace)
 
@@ -3057,6 +3363,30 @@ Vous voulez activer ou désactiver une seule fonctionnalité.
 
 **Voir aussi:** [Activer ou désactiver des processus entiers](help:user.features.processes)
 
+### Quel genre d’activité est-ce ?
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking, et voulez que l’application s’y adapte. Le guide de mise en place le demande à sa première étape ; vous pouvez le changer ici plus tard.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Étapes**
+
+1. Ouvrez [Espace](app:/workspace-settings).
+2. Touchez **Quel genre d’activité est-ce ?**, choisissez un genre et, si l’activité est plusieurs choses, cochez d’autres genres en dessous (facultatif).
+3. Lisez ce qu’il **Active** et **Désactive**, puis touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.
+- Un genre sans places désactive tout ce qui concerne les places — sièges, plan, borne, salles. **Tout afficher** liste chaque fonction.
+- Rien ne change avant **Enregistrer** ; **Annuler** laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.
+- Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans **Fonctions**.
+- Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.
+
+**Voir aussi:** [Fonctions](help:user.features.processes)
+
 ### Pays
 
 **Public:** Propriétaire · Administrateur·rice avec l'autorisation
@@ -3120,6 +3450,60 @@ Vous voulez que les invitations et les documents parlent la langue de votre comm
 - Ce n'est pas la langue de votre propre application. Celle-ci ne change que ce que vous voyez, et se trouve dans vos réglages personnels.
 
 **Voir aussi:** [Message d'invitation](help:user.workspace.settings.invitation-message)
+
+### Papier des documents
+
+**Public:** Propriétaire · Administrateur·rice avec l'autorisation
+
+Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise votre pays.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Étapes**
+
+1. Dans [Espace](app:/workspace-settings), sous **Informations générales**, ouvrez **Papier des documents**.
+2. Gardez le papier usuel de votre pays, ou choisissez-en un autre qu'il permet.
+3. Touchez **Enregistrer**.
+
+**Bon à savoir**
+
+- Les États-Unis et le Canada impriment sur Lettre US ; les autres pays sur A4, sauf si vous choisissez Lettre US.
+- En Suisse, seul l'A4 est proposé : une facture se termine par une section paiement imprimée sur A4.
+- Sur Lettre US, l'adresse s'imprime pour une enveloppe à fenêtre américaine n° 10 (4 1/8 × 9 1/2 po, une fenêtre à gauche) : pliez la lettre en trois, le panneau d'adresse vers l'extérieur, et glissez-la au bas de l'enveloppe. Une fenêtre à gauche et une à droite désignent cette seule fenêtre ; le destinataire a la place de cinq lignes ; une adresse plus longue s'imprime en entier au début du texte, et la fenêtre reste vide.
+- Une facture garde le papier de son émission. Changer de papier change les factures émises ensuite.
+- Une lettre, une relance, un relevé ou un rapport s'imprime sur le papier choisi au moment où vous l'imprimez.
+- Si l'espace passe dans un pays qui n'utilise pas le papier choisi, il suit le papier usuel de ce pays.
+
+**Voir aussi:** [Pays](help:user.workspace.settings.country)
+
+### Organisation
+
+**Public:** Propriétaire
+
+Votre entreprise a des sites à l'étranger, dans un autre pays ou une autre devise. Chacun d'eux est une maison : une entreprise à part entière avec les règles de son pays, sa devise et sa propre comptabilité. Ensemble, elles forment une organisation avec une tête.
+
+**Étapes**
+
+1. Dans [Espace](app:/workspace-settings), ouvrez **Organisation**.
+2. Si l'entreprise n'est encore dans aucune organisation, touchez **Faire de cette entreprise la tête d’une organisation** et donnez-lui un nom.
+3. Touchez **Ajouter une de mes entreprises** pour faire d'une autre entreprise dont vous êtes propriétaire une maison de l'organisation.
+4. Touchez **Retirer de l’organisation** à côté d'une maison pour en refaire une entreprise indépendante.
+5. Touchez **En faire la tête** à côté d'une maison dont vous êtes propriétaire pour en faire la tête. Le propriétaire d'une autre maison voit **Quitter l’organisation** à côté de celle-ci.
+6. Touchez **Ajouter une maison à l’étranger** pour créer une entreprise à part entière dans un autre pays ou une autre devise : choisissez d'abord son pays ; sa devise, son fuseau horaire et la langue de ses documents en sont proposés. Le formulaire dit ce qui voyage, ce qui arrive inactif à tarifer et ce qui ne voyage pas. Touchez **Créer la maison** : vous y arrivez, et son accueil montre une fois comment elle a commencé.
+7. Dans la nouvelle maison, l'accueil affiche sa première tâche : d'abord les taux de taxe de son pays, puis **Fixer vos prix** pour les services et forfaits arrivés inactifs. Donnez à chacun un prix (0 le rend gratuit) et un taux, puis activez-le ; les tranches de cotisation, la mise en page et les liens des documents, les instructions de paiement et le compte bancaire sont propres à la maison. Touchez **Terminé** quand il ne reste rien.
+8. Dans une maison dont vous êtes propriétaire, activez **Les membres des autres maisons sont les bienvenus ici** pour accueillir immédiatement un membre d'une autre maison de l'organisation qui le demande, aux conditions de cette maison pour un nouveau membre. Désactivé, la demande attend votre décision, qui nomme la maison d'où vient la personne.
+
+**Bon à savoir**
+
+- Chaque maison indique son pays, sa devise et votre propre rôle. Qui d'autre en est propriétaire se lit dans la maison elle-même.
+- Un membre d'une maison voit les autres maisons de l'organisation sur Moi, sous **Autres maisons de** l'organisation, et touche **Demander à rejoindre**. Une question dit d'abord ce que cela implique : son profil devient visible pour cette maison, qui est une activité à part entière avec ses propres conditions, prix et devise.
+- Dans Moi, les maisons sont regroupées sous le nom de l'organisation : la tête d'abord, puis par pays.
+- Dans une maison, touchez le nom de l'entreprise en haut pour passer à une autre maison de l'organisation.
+- Les montants dans des devises différentes sont affichés côte à côte et jamais additionnés.
+- La tête part en dernier : retirez d'abord les autres maisons.
+- Seul un propriétaire de l'entreprise et de la tête peut modifier l'organisation.
+
+**Voir aussi:** [Pays](help:user.workspace.settings.country)
 
 ### Adresse d'en-tête
 
@@ -3838,6 +4222,7 @@ Un nouvel arrivant attend votre décision, ou un membre fait une pause, et vous 
 - La décision sur un nouveau membre peut aussi passer par les règles de validation, comme décrit dans [Règles de validation](help:user.validation.overview).
 - La mise en pause est réservée aux propriétaires et conserve tout l'historique.
 - Un membre parti affiche **Parti** et ne peut pas être mis en pause.
+- Une suspension et un changement de part comptent par mois entiers, à partir du premier mois dont le premier jour tombe à leur date ou après ; rien n'est calculé au prorata. Un mois déjà facturé garde ce que dit sa facture ; un changement compte à partir du premier mois pas encore facturé. Un mois suspendu dès son premier jour ne doit aucun abonnement et n'inclut aucune demi-journée ; une suspension qui commence le 15 laisse ce mois facturé en entier et libère le suivant. L'onglet **Formule** d'un membre liste les changements programmés, avec les mois facturés et libérés, et le premier relevé où figure un changement de part. Pour changer une formule, choisissez **Dès que possible** ou **À partir du premier d'un mois** ; une suspension prend le jour où elle commence et, s'il est connu, le jour **De nouveau actif le**. Avant d'appliquer, la tâche dit ce que le changement signifie en argent et combien de réservations tombent dans les mois libérés ; une date impossible est refusée avec la plus proche possible.
 
 **Voir aussi:** [Inviter un membre](help:user.members.invite)
 
@@ -4171,7 +4556,7 @@ Le prix d'une unité, TTC : le membre paie exactement cette somme, TVA comprise.
 
 #### Lieu de prestation d'un service
 
-Où la TVA de ce service est due. **Rattaché aux locaux**, la valeur par défaut, garde votre TVA pour tout client : un poste, un bureau, une salle et ce qui s'utilise sur place sont imposés là où se trouve l'immeuble. Choisissez **Prestation générale (non rattachée aux locaux)** uniquement pour ce qui n'est pas lié à l'immeuble, comme le traitement du courrier ou la domiciliation : pour une entreprise d'un autre pays de l'UE, cette ligne est alors autoliquidée, et pour une entreprise hors de l'UE elle est hors champ ; un consommateur paie toujours votre TVA. Chaque prestation enregistrée garde le choix en vigueur à ce moment. Le champ apparaît quand vous facturez la TVA et que la fonctionnalité **Lieu de prestation par service** est activée.
+Où la TVA de ce service est due. **Rattaché aux locaux**, la valeur par défaut d'une activité qui réserve des espaces, garde votre TVA pour tout client : un poste, un bureau, une salle et ce qui s'utilise sur place sont imposés là où se trouve l'immeuble. Choisissez **Prestation générale (non rattachée aux locaux)** uniquement pour ce qui n'est pas lié à l'immeuble, comme le traitement du courrier ou la domiciliation : pour une entreprise d'un autre pays de l'UE, cette ligne est alors autoliquidée, et pour une entreprise hors de l'UE elle est hors champ ; un consommateur paie toujours votre TVA. Chaque prestation enregistrée garde le choix en vigueur à ce moment. Une activité qui ne réserve aucun espace commence au contraire un nouveau service comme prestation générale, une valeur par défaut que vous confirmez : chaque choix de la liste indique comment il est imposé. Un service existant garde sa classe quand vous activez ou désactivez la réservation d'espaces. Le champ apparaît quand vous facturez la TVA et que la fonctionnalité **Lieu de prestation par service** est activée, ou quand votre activité ne réserve aucun espace.
 
 #### Actif
 
@@ -4253,6 +4638,10 @@ Vous voulez que les membres règlent une facture en cours en ligne, sur votre pr
 
 Les clés viennent du tableau de bord du prestataire : **Client ID**, **Secret**, **Environnement**, **ID du webhook** et **URL de retour** pour PayPal ; **Clé secrète**, **Secret de signature du webhook** et **URL de retour** pour Stripe ; **Clé API** et **URL de retour** pour Mollie et Wero. Gardez les clés de test et de production séparées : toutes les clés que vous saisissez doivent appartenir au même mode.
 
+Un espace de production n'encaisse qu'avec des clés de production : avec des clés de test, le paiement en ligne d'un membre est refusé. Pour Stripe, le point de terminaison du webhook écoute aussi **charge.dispute.created** et **charge.refunded** : un paiement que le prestataire annule (un remboursement ou une contestation) est alors marqué annulé, et vous corrigez le solde du membre. Tant qu'une personne qui voit les finances ne l'a pas marqué **Examiné** sous **Annulés par le prestataire** sur l'écran des paiements, l'aperçu indique combien d'annulations attendent.
+
+Une installation qui ne fait que répéter les paiements peut définir `DESKILO_ALLOW_TEST_PAYMENTS=true` dans l'environnement de ses fonctions : les commandes s'ouvrent alors avec des clés de test et les événements en mode test sont traités ; ce réglage ne doit jamais être défini sur une installation qui encaisse de vrais paiements.
+
 Les secrets sont stockés sur le serveur et ne sont plus jamais affichés. Un secret enregistré indique **Défini — laisser vide pour conserver** ; saisissez une nouvelle valeur pour le remplacer.
 
 ### Dépenses programmées
@@ -4321,7 +4710,7 @@ Dans ce chapitre :
 - La TVA : régime, numéro, taux, groupes et déclaration périodique
 - La facturation électronique : où part la facture lisible par une machine
 - Le modèle PDF de facture et l'éditeur de rapports
-- Émettre et clôturer un mois : l'écran Facturation, l'assistant de clôture, le regroupement, les dépenses partagées
+- Émettre et clôturer un mois : l'écran Facturation, la facturation du mois, une facture et un client, les paiements et les avoirs, l'assistant de clôture, le regroupement, les dépenses partagées
 - Les relances de paiement
 - Le registre des factures, les exports comptables et l'analyse d'activité
 
@@ -4842,6 +5231,28 @@ Un groupe dit de quel type de taux il s'agit, pour que la facture le range dans 
 
 **Voir aussi:** [Définir les taux](help:user.money.vat.rates)
 
+### Le décompte suisse : chiffres 205 et 383
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Votre espace est en Suisse, et vous voulez les prestations pour lesquelles vous avez opté et l'impôt sur les acquisitions dans les bonnes cases.
+
+**Étapes**
+
+1. Dans [Identité légale et facturation électronique](app:/legal-identity), sous **Location et option (Suisse)**, activez **Nous ne louons que des locaux nus** si vous louez des locaux sans services. Activez ensuite **Nous avons opté (art. 22 LTVA)** si vous avez opté, et saisissez **Option effective dès (AAAA-MM-JJ)**.
+2. Enregistrez une dépense achetée à l'étranger avec **Acheté auprès d'un fournisseur à l'étranger** activé.
+3. Ouvrez [Déclaration de TVA](app:/vat-declarations) et préparez la période.
+4. Téléchargez **Décompte TVA, XML eCH-0217 (téléversement ePortal)** et déposez-le sur l'ePortal.
+
+**Bon à savoir**
+
+- Le chiffre 205 est la part de votre chiffre d'affaires (chiffre 200) qui est une location nue imposée parce que vous avez opté. Les lignes immobilières de la facture donnent cette part. Le décompte la compte toujours dans le chiffre 200.
+- Le chiffre 383 est l'impôt sur les acquisitions. Il est déclaré comme impôt dû, et sa part déductible compte avec l'impôt préalable. Il ne fait pas partie du chiffre d'affaires.
+- Dans le fichier eCH-0217, les prestations optées sont écrites `opted`, et l'impôt sur les acquisitions un élément `acquisitionTax` par taux.
+- Un·e opérateur·rice qui modifie les cases dans **Données de référence fiscales** nomme les lignes supplémentaires d'une case dans **Autres catégories de lignes qu'elle additionne (séparées par des virgules, p. ex. acquisition)**. Le chiffre 383 porte `acquisition`.
+
+**Voir aussi:** [Préparer la déclaration de TVA](help:user.money.vat.declaration) · [La TVA d'une dépense](help:user.money.expenses.vat)
+
 ### Changer un taux par la loi
 
 **Public:** Propriétaire · Administrateur·rice facturation
@@ -4914,6 +5325,7 @@ Vous indiquez à DesKilo où déposer vos factures sous forme de fichiers lisibl
 - Le jeton est stocké sur le serveur et n'est plus jamais affiché.
 - Le fichier valide est une facture EN 16931. Savoir si votre pays impose une plateforme, et laquelle, est à confirmer avec votre comptable.
 - Déposer le fichier est la deuxième de trois étapes : voir [Ce que l'application émet, et ce qui reste chez votre comptable](help:user.invoicing.scope).
+- En Italie, aucune facture n'est émise avant que la plateforme nationale (le SdI) ait accepté un document de l'espace. **Envoyer un document de test** dans l'étape facturation électronique du guide de configuration : la facture pro forma du mois en cours d'un membre, avec un numéro de test, part vers l'environnement de test de la plateforme avec ses identifiants de test. Rien n'est émis, numéroté ni comptabilisé. Une fois la plateforme d'accord, l'espace émet ; de nouveaux identifiants ou une autre identité du vendeur demandent un nouveau test.
 
 **Voir aussi:** [Envoyer une facture électronique](help:user.money.einvoice.send) · [Identité légale](help:user.money.legal.identity)
 
@@ -5076,6 +5488,7 @@ Vous voulez remettre une facture émise sous sa forme lisible par une machine.
 - Si quelque chose manque, la feuille le liste. **Compléter l'identité légale** vous mène à l'écran qui le corrige.
 - Une facture signée avant que vous ayez complété votre identité garde ce avec quoi elle a été émise. Marquez-la comme erronée et émettez-en une de remplacement si cela compte.
 - Le canal que doit utiliser un client dépend de votre pays et du client. Confirmez avec votre comptable.
+- Si la réponse de la plateforme se perd alors que le document a peut-être été envoyé, la facture affiche **résultat inconnu** et **Envoyer** n'est plus proposé. Vérifiez l'enregistrement de la plateforme, puis touchez **Consigner ce qui s'est passé** et indiquez ce que vous avez constaté, pourquoi vous en êtes sûr et ce que vous avez vérifié. Une personne autorisée à émettre des factures peut le faire une fois ; rien n'est envoyé par ce geste.
 
 **Voir aussi:** [La plateforme de facturation électronique](help:user.money.einvoice.overview) · [L'écran Facturation](help:user.invoicing.hub)
 
@@ -5095,6 +5508,7 @@ Vous voulez que vos factures soient à votre image : logo, mise en page, formula
 **Bon à savoir**
 
 - Le modèle ne change que le PDF. Le XML de la facture électronique n'est jamais modifié.
+- Une facture émise garde l'original avec lequel elle a été émise : un modèle modifié ensuite ne change que les factures émises après. Des images qui rendent une facture plus lourde qu'un original ne peut l'être empêchent de conserver son original ; utilisez des images plus légères.
 - Toute personne autorisée à concevoir des documents peut le faire.
 - Un modèle qui ne s'affiche pas ne bloque jamais un document : la mise en page intégrée prend le relais.
 
@@ -5172,24 +5586,51 @@ Vos membres lisent leurs documents dans leur propre langue.
 
 **Public:** Propriétaire · Administrateur·rice facturation
 
-Vous voyez d'un coup d'œil ce qu'il faut émettre, ce qu'il faut encaisser et ce qui est clos.
+Vous ouvrez la facturation et voyez ce qu'on vous doit, ce qu'il reste à faire et les factures de chaque client.
 
 ![](assets/help/images/user-invoicing-hub.fr.b8fa17aa9.jpg)
 
 **Étapes**
 
 1. Ouvrez [Facturation](app:/invoices).
-2. Lisez la bande : **À émettre**, **À encaisser**, **À confirmer**, **Closes**.
-3. Travaillez dans les trois onglets : **À facturer** (membres avec quelque chose de suivi, pas encore facturé), **En cours** (émises, impayées) et **Archives** (payées ou closes).
-4. Touchez l'icône d'outils pour les autres outils.
+2. Lisez **À recevoir** : ce qui est **En retard**, ce qui est **Pas encore échu**, et ce qui a été **Facturé en** et **Encaissé en** ce mois-ci.
+3. Avancez dans **À faire** : chaque entrée dit quoi faire, pour combien, et s'ouvre avec **Voir**. Quand il ne reste rien, elle indique **Tout est à jour.**
+4. En dessous, choisissez **Ouvertes**, **En retard**, **À confirmer** ou **Payées**, et lisez la liste par **Clients** ou par **Factures**. **Rechercher** trouve un client ou un numéro.
+5. Touchez **Nouvelle** pour une seule facture, et **Plus** pour **Factures payées et closes**, **Mes propres factures**, **Registre des factures**, **Modèle PDF des factures** et **Comment fonctionne la facturation**.
 
 **Bon à savoir**
 
-- Vous voyez les factures de tout l'espace. Les vôtres sont dans vos finances, sous **Mes finances**.
-- Les factures ne sont jamais modifiées ni supprimées : une facture erronée est marquée comme telle et remplacée.
-- L'entrée **Comment fonctionne la facturation** explique qui intervient à chaque étape.
+- Un avoir que l'entreprise doit n'est jamais compté dans ce qu'on vous doit : il attend dans **Rembourser les avoirs**.
+- Chaque statut est un mot autant qu'une couleur : **Échéance aujourd’hui**, **Paiement reçu · à rapprocher**, **En attente de la confirmation du client**, **Suspendue**.
+- Vos propres factures sont dans vos finances, sous **Mes propres factures**.
+- Une facture ne se modifie ni ne se supprime : une facture fausse est corrigée par une facture de remplacement.
 
-**Voir aussi:** [Nouvelle facture](help:user.invoicing.new-invoice) · [Factures en cours](help:user.invoicing.open)
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month) · [Suivre une facture](help:user.invoicing.open)
+
+### Facturer le mois
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Le mois qui vient de s'achever a des clients encore à facturer, et vous les facturez en une fois.
+
+<!-- image: user-invoicing-month -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Facturer** et le mois dans **À faire**, et touchez **Voir**.
+2. Lisez la liste : chaque client qui a quelque chose à facturer est coché, avec son montant. **Tous** coche ou décoche tout ensemble.
+3. Un client marqué **À compléter** dit ce qui manque. Touchez **Compléter**, complétez, puis revenez : le client est relu.
+4. Touchez **Émettre** avec le nombre et le montant.
+5. Lisez ce qui s'est passé (**Émise**, **Attend une validation** ou **Non fait**) et touchez **Terminé**.
+
+**Bon à savoir**
+
+- Un mois dont les crédits dépassent les frais émet un avoir : l'entreprise le doit, et il attend dans **Rembourser les avoirs**.
+- Une information qui manque à votre entreprise est dite une seule fois, en haut, avec un seul **Compléter** ; rien n'est émis tant qu'elle manque.
+- Ce qui n'a pas été fait reste dans **À faire**, et **Réessayer pour celles-ci** réessaie sans rien émettre deux fois.
+- **Voir la proforma** montre la facture d'un client avant qu'elle n'existe.
+
+**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Rembourser un avoir](help:user.invoicing.refunds)
 
 ### Émettre une facture
 
@@ -5201,10 +5642,10 @@ Vous facturez un membre pour un mois.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez **Nouvelle facture**, ou **Facturer** sur une ligne de **À facturer**.
+1. Dans [Facturation](app:/invoices), touchez **Nouvelle**. Pour facturer tout un mois, voyez [Facturer le mois](help:user.invoicing.month).
 2. Choisissez le **Membre** et le mois. Les positions viennent de ce qui a été suivi.
 3. Activez **Inclure l'annexe détaillée (présences, services, paiements)** si vous la souhaitez.
-4. Touchez **Émettre la facture**. Dans **À facturer**, **Tout facturer** émet chaque ligne.
+4. Touchez **Émettre la facture**.
 
 **Bon à savoir**
 
@@ -5216,27 +5657,122 @@ Vous facturez un membre pour un mois.
 
 **Voir aussi:** [Assistant de clôture](help:user.invoicing.wizard)
 
-### Relancer et solder les factures en cours
+### Suivre une facture
 
 **Public:** Propriétaire · Administrateur·rice facturation
 
-Vous suivez ce qui est impayé et vous le soldez correctement.
+Vous ouvrez une facture et voyez où elle en est, ce qui s'est passé et la seule chose à faire maintenant.
 
 ![](assets/help/images/user-invoicing-open.fr.b8fa17aa9.jpg)
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), ouvrez l'onglet **En cours** et touchez une facture.
-2. Utilisez les actions proposées : **Envoyer un rappel**, **Marquer comme payée** (rapprocher un paiement enregistré), **Annuler le solde restant**, **Marquer comme erronée**, ou partager le PDF.
-3. Les factures payées passent dans **Archives**.
+1. Dans [Facturation](app:/invoices), touchez un client, puis la facture (ou touchez-la dans la liste par **Factures**).
+2. Lisez le haut : ce qui reste dû sur le total et l'échéance, ou **Payée en totalité**.
+3. Lisez **Ce qui s’est passé** : l'émission, l'échéance, chaque relance, un paiement déclaré par le client, le paiement.
+4. Utilisez l'action du bas : **Partager la relance** avec son niveau, **Confirmer le paiement**, **Rapprocher le paiement** ou **Enregistrer le remboursement**.
+5. Touchez **Plus** pour le PDF (**Voir le PDF**, **Télécharger le PDF**, **Partager le PDF**), **Suspendre les relances**, **Rapprocher un paiement** et les **Corrections** : **Corriger par une facture de remplacement**, **Annuler cette facture, émise par erreur**, **Passer le reste en perte**.
 
 **Bon à savoir**
 
-- Une facture est payée dès qu'un vrai paiement lui est rapproché. Un écart demande une note, ou un avoir pour l'excédent.
-- L'annulation d'un solde restant passe par une validation.
-- **Marquer comme erronée** est irréversible. Faites-le avant le paiement, jamais après.
+- **Par e-mail** envoie la facture à l'e-mail de contact du client, et **Renvoyer** l'envoie une fois de plus. Un e-mail accepté par le fournisseur ne prouve pas qu'il a été lu.
+- Suspendue, aucune relance ne part tant que vous ne la levez pas.
+- Le remplacement ou l'annulation sont proposés tant que rien n'est rapproché de la facture, **Passer le reste en perte** dès qu'une partie a été payée. Une facture ne se modifie jamais.
+- Un client qui dit avoir payé attend votre réponse : vérifiez votre banque, puis **Confirmer le paiement** ou **Non reçu**.
 
-**Voir aussi:** [Règles de relance](help:user.money.reminders.rules) · [Regrouper des factures](help:user.invoicing.settlement)
+**Voir aussi:** [Partager les relances](help:user.invoicing.reminders) · [Rapprocher un paiement reçu](help:user.invoicing.payments)
+
+### Partager les relances
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Dans votre espace, les relances se partagent à la main, et certaines sont dues.
+
+<!-- image: user-invoicing-reminders -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Partager les relances à la main** dans **À faire** et touchez **Voir**.
+2. Chaque ligne nomme le client, le montant et le retard, avec son niveau (Relance 1, …). **Aperçu** montre la lettre.
+3. Touchez **Partager** sur une ligne et envoyez la lettre comme vous le souhaitez ; le bouton sous la liste partage la suivante.
+4. Quand le client a une adresse e-mail, **Envoyer par e-mail** l'envoie ; un bouton à la fin envoie par e-mail chaque ligne qui a une adresse.
+5. Touchez **Terminé** quand la file dit ce qui a été partagé.
+
+**Bon à savoir**
+
+- Une relance n'est enregistrée sur sa facture que si elle a vraiment été partagée ou envoyée. Un partage que vous avez fermé n'enregistre rien.
+- Si de l'argent reçu n'est pas encore affecté, la file vous demande de le vérifier d'abord (**À vérifier d'abord : argent reçu et non affecté**) : le client a peut-être payé.
+- Quand les relances partent d'elles-mêmes, cette entrée n'est pas dans **À faire** ; **Règles** dit comment elles fonctionnent.
+
+**Voir aussi:** [Règles de relance](help:user.money.reminders.rules) · [Relances automatiques](help:user.money.reminders.automatic)
+
+### Rapprocher un paiement reçu
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Un paiement est arrivé sur le compte et vous dites quelles factures il paie.
+
+<!-- image: user-invoicing-payments -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Rapprocher des paiements** dans **À faire** et touchez **Voir**, puis **Rapprocher** sur le client.
+2. **Paiements à rapprocher** montre chaque paiement reçu avec les factures qu'il peut payer ; **Même montant** marque celle qui correspond.
+3. Touchez cette facture pour la rapprocher, ou **Affecter aux factures** pour répartir un paiement sur plusieurs.
+4. Dans **Affecter aux factures**, cochez les factures et vérifiez les montants ; la plus ancienne est payée d'abord. Touchez **Affecter aux factures** pour confirmer.
+
+**Bon à savoir**
+
+- Ce qui reste du paiement reste en avoir pour le client, et la feuille dit combien.
+- Une facture payée en partie demande une note.
+- Un rapprochement peut attendre une seconde approbation quand une règle le demande.
+- Rien n'est enregistré si quelque chose a changé entre-temps : la page relit le paiement et dit pourquoi.
+
+**Voir aussi:** [Suivre une facture](help:user.invoicing.open) · [La page d'un client et son relevé](help:user.invoicing.customer)
+
+### Rembourser un avoir
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+L'entreprise doit de l'argent à un client sur un avoir, et vous enregistrez qu'il a été remboursé.
+
+<!-- image: user-invoicing-refunds -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), trouvez **Rembourser les avoirs** dans **À faire** et touchez **Voir**.
+2. Touchez le client, puis l'avoir : il indique **Remboursement dû** et **L’entreprise doit ce remboursement**.
+3. Remboursez le client, puis touchez **Enregistrer le remboursement** et confirmez.
+
+**Bon à savoir**
+
+- Un avoir n'est jamais compté dans **À recevoir**.
+- Une fois enregistré, l'avoir indique **Remboursée** et quitte **À faire**.
+
+**Voir aussi:** [Facturer le mois](help:user.invoicing.month)
+
+### La page d'un client et son relevé
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez tout sur un client : ce qu'il doit, ses factures et un relevé à lui envoyer.
+
+<!-- image: user-invoicing-customer -->
+
+**Étapes**
+
+1. Dans [Facturation](app:/invoices), touchez le client.
+2. Lisez ce qu'il **Doit**, ou **Rien à payer**, et son avoir éventuel : les paiements qu'aucune facture n'a encore pris.
+3. Lisez les **Factures** et l'**Historique** : émissions, paiements, relances partagées, paiements déclarés.
+4. Touchez **Relevé de compte** pour les éléments ouverts à ce jour, ou **Relevé sur une période** pour les mouvements entre deux dates avec le solde d'ouverture et de clôture.
+
+**Bon à savoir**
+
+- Un relevé est dans une seule devise ; s'il y en a plusieurs, vous choisissez laquelle.
+- S'il n'y a rien d'ouvert, il n'y a pas de relevé à ce jour à imprimer.
+- Dans un relevé sur une période, les soldes avant le premier jour enregistré sont reconstitués à partir des données d'aujourd'hui, et le relevé le dit.
+
+**Voir aussi:** [Rapprocher un paiement reçu](help:user.invoicing.payments)
 
 ### L'assistant de clôture
 
@@ -5248,7 +5784,7 @@ Un seul parcours guidé pour la routine financière : émettre, envoyer, relance
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez **Assistant de clôture** (ou ouvrez l'[Assistant de facturation](app:/invoicing/wizard)).
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Assistant de clôture** (ou ouvrez l'[Assistant de facturation](app:/invoicing/wizard)).
 2. Choisissez la passe : **Début de mois** (abonnements que les membres paient d'avance, pour le mois à venir) ou **Fin de mois** (usage, consommation et frais supplémentaires du mois qui vient de s'achever). La date en propose une.
 3. Suivez les étapes : **Revue**, **Émettre**, **Envoyer**, **Relancer**, **Paiements**, **Rapprocher**, **Clôturer**, **Récapitulatif**.
 4. Touchez **Suivant** à chaque étape, et **Terminer** à la fin.
@@ -5271,7 +5807,7 @@ Un membre a plusieurs factures ouvertes et ne doit en payer qu'une.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Regrouper en une facture**.
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Regrouper des factures en une**.
 2. Choisissez au moins deux factures ouvertes du même membre.
 3. Confirmez. On vous demande si vous voulez joindre les factures regroupées.
 
@@ -5292,7 +5828,7 @@ Un coût partagé par la communauté est réparti entre les membres.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Répartir une dépense**.
+1. Ouvrez [Mes finances](app:/money) et touchez **Répartir une dépense**, à côté de **Achats**.
 2. Décrivez **La dépense**, puis choisissez **Répartir selon** : **Parts égales**, **Abonnement**, **Usage** ou **Clé personnalisée**.
 3. Vérifiez les **Parts**, décochez toute personne à **Exclure**, et touchez **Comptabiliser les parts**.
 
@@ -5314,7 +5850,7 @@ Vous décidez quand et à quelle fréquence une facture en retard est relancée.
 
 **Étapes**
 
-1. Dans [Facturation](app:/invoices), touchez l'icône d'outils et **Règles de relance**.
+1. Dans [Facturation](app:/invoices), touchez **Plus** puis **Règles de relance**.
 2. Réglez **Nombre de niveaux de relance**, **Jours avant la première relance** et **Jours entre les relances**.
 3. Touchez **Enregistrer**.
 
@@ -5335,7 +5871,7 @@ Vous voulez que les relances partent toutes seules.
 
 **Étapes**
 
-1. Ouvrez **Règles de relance** dans les outils de Facturation.
+1. Ouvrez **Règles de relance** depuis **Plus** dans Facturation.
 2. Activez **Relances automatiques**.
 3. Touchez **Enregistrer**.
 
@@ -5370,6 +5906,29 @@ Toutes les factures dans une seule liste triable.
 
 **Voir aussi:** [Exports comptables](help:user.invoicing.accounting-export)
 
+### Vos journaux comptables
+
+**Public:** Propriétaire
+
+Le logiciel de votre comptable connaît vos journaux sous ses propres codes, et vous voulez que chaque export les utilise.
+
+<!-- image: user-money-accounting-journals -->
+
+**Étapes**
+
+1. Ouvrez [Comptabilité et TVA](app:/money/accounting) et touchez **Journaux comptables**.
+2. Pour **Ventes**, **Banque**, **Achats** et **Opérations diverses**, saisissez le **Code** et le **Libellé** qu'utilise votre comptable.
+3. Touchez **Enregistrer**. **Utiliser les codes standard** remet les codes standard du pays.
+
+**Bon à savoir**
+
+- Chaque export comptable de l'application les utilise : le FEC, le journal générique, les grands livres SAF-T et les livres imprimés.
+- Un code n'a ni saut de ligne, ni tabulation, ni |, et deux journaux n'ont jamais le même code ; le formulaire dit quel champ corriger.
+- Un code modifié change aussi les numéros d'écriture d'une période exportée à nouveau.
+- Les envois vers Pennylane et Business Central utilisent aussi ces codes ; le journal doit y exister sous le même code.
+
+**Voir aussi:** [Exports comptables](help:user.invoicing.accounting-export)
+
 ### Exports comptables
 
 **Public:** Propriétaire · Administrateur·rice facturation
@@ -5393,6 +5952,67 @@ Vous remettez à votre comptable les factures et les paiements de l'année.
 
 **Voir aussi:** [Compte de TVA](help:user.money.vat.account) · [Le registre des factures](help:user.invoicing.register)
 
+### Transferts : le lien numérique vers votre système comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous tenez vos registres de TVA dans un autre système comptable, et vous devez montrer comment les chiffres y sont arrivés, par exemple pour le Making Tax Digital britannique.
+
+**Étapes**
+
+1. Ouvrez [Comptabilité et TVA](app:/money/accounting) et touchez **Systèmes comptables**.
+2. Lisez **Transferts** : chaque fichier remis et chaque document livré à une connexion sur la période, chacun avec le SHA-256 de ce qui a été transmis.
+3. Remettez le **CSV comptable** à votre comptable. Son `report.json` cite la liste des Transferts de l'année.
+
+**Bon à savoir**
+
+- Un lien numérique est un fichier ou une livraison par connexion enregistré dans **Transferts**. Recopier des chiffres à la main dans l'autre système n'est pas un lien numérique.
+- Le SHA-256 prouve que le fichier reçu par l'autre système est celui que DesKilo a remis.
+- Une liste vide indique « Rien n'a été remis ni envoyé dans cette période. »
+
+**Voir aussi:** [Exports comptables](help:user.invoicing.accounting-export) · [Où les registres sont conservés](help:user.invoicing.records-location)
+
+### Où les registres sont conservés
+
+**Public:** Propriétaire · Administrateur·rice facturation · Opérateur·rice
+
+Certains pays disent où une entreprise conserve ses livres, et vous voulez savoir ce que l'application indique pour la vôtre.
+
+**Étapes**
+
+1. Ouvrez [Identité légale et facturation électronique](app:/legal-identity) et allez à la section **Livre comptable**.
+2. Lisez **Où les registres sont conservés**, à côté des durées de conservation.
+3. Pour une entreprise canadienne dont les registres sont conservés hors du Canada, saisissez **Autorisation de l'ARC de conserver les registres hors du Canada** dans les paramètres de l'espace, sous **Lieu de conservation des registres**.
+
+**Bon à savoir**
+
+- L'opérateur·rice de l'installation déclare **Pays où cette installation conserve ses données**, comme le contrat d'hébergement l'indique. L'application ne le devine jamais. Non déclaré, la tuile le dit et n'indique aucun lieu.
+- Le Canada fait conserver les livres au Canada sauf autorisation de l'ARC ; l'Allemagne fait conserver les livres électroniques dans l'UE. La tuile avertit quand le pays déclaré ne convient pas.
+- Une archive britannique, irlandaise, canadienne ou américaine contient ses tables avec un `tables/README.txt` qui décrit en anglais chaque table et chaque colonne, et dit où les registres sont conservés.
+
+**Voir aussi:** [Transferts : le lien numérique vers votre système comptable](help:user.invoicing.transfers)
+
+### Arrêter le nouveau travail comptable
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez que vos connecteurs comptables n'acceptent plus de nouveau travail, par exemple en changeant de comptable, sans perdre ce qui a déjà été envoyé.
+
+**Étapes**
+
+1. Ouvrez **Systèmes comptables** et lisez la carte **Nouveau travail comptable** : elle indique si les connecteurs sont **Actif**, **En maintenance** ou **Retiré**.
+2. Pour mettre en pause, touchez **Arrêter le nouveau travail**. Pour admettre de nouveau du travail, touchez **Reprendre le nouveau travail**.
+3. Le propriétaire peut toucher **Retirer les connecteurs** depuis la maintenance, et **Rouvrir en maintenance** depuis l'état retiré. Les deux demandent un **Motif**.
+
+**Bon à savoir**
+
+- Tant que rien de nouveau n'est admis, vous pouvez encore lire l'historique, révoquer une connexion et terminer les livraisons déjà commencées.
+- Le retrait est refusé tant que des livraisons sont en cours ; terminez-les ou réglez-les d'abord.
+- La carte n'est montrée qu'aux personnes qui gèrent les connecteurs ; seul le propriétaire voit les actions de retrait et de réouverture.
+- Sans décision propre, la carte suit le réglage des connecteurs comptables.
+
+**Voir aussi :** [Exports comptables](help:user.invoicing.accounting-export)
+
 ### Analyse d'activité
 
 **Public:** Propriétaire · Administrateur·rice facturation
@@ -5413,6 +6033,29 @@ Vous regardez comment l'espace se porte.
 - La période en cours est partielle ; ses chiffres changent encore.
 
 **Voir aussi:** [L'écran Facturation](help:user.invoicing.hub)
+
+### Charges, échéances et charges partagées dans l'analyse
+
+**Public:** Propriétaire · Administrateur·rice facturation
+
+Vous voulez le côté achats de l'analyse : ce que l'espace a dépensé, doit encore et s'attend encore à payer, et comment les charges partagées pèsent sur chaque ressource.
+
+**Étapes**
+
+1. Ouvrez [Analyse d’activité](app:/bi) et choisissez les mois.
+2. Lisez **Charges d'exploitation (enregistrées)**, **Facturé moins charges d'exploitation enregistrées**, **Amortissements comptables (enregistrés)** et **Équipement acquis (immobilisé)**.
+3. Lisez **Payé (enregistré)**, **Reste à facturer (contrats)** et **À payer attendu (dû + contrats)** pour la trésorerie.
+4. Lisez **Charges partagées par ressource**, et touchez **Règles de répartition** pour dire comment une catégorie d'achat se répartit sur les étages et les bureaux.
+5. Dans une règle, choisissez la **Catégorie d'achat** (ou **Une ligne d'achat**), les **Poids (nombres entiers ; vide ou 0 : aucune part)**, la **Base (pourquoi ces poids)** et **En vigueur à partir du**, puis enregistrez. **Arrêter la règle** y met fin à partir de ce mois.
+
+**Bon à savoir**
+
+- Les chiffres disent ce qu'ils comptent. **Facturé moins charges d'exploitation enregistrées** n'est pas un bénéfice : ni amortissements, ni salaires, ni frais bancaires. **Payé (enregistré)** reprend les paiements enregistrés, pas un solde bancaire rapproché.
+- Les amortissements ne sont connus que si les valeurs comptables confirmées par votre expert-comptable couvrent exactement les mois choisis ; sinon ils sont inconnus, jamais 0.
+- Une charge qu'aucune règle ne répartit reste non affectée, jamais partagée à parts égales. La répartition est une analyse : aucun membre n'est facturé et aucun document ne change.
+- Les règles de répartition demandent **Gérer les tarifs et règles de facturation**.
+
+**Voir aussi:** [Analyse d'activité](help:user.invoicing.bi) · [Le registre des équipements](help:user.money.purchases.equipment)
 
 ## Avancé
 
@@ -6122,6 +6765,8 @@ Vous voulez une vue d’ensemble avant de choisir quoi que ce soit. DesKilo regr
 
 **Public:** Propriétaire · Copropriétaire · Administrateur·rice
 
+Le guide de mise en place reste accessible dans le menu de l’espace après la configuration. Son récapitulatif indique l’espace, l’objectif choisi et le nombre de tâches obligatoires restantes. Ouvrez le détail des résultats pour voir chaque jalon. L’action conseillée mène à une tâche réalisable maintenant ; les tâches en attente d’une autre étape ou de l’opérateur le précisent. Une vérification indisponible ne signifie pas que la tâche est terminée. La progression dépend des réglages enregistrés : ouvrir une tâche ne la termine pas. Chaque tâche garde l’espace, l’objectif et son état visibles, et nomme la destination suivante.
+
 Vous voulez connaître le chemin le plus court vers un espace que l’on peut réserver. L’application tient une liste de préparation, **Mise en place de cet espace**, et, sur l’écran Réserver, dit aux propriétaires ce qui manque : *Avant que quiconque puisse réserver ici*.
 
 *Ce qui doit exister avant la première réservation*
@@ -6593,6 +7238,8 @@ Chaque ligne de **Interrupteurs** porte un badge de maturité, qui dit jusqu’o
 
 **Public:** Propriétaire · Copropriétaire
 
+Pour choisir ce que fait l’espace, répondez aux questions regroupées autour des réservations, de l’argent et du fonctionnement quotidien. Les commandes de vérification et d’application restent visibles pendant le défilement. Vérifiez le nombre de réglages qui changeraient et leurs effets concrets avant d’appliquer ; répondre ne modifie pas l’espace. Les niveaux détaillés et les démarrages rapides se trouvent dans la section avancée. Un niveau choisi volontairement est conservé lorsque vous répondez à d’autres questions ; l’action des niveaux conseillés rétablit les recommandations. « Je ne sais pas encore » conserve la réponse précédente et empêche l’application tant que vous ne l’avez pas précisée. Le questionnaire hors ligne suit la même règle et bloque l’export si une réponse reste incertaine.
+
 Vous ne voulez pas décider cent choses. Voici trois points de départ réalistes ; chacun liste exactement ce qui est activé. Choisissez le plus proche, puis ajustez.
 
 Le premier n’a besoin d’aucun modèle. Le deuxième est le modèle prêt à l’emploi de l’application. Le troisième est construit à partir des fonctionnalités elles-mêmes. Ils portent le nom de ce qu’ils offrent, pas d’une taille.
@@ -6803,7 +7450,7 @@ Vous voulez un seul endroit qui dise, pour les principales fonctionnalités, ce 
 | **Photos des membres sur le plan** | Les photos des occupants sur les places. | | Personne |
 | **Vocabulaire de l’espace** | Les mots propres à l’espace pour quelques libellés. | | Propriétaire |
 | **Couleurs de l’espace** | La couleur de la marque et les couleurs des salles. | | Propriétaire |
-| **Présentation publique de l’espace** | Une page publique avec ce que vous choisissez de montrer. | | Propriétaire |
+| **Présentation publique de l’espace** | Une page publique avec ce que vous choisissez de montrer, et où vous êtes sur la carte. | | Propriétaire |
 
 *Réservations et utilisation*
 
@@ -7488,7 +8135,7 @@ Vous décidez si une personne appuie sur les boutons chaque mois ou si DesKilo s
 - Chaque type de facture (abonnement, fin de mois) ne peut être émis qu'une fois par membre et par mois. Une facture ne se modifie ni ne se supprime ; une facture erronée est marquée comme telle et remplacée.
 - Par défaut, le propriétaire et les copropriétaires émettent les factures. **Les admins émettent des factures** étend ce droit aux administrateurs.
 
-**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Relancer et solder les factures ouvertes](help:user.invoicing.open)
+**Voir aussi:** [L'écran Facturation](help:user.invoicing.hub) · [Suivre une facture](help:user.invoicing.open)
 
 ### Relances de paiement
 
@@ -7708,7 +8355,7 @@ Le push ne vient pas avec l'app toute seule. Si votre espace tourne sur l'instal
 1. Créez un projet Firebase et compilez l'app avec lui. Sans cela, l'app reste limitée aux notifications locales, et un membre voit **Cette version n'a pas de notifications push**. La version préparée pour F-Droid n'a aucun push ([état F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. Pour iPhone et Mac, ajoutez une clé push Apple au projet Firebase.
 3. Enregistrez la clé de compte de service Firebase comme secret du serveur et déployez la fonction push.
-4. Sur votre propre installation, faites pointer la ligne `push_config` de votre base de données vers l'adresse et la clé de votre propre fonction push. Elle est préremplie avec l'adresse de l'installation de référence.
+4. Sur votre propre installation, le constructeur règle la ligne `push_config` de votre base de données sur l'adresse et la clé de votre propre fonction push, et le docteur la vérifie. `dart run tool/instance.dart push --ref <ref>` la règle de nouveau. Le constructeur règle aussi, là où les fonctions sont déployées, le paramètre de fonction `DESKILO_APP_URL` sur l'adresse web de votre app, afin que les fonctions qui renvoient vers l'app (l'interface d'assistant et la connexion comptable) puissent construire leurs liens ; le docteur le signale s'il manque ou s'il porte une autre adresse, et `dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l'app>` le règle de nouveau.
 5. Testez avec deux comptes, comme décrit dans [le plan de test](help:setup.notify.test).
 
 **Bon à savoir**
@@ -7716,7 +8363,7 @@ Le push ne vient pas avec l'app toute seule. Si votre espace tourne sur l'instal
 - Sans les étapes 1 à 4, rien n'est poussé, quels que soient les interrupteurs. Le fil, la cloche et les messages fonctionnent toujours.
 - La liste de contrôle détaillée s'adresse à l'opérateur : voir [Les plateformes](help:user.advanced.platforms) et [Votre propre serveur](help:user.advanced.own-server).
 - Le texte d'un push ne contient jamais de nom ni d'horaire : c'est voulu, pour la confidentialité.
-- Associez le secret push sur chaque installation : enregistrez d’abord la même valeur aléatoire privée dans Vault sous `deskilo_push_shared_secret`, puis dans `PUSH_SHARED_SECRET` pour la fonction push. Testez un message et un rappel après l’association. Les installations non associées conservent leur envoi précédent avec un avertissement ; les installations configurées refusent les appels sans secret ou identifiant de service. Ne copiez jamais le secret dans l’application ou le XML de configuration.
+- Associez le secret push sur chaque installation : enregistrez d’abord la même valeur aléatoire privée dans Vault sous `deskilo_push_shared_secret`, puis dans `PUSH_SHARED_SECRET` pour la fonction push. Testez un message et un rappel après l’association. Sans le secret, la fonction push n’accepte que l’identifiant de service : messages et rappels ne partent pas tant que le secret n’est pas associé. Ne copiez jamais le secret dans l’application ou le XML de configuration.
 
 **Voir aussi:** [Notifications push sur cet appareil](help:user.privacy.push)
 

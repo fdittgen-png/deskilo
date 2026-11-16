@@ -23,20 +23,21 @@ const STEPS=[
   return[h('p',{class:'hint'},T('levelsOffline')),
    lbl(JT('setupLevelsQuestions')),
    ...questionRows(),
-   lbl(JT('setupLevelsPresets')),
-   h('div',{class:'chips'},...Object.keys(LEVELS.presets).map(n=>chip(jw('preset',n),n===preset,()=>applyPreset(n)))),
-   lbl(JT('setupLevelsChoice')),
-   ...LEVELS.processes.map(pr=>levelSelect(pr,now,rec)),
+   advancedLevels(now,rec,preset),
    ...levelGaps(now).map(g=>h('div',{class:'dep'},g)),
    h('p',{class:'hint'},T('levelsExpertHint')),
    h('button',{class:'btn ghost',type:'button',onclick:()=>go('features')},T('levelsExpertOpen'))]},
  check(){const now=levelsNow(),gaps=levelGaps(now);const f=gaps.map(g=>F.warn(g,'levels'));
-  if(!gaps.length)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
+  if(unknownQs.size)f.push(F.err(JT('setupChoicesNeedsDecision'),'levels'));
+  if(!gaps.length&&!unknownQs.size)f.push(F.ok(S.journey.used?T('levelsOk',{list:LEVELS.processes.map(pr=>jw('process',pr.key)+': '+jw('level',pr.key+'_'+now[pr.key])).join(T('listSep'))}):T('levelsUnanswered')));
   return f}},
 
 {id:'identity',get title(){return T('identityTitle')},get why(){return T('identityWhy')},
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);return[
   input(T('identityName'),'name',T('identityNameHint'),'text','','identity'),
+  // #3549 — what kind of business it is; set in the app, where it proposes the features.
+  selectEl(T('identityBusinessKind'),'businessKind',[['coworking',T('businessKind_coworking')],['studio',T('businessKind_studio')],['practice',T('businessKind_practice')],['salon',T('businessKind_salon')],['service',T('businessKind_service')]],T('identityBusinessKindHint'),null,'businessKind'),
+  ...(S.businessKind&&S.businessKind!=='coworking'?[h('p',{class:'hint'},T('businessKindNoBookingYet'))]:[]),
   selectEl(T('identityEnvironment'),'environment',opts(ENVIRONMENTS),T('identityEnvironmentHint'),null,'identity'),
   h('div',{class:'row'},selectEl(T('identityCountry'),'country',COUNTRIES.map(c=>[c[0],countryName(c[0])+(INVOICING_COUNTRIES.includes(c[0])?' · '+T('identityCountryInvoices'):'')]),T('identityCountryHint')+' '+T('identityCountryInvoicesHint',{list:INVOICING_COUNTRIES.map(countryName).join(T('listSep'))}),onCountry,'region'),
    selectEl(T('identityCurrency'),'currency',CURRENCIES.map(c=>[c,c]),T('identityCurrencyHint'),null,'region')),
@@ -51,6 +52,8 @@ const STEPS=[
   ...(S.country==='US'?[selectEl(T('retUsYears'),'retention.usYears',opts(RET_US_YEARS),T('retUsYearsHint'),null,'legal')]:[]),
   // #3075 — the server and network parameters decide nothing for a newcomer: they sit behind an advanced disclosure the owner opens on purpose.
   ((d)=>{d.ontoggle=()=>{advOpen=d.open};return d})(h('details',{class:'adv',...(advOpen||S.network.roles==='workspace_host'?{open:''}:{})},h('summary',{},T('identityAdvanced')),
+  // #3852 — the paper of the documents: the country's usual one unless another it allows is chosen.
+  selectEl(T('identityPaper'),'paper',paperOpts(),paperHint(),null,'paper'),
   selectEl(T('networkRoles'),'network.roles',opts(NETWORK_ROLES),T('networkRolesHint'),null,'identity'),
   ...(S.network.roles==='workspace_host'?[input(T('networkHomeUrl'),'network.homeUrl',T('networkHomeUrlHint'),'url','https://','identity'),input(T('networkHomeKey'),'network.homeKey',T('networkHomeKeyHint'),'text','sb_publishable_','identity')]:[]),
   // #2562 C2a — for a workspace server enrolled at a personal home.
@@ -65,6 +68,8 @@ const STEPS=[
   selectEl(T('inboxPageSize'),'inbox.pageSize',opts(INBOX_PAGE),T('inboxPageSizeHint'),null,'identity'),
   // #2863 — every server that asks a company registry for supplier details.
   ...(on('badgeSignIn')?[input(T('badgeFailureLimit'),'badgeSecurity.failureLimit',T('badgeFailureLimitHint'),'number','','tags')]:[]),
+  // #3675 — where badge sign-in works, once kiosks can be enrolled.
+  ...(on('badgeSignIn')&&on('kioskEnrolment')?[selectEl(T('badgeSigninWhere'),'badgeSecurity.signinWhere',opts(BADGE_WHERE),T('badgeSigninWhereHint'),null,'tags')]:[]),
   selectEl(T('supLookupWait'),'supplierLookup.timeout',opts(SUP_LOOKUP_WAIT),T('supLookupWaitHint'),null,'identity'),
   selectEl(T('supLookupRate'),'supplierLookup.perMinute',opts(SUP_LOOKUP_RATE),T('supLookupRateHint'),null,'identity'),
   // #2378 — where the data lives, as the operator declares it; never inferred.
@@ -73,11 +78,12 @@ const STEPS=[
   selectEl(T('regionCurrency'),'region.currency',REGION_CURRENCIES().map(c=>[c,c]),T('regionCurrencyHint'),null,'identity'),
   selectEl(T('regionCountry'),'region.country',COUNTRIES.map(c=>[c[0],countryName(c[0])]),T('regionCountryHint'),null,'identity'),
   selectEl(T('regionLocale'),'region.locale',FORMAT_LOCALES.map(l=>[l,l]),T('regionLocaleHint'),null,'identity'),
+  selectEl(T('regionWeekStart'),'region.weekStart',opts(WEEK_START),T('regionWeekStartHint'),null,'identity'),
   input(T('mapTiles'),'map.tiles',T('mapTilesHint'),'url','https://tile.openstreetmap.org/{z}/{x}/{y}.png','identity'),
   input(T('mapGeocoder'),'map.geocoder',T('mapGeocoderHint'),'url','https://photon.komoot.io/api/','identity'),
   )),
  ]},
- check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
+ check(){const f=[];if(!S.name.trim())f.push(F.err(T('identityErrName'),'identity'));if(DOCUMENT_LANGUAGE_COUNTRIES.includes(country()[0])&&!S.language)f.push(F.err(T('identityErrDocumentLanguage'),'language'));if(S.brandColor.trim()&&!/^#[0-9a-f]{6}$/i.test(S.brandColor.trim()))f.push(F.err(T('identityErrBrandColor'),'identity'));else f.push(F.ok(T('identityOk',{name:S.name.trim(),country:countryName(country()[0]),currency:S.currency,timezone:S.timezone})));if(S.currency!==country()[1])f.push(F.warn(T('identityWarnCurrency',{currency:S.currency,expected:country()[1]}),'identity'));
   // #2562 C2a — a refresh slower than the lifetime lets statuses lapse.
   if(S.network.roles==='workspace_host'&&Number(S.enrolment.reconcile)>Number(S.enrolment.lifetime))f.push(F.err(T('enrolErrReconcile'),'identity'));
   // #2331 — the server refuses to issue for any other seller country.
@@ -91,6 +97,8 @@ const STEPS=[
   const row=k=>{const name=featureTitle(k),d=featureDesc(k);const parent=REQUIRES[k];const also=alsoEnabled(k);
    const note=!availableHere(k)?T('featuresUnavailableIn',{desc:d,country:countryName(S.country),list:AVAILABLE_IN[k].map(c=>c==='@eu'?T('featuresAvailabilityEu'):countryName(c)).join(T('listSep'))}):(!S.features[k]&&also.length)?T('featuresAlsoEnables',{desc:d,list:quotedList(also)}):(S.features[k]&&parent&&!on(parent)?T('featuresWaitingFor',{desc:d,feature:quoted(featureTitle(waitsFor(k)))}):d);
    const c=checkbox(name,note,S.features[k],v=>applyFeature(k,v),(parent?'child':''));
+   // #3300 — a switch the country does not offer is not offered for activation; a stored ON can be turned off.
+   if(!availableHere(k)&&!S.features[k])c.querySelector('input').disabled=true;
    const fh=helpIcon(null,k);if(fh)c.querySelector('span').insertBefore(fh,c.querySelector('span div'));return c};
   // #1330 — one card per business process, the same switches underneath;
   // a switch no process lists yet (a reserved flag) is offered last.
@@ -158,10 +166,10 @@ const STEPS=[
     ...offices,h('button',{class:'add',type:'button',onclick:()=>{const list=get(`${lp}.offices`);set(`${lp}.offices`,[...list,newOffice(list.length+1)]);render()}},'+ '+T('planAddOffice')),
     h('button',{class:'del',type:'button',onclick:()=>{set('levels',S.levels.filter((_,j)=>j!==li));render()}},'✕ '+T('planRemoveLevel'))))});
   if(on('multiSite')){body.push(lbl(T('planSites'),'plan','sites'),h('p',{class:'hint'},T('planSitesHint')));
-   S.sites.forEach((st,si)=>{const sp=`sites.${si}`;body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planSiteName'),'plan'),cell(`${sp}.name`)),h('div',{},lbl(T('fieldStreet'),'plan'),cell(`${sp}.street`)),h('div',{},lbl(T('fieldPostal'),'plan'),cell(`${sp}.postal`)),h('div',{},lbl(T('fieldCity'),'plan'),cell(`${sp}.city`)),h('div',{},lbl(T('planSiteLegalId'),'plan'),cell(`${sp}.legalId`))),
+   S.sites.forEach((st,si)=>{const sp=`sites.${si}`;body.push(h('div',{class:'card'},h('div',{class:'row'},h('div',{},lbl(T('planSiteName'),'plan'),cell(`${sp}.name`)),h('div',{},lbl(T('fieldStreet'),'plan'),cell(`${sp}.street`)),h('div',{},lbl(T('fieldPostal'),'plan'),cell(`${sp}.postal`)),h('div',{},lbl(T('fieldCity'),'plan'),cell(`${sp}.city`)),h('div',{},lbl(T('fieldRegion'),'plan'),cell(`${sp}.subdivision`)),h('div',{},lbl(T('planSiteLegalId'),'plan'),cell(`${sp}.legalId`))),
     // The levels on the removed site move to the default one.
     h('button',{class:'del',type:'button',onclick:()=>{const name=get(`${sp}.name`);setMany([['sites',S.sites.filter((_,j)=>j!==si)],...S.levels.flatMap((l,i)=>l.site===name?[[`levels.${i}.site`,'']]:[])]);render()}},'✕ '+T('planRemoveSite'))))});
-   body.push(h('button',{class:'add',type:'button',onclick:()=>{set('sites',[...S.sites,{name:T('defaultSite',{n:S.sites.length+2}),street:'',postal:'',city:'',legalId:''}]);render()}},'+ '+T('planAddSite')));}
+   body.push(h('button',{class:'add',type:'button',onclick:()=>{set('sites',[...S.sites,{name:T('defaultSite',{n:S.sites.length+2}),street:'',postal:'',city:'',subdivision:'',legalId:''}]);render()}},'+ '+T('planAddSite')));}
   body.push(h('button',{class:'add',type:'button',onclick:()=>{set('levels',[...S.levels,{name:T('defaultLevel',{n:S.levels.length+1}),offices:[newOffice(1)]}]);render()}},'+ '+T('planAddLevel')));
   if(!whole)body.push(needs('levelBooking'),h('p',{class:'hint'},T('planNoWholeHint')),help('whole'));
   return body},
@@ -214,12 +222,12 @@ const STEPS=[
    if(S.country==='CA'&&registered())k.push(lbl(T('legalCaTax'),'vat'),h('p',{class:'hint'},T('legalCaTaxHint')),input(T('legalQstNumber'),'landTax.qst','1234567890 TQ0001','text','','vat'),checkbox(T('legalQuickMethod'),T('legalQuickMethodDesc'),S.landTax.quick,v=>set('landTax.quick',v),'','vat'));
    if(S.country==='CH')k.push(lbl(T('legalLetting'),'vat'),h('p',{class:'hint'},T('legalLettingHint')),checkbox(T('legalBareLetting'),T('legalBareLettingDesc'),S.landTax.bare,v=>set('landTax.bare',v),'','vat'),S.landTax.bare?checkbox(T('legalChOption'),'',S.landTax.option,v=>set('landTax.option',v),'','vat'):null,S.landTax.bare&&S.landTax.option?input(T('legalOptionDate'),'landTax.date','','date','','vat'):null);
    if(S.country==='GB')k.push(lbl(T('legalLandTax'),'vat'),h('p',{class:'hint'},T('legalLandTaxHint')),checkbox(T('legalOptionToTax'),'',S.landTax.option,v=>set('landTax.option',v),'','vat'),S.landTax.option?h('div',{class:'row'},input(T('legalOptionDate'),'landTax.date','','date','','vat'),input(T('legalOptionRef'),'landTax.ref','','text','','vat')):null,checkbox(T('legalFacilitiesPackage'),T('legalFacilitiesPackageDesc'),S.landTax.facilities,v=>set('landTax.facilities',v),'','vat'))}
-  k.push(lbl(T('legalBillingAddress'),'legal'),h('div',{class:'row'},input(T('fieldStreet'),'street','','text','','legal'),input(T('fieldPostal'),'postal','','text','','legal'),input(T('fieldCity'),'city','','text','','legal')),
+  k.push(lbl(T('legalBillingAddress'),'legal'),h('div',{class:'row'},input(T('fieldStreet'),'street','','text','','legal'),input(T('fieldPostal'),'postal','','text','','legal'),input(T('fieldCity'),'city','','text','','legal'),input(T('fieldRegion'),'subdivision','','text','','legal')),
    lbl(T('legalMentions'),'legal','mentions'),help('legal'),
    input(T('mentionLegalForm'),'mentions.legalForm',T('mentionLegalFormHint')),input(T('mentionTerms'),'mentions.terms',T('mentionTermsHint')),
    h('div',{class:'row'},input(T('mentionPenalty'),'mentions.penalty',''),input(T('mentionRecovery'),'mentions.recovery','')),
    h('div',{class:'row'},input(T('mentionEscompte'),'mentions.escompte',''),input(T('mentionInsurance'),'mentions.insurance','')),input(T('mentionSpecial'),'mentions.special',''));
-  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),input(T('dunningFirstDays'),'reminders.firstDays','','number'),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
+  if(on('dunning')){k.push(lbl(T('legalDunning'),'dunning','reminders'),help('dunning'),h('p',{class:'hint'},T('legalDunningHint')),h('div',{class:'row'},input(T('dunningLevels'),'reminders.levels','','number'),statesTerm(input(T('dunningFirstDays'),'reminders.firstDays','','number')),input(T('dunningBetweenDays'),'reminders.betweenDays','','number')));
    if(on('paymentReminders'))k.push(help('reminders_auto'),checkbox(T('dunningAutomatic'),T('dunningAutomaticDesc'),S.reminders.automatic===true,v=>set('reminders.automatic',v),'','reminders_auto'));else k.push(needs('paymentReminders'))}
   else k.push(needs('dunning'));
   if(isEU()){k.push(lbl(T('einvoicePlatform'),'einvoice','einvoice'),help('einvoice'),h('p',{class:'hint'},T('einvoiceHint')),
@@ -248,6 +256,8 @@ const STEPS=[
  build(st=this){const{lbl,input,selectEl,helpIcon}=ui(st);const k=[help('services')];const vatCol=registered()&&on('vatManagement');const supplyCol=vatCol&&on('supplyClassification');
   if(on('services'))k.push(lbl(T('servicesServices'),'services','services'),tableRows([T('colName'),T('colPrice',{currency:S.currency}),...(vatCol?[T('servicesVatCol')]:[]),...(supplyCol?[h('span',{},T('servicesSupplyCol'),helpIcon('supplyClass'))]:[])],'services',(s,sp)=>[cell(`${sp}.name`),cell(`${sp}.price`,'number'),...(vatCol?[cell(`${sp}.vat`,'number')]:[]),...(supplyCol?[pick(`${sp}.supply`,[['property',T('servicesSupplyProperty')],['general',T('servicesSupplyGeneral')]],s.supply==='general'?'general':'property')]:[])],()=>({name:'',price:'',vat:'',supply:'property'}),'+ '+T('servicesAdd')));else k.push(needs('services'));
   if(on('accessorySupplements'))k.push(lbl(T('servicesAccessories'),'services','accessories'),h('p',{class:'hint'},T('servicesAccessoriesHint')),tableRows([T('colName'),T('servicesSupplement',{currency:S.currency})],'accessories',(a,ap)=>[cell(`${ap}.name`),cell(`${ap}.supp`,'number')],()=>({name:'',supp:'0'}),'+ '+T('servicesAddAccessory')));else k.push(needs('accessorySupplements'));
+  // #3824 — the goods ledger's one rule a business decides before its first move.
+  if(on('stockManagement'))k.push(checkbox(T('stockAllowNegative'),T('stockAllowNegativeHint'),S.stock.allowNegative,v=>set('stock.allowNegative',v)));
   if(!vatCol&&on('services'))k.push(dep(registered()?T('servicesVatHiddenFeature',{feature:quoted(featureTitle('vatManagement'))}):T('servicesVatHiddenNotSubject'),registered()?'features':'legal'));
   return k},
  check(){const f=[];if(on('services')){const n=S.services.filter(s=>s.name.trim()).length;if(!n)f.push(F.warn(T('servicesErrNone'),'services'));else f.push(F.ok(T('servicesOk',{n})));S.services.filter(s=>s.name.trim()&&!(num(s.price)>=0)).forEach(s=>f.push(F.err(T('servicesErrNoPrice',{name:quoted(s.name)}),'services')))}
@@ -439,6 +449,10 @@ const STEPS=[
 // #2331 — every answer the import cannot apply (DEST 'app' / 'file'), and
 // what nothing in the page asks for but the space needs, in the order the
 // owner meets them in the app.
+// #3889 -- the payment term counts as the business's own only when the person
+// typed it: the field marks the answer as stated, and the export carries the
+// term only then (an untouched one stays the platform's default to review).
+function statesTerm(d){const i=d.querySelector('input'),typed=i.oninput;i.oninput=e=>{S.reminders.firstDaysStated=true;if(typed)typed.call(i,e)};return d}
 function toDoInApp(){const out=[T('todoCreateSpace',{name:S.name.trim()||'—'})];
  const ms=S.members.filter(m=>String(m.email||'').trim());
  out.push(ms.length?T('todoInviteMembers',{n:ms.length}):T('todoInviteNobody'));

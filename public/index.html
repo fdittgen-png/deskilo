@@ -17,6 +17,10 @@
   <base href="/app/">
 
   <meta charset="UTF-8">
+  <!-- #3915: what the page may load and where the app may connect (the
+       servers a person chooses at run time: any host over TLS, and a local
+       one). Proven by the web build's browser start-up step. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:* http://[::1]:* ws://localhost:* ws://127.0.0.1:* ws://[::1]:*; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="Coworking without the admin: desks, bookings, members, billing and invoices.">
   <meta name="theme-color" content="#C2410C">

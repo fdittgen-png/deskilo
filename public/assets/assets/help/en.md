@@ -408,6 +408,31 @@ You are in a space and want to reach a screen. Everything is in one menu, and a 
 
 **See also:** [Navigation style](help:user.profile.settings.navigation) · [Me: your home and your spaces](help:user.me.home)
 
+### The workspace overview
+
+**Audience:** Administrator · Owner
+
+You open the space and want to see first what needs you, then the figures you may read.
+
+<!-- image: user-start-workspace-overview -->
+
+**Steps**
+
+1. Open [Overview](app:/workspace-overview).
+2. Read **Needs attention**: what waits for you, and a line counting the requests nobody in the space has decided yet. "Nothing needs you" means there is nothing.
+3. Read **Key indicators**, grouped as **Capacity**, **Sales**, **Purchases**, **Cash** and **People**. Tap a tile to open where its figure comes from.
+4. Tap **Customize** to pin the tiles you want, in your order.
+5. Tap **All indicators** for the full analytics page.
+
+**Good to know**
+
+- You see only the figures your role may read. A figure that could not be read shows **Not available**, never zero.
+- **Active memberships** counts memberships, not people. **Overdue receivables** leaves out invoices with no proven due date or on hold and counts them apart. Both are today's figures: no history is kept.
+- **Customize** needs the right to read the workspace figures and the report designer.
+- The owner switches the page on as **Workspace overview** among the features. Off, the attention list and the analytics page stay as they are.
+
+**See also:** [Find your way around](help:user.start.navigation)
+
 ### The Get started card and the tips
 
 **Audience:** Everyone
@@ -1834,6 +1859,7 @@ You want to sign in by scanning your badge instead of typing your e-mail.
 - The row reads **No PIN yet** or **PIN set**.
 - Only you can set it, and nobody, not even an owner, can read it back.
 - **Change PIN** replaces it; **Remove PIN** switches off badge sign-in for all your badges.
+- A badge signs you in to its own workspace. An owner or administrator of another workspace signs in with the password, not the badge.
 
 **See also:** [Your badge](help:user.profile.settings.badge)
 
@@ -2064,6 +2090,25 @@ You want to decide, one item at a time, who sees your name, bio, contact details
 - **Anyone signed in** is offered only for some items, such as **Name and photo** and **Profession and bio**. **WhatsApp and e-mail** and **In the space today** never go wider than your own spaces.
 
 **See also:** [Public profile](help:user.privacy.public-profile) · [Who can see my data](help:user.privacy.visibility)
+
+### What a business you join can see
+
+**Audience:** Everyone
+
+You want to know what a business learns about you when you ask to join it, and once you are a member.
+
+**Steps**
+
+1. Open [Me](app:/me?tab=me) and scroll to **Privacy**.
+2. Tap **What a business you join can see**.
+
+**Good to know**
+
+- When you ask to join, the business sees your name and photo. Your e-mail address is not shown with a request.
+- Once you are a member, everyone in the space sees your name and photo. Your WhatsApp number, your status and when you were last seen follow your choices in **Who sees me**.
+- The administrators who invoice you or keep the member records see the details they need to invoice you: name, company, address, phone, e-mail, VAT number, legal id and preferred language. Your birthday, if you gave it, is seen only by those who keep the member records.
+
+**See also:** [Choose who sees me](help:user.privacy.audiences)
 
 ### Publish a public profile
 
@@ -2509,6 +2554,28 @@ You paid something for the space and you want the workspace to reimburse you.
 
 **See also:** [Approve or decline an expense](help:user.money.expense.approve)
 
+### The VAT of an expense
+
+**Audience:** Member · Administrator · Owner
+
+An expense carries VAT, and you want the space to deduct the right part of it.
+
+**Steps**
+
+1. In the expense form, or in **Scheduled expenses**, choose **VAT on this expense**: a rate, or **No VAT**.
+2. Enter the **Deductible share (%)**: 100 unless part of the expense is private or serves an exempt activity.
+3. Turn on **A fixed asset** for equipment the space keeps and depreciates.
+4. For a service bought abroad that carries no VAT of your country, turn on **Bought from a supplier abroad**. The amount you typed is then the base: the space owes the acquisition tax on it and deducts its share.
+
+**Good to know**
+
+- The fields appear when the space is VAT-registered and **Input VAT** is switched on.
+- **Bought from a supplier abroad** appears only where your country's return has a box for that tax, for example the Swiss return (Ziffer 383).
+- A scheduled expense asks once, and every occurrence carries the answer.
+- The deductible VAT counts in the month the expense is approved.
+
+**See also:** [Submit an expense](help:user.money.expense) · [The Swiss return: Ziffern 205 and 383](help:user.money.vat.ch-return)
+
 ### Approve or decline an expense
 
 **Audience:** Administrator · Owner
@@ -2531,6 +2598,246 @@ An expense is waiting and you decide whether the workspace pays it.
 - **Finance alerts** in Money appears when the **Events tab** feature is on.
 
 **See also:** [Finance alerts](help:user.money.alerts)
+
+### The Sales page
+
+**Audience:** Administrator · Owner
+
+You want everything the space sells and invoices in one place.
+
+<!-- image: user-money-sales -->
+
+**Steps**
+
+1. Open [Sales](app:/money/sales), or tap **Sales** in [My finances](app:/money).
+2. Tap **Services** to change what members can buy. It is shown when you may manage the services.
+3. Tap **Invoices** to issue and follow the invoices.
+4. Tap **Guest passes** for the passes sold at the desk, when the space sells them.
+5. Tap **Invoice register** for the list of every invoice issued, or **Pricing & packages** to change the prices. **Pricing & packages** is shown when you may manage the billing rules.
+
+**Good to know**
+
+- Each line opens the screen it always opened, with the same rights. The page only gathers them.
+- The page appears when invoicing is switched on in the space and you are an administrator.
+
+**See also:** [Invoicing at a glance](help:user.money.invoicing) · [The Purchases page](help:user.money.purchases)
+
+### Sell and revoke a guest pass
+
+**Audience:** Administrator · Owner
+
+A guest who is not a member takes a place for a day or a few hours, pays at the desk and gets an invoice.
+
+<!-- image: user-money-guest-passes -->
+
+**Steps**
+
+1. Open [Guest passes](app:/money/guest-passes), or **Guest passes** on the [Sales](app:/money/sales) page.
+2. The first time, tap **Add a pass**: its **Name**, **Per day** or **Per hour**, the **Price per unit**, and **On sale**.
+3. Tap **Sell a pass**, choose the **Pass** and the **Place**, the days (**From**, **To**) and the guest's name and contact, and tick **Paid at the desk** if they paid.
+4. **Passes sold** lists each pass with what was **Used**. To take passes back, select them and tap **Revoke**, then confirm.
+
+**Good to know**
+
+- The guest does not become a member; their name and contact are printed on the invoice.
+- Revoking cancels the bookings that have not started yet. The days already started stay, and no money moves: correct the guest's invoice on its page if they are owed money back.
+- **Revoked, invoice not corrected** lists the revoked passes whose invoice still waits for its correction; **Open the invoice** takes you there.
+- An hourly pass is for one day; a day pass lasts 1 to 31 days.
+
+**See also:** [The Sales page](help:user.money.sales) · [Follow one invoice](help:user.invoicing.open)
+
+### The Purchases page and Add purchase / expense
+
+**Audience:** Member · Administrator · Owner
+
+You bought something for the space, or a supplier sent a bill, and you want to record it.
+
+<!-- image: user-money-purchases -->
+
+**Steps**
+
+1. Open [Purchases](app:/money/purchases), or tap **Purchases** in [My finances](app:/money).
+2. Tap **Add purchase / expense**.
+3. If you may capture supplier bills, answer **Who paid?**:
+   - **I paid personally**: the expense form opens. Once approved, the space owes it to you.
+   - **Not paid yet**: a supplier bill the space still has to pay.
+   - **The space already paid**: capture the bill. Once it is approved, record its payment from **To pay**.
+4. Fill in the form that opens and save it.
+
+**Good to know**
+
+- Without the right to capture supplier bills, the question is skipped and the expense form opens.
+- The other buttons on the page open **Suppliers**, **Purchases** (the list of purchase documents), the lease, the equipment and the rented rooms, each when the space uses it.
+- **Purchases** lists supplier bills and the receipts members paid for the space, one document each. The tabs are **Documents** and **To pay**.
+
+**See also:** [Submit an expense](help:user.money.expense) · [A supplier bill, from capture to approval](help:user.money.purchases.bills)
+
+### A supplier bill, from capture to approval
+
+**Audience:** Administrator · Owner
+
+A supplier sent a bill and you want the space to owe it, with a second person's approval.
+
+**Steps**
+
+1. In **Purchases**, tap **Add supplier bill**, or use **Add purchase / expense**.
+2. Choose the **Supplier** and enter the **Invoice number**, the lines and the **Total**. A bill saved incomplete stays a draft: "A draft: send it for approval when it is complete."
+3. Tap **Send for approval**.
+4. Another person opens [Supplier bills to approve](app:/money/purchases/approvals) and taps **Approve**, or **Reject** with the reason.
+5. Once approved, the bill is owed to the supplier until it is paid.
+
+**Good to know**
+
+- A bill needs its supplier and an amount before it can be sent.
+- The person who sent a bill cannot decide it. In the workspace settings, **Bills one person may approve below (currency units)** lets that person approve small bills, if they may approve expenses. 0 keeps the rule that another person approves every bill. Rejecting always takes another person.
+- Each document shows its approval, its settlement (**Unpaid**, **Partly settled**, **Settled**, **Nothing owed**) and its accounting state apart.
+- Capturing a bill needs **Capture supplier bills**. Deciding one needs **Approve expenses**.
+
+**See also:** [What the space owes: To pay](help:user.money.purchases.to-pay) · [Supplier balances](help:user.money.suppliers.balance)
+
+### What the space owes: To pay
+
+**Audience:** Administrator · Owner
+
+You want to see what the space still owes, and record what was paid.
+
+**Steps**
+
+1. In **Purchases**, open the **To pay** tab, or open [Cash](app:/money/cash) and tap **To pay**.
+2. Read **Owed to suppliers** for approved bills and **Owed to members** for the reimbursements of approved receipts.
+3. Tap **Record payment** on a line. Enter the **Amount paid**, the date (**Paid on**), the **Method** and, if you wish, a **Reference (optional)**.
+4. For a member who also owes the space, tap **Offset against an invoice** instead. Choose the **Invoice**: the claim settles that open invoice rather than being paid out.
+5. To apply a supplier credit note, tap **Apply to its bill** on the credit note.
+
+**Good to know**
+
+- Record only money that was actually paid. The payment is reported by you; it is not confirmed by the bank.
+- A wrong payment is never deleted. Tap **Reverse** and state the reason. A payment already applied to an invoice cannot be reversed.
+- An offset keeps the invoice's sales and VAT; only its payment is explained.
+- A credit note is applied by another person than the one who captured it, to an approved bill of the same supplier that still owes at least that much.
+- In the workspace settings, **Payments a second person records from (currency units)** means a payment of at least that amount cannot be recorded by the person who approved the bill it pays. 0 switches the rule off.
+- Recording a payment needs **Record payments to members**; an offset needs **Issue invoices & match payments**.
+
+**See also:** [The Cash page](help:user.money.cash)
+
+### The premises lease
+
+**Audience:** Owner · Administrator with the permission
+
+The space rents its premises, and you want the rent and charges it owes recorded once, with their history.
+
+<!-- image: user-money-purchases-lease -->
+
+**Steps**
+
+1. Open [Purchases](app:/money/purchases) and tap **Premises lease**.
+2. Tap **Add a lease**. Choose the **Lessor (a supplier)**, write the **Premises (address)** and the **Starts on** date. Add **Fixed until**, **Notice in months**, the **Deposit** and an **Indexation (note)** if the lease has them.
+3. Under **Rent and charges**, tap **New amount**. Choose the **Charge** (**Rent**, **Service charge advance** or **Other charge**), the **Amount**, how often it is **Paid** and **From** which day.
+4. When the rent changes, add a **New amount** from its date. It replaces the amount in force; the earlier one stays in the history.
+5. To end the lease, tap **Give notice**. Enter **Notice given on**, **The lease ends on** and **Why does it end?**.
+6. Once the lessor bills the year's service charges, tap **Settle charges**. Enter the period, the **Amount billed** and the day it is **Due on**.
+
+**Good to know**
+
+- Record the lessor as a supplier first.
+- After notice, the scheduled amounts stop at the day the lease ends. Occurrences already presented are kept.
+- A settlement deducts the advances paid in the period: a balance is owed on the day you chose, a surplus is recorded as a credit. A period is settled once.
+- Recording the lease needs **Record the premises lease**; the space must have **Premises lease** switched on.
+
+**See also:** [Rent commitments and the bills that meet them](help:user.money.purchases.commitments) · [Suppliers](help:user.money.suppliers.balance)
+
+### Rent commitments and the bills that meet them
+
+**Audience:** Owner · Administrator with the permission
+
+The lease or a rented room expects rent each month, and you want each month matched to the lessor's bill, without counting the cost twice.
+
+**Steps**
+
+1. In **Premises lease** or **Rented rooms**, tap **Commitments**.
+2. Read each month: **Expected**, **Partly matched** or **Matched**.
+3. Tap **Match a bill** on a month. Choose the **Bill** and the **Line of the bill**, and enter the **Amount covered**.
+4. If the bill differs from what the month expects, tap **Accept the difference** and write **Why the bill differs**.
+5. A wrong match is undone with **Reverse** and its reason.
+
+**Good to know**
+
+- A bill matched to a month replaces that month's expectation; it never adds a second cost.
+- Only the lessor's pending or approved supplier bills can be matched, up to what the month still expects.
+- An accepted difference goes to the validators: nothing changes until they decide.
+
+**See also:** [The premises lease](help:user.money.purchases.lease) · [Rented rooms](help:user.money.purchases.rented-rooms)
+
+### Rented rooms
+
+**Audience:** Owner · Administrator with the permission
+
+The space rents rooms from a lessor, and you want members to book them only while the rental runs, and only the members you choose.
+
+<!-- image: user-money-purchases-rented-rooms -->
+
+**Steps**
+
+1. In the floor plan, mark the floor as rented: under **Floors**, it reads "Rented floor: its rooms are booked only inside a rental".
+2. Open [Purchases](app:/money/purchases), tap **Rented rooms**, and tap **Rent this room** on a room.
+3. Choose the **Lessor**, the **First day** and, if it ends, the **Last day (optional)**. Enter the **Cost to the space per month** and the **Fee per half day for a member (optional)**.
+4. Choose who may book: **Open to every member**, or **Also open to these members**, **Also open to these roles** or **Also open to these plans**, each with its own fee if you wish.
+5. Set the **Status** to **Active: bookable** and tap **Save**.
+
+**Good to know**
+
+- A rented room can be booked only inside its rental period, and only by the people you chose. Nobody else sees it.
+- While the status is **Draft: not bookable**, nobody can book it. Once the rental **Ended**, the room is not bookable again until a new rental starts.
+- The monthly cost appears in **Commitments**, to be matched to the lessor's bills.
+- Managing rented rooms needs **Manage sites and edit the floor plan**; the space must have **Rented rooms** switched on.
+
+**See also:** [Rent commitments and the bills that meet them](help:user.money.purchases.commitments)
+
+### The equipment register
+
+**Audience:** Owner · Administrator with the permission
+
+The space bought long-lasting equipment, and you want it registered and treated as your accountant decides.
+
+<!-- image: user-money-purchases-equipment -->
+
+**Steps**
+
+1. On the purchase, classify the line as long-lasting equipment.
+2. Open [Purchases](app:/money/purchases), tap **Equipment** and then **Register equipment**. Choose the **Purchase line** and give the **Name of the equipment**.
+3. Tap **Decide treatment**. Choose **Capitalise as equipment** or **Expense**, write the **Basis of the decision**, and add **Available for use on** only if you know it.
+4. To keep your accountant's figures, tap **Accountant's valuations** and **Import a file** (or **Type in one asset**). Check the preview and tap **Confirm**.
+
+**Good to know**
+
+- Each piece shows its state: **Waiting for treatment**, **Capitalised, in use**, **Expensed** or **Disposed of**.
+- The cost is known once the purchase's deductible VAT share is qualified.
+- Valuations are evidence only: nothing is posted from them, and a blank figure stays unknown. A later batch replaces an earlier one and says why.
+- Registering needs **Capture supplier bills**; deciding the treatment and the valuations need **Manage tariffs and billing rules** and **View workspace finances**.
+
+**See also:** [A supplier bill, from capture to approval](help:user.money.purchases.bills)
+
+### The Cash page
+
+**Audience:** Administrator · Owner
+
+You want to see the money recorded in and out, and what is still to pay.
+
+<!-- image: user-money-cash -->
+
+**Steps**
+
+1. Open [Cash](app:/money/cash), or tap **Cash** in [My finances](app:/money).
+2. Tap **Money in and out by month** for the recorded payments month by month.
+3. Tap **To pay** for what the space still owes.
+4. Tap **Bank statements** to import a statement and match its lines, when the space uses them.
+
+**Good to know**
+
+- The page shows recorded payments, not a reconciled bank balance.
+- It appears for administrators when the workspace status or purchases are switched on.
+
+**See also:** [What the space owes: To pay](help:user.money.purchases.to-pay)
 
 ### Supplier balances
 
@@ -2587,17 +2894,16 @@ You issue and chase the invoices of the whole workspace and want to know where t
 **Steps**
 
 1. Open [Invoicing](app:/invoices).
-2. Read the tabs: **To invoice** lists members still to be invoiced for the month, **Open** the invoices issued and unpaid, and **Archive** those that are closed.
-3. Read the line of four steps under the banner: **To issue**, **To collect**, **To confirm** and **Closed**, with a count for each.
-4. Tap **Month-close wizard** to invoice a month, or **New invoice** for a single one.
-5. Tap the tools icon for the invoice register, reminder rules, the invoice PDF template and **My finances**.
+2. Read **Owed to you**: what is **Overdue** and what is **Not yet due**.
+3. Work down **To do**: each entry opens with **Review**, until it reads **You are all caught up.**
+4. Below, read the customers and their invoices; tap **New** for a single invoice and **More** for the other tools.
 
 **Good to know**
 
-- Invoices are never edited or deleted. A wrong one is marked erroneous and replaced.
-- The full workflow, from month-close to settlement and reminders, is in chapter 08: [Reminder rules](help:user.money.reminders.rules) and [The invoice PDF template](help:user.money.reports.invoice-template) are good places to continue.
+- Invoices are never edited or deleted. A wrong one is corrected with a replacement.
+- The whole routine, from invoicing the month to matching payments and paying out credit notes, is in chapter 08: start with [The Invoicing screen](help:user.invoicing.hub).
 
-**See also:** [Reminder rules](help:user.money.reminders.rules)
+**See also:** [Invoice the month](help:user.invoicing.month) · [Reminder rules](help:user.money.reminders.rules)
 
 ## Your space, set up by you (Workspace settings)
 
@@ -3057,6 +3363,30 @@ You want to turn one single feature on or off.
 
 **See also:** [Switch whole processes on or off](help:user.features.processes)
 
+### What kind of business is it?
+
+**Audience:** Owner · Administrator with the permission
+
+You run a studio, a practice or a salon rather than a coworking space, and want the app to match. The setup guide asks it on its first step; you can change it here later.
+
+<!-- image: user-workspace-settings--business-kind -->
+
+**Steps**
+
+1. Open [Workspace](app:/workspace-settings).
+2. Tap **What kind of business is it?**, choose a kind and, if the business is several things, tick further kinds below (optional).
+3. Read what it **Switches on** and **Switches off**, then tap **Save**.
+
+**Good to know**
+
+- Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.
+- A kind without places switches off everything about places — seats, the floor plan, the kiosk, rooms. **Show all** lists every feature.
+- Nothing changes until **Save**; **Cancel** leaves everything as it is. Choosing a kind later proposes again and never switches anything silently.
+- A feature not yet reviewed as stable is switched on only if you tick it; switch it on later in **Features** otherwise.
+- Coworking proposes nothing, and switching places off deletes nothing: switch them on again and the floor plan and bookings are back.
+
+**See also:** [Features](help:user.features.processes)
+
 ### Country
 
 **Audience:** Owner · Administrator with the permission
@@ -3120,6 +3450,60 @@ You want invitations and documents to speak the language of your community.
 - It is not your own app language. That one only changes what you see, and lives in your personal settings.
 
 **See also:** [Invitation message](help:user.workspace.settings.invitation-message)
+
+### Paper of the documents
+
+**Audience:** Owner · Administrator with the permission
+
+You want your invoices and letters printed on the paper your country uses.
+
+<!-- image: user-workspace-settings--paper -->
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), under **General details**, open **Paper of the documents**.
+2. Keep the paper usual in your country, or pick another one it allows.
+3. Tap **Save**.
+
+**Good to know**
+
+- The United States and Canada print on US Letter; other countries print on A4 unless you choose US Letter.
+- In Switzerland only A4 is offered: an invoice ends on a payment part printed on A4.
+- On US Letter the address is printed for a US #10 window envelope (4 1/8 × 9 1/2 in, one window on the left): fold the letter in three, address panel outward, and seat it at the bottom of the envelope. A left or a right window both mean that one window; the recipient has room for five lines; a longer address is printed whole at the start of the text instead, and the window stays empty.
+- An invoice keeps the paper it was issued on. Changing the paper changes the invoices issued after it.
+- A letter, a reminder, a statement or a report is printed on the paper chosen when you print it.
+- If you move the space to a country that does not use the paper you chose, the space follows that country's usual paper.
+
+**See also:** [Country](help:user.workspace.settings.country)
+
+### Organisation
+
+**Audience:** Owner
+
+Your business has sites abroad, in another country or another currency. Each of them is a house: a business of its own with its country's rules, its currency and its own books. Together they form one organisation with one head.
+
+**Steps**
+
+1. In [Workspace](app:/workspace-settings), open **Organisation**.
+2. If the business is in no organisation yet, tap **Make this business the head of an organisation** and give it a name.
+3. Tap **Add one of my businesses** to make another business you own a house of the organisation.
+4. Tap **Take out of the organisation** beside a house to make it a business on its own again.
+5. Tap **Make it the head** beside a house you own to make it the head. The owner of another house sees **Leave the organisation** beside that house.
+6. Tap **Add a house abroad** to make a business of its own in another country or currency: choose its country first; its currency, time zone and the language of its documents are proposed from it. The form says what travels, what arrives inactive to be priced, and what does not travel. Tap **Create the house**: you land in it, and its home shows once how it began.
+7. In the new house, its home lists its first task: first its country's tax rates, then **Name your prices** for the services and packages that arrived inactive. Give each a price (0 makes it free) and a rate, and activate it; the fee bands, the document layout and links, and the payment instructions and bank account are the house's own to set. Tap **Done** when nothing is left.
+8. In a house you own, switch on **Members of the other houses are welcome here** to take a member of another house of the organisation at once when they ask, with this house's terms for a new member. Off, the request waits for your decision, which names the house the person comes from.
+
+**Good to know**
+
+- Each house shows its country, its currency and your own role there. Who else owns a house is shown inside that house.
+- A member of one house sees the organisation's other houses on Me, under **Other houses of** the organisation, and taps **Ask to join**. One question first says what joining means: their profile becomes visible to that house, which is a business of its own with its own terms, prices and currency.
+- On Me, the houses are listed together under the organisation's name: the head first, then by country.
+- Inside a house, tap the business's name at the top to move to another house of the organisation.
+- Amounts in different currencies are shown side by side and never added up.
+- The head leaves last: take the other houses out first.
+- Only an owner of the business and of the head may change the organisation.
+
+**See also:** [Country](help:user.workspace.settings.country)
 
 ### Letterhead address
 
@@ -3838,6 +4222,7 @@ A newcomer waits for your decision, or a member takes a break, and you want the 
 - The decision on a new member can also be taken through the validation rules, as described in [Validation rules](help:user.validation.overview).
 - Pausing is for owners and keeps all history.
 - A member who left shows **Exited**, and cannot be paused.
+- A pause and a share change count in whole months, from the first month whose first day is on or after their date; nothing is prorated. A month already invoiced keeps what its invoice says; a change counts from the first month not yet invoiced. A month paused on its first day owes no subscription fee and includes no half-days; a pause starting on the 15th leaves that month charged in full and frees the next. A member's **Plan** tab lists the scheduled changes with the months they charge and free, and the first statement a share change shows on. When you change a plan, choose **As soon as possible** or **From the first of a month**; a pause takes the day it starts and, if known, the day the member is **Active again on**. Before you apply, the task says what the change means in money and how many bookings fall in the freed months; a date that cannot be taken is refused with the earliest one.
 
 **See also:** [Invite a member](help:user.members.invite)
 
@@ -4171,7 +4556,7 @@ The price of one unit, gross: the member pays exactly this, and VAT is part of i
 
 #### Place of supply of a service
 
-Where the VAT on this service is due. **Connected with the premises**, the default, keeps your VAT for every customer: a desk, an office, a room and whatever is used on the premises are taxed where the building stands. Choose **General service (not connected with the premises)** only for what is not tied to the building, such as mail handling or a virtual office: for a business in another EU country that line is then reverse-charged, and for a business outside the EU it is outside the scope; a consumer still pays your VAT. Each charge keeps the choice it was recorded with. The field shows when you charge VAT and the **Place of supply per service** feature is on.
+Where the VAT on this service is due. **Connected with the premises**, the default in a business that books places, keeps your VAT for every customer: a desk, an office, a room and whatever is used on the premises are taxed where the building stands. Choose **General service (not connected with the premises)** only for what is not tied to the building, such as mail handling or a virtual office: for a business in another EU country that line is then reverse-charged, and for a business outside the EU it is outside the scope; a consumer still pays your VAT. Each charge keeps the choice it was recorded with. A business that books no places starts a new service as a general service instead, a default you confirm: each choice in the list says how it is taxed. An existing service keeps its class when you switch place booking on or off. The field shows when you charge VAT and the **Place of supply per service** feature is on, or when your business books no places.
 
 #### Active
 
@@ -4253,6 +4638,10 @@ You want members to pay an outstanding bill online, into your own provider accou
 
 The keys come from the provider's own dashboard: **Client ID**, **Secret**, **Environment**, **Webhook ID** and **Return URL** for PayPal; **Secret key**, **Webhook signing secret** and **Return URL** for Stripe; **API key** and **Return URL** for Mollie and Wero. Keep test and live keys apart: all keys you enter must belong to the same mode.
 
+A production workspace takes payments with live keys only: with test keys, a member's online payment is refused. For Stripe, the webhook endpoint also listens to **charge.dispute.created** and **charge.refunded**: a payment the provider reverses (a refund or a dispute) is then marked reversed, and you correct the member's balance. Until someone who sees the finances marks it **Looked at** under **Reversed by the provider** on the payments screen, the overview says how many reversals wait.
+
+An installation that only rehearses payments can set `DESKILO_ALLOW_TEST_PAYMENTS=true` in the environment of its functions, so that orders open under test keys and test-mode events are processed; it must never be set on an installation that takes real payments.
+
 Secrets are stored on the server and never shown again. A saved one reads **Set — leave blank to keep**; type a new value to replace it.
 
 ### Scheduled expenses
@@ -4321,7 +4710,7 @@ In this chapter:
 - VAT: regime, number, rates, groups and the periodic declaration
 - E-invoicing: where the machine-readable invoice is sent
 - The invoice PDF template and the report editor
-- Issuing and closing a month: the Invoicing screen, the month-close wizard, regrouping, shared expenses
+- Issuing and closing a month: the Invoicing screen, invoicing the month, one invoice and one customer, payments and credit notes, the month-close wizard, regrouping, shared expenses
 - Payment reminders
 - The invoice register, accounting exports and business analytics
 
@@ -4842,6 +5231,28 @@ A group says what kind of rate this is, so the invoice puts it in the right cate
 
 **See also:** [Setting the rates](help:user.money.vat.rates)
 
+### The Swiss return: Ziffern 205 and 383
+
+**Audience:** Owner · Billing administrator
+
+Your space is in Switzerland, and you want the supplies you opted to tax and the acquisition tax in the right boxes.
+
+**Steps**
+
+1. In [Legal identity & e-invoicing](app:/legal-identity), under **Letting and the option (Switzerland)**, turn on **We only let bare rooms** if you let rooms without services. Then turn on **We opted for taxation (art. 22 MWSTG)** if you opted, and enter the **Option effective from (YYYY-MM-DD)**.
+2. Record an expense bought from a supplier abroad with **Bought from a supplier abroad** turned on.
+3. Open [VAT declaration](app:/vat-declarations) and prepare the period.
+4. Download **MWST return, eCH-0217 XML (ePortal upload)** and upload it on the ePortal.
+
+**Good to know**
+
+- Ziffer 205 is the part of your sales (Ziffer 200) that is a bare letting taxed because you opted. The invoice's property lines give that part. The return still counts it in 200.
+- Ziffer 383 is the acquisition tax. It is declared as tax owed, and its deductible share counts with the input tax. It is not part of the turnover.
+- In the eCH-0217 file, the opted supplies are written as `opted`, and the acquisition tax as one `acquisitionTax` element per rate.
+- An operator who edits the boxes in **Tax reference data** names the extra lines a box adds in **Other line categories it adds (comma separated, e.g. acquisition)**. Ziffer 383 carries `acquisition`.
+
+**See also:** [Preparing the VAT return](help:user.money.vat.declaration) · [The VAT of an expense](help:user.money.expenses.vat)
+
 ### Change a rate by law
 
 **Audience:** Owner · Billing administrator
@@ -4914,6 +5325,7 @@ You tell DesKilo where to post your invoices as machine-readable files.
 - The token is stored on the server and never shown again.
 - The valid file is an EN 16931 invoice. Whether your country requires a platform, and which, is something to confirm with your accountant.
 - Posting the file is the second of three steps: see [What the app issues, and what stays with your accountant](help:user.invoicing.scope).
+- In Italy no invoice is issued before the national platform (the SdI) has accepted one of the workspace's documents. **Send a test document** in the setup guide's e-invoicing step: the proforma of a member's current month, with a test number, goes to the platform's test environment with its test credentials. Nothing is issued, numbered or booked. Once the platform accepts it, the workspace issues; new credentials or another seller identity ask for a new test.
 
 **See also:** [Sending an e-invoice](help:user.money.einvoice.send) · [Legal identity](help:user.money.legal.identity)
 
@@ -5076,6 +5488,7 @@ You want to hand an issued invoice over in its machine-readable form.
 - If something is missing, the sheet lists it. **Complete the legal identity** takes you to the screen that fixes it.
 - An invoice signed before you completed your identity keeps what it was issued with. Mark it erroneous and issue a replacement if it matters.
 - Which channel a customer must use depends on your country and the customer. Confirm with your accountant.
+- If the platform's answer is lost after the document may have left, the invoice shows **outcome unknown** and **Send** is not offered again. Check the platform's own record, then tap **Record what happened** and say what you found, why you are sure and what you checked. Someone who may issue invoices can do this once; nothing is sent by it.
 
 **See also:** [The e-invoicing platform](help:user.money.einvoice.overview) · [The Invoicing screen](help:user.invoicing.hub)
 
@@ -5095,6 +5508,7 @@ You want your invoices to look like yours: logo, layout, wording.
 **Good to know**
 
 - The template changes the PDF only. The e-invoice XML is never touched.
+- An issued invoice keeps the original it was issued with: a template changed later changes only the invoices issued after it. Pictures that make an invoice larger than an original may be keep its original from being kept; use smaller pictures.
 - Anyone with permission to design documents can do this.
 - A template that does not render never blocks a document: the built-in layout takes over.
 
@@ -5172,24 +5586,51 @@ Your members read their documents in their own language.
 
 **Audience:** Owner · Billing administrator
 
-You see at a glance what to issue, what to collect and what is closed.
+You open Invoicing and see what you are owed, what to do next and every customer's invoices.
 
 ![](assets/help/images/user-invoicing-hub.en.b8fa17aa9.jpg)
 
 **Steps**
 
 1. Open [Invoicing](app:/invoices).
-2. Read the strip: **To issue**, **To collect**, **To confirm**, **Closed**.
-3. Work in the three tabs: **To invoice** (members with something tracked, not yet invoiced), **Open** (issued, unpaid) and **Archive** (paid or closed).
-4. Tap the tools icon for the other tools.
+2. Read **Owed to you**: what is **Overdue**, what is **Not yet due**, and what was **Invoiced in** and **Received in** this month.
+3. Work down **To do**: each entry says what to do, for how many, and opens it with **Review**. When nothing is left it reads **You are all caught up.**
+4. Below, choose **Open**, **Overdue**, **To confirm** or **Paid**, and read the list by **Customers** or by **Invoices**. **Search** finds a customer or a number.
+5. Tap **New** for a single invoice, and **More** for **Paid and closed invoices**, **My own invoices**, **Invoice register**, **Invoice PDF template** and **How invoicing works**.
 
 **Good to know**
 
-- You see invoices for the whole workspace. Your own are in your finances, under **My finances**.
-- Invoices are never edited or deleted: a wrong one is marked erroneous and replaced.
-- The **How invoicing works** entry explains who moves at each step.
+- A credit note the business owes is never counted as owed to you: it waits in **Pay out refunds**.
+- Every status is a word as well as a colour: **Due today**, **Payment received · to match**, **Waiting for the customer to confirm**, **On hold**.
+- Your own invoices are in your finances, under **My own invoices**.
+- Invoices are never edited or deleted: a wrong one is corrected with a replacement.
 
-**See also:** [New invoice](help:user.invoicing.new-invoice) · [Open invoices](help:user.invoicing.open)
+**See also:** [Invoice the month](help:user.invoicing.month) · [Follow one invoice](help:user.invoicing.open)
+
+### Invoice the month
+
+**Audience:** Owner · Billing administrator
+
+The month just ended has customers still to invoice, and you issue them in one go.
+
+<!-- image: user-invoicing-month -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Invoice** and the month in **To do**, and tap **Review**.
+2. Read the list: every customer with something to invoice is ticked, with the amount. **All** ticks or unticks them together.
+3. A customer marked **Needs a fix** says what is missing. Tap **Fix**, complete it, and come back: the customer is read again.
+4. Tap **Issue** with the count and the amount.
+5. Read what happened (**Issued**, **Waits for a validation** or **Not done**) and tap **Done**.
+
+**Good to know**
+
+- A month whose credits exceed its charges issues a credit note: the business owes it, and it waits in **Pay out refunds**.
+- A detail your business is missing is said once, on top, with one **Fix**; nothing is issued until it is complete.
+- What was not done stays in **To do**, and **Retry for these** tries again without issuing anything twice.
+- **Preview the proforma** shows a customer's invoice before it exists.
+
+**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Pay out a credit note](help:user.invoicing.refunds)
 
 ### Issue an invoice
 
@@ -5201,10 +5642,10 @@ You invoice a member for a month.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap **New invoice**, or **Issue** on a row of **To invoice**.
+1. In [Invoicing](app:/invoices), tap **New**. To invoice a whole month, use [Invoice the month](help:user.invoicing.month).
 2. Pick the **Member** and the month. The positions come from what was tracked.
 3. Switch on **Include the detailed annex (check-ins, services, payments)** if you want it.
-4. Tap **Issue invoice**. In **To invoice**, **Invoice all** issues every row.
+4. Tap **Issue invoice**.
 
 **Good to know**
 
@@ -5216,27 +5657,122 @@ You invoice a member for a month.
 
 **See also:** [Month-close wizard](help:user.invoicing.wizard)
 
-### Chase and settle open invoices
+### Follow one invoice
 
 **Audience:** Owner · Billing administrator
 
-You follow what is unpaid and close it properly.
+You open an invoice and see where it stands, what happened and the one thing to do now.
 
 ![](assets/help/images/user-invoicing-open.en.b8fa17aa9.jpg)
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), open the **Open** tab and tap an invoice.
-2. Use the actions it offers: **Send a reminder**, **Mark as paid** (match a registered payment), **Cancel outstanding amount**, **Mark erroneous**, or share the PDF.
-3. Paid invoices move to **Archive**.
+1. In [Invoicing](app:/invoices), tap a customer, then the invoice (or tap it in the list by **Invoices**).
+2. Read the top: what is open of the total and when it is due, or **Paid in full**.
+3. Read **What happened**: issued, the due date, each reminder, a payment the customer declared, the payment.
+4. Use the action at the bottom: **Share reminder** with its level, **Confirm payment**, **Match the payment** or **Record the refund**.
+5. Tap **More** for the PDF (**View the PDF**, **Download the PDF**, **Share the PDF**), **Hold reminders**, **Match a payment** and the **Corrections**: **Correct with a replacement**, **Cancel this invoice, issued by mistake**, **Write off the rest**.
 
 **Good to know**
 
-- An invoice is paid once a real payment is matched to it. A difference needs a note, or a credit note for the excess.
-- Cancelling an outstanding amount goes through validation.
-- **Mark erroneous** cannot be undone. Do it before payment, never after.
+- **By e-mail** sends the invoice to the customer's contact e-mail, and **Send again** sends it once more. An e-mail the provider accepted is not proof it was read.
+- On hold, no reminder goes out until you release it.
+- A replacement or a cancellation is offered while nothing is matched to the invoice, **Write off the rest** once part of it was paid. An invoice is never edited.
+- A customer who says they paid waits for you: check your bank, then **Confirm payment** or **Not received**.
 
-**See also:** [Reminder rules](help:user.money.reminders.rules) · [Regroup invoices](help:user.invoicing.settlement)
+**See also:** [Share the reminders](help:user.invoicing.reminders) · [Match a payment received](help:user.invoicing.payments)
+
+### Share the reminders
+
+**Audience:** Owner · Billing administrator
+
+Reminders are shared by hand in your space, and some are due.
+
+<!-- image: user-invoicing-reminders -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Share reminders by hand** in **To do** and tap **Review**.
+2. Each line names the customer, the amount and how late it is, with its level (Reminder 1, …). **Preview** shows the letter.
+3. Tap **Share** on a line and send the letter the way you choose; the button below the list shares the next one.
+4. Where the customer has an e-mail address, **Send by e-mail** sends it; a button at the end e-mails every line that has an address.
+5. Tap **Done** when the queue says what was shared.
+
+**Good to know**
+
+- A reminder is recorded on its invoice only when it was really shared or sent. A share you closed records nothing.
+- If money received is not assigned yet, the queue asks you to check it first (**Check first: money received and not assigned**): the customer may have paid.
+- When reminders go out by themselves, this entry is not in **To do**; **Rules** sets how they work.
+
+**See also:** [Reminder rules](help:user.money.reminders.rules) · [Automatic reminders](help:user.money.reminders.automatic)
+
+### Match a payment received
+
+**Audience:** Owner · Billing administrator
+
+A payment arrived on the account and you say which invoices it pays.
+
+<!-- image: user-invoicing-payments -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Match payments** in **To do** and tap **Review**, then **Match** on the customer.
+2. **Payments to match** shows each payment received with the invoices it may pay; **Same amount** marks the one that fits.
+3. Tap that invoice to match it, or **Assign to invoices** to share one payment over several.
+4. In **Assign to invoices**, tick the invoices and check the amounts; the oldest is paid first. Tap **Assign to invoices** to confirm.
+
+**Good to know**
+
+- What is left of the payment stays as credit for the customer, and the sheet says how much.
+- An invoice paid in part needs a note.
+- A match may wait for a second approval when a rule asks for it.
+- Nothing is recorded when something changed meanwhile: the page reads the payment again and says why.
+
+**See also:** [Follow one invoice](help:user.invoicing.open) · [A customer's page and statement](help:user.invoicing.customer)
+
+### Pay out a credit note
+
+**Audience:** Owner · Billing administrator
+
+The business owes a customer money back on a credit note, and you record that it was paid out.
+
+<!-- image: user-invoicing-refunds -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), find **Pay out refunds** in **To do** and tap **Review**.
+2. Tap the customer, then the credit note: it reads **Refund owed** and **The business owes this refund**.
+3. Pay the customer back, then tap **Record the refund** and confirm.
+
+**Good to know**
+
+- A credit note is never counted in **Owed to you**.
+- Once recorded, the credit note reads **Refunded** and leaves **To do**.
+
+**See also:** [Invoice the month](help:user.invoicing.month)
+
+### A customer's page and statement
+
+**Audience:** Owner · Billing administrator
+
+You want everything about one customer: what they owe, their invoices and a statement to send them.
+
+<!-- image: user-invoicing-customer -->
+
+**Steps**
+
+1. In [Invoicing](app:/invoices), tap the customer.
+2. Read what they **Owes**, or **Nothing owed**, and any credit: payments no invoice has taken yet.
+3. Read **Invoices** and the **Story**: issued, paid, reminders shared, payments declared.
+4. Tap **Statement of account** for the open items as of today, or **Statement for a period** for the movements between two dates with the opening and closing balance.
+
+**Good to know**
+
+- A statement is in one currency; with several, you choose which.
+- With nothing open, there is no statement as of today to print.
+- In a statement for a period, balances before the first recorded day are reconstructed from today's records, and the statement says so.
+
+**See also:** [Match a payment received](help:user.invoicing.payments)
 
 ### The month-close wizard
 
@@ -5248,7 +5784,7 @@ One guided path for the money routine: issue, send, remind, register payments, m
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap **Month-close wizard** (or open the [Invoicing wizard](app:/invoicing/wizard)).
+1. In [Invoicing](app:/invoices), tap **More** and **Month-close wizard** (or open the [Invoicing wizard](app:/invoicing/wizard)).
 2. Choose the run: **Start of month** (subscriptions members pay ahead, for the coming month) or **End of month** (usage, consumption and extra charges of the month just ended). The date proposes one.
 3. Follow the steps: **Review**, **Issue**, **Send**, **Remind**, **Payments**, **Match**, **Close**, **Summary**.
 4. Tap **Next** at each step, and **Finish** at the end.
@@ -5271,7 +5807,7 @@ A member has several open invoices and should pay a single one.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Regroup into one invoice**.
+1. In [Invoicing](app:/invoices), tap **More** and **Regroup invoices into one**.
 2. Choose at least two open invoices of the same member.
 3. Confirm. You are asked whether to attach the regrouped invoices.
 
@@ -5292,7 +5828,7 @@ A cost shared by the community is split among members.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Distribute an expense**.
+1. Open [My finances](app:/money) and tap **Distribute an expense**, beside **Purchases**.
 2. Describe **The expense**, then choose **Split by**: **Equal**, **Subscription**, **Usage** or **Custom key**.
 3. Check the **Shares**, untick anyone to **Leave out**, and tap **Book the shares**.
 
@@ -5314,7 +5850,7 @@ You decide when and how often an overdue invoice is chased.
 
 **Steps**
 
-1. In [Invoicing](app:/invoices), tap the tools icon and **Reminder rules**.
+1. In [Invoicing](app:/invoices), tap **More** and **Reminder rules**.
 2. Set **Number of reminder levels**, **Days until the first reminder** and **Days between reminders**.
 3. Tap **Save**.
 
@@ -5335,7 +5871,7 @@ You want reminders to leave on their own.
 
 **Steps**
 
-1. Open **Reminder rules** in the Invoicing tools.
+1. Open **Reminder rules** from **More** in Invoicing.
 2. Switch **Automatic reminders** on.
 3. Tap **Save**.
 
@@ -5370,6 +5906,29 @@ All invoices in one sortable list.
 
 **See also:** [Accounting exports](help:user.invoicing.accounting-export)
 
+### Your accounting journals
+
+**Audience:** Owner
+
+Your accountant's software knows your journals by its own codes, and you want every export to use them.
+
+<!-- image: user-money-accounting-journals -->
+
+**Steps**
+
+1. Open [Accounting & VAT](app:/money/accounting) and tap **Accounting journals**.
+2. For **Sales**, **Bank**, **Purchases** and **Miscellaneous operations**, enter the **Code** and the **Label** your accountant uses.
+3. Tap **Save**. **Use the standard codes** puts the country's standard codes back.
+
+**Good to know**
+
+- Every accounting export the app writes uses them: the FEC, the generic journal, the SAF-T ledgers and the printed books.
+- A code has no line break, tab or |, and two journals never share a code; the form says which field to fix.
+- A changed code also changes the entry numbers of a period you export again.
+- Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export)
+
 ### Accounting exports
 
 **Audience:** Owner · Billing administrator
@@ -5393,6 +5952,67 @@ You hand the year's invoices and payments to your accountant.
 
 **See also:** [VAT account](help:user.money.vat.account) · [The invoice register](help:user.invoicing.register)
 
+### Transfers: the digital link to your accounting system
+
+**Audience:** Owner · Billing administrator
+
+You keep your VAT records in another accounting system, and you need to show how the figures got there, for example under UK Making Tax Digital.
+
+**Steps**
+
+1. Open [Accounting & VAT](app:/money/accounting) and tap **Accounting systems**.
+2. Read **Transfers**: every file handed out and every document delivered to a connection in the period, each with the SHA-256 of what was carried.
+3. Hand the **Accounting CSV** to your accountant. Its `report.json` quotes the Transfers list of the year.
+
+**Good to know**
+
+- A digital link is a file or a connection delivery recorded in **Transfers**. Typing figures into the other system by hand is not a digital link.
+- The SHA-256 proves that the file the other system received is the one DesKilo handed out.
+- An empty list says "Nothing was handed out or delivered in this period."
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export) · [Where the records are kept](help:user.invoicing.records-location)
+
+### Where the records are kept
+
+**Audience:** Owner · Billing administrator · Operator
+
+Some countries say where a business keeps its books, and you want to know what the app states about yours.
+
+**Steps**
+
+1. Open [Legal identity & e-invoicing](app:/legal-identity) and go to the **Accounting book** section.
+2. Read **Where the records are kept**, next to the retention periods.
+3. For a Canadian business whose records are kept outside Canada, enter **CRA authorisation to keep records outside Canada** in the workspace settings, under **Records location**.
+
+**Good to know**
+
+- The operator of the installation declares **Country where this installation keeps its data**, as the hosting contract states it. The app never guesses it. Undeclared, the tile says so and states no location.
+- Canada keeps books in Canada unless the CRA authorises another place; Germany keeps electronic books in the EU. The tile warns when the declared country does not fit.
+- A British, Irish, Canadian or US archive carries its tables with a `tables/README.txt` that describes every table and column in English, and says where the records are kept.
+
+**See also:** [Transfers: the digital link to your accounting system](help:user.invoicing.transfers)
+
+### Stopping new accounting work
+
+**Audience:** Owner · Billing administrator
+
+You want your accounting connectors to stop taking on new work, for example when you change accountant, without losing what was already sent.
+
+**Steps**
+
+1. Open **Accounting systems** and read the card **New accounting work**: it says whether the connectors are **Active**, in **Servicing** or **Retired**.
+2. To pause, tap **Stop new work**. To admit work again, tap **Resume new work**.
+3. The owner can tap **Retire the connectors** from servicing, and **Reopen for servicing** from retired. Both ask for a **Reason**.
+
+**Good to know**
+
+- While nothing new is admitted you can still read the history, revoke a connection and finish deliveries that were already started.
+- Retiring is refused while deliveries are still in progress; finish or settle them first.
+- The card is shown only to people who manage the connectors; only the owner sees the retire and reopen actions.
+- Without a decision of its own the card follows the accounting connectors setting.
+
+**See also:** [Accounting exports](help:user.invoicing.accounting-export)
+
 ### Business analytics
 
 **Audience:** Owner · Billing administrator
@@ -5413,6 +6033,29 @@ You look at how the workspace performs.
 - The current period is partial; its figures still change.
 
 **See also:** [The Invoicing screen](help:user.invoicing.hub)
+
+### Costs, commitments and shared costs in the analytics
+
+**Audience:** Owner · Billing administrator
+
+You want the purchase side of the analytics: what the space spent, still owes and still expects to pay, and how shared costs fall on each resource.
+
+**Steps**
+
+1. Open [Business analytics](app:/bi) and choose the months.
+2. Read **Operating costs (recorded)**, **Invoiced less recorded operating costs**, **Book depreciation (recorded)** and **Equipment bought (capitalised)**.
+3. Read **Paid out (recorded)**, **Still to be billed (contracts)** and **Expected to pay (owed + contracts)** for the cash side.
+4. Read **Shared costs by resource**, and tap **Allocation rules** to say how a purchase category is spread over levels and offices.
+5. In a rule, choose the **Purchase category** (or **One purchase line**), the **Weights (whole numbers; empty or 0 is no share)**, the **Basis (why these weights)** and **In force from**, then save. **Stop the rule** ends it from this month on.
+
+**Good to know**
+
+- Figures say what they count. **Invoiced less recorded operating costs** is not a profit: no depreciation, payroll or bank charges are in it. **Paid out (recorded)** is recorded payments, not a reconciled bank balance.
+- Depreciation is known only when your accountant's confirmed book values cover exactly the chosen months; otherwise it is unknown, never 0.
+- A cost no rule spreads stays unallocated, never split evenly. The allocation is an analysis: no member is billed and no document changes.
+- Allocation rules need **Manage tariffs and billing rules**.
+
+**See also:** [Business analytics](help:user.invoicing.bi) · [The equipment register](help:user.money.purchases.equipment)
 
 ## Advanced
 
@@ -6122,6 +6765,8 @@ You want a picture of the whole before you choose anything. DesKilo groups its f
 
 **Audience:** Owner · Co-owner · Administrator
 
+The setup guide stays available in the workspace menu after setup. Its overview names the workspace, the chosen goal and the number of required tasks still to complete. Open the outcome details to see each milestone. The recommended action leads to a task you can do now; tasks waiting for another step or the operator say so. An unavailable check is not completion. Progress comes from saved settings: visiting a task does not complete it. Each task keeps the workspace, goal and task status visible, and names the next destination.
+
 You want to know the shortest road to a space people can book. The app keeps a readiness list called **Setting up this space** and, on the Reserve screen, tells owners **Before anyone can book here** what is missing.
 
 *What must be there before the first booking*
@@ -6593,6 +7238,8 @@ At the time of writing most features read **Unreviewed**, eighteen read **Beta**
 
 **Audience:** Owner · Co-owner
 
+To choose what the workspace does, answer the questions grouped around bookings, money and daily operation. The review and apply controls stay visible while you scroll. Review the number of settings that would change and the concrete effects before applying; nothing is applied merely by answering. Detailed process levels and quick starts are under the advanced section. A level you deliberately choose is kept when you answer other questions; use the suggested-level action to return to recommendations. “Not sure yet” keeps the previous answer and prevents applying until you resolve it. The offline questionnaire uses the same rule and blocks export while an answer is unresolved.
+
 You do not want to decide a hundred things. Here are three realistic starting points; each one lists exactly what is on. Pick the nearest, then adjust.
 
 The first needs no template. The second is the ready-made template of the app. The third is built from the features themselves. They are named after what they offer, not after a size.
@@ -6803,7 +7450,7 @@ You want one place that says, for the main features, what members get, what it n
 | **Member photos on the plan** | Occupants' photos on seats. | | Nobody |
 | **Workspace vocabulary** | The space's own words for a few labels. | | Owner |
 | **Workspace colours** | The brand colour and room colours. | | Owner |
-| **Public workspace listing** | A public page with what you choose to show. | | Owner |
+| **Public workspace listing** | A public page with what you choose to show, and where you are on the map. | | Owner |
 
 *Reservations & usage*
 
@@ -7488,7 +8135,7 @@ You decide whether a person presses the buttons each month or DesKilo does.
 - Each kind of invoice (subscription, end-of-month) can be issued once per member and month. Invoices cannot be edited or deleted; a wrong one is marked erroneous and replaced.
 - By default the owner and co-owners issue invoices. **Admins issue invoices** extends this to administrators.
 
-**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Chase and settle open invoices](help:user.invoicing.open)
+**See also:** [The Invoicing screen](help:user.invoicing.hub) · [Follow one invoice](help:user.invoicing.open)
 
 ### Payment reminders
 
@@ -7708,7 +8355,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build prepared for F-Droid has no push at all ([F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. For iPhone and Mac, add an Apple push key to the Firebase project.
 3. Store the Firebase service-account key as a secret of the server and deploy the push function.
-4. On your own installation, point the `push_config` row of your database at your own push function URL and key. It is seeded with the address of the reference installation.
+4. On your own installation, the builder sets the `push_config` row of your database to your own push function URL and key, and the doctor verifies it. `dart run tool/instance.dart push --ref <ref>` sets it again. The builder also sets the function setting `DESKILO_APP_URL` where the functions are deployed, to the web address of your app, so that the functions that link back to the app (the assistant interface and the accounting sign-in) can build their links; the doctor reports it when it is missing or another address, and `dart run tool/instance.dart auth --ref <ref> --site-url <web address of the app>` sets it again.
 5. Test it with two accounts, as described in [the test plan](help:setup.notify.test).
 
 **Good to know**
@@ -7716,7 +8363,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 - Without steps 1 to 4, nothing is pushed, whatever the switches say. The feed, the bell and the messages still work.
 - The detailed checklist is for the operator: see [Platforms](help:user.advanced.platforms) and [Your own server](help:user.advanced.own-server).
 - Push text never carries a name or a time: this is deliberate, for privacy.
-- Pair the push secret on each installation: store the same private random value in Vault as `deskilo_push_shared_secret` first, then as `PUSH_SHARED_SECRET` for the push function. Test a message and a reminder after pairing. Installations not yet paired keep their earlier delivery with a warning; configured installations refuse callers without the secret or service credential. Never copy the secret into the app or the setup XML.
+- Pair the push secret on each installation: store the same private random value in Vault as `deskilo_push_shared_secret` first, then as `PUSH_SHARED_SECRET` for the push function. Test a message and a reminder after pairing. Without the secret, the push function accepts only the service credential, so messages and reminders are not sent until the secret is paired. Never copy the secret into the app or the setup XML.
 
 **See also:** [Push notifications on this device](help:user.privacy.push)
 

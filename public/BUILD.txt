@@ -1,5 +1,5 @@
-source: fdittgen-png/deskilo@1194197ec83ad63658ea3bdb0844dbcceb185689
-built: 2026-11-03T06:56:18.650Z
+source: fdittgen-png/deskilo@83eff0afd88adee550ab648629c2168df54df526
+built: 2026-11-16T21:54:22.233Z
 site_url: https://www.deskilo.org
 app_url: https://www.deskilo.org/app/
 mode: pages + web app
