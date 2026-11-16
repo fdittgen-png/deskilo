@@ -33,3 +33,271 @@ packages/deskilo_jurisdiction_es/lib/src/vat_register_es.dart :: 'AE' => ( :: 1 
 packages/deskilo_accounting_interchange/lib/src/sage.dart :: 'AE' => _tax(euCustomer ? 'tax_eu_services' : 'tax_reverse_charge'), :: 1 :: EN 16931 category to the role of the Sage 50 code row (sage/tax_eu_services, sage/tax_reverse_charge): the codes themselves are reference rows
 lib/features/money/domain/accounting_targets_xero.dart :: countries: {'GB', 'CA', 'US', accountingCountriesEu}, :: 1 :: the countries the Xero import file is offered in, a target descriptor, not a tax value
 lib/core/jurisdiction/jurisdiction_resolver.dart :: 'UK' => 'GB', :: 1 :: an ISO spelling alias (UK for GB): not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'AB': 'Alberta', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'BC': 'British Columbia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'MB': 'Manitoba', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'NB': 'New Brunswick', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'NL': 'Newfoundland and Labrador', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'NS': 'Nova Scotia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'NT': 'Northwest Territories', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'NU': 'Nunavut', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'ON': 'Ontario', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'PE': 'Prince Edward Island', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'QC': 'Quebec', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'SK': 'Saskatchewan', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ca/lib/src/ca_regions.dart :: 'YT': 'Yukon', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'AG': 'Aargau', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'AI': 'Appenzell Innerrhoden', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'AR': 'Appenzell Ausserrhoden', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'BE': 'Bern', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'BL': 'Basel-Landschaft', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'BS': 'Basel-Stadt', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'FR': 'Fribourg', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'GE': 'Genève', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'GL': 'Glarus', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'GR': 'Graubünden', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'JU': 'Jura', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'LU': 'Luzern', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'NE': 'Neuchâtel', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'NW': 'Nidwalden', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'OW': 'Obwalden', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'SG': 'St. Gallen', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'SH': 'Schaffhausen', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'SO': 'Solothurn', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'SZ': 'Schwyz', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'TG': 'Thurgau', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'TI': 'Ticino', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'UR': 'Uri', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'VD': 'Vaud', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'VS': 'Valais', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'ZG': 'Zug', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ch/lib/src/ch_regions.dart :: 'ZH': 'Zürich', :: 1 :: a canton's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'VI': 'Araba/Álava', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'AB': 'Albacete', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'AL': 'Almería', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'AV': 'Ávila', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'BA': 'Badajoz', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'PM': 'Illes Balears', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'BI': 'Bizkaia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'BU': 'Burgos', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CC': 'Cáceres', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CA': 'Cádiz', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CS': 'Castellón/Castelló', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CE': 'Ceuta', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CR': 'Ciudad Real', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CO': 'Córdoba', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'CU': 'Cuenca', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'SS': 'Gipuzkoa', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'GI': 'Girona', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'GR': 'Granada', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'GU': 'Guadalajara', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'HU': 'Huesca', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'LO': 'La Rioja', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'GC': 'Las Palmas', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'LE': 'León', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'LU': 'Lugo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'MA': 'Málaga', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'ML': 'Melilla', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'MU': 'Murcia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'NA': 'Navarra', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'OR': 'Ourense', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'PO': 'Pontevedra', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'SA': 'Salamanca', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'TF': 'Santa Cruz de Tenerife', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'SG': 'Segovia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'SE': 'Sevilla', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'SO': 'Soria', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'TE': 'Teruel', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'TO': 'Toledo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'VA': 'Valladolid', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_es/lib/src/es_regions.dart :: 'ZA': 'Zamora', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'CW': 'Carlow', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'CN': 'Cavan', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'CE': 'Clare', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'CO': 'Cork', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'DL': 'Donegal', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'KY': 'Kerry', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'KE': 'Kildare', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'KK': 'Kilkenny', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'LS': 'Laois', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'LM': 'Leitrim', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'LK': 'Limerick', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'LD': 'Longford', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'LH': 'Louth', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'MO': 'Mayo', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'MH': 'Meath', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'MN': 'Monaghan', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'OY': 'Offaly', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'RN': 'Roscommon', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'SO': 'Sligo', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'TA': 'Tipperary', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'WD': 'Waterford', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'WH': 'Westmeath', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'WX': 'Wexford', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ie/lib/src/ie_regions.dart :: 'WW': 'Wicklow', :: 1 :: a county's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AG': 'Agrigento', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AL': 'Alessandria', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AN': 'Ancona', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AO': 'Aosta', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AR': 'Arezzo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AP': 'Ascoli Piceno', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AT': 'Asti', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AV': 'Avellino', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BA': 'Bari', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BT': 'Barletta-Andria-Trani', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BL': 'Belluno', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BN': 'Benevento', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BG': 'Bergamo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BI': 'Biella', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BO': 'Bologna', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BZ': 'Bolzano', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BS': 'Brescia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'BR': 'Brindisi', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CA': 'Cagliari', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CL': 'Caltanissetta', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CB': 'Campobasso', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CE': 'Caserta', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CT': 'Catania', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CZ': 'Catanzaro', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CH': 'Chieti', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CO': 'Como', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CS': 'Cosenza', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CR': 'Cremona', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'KR': 'Crotone', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'CN': 'Cuneo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'EN': 'Enna', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FM': 'Fermo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FE': 'Ferrara', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FI': 'Firenze', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FG': 'Foggia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FC': 'Forlì-Cesena', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'FR': 'Frosinone', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'GE': 'Genova', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'GO': 'Gorizia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'GR': 'Grosseto', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'IM': 'Imperia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'IS': 'Isernia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'AQ': "L'Aquila", :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SP': 'La Spezia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LT': 'Latina', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LE': 'Lecce', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LC': 'Lecco', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LI': 'Livorno', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LO': 'Lodi', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'LU': 'Lucca', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MC': 'Macerata', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MN': 'Mantova', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MS': 'Massa-Carrara', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MT': 'Matera', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'ME': 'Messina', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MI': 'Milano', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MO': 'Modena', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'MB': 'Monza e Brianza', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'NA': 'Napoli', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'NO': 'Novara', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'NU': 'Nuoro', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'OR': 'Oristano', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PD': 'Padova', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PA': 'Palermo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PR': 'Parma', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PV': 'Pavia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PG': 'Perugia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PU': 'Pesaro e Urbino', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PE': 'Pescara', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PC': 'Piacenza', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PI': 'Pisa', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PT': 'Pistoia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PN': 'Pordenone', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PZ': 'Potenza', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'PO': 'Prato', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RG': 'Ragusa', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RA': 'Ravenna', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RC': 'Reggio Calabria', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RE': 'Reggio Emilia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RI': 'Rieti', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RN': 'Rimini', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RM': 'Roma', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'RO': 'Rovigo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SA': 'Salerno', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SS': 'Sassari', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SV': 'Savona', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SI': 'Siena', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SR': 'Siracusa', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SO': 'Sondrio', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'SU': 'Sud Sardegna', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TA': 'Taranto', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TE': 'Teramo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TR': 'Terni', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TO': 'Torino', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TP': 'Trapani', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TN': 'Trento', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TV': 'Treviso', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'TS': 'Trieste', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'UD': 'Udine', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VA': 'Varese', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VE': 'Venezia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VB': 'Verbano-Cusio-Ossola', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VC': 'Vercelli', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VR': 'Verona', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VV': 'Vibo Valentia', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VI': 'Vicenza', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_it/lib/src/it_regions.dart :: 'VT': 'Viterbo', :: 1 :: a province's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AL': 'Alabama', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AK': 'Alaska', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AZ': 'Arizona', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AR': 'Arkansas', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'CA': 'California', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'CO': 'Colorado', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'CT': 'Connecticut', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'DE': 'Delaware', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'DC': 'District of Columbia', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'FL': 'Florida', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'GA': 'Georgia', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'HI': 'Hawaii', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'ID': 'Idaho', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'IL': 'Illinois', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'IN': 'Indiana', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'IA': 'Iowa', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'KS': 'Kansas', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'KY': 'Kentucky', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'LA': 'Louisiana', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'ME': 'Maine', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MD': 'Maryland', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MA': 'Massachusetts', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MI': 'Michigan', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MN': 'Minnesota', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MS': 'Mississippi', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MO': 'Missouri', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MT': 'Montana', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NE': 'Nebraska', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NV': 'Nevada', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NH': 'New Hampshire', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NJ': 'New Jersey', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NM': 'New Mexico', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NY': 'New York', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'NC': 'North Carolina', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'ND': 'North Dakota', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'OH': 'Ohio', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'OK': 'Oklahoma', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'OR': 'Oregon', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'PA': 'Pennsylvania', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'RI': 'Rhode Island', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'SC': 'South Carolina', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'SD': 'South Dakota', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'TN': 'Tennessee', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'TX': 'Texas', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'UT': 'Utah', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'VT': 'Vermont', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'VA': 'Virginia', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'WA': 'Washington', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'WV': 'West Virginia', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'WI': 'Wisconsin', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'WY': 'Wyoming', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AS': 'American Samoa', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'GU': 'Guam', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'MP': 'Northern Mariana Islands', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'PR': 'Puerto Rico', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'VI': 'U.S. Virgin Islands', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AA': 'Armed Forces Americas', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AE': 'Armed Forces Europe', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AP': 'Armed Forces Pacific', :: 1 :: a state's code and name in an address (#3649), not a tax value

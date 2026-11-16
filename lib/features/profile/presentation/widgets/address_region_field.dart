@@ -9,10 +9,11 @@ import 'package:flutter/material.dart';
 import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 
 /// The region field of an address in [country].
-class AddressRegionField extends StatelessWidget {
+class AddressRegionField extends StatefulWidget {
   const AddressRegionField({
     super.key,
     required this.fieldKey,
@@ -35,35 +36,52 @@ class AddressRegionField extends StatelessWidget {
   final bool enabled;
 
   @override
+  State<AddressRegionField> createState() => _AddressRegionFieldState();
+}
+
+class _AddressRegionFieldState extends State<AddressRegionField> {
+  /// The free code, where the country has no list of its own.
+  late final _text = TextEditingController(text: widget.value);
+
+  @override
+  void dispose() {
+    _text.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final field = postalLayoutOf(country).region;
+    final field = postalLayoutOf(widget.country).region;
     if (field == null) return const SizedBox.shrink();
     final l10n = context.l10n;
-    final decoration = InputDecoration(
-      labelText: regionLabel(l10n, field.kind),
-      errorText: error,
-      border: const OutlineInputBorder(),
-    );
+    final label = _regionLabel(l10n, field.kind);
     return Padding(
       padding: const EdgeInsets.only(bottom: AppSpacing.md),
       child: field.names.isEmpty
-          ? TextFormField(
-              key: ValueKey(fieldKey),
-              initialValue: value,
-              enabled: enabled,
+          ? AppTextField(
+              key: ValueKey(widget.fieldKey),
+              controller: _text,
+              label: label,
+              error: widget.error,
+              enabled: widget.enabled,
               maxLength: 10,
-              textCapitalization: TextCapitalization.characters,
-              autocorrect: false,
-              decoration: decoration,
-              onChanged: (v) => onChanged(regionCode(v)),
+              onChanged: (v) => widget.onChanged(regionCode(v)),
             )
           : DropdownButtonFormField<String>(
-              key: ValueKey(fieldKey),
-              initialValue: field.names.containsKey(value) ? value : '',
+              key: ValueKey(widget.fieldKey),
+              initialValue: field.names.containsKey(widget.value)
+                  ? widget.value
+                  : '',
               isExpanded: true,
-              decoration: decoration,
+              decoration: InputDecoration(
+                labelText: label,
+                errorText: widget.error,
+                border: const OutlineInputBorder(),
+              ),
               items: _items(field),
-              onChanged: enabled ? (v) => onChanged(v ?? '') : null,
+              onChanged: widget.enabled
+                  ? (v) => widget.onChanged(v ?? '')
+                  : null,
             ),
     );
   }
@@ -81,7 +99,7 @@ class AddressRegionField extends StatelessWidget {
 }
 
 /// What the country calls the region of an address, in the reader's language.
-String regionLabel(AppLocalizations l10n, RegionKind kind) => switch (kind) {
+String _regionLabel(AppLocalizations l10n, RegionKind kind) => switch (kind) {
   RegionKind.state => l10n.addressRegionState,
   RegionKind.province => l10n.addressRegionProvince,
   RegionKind.county => l10n.addressRegionCounty,
