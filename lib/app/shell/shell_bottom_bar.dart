@@ -261,7 +261,6 @@ class ShellBottomBar extends ConsumerWidget {
             context: context,
             ref: ref,
             t: t,
-            hidden: hidden,
             showCoach: showCoach,
             bar: bar,
             barHeight: barHeight,
@@ -298,11 +297,12 @@ class ShellBottomBar extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
     required double t,
-    required bool hidden,
     required bool showCoach,
     required Widget bar,
     required double barHeight,
   }) {
+    // Read again here: the build above watches it and builds this again.
+    final hidden = ref.read(shellBarHiddenProvider).value ?? false;
     final shown = barHeight + ShellBarMetrics.rise;
     // Two values across a whole drag, and never a third.
     final boxHeight = t >= 1 ? ShellBarMetrics.hiddenHeight : shown;
