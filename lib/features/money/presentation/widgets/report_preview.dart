@@ -2,6 +2,7 @@
 import 'dart:math' as math;
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
@@ -154,6 +155,7 @@ Future<void> showReportQuickPreview(
                 ),
                 Flexible(
                   child: _ZoomablePages(
+                    paper: report.paper,
                     children: [
                       _PreviewSheet(report: report, images: images),
                       // #837 — each regrouped invoice on its own sheet
@@ -220,8 +222,10 @@ Future<void> showReportQuickPreview(
 /// Never above 100 % on a wide screen: a 595 px document blown up to
 /// fill a tablet is not what the paper looks like.
 class _ZoomablePages extends StatefulWidget {
-  const _ZoomablePages({required this.children});
+  const _ZoomablePages({required this.paper, required this.children});
 
+  /// #4119 — the sheet the pages are drawn on, whose width the view fits.
+  final Paper paper;
   final List<Widget> children;
 
   /// What the buttons step by. A little more than a third per tap, so
@@ -248,7 +252,7 @@ class _ZoomablePagesState extends State<_ZoomablePages> {
 
   /// Fit the page's WIDTH, never magnifying past 100 %.
   double _fitFor(double viewport) =>
-      ((viewport - AppSpacing.md * 2) / ReportPage.width).clamp(
+      ((viewport - AppSpacing.md * 2) / ReportPage.widthOf(widget.paper)).clamp(
         _ZoomablePages.minScale,
         1.0,
       );
@@ -370,7 +374,7 @@ class _PreviewSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sheet = Container(
-      width: ReportPage.width,
+      width: ReportPage.widthOf(report.paper),
       color: ReportPage.paper,
       padding: ReportPage.margins,
       child: ReportBlocksView(report: report, images: images),

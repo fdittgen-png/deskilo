@@ -31,7 +31,7 @@ import 'invoice_documents.dart'
 import 'report_defaults.dart';
 import 'report_facts_of.dart';
 import 'report_image_resolve.dart';
-import 'report_layout_actions.dart' show businessPaperOf;
+import 'report_layout_actions.dart' show businessPaperOf, kindPaperOf;
 
 /// The document language of [invoice]'s customer (#496): their preference
 /// → the business's document language → its country's (#3850). The reminder
@@ -90,7 +90,16 @@ reminderLetterReport(
   final report =
       (bands == null ? null : renderReportBands(bands: bands, data: texted)) ??
       renderReportBands(bands: fallback, data: texted)!;
-  return (report: report, title: title, l10n: l10n, language: language);
+  // #4119 -- a reminder is a letter written today, on the business's paper:
+  // the sheet the preview draws is the one the PDF prints.
+  return (
+    report: report.onPaper(
+      kindPaperOf(ref, 'r$level', reminderLevels: level),
+    ),
+    title: title,
+    l10n: l10n,
+    language: language,
+  );
 }
 
 /// Renders the reminder LETTER for [invoice] at [level] (#472): the

@@ -16,6 +16,8 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/address_window.dart';
@@ -23,7 +25,8 @@ import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
 import 'report_preview.dart';
 
-/// One A4 sheet, at [ReportPage] size, drawing [document].
+/// One sheet of the document's paper (#4119: A4 or Letter), at [ReportPage]
+/// size, drawing [document].
 class LayoutPageView extends StatelessWidget {
   const LayoutPageView({
     super.key,
@@ -51,8 +54,10 @@ class LayoutPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const pageW = ReportPage.width;
-    const pageH = ReportPage.height;
+    // #4119 -- the sheet of the document's own paper.
+    final paper = document.paper;
+    final pageW = ReportPage.widthOf(paper);
+    final pageH = ReportPage.heightOf(paper);
     final margin = document.margin.resolve(pageW);
     final contentW = pageW - 2 * margin;
     final contentH = pageH - 2 * margin;
@@ -63,16 +68,30 @@ class LayoutPageView extends StatelessWidget {
     final windowOn = recipient != null &&
         !recipient.isOff &&
         (window != null || frame != null);
+    // The field of the window on this paper, as the PDF places it (#3981).
+    final field = (window ?? AddressWindow.off).fieldOn(paper);
     final fieldLeft = frame?.x?.resolve(pageW) ??
-        (window != null && window.isOn ? window.leftEdge : 0.0);
-    final fieldTop = frame?.y?.resolve(pageH) ?? addressWindowTop;
-    final fieldW = frame?.w?.resolve(pageW) ?? addressWindowWidth;
-    final fieldH = frame?.h?.resolve(pageH) ?? addressWindowHeight;
+        (window != null && window.isOn ? field.leftPt : 0.0);
+    final fieldTop = frame?.y?.resolve(pageH) ?? field.topPt;
+    final fieldW = frame?.w?.resolve(pageW) ?? field.widthPt;
+    final fieldH = frame?.h?.resolve(pageH) ?? field.heightPt;
 
     final headerH = document.header.height?.resolve(contentH) ??
-        (windowOn ? fieldTop - margin : null);
-    final bodyTop = document.body.y?.resolve(pageH) ??
-        (windowOn ? addressWindowFlowResume : null);
+        (windowOn
+            ? (frame?.y != null ? fieldTop : field.senderLimitPt) - margin
+            : null);
+    // A body stated at the A4 convention's 90 mm under a named window
+    // means where the window convention resumes: on Letter, its own line.
+    final stated = document.body.y;
+    final followsWindow = paper != Paper.a4 &&
+        windowOn &&
+        frame == null &&
+        stated != null &&
+        stated.unit == LengthUnit.mm &&
+        stated.value == addressWindowFlowResumeMm;
+    final bodyTop = followsWindow
+        ? field.flowResumePt
+        : stated?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
     final reserve = bodyTop == null
         ? 0.0
         : (bodyTop - margin - (headerH ?? 0)).clamp(0.0, pageH);
@@ -141,6 +160,7 @@ class LayoutPageView extends StatelessWidget {
         // The recipient, at page coordinates — page one only.
         if (windowOn && !showContinuation)
           Positioned(
+            key: const ValueKey('layout-preview-recipient-field'),
             left: fieldLeft,
             top: fieldTop,
             width: fieldW,
@@ -149,12 +169,12 @@ class LayoutPageView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(recipientName,
-                    style: ReportPage.body.copyWith(fontSize: 11)),
+                    style: ReportPage.body.copyWith(fontSize: field.fontSizePt)),
                 if (recipientAddress.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Text(recipientAddress,
-                        style: ReportPage.body.copyWith(fontSize: 11)),
+                        style: ReportPage.body.copyWith(fontSize: field.fontSizePt)),
                   ),
               ],
             ),

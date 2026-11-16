@@ -7,6 +7,7 @@
 // and the drafts and says so here as abstract members.
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:file_selector/file_selector.dart' show XFile;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show rootBundle;
@@ -33,6 +34,7 @@ import '../report_defaults.dart';
 import '../report_design_actions.dart';
 import '../report_edit_history.dart';
 import '../report_kind_labels.dart';
+import '../report_layout_actions.dart' show kindPaperOf;
 import '../report_layout_design_actions.dart';
 import 'invoice_template_sheet.dart' show ReportTemplateEditor;
 import 'report_editor_dialogs.dart';
@@ -212,6 +214,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
     if (xml == null) return;
     await showLayoutQuickPreview(context, ref,
         layoutXml: xml,
+        paper: kindPaperOf(ref, editorDoc, reminderLevels: editorReminderLevels),
         data: withOwnerTexts(
             liveReportData(context, ref, editorDoc) ?? sampleReportData(context.l10n),
             editorCurrentTexts));
@@ -303,7 +306,10 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
     final bands = editorCurrentBands.hasBands
         ? editorCurrentBands
         : defaultBandsForDoc(editorDoc, l10n);
-    final report = renderReportBands(bands: bands, data: data);
+    // #4119 -- the sheet of the paper the document is printed on.
+    final report = renderReportBands(bands: bands, data: data)?.onPaper(
+      kindPaperOf(ref, editorDoc, reminderLevels: editorReminderLevels),
+    );
     final images = await resolveReportImages(ref, report);
     if (!mounted) return;
     if (report == null) {
@@ -474,6 +480,7 @@ mixin ReportTemplateEditorActions on ConsumerState<ReportTemplateEditor> {
             withOwnerTexts(liveReportData(context, ref, editorDoc) ?? sampleReportData(l10n), editorCurrentTexts),
         textKeys: editorCurrentTexts.keys.toList(),
         sideBySide: sideBySide,
+        paper: kindPaperOf(ref, editorDoc, reminderLevels: editorReminderLevels) ?? Paper.a4,
       );
     }
     return ReportMarkupBands(
