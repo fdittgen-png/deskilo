@@ -50,8 +50,8 @@ alter table public.payment_intents add column if not exists claim_withdrawn_at t
 -- What the claim's settlement applied, and what it left out and why.
 alter table public.payment_intents add column if not exists claim_outcome jsonb;
 -- When the payment flow handed the intent to its provider (create-payment-
--- order writes it just before it calls the provider): from then on the
--- money may arrive whenever the provider settles it.
+-- order asks hand_payment_intent, 6b, just before it calls the provider):
+-- from then on the money may arrive whenever the provider settles it.
 alter table public.payment_intents add column if not exists handed_at timestamptz;
 
 -- ── 0. the rules every claim reads ───────────────────────────────────────
@@ -749,6 +749,40 @@ $fn$;
 revoke execute on function public.withdraw_payment_claim(uuid) from public, anon;
 grant execute on function public.withdraw_payment_claim(uuid) to authenticated;
 
+-- ── 6b. the payment flow hands an intent to its provider ─────────────────
+-- Decided here, under the claim's locks and by the database's clock, never
+-- by the caller's: a claim never handed lapses after the window, and a
+-- hand-over after that would open it again beside a payment that named its
+-- invoices meanwhile. The lock order is the settlement's: the intent, then
+-- its invoices by id. clock_timestamp(), not now(): this may have waited
+-- for the locks behind a payment that already found the claim lapsed.
+-- True: handed (a reused intent keeps its first hand-over); false: not
+-- handed, so no provider is called and the app starts a new payment.
+create or replace function public.hand_payment_intent(p_intent uuid)
+returns boolean language plpgsql security definer set search_path = public as $fn$
+declare
+  v_intent public.payment_intents;
+begin
+  select * into v_intent from public.payment_intents where id = p_intent for update;
+  if v_intent.id is null or v_intent.status <> 'created' then return false; end if;
+  if v_intent.handed_at is not null then return true; end if;
+  if v_intent.claimed_invoice_ids is not null then
+    perform 1 from public.invoices i
+     where i.id = any (v_intent.claimed_invoice_ids)
+       and i.workspace_id = v_intent.workspace_id and i.member_id = v_intent.member_id
+     order by i.id for update;
+    if v_intent.claim_withdrawn_at is not null
+       or v_intent.created_at <= clock_timestamp() - public.payment_claim_window() then
+      return false;
+    end if;
+  end if;
+  update public.payment_intents set handed_at = clock_timestamp() where id = p_intent;
+  return true;
+end;
+$fn$;
+revoke execute on function public.hand_payment_intent(uuid) from public, anon, authenticated;
+grant execute on function public.hand_payment_intent(uuid) to service_role;
+
 -- ── 7. Me knows which of its invoices is in a payment being processed ────
 -- my_finance_overview (0755, restated whole): each invoice also answers
 -- `in_payment`. Only the person's own invoices, as before.
@@ -862,4 +896,4 @@ grant execute on function public.my_finance_overview() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(795);
+select public.set_deskilo_schema_version(796);

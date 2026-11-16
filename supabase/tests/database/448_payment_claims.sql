@@ -10,7 +10,7 @@
 -- refusal changes nothing; a withdrawn claim frees its invoices; a callback
 -- delivered twice applies once; without a claim nothing changes. Rolled back.
 begin;
-select plan(92);
+select plan(103);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -391,6 +391,12 @@ select is(pg_temp.refusal_code($$select public.withdraw_payment_claim(current_se
 select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A10')], 1400, '2027-03', '00000000-0000-4000-8000-000003556f06')$$),
   'DKC12', 'a retry of the withdrawn payment is refused, not reused');
 reset role;
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f06')::uuid), false,
+  'the payment flow cannot hand a withdrawn claim to its provider');
+reset role;
+select ok((select handed_at is null from public.payment_intents where id = current_setting('t.f06')::uuid),
+  'and the withdrawn payment stays never handed');
 select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f06'), 'cap-6', 1400)$$,
   'the provider captures the withdrawn payment');
 select is((select count(*)::int from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A10')),
@@ -404,6 +410,13 @@ select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A11')], 1600,
 reset role;
 update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 minute'
  where request_id = '00000000-0000-4000-8000-000003556f07';
+select set_config('t.f07', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f07'), true);
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f07')::uuid), false,
+  'past the window, the payment flow cannot hand the lapsed claim to its provider');
+reset role;
+select ok((select handed_at is null from public.payment_intents where id = current_setting('t.f07')::uuid),
+  'so the lapsed claim stays lapsed');
 select pg_temp.act('a2');
 set local role authenticated;
 select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A11')], 1600, '2027-04')$$,
@@ -414,11 +427,22 @@ reset role;
 select pg_temp.act('a2');
 set local role authenticated;
 select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A13')], 1250, '2027-07', '00000000-0000-4000-8000-000003556f08')$$,
-  'a claim of A13, handed to its provider');
+  'a claim of A13');
 reset role;
-update public.payment_intents set handed_at = now() - interval '2 days',
-       created_at = now() - public.payment_claim_window() - interval '1 day'
- where request_id = '00000000-0000-4000-8000-000003556f08';
+select set_config('t.f08', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f08'), true);
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f08')::uuid), true,
+  'within the window the payment flow hands it to its provider');
+reset role;
+select set_config('t.f08_handed', (select handed_at::text from public.payment_intents where id = current_setting('t.f08')::uuid), true);
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f08')::uuid), true,
+  'a retry of the same payment is handed again');
+reset role;
+select is((select handed_at::text from public.payment_intents where id = current_setting('t.f08')::uuid),
+  current_setting('t.f08_handed'), 'and keeps its first hand-over');
+update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 day'
+ where id = current_setting('t.f08')::uuid;
 select pg_temp.act('a2');
 set local role authenticated;
 select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A13')], 1250, '2027-07')$$),
@@ -428,6 +452,22 @@ select lives_ok($$select public.settle_online_payment('stripe', (select order_id
   'the provider settles it days later');
 select is((select m.status || ':' || m.paid_cents from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A13')),
   'confirmed:1250', 'and its claim is applied');
+
+-- ── A payment without a claim is handed; only the payment flow hands ─────
+select pg_temp.act('a2');
+set local role authenticated;
+select set_config('t.f09', pg_temp.open_intent(null, 500, '2027-09', '00000000-0000-4000-8000-000003556f10')::text, true);
+reset role;
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f09')::uuid), true,
+  'a payment that names no invoices is handed to its provider');
+reset role;
+select ok((select handed_at is not null from public.payment_intents where id = current_setting('t.f09')::uuid),
+  'and its hand-over is kept');
+select ok(not has_function_privilege('anon', 'public.hand_payment_intent(uuid)', 'execute'),
+  'an anonymous caller cannot hand a payment over');
+select ok(not has_function_privilege('authenticated', 'public.hand_payment_intent(uuid)', 'execute'),
+  'a signed-in person cannot hand a payment over: only the payment flow does');
 
 -- ── An approved payment without a claim is untouched ─────────────────────
 select pg_temp.act('a2');

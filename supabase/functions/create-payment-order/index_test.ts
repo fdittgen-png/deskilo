@@ -245,65 +245,69 @@ Deno.test("an outcome that is not definitive writes nothing: the intent stays pe
   }
 });
 
-/** A service client whose payment_intents update records its patch and
- * filters, and answers [error]. */
+/** A service client whose rpc records its calls and answers [data] and
+ * [error]. */
 function handOverAdmin(
-  writes: { patch: unknown; filters: [string, string, unknown][] }[],
+  calls: { fn: string; args: unknown }[],
+  data: unknown,
   error: { message: string } | null,
 ) {
   return {
-    from: (_table: string) => ({
-      update: (patch: unknown) => {
-        const write = { patch, filters: [] as [string, string, unknown][] };
-        writes.push(write);
-        const chain = {
-          eq: (column: string, value: unknown) => {
-            write.filters.push(["eq", column, value]);
-            return chain;
-          },
-          is: (column: string, value: unknown) => {
-            write.filters.push(["is", column, value]);
-            return chain;
-          },
-          then: (resolve: (v: unknown) => void) => resolve({ error }),
-        };
-        return chain;
-      },
-    }),
+    rpc: (fn: string, args: unknown) => {
+      calls.push({ fn, args });
+      return Promise.resolve({ data, error });
+    },
   };
 }
 
-Deno.test("#3556 — the intent is marked handed to its provider before the provider is called", async () => {
-  const writes: { patch: unknown; filters: [string, string, unknown][] }[] = [];
+Deno.test("#3556 — the database hands the intent over before the provider is called", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
   const seen: number[] = [];
-  const order = await handedThen(
-    handOverAdmin(writes, null),
+  const handed = await handedThen(
+    handOverAdmin(calls, true, null),
     "intent-1",
+    "stripe",
     () => {
-      seen.push(writes.length);
+      seen.push(calls.length);
       return Promise.resolve("order-1");
     },
-    () => "2026-11-16T10:00:00.000Z",
   );
-  assertEquals(order, "order-1");
-  assertEquals(seen, [1], "the provider is called after the hand-over is written");
-  assertEquals(writes, [{
-    patch: { handed_at: "2026-11-16T10:00:00.000Z" },
-    filters: [["eq", "id", "intent-1"], ["is", "handed_at", null]],
-  }]);
+  assertEquals(handed, { ok: true, value: "order-1" });
+  assertEquals(seen, [1], "the provider is called after the hand-over");
+  assertEquals(calls, [{ fn: "hand_payment_intent", args: { p_intent: "intent-1" } }]);
 });
 
-Deno.test("#3556 — a hand-over that cannot be written calls no provider", async () => {
-  const writes: { patch: unknown; filters: [string, string, unknown][] }[] = [];
+Deno.test("#3556 — a claim the database will not hand over calls no provider and answers intent_stale", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
   let called = false;
-  const order = await handedThen(
-    handOverAdmin(writes, { message: "permission denied" }),
+  const handed = await handedThen(
+    handOverAdmin(calls, false, null),
     "intent-1",
+    "stripe",
     () => {
       called = true;
       return Promise.resolve("order-1");
     },
   );
-  assertEquals(order, null);
   assertEquals(called, false);
+  if (handed.ok) throw new Error("a refused hand-over must not hand over");
+  assertEquals(handed.response.status, 409);
+  assertEquals(await handed.response.json(), { error: "intent_stale", provider: "stripe" });
+});
+
+Deno.test("#3556 — a hand-over that cannot be asked calls no provider", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
+  let called = false;
+  const handed = await handedThen(
+    handOverAdmin(calls, null, { message: "permission denied" }),
+    "intent-1",
+    "stripe",
+    () => {
+      called = true;
+      return Promise.resolve("order-1");
+    },
+  );
+  assertEquals(called, false);
+  if (handed.ok) throw new Error("a failed hand-over must not hand over");
+  assertEquals(handed.response.status, 500);
 });
