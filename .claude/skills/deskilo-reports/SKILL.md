@@ -44,7 +44,9 @@ Binding rules: AGENT_RULES "Printed reports: the window-envelope contract",
   counts customised BANDS as a design). `tryLayoutPdf` must never throw:
   any failure logs and falls back to bands.
 - Window-envelope contract: the millimetres live in AGENT_RULES and once in
-  code (`domain/report_conformance.dart`, `domain/address_window.dart`).
+  code (`AddressWindow.fieldOn(paper)` in
+  `packages/deskilo_document_model/lib/address_window_kind.dart`, A4 and
+  US Letter; `domain/report_conformance.dart` reads them).
   Prove on the PDF with `textPositions(bytes)` (InkAt xMm/yMm/page).
 
 ## CLI (pure Dart — never import Flutter/l10n from what it uses)

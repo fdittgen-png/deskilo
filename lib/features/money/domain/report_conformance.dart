@@ -48,37 +48,41 @@ class ReportZone {
 /// back into the units the spec is written in.
 const double _perMm = 25.4 / 72;
 
-/// The window-envelope contract, in the order the eye reads it. The zones
-/// are measured down from the top edge, so only the body's end depends on
-/// the [paper] (#3852).
-List<ReportZone> reportZones(AddressWindow window, {Paper paper = Paper.a4}) => [
-      const ReportZone(
-        name: 'sender',
-        topMm: pageMargin * _perMm,
-        bottomMm: addressWindowTop * _perMm,
-        leftMm: pageMargin * _perMm,
-        why: 'the letterhead has only the 25 mm above the aperture; '
-            'anything taller collides with the recipient',
-      ),
-      ReportZone(
-        name: 'address field',
-        topMm: addressWindowTop * _perMm,
-        bottomMm: (addressWindowTop + addressWindowHeight) * _perMm,
-        leftMm: window.isOn ? window.leftEdge * _perMm : null,
-        widthMm: addressWindowWidth * _perMm,
-        why: 'the envelope aperture: ink outside it is not visible '
-            'without opening the envelope',
-      ),
-      ReportZone(
-        name: 'body',
-        topMm: addressWindowFlowResume * _perMm,
-        bottomMm: paper.heightMm - (pageMargin * _perMm),
-        leftMm: pageMargin * _perMm,
-        why: 'the identification block — the word Facture, the number '
-            'and the dates — opens here, under the aperture and its '
-            'tolerance band',
-      ),
-    ];
+/// The window-envelope contract, in the order the eye reads it. The
+/// field, the sender's limit and the flow's resume depend on the [paper]
+/// (#3981): A4 has the DIN 5008 / French millimetres, US Letter the #10
+/// window envelope's, both from `AddressWindow.fieldOn`.
+List<ReportZone> reportZones(AddressWindow window, {Paper paper = Paper.a4}) {
+  final field = window.fieldOn(paper);
+  return [
+    ReportZone(
+      name: 'sender',
+      topMm: pageMargin * _perMm,
+      bottomMm: field.senderLimitMm,
+      leftMm: pageMargin * _perMm,
+      why: 'the letterhead has only the band above the aperture; '
+          'anything taller collides with the recipient',
+    ),
+    ReportZone(
+      name: 'address field',
+      topMm: field.topMm,
+      bottomMm: field.bottomMm,
+      leftMm: window.isOn ? field.leftMm : null,
+      widthMm: field.widthMm,
+      why: 'the envelope aperture: ink outside it is not visible '
+          'without opening the envelope',
+    ),
+    ReportZone(
+      name: 'body',
+      topMm: field.flowResumeMm,
+      bottomMm: paper.heightMm - (pageMargin * _perMm),
+      leftMm: pageMargin * _perMm,
+      why: 'the identification block — the word Facture, the number '
+          'and the dates — opens here, under the aperture and its '
+          'tolerance band',
+    ),
+  ];
+}
 
 /// A finding from measuring a generated document.
 class ConformanceIssue {

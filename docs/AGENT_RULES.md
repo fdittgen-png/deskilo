@@ -710,6 +710,44 @@ looked right. So:
 Changing any of these millimetres means changing that file, and the
 reason belongs in the commit message.
 
+### US Letter has its own convention (#3981)
+
+The table above is A4's. The numbers are a function of the paper, written
+once in `packages/deskilo_document_model/lib/address_window_kind.dart`
+(`AddressWindow.fieldOn(paper)`: left, top, width, height, the sender's
+limit, where the flow resumes, the recipient's type size); A4 keeps the
+values above exactly.
+
+**Stock.** A US #10 envelope with one window on the left: 4 1/8 × 9 1/2 in
+(104.8 × 241.3 mm); window 1 1/8 × 4 1/2 in (28.6 × 114.3 mm), 7/8 in
+(22.2 mm) from the left edge and 1/2 in (12.7 mm) from the bottom (some
+makers 5/8 in; the field is inside both). The sheet is folded in three,
+address panel on top and outward, and sits at the bottom of the envelope.
+
+| Zone | Letter, from the page edge |
+|---|---|
+| Recipient field | left **25.4**, top **56**, **83 × 21 mm** (56 → 77): five lines at 9.5 pt fit |
+| Sender | owns everything above **50 mm** |
+| Between | nothing but the recipient from **50 to 93 mm**, across the page |
+| Flow | resumes at **93 mm** (the first fold is at 93.1 mm) |
+| Footer, page 2+ | as on A4, measured from the Letter page's own height |
+
+`left` and `right` both mean this one window on Letter (a #10 has no
+right-hand window); `off` stays off. A design keeps the kind it chose and
+prints correctly on either paper; a body stated at `90mm` under a named
+window follows the paper's resume line. A design with an explicit
+recipient frame is not touched.
+
+**A recipient that does not fit is never dropped** (A4 and Letter alike). Both
+engines lay the recipient out at the field's type size, wrapped at the
+field's width, before placing it: if it fits the field's height it is placed
+in the field; otherwise it is printed whole at the start of the flow, as when
+the window is off for that document, and the field stays empty. The type
+size is a named value of the field (`AddressField.fontSizePt`: 11 pt on A4,
+9.5 pt on Letter, the size at which five lines, the name and four of address,
+fit 21 mm). `tool/report.dart check` reports "N lines, M do not fit" and says
+the document prints its recipient in the flow, so a design's author knows.
+
 ### The edges belong to the design (#902)
 
 `<report-layout margin="20mm" margin-top="8mm" margin-bottom="8mm">` — the
@@ -749,9 +787,10 @@ bug in the generator, not something to patch in the file.
 
 **Where things live, and what may not drift:**
 
-- geometry constants: `lib/features/money/domain/address_window.dart` —
-  the layout engine, the harness and `check` all read these; change them
-  there only, with the reason in the commit;
+- geometry constants: `packages/deskilo_document_model/lib/address_window_kind.dart`
+  (`AddressWindow.fieldOn(paper)`) — the layout engine, the banded sheet,
+  the harness and `check` all read these; change them there only, with the
+  reason in the commit;
 - the vocabulary: `report_layout/layout_xml.dart` (`LayoutXml`) — `describe`
   and the how-to block print these constants, never a hand-written list;
 - the ink: `report_style.dart` — both engines and the on-screen mirror
