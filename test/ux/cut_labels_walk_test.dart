@@ -5,6 +5,7 @@
 // wide with text at 1.0 and 1.3.
 import 'package:deskilo/core/i18n/workspace_locale_fields.dart';
 import 'package:deskilo/core/theme/app_spacing.dart';
+import 'package:deskilo/core/ui/edge_fade_scroll.dart';
 import 'package:deskilo/features/me/presentation/me_home_tab.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/money/presentation/widgets/report_template_toolbar.dart';
@@ -100,7 +101,7 @@ void main() {
       });
 
       testWidgets('the report editor\'s chips at ${width.toInt()} px and text '
-          '$scale: every chip is whole inside the window', (tester) async {
+          '$scale: no chip\'s words are cut, and the row scrolls to its last chip', (tester) async {
         tester.platformDispatcher.textScaleFactorTestValue = scale;
         addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
         await pumpApp(
@@ -135,21 +136,29 @@ void main() {
           overrides: standardTestOverrides(),
         );
         await tester.pump(const Duration(seconds: 1));
+        // #4078, decided: the chips stay ONE row that scrolls sideways, its
+        // edge faded where more follows. Wrapping them took the editor's
+        // height on a phone (four rows of chips above the page). What must
+        // hold is that no chip's own words are cut and every chip is reached.
         final chips = find.byType(ChoiceChip);
         expect(chips, findsAtLeastNWidgets(8));
-        for (final e in chips.evaluate()) {
-          final r = tester.getRect(find.byWidget(e.widget));
-          expect(r.left, greaterThanOrEqualTo(0));
-          expect(r.right, lessThanOrEqualTo(width), reason: '${e.widget.key}');
-        }
-        expect(
-          find.descendant(
-            of: find.byType(ListView),
-            matching: find.byType(SingleChildScrollView),
-          ),
-          findsNothing,
-          reason: 'no strip that scrolls sideways',
+        expect(find.byType(EdgeFadeScroll), findsNWidgets(2));
+        expect(_cutTexts(), isEmpty);
+        // The selected document is in view when the editor opens.
+        final selected = tester.getRect(
+          find.byKey(const ValueKey('invoice-template-doc-invoice')),
         );
+        expect(selected.left, greaterThanOrEqualTo(0));
+        expect(selected.right, lessThanOrEqualTo(width));
+        // The last document is reached by scrolling the row.
+        final last = find.byKey(
+          const ValueKey('invoice-template-doc-purchase_order'),
+        );
+        await tester.ensureVisible(last);
+        await tester.pump(const Duration(milliseconds: 300));
+        final reached = tester.getRect(last);
+        expect(reached.left, greaterThanOrEqualTo(0));
+        expect(reached.right, lessThanOrEqualTo(width));
         expect(_cutTexts(), isEmpty);
       });
     }

@@ -8,12 +8,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/edge_fade_scroll.dart';
 import '../../domain/report_template_assembly.dart';
 import '../report_defaults.dart';
 import '../report_design_actions.dart';
-
-/// The gap between two chips of a row.
-const double _chipGap = 6;
 
 /// One template per LANGUAGE (#496): the default, plus an overlay per
 /// language; a dot marks a language with its own bands (#822).
@@ -39,47 +37,54 @@ class ReportTemplateLanguageChips extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    // #4078 — the chips wrap onto further lines: each is whole, none is
-    // cut by the edge of a phone.
-    return Wrap(
-      spacing: _chipGap,
-      runSpacing: AppSpacing.xs,
-      crossAxisAlignment: WrapCrossAlignment.center,
-      children: [
-        ChoiceChip(
-          key: const ValueKey('invoice-template-lang-default'),
-          label: Text(l10n.reportTemplateLangDefault),
-          selected: selected.isEmpty,
-          onSelected: (_) => onSelect(''),
-        ),
-        for (final lang in reportTemplateLanguages)
-          ChoiceChip(
-            key: ValueKey('invoice-template-lang-$lang'),
-            // #1191 — the chip's own tick would land on the dot.
-            showCheckmark: false,
-            avatar: overridden(lang)
-                ? Icon(
-                    Icons.circle,
-                    key: ValueKey('invoice-template-lang-own-$lang'),
-                    size: 10,
-                    color: Theme.of(context).colorScheme.primary,
-                  )
-                : null,
-            tooltip: overridden(lang)
-                ? (l10n.reportTemplateLangOverridden)
-                : (l10n.reportTemplateLangInherits),
-            label: Text(lang.toUpperCase()),
-            selected: selected == lang,
-            onSelected: (_) => onSelect(lang),
+    return EdgeFadeScroll(
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: ChoiceChip(
+              key: const ValueKey('invoice-template-lang-default'),
+              label: Text(
+                l10n.reportTemplateLangDefault,
+              ),
+              selected: selected.isEmpty,
+              onSelected: (_) => onSelect(''),
+            ),
           ),
-        if (selected.isNotEmpty && canClear)
-          TextButton.icon(
-            key: const ValueKey('invoice-template-clear-overlay'),
-            icon: const Icon(Icons.layers_clear_outlined, size: 18),
-            label: Text(l10n.reportTemplateClearOverlay),
-            onPressed: onClear,
-          ),
-      ],
+          for (final lang in reportTemplateLanguages)
+            Padding(
+              padding: const EdgeInsets.only(right: 6),
+              child: ChoiceChip(
+                key: ValueKey('invoice-template-lang-$lang'),
+                // #1191 — the chip's own tick would land on the dot.
+                showCheckmark: false,
+                avatar: overridden(lang)
+                    ? Icon(
+                        Icons.circle,
+                        key: ValueKey('invoice-template-lang-own-$lang'),
+                        size: 10,
+                        color: Theme.of(context).colorScheme.primary,
+                      )
+                    : null,
+                tooltip: overridden(lang)
+                    ? (l10n.reportTemplateLangOverridden)
+                    : (l10n.reportTemplateLangInherits),
+                label: Text(lang.toUpperCase()),
+                selected: selected == lang,
+                onSelected: (_) => onSelect(lang),
+              ),
+            ),
+          if (selected.isNotEmpty && canClear)
+            TextButton.icon(
+              key: const ValueKey('invoice-template-clear-overlay'),
+              icon: const Icon(Icons.layers_clear_outlined, size: 18),
+              label: Text(
+                l10n.reportTemplateClearOverlay,
+              ),
+              onPressed: onClear,
+            ),
+        ],
+      ),
     );
   }
 }
@@ -98,21 +103,23 @@ class ReportTemplateDocChips extends StatelessWidget {
   final String selected;
   final ValueChanged<String> onSelect;
 
-  // #4078 — the chips wrap onto further lines: each is whole.
   @override
-  Widget build(BuildContext context) => Wrap(
+  Widget build(BuildContext context) => EdgeFadeScroll(
     key: const ValueKey('invoice-template-docs'),
-    spacing: _chipGap,
-    runSpacing: AppSpacing.xs,
-    children: [
-      for (final (doc, label) in docs)
-        ChoiceChip(
-          key: ValueKey('invoice-template-doc-$doc'),
-          label: Text(label),
-          selected: selected == doc,
-          onSelected: (_) => onSelect(doc),
-        ),
-    ],
+    child: Row(
+      children: [
+        for (final (doc, label) in docs)
+          Padding(
+            padding: const EdgeInsets.only(right: 6),
+            child: ChoiceChip(
+              key: ValueKey('invoice-template-doc-$doc'),
+              label: Text(label),
+              selected: selected == doc,
+              onSelected: (_) => onSelect(doc),
+            ),
+          ),
+      ],
+    ),
   );
 }
 
