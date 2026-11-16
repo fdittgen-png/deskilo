@@ -12985,7 +12985,6 @@
   "messengerInquiryClose": "Anfrage abschließen",
   "messengerInquiryClosed": "Anfrage abgeschlossen.",
   "messengerInquiryFrom": "Von {name}",
-  "messengerInquirySend": "Anfrage senden",
   "messengerLock": "Weiterleiten sperren",
   "messengerMessageActions": "Nachrichtenaktionen",
   "messengerNoStarred": "Noch keine markierte Nachricht.",
@@ -14129,6 +14128,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Guten Tag, ich möchte mehr über „{service}“ erfahren.",
+  "placeInquiryNoWay": "Diesem Betrieb kann man von hier aus nicht schreiben.",
+  "placeInquiryReachOtherwise": "Sie erreichen ihn hier:",
+  "placeInquirySendTo": "An {business} senden",
+  "placePreviewContact": "Kontakt aufnehmen",
+  "placeServiceAsk": "Nach {service} fragen",
+  "placeServiceAskShort": "Fragen",
+  "placeServicesOther": "Weitere",
+  "placeServicesTitle": "Leistungen",
   "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "planActiveLabel": "Aktiv",
   "planAfternoonChip": "Nachmittag",

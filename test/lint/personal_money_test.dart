@@ -18,6 +18,7 @@ import 'lint_sources.dart';
 /// a business's page live with the directory.
 const List<String> _personalMoneyFiles = [
   'lib/features/directory/presentation/directory_row.dart',
+  'lib/features/directory/presentation/public_services_section.dart',
   'lib/features/directory/presentation/public_workspace_view.dart',
   'lib/features/money/presentation/screens/account_activity_screen.dart',
   'lib/features/money/presentation/screens/my_finances_screen.dart',

@@ -34804,12 +34804,6 @@ abstract class AppLocalizations {
   /// **'From {name}'**
   String messengerInquiryFrom(String name);
 
-  /// Button sending the first message of an inquiry (#1824)
-  ///
-  /// In en, this message translates to:
-  /// **'Send inquiry'**
-  String get messengerInquirySend;
-
   /// Author action: forbid forwarding this message (#1824)
   ///
   /// In en, this message translates to:
@@ -38497,6 +38491,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'0 stars'**
   String get placeFeedbackZero;
+
+  /// #3554 Inquiry sheet: the first message, prefilled when the person tapped a service; names the service only, never its price; {service} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, I would like to know more about “{service}”.'**
+  String placeInquiryAbout(String service);
+
+  /// #3554 Inquiry sheet: nobody answers messages and the business published no e-mail or phone
+  ///
+  /// In en, this message translates to:
+  /// **'This business cannot be written to from here.'**
+  String get placeInquiryNoWay;
+
+  /// #3554 Inquiry sheet: nobody answers messages; introduces the business's published e-mail and phone
+  ///
+  /// In en, this message translates to:
+  /// **'You can reach it here:'**
+  String get placeInquiryReachOtherwise;
+
+  /// #3554 Inquiry sheet: the send button, naming the business that receives the message; {business} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Send to {business}'**
+  String placeInquirySendTo(String business);
+
+  /// #3554 A business's page: the button that opens an inquiry to a business that is not a coworking space
+  ///
+  /// In en, this message translates to:
+  /// **'Get in touch'**
+  String get placePreviewContact;
+
+  /// #3554 A business's page: what a service row does, read by assistive technology; {service} is the service's name
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about {service}'**
+  String placeServiceAsk(String service);
+
+  /// #3554 A business's page: the short affordance at the end of a service row that opens an inquiry about it
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get placeServiceAskShort;
+
+  /// #3554 A business's page: group of the services published without a category
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get placeServicesOther;
+
+  /// #3554 A business's page: heading of the services it published
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get placeServicesTitle;
 
   /// Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)
   ///

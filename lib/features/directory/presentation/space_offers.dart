@@ -3,9 +3,14 @@
 // #1823 — a published space page says plainly what I can do there.
 //
 // A member enters; anyone else may request a membership through the
-// existing admission path (0303); when the space published an e-mail,
-// it can be copied. Contacting the hosts in the app is its own action
-// (#1824), and visitor access is out of scope.
+// existing admission path (0303). Contacting the hosts in the app is its
+// own action (#1824), and visitor access is out of scope.
+//
+// #3554 — never more than two buttons, exactly one filled, in the same
+// order on every screen. Which is filled follows what the business
+// published, not its kind: one that takes inquiries and publishes services
+// is reached by the inquiry first; one that takes none offers no message
+// (its e-mail, if published, can be copied instead).
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +32,7 @@ class SpaceOffers extends ConsumerStatefulWidget {
     super.key,
     required this.workspace,
     required this.onRequest,
-    this.secondary,
+    this.contact,
   });
 
   final PublicWorkspace workspace;
@@ -36,8 +41,9 @@ class SpaceOffers extends ConsumerStatefulWidget {
   /// server took it (#3683: then the button gives way to "Request pending").
   final Future<bool> Function() onRequest;
 
-  /// The outlined action beside the one filled action (Message the space).
-  final Widget? secondary;
+  /// The inquiry to the hosts, with its words and whether it is the one
+  /// filled action; null where the business takes no inquiries.
+  final ({String label, VoidCallback open, bool primary})? contact;
 
   @override
   ConsumerState<SpaceOffers> createState() => _SpaceOffersState();
@@ -101,12 +107,40 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
         (ref.watch(pendingAdmissionsProvider).value?.contains(workspace.id) ??
             false);
     final email = workspace.text('email').trim();
+    final contact = widget.contact;
+    Widget contactButton({required bool filled}) {
+      const icon = Icon(Icons.contact_support_outlined);
+      final label = Text(contact!.label);
+      return filled
+          ? FilledButton.icon(
+              key: const ValueKey('write-to-hosts'),
+              icon: icon,
+              label: label,
+              onPressed: contact.open,
+            )
+          : OutlinedButton.icon(
+              key: const ValueKey('write-to-hosts'),
+              icon: icon,
+              label: label,
+              onPressed: contact.open,
+            );
+    }
+
+    final contactFirst = mine == null && (contact?.primary ?? false);
+    final joinIcon = Icon(
+      pending ? Icons.hourglass_top : Icons.person_add_outlined,
+    );
+    final joinLabel = Text(
+      pending ? l.portalRequestPending : l.portalRequestProfile,
+    );
+    final onJoin = unknown || _sending || pending ? null : _request;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.sm),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         spacing: AppSpacing.sm,
         children: [
+          if (contactFirst) contactButton(filled: true),
           if (mine != null)
             FilledButton.icon(
               key: const ValueKey('portal-enter'),
@@ -121,19 +155,22 @@ class _SpaceOffersState extends ConsumerState<SpaceOffers> {
                 ..invalidate(myWorkspacesProvider)
                 ..invalidate(pendingAdmissionsProvider),
             )
+          else if (contactFirst)
+            OutlinedButton.icon(
+              key: const ValueKey('portal-request-membership'),
+              icon: joinIcon,
+              label: joinLabel,
+              onPressed: onJoin,
+            )
           else
             FilledButton.icon(
               key: const ValueKey('portal-request-membership'),
-              icon: Icon(
-                pending ? Icons.hourglass_top : Icons.person_add_outlined,
-              ),
-              label: Text(
-                pending ? l.portalRequestPending : l.portalRequestProfile,
-              ),
-              onPressed: unknown || _sending || pending ? null : _request,
+              icon: joinIcon,
+              label: joinLabel,
+              onPressed: onJoin,
             ),
-          ?widget.secondary,
-          if (email.isNotEmpty)
+          if (contact != null && !contactFirst) contactButton(filled: false),
+          if (contact == null && email.isNotEmpty)
             TextButton.icon(
               key: const ValueKey('portal-copy-email'),
               icon: const Icon(Icons.copy_outlined),

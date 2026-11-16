@@ -34,7 +34,6 @@
   "messengerWriteToHosts": "An die Gastgeber schreiben",
   "messengerHostsIntro": "Ihre Nachricht lesen diese Gastgeber des Betriebs:",
   "messengerHostsNone": "In diesem Betrieb beantwortet gerade niemand Nachrichten.",
-  "messengerInquirySend": "Anfrage senden",
   "messengerInquiriesTitle": "Anfragen",
   "messengerInquiriesEmpty": "Noch keine Anfragen.",
   "messengerInquiryClose": "Anfrage abschließen",
