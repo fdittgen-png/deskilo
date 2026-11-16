@@ -244,11 +244,14 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   }
   const key = idempotencyKey(String(intent.id));
   try {
-    const order = await ORDER_ADAPTERS[provider](
-      cfg,
-      { amountCents, currency, reference, key, intentId: String(intent.id) },
-      runtimeDeps(),
-    );
+    const handed = await handedThen(admin, String(intent.id), provider, () =>
+      ORDER_ADAPTERS[provider](
+        cfg,
+        { amountCents, currency, reference, key, intentId: String(intent.id) },
+        runtimeDeps(),
+      ));
+    if (!handed.ok) return handed.response;
+    const order = handed.value;
 
     const { error: insertError } = await admin
       .from("payment_intents")
@@ -276,6 +279,33 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   } catch (e) {
     return orderFailure(admin, String(intent.id), provider, e, intent.reused === true);
   }
+}
+
+/** #3556 — the intent is handed to its provider BEFORE the provider is
+ * called, and the database decides it (`hand_payment_intent`), under the
+ * claim's locks and by its own clock: from then on the invoices it names
+ * wait for the provider's word (or a withdrawal), never for a clock, since
+ * the money may arrive whenever the provider settles it. A claim the
+ * database finds withdrawn or lapsed is not handed: no provider is called
+ * and the app starts a new payment (409 `intent_stale`). A hand-over that
+ * cannot be asked calls no provider either (500). A reused intent keeps its
+ * first hand-over. */
+export async function handedThen<T>(
+  // deno-lint-ignore no-explicit-any
+  admin: any,
+  intentId: string,
+  provider: string,
+  call: () => Promise<T>,
+): Promise<{ ok: true; value: T } | { ok: false; response: Response }> {
+  const { data, error } = await admin.rpc("hand_payment_intent", { p_intent: intentId });
+  if (error) {
+    console.error("payment intent hand-over failed", error.message);
+    return { ok: false, response: json({ error: "intent_insert_failed" }, 500) };
+  }
+  if (data !== true) {
+    return { ok: false, response: json({ error: "intent_stale", provider }, 409) };
+  }
+  return { ok: true, value: await call() };
 }
 
 /** #2014 — a definitive refusal fails the intent (its number is not
