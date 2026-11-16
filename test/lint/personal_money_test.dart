@@ -14,8 +14,11 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// The personal surfaces outside `lib/features/me`: Me › Finances and the
-/// account history live with the money feature.
+/// account history live with the money feature; #3554 — Discover's card and
+/// a business's page live with the directory.
 const List<String> _personalMoneyFiles = [
+  'lib/features/directory/presentation/directory_row.dart',
+  'lib/features/directory/presentation/public_workspace_view.dart',
   'lib/features/money/presentation/screens/account_activity_screen.dart',
   'lib/features/money/presentation/screens/my_finances_screen.dart',
   'lib/features/money/presentation/widgets/finance_document_views.dart',

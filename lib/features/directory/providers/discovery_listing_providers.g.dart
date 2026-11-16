@@ -8,27 +8,27 @@ part of 'discovery_listing_providers.dart';
 
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
-/// What discovery has loaded for [query]: the directory's first page of
+/// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
-/// more of. A new query is a new listing; an answer that arrives after its
-/// listing was left is dropped, so it never replaces a newer one.
+/// more of. A new query or kind is a new listing; an answer that arrives
+/// after its listing was left is dropped, so it never replaces a newer one.
 
 @ProviderFor(DiscoveryListing)
 final discoveryListingProvider = DiscoveryListingFamily._();
 
-/// What discovery has loaded for [query]: the directory's first page of
+/// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
-/// more of. A new query is a new listing; an answer that arrives after its
-/// listing was left is dropped, so it never replaces a newer one.
+/// more of. A new query or kind is a new listing; an answer that arrives
+/// after its listing was left is dropped, so it never replaces a newer one.
 final class DiscoveryListingProvider
     extends $AsyncNotifierProvider<DiscoveryListing, DiscoveryResults> {
-  /// What discovery has loaded for [query]: the directory's first page of
+  /// What discovery has loaded for [filter]: the directory's first page of
   /// sources and the first page of each, then whatever the person asks for
-  /// more of. A new query is a new listing; an answer that arrives after its
-  /// listing was left is dropped, so it never replaces a newer one.
+  /// more of. A new query or kind is a new listing; an answer that arrives
+  /// after its listing was left is dropped, so it never replaces a newer one.
   DiscoveryListingProvider._({
     required DiscoveryListingFamily super.from,
-    required String super.argument,
+    required DiscoveryFilter super.argument,
   }) : super(
          retry: _noRetry,
          name: r'discoveryListingProvider',
@@ -62,12 +62,12 @@ final class DiscoveryListingProvider
   }
 }
 
-String _$discoveryListingHash() => r'9f933f4cdb1e1073eae4953b54ff37d8fe70963f';
+String _$discoveryListingHash() => r'e545a33effccb6646ca91033411ea251b7b70b38';
 
-/// What discovery has loaded for [query]: the directory's first page of
+/// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
-/// more of. A new query is a new listing; an answer that arrives after its
-/// listing was left is dropped, so it never replaces a newer one.
+/// more of. A new query or kind is a new listing; an answer that arrives
+/// after its listing was left is dropped, so it never replaces a newer one.
 
 final class DiscoveryListingFamily extends $Family
     with
@@ -76,7 +76,7 @@ final class DiscoveryListingFamily extends $Family
           AsyncValue<DiscoveryResults>,
           DiscoveryResults,
           FutureOr<DiscoveryResults>,
-          String
+          DiscoveryFilter
         > {
   DiscoveryListingFamily._()
     : super(
@@ -87,28 +87,28 @@ final class DiscoveryListingFamily extends $Family
         isAutoDispose: true,
       );
 
-  /// What discovery has loaded for [query]: the directory's first page of
+  /// What discovery has loaded for [filter]: the directory's first page of
   /// sources and the first page of each, then whatever the person asks for
-  /// more of. A new query is a new listing; an answer that arrives after its
-  /// listing was left is dropped, so it never replaces a newer one.
+  /// more of. A new query or kind is a new listing; an answer that arrives
+  /// after its listing was left is dropped, so it never replaces a newer one.
 
-  DiscoveryListingProvider call(String query) =>
-      DiscoveryListingProvider._(argument: query, from: this);
+  DiscoveryListingProvider call(DiscoveryFilter filter) =>
+      DiscoveryListingProvider._(argument: filter, from: this);
 
   @override
   String toString() => r'discoveryListingProvider';
 }
 
-/// What discovery has loaded for [query]: the directory's first page of
+/// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
-/// more of. A new query is a new listing; an answer that arrives after its
-/// listing was left is dropped, so it never replaces a newer one.
+/// more of. A new query or kind is a new listing; an answer that arrives
+/// after its listing was left is dropped, so it never replaces a newer one.
 
 abstract class _$DiscoveryListing extends $AsyncNotifier<DiscoveryResults> {
-  late final _$args = ref.$arg as String;
-  String get query => _$args;
+  late final _$args = ref.$arg as DiscoveryFilter;
+  DiscoveryFilter get filter => _$args;
 
-  FutureOr<DiscoveryResults> build(String query);
+  FutureOr<DiscoveryResults> build(DiscoveryFilter filter);
   @$mustCallSuper
   @override
   WhenComplete runBuild() {

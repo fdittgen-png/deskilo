@@ -71,7 +71,7 @@ final _studio = _card('2', 'Studio Sud', {
 /// Two places loaded and one directory that did not answer.
 class _PartlyAnswered extends DiscoveryListing {
   @override
-  Future<DiscoveryResults> build(String query) async => DiscoveryResults(
+  Future<DiscoveryResults> build(DiscoveryFilter filter) async => DiscoveryResults(
     sources: [
       SourceListing(
         const DirectorySource('https://a.example', 'k'),

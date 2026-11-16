@@ -125,7 +125,7 @@ void main() {
       'directory home', () async {
     final network = _Network(_personalHome);
     final c = _container(network);
-    final listing = discoveryListingProvider('');
+    final listing = discoveryListingProvider(const DiscoveryFilter(''));
     var notified = 0;
     final sub = c.listen(listing, (_, _) => notified++);
     addTearDown(sub.close);
@@ -170,7 +170,7 @@ void main() {
       'personal_home_kind': 'unset',
     });
     final c = _container(network);
-    final listing = discoveryListingProvider('');
+    final listing = discoveryListingProvider(const DiscoveryFilter(''));
     final sub = c.listen(listing, (_, _) {});
     addTearDown(sub.close);
     await expectLater(
@@ -199,7 +199,7 @@ void main() {
   test('a failed declaration read is not kept: the retry asks again', () async {
     final network = _Network(null);
     final c = _container(network);
-    final listing = discoveryListingProvider('');
+    final listing = discoveryListingProvider(const DiscoveryFilter(''));
     final sub = c.listen(listing, (_, _) {});
     addTearDown(sub.close);
     await expectLater(c.read(listing.future), throwsA(anything));

@@ -236,7 +236,7 @@ void main() {
       ],
     );
     addTearDown(container.dispose);
-    final listing = discoveryListingProvider('');
+    final listing = discoveryListingProvider(const DiscoveryFilter(''));
     final keepAlive = container.listen(listing, (_, _) {});
     addTearDown(keepAlive.close);
     await container.read(listing.future);
