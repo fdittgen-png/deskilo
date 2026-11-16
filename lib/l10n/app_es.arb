@@ -6226,6 +6226,11 @@
     }
   },
   "eventCommitmentVarianceLine": "{actor} acepta una diferencia de {amount} en {reference} (vencimiento {date}): {reason}",
+  "eventCredentialAreaEinvoice": "facturación electrónica",
+  "eventCredentialAreaPayment": "pagos",
+  "eventCredentialCleared": "{actor} borró las credenciales de {provider} ({area}): {keys}.",
+  "eventCredentialReplaced": "{actor} sustituyó las credenciales de {provider} ({area}): {keys}.",
+  "eventCredentialSet": "{actor} registró las credenciales de {provider} ({area}): {keys}.",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} reparte «{title}»: {amount} entre 1 socio} other{{actor} reparte «{title}»: {amount} entre {count} socios}}",
   "@eventExpenseRepartitionLine": {
@@ -6413,6 +6418,7 @@
   "eventTypeAdjustment": "Ajuste",
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
+  "eventTypeCredentialChange": "Cambio de credenciales",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
   "eventTypeExpenseSchedule": "Gasto programado",

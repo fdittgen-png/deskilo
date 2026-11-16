@@ -9710,6 +9710,42 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'E-Rechnung';
+
+  @override
+  String get eventCredentialAreaPayment => 'Zahlungen';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) gelöscht: $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) ersetzt: $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) hinterlegt: $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validiert $scheduled — $reason';
   }
@@ -9960,6 +9996,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Mietabweichung';
+
+  @override
+  String get eventTypeCredentialChange => 'Änderung der Zugangsdaten';
 
   @override
   String get eventTypeExpense => 'Ausgabe';

@@ -59,7 +59,9 @@ Set<WorkspacePermission> eventTypeViewPermissions(String type) {
     'lease_change' => const ['manageLease', 'viewFinances'],
     'commitment_variance' => const ['managePurchases', 'viewFinances'],
     'badge_security_alert' => const ['workspaceSettings'],
-    'payment_instructions_change' => const ['manageIntegrations'],
+    'payment_instructions_change' || 'credential_change' => const [
+      'manageIntegrations',
+    ],
     'privacy_incident' => const ['managePrivacy'],
     'settlement_review' => const ['viewFinances'],
     'kiosk_device' => const ['workspaceSettings'],
