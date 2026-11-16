@@ -101,8 +101,9 @@ abstract interface class InvoiceOriginalRepository {
   /// The stored PDF of [original], as it is held.
   Future<Uint8List> pdfOf(InvoiceOriginal original);
 
-  /// #4120 — the structured part (CII) stored with [original], as it is held.
-  Future<String> xmlOf(InvoiceOriginal original);
+  /// #4120 — the structured part (CII) stored with [original] in
+  /// [workspaceId], as it is held.
+  Future<String> xmlOf(String workspaceId, InvoiceOriginal original);
 
   /// Stores [pdf] as the original of the invoice [invoiceId] of [workspaceId],
   /// with its CII [xml]; the server checks the XML against the invoice.

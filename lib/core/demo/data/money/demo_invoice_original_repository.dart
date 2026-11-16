@@ -37,7 +37,7 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
       _files[original.path] ?? Uint8List(0);
 
   @override
-  Future<String> xmlOf(InvoiceOriginal original) async =>
+  Future<String> xmlOf(String workspaceId, InvoiceOriginal original) async =>
       _xmls[original.invoiceId] ?? '';
 
   @override

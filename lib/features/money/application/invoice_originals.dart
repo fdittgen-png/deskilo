@@ -70,7 +70,7 @@ class InvoiceOriginals {
     if (!invoice.keepsOriginal) return null;
     final kept = await _store.originalOf(invoice.workspaceId, invoice.id);
     if (kept == null) return null;
-    final xml = await _store.xmlOf(kept);
+    final xml = await _store.xmlOf(invoice.workspaceId, kept);
     if (kept.holdsXml(xml)) return xml;
     TraceLogger.instance.warn(
       'money',

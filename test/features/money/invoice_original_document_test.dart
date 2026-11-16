@@ -74,7 +74,8 @@ class _Tampered implements InvoiceOriginalRepository {
   Future<Uint8List> pdfOf(InvoiceOriginal o) async =>
       Uint8List.fromList([...await inner.pdfOf(o), 32]);
   @override
-  Future<String> xmlOf(InvoiceOriginal o) async => '${await inner.xmlOf(o)} ';
+  Future<String> xmlOf(String ws, InvoiceOriginal o) async =>
+      '${await inner.xmlOf(ws, o)} ';
   @override
   Future<InvoiceOriginal> store({
     required String workspaceId,

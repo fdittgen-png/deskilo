@@ -35,8 +35,8 @@ DemoInvoiceOriginalRepository _store() => DemoInvoiceOriginalRepository(
 class _XmlAltered extends DemoInvoiceOriginalRepository {
   _XmlAltered() : super(storedBy: () => null, now: () => DateTime.utc(2026));
   @override
-  Future<String> xmlOf(InvoiceOriginal original) async =>
-      '${await super.xmlOf(original)} ';
+  Future<String> xmlOf(String workspaceId, InvoiceOriginal original) async =>
+      '${await super.xmlOf(workspaceId, original)} ';
 }
 
 Future<(FakeMoneyRepository, Invoice)> _issued({bool keeps = true}) async {
@@ -140,7 +140,7 @@ void main() {
     );
     expect(voucher.source, InvoiceDocumentSource.original);
     final kept = (await store.originalOf(invoice.workspaceId, invoice.id))!;
-    expect(voucher.xml, await store.xmlOf(kept));
+    expect(voucher.xml, await store.xmlOf(invoice.workspaceId, kept));
     expect(voucher.xml, isNotEmpty);
     expect(
       withoutOriginal([invoice], {invoice.id: voucher}, filesXml: true),
