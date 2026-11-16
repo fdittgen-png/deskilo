@@ -1,9 +1,8 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
--- (member_has_permission, may_validate_event_type,
---  event_type_restriction_holds, event_readable and mcp_target are restated
---  whole; respond_to_event is patched at two asserted anchors of its live
---  definition; member_permission_raw, may_validate_by, event_type_restriction
+-- (member_has_permission, event_type_restriction_holds, event_readable and
+--  mcp_target are restated whole; respond_to_event is patched at one asserted
+--  anchor of its live definition; member_permission_raw, may_validate_by, event_type_restriction
 --  and event_readable_by are new)
 --
 -- #4146 -- a decision on an event needs the right to read it
@@ -14,13 +13,14 @@
 --     rule would not show the event; the owner always decides. Under the
 --     rules "listed validators" and "the members decide", the validator's
 --     rule is itself a way to read, so those keep deciding as they do.
---   * The eligible validators the rule counts (the pool that says whether an
---     event's author or subject may decide it alone) are those who may also
---     read it. The configured number of validations holds (#840).
+--   * The pool of eligible validators and the number of validations
+--     required are unchanged (#840); a quorum that can no longer be reached
+--     ends by the sweep, as before.
 --   * The reading rule is one rule for the caller and for any member:
 --     event_readable_by(member, ...) holds it, event_readable(...) asks it
 --     for the caller's member; a validator's rule names a member through
---     may_validate_by, which may_validate_event_type asks for the caller.
+--     member_validator_types (0803), for the types that can wait for a
+--     decision.
 --     A member's rights come from member_permission_raw, has_permission_raw's
 --     body keyed by member, so member_has_permission now answers as
 --     has_permission does; no client asks another member's rights.
@@ -31,9 +31,9 @@
 
 -- ── a member's rights, as has_permission answers them ────────────────────
 -- has_permission_raw's body (the live definition), keyed by member instead
--- of the caller. A migration that rewrites one of the two bodies rewrites
--- the other (test/lint/member_permission_twin_test.dart); pgTAP 457 compares
--- their answers for every right and every state of a member.
+-- of the caller. pgTAP 457 compares the two live bodies line for line once
+-- the keyed lines are put back, and their answers for every right and every
+-- state of a member.
 create or replace function public.member_permission_raw(p_member_id uuid, perm text)
 returns boolean language sql stable security definer set search_path to 'public' as $function$
 
@@ -92,30 +92,15 @@ revoke execute on function public.event_type_restriction_holds(uuid, text) from 
 grant execute on function public.event_type_restriction_holds(uuid, text) to authenticated;
 
 -- ── a validator's rule, for a member ─────────────────────────────────────
--- Whether the rule in force for [p_type] (0803) names member [p_member_id].
+-- Whether the rule in force for [p_type] names member [p_member_id] (0803's
+-- member_validator_types, the one place a validator's rule is read).
 create or replace function public.may_validate_by(p_member_id uuid, p_workspace_id uuid, p_type text)
 returns boolean language sql stable security definer set search_path = public as $fn$
-  select exists (
-    select 1
-      from public.effective_validation_policy(p_workspace_id, p_type) vp
-      join public.members m
-        on m.id = p_member_id and m.workspace_id = vp.workspace_id and m.status = 'active'
-     where vp.validator_scope = 'members'
-        or (vp.validator_scope = 'listed' and m.id = any(vp.eligible_admin_ids))
-        or (vp.validator_scope = 'admins' and cardinality(vp.eligible_admin_ids) > 0
-            and m.is_admin and vp.admins_may_validate and m.id = any(vp.eligible_admin_ids)));
+  select exists (select 1 from public.members m
+                  where m.id = p_member_id and m.workspace_id = p_workspace_id)
+     and p_type in (select public.member_validator_types(p_member_id));
 $fn$;
 revoke execute on function public.may_validate_by(uuid, uuid, text) from public, anon, authenticated;
-
--- Restated whole from 0803: the same naming, asked for the caller.
-create or replace function public.may_validate_event_type(p_workspace_id uuid, p_type text)
-returns boolean language sql stable security definer set search_path to 'public' as $function$
-  select exists (select 1 from public.members m
-                  where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active'
-                    and public.may_validate_by(m.id, p_workspace_id, p_type));
-$function$;
-revoke execute on function public.may_validate_event_type(uuid, text) from public, anon;
-grant execute on function public.may_validate_event_type(uuid, text) to authenticated;
 
 -- ── the reading rule, for a member ───────────────────────────────────────
 -- Whether member [p_member_id] may read an event of [p_type] in
@@ -146,9 +131,10 @@ $fn$;
 revoke execute on function public.event_readable(uuid, text, uuid, uuid) from public, anon, authenticated;
 
 -- ── a decision needs the right to read ───────────────────────────────────
--- respond_to_event, at two asserted anchors of its live definition: 0803's
--- check for requests to join becomes the check for every type, and the pool
--- of eligible validators counts those who may read.
+-- respond_to_event, at one asserted anchor of its live definition: 0803's
+-- check for requests to join becomes the check for every type. The pool of
+-- eligible validators and the number required are as they were (#840): a
+-- quorum that can no longer be reached ends by the sweep.
 do $patch$
 declare
   v_def text := pg_get_functiondef('public.respond_to_event(uuid, boolean)'::regprocedure);
@@ -159,10 +145,8 @@ declare
     raise exception 'you are not an eligible validator for this event' using errcode = 'DKN01';
   end if;
 $a$;
-  v_pool constant text := $a$      and m.id not in (v_event.actor_member_id, v_event.subject_member_id)$a$;
 begin
-  if (length(v_def) - length(replace(v_def, v_join, ''))) / length(v_join) <> 1
-     or (length(v_def) - length(replace(v_def, v_pool, ''))) / length(v_pool) <> 1 then
+  if (length(v_def) - length(replace(v_def, v_join, ''))) / length(v_join) <> 1 then
     raise exception 'respond_to_event: an anchor of its decision rule is not there exactly once' using errcode = 'P0001';
   end if;
   v_def := replace(v_def, v_join, $a$  -- #4146 -- a decision needs the right to read the event; the owner always
@@ -175,9 +159,6 @@ begin
     raise exception 'you are not an eligible validator for this event' using errcode = 'DKN01';
   end if;
 $a$);
-  v_def := replace(v_def, v_pool, v_pool || $a$
-      and (m.is_owner or coalesce(public.event_readable_by(m.id, v_event.workspace_id, v_event.type,
-                                                           v_event.actor_member_id, v_event.subject_member_id), false))$a$);
   execute v_def;
 end;
 $patch$;

@@ -1,12 +1,14 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4146 (0804): a decision on an event needs the right to read it, for every
--- event type; the owner always decides; the eligible validators counted are
--- those who may read. Under "listed validators" and "the members decide",
--- the validator's rule is itself a way to read. member_has_permission (and
+-- event type and through every door; the owner always decides; the pool of
+-- validators and the number required are as before (#840). Under "listed
+-- validators" and "the members decide", the validator's rule is itself a way
+-- to read. Cases named "kept" pin what the rule must not change; the others
+-- fail without it. member_has_permission (and
 -- member_permission_raw) answer as has_permission (has_permission_raw) does,
 -- for every right of the catalogue and every state of a member.
 begin;
-select plan(18);
+select plan(22);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004146' || lpad(n::text, 4, '0'))::uuid;
@@ -55,6 +57,16 @@ begin
 end $f$;
 select is(pg_temp.differences(), null,
   'for every right and every state of a member, the member''s rights answer as has_permission does');
+select is(
+  (select btrim(regexp_replace(
+            replace(replace(prosrc, 'join public.workspaces w on w.id = m.workspace_id', 'join public.workspaces w on w.id = ws'),
+                    'm.id = p_member_id and m.status = ''active''',
+                    'm.workspace_id = ws and m.user_id = auth.uid() and m.status = ''active'''),
+            '\s+', ' ', 'g'))
+     from pg_proc where oid = 'public.member_permission_raw(uuid, text)'::regprocedure),
+  (select btrim(regexp_replace(prosrc, '\s+', ' ', 'g'))
+     from pg_proc where oid = 'public.has_permission_raw(uuid, text)'::regprocedure),
+  'the member''s rights are has_permission_raw''s body, line for line, keyed by member');
 select ok(public.member_has_permission(pg_temp.u(223), 'paymentTermsEdit')
           and public.member_has_permission(pg_temp.u(213), 'issueInvoices')
           and not public.member_has_permission(pg_temp.u(223), 'issueInvoices'),
@@ -112,41 +124,63 @@ select pg_temp.rule('admins');
 select pg_temp.expense(1);
 select is(pg_temp.decide(12, pg_temp.u(401)), 'ERR DKN01',
   'administrators decide: one whose role does not read expenses is refused');
-select is(pg_temp.decide(13, pg_temp.u(401)) || pg_temp.status(1), 'confirmed', 'one who reads them decides');
+select is(pg_temp.decide(13, pg_temp.u(401)) || pg_temp.status(1), 'confirmed', 'kept: one who reads them decides');
+-- the assistant's door: the same refusal
+create function pg_temp.assistant_decides(n int, p_event uuid) returns text language plpgsql as $f$
+declare c public.mcp_call_context;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(n), 'role', 'authenticated')::text, true);
+  c.member_id := pg_temp.u(300 + n - 10);
+  return public.mcp_op_respond_to_validation(c, jsonb_build_object('event_id', p_event, 'accept', 'true')) ->> 'event_status';
+exception when others then
+  return 'ERR ' || sqlstate;
+end $f$;
+select pg_temp.expense(9);
+select is(pg_temp.assistant_decides(12, pg_temp.u(409)), 'ERR DKN01',
+  'through the assistant, an administrator who does not read expenses is refused the same way');
 -- listed validators
 select pg_temp.rule('listed', 1, array[305]);
 select pg_temp.expense(2);
 select is(pg_temp.decide(12, pg_temp.u(402)), 'ERR DKN01', 'listed validators: an administrator not listed is refused');
 select is(pg_temp.decide(15, pg_temp.u(402)) || pg_temp.status(2), 'confirmed',
-  'the listed member decides: the rule that names them is a way to read');
+  'kept: the listed member decides, the rule that names them is a way to read');
 -- the members decide
 select pg_temp.rule('members');
 select pg_temp.expense(3);
-select is(pg_temp.decide(16, pg_temp.u(403)) || pg_temp.status(3), 'confirmed', 'the members decide: a member decides');
--- the owner always decides, and completes a quorum
-select pg_temp.rule('admins', 2);
-select pg_temp.expense(4);
-select is(pg_temp.decide(13, pg_temp.u(404)) || pg_temp.status(4), 'pending', 'two validations asked: one is not enough');
-select is(pg_temp.decide(11, pg_temp.u(404)) || pg_temp.status(4), 'confirmed', 'the owner decides the second');
--- the pool counts those who may read: an expense the owner records for 303,
--- an administrator who reads expenses; besides them only 302, an
--- administrator who does not
+select is(pg_temp.decide(16, pg_temp.u(403)) || pg_temp.status(3), 'confirmed', 'kept: the members decide, a member decides');
+-- a subject decides what is proposed to them: a payment an administrator
+-- records for 306, who does not read the finances
 select pg_temp.rule('admins');
 insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
-values (pg_temp.u(405), pg_temp.u(103), 'expense', 'submitted', pg_temp.u(301), pg_temp.u(303),
-        '{"amount_cents": 1000, "category": "supplies"}', 'pending');
-select is(pg_temp.decide(13, pg_temp.u(405)) || pg_temp.status(5), 'confirmed',
-  'with no other validator who may read it, the administrator it is for decides it');
--- 302 now reads the money too
-insert into public.workspace_role_members (workspace_id, role_id, member_id)
-values (pg_temp.u(103), pg_temp.u(503), pg_temp.u(302));
+values (pg_temp.u(410), pg_temp.u(103), 'payment', 'submitted', pg_temp.u(303), pg_temp.u(306), '{"amount_cents": 500}', 'pending');
+select is(pg_temp.decide(16, pg_temp.u(410)), '', 'kept: the member a payment is recorded for accepts it, without the finance right');
+-- two validations asked: the owner completes them
+select pg_temp.rule('admins', 2);
+select pg_temp.expense(4);
+select is(pg_temp.decide(13, pg_temp.u(404)) || pg_temp.status(4), 'pending', 'kept: two validations asked, one is not enough');
+select is(pg_temp.decide(11, pg_temp.u(404)) || pg_temp.status(4), 'confirmed', 'kept: the owner decides the second');
+-- the pool is as before: the owner as subject waits for another
+-- administrator, even one who cannot read the event
+select pg_temp.rule('admins');
 insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
-values (pg_temp.u(406), pg_temp.u(103), 'expense', 'submitted', pg_temp.u(301), pg_temp.u(303),
+values (pg_temp.u(411), pg_temp.u(103), 'expense', 'submitted', pg_temp.u(304), pg_temp.u(301),
         '{"amount_cents": 1000, "category": "supplies"}', 'pending');
-select is(pg_temp.decide(13, pg_temp.u(406)), 'ERR P0001',
-  'with another validator who may read it, the administrator it is for waits for them');
+select is(pg_temp.decide(11, pg_temp.u(411)), 'ERR P0001',
+  'the owner an expense is for waits for another validator, as before');
+select is(pg_temp.decide(12, pg_temp.u(411)), 'ERR DKN01', 'and an administrator who cannot read it is refused');
+-- a quorum that can no longer be reached ends by the sweep
+select pg_temp.rule('admins', 2);
+select pg_temp.expense(12);
+select is(pg_temp.decide(13, pg_temp.u(412)) || pg_temp.status(12), 'pending', 'two asked, one reader decided');
+update public.events set created_at = now() - interval '8 days' where id = pg_temp.u(412);
+create function pg_temp.sweep(n int) returns text language plpgsql as $f$
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(n), 'role', 'authenticated')::text, true);
+  perform public.sweep_pending_events(pg_temp.u(103));
+  return '';
+end $f$;
+select is(pg_temp.sweep(13) || pg_temp.status(12), 'expired', 'the sweep ends it, as before');
 -- the rule in force: in general the members decide; expenses by 305 alone
-delete from public.workspace_role_members where member_id = pg_temp.u(302);
 delete from public.validation_policies where workspace_id = pg_temp.u(103);
 insert into public.validation_policies (workspace_id, event_type, validator_scope, eligible_admin_ids)
 values (pg_temp.u(103), null, 'members', '{}'),
@@ -154,9 +188,8 @@ values (pg_temp.u(103), null, 'members', '{}'),
 select pg_temp.expense(7);
 select is(pg_temp.decide(16, pg_temp.u(407)), 'ERR DKN01',
   'a member the expense rule does not name is refused, whatever the general rule');
-select is(pg_temp.decide(15, pg_temp.u(407)) || pg_temp.status(7), 'confirmed', 'the member it names decides');
--- the assistant's target of a validation: an event the caller may not read
--- is answered as one not found
+select is(pg_temp.decide(15, pg_temp.u(407)) || pg_temp.status(7), 'confirmed', 'kept: the member it names decides');
+-- the assistant's target of a validation
 select pg_temp.expense(8);
 create function pg_temp.target(n int, p_event uuid) returns text language plpgsql as $f$
 begin
@@ -166,19 +199,10 @@ begin
 end $f$;
 select is(pg_temp.target(12, pg_temp.u(408)) || ' ' || pg_temp.target(12, gen_random_uuid()), 'none none',
   'the assistant answers an event its caller may not read as one not found');
-select is(pg_temp.target(15, pg_temp.u(408)), 'expense', 'and gives the target to who may read it');
-
--- every door: the admission desk and the assistant decide through respond_to_event
-select ok(pg_get_functiondef('public.respond_to_event(uuid, boolean)'::regprocedure)
-            like '%public.event_readable_by(v_caller.id%'
-          and pg_get_functiondef('public.decide_workspace_application(uuid, boolean, text, uuid)'::regprocedure)
-            like '%public.respond_to_event(%'
-          and pg_get_functiondef('public.mcp_op_respond_to_validation(public.mcp_call_context, jsonb)'::regprocedure)
-            like '%public.respond_to_event(%',
-  'the app, the admission desk and the assistant decide through the one check');
+select is(pg_temp.target(15, pg_temp.u(408)), 'expense', 'kept: and gives the target to who may read it');
 select ok(public.event_readable_by(pg_temp.u(302), pg_temp.u(103), 'member_join', null, null) is not null
           and public.event_readable_by(pg_temp.u(306), pg_temp.u(103), 'payment', null, null) is not null,
-  'the rule answers yes or no, never unknown, when an event names nobody');
+  'kept: the rule answers yes or no, never unknown, when an event names nobody');
 select ok(not has_function_privilege('authenticated', 'public.event_readable_by(uuid, uuid, text, uuid, uuid)', 'execute')
           and not has_function_privilege('authenticated', 'public.member_permission_raw(uuid, text)', 'execute')
           and not has_function_privilege('authenticated', 'public.member_has_permission(uuid, text)', 'execute')

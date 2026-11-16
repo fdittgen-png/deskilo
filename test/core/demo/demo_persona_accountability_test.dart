@@ -111,9 +111,10 @@ void main() {
         halfDays: 1,
       );
       fixture.becomePersona(DemoPersona.kiosk);
+      // #4146 — as respond_to_event: the reading rule refuses first (DKN01).
       await expectLater(
         fixture.events.respond(id, accept: false),
-        throwsA(_refused('not allowed to decide')),
+        throwsA(_refused('not an eligible validator')),
       );
     });
 

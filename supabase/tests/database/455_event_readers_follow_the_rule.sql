@@ -4,7 +4,7 @@
 -- rule is read as the decision reads it -- the type's own rule, else the
 -- general one. Each case below fails without the rule it names.
 begin;
-select plan(26);
+select plan(30);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004143' || lpad(n::text, 4, '0'))::uuid;
@@ -111,7 +111,7 @@ select is(pg_temp.one(3, 306), 'not_found', 'nor is it read');
 
 -- ── the personal export ──
 select is(pg_temp.exported(3, 'privacy_incident'), 0,
-  'a member who does not hold the privacy right does not export the incidents naming them');
+  'a member who does not hold the privacy right does not export the incidents told to them');
 select is(pg_temp.exported(1, 'privacy_incident'), 2, 'the owner, who holds it, exports the one told to her and the one she recorded');
 
 -- ── the admission desk, under the administrators' rule ──
@@ -149,6 +149,33 @@ select is(pg_temp.as_user(4, format('select public.decide_workspace_application(
 select is((select status from public.events where id = pg_temp.u(305)) || ' '
           || (select status from public.members where id = pg_temp.u(207)),
   'confirmed active', 'the request is confirmed and the applicant a member');
+-- ── a validator's rule reads what waits for a decision ──
+select is((select coalesce(string_agg(t, ', ' order by t), '') from (
+             select distinct (regexp_matches(pg_get_constraintdef(c.oid), '''([a-z_]+)''', 'g'))[1] as t
+               from pg_constraint c where c.conname = 'events_type_check' and c.conrelid = 'public.events'::regclass) x
+            where public.event_type_waits_for_decision(t) is null), '',
+  'every event type is classified: it waits for a decision, or it is a notice');
+-- the owner's notices, and an expense of 204 waiting
+insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, payload, status)
+values (pg_temp.u(311), pg_temp.u(101), 'credential_change', 'modified', pg_temp.u(201), pg_temp.u(201), '{}', 'applied'),
+       (pg_temp.u(312), pg_temp.u(101), 'invoice_issued', 'created', pg_temp.u(201), pg_temp.u(201), '{}', 'applied'),
+       (pg_temp.u(313), pg_temp.u(101), 'settlement_review', 'created', pg_temp.u(201), pg_temp.u(201), '{}', 'applied'),
+       (pg_temp.u(314), pg_temp.u(101), 'expense', 'submitted', pg_temp.u(204), pg_temp.u(204), '{"amount_cents": 100}', 'pending');
+create function pg_temp.types_read(n int) returns text language sql as $$
+  select pg_temp.as_user(n, format(
+    $q$select coalesce(string_agg(type, ',' order by type), '') from public.events
+         where workspace_id = %L and id in (%L, %L, %L, %L)$q$,
+    pg_temp.u(101), pg_temp.u(311), pg_temp.u(312), pg_temp.u(313), pg_temp.u(314)));
+$$;
+-- the general rule is still "the members decide"
+select is(pg_temp.types_read(6), 'expense',
+  'under a general rule the members decide, a member reads the expense waiting for them, none of the notices');
+update public.validation_policies set validator_scope = 'admins', eligible_admin_ids = array[pg_temp.u(202)]
+ where workspace_id = pg_temp.u(101) and event_type is null;
+select is(pg_temp.types_read(2), 'expense',
+  'an administrator a general rule names reads the expense, none of the notices');
+select is(pg_temp.types_read(6), '', 'and a member that rule does not name reads none of them');
+
 select ok(not has_function_privilege('authenticated', 'public.effective_validation_policy(uuid, text)', 'execute')
           and not has_function_privilege('authenticated', 'public.event_readable(uuid, text, uuid, uuid)', 'execute'),
   'no client asks the rule in force or the reading rule directly');

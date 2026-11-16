@@ -92,7 +92,7 @@ class FakeEventRepository implements EventRepository {
   /// actor or subject, or a validator its rule names; a privacy incident
   /// only with managePrivacy held now (0667). Somebody who is not an
   /// active member of the space reads none of it.
-  bool _mayRead(WorkspaceEvent e) {
+  bool _mayRead(WorkspaceEvent e, {bool ownCounts = true}) {
     if (decider == null) return true;
     final me = decider!();
     if (me == null || me.status != MemberStatus.active) return false;
@@ -109,7 +109,9 @@ class FakeEventRepository implements EventRepository {
         !held.contains(WorkspacePermission.viewFinances)) {
       return false;
     }
-    if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
+    if (ownCounts && (e.actorMemberId == me.id || e.subjectMemberId == me.id)) {
+      return true;
+    }
     if (eventTypeViewPermissions(e.type.dbName).any(held.contains)) return true;
     final policy = policyFor(e.type.dbName, policies);
     return policy.validatorScope == 'members' ||
@@ -131,6 +133,18 @@ class FakeEventRepository implements EventRepository {
       throw const PostgrestException(message: 'you already decided this event', code: 'DKD01');
     }
     final me = decider?.call();
+    // #4146 (0804) — as respond_to_event: a decision needs the right to read
+    // the event; the owner always decides; a request to join is read as its
+    // reviewer, never by being its member.
+    if (decider != null &&
+        me != null &&
+        !me.isOwner &&
+        !_mayRead(event, ownCounts: event.type != EventType.memberJoin)) {
+      throw const PostgrestException(
+        message: 'you are not an eligible validator for this event',
+        code: 'DKN01',
+      );
+    }
     if (decider != null &&
         (me == null ||
             !event.isDecidedBy(

@@ -10,7 +10,7 @@
 -- or now applies the rule fails too. test/lint/definer_event_readers_test.dart
 -- checks each listed signature against the effective contract.
 begin;
-select plan(6);
+select plan(7);
 
 create temp table listed (sig text primary key, reason text not null check (length(reason) > 0));
 insert into listed (sig, reason) values
@@ -54,8 +54,6 @@ insert into listed (sig, reason) values
    'callable by the service role only'),
   ('my_finance_overview()',
    'amounts of the caller''s own invoices; no event'),
-  ('my_workspace_applications(timestamp with time zone,uuid)',
-   'every row passes can_discuss_workspace_application, which applies the rule'),
   ('open_claim_invoices(uuid)',
    'callable by the service role only'),
   ('payment_attempt_notice(uuid,uuid,text)',
@@ -94,7 +92,8 @@ create function pg_temp.readers() returns table (sig text, applies boolean) lang
          p.prosrc ~* '\m(event_readable|event_readable_by|event_type_restriction_holds)\s*\('
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.prosecdef and p.prorettype <> 'trigger'::regtype
-     and p.prosrc ~* '\m(from|join)\s+("?public"?\s*\.\s*)?"?events"?\M';
+     and (p.prosrc ~* '(\m(from|join)|,)\s+(only\s+)?("?public"?\s*\.\s*)?"?events"?\M'
+          or p.prosrc ~* '\mupdate\s+(only\s+)?("?public"?\s*\.\s*)?"?events"?\M[^;]*\mreturning\M');
 $$;
 
 select is((select coalesce(string_agg(r.sig, ', ' order by r.sig), '') from pg_temp.readers() r
@@ -109,7 +108,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
 select is((select string_agg(r.sig, ', ' order by r.sig) from pg_temp.readers() r where r.applies),
   'calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), '
   || 'can_discuss_workspace_application(uuid), export_my_data(uuid), mcp_read_v1(uuid,members,text,jsonb), '
-  || 'mcp_target(uuid,text,jsonb), respond_to_event(uuid,boolean)',
+  || 'mcp_target(uuid,text,jsonb), my_workspace_applications(timestamp with time zone,uuid), respond_to_event(uuid,boolean)',
   'the readers that apply the rule');
 
 -- a reader under a quoted, schema-less name, made definer afterwards, is
@@ -117,14 +116,26 @@ select is((select string_agg(r.sig, ', ' order by r.sig) from pg_temp.readers() 
 create function public.zz_fixture_reader(p_ws uuid) returns bigint language sql stable as
   $f$ select count(*) from "events" e where e.workspace_id = p_ws $f$;
 alter function public.zz_fixture_reader(uuid) security definer;
+create function public.zz_fixture_only(p_ws uuid) returns bigint language sql stable security definer as
+  $f$ select count(*) from only public.events e where e.workspace_id = p_ws $f$;
+create function public.zz_fixture_comma(p_ws uuid) returns bigint language sql stable security definer as
+  $f$ select count(*) from public.members m, public.events e where e.actor_member_id = m.id and m.workspace_id = p_ws $f$;
+create function public.zz_fixture_returning(p_id uuid) returns text language sql volatile security definer as
+  $f$ update public.events set payload = payload where id = p_id returning type $f$;
 create function public.zz_fixture_ruled(p_ws uuid) returns bigint language sql stable security definer as
   $f$ select count(*) from public.events e where e.workspace_id = p_ws
         and public.event_readable(e.workspace_id, e.type, e.actor_member_id, e.subject_member_id) $f$;
 select is((select string_agg(r.sig || ':' || r.applies, ', ' order by r.sig) from pg_temp.readers() r
             where r.sig like 'zz_fixture_%'),
-  'zz_fixture_reader(uuid):false, zz_fixture_ruled(uuid):true',
-  'a reader is found whatever its name''s form and however it became definer; the rule is seen in its source');
-select ok((select count(*) from listed) = 37, 'the list holds 37 reasoned exceptions');
+  'zz_fixture_comma(uuid):false, zz_fixture_only(uuid):false, zz_fixture_reader(uuid):false, '
+  || 'zz_fixture_returning(uuid):false, zz_fixture_ruled(uuid):true',
+  'a reader is found whatever its name''s form, through only, a comma join or an update that returns, '
+  || 'and however it became definer; the rule is seen in its source');
+select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from listed l
+            where l.reason like 'callable by the service role only%'
+              and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
+  'every entry listed as callable by the service role only is not executable by a signed-in client');
+select ok((select count(*) from listed) = 36, 'the list holds 36 reasoned exceptions');
 
 select * from finish();
 rollback;
