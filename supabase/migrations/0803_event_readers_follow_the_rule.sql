@@ -3,7 +3,9 @@
 -- (may_validate_event_type, event_readable, mcp_read_v1 and
 --  can_discuss_workspace_application are restated whole; export_my_data, respond_to_event and
 --  my_workspace_applications are patched at asserted anchors of their live
---  definitions; effective_validation_policy is new)
+--  definitions; events_select is restated; effective_validation_policy,
+--  event_type_waits_for_decision, member_validator_types and
+--  validator_event_types are new)
 --
 -- #4143 -- the assistant's validation reads, the personal export and the
 -- admission desk follow each event type's reading rule (event_readable and
@@ -13,7 +15,9 @@
 --     the business's general rule (effective_validation_policy) -- the one
 --     respond_to_event decides by, and the one may_validate_event_type now
 --     asks. A rule names its validators in the scopes 'members' and
---     'listed', and, in the scope 'admins', the administrators it lists;
+--     'listed', and, in the scope 'admins', the administrators it lists --
+--     for the types that can wait for a decision, not the notices
+--     (event_type_waits_for_decision);
 --   * the assistant's list of pending validations and its read of one show
 --     the caller's own requests under each type's restrictive rule, and,
 --     wide, the events the caller may read;
@@ -39,18 +43,63 @@ returns setof public.validation_policies language sql stable as $fn$
 $fn$;
 revoke execute on function public.effective_validation_policy(uuid, text) from public, anon, authenticated;
 
+-- Whether an event of [p_type] can wait for a decision: the types a
+-- validation rule decides (the app's validation cards, kept equal by
+-- test/lint/decidable_event_types_test.dart), not the notices nobody
+-- decides. Null for a type the function does not know: pgTAP 455 classifies
+-- every type of events_type_check, so a new type must be placed here.
+create or replace function public.event_type_waits_for_decision(p_type text)
+returns boolean language sql immutable as $fn$
+  select case
+    when p_type in ('payment', 'expense', 'service_charge', 'quota', 'reservation_delete', 'invoice_writeoff', 'role_change', 'member_join', 'reservation', 'space_reservation', 'invoice_payment', 'price_negotiation', 'expense_schedule', 'expense_repartition', 'usage_correction', 'usage_record_delete', 'payment_terms_change', 'invoice_issue', 'invoice_void', 'refund', 'member_status_change', 'subscription_change', 'matrix_change', 'lease_change', 'commitment_variance') then true
+    when p_type in ('adjustment', 'badge_security_alert', 'credential_change', 'invoice_issued', 'invoice_payment_reversed', 'invoice_reminder', 'kiosk_device', 'payment_attempt_unreadable', 'payment_instructions_change', 'privacy_incident', 'settlement_review') then false
+  end;
+$fn$;
+revoke execute on function public.event_type_waits_for_decision(text) from public, anon;
+grant execute on function public.event_type_waits_for_decision(text) to authenticated;
+
+-- The types the rule in force names member [p_member_id] a validator of, in
+-- their business: among the types that can wait for a decision, the scopes
+-- 'members' and 'listed', and in the scope 'admins' the administrators it
+-- lists. The one place a validator's rule is read.
+create or replace function public.member_validator_types(p_member_id uuid)
+returns setof text language sql stable security definer set search_path = public as $fn$
+  with types as (
+    select distinct (regexp_matches(pg_get_constraintdef(c.oid), '''([a-z_]+)''', 'g'))[1] as t
+      from pg_constraint c
+     where c.conname = 'events_type_check' and c.conrelid = 'public.events'::regclass
+  )
+  select types.t
+    from types
+    join public.members m on m.id = p_member_id and m.status = 'active'
+   where public.event_type_waits_for_decision(types.t) is true
+     and exists (select 1 from public.effective_validation_policy(m.workspace_id, types.t) vp
+                  where vp.validator_scope = 'members'
+                     or (vp.validator_scope = 'listed' and m.id = any(vp.eligible_admin_ids))
+                     or (vp.validator_scope = 'admins' and cardinality(vp.eligible_admin_ids) > 0
+                         and m.is_admin and vp.admins_may_validate and m.id = any(vp.eligible_admin_ids)));
+$fn$;
+revoke execute on function public.member_validator_types(uuid) from public, anon, authenticated;
+
+-- The caller's (business, type) pairs a validator's rule names them for: the
+-- events table's policy reads it once per query, as it reads
+-- event_types_in_view.
+create or replace function public.validator_event_types()
+returns table (ws_id uuid, event_type text) language sql stable security definer set search_path = public as $fn$
+  select m.workspace_id, t.t
+    from public.members m
+    cross join lateral public.member_validator_types(m.id) as t(t)
+   where m.user_id = auth.uid() and m.status = 'active';
+$fn$;
+revoke execute on function public.validator_event_types() from public, anon;
+grant execute on function public.validator_event_types() to authenticated;
+
 -- Whether the rule in force for [p_type] names the caller as a validator.
 create or replace function public.may_validate_event_type(p_workspace_id uuid, p_type text)
 returns boolean language sql stable security definer set search_path to 'public' as $function$
-  select exists (
-    select 1
-      from public.effective_validation_policy(p_workspace_id, p_type) vp
-      join public.members m
-        on m.workspace_id = vp.workspace_id and m.user_id = auth.uid() and m.status = 'active'
-     where vp.validator_scope = 'members'
-        or (vp.validator_scope = 'listed' and m.id = any(vp.eligible_admin_ids))
-        or (vp.validator_scope = 'admins' and cardinality(vp.eligible_admin_ids) > 0
-            and m.is_admin and vp.admins_may_validate and m.id = any(vp.eligible_admin_ids)));
+  select exists (select 1 from public.members m
+                  where m.workspace_id = p_workspace_id and m.user_id = auth.uid() and m.status = 'active'
+                    and p_type in (select public.member_validator_types(m.id)));
 $function$;
 revoke execute on function public.may_validate_event_type(uuid, text) from public, anon;
 grant execute on function public.may_validate_event_type(uuid, text) to authenticated;
@@ -72,6 +121,18 @@ returns boolean language sql stable security definer set search_path = public as
           or public.may_validate_event_type(p_workspace_id, p_type));
 $fn$;
 revoke execute on function public.event_readable(uuid, text, uuid, uuid) from public, anon, authenticated;
+
+-- The events table's policy, restated from 0216 with its third way read
+-- once per query (validator_event_types) instead of once per row.
+drop policy if exists events_select on public.events;
+create policy events_select on public.events
+  for select using (
+    (workspace_id, type) in (select v.ws_id, v.event_type from public.event_types_in_view() v)
+    or exists (select 1 from public.members m
+                where m.user_id = auth.uid()
+                  and m.id = any (array[events.actor_member_id, events.subject_member_id]))
+    or (workspace_id, type) in (select v.ws_id, v.event_type from public.validator_event_types() v)
+  );
 
 -- ── the assistant's validation reads ─────────────────────────────────────
 -- Restated whole from the live definition (0745's, as dev holds it).
@@ -379,8 +440,9 @@ $function$;
 revoke execute on function public.can_discuss_workspace_application(uuid) from public, anon;
 grant execute on function public.can_discuss_workspace_application(uuid) to authenticated;
 
--- The caller's applications: only those they applied for, decided, or that
--- wait in a business they are an active member of, before the question.
+-- The caller's applications: those they applied for or decided, and those of
+-- the businesses where they may review requests to join -- asked once per
+-- business (the same type, no actor or subject), not once per row.
 do $patch$
 declare
   v_def text := pg_get_functiondef('public.my_workspace_applications(timestamptz, uuid)'::regprocedure);
@@ -392,11 +454,11 @@ begin
   execute replace(v_def, v_old, $a$    where e.type='member_join'
       and (application.applicant_user_id=auth.uid()
            or e.workspace_id in (select mm.workspace_id from public.members mm
-                                  where mm.user_id=auth.uid() and mm.status='active')
+                                  where mm.user_id=auth.uid() and mm.status='active'
+                                    and public.event_readable(mm.workspace_id, 'member_join', null, null))
            or exists (select 1 from public.workspace_application_messages decided
                        where decided.event_id=e.id and decided.author_user_id=auth.uid()
-                         and decided.kind in ('accepted','refused')))
-      and public.can_discuss_workspace_application(e.id)$a$);
+                         and decided.kind in ('accepted','refused')))$a$);
 end;
 $patch$;
 
