@@ -2661,6 +2661,7 @@ routine public.event_decisions_fill_workspace() -> trigger | function | invoker 
 routine public.event_readable(p_workspace_id uuid, p_type text, p_actor uuid, p_subject uuid) -> boolean | function | definer | stable | exec:service_role | body:5f88f5f6ab04
 routine public.event_type_restriction_holds(p_workspace_id uuid, p_type text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:cc76a9e870fb
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:4dc8762577d2
+routine public.event_type_waits_for_decision(p_type text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:a38784961455
 routine public.event_types_in_view() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:5f4ba165c976
 routine public.expense_event_schedule_vat() -> trigger | function | definer | volatile | exec:service_role | body:7f69a609e224
 routine public.expense_schedules_title_facts() -> trigger | function | invoker | volatile | exec:service_role | body:63e5c91f4bce
@@ -2915,7 +2916,7 @@ routine public.match_invoice_part(p_actor members, p_invoice_id uuid, p_payment_
 routine public.match_purchase_commitments_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_matches jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ed8832a5c76f
 routine public.may_deploy(p_from uuid, p_to uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:51c0d6622d7d
 routine public.may_manage_kiosk_devices(p_workspace_id uuid) -> boolean | function | definer | stable | exec:service_role | body:c811a3134efe
-routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:dc12433ad738
+routine public.may_validate_event_type(p_workspace_id uuid, p_type text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:976e7011ef32
 routine public.may_view_invoice(p_invoice_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:4a02ac9c0f76
 routine public.may_view_member_finances(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:642867c71724
 routine public.may_view_member_negotiations(p_member_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:b55728ee95bd
@@ -3091,6 +3092,7 @@ routine public.member_statement(p_member_id uuid, p_period text) -> jsonb | func
 routine public.member_term_changes_decided() -> trigger | function | definer | volatile | exec:service_role | body:9fea1510c27f
 routine public.member_term_changes_rebalance() -> trigger | function | definer | volatile | exec:service_role | body:6be1f782e750
 routine public.member_terms_carry_paused(p_workspace_id uuid) -> integer | function | definer | volatile | exec:service_role | body:fd8bafae2bfd
+routine public.member_validator_types(p_member_id uuid) -> SETOF text | function | definer | stable | exec:service_role | body:3ab1ce699550
 routine public.member_vies_verified(p_member_id uuid, p_vat_id text) -> boolean | function | definer | stable | exec:service_role | body:0f32fc93d2ff
 routine public.members_administrator_holding() -> trigger | function | definer | volatile | exec:service_role | body:c7f82b3888a8
 routine public.members_invitation_roles() -> trigger | function | definer | volatile | exec:service_role | body:bd2f17c947c3
@@ -3165,7 +3167,7 @@ routine public.my_settings(p_workspace uuid) -> jsonb | function | definer | sta
 routine public.my_starred_messages() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6910f2684291
 routine public.my_visibility() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:68c1b2f749f5
 routine public.my_visibility_network_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:bf78a48d40be
-routine public.my_workspace_applications(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:b2a1724df39e
+routine public.my_workspace_applications(p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:dce9aefcef2b
 routine public.my_workspace_hosts_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fd101ad4aefc
 routine public.my_workspace_inbox_v1(p_before_at timestamp with time zone, p_before_key text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c3dd6d3ba4e1
 routine public.my_workspace_public_page(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:c02f6d89a75f
@@ -3780,6 +3782,7 @@ routine public.usage_records_read_v1(p_workspace_id uuid, p_period text, p_membe
 routine public.user_has_email(p_user_id uuid) -> boolean | function | definer | stable | exec:service_role | body:d235bec5f1fa
 routine public.validate_workspace_timezone() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:26b3aa3b74b7
 routine public.validation_requires(p_workspace_id uuid, p_type text, p_amount_cents integer) -> boolean | function | definer | stable | exec:service_role | body:a772dde0819a
+routine public.validator_event_types() -> TABLE(ws_id uuid, event_type text) | function | definer | stable | exec:authenticated,service_role | body:93be68e8828a
 routine public.valuation_actor(p_workspace_id uuid) -> uuid | function | definer | stable | exec:service_role | body:371af9a55e5b
 routine public.valuation_batch_json(b asset_valuation_batches) -> jsonb | function | definer | stable | exec:service_role | body:410c01c4d36b
 routine public.valuation_bridge(r asset_valuation_rows) -> text | function | invoker | immutable | exec:service_role | body:42be3c1c13ba
