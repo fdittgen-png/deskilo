@@ -29,18 +29,25 @@ Future<void> showInvoiceGroupSheet(
   BuildContext context,
   FinanceInvoice invoice,
   InvoiceRef ref,
+) => showInvoiceGroupSheetFor(context, [(invoice, ref)]);
+
+/// #3556 (1b) — the same for several invoices at once (a selection): a
+/// group holding all of them is ticked, one holding some is marked, and a
+/// switch files them all or takes them all out.
+Future<void> showInvoiceGroupSheetFor(
+  BuildContext context,
+  List<(FinanceInvoice, InvoiceRef)> items,
 ) => showAppSheet<void>(
   context: context,
   isScrollControlled: true,
   showDragHandle: true,
-  builder: (_) => _InvoiceGroupSheet(invoice: invoice, invoiceRef: ref),
+  builder: (_) => _InvoiceGroupSheet(items: items),
 );
 
 class _InvoiceGroupSheet extends ConsumerStatefulWidget {
-  const _InvoiceGroupSheet({required this.invoice, required this.invoiceRef});
+  const _InvoiceGroupSheet({required this.items});
 
-  final FinanceInvoice invoice;
-  final InvoiceRef invoiceRef;
+  final List<(FinanceInvoice, InvoiceRef)> items;
 
   @override
   ConsumerState<_InvoiceGroupSheet> createState() => _InvoiceGroupSheetState();
@@ -90,6 +97,25 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
     });
   }
 
+  /// Whether [g] holds all the invoices (true), some (null) or none.
+  bool? _held(InvoiceGroup g) {
+    final held = widget.items.where((i) => g.holds(i.$2)).length;
+    return held == widget.items.length ? true : (held == 0 ? false : null);
+  }
+
+  /// Takes them all out of [g] when it holds them all; else files the ones
+  /// it does not hold.
+  Future<void> _toggle(InvoiceGroups groups, InvoiceGroup g) async {
+    final all = _held(g) == true;
+    for (final (invoice, ref) in widget.items) {
+      if (all) {
+        await groups.remove(g.id, ref);
+      } else if (!g.holds(ref)) {
+        await groups.add(g.id, ref, invoice.number);
+      }
+    }
+  }
+
   Future<void> _create() {
     final checked = invoiceGroupName(_name.text);
     if (checked.name == null) {
@@ -100,7 +126,9 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
     }
     return _write((groups) async {
       final id = await groups.create(checked.name!);
-      await groups.add(id, widget.invoiceRef, widget.invoice.number);
+      for (final (invoice, ref) in widget.items) {
+        await groups.add(id, ref, invoice.number);
+      }
     });
   }
 
@@ -119,7 +147,11 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
           padding: AppSpacing.lgAll,
           children: [
             Text(
-              l10n.financesGroupAddTitle(widget.invoice.number),
+              l10n.financesGroupAddTitle(
+                widget.items.length == 1
+                    ? widget.items.single.$1.number
+                    : l10n.invoicingInvoiceCount(widget.items.length),
+              ),
               style: Theme.of(context).textTheme.titleMedium,
             ),
             if (read case AsyncError(:final error) when !read.hasValue)
@@ -132,18 +164,11 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
                 key: ValueKey('invoice-group-toggle-${g.id}'),
                 contentPadding: EdgeInsets.zero,
                 title: Text(g.name),
-                value: g.holds(widget.invoiceRef),
+                tristate: true,
+                value: _held(g),
                 onChanged: _busy
                     ? null
-                    : (on) => _write(
-                        (groups) => on ?? false
-                            ? groups.add(
-                                g.id,
-                                widget.invoiceRef,
-                                widget.invoice.number,
-                              )
-                            : groups.remove(g.id, widget.invoiceRef),
-                      ),
+                    : (_) => _write((groups) => _toggle(groups, g)),
               ),
             const FormGap(),
             AppTextField(

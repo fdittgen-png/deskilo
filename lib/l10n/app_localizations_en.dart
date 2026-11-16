@@ -6415,6 +6415,56 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get claimRefusedAlreadyInPayment =>
+      'One of these invoices is already in another payment. Nothing was charged.';
+
+  @override
+  String get claimRefusedAmount =>
+      'What these invoices still owe has changed. Refresh and try again.';
+
+  @override
+  String get claimRefusedCannotTake =>
+      'One of these invoices cannot take a payment now. Refresh to see where it stands.';
+
+  @override
+  String get claimRefusedCurrency =>
+      'One of these invoices is in another currency than the business takes payments in. Nothing was charged.';
+
+  @override
+  String get claimRefusedEmpty => 'Choose the invoices this payment is for.';
+
+  @override
+  String get claimRefusedMonths =>
+      'A payment is for the invoices of one month. Nothing was charged.';
+
+  @override
+  String get claimRefusedNotMyPayment =>
+      'This payment is not yours to withdraw.';
+
+  @override
+  String get claimRefusedNotProcessing =>
+      'This payment is no longer being processed. Refresh to see where it stands.';
+
+  @override
+  String get claimRefusedNotYours =>
+      'One of these invoices is not yours to pay. Nothing was charged.';
+
+  @override
+  String get claimRefusedNothingToFree => 'This payment was already withdrawn.';
+
+  @override
+  String get claimRefusedOther =>
+      'The business refused these invoices for this payment. Refresh and try again.';
+
+  @override
+  String get claimRefusedOtherMonth =>
+      'These invoices are of another month than this payment. Nothing was charged.';
+
+  @override
+  String get claimRefusedWithdrawn =>
+      'You withdrew this payment. Select the invoices again to pay them.';
+
+  @override
   String get coOwnerAction => 'Co-ownership';
 
   @override
@@ -12501,6 +12551,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesBeingValidated => 'Being validated';
 
   @override
+  String financesBusinessUnavailable(String business) {
+    return '$business cannot be reached right now. Nothing was sent.';
+  }
+
+  @override
   String get financesColumnAmount => 'Amount';
 
   @override
@@ -12541,6 +12596,32 @@ class AppLocalizationsEn extends AppLocalizations {
       one: '1 document',
     );
     return '$workspace: $_temp0';
+  }
+
+  @override
+  String get financesDeclareEachMonth =>
+      'One declaration per month is recorded; each waits for the business to approve it.';
+
+  @override
+  String get financesDeclareFailed =>
+      'The declaration could not be recorded. Try again.';
+
+  @override
+  String get financesDeclareSend => 'Record as paid';
+
+  @override
+  String financesDeclareTitle(String business) {
+    return 'Paid to $business';
+  }
+
+  @override
+  String financesDeclaredPart(String recorded, String rest, String reason) {
+    return 'Recorded: $recorded. Not recorded: $rest. $reason';
+  }
+
+  @override
+  String financesDeclaredSent(String business) {
+    return 'Recorded. $business approves it.';
   }
 
   @override
@@ -12630,6 +12711,17 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your connected installations could not be listed right now; what is shown comes from this installation only.';
 
   @override
+  String get financesIHavePaid => 'I have paid';
+
+  @override
+  String get financesInPayment => 'In payment';
+
+  @override
+  String financesInPaymentSince(String date) {
+    return 'In payment since $date';
+  }
+
+  @override
   String financesLinkAction(String space) {
     return 'Open for $space';
   }
@@ -12682,6 +12774,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesPartlyPaid => 'Partly paid';
 
   @override
+  String financesPayAmount(String amount) {
+    return 'Pay $amount';
+  }
+
+  @override
+  String financesPayThen(String months) {
+    return 'This pays the first month. Then: $months.';
+  }
+
+  @override
+  String financesPayTitle(String business) {
+    return 'Pay $business';
+  }
+
+  @override
+  String financesPaymentReceived(String business) {
+    return 'Payment received · $business is matching it';
+  }
+
+  @override
   String financesPaymentsMoreFailed(String host) {
     return '$host did not answer for more payments. Tap to try again.';
   }
@@ -12708,6 +12820,40 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesReminders => 'Reminders';
 
   @override
+  String financesSelectInvoice(String number) {
+    return 'Select $number';
+  }
+
+  @override
+  String get financesSelectionClear => 'Clear the selection';
+
+  @override
+  String financesSelectionInvoiceAmount(String number, String amount) {
+    return '$number · $amount';
+  }
+
+  @override
+  String financesSelectionMonthAmount(String month, String amount) {
+    return '$month: $amount';
+  }
+
+  @override
+  String financesSelectionOneBusiness(String business) {
+    return 'A payment is for one business in one currency: $business.';
+  }
+
+  @override
+  String financesSelectionSummary(int count, String amount) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices selected · $amount',
+      one: '1 invoice selected · $amount',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get financesShowAmount => 'Show amount';
 
   @override
@@ -12728,10 +12874,48 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesStateUnpaid => 'Unpaid';
 
   @override
+  String financesTooManyInvoices(int max) {
+    String _temp0 = intl.Intl.pluralLogic(
+      max,
+      locale: localeName,
+      other: 'A payment names at most $max invoices. Select fewer.',
+      one: 'A payment names at most $max invoice. Select fewer.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get financesTypeAll => 'All documents';
 
   @override
   String get financesTypeCreditNote => 'Credit note';
+
+  @override
+  String financesWaitsForBusiness(String business) {
+    return 'Declared paid · waits for $business';
+  }
+
+  @override
+  String get financesWithdraw => 'Withdraw';
+
+  @override
+  String get financesWithdrawBody =>
+      'Its invoices can be paid again. Money that still arrives is credited to your account and not applied to these invoices.';
+
+  @override
+  String get financesWithdrawFailed =>
+      'The payment could not be withdrawn. Try again.';
+
+  @override
+  String get financesWithdrawSettling =>
+      'If you have just paid at the provider, wait: the confirmation takes a few minutes.';
+
+  @override
+  String get financesWithdrawTitle => 'Withdraw this payment?';
+
+  @override
+  String get financesWithdrawn =>
+      'Payment withdrawn. Its invoices can be paid again.';
 
   @override
   String get financesYourCredit => 'Your credit';
@@ -23423,6 +23607,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payOnlineChooseTitle => 'Pay online';
 
   @override
+  String get payOnlineClaimNotTaken =>
+      'The payment service did not take these invoices, so the checkout was not opened. Nothing was charged.';
+
+  @override
+  String get payOnlineClaimsUnsupported =>
+      'This business\'s payment service must be updated before selected invoices can be paid online.';
+
+  @override
   String get payOnlineDiagHint => 'The server is missing this configuration:';
 
   @override
@@ -23477,6 +23669,10 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get payOnlineReversedTitle => 'Online payment reversed';
+
+  @override
+  String get payOnlineStartAgain =>
+      'This payment can no longer be continued. Start the payment again.';
 
   @override
   String get payOnlineTestKeys =>

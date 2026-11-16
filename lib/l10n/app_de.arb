@@ -3866,6 +3866,19 @@
   },
   "chromeChipWithHint": "{label}, {hint}",
   "chromeRoleAs": "als {role}",
+  "claimRefusedAlreadyInPayment": "Eine dieser Rechnungen ist bereits in einer anderen Zahlung. Es wurde nichts belastet.",
+  "claimRefusedAmount": "Der offene Betrag dieser Rechnungen hat sich geändert. Aktualisieren Sie und versuchen Sie es erneut.",
+  "claimRefusedCannotTake": "Eine dieser Rechnungen kann gerade keine Zahlung annehmen. Aktualisieren Sie, um ihren Stand zu sehen.",
+  "claimRefusedCurrency": "Eine dieser Rechnungen ist in einer anderen Währung, als der Betrieb Zahlungen annimmt. Es wurde nichts belastet.",
+  "claimRefusedEmpty": "Wählen Sie die Rechnungen, die diese Zahlung begleicht.",
+  "claimRefusedMonths": "Eine Zahlung begleicht die Rechnungen eines Monats. Es wurde nichts belastet.",
+  "claimRefusedNotMyPayment": "Diese Zahlung können Sie nicht zurückziehen.",
+  "claimRefusedNotProcessing": "Diese Zahlung wird nicht mehr bearbeitet. Aktualisieren Sie, um ihren Stand zu sehen.",
+  "claimRefusedNotYours": "Eine dieser Rechnungen ist nicht von Ihnen zu bezahlen. Es wurde nichts belastet.",
+  "claimRefusedNothingToFree": "Diese Zahlung wurde bereits zurückgezogen.",
+  "claimRefusedOther": "Der Betrieb hat diese Rechnungen für diese Zahlung abgelehnt. Aktualisieren Sie und versuchen Sie es erneut.",
+  "claimRefusedOtherMonth": "Diese Rechnungen gehören zu einem anderen Monat als diese Zahlung. Es wurde nichts belastet.",
+  "claimRefusedWithdrawn": "Sie haben diese Zahlung zurückgezogen. Wählen Sie die Rechnungen erneut aus, um sie zu bezahlen.",
   "coOwnerAction": "Mit-Inhaberschaft",
   "coOwnerActivate": "Jetzt zum Inhaber machen",
   "coOwnerActive": "Aktiver Mitinhaber — Inhaber-Rechte sofort, automatische Nachfolge",
@@ -7873,6 +7886,7 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
+  "financesBusinessUnavailable": "{business} ist gerade nicht erreichbar. Es wurde nichts gesendet.",
   "financesColumnAmount": "Betrag",
   "financesColumnDocument": "Dokument und Zeitraum",
   "financesColumnState": "Dokument und Zahlung",
@@ -7883,6 +7897,12 @@
   "financesCoverageOlderSettled": "Ältere bezahlte Dokumente sind nicht aufgeführt; alles, was noch zu zahlen ist, schon.",
   "financesCoverageReading": "{host} wird gelesen …",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 Dokument} other{{count} Dokumente}}",
+  "financesDeclareEachMonth": "Pro Monat wird eine Meldung erfasst; jede wartet auf die Bestätigung des Betriebs.",
+  "financesDeclareFailed": "Die Meldung konnte nicht erfasst werden. Versuchen Sie es erneut.",
+  "financesDeclareSend": "Als bezahlt erfassen",
+  "financesDeclareTitle": "An {business} bezahlt",
+  "financesDeclaredPart": "Erfasst: {recorded}. Nicht erfasst: {rest}. {reason}",
+  "financesDeclaredSent": "Erfasst. {business} bestätigt es.",
   "financesDevSection": "Entwicklungs-Spaces — Testdaten, oben nicht mitgezählt",
   "financesDueCalendarUnknown": "Fällig am {date} · Kalender des Unternehmens unbekannt",
   "@financesDueCalendarUnknown": {
@@ -7937,6 +7957,9 @@
   "@financesHostsUnavailable": {
     "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
   },
+  "financesIHavePaid": "Ich habe bezahlt",
+  "financesInPayment": "In Zahlung",
+  "financesInPaymentSince": "In Zahlung seit {date}",
   "financesLinkAction": "Für {space} öffnen",
   "@financesLinkAction": {
     "placeholders": {
@@ -7994,6 +8017,10 @@
   "@financesPartlyPaid": {
     "description": "Me › Finances"
   },
+  "financesPayAmount": "{amount} bezahlen",
+  "financesPayThen": "Diese Zahlung begleicht den ersten Monat. Danach: {months}.",
+  "financesPayTitle": "An {business} zahlen",
+  "financesPaymentReceived": "Zahlung eingegangen · {business} ordnet sie zu",
   "financesPaymentsMoreFailed": "{host} hat für weitere Zahlungen nicht geantwortet. Tippen, um es erneut zu versuchen.",
   "@financesPaymentsMoreFailed": {
     "placeholders": {
@@ -8033,6 +8060,12 @@
   "@financesReminders": {
     "description": "Me › Finances"
   },
+  "financesSelectInvoice": "{number} auswählen",
+  "financesSelectionClear": "Auswahl aufheben",
+  "financesSelectionInvoiceAmount": "{number} · {amount}",
+  "financesSelectionMonthAmount": "{month}: {amount}",
+  "financesSelectionOneBusiness": "Eine Zahlung gilt einem Betrieb in einer Währung: {business}.",
+  "financesSelectionSummary": "{count, plural, one{1 Rechnung ausgewählt · {amount}} other{{count} Rechnungen ausgewählt · {amount}}}",
   "financesShowAmount": "Betrag anzeigen",
   "financesSourceUnavailable": "Die Dokumente von {host} konnten gerade nicht gelesen werden; angezeigt wird, was aus Ihren anderen Räumen stammt.",
   "@financesSourceUnavailable": {
@@ -8053,8 +8086,16 @@
     "description": "Me › Finances"
   },
   "financesStateUnpaid": "Unbezahlt",
+  "financesTooManyInvoices": "{max, plural, one{Eine Zahlung umfasst höchstens {max} Rechnung. Wählen Sie weniger aus.} other{Eine Zahlung umfasst höchstens {max} Rechnungen. Wählen Sie weniger aus.}}",
   "financesTypeAll": "Alle Dokumente",
   "financesTypeCreditNote": "Gutschrift",
+  "financesWaitsForBusiness": "Als bezahlt gemeldet · wartet auf {business}",
+  "financesWithdraw": "Zurückziehen",
+  "financesWithdrawBody": "Ihre Rechnungen können wieder bezahlt werden. Geld, das noch eingeht, wird Ihrem Konto gutgeschrieben und nicht diesen Rechnungen zugeordnet.",
+  "financesWithdrawFailed": "Die Zahlung konnte nicht zurückgezogen werden. Versuchen Sie es erneut.",
+  "financesWithdrawSettling": "Wenn Sie gerade beim Anbieter bezahlt haben, warten Sie: Die Bestätigung dauert einige Minuten.",
+  "financesWithdrawTitle": "Diese Zahlung zurückziehen?",
+  "financesWithdrawn": "Zahlung zurückgezogen. Ihre Rechnungen können wieder bezahlt werden.",
   "financesYourCredit": "Ihr Guthaben",
   "formErrorSummaryGoTo": "Zum ersten Problem",
   "formErrorSummaryTitle": "{count, plural, one{1 Feld braucht Ihre Aufmerksamkeit} other{{count} Felder brauchen Ihre Aufmerksamkeit}}",
@@ -13691,6 +13732,8 @@
   "payFieldWebhookSecret": "Webhook-Signaturgeheimnis",
   "payOnlineButton": "Online bezahlen",
   "payOnlineChooseTitle": "Online bezahlen",
+  "payOnlineClaimNotTaken": "Der Zahlungsdienst hat diese Rechnungen nicht übernommen, die Zahlung wurde nicht geöffnet. Es wurde nichts belastet.",
+  "payOnlineClaimsUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.",
   "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration:",
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",
   "payOnlineFailedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.",
@@ -13701,6 +13744,7 @@
   "payOnlineReversedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
   "payOnlineReversedPartDetail": "Von der Zahlung {reference} ({amount} über {provider}) hat der Anbieter {reversed} rückgängig gemacht (eine Erstattung oder ein Widerspruch). Das Unternehmen berichtigt Ihren Saldo.",
   "payOnlineReversedTitle": "Online-Zahlung rückgängig gemacht",
+  "payOnlineStartAgain": "Diese Zahlung kann nicht mehr fortgesetzt werden. Starten Sie die Zahlung erneut.",
   "payOnlineTestKeys": "Online-Zahlung ist nicht verfügbar: Der Zahlungsanbieter ist mit Testzugangsdaten eingerichtet. Das Unternehmen muss seine Live-Schlüssel eingeben.",
   "paymentAccountNumberLabel": "Kontonummer",
   "@paymentAccountNumberLabel": {

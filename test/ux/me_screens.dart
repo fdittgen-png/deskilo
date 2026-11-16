@@ -11,6 +11,8 @@ import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
+import 'package:deskilo/features/money/domain/finance_selection.dart';
+import 'package:deskilo/features/money/providers/finance_selection_provider.dart';
 import 'package:deskilo/features/reservations/domain/my_reservations.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
@@ -154,6 +156,95 @@ MeScenario _oneSourceFailed() => MeScenario(
   documents: twoCurrencies(),
 );
 
+/// #3556 (1b) — one of my invoices, as the overview answers it about paying.
+FinanceInvoice _mine(
+  String id, {
+  String period = '2026-04',
+  int due = 12000,
+  bool payable = true,
+  bool inPayment = false,
+  String? claimPaymentId,
+  bool received = false,
+}) => FinanceInvoice(
+  id: id,
+  workspaceId: 'ws-1',
+  workspaceName: 'Atelier du Marché',
+  number: 'F-$id',
+  issuedAt: DateTime.utc(2026, 5, 2),
+  totalCents: due,
+  paidCents: 0,
+  currency: 'EUR',
+  state: FinanceState.open,
+  stillDueCents: due,
+  period: period,
+  payable: payable,
+  inPayment: inPayment,
+  claimPaymentId: claimPaymentId,
+  paymentReceived: received,
+);
+
+FakeAccountActivityRepository _paying(
+  List<FinanceInvoice> invoices, {
+  List<String> unavailable = const [],
+}) => FakeAccountActivityRepository()
+  ..financeOverview = FinanceOverview(
+    invoices: invoices,
+    unavailableSources: unavailable,
+  );
+
+class _Preselected extends FinanceSelectionController {
+  _Preselected(this.selection);
+  final FinanceSelection selection;
+
+  @override
+  FinanceSelection build() => selection;
+}
+
+MeScenario _payingScenario(
+  List<FinanceInvoice> invoices, {
+  List<FinanceInvoice> selected = const [],
+  List<String> unavailable = const [],
+}) => MeScenario(
+  workspace: twoSpaces(),
+  overrides: [
+    ..._shell(),
+    financeSelectionControllerProvider.overrideWith(
+      () => _Preselected(FinanceSelection(selected)),
+    ),
+  ],
+  documents: _paying(invoices, unavailable: unavailable),
+);
+
+MeScenario _nothingPayable() => _payingScenario([
+  _mine('1', payable: false, received: true),
+]);
+
+MeScenario _aSelection() {
+  final a = _mine('1');
+  return _payingScenario([a, _mine('2', due: 4000)], selected: [a]);
+}
+
+MeScenario _aSelectionAcrossMonths() {
+  final a = _mine('1');
+  final b = _mine('2', period: '2026-05', due: 5900);
+  return _payingScenario([a, b], selected: [a, b]);
+}
+
+MeScenario _inPayment() => _payingScenario([
+  _mine('1', payable: false, inPayment: true, claimPaymentId: 'order-1'),
+  _mine('2', payable: false, inPayment: true),
+]);
+
+MeScenario _paymentReceived() => _payingScenario([
+  _mine('1', payable: false, received: true),
+  _mine('2'),
+]);
+
+MeScenario _payableBesideUnavailable() => _payingScenario(
+  [_mine('1')],
+  unavailable: ['https://elsewhere.example'],
+);
+
 /// #3554 — Discover with a kind chosen, one of its two sources failing: the
 /// other's practice is listed, the failed one says so with its retry, and
 /// the chip stays chosen.
@@ -249,6 +340,21 @@ final List<MeScreen> meScreens = [
     route: '/me/data',
     sources: [],
     states: {'populated': _populated, 'empty': _empty},
+  ),
+  // #3556 (1b) -- paying what I select: the states the selection, the
+  // payments being processed and a source that did not answer show.
+  const MeScreen(
+    id: 'data · paying a selection',
+    route: '/me/data?view=finances',
+    sources: [],
+    states: {
+      'nothing payable': _nothingPayable,
+      'a selection': _aSelection,
+      'a selection across months': _aSelectionAcrossMonths,
+      'in payment': _inPayment,
+      'payment received': _paymentReceived,
+      'one source unavailable': _payableBesideUnavailable,
+    },
   ),
   // #3620 -- my reservations: a phone journey of the day, guarded with Me.
   const MeScreen(

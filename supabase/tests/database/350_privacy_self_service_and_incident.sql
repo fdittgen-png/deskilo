@@ -141,14 +141,14 @@ select is((select count(*)::int from public.events
 -- Who can READ it: events_select also admits the actor or subject and any member
 -- under a wildcard validation policy; the restrictive policy narrows the type to
 -- the holders of the right now.
--- A wildcard validation policy open to every member: the member may validate
--- ANY event type (0144 lets such a member read those events), and still reads
--- no incident.
+-- A wildcard validation policy open to every member: the member validates
+-- the event types that wait for a decision (#4143, 0803), never a notice such
+-- as the incident, and reads no incident.
 insert into public.validation_policies (workspace_id, event_type, validator_scope)
 values (pg_temp.ws(), null, 'members');
 select pg_temp.act_as(pg_temp.u('c2'));
-select ok(public.may_validate_event_type(pg_temp.ws(), 'privacy_incident'),
-  'the plain member satisfies may_validate_event_type for the incident under the wildcard members policy');
+select ok(not public.may_validate_event_type(pg_temp.ws(), 'privacy_incident'),
+  'the wildcard members policy names no validator of the incident, a notice nobody decides');
 select is((select count(*)::int from public.events where type = 'privacy_incident'), 0,
   'and still reads no incident event: the restrictive policy beats the validator rule');
 reset role;

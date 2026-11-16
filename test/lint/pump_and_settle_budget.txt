@@ -39,7 +39,10 @@
 # review {"path":"test/features/task_recorder/calendar_journey_test.dart","before":18,"after":20,"invariant":"#4021 the journey opens the Filters sheet before choosing its kinds and closes it before opening an item","cost":"two settles for the sheet in and out, in one journey test"}
 # review {"path":"test/features/workspace/organisation_sheet_test.dart","before":0,"after":13,"invariant":"#4006 the organisation page: each command opens its dialog or its picker, is confirmed, and the page reads the organisations again before the next step","cost":"four tests of about 1 s each; every settle waits for the sheet, a dialog, a picker or the read that follows a command"}
 # review {"path":"test/features/workspace/organisation_sheet_test.dart","before":13,"after":19,"invariant":"#4006 every change of the organisation is confirmed first: each command test opens the confirmation and answers it, and one test cancels it","cost":"one settle per confirmation shown and answered; five tests of about 1 s each"}
+# review {"path":"test/features/money/my_finances_selection_test.dart","before":0,"after":12,"invariant":"#3556 a person pays or declares what they select on My finances: each step (a checkbox, the bar, the confirmation, the send, the withdrawal and its confirmation) settles once before the selection, the stored payments or the snack are read","cost":"6 tests in 2 s locally"}
 # review {"path":"test/features/money/invoice_groups_screen_test.dart","before":0,"after":16,"invariant":"#3556 a person files invoices in their own groups on My finances: each step (the row action, the sheet, a switch, the new group, the chip, rename, delete and its confirmation) settles once before the stored groups or the header are read","cost":"4 tests in 2 s locally"}
+# review {"path":"test/features/money/my_finances_selection_test.dart","before":12,"after":15,"invariant":"#3556 the selection is filed in one of my groups from the bar: the menu, its entry, the sheet and the new group each settle once before the stored group is read","cost":"one test, under 1 s locally"}
+# review {"path":"test/features/money/my_finances_selection_test.dart","before":15,"after":27,"invariant":"#3556 the review of 1b: a retry after a lost answer, a declaration refused at its second month, an outdated payment service and a dropped claim, a business that cannot be entered, and the settling withdrawal: each tap, confirmation and send settles once before the request ids, the stored payments or the message are read","cost":"five tests in 2 s locally"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -114,6 +117,7 @@
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart
 38 test/features/money/money_screen_test.dart
+27 test/features/money/my_finances_selection_test.dart
 16 test/features/money/number_sequences_screen_test.dart
 12 test/features/money/payment_terms_test.dart
 18 test/features/money/price_negotiations_test.dart

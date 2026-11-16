@@ -25,7 +25,13 @@ class PaymentGatewayConfig {
   const PaymentGatewayConfig({
     required this.providers,
     this.missing = const {},
+    this.claims = false,
   });
+
+  /// #3556 — the business's payment function takes a payment's claim of
+  /// invoices; an older one does not say, and a selection is not paid
+  /// through it (it would drop the claim and pay the account).
+  final bool claims;
 
   /// Fully configured, offerable providers (possibly empty).
   final List<PaymentProvider> providers;
@@ -49,7 +55,12 @@ class PaymentOrderStart {
     this.orderId,
     this.missing = const [],
     this.alreadyPaid = false,
+    this.claimed,
   });
+
+  /// #3556 — how many invoices the function says the payment names; null
+  /// from a function that does not say.
+  final int? claimed;
 
   /// #2014 B — the retried request had already been paid: nothing to open.
   final bool alreadyPaid;

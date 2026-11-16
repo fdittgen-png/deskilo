@@ -3866,6 +3866,19 @@
   },
   "chromeChipWithHint": "{label}, {hint}",
   "chromeRoleAs": "come {role}",
+  "claimRefusedAlreadyInPayment": "Una di queste fatture è già in un altro pagamento. Non è stato addebitato nulla.",
+  "claimRefusedAmount": "Quanto resta da pagare su queste fatture è cambiato. Aggiorni e riprovi.",
+  "claimRefusedCannotTake": "Una di queste fatture non può ricevere un pagamento ora. Aggiorni per vedere a che punto è.",
+  "claimRefusedCurrency": "Una di queste fatture è in una valuta diversa da quella dei pagamenti dell’attività. Non è stato addebitato nulla.",
+  "claimRefusedEmpty": "Scelga le fatture che questo pagamento salda.",
+  "claimRefusedMonths": "Un pagamento salda le fatture di un solo mese. Non è stato addebitato nulla.",
+  "claimRefusedNotMyPayment": "Questo pagamento non spetta a Lei ritirarlo.",
+  "claimRefusedNotProcessing": "Questo pagamento non è più in corso. Aggiorni per vedere a che punto è.",
+  "claimRefusedNotYours": "Una di queste fatture non spetta a Lei pagarla. Non è stato addebitato nulla.",
+  "claimRefusedNothingToFree": "Questo pagamento è già stato ritirato.",
+  "claimRefusedOther": "L’attività ha rifiutato queste fatture per questo pagamento. Aggiorni e riprovi.",
+  "claimRefusedOtherMonth": "Queste fatture sono di un mese diverso da questo pagamento. Non è stato addebitato nulla.",
+  "claimRefusedWithdrawn": "Ha ritirato questo pagamento. Selezioni di nuovo le fatture per pagarle.",
   "coOwnerAction": "Comproprietà",
   "coOwnerActivate": "Promuovi a proprietario ora",
   "coOwnerActive": "Comproprietario attivo — permessi da proprietario subito, successione automatica",
@@ -7873,6 +7886,7 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
+  "financesBusinessUnavailable": "{business} non è raggiungibile ora. Non è stato inviato nulla.",
   "financesColumnAmount": "Importo",
   "financesColumnDocument": "Documento e periodo",
   "financesColumnState": "Documento e pagamento",
@@ -7883,6 +7897,12 @@
   "financesCoverageOlderSettled": "I documenti pagati più vecchi non sono elencati; tutto ciò che resta da pagare sì.",
   "financesCoverageReading": "Lettura di {host}…",
   "financesCoverageWorkspace": "{workspace}: {count, plural, one{1 documento} other{{count} documenti}}",
+  "financesDeclareEachMonth": "Viene registrata una dichiarazione per mese; ciascuna attende l’approvazione dell’attività.",
+  "financesDeclareFailed": "Non è stato possibile registrare la dichiarazione. Riprovi.",
+  "financesDeclareSend": "Registra come pagato",
+  "financesDeclareTitle": "Pagato a {business}",
+  "financesDeclaredPart": "Registrato: {recorded}. Non registrato: {rest}. {reason}",
+  "financesDeclaredSent": "Registrato. {business} lo approva.",
   "financesDevSection": "Spazi di sviluppo — dati di prova, non conteggiati sopra",
   "financesDueCalendarUnknown": "Scade il {date} · calendario dell'attività sconosciuto",
   "@financesDueCalendarUnknown": {
@@ -7937,6 +7957,9 @@
   "@financesHostsUnavailable": {
     "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
   },
+  "financesIHavePaid": "Ho pagato",
+  "financesInPayment": "In pagamento",
+  "financesInPaymentSince": "In pagamento dal {date}",
   "financesLinkAction": "Apri per {space}",
   "@financesLinkAction": {
     "placeholders": {
@@ -7994,6 +8017,10 @@
   "@financesPartlyPaid": {
     "description": "Me › Finances"
   },
+  "financesPayAmount": "Paga {amount}",
+  "financesPayThen": "Questo pagamento salda il primo mese. Poi: {months}.",
+  "financesPayTitle": "Pagare {business}",
+  "financesPaymentReceived": "Pagamento ricevuto · {business} lo sta abbinando",
   "financesPaymentsMoreFailed": "{host} non ha risposto per altri pagamenti. Tocchi per riprovare.",
   "@financesPaymentsMoreFailed": {
     "placeholders": {
@@ -8033,6 +8060,12 @@
   "@financesReminders": {
     "description": "Me › Finances"
   },
+  "financesSelectInvoice": "Seleziona {number}",
+  "financesSelectionClear": "Annulla la selezione",
+  "financesSelectionInvoiceAmount": "{number} · {amount}",
+  "financesSelectionMonthAmount": "{month}: {amount}",
+  "financesSelectionOneBusiness": "Un pagamento è per una sola attività in una sola valuta: {business}.",
+  "financesSelectionSummary": "{count, plural, one{1 fattura selezionata · {amount}} other{{count} fatture selezionate · {amount}}}",
   "financesShowAmount": "Mostra l'importo",
   "financesSourceUnavailable": "I documenti di {host} non sono stati letti per ora; quanto mostrato proviene dai Suoi altri spazi.",
   "@financesSourceUnavailable": {
@@ -8053,8 +8086,16 @@
     "description": "Me › Finances"
   },
   "financesStateUnpaid": "Non pagata",
+  "financesTooManyInvoices": "{max, plural, one{Un pagamento comprende al massimo {max} fattura. Ne selezioni meno.} other{Un pagamento comprende al massimo {max} fatture. Ne selezioni meno.}}",
   "financesTypeAll": "Tutti i documenti",
   "financesTypeCreditNote": "Nota di credito",
+  "financesWaitsForBusiness": "Dichiarata pagata · attende {business}",
+  "financesWithdraw": "Ritira",
+  "financesWithdrawBody": "Le sue fatture potranno essere pagate di nuovo. Il denaro che arrivasse ancora viene accreditato sul Suo conto e non applicato a queste fatture.",
+  "financesWithdrawFailed": "Non è stato possibile ritirare il pagamento. Riprovi.",
+  "financesWithdrawSettling": "Se ha appena pagato presso il fornitore, attenda: la conferma richiede qualche minuto.",
+  "financesWithdrawTitle": "Ritirare questo pagamento?",
+  "financesWithdrawn": "Pagamento ritirato. Le sue fatture possono essere pagate di nuovo.",
   "financesYourCredit": "Il suo credito",
   "formErrorSummaryGoTo": "Vai al primo problema",
   "formErrorSummaryTitle": "{count, plural, one{1 campo richiede la Sua attenzione} other{{count} campi richiedono la Sua attenzione}}",
@@ -13691,6 +13732,8 @@
   "payFieldWebhookSecret": "Segreto di firma webhook",
   "payOnlineButton": "Paga online",
   "payOnlineChooseTitle": "Paga online",
+  "payOnlineClaimNotTaken": "Il servizio di pagamento non ha preso in carico queste fatture, quindi il pagamento non è stato aperto. Non è stato addebitato nulla.",
+  "payOnlineClaimsUnsupported": "Il servizio di pagamento di questa attività deve essere aggiornato prima di poter pagare online fatture selezionate.",
   "payOnlineDiagHint": "Sul server manca questa configurazione:",
   "payOnlineDiagTitle": "Pagamenti online — non configurati",
   "payOnlineFailedDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è stato completato — nulla è stato accreditato; il saldo resta dovuto.",
@@ -13701,6 +13744,7 @@
   "payOnlineReversedDetail": "Il pagamento {reference} ({amount} tramite {provider}) è stato stornato dal fornitore (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
   "payOnlineReversedPartDetail": "Del pagamento {reference} ({amount} tramite {provider}), il fornitore ha stornato {reversed} (un rimborso o una contestazione). L'azienda corregge il suo saldo.",
   "payOnlineReversedTitle": "Pagamento online stornato",
+  "payOnlineStartAgain": "Questo pagamento non può più essere proseguito. Avvii di nuovo il pagamento.",
   "payOnlineTestKeys": "Il pagamento online non è disponibile: il fornitore di pagamento è configurato con credenziali di prova. L'azienda deve inserire le sue chiavi reali.",
   "paymentAccountNumberLabel": "Numero di conto",
   "@paymentAccountNumberLabel": {

@@ -8436,6 +8436,58 @@
       }
     }
   },
+  "claimRefusedAlreadyInPayment": "One of these invoices is already in another payment. Nothing was charged.",
+  "@claimRefusedAlreadyInPayment": {
+    "description": "#3556 Refusal: an invoice is already in another payment"
+  },
+  "claimRefusedAmount": "What these invoices still owe has changed. Refresh and try again.",
+  "@claimRefusedAmount": {
+    "description": "#3556 Refusal: the amount is not what the invoices still owe"
+  },
+  "claimRefusedCannotTake": "One of these invoices cannot take a payment now. Refresh to see where it stands.",
+  "@claimRefusedCannotTake": {
+    "description": "#3556 Refusal: an invoice cannot take a payment now (settled, voided, matched, nothing due)"
+  },
+  "claimRefusedCurrency": "One of these invoices is in another currency than the business takes payments in. Nothing was charged.",
+  "@claimRefusedCurrency": {
+    "description": "#3556 Refusal: an invoice is in another currency than the payment"
+  },
+  "claimRefusedEmpty": "Choose the invoices this payment is for.",
+  "@claimRefusedEmpty": {
+    "description": "#3556 Refusal: the payment named no invoice"
+  },
+  "claimRefusedMonths": "A payment is for the invoices of one month. Nothing was charged.",
+  "@claimRefusedMonths": {
+    "description": "#3556 Refusal: invoices of several months in one payment"
+  },
+  "claimRefusedNotMyPayment": "This payment is not yours to withdraw.",
+  "@claimRefusedNotMyPayment": {
+    "description": "#3556 Refusal: withdrawing a payment that is not the person's"
+  },
+  "claimRefusedNotProcessing": "This payment is no longer being processed. Refresh to see where it stands.",
+  "@claimRefusedNotProcessing": {
+    "description": "#3556 Refusal: the payment is no longer being processed (paid or failed)"
+  },
+  "claimRefusedNotYours": "One of these invoices is not yours to pay. Nothing was charged.",
+  "@claimRefusedNotYours": {
+    "description": "#3556 Refusal: an invoice is not the person's to pay (or unknown)"
+  },
+  "claimRefusedNothingToFree": "This payment was already withdrawn.",
+  "@claimRefusedNothingToFree": {
+    "description": "#3556 Refusal: the payment was already withdrawn"
+  },
+  "claimRefusedOther": "The business refused these invoices for this payment. Refresh and try again.",
+  "@claimRefusedOther": {
+    "description": "#3556 Refusal of a payment's invoices whose code this version does not know"
+  },
+  "claimRefusedOtherMonth": "These invoices are of another month than this payment. Nothing was charged.",
+  "@claimRefusedOtherMonth": {
+    "description": "#3556 Refusal: the payment's month is not the invoices'"
+  },
+  "claimRefusedWithdrawn": "You withdrew this payment. Select the invoices again to pay them.",
+  "@claimRefusedWithdrawn": {
+    "description": "#3556 Refusal: retrying a payment whose invoices were withdrawn"
+  },
   "coOwnerAction": "Co-ownership",
   "@coOwnerAction": {
     "description": "Member-sheet action opening the co-owner dialog (0058)"
@@ -16448,6 +16500,15 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
+  "financesBusinessUnavailable": "{business} cannot be reached right now. Nothing was sent.",
+  "@financesBusinessUnavailable": {
+    "description": "#3556 The business of the selected invoices cannot be opened right now (its server, the account changed)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
   "financesColumnAmount": "Amount",
   "@financesColumnAmount": {
     "description": "#2557 C4 Me › Finances: the rows header, the amount in its own currency."
@@ -16503,6 +16564,51 @@
       },
       "count": {
         "type": "int"
+      }
+    }
+  },
+  "financesDeclareEachMonth": "One declaration per month is recorded; each waits for the business to approve it.",
+  "@financesDeclareEachMonth": {
+    "description": "#3556 Confirmation of a declaration spanning months: one declaration per month"
+  },
+  "financesDeclareFailed": "The declaration could not be recorded. Try again.",
+  "@financesDeclareFailed": {
+    "description": "#3556 The declaration of the selected invoices could not be recorded"
+  },
+  "financesDeclareSend": "Record as paid",
+  "@financesDeclareSend": {
+    "description": "#3556 Confirmation: records the declaration(s)"
+  },
+  "financesDeclareTitle": "Paid to {business}",
+  "@financesDeclareTitle": {
+    "description": "#3556 Confirmation title before declaring the selected invoices paid; {business} is the payee",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesDeclaredPart": "Recorded: {recorded}. Not recorded: {rest}. {reason}",
+  "@financesDeclaredPart": {
+    "description": "#3556 A declaration over several months refused part-way: which months were recorded, which not, and why",
+    "placeholders": {
+      "recorded": {
+        "type": "String"
+      },
+      "rest": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "financesDeclaredSent": "Recorded. {business} approves it.",
+  "@financesDeclaredSent": {
+    "description": "#3556 After declaring: the declaration waits for the business; {business} is its name",
+    "placeholders": {
+      "business": {
+        "type": "String"
       }
     }
   },
@@ -16628,6 +16734,23 @@
   "@financesHostsUnavailable": {
     "description": "Me › Finances: the list of the person's connected installations could not be read (#3682); shown with Try again, never as having none"
   },
+  "financesIHavePaid": "I have paid",
+  "@financesIHavePaid": {
+    "description": "#3556 The button declaring the selected invoices paid (outlined)"
+  },
+  "financesInPayment": "In payment",
+  "@financesInPayment": {
+    "description": "#3556 Row state: the invoice is in an online payment being processed"
+  },
+  "financesInPaymentSince": "In payment since {date}",
+  "@financesInPaymentSince": {
+    "description": "#3556 Row state: in an online payment since the day it was handed to its provider",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "financesLinkAction": "Open for {space}",
   "@financesLinkAction": {
     "description": "Shown as a text in my finances link card (money). Placeholders: {space} (String).",
@@ -16695,6 +16818,42 @@
   "@financesPartlyPaid": {
     "description": "Me › Finances"
   },
+  "financesPayAmount": "Pay {amount}",
+  "@financesPayAmount": {
+    "description": "#3556 The button paying online; {amount} names its currency",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPayThen": "This pays the first month. Then: {months}.",
+  "@financesPayThen": {
+    "description": "#3556 Confirmation of an online payment of several months: the oldest is paid now, these follow; {months} lists them with their amounts",
+    "placeholders": {
+      "months": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPayTitle": "Pay {business}",
+  "@financesPayTitle": {
+    "description": "#3556 Confirmation title before paying the selected invoices online; {business} is the payee",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesPaymentReceived": "Payment received · {business} is matching it",
+  "@financesPaymentReceived": {
+    "description": "#3556 Row state: the invoice's payment arrived and the business is matching it; {business} is its name",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
   "financesPaymentsMoreFailed": "{host} did not answer for more payments. Tap to try again.",
   "@financesPaymentsMoreFailed": {
     "description": "#2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay",
@@ -16739,6 +16898,64 @@
   "@financesReminders": {
     "description": "Me › Finances"
   },
+  "financesSelectInvoice": "Select {number}",
+  "@financesSelectInvoice": {
+    "description": "#3556 My finances: the checkbox of one invoice, for assistive technology; {number} is the invoice number",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "financesSelectionClear": "Clear the selection",
+  "@financesSelectionClear": {
+    "description": "#3556 Selection bar: clears the selection (tooltip)"
+  },
+  "financesSelectionInvoiceAmount": "{number} · {amount}",
+  "@financesSelectionInvoiceAmount": {
+    "description": "#3556 Confirmation: one invoice and what it still owes",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "financesSelectionMonthAmount": "{month}: {amount}",
+  "@financesSelectionMonthAmount": {
+    "description": "#3556 Confirmation: one month of the selection and what its invoices still owe",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "financesSelectionOneBusiness": "A payment is for one business in one currency: {business}.",
+  "@financesSelectionOneBusiness": {
+    "description": "#3556 Selection bar: why invoices of other businesses or currencies cannot be added; {business} is the selection's business",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesSelectionSummary": "{count, plural, one{1 invoice selected · {amount}} other{{count} invoices selected · {amount}}}",
+  "@financesSelectionSummary": {
+    "description": "#3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      },
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "financesShowAmount": "Show amount",
   "@financesShowAmount": {
     "description": "#2557 C5 Me › Finances: reveals one compact card's amount."
@@ -16768,6 +16985,15 @@
   "@financesStateUnpaid": {
     "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
   },
+  "financesTooManyInvoices": "{max, plural, one{A payment names at most {max} invoice. Select fewer.} other{A payment names at most {max} invoices. Select fewer.}}",
+  "@financesTooManyInvoices": {
+    "description": "#3556 A payment names at most this many invoices",
+    "placeholders": {
+      "max": {
+        "type": "int"
+      }
+    }
+  },
   "financesTypeAll": "All documents",
   "@financesTypeAll": {
     "description": "#2557 C4 Me › Finances: the type filter, every document."
@@ -16775,6 +17001,39 @@
   "financesTypeCreditNote": "Credit note",
   "@financesTypeCreditNote": {
     "description": "#2557 C4 Me › Finances: the document state of a credit note (a row and the type filter)."
+  },
+  "financesWaitsForBusiness": "Declared paid · waits for {business}",
+  "@financesWaitsForBusiness": {
+    "description": "#3556 Row state: a declared payment names the invoice and waits for the business; {business} is its name",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesWithdraw": "Withdraw",
+  "@financesWithdraw": {
+    "description": "#3556 Withdraws an online payment that is being processed"
+  },
+  "financesWithdrawBody": "Its invoices can be paid again. Money that still arrives is credited to your account and not applied to these invoices.",
+  "@financesWithdrawBody": {
+    "description": "#3556 Confirmation: what withdrawing means for money that still arrives"
+  },
+  "financesWithdrawFailed": "The payment could not be withdrawn. Try again.",
+  "@financesWithdrawFailed": {
+    "description": "#3556 The payment could not be withdrawn"
+  },
+  "financesWithdrawSettling": "If you have just paid at the provider, wait: the confirmation takes a few minutes.",
+  "@financesWithdrawSettling": {
+    "description": "#3556 Withdrawal confirmation, when the payment was just handed to its provider"
+  },
+  "financesWithdrawTitle": "Withdraw this payment?",
+  "@financesWithdrawTitle": {
+    "description": "#3556 Confirmation title before withdrawing a payment"
+  },
+  "financesWithdrawn": "Payment withdrawn. Its invoices can be paid again.",
+  "@financesWithdrawn": {
+    "description": "#3556 After withdrawing a payment"
   },
   "financesYourCredit": "Your credit",
   "@financesYourCredit": {
@@ -30847,6 +31106,14 @@
   "@payOnlineChooseTitle": {
     "description": "Title of the provider chooser sheet"
   },
+  "payOnlineClaimNotTaken": "The payment service did not take these invoices, so the checkout was not opened. Nothing was charged.",
+  "@payOnlineClaimNotTaken": {
+    "description": "#3556 The payment service did not take the selected invoices: the checkout is not opened"
+  },
+  "payOnlineClaimsUnsupported": "This business's payment service must be updated before selected invoices can be paid online.",
+  "@payOnlineClaimsUnsupported": {
+    "description": "#3556 The business's payment service is too old to pay selected invoices"
+  },
   "payOnlineDiagHint": "The server is missing this configuration:",
   "@payOnlineDiagHint": {
     "description": "Hint above the per-provider missing-config lines in the diagnostics dialog"
@@ -30933,6 +31200,10 @@
   "payOnlineReversedTitle": "Online payment reversed",
   "@payOnlineReversedTitle": {
     "description": "#3905 card title on the bill: an online payment the provider reversed (a refund or a dispute)"
+  },
+  "payOnlineStartAgain": "This payment can no longer be continued. Start the payment again.",
+  "@payOnlineStartAgain": {
+    "description": "#3556 A retried online payment the server ended (failed or too old): start a new one"
   },
   "payOnlineTestKeys": "Online payment isn't available: the payment provider is set up with test credentials. The business needs to enter its live keys.",
   "@payOnlineTestKeys": {

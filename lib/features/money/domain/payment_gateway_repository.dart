@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'payment_claims.dart';
 import 'payment_intent.dart';
 import 'payment_provider.dart';
 import 'payment_test_check.dart';
@@ -74,6 +75,18 @@ abstract interface class PaymentGatewayRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
+  });
+
+  /// #3556 — a payment of exactly the invoices of [claim], as
+  /// [createPaymentOrder] otherwise; the server refuses a claim it cannot
+  /// take with [ClaimRefused].
+  Future<PaymentOrderStart> createClaimOrder({
+    required PaymentProvider provider,
+    required String workspaceId,
+    required String memberId,
+    required String currencyCode,
+    required InvoiceClaim claim,
     String? requestId,
   });
 }

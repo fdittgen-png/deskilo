@@ -119,6 +119,9 @@ Deno.test("the request: workspace currency wins, a disagreeing body is refused",
       { ...body, amount_cents: 1.5 },
       { ...body, request_id: "not-a-uuid" },
       { ...body, member_id: "" },
+      { ...body, invoice_ids: [] },
+      { ...body, invoice_ids: ["not-a-uuid"] },
+      { ...body, invoice_ids: "00000000-0000-4000-8000-000000000001" },
     ]
   ) {
     assertEquals(parsePaymentOrderRequest(bad, "EUR"), {
@@ -180,6 +183,23 @@ Deno.test("#3917: an overriding webhook address that already names an intent nam
   const params = new URL(url).searchParams;
   assertEquals(params.getAll("intent"), ["new"]);
   assertEquals(params.get("site"), "a");
+});
+
+Deno.test("#3556: a payment names its invoices, or none as before", () => {
+  const body = {
+    provider: "stripe",
+    member_id: "m",
+    amount_cents: 500,
+    period: "2026-10",
+  };
+  const without = parsePaymentOrderRequest(body, "EUR");
+  assertEquals(without.ok && without.request.invoiceIds, null);
+  const ids = [
+    "00000000-0000-4000-8000-000000000001",
+    "00000000-0000-4000-8000-000000000002",
+  ];
+  const named = parsePaymentOrderRequest({ ...body, invoice_ids: ids }, "EUR");
+  assertEquals(named.ok && named.request.invoiceIds, ids);
 });
 
 /** What each provider receives as the text its payer reads, for [payee]. */
