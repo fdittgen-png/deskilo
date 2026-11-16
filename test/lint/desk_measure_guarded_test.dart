@@ -49,11 +49,13 @@ List<String> unguarded(
 ];
 
 /// The guards that open pages on the desk: every guard of `test/ux` but
-/// the phones' (`pocket_guards_test.dart`).
+/// the phones' (`pocket_guards_test.dart`), and the lists the desk walk runs
+/// on (`walked_routes.dart`, #4077).
 Iterable<String> _deskGuards() => [
   for (final f in filesWithExtension('test/ux', '.dart'))
     if (f.uri.pathSegments.last case final name
-        when name.contains('guard') && name != 'pocket_guards_test.dart')
+        when (name.contains('guard') && name != 'pocket_guards_test.dart') ||
+            name == 'walked_routes.dart')
       f.readAsStringSync(),
 ];
 

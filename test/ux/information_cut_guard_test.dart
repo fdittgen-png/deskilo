@@ -16,9 +16,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/mock_providers.dart';
 import 'experience_guards.dart';
+import 'walked_routes.dart';
 
-/// The five tab pages.
-const _tabs = ['/messages', '/calendar', '/directory', '/money', '/reserve'];
+/// The five tab pages (listed in walked_routes.dart, which the route lint
+/// reads).
+const _tabs = phoneTabRoutes;
 
 void main() {
   setUpAll(loadRealFonts);

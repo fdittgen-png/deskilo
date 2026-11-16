@@ -164,7 +164,9 @@ Read from the source tree and its tests (November 2026). Sources read in the cod
 | `/editor` | Setup / places editor | workspace; perm any of manageSites; feature placeBooking / router: member ->/calendar, admin open, owner open | 768/1024/1440/1920 + sheets 390/1440 light,dark | - | no | desk Tab walk (keyboardProblems) 768/1024/1440/1920 | scenario (seed state) placeBooking: state by member | empty: getting_started_hint_test.dart; fail: getting_started_card_test.dart; refused: getting_started_card_test.dart | member/admin evidence by name: editor_entry_test.dart; owner (fixture default member isOwner:true) | 10 |
 | `/editor/level/:levelId` | Setup / places editor | workspace; perm any of manageSites / router: member ->/calendar, admin open, owner open | 768/1024/1440/1920 + sheets 390/1440 light,dark | - | Level canvas (all but keyboard; + locales) | desk Tab walk (keyboardProblems) 768/1024/1440/1920; a11y matrix keyboard axis | structural route, no feature | none found | owner (fixture default member isOwner:true) | 0 |
 
-## Not covered anywhere (44 routes)
+## Not covered anywhere (44 routes, as measured on 15 November)
+
+Since #4077 every route is rendered by a walk or carries a reason in `test/lint/route_walk_coverage_test.dart`; the list below is the state before it.
 
 Rule: no desk-guard page, no a11y matrix row, no phone/Me/pocket/info-cut guard and no WorkspaceFeature scenario. The count after the name is the number of other test files that name the route or its screen class (name match); 0 = nothing found.
 
