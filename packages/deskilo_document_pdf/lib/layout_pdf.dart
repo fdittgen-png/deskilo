@@ -12,6 +12,7 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 import 'address_window.dart';
+import 'layout_recipient_placement.dart';
 import 'paper_format.dart';
 import 'report_page_footer.dart';
 import 'report_style.dart';
@@ -57,31 +58,16 @@ Future<Uint8List> buildLayoutPdf({
   final contentH = pageH - marginTop - marginBottom;
   final ctx = _Box(contentW, contentH, images, markup, diagnostics);
 
-  // The recipient: a named convention takes the millimetres from the one
-  // place they live; an explicit frame is page-absolute by definition.
-  final recipient = document.recipient;
-  final window = recipient?.window;
-  final recipientFrame = recipient?.frame;
-  final windowOn =
-      recipient != null && !recipient.isOff && (window != null || recipientFrame != null);
-  final fieldLeft = recipientFrame?.x?.resolve(pageW) ??
-      (window != null && window.isOn ? window.leftEdge : 0.0);
-  final fieldTop = recipientFrame?.y?.resolve(pageH) ?? addressWindowTop;
-  final fieldW = recipientFrame?.w?.resolve(pageW) ?? addressWindowWidth;
-  final fieldH = recipientFrame?.h?.resolve(pageH) ?? addressWindowHeight;
-
-  // The header owns the band above the field; the body resumes where
-  // the design says, or at 90 mm under a window, or right after the
-  // header otherwise.
-  final headerH = document.header.height?.resolve(contentH) ??
-      (windowOn ? fieldTop - marginTop : null);
-  final bodyTop = document.body.y?.resolve(pageH) ??
-      (windowOn ? addressWindowFlowResume : null);
+  final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
+  final place = RecipientPlacement(document, format, contentH, marginTop,
+      theme, (name: recipientName, address: recipientAddress));
+  final windowOn = place.windowOn;
+  final headerH = place.headerH;
+  final bodyTop = place.bodyTop;
   final reserve = bodyTop == null
       ? 0.0
       : math.max(0.0, bodyTop - marginTop - (headerH ?? 0));
 
-  final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   final doc = pw.Document(title: documentTitle);
   final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
 
@@ -99,14 +85,15 @@ Future<Uint8List> buildLayoutPdf({
                     ignoreMargins: true,
                     child: pw.Stack(children: [
                       pw.Positioned(
-                        left: fieldLeft,
-                        top: fieldTop,
+                        left: place.left,
+                        top: place.top,
                         child: pw.SizedBox(
-                          width: fieldW,
-                          height: fieldH,
+                          width: place.width,
+                          height: place.height,
                           child: addressWindowRecipient(
                             name: recipientName,
                             address: recipientAddress,
+                            fontSize: place.fontSize,
                           ),
                         ),
                       ),
@@ -148,6 +135,7 @@ Future<Uint8List> buildLayoutPdf({
             height: document.footer.height?.resolve(contentH), bottomAligned: true)],
       ),
       build: (context) => [
+        ...place.recipientInFlow(),
         ...ctx.children(document.body.children, height: contentH),
         ...additionalBody,
         if (signature.isNotEmpty) ...[

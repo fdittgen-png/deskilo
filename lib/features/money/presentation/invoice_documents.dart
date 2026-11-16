@@ -32,7 +32,6 @@ import '../../plan/providers/floor_plan_providers.dart';
 import '../../workspace/domain/workspace.dart';
 import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/address_window.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_pdf.dart';
 import '../domain/invoice_pdf_template.dart';
@@ -374,7 +373,7 @@ Future<({List<int> bytes, String fileName})> buildInvoicePdfFile(
   final words = reportStringsOf(l10n, formatLocale: formatLocale);
   final bytes = await buildInvoicePdf(InvoicePdfRequest(
     qrBillPage: qrPage,
-    addressWindow: addressWindowOnPaper(invoiceAddressWindowOf(options, features), paper),
+    addressWindow: invoiceAddressWindowOf(options, features),
     paper: paper,
     invoice: invoice,
     reportImages: reportImages,

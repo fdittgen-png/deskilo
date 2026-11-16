@@ -7,12 +7,15 @@
 // sheet's own millimetre reader), no golden files.
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/address_window.dart';
+import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
 import 'package:deskilo/features/money/domain/report_data.dart';
@@ -21,13 +24,17 @@ import 'package:deskilo/features/money/domain/report_kind.dart';
 import 'package:deskilo/features/money/domain/report_layout/layout_render.dart';
 import 'package:deskilo/features/money/domain/report_layout_file.dart';
 import 'package:deskilo/features/money/domain/report_letter_layouts.dart';
+import 'package:deskilo/features/money/presentation/invoice_documents.dart';
+import 'package:deskilo/features/money/presentation/report_layout_actions.dart';
 import 'package:deskilo/features/money/presentation/report_sample_data.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace_data_report.dart';
 import 'package:deskilo/features/workspace/domain/workspace_data_report_builder.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';
+import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/l10n/app_localizations_fr.dart';
-import 'package:deskilo_document_model/paper.dart';
+import 'package:deskilo_document_model/deskilo_document_model.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -274,13 +281,12 @@ Future<bool> exchangeAction() async {
 }
 
 /// The letter the Demo prints: the recipient sits in the window of the
-/// envelope (the sheet's own millimetre reader), on A4, with the footer.
+/// envelope (the sheet's own millimetre reader), on A4, with the footer;
+/// and the New York house's invoice, on Letter, has its recipient in the
+/// #10 window's field (#3981).
 Future<bool> addressWindowState() async {
   final p = await _printed();
-  final window = addressWindowOnPaper(
-    p.template.addressWindow ?? AddressWindow.off,
-    Paper.a4,
-  );
+  final window = p.template.addressWindow ?? AddressWindow.off;
   final xml = defaultLetterLayoutXml(
     'invoice',
     const LetterStrings(),
@@ -309,7 +315,11 @@ Future<bool> addressWindowState() async {
   final inWindow = page1
       .where((i) => i.xMm >= 100 && i.yMm >= 40 && i.yMm <= 90)
       .toList();
+  final ny = await _newYorkInvoice(p.f);
   return allHold({
+    'the New York invoice is on Letter': ny.paper == Paper.letter,
+    'on the banded engine, which the app picks for it': !ny.positioned,
+    'its recipient is in the field, nothing else from 50 to 93 mm': ny.inField,
     'the window is the owner\'s':
         p.template.addressWindow == AddressWindow.right,
     'on A4 the window holds': window == AddressWindow.right,
@@ -320,6 +330,111 @@ Future<bool> addressWindowState() async {
         .where((i) => i.xMm < 100 && i.yMm > 45 && i.yMm < 89.5)
         .isEmpty,
   });
+}
+
+/// What the New York house's first invoice prints, the way the app prints
+/// it: the engine the app picks for it (the banded sheet, as the Demo's
+/// New York space has no layout design and the positioned engine is used
+/// only when `invoiceLayoutXmlOf` yields one), on the
+/// paper frozen on the invoice; `inField` says the first page's ink between
+/// 50 and 93 mm is all inside the field.
+Future<({bool positioned, Paper paper, bool inField})>
+_newYorkInvoice(DemoFixture f) async {
+  final invoice = f.newYork.money.invoices.firstWhere(
+    (i) => i.workspaceId == demoNewYorkSpaceId,
+  );
+  final workspace = f.workspaces.workspaces.firstWhere(
+    (w) => w.id == demoNewYorkSpaceId,
+  );
+  final template = await f.newYork.money.fetchInvoicePdfTemplate(
+    demoNewYorkSpaceId,
+  );
+  final options = InvoicePdfFileOptions(
+    reference: ActiveTaxReference.current,
+    template: template,
+    workspace: workspace,
+  );
+  final features = effectiveFeatures(
+    resolveEnabledFeatures(workspace.featureFlags),
+  );
+  final paper = Paper.fromWire(invoice.paper) ?? Paper.a4;
+  final layoutXml = invoiceLayoutXmlOf(
+    invoice,
+    options,
+    template,
+    features,
+    englishL10n,
+  );
+  final window = invoiceAddressWindowOf(options, features);
+  final Uint8List bytes;
+  if (layoutXml == null) {
+    bytes = await buildInvoicePdf(
+      InvoicePdfRequest(
+        invoice: invoice,
+        strings: const InvoicePdfStrings(
+          invoiceTitle: 'Invoice',
+          issuedOn: 'Issued on',
+          issuedBy: 'Issued by',
+          billedTo: 'Billed to',
+          total: 'Total',
+          signature: 'Digital signature',
+          voided: '',
+          voidedWatermark: 'Voided',
+          proforma: 'Proforma',
+          replaces: 'Replaces',
+          description: 'Description',
+          charges: 'Charges',
+          payments: 'Payments',
+          annex: 'Annex',
+          attendance: 'Attendance',
+          activity: 'Bookings',
+          reserved: 'reserved',
+          page: 'Page',
+        ),
+        addressWindow: window,
+        paper: paper,
+        money: (int cents) => '${cents / 100}',
+        lineText: (InvoiceLine line) => invoiceLineText(const ReportStrings(), line),
+        activityText: (InvoiceDetailEntry e) => annexEntryText(const ReportStrings(), e),
+        dateLabel: '',
+        baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+        boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+      ),
+    );
+  } else {
+    final data = invoiceReportData(
+      reportStringsOf(englishL10n, dateLocale: 'en', formatLocale: null),
+      invoice,
+      reference: ActiveTaxReference.current,
+      proforma: false,
+      copy: false,
+      workspace: workspace,
+    );
+    bytes = await buildLayoutPdf(
+      document: renderLayoutDocument(layoutXml, data).onPaper(paper),
+      data: data,
+      documentTitle: 'invoice',
+      pageLabel: 'Page',
+      baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+      boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+    );
+  }
+  final field = window.fieldOn(paper);
+  final band = textPositions(bytes, paper: paper)
+      .where(
+        (i) => i.page == 1 && i.yMm > field.senderLimitMm && i.yMm < field.flowResumeMm,
+      )
+      .toList();
+  final inField = band
+      .where(
+        (i) => i.yMm >= field.topMm - 0.5 && i.yMm <= field.bottomMm && i.xMm >= field.leftMm - 0.5,
+      )
+      .toList();
+  return (
+    positioned: layoutXml != null,
+    paper: paper,
+    inField: inField.isNotEmpty && inField.length == band.length,
+  );
 }
 
 /// The letter standard: a person-facing kind without a design of its own is

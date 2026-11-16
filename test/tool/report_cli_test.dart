@@ -76,6 +76,9 @@ void main() {
     expect(result.exitCode, 0,
         reason: 'stdout:\n${result.stdout}\nstderr:\n${result.stderr}');
     expect(result.stdout, contains('CONFORMS'));
+    // #3981 — the zones it measures are the Letter ones.
+    expect(result.stdout, contains('56–77 mm'));
+    expect(result.stdout, contains('93–259 mm'));
     final boxes = RegExp(r'/MediaBox\s*\[\s*0\s+0\s+([\d.]+)\s+([\d.]+)')
         .allMatches(latin1.decode(File(pdf).readAsBytesSync()))
         .map((m) => (double.parse(m.group(1)!), double.parse(m.group(2)!)))
@@ -95,6 +98,46 @@ void main() {
     final result = await _run(['check', bad.path]);
     expect(result.exitCode, 1, reason: '${result.stdout}');
     expect(result.stdout, contains('ISSUE'));
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
+  // #3981 — ink at 60 mm outside the Letter field, and a sixth address
+  // line, are reported on Letter.
+  test('on Letter, ink at 60 mm outside the field FAILS check with exit 1',
+      () async {
+    final out = Directory.systemTemp.createTempSync('report-cli');
+    final bad = File('${out.path}/bad.xml')
+      ..writeAsStringSync('''
+<report-layout page="Letter" margin="20mm">
+  <recipient window="fr"/>
+  <body y="60mm"><text>too high, across the page</text></body>
+</report-layout>''');
+    final result = await _run(['check', bad.path, '--out', '${out.path}/bad.pdf']);
+    expect(result.exitCode, 1, reason: '${result.stdout}');
+    expect(result.stdout, contains('between the sender and the flow'));
+  }, timeout: const Timeout(Duration(minutes: 3)));
+
+  test('on Letter, a sixth address line is reported by check', () async {
+    final out = Directory.systemTemp.createTempSync('report-cli');
+    final letter = File('${out.path}/letter.xml')
+      ..writeAsStringSync(File(_sample)
+          .readAsStringSync()
+          .replaceFirst('<report-layout', '<report-layout page="Letter"'));
+    final json = '${out.path}/invoice.json';
+    expect((await _run(['sample', '--out', json])).exitCode, 0);
+    final data = jsonDecode(File(json).readAsStringSync()) as Map;
+    Future<ProcessResult> check(String address) {
+      File(json).writeAsStringSync(
+          jsonEncode({...data, 'client_address': address}));
+      return _run(['check', letter.path, '--data', json,
+          '--out', '${out.path}/letter.pdf']);
+    }
+
+    final five = await check('1 Main Street\nSuite 4\nSpringfield\nUSA');
+    expect(five.exitCode, 0, reason: '${five.stdout}');
+    final six = await check('1 Main Street\nSuite 4\nSpringfield\nIL 62701\nUSA');
+    expect(six.exitCode, 1, reason: '${six.stdout}');
+    expect(six.stdout, contains('prints whole in the flow'));
+    expect(six.stdout, contains('do not fit'));
   }, timeout: const Timeout(Duration(minutes: 3)));
 
   test('a layout that cannot be read exits 2 and names the element', () async {
