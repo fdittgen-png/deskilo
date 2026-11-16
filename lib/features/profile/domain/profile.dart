@@ -117,6 +117,7 @@ class Profile implements SystemStamped {
     String workspaceCountry = '',
     String? nameAbove,
     String courtesyWord = '',
+    String Function(String code)? countryName,
   }) {
     // #910 — the company only leaves the block when it is the line
     // printed above it; [fullName] may be the display name instead.
@@ -124,6 +125,7 @@ class Profile implements SystemStamped {
       workspaceCountry: workspaceCountry,
       nameAbove: nameAbove ?? fullName,
       courtesyWord: courtesyWord,
+      countryName: countryName,
     );
     return block.isNotEmpty ? block : address;
   }

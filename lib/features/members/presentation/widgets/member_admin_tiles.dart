@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../core/i18n/country_names.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
@@ -100,6 +101,7 @@ List<Widget> _memberManagedTiles(MemberPageContext c) {
             // #912 — the title the person asked for, in the reader's
             // language, exactly as the document will print it.
             courtesyWord: courtesyWord(l10n, identity.courtesy),
+            countryName: (code) => localizedCountryName(l10n, code),
           )
           .replaceAll('\n', ', '),
       onTap: () => context.push('/members/managed?member=${member.id}'),

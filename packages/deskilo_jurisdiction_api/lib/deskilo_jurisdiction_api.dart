@@ -12,6 +12,7 @@ export 'src/invoice_document_context.dart';
 export 'src/invoice_mentions_contribution.dart';
 export 'src/invoice_profile_contribution.dart';
 export 'src/payment_slip_contribution.dart';
+export 'src/postal_layout_contribution.dart';
 export 'src/register_contribution.dart';
 export 'src/validation_result.dart';
 export 'src/vat_filing_contribution.dart';

@@ -37,6 +37,7 @@ void main() {
     const structural = {
       PersonalInfo.keyCourtesy,
       PersonalInfo.keyCountryCode,
+      PersonalInfo.keySubdivision,
     };
     final real = _real.toDb();
     final after = shown.toDb();

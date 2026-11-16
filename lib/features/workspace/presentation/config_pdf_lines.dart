@@ -6,6 +6,7 @@
 import 'package:intl/intl.dart';
 
 import '../../../core/i18n/rate_format.dart';
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../core/time/work_hours.dart';
 import '../domain/closure_day.dart';
 import '../domain/site.dart';
@@ -58,7 +59,12 @@ List<String> configSites(List<Site> sites) => [
       s.name,
       [
         s.street,
-        [s.postalCode, s.city].where((p) => p.isNotEmpty).join(' '),
+        // #3649 -- in the order of the site's country.
+        ...postalLayoutOf(s.countryCode).render(
+          postalCode: s.postalCode,
+          city: s.city,
+          capitals: false,
+        ),
       ].where((p) => p.isNotEmpty).join(', '),
     ].where((p) => p.isNotEmpty).join(' — '),
 ];

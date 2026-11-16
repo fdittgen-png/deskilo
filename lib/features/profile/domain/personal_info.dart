@@ -14,6 +14,8 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
+
 // The vocabulary moved into the money kernel (#3402), where the invoice's report
 // strings read it; importers of this file keep reading it here until the sweep.
 export 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show Courtesy;
@@ -28,6 +30,7 @@ class PersonalInfo {
     this.street = '',
     this.postalCode = '',
     this.city = '',
+    this.subdivision = '',
     this.countryCode = '',
     this.phone = '',
     this.email = '',
@@ -50,6 +53,11 @@ class PersonalInfo {
   final String postalCode;
   final String city;
 
+  /// #3649 -- the region of the address (a state, province, county or canton),
+  /// as its code: the second part of ISO 3166-2 (`NY`, `MI`). Written where the
+  /// country's postal layout places it.
+  final String subdivision;
+
   /// ISO 3166-1 alpha-2, upper case.
   final String countryCode;
   final String phone;
@@ -71,6 +79,7 @@ class PersonalInfo {
       street.isEmpty &&
       postalCode.isEmpty &&
       city.isEmpty &&
+      subdivision.isEmpty &&
       countryCode.isEmpty &&
       phone.isEmpty &&
       email.isEmpty &&
@@ -135,24 +144,28 @@ class PersonalInfo {
   ///
   /// [courtesyWord] is that title in the reader's language; empty
   /// prints the name alone, which is what [Courtesy.none] means.
+  ///
+  /// #3649 -- the lines below the street follow the postal layout of the
+  /// address's country (the workspace's when the address names none), and a
+  /// country abroad is named by [countryName] in the document's language, in
+  /// capitals; without it, by its code.
   String postalBlock({
     String workspaceCountry = '',
     String? nameAbove,
     String courtesyWord = '',
+    String Function(String code)? countryName,
   }) {
     final above = (nameAbove ?? fullName).trim();
     final person = personName;
     return _postalBlock(
+      this,
       // Never repeat the line printed above; the company is normally it.
       company: company.trim() == above ? '' : company,
       person: person.isEmpty || person == above
           ? ''
           : [courtesyWord.trim(), person].where((p) => p.isNotEmpty).join(' '),
-      street: street,
-      postalCode: postalCode,
-      city: city,
-      countryCode: countryCode,
       workspaceCountry: workspaceCountry,
+      countryName: countryName,
     );
   }
 
@@ -177,7 +190,7 @@ class PersonalInfo {
     street: street ?? this.street,
     postalCode: postalCode ?? this.postalCode,
     city: city ?? this.city,
-    countryCode: countryCode ?? this.countryCode,
+    subdivision: subdivision, countryCode: countryCode ?? this.countryCode,
     phone: phone ?? this.phone,
     email: email ?? this.email,
     vatId: vatId ?? this.vatId,
@@ -193,6 +206,7 @@ class PersonalInfo {
     street: street.trim(),
     postalCode: postalCode.trim(),
     city: city.trim(),
+    subdivision: subdivision.trim().toUpperCase(),
     countryCode: countryCode.trim().toUpperCase(),
     phone: phone.trim(),
     email: email.trim(),
@@ -209,6 +223,7 @@ class PersonalInfo {
   static const String keyStreet = 'street';
   static const String keyPostalCode = 'postal_code';
   static const String keyCity = 'city';
+  static const String keySubdivision = 'subdivision';
   static const String keyCountryCode = 'country_code';
   static const String keyPhone = 'phone';
   static const String keyEmail = 'email';
@@ -223,6 +238,7 @@ class PersonalInfo {
     street: db[keyStreet] as String? ?? '',
     postalCode: db[keyPostalCode] as String? ?? '',
     city: db[keyCity] as String? ?? '',
+    subdivision: db[keySubdivision] as String? ?? '',
     countryCode: db[keyCountryCode] as String? ?? '',
     phone: db[keyPhone] as String? ?? '',
     email: db[keyEmail] as String? ?? '',
@@ -238,6 +254,7 @@ class PersonalInfo {
     keyStreet: street,
     keyPostalCode: postalCode,
     keyCity: city,
+    keySubdivision: subdivision,
     keyCountryCode: countryCode,
     keyPhone: phone,
     keyEmail: email,
@@ -255,6 +272,7 @@ class PersonalInfo {
       other.street == street &&
       other.postalCode == postalCode &&
       other.city == city &&
+      other.subdivision == subdivision &&
       other.countryCode == countryCode &&
       other.phone == phone &&
       other.email == email &&
@@ -270,6 +288,7 @@ class PersonalInfo {
     street,
     postalCode,
     city,
+    subdivision,
     countryCode,
     phone,
     email,
@@ -288,28 +307,26 @@ String _fullName(String first, String last) {
   return '$f $l';
 }
 
-String _postalBlock({
+String _postalBlock(
+  PersonalInfo info, {
   required String company,
   required String person,
-  required String street,
-  required String postalCode,
-  required String city,
-  required String countryCode,
   required String workspaceCountry,
+  String Function(String code)? countryName,
 }) {
-  final locality = [
-    postalCode.trim(),
-    city.trim().toUpperCase(),
-  ].where((p) => p.isNotEmpty).join(' ');
-  final abroad =
-      countryCode.trim().isNotEmpty &&
-      workspaceCountry.trim().isNotEmpty &&
-      countryCode.trim().toUpperCase() != workspaceCountry.trim().toUpperCase();
+  final country = info.countryCode.trim().toUpperCase();
+  final home = workspaceCountry.trim().toUpperCase();
+  final abroad = country.isNotEmpty && home.isNotEmpty && country != home;
+  final layout = postalLayoutOf(country.isNotEmpty ? country : home);
   return [
     company.trim(),
     person.trim(),
-    street.trim(),
-    locality,
-    if (abroad) countryCode.trim().toUpperCase(),
+    info.street.trim(),
+    ...layout.render(
+      postalCode: info.postalCode,
+      city: info.city,
+      region: info.subdivision,
+    ),
+    if (abroad) (countryName?.call(country) ?? country).toUpperCase(),
   ].where((l) => l.isNotEmpty).join('\n');
 }

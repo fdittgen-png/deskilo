@@ -18,6 +18,7 @@ import 'package:meta/meta.dart';
 
 import '../../../core/i18n/money_format.dart';
 import '../../../core/i18n/rate_format.dart';
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../profile/domain/personal_info.dart';
 import '../../workspace/domain/payment_instructions.dart';
 import '../../workspace/domain/workspace.dart';
@@ -164,6 +165,7 @@ String clientAddressOf(
     street: buyer.street,
     postalCode: buyer.postalCode,
     city: buyer.city,
+    subdivision: buyer.subdivision,
     countryCode: buyer.country,
   ).postalBlock(
     workspaceCountry: workspace?.countryCode ?? '',
@@ -173,6 +175,8 @@ String clientAddressOf(
     nameAbove: clientNameOf(invoice),
     // #912 — in the reader's language, from the code the party froze.
     courtesyWord: strings.courtesyWord(Courtesy.fromWire(buyer.courtesy)),
+    // #3649 -- a client abroad is named in the reader's language.
+    countryName: strings.countryName,
   );
 }
 
@@ -400,9 +404,16 @@ String siteNameOf(Invoice invoice) {
 String siteAddressOf(Invoice invoice) {
   final seller = invoice.sellerParty;
   if (seller == null || seller.siteDefault) return '';
-  return [seller.street, '${seller.postalCode} ${seller.city}'.trim()]
-      .where((l) => l.isNotEmpty)
-      .join(', ');
+  // #3649 -- in the order of the site's country, written as given.
+  return [
+    seller.street.trim(),
+    ...postalLayoutOf(seller.country).render(
+      postalCode: seller.postalCode,
+      city: seller.city,
+      region: seller.subdivision,
+      capitals: false,
+    ),
+  ].where((l) => l.isNotEmpty).join(', ');
 }
 
 /// #946 — the other sites the month's attendance stood at.

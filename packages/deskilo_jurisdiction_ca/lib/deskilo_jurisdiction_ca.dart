@@ -4,4 +4,5 @@ library;
 
 export 'src/ca_archive.dart';
 export 'src/ca_invoice_mentions.dart';
+export 'src/ca_postal_layout.dart';
 export 'src/ca_vat_filing.dart';
