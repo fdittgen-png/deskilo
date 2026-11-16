@@ -20910,7 +20910,7 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerRegion": "The customer's region, for a customer in the business's own country: the province in Italy, the county in Romania, the state or province in the United States or Canada",
+  "invoiceMissingBuyerRegion": "The customer's region, for a customer in the business's own country: the province in Italy, the county in Romania, the state or province in the United States or Canada — enter it in the customer's address",
   "@invoiceMissingBuyerRegion": {
     "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
   },
@@ -20958,7 +20958,7 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerRegion": "The region of the business's address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada",
+  "invoiceMissingSellerRegion": "The region of the business's address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada — enter it in the legal identity, under “E-invoicing address”",
   "@invoiceMissingSellerRegion": {
     "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
   },

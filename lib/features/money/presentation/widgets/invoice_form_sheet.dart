@@ -26,13 +26,12 @@ import '../../domain/invoice_issue_readiness.dart';
 import '../../domain/invoice_mail.dart' show invoiceEmailKey;
 import '../../providers/money_providers.dart';
 import '../e_invoice_identity.dart';
-import '../invoice_issue_block_text.dart';
 import '../invoice_original_document.dart';
 import '../issue_judgement.dart';
 import 'einvoice_gaps_warning.dart';
 import 'invoice_correction_reason_field.dart';
 import 'invoice_issue_runner.dart';
-import 'invoice_missing_sales_tax.dart';
+import 'invoice_missing_banner.dart';
 import 'invoice_preview_body.dart';
 
 /// Issues an invoice — plain, or a REPLACEMENT (0061) of [replaces]. Since
@@ -330,15 +329,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         correctionReason: _correctionReason,
       );
 
-  Widget _missingBanner(InvoiceIssueBlock block) {
-    final l10n = widget.l10n;
-    return InlineBanner(
-            key: const ValueKey('invoice-missing-essentials'),
-            icon: Icons.rule_folder_outlined,
-            text: '${invoiceIssueBlockTitle(l10n, block)}:\n'
-                '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
-          );
-  }
+  Widget _missingBanner(InvoiceIssueBlock block) =>
+      InvoiceMissingBanner(l10n: widget.l10n, block: block, missing: _missing);
 
   /// #4058 — the button names the amount; pressed only on a read preview.
   Widget _submitButton(BuildContext context, List<InvoiceLine> lines) {

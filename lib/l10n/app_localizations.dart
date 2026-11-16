@@ -25658,7 +25658,7 @@ abstract class AppLocalizations {
   /// #4105 a missing essential: the customer's region, for a customer in the seller's country
   ///
   /// In en, this message translates to:
-  /// **'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada'**
+  /// **'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada — enter it in the customer\'s address'**
   String get invoiceMissingBuyerRegion;
 
   /// #2356: invoiceMissingBuyerTaxId
@@ -25730,7 +25730,7 @@ abstract class AppLocalizations {
   /// #4105 a missing essential: the seller's region, which the country's invoices require
   ///
   /// In en, this message translates to:
-  /// **'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada'**
+  /// **'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada — enter it in the legal identity, under “E-invoicing address”'**
   String get invoiceMissingSellerRegion;
 
   /// #2356: invoiceMissingSellerTaxNumber

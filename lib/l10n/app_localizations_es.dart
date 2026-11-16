@@ -16108,7 +16108,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingBuyerRegion =>
-      'La región del cliente, para un cliente en el país de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia en Estados Unidos o Canadá';
+      'La región del cliente, para un cliente en el país de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia en Estados Unidos o Canadá — indíquela en la dirección del cliente';
 
   @override
   String get invoiceMissingBuyerTaxId =>
@@ -16156,7 +16156,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerRegion =>
-      'La región de la dirección de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia de un vendedor en Estados Unidos o Canadá';
+      'La región de la dirección de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia de un vendedor en Estados Unidos o Canadá — indíquela en la identidad legal, en «Dirección de facturación electrónica»';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

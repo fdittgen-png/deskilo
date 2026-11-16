@@ -16179,7 +16179,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMissingBuyerRegion =>
-      'La région du client, pour un client dans le pays de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province aux États-Unis ou au Canada';
+      'La région du client, pour un client dans le pays de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province aux États-Unis ou au Canada — à saisir dans l\'adresse du client';
 
   @override
   String get invoiceMissingBuyerTaxId =>
@@ -16227,7 +16227,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMissingSellerRegion =>
-      'La région de l\'adresse de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province d\'un vendeur aux États-Unis ou au Canada';
+      'La région de l\'adresse de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province d\'un vendeur aux États-Unis ou au Canada — à saisir dans l\'identité légale, sous « Adresse de facturation électronique »';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

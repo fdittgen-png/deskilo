@@ -9567,7 +9567,7 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerRegion": "Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada",
+  "invoiceMissingBuyerRegion": "Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada — in der Anschrift des Kunden eintragen",
   "@invoiceMissingBuyerRegion": {
     "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
   },
@@ -9612,7 +9612,7 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerRegion": "Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada",
+  "invoiceMissingSellerRegion": "Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada — in der rechtlichen Identität unter „E-Rechnungsadresse“ eintragen",
   "@invoiceMissingSellerRegion": {
     "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
   },

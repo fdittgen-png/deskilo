@@ -126,4 +126,37 @@ revoke execute on function public.invoice_issue_draft(uuid, uuid, text, text, uu
 grant execute on function public.invoice_issue_draft(uuid, uuid, text, text, uuid, text)
   to authenticated, service_role;
 
+-- ── 5. a business without its own region is told before it issues ──────
+-- The readiness of a space (and with it the setup's legal identity step)
+-- counts the region the country's invoices require of the seller: the same
+-- rule, the same key, before the first issue asks for it.
+create or replace function public.workspace_lacks_region(p_workspace_id uuid)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select coalesce('seller_region' = any(public.invoice_region_missing(
+           jsonb_build_object('subdivision', coalesce(w.invoice_legal ->> 'subdivision', '')),
+           '{"country": "-"}'::jsonb, w.country_code)), false)
+    from public.workspaces w where w.id = p_workspace_id
+$fn$;
+revoke execute on function public.workspace_lacks_region(uuid) from public, anon, authenticated;
+
+do $migration$
+declare
+  v_def text := pg_get_functiondef('public.workspace_readiness(uuid)'::regprocedure);
+  v_old text := $r$         'state', case when v_identity then 'ready' else 'needs_configuration' end,
+         'reason', case when not v_identity then 'invoicing_needs_identity' end))
+$r$;
+  v_new text := $r$         'state', case when v_identity and not public.workspace_lacks_region(p_workspace_id)
+                       then 'ready' else 'needs_configuration' end,
+         'reason', case when not v_identity then 'invoicing_needs_identity'
+                        when public.workspace_lacks_region(p_workspace_id) then 'seller_region' end))
+$r$;
+begin
+  if position(v_new in v_def) > 0 then return; end if;
+  if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
+    raise exception 'workspace_readiness no longer has the shape 0792 extends' using errcode = 'P0001';
+  end if;
+  execute replace(v_def, v_old, v_new);
+end
+$migration$;
+
 select public.set_deskilo_schema_version(792);

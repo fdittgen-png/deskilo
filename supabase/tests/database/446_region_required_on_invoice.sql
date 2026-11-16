@@ -6,7 +6,7 @@
 -- country whose invoices do not require it refuses nothing. The facts come
 -- from postal_region_rules(), generated from the app's layouts. Rolled back.
 begin;
-select plan(13);
+select plan(15);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004105' || lpad(n::text, 4, '0'))::uuid;
@@ -134,6 +134,17 @@ select is(current_setting('t.draft')::jsonb -> 'missing', '[]'::jsonb,
 select is((select parties from public.invoices where id = current_setting('t.inv')::uuid),
   current_setting('t.draft')::jsonb -> 'parties',
   'the draft''s parties are the parties the issued invoice stores');
+
+-- ── the business is told before it issues: its readiness names the region ──
+update public.workspaces set legal_id = '01234567890', street = 'Via Roma 2' where id = pg_temp.u(101);
+select is((select r ->> 'reason' from jsonb_array_elements(public.workspace_readiness(pg_temp.u(101))) r
+            where r ->> 'section' = 'legal_identity'), 'seller_region',
+  'a business whose invoices require its own region is told by its readiness before it issues');
+update public.workspaces set invoice_legal = coalesce(invoice_legal, '{}'::jsonb) || '{"subdivision": "MI"}'
+ where id = pg_temp.u(101);
+select isnt((select r ->> 'reason' from jsonb_array_elements(public.workspace_readiness(pg_temp.u(101))) r
+              where r ->> 'section' = 'legal_identity'), 'seller_region',
+  'once its province is entered, its readiness no longer names it');
 
 select * from finish();
 rollback;

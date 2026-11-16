@@ -9567,7 +9567,7 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
-  "invoiceMissingBuyerRegion": "La région du client, pour un client dans le pays de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province aux États-Unis ou au Canada",
+  "invoiceMissingBuyerRegion": "La région du client, pour un client dans le pays de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province aux États-Unis ou au Canada — à saisir dans l'adresse du client",
   "@invoiceMissingBuyerRegion": {
     "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
   },
@@ -9612,7 +9612,7 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
-  "invoiceMissingSellerRegion": "La région de l'adresse de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province d'un vendeur aux États-Unis ou au Canada",
+  "invoiceMissingSellerRegion": "La région de l'adresse de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province d'un vendeur aux États-Unis ou au Canada — à saisir dans l'identité légale, sous « Adresse de facturation électronique »",
   "@invoiceMissingSellerRegion": {
     "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
   },
