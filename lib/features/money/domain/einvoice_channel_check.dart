@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import 'einvoice_gateway.dart';
+
 /// #2358 — one thing a CHANNEL needs that the bare EN 16931 file does
 /// not: the download stays valid without it, but the network refuses the
 /// document. Judged per format, before the Send button is offered — the
@@ -96,4 +98,23 @@ List<ChannelGap> _regionGaps(
     if (lacks(seller)) ChannelGap.sellerSubdivision,
     if (lacks(buyer)) ChannelGap.buyerSubdivision,
   ];
+}
+
+/// #4105 -- what the configured channel will still need from [seller] and
+/// [buyer]: the ONE judgement, asked before issuing (the draft's parties) and
+/// before sending (the parties the invoice stored), so the two can never
+/// disagree. Nothing when no channel is configured.
+List<ChannelGap> channelGapsFor(
+  EInvoiceGatewayConfig gateway, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  String iban = '',
+}) {
+  if (!gateway.configured) return const [];
+  final format = eInvoiceFormatFor(
+    provider: gateway.provider,
+    destination: 'government',
+    buyerEndpointScheme: buyer.endpointScheme,
+  );
+  return channelGaps(format, seller: seller, buyer: buyer, iban: iban);
 }

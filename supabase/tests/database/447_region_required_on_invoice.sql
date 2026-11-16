@@ -6,11 +6,12 @@
 -- country whose invoices do not require it refuses nothing. The facts come
 -- from postal_region_rules(), generated from the app's layouts. Rolled back.
 begin;
-select plan(8);
+select plan(10);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004105' || lpad(n::text, 4, '0'))::uuid;
 $$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 values (pg_temp.u(1), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
         'region4105@example.test', '', now(), now(), now());
@@ -65,6 +66,28 @@ select is(pg_temp.regions(103,
     '{"street": "1 Main St", "city": "Boston", "country": "US", "subdivision": "MA"}',
     '{"name": "Customer", "street": "2 Elm St", "city": "Boston", "country": "US", "subdivision": "MA"}'),
   '', 'and once the states are entered, nothing about a region is missing');
+
+-- ── the draft an issue would store, before the number is taken ──
+insert into public.members (id, workspace_id, managed_name, status, subscription_pct, overage_policy, joined_at)
+values (pg_temp.u(301), pg_temp.u(102), 'Client', 'active', 100, 'blocked', '2026-01-01');
+insert into public.managed_identities (workspace_id, member_id, identity)
+values (pg_temp.u(102), pg_temp.u(301),
+        public.managed_identity_clean('{"first_name": "Ada", "last_name": "Client", "street": "2 rue du Bac", "city": "Paris", "postal_code": "75007"}'));
+update public.workspaces set street = '1 rue de la Paix', city = 'Paris', postal_code = '75002'
+ where id = pg_temp.u(102);
+delete from public.fee_bands where workspace_id = pg_temp.u(102);
+insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage_fee_cents)
+values (pg_temp.u(102), 0, 100, 3500, 1000);
+select set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
+set local role authenticated;
+select set_config('t.draft', public.invoice_issue_draft(pg_temp.u(102), pg_temp.u(301), '2026-09')::text, true);
+select set_config('t.inv', public.create_invoice(pg_temp.u(102), pg_temp.u(301), '2026-09')::text, true);
+reset role;
+select is(current_setting('t.draft')::jsonb -> 'missing', '[]'::jsonb,
+  'the draft of an invoice that can be issued names nothing missing');
+select is((select parties from public.invoices where id = current_setting('t.inv')::uuid),
+  current_setting('t.draft')::jsonb -> 'parties',
+  'the draft''s parties are the parties the issued invoice stores');
 
 select * from finish();
 rollback;

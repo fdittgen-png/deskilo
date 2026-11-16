@@ -79,4 +79,49 @@ $r$)) v(f, o, n)
 end
 $migration$;
 
+-- ── 4. the draft an issue would store, asked before issuing ─────────────
+-- invoice_issue_readiness (0416) dry-runs create_invoice and answers what is
+-- missing. This dry run answers the same, and when nothing is missing, the
+-- parties the invoice would store: the app judges what the configured channel
+-- will need on exactly those, before the number is taken, with the function
+-- it uses before sending (#4105, one source).
+create or replace function public.invoice_issue_draft(
+  p_workspace_id uuid, p_member_id uuid, p_period text,
+  p_kind text default 'full', p_replaces uuid default null,
+  p_correction_reason text default ''
+) returns jsonb
+language plpgsql security definer set search_path = public as $fn$
+declare
+  v_detail text;
+  v_id uuid;
+  v_parties jsonb;
+begin
+  if auth.uid() is null
+     or not public.has_permission(p_workspace_id, 'issueInvoices') then
+    raise exception 'admins may not issue invoices here' using errcode = 'DKN01';
+  end if;
+  begin
+    v_id := public.create_invoice(
+      p_workspace_id, p_member_id, p_period, p_replaces, false, p_kind, true,
+      '', '', p_correction_reason);
+    select i.parties into v_parties from public.invoices i where i.id = v_id;
+    -- Issued inside this block: undo it, carrying the parties out.
+    raise exception using message = 'dry run', errcode = 'DKI02',
+      detail = coalesce(v_parties, '{}'::jsonb)::text;
+  exception
+    when sqlstate 'DKI01' then
+      get stacked diagnostics v_detail = pg_exception_detail;
+      return jsonb_build_object('missing', to_jsonb(string_to_array(v_detail, ',')),
+                                'parties', null);
+    when sqlstate 'DKI02' then
+      get stacked diagnostics v_detail = pg_exception_detail;
+      return jsonb_build_object('missing', '[]'::jsonb, 'parties', v_detail::jsonb);
+  end;
+end;
+$fn$;
+revoke execute on function public.invoice_issue_draft(uuid, uuid, text, text, uuid, text)
+  from public, anon;
+grant execute on function public.invoice_issue_draft(uuid, uuid, text, text, uuid, text)
+  to authenticated, service_role;
+
 select public.set_deskilo_schema_version(793);
