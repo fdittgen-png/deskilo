@@ -46,8 +46,8 @@ class DirectoryMemberRow extends StatelessWidget {
     final tile = ListTile(
       key: const ValueKey('directory-whatsapp'),
       // #4069 — compact: name and role, then the status in text and icon.
+      // Dense text, not a denser layout: its buttons keep 48 dp.
       dense: true,
-      visualDensity: VisualDensity.compact,
       leading: _avatar(theme),
       title: Row(
         children: [
