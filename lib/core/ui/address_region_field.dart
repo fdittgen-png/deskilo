@@ -6,11 +6,11 @@
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../core/jurisdiction/installed_postal_layouts.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_spacing.dart';
-import '../../../../core/ui/form_kit.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../l10n/app_localizations.dart';
+import '../jurisdiction/installed_postal_layouts.dart';
+import '../l10n/context_l10n.dart';
+import '../theme/app_spacing.dart';
+import 'form_kit.dart';
 
 /// The region field of an address in [country].
 class AddressRegionField extends StatefulWidget {

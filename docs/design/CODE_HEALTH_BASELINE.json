@@ -871,7 +871,6 @@
     {"id":"lib/features/workspace/presentation/screens/onboarding_screen.dart#_OnboardingScreenState.build(BuildContext context)","cog":30,"cyc":23,"len":84,"params":1},
     {"id":"lib/features/workspace/presentation/screens/roles_screen_labels.dart#permissionLabel(AppLocalizations l10n,WorkspacePermission permission)","cog":1,"cyc":27,"len":54,"params":2},
     {"id":"lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen.build(BuildContext context,WidgetRef ref)","cog":46,"cyc":20,"len":87,"params":2},
-    {"id":"lib/features/workspace/presentation/screens/sites_screen.dart#SitesScreen._editSite(BuildContext context,WidgetRef ref,Site? site)","cog":19,"cyc":26,"len":107,"params":3},
     {"id":"lib/features/workspace/presentation/screens/workspace_code_screen.dart#_WorkspaceCodeScreenState.build(BuildContext context)","cog":29,"cyc":19,"len":211,"params":1},
     {"id":"lib/features/workspace/presentation/widgets/bi_charts.dart#_EvolutionPainter.paint(Canvas canvas,Size size)","cog":48,"cyc":32,"len":136,"params":2},
     {"id":"lib/features/workspace/presentation/widgets/bi_dashboard_content.dart#biDashboardContent({required BiModule module,required BiModuleView view,required BiResult result,required BiSeries series,required BiDashboardExtras extras,required AppLocalizations l10n,required String locale,required DateTime from,required DateTime to,required DateTime now})","cog":0,"cyc":1,"len":24,"params":10},

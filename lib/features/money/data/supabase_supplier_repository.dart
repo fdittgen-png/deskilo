@@ -15,7 +15,7 @@ class SupabaseSupplierRepository implements SupplierRepository {
         .from('suppliers')
         .select(
           'id, supplier_number, name, tax_id_entered, tax_identifier, '
-          'tax_id_kind, street, postal_code, city, country_code, contact, '
+          'tax_id_kind, street, postal_code, city, country_code, subdivision, contact, '
           'status, bank_revision',
         )
         .eq('workspace_id', workspaceId)
@@ -67,6 +67,7 @@ class SupabaseSupplierRepository implements SupplierRepository {
         'p_postal_code': draft.postalCode,
         'p_city': draft.city,
         'p_country_code': draft.countryCode,
+        'p_subdivision': draft.subdivision,
         'p_contact': draft.contact,
         'p_number': draft.number,
       },

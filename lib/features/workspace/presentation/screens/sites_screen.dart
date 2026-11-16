@@ -15,6 +15,7 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../domain/site.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/site_edit_dialog.dart';
 
 class SitesScreen extends ConsumerWidget {
   const SitesScreen({super.key});
@@ -111,70 +112,12 @@ class SitesScreen extends ConsumerWidget {
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final name = TextEditingController(text: site?.name ?? '');
-    final street = TextEditingController(text: site?.street ?? '');
-    final postal = TextEditingController(text: site?.postalCode ?? '');
-    final city = TextEditingController(text: site?.city ?? '');
-    final country = TextEditingController(
-        text: site?.countryCode ?? workspace.countryCode);
-    final legal = TextEditingController(text: site?.legalId ?? '');
-    final vat = TextEditingController(text: site?.vatId ?? '');
-    final exemption = TextEditingController(text: site?.taxExemptionReason ?? '');
-    Widget field(String key, TextEditingController c, String label) => TextField(
-          key: ValueKey(key),
-          controller: c,
-          decoration: InputDecoration(labelText: label),
-        );
-    final result = await showDialog<String>(
+    final result = await showDialog<SiteEditResult>(
       context: context,
-      builder: (context) => AlertDialog(
-        title: Text(site == null
-            ? (l10n.sitesAdd)
-            : site.name),
-        content: SingleChildScrollView(
-          child: Column(mainAxisSize: MainAxisSize.min, children: [
-            field('site-name', name, l10n.siteName),
-            field('site-street', street, l10n.siteStreet),
-            field('site-postal', postal, l10n.sitePostalCode),
-            field('site-city', city, l10n.siteCity),
-            field('site-country', country, l10n.siteCountry),
-            field('site-legal', legal,
-                l10n.siteLegalId),
-            if (site != null && !site.isDefault) ...[
-              const SizedBox(height: AppSpacing.md),
-              Text(
-                l10n.siteRegistrationHint,
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-              field('site-vat', vat, l10n.siteVatId),
-              field('site-exemption', exemption,
-                  l10n.siteExemptionReason),
-            ],
-            if (site != null && !site.isDefault) ...[
-              const SizedBox(height: AppSpacing.md),
-              Text(l10n.siteDeleteHint,
-                  style: Theme.of(context).textTheme.bodySmall),
-            ],
-          ]),
-        ),
-        actions: [
-          if (site != null && !site.isDefault)
-            TextButton(
-              key: const ValueKey('site-delete'),
-              onPressed: () => Navigator.of(context).pop('delete'),
-              child: Text(l10n.siteDelete),
-            ),
-          TextButton(
-            key: const ValueKey('sites-cancel'),
-            onPressed: () => Navigator.of(context).pop(),
-            child: Text(l10n.commonCancel),
-          ),
-          FilledButton(
-            key: const ValueKey('site-save'),
-            onPressed: () => Navigator.of(context).pop('save'),
-            child: Text(l10n.commonSave),
-          ),
-        ],
+      builder: (_) => SiteEditDialog(
+        site: site,
+        workspaceId: workspace.id,
+        workspaceCountry: workspace.countryCode,
       ),
     );
     if (result == null || !context.mounted) return;
@@ -185,32 +128,18 @@ class SitesScreen extends ConsumerWidget {
       message: 'site save failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        if (result == 'delete') {
-          await repo.deleteSite(site!.id);
+        if (result.delete) {
+          await repo.deleteSite(result.draft.id);
           return;
         }
-        final draft = Site(
-          id: site?.id ?? '',
-          workspaceId: workspace.id,
-          name: name.text.trim(),
-          street: street.text.trim(),
-          postalCode: postal.text.trim(),
-          city: city.text.trim(),
-          countryCode: country.text.trim().toUpperCase(),
-          legalId: legal.text.trim(),
-          vatId: vat.text.trim(),
-          taxExemptionReason: exemption.text.trim(),
-          isDefault: site?.isDefault ?? false,
-          sortOrder: site?.sortOrder ?? 0,
-        );
-        await repo.upsertSite(workspace.id, draft, isNew: site == null);
+        await repo.upsertSite(workspace.id, result.draft, isNew: site == null);
       },
     );
     if (!context.mounted) return;
     ref
       ..invalidate(sitesProvider)
       ..invalidate(levelsProvider);
-    if (ok && result == 'save') {
+    if (ok && !result.delete) {
       AppSnack.success(context, l10n.siteSaved);
     }
   }
