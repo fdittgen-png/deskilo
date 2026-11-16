@@ -751,14 +751,6 @@ const Map<String, String> _personaFindings = {
       'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
   '/invoices/inv-1|admin|390':
       'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
-  '/organisation/demo-organisation-atelier/overview|member|390':
-      'a control 334.0 x 47.0 dp (under 48)',
-  '/organisation/demo-organisation-atelier/overview|admin|390':
-      'a control 334.0 x 47.0 dp (under 48)',
-  '/members/managed|admin|390': 'a control 358.0 x 16.0 dp (under 48)',
-  '/members/member-2|admin|390': 'a control 165.8 x 22.0 dp (under 48)',
-  '/report-editor|admin|390':
-      'two controls 121.2 x 11.6 and 146.4 x 11.6 dp (under 48)',
   '/money/cash|admin|1440':
       'the router lands the administrator on /money/status, not on the page '
           'its golden calls open',
@@ -777,11 +769,11 @@ PageKind _kindFor(_Persona persona, String path, PageKind kind) =>
 /// carries information cut.
 Set<String> _phoneProblems(WidgetTester tester, List<String> details) {
   for (final node in tappableNodes(tester)) {
-    if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+    if (targetUnder48(node)) {
       details.add(
         'target ${node.size.width.toStringAsFixed(1)} x '
         '${node.size.height.toStringAsFixed(1)}'
-        '${node.named ? '' : ' (unnamed)'}',
+        '${node.named ? '' : ' (unnamed)'} "${node.label}"',
       );
     }
   }
@@ -1032,6 +1024,49 @@ void main() {
     expect(problems, contains('information cut'));
     expect(problems, contains('unnamed control'));
     expect(problems, contains('target under 48 dp'));
+    semantics.dispose();
+  });
+
+  // #4095 -- a control half scrolled out is measured as the control it is:
+  // its visible part is not its size. A small control inside the viewport
+  // is still named.
+  testWidgets('the phone guard measures a control cut by its viewport whole, '
+      'and still names a small one inside it', (tester) async {
+    final semantics = tester.ensureSemantics();
+    tester.view
+      ..physicalSize = const Size(390, 300)
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    Widget row(String name, double height) => InkWell(
+      onTap: () {},
+      child: SizedBox(height: height, child: Text(name)),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ListView(
+            children: [
+              row('whole', 270),
+              // 100 high, 30 dp of it in the viewport.
+              row('cut', 100),
+            ],
+          ),
+        ),
+      ),
+    );
+    final details = <String>[];
+    expect(
+      _phoneProblems(tester, details),
+      isNot(contains('target under 48 dp')),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ListView(children: [row('first', 100), row('small', 20), row('big', 400)]),
+        ),
+      ),
+    );
+    expect(_phoneProblems(tester, details), contains('target under 48 dp'));
     semantics.dispose();
   });
 }
