@@ -124,6 +124,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<InvoicePdfTemplate> fetchInvoicePdfTemplate(String workspaceId) => _templates.fetchInvoicePdfTemplate(workspaceId);
   @override Future<void> setInvoicePdfTemplate(String workspaceId, InvoicePdfTemplate template) => _templates.setInvoicePdfTemplate(workspaceId, template);
   @override Future<List<String>> listReportImages(String workspaceId) => _templates.listReportImages(workspaceId);
+  @override Future<Map<String, int>> reportImageWeights(String workspaceId) => _templates.reportImageWeights(workspaceId);
   @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => _templates.uploadReportImage(workspaceId, name: name, bytes: bytes, contentType: contentType);
   @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => _templates.fetchReportImage(workspaceId, name);
   @override Future<void> settleCreditInvoice(String invoiceId, {String note = ''}) => _commands.settleCreditInvoice(invoiceId, note: note);

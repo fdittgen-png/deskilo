@@ -55,6 +55,18 @@ class SupabaseReportTemplateRepository implements ReportTemplateRepository {
   }
 
   @override
+  Future<Map<String, int>> reportImageWeights(String workspaceId) async {
+    final entries = await _client.storage
+        .from('floor-plans')
+        .list(path: '$workspaceId/report');
+    return {
+      for (final entry in entries)
+        if (entry.name.isNotEmpty && entry.metadata?['size'] is num)
+          entry.name: (entry.metadata!['size'] as num).toInt(),
+    };
+  }
+
+  @override
   Future<void> uploadReportImage(
     String workspaceId, {
     required String name,

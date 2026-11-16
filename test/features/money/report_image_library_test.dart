@@ -16,6 +16,7 @@ import 'package:file_selector/file_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image/image.dart' as img;
 import 'package:pdf/widgets.dart' as pw;
 
 import '../../helpers/fake_money_repository.dart';
@@ -24,6 +25,9 @@ import '../../helpers/mock_providers.dart';
 final _png = base64Decode(
   'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACklEQVR4nGMAAQAABQABDQottAAAAABJRU5ErkJggg==',
 );
+
+/// A small JPEG made here: within print size, so it is stored as it is.
+final _jpeg = img.encodeJpg(img.Image(width: 8, height: 8), quality: 80);
 
 class _Images extends FakeMoneyRepository {
   String? workspace;
@@ -94,7 +98,7 @@ void main() {
   testWidgets(
     'upload replaces cached bytes and remains reusable on reopening',
     (tester) async {
-      final repository = _Images()..reportImages['logo-jpg'] = _png;
+      final repository = _Images()..reportImages['logo-jpg'] = _jpeg;
       late WidgetRef captured;
       String? selected;
       await tester.pumpWidget(
@@ -106,7 +110,7 @@ void main() {
             ),
             filePickerProvider.overrideWithValue(
               (group) async =>
-                  XFile.fromData(_png, name: 'logo.jpg', path: 'logo.jpg'),
+                  XFile.fromData(_jpeg, name: 'logo.jpg', path: 'logo.jpg'),
             ),
           ],
           child: MaterialApp(
@@ -143,7 +147,7 @@ void main() {
       );
       expect(
         await captured.read(reportImageBytesProvider('logo-jpg').future),
-        _png,
+        _jpeg,
       );
       await tester.tap(find.byKey(const ValueKey('report-image-logo-jpg')));
       await tester.pumpAndSettle();

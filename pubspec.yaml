@@ -127,6 +127,11 @@ dependencies:
   # Bill PDF export (#133) — pure Dart. Deliberately NOT the
   # `printing` package: it pulls platform channels we don't need.
   pdf: ^3.12.0
+  # #3984 — a report picture is brought to print size when it is added
+  # (JPEG encoding, and whether a picture uses transparency); also the
+  # documentation screenshot pipeline (tool/media.dart, #1017). The PDF
+  # writer ships it already. Same version as the packages' overrides.
+  image: ^4.9.2
   path_provider: ^2.1.6
 
   # Workspace configuration export/import (#164) — pure Dart, permissive,
@@ -162,10 +167,6 @@ dependencies:
   phone_numbers_parser: ^9.0.29
 
 dev_dependencies:
-  # #1017 — the documentation screenshot pipeline (tool/media.dart):
-  # merge, crop, downscale. Tool-only; the app never decodes an image
-  # itself.
-  image: ^4.9.2
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0

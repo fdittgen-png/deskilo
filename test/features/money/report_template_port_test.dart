@@ -35,6 +35,12 @@ class _Templates implements ReportTemplateRepository {
   }
 
   @override
+  Future<Map<String, int>> reportImageWeights(String workspaceId) async {
+    calls.add('weights:$workspaceId');
+    return const {'logo.png': 1};
+  }
+
+  @override
   Future<void> uploadReportImage(
     String workspaceId, {
     required String name,

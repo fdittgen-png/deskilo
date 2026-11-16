@@ -16252,7 +16252,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceOriginalTooLarge =>
-      'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.';
+      'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. The picture library lists the pictures that are larger than they print and brings them to print size, one by one.';
 
   @override
   String invoiceOriginalsCouldNotKeep(int count) {
@@ -28107,6 +28107,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportImageInvalid => 'The file is not a usable image';
 
   @override
+  String get reportImagePreparing => 'Preparing the picture for print…';
+
+  @override
   String reportImageProblem(String name, String reason) {
     return '$name: $reason';
   }
@@ -28130,12 +28133,37 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reportImageUpload => 'Upload image';
 
   @override
+  String reportImagesBringFailed(String names) {
+    return 'These pictures were not changed and are stored as they were: $names';
+  }
+
+  @override
+  String get reportImagesBringToPrint => 'Bring to print size';
+
+  @override
+  String get reportImagesBringing => 'Bringing the pictures to print size…';
+
+  @override
   String get reportImagesEmpty =>
       'No image yet — upload your logo, a stamp or a signature and reference it with ![name].';
 
   @override
   String get reportImagesLoadFailed =>
       'Could not load report images. Try again.';
+
+  @override
+  String get reportImagesOpenLibrary => 'Open the picture library';
+
+  @override
+  String reportImagesOversized(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count stored pictures are larger than they print',
+      one: '1 stored picture is larger than it prints',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reportImagesTitle => 'Report images';

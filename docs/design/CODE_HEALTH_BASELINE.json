@@ -201,7 +201,7 @@
 
       "members": 3,
 
-      "money": 8,
+      "money": 7,
 
       "plan": 2,
 
@@ -266,7 +266,7 @@
 
       "money -> profile": 9,
 
-      "money -> workspace": 142,
+      "money -> workspace": 141,
 
       "plan -> money": 3,
 
