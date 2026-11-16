@@ -52,8 +52,10 @@ create index if not exists personal_invoice_group_items_user
 
 alter table public.personal_invoice_groups enable row level security;
 alter table public.personal_invoice_group_items enable row level security;
-revoke all on public.personal_invoice_groups from anon;
-revoke all on public.personal_invoice_group_items from anon;
+-- Exactly the commands a policy allows: a reference is filed or removed,
+-- never changed.
+revoke all on public.personal_invoice_groups from anon, authenticated;
+revoke all on public.personal_invoice_group_items from anon, authenticated;
 grant select, insert, update, delete on public.personal_invoice_groups to authenticated;
 grant select, insert, delete on public.personal_invoice_group_items to authenticated;
 
