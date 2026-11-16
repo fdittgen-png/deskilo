@@ -116,7 +116,7 @@ class TaskWizardScreen extends ConsumerWidget {
           TaskWizardSectionHeader(
             key: const ValueKey('task-wizard-recordings'),
             title: l10n.taskWizardRecordings,
-            action: FilledButton.icon(
+            action: FilledButton.tonalIcon(
               key: const ValueKey('task-wizard-record'),
               onPressed: () => context.push(taskRecorderRoute),
               icon: const Icon(Icons.fiber_manual_record_outlined),
