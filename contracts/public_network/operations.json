@@ -78,8 +78,44 @@
         }
       }
     },
+    "PublicService": {
+      "description": "#3553: a service the business offers, published only while it is active and marked public: its name, category and duration, and its price in minor units of its own currency with what that price means for tax (included: the price contains the tax; excluded: a tax is added at the sale; none: no tax applies). Nothing is converted.",
+      "fields": {
+        "name": {
+          "type": "text",
+          "required": true,
+          "maxLength": 80
+        },
+        "category": {
+          "type": "text",
+          "maxLength": 200
+        },
+        "duration_minutes": {
+          "type": "integer",
+          "min": 0
+        },
+        "price_minor": {
+          "type": "integer",
+          "required": true,
+          "min": 0
+        },
+        "currency": {
+          "type": "currency",
+          "required": true
+        },
+        "tax_treatment": {
+          "type": "enum",
+          "required": true,
+          "values": [
+            "included",
+            "excluded",
+            "none"
+          ]
+        }
+      }
+    },
     "PublicWorkspaceDocument": {
-      "description": "The projection the owner approved for public display, plus the workspace name, currency, booking unit and consenting contacts. No invitation code, plan, occupancy, price, internal note or operator stamp.",
+      "description": "The projection the owner approved for public display, plus the workspace name, currency, booking unit and consenting contacts. Since #3553 also its kinds, the services it marked public (each price in its own currency with its tax treatment) and whether it takes inquiries. No invitation code, plan, occupancy, internal note or operator stamp.",
       "must_understand": "must_understand",
       "fields": {
         "name": {
@@ -158,6 +194,18 @@
           "type": "array",
           "items": "PublicContact",
           "maxItems": 100
+        },
+        "kinds": {
+          "type": "string_list",
+          "maxItems": 10
+        },
+        "services": {
+          "type": "array",
+          "items": "PublicService",
+          "maxItems": 12
+        },
+        "takes_inquiries": {
+          "type": "boolean"
         }
       }
     },
@@ -283,6 +331,18 @@
         "longitude": {
           "type": "text",
           "maxLength": 4000
+        },
+        "kinds": {
+          "type": "string_list",
+          "maxItems": 10
+        },
+        "services": {
+          "type": "array",
+          "items": "PublicService",
+          "maxItems": 12
+        },
+        "takes_inquiries": {
+          "type": "boolean"
         }
       }
     },

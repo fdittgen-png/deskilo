@@ -26,6 +26,17 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'available': PublicField(PublicFieldType.boolean, required: true),
     },
   ),
+  'PublicService': PublicSchema(
+    'PublicService',
+    {
+      'name': PublicField(PublicFieldType.text, required: true, maxLength: 80),
+      'category': PublicField(PublicFieldType.text, maxLength: 200),
+      'duration_minutes': PublicField(PublicFieldType.integer, min: 0),
+      'price_minor': PublicField(PublicFieldType.integer, required: true, min: 0),
+      'currency': PublicField(PublicFieldType.currency, required: true),
+      'tax_treatment': PublicField(PublicFieldType.enum_, required: true, values: ['included', 'excluded', 'none']),
+    },
+  ),
   'PublicWorkspaceDocument': PublicSchema(
     'PublicWorkspaceDocument',
     {
@@ -44,6 +55,9 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'latitude': PublicField(PublicFieldType.decimal, min: -90, max: 90),
       'longitude': PublicField(PublicFieldType.decimal, min: -180, max: 180),
       'contacts': PublicField(PublicFieldType.array, schema: 'PublicContact', maxItems: 100),
+      'kinds': PublicField(PublicFieldType.stringList, maxItems: 10),
+      'services': PublicField(PublicFieldType.array, schema: 'PublicService', maxItems: 12),
+      'takes_inquiries': PublicField(PublicFieldType.boolean),
     },
     mustUnderstand: 'must_understand',
   ),
@@ -86,6 +100,9 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'plans': PublicField(PublicFieldType.text, maxLength: 4000),
       'latitude': PublicField(PublicFieldType.text, maxLength: 4000),
       'longitude': PublicField(PublicFieldType.text, maxLength: 4000),
+      'kinds': PublicField(PublicFieldType.stringList, maxItems: 10),
+      'services': PublicField(PublicFieldType.array, schema: 'PublicService', maxItems: 12),
+      'takes_inquiries': PublicField(PublicFieldType.boolean),
     },
   ),
   'PublicationPage': PublicSchema(

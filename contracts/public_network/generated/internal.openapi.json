@@ -280,8 +280,49 @@
           }
         }
       },
+      "PublicService": {
+        "description": "#3553: a service the business offers, published only while it is active and marked public: its name, category and duration, and its price in minor units of its own currency with what that price means for tax (included: the price contains the tax; excluded: a tax is added at the sale; none: no tax applies). Nothing is converted.",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "name",
+          "price_minor",
+          "currency",
+          "tax_treatment"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 80
+          },
+          "category": {
+            "type": "string",
+            "maxLength": 200
+          },
+          "duration_minutes": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "price_minor": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "currency": {
+            "type": "string",
+            "pattern": "^[A-Z]{3}$"
+          },
+          "tax_treatment": {
+            "type": "string",
+            "enum": [
+              "included",
+              "excluded",
+              "none"
+            ]
+          }
+        }
+      },
       "PublicWorkspaceDocument": {
-        "description": "The projection the owner approved for public display, plus the workspace name, currency, booking unit and consenting contacts. No invitation code, plan, occupancy, price, internal note or operator stamp.",
+        "description": "The projection the owner approved for public display, plus the workspace name, currency, booking unit and consenting contacts. Since #3553 also its kinds, the services it marked public (each price in its own currency with its tax treatment) and whether it takes inquiries. No invitation code, plan, occupancy, internal note or operator stamp.",
         "type": "object",
         "additionalProperties": true,
         "required": [
@@ -374,6 +415,23 @@
               "$ref": "#/components/schemas/PublicContact"
             },
             "maxItems": 100
+          },
+          "kinds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicService"
+            },
+            "maxItems": 12
+          },
+          "takes_inquiries": {
+            "type": "boolean"
           },
           "must_understand": {
             "type": "array",
@@ -490,6 +548,23 @@
           "longitude": {
             "type": "string",
             "maxLength": 4000
+          },
+          "kinds": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200
+            }
+          },
+          "services": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PublicService"
+            },
+            "maxItems": 12
+          },
+          "takes_inquiries": {
+            "type": "boolean"
           }
         }
       },

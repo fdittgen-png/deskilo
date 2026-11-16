@@ -218,11 +218,11 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "d83a924de595bebd4003640e2253b14826d7635fae5bd262fffe8d2bccbad546",
+      "contracts/public_network/operations.json": "41ab8f4fa03cf763f92e17940a3d75732ee22483f24a1aab72965c5c9780a365",
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "cd62ee381f86dd96c2be2247363d184cf3f7035780271c794e67358e06f6cb77",
+      "lib/core/public_network/public_network_operations.dart": "c3ca76be31399be9a84611018262ff669e0edc82951b88c3d845165f012a3b12",
       "public_network_descriptor()": "1b402a737cbf96f352a3f19f067bddfde280fa2f1dfa176eaa0699d62f9372e7"
     },
     "evidence": {
