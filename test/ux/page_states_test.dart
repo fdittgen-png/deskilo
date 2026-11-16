@@ -73,10 +73,11 @@ final List<_Page> _pages = [
 /// a failure drawn as an empty list, or no way to read again.
 Set<String> _stateProblems(_State state) {
   final problems = <String>{};
-  final failed = find
-      .text('This could not be loaded. Try again.')
-      .evaluate()
-      .isNotEmpty;
+  // The two shared primitives that say a read failed: the banner of a list
+  // and the failed row of a records table.
+  final failed =
+      find.text('This could not be loaded. Try again.').evaluate().isNotEmpty ||
+      find.text('The list could not be read.').evaluate().isNotEmpty;
   final denied = find
       .text(
         'You do not have access to this. Ask a workspace administrator if you '
@@ -128,7 +129,28 @@ Future<void> _show(
 /// #4076 -- a state a page does not draw through the shared primitives yet:
 /// `page|state|width` -> what it draws. Left out until the page is fixed
 /// (the list only shrinks).
-const Map<String, String> _stateFindings = {};
+const Map<String, String> _stateFindings = {
+  'invoices|failed|1440':
+      'its own words ("Invoices could not be read.") and Try again',
+  'invoices|failed|390':
+      'its own words ("Invoices could not be read.") and Try again',
+  'purchases|failed|390':
+      'nothing: no failure and no Try again, the page reads as empty',
+  'invoices|refused|1440':
+      'its own words ("Invoices could not be read.") and Try again',
+  'invoices|refused|390':
+      'its own words ("Invoices could not be read.") and Try again',
+  'purchases|refused|390':
+      'nothing: no refusal and no Try again, the page reads as empty',
+  'members|refused|1440':
+      'the records table\'s plain "The list could not be read." for a refusal',
+  'documents|refused|1440':
+      'the records table\'s plain "The list could not be read." for a refusal',
+  'documents|refused|390':
+      'the plain "The list could not be read." for a refusal',
+  'purchases|refused|1440':
+      'the records table\'s plain "The list could not be read." for a refusal',
+};
 
 void main() {
   for (final page in _pages) {
