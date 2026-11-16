@@ -16,6 +16,8 @@
 import 'dart:typed_data';
 
 import 'package:deskilo_document_model/layout_model.dart';
+import 'package:deskilo_document_model/layout_units.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/address_window.dart';
@@ -23,7 +25,8 @@ import '../../domain/invoice_report.dart';
 import 'report_page_style.dart';
 import 'report_preview.dart';
 
-/// One A4 sheet, at [ReportPage] size, drawing [document].
+/// One sheet of the document's paper (#4119: A4 or Letter), at [ReportPage]
+/// size, drawing [document].
 class LayoutPageView extends StatelessWidget {
   const LayoutPageView({
     super.key,
@@ -51,31 +54,23 @@ class LayoutPageView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const pageW = ReportPage.width;
-    const pageH = ReportPage.height;
+    // #4119 -- the sheet of the document's own paper.
+    final paper = document.paper;
+    final pageW = ReportPage.widthOf(paper);
+    final pageH = ReportPage.heightOf(paper);
     final margin = document.margin.resolve(pageW);
     final contentW = pageW - 2 * margin;
     final contentH = pageH - 2 * margin;
 
-    final recipient = document.recipient;
-    final window = recipient?.window;
-    final frame = recipient?.frame;
-    final windowOn = recipient != null &&
-        !recipient.isOff &&
-        (window != null || frame != null);
-    final fieldLeft = frame?.x?.resolve(pageW) ??
-        (window != null && window.isOn ? window.leftEdge : 0.0);
-    final fieldTop = frame?.y?.resolve(pageH) ?? addressWindowTop;
-    final fieldW = frame?.w?.resolve(pageW) ?? addressWindowWidth;
-    final fieldH = frame?.h?.resolve(pageH) ?? addressWindowHeight;
-
-    final headerH = document.header.height?.resolve(contentH) ??
-        (windowOn ? fieldTop - margin : null);
-    final bodyTop = document.body.y?.resolve(pageH) ??
-        (windowOn ? addressWindowFlowResume : null);
-    final reserve = bodyTop == null
-        ? 0.0
-        : (bodyTop - margin - (headerH ?? 0)).clamp(0.0, pageH);
+    final g = _Geometry(document, pageW, pageH, margin, contentH);
+    final windowOn = g.windowOn;
+    final field = g.field;
+    final fieldLeft = g.fieldLeft;
+    final fieldTop = g.fieldTop;
+    final fieldW = g.fieldW;
+    final fieldH = g.fieldH;
+    final headerH = g.headerH;
+    final reserve = g.reserve;
     final footerH = document.footer.height?.resolve(contentH);
     final pageOne = '$pageLabel 1';
     // The recipient reads the same two fields the PDF reads.
@@ -141,6 +136,7 @@ class LayoutPageView extends StatelessWidget {
         // The recipient, at page coordinates — page one only.
         if (windowOn && !showContinuation)
           Positioned(
+            key: const ValueKey('layout-preview-recipient-field'),
             left: fieldLeft,
             top: fieldTop,
             width: fieldW,
@@ -149,12 +145,12 @@ class LayoutPageView extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(recipientName,
-                    style: ReportPage.body.copyWith(fontSize: 11)),
+                    style: ReportPage.body.copyWith(fontSize: field.fontSizePt)),
                 if (recipientAddress.isNotEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 2),
                     child: Text(recipientAddress,
-                        style: ReportPage.body.copyWith(fontSize: 11)),
+                        style: ReportPage.body.copyWith(fontSize: field.fontSizePt)),
                   ),
               ],
             ),
@@ -162,6 +158,61 @@ class LayoutPageView extends StatelessWidget {
       ]),
     );
   }
+}
+
+/// Where the recipient's field is on the sheet and what it does to the
+/// header band and the body's start, on the document's paper (#4119, #3981):
+/// the PDF's `RecipientPlacement` without the text measure.
+class _Geometry {
+  _Geometry(
+    LayoutDocument document,
+    double pageW,
+    double pageH,
+    double margin,
+    double contentH,
+  ) {
+    final paper = document.paper;
+    final recipient = document.recipient;
+    final window = recipient?.window;
+    final frame = recipient?.frame;
+    windowOn =
+        recipient != null &&
+        !recipient.isOff &&
+        (window != null || frame != null);
+    field = (window ?? AddressWindow.off).fieldOn(paper);
+    fieldLeft =
+        frame?.x?.resolve(pageW) ??
+        (window != null && window.isOn ? field.leftPt : 0.0);
+    fieldTop = frame?.y?.resolve(pageH) ?? field.topPt;
+    fieldW = frame?.w?.resolve(pageW) ?? field.widthPt;
+    fieldH = frame?.h?.resolve(pageH) ?? field.heightPt;
+    headerH =
+        document.header.height?.resolve(contentH) ??
+        (windowOn
+            ? (frame?.y != null ? fieldTop : field.senderLimitPt) - margin
+            : null);
+    // A body stated at the A4 convention's 90 mm under a named window
+    // means where the window convention resumes: on Letter, its own line.
+    final stated = document.body.y;
+    final followsWindow =
+        paper != Paper.a4 &&
+        windowOn &&
+        frame == null &&
+        stated != null &&
+        stated.unit == LengthUnit.mm &&
+        stated.value == addressWindowFlowResumeMm;
+    final bodyTop = followsWindow
+        ? field.flowResumePt
+        : stated?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
+    reserve = bodyTop == null
+        ? 0.0
+        : (bodyTop - margin - (headerH ?? 0)).clamp(0.0, pageH);
+  }
+
+  late final bool windowOn;
+  late final AddressField field;
+  late final double fieldLeft, fieldTop, fieldW, fieldH, reserve;
+  late final double? headerH;
 }
 
 /// The parent box an element resolves against — the Flutter twin of the

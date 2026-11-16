@@ -147,7 +147,7 @@
  "identityCurrencyHint": "ISO-4217-Code. Die App kennt die Anzahl der Nachkommastellen jeder Währung (der Yen hat keine, der Dinar drei).",
  "identityTimezone": "Zeitzone",
  "identityTimezoneHint": "IANA-Name. Alle Buchungszeitfenster sind darin verankert; jedes Mitglied kann die Uhrzeit in seiner eigenen anzeigen.",
- "identityLanguage": "Sprache des Arbeitsbereichs",
+ "identityLanguage": "Sprache Ihrer Dokumente",
  "identityLanguageHint": "Einladungen, Rechnungen und Berichte werden standardmäßig in dieser Sprache verfasst.",
  "identityPaper": "Papier der Dokumente",
  "identityPaperHint": "Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde.",

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -43,7 +44,12 @@ class ReportPageDesigner extends ConsumerStatefulWidget {
     required this.previewData,
     this.sideBySide = false,
     this.textKeys = const [],
+    this.paper = Paper.a4,
   });
+
+  /// #4119 — the sheet the document is printed on: the page, its margins'
+  /// guides and the page count follow it.
+  final Paper paper;
 
   final TextEditingController header;
   final TextEditingController body;
@@ -120,9 +126,9 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
   /// area. Print colors — never the app theme.
   Widget _page(Widget content, {Key? key}) => Container(
         key: key,
-        width: ReportPage.width,
+        width: ReportPage.widthOf(widget.paper),
         constraints:
-            const BoxConstraints(minHeight: ReportPage.height),
+            BoxConstraints(minHeight: ReportPage.heightOf(widget.paper)),
         decoration: const BoxDecoration(
           color: ReportPage.paper,
           boxShadow: [
@@ -148,8 +154,8 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
                       width: .5,
                     ),
                   ),
-                  child: const CustomPaint(
-                    painter: PageBreakGuidePainter(),
+                  child: CustomPaint(
+                    painter: PageBreakGuidePainter(paper: widget.paper),
                   ),
                 ),
               ),
@@ -170,8 +176,8 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
           fit: BoxFit.scaleDown,
           alignment: Alignment.topCenter,
           child: ReportPageScale(
-            scale: constraints.maxWidth < ReportPage.width
-                ? constraints.maxWidth / ReportPage.width
+            scale: constraints.maxWidth < ReportPage.widthOf(widget.paper)
+                ? constraints.maxWidth / ReportPage.widthOf(widget.paper)
                 : 1,
             child: page,
           ),
@@ -181,7 +187,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: SizedBox(
-        width: ReportPage.width * zoom,
+        width: ReportPage.widthOf(widget.paper) * zoom,
         child: FittedBox(
           fit: BoxFit.fitWidth,
           alignment: Alignment.topLeft,
@@ -206,6 +212,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
       children: [
         ReportVisualEditor(
           textKeys: widget.textKeys,
+          paper: widget.paper,
           key: _headerKey,
           controller: widget.header,
           label: widget.headerLabel,
@@ -215,6 +222,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         ),
         ReportVisualEditor(
           textKeys: widget.textKeys,
+          paper: widget.paper,
           key: _bodyKey,
           controller: widget.body,
           label: widget.bodyLabel,
@@ -224,6 +232,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
         ),
         ReportVisualEditor(
           textKeys: widget.textKeys,
+          paper: widget.paper,
           key: _footerKey,
           controller: widget.footer,
           label: widget.footerLabel,
@@ -281,7 +290,7 @@ class ReportPageDesignerState extends ConsumerState<ReportPageDesigner> {
       if (!mounted) return;
       final height = _contentKey.currentContext?.size?.height;
       if (height == null) return;
-      final pages = (height / ReportPage.contentHeight).ceil().clamp(1, 999);
+      final pages = (height / ReportPage.contentHeightOf(widget.paper)).ceil().clamp(1, 999);
       if (pages != _pages) setState(() => _pages = pages);
     });
   }

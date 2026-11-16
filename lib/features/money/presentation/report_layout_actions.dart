@@ -24,6 +24,7 @@ import '../../workspace/providers/workspace_providers.dart';
 import '../domain/address_window.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/pinned_pdf.dart';
+import '../domain/report_kind.dart';
 import '../domain/report_layout/layout_render.dart';
 import '../providers/money_providers.dart';
 import 'invoice_documents.dart';
@@ -133,6 +134,13 @@ Paper businessPaperOf(WidgetRef ref) {
   return Paper.fromWire(workspace?.paper) ??
       CountryCatalog.byCode(workspace?.countryCode ?? '').paper;
 }
+
+/// #4119 -- the paper the document [kindId] is shown and printed on when it
+/// is made now: the business's paper where the kind declares it, else null
+/// (the design's own).
+Paper? kindPaperOf(WidgetRef ref, String kindId, {int reminderLevels = 9}) =>
+    reportKindById(kindId, reminderLevels: reminderLevels)
+        ?.printedOn(businessPaperOf(ref));
 
 /// The positioned layout for letter [docId] in [language], or null when
 /// that document still uses its bands (or the feature is off).

@@ -1944,6 +1944,7 @@ const Set<String> uiKeys = {
   'last-name',
   'late-penalty',
   'layer-body',
+  'layout-preview-recipient-field',
   'lease-add',
   'lease-cancel',
   'lease-deposit',

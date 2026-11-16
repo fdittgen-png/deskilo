@@ -147,7 +147,7 @@
  "identityCurrencyHint": "ISO 4217 code. The app knows how many decimals each one has (the yen has none, the dinar three).",
  "identityTimezone": "Time zone",
  "identityTimezoneHint": "IANA name. Every booking slot is anchored to it; each member can display the time in their own.",
- "identityLanguage": "Workspace language",
+ "identityLanguage": "Language of your documents",
  "identityLanguageHint": "Invitations, invoices and reports are written in it by default.",
  "identityPaper": "Paper of the documents",
  "identityPaperHint": "An invoice keeps the paper it was issued on.",

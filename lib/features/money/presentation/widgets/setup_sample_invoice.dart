@@ -22,6 +22,7 @@ import '../invoice_documents.dart' show invoicePdfTemplateFor;
 import '../report_defaults.dart';
 import '../report_facts_of.dart';
 import '../report_image_resolve.dart';
+import '../report_layout_actions.dart' show businessPaperOf;
 import '../report_strings_l10n.dart';
 import 'report_page_style.dart';
 import 'report_preview.dart';
@@ -63,8 +64,10 @@ InvoiceReport? setupSampleReport(
   final bands =
       look ??
       (template.invoiceBands.hasBands ? template.invoiceBands : builtIn);
-  return renderReportBands(bands: bands, data: data) ??
-      renderReportBands(bands: builtIn, data: data)!;
+  // #4119 — the sheet is the paper the business's invoices are printed on.
+  return (renderReportBands(bands: bands, data: data) ??
+          renderReportBands(bands: builtIn, data: data)!)
+      .onPaper(businessPaperOf(ref));
 }
 
 /// [report] on white paper at the page's own width, scaled down to the
@@ -112,7 +115,7 @@ class _SetupSampleSheetState extends ConsumerState<SetupSampleSheet> {
           alignment: AlignmentDirectional.topStart,
           child: Container(
             key: const ValueKey('setup-sample-sheet'),
-            width: ReportPage.width,
+            width: ReportPage.widthOf(widget.report.paper),
             color: ReportPage.paper,
             padding: ReportPage.margins,
             child: ReportBlocksView(
