@@ -103,7 +103,6 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.expenseRepartitionWizard,
   // #945 — a second address is opt-in.
   WorkspaceFeature.multiSite,
-  WorkspaceFeature.siteDocuments,
   WorkspaceFeature.vatGroups,
   WorkspaceFeature.vatRateHistory,
   WorkspaceFeature.vatCounterparty,
@@ -193,7 +192,6 @@ void main() {
       'workspaceStatus': true,
       'expenseRepartitionWizard': true,
       'multiSite': true,
-      'siteDocuments': true,
       'vatGroups': true,
       'vatRateHistory': true,
       'vatCounterparty': true,

@@ -22,9 +22,6 @@ class WorkspaceSubprocess {
 }
 
 const internalCapabilities = <WorkspaceFeature, String>{
-  WorkspaceFeature.siteDocuments:
-      'Reserved site-document flag: no implementation consumes it (#1325). '
-      'Not selectable until a gated workflow is implemented.',
   WorkspaceFeature.personalShell:
       'Read from the installation registry defaults, never from a workspace '
       '(#2552): a per-workspace switch has no effect until the personal home '

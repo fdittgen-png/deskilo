@@ -85,7 +85,6 @@ const Set<String> workspaceFeatureKeys = {
   'workspaceStatus',
   'expenseRepartitionWizard',
   'multiSite',
-  'siteDocuments',
   'vatGroups',
   'vatRateHistory',
   'vatCounterparty',
