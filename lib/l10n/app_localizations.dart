@@ -12975,6 +12975,18 @@ abstract class AppLocalizations {
   /// **'Reserved today'**
   String get directoryReservedToday;
 
+  /// #4069 — the label of the members directory's search field.
+  ///
+  /// In en, this message translates to:
+  /// **'Search by name or e-mail'**
+  String get directorySearchLabel;
+
+  /// #4069 — the directory's search found no one.
+  ///
+  /// In en, this message translates to:
+  /// **'No one matches “{query}”'**
+  String directorySearchNone(String query);
+
   /// Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows.
   ///
   /// In en, this message translates to:
@@ -33549,6 +33561,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Add a service'**
   String get memberPageAddService;
+
+  /// #4069 — under a member's next bookings: opens the calendar filtered to them, with how many they have.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{All bookings ({count})} other{All bookings ({count})}}'**
+  String memberPageAllBookings(int count);
 
   /// Shown as a text in member header cards (members). Placeholders: {seat} (String), {time} (String).
   ///
