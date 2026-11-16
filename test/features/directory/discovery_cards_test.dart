@@ -42,12 +42,13 @@ Future<void> _pump(WidgetTester tester, DiscoveryResults results) async {
     tester,
     Scaffold(
       body: DiscoveryListView(
-        query: '',
+        filter: const DiscoveryFilter(''),
         results: results,
         selected: null,
         onView: (_) {},
         onLocate: (_) {},
         onClear: () {},
+        onAllKinds: () {},
       ),
     ),
     size: const Size(390, 1200),

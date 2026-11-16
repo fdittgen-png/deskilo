@@ -14,3 +14,26 @@ String? businessKindLabel(AppLocalizations l10n, String code) => switch (code) {
   'service' => l10n.businessKindNameService,
   _ => null,
 };
+
+/// #3554 — the kinds Discover offers to narrow by, in its order: the app's
+/// own catalogue, never the kinds the loaded results happen to contain (a
+/// kind beyond the first page must still be choosable).
+const List<String> discoverableBusinessKinds = [
+  'coworking',
+  'studio',
+  'practice',
+  'salon',
+  'service',
+];
+
+/// The label of Discover's chip for the kind [code] (a plural), or null for
+/// a kind this app does not know.
+String? businessKindChipLabel(AppLocalizations l10n, String code) =>
+    switch (code) {
+      'coworking' => l10n.discoveryKindCoworking,
+      'studio' => l10n.discoveryKindStudios,
+      'practice' => l10n.discoveryKindPractices,
+      'salon' => l10n.discoveryKindSalons,
+      'service' => l10n.discoveryKindServices,
+      _ => null,
+    };

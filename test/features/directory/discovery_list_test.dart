@@ -290,8 +290,9 @@ void main() {
 
       // Tab reaches the first row's Bookmark, then its View, then Locate,
       // then the next row's Bookmark: no card swallows the focus.
+      // #3554 — the kind chips stand between the search and the first row.
       var tabs = 0;
-      while (!_focusWithin(tester, find.byKey(_bookmark(_one))) && tabs < 12) {
+      while (!_focusWithin(tester, find.byKey(_bookmark(_one))) && tabs < 24) {
         await _tab(tester);
         tabs++;
       }

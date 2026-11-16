@@ -9,6 +9,7 @@ import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/empty_state.dart';
 import '../../../core/ui/kit/retry_notice.dart';
 import '../../../core/ui/motion.dart';
+import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -29,22 +30,27 @@ String _sourceLabel(String origin) {
 class DiscoveryListView extends ConsumerStatefulWidget {
   const DiscoveryListView({
     super.key,
-    required this.query,
+    required this.filter,
     required this.results,
     required this.selected,
     required this.onView,
     required this.onLocate,
     required this.onClear,
+    required this.onAllKinds,
     this.revealSelected = false,
   });
 
-  final String query;
+  /// #3554 — the words and the kind this listing asked for.
+  final DiscoveryFilter filter;
   final DiscoveryResults results;
   final PublicWorkspace? selected;
   final ValueChanged<PublicWorkspace> onView, onLocate;
 
   /// Empties the search: the way out of a query with no result.
   final VoidCallback onClear;
+
+  /// Drops the chosen kind: the way out of a kind with no result.
+  final VoidCallback onAllKinds;
   final bool revealSelected;
 
   @override
@@ -65,7 +71,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
   /// build: how a card the list has not built yet is approached.
   var _selectedAt = -1, _shownRows = 0;
 
-  String get query => widget.query;
+  String get query => widget.filter.query;
   DiscoveryResults get results => widget.results;
 
   static bool _same(PublicWorkspace? a, PublicWorkspace? b) =>
@@ -138,8 +144,9 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
   Widget? _footer(BuildContext context, WidgetRef ref, SourceListing s) {
     final l = context.l10n;
     final name = _sourceLabel(s.origin);
-    void more() =>
-        ref.read(discoveryListingProvider(query).notifier).more(s.origin);
+    void more() => ref
+        .read(discoveryListingProvider(widget.filter).notifier)
+        .more(s.origin);
     return switch (s.status) {
       SourceStatus.loading => const Padding(
         padding: AppSpacing.smAll,
@@ -169,8 +176,9 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
 
   Widget? _moreSources(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
-    void more() =>
-        ref.read(discoveryListingProvider(query).notifier).moreSources();
+    void more() => ref
+        .read(discoveryListingProvider(widget.filter).notifier)
+        .moreSources();
     if (results.sourcesLoading) return const LinearProgressIndicator();
     if (results.sourcesFailed) {
       return Row(
@@ -208,6 +216,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
         ),
       ];
     }
+    if (widget.filter.kind case final kind?) return _noKindMatch(kind);
     if (query.trim().isEmpty) {
       return [
         EmptyState(
@@ -234,6 +243,36 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
     ];
   }
 
+  /// #3554 — a kind chosen and nothing of it found: said with the kind's
+  /// name, with the way back to every kind (and out of the words typed).
+  List<Widget> _noKindMatch(String kind) {
+    final l = context.l10n;
+    return [
+      EmptyState(
+        key: const ValueKey('directory-kind-no-match'),
+        icon: Icons.search_off_outlined,
+        title: l.discoveryKindNoMatch(businessKindChipLabel(l, kind) ?? kind),
+      ),
+      Wrap(
+        alignment: WrapAlignment.center,
+        spacing: AppSpacing.sm,
+        children: [
+          OutlinedButton(
+            key: const ValueKey('directory-kind-show-all'),
+            onPressed: widget.onAllKinds,
+            child: Text(l.discoveryKindAll),
+          ),
+          if (query.trim().isNotEmpty)
+            OutlinedButton(
+              key: const ValueKey('directory-clear-search'),
+              onPressed: widget.onClear,
+              child: Text(l.discoveryClearSearch),
+            ),
+        ],
+      ),
+    ];
+  }
+
   /// A directory that did not answer is one line with its Retry beside the
   /// results that loaded -- never instead of them; the counts and the names
   /// are for whoever asks: behind Details.
@@ -248,7 +287,19 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
             key: const ValueKey('directory-portal-directory-unavailable'),
             text: l.discoveryDirectoriesDidNotAnswer(refused.length),
             retryLabel: l.commonRetry,
-            onRetry: () => ref.invalidate(discoveryListingProvider(query)),
+            onRetry: () =>
+                ref.invalidate(discoveryListingProvider(widget.filter)),
+          ),
+        ),
+      // #3554 — a source that cannot narrow by kind was not asked: its
+      // businesses are missing from this result, not absent from it.
+      if (results.uncovered.isNotEmpty)
+        Padding(
+          padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+          child: Text(
+            key: const ValueKey('directory-kind-uncovered'),
+            l.discoveryKindUncovered(results.uncovered.length),
+            style: Theme.of(context).textTheme.bodySmall,
           ),
         ),
     ];

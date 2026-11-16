@@ -81,11 +81,13 @@ void main() {
 
     final coworking = await search('', kind: 'coworking');
     expect(coworking.map((w) => w.id), containsAll(['ws-1', 'demo-zurich']));
+    // #3554 — the practice nearby is found by its kind, and not among the
+    // coworking spaces.
     expect(
-      await search('', kind: 'practice'),
-      isEmpty,
-      reason: 'no practice among these cards',
+      (await search('', kind: 'practice')).map((w) => w.id),
+      ['demo-practice-garrigue'],
     );
+    expect(coworking.map((w) => w.id), isNot(contains('demo-practice-garrigue')));
     final zurich = coworking.firstWhere((w) => w.id == 'demo-zurich');
     expect(zurich.services.map((s) => s.currency).toSet(), {
       'CHF',
