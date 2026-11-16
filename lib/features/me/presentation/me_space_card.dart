@@ -41,6 +41,11 @@ class MeSpaceCard extends ConsumerWidget {
   static const int prodFlex = 2;
   static const int devFlex = 1;
 
+  /// What a button spends besides its label: its padding, the dot with its
+  /// gap, and the card's own end gap.
+  static const double labelExtras =
+      AppSpacing.md * 2 + 8 + AppSpacing.sm + AppSpacing.sm;
+
   final Workspace space;
   final Member? member;
   final bool lastUsed;
@@ -93,15 +98,13 @@ class MeSpaceCard extends ConsumerWidget {
     // Green says the space is real, orange says it is one to try things in
     // (#917); the word is on the tile as well, and the colour is a tint, not
     // a block, so the list stays calm.
-    final openLabel = isProd ? l10n.uxOpenWorkspace : l10n.meTestBusiness;
+    final openLabel = openLabelOf(l10n, space);
     final named = waiting > 0 &&
         WindowClass.of(context).index >= WindowClass.expanded.index;
     final tone = isProd
         ? AppEnvironmentColors.productionOf(brightness)
         : AppEnvironmentColors.developmentOf(brightness);
-    return Expanded(
-      flex: isProd ? prodFlex : devFlex,
-      child: Padding(
+    return Padding(
         padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
         child: Builder(
           builder: (buttonContext) => Tooltip(
@@ -155,9 +158,12 @@ class MeSpaceCard extends ConsumerWidget {
             ),
           ),
         ),
-      ),
     );
   }
+
+  /// What [space]'s button says: the business's own, or its test twin.
+  static String openLabelOf(AppLocalizations l10n, Workspace space) =>
+      space.env.isProduction ? l10n.uxOpenWorkspace : l10n.meTestBusiness;
 }
 
 /// What the button of one side says: its label, the dot or the "last used"
@@ -287,4 +293,88 @@ Future<void> confirmLeaveSpace(
     context,
     l10n.meLeaveDone(space.name),
   );
+}
+
+/// The buttons of one business on Me's home (#4131): side by side while every
+/// word of each label fits its button whole, else one under the other, the
+/// business's own first, each as wide as the card. A word is never broken.
+class MeSpaceActions extends StatelessWidget {
+  const MeSpaceActions({super.key, required this.sides, this.lastUsedId});
+
+  /// The business's sides, each with the person's membership of it.
+  final List<(Workspace, Member?)> sides;
+  final String? lastUsedId;
+
+  static int _flexOf(Workspace space) =>
+      space.env.isProduction ? MeSpaceCard.prodFlex : MeSpaceCard.devFlex;
+
+  /// Whether the longest word of [label] fits one line of a button [width] wide.
+  static bool wordFits(BuildContext context, String label, double width) {
+    final style = (Theme.of(context).textTheme.labelLarge ?? const TextStyle())
+        .strong;
+    final scaler = MediaQuery.textScalerOf(context);
+    final direction = Directionality.of(context);
+    var longest = 0.0;
+    for (final word in label.split(RegExp(r'\s+'))) {
+      final painter = TextPainter(
+        text: TextSpan(text: word, style: style),
+        textDirection: direction,
+        textScaler: scaler,
+      )..layout();
+      if (painter.width > longest) longest = painter.width;
+      painter.dispose();
+    }
+    return longest <= width - MeSpaceCard.labelExtras;
+  }
+
+  Widget _card((Workspace, Member?) side) => MeSpaceCard(
+    space: side.$1,
+    member: side.$2,
+    lastUsed: side.$1.id == lastUsedId,
+  );
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    // A space without a production side keeps development at the right.
+    final lead = sides.any((s) => s.$1.env.isProduction)
+        ? 0
+        : MeSpaceCard.prodFlex;
+    final total = sides.fold<int>(lead, (sum, s) => sum + _flexOf(s.$1));
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final fits = sides.every(
+          (s) => wordFits(
+            context,
+            MeSpaceCard.openLabelOf(l10n, s.$1),
+            constraints.maxWidth * _flexOf(s.$1) / total,
+          ),
+        );
+        if (fits) {
+          return Row(
+            children: [
+              if (lead > 0) const Spacer(flex: MeSpaceCard.prodFlex),
+              for (final side in sides)
+                Expanded(flex: _flexOf(side.$1), child: _card(side)),
+            ],
+          );
+        }
+        final ordered = [...sides]
+          ..sort(
+            (a, b) =>
+                (b.$1.env.isProduction ? 1 : 0) -
+                (a.$1.env.isProduction ? 1 : 0),
+          );
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            for (final (i, side) in ordered.indexed) ...[
+              if (i > 0) const SizedBox(height: AppSpacing.sm),
+              _card(side),
+            ],
+          ],
+        );
+      },
+    );
+  }
 }

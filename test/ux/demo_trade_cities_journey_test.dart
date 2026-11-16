@@ -11,10 +11,12 @@
 // month m. The Demo opens on 13 May 2026, so the last billed month is April
 // and the one still open is Bruno's March (i = 1, half-time):
 //   4*250 + 1*200 + 5*150 + 0*200 + 1*400 + 6*15 + 4*50 + 4*20 + 0*500
-//   = 2720, plus 18000 = 20720  ->  207.20 in the city's currency.
+//   = 2720, plus 18000 = 20720 at the base prices. Each town charges its own
+//   price level (#4130): Zurich 125 %, Milan 85 %, every price rounded to the
+//   minor unit, so Zurich's March is 25908 and Milan's 17620.
 // Ada's (i = 0, full-time) April invoice is paid:
 //   4*250 + 1*200 + 4*150 + 0 + 1*400 + 4*15 + 4*50 + 4*20 + 0 = 2540,
-//   plus 36000 = 38540  ->  385.40.
+//   plus 36000 = 38540 at the base prices: Zurich 48182, Milan 32766.
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -22,8 +24,10 @@ import 'package:go_router/go_router.dart';
 
 import '../helpers/screens/demo_journeys.dart' show pumpDemo;
 
-const _openMarch = 20720;
-const _adaApril = 38540;
+/// What each town's invoices come to at its own price level (#4130): the one
+/// open invoice of March (Bruno's) and Ada's April invoice, by currency.
+const _openMarch = {'CHF': 25908, 'EUR': 17620};
+const _adaApril = {'CHF': 48182, 'EUR': 32766};
 
 Future<void> _settle(WidgetTester tester) async {
   for (var i = 0; i < 20; i++) {
@@ -76,7 +80,7 @@ void main() {
       expect(find.byKey(const ValueKey('invoicing-home')), findsOneWidget,
           reason: name);
       if (currency != null) {
-        expect(_text(_money(currency, _openMarch)), isTrue,
+        expect(_text(_money(currency, _openMarch[currency]!)), isTrue,
             reason: '$name: March, the one open invoice');
       }
     }
@@ -101,7 +105,7 @@ void main() {
           scrollable: find.byType(Scrollable).first);
       await tester.tap(amount);
       await tester.pump();
-      expect(_text(_money(currency, _adaApril)), isTrue, reason: id);
+      expect(_text(_money(currency, _adaApril[currency]!)), isTrue, reason: id);
     }
     // The two are never one figure: no text carries both currencies.
     final both = find
