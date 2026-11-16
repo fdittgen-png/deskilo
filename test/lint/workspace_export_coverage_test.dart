@@ -642,6 +642,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     // a settled payment paid is its invoice matches, which are exported.
     'claimed_invoice_ids',
     'claim_withdrawn_at',
+    // ... and what its settlement applied and left out: the applied parts
+    // are the exported matches; the rest stayed the payer's credit.
+    'claim_outcome',
   },
   'einvoice_inbox': {
     // The received document itself: it travels as a file of its own, not

@@ -31,7 +31,7 @@ const _notForTheApp = <String, String>{
       'an operator\'s refusal: only a personal home names itself as one '
       '(0565)',
   // #3556 (0795) — a payment's claim of invoices. No screen sends a claim
-  // yet: My finances' selection (#3556, the app piece) maps DKC02-DKC10 and
+  // yet: My finances' selection (#3556, the app piece) maps DKC02-DKC11 and
   // removes them here; the test below fails until it does.
   'DKC01':
       'the app always names the invoices it pays: an empty claim is a '
@@ -45,6 +45,10 @@ const _notForTheApp = <String, String>{
   'DKC08': 'no screen withdraws a claim yet (0795); My finances reads it next',
   'DKC09': 'no screen withdraws a claim yet (0795); My finances reads it next',
   'DKC10': 'no screen withdraws a claim yet (0795); My finances reads it next',
+  'DKC11': 'no screen sends a claim yet (0795); My finances reads it next',
+  'DKC12':
+      'a retry of a payment whose claim was withdrawn: the payment flow '
+      'answers it, no screen meets it (0795)',
 };
 
 final _raised = RegExp(r"errcode\s*=\s*'(DK[A-Z0-9]{3})'");

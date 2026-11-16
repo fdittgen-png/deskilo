@@ -10,7 +10,7 @@
 -- refusal changes nothing; a withdrawn claim frees its invoices; a callback
 -- delivered twice applies once; without a claim nothing changes. Rolled back.
 begin;
-select plan(43);
+select plan(78);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -56,12 +56,24 @@ begin
          (ws, m_a, m_o, 'CL-V1', 'V1', '[]'::jsonb, 900, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-08', '2026-08-01', 'full'),
          (ws, m_b, m_o, 'CL-B1', 'B1', '[]'::jsonb, 4000, 'EUR', 'Ben', 'Claims', 'Owner', 'sig', '2026-10', '2026-10-01', 'full'),
          (ws2, m_a2, m_o2, 'EL-W1', 'W1', '[]'::jsonb, 4000, 'EUR', 'Ada', 'Elsewhere', 'Owner', 'sig', '2026-10', '2026-10-01', 'full'),
-         (wsp, m_ap, m_op, 'FE-P1', 'P1', '[]'::jsonb, 2500, 'EUR', 'Ada', 'Four eyes', 'Owner', 'sig', '2026-10', '2026-10-01', 'full');
+         (wsp, m_ap, m_op, 'FE-P1', 'P1', '[]'::jsonb, 2500, 'EUR', 'Ada', 'Four eyes', 'Owner', 'sig', '2026-10', '2026-10-01', 'full'),
+         (wsp, m_ap, m_op, 'FE-P2', 'P2', '[]'::jsonb, 3000, 'EUR', 'Ada', 'Four eyes', 'Owner', 'sig', '2026-11', '2026-11-01', 'full'),
+         -- one month each, for the cases below
+         (ws, m_a, m_o, 'CL-A7', 'A7', '[]'::jsonb, 2000, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-12', '2026-10-10', 'full'),
+         (ws, m_a, m_o, 'CL-A8', 'A8', '[]'::jsonb, 1100, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-01', '2026-10-11', 'full'),
+         (ws, m_a, m_o, 'CL-A9', 'A9', '[]'::jsonb, 1300, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-02', '2026-10-12', 'full'),
+         (ws, m_a, m_o, 'CL-A10', 'A10', '[]'::jsonb, 1400, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-03', '2026-10-13', 'full'),
+         (ws, m_a, m_o, 'CL-A11', 'A11', '[]'::jsonb, 1600, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-04', '2026-10-14', 'full'),
+         -- issued in francs before the business moved to euros, still open
+         (ws, m_a, m_o, 'CL-C1', 'C1', '[]'::jsonb, 700, 'CHF', 'Ada', 'Claims', 'Owner', 'sig', '2027-05', '2026-10-15', 'full'),
+         (ws, m_a, m_o, 'CL-A12', 'A12', '[]'::jsonb, 800, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-06', '2026-10-16', 'full');
   update public.invoices set voided_at = now() where number = 'CL-V1';
   perform set_config('t.ws', ws::text, true);
   perform set_config('t.wsp', wsp::text, true);
   perform set_config('t.m_a', m_a::text, true);
   perform set_config('t.m_ap', m_ap::text, true);
+  perform set_config('t.ws2', ws2::text, true);
+  perform set_config('t.m_a2', m_a2::text, true);
   -- Read here: as Ada, Ben's invoice is not even visible.
   perform set_config('t.b1', (select id::text from public.invoices where number = 'CL-B1'), true);
 end;
@@ -106,6 +118,15 @@ select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'
   'an invoice of this payment is not one of yours to pay', 'condition 4: another business''s invoice, the same answer');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'), pg_temp.inv('CL-A3')], 3500, '2026-10')$$),
   'a payment settles invoices of one month: this selection spans 2026-09, 2026-10', 'condition 6: the months are named');
+select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[]::uuid[], 100, '2026-10')$$),
+  'DKC01', 'a claim names at least one invoice');
+select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5')], 1500, '2026-09')$$),
+  'these invoices are of 2026-10, not of 2026-09', 'DKC04: the payment''s month is its invoices''');
+select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5')], 1500, '2026-09')$$),
+  'DKC04', 'with its code');
+select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-C1')], 700, '2027-05')$$),
+  'a payment in EUR settles invoices in EUR: not CL-C1 (CHF)',
+  'DKC11: an invoice of the business''s former currency is not paid in its new one');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A2')], 3000, '2026-10')$$),
   'CL-A2 is already in a payment being processed', 'condition 2: an invoice in an open online claim, named, and why');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5')], 8000, '2026-10', '00000000-0000-4000-8000-000003556f01')$$),
@@ -140,6 +161,17 @@ select is((select count(*)::int from public.invoice_match_payments p join public
   2, 'and applied once');
 select is((select count(*)::int from public.open_claim_invoices(current_setting('t.ws')::uuid) o where o.invoice_id in (pg_temp.inv('CL-A1'), pg_temp.inv('CL-A2'))),
   0, 'a captured payment frees its invoices');
+select is((select jsonb_array_length(claim_outcome -> 'applied')::text || '/' || jsonb_array_length(claim_outcome -> 'left_out')::text
+             from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f01'),
+  '2/0', 'the intent keeps what its claim applied (both) and left out (none)');
+select set_config('t.f01', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f01'), true);
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A1')], 5000, '2026-10')$$),
+  'CL-A1 cannot take a payment now', 'DKC05: a paid invoice is not claimed again');
+select is(pg_temp.refusal_code($$select public.withdraw_payment_claim(current_setting('t.f01')::uuid)$$),
+  'DKC10', 'a captured payment''s claim is not withdrawn');
+reset role;
 
 -- ── Paid otherwise meanwhile (condition 3) ──────────────────────────────
 select pg_temp.act('a2');
@@ -161,6 +193,8 @@ select is((select l.amount_cents - public.payment_used_cents(l.id) from public.l
             join public.payment_intents pi on pi.ledger_entry_id = l.id
            where pi.request_id = '00000000-0000-4000-8000-000003556f02'),
   1500::bigint, 'condition 3: the money stays the payer''s credit, applied to nothing else');
+select is((select claim_outcome -> 'left_out' -> 0 ->> 'reason' from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f02'),
+  'matched', 'and the intent says why: paid otherwise, not lost');
 
 -- ── A declared payment: the owner decides its claim (condition 5) ───────
 select pg_temp.act('a1');
@@ -171,6 +205,9 @@ select lives_ok(format('select public.respond_to_event(%L, true)',
 reset role;
 select is((select m.status || ':' || m.paid_cents from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A4')),
   'confirmed:1000', 'approving applies exactly its claim');
+select is((select payload -> 'claim_outcome' -> 'applied' -> 0 ->> 'number' from public.events
+            where type = 'payment' and payload -> 'claim' -> 0 ->> 'number' = 'CL-A4'),
+  'CL-A4', 'the declared payment keeps what its claim applied');
 insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, event_id)
 select workspace_id, subject_member_id, 'credit', 'payment', 1000, 'replay', '2026-10', id
   from public.events where type = 'payment' and payload -> 'claim' -> 0 ->> 'number' = 'CL-A4';
@@ -251,6 +288,145 @@ reset role;
 select is((select count(*)::int from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A6'))
           + (select count(*)::int from public.open_claim_invoices(current_setting('t.ws')::uuid) o where o.invoice_id = pg_temp.inv('CL-A6')),
   0, 'nothing is applied and A6 is free again');
+
+-- ── The owner's pending partial: the claim is refused before paying ─────
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
+values (current_setting('t.wsp')::uuid, current_setting('t.m_ap')::uuid, 'credit', 'payment', 1000, 'half at the desk', '2026-11');
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok(format('select public.match_invoice(%L, %L, %L, %L)', pg_temp.inv('FE-P2'),
+  (select id from public.ledger_entries where description = 'half at the desk'), 'under_accepted', 'half'),
+  'the owner matches half of P2, waiting for its validators');
+reset role;
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal(format('select public.open_payment_intent(%L, %L, %L, %L, 2000, %L, null, array[%L]::uuid[])',
+  current_setting('t.wsp'), current_setting('t.m_ap'), 'stripe', '2026-11', 'EUR', pg_temp.inv('FE-P2'))),
+  'FE-P2 cannot take a payment now', 'a pending match: the claim meets the rule its settlement would');
+reset role;
+
+-- ── A standing partial: the claim pays what is left ──────────────────────
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
+values (current_setting('t.ws')::uuid, current_setting('t.m_a')::uuid, 'credit', 'payment', 500, 'part of A7', '2026-12');
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok(format('select public.match_invoice(%L, %L, %L, %L)', pg_temp.inv('CL-A7'),
+  (select id from public.ledger_entries where description = 'part of A7'), 'under_accepted', 'part paid'),
+  'the owner accepts 500 of A7''s 2000');
+reset role;
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A7')], 1500, '2026-12', '00000000-0000-4000-8000-000003556f04')$$,
+  'Ada claims the 1500 still due');
+reset role;
+select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f04'), 'cap-4', 1500)$$,
+  'its capture');
+select is((select m.paid_cents from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A7')),
+  2000, 'the partial and the claimed part pay A7 whole');
+
+-- ── An issuer records a claimed payment for a member ─────────────────────
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok(format('select public.record_payment(%L, %L, 1100, %L, %L, null, null, array[%L]::uuid[])',
+  current_setting('t.ws'), current_setting('t.m_a'), '', 'transfer', pg_temp.inv('CL-A8')),
+  'the owner declares Ada''s transfer of A8');
+reset role;
+
+-- ── Me reads which invoice is in a payment, and which it may pay ─────────
+select pg_temp.act('a2');
+set local role authenticated;
+select is((select (x ->> 'in_payment') || '/' || (x ->> 'payable')
+             from jsonb_array_elements(public.my_finance_overview() -> 'invoices') x where x ->> 'number' = 'CL-A8'),
+  'true/false', 'an invoice in a declared payment: in payment, not payable');
+select is((select (x ->> 'in_payment') || '/' || (x ->> 'payable')
+             from jsonb_array_elements(public.my_finance_overview() -> 'invoices') x where x ->> 'number' = 'CL-A12'),
+  'false/true', 'an open invoice: payable');
+reset role;
+
+-- ── A failed intent: its claim is void, a late capture applies nothing ───
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A9')], 1300, '2027-02', '00000000-0000-4000-8000-000003556f05')$$,
+  'a claim of A9');
+reset role;
+update public.payment_intents set status = 'failed' where request_id = '00000000-0000-4000-8000-000003556f05';
+select is((select count(*)::int from public.open_claim_invoices(current_setting('t.ws')::uuid) o where o.invoice_id = pg_temp.inv('CL-A9')),
+  0, 'a failed payment frees its invoices');
+select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f05'), 'cap-5', 1300)$$,
+  'the provider captures it after all');
+select is((select count(*)::int from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A9'))::text
+          || '/' || (select (l.amount_cents - public.payment_used_cents(l.id))::text from public.ledger_entries l
+                      join public.payment_intents pi on pi.ledger_entry_id = l.id
+                     where pi.request_id = '00000000-0000-4000-8000-000003556f05'),
+  '0/1300', 'nothing applied: the money is the member''s credit');
+
+-- ── Withdrawing: whose, how often, and a late capture ────────────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A10')], 1400, '2027-03', '00000000-0000-4000-8000-000003556f06')$$,
+  'a claim of A10');
+reset role;
+select set_config('t.f06', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f06'), true);
+select pg_temp.act('a3');
+set local role authenticated;
+select is(pg_temp.refusal_code($$select public.withdraw_payment_claim(current_setting('t.f06')::uuid)$$),
+  'DKC08', 'another member cannot withdraw it');
+reset role;
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok($$select public.withdraw_payment_claim(current_setting('t.f06')::uuid)$$,
+  'whoever issues the invoices withdraws it for the member');
+reset role;
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal_code($$select public.withdraw_payment_claim(current_setting('t.f06')::uuid)$$),
+  'DKC09', 'a withdrawn claim frees nothing more');
+select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A10')], 1400, '2027-03', '00000000-0000-4000-8000-000003556f06')$$),
+  'DKC12', 'a retry of the withdrawn payment is refused, not reused');
+reset role;
+select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f06'), 'cap-6', 1400)$$,
+  'the provider captures the withdrawn payment');
+select is((select count(*)::int from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A10')),
+  0, 'its claim applies nothing: the money is the member''s credit');
+
+-- ── A payment never sent: its claim lapses with the window ───────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A11')], 1600, '2027-04', '00000000-0000-4000-8000-000003556f07')$$,
+  'a claim of A11 that never reaches its provider');
+reset role;
+update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 minute'
+ where request_id = '00000000-0000-4000-8000-000003556f07';
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A11')], 1600, '2027-04')$$,
+  'past the window its invoice enters another payment');
+reset role;
+
+-- ── An approved payment without a claim is untouched ─────────────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok(format('select public.record_payment(%L, %L, 300, %L, %L, null, %L)',
+  current_setting('t.ws'), current_setting('t.m_a'), 'no claim', 'cash', '2026-10'),
+  'a declared payment without a claim');
+reset role;
+select pg_temp.act('a1');
+set local role authenticated;
+select lives_ok(format('select public.respond_to_event(%L, true)',
+  (select id from public.events where type = 'payment' and status = 'pending' and payload ->> 'note' = 'no claim')),
+  'its approval');
+reset role;
+select is((select payload ? 'claim_outcome' from public.events where type = 'payment' and payload ->> 'note' = 'no claim'),
+  false, 'no claim, nothing applied, nothing written');
+
+-- ── Online payments off ──────────────────────────────────────────────────
+update public.workspaces set feature_flags = feature_flags - 'onlinePayments' where id = current_setting('t.ws2')::uuid;
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal(format('select public.open_payment_intent(%L, %L, %L, %L, 4000, %L, null, array[%L]::uuid[])',
+  current_setting('t.ws2'), current_setting('t.m_a2'), 'stripe', '2026-10', 'EUR', pg_temp.inv('EL-W1'))),
+  'online payments are off in this workspace', 'a claim opens no online payment while they are off');
+reset role;
 
 select * from finish();
 rollback;
