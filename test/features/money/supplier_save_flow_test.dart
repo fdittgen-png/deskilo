@@ -244,6 +244,30 @@ void main() {
     },
   );
 
+  // #3649 (3b) -- a supplier's address asks for the region its country has.
+  testWidgets('an American supplier is saved with its state, never without', (
+    tester,
+  ) async {
+    final world = _World();
+    await _openForm(tester, world);
+    await _type(tester, 'name', 'Acme Inc');
+    await _type(tester, 'country', 'US');
+    await tester.tap(find.byKey(_save));
+    await tester.pump();
+    expect(find.text('An address in this country needs its region.'), findsOneWidget);
+    expect(world.suppliers.saves, 0);
+    await tester.ensureVisible(find.byKey(const ValueKey('supplier-region')));
+    await tester.tap(find.byKey(const ValueKey('supplier-region')));
+    await _settle(tester);
+    // The first state by name, so the open list shows it.
+    await tester.tap(find.text('Alabama').last);
+    await _settle(tester);
+    await tester.tap(find.byKey(_save));
+    await _settle(tester);
+    expect(world.suppliers.saves, 1);
+    expect(world.suppliers.suppliers.single.subdivision, 'AL');
+  });
+
   testWidgets('an empty name is said under its field and nothing is sent', (
     tester,
   ) async {

@@ -8447,6 +8447,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'a buyer reference or a purchase-order number';
 
   @override
+  String get eInvoiceChannelGapBuyerSubdivision =>
+      'the region of the customer’s address (BT-54)';
+
+  @override
   String get eInvoiceChannelGapBuyerTaxId =>
       'the customer’s VAT number or fiscal code';
 
@@ -8467,11 +8471,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'the space’s electronic address (BT-34) in its legal identity';
 
   @override
-  String get eInvoiceChannelGapSellerVatId => 'the space’s VAT number';
+  String get eInvoiceChannelGapSellerSubdivision =>
+      'the region of the space’s address (BT-39) in its legal identity';
 
   @override
-  String get eInvoiceChannelGapSubdivision =>
-      'the county of each Romanian address';
+  String get eInvoiceChannelGapSellerVatId => 'the space’s VAT number';
 
   @override
   String eInvoiceChannelGapsTitle(String channel) {

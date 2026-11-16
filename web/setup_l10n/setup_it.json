@@ -249,6 +249,7 @@
  "fieldStreet": "Via",
  "fieldPostal": "CAP",
  "fieldCity": "Città",
+ "fieldRegion": "Regione (codice)",
  "planSiteLegalId": "N. di registrazione (SIRET)",
  "planRemoveSite": "Rimuovi questa sede",
  "planAddSite": "Aggiungi una sede",

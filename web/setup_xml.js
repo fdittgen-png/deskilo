@@ -132,7 +132,9 @@ function bookingRules(){const w=workHours(),policies=on('bookingPolicies');
 function legalConfig(){const m=S.mentions,lt=S.landTax,reg=registered();
  const out={legal_form:m.legalForm||'',registration:m.register||'',payment_terms:m.terms||'',late_penalty:m.penalty||'',
   recovery_indemnity:m.recovery||'',escompte:m.escompte||'',insurance:m.insurance||'',special_mentions:m.special||'',
-  seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:S.vatExigibility};
+  seller_kind:S.org==='company'?'':'association',customer_capacity:S.customerCapacity||'',vat_tax_point:S.vatExigibility,
+  // #3649 — the region of the space's address, as its code.
+  subdivision:String(S.subdivision||'').trim().toUpperCase()};
  if(S.vatExigibility==='invoice')out.vat_exigibility='invoice';
  if(S.vatExigibility==='cash')out.vat_exigibility='payment';
  // #2357 — how often the return is filed: a stored parameter now.
@@ -192,7 +194,7 @@ function tablesConfig(){
  // and ''): a null made the import refuse the whole configuration.
  if(on('vatManagement')&&registered())t.vat_rates=S.vatRates.filter(r=>String(r.label).trim()&&r.percent!==''&&r.percent!=null).map((r,i)=>({label:String(r.label).trim(),percent:parseFloat(r.percent),
    category:parseFloat(r.percent)>0?'S':'Z',is_default:i===0,active:true,group_key:on('vatGroups')&&r.group?r.group:'standard',outside_base:false,exemption_reason:'',valid_from:on('vatRateHistory')&&r.validFrom?r.validFrom:'1900-01-01',valid_to:null,supersedes:null}));
- if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',
+ if(on('multiSite'))t.sites=S.sites.filter(x=>String(x.name).trim()).map((x,i)=>({name:x.name.trim(),street:x.street||'',postal_code:x.postal||'',city:x.city||'',country_code:S.country||'',subdivision:String(x.subdivision||'').trim().toUpperCase(),
    legal_id:x.legalId||'',is_default:i===0,sort_order:i,vat_id:'',tax_exemption_reason:''}));
  return t;
 }

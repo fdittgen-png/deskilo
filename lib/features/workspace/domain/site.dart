@@ -1,4 +1,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #945 — a site: the unit of address. Levels belong to a site, a member
@@ -14,6 +16,7 @@ class Site implements SystemStamped {
     this.postalCode = '',
     this.city = '',
     this.countryCode = '',
+    this.subdivision = '',
     this.legalId = '',
     this.vatId = '',
     this.taxExemptionReason = '',
@@ -36,6 +39,9 @@ class Site implements SystemStamped {
   /// ISO 3166-1 alpha-2, upper case.
   final String countryCode;
 
+  /// #3649 -- the region of the address, as its code (`MI`).
+  final String subdivision;
+
   /// The establishment's registration — a SIRET in France — under the
   /// entity's SIREN. The VAT number and the exemption stay the entity's.
   final String legalId;
@@ -48,12 +54,15 @@ class Site implements SystemStamped {
   final bool isDefault;
   final int sortOrder;
 
-  /// Street · POSTAL CITY — one line per element, as documents print it.
+  /// The street, then the lines its country writes below it (#3649) -- one
+  /// line per element, as documents print it.
   String get postalBlock => [
         street.trim(),
-        [postalCode.trim(), city.trim().toUpperCase()]
-            .where((p) => p.isNotEmpty)
-            .join(' '),
+        ...postalLayoutOf(countryCode).render(
+          postalCode: postalCode,
+          city: city,
+          region: subdivision,
+        ),
       ].where((l) => l.isNotEmpty).join('\n');
 
   bool get hasAddress => street.isNotEmpty || city.isNotEmpty;
@@ -67,6 +76,7 @@ class Site implements SystemStamped {
         postalCode: row['postal_code'] as String? ?? '',
         city: row['city'] as String? ?? '',
         countryCode: row['country_code'] as String? ?? '',
+        subdivision: row['subdivision'] as String? ?? '',
         legalId: row['legal_id'] as String? ?? '',
         vatId: row['vat_id'] as String? ?? '',
         taxExemptionReason: row['tax_exemption_reason'] as String? ?? '',
@@ -92,7 +102,7 @@ class Site implements SystemStamped {
         street: street ?? this.street,
         postalCode: postalCode ?? this.postalCode,
         city: city ?? this.city,
-        countryCode: countryCode ?? this.countryCode,
+        countryCode: countryCode ?? this.countryCode, subdivision: subdivision,
         legalId: legalId ?? this.legalId,
         vatId: vatId ?? this.vatId,
         taxExemptionReason: taxExemptionReason ?? this.taxExemptionReason,

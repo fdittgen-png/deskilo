@@ -13413,6 +13413,12 @@ abstract class AppLocalizations {
   /// **'a buyer reference or a purchase-order number'**
   String get eInvoiceChannelGapBuyerReference;
 
+  /// #3649 what a channel needs: the region of the customer’s address
+  ///
+  /// In en, this message translates to:
+  /// **'the region of the customer’s address (BT-54)'**
+  String get eInvoiceChannelGapBuyerSubdivision;
+
   /// #2358 channel gap
   ///
   /// In en, this message translates to:
@@ -13443,17 +13449,17 @@ abstract class AppLocalizations {
   /// **'the space’s electronic address (BT-34) in its legal identity'**
   String get eInvoiceChannelGapSellerEndpoint;
 
+  /// #3649 what a channel needs: the region of the space’s address
+  ///
+  /// In en, this message translates to:
+  /// **'the region of the space’s address (BT-39) in its legal identity'**
+  String get eInvoiceChannelGapSellerSubdivision;
+
   /// #2358 channel gap
   ///
   /// In en, this message translates to:
   /// **'the space’s VAT number'**
   String get eInvoiceChannelGapSellerVatId;
-
-  /// #2358 channel gap
-  ///
-  /// In en, this message translates to:
-  /// **'the county of each Romanian address'**
-  String get eInvoiceChannelGapSubdivision;
 
   /// #2358 e-invoice sheet: what the configured channel still needs before Send is offered
   ///

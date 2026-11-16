@@ -63,6 +63,7 @@ List<String> configSites(List<Site> sites) => [
         ...postalLayoutOf(s.countryCode).render(
           postalCode: s.postalCode,
           city: s.city,
+          region: s.subdivision,
           capitals: false,
         ),
       ].where((p) => p.isNotEmpty).join(', '),

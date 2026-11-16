@@ -170,7 +170,7 @@ const PARAM_META=[
  ['numbering.prefix','fieldPrefix','text'],['numbering.datePart','colDate','enum',()=>NUMDATE.map(x=>x[0])],['numbering.digits','fieldDigits','int',{min:1}],
  ['numbering.reset','numReset','enum',(s=S)=>resetsFor(s)],
  ['memberNumbering.prefix','fieldPrefix','text'],['memberNumbering.digits','fieldDigits','int',{min:1}],
- ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],
+ ['regNumber','legalRegNumber','text'],['vatId','legalVatId','text'],['exemption','legalExemption','text'],['street','fieldStreet','text'],['postal','fieldPostal','text'],['city','fieldCity','text'],['subdivision','fieldRegion','text'],
  ['mentions.legalForm','mentionLegalForm','text'],['mentions.terms','mentionTerms','text'],['mentions.penalty','mentionPenalty','text'],['mentions.recovery','mentionRecovery','text'],['mentions.escompte','mentionEscompte','text'],['mentions.insurance','mentionInsurance','text'],['mentions.special','mentionSpecial','text'],
  ['reminders.levels','dunningLevels','int',{min:0},{needs:'dunning'}],['reminders.firstDays','dunningFirstDays','int',{min:0},{needs:'dunning'}],['reminders.betweenDays','dunningBetweenDays','int',{min:0},{needs:'dunning'}],
  ['reminders.automatic','dunningAutomatic','bool',null,{needs:'paymentReminders'}],

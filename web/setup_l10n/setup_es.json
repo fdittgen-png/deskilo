@@ -249,6 +249,7 @@
  "fieldStreet": "Calle",
  "fieldPostal": "Código postal",
  "fieldCity": "Ciudad",
+ "fieldRegion": "Región (código)",
  "planSiteLegalId": "N.º de registro (SIRET)",
  "planRemoveSite": "Eliminar esta sede",
  "planAddSite": "Añadir una sede",

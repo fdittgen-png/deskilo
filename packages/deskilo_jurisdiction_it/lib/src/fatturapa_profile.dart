@@ -150,6 +150,8 @@ class _FatturaPaWriter {
               : '00000',
         );
         el('Comune', _latin(p.city, 60, '-'));
+        // #3649 -- the host hands the province's sigla, read through the
+        // one mapping (`subdivisionPart`).
         final province = p.subdivision.toUpperCase();
         if (italian && RegExp(r'^[A-Z]{2}$').hasMatch(province)) {
           el('Provincia', province);

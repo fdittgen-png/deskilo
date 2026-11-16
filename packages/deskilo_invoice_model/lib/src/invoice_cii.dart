@@ -6,6 +6,7 @@ import 'package:xml/xml.dart';
 import 'e_invoice_totals.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -272,9 +273,9 @@ class _CiiWriter {
       if (p.city.isNotEmpty) ram('CityName', p.city);
       ram('CountryID', p.country.toUpperCase());
       // #2358 — BT-39 / BT-54, after the country in CII's sequence.
-      if (p.subdivision.isNotEmpty) {
-        ram('CountrySubDivisionName', p.subdivision);
-      }
+      // #3649 -- the region's code, read through the one mapping.
+      final region = subdivisionPart(p.country, p.subdivision);
+      if (region.isNotEmpty) ram('CountrySubDivisionName', region);
     });
   }
 

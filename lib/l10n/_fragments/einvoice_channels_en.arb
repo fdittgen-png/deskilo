@@ -81,9 +81,13 @@
   "@eInvoiceChannelGapSellerContact": {
     "description": "#2358 channel gap"
   },
-  "eInvoiceChannelGapSubdivision": "the county of each Romanian address",
-  "@eInvoiceChannelGapSubdivision": {
-    "description": "#2358 channel gap"
+  "eInvoiceChannelGapSellerSubdivision": "the region of the space’s address (BT-39) in its legal identity",
+  "eInvoiceChannelGapBuyerSubdivision": "the region of the customer’s address (BT-54)",
+  "@eInvoiceChannelGapSellerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the space’s address"
+  },
+  "@eInvoiceChannelGapBuyerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the customer’s address"
   },
   "eInvoiceChannelGapSellerVatId": "the space’s VAT number",
   "@eInvoiceChannelGapSellerVatId": {
