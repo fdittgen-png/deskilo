@@ -10,7 +10,7 @@
 -- refusal changes nothing; a withdrawn claim frees its invoices; a callback
 -- delivered twice applies once; without a claim nothing changes. Rolled back.
 begin;
-select plan(103);
+select plan(113);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -69,7 +69,10 @@ begin
          (ws, m_a, m_o, 'CL-A12', 'A12', '[]'::jsonb, 800, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-06', '2026-10-16', 'full'),
          (ws, m_a, m_o, 'CL-A13', 'A13', '[]'::jsonb, 1250, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-07', '2026-10-17', 'full'),
          (ws, m_a, m_o, 'CL-A14', 'A14', '[]'::jsonb, 1700, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-08', '2026-10-18', 'full'),
-         (ws, m_a, m_o, 'CL-A15', 'A15', '[]'::jsonb, 1900, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-09', '2026-10-19', 'full');
+         (ws, m_a, m_o, 'CL-A15', 'A15', '[]'::jsonb, 1900, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-09', '2026-10-19', 'full'),
+         (ws, m_a, m_o, 'CL-A16', 'A16', '[]'::jsonb, 800, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-08', '2026-10-18', 'usage'),
+         (ws, m_a, m_o, 'CL-A17', 'A17', '[]'::jsonb, 600, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-10', '2026-10-20', 'full'),
+         (ws, m_a, m_o, 'CL-A18', 'A18', '[]'::jsonb, 700, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2027-11', '2026-10-21', 'full');
   update public.invoices set voided_at = now() where number = 'CL-V1';
   perform set_config('t.ws', ws::text, true);
   perform set_config('t.wsp', wsp::text, true);
@@ -494,39 +497,99 @@ select is(pg_temp.refusal(format('select public.open_payment_intent(%L, %L, %L, 
   'online payments are off in this workspace', 'a claim opens no online payment while they are off');
 reset role;
 
+-- ── A withdrawn claim is never handed, not even again ────────────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A18')], 700, '2027-11', '00000000-0000-4000-8000-000003556f13')$$,
+  'a claim of A18');
+reset role;
+select set_config('t.f13', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f13'), true);
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f13')::uuid), true, 'it is handed to its provider');
+reset role;
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select public.withdraw_payment_claim(current_setting('t.f13')::uuid)$$,
+  'the member withdraws it while its outcome is unknown');
+reset role;
+set local role service_role;
+select is(public.hand_payment_intent(current_setting('t.f13')::uuid), false,
+  'a retry of the handed payment is not handed again: its invoices may be in another payment');
+reset role;
+
+-- ── What passes on a retry aborts the settlement whole ────────────────────
+select pg_temp.act('a2');
+set local role authenticated;
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A17')], 600, '2027-10', '00000000-0000-4000-8000-000003556f12')$$,
+  'a claim of A17');
+reset role;
+create function public.t3556_serialization() returns trigger language plpgsql as $t$
+begin raise exception 'could not serialize access' using errcode = '40001'; end $t$;
+create trigger t3556_serialization before insert on public.invoice_matches
+  for each row execute function public.t3556_serialization();
+select is(pg_temp.refusal_code($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f12'), 'cap-12', 600)$$),
+  '40001', 'a serialization failure while applying the claim is raised, not recorded');
+select is((select status || ':' || (ledger_entry_id is null)::text from public.payment_intents
+            where request_id = '00000000-0000-4000-8000-000003556f12'),
+  'created:true', 'nothing was credited: the provider''s retry settles it whole');
+drop trigger t3556_serialization on public.invoice_matches;
+drop function public.t3556_serialization();
+
 -- ── The books closed today: the money is credited, the claim waits for a person
 select pg_temp.act('a2');
 set local role authenticated;
-select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A14')], 1700, '2027-08', '00000000-0000-4000-8000-000003556f09')$$,
-  'a claim of A14');
+select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A14'), pg_temp.inv('CL-A16')], 2500, '2027-08', '00000000-0000-4000-8000-000003556f09')$$,
+  'a claim of A14 and A16');
 select lives_ok(format('select public.record_payment(%L, %L, 1900, %L, %L, null, null, array[%L]::uuid[])',
   current_setting('t.ws'), current_setting('t.m_a'), '', 'transfer', pg_temp.inv('CL-A15')),
   'a declared payment of A15');
 reset role;
 insert into public.book_periods (workspace_id, period_from, period_to, reason)
 values (current_setting('t.ws')::uuid, current_date - 1, current_date + 1, 'owner');
-select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f09'), 'cap-9', 1700)$$,
+select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f09'), 'cap-9', 2500)$$,
   'the capture commits although no match can be booked today');
 select is((select pi.status || ':' || (l.amount_cents - public.payment_used_cents(l.id))::text
              from public.payment_intents pi join public.ledger_entries l on l.id = pi.ledger_entry_id
             where pi.request_id = '00000000-0000-4000-8000-000003556f09'),
-  'captured:1700', 'the payment is the payer''s credit, whole');
-select is((select (claim_outcome -> 'left_out' -> 0 ->> 'reason') || ':' || (claim_outcome -> 'left_out' -> 0 ->> 'number')
-             || ':' || ((claim_outcome -> 'left_out' -> 0 ->> 'words') like '%closed period of the books%')::text
-             from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f09'),
-  'error:CL-A14:true', 'the outcome names why nothing was applied');
+  'captured:2500', 'the payment is the payer''s credit, whole');
+select is((select string_agg((o ->> 'reason') || ':' || (o ->> 'number') || ':'
+                             || ((o ->> 'words') like '%closed period of the books%')::text, ',' order by o ->> 'number')
+             from public.payment_intents pi, jsonb_array_elements(pi.claim_outcome -> 'left_out') o
+            where pi.request_id = '00000000-0000-4000-8000-000003556f09'),
+  'error:CL-A14:true,error:CL-A16:true', 'the outcome names every invoice it left out, and why');
 select pg_temp.act('a1');
 set local role authenticated;
 select lives_ok(format('select public.respond_to_event(%L, true)',
   (select id from public.events where type = 'payment' and status = 'pending' and payload -> 'claim' -> 0 ->> 'number' = 'CL-A15')),
   'the owner approves the declared payment all the same');
 reset role;
-select is((select (payload -> 'claim_outcome' -> 'left_out' -> 0 ->> 'reason') || ':'
-             || ((payload -> 'claim_outcome' -> 'left_out' -> 0 ->> 'words') like '%closed period of the books%')::text
-             from public.events where type = 'payment' and payload -> 'claim' -> 0 ->> 'number' = 'CL-A15'),
-  'error:true', 'and its outcome names why nothing was applied');
-select is((select count(*)::int from public.invoice_matches m where m.invoice_id in (pg_temp.inv('CL-A14'), pg_temp.inv('CL-A15'))),
+select is((select string_agg((o ->> 'reason') || ':' || (o ->> 'number') || ':'
+                             || ((o ->> 'words') like '%closed period of the books%')::text, ',' order by o ->> 'number')
+             from public.events e, jsonb_array_elements(e.payload -> 'claim_outcome' -> 'left_out') o
+            where e.type = 'payment' and e.payload -> 'claim' -> 0 ->> 'number' = 'CL-A15'),
+  'error:CL-A15:true', 'and its outcome names every invoice it left out, and why');
+select is((select count(*)::int from public.invoice_matches m
+            where m.invoice_id in (pg_temp.inv('CL-A14'), pg_temp.inv('CL-A15'), pg_temp.inv('CL-A16'))),
   0, 'no match was booked into the closed period');
+-- the money is there, unmatched: the invoices are not offered to pay again
+select pg_temp.act('a2');
+set local role authenticated;
+select is((select (x ->> 'payable') || ':' || (x ->> 'payment_received')
+             from jsonb_array_elements(public.my_finance_overview() -> 'invoices') x where x ->> 'number' = 'CL-A14'),
+  'false:true', 'an invoice whose online payment arrived unapplied is not payable again');
+select is((select (x ->> 'payable') || ':' || (x ->> 'payment_received')
+             from jsonb_array_elements(public.my_finance_overview() -> 'invoices') x where x ->> 'number' = 'CL-A15'),
+  'false:true', 'nor one whose approved declared payment could not be applied');
+reset role;
+delete from public.book_periods where workspace_id = current_setting('t.ws')::uuid and reason = 'owner';
+update public.payment_intents set status = 'reversed', reversed_at = now(), reversal_reason = 'refund'
+ where request_id = '00000000-0000-4000-8000-000003556f09';
+select pg_temp.act('a2');
+set local role authenticated;
+select is((select (x ->> 'payable') || ':' || (x ->> 'payment_received')
+             from jsonb_array_elements(public.my_finance_overview() -> 'invoices') x where x ->> 'number' = 'CL-A14'),
+  'true:false', 'once the provider reversed that payment, the invoice is payable again');
+reset role;
 
 select * from finish();
 rollback;

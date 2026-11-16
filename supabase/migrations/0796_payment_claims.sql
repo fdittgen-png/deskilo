@@ -399,8 +399,9 @@ revoke execute on function public.check_payment_claim(uuid, uuid, uuid[], text, 
 -- failure inside it (a period of the books closed today, a credit spent
 -- on an invoice issued meanwhile) undoes the application alone and is
 -- recorded, every invoice left out with the error's code and words, for a
--- person to match. Only a transaction rollback (class 40: serialization
--- failure, deadlock) is raised again, so the whole settlement is retried.
+-- person to match. What passes on a retry (a transaction rollback, class
+-- 40; a lock not available, 55P03; a lack of resources, class 53) is raised
+-- again, so the whole settlement is retried.
 -- Returns what was applied and what was left out.
 create or replace function public.apply_payment_claim(
   p_ledger uuid, p_ids uuid[], p_payer uuid, p_source uuid, p_currency text)
@@ -427,7 +428,7 @@ begin
       from public.ledger_entries l where l.id = p_ledger;
     v_reason := case
       when coalesce(v_left, 0) <= 0 then 'payment_used'
-      when upper(v_invoice.currency) <> upper(p_currency) then 'other_currency'
+      when upper(v_invoice.currency) is distinct from upper(p_currency) then 'other_currency'
       else public.invoice_match_blocker(v_invoice.id)
     end;
     if v_reason is not null then
@@ -445,8 +446,14 @@ begin
       'invoice_id', v_invoice.id, 'number', v_invoice.number, 'amount_cents', v_amount));
   end loop;
   exception
-    when transaction_rollback then raise;
     when others then
+      -- What passes on a retry is raised again, so the whole settlement is
+      -- retried: a transaction rollback (class 40), a lock not available
+      -- (55P03), a lack of resources (class 53). Only what a retry would
+      -- meet again is recorded.
+      if left(sqlstate, 2) in ('40', '53') or sqlstate = '55P03' then
+        raise;
+      end if;
       return jsonb_build_object('applied', '[]'::jsonb, 'left_out', (
         select coalesce(jsonb_agg(jsonb_build_object(
                  'invoice_id', i.id, 'number', i.number, 'reason', 'error',
@@ -757,7 +764,8 @@ grant execute on function public.withdraw_payment_claim(uuid) to authenticated;
 -- its invoices by id. clock_timestamp(), not now(): this may have waited
 -- for the locks behind a payment that already found the claim lapsed.
 -- True: handed (a reused intent keeps its first hand-over); false: not
--- handed, so no provider is called and the app starts a new payment.
+-- handed (a withdrawn claim, even one handed before; a lapsed one), so no
+-- provider is called and the app starts a new payment.
 create or replace function public.hand_payment_intent(p_intent uuid)
 returns boolean language plpgsql security definer set search_path = public as $fn$
 declare
@@ -765,14 +773,16 @@ declare
 begin
   select * into v_intent from public.payment_intents where id = p_intent for update;
   if v_intent.id is null or v_intent.status <> 'created' then return false; end if;
+  -- A withdrawn claim is never handed, not even again: its invoices may be
+  -- in another payment by now.
+  if v_intent.claim_withdrawn_at is not null then return false; end if;
   if v_intent.handed_at is not null then return true; end if;
   if v_intent.claimed_invoice_ids is not null then
     perform 1 from public.invoices i
      where i.id = any (v_intent.claimed_invoice_ids)
        and i.workspace_id = v_intent.workspace_id and i.member_id = v_intent.member_id
      order by i.id for update;
-    if v_intent.claim_withdrawn_at is not null
-       or v_intent.created_at <= clock_timestamp() - public.payment_claim_window() then
+    if v_intent.created_at <= clock_timestamp() - public.payment_claim_window() then
       return false;
     end if;
   end if;
@@ -783,9 +793,47 @@ $fn$;
 revoke execute on function public.hand_payment_intent(uuid) from public, anon, authenticated;
 grant execute on function public.hand_payment_intent(uuid) to service_role;
 
+-- ── 6c. an invoice whose money arrived but could not be applied ─────────
+-- A settled payment (an online capture, or an approved declared payment)
+-- whose claim could not be applied (left out with reason `error`: a closed
+-- period, a credit spent meanwhile) still holds its invoice while that
+-- payment has money left unmatched, by the measure every match uses
+-- (`payment_used_cents`): the payer's money is there, waiting for a person
+-- to match it. Paying the invoice again would pay it twice. The invoice is
+-- free again once that money is matched elsewhere, or once the provider
+-- reversed the online payment (0757). A declared payment has no reversal of
+-- its own: its money is corrected by hand, and matched.
+create or replace function public.invoice_payment_received(p_invoice uuid)
+returns boolean language sql stable security definer set search_path = public as $fn$
+  select exists (
+    select 1
+      from public.invoices i
+      join public.payment_intents pi
+        on pi.workspace_id = i.workspace_id and pi.member_id = i.member_id
+      join public.ledger_entries l on l.id = pi.ledger_entry_id
+     where i.id = p_invoice
+       and pi.status = 'captured'
+       and pi.claim_outcome -> 'left_out'
+             @> jsonb_build_array(jsonb_build_object('invoice_id', p_invoice, 'reason', 'error'))
+       and l.amount_cents - public.payment_used_cents(l.id) > 0)
+  or exists (
+    select 1
+      from public.invoices i
+      join public.events e
+        on e.workspace_id = i.workspace_id and e.type = 'payment' and e.status = 'confirmed'
+      join public.ledger_entries l
+        on l.event_id = e.id and l.kind = 'credit' and l.category = 'payment'
+     where i.id = p_invoice
+       and e.payload -> 'claim_outcome' -> 'left_out'
+             @> jsonb_build_array(jsonb_build_object('invoice_id', p_invoice, 'reason', 'error'))
+       and l.amount_cents - public.payment_used_cents(l.id) > 0);
+$fn$;
+revoke execute on function public.invoice_payment_received(uuid) from public, anon, authenticated;
+
 -- ── 7. Me knows which of its invoices is in a payment being processed ────
 -- my_finance_overview (0755, restated whole): each invoice also answers
--- `in_payment`. Only the person's own invoices, as before.
+-- `in_payment`, `payment_received` (6c) and `payable`. Only the person's own
+-- invoices, as before.
 create or replace function public.my_finance_overview()
 returns jsonb
 language plpgsql
@@ -822,12 +870,16 @@ begin
            -- #3556 — the invoice is in a payment being processed (an online
            -- payment or a declared one that names it): not for another.
            exists (select 1 from claimed c where c.invoice_id = i.id) as in_payment,
+           -- Its money arrived and waits for a person to match it (6c).
+           pr.received as payment_received,
            -- What a payment may name: the invoice takes a match now (the
            -- rule its settlement follows), is in the business's currency
-           -- (a payment is taken in it) and is in no open claim.
+           -- (a payment is taken in it), is in no open claim and has no
+           -- payment waiting to be matched to it.
            public.invoice_match_blocker(i.id) is null
              and upper(i.currency) = upper(w.currency_code)
-             and not exists (select 1 from claimed c where c.invoice_id = i.id) as payable,
+             and not exists (select 1 from claimed c where c.invoice_id = i.id)
+             and not pr.received as payable,
            coalesce((select sum(p.amount_cents) from public.invoice_match_payments p
                        join public.events e on e.id = p.event_id
                       where p.invoice_id = i.id and e.status = 'pending'), 0)
@@ -844,6 +896,7 @@ begin
         select x.* from public.invoice_matches x
          where x.invoice_id = i.id order by x.matched_at desc limit 1
       ) m on true
+      cross join lateral (select public.invoice_payment_received(i.id) as received) pr
      where mem.user_id = auth.uid()
        and i.voided_at is null and i.settled_by_invoice_id is null
   ),
@@ -866,7 +919,8 @@ begin
            'issued_at', a.issued_at, 'due_on', a.due_on, 'total_cents', a.total_cents,
            'currency', a.currency, 'paid_cents', a.paid_cents, 'state', a.state,
            'still_due_cents', a.still_due_cents, 'awaiting_cents', a.awaiting_cents,
-           'in_payment', a.in_payment, 'payable', a.payable,
+           'in_payment', a.in_payment, 'payment_received', a.payment_received,
+           'payable', a.payable,
            'reminder_count', a.reminder_count, 'last_reminder_at', a.last_reminder_at)
          order by a.issued_at desc, a.id desc), '[]'::jsonb),
          (select count(*) from settled) > 300
