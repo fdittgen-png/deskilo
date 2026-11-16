@@ -30,7 +30,8 @@ class CaPostalLayout extends PostalLayoutContribution {
     postalCodeInCapitals: true,
     region: RegionField(
       kind: RegionKind.province,
-      required: true,
+      requiredInForm: true,
+      requiredOnInvoice: true,
       names: caRegions,
     ),
   );

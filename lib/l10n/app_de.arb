@@ -9559,6 +9559,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerRegion": "Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingBuyerTaxId": "Die Steuerkennung des Kunden: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
@@ -9599,6 +9603,10 @@
   "invoiceMissingSellerQstNumber": "Die QST-Registrierungsnummer des Betriebs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)",
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
+  },
+  "invoiceMissingSellerRegion": "Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
   },
   "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Betriebs (das Feld Registrierung trägt die Steuernummer)",
   "@invoiceMissingSellerTaxNumber": {

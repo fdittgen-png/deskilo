@@ -14,6 +14,13 @@ String _salesTaxMissingLabel(AppLocalizations l10n, String key) => switch (key) 
 /// #2363 -- a site where the country's VAT does not apply (9999).
 String _territoryMissingLabel(AppLocalizations l10n, String key) => switch (key) {
   'territory_outside_vat' => l10n.invoiceMissingTerritoryOutsideVat,
+  _ => _regionMissingLabel(l10n, key),
+};
+
+/// #4105 -- the region the country's own invoices require (0793).
+String _regionMissingLabel(AppLocalizations l10n, String key) => switch (key) {
+  'seller_region' => l10n.invoiceMissingSellerRegion,
+  'buyer_region' => l10n.invoiceMissingBuyerRegion,
   _ => key,
 };
 

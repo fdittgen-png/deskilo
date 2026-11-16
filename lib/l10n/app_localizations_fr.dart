@@ -16171,6 +16171,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Le nom ou la société du client';
 
   @override
+  String get invoiceMissingBuyerRegion =>
+      'La région du client, pour un client dans le pays de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province aux États-Unis ou au Canada';
+
+  @override
   String get invoiceMissingBuyerTaxId =>
       'L\'identifiant fiscal du client : le NIF d\'un client professionnel en Espagne, le codice fiscale ou la partita IVA d\'un client en Italie, le SIREN d\'un client professionnel en France';
 
@@ -16213,6 +16217,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingSellerQstNumber =>
       'Le numéro d\'inscription à la TVQ de l\'entreprise délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l\'identité légale (la facture perçoit la TVQ)';
+
+  @override
+  String get invoiceMissingSellerRegion =>
+      'La région de l\'adresse de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province d\'un vendeur aux États-Unis ou au Canada';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

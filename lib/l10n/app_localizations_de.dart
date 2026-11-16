@@ -16141,6 +16141,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Kunden';
 
   @override
+  String get invoiceMissingBuyerRegion =>
+      'Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada';
+
+  @override
   String get invoiceMissingBuyerTaxId =>
       'Die Steuerkennung des Kunden: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich';
 
@@ -16183,6 +16187,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceMissingSellerQstNumber =>
       'Die QST-Registrierungsnummer des Betriebs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)';
+
+  @override
+  String get invoiceMissingSellerRegion =>
+      'Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada';
 
   @override
   String get invoiceMissingSellerTaxNumber =>

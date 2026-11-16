@@ -46,6 +46,14 @@
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
   },
+  "invoiceMissingSellerRegion": "La regione dell'indirizzo dell'attività: la provincia in Italia, il distretto in Romania, lo Stato o la provincia di un venditore negli Stati Uniti o in Canada",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
+  },
+  "invoiceMissingBuyerRegion": "La regione del cliente, per un cliente nel paese dell'attività: la provincia in Italia, il distretto in Romania, lo Stato o la provincia negli Stati Uniti o in Canada",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingNationalCurrency": "L'IVA nella valuta nazionale: un venditore di uno Stato membro fuori dall'euro fattura qui l'IVA nella propria valuta (art. 230 della direttiva IVA)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"

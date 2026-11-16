@@ -12,15 +12,23 @@ enum RegionKind { state, province, county, canton, region }
 class RegionField {
   const RegionField({
     required this.kind,
-    this.required = false,
+    this.requiredInForm = false,
+    this.requiredOnInvoice = false,
     this.names = const {},
     this.printsName = false,
   });
 
   final RegionKind kind;
 
-  /// An address of this country is incomplete without its region.
-  final bool required;
+  /// The address form asks for the region: an address of this country is
+  /// incomplete without it.
+  final bool requiredInForm;
+
+  /// #4105 -- the country's own invoice rules need the region on the
+  /// document: an invoice is refused before it is issued when a party in the
+  /// seller's country has none. Distinct from [requiredInForm], so a country
+  /// can ask for the region in its form without refusing invoices.
+  final bool requiredOnInvoice;
 
   /// The country's regions, by code (the second part of ISO 3166-2) with the
   /// name its post prints. Empty: any code is accepted.

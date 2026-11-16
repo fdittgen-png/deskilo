@@ -46,6 +46,14 @@
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
   },
+  "invoiceMissingSellerRegion": "La région de l'adresse de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province d'un vendeur aux États-Unis ou au Canada",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
+  },
+  "invoiceMissingBuyerRegion": "La région du client, pour un client dans le pays de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province aux États-Unis ou au Canada",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingNationalCurrency": "La TVA dans la monnaie nationale : un vendeur d'un État membre hors zone euro facture ici la TVA dans sa propre monnaie (art. 230 de la directive TVA)",
   "@invoiceMissingNationalCurrency": {
     "description": "#2356: invoiceMissingNationalCurrency"

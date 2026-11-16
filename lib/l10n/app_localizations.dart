@@ -25643,6 +25643,12 @@ abstract class AppLocalizations {
   /// **'The customer\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #4105 a missing essential: the customer's region, for a customer in the seller's country
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada'**
+  String get invoiceMissingBuyerRegion;
+
   /// #2356: invoiceMissingBuyerTaxId
   ///
   /// In en, this message translates to:
@@ -25708,6 +25714,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
   String get invoiceMissingSellerQstNumber;
+
+  /// #4105 a missing essential: the seller's region, which the country's invoices require
+  ///
+  /// In en, this message translates to:
+  /// **'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada'**
+  String get invoiceMissingSellerRegion;
 
   /// #2356: invoiceMissingSellerTaxNumber
   ///

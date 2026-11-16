@@ -82,6 +82,10 @@ final Map<String, (PersonalInfo, String)> _addresses = {
     _at('US', '1600 Pennsylvania Ave NW', '20500', 'Washington', 'DC'),
     '1600 Pennsylvania Ave NW\nWASHINGTON DC 20500',
   ),
+  'RO': (
+    _at('RO', 'Strada Lipscani 1', '030031', 'București', 'B'),
+    'Strada Lipscani 1\n030031 București\nBucurești',
+  ),
   'CA': (
     _at('CA', '24 Sussex Dr', 'k1m 1m4', 'Ottawa', 'ON'),
     '24 Sussex Dr\nOTTAWA ON K1M 1M4',

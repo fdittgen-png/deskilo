@@ -29,7 +29,8 @@ class UsPostalLayout extends PostalLayoutContribution {
     cityInCapitals: true,
     region: RegionField(
       kind: RegionKind.state,
-      required: true,
+      requiredInForm: true,
+      requiredOnInvoice: true,
       names: usRegions,
     ),
   );
