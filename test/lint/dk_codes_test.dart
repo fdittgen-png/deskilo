@@ -49,6 +49,8 @@ const _notForTheApp = <String, String>{
   'DKC12':
       'a retry of a payment whose claim was withdrawn: the payment flow '
       'answers it, no screen meets it (0797)',
+  'DKC13': 'no screen takes a declaration back yet (#4140); My finances '
+      'reads it next',
 };
 
 final _raised = RegExp(r"errcode\s*=\s*'(DK[A-Z0-9]{3})'");
