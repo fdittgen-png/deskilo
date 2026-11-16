@@ -21,4 +21,4 @@ grant execute on function public.mcp_operation_catalogue() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(796);
+select public.set_deskilo_schema_version(795);
