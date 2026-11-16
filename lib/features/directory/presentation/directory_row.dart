@@ -1,13 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 
+import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/ui/kit/kit_card.dart';
+import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/place_summary.dart';
 import '../domain/public_workspace.dart';
+import 'public_service_line.dart';
 import 'saved_place_button.dart';
+
+/// How many published services a card names; the page lists them all.
+const int _servicesShown = 3;
 
 /// One listed space: its name, its place, what it offers, and three
 /// separate actions (Bookmark, View, Locate on map). The card itself is
@@ -37,16 +43,31 @@ class DirectoryRow extends StatelessWidget {
     final w = workspace;
     final id = '${w.source}/${w.id}';
     // The town and the kind, when the space published them -- never the host
-    // it is served from.
-    final kind = switch (w.text('host_type')) {
-      'association' => l.portalAssociation,
-      'company' => l.portalCompany,
-      _ => '',
-    };
+    // it is served from. #3554 — the business's kind (its primary one this
+    // app can name); the legal form only from an installation that
+    // publishes no kind.
+    final kind =
+        w.kinds.map((code) => businessKindLabel(l, code)).nonNulls.firstOrNull ??
+        switch (w.text('host_type')) {
+          'association' => l.portalAssociation,
+          'company' => l.portalCompany,
+          _ => '',
+        };
     final place = [
       cityOfAddress(w.text('address')),
       kind,
     ].where((part) => part.isNotEmpty).join(' · ');
+    // #3554 — up to three published services, each in its own currency,
+    // named, with its tax word: never a "from" price across them.
+    final format = personalFormatOf(context);
+    final services = [
+      for (final s in w.services.take(_servicesShown))
+        publicServiceLine(
+          l,
+          s,
+          format.moneyNamed(s.currency).formatMinor(s.priceMinor),
+        ),
+    ];
     final description = w.text('description');
     final muted = theme.textTheme.bodyMedium?.copyWith(
       color: theme.colorScheme.onSurfaceVariant,
@@ -72,6 +93,7 @@ class DirectoryRow extends StatelessWidget {
                   children: [
                     Text(w.name, style: theme.textTheme.titleMedium),
                     if (place.isNotEmpty) Text(place, style: muted),
+                    for (final line in services) Text(line),
                     if (description.isNotEmpty)
                       Text(
                         description,

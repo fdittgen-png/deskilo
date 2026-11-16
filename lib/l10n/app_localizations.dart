@@ -13071,6 +13071,54 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
   String discoveryDirectoriesDidNotAnswer(int count);
 
+  /// #3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result
+  ///
+  /// In en, this message translates to:
+  /// **'All kinds'**
+  String get discoveryKindAll;
+
+  /// #3554 Discover: chip narrowing the search to coworking spaces (plural sense)
+  ///
+  /// In en, this message translates to:
+  /// **'Coworking'**
+  String get discoveryKindCoworking;
+
+  /// #3554 Discover: a kind is chosen and no business of it was found; {kind} is the chip's label
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found in “{kind}”'**
+  String discoveryKindNoMatch(String kind);
+
+  /// #3554 Discover: chip narrowing the search to practices (therapists, advisers)
+  ///
+  /// In en, this message translates to:
+  /// **'Practices'**
+  String get discoveryKindPractices;
+
+  /// #3554 Discover: chip narrowing the search to salons
+  ///
+  /// In en, this message translates to:
+  /// **'Salons'**
+  String get discoveryKindSalons;
+
+  /// #3554 Discover: chip narrowing the search to other service businesses
+  ///
+  /// In en, this message translates to:
+  /// **'Other services'**
+  String get discoveryKindServices;
+
+  /// #3554 Discover: chip narrowing the search to studios
+  ///
+  /// In en, this message translates to:
+  /// **'Studios'**
+  String get discoveryKindStudios;
+
+  /// #3554 Discover: directories that cannot narrow their cards by kind are not asked, so their businesses are not in this result; never read as 'none found'
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{One directory cannot narrow by kind: it was not asked.} other{{count} directories cannot narrow by kind: they were not asked.}}'**
+  String discoveryKindUncovered(int count);
+
   /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: loaded, shown, answered, sources]
   ///
   /// In en, this message translates to:

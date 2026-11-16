@@ -8293,6 +8293,41 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'Tutti i tipi';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Nessun risultato in «$kind»';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Studi professionali';
+
+  @override
+  String get discoveryKindSalons => 'Saloni';
+
+  @override
+  String get discoveryKindServices => 'Altri servizi';
+
+  @override
+  String get discoveryKindStudios => 'Studi';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count elenchi non sanno filtrare per tipo: non sono stati interpellati.',
+      one: 'Un elenco non sa filtrare per tipo: non è stato interpellato.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,

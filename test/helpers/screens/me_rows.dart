@@ -25,6 +25,7 @@ Future<void> _pumpMe(
     accountActivity: scenario.documents,
     me: scenario.me,
     messenger: scenario.messenger,
+    directory: scenario.directory,
     extraOverrides: scenario.overrides,
     size: size,
   );

@@ -119,6 +119,7 @@ void main() {
                 me: scenario.me,
                 accountActivity: scenario.documents,
                 messenger: scenario.messenger,
+                directory: scenario.directory,
                 timeZoneMode: TimeZoneMode.workspace,
                 clock: FixedClock(meGuardNow),
                 // Tall enough that no row is cut by the viewport: a clipped row's
@@ -188,6 +189,7 @@ void main() {
               me: scenario.me,
               accountActivity: scenario.documents,
               messenger: scenario.messenger,
+              directory: scenario.directory,
               timeZoneMode: TimeZoneMode.workspace,
               clock: FixedClock(meGuardNow),
               size: const Size(390, 844),

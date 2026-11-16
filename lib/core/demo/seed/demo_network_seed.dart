@@ -144,6 +144,61 @@ const _demoNeighbourZurich = PublicWorkspace('demo-zurich', kDemoServerOrigin, '
   ],
 });
 
+/// #3554 — a practice near the Demo space, so Discover's kind chips and its
+/// search over services have a practice to find: four public services (a
+/// card names three), in euros, under the franchise that adds no VAT.
+const _demoNeighbourPractice = PublicWorkspace(
+  'demo-practice-garrigue',
+  kDemoServerOrigin,
+  '',
+  {
+    'name': 'Cabinet Garrigue',
+    'address': '8 rue Conti\n34120 Pézenas',
+    'host_type': 'company',
+    'currency': 'EUR',
+    'kinds': ['practice'],
+    'services': [
+      {
+        'name': 'Relaxing massage',
+        'category': 'Massages',
+        'duration_minutes': 60,
+        'price_minor': 6500,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Back massage',
+        'category': 'Massages',
+        'duration_minutes': 30,
+        'price_minor': 3800,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Foot reflexology',
+        'category': 'Reflexology',
+        'duration_minutes': 45,
+        'price_minor': 5000,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Five massages',
+        'category': 'Packages',
+        'price_minor': 29000,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+    ],
+    'takes_inquiries': true,
+    'latitude': '43.4594',
+    'longitude': '3.4248',
+    'contacts': [
+      {'name': 'Inès Garrigue', 'owner': true},
+    ],
+  },
+);
+
 /// The space's own public page, published, and the directory that lists
 /// it with its neighbours.
 void seedDemoDirectory(FakeDirectoryRepository directory) {
@@ -164,6 +219,7 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
       _demoNeighbourQuai,
       _demoNeighbourHalles,
       _demoNeighbourZurich,
+      _demoNeighbourPractice,
     ]);
 }
 

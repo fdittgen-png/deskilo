@@ -6,6 +6,8 @@
 // Me screen is added here in the PR that adds it; `me_scaffold_table_test`
 // fails when a Scaffold under lib/features/me/presentation is not listed.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/core/demo/data/public_directory_repository.dart';
+import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/me/providers/personal_shell_providers.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
@@ -27,6 +29,7 @@ class MeScenario {
     this.me,
     this.documents,
     this.messenger,
+    this.directory,
   });
 
   final FakeWorkspaceRepository workspace;
@@ -34,6 +37,9 @@ class MeScenario {
   final FakeMeRepository? me;
   final FakeAccountActivityRepository? documents;
   final FakeMessengerRepository? messenger;
+
+  /// #3554 — the public directory Discover reads; the empty one by default.
+  final FakeDirectoryRepository? directory;
 }
 
 /// The instant every Me guard and sheet runs at (UTC, so no zone moves it).
@@ -148,6 +154,36 @@ MeScenario _oneSourceFailed() => MeScenario(
   documents: twoCurrencies(),
 );
 
+/// #3554 — Discover with a kind chosen, one of its two sources failing: the
+/// other's practice is listed, the failed one says so with its retry, and
+/// the chip stays chosen.
+MeScenario _discoverSourceFailed() => MeScenario(
+  workspace: twoSpaces(),
+  overrides: _shell(),
+  directory: FakeDirectoryRepository()
+    ..cards.addAll(const [
+      PublicWorkspace('p1', 'https://a.example', 'k', {
+        'name': 'Cabinet Garrigue',
+        'address': '8 rue Conti\n34120 Pézenas',
+        'kinds': ['practice'],
+        'services': [
+          {
+            'name': 'Relaxing massage',
+            'duration_minutes': 60,
+            'price_minor': 6500,
+            'currency': 'EUR',
+            'tax_treatment': 'none',
+          },
+        ],
+      }),
+      PublicWorkspace('p2', 'https://b.example', 'k', {
+        'name': 'Praxis am Markt',
+        'kinds': ['practice'],
+      }),
+    ])
+    ..failPages.add('https://b.example#0'),
+);
+
 /// The Spaces page's own source is the references of the account: when they
 /// cannot be read it says so beside what it could read (#1650, #3545).
 MeScenario _spacesSourceFailed() => MeScenario(
@@ -190,6 +226,17 @@ final List<MeScreen> meScreens = [
     route: '/me/discover',
     sources: [],
     states: {'populated': _populated, 'empty': _empty},
+  ),
+  // #3554 — Discover narrowed to a kind: the chips stay with nothing found
+  // and with one source failed.
+  const MeScreen(
+    id: 'discover · a kind chosen',
+    route: '/me/discover?kind=practice',
+    sources: [],
+    states: {
+      'nothing found': _empty,
+      'one source failed': _discoverSourceFailed,
+    },
   ),
   const MeScreen(
     id: 'messages',
