@@ -3,9 +3,12 @@
 // #3832 — a trade city (Zurich, Milan) as the repositories hold it: its own
 // in-memory stores beside the main space's, a shared list of spaces, and
 // every record derived from the city's [DemoTradeCity] facts.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../features/money/domain/einvoice_gateway.dart';
 import '../../features/plan/domain/seat.dart';
 import '../../features/workspace/domain/booking_granularity.dart';
+import '../jurisdiction/installed_postal_layouts.dart';
 import 'data/accessory_repository.dart';
 import 'data/booking_right_reservations.dart';
 import 'data/calendar_repository.dart';
@@ -113,6 +116,7 @@ class DemoTradeCityData implements DemoSpaceParts {
         ..testId = '${city.prefix}-sdi-test'
         ..testVerdict = EInvoiceTestVerdict.accepted;
     }
+    _tellBeforeIssuing(money, city, listing);
     seedCityExpenses(money, city.id, city.prefix, now);
     seedCityMoney(money, space, (
       workspaceId: city.id,
@@ -205,4 +209,55 @@ class DemoTradeCityData implements DemoSpaceParts {
   final roles = FakeWorkspaceRoles();
   @override
   late final planResources = FakePlanResourceRepository(floorPlan);
+}
+
+/// #4105 — what [city]'s own invoices and channel will need, told before an
+/// issue: the twin of the server's region rule refuses a customer without a
+/// province, and the parties an issue would store let the channel's gaps be
+/// warned about (Milan: a customer in Switzerland without a VAT number).
+void _tellBeforeIssuing(
+  FakeMoneyRepository money,
+  DemoTradeCity city,
+  DemoSpaceListing listing,
+) {
+  // #4105 — what the city's own invoices require of a customer's address,
+  // by the twin of the server's rule (Milan: a customer without a province
+  // is refused).
+  money.invoiceQueries.buyers.missing = (memberId) {
+    final customer = city.customerOf(memberId);
+    return invoiceRegionMissing(
+      sellerCountry: city.countryCode,
+      sellerRegion: city.region,
+      buyerCountry: customer.country,
+      buyerRegion: customer.region,
+    );
+  };
+  // #4105 — the parties an issue would store, so what the city's channel
+  // will need is told before issuing (Milan: a customer in Switzerland
+  // without a VAT number is warned about).
+  if (city.region.isNotEmpty) {
+    money.invoiceQueries.buyers.parties = (memberId) {
+      final customer = city.customerOf(memberId);
+      return (
+        seller: InvoiceParty(
+          name: city.name,
+          street: city.street,
+          city: city.city,
+          postalCode: city.postalCode,
+          country: city.countryCode,
+          vatId: city.vatId,
+          subdivision: city.region,
+        ),
+        buyer: InvoiceParty(
+          name: listing.workspaces.memberNames[memberId] ?? '',
+          country: customer.country,
+          subdivision: customer.region,
+          vatId: customer.vatId,
+          // An Italian customer is named by its fiscal code: one without it
+          // is refused before issuing (0600), never only warned about.
+          legalId: customer.country == city.countryCode ? 'RSSMRA80A01F205X' : '',
+        ),
+      );
+    };
+  }
 }

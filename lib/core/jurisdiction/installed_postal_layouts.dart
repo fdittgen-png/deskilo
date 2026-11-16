@@ -144,3 +144,31 @@ returns jsonb language sql immutable set search_path = public as $quote
 $quote;
 revoke execute on function public.postal_region_rules() from public, anon, authenticated;''';
 }
+
+/// #4105 -- the keys an issue is refused with for the region a country's own
+/// invoices require, as `invoice_region_missing` (0792) answers them, for a
+/// source that is not the server (the Demo): the seller's region where its
+/// country asks for it, a customer's where it asks for every party's and the
+/// customer is in the seller's country (one whose address names no country
+/// is). A customer abroad is never refused for it.
+List<String> invoiceRegionMissing({
+  required String sellerCountry,
+  required String sellerRegion,
+  required String buyerCountry,
+  required String buyerRegion,
+}) {
+  final seller = sellerCountry.trim().toUpperCase();
+  final rule =
+      postalLayoutOf(seller).region?.requiredOnInvoice ?? RegionOnInvoice.none;
+  final buyer = buyerCountry.trim().isEmpty
+      ? seller
+      : buyerCountry.trim().toUpperCase();
+  return [
+    if (rule != RegionOnInvoice.none && sellerRegion.trim().isEmpty)
+      'seller_region',
+    if (rule == RegionOnInvoice.everyParty &&
+        buyer == seller &&
+        buyerRegion.trim().isEmpty)
+      'buyer_region',
+  ];
+}
