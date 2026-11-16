@@ -5,7 +5,7 @@ import 'dart:convert' show base64Decode;
 import 'dart:typed_data';
 
 /// What of an invoice's sending is its own and what would be today's
-/// (`invoice_send_basis`, 0795).
+/// (`invoice_send_basis`, 0794).
 class EInvoiceSendBasis {
   const EInvoiceSendBasis({
     this.iban,
@@ -48,7 +48,7 @@ class EInvoiceSendBasis {
 }
 
 /// The document an invoice's sending left with, as stored
-/// (`invoice_sent_document`, 0795).
+/// (`invoice_sent_document`, 0794).
 class SentEInvoiceDocument {
   const SentEInvoiceDocument({
     required this.fileName,

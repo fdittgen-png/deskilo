@@ -189,4 +189,4 @@ $fn$;
 revoke execute on function public.invoice_sent_document(uuid) from public, anon;
 grant execute on function public.invoice_sent_document(uuid) to authenticated, service_role;
 
-select public.set_deskilo_schema_version(795);
+select public.set_deskilo_schema_version(794);

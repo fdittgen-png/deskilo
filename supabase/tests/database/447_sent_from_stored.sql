@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #4120 (0795) -- what is sent to a network is built from what the invoice
+-- #4120 (0794) -- what is sent to a network is built from what the invoice
 -- stored, and what was sent can be read again. An invoice issued now freezes
 -- the business's own account and the tax reference's revision; a later change
 -- of either leaves it as it was, and the sending basis says nothing is today's.
