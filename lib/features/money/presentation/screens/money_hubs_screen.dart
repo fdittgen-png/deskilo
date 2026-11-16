@@ -16,10 +16,12 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/shortcuts/shortcut_scope.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/page_title.dart';
+import '../../providers/purchase_providers.dart';
 import '../widgets/add_purchase_button.dart';
 import 'accounting_status.dart';
 import 'money_action_set.dart';
@@ -79,6 +81,17 @@ class PurchasesHubScreen extends ConsumerWidget {
         key: const ValueKey('purchases-hub'),
         padding: AppSpacing.mdAll,
         children: [
+          // #4097 — the purchases could not be read, or may not be: said
+          // here with Try again, not left to read as an empty list.
+          if (data.workspace case final workspace? when data.purchasesOn)
+            if (ref.watch(purchasesProvider(workspace.id))
+                case AsyncValue(hasValue: false, :final Object error)) ...[
+              ReadFailureBanner(
+                error: error,
+                onRetry: () => ref.invalidate(purchasesProvider(workspace.id)),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+            ],
           // A member's own outlay, whatever else they may manage.
           // #2577 C2 — one way in: who paid decides the form.
           add,

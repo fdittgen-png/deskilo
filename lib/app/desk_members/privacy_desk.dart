@@ -64,6 +64,7 @@ class PrivacyDesk extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(workspaceRightsRequestsProvider(space.id)),
       keyOf: (r) => r.id,
       searchText: (r) =>

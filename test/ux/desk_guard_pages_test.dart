@@ -742,27 +742,23 @@ Set<String> _opensFor(_Persona persona) => {
       m.group(2)!,
 };
 
+/// #4096 — the routes the router's golden says the desk forwards for
+/// [persona] (a `@desk` line): there the person lands on another page of
+/// theirs, which the walk checks instead.
+Set<String> _deskForwardsFor(_Persona persona) => {
+  for (final line in File(
+    'test/app/fixtures/route_outcomes.golden',
+  ).readAsLinesSync())
+    if (RegExp(r'^(\S+) on  (\S+) @desk -> ').firstMatch(line)
+        case final m? when m.group(1) == persona.name)
+      m.group(2)!,
+};
+
 /// #4076 -- what the persona walk found and has not fixed: `path|persona|
 /// width` -> the measurement. Each case is left out until its page is fixed
 /// (the list only shrinks); a test below holds that every key is a case of the
 /// walk, so a fixed page cannot leave a stale line.
-const Map<String, String> _personaFindings = {
-  '/invoices/inv-1|member|390':
-      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
-  '/invoices/inv-1|admin|390':
-      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
-  '/organisation/demo-organisation-atelier/overview|member|390':
-      'a control 334.0 x 47.0 dp (under 48)',
-  '/organisation/demo-organisation-atelier/overview|admin|390':
-      'a control 334.0 x 47.0 dp (under 48)',
-  '/members/managed|admin|390': 'a control 358.0 x 16.0 dp (under 48)',
-  '/members/member-2|admin|390': 'a control 165.8 x 22.0 dp (under 48)',
-  '/report-editor|admin|390':
-      'two controls 121.2 x 11.6 and 146.4 x 11.6 dp (under 48)',
-  '/money/cash|admin|1440':
-      'the router lands the administrator on /money/status, not on the page '
-          'its golden calls open',
-};
+const Map<String, String> _personaFindings = {};
 
 /// What kind of page a persona meets: a member's /invoices is the member's own
 /// invoices (cards, no table of all invoices and no record beside one), so the
@@ -777,11 +773,11 @@ PageKind _kindFor(_Persona persona, String path, PageKind kind) =>
 /// carries information cut.
 Set<String> _phoneProblems(WidgetTester tester, List<String> details) {
   for (final node in tappableNodes(tester)) {
-    if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+    if (targetUnder48(node)) {
       details.add(
         'target ${node.size.width.toStringAsFixed(1)} x '
         '${node.size.height.toStringAsFixed(1)}'
-        '${node.named ? '' : ' (unnamed)'}',
+        '${node.named ? '' : ' (unnamed)'} "${node.label}"',
       );
     }
   }
@@ -937,6 +933,7 @@ void main() {
 
   for (final persona in _walkedPersonas) {
     final opens = _opensFor(persona);
+    final forwards = _deskForwardsFor(persona);
     for (final size in _personaSizes) {
       for (final (path, pageKind, _, _) in _pages) {
         if (!opens.contains(matchRoute(path)?.pattern)) continue;
@@ -954,18 +951,37 @@ void main() {
             'guards hold', skip: finding != null, (tester) async {
           final semantics = tester.ensureSemantics();
           await _open(tester, path, size, persona);
-          expect(
-            _landed(tester),
-            Uri.parse(path).path,
-            reason: 'the router opens it for the ${persona.name}',
-          );
+          final landed = _landed(tester);
+          // #4096 — where the golden says the desk forwards this route, the
+          // person lands on another page of the same place (a refusal sends
+          // them elsewhere), and that page is the one checked.
+          final forwarded =
+              size.width >= 1024 &&
+              forwards.contains(matchRoute(path)?.pattern) &&
+              landed != Uri.parse(path).path;
+          if (forwarded) {
+            expect(
+              Uri.parse(landed).pathSegments.first,
+              Uri.parse(path).pathSegments.first,
+              reason: 'the desk forwards $path within its place, not away',
+            );
+          } else {
+            expect(
+              landed,
+              Uri.parse(path).path,
+              reason: 'the router opens it for the ${persona.name}',
+            );
+          }
+          final landedKind = forwarded
+              ? _pages.firstWhere((p) => p.$1 == landed).$2
+              : kind;
           final details = <String>[];
           expect(
             size.width >= 1024
                 ? deskGuardProblems(
                     details: details,
                     tester,
-                    kind: kind,
+                    kind: landedKind,
                     size: size,
                     rowTypes: _rowTypes,
                     tableTypes: _tableTypes,
@@ -1032,6 +1048,49 @@ void main() {
     expect(problems, contains('information cut'));
     expect(problems, contains('unnamed control'));
     expect(problems, contains('target under 48 dp'));
+    semantics.dispose();
+  });
+
+  // #4095 -- a control half scrolled out is measured as the control it is:
+  // its visible part is not its size. A small control inside the viewport
+  // is still named.
+  testWidgets('the phone guard measures a control cut by its viewport whole, '
+      'and still names a small one inside it', (tester) async {
+    final semantics = tester.ensureSemantics();
+    tester.view
+      ..physicalSize = const Size(390, 300)
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    Widget row(String name, double height) => InkWell(
+      onTap: () {},
+      child: SizedBox(height: height, child: Text(name)),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ListView(
+            children: [
+              row('whole', 270),
+              // 100 high, 30 dp of it in the viewport.
+              row('cut', 100),
+            ],
+          ),
+        ),
+      ),
+    );
+    final details = <String>[];
+    expect(
+      _phoneProblems(tester, details),
+      isNot(contains('target under 48 dp')),
+    );
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: ListView(children: [row('first', 100), row('small', 20), row('big', 400)]),
+        ),
+      ),
+    );
+    expect(_phoneProblems(tester, details), contains('target under 48 dp'));
     semantics.dispose();
   });
 }
