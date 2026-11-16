@@ -227,7 +227,8 @@ void main() {
     final journey = await pumpDemo(tester);
     await _go(tester, '/discover');
 
-    expect(journey.fixture.directory.cards, hasLength(3));
+    // #3553 — the space, its two neighbours and a house in Zurich (CHF).
+    expect(journey.fixture.directory.cards, hasLength(4));
     for (final card in journey.fixture.directory.cards) {
       expect(_shows(card.name), isTrue, reason: card.name);
     }

@@ -67,8 +67,9 @@ String _eInvoiceGapText(AppLocalizations l10n, EInvoiceGap gap) =>
         l10n.invoiceGapMissingSellerPostalCode,
     };
 
-/// #2358 — localized wording of what a channel still needs.
-String _channelGapText(AppLocalizations l10n, ChannelGap gap) =>
+/// #2358 — localized wording of what a channel still needs (#4105: also
+/// before issuing).
+String channelGapText(AppLocalizations l10n, ChannelGap gap) =>
     switch (gap) {
       ChannelGap.sellerEndpoint => l10n.eInvoiceChannelGapSellerEndpoint,
       ChannelGap.buyerEndpoint => l10n.eInvoiceChannelGapBuyerEndpoint,
@@ -345,7 +346,7 @@ class _EInvoiceBody extends StatelessWidget {
                   text: [
                     l10n.eInvoiceChannelGapsTitle(sendChannel),
                     for (final gap in sendGaps)
-                      '• ${_channelGapText(l10n, gap)}',
+                      '• ${channelGapText(l10n, gap)}',
                   ].join('\n'),
                 ),
               ],

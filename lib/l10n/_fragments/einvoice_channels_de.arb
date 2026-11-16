@@ -292,5 +292,23 @@
   "einvoiceTestUnavailable": "Die eingerichtete Plattform nimmt kein Testdokument an.",
   "einvoiceTestNotAllowed": "Nur wer die Integrationen verwaltet, sendet ein Testdokument.",
   "einvoiceTestFailed": "Die Plattform konnte das Testdokument nicht annehmen. Versuchen Sie es später erneut.",
-  "einvoiceTestNothingToInvoice": "Dieses Mitglied hat in diesem Monat nichts auf der Rechnung: Wählen Sie ein anderes Mitglied."
+  "einvoiceTestNothingToInvoice": "Dieses Mitglied hat in diesem Monat nichts auf der Rechnung: Wählen Sie ein anderes Mitglied.",
+  "invoiceEInvoiceGapsTitle": "Die E-Rechnung kann erst versendet werden, wenn dies ergänzt ist (die Rechnung kann trotzdem ausgestellt werden):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
+  "invoiceEInvoiceGapsOpenIdentity": "Rechtliche Identität öffnen",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceMonthEInvoiceGapsLine": "Die E-Rechnung braucht noch: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  }
 }

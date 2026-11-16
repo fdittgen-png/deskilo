@@ -73,5 +73,15 @@
   "portalPlaceNotFound": "Nessun luogo trovato per questo indirizzo. Controlli l'indirizzo e riprovi.",
   "portalPlaceFailed": "Il servizio di mappe non ha risposto. Riprovi.",
   "portalPlaceRemove": "Rimuovere il luogo",
-  "portalPlaceTapToMove": "Tocchi la mappa per spostare il segnaposto."
+  "portalPlaceTapToMove": "Tocchi la mappa per spostare il segnaposto.",
+  "portalOfferTitle": "Cosa dice la pagina della sua offerta",
+  "portalOfferKinds": "Tipo: {kinds}",
+  "portalOfferNoServices": "Nessun servizio è ancora pubblico. Un servizio appare qui quando è attivo e segnato come pubblico.",
+  "portalOfferMinutes": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
+  "portalOfferTaxIncluded": "imposta inclusa",
+  "portalOfferTaxExcluded": "più imposta",
+  "portalOfferTaxNone": "senza imposta",
+  "portalOfferInquiriesYes": "I visitatori possono scriverle",
+  "portalOfferInquiriesNo": "Non accetta richieste",
+  "portalOfferEdit": "Scegliere i servizi pubblici"
 }

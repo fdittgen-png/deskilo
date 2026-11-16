@@ -1,0 +1,15 @@
+name: deskilo_jurisdiction_ro
+description: >-
+  The Romanian postal layout (#4105 of #3649): how an address in Romania is written and the counties it names, behind the postal layout contract. Pure Dart; depends on the contract package alone.
+version: 0.1.0
+publish_to: none
+
+environment:
+  sdk: ^3.12.0
+
+dependencies:
+  deskilo_jurisdiction_api:
+    path: ../deskilo_jurisdiction_api
+
+dev_dependencies:
+  lints: ^6.0.0

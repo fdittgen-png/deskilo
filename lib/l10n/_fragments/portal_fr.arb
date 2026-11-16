@@ -73,5 +73,15 @@
   "portalPlaceNotFound": "Aucun lieu trouvé pour cette adresse. Vérifiez l'adresse et réessayez.",
   "portalPlaceFailed": "Le service de carte n'a pas répondu. Réessayez.",
   "portalPlaceRemove": "Retirer le lieu",
-  "portalPlaceTapToMove": "Touchez la carte pour déplacer le repère."
+  "portalPlaceTapToMove": "Touchez la carte pour déplacer le repère.",
+  "portalOfferTitle": "Ce que la page dit de votre offre",
+  "portalOfferKinds": "Type : {kinds}",
+  "portalOfferNoServices": "Aucun service n’est encore public. Un service apparaît ici dès qu’il est actif et marqué public.",
+  "portalOfferMinutes": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
+  "portalOfferTaxIncluded": "taxe comprise",
+  "portalOfferTaxExcluded": "plus taxe",
+  "portalOfferTaxNone": "sans taxe",
+  "portalOfferInquiriesYes": "Les visiteurs peuvent vous écrire",
+  "portalOfferInquiriesNo": "Vous ne prenez pas de demandes",
+  "portalOfferEdit": "Choisir les services publics"
 }

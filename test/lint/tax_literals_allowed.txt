@@ -301,3 +301,44 @@ packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'VI': 'U.S. Virgin I
 packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AA': 'Armed Forces Americas', :: 1 :: a state's code and name in an address (#3649), not a tax value
 packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AE': 'Armed Forces Europe', :: 1 :: a state's code and name in an address (#3649), not a tax value
 packages/deskilo_jurisdiction_us/lib/src/us_regions.dart :: 'AP': 'Armed Forces Pacific', :: 1 :: a state's code and name in an address (#3649), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'AB': 'Alba', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'AR': 'Arad', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'AG': 'Argeș', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BC': 'Bacău', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BH': 'Bihor', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BN': 'Bistrița-Năsăud', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BT': 'Botoșani', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BV': 'Brașov', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BR': 'Brăila', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'BZ': 'Buzău', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'CS': 'Caraș-Severin', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'CL': 'Călărași', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'CJ': 'Cluj', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'CT': 'Constanța', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'CV': 'Covasna', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'DB': 'Dâmbovița', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'DJ': 'Dolj', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'GL': 'Galați', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'GR': 'Giurgiu', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'GJ': 'Gorj', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'HR': 'Harghita', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'HD': 'Hunedoara', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'IL': 'Ialomița', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'IS': 'Iași', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'IF': 'Ilfov', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'MM': 'Maramureș', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'MH': 'Mehedinți', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'MS': 'Mureș', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'NT': 'Neamț', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'OT': 'Olt', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'PH': 'Prahova', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'SM': 'Satu Mare', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'SJ': 'Sălaj', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'SB': 'Sibiu', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'SV': 'Suceava', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'TR': 'Teleorman', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'TM': 'Timiș', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'TL': 'Tulcea', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'VS': 'Vaslui', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'VL': 'Vâlcea', :: 1 :: a county's code and name in an address (#4105), not a tax value
+packages/deskilo_jurisdiction_ro/lib/src/ro_regions.dart :: 'VN': 'Vrancea', :: 1 :: a county's code and name in an address (#4105), not a tax value

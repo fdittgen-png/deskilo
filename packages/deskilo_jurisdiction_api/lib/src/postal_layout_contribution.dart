@@ -4,6 +4,19 @@ import 'capability_descriptor.dart';
 /// A part of the lines an address writes below its street.
 enum PostalPart { postalCode, city, region }
 
+/// #4105 -- whose region the country's own invoice rules require.
+enum RegionOnInvoice {
+  /// None: the invoice is valid without a region.
+  none,
+
+  /// The seller's own (a US state or Canadian province: the sales tax reads it).
+  seller,
+
+  /// Every party in the seller's country (an Italian province, a Romanian
+  /// county).
+  everyParty,
+}
+
 /// What a country calls the region of an address.
 enum RegionKind { state, province, county, canton, region }
 
@@ -12,15 +25,23 @@ enum RegionKind { state, province, county, canton, region }
 class RegionField {
   const RegionField({
     required this.kind,
-    this.required = false,
+    this.requiredInForm = false,
+    this.requiredOnInvoice = RegionOnInvoice.none,
     this.names = const {},
     this.printsName = false,
   });
 
   final RegionKind kind;
 
-  /// An address of this country is incomplete without its region.
-  final bool required;
+  /// The address form asks for the region: an address of this country is
+  /// incomplete without it.
+  final bool requiredInForm;
+
+  /// #4105 -- whose region the country's own invoice rules need on the
+  /// document: an invoice is refused before it is issued when such a party in
+  /// the seller's country has none. Distinct from [requiredInForm], so a
+  /// country can ask for the region in its form without refusing invoices.
+  final RegionOnInvoice requiredOnInvoice;
 
   /// The country's regions, by code (the second part of ISO 3166-2) with the
   /// name its post prints. Empty: any code is accepted.

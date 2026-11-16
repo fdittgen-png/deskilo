@@ -15601,6 +15601,13 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Ouvrir l\'identité légale';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'La facture électronique ne pourra pas être envoyée tant que ceci n\'est pas ajouté (la facture peut tout de même être émise) :';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Valide, mais les profils nationaux stricts demandent aussi :';
 
@@ -16171,6 +16178,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Le nom ou la société du client';
 
   @override
+  String get invoiceMissingBuyerRegion =>
+      'La région du client, pour un client dans le pays de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province aux États-Unis ou au Canada — à saisir dans l\'adresse du client';
+
+  @override
   String get invoiceMissingBuyerTaxId =>
       'L\'identifiant fiscal du client : le NIF d\'un client professionnel en Espagne, le codice fiscale ou la partita IVA d\'un client en Italie, le SIREN d\'un client professionnel en France';
 
@@ -16213,6 +16224,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get invoiceMissingSellerQstNumber =>
       'Le numéro d\'inscription à la TVQ de l\'entreprise délivré par Revenu Québec, sous la forme 1234567890 TQ0001, dans l\'identité légale (la facture perçoit la TVQ)';
+
+  @override
+  String get invoiceMissingSellerRegion =>
+      'La région de l\'adresse de l\'entreprise : la province en Italie, le județ en Roumanie, l\'État ou la province d\'un vendeur aux États-Unis ou au Canada — à saisir dans l\'identité légale, sous « Adresse de facturation électronique »';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
@@ -16271,6 +16286,11 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceMonthDone => 'Terminé';
+
+  @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Sa facture électronique aura besoin de : $what';
+  }
 
   @override
   String get invoiceMonthFix => 'Compléter';
@@ -24749,6 +24769,47 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished => 'Ce lieu n’est plus publié.';
+
+  @override
+  String get portalOfferEdit => 'Choisir les services publics';
+
+  @override
+  String get portalOfferInquiriesNo => 'Vous ne prenez pas de demandes';
+
+  @override
+  String get portalOfferInquiriesYes => 'Les visiteurs peuvent vous écrire';
+
+  @override
+  String portalOfferKinds(String kinds) {
+    return 'Type : $kinds';
+  }
+
+  @override
+  String portalOfferMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '$minutes min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalOfferNoServices =>
+      'Aucun service n’est encore public. Un service apparaît ici dès qu’il est actif et marqué public.';
+
+  @override
+  String get portalOfferTaxExcluded => 'plus taxe';
+
+  @override
+  String get portalOfferTaxIncluded => 'taxe comprise';
+
+  @override
+  String get portalOfferTaxNone => 'sans taxe';
+
+  @override
+  String get portalOfferTitle => 'Ce que la page dit de votre offre';
 
   @override
   String get portalOpenMe => 'Moi : mon compte et mes lieux';

@@ -39,6 +39,7 @@ import '../../domain/dunning.dart';
 import '../../providers/invoice_original_providers.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/recorded_payments_providers.dart';
+import '../e_invoice_identity.dart';
 import '../invoice_actions.dart';
 import '../invoice_original_document.dart';
 import '../widgets/invoice_form_sheet.dart';
@@ -419,6 +420,7 @@ class _InvoicingHomeScreenState extends ConsumerState<InvoicingHomeScreen> {
             entries: overview.toInvoice,
             currency: workspace.currencyCode,
             workspaceId: workspace.id,
+            iban: workspaceIban(workspace),
             onFixCustomer: (memberId) async {
               await context.push('/member/$memberId');
             },

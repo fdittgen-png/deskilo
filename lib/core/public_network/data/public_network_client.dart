@@ -72,6 +72,27 @@ class PublicNetworkNegotiator {
     return negotiatePublicOperation(profile, op);
   }
 
+  /// #3553 — whether the installation at [origin] advertises [capability]
+  /// in its descriptor. A server from before negotiation, one whose
+  /// descriptor this client cannot accept, or one that cannot be reached
+  /// does not: the caller then reports it as not covered.
+  Future<bool> advertises(String origin, String key, String capability) async {
+    try {
+      final profile = await (_profiles[origin] ??= _read(origin, key));
+      return profile is PublicNegotiatingServer &&
+          profile.capabilities.contains(capability);
+    } on Object catch (e, st) {
+      _profiles.remove(origin)?.ignore();
+      TraceLogger.instance.warn(
+        'public_network',
+        'descriptor unreachable',
+        error: e.runtimeType,
+        stackTrace: st,
+      );
+      return false;
+    }
+  }
+
   /// Drops what [origin] said, so the next action asks again.
   void forget(String origin) => _profiles.remove(origin)?.ignore();
 }

@@ -6,6 +6,7 @@
       1
     ],
     "capabilities": [
+      "kind_filter",
       "operation_header"
     ]
   },
@@ -218,19 +219,19 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "41ab8f4fa03cf763f92e17940a3d75732ee22483f24a1aab72965c5c9780a365",
+      "contracts/public_network/operations.json": "5f079d0b69824167e47fd824b382f63489ab795ef4f5af7753d177d1db1281ff",
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "c3ca76be31399be9a84611018262ff669e0edc82951b88c3d845165f012a3b12",
-      "public_network_descriptor()": "1b402a737cbf96f352a3f19f067bddfde280fa2f1dfa176eaa0699d62f9372e7"
+      "lib/core/public_network/public_network_operations.dart": "8a762752e70cd1f5c1a8857ed1e0bcff1d25792e5605778e162a788afa0e9ace",
+      "public_network_descriptor()": "cab812daed3c930b0a0792670a6236070bacc0dd7393e989dde331015683e4c8"
     },
     "evidence": {
       "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
       "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
       "test/core/public_network/public_network_negotiation_test.dart": "c3c75df7c058ff975575d76e7107fbc565d68353bbea8a294b2ea7b138d93c86",
       "test/features/directory/participant_negotiation_test.dart": "22379556053bb8208bfdd46e66dd1c84aacb56623ed87f7a4a80577f773ca3f1",
-      "test/fixtures/public_network/descriptor_current.json": "13296b451a37ebec77714a509406a3947ed1f745aa852fc90437a58d81e0a2a2",
+      "test/fixtures/public_network/descriptor_current.json": "3e7df99e5ef75e7ee7fd4be76d98f7cc11c971a3259ca2fe32079fd88babfe02",
       "test/fixtures/public_network/legacy_server_no_descriptor.json": "577eea25d7b5cd945504ed49c6eef95096155d8d46185587fab3efdbd86b9859",
       "test/fixtures/public_network/released_client_requests.json": "35192f11ad727121ab15c4f108efb99315afdcbd973506f01dab57d6c9cd42e0",
       "test/fixtures/public_network/synthetic_newer_server.json": "92c5f27107d9d09b21b8bf0e667508e822c31754f38c6a845f9ba053319cfdbf",

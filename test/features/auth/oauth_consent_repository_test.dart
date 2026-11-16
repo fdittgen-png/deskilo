@@ -69,6 +69,14 @@ void main() {
     expect(calls.last,'/auth/v1/oauth/authorizations/$_id/consent');
   });
 
+  test('a purpose this version does not know is refused, never read as a consent (#3913)',
+      () async {
+    context['purpose'] = 'a_purpose_of_a_newer_server';
+    await expectLater(
+        repository.context(_id), throwsA(isA<OAuthConsentUnavailable>()));
+    expect(calls.where((c) => c.endsWith('/consent')), isEmpty);
+  });
+
   test('already-approved redirect still requires protected identity purpose', () async {
     details = {'redirect_url':'$_callback?code=one-use'};
     final initial = await repository.context(_id);

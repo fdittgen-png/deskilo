@@ -348,5 +348,23 @@
   "einvoiceTestNothingToInvoice": "This member has nothing on their bill this month: choose another member.",
   "@einvoiceTestNothingToInvoice": {
     "description": "#3883 the sandbox test document that opens a national channel's issuing gate"
+  },
+  "invoiceEInvoiceGapsTitle": "The e-invoice cannot be sent until these are added (the invoice can still be issued):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
+  "invoiceEInvoiceGapsOpenIdentity": "Open the legal identity",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceMonthEInvoiceGapsLine": "Its e-invoice will need: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
   }
 }

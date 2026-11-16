@@ -32,6 +32,32 @@ class FakeDirectoryRepository
   /// let its retry succeed.
   final failPages = <String>{};
 
+  /// #3553 — what this installation publishes of a business of its own,
+  /// read live (its kinds, the services marked public, whether it takes
+  /// inquiries), as the server's projection does; empty for another's.
+  Future<Map<String, Object?>> Function(String workspace)? offer;
+
+  Future<PublicWorkspace> _withOffer(PublicWorkspace card) async {
+    final own = await offer?.call(card.id);
+    if (own == null || own.isEmpty) return card;
+    return PublicWorkspace(card.id, card.source, card.key, {
+      ...card.document,
+      ...own,
+    });
+  }
+
+  /// #3553 — a query finds a card by its name or by a published service's
+  /// name or category, as the server's search text does.
+  static bool _matches(PublicWorkspace w, String query) {
+    final q = query.toLowerCase();
+    return w.name.toLowerCase().contains(q) ||
+        w.services.any(
+          (s) =>
+              s.name.toLowerCase().contains(q) ||
+              (s.category?.toLowerCase().contains(q) ?? false),
+        );
+  }
+
   /// Cards per page of one source; the contract's page size by default.
   int pageSize = PublicNetworkOperations.directoryWorkspacesSearch.pageSize!;
 
@@ -55,14 +81,20 @@ class FakeDirectoryRepository
     DirectorySource source,
     String query, {
     int page = 0,
+    String? kind,
   }) async {
     reads.add('${source.origin}#$page');
     if (fail || failPages.contains('${source.origin}#$page')) {
       throw StateError('directory unavailable');
     }
-    final matching = cards
-        .where((w) => w.source == source.origin)
-        .where((w) => w.name.toLowerCase().contains(query.toLowerCase()))
+    final own = [
+      for (final w in cards.where((w) => w.source == source.origin))
+        await _withOffer(w),
+    ];
+    final matching = own
+        .where((w) => _matches(w, query))
+        // #3553 — the Demo's installations narrow by kind, as this one does.
+        .where((w) => kind == null || w.kinds.contains(kind))
         .toList();
     final slice = matching.skip(page * pageSize).take(pageSize).toList();
     return SourceCardsPage(slice, more: slice.length == pageSize);
@@ -72,9 +104,10 @@ class FakeDirectoryRepository
   Future<PublicWorkspace?> detail(PublicWorkspace card) async {
     if (fail) throw StateError('directory unavailable');
     if (card.source.isEmpty) return card;
-    return cards
+    final held = cards
         .where((w) => w.id == card.id && w.source == card.source)
         .firstOrNull;
+    return held == null ? null : _withOffer(held);
   }
 
   /// #2086 — the workspace's own information an inherited field follows.
@@ -100,7 +133,7 @@ class FakeDirectoryRepository
     final stored = (pages[workspace]?['document'] as Map?) ?? const {};
     return {
       'published': pages[workspace]?['published'] == true,
-      'document': _resolved(workspace),
+      'document': {..._resolved(workspace), ...?await offer?.call(workspace)},
       'following': {
         for (final field in publicInheritedFields)
           field: !stored.containsKey(field),
