@@ -57,13 +57,9 @@ Future<Uint8List> buildLayoutPdf({
   final contentH = pageH - marginTop - marginBottom;
   final ctx = _Box(contentW, contentH, images, markup, diagnostics);
 
-  final place = _RecipientPlacement(
-    document,
-    pageW: pageW,
-    pageH: pageH,
-    contentH: contentH,
-    marginTop: marginTop,
-  );
+  final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
+  final place = _RecipientPlacement(document, format, contentH, marginTop,
+      theme, (name: recipientName, address: recipientAddress));
   final windowOn = place.windowOn;
   final headerH = place.headerH;
   final bodyTop = place.bodyTop;
@@ -71,7 +67,6 @@ Future<Uint8List> buildLayoutPdf({
       ? 0.0
       : math.max(0.0, bodyTop - marginTop - (headerH ?? 0));
 
-  final theme = pw.ThemeData.withFont(base: baseFont, bold: boldFont);
   final doc = pw.Document(title: documentTitle);
   final markSize = math.min(120.0, 820 / math.max(watermark.length, 1));
 
@@ -139,6 +134,7 @@ Future<Uint8List> buildLayoutPdf({
             height: document.footer.height?.resolve(contentH), bottomAligned: true)],
       ),
       build: (context) => [
+        ...place.recipientInFlow(),
         ...ctx.children(document.body.children, height: contentH),
         ...additionalBody,
         if (signature.isNotEmpty) ...[
@@ -446,16 +442,19 @@ Set<String> layoutImageNames(LayoutDocument document) {
 /// definition.
 class _RecipientPlacement {
   _RecipientPlacement(
-    LayoutDocument document, {
-    required double pageW,
-    required double pageH,
-    required double contentH,
-    required double marginTop,
-  }) {
+    LayoutDocument document,
+    PdfPageFormat format,
+    double contentH,
+    double marginTop,
+    pw.ThemeData theme,
+    ({String name, String address}) text,
+  ) : name = text.name,
+        address = text.address {
+    final pageW = format.width, pageH = format.height;
     final recipient = document.recipient;
     final window = recipient?.window;
     final frame = recipient?.frame;
-    windowOn = recipient != null &&
+    final named = recipient != null &&
         !recipient.isOff &&
         (window != null || frame != null);
     final field = (window ?? AddressWindow.off).fieldOn(document.paper);
@@ -465,6 +464,18 @@ class _RecipientPlacement {
     top = frame?.y?.resolve(pageH) ?? field.topPt;
     width = frame?.w?.resolve(pageW) ?? field.widthPt;
     height = frame?.h?.resolve(pageH) ?? field.heightPt;
+    // A recipient that does not fit is not placed: the document is laid
+    // out as when the window is off, and the recipient joins the flow.
+    overflowed = named &&
+        !addressFitsField(
+          name: name,
+          address: address,
+          widthPt: width,
+          heightPt: height,
+          fontSize: fontSize,
+          theme: theme,
+        );
+    windowOn = named && !overflowed;
     // The header owns the band above the field; the body resumes where
     // the design says, or where the convention does under a window, or
     // right after the header otherwise.
@@ -487,7 +498,17 @@ class _RecipientPlacement {
         : stated?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
   }
 
-  late final bool windowOn;
+  final String name, address;
+  late final bool windowOn, overflowed;
   late final double left, top, width, height, fontSize;
   late final double? headerH, bodyTop;
+
+  /// A recipient that does not fit its field, printed whole at the start of
+  /// the flow (#3981); nothing when the field holds it.
+  List<pw.Widget> recipientInFlow() => !overflowed
+      ? const []
+      : [
+          addressWindowRecipient(name: name, address: address, fontSize: fontSize),
+          pw.SizedBox(height: 12),
+        ];
 }

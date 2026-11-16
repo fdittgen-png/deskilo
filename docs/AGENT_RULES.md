@@ -726,7 +726,7 @@ address panel on top and outward, and sits at the bottom of the envelope.
 
 | Zone | Letter, from the page edge |
 |---|---|
-| Recipient field | left **25.4**, top **56**, **83 × 21 mm** (56 → 77): five lines at 9.5 pt fit, a sixth does not and `tool/report.dart check` says so |
+| Recipient field | left **25.4**, top **56**, **83 × 21 mm** (56 → 77): five lines at 9.5 pt fit |
 | Sender | owns everything above **50 mm** |
 | Between | nothing but the recipient from **50 to 93 mm**, across the page |
 | Flow | resumes at **93 mm** (the first fold is at 93.1 mm) |
@@ -737,6 +737,16 @@ right-hand window); `off` stays off. A design keeps the kind it chose and
 prints correctly on either paper; a body stated at `90mm` under a named
 window follows the paper's resume line. A design with an explicit
 recipient frame is not touched.
+
+**A recipient that does not fit is never dropped** (A4 and Letter alike). Both
+engines lay the recipient out at the field's type size, wrapped at the
+field's width, before placing it: if it fits the field's height it is placed
+in the field; otherwise it is printed whole at the start of the flow, as when
+the window is off for that document, and the field stays empty. The type
+size is a named value of the field (`AddressField.fontSizePt`: 11 pt on A4,
+9.5 pt on Letter, the size at which five lines, the name and four of address,
+fit 21 mm). `tool/report.dart check` reports "N lines, M do not fit" and says
+the document prints its recipient in the flow, so a design's author knows.
 
 ### The edges belong to the design (#902)
 

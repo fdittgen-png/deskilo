@@ -77,6 +77,30 @@ pw.Widget addressWindowRecipient({
       ],
     );
 
+/// #3981 — whether the recipient, laid out at [fontSize] and wrapped at
+/// [widthPt], is no taller than [heightPt]. The same widget and the same
+/// layout the field draws, so the answer is the one the page gives: a
+/// recipient that does not fit is not placed in the field (the engine
+/// would drop it), it is printed whole in the flow instead.
+bool addressFitsField({
+  required String name,
+  required String address,
+  required double widthPt,
+  required double heightPt,
+  required double fontSize,
+  required pw.ThemeData theme,
+}) {
+  final widget = addressWindowRecipient(
+    name: name,
+    address: address,
+    fontSize: fontSize,
+  );
+  final context = pw.Context(document: pw.Document().document)
+      .inheritFrom(theme);
+  widget.layout(context, pw.BoxConstraints(maxWidth: widthPt));
+  return widget.box!.height <= heightPt + 0.01;
+}
+
 /// The address block painted at PAGE coordinates on the first sheet.
 ///
 /// It ignores the document's margins deliberately: the envelope does

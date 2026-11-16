@@ -96,7 +96,8 @@ Future<int> _render(_Args args, {required bool check}) async {
   stdout.writeln('wrote $out (${bytes.length} bytes)');
   if (!check) return 0;
   // #3852 — a design is rendered and measured on the paper it was made on.
-  return _check(bytes, document, document.paper, data);
+  return _check(bytes, document, document.paper, data,
+      pw.ThemeData.withFont(base: font('Roboto-Regular.ttf'), bold: font('Roboto-Bold.ttf')));
 }
 
 /// #2898 — the pictures a design names (`<image name>`, `![name]`): every
@@ -110,15 +111,25 @@ Map<String, Uint8List> _images(String? dir) => {
                 file.readAsBytesSync(),
     };
 
+/// The recipient's lines the data carries: the name, then the address.
+List<String> _recipientLines(Map<String, Object?> data) {
+  final name = '${data['client_name'] ?? ''}'.trim();
+  return '${name.isEmpty ? data['member'] ?? '' : name}\n${data['client_address'] ?? ''}'
+      .split('\n')
+      .where((l) => l.trim().isNotEmpty)
+      .toList();
+}
+
 /// Measures the produced sheet against the spec — the same numbers the
 /// CI gate uses — and prints a table a designer can read with a ruler.
 int _check(
-    Uint8List bytes, LayoutDocument document, Paper paper, Map<String, Object?> data) {
+    Uint8List bytes, LayoutDocument document, Paper paper, Map<String, Object?> data, pw.ThemeData theme) {
   final window = document.recipient?.window ??
       (document.recipient?.frame != null ? AddressWindow.right : AddressWindow.off);
   final ink = textPositions(bytes, paper: paper);
   final page1 = ink.where((i) => i.page == 1).toList();
   final issues = <ConformanceIssue>[];
+  final field = window.fieldOn(paper);
   final pages = ink.map((i) => i.page).toSet().length;
 
   stdout.writeln('\n  ${"zone".padRight(15)} ${"band".padRight(12)} ink');
@@ -136,24 +147,30 @@ int _check(
       }
     }
     if (zone.name == 'address field' && window.isOn && inZone.isEmpty) {
-      issues.add(ConformanceIssue(zone.name,
-          'NO RECIPIENT — the envelope shows blank and the buyer is not named'));
-    }
-    if (zone.name == 'address field' && window.isOn && document.recipient?.frame == null) {
-      // The recipient's lines the data carries against the lines inside
-      // the field: a line that does not fit is not printed (#3981).
-      final name = '${data['client_name'] ?? ''}'.trim();
-      final wanted = '${name.isEmpty ? data['member'] ?? '' : name}\n${data['client_address'] ?? ''}'
-          .split('\n')
-          .where((l) => l.trim().isNotEmpty)
-          .length;
-      final printed = inZone.map((i) => i.yMm.round()).toSet().length;
-      if (inZone.isNotEmpty && printed < wanted) {
+      final lines = _recipientLines(data);
+      if (lines.isEmpty) {
+        issues.add(ConformanceIssue(zone.name,
+            'NO RECIPIENT — the envelope shows blank and the buyer is not named'));
+      } else {
+        // #3981 — the engine prints a recipient that does not fit its field
+        // whole at the start of the flow, and leaves the window empty.
+        var fitting = lines.length;
+        while (fitting > 0 &&
+            !addressFitsField(
+                name: lines.first,
+                address: lines.skip(1).take(fitting - 1).join('\n'),
+                widthPt: field.widthPt,
+                heightPt: field.heightPt,
+                fontSize: field.fontSizePt,
+                theme: theme)) {
+          fitting--;
+        }
         issues.add(ConformanceIssue(
             zone.name,
-            'the recipient has $wanted lines, ${wanted - printed} do not fit '
-            'the ${zone.widthMm!.toStringAsFixed(0)} × '
-            '${(zone.bottomMm - zone.topMm).toStringAsFixed(0)} mm field'));
+            'the recipient has ${lines.length} lines, ${lines.length - fitting} '
+            'do not fit the ${zone.widthMm!.toStringAsFixed(0)} × '
+            '${(zone.bottomMm - zone.topMm).toStringAsFixed(0)} mm field: it '
+            'prints whole in the flow, not in the window'));
       }
     }
     stdout.writeln('  ${zone.name.padRight(15)} '
@@ -164,7 +181,6 @@ int _check(
   // resumes. On A4 that is the band under the aperture, on the left of
   // the page; on Letter (#3981) the whole band from the sender's limit,
   // across the page, outside the field itself.
-  final field = window.fieldOn(paper);
   for (final i in page1) {
     final under = paper == Paper.a4
         ? i.yMm > field.bottomMm && i.yMm < field.flowResumeMm && i.xMm < 100

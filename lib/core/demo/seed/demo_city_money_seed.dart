@@ -1,8 +1,10 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Synthetic monthly invoices and matched payments for city demos.
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/country/country_catalog.dart';
 import '../../../features/money/domain/invoice_pdf_template.dart';
 import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
@@ -113,6 +115,14 @@ class _CityMoney {
     _template();
   }
 
+  String _paperOf(String workspaceId) {
+    final country = workspace.workspaces
+        .firstWhere((w) => w.id == workspaceId)
+        .countryCode;
+    final paper = CountryCatalog.byCode(country).paper;
+    return paper == Paper.a4 ? '' : paper.wire;
+  }
+
   void _member(
     DateTime month,
     int index,
@@ -175,6 +185,9 @@ class _CityMoney {
         issuedAt: issued,
         period: period,
         title: '${words?.title ?? 'Coworking'} · $period',
+        // #3981 — the paper the country uses, frozen on the invoice as at
+        // issue (A4 stays the unwritten default).
+        paper: _paperOf(workspaceId),
         lines: [
           InvoiceLine(
             label: words?.fee ?? 'Workspace membership',

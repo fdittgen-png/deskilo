@@ -83,7 +83,8 @@ class AddressField {
 
   /// The size the recipient is set at, so that the lines the field is
   /// made for fit in it: 11 pt in A4's 40 mm, 9.5 pt in Letter's 21 mm
-  /// (five lines; a sixth does not fit).
+  /// (five lines, the name and four of address; at 10 pt they overflow).
+  /// A recipient that still does not fit is printed whole in the flow.
   final double fontSizePt;
 
   double get bottomMm => topMm + heightMm;

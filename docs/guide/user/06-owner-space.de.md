@@ -588,7 +588,7 @@ Sie möchten, dass Ihre Rechnungen und Briefe auf dem Papier gedruckt werden, da
 
 - Die USA und Kanada drucken auf US Letter; die anderen Länder auf A4, außer Sie wählen US Letter.
 - In der Schweiz wird nur A4 angeboten: Eine Rechnung endet mit einem Zahlteil auf A4.
-- Auf US Letter steht die Anschrift für einen US-Fensterumschlag #10 (4 1/8 × 9 1/2 Zoll, ein Fenster links): Falten Sie den Brief in drei Teile, das Adressfeld nach außen, und schieben Sie ihn unten in den Umschlag. Ein Fenster links und eines rechts bedeuten beide dieses eine Fenster; der Empfänger hat Platz für fünf Zeilen.
+- Auf US Letter steht die Anschrift für einen US-Fensterumschlag #10 (4 1/8 × 9 1/2 Zoll, ein Fenster links): Falten Sie den Brief in drei Teile, das Adressfeld nach außen, und schieben Sie ihn unten in den Umschlag. Ein Fenster links und eines rechts bedeuten beide dieses eine Fenster; der Empfänger hat Platz für fünf Zeilen; eine längere Anschrift steht stattdessen vollständig am Anfang des Textes, und das Fenster bleibt leer.
 - Eine Rechnung behält das Papier, auf dem sie ausgestellt wurde. Ein anderes Papier gilt für die danach ausgestellten Rechnungen.
 - Ein Brief, eine Mahnung, ein Kontoauszug oder ein Bericht wird auf dem Papier gedruckt, das beim Drucken gewählt ist.
 - Zieht der Arbeitsbereich in ein Land, das das gewählte Papier nicht verwendet, folgt er dem dort üblichen Papier.

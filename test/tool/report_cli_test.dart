@@ -136,6 +136,7 @@ void main() {
     expect(five.exitCode, 0, reason: '${five.stdout}');
     final six = await check('1 Main Street\nSuite 4\nSpringfield\nIL 62701\nUSA');
     expect(six.exitCode, 1, reason: '${six.stdout}');
+    expect(six.stdout, contains('prints whole in the flow'));
     expect(six.stdout, contains('do not fit'));
   }, timeout: const Timeout(Duration(minutes: 3)));
 

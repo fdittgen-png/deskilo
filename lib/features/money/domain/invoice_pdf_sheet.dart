@@ -54,7 +54,19 @@ class InvoiceSheet {
   String Function(InvoiceDetailEntry entry) get activityText =>
       request.activityText;
 
-  bool get windowOn => primary && addressWindow.isOn;
+  /// #3981 — the window is used when the recipient fits its field; one
+  /// that does not is printed whole in the flow, as when the window is off
+  /// for the document, and the field stays empty.
+  late final bool windowOn = primary && addressWindow.isOn && _recipientFits;
+
+  bool get _recipientFits => addressFitsField(
+        name: invoice.clientName,
+        address: invoice.memberAddress,
+        widthPt: _field.widthPt,
+        heightPt: _field.heightPt,
+        fontSize: _field.fontSizePt,
+        theme: theme,
+      );
 
   /// #3981 — the address field of the window on the document's paper.
   AddressField get _field => addressWindow.fieldOn(request.paper);

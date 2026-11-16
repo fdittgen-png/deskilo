@@ -3469,7 +3469,7 @@ Vous voulez que vos factures et vos lettres s'impriment sur le papier qu'utilise
 
 - Les États-Unis et le Canada impriment sur Lettre US ; les autres pays sur A4, sauf si vous choisissez Lettre US.
 - En Suisse, seul l'A4 est proposé : une facture se termine par une section paiement imprimée sur A4.
-- Sur Lettre US, l'adresse s'imprime pour une enveloppe à fenêtre américaine n° 10 (4 1/8 × 9 1/2 po, une fenêtre à gauche) : pliez la lettre en trois, le panneau d'adresse vers l'extérieur, et glissez-la au bas de l'enveloppe. Une fenêtre à gauche et une à droite désignent cette seule fenêtre ; le destinataire a la place de cinq lignes.
+- Sur Lettre US, l'adresse s'imprime pour une enveloppe à fenêtre américaine n° 10 (4 1/8 × 9 1/2 po, une fenêtre à gauche) : pliez la lettre en trois, le panneau d'adresse vers l'extérieur, et glissez-la au bas de l'enveloppe. Une fenêtre à gauche et une à droite désignent cette seule fenêtre ; le destinataire a la place de cinq lignes ; une adresse plus longue s'imprime en entier au début du texte, et la fenêtre reste vide.
 - Une facture garde le papier de son émission. Changer de papier change les factures émises ensuite.
 - Une lettre, une relance, un relevé ou un rapport s'imprime sur le papier choisi au moment où vous l'imprimez.
 - Si l'espace passe dans un pays qui n'utilise pas le papier choisi, il suit le papier usuel de ce pays.

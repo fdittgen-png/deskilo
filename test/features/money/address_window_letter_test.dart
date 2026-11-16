@@ -9,6 +9,7 @@
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/report_conformance.dart';
@@ -49,7 +50,7 @@ const _strings = InvoicePdfStrings(
   page: 'Page',
 );
 
-Invoice _invoice(String address) => Invoice(
+Invoice _invoice(String address, Paper paper) => Invoice(
   id: 'i1',
   workspaceId: 'w1',
   memberId: 'm1',
@@ -64,19 +65,23 @@ Invoice _invoice(String address) => Invoice(
   issuerName: 'Flo',
   signature: 'a' * 64,
   totalCents: 10000,
-  paper: 'Letter',
+  paper: paper.wire,
   lines: [
     const InvoiceLine(kind: 'adjustment', label: 'Desk, half day', amountCents: 10000),
   ],
 );
 
-Future<Uint8List> _banded(AddressWindow window, String address) =>
+Future<Uint8List> _banded(
+  AddressWindow window,
+  String address, {
+  Paper paper = Paper.letter,
+}) =>
     buildInvoicePdf(
       InvoicePdfRequest(
-        invoice: _invoice(address),
+        invoice: _invoice(address, paper),
         strings: _strings,
         addressWindow: window,
-        paper: Paper.letter,
+        paper: paper,
         money: (cents) => '\$${(cents / 100).toStringAsFixed(2)}',
         lineText: (line) => invoiceLineText(const ReportStrings(), line),
         activityText: (entry) => annexEntryText(const ReportStrings(), entry),
@@ -87,7 +92,11 @@ Future<Uint8List> _banded(AddressWindow window, String address) =>
       ),
     );
 
-Future<Uint8List> _positioned(AddressWindow window, String address) async =>
+Future<Uint8List> _positioned(
+  AddressWindow window,
+  String address, {
+  Paper paper = Paper.letter,
+}) async =>
     (await tryLayoutPdf(
       layoutXml: defaultLetterLayoutXml(
         'invoice',
@@ -108,10 +117,10 @@ Future<Uint8List> _positioned(AddressWindow window, String address) async =>
         ],
       },
       what: 'invoice',
-      print: const LayoutPrint(
+      print: LayoutPrint(
         documentTitle: 'invoice',
         pageLabel: 'Page',
-        paper: Paper.letter,
+        paper: paper,
       ),
       font: (asset) async => _ttf(asset),
     ))!;
@@ -194,20 +203,76 @@ void main() {
     );
   });
 
-  test('five lines fit the field; a sixth is not printed outside it', () async {
+  test('five lines fit the Letter field and are in it', () async {
     final f = AddressWindow.left.fieldOn(Paper.letter);
-    int lines(Iterable<InkAt> ink) =>
-        ink.where((i) => _inField(i, f)).map((i) => i.yMm.round()).toSet().length;
-    final five = _page1(await _banded(AddressWindow.left, _fiveLines));
-    expect(lines(five), 5, reason: 'the name and four lines of address');
-    final six = _page1(
-      await _banded(AddressWindow.left, '$_fiveLines\nPlanet Earth'),
-    );
-    expect(lines(six), lessThan(6), reason: 'the sixth does not fit');
-    expect(
-      six.where((i) => i.yMm > f.bottomMm && i.yMm < f.flowResumeMm),
-      isEmpty,
-      reason: 'and nothing is printed below the field',
-    );
+    for (final bytes in [
+      await _banded(AddressWindow.left, _fiveLines),
+      await _positioned(AddressWindow.left, _fiveLines),
+    ]) {
+      expect(
+        _page1(bytes).where((i) => _inField(i, f)).map((i) => i.yMm.round()).toSet().length,
+        5,
+      );
+    }
+  });
+
+  // #3981 — a recipient that does not fit its field is never dropped: it
+  // is printed whole at the start of the flow and the field stays empty.
+  final longLine = List.filled(60, 'Quarterbridge').join(' ');
+  final cases = <(String, Paper, String, int)>[
+    ('six lines on Letter', Paper.letter, '$_fiveLines\nPlanet Earth', 7),
+    ('a long wrapping line on Letter', Paper.letter, longLine, 3),
+    ('eleven lines on A4', Paper.a4, List.generate(11, (i) => 'Line $i').join('\n'), 11),
+    ('a long wrapping line on A4', Paper.a4, longLine, 3),
+  ];
+  for (final (what, paper, address, minRuns) in cases) {
+    final f = AddressWindow.left.fieldOn(paper);
+    int runs(Uint8List bytes) =>
+        textPositions(bytes, paper: paper).where((i) => i.page == 1).length;
+    List<int> fieldPages(Uint8List bytes) => addressFieldPages(
+          bytes,
+          leftEdgePt: f.leftPt,
+          topPt: f.topPt,
+          heightPt: f.heightPt,
+          paper: paper,
+        );
+    for (final engine in ['banded', 'positioned']) {
+      test('$what, $engine: printed whole in the flow, none in the field',
+          () async {
+        Future<Uint8List> make(String a) => engine == 'banded'
+            ? _banded(AddressWindow.left, a, paper: paper)
+            : _positioned(AddressWindow.left, a, paper: paper);
+        final long = await make(address);
+        final short = await make('1 Main Street');
+        expect(fieldPages(short), [1], reason: 'a short one is in the window');
+        expect(fieldPages(long), isEmpty, reason: 'the field is not painted');
+        expect(
+          runs(long) - runs(short),
+          greaterThanOrEqualTo(minRuns - 2),
+          reason: 'every line is on the page',
+        );
+      });
+    }
+  }
+
+  test('an address that fits today is still in the A4 field', () async {
+    final f = AddressWindow.left.fieldOn(Paper.a4);
+    for (final bytes in [
+      await _banded(AddressWindow.left, _fiveLines, paper: Paper.a4),
+      await _positioned(AddressWindow.left, _fiveLines, paper: Paper.a4),
+    ]) {
+      expect(
+        textPositions(bytes)
+            .where((i) => i.page == 1 && _inFieldOn(i, f))
+            .length,
+        greaterThanOrEqualTo(5),
+      );
+    }
   });
 }
+
+bool _inFieldOn(InkAt i, AddressField f) =>
+    i.yMm >= f.topMm - 0.5 &&
+    i.yMm <= f.bottomMm &&
+    i.xMm >= f.leftMm - 0.5 &&
+    i.xMm <= f.rightMm;

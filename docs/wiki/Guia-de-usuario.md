@@ -3623,7 +3623,7 @@ Usted quiere que sus facturas y cartas se impriman en el papel que usa su país.
 
 - Estados Unidos y Canadá imprimen en Carta EE. UU.; los demás países en A4, salvo que usted elija Carta EE. UU.
 - En Suiza solo se ofrece A4: una factura termina con una sección de pago impresa en A4.
-- En Carta EE. UU., la dirección se imprime para un sobre con ventana estadounidense n.º 10 (4 1/8 × 9 1/2 pulg., una ventana a la izquierda): doble la carta en tres, con el panel de la dirección hacia fuera, y colóquela en la parte inferior del sobre. Una ventana a la izquierda y una a la derecha significan esa única ventana; el destinatario dispone de cinco líneas.
+- En Carta EE. UU., la dirección se imprime para un sobre con ventana estadounidense n.º 10 (4 1/8 × 9 1/2 pulg., una ventana a la izquierda): doble la carta en tres, con el panel de la dirección hacia fuera, y colóquela en la parte inferior del sobre. Una ventana a la izquierda y una a la derecha significan esa única ventana; el destinatario dispone de cinco líneas; una dirección más larga se imprime completa al comienzo del texto y la ventana queda vacía.
 - Una factura conserva el papel con el que se emitió. Cambiar de papel cambia las facturas emitidas después.
 - Una carta, un recordatorio, un extracto o un informe se imprime en el papel elegido en el momento de imprimirlo.
 - Si el espacio pasa a un país que no usa el papel elegido, sigue el papel habitual de ese país.
