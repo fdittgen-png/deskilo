@@ -30830,6 +30830,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupAdvancedSettings => 'Impostazioni avanzate';
 
   @override
+  String setupAllSteps(int done, int total) {
+    return 'Tutti i passaggi: $done su $total';
+  }
+
+  @override
+  String get setupAllStepsNote => 'Include i passaggi per dopo';
+
+  @override
   String get setupAnswerUnknown => 'Non lo so ancora';
 
   @override
@@ -31114,6 +31122,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupGoalChange => 'Cambia';
+
+  @override
+  String setupGoalChecks(int ready, int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Questo obiettivo: $ready controlli su $required fatti',
+      one: 'Questo obiettivo: $ready controllo su $required fatto',
+    );
+    return '$_temp0';
+  }
 
   @override
   String setupGoalLine(String milestone) {
@@ -32657,6 +32676,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupStepOpenScreen => 'Apra';
+
+  @override
+  String setupStepPosition(int number, int total, String name) {
+    return 'Passaggio $number di $total · $name';
+  }
 
   @override
   String get setupStepPreviewTitle => 'Cosa vedranno i Suoi membri';

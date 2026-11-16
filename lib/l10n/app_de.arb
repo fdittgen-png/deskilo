@@ -18714,6 +18714,8 @@
   },
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "setupAdvancedSettings": "Erweiterte Einstellungen",
+  "setupAllSteps": "Alle Schritte: {done} von {total}",
+  "setupAllStepsNote": "Mit den Schritten für später",
   "setupAnswerUnknown": "Weiß ich noch nicht",
   "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
   "setupApprovalsApply": "Diese Regel verwenden",
@@ -18775,6 +18777,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
+  "setupGoalChecks": "{required, plural, one{Dieses Ziel: {ready} von {required} Prüfung erledigt} other{Dieses Ziel: {ready} von {required} Prüfungen erledigt}}",
   "setupGoalLine": "Ihr Ziel: {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
@@ -19256,6 +19259,7 @@
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "Öffnen",
+  "setupStepPosition": "Schritt {number} von {total} · {name}",
   "setupStepPreviewTitle": "Was Ihre Mitglieder sehen",
   "setupStepTitleAccounting": "Buchhaltung",
   "setupStepTitleApprovals": "Freigaben",

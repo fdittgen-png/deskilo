@@ -77,6 +77,8 @@ class WorkspaceLocaleFields extends ConsumerWidget {
         decoration: InputDecoration(
           labelText: l10n.workspaceCurrencyLabel,
           helperText: l10n.workspaceSettingsCurrencyHelper,
+          // #4078 — the helper wraps, whole, on a phone.
+          helperMaxLines: 4,
         ),
         validator: (value) => value == null
             ? (l10n.taxRefRequired)

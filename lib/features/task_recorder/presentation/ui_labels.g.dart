@@ -3348,6 +3348,7 @@ Map<String, _Getter> _part8() => {
   'settingUnitBytes': (l) => l.settingUnitBytes,
   'settingUnitQuarters': (l) => l.settingUnitQuarters,
   'settlementAction': (l) => l.settlementAction,
+  'setupAllStepsNote': (l) => l.setupAllStepsNote,
   'setupChoicesAdvanced': (l) => l.setupChoicesAdvanced,
   'setupGrowBooksLocal': (l) => l.setupGrowBooksLocal,
   'setupGrowLegalAskRegime': (l) => l.setupGrowLegalAskRegime,

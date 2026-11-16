@@ -33,37 +33,46 @@ class DemoSetupCard extends ConsumerWidget {
     return Card(
       key: const ValueKey('demo-setup-card'),
       color: theme.colorScheme.secondaryContainer,
-      child: Padding(
-        padding: const EdgeInsets.all(AppSpacing.md),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(l10n.demoSetupCardTitle, style: theme.textTheme.titleMedium),
-            const SizedBox(height: AppSpacing.xs),
-            Text(l10n.demoSetupCardBody),
-            const SizedBox(height: AppSpacing.xs),
-            Text(
-              l10n.demoSetupCardWhere(
-                space.name,
-                DemoControls.personaLabel(l10n, env.persona),
-              ),
-            ),
-            const SizedBox(height: AppSpacing.sm),
-            const _DemoOrganisation(),
-            Wrap(
-              spacing: AppSpacing.sm,
-              runSpacing: AppSpacing.xs,
-              children: [
-                TextButton.icon(
-                  key: const ValueKey('demo-setup-reset'),
-                  icon: const Icon(Icons.restart_alt),
-                  label: Text(l10n.demoSessionReset),
-                  onPressed: () => DemoControls.resetWithNotice(context, env),
-                ),
-              ],
-            ),
-          ],
+      // #4074 — collapsed: the explanation is a row below the steps, the
+      // first view is the setup's own counts.
+      child: ExpansionTile(
+        key: const ValueKey('demo-setup-details'),
+        title: Text(
+          l10n.demoSetupCardTitle,
+          style: theme.textTheme.titleMedium,
         ),
+        tilePadding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        childrenPadding: const EdgeInsets.fromLTRB(
+          AppSpacing.md,
+          0,
+          AppSpacing.md,
+          AppSpacing.md,
+        ),
+        expandedCrossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(l10n.demoSetupCardBody),
+          const SizedBox(height: AppSpacing.xs),
+          Text(
+            l10n.demoSetupCardWhere(
+              space.name,
+              DemoControls.personaLabel(l10n, env.persona),
+            ),
+          ),
+          const SizedBox(height: AppSpacing.sm),
+          const _DemoOrganisation(),
+          Wrap(
+            spacing: AppSpacing.sm,
+            runSpacing: AppSpacing.xs,
+            children: [
+              TextButton.icon(
+                key: const ValueKey('demo-setup-reset'),
+                icon: const Icon(Icons.restart_alt),
+                label: Text(l10n.demoSessionReset),
+                onPressed: () => DemoControls.resetWithNotice(context, env),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
