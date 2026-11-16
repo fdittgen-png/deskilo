@@ -54,15 +54,32 @@ void seedCityMoney(
   FakeWorkspaceRepository workspace,
   CityMoneySpec spec, {
   CityMoneyWords? words,
-}) => _CityMoney(money, workspace, spec, words).seed();
+  int priceLevelPercent = 100,
+}) => _CityMoney(money, workspace, spec, words, priceLevelPercent).seed();
 
 class _CityMoney {
-  _CityMoney(this.money, this.workspace, this.spec, this.words);
+  _CityMoney(
+    this.money,
+    this.workspace,
+    this.spec,
+    this.words,
+    this.priceLevelPercent,
+  );
   final FakeMoneyRepository money;
   final FakeWorkspaceRepository workspace;
   final CityMoneySpec spec;
   final CityMoneyWords? words;
-  List<(String, int, bool)> get catalogue => words?.catalogue ?? _coworking;
+
+  /// #4130 -- the town's price level against the catalogue's base prices.
+  final int priceLevelPercent;
+
+  /// [base] minor units at the town's price level, rounded to the minor unit.
+  int _atLevel(int base) => (base * priceLevelPercent + 50) ~/ 100;
+
+  List<(String, int, bool)> get catalogue => [
+    for (final (name, price, kept) in words?.catalogue ?? _coworking)
+      (name, _atLevel(price), kept),
+  ];
   static const _coworking = <(String, int, bool)>[
     ('Coffee', 250, true),
     ('Tea', 200, true),
@@ -135,7 +152,7 @@ class _CityMoney {
     final siteRentals = spec.siteRentals;
     final period = yearMonth(month.year, month.month);
     final id = '$prefix-invoice-$period-$index';
-    final charge = member.subscriptionPct < 100 ? 18000 : 36000;
+    final charge = _atLevel(member.subscriptionPct < 100 ? 18000 : 36000);
     final quantities = [
       (index + month.month) % 5,
       (index + month.month) % 3,

@@ -35,6 +35,7 @@ class DemoTradeCity {
     required this.postalCode,
     required this.inviteCode,
     required this.vatPercent,
+    required this.priceLevelPercent,
     required this.siteNames,
     required this.vendorStem,
     required this.foreignCurrency,
@@ -52,6 +53,11 @@ class DemoTradeCity {
 
   /// The standard rate its invoices and purchase lines carry, in percent.
   final double vatPercent;
+
+  /// #4130 -- what this town charges, in percent of the catalogue's base
+  /// prices: the membership and every item of its sales invoices, so its
+  /// invoices, payments and overdue amount differ from another town's.
+  final int priceLevelPercent;
 
   /// The names of its sites; the first is the main one.
   final List<String> siteNames;
@@ -204,6 +210,7 @@ const demoZurich = DemoTradeCity(
   postalCode: '8001',
   inviteCode: 'LIMMATDEMO',
   vatPercent: 8.1,
+  priceLevelPercent: 125,
   siteNames: ['Limmat House', 'Oerlikon Studio'],
   vendorStem: 'Limmat',
   foreignCurrency: 'EUR',
@@ -226,6 +233,7 @@ const demoMilan = DemoTradeCity(
   postalCode: '20121',
   inviteCode: 'NAVIGLIDEMO',
   vatPercent: 22,
+  priceLevelPercent: 85,
   siteNames: ['Navigli Hall', 'Isola Studio'],
   vendorStem: 'Navigli',
   foreignCurrency: 'CHF',

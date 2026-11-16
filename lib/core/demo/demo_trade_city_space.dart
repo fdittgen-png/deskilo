@@ -128,7 +128,7 @@ class DemoTradeCityData implements DemoSpaceParts {
       vatPercent: city.vatPercent,
       siteRentals: const [],
       hourlyBookings: const [],
-    ));
+    ), priceLevelPercent: city.priceLevelPercent);
     seedCityUsage(money, reservations.reservations);
     final calendar = FakeCalendarRepository(actor: actor);
     seedDemoCalendar(

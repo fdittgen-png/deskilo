@@ -174,4 +174,44 @@ void main() {
     });
     expect(overview.totals.every((t) => t.incomplete), isTrue);
   });
+
+  test('in each of the last three months no two houses read the same '
+      'invoiced, collected or overdue figure (#4130)', () async {
+    final f = DemoFixture.build()..becomePersona(DemoPersona.owner);
+    final organisation = (await demoOrganisations(f.workspaces)).single;
+    for (var back = 1; back <= 3; back++) {
+      final at = DateTime(f.seededAt.year, f.seededAt.month - back);
+      final month = yearMonth(at.year, at.month);
+      final overview = await demoOrganisationOverview(
+        f,
+        organisation.id,
+        month,
+      );
+      final figures = <String, Map<int, String>>{
+        'invoiced': {},
+        'collected': {},
+        'overdue': {},
+      };
+      for (final house in overview.houses) {
+        final read = {
+          'invoiced': house.invoiced?.minor,
+          'collected': house.collected?.minor,
+          'overdue': house.overdue?.minor,
+        };
+        for (final MapEntry(:key, :value) in read.entries) {
+          // A house that has nothing to say in a month reads zero; only
+          // figures that exist are told apart.
+          if (value == null || value == 0) continue;
+          final other = figures[key]![value];
+          expect(
+            other,
+            isNull,
+            reason:
+                '$month $key: ${house.name} reads $value like ${other ?? ''}',
+          );
+          figures[key]![value] = house.name;
+        }
+      }
+    }
+  });
 }
