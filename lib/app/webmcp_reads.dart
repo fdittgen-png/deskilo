@@ -152,16 +152,6 @@ Future<Map<String, Object?>> _listMyReservations(
   final read = await ref
       .read(reservationRepositoryProvider)
       .fetchWindowRead(workspace.id, from: from, to: to);
-  // #3884 -- the answer's fields are the contract's; it has none for "some
-  // bookings could not be read". A list that silently lacks bookings reads
-  // as complete, so the read is refused with the reason instead.
-  if (read.unreadable > 0) {
-    throw WebMcpRefused(
-      'unreadable',
-      '${read.unreadable} booking(s) in this window could not be read by '
-          'this version of the app, so the list would be incomplete.',
-    );
-  }
   final window = read.rows;
   final mine = [
     for (final r in window)
@@ -179,7 +169,11 @@ Future<Map<String, Object?>> _listMyReservations(
         'ends_at': r.endsAt.toUtc().toIso8601String(),
         'status': reservationStatusToDb(r.status),
       },
-  ], input);
+  ], input)
+    // #3913 -- the bookings of the window this version could not read are
+    // left out and counted, so the list never reads as complete when it is
+    // not (the contract's `unreadable`).
+    ..addAll({if (read.unreadable > 0) 'unreadable': read.unreadable});
 }
 
 Future<Map<String, Object?>> _listMyInvoices(
