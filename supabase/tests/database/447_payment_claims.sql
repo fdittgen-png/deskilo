@@ -24,13 +24,13 @@ begin
          'claims-' || u || '@deskilo.test', '', now(), now(), now()
     from unnest(array[u_o, u_a, u_b]) u;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
-  values ('Claims', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true}'::jsonb)
+  values ('Claims', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true, "onlinePayments": true}'::jsonb)
   returning id into ws;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
-  values ('Elsewhere', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true}'::jsonb)
+  values ('Elsewhere', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true, "onlinePayments": true}'::jsonb)
   returning id into ws2;
   insert into public.workspaces (name, country_code, currency_code, timezone, created_by, feature_flags)
-  values ('Four eyes', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true}'::jsonb)
+  values ('Four eyes', 'FR', 'EUR', 'Europe/Paris', u_o, '{"moneyTab": true, "invoicing": true, "onlinePayments": true}'::jsonb)
   returning id into wsp;
   delete from public.validation_policies where workspace_id in (ws, ws2);
   insert into public.members (workspace_id, user_id, is_owner, is_admin, status, joined_at)

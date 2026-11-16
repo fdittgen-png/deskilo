@@ -384,6 +384,12 @@ declare
   v_due bigint;
 begin
   v_me := public.my_active_member(p_workspace_id);
+  -- 0393 (#1917, #1974): automatic collection is a feature. With
+  -- onlinePayments off no new payment is opened; a payment already open
+  -- is still settled by its provider (servicing it).
+  if not public.feature_operation_allowed(p_workspace_id, 'onlinePayments', 'accept_new') then
+    raise exception 'online payments are off in this workspace';
+  end if;
   if p_member_id <> v_me.id and not public.has_permission(p_workspace_id, 'issueInvoices') then
     raise exception 'a payment is opened for yourself, or by whoever issues the invoices';
   end if;
