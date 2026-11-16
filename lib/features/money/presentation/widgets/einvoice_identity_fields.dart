@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart' show RegionOnInvoice;
 import 'package:flutter/material.dart';
 
 import '../../../../core/jurisdiction/installed_postal_layouts.dart';
@@ -80,6 +81,10 @@ class EInvoiceIdentityFields extends StatelessWidget {
   /// The space's country, whose layout says what its region is called.
   final String country;
 
+  bool get _owedOnInvoices =>
+      (postalLayoutOf(country).region?.requiredOnInvoice ?? RegionOnInvoice.none) !=
+      RegionOnInvoice.none;
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -114,7 +119,11 @@ class EInvoiceIdentityFields extends StatelessWidget {
             fieldKey: 'legal-identity-subdivision',
             country: country,
             value: form.subdivision.text,
-            error: error,
+            // #4105 -- a region this country's invoices require is said
+            // missing here, before the first issue refuses it.
+            error: error ?? (_owedOnInvoices && form.subdivision.text.trim().isEmpty
+                ? l10n.addressRegionMissing
+                : null),
             onChanged: (v) {
               form.subdivision.text = v;
               form.regionError.value = null;

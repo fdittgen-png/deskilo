@@ -19,6 +19,7 @@
 // customer's account (they are notified); no e-mail leaves the server.
 import 'dart:async';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -33,13 +34,17 @@ import '../../../../core/ui/kit/kit_card.dart';
 import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/select_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../application/issue_invoice.dart';
 import '../../application/issue_month.dart';
 import '../../application/issue_month_readiness.dart';
 import '../../providers/money_providers.dart';
 import '../invoice_original_document.dart';
 import '../invoice_proforma.dart';
+import '../issue_judgement.dart';
 import '../period_label.dart';
+import '../widgets/e_invoice_sheet.dart';
+import '../widgets/einvoice_gaps_warning.dart';
 import 'invoice_month_parts.dart';
 import 'invoice_month_result.dart';
 import 'invoice_month_state.dart';
@@ -51,6 +56,7 @@ class InvoiceMonthFlow extends ConsumerStatefulWidget {
     required this.entries,
     required this.currency,
     required this.workspaceId,
+    this.iban = '',
     required this.onFixCustomer,
     required this.onFixBusiness,
   });
@@ -66,6 +72,9 @@ class InvoiceMonthFlow extends ConsumerStatefulWidget {
 
   /// The business whose month is invoiced.
   final String workspaceId;
+
+  /// #4105 — the account the business is paid on: a channel may need it.
+  final String iban;
 
   /// Opens the place where a customer's billing details are completed; the
   /// list reads that customer again when it returns.
@@ -106,9 +115,19 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
   Future<void> _read(List<String> memberIds) {
     _state.readingAgain(memberIds);
     return readMonthReadiness(
-      queries: ref.read(invoiceQueriesProvider),
-      workspaceId: widget.workspaceId,
-      period: widget.period,
+      // #4105 -- the essentials, and what each e-invoice will need.
+      judge: (id) => judgeIssue(
+        ref,
+        widget.workspaceId,
+        (
+          memberId: id,
+          period: widget.period,
+          kind: InvoiceKind.full,
+          replacesId: null,
+          correctionReason: '',
+        ),
+        iban: widget.iban,
+      ),
       memberIds: memberIds,
       onEach: (id, readiness) {
         if (mounted) _state.readinessArrived(id, readiness);
@@ -119,6 +138,18 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
   Future<void> _fixCustomer(String memberId) async {
     await widget.onFixCustomer(memberId);
     if (mounted) await _read([memberId]);
+  }
+
+  /// #4105 -- what this customer's e-invoice will still need; a warning.
+  Widget _gapsCaption(AppLocalizations l10n, String memberId) {
+    final gaps = _state.readiness.customerGaps(memberId);
+    if (gaps.isEmpty) return const SizedBox.shrink();
+    return Text(
+      l10n.invoiceMonthEInvoiceGapsLine(
+        [for (final g in gaps) channelGapText(l10n, g)].join(', '),
+      ),
+      key: ValueKey('invoice-month-gaps-$memberId'),
+    );
   }
 
   Future<void> _fixBusiness() async {
@@ -253,6 +284,12 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
                 ),
                 const SizedBox(height: AppSpacing.md),
               ],
+              // #4105 -- what every e-invoice of the month will need from the
+              // space itself: a warning, said once.
+              if (_state.readiness.businessGaps.isNotEmpty) ...[
+                EInvoiceGapsWarning(l10n: l10n, gaps: _state.readiness.businessGaps),
+                const SizedBox(height: AppSpacing.md),
+              ],
               KitLabel(
                 l10n.invoiceMonthSelected(
                   chosen.length,
@@ -337,7 +374,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
                   )
                 : issuing
                 ? Text(l10n.invoiceMonthIssuing)
-                : const SizedBox.shrink(),
+                : _gapsCaption(l10n, e.memberId),
             amount: money.formatMinor(e.totalCents),
           ),
         ),

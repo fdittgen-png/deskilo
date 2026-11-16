@@ -9084,6 +9084,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Rechtliche Identität öffnen",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "Die E-Rechnung kann erst versendet werden, wenn dies ergänzt ist (die Rechnung kann trotzdem ausgestellt werden):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Gültig, doch die strengen nationalen Profile wollen zusätzlich:",
   "invoiceEInvoicePublicRoute": "Öffentliche Auftraggeber: {channel}.",
   "@invoiceEInvoicePublicRoute": {
@@ -9559,6 +9567,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerRegion": "Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada — in der Anschrift des Kunden eintragen",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingBuyerTaxId": "Die Steuerkennung des Kunden: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
@@ -9600,6 +9612,10 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
+  "invoiceMissingSellerRegion": "Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada — in der rechtlichen Identität unter „E-Rechnungsadresse“ eintragen",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
+  },
   "invoiceMissingSellerTaxNumber": "Die USt-IdNr. oder die Steuernummer des Betriebs (das Feld Registrierung trägt die Steuernummer)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
@@ -9633,6 +9649,16 @@
   "invoiceMonthBusinessFix": "Die Angaben Ihres Betriebs sind unvollständig: {missing}",
   "invoiceMonthCheckAgain": "Erneut prüfen",
   "invoiceMonthDone": "Fertig",
+  "invoiceMonthEInvoiceGapsLine": "Die E-Rechnung braucht noch: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Ergänzen",
   "invoiceMonthHeld": "Wartet auf eine Freigabe",
   "invoiceMonthIssue": "{count, plural, =0{Rechnungen ausstellen} one{1 Rechnung ausstellen · {amount}} other{{count} Rechnungen ausstellen · {amount}}}",

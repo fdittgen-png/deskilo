@@ -13,6 +13,7 @@ import '../data/supabase_einvoice_transmissions.dart';
 import '../data/supabase_expense_repository.dart';
 import '../data/supabase_invoice_action_commands.dart';
 import '../data/supabase_invoice_commands.dart';
+import '../data/supabase_invoice_issue_drafts.dart';
 import '../data/supabase_invoice_queries.dart';
 import '../data/supabase_member_account_commands.dart';
 import '../data/supabase_member_account_queries.dart';
@@ -28,6 +29,7 @@ import '../domain/einvoice_transmissions.dart';
 import '../domain/expense_repository.dart';
 import '../domain/invoice_action_commands.dart';
 import '../domain/invoice_commands.dart';
+import '../domain/invoice_issue_draft.dart';
 import '../domain/invoice_queries.dart';
 import '../domain/ledger_entry.dart';
 import '../domain/member_account_commands.dart';
@@ -44,6 +46,11 @@ part 'money_queries_providers.g.dart';
 @Riverpod(keepAlive: true)
 InvoiceQueries invoiceQueries(Ref ref) =>
     SupabaseInvoiceQueries(ref.watch(moneyClientProvider));
+
+/// #4105 — the dry run of an issue, with the parties it would store.
+@Riverpod(keepAlive: true)
+InvoiceIssueDrafts invoiceIssueDrafts(Ref ref) =>
+    SupabaseInvoiceIssueDrafts(ref.watch(moneyClientProvider));
 
 /// #2591 C1 — the member's account, statement, ledger and usage reads.
 @Riverpod(keepAlive: true)

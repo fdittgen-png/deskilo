@@ -321,9 +321,8 @@ class _EInvoiceExportRun {
       destination: 'government',
       buyerEndpointScheme: s.buyer.endpointScheme,
     );
-    final sendGaps = gateway.configured
-        ? channelGaps(sendFormat, seller: s.seller, buyer: s.buyer, iban: s.iban)
-        : const <ChannelGap>[];
+    // #4105 -- the same judgement the issue form makes before issuing.
+    final sendGaps = channelGapsFor(gateway, seller: s.seller, buyer: s.buyer, iban: s.iban);
     // Only an `uncertain` submission stops Send (#3335): a prepared one is
     // claimed by the next send, and one in flight answers "in progress" until
     // its window passes and the server marks it uncertain — hiding those

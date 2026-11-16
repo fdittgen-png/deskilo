@@ -21,6 +21,7 @@ import '../../features/events/providers/event_providers.dart';
 import '../../features/me/providers/me_providers.dart'
     show myReservationsSourcesFromMe, pendingAdmissionsFromMe;
 import '../../features/money/domain/hmrc_submission.dart';
+import '../../features/money/domain/invoice_issue_draft.dart';
 import '../../features/money/providers/bank_statement_providers.dart';
 import '../../features/money/providers/credit_move_providers.dart';
 import '../../features/money/providers/credit_providers.dart';
@@ -184,6 +185,10 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
         return ref.read(myMemberProvider).value?.id ?? '';
       };
     }),
+    // #4105 — the Demo tells the essentials; it names no channel's gaps.
+    invoiceIssueDraftsProvider.overrideWith(
+      (ref) => ReadinessOnlyIssueDrafts(ref.watch(invoiceQueriesProvider)),
+    ),
     ..._moneyPortOverrides(money),
     // #2585
     invoiceActionCommandsProvider.overrideWith(

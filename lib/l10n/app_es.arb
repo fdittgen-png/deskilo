@@ -9084,6 +9084,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Abrir la identidad legal",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "La factura electrónica no podrá enviarse hasta que se añada esto (la factura puede emitirse igualmente):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Válido, pero los perfiles nacionales estrictos piden además:",
   "invoiceEInvoicePublicRoute": "Clientes del sector público: {channel}.",
   "@invoiceEInvoicePublicRoute": {
@@ -9559,6 +9567,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerRegion": "La región del cliente, para un cliente en el país de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia en Estados Unidos o Canadá — indíquela en la dirección del cliente",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingBuyerTaxId": "El identificador fiscal del cliente: el NIF de un cliente empresarial en España, el codice fiscale o la partita IVA de un cliente en Italia, el SIREN de un cliente empresarial en Francia",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
@@ -9600,6 +9612,10 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
+  "invoiceMissingSellerRegion": "La región de la dirección de la empresa: la provincia en Italia, el distrito en Rumanía, el estado o la provincia de un vendedor en Estados Unidos o Canadá — indíquela en la identidad legal, en «Dirección de facturación electrónica»",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
+  },
   "invoiceMissingSellerTaxNumber": "El número de IVA o el NIF de la empresa (el campo de registro lleva el NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
@@ -9633,6 +9649,16 @@
   "invoiceMonthBusinessFix": "Los datos de su negocio están incompletos: {missing}",
   "invoiceMonthCheckAgain": "Comprobar de nuevo",
   "invoiceMonthDone": "Hecho",
+  "invoiceMonthEInvoiceGapsLine": "Su factura electrónica necesitará: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Completar",
   "invoiceMonthHeld": "Espera una validación",
   "invoiceMonthIssue": "{count, plural, =0{Emitir facturas} one{Emitir 1 factura · {amount}} other{Emitir {count} facturas · {amount}}}",

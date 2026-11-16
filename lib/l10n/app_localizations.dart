@@ -24743,6 +24743,18 @@ abstract class AppLocalizations {
   /// **'{channel} only accepts {format}: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.'**
   String invoiceEInvoiceFormatMismatch(String channel, String format);
 
+  /// #4105 the link to where the space’s own facts are entered
+  ///
+  /// In en, this message translates to:
+  /// **'Open the legal identity'**
+  String get invoiceEInvoiceGapsOpenIdentity;
+
+  /// #4105 before issuing: what the configured channel will still need
+  ///
+  /// In en, this message translates to:
+  /// **'The e-invoice cannot be sent until these are added (the invoice can still be issued):'**
+  String get invoiceEInvoiceGapsTitle;
+
   /// E-invoice sheet: header above the non-fatal gaps
   ///
   /// In en, this message translates to:
@@ -25643,6 +25655,12 @@ abstract class AppLocalizations {
   /// **'The customer\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #4105 a missing essential: the customer's region, for a customer in the seller's country
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada — enter it in the customer\'s address'**
+  String get invoiceMissingBuyerRegion;
+
   /// #2356: invoiceMissingBuyerTaxId
   ///
   /// In en, this message translates to:
@@ -25708,6 +25726,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
   String get invoiceMissingSellerQstNumber;
+
+  /// #4105 a missing essential: the seller's region, which the country's invoices require
+  ///
+  /// In en, this message translates to:
+  /// **'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada — enter it in the legal identity, under “E-invoicing address”'**
+  String get invoiceMissingSellerRegion;
 
   /// #2356: invoiceMissingSellerTaxNumber
   ///
@@ -25798,6 +25822,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get invoiceMonthDone;
+
+  /// #4105 the month review: what one customer’s e-invoice will still need (a warning)
+  ///
+  /// In en, this message translates to:
+  /// **'Its e-invoice will need: {what}'**
+  String invoiceMonthEInvoiceGapsLine(String what);
 
   /// #3587 R1-e: opens the place where a missing detail is completed
   ///

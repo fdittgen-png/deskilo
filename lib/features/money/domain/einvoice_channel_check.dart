@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:meta/meta.dart';
+
+import 'einvoice_gateway.dart';
 
 /// #2358 — one thing a CHANNEL needs that the bare EN 16931 file does
 /// not: the download stays valid without it, but the network refuses the
@@ -44,6 +47,7 @@ enum ChannelGap {
 
 /// What [format] still needs from [seller], [buyer] and the workspace's
 /// [iban]. Empty = the channel has everything its validator checks.
+@visibleForTesting
 List<ChannelGap> channelGaps(
   EInvoiceFormat format, {
   required InvoiceParty seller,
@@ -55,8 +59,7 @@ List<ChannelGap> channelGaps(
     EInvoiceFormat.peppolBis => [
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,
       if (blank(buyer.endpointId)) ChannelGap.buyerEndpoint,
-      if (blank(buyer.reference) && blank(buyer.orderReference))
-        ChannelGap.buyerReference,
+      if (blank(buyer.reference + buyer.orderReference)) ChannelGap.buyerReference,
     ],
     EInvoiceFormat.xrechnung => [
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,
@@ -97,3 +100,37 @@ List<ChannelGap> _regionGaps(
     if (lacks(buyer)) ChannelGap.buyerSubdivision,
   ];
 }
+
+/// #4105 -- what the configured channel will still need from [seller] and
+/// [buyer]: the ONE judgement, asked before issuing (the draft's parties) and
+/// before sending (the parties the invoice stored), so the two can never
+/// disagree. Nothing when no channel is configured.
+List<ChannelGap> channelGapsFor(
+  EInvoiceGatewayConfig gateway, {
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  String iban = '',
+}) {
+  if (!gateway.configured) return const [];
+  final format = eInvoiceFormatFor(
+    provider: gateway.provider,
+    destination: 'government',
+    buyerEndpointScheme: buyer.endpointScheme,
+  );
+  return channelGaps(format, seller: seller, buyer: buyer, iban: iban);
+}
+
+/// #4105 -- whether [gap] is the space's own (the same for every customer, said
+/// once and fixed in the legal identity) rather than one customer's.
+bool isSellerGap(ChannelGap gap) => switch (gap) {
+  ChannelGap.sellerEndpoint ||
+  ChannelGap.sellerContact ||
+  ChannelGap.sellerVatId ||
+  ChannelGap.sellerSubdivision ||
+  ChannelGap.paymentAccount => true,
+  ChannelGap.buyerEndpoint ||
+  ChannelGap.buyerReference ||
+  ChannelGap.leitwegId ||
+  ChannelGap.buyerTaxId ||
+  ChannelGap.buyerSubdivision => false,
+};

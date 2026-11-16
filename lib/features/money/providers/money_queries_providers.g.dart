@@ -57,6 +57,59 @@ final class InvoiceQueriesProvider
 
 String _$invoiceQueriesHash() => r'fa30e92b6352911be8389f2ff83dfa011398d211';
 
+/// #4105 — the dry run of an issue, with the parties it would store.
+
+@ProviderFor(invoiceIssueDrafts)
+final invoiceIssueDraftsProvider = InvoiceIssueDraftsProvider._();
+
+/// #4105 — the dry run of an issue, with the parties it would store.
+
+final class InvoiceIssueDraftsProvider
+    extends
+        $FunctionalProvider<
+          InvoiceIssueDrafts,
+          InvoiceIssueDrafts,
+          InvoiceIssueDrafts
+        >
+    with $Provider<InvoiceIssueDrafts> {
+  /// #4105 — the dry run of an issue, with the parties it would store.
+  InvoiceIssueDraftsProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'invoiceIssueDraftsProvider',
+        isAutoDispose: false,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$invoiceIssueDraftsHash();
+
+  @$internal
+  @override
+  $ProviderElement<InvoiceIssueDrafts> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  InvoiceIssueDrafts create(Ref ref) {
+    return invoiceIssueDrafts(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(InvoiceIssueDrafts value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<InvoiceIssueDrafts>(value),
+    );
+  }
+}
+
+String _$invoiceIssueDraftsHash() =>
+    r'b0be3e8b1ceb0c8db2b5769dfbf317cb749b8796';
+
 /// #2591 C1 — the member's account, statement, ledger and usage reads.
 
 @ProviderFor(memberAccountQueries)
