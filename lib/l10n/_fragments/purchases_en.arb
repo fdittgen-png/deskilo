@@ -294,5 +294,26 @@
   "purchaseReceiptSubmitted": "Receipt submitted: it awaits approval.",
   "@purchaseReceiptSubmitted": {
     "description": "#2573 purchase lines: place and several-line receipts"
+  },
+  "purchaseBillSectionSupplier": "Supplier and document",
+  "purchaseBillSectionAmount": "Amount and tax",
+  "purchaseBillSectionAccounting": "Accounting",
+  "purchaseBillSectionDescription": "Description and item",
+  "purchaseBillOptional": "{label} (optional)",
+  "@purchaseBillSectionSupplier": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "@purchaseBillSectionAmount": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "@purchaseBillSectionAccounting": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "@purchaseBillSectionDescription": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "@purchaseBillOptional": {
+    "description": "#4065 — a field's label, marked as one that may stay empty.",
+    "placeholders": {"label": {"type": "String"}}
   }
 }

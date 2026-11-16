@@ -40658,6 +40658,12 @@ abstract class AppLocalizations {
   /// **'No order'**
   String get purchaseBillNoOrder;
 
+  /// #4065 — a field's label, marked as one that may stay empty.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} (optional)'**
+  String purchaseBillOptional(String label);
+
   /// #3307 goods receipts
   ///
   /// In en, this message translates to:
@@ -40669,6 +40675,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The order this bill charges: its amounts are taken and stay editable'**
   String get purchaseBillOrderHint;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting'**
+  String get purchaseBillSectionAccounting;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount and tax'**
+  String get purchaseBillSectionAmount;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Description and item'**
+  String get purchaseBillSectionDescription;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier and document'**
+  String get purchaseBillSectionSupplier;
 
   /// #2577 the guided purchase / expense entry
   ///
