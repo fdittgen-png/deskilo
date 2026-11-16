@@ -152,7 +152,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     myReservationsSourcesFromMe, pendingAdmissionsFromMe,
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
-    financeHostsFromMe,
+    financeHostsFromMe, financeHomeFromMe,
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575

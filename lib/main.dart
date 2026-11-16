@@ -136,6 +136,7 @@ Future<void> main() async {
         myReservationsSourcesFromMe, // #2553
         pendingAdmissionsFromMe, // #3696
         financeHostsFromMe, // #2557
+        financeHomeFromMe, // #3556
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495

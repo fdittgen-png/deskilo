@@ -10,6 +10,7 @@ import '../features/me/application/my_reservation_sources.dart';
 import '../features/me/providers/me_providers.dart';
 import '../features/money/domain/finance_hosts.dart';
 import '../features/money/providers/finance_host_providers.dart';
+import '../features/money/providers/invoice_group_providers.dart';
 
 /// Puts the hosts in a scope's overrides (main.dart, the demo container).
 final Override financeHostsFromMe = financeHostsProvider.overrideWith((
@@ -26,3 +27,13 @@ final Override financeHostsFromMe = financeHostsProvider.overrideWith((
       ),
   ];
 });
+
+/// #3556 (part 2) — my personal home's installation, which a group's
+/// reference names for an invoice the home answered.
+final Override financeHomeFromMe = financeHomeInstallationProvider.overrideWith(
+  (ref) async {
+    final home =
+        (await ref.watch(personalWorkspaceRefsProvider.future)).homeInstallationId;
+    return home.isEmpty ? null : home;
+  },
+);

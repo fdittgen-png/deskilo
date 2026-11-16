@@ -12652,6 +12652,62 @@ class AppLocalizationsDe extends AppLocalizations {
       'Vollständiger Verlauf, Nutzung und andere Server';
 
   @override
+  String get financesGroupAdd => 'Zu einer Gruppe hinzufügen';
+
+  @override
+  String financesGroupAddTitle(String number) {
+    return 'Gruppen von $number';
+  }
+
+  @override
+  String get financesGroupCreate => 'Anlegen und hinzufügen';
+
+  @override
+  String get financesGroupDelete => 'Gruppe löschen';
+
+  @override
+  String financesGroupDeleteConfirm(String name) {
+    return '„$name“ löschen? Die Rechnungen bleiben, wie sie sind.';
+  }
+
+  @override
+  String get financesGroupFailed =>
+      'Die Gruppe konnte nicht gespeichert werden. Versuchen Sie es erneut.';
+
+  @override
+  String get financesGroupNameShape => 'Ein Name hat 1 bis 80 Zeichen.';
+
+  @override
+  String get financesGroupNameTaken =>
+      'Sie haben bereits eine Gruppe mit diesem Namen.';
+
+  @override
+  String get financesGroupNewName => 'Neue Gruppe';
+
+  @override
+  String get financesGroupRemove => 'Aus der Gruppe entfernen';
+
+  @override
+  String get financesGroupRename => 'Gruppe umbenennen';
+
+  @override
+  String financesGroupUnreadable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Rechnungen sind gerade nicht lesbar: Die Summen lassen sie aus.',
+      one: '1 Rechnung ist gerade nicht lesbar: Die Summen lassen sie aus.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String financesGroupUnreadableItem(String number) {
+    return '$number · gerade nicht lesbar';
+  }
+
+  @override
   String get financesHideAmount => 'Betrag ausblenden';
 
   @override

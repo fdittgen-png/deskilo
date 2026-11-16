@@ -25,7 +25,9 @@ import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
+import '../../providers/invoice_group_providers.dart';
 import 'dev_label.dart';
+import 'invoice_group_sheet.dart';
 import 'own_finance_export_menu.dart';
 
 /// The payment state, as the server derived it. A credit note nothing was
@@ -145,8 +147,8 @@ class _RowsHeader extends StatelessWidget {
   }
 }
 
-/// The room Open and Export take at the end of a row.
-const double _actionsWidth = 200;
+/// The room Open, Export and Add to a group take at the end of a row.
+const double _actionsWidth = 240;
 
 class _FinanceDocument extends ConsumerWidget {
   const _FinanceDocument({
@@ -262,6 +264,7 @@ class _FinanceDocument extends ConsumerWidget {
                       child: Text(l10n.financesOpenDocument),
                     ),
                     export,
+                    _GroupButton(invoice),
                   ],
                 ),
               ),
@@ -296,6 +299,7 @@ class _FinanceDocument extends ConsumerWidget {
                   const SizedBox(width: AppSpacing.sm),
                   _CardAmount(invoice, amount),
                   export,
+                  _GroupButton(invoice),
                 ],
               ),
             ),
@@ -320,6 +324,26 @@ class _FinanceDocument extends ConsumerWidget {
               child: body,
             )
           : body,
+    );
+  }
+}
+
+/// #3556 — files the document in my own groups, where its installation can
+/// be told; nothing otherwise.
+class _GroupButton extends ConsumerWidget {
+  const _GroupButton(this.invoice);
+
+  final FinanceInvoice invoice;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final groupRef = ref.watch(invoiceRefResolverProvider)(invoice);
+    if (groupRef == null) return const SizedBox.shrink();
+    return IconButton(
+      key: ValueKey('finances-group-${invoice.id}'),
+      tooltip: context.l10n.financesGroupAdd,
+      icon: const Icon(Icons.create_new_folder_outlined),
+      onPressed: () => showInvoiceGroupSheet(context, invoice, groupRef),
     );
   }
 }

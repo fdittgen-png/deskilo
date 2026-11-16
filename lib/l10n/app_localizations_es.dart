@@ -12627,6 +12627,61 @@ class AppLocalizationsEs extends AppLocalizations {
       'Historial completo, uso y otros servidores';
 
   @override
+  String get financesGroupAdd => 'Añadir a un grupo';
+
+  @override
+  String financesGroupAddTitle(String number) {
+    return 'Grupos de $number';
+  }
+
+  @override
+  String get financesGroupCreate => 'Crear y añadir';
+
+  @override
+  String get financesGroupDelete => 'Eliminar el grupo';
+
+  @override
+  String financesGroupDeleteConfirm(String name) {
+    return '¿Eliminar «$name»? Las facturas quedan como están.';
+  }
+
+  @override
+  String get financesGroupFailed =>
+      'No se pudo guardar el grupo. Vuelva a intentarlo.';
+
+  @override
+  String get financesGroupNameShape => 'Un nombre tiene de 1 a 80 caracteres.';
+
+  @override
+  String get financesGroupNameTaken => 'Ya tiene un grupo con este nombre.';
+
+  @override
+  String get financesGroupNewName => 'Nuevo grupo';
+
+  @override
+  String get financesGroupRemove => 'Quitar del grupo';
+
+  @override
+  String get financesGroupRename => 'Renombrar el grupo';
+
+  @override
+  String financesGroupUnreadable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count facturas no se pueden leer ahora: los totales las dejan fuera.',
+      one: '1 factura no se puede leer ahora: los totales la dejan fuera.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String financesGroupUnreadableItem(String number) {
+    return '$number · no se puede leer ahora';
+  }
+
+  @override
   String get financesHideAmount => 'Ocultar el importe';
 
   @override
