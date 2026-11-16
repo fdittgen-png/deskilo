@@ -1123,6 +1123,7 @@ const Set<String> uiKeys = {
   'directory-home-unavailable',
   'directory-incompatible',
   'directory-kind-all',
+  'directory-kind-chips',
   'directory-kind-no-match',
   'directory-kind-show-all',
   'directory-kind-uncovered',

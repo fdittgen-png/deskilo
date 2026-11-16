@@ -375,7 +375,11 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     searchField,
     // Above the results: the chosen kind survives a listing that loads,
     // finds nothing or fails.
-    DiscoveryKindChips(selected: _kind, onChanged: _chooseKind),
+    DiscoveryKindChips(
+      key: const ValueKey('directory-kind-chips'),
+      selected: _kind,
+      onChanged: _chooseKind,
+    ),
     const SizedBox(height: AppSpacing.sm),
     Expanded(
       child: switch (rows) {
