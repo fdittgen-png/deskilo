@@ -9,7 +9,7 @@
 -- A service, a kind, the VAT regime changing refreshes the card in the same
 -- transaction, without saving the page.
 begin;
-select plan(26);
+select plan(28);
 
 insert into auth.users(id,instance_id,aud,role,email,encrypted_password,email_confirmed_at,created_at,updated_at)
 values ('00000000-0000-4000-8000-0000003553a1','00000000-0000-0000-0000-000000000000',
@@ -109,6 +109,15 @@ select is((select document->'services'->0->>'tax_treatment' from public.public_w
 update public.workspaces set feature_flags=feature_flags||'{"spaceInquiries":false}' where id='00000000-0000-4000-8000-0000003553b1';
 select is((select document->>'takes_inquiries' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000003553b1'),
  'false','a business that stops taking inquiries says so');
+
+-- A card is refreshed by whoever changed something, member or not: the
+-- kinds are read all the same.
+select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-0000003553a9","role":"authenticated"}',true);
+select lives_ok($$update public.workspaces set feature_flags=feature_flags||'{"spaceInquiries":true}' where id='00000000-0000-4000-8000-0000003553b1'$$,
+ 'a card refreshed while a non-member is signed in');
+select is((select document->'kinds'->>0 from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000003553b1'),
+ 'salon','still carries its kinds');
+select set_config('request.jwt.claims','{}',true);
 
 -- Twelve at most, in the business's own order.
 insert into public.services(workspace_id,name,price_cents,active,is_public,sort_order)

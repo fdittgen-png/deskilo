@@ -45,18 +45,33 @@ $fn$;
 revoke execute on function public.public_workspace_tax_treatment(uuid) from public, anon, authenticated;
 
 -- ── 2. what the business is and offers ───────────────────────────────────
+-- A setting's effective text (the workspace's, else the platform's, else the
+-- definition's default), read for the card: a card is refreshed by whoever
+-- changed something, member or not, so setting_value's membership gate does
+-- not apply here.
+create or replace function public.public_workspace_setting_text(p_workspace uuid, p_key text)
+returns text language sql stable security definer set search_path = public as $fn$
+  select coalesce(
+    (select s.value from public.setting_values s
+      where s.scope = 'workspace' and s.workspace_id = p_workspace and s.key = p_key and s.valid_to is null),
+    (select s.value from public.setting_values s
+      where s.scope = 'platform' and s.key = p_key and s.valid_to is null),
+    (select d.default_value from public.setting_definitions d where d.key = p_key)) #>> '{}';
+$fn$;
+revoke execute on function public.public_workspace_setting_text(uuid, text) from public, anon, authenticated;
+
 create or replace function public.public_workspace_offer(p_workspace uuid)
 returns jsonb language sql stable security definer set search_path = public as $fn$
   select jsonb_build_object(
     'kinds', coalesce((
       select jsonb_agg(k.code order by k.at)
         from (select code, min(at) as at
-                from (select nullif(btrim(public.setting_value(p_workspace, 'business.kind') #>> '{}'), '') as code,
+                from (select nullif(btrim(public.public_workspace_setting_text(p_workspace, 'business.kind')), '') as code,
                              0::bigint as at
                       union all
                       select nullif(btrim(t.c), ''), t.n
                         from unnest(string_to_array(
-                               coalesce(public.setting_value(p_workspace, 'business.more_kinds') #>> '{}', ''),
+                               coalesce(public.public_workspace_setting_text(p_workspace, 'business.more_kinds'), ''),
                                ',')) with ordinality as t(c, n)) codes
                where code is not null
                group by code) k), '[]'::jsonb),
