@@ -140,6 +140,7 @@ const _moneyEvents = <EventType>{
   EventType.paymentInstructionsChange,
   EventType.settlementReview,
   EventType.credentialChange,
+  EventType.paymentAttemptUnreadable,
 };
 
 /// The category a workspace event belongs to. A check-in/check-out is a

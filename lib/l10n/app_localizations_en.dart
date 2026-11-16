@@ -9767,6 +9767,26 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventOutcomeRejected => 'Rejected';
 
   @override
+  String get eventPaymentAttemptNoticeEnded => 'ended since';
+
+  @override
+  String get eventPaymentAttemptNoticeRead => 'checked since';
+
+  @override
+  String get eventPaymentAttemptNoticeSettled => 'paid since';
+
+  @override
+  String eventPaymentAttemptUnreadable(
+    String reference,
+    String member,
+    String amount,
+    String provider,
+    String reason,
+  ) {
+    return 'Payment $reference of $member ($amount) could not be checked at $provider: $reason.';
+  }
+
+  @override
   String eventPaymentInstructionsChange(String actor, String fields) {
     return '$actor changed the bank account members pay into, through an assistant and with their confirmation in the app: $fields.';
   }
@@ -9951,6 +9971,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Payment';
+
+  @override
+  String get eventTypePaymentAttemptUnreadable => 'Payment not checked';
 
   @override
   String get eventTypePaymentInstructionsChange => 'Bank account change';
@@ -23458,6 +23481,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get paymentAccountNumberLabel => 'Account number';
+
+  @override
+  String get paymentAttemptReasonApprovedNotCaptured =>
+      'the payer approved it too long ago for it to be collected automatically';
+
+  @override
+  String get paymentAttemptReasonMismatch =>
+      'the provider’s answer does not match this payment';
+
+  @override
+  String get paymentAttemptReasonNotConfigured =>
+      'the provider’s credentials are not set';
+
+  @override
+  String get paymentAttemptReasonRecordFailed =>
+      'the provider’s answer could not be recorded';
+
+  @override
+  String get paymentAttemptReasonRefused =>
+      'the provider refused the business’s credentials';
+
+  @override
+  String get paymentAttemptReasonUnexpectedAnswer =>
+      'the provider reports a refund or a dispute';
+
+  @override
+  String get paymentAttemptReasonUnknownOrder =>
+      'the provider does not know this payment';
+
+  @override
+  String get paymentAttemptReasonUnreachable => 'the provider did not answer';
 
   @override
   String get paymentBankCodeLabel => 'Bank code';

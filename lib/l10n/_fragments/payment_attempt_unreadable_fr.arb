@@ -1,0 +1,15 @@
+{
+  "eventTypePaymentAttemptUnreadable": "Paiement non vérifié",
+  "eventPaymentAttemptUnreadable": "Le paiement {reference} de {member} ({amount}) n’a pas pu être vérifié chez {provider} : {reason}.",
+  "eventPaymentAttemptNoticeRead": "vérifié depuis",
+  "eventPaymentAttemptNoticeSettled": "payé depuis",
+  "eventPaymentAttemptNoticeEnded": "terminé depuis",
+  "paymentAttemptReasonUnreachable": "le prestataire n’a pas répondu",
+  "paymentAttemptReasonRefused": "le prestataire a refusé les identifiants de l’entreprise",
+  "paymentAttemptReasonNotConfigured": "les identifiants du prestataire ne sont pas renseignés",
+  "paymentAttemptReasonUnknownOrder": "le prestataire ne connaît pas ce paiement",
+  "paymentAttemptReasonMismatch": "la réponse du prestataire ne correspond pas à ce paiement",
+  "paymentAttemptReasonUnexpectedAnswer": "le prestataire signale un remboursement ou une contestation",
+  "paymentAttemptReasonRecordFailed": "la réponse du prestataire n’a pas pu être enregistrée",
+  "paymentAttemptReasonApprovedNotCaptured": "le payeur l’a approuvé il y a trop longtemps pour qu’il soit encaissé automatiquement"
+}

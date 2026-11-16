@@ -9838,6 +9838,26 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventOutcomeRejected => 'Rifiutato';
 
   @override
+  String get eventPaymentAttemptNoticeEnded => 'concluso nel frattempo';
+
+  @override
+  String get eventPaymentAttemptNoticeRead => 'verificato nel frattempo';
+
+  @override
+  String get eventPaymentAttemptNoticeSettled => 'pagato nel frattempo';
+
+  @override
+  String eventPaymentAttemptUnreadable(
+    String reference,
+    String member,
+    String amount,
+    String provider,
+    String reason,
+  ) {
+    return 'Il pagamento $reference di $member ($amount) non è stato verificato presso $provider: $reason.';
+  }
+
+  @override
   String eventPaymentInstructionsChange(String actor, String fields) {
     return '$actor ha modificato il conto bancario su cui pagano i membri, tramite un assistente e con la sua conferma nell\'app: $fields.';
   }
@@ -10026,6 +10046,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Pagamento';
+
+  @override
+  String get eventTypePaymentAttemptUnreadable => 'Pagamento non verificato';
 
   @override
   String get eventTypePaymentInstructionsChange =>
@@ -23650,6 +23673,37 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get paymentAccountNumberLabel => 'Numero di conto';
+
+  @override
+  String get paymentAttemptReasonApprovedNotCaptured =>
+      'il pagatore lo ha approvato troppo tempo fa perché venga incassato automaticamente';
+
+  @override
+  String get paymentAttemptReasonMismatch =>
+      'la risposta del fornitore non corrisponde a questo pagamento';
+
+  @override
+  String get paymentAttemptReasonNotConfigured =>
+      'le credenziali del fornitore non sono impostate';
+
+  @override
+  String get paymentAttemptReasonRecordFailed =>
+      'la risposta del fornitore non è stata registrata';
+
+  @override
+  String get paymentAttemptReasonRefused =>
+      'il fornitore ha rifiutato le credenziali dell’azienda';
+
+  @override
+  String get paymentAttemptReasonUnexpectedAnswer =>
+      'il fornitore segnala un rimborso o una contestazione';
+
+  @override
+  String get paymentAttemptReasonUnknownOrder =>
+      'il fornitore non conosce questo pagamento';
+
+  @override
+  String get paymentAttemptReasonUnreachable => 'il fornitore non ha risposto';
 
   @override
   String get paymentBankCodeLabel => 'Codice banca';

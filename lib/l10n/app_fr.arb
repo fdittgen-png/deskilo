@@ -6323,6 +6323,10 @@
   "eventOutcomeConfirmed": "Confirmé",
   "eventOutcomePending": "En attente d'une décision",
   "eventOutcomeRejected": "Refusé",
+  "eventPaymentAttemptNoticeEnded": "terminé depuis",
+  "eventPaymentAttemptNoticeRead": "vérifié depuis",
+  "eventPaymentAttemptNoticeSettled": "payé depuis",
+  "eventPaymentAttemptUnreadable": "Le paiement {reference} de {member} ({amount}) n’a pas pu être vérifié chez {provider} : {reason}.",
   "eventPaymentInstructionsChange": "{actor} a modifié le compte bancaire sur lequel les membres paient, par l'intermédiaire d'un assistant et avec sa confirmation dans l'application : {fields}.",
   "eventPaymentSubmitted": "{actor} a enregistré un paiement de {amount}",
   "eventPaymentTermsChangeLine": "{actor} demande de fixer les conditions de paiement : {terms}",
@@ -6455,6 +6459,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Paiement",
+  "eventTypePaymentAttemptUnreadable": "Paiement non vérifié",
   "eventTypePaymentInstructionsChange": "Changement du compte bancaire",
   "eventTypePaymentTermsChange": "Conditions de paiement",
   "@eventTypePaymentTermsChange": {
@@ -13700,6 +13705,14 @@
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
   },
+  "paymentAttemptReasonApprovedNotCaptured": "le payeur l’a approuvé il y a trop longtemps pour qu’il soit encaissé automatiquement",
+  "paymentAttemptReasonMismatch": "la réponse du prestataire ne correspond pas à ce paiement",
+  "paymentAttemptReasonNotConfigured": "les identifiants du prestataire ne sont pas renseignés",
+  "paymentAttemptReasonRecordFailed": "la réponse du prestataire n’a pas pu être enregistrée",
+  "paymentAttemptReasonRefused": "le prestataire a refusé les identifiants de l’entreprise",
+  "paymentAttemptReasonUnexpectedAnswer": "le prestataire signale un remboursement ou une contestation",
+  "paymentAttemptReasonUnknownOrder": "le prestataire ne connaît pas ce paiement",
+  "paymentAttemptReasonUnreachable": "le prestataire n’a pas répondu",
   "paymentBankCodeLabel": "Code banque",
   "@paymentBankCodeLabel": {
     "description": "#711 - globalization"

@@ -6323,6 +6323,10 @@
   "eventOutcomeConfirmed": "Bestätigt",
   "eventOutcomePending": "Wartet auf eine Entscheidung",
   "eventOutcomeRejected": "Abgelehnt",
+  "eventPaymentAttemptNoticeEnded": "inzwischen beendet",
+  "eventPaymentAttemptNoticeRead": "inzwischen geprüft",
+  "eventPaymentAttemptNoticeSettled": "inzwischen bezahlt",
+  "eventPaymentAttemptUnreadable": "Die Zahlung {reference} von {member} ({amount}) konnte bei {provider} nicht geprüft werden: {reason}.",
   "eventPaymentInstructionsChange": "{actor} hat das Bankkonto, auf das Mitglieder zahlen, über einen Assistenten und mit eigener Bestätigung in der App geändert: {fields}.",
   "eventPaymentSubmitted": "{actor} hat eine Zahlung von {amount} erfasst",
   "eventPaymentTermsChangeLine": "{actor} beantragt Zahlungsbedingungen: {terms}",
@@ -6455,6 +6459,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Zahlung",
+  "eventTypePaymentAttemptUnreadable": "Zahlung nicht geprüft",
   "eventTypePaymentInstructionsChange": "Änderung des Bankkontos",
   "eventTypePaymentTermsChange": "Zahlungsbedingungen",
   "@eventTypePaymentTermsChange": {
@@ -13700,6 +13705,14 @@
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
   },
+  "paymentAttemptReasonApprovedNotCaptured": "der Zahlende hat sie vor zu langer Zeit freigegeben, um sie automatisch einzuziehen",
+  "paymentAttemptReasonMismatch": "die Antwort des Anbieters passt nicht zu dieser Zahlung",
+  "paymentAttemptReasonNotConfigured": "die Zugangsdaten des Anbieters sind nicht hinterlegt",
+  "paymentAttemptReasonRecordFailed": "die Antwort des Anbieters konnte nicht gespeichert werden",
+  "paymentAttemptReasonRefused": "der Anbieter hat die Zugangsdaten des Unternehmens abgelehnt",
+  "paymentAttemptReasonUnexpectedAnswer": "der Anbieter meldet eine Erstattung oder einen Widerspruch",
+  "paymentAttemptReasonUnknownOrder": "der Anbieter kennt diese Zahlung nicht",
+  "paymentAttemptReasonUnreachable": "der Anbieter hat nicht geantwortet",
   "paymentBankCodeLabel": "Bankleitzahl",
   "@paymentBankCodeLabel": {
     "description": "#711 - globalization"

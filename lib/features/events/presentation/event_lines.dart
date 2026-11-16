@@ -170,7 +170,7 @@ String eventLine(
             EventType.commitmentVariance,
         _) =>
       _recordOrLeaseLine(l10n, event, actor, currency),
-    _ => _noticeOrFallbackLine(l10n, event, actor),
+    _ => _otherLine(l10n, event, actor, names, currency),
   };
   // Service charges name no actor in the title, so always say whose bill
   // it lands on; other types only when an admin acted for someone else.
@@ -274,11 +274,24 @@ bool _appendsSubject(WorkspaceEvent event) {
       event.type == EventType.paymentInstructionsChange ||
       event.type == EventType.settlementReview ||
       event.type == EventType.kioskDevice ||
-      event.type == EventType.credentialChange) {
+      event.type == EventType.credentialChange ||
+      event.type == EventType.paymentAttemptUnreadable) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
 }
+
+/// The line of a type the main switch does not name: #4136's notice that a
+/// payment could not be checked, or one of the notices below.
+String _otherLine(
+  AppLocalizations l10n,
+  WorkspaceEvent event,
+  String actor,
+  Map<String, String> names,
+  MoneyFormat currency,
+) => event.type == EventType.paymentAttemptUnreadable
+    ? _paymentAttemptUnreadableLine(l10n, event, names, currency)
+    : _noticeOrFallbackLine(l10n, event, actor);
 
 /// The lines of the notices that are not about a booking or money in motion:
 /// the badge sign-in alert, and (#3132) the owners' notice that an assistant
@@ -350,5 +363,47 @@ String _credentialChangeLine(
     'clear' => l10n.eventCredentialCleared(actor, provider, area, keys),
     'replace' => l10n.eventCredentialReplaced(actor, provider, area, keys),
     _ => l10n.eventCredentialSet(actor, provider, area, keys),
+  };
+}
+
+/// The names the payment providers give themselves, in every language.
+const _providerNames = {'stripe': 'Stripe', 'mollie': 'Mollie', 'paypal': 'PayPal'};
+
+/// #4136 — which payment of which member (named in its payload, never its
+/// subject) could not be checked at its provider, for how much and why; once
+/// its attempt was read, paid or ended, says so.
+String _paymentAttemptUnreadableLine(
+  AppLocalizations l10n,
+  WorkspaceEvent event,
+  Map<String, String> names,
+  MoneyFormat currency,
+) {
+  final member = names['${event.payload['member_id'] ?? ''}'] ?? '';
+  final cents = (event.payload['amount_cents'] as num?)?.toInt();
+  final amount = cents == null ? '' : currency.formatMinor(cents);
+  final provider = '${event.payload['provider'] ?? ''}';
+  final reason = switch (event.payload['reason']) {
+    'unreachable' => l10n.paymentAttemptReasonUnreachable,
+    'refused' => l10n.paymentAttemptReasonRefused,
+    'not_configured' => l10n.paymentAttemptReasonNotConfigured,
+    'unknown_order' => l10n.paymentAttemptReasonUnknownOrder,
+    'mismatch' => l10n.paymentAttemptReasonMismatch,
+    'unexpected_answer' => l10n.paymentAttemptReasonUnexpectedAnswer,
+    'record_failed' => l10n.paymentAttemptReasonRecordFailed,
+    'approved_not_captured' => l10n.paymentAttemptReasonApprovedNotCaptured,
+    final other => '${other ?? ''}',
+  };
+  final line = l10n.eventPaymentAttemptUnreadable(
+    '${event.payload['reference'] ?? ''}',
+    member,
+    amount,
+    _providerNames[provider] ?? provider,
+    reason,
+  );
+  return switch (event.payload['ended']) {
+    'read' => '$line · ${l10n.eventPaymentAttemptNoticeRead}',
+    'settled' => '$line · ${l10n.eventPaymentAttemptNoticeSettled}',
+    'ended' => '$line · ${l10n.eventPaymentAttemptNoticeEnded}',
+    _ => line,
   };
 }

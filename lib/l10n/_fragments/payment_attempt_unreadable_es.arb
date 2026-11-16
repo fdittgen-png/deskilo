@@ -1,0 +1,15 @@
+{
+  "eventTypePaymentAttemptUnreadable": "Pago no comprobado",
+  "eventPaymentAttemptUnreadable": "El pago {reference} de {member} ({amount}) no se pudo comprobar en {provider}: {reason}.",
+  "eventPaymentAttemptNoticeRead": "comprobado desde entonces",
+  "eventPaymentAttemptNoticeSettled": "pagado desde entonces",
+  "eventPaymentAttemptNoticeEnded": "terminado desde entonces",
+  "paymentAttemptReasonUnreachable": "el proveedor no respondió",
+  "paymentAttemptReasonRefused": "el proveedor rechazó las credenciales de la empresa",
+  "paymentAttemptReasonNotConfigured": "las credenciales del proveedor no están configuradas",
+  "paymentAttemptReasonUnknownOrder": "el proveedor no conoce este pago",
+  "paymentAttemptReasonMismatch": "la respuesta del proveedor no corresponde a este pago",
+  "paymentAttemptReasonUnexpectedAnswer": "el proveedor indica un reembolso o una disputa",
+  "paymentAttemptReasonRecordFailed": "la respuesta del proveedor no se pudo registrar",
+  "paymentAttemptReasonApprovedNotCaptured": "el pagador lo aprobó hace demasiado tiempo para cobrarlo automáticamente"
+}

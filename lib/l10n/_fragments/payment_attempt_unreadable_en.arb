@@ -1,0 +1,71 @@
+{
+  "eventTypePaymentAttemptUnreadable": "Payment not checked",
+  "eventPaymentAttemptUnreadable": "Payment {reference} of {member} ({amount}) could not be checked at {provider}: {reason}.",
+  "eventPaymentAttemptNoticeRead": "checked since",
+  "eventPaymentAttemptNoticeSettled": "paid since",
+  "eventPaymentAttemptNoticeEnded": "ended since",
+  "paymentAttemptReasonUnreachable": "the provider did not answer",
+  "paymentAttemptReasonRefused": "the provider refused the business’s credentials",
+  "paymentAttemptReasonNotConfigured": "the provider’s credentials are not set",
+  "paymentAttemptReasonUnknownOrder": "the provider does not know this payment",
+  "paymentAttemptReasonMismatch": "the provider’s answer does not match this payment",
+  "paymentAttemptReasonUnexpectedAnswer": "the provider reports a refund or a dispute",
+  "paymentAttemptReasonRecordFailed": "the provider’s answer could not be recorded",
+  "paymentAttemptReasonApprovedNotCaptured": "the payer approved it too long ago for it to be collected automatically",
+  "@eventTypePaymentAttemptUnreadable": {
+    "description": "#4136 the event type: a payment attempt could not be checked at its provider"
+  },
+  "@eventPaymentAttemptUnreadable": {
+    "description": "#4136 the notice: which payment, whose, how much, at which provider, and why it could not be checked",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "@eventPaymentAttemptNoticeRead": {
+    "description": "#4136 the notice ended: the attempt was read again at its provider"
+  },
+  "@eventPaymentAttemptNoticeSettled": {
+    "description": "#4136 the notice ended: the attempt was paid"
+  },
+  "@eventPaymentAttemptNoticeEnded": {
+    "description": "#4136 the notice ended: the attempt ended unpaid"
+  },
+  "@paymentAttemptReasonUnreachable": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonRefused": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonNotConfigured": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonUnknownOrder": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonMismatch": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonUnexpectedAnswer": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonRecordFailed": {
+    "description": "#4136 reason"
+  },
+  "@paymentAttemptReasonApprovedNotCaptured": {
+    "description": "#4136 reason"
+  }
+}
