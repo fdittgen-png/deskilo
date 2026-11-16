@@ -37,7 +37,19 @@ Future<ProviderContainer> _open(WidgetTester tester, Size size,
   );
   demo.read(routerProvider).go('/setup');
   await tester.pumpAndSettle();
+  await _expand(tester);
   return demo;
+}
+
+/// #4074 — the card is a collapsed row below the steps; opens it.
+Future<void> _expand(WidgetTester tester) async {
+  if (find.byKey(const ValueKey('demo-setup-reset')).evaluate().isNotEmpty) {
+    return;
+  }
+  final title = find.text('How the demo works');
+  await tester.ensureVisible(title);
+  await tester.tap(title);
+  await tester.pumpAndSettle();
 }
 
 List<String> _houseIds(WidgetTester tester) => [
@@ -111,6 +123,7 @@ void main() {
     expect(demo.read(currentWorkspaceProvider).value?.id, 'ws-3');
     demo.read(routerProvider).go('/setup');
     await tester.pumpAndSettle();
+    await _expand(tester);
     await tester.tap(find.byKey(const ValueKey('demo-organisation-outside')));
     await tester.pumpAndSettle();
     expect(demo.read(currentWorkspaceProvider).value?.id, 'ws-7');

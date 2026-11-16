@@ -34,14 +34,14 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_network_seed.dart:333` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_new_york_seed.dart:203` | title | Branded tote bags · $period | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_new_york_seed.dart:207` | label | Branded tote bag | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:144` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:152` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:160` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:169` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:181` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:188` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:195` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_people_seed.dart:283` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:146` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:154` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:162` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:171` | label | Chiara · QR | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:186` | title | House rules | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:194` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:202` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_people_seed.dart:291` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_practice_seed.dart:107` | title | Beratung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:330` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:337` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |

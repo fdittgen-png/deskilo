@@ -1,0 +1,6 @@
+{
+  "invoiceCorrectionKeepsKind": "A correction is of the kind of the invoice it replaces.",
+  "@invoiceCorrectionKeepsKind": {
+    "description": "#3994 Refusal DKI08: a correction was sent with a kind other than the invoice it replaces"
+  }
+}

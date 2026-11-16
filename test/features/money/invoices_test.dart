@@ -10,6 +10,7 @@ import 'dart:typed_data';
 
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
+import 'package:deskilo/core/ui/form_sheet.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -54,6 +55,7 @@ FakeWorkspaceRepository _reader() {
 
 /// #3587 — the To do's "Invoice {month}" entry: the month's flow.
 Future<void> openTheMonth(WidgetTester tester) async {
+  await openInvoicingTodo(tester); // #4059
   final entry = find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth'));
   await tester.ensureVisible(entry);
   await tester.tap(entry);
@@ -395,9 +397,10 @@ void main() {
     // The issue sheet's preview (the page under it lists the old lines).
     expect(
       find.descendant(
+        // #4058 — a task: whatever its container, the form is its shell.
         of: find.ancestor(
           of: find.byKey(const ValueKey('invoice-submit')),
-          matching: find.byType(BottomSheet),
+          matching: find.byType(SheetShell),
         ),
         matching: find.textContaining(RegExp(r'^Subscription \w+ 50%$')),
       ),
@@ -950,7 +953,7 @@ void main() {
 
     // #3587 — the home: the invoice is owed and on the open list;
     // remind and match from its sheet.
-    expect(find.byKey(const ValueKey('invoicing-owed')), findsOneWidget);
+    expect(invoicingOwedFigures, findsOneWidget);
     final row = await invoicingRow(tester, invoice.id);
     expect(row, findsOneWidget);
     expect(find.byKey(const ValueKey('invoicing-filter-open')), findsOneWidget);
@@ -1113,11 +1116,8 @@ void main() {
     // page over the home: closed first.
     await closeInvoicePage(tester);
     expect(
-      find.byWidgetPredicate((w) =>
-          w.key is ValueKey<String> &&
-          (w.key! as ValueKey<String>).value.startsWith('invoicing-owed-') &&
-          (w.key! as ValueKey<String>).value.endsWith('-toConfirm')),
-      findsOneWidget,
+      owedBucketShown(tester, 'toConfirm'),
+      isTrue,
       reason: 'the pending match awaits validation',
     );
     await openInvoice(tester, invoice.id);

@@ -339,9 +339,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
   @override
-  String get accountingStatusAllBooks => 'Everything in the books';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure or more';
   }
@@ -353,10 +350,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Books closed up to';
 
   @override
+  String get accountingStatusDue => 'Due';
+
+  @override
   String get accountingStatusLastExport => 'Last export';
 
   @override
   String get accountingStatusNotRead => 'Could not be read';
+
+  @override
+  String get accountingStatusReference => 'Reference';
+
+  @override
+  String get accountingStatusToFile => 'To file';
+
+  @override
+  String get accountingStatusToMatch => 'To match';
 
   @override
   String get accountingStatusVatToFile => 'VAT return to file';
@@ -5847,6 +5856,17 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarDayEmpty => 'Nothing on this day.';
 
   @override
+  String calendarDecisionsEntry(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Decisions ($count)',
+      one: 'Decisions ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarDeskAll => 'All';
 
   @override
@@ -5874,10 +5894,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get calendarDeskExport => 'Export';
 
   @override
+  String calendarDeskFilterChip(String filter, String value) {
+    return '$filter: $value';
+  }
+
+  @override
   String get calendarDeskFilterKind => 'Kind of place';
 
   @override
   String get calendarDeskFilterLevel => 'Level';
+
+  @override
+  String calendarDeskFiltersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filters · $count',
+      one: 'Filters · $count',
+      zero: 'Filters',
+    );
+    return '$_temp0';
+  }
 
   @override
   String calendarDeskFreeDay(String place, String day) {
@@ -8287,7 +8324,19 @@ class AppLocalizationsEn extends AppLocalizations {
   String get documentsCategoryStatutes => 'Statutes & legal';
 
   @override
+  String get documentsColAdded => 'Added';
+
+  @override
+  String get documentsColAudience => 'Audience';
+
+  @override
+  String get documentsColGroup => 'Group';
+
+  @override
   String get documentsDelete => 'Remove document?';
+
+  @override
+  String get documentsEditAudience => 'Edit audience';
 
   @override
   String get documentsEmpty =>
@@ -15262,6 +15311,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceCopyWithPaymentStatus => 'Copy with payment status';
 
   @override
+  String get invoiceCorrectionKeepsKind =>
+      'A correction is of the kind of the invoice it replaces.';
+
+  @override
   String get invoiceCorrectionReason => 'Reason for the correction';
 
   @override
@@ -15657,11 +15710,24 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Issue invoice · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Check again';
 
   @override
   String get invoiceIssueDeclined =>
       'The validation was declined or expired. No invoice was issued.';
+
+  @override
+  String get invoiceIssueKept =>
+      'The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.';
 
   @override
   String get invoiceIssueNotFoundYet =>
@@ -16902,6 +16968,11 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String invoicingCreditAmount(String amount) {
+    return 'credit $amount';
+  }
+
+  @override
   String invoicingCustomerCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -17166,6 +17237,18 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingStatusToMatch => 'Payment received · to match';
 
   @override
+  String invoicingSummaryToReview(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count to review',
+      one: '1 to review',
+      zero: 'nothing to review',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicingTodo => 'To do';
 
   @override
@@ -17175,7 +17258,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingTodoDrafts => 'Issue drafts';
 
   @override
-  String get invoicingTodoFix => 'Fix';
+  String get invoicingTodoFixRejected => 'Fix the e-invoices';
 
   @override
   String get invoicingTodoKeep => 'Keep them';
@@ -17217,7 +17300,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoicingTodoReminders => 'Share reminders by hand';
 
   @override
-  String get invoicingTodoReview => 'Review';
+  String invoicingTodoReviewMonth(String month) {
+    return 'Review $month';
+  }
+
+  @override
+  String get invoicingTodoShareReminders => 'Share reminders';
 
   @override
   String get invoicingTools => 'Invoicing tools';
@@ -25297,11 +25385,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseBillNoOrder => 'No order';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (optional)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Purchase order';
 
   @override
   String get purchaseBillOrderHint =>
       'The order this bill charges: its amounts are taken and stay editable';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Accounting';
+
+  @override
+  String get purchaseBillSectionAmount => 'Amount and tax';
+
+  @override
+  String get purchaseBillSectionDescription => 'Description and item';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Supplier and document';
 
   @override
   String get purchaseEntryAdd => 'Add purchase / expense';
@@ -26010,6 +26115,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get purchasesSupplier => 'Supplier';
+
+  @override
+  String get purchasesSupplierNotRead => 'Not read';
 
   @override
   String get purchasesTabDocuments => 'Documents';
@@ -30426,6 +30534,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupAdvancedSettings => 'Advanced settings';
 
   @override
+  String setupAllSteps(int done, int total) {
+    return 'All steps: $done of $total';
+  }
+
+  @override
+  String get setupAllStepsNote => 'Includes steps for later';
+
+  @override
   String get setupAnswerUnknown => 'Not sure yet';
 
   @override
@@ -30709,6 +30825,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get setupGoalChange => 'Change';
+
+  @override
+  String setupGoalChecks(int ready, int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'This goal: $ready of $required checks done',
+      one: 'This goal: $ready of $required check done',
+    );
+    return '$_temp0';
+  }
 
   @override
   String setupGoalLine(String milestone) {
@@ -32242,6 +32369,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get setupStepOpenScreen => 'Open it';
 
   @override
+  String setupStepPosition(int number, int total, String name) {
+    return 'Step $number of $total · $name';
+  }
+
+  @override
   String get setupStepPreviewTitle => 'What your members will see';
 
   @override
@@ -32662,7 +32794,32 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spaceYoursNow => 'Reserved by you for this slot.';
 
   @override
+  String get statementDeskBalanceCredit =>
+      'Credit: this amount is in your favour';
+
+  @override
+  String get statementDeskBalanceOwed => 'Owed: you owe this amount';
+
+  @override
+  String get statementDeskBalanceSettled => 'Settled: nothing is owed';
+
+  @override
   String get statementDeskColLine => 'Line';
+
+  @override
+  String get statementDeskNoMovements =>
+      'No other movements this month: the figures above are the whole statement.';
+
+  @override
+  String statementDeskUsed(int used, int allowance) {
+    String _temp0 = intl.Intl.pluralLogic(
+      allowance,
+      locale: localeName,
+      other: '$allowance half-days',
+      one: '1 half-day',
+    );
+    return '$used of $_temp0';
+  }
 
   @override
   String get statusAwaiting => 'Awaiting';

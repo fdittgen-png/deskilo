@@ -88,9 +88,9 @@ select is((select organisation_id from public.workspaces where id = pg_temp.id('
   'the house is placed in the organisation');
 select is((select (country_code, currency_code, default_locale)::text from public.workspaces where id = pg_temp.id('milan')),
   '(IT,EUR,it)', 'with its country, currency and language');
-select is((select (base_fee_cents, overage_fee_cents, active)::text from public.plans
-            where workspace_id = pg_temp.id('milan') and name = 'Resident'),
-  '(25000,1500,f)', 'in the same currency a plan keeps its amounts and arrives inactive');
+select is((select (price_cents, active)::text from public.packages
+            where workspace_id = pg_temp.id('milan') and name = 'Ten days'),
+  '(18000,f)', 'in the same currency a package keeps its price and arrives inactive');
 select is((select (price_cents, active, vat_rate_id is null)::text from public.services
             where workspace_id = pg_temp.id('milan') and name = 'Coffee'),
   '(250,f,t)', 'a service arrives inactive with no rate');
@@ -136,9 +136,8 @@ set local role authenticated;
 select set_config('deskilo.test.london', (public.create_organisation_house_once(pg_temp.id('org'), 'HOUSE-LONDON',
   'GB', 'GBP', 'Europe/London', 'en', '00000000-0000-4000-8000-0000000040e2') ->> 'workspace_id'), false);
 reset role;
-select is((select (base_fee_cents, overage_fee_cents, active)::text from public.plans
-            where workspace_id = pg_temp.id('london') and name = 'Resident'),
-  '(0,0,f)', 'in another currency a plan''s fees are 0');
+select is((select count(*)::int from public.plans where workspace_id = pg_temp.id('london')), 0,
+  'a plan, retired, travels to no house (#4042)');
 select is((select (price_cents, active)::text from public.packages
             where workspace_id = pg_temp.id('london') and name = 'Ten days'),
   '(0,f)', 'and a package''s price');

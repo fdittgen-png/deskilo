@@ -3,7 +3,7 @@
 -- (the feature registry and the builtin template are restated; no stored
 --  flags move)
 --
--- #3997 (first of two files, before 0784) -- `siteDocuments` is retired. It
+-- #3997 (first of two files, before 0787) -- `siteDocuments` is retired. It
 -- was a reserved flag nothing read: a document names its site since 0169
 -- whatever it said. The server's copy of the manifest and the builtin
 -- template no longer name it. A business's stored value of it stays in its
@@ -665,4 +665,4 @@ on conflict (key) where owner_workspace_id is null do update
       configuration = excluded.configuration,
       floor_plan = excluded.floor_plan;
 
-select public.set_deskilo_schema_version(783);
+select public.set_deskilo_schema_version(786);

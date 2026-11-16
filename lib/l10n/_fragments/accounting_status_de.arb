@@ -5,7 +5,6 @@
   "accountingStatusVatToFile": "Abzugebende Umsatzsteuererklärung",
   "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
   "accountingStatusNotRead": "Konnte nicht gelesen werden",
-  "accountingStatusAllBooks": "Alles in der Buchhaltung",
   "accountingExportsBy": "Erstellt von",
   "accountingExportsRows": "Zeilen",
   "accountingExportsFingerprint": "Prüfsumme",
@@ -17,5 +16,9 @@
   "vatReturnNotCompared": "Dieses Feld besteht aus Einkäufen, einer Kategorie oder einer Berichtigung: seine Belege werden hier nicht addiert.",
   "vatReturnOpen": "Erklärung öffnen",
   "accountingExportsTitle": "Exporte",
-  "accountingStatusAtLeast": "{figure} oder mehr"
+  "accountingStatusAtLeast": "{figure} oder mehr",
+  "accountingStatusDue": "Zu erledigen",
+  "accountingStatusReference": "Referenz",
+  "accountingStatusToFile": "Einzureichen",
+  "accountingStatusToMatch": "Abzugleichen"
 }

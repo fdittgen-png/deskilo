@@ -192,4 +192,37 @@ void main() {
     expect(find.text(_en.houseBirthNotCarried), findsOneWidget);
     expect(find.textContaining('Atelier du Marché'), findsOneWidget);
   });
+
+  testWidgets('a house born without plans names none (#4042)', (tester) async {
+    await pumpApp(
+      tester,
+      Scaffold(
+        body: HouseBirthView(
+          head: 'Atelier du Marché',
+          birth: HouseBirth(
+            workspaceId: 'krk',
+            headWorkspaceId: 'head',
+            plans: 0,
+            services: 6,
+            packages: 1,
+            validationPolicies: 2,
+            features: 30,
+            amountsKept: false,
+            coOwnersAdded: 1,
+            pricesPending: true,
+            createdAt: DateTime(2026, 11, 15),
+          ),
+        ),
+      ),
+    );
+    expect(
+      find.text(
+        _en.houseBirthToPrice(
+          '${_en.houseBirthServices(6)}, ${_en.houseBirthPackages(1)}',
+        ),
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining(_en.houseBirthPlans(0)), findsNothing);
+  });
 }

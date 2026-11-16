@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -9,13 +11,12 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_bar.dart';
-import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/workspace_document.dart';
 import '../../domain/workspace_permission.dart';
 import '../../providers/workspace_providers.dart';
+import '../widgets/documents_table.dart';
 
 /// The workspace DOCUMENT LIBRARY (#500): statutes, guides, financial
 /// statements, minutes — links into whatever drive the workspace uses
@@ -271,99 +272,94 @@ class DocumentsScreen extends ConsumerWidget {
     ref.invalidate(workspaceDocumentsProvider);
   }
 
+  /// #4070 — Edit audience: one choice of who sees the document.
+  Future<void> _editAudience(
+    BuildContext context,
+    WidgetRef ref,
+    WorkspaceDocument document,
+  ) async {
+    final l10n = context.l10n;
+    var minRole = WorkspaceDocument.roles.contains(document.minRole)
+        ? document.minRole
+        : 'member';
+    final saved = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => StatefulBuilder(
+        builder: (dialogContext, setState) => AlertDialog(
+          title: Text(l10n.documentsEditAudience),
+          content: DropdownButtonFormField<String>(
+            key: const ValueKey('document-audience-edit'),
+            initialValue: minRole,
+            items: [
+              for (final r in WorkspaceDocument.roles)
+                DropdownMenuItem(value: r, child: Text(audienceName(l10n, r))),
+            ],
+            onChanged: (v) => setState(() => minRole = v ?? minRole),
+            decoration: InputDecoration(labelText: l10n.documentsRoleLabel),
+          ),
+          actions: [
+            TextButton(
+              key: const ValueKey('document-audience-cancel'),
+              onPressed: () => Navigator.of(dialogContext).pop(false),
+              child: Text(l10n.commonCancel),
+            ),
+            FilledButton(
+              key: const ValueKey('document-audience-save'),
+              onPressed: () => Navigator.of(dialogContext).pop(true),
+              child: Text(l10n.commonSave),
+            ),
+          ],
+        ),
+      ),
+    );
+    if (saved != true || !context.mounted || minRole == document.minRole) {
+      return;
+    }
+    if (!await runGuarded(
+      context,
+      domain: 'workspace',
+      message: 'document audience change failed',
+      errorText: l10n.workspaceGenericError,
+      action: () => ref
+          .read(workspaceRepositoryProvider)
+          .setDocumentAudience(document.id, minRole),
+    )) {
+      return;
+    }
+    ref.invalidate(workspaceDocumentsProvider);
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final documentsAsync = ref.watch(workspaceDocumentsProvider);
     // #2137 — whoever manages the library curates it, through a role too.
     final canCurate = ref
         .watch(myPermissionsProvider)
         .contains(WorkspacePermission.manageDocuments);
     return Scaffold(
-      appBar: pageBar(context,
+      appBar: pageBar(
+        context,
         title: l10n.featureDocuments,
-      ),
-      floatingActionButton: canCurate
-          ? FloatingActionButton(
-              key: const ValueKey('documents-add'),
-              onPressed: () => _addDialog(context, ref),
-              child: Icon(Icons.add, semanticLabel: context.l10n.documentsAdd),
-            )
-          : null,
-      body: switch (documentsAsync) {
-        AsyncData(value: final documents) => documents.isEmpty
-            ? EmptyState(
-                icon: Icons.folder_open_outlined,
-                title: l10n.documentsEmpty,
-              )
-            : ListView(
-                // #1181 — the add button overlays this list; it ends
-                // above it.
-                padding: AppSpacing.gutterAll
-                    .add(const EdgeInsets.only(bottom: kFabSafeBottom)),
-                children: [
-                  for (final category in WorkspaceDocument.categories)
-                    if (documents.any((d) => _shelf(d) == category)) ...[
-                      Padding(
-                        padding: const EdgeInsets.only(
-                            top: AppSpacing.sm, bottom: AppSpacing.xs),
-                        child: Text(
-                          categoryName(l10n, category),
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                      for (final document in documents
-                          .where((d) => _shelf(d) == category))
-                        ListTile(
-                          key: ValueKey('document-${document.id}'),
-                          contentPadding: EdgeInsets.zero,
-                          leading: Icon(providerIcon(document.provider)),
-                          title: Text(document.title),
-                          subtitle: Row(children: [
-                            Text(providerName(document.provider)),
-                            if (document.minRole != 'member') ...[
-                              const SizedBox(width: 6),
-                              Icon(Icons.lock_outline,
-                                  size: 12,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .onSurfaceVariant),
-                              Text(
-                                document.minRole == 'owner'
-                                    ? (l10n.documentsRoleOwner)
-                                    : (l10n.documentsRoleAdmin),
-                                style:
-                                    Theme.of(context).textTheme.bodySmall,
-                              ),
-                            ],
-                          ]),
-                          trailing: canCurate
-                              ? IconButton(
-                                tooltip: MaterialLocalizations.of(context).deleteButtonTooltip,
-                                  key: ValueKey(
-                                      'document-delete-${document.id}'),
-                                  icon: const Icon(Icons.delete_outline),
-                                  onPressed: () =>
-                                      _delete(context, ref, document),
-                                )
-                              : const Icon(Icons.open_in_new, size: 18),
-                          onTap: () => ref.read(linkLauncherProvider)(
-                              Uri.parse(document.url)),
-                        ),
-                    ],
-                ],
+        actions: [
+          if (canCurate)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: AppSpacing.sm),
+              child: FilledButton(
+                key: const ValueKey('documents-add'),
+                onPressed: () => _addDialog(context, ref),
+                child: Text(l10n.documentsAdd),
               ),
-        AsyncError() => Center(
-            child: Text(l10n.workspaceGenericError),
-          ),
-        _ => const LoadingView(),
-      },
+            ),
+        ],
+      ),
+      body: DocumentsTable(
+        read: ref.watch(workspaceDocumentsProvider),
+        canCurate: canCurate,
+        onOpen: (d) => ref.read(linkLauncherProvider)(Uri.parse(d.url)),
+        onEditAudience: (d) => unawaited(_editAudience(context, ref, d)),
+        onDelete: (d) => unawaited(_delete(context, ref, d)),
+        onRetry: () => ref.invalidate(workspaceDocumentsProvider),
+      ),
     );
   }
 }
-
-/// #2327 — the shelf a document is listed under. A category this app does
-/// not know (an older or newer client wrote it) is listed under "other"
-/// rather than not at all: a library with rows must never render blank.
-String _shelf(WorkspaceDocument d) =>
-    WorkspaceDocument.categories.contains(d.category) ? d.category : 'other';

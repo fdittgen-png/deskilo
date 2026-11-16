@@ -281,9 +281,16 @@ List<TemplateFieldSpec> _tables() => [
         'from_pct': TemplateFieldType.percent, 'to_pct': TemplateFieldType.percent,
         'fee_cents': _cents, 'overage_fee_cents': _cents,
       }),
+      // #4042 — plans are retired: tariffs are fee bands, and no plan travels.
       ..._row('plans', 'tariffs', 'name', {
         'name': _text, 'base_fee_cents': _cents, 'included_half_days': _int,
         'overage_fee_cents': _cents, 'active': _bool,
+      }, portability: {
+        for (final c in ['name', 'base_fee_cents', 'included_half_days', 'overage_fee_cents', 'active'])
+          c: _never,
+      }, reasons: {
+        for (final c in ['name', 'base_fee_cents', 'included_half_days', 'overage_fee_cents', 'active'])
+          c: 'retired: a business\'s tariffs are its fee bands (#4042)',
       }),
       ..._row('services', 'services', 'name', {
         'name': _text, 'price_cents': _cents, 'active': _bool, 'stock': _int, 'vat_rate': _text,
@@ -341,7 +348,7 @@ List<TemplateFieldSpec> _tables() => [
       _f('tables.workspace_field_definitions[].options[].labels.{locale}', 'field_definitions', _text, key: 'key'),
     ];
 
-const _siteColumns = ['name', 'street', 'postal_code', 'city', 'country_code',
+const _siteColumns = ['name', 'street', 'postal_code', 'city', 'country_code', 'subdivision',
   'legal_id', 'vat_id', 'tax_exemption_reason', 'is_default', 'sort_order'];
 
 /// The plan tree `strip_template_plan` keeps: names and geometry, never a

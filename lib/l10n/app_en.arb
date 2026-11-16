@@ -430,10 +430,6 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Everything in the books",
-  "@accountingStatusAllBooks": {
-    "description": "#3616 heading of the doors to every part of the books, under the status tiles"
-  },
   "accountingStatusAtLeast": "{figure} or more",
   "@accountingStatusAtLeast": {
     "description": "#3913 A count shown when some rows could not be read by this version: the true count is at least this.",
@@ -452,6 +448,10 @@
   "@accountingStatusClosedUpTo": {
     "description": "#3616 books status tile: the last day of the latest closed period"
   },
+  "accountingStatusDue": "Due",
+  "@accountingStatusDue": {
+    "description": "#4066 — the accounting overview's first block: what asks for something."
+  },
   "accountingStatusLastExport": "Last export",
   "@accountingStatusLastExport": {
     "description": "#3616 books status tile: the latest file handed to the accountant"
@@ -459,6 +459,18 @@
   "accountingStatusNotRead": "Could not be read",
   "@accountingStatusNotRead": {
     "description": "#3616 books status tile whose read failed: never shown as nothing to do"
+  },
+  "accountingStatusReference": "Reference",
+  "@accountingStatusReference": {
+    "description": "#4066 — the accounting overview's second block: what only states a figure, and the doors."
+  },
+  "accountingStatusToFile": "To file",
+  "@accountingStatusToFile": {
+    "description": "#4066 — said on the VAT return's tile while a return is still to file; no deadline is given."
+  },
+  "accountingStatusToMatch": "To match",
+  "@accountingStatusToMatch": {
+    "description": "#4066 — said on the bank tile while movements wait for a match."
   },
   "accountingStatusVatToFile": "VAT return to file",
   "@accountingStatusVatToFile": {
@@ -7639,6 +7651,15 @@
   "@calendarDayEmpty": {
     "description": "Shown as a text in calendar hub screen (calendar), and 1 other place."
   },
+  "calendarDecisionsEntry": "{count, plural, one{Decisions ({count})} other{Decisions ({count})}}",
+  "@calendarDecisionsEntry": {
+    "description": "#4055 — on a phone, the pending decisions as one row that opens the Alerts view: calendarDecisionsEntry.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "calendarDeskAll": "All",
   "@calendarDeskAll": {
     "description": "#3626 The desk calendar's filter choice that keeps everything (every level, kind, member or state)"
@@ -7675,6 +7696,18 @@
   "@calendarDeskExport": {
     "description": "#3626 Button of the desk calendar: export the bookings of the period as a file"
   },
+  "calendarDeskFilterChip": "{filter}: {value}",
+  "@calendarDeskFilterChip": {
+    "description": "#4075 — a filter in use, as a chip beside the filter control: the filter's name and what it keeps.",
+    "placeholders": {
+      "filter": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "calendarDeskFilterKind": "Kind of place",
   "@calendarDeskFilterKind": {
     "description": "#3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)"
@@ -7682,6 +7715,15 @@
   "calendarDeskFilterLevel": "Level",
   "@calendarDeskFilterLevel": {
     "description": "#3626 The desk calendar's filter by level"
+  },
+  "calendarDeskFiltersCount": "{count, plural, =0{Filters} one{Filters · {count}} other{Filters · {count}}}",
+  "@calendarDeskFiltersCount": {
+    "description": "#4075 — the desk calendar's one filter control where the four filters do not fit the line, with the number in use.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "calendarDeskFreeDay": "{place}: free on {day}, new booking",
   "@calendarDeskFreeDay": {
@@ -10926,9 +10968,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Added",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Audience",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Group",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Remove document?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Edit audience",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "No document yet. Link your statutes, guides and statements from any drive.",
   "@documentsEmpty": {
@@ -19987,6 +20045,10 @@
   "@invoiceCopyWithPaymentStatus": {
     "description": "#3853 the action that prints today's copy with the paid stamp, never the original"
   },
+  "invoiceCorrectionKeepsKind": "A correction is of the kind of the invoice it replaces.",
+  "@invoiceCorrectionKeepsKind": {
+    "description": "#3994 Refusal DKI08: a correction was sent with a kind other than the invoice it replaces"
+  },
   "invoiceCorrectionReason": "Reason for the correction",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -20502,6 +20564,15 @@
       }
     }
   },
+  "invoiceIssueAmount": "Issue invoice · {amount}",
+  "@invoiceIssueAmount": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "invoiceIssueCheckAgain": "Check again",
   "@invoiceIssueCheckAgain": {
     "description": "Looks for the invoice in the archive; never sends it again"
@@ -20509,6 +20580,14 @@
   "invoiceIssueDeclined": "The validation was declined or expired. No invoice was issued.",
   "@invoiceIssueDeclined": {
     "description": "Result of a look: the validators declined the held invoice request"
+  },
+  "invoiceIssueKept": "The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.",
+  "@invoiceIssueKept": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept."
+  },
+  "invoiceIssueKeptEmail": "The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.",
+  "@invoiceIssueKeptEmail": {
+    "description": "#4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail."
   },
   "invoiceIssueNotFoundYet": "Not found yet. Nothing was sent again.",
   "@invoiceIssueNotFoundYet": {
@@ -22102,6 +22181,15 @@
       }
     }
   },
+  "invoicingCreditAmount": "credit {amount}",
+  "@invoicingCreditAmount": {
+    "description": "#4059 — a to-do's button names its task; a negative amount is named: invoicingCreditAmount.",
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
   "invoicingCustomerCount": "{count, plural, one{1 customer} other{{count} customers}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
@@ -22438,6 +22526,15 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
+  "invoicingSummaryToReview": "{count, plural, =0{nothing to review} one{1 to review} other{{count} to review}}",
+  "@invoicingSummaryToReview": {
+    "description": "#4059 — the compact summary's count of to-dos: invoicingSummaryToReview.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "invoicingTodo": "To do",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -22450,9 +22547,9 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoFix": "Fix",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
+  "invoicingTodoFixRejected": "Fix the e-invoices",
+  "@invoicingTodoFixRejected": {
+    "description": "#4059 — a to-do's button names its task; a negative amount is named: invoicingTodoFixRejected."
   },
   "invoicingTodoKeep": "Keep them",
   "@invoicingTodoKeep": {
@@ -22497,9 +22594,18 @@
   "@invoicingTodoReminders": {
     "description": "#3587 To do: the reminder queue (by hand only)"
   },
-  "invoicingTodoReview": "Review",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
+  "invoicingTodoReviewMonth": "Review {month}",
+  "@invoicingTodoReviewMonth": {
+    "description": "#4059 — a to-do's button names its task; a negative amount is named: invoicingTodoReviewMonth.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "invoicingTodoShareReminders": "Share reminders",
+  "@invoicingTodoShareReminders": {
+    "description": "#4059 — a to-do's button names its task; a negative amount is named: invoicingTodoShareReminders."
   },
   "invoicingTools": "Invoicing tools",
   "@invoicingTools": {
@@ -33226,6 +33332,15 @@
   "@purchaseBillNoOrder": {
     "description": "#3307 goods receipts"
   },
+  "purchaseBillOptional": "{label} (optional)",
+  "@purchaseBillOptional": {
+    "description": "#4065 — a field's label, marked as one that may stay empty.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseBillOrder": "Purchase order",
   "@purchaseBillOrder": {
     "description": "#3307 goods receipts"
@@ -33233,6 +33348,22 @@
   "purchaseBillOrderHint": "The order this bill charges: its amounts are taken and stay editable",
   "@purchaseBillOrderHint": {
     "description": "#3307 goods receipts"
+  },
+  "purchaseBillSectionAccounting": "Accounting",
+  "@purchaseBillSectionAccounting": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionAmount": "Amount and tax",
+  "@purchaseBillSectionAmount": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionDescription": "Description and item",
+  "@purchaseBillSectionDescription": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionSupplier": "Supplier and document",
+  "@purchaseBillSectionSupplier": {
+    "description": "#4065 — a heading of the supplier-bill form."
   },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
@@ -34203,6 +34334,10 @@
   "purchasesSupplier": "Supplier",
   "@purchasesSupplier": {
     "description": "#2573 purchases"
+  },
+  "purchasesSupplierNotRead": "Not read",
+  "@purchasesSupplierNotRead": {
+    "description": "#4067 the purchases table: the supplier cell when the suppliers could not be read"
   },
   "purchasesTabDocuments": "Documents",
   "@purchasesTabDocuments": {
@@ -39657,6 +39792,22 @@
   "@setupAdvancedSettings": {
     "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
   },
+  "setupAllSteps": "All steps: {done} of {total}",
+  "@setupAllSteps": {
+    "description": "#4074 the setup head's count of every step the space uses, named as all steps. The numbers are figures after a label and a colon, read as values. [not a count: done, total]",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupAllStepsNote": "Includes steps for later",
+  "@setupAllStepsNote": {
+    "description": "#4074 the line under the all-steps count: it includes steps for later."
+  },
   "setupAnswerUnknown": "Not sure yet",
   "@setupAnswerUnknown": {
     "description": "#3076 setup questions: the third answer, not decided yet"
@@ -39952,6 +40103,18 @@
   "setupGoalChange": "Change",
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalChecks": "{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}",
+  "@setupGoalChecks": {
+    "description": "#4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
   },
   "setupGoalLine": "Your goal: {milestone}",
   "@setupGoalLine": {
@@ -41878,6 +42041,21 @@
   "@setupStepOpenScreen": {
     "description": "#2870 setup steps: setupStepOpenScreen"
   },
+  "setupStepPosition": "Step {number} of {total} · {name}",
+  "@setupStepPosition": {
+    "description": "#4074 where a step stands in the guide and its name, beside its number. The numbers are positions, not a quantity. [not a count: number, total]",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
+  },
   "setupStepPreviewTitle": "What your members will see",
   "@setupStepPreviewTitle": {
     "description": "#2870 setup steps: setupStepPreviewTitle"
@@ -42452,9 +42630,37 @@
   "@spaceYoursNow": {
     "description": "Space sheet: the viewer already holds the reservation — the button below checks in"
   },
+  "statementDeskBalanceCredit": "Credit: this amount is in your favour",
+  "@statementDeskBalanceCredit": {
+    "description": "#4068 Note under the balance tile when the balance is positive (a credit)."
+  },
+  "statementDeskBalanceOwed": "Owed: you owe this amount",
+  "@statementDeskBalanceOwed": {
+    "description": "#4068 Note under the balance tile when the balance is negative (owed)."
+  },
+  "statementDeskBalanceSettled": "Settled: nothing is owed",
+  "@statementDeskBalanceSettled": {
+    "description": "#4068 Note under the balance tile when the balance is zero."
+  },
   "statementDeskColLine": "Line",
   "@statementDeskColLine": {
     "description": "#3627 Column header of the month's statement lines at the desk."
+  },
+  "statementDeskNoMovements": "No other movements this month: the figures above are the whole statement.",
+  "@statementDeskNoMovements": {
+    "description": "#4068 Shown in place of the lines table when the month has no line beyond the subscription and the payments the tiles already show."
+  },
+  "statementDeskUsed": "{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}",
+  "@statementDeskUsed": {
+    "description": "#4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month. [not a count: used]",
+    "placeholders": {
+      "used": {
+        "type": "int"
+      },
+      "allowance": {
+        "type": "int"
+      }
+    }
   },
   "statusAwaiting": "Awaiting",
   "@statusAwaiting": {

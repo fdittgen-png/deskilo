@@ -1,0 +1,19 @@
+{
+  "@@locale": "en",
+  "documentsColGroup": "Group",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
+  "documentsColAudience": "Audience",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColAdded": "Added",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsEditAudience": "Edit audience",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
+  }
+}

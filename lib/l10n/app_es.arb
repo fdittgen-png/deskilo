@@ -213,12 +213,15 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Toda la contabilidad",
   "accountingStatusAtLeast": "{figure} o más",
   "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
   "accountingStatusClosedUpTo": "Libros cerrados hasta",
+  "accountingStatusDue": "Pendiente",
   "accountingStatusLastExport": "Última exportación",
   "accountingStatusNotRead": "No se pudo leer",
+  "accountingStatusReference": "Referencia",
+  "accountingStatusToFile": "Por presentar",
+  "accountingStatusToMatch": "Por conciliar",
   "accountingStatusVatToFile": "Declaración de IVA por presentar",
   "acctConnConnectToken": "Conectar con un token de API",
   "acctConnDetail": "Respuesta del sistema: {detail}",
@@ -3475,6 +3478,7 @@
     "description": "#718/#719 - calendar hub"
   },
   "calendarDayEmpty": "Nada ese día.",
+  "calendarDecisionsEntry": "{count, plural, one{Decisiones ({count})} other{Decisiones ({count})}}",
   "calendarDeskAll": "Todos",
   "calendarDeskBooking": "Detalles de la reserva",
   "calendarDeskColumnFrom": "Desde",
@@ -3484,8 +3488,10 @@
   "calendarDeskColumnState": "Estado",
   "calendarDeskColumnTo": "Hasta",
   "calendarDeskExport": "Exportar",
+  "calendarDeskFilterChip": "{filter}: {value}",
   "calendarDeskFilterKind": "Tipo de plaza",
   "calendarDeskFilterLevel": "Nivel",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtros} one{Filtros · {count}} other{Filtros · {count}}}",
   "calendarDeskFreeDay": "{place}: libre el {day}, nueva reserva",
   "calendarDeskFreeSlot": "{place}: libre de {from} a {to}, nueva reserva",
   "calendarDeskMissingHour": "Los relojes se adelantan: de {from} a {to} no existe ese día",
@@ -5118,9 +5124,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Añadido",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Visible para",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Grupo",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "¿Quitar el documento?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Cambiar la visibilidad",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "Aún no hay documentos. Enlace sus estatutos, guías y estados desde cualquier drive.",
   "@documentsEmpty": {
@@ -8961,6 +8983,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",
+  "invoiceCorrectionKeepsKind": "Una corrección es del mismo tipo que la factura que sustituye.",
   "invoiceCorrectionReason": "Motivo de la rectificación",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -9306,8 +9329,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Emitir la factura · {amount}",
   "invoiceIssueCheckAgain": "Comprobar de nuevo",
   "invoiceIssueDeclined": "La validación fue rechazada o caducó. No se emitió ninguna factura.",
+  "invoiceIssueKept": "La factura emitida se conserva como un original que ya no puede modificarse; la comparte o la descarga desde la factura.",
+  "invoiceIssueKeptEmail": "La factura emitida se conserva como un original que ya no puede modificarse; la envía por correo, la comparte o la descarga desde la factura.",
   "invoiceIssueNotFoundYet": "Aún no se encuentra. No se volvió a enviar nada.",
   "invoiceIssueOne": "Facturar",
   "invoiceIssueUnknownBody": "La factura se envió pero la respuesta no llegó, así que puede que ya exista. No se vuelve a enviar nada. Compruebe de nuevo para buscarla.",
@@ -10249,6 +10275,7 @@
       }
     }
   },
+  "invoicingCreditAmount": "saldo a favor {amount}",
   "invoicingCustomerCount": "{count, plural, one{1 cliente} other{{count} clientes}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
@@ -10574,6 +10601,7 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
+  "invoicingSummaryToReview": "{count, plural, =0{nada que revisar} one{1 por revisar} other{{count} por revisar}}",
   "invoicingTodo": "Pendiente",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -10586,10 +10614,7 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoFix": "Corregir",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
-  },
+  "invoicingTodoFixRejected": "Corregir las facturas electrónicas",
   "invoicingTodoKeep": "Conservarlos",
   "invoicingTodoKeepOriginals": "{count, plural, one{Conservar el original de {count} factura} other{Conservar los originales de {count} facturas}}",
   "invoicingTodoMatch": "Conciliar pagos",
@@ -10622,10 +10647,8 @@
   "@invoicingTodoReminders": {
     "description": "#3587 To do: the reminder queue (by hand only)"
   },
-  "invoicingTodoReview": "Ver",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
-  },
+  "invoicingTodoReviewMonth": "Revisar {month}",
+  "invoicingTodoShareReminders": "Compartir recordatorios",
   "invoicingTools": "Herramientas de facturación",
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
@@ -14728,8 +14751,13 @@
   "purchaseApproveSelected": "{count, plural, one{Aprobar {count} documento} other{Aprobar {count} documentos}}",
   "purchaseBillForOrder": "Pedido de compra {reference}",
   "purchaseBillNoOrder": "Ningún pedido",
+  "purchaseBillOptional": "{label} (opcional)",
   "purchaseBillOrder": "Pedido de compra",
   "purchaseBillOrderHint": "El pedido que cobra esta factura: sus importes se toman y siguen editables",
+  "purchaseBillSectionAccounting": "Contabilidad",
+  "purchaseBillSectionAmount": "Importe e impuesto",
+  "purchaseBillSectionDescription": "Descripción y artículo",
+  "purchaseBillSectionSupplier": "Proveedor y documento",
   "purchaseEntryAdd": "Añadir compra / gasto",
   "purchaseEntryMe": "Pagué yo",
   "purchaseEntryMeHint": "Preséntelo como su gasto: una vez aprobado, el espacio se lo debe.",
@@ -15267,6 +15295,7 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesSupplierNotRead": "No leído",
   "purchasesTabDocuments": "Documentos",
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
@@ -18677,6 +18706,8 @@
   },
   "settlementVatNote": "Las líneas y su IVA se toman de las facturas reagrupadas; la declaración de IVA cuenta las originales una sola vez.",
   "setupAdvancedSettings": "Ajustes avanzados",
+  "setupAllSteps": "Todos los pasos: {done} de {total}",
+  "setupAllStepsNote": "Incluye los pasos para más adelante",
   "setupAnswerUnknown": "Aún no lo sé",
   "setupAnswerUnknownNote": "Aún sin decidir: {list} se quedan en la opción segura. No se activa nada por ello; vuelva a esta pregunta aquí cuando lo sepa.",
   "setupApprovalsApply": "Usar esta regla",
@@ -18738,6 +18769,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
+  "setupGoalChecks": "{required, plural, one{Este objetivo: {ready} de {required} comprobación hecha} other{Este objetivo: {ready} de {required} comprobaciones hechas}}",
   "setupGoalLine": "Su objetivo: {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
@@ -19219,6 +19251,7 @@
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "Abrirlo",
+  "setupStepPosition": "Paso {number} de {total} · {name}",
   "setupStepPreviewTitle": "Lo que verán sus miembros",
   "setupStepTitleAccounting": "Contabilidad",
   "setupStepTitleApprovals": "Aprobaciones",
@@ -19456,7 +19489,12 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Reservado por usted para esta franja.",
+  "statementDeskBalanceCredit": "A favor: este importe es a su favor",
+  "statementDeskBalanceOwed": "Debido: usted debe este importe",
+  "statementDeskBalanceSettled": "Saldado: no se debe nada",
   "statementDeskColLine": "Línea",
+  "statementDeskNoMovements": "Ningún otro movimiento este mes: las cifras de arriba son todo el extracto.",
+  "statementDeskUsed": "{used} de {allowance, plural, one{1 media jornada} other{{allowance} medias jornadas}}",
   "statusAwaiting": "Pendiente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

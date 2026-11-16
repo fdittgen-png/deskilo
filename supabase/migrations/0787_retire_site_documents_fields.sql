@@ -2,7 +2,7 @@
 -- risk: transforming
 -- (the template field registry is restated with one field less)
 --
--- #3997 (second of two files, after 0783) -- the template field registry
+-- #3997 (second of two files, after 0786) -- the template field registry
 -- no longer carries `workspace.feature_flags.siteDocuments`: the flag is
 -- retired. A configuration that still names it is read as before; the
 -- field is not one a template carries any more. Apart so each file fits the
@@ -78,11 +78,11 @@ as $registry$
     {"id":"tables.packages[].name","entity":"packages","type":"text","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
     {"id":"tables.packages[].price_cents","entity":"packages","type":"cents","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
     {"id":"tables.packages[].vat_rate","entity":"packages","type":"text","portability":"reference","absent":"inherit","key":"name","bindings":["vat_rates.label"],"process":"membershipCommerce"},
-    {"id":"tables.plans[].active","entity":"tariffs","type":"boolean","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
-    {"id":"tables.plans[].base_fee_cents","entity":"tariffs","type":"cents","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
-    {"id":"tables.plans[].included_half_days","entity":"tariffs","type":"integer","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
-    {"id":"tables.plans[].name","entity":"tariffs","type":"text","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
-    {"id":"tables.plans[].overage_fee_cents","entity":"tariffs","type":"cents","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
+    {"id":"tables.plans[].active","entity":"tariffs","type":"boolean","portability":"never","absent":"inherit","key":"name","reason":"retired: a business's tariffs are its fee bands (#4042)","process":"membershipCommerce"},
+    {"id":"tables.plans[].base_fee_cents","entity":"tariffs","type":"cents","portability":"never","absent":"inherit","key":"name","reason":"retired: a business's tariffs are its fee bands (#4042)","process":"membershipCommerce"},
+    {"id":"tables.plans[].included_half_days","entity":"tariffs","type":"integer","portability":"never","absent":"inherit","key":"name","reason":"retired: a business's tariffs are its fee bands (#4042)","process":"membershipCommerce"},
+    {"id":"tables.plans[].name","entity":"tariffs","type":"text","portability":"never","absent":"inherit","key":"name","reason":"retired: a business's tariffs are its fee bands (#4042)","process":"membershipCommerce"},
+    {"id":"tables.plans[].overage_fee_cents","entity":"tariffs","type":"cents","portability":"never","absent":"inherit","key":"name","reason":"retired: a business's tariffs are its fee bands (#4042)","process":"membershipCommerce"},
     {"id":"tables.services[].active","entity":"services","type":"boolean","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
     {"id":"tables.services[].name","entity":"services","type":"text","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
     {"id":"tables.services[].price_cents","entity":"services","type":"cents","portability":"literal","absent":"inherit","key":"name","process":"membershipCommerce"},
@@ -453,4 +453,4 @@ as $registry$
 $registry$;
 revoke execute on function public.template_field_registry() from public, anon;
 
-select public.set_deskilo_schema_version(784);
+select public.set_deskilo_schema_version(787);

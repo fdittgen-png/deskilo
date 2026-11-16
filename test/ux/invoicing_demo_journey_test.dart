@@ -27,6 +27,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../helpers/screens/demo_journeys.dart' show pumpDemo;
+import '../helpers/screens/invoices.dart'
+    show invoicingOwedFigures, openInvoicingTodo;
 
 final _en = AppLocalizationsEn();
 
@@ -78,7 +80,7 @@ _Card _card(WidgetTester tester) {
     for (final e
         in find
             .descendant(
-              of: find.byKey(const ValueKey('invoicing-owed')),
+              of: invoicingOwedFigures, // #4059 — the card, or the strip on a phone
               matching: find.byType(Text),
             )
             .evaluate())
@@ -97,8 +99,18 @@ _Card _card(WidgetTester tester) {
 /// Back (not a tap: the way home) until the invoicing home shows.
 Future<void> _backHome(WidgetTester tester) async {
   for (var i = 0; i < 6; i++) {
-    if (find.byKey(const ValueKey('invoicing-owed')).evaluate().isNotEmpty &&
+    // #4059 — the home, at its top: what it sums up is above its list, and
+    // a list scrolled down leaves it unbuilt.
+    final home = find.byKey(const ValueKey('invoicing-home'));
+    if (home.evaluate().isNotEmpty &&
         find.byKey(const ValueKey('invoice-page-more')).evaluate().isEmpty) {
+      tester
+          .state<ScrollableState>(
+            find.descendant(of: home, matching: find.byType(Scrollable)).first,
+          )
+          .position
+          .jumpTo(0);
+      await tester.pump();
       break;
     }
     final close = [
@@ -143,6 +155,7 @@ void main() {
     final month = _Touches();
     final fix = _Touches();
     final issuedBefore = {for (final i in f.money.invoices) i.id};
+    await openInvoicingTodo(tester); // #4059
     await month.on(
       tester,
       find.byKey(const ValueKey('invoicing-todo-invoiceTheMonth')),
@@ -216,6 +229,7 @@ void main() {
 
     // Share the due reminders by hand: Review, then one Share per line.
     final share = _Touches();
+    await openInvoicingTodo(tester); // #4059
     await share.on(
       tester,
       find.byKey(const ValueKey('invoicing-todo-shareReminders')),
@@ -265,6 +279,7 @@ void main() {
     // the invoice it pays.
     final match = _Touches();
     final beforeMatch = _card(tester);
+    await openInvoicingTodo(tester); // #4059
     await match.on(
       tester,
       find.byKey(const ValueKey('invoicing-todo-matchPayments')),
@@ -316,6 +331,7 @@ void main() {
     // the refund, Confirm.
     final payout = _Touches();
     final beforePayout = _card(tester);
+    await openInvoicingTodo(tester); // #4059
     await payout.on(
       tester,
       find.byKey(const ValueKey('invoicing-todo-payOutRefunds')),

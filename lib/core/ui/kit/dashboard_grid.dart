@@ -8,6 +8,7 @@
 import 'package:flutter/material.dart';
 
 import '../../l10n/context_l10n.dart';
+import '../../theme/app_radius.dart';
 import '../../theme/app_spacing.dart';
 
 /// The most columns a dashboard lays out, however wide it is.
@@ -138,6 +139,10 @@ class KpiTrendMark extends StatelessWidget {
 /// One figure: its [label], the [figure] itself, one line of [note] (the
 /// period it covers), and the [trend] with its worded [trendChange]. A tap
 /// runs [onTap].
+///
+/// #4066 — a tile that asks for something ([asks]: "To file") says so in
+/// words above its label and is outlined; one that only states a figure is
+/// not. Never by colour alone.
 class KpiTile extends StatelessWidget {
   const KpiTile({
     super.key,
@@ -149,7 +154,11 @@ class KpiTile extends StatelessWidget {
     this.onTap,
     this.figureKey,
     this.tapKey,
+    this.asks,
   });
+
+  /// What the tile asks of the reader, in words; null when it only states.
+  final String? asks;
 
   final String label;
   final String figure;
@@ -165,8 +174,19 @@ class KpiTile extends StatelessWidget {
     final theme = Theme.of(context);
     final text = theme.textTheme;
     final direction = trend;
+    final asking = asks;
+    final outline = BorderSide(color: theme.colorScheme.primary, width: 2);
+    final shape = theme.cardTheme.shape;
     return Card(
       margin: EdgeInsets.zero,
+      shape: asking == null
+          ? null
+          : shape is OutlinedBorder
+          ? shape.copyWith(side: outline)
+          : RoundedRectangleBorder(
+              borderRadius: AppRadius.mdAll,
+              side: outline,
+            ),
       child: InkWell(
         key: tapKey,
         onTap: onTap,
@@ -175,6 +195,25 @@ class KpiTile extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              if (asking != null)
+                Row(
+                  children: [
+                    Icon(
+                      Icons.flag_outlined,
+                      size: text.labelSmall?.fontSize,
+                      color: theme.colorScheme.primary,
+                    ),
+                    const SizedBox(width: AppSpacing.xs),
+                    Flexible(
+                      child: Text(
+                        asking,
+                        style: text.labelSmall?.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               Text(
                 label,
                 maxLines: 2,

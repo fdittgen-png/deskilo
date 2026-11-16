@@ -20,10 +20,6 @@
   "@accountingStatusNotRead": {
     "description": "#3616 books status tile whose read failed: never shown as nothing to do"
   },
-  "accountingStatusAllBooks": "Everything in the books",
-  "@accountingStatusAllBooks": {
-    "description": "#3616 heading of the doors to every part of the books, under the status tiles"
-  },
   "accountingExportsBy": "Made by",
   "@accountingExportsBy": {
     "description": "#3616 export history column: the member who made the file"
@@ -91,5 +87,21 @@
         "example": "12"
       }
     }
+  },
+  "accountingStatusDue": "Due",
+  "accountingStatusReference": "Reference",
+  "accountingStatusToFile": "To file",
+  "accountingStatusToMatch": "To match",
+  "@accountingStatusDue": {
+    "description": "#4066 — the accounting overview's first block: what asks for something."
+  },
+  "@accountingStatusReference": {
+    "description": "#4066 — the accounting overview's second block: what only states a figure, and the doors."
+  },
+  "@accountingStatusToFile": {
+    "description": "#4066 — said on the VAT return's tile while a return is still to file; no deadline is given."
+  },
+  "@accountingStatusToMatch": {
+    "description": "#4066 — said on the bank tile while movements wait for a match."
   }
 }

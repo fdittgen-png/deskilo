@@ -668,12 +668,6 @@ abstract class AppLocalizations {
   /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
   String get accountingSourceRefused;
 
-  /// #3616 heading of the doors to every part of the books, under the status tiles
-  ///
-  /// In en, this message translates to:
-  /// **'Everything in the books'**
-  String get accountingStatusAllBooks;
-
   /// #3913 A count shown when some rows could not be read by this version: the true count is at least this.
   ///
   /// In en, this message translates to:
@@ -692,6 +686,12 @@ abstract class AppLocalizations {
   /// **'Books closed up to'**
   String get accountingStatusClosedUpTo;
 
+  /// #4066 — the accounting overview's first block: what asks for something.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get accountingStatusDue;
+
   /// #3616 books status tile: the latest file handed to the accountant
   ///
   /// In en, this message translates to:
@@ -703,6 +703,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not be read'**
   String get accountingStatusNotRead;
+
+  /// #4066 — the accounting overview's second block: what only states a figure, and the doors.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get accountingStatusReference;
+
+  /// #4066 — said on the VAT return's tile while a return is still to file; no deadline is given.
+  ///
+  /// In en, this message translates to:
+  /// **'To file'**
+  String get accountingStatusToFile;
+
+  /// #4066 — said on the bank tile while movements wait for a match.
+  ///
+  /// In en, this message translates to:
+  /// **'To match'**
+  String get accountingStatusToMatch;
 
   /// #3616 books status tile: the period of the oldest VAT return not filed
   ///
@@ -9155,6 +9173,12 @@ abstract class AppLocalizations {
   /// **'Nothing on this day.'**
   String get calendarDayEmpty;
 
+  /// #4055 — on a phone, the pending decisions as one row that opens the Alerts view: calendarDecisionsEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Decisions ({count})} other{Decisions ({count})}}'**
+  String calendarDecisionsEntry(int count);
+
   /// #3626 The desk calendar's filter choice that keeps everything (every level, kind, member or state)
   ///
   /// In en, this message translates to:
@@ -9209,6 +9233,12 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get calendarDeskExport;
 
+  /// #4075 — a filter in use, as a chip beside the filter control: the filter's name and what it keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'{filter}: {value}'**
+  String calendarDeskFilterChip(String filter, String value);
+
   /// #3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)
   ///
   /// In en, this message translates to:
@@ -9220,6 +9250,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Level'**
   String get calendarDeskFilterLevel;
+
+  /// #4075 — the desk calendar's one filter control where the four filters do not fit the line, with the number in use.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Filters} one{Filters · {count}} other{Filters · {count}}}'**
+  String calendarDeskFiltersCount(int count);
 
   /// #3626 Accessibility label of a free day cell of a place in the week grid: a click opens New booking. Placeholders: {place}, {day} (a date)
   ///
@@ -13161,11 +13197,35 @@ abstract class AppLocalizations {
   /// **'Statutes & legal'**
   String get documentsCategoryStatutes;
 
+  /// #4070 document library: documentsColAdded
+  ///
+  /// In en, this message translates to:
+  /// **'Added'**
+  String get documentsColAdded;
+
+  /// #4070 document library: documentsColAudience
+  ///
+  /// In en, this message translates to:
+  /// **'Audience'**
+  String get documentsColAudience;
+
+  /// #4070 document library: documentsColGroup
+  ///
+  /// In en, this message translates to:
+  /// **'Group'**
+  String get documentsColGroup;
+
   /// Workspace document library (#500)
   ///
   /// In en, this message translates to:
   /// **'Remove document?'**
   String get documentsDelete;
+
+  /// #4070 document library: documentsEditAudience
+  ///
+  /// In en, this message translates to:
+  /// **'Edit audience'**
+  String get documentsEditAudience;
 
   /// Workspace document library (#500)
   ///
@@ -24509,6 +24569,12 @@ abstract class AppLocalizations {
   /// **'Copy with payment status'**
   String get invoiceCopyWithPaymentStatus;
 
+  /// #3994 Refusal DKI08: a correction was sent with a kind other than the invoice it replaces
+  ///
+  /// In en, this message translates to:
+  /// **'A correction is of the kind of the invoice it replaces.'**
+  String get invoiceCorrectionKeepsKind;
+
   /// #2440: invoiceCorrectionReason
   ///
   /// In en, this message translates to:
@@ -25139,6 +25205,12 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{Issue 1 invoice for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.} other{Issue {count} invoices for {month}, {total} in total? An issued invoice can no longer be edited — a mistake is corrected with a replacement.}}'**
   String invoiceIssueAllConfirm(int count, String month, String total);
 
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Issue invoice · {amount}'**
+  String invoiceIssueAmount(String amount);
+
   /// Looks for the invoice in the archive; never sends it again
   ///
   /// In en, this message translates to:
@@ -25150,6 +25222,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The validation was declined or expired. No invoice was issued.'**
   String get invoiceIssueDeclined;
+
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKept.
+  ///
+  /// In en, this message translates to:
+  /// **'The issued invoice is kept as an original that cannot be changed; you share or download it from the invoice.'**
+  String get invoiceIssueKept;
+
+  /// #4058 — issuing an invoice says its amount and what issuing means: invoiceIssueKeptEmail.
+  ///
+  /// In en, this message translates to:
+  /// **'The issued invoice is kept as an original that cannot be changed; you send it by e-mail, share or download it from the invoice.'**
+  String get invoiceIssueKeptEmail;
 
   /// Result of a look that found no invoice
   ///
@@ -27047,6 +27131,12 @@ abstract class AppLocalizations {
   /// **'{customers} · {invoices}'**
   String invoicingCountLine(String customers, String invoices);
 
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingCreditAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'credit {amount}'**
+  String invoicingCreditAmount(String amount);
+
   /// #3587 how many customers
   ///
   /// In en, this message translates to:
@@ -27419,6 +27509,12 @@ abstract class AppLocalizations {
   /// **'Payment received · to match'**
   String get invoicingStatusToMatch;
 
+  /// #4059 — the compact summary's count of to-dos: invoicingSummaryToReview.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{nothing to review} one{1 to review} other{{count} to review}}'**
+  String invoicingSummaryToReview(int count);
+
   /// #3587 the To do card's heading
   ///
   /// In en, this message translates to:
@@ -27437,11 +27533,11 @@ abstract class AppLocalizations {
   /// **'Issue drafts'**
   String get invoicingTodoDrafts;
 
-  /// #3587 a To do entry's button for a failure
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoFixRejected.
   ///
   /// In en, this message translates to:
-  /// **'Fix'**
-  String get invoicingTodoFix;
+  /// **'Fix the e-invoices'**
+  String get invoicingTodoFixRejected;
 
   /// #3853 To do: the action that keeps the originals, in turn
   ///
@@ -27485,11 +27581,17 @@ abstract class AppLocalizations {
   /// **'Share reminders by hand'**
   String get invoicingTodoReminders;
 
-  /// #3587 a To do entry's button
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoReviewMonth.
   ///
   /// In en, this message translates to:
-  /// **'Review'**
-  String get invoicingTodoReview;
+  /// **'Review {month}'**
+  String invoicingTodoReviewMonth(String month);
+
+  /// #4059 — a to-do's button names its task; a negative amount is named: invoicingTodoShareReminders.
+  ///
+  /// In en, this message translates to:
+  /// **'Share reminders'**
+  String get invoicingTodoShareReminders;
 
   /// invoicing hub vs my finances
   ///
@@ -40562,6 +40664,12 @@ abstract class AppLocalizations {
   /// **'No order'**
   String get purchaseBillNoOrder;
 
+  /// #4065 — a field's label, marked as one that may stay empty.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} (optional)'**
+  String purchaseBillOptional(String label);
+
   /// #3307 goods receipts
   ///
   /// In en, this message translates to:
@@ -40573,6 +40681,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The order this bill charges: its amounts are taken and stay editable'**
   String get purchaseBillOrderHint;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting'**
+  String get purchaseBillSectionAccounting;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount and tax'**
+  String get purchaseBillSectionAmount;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Description and item'**
+  String get purchaseBillSectionDescription;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier and document'**
+  String get purchaseBillSectionSupplier;
 
   /// #2577 the guided purchase / expense entry
   ///
@@ -41795,6 +41927,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier'**
   String get purchasesSupplier;
+
+  /// #4067 the purchases table: the supplier cell when the suppliers could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Not read'**
+  String get purchasesSupplierNotRead;
 
   /// #2574 purchase payables
   ///
@@ -48996,6 +49134,18 @@ abstract class AppLocalizations {
   /// **'Advanced settings'**
   String get setupAdvancedSettings;
 
+  /// #4074 the setup head's count of every step the space uses, named as all steps. The numbers are figures after a label and a colon, read as values. [not a count: done, total]
+  ///
+  /// In en, this message translates to:
+  /// **'All steps: {done} of {total}'**
+  String setupAllSteps(int done, int total);
+
+  /// #4074 the line under the all-steps count: it includes steps for later.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes steps for later'**
+  String get setupAllStepsNote;
+
   /// #3076 setup questions: the third answer, not decided yet
   ///
   /// In en, this message translates to:
@@ -49295,6 +49445,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change'**
   String get setupGoalChange;
+
+  /// #4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}'**
+  String setupGoalChecks(int ready, int required);
 
   /// #3076 — the hub states the goal the space chose, derived from the last milestone that applies.
   ///
@@ -51725,6 +51881,12 @@ abstract class AppLocalizations {
   /// **'Open it'**
   String get setupStepOpenScreen;
 
+  /// #4074 where a step stands in the guide and its name, beside its number. The numbers are positions, not a quantity. [not a count: number, total]
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number} of {total} · {name}'**
+  String setupStepPosition(int number, int total, String name);
+
   /// #2870 setup steps: setupStepPreviewTitle
   ///
   /// In en, this message translates to:
@@ -52481,11 +52643,41 @@ abstract class AppLocalizations {
   /// **'Reserved by you for this slot.'**
   String get spaceYoursNow;
 
+  /// #4068 Note under the balance tile when the balance is positive (a credit).
+  ///
+  /// In en, this message translates to:
+  /// **'Credit: this amount is in your favour'**
+  String get statementDeskBalanceCredit;
+
+  /// #4068 Note under the balance tile when the balance is negative (owed).
+  ///
+  /// In en, this message translates to:
+  /// **'Owed: you owe this amount'**
+  String get statementDeskBalanceOwed;
+
+  /// #4068 Note under the balance tile when the balance is zero.
+  ///
+  /// In en, this message translates to:
+  /// **'Settled: nothing is owed'**
+  String get statementDeskBalanceSettled;
+
   /// #3627 Column header of the month's statement lines at the desk.
   ///
   /// In en, this message translates to:
   /// **'Line'**
   String get statementDeskColLine;
+
+  /// #4068 Shown in place of the lines table when the month has no line beyond the subscription and the payments the tiles already show.
+  ///
+  /// In en, this message translates to:
+  /// **'No other movements this month: the figures above are the whole statement.'**
+  String get statementDeskNoMovements;
+
+  /// #4068 Usage tile of My finances at the desk: half-days used of the half-days allowed this month. [not a count: used]
+  ///
+  /// In en, this message translates to:
+  /// **'{used} of {allowance, plural, one{1 half-day} other{{allowance} half-days}}'**
+  String statementDeskUsed(int used, int allowance);
 
   /// #934 workspace status / repartition wizard: statusAwaiting
   ///

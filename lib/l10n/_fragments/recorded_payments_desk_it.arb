@@ -3,5 +3,10 @@
   "recordedPaymentsColMatched": "Abbinato il",
   "statementDeskColLine": "Voce",
   "usageColBilled": "Fatturato",
-  "moneyReportsForMonth": "Report di {month}"
+  "moneyReportsForMonth": "Report di {month}",
+  "statementDeskUsed": "{used} su {allowance, plural, one{1 mezza giornata} other{{allowance} mezze giornate}}",
+  "statementDeskBalanceOwed": "Dovuto: lei deve questo importo",
+  "statementDeskBalanceCredit": "Credito: questo importo è a suo favore",
+  "statementDeskBalanceSettled": "Saldato: non è dovuto nulla",
+  "statementDeskNoMovements": "Nessun altro movimento questo mese: le cifre sopra sono tutto l'estratto."
 }

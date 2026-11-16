@@ -213,12 +213,15 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Alles in der Buchhaltung",
   "accountingStatusAtLeast": "{figure} oder mehr",
   "accountingStatusBankToMatch": "Zuzuordnende Bankbuchungen",
   "accountingStatusClosedUpTo": "Bücher abgeschlossen bis",
+  "accountingStatusDue": "Zu erledigen",
   "accountingStatusLastExport": "Letzter Export",
   "accountingStatusNotRead": "Konnte nicht gelesen werden",
+  "accountingStatusReference": "Referenz",
+  "accountingStatusToFile": "Einzureichen",
+  "accountingStatusToMatch": "Abzugleichen",
   "accountingStatusVatToFile": "Abzugebende Umsatzsteuererklärung",
   "acctConnConnectToken": "Mit API-Token verbinden",
   "acctConnDetail": "Antwort des Systems: {detail}",
@@ -3475,6 +3478,7 @@
     "description": "#718/#719 - calendar hub"
   },
   "calendarDayEmpty": "Nichts an diesem Tag.",
+  "calendarDecisionsEntry": "{count, plural, one{Entscheidungen ({count})} other{Entscheidungen ({count})}}",
   "calendarDeskAll": "Alle",
   "calendarDeskBooking": "Buchungsdetails",
   "calendarDeskColumnFrom": "Von",
@@ -3484,8 +3488,10 @@
   "calendarDeskColumnState": "Status",
   "calendarDeskColumnTo": "Bis",
   "calendarDeskExport": "Exportieren",
+  "calendarDeskFilterChip": "{filter}: {value}",
   "calendarDeskFilterKind": "Art des Platzes",
   "calendarDeskFilterLevel": "Ebene",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filter} one{Filter · {count}} other{Filter · {count}}}",
   "calendarDeskFreeDay": "{place}: frei am {day}, neue Buchung",
   "calendarDeskFreeSlot": "{place}: frei von {from} bis {to}, neue Buchung",
   "calendarDeskMissingHour": "Die Uhren werden vorgestellt: {from} bis {to} gibt es an diesem Tag nicht",
@@ -5118,9 +5124,25 @@
   "@documentsCategoryStatutes": {
     "description": "Workspace document library (#500)"
   },
+  "documentsColAdded": "Hinzugefügt",
+  "@documentsColAdded": {
+    "description": "#4070 document library: documentsColAdded"
+  },
+  "documentsColAudience": "Sichtbar für",
+  "@documentsColAudience": {
+    "description": "#4070 document library: documentsColAudience"
+  },
+  "documentsColGroup": "Gruppe",
+  "@documentsColGroup": {
+    "description": "#4070 document library: documentsColGroup"
+  },
   "documentsDelete": "Dokument entfernen?",
   "@documentsDelete": {
     "description": "Workspace document library (#500)"
+  },
+  "documentsEditAudience": "Sichtbarkeit ändern",
+  "@documentsEditAudience": {
+    "description": "#4070 document library: documentsEditAudience"
   },
   "documentsEmpty": "Noch kein Dokument. Verlinken Sie Satzung, Anleitungen und Berichte aus jedem Drive.",
   "@documentsEmpty": {
@@ -8961,6 +8983,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Kopie mit Zahlungsstatus",
+  "invoiceCorrectionKeepsKind": "Eine Korrektur hat die Art der Rechnung, die sie ersetzt.",
   "invoiceCorrectionReason": "Grund der Berichtigung",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"
@@ -9306,8 +9329,11 @@
       }
     }
   },
+  "invoiceIssueAmount": "Rechnung ausstellen · {amount}",
   "invoiceIssueCheckAgain": "Erneut prüfen",
   "invoiceIssueDeclined": "Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.",
+  "invoiceIssueKept": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie teilen oder laden sie von der Rechnung aus herunter.",
+  "invoiceIssueKeptEmail": "Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie senden sie per E-Mail, teilen oder laden sie von der Rechnung aus herunter.",
   "invoiceIssueNotFoundYet": "Noch nicht gefunden. Es wurde nichts erneut gesendet.",
   "invoiceIssueOne": "Berechnen",
   "invoiceIssueUnknownBody": "Die Rechnung wurde gesendet, die Antwort ist aber nicht angekommen; sie existiert vielleicht schon. Es wird nichts erneut gesendet. Prüfen Sie erneut, um sie zu suchen.",
@@ -10249,6 +10275,7 @@
       }
     }
   },
+  "invoicingCreditAmount": "Guthaben {amount}",
   "invoicingCustomerCount": "{count, plural, one{1 Kunde} other{{count} Kunden}}",
   "@invoicingCustomerCount": {
     "description": "#3587 how many customers",
@@ -10574,6 +10601,7 @@
   "@invoicingStatusToMatch": {
     "description": "#3587 status"
   },
+  "invoicingSummaryToReview": "{count, plural, =0{nichts zu prüfen} one{1 zu prüfen} other{{count} zu prüfen}}",
   "invoicingTodo": "Zu tun",
   "@invoicingTodo": {
     "description": "#3587 the To do card's heading"
@@ -10586,10 +10614,7 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoFix": "Beheben",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
-  },
+  "invoicingTodoFixRejected": "E-Rechnungen beheben",
   "invoicingTodoKeep": "Aufbewahren",
   "invoicingTodoKeepOriginals": "{count, plural, one{Das Original von {count} Rechnung aufbewahren} other{Die Originale von {count} Rechnungen aufbewahren}}",
   "invoicingTodoMatch": "Zahlungen zuordnen",
@@ -10622,10 +10647,8 @@
   "@invoicingTodoReminders": {
     "description": "#3587 To do: the reminder queue (by hand only)"
   },
-  "invoicingTodoReview": "Ansehen",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
-  },
+  "invoicingTodoReviewMonth": "{month} prüfen",
+  "invoicingTodoShareReminders": "Mahnungen teilen",
   "invoicingTools": "Werkzeuge der Rechnungsstellung",
   "@invoicingTools": {
     "description": "invoicing hub vs my finances"
@@ -14728,8 +14751,13 @@
   "purchaseApproveSelected": "{count, plural, one{{count} Beleg freigeben} other{{count} Belege freigeben}}",
   "purchaseBillForOrder": "Bestellung {reference}",
   "purchaseBillNoOrder": "Keine Bestellung",
+  "purchaseBillOptional": "{label} (optional)",
   "purchaseBillOrder": "Bestellung",
   "purchaseBillOrderHint": "Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar",
+  "purchaseBillSectionAccounting": "Buchhaltung",
+  "purchaseBillSectionAmount": "Betrag und Steuer",
+  "purchaseBillSectionDescription": "Beschreibung und Artikel",
+  "purchaseBillSectionSupplier": "Lieferant und Beleg",
   "purchaseEntryAdd": "Einkauf / Ausgabe hinzufügen",
   "purchaseEntryMe": "Ich habe selbst bezahlt",
   "purchaseEntryMeHint": "Als Ihre Ausgabe einreichen: nach der Genehmigung schuldet der Raum sie Ihnen.",
@@ -15267,6 +15295,7 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesSupplierNotRead": "Nicht gelesen",
   "purchasesTabDocuments": "Belege",
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"
@@ -18677,6 +18706,8 @@
   },
   "settlementVatNote": "Die Positionen und ihre MwSt. sind aus den zusammengefassten Rechnungen übernommen; die Umsatzsteuererklärung zählt die Originale einmal.",
   "setupAdvancedSettings": "Erweiterte Einstellungen",
+  "setupAllSteps": "Alle Schritte: {done} von {total}",
+  "setupAllStepsNote": "Mit den Schritten für später",
   "setupAnswerUnknown": "Weiß ich noch nicht",
   "setupAnswerUnknownNote": "Noch nicht entschieden: {list} bleiben bei der sicheren Wahl. Dafür wird nichts eingeschaltet; kommen Sie hier auf die Frage zurück, sobald Sie es wissen.",
   "setupApprovalsApply": "Diese Regel verwenden",
@@ -18738,6 +18769,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
+  "setupGoalChecks": "{required, plural, one{Dieses Ziel: {ready} von {required} Prüfung erledigt} other{Dieses Ziel: {ready} von {required} Prüfungen erledigt}}",
   "setupGoalLine": "Ihr Ziel: {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
@@ -19219,6 +19251,7 @@
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "Öffnen",
+  "setupStepPosition": "Schritt {number} von {total} · {name}",
   "setupStepPreviewTitle": "Was Ihre Mitglieder sehen",
   "setupStepTitleAccounting": "Buchhaltung",
   "setupStepTitleApprovals": "Freigaben",
@@ -19456,7 +19489,12 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "statementDeskBalanceCredit": "Guthaben: dieser Betrag steht Ihnen zu",
+  "statementDeskBalanceOwed": "Geschuldet: Sie schulden diesen Betrag",
+  "statementDeskBalanceSettled": "Ausgeglichen: nichts ist offen",
   "statementDeskColLine": "Posten",
+  "statementDeskNoMovements": "Keine weiteren Bewegungen in diesem Monat: die Zahlen oben sind die ganze Abrechnung.",
+  "statementDeskUsed": "{used} von {allowance, plural, one{1 Halbtag} other{{allowance} Halbtagen}}",
   "statusAwaiting": "Offen",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

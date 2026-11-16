@@ -6,6 +6,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/features/enabled_feature_keys.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/i18n/money_format.dart';
@@ -13,7 +14,7 @@ import '../../../../core/ids/request_id.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -21,6 +22,7 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
 import '../../domain/invoice_issue_readiness.dart';
+import '../../domain/invoice_mail.dart' show invoiceEmailKey;
 import '../../providers/money_providers.dart';
 import '../invoice_issue_block_text.dart';
 import '../invoice_original_document.dart';
@@ -59,12 +61,16 @@ Future<void> showInvoiceIssueSheet(
   // One instant for the whole sheet: the month ceiling and the default
   // period must not straddle a midnight (or month) tick.
   final now = ref.read(clockProvider).now();
-  final result = await showAppSheet<
+  // #4058 — a task: a sheet on a phone, a side task at the desk; what was
+  // chosen survives a resize, and leaving with changes asks.
+  final result = await showTask<
       ({String memberId, String period, bool detailed,
         String buyerReference, String purchaseOrder, String correctionReason})>(
-    context: context,
-    isScrollControlled: true,
+    context,
+    size: TaskSize.standard,
+    sessionKey: ('invoice-issue', workspace.id, replaces?.id),
     builder: (context) => _InvoiceForm(
+      canEmail: featureOn(ref.read(enabledFeatureKeysProvider), invoiceEmailKey, byDefault: false),
       countryCode: workspace.countryCode,
       association: ref.read(sellerIsAssociationProvider),
       now: now,
@@ -85,10 +91,10 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
         replacesId: replaces?.id,
+        kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
         correctionReason: correctionReason,
       ),
-      // Only preselect a member the dropdown actually offers — the wrong
-      // invoice may target a member who has left since.
+      // Only preselect a member the dropdown offers: the wrong invoice's member may have left.
       initialMemberId:
           members.any((m) => m.id == (memberId ?? replaces?.memberId))
               ? (memberId ?? replaces?.memberId)
@@ -100,8 +106,7 @@ Future<void> showInvoiceIssueSheet(
   );
   if (result == null || !context.mounted) return;
 
-  // The context is captured here: a workspace picked later never receives
-  // this command, nor the look for its answer.
+  // The context is captured here: a later workspace never receives this command or its look.
   await runInvoiceIssue(
     context,
     InvoiceIssuance(
@@ -114,6 +119,7 @@ Future<void> showInvoiceIssueSheet(
       memberId: result.memberId,
       period: result.period,
       replacesId: replaces?.id,
+      kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
       detailed: result.detailed,
       buyerReference: result.buyerReference,
       purchaseOrder: result.purchaseOrder,
@@ -131,6 +137,7 @@ Future<void> showInvoiceIssueSheet(
 /// no way to type a position — that is the point.
 class _InvoiceForm extends StatefulWidget {
   const _InvoiceForm({
+    required this.canEmail,
     required this.countryCode,
     required this.association,
     required this.l10n,
@@ -144,6 +151,9 @@ class _InvoiceForm extends StatefulWidget {
     this.initialDetailed = false,
     this.replacesNumber,
   });
+
+  /// #4058 — whether an issued invoice can then be sent by e-mail.
+  final bool canEmail;
 
   /// The workspace's country (its law's own correction reason codes).
   final String countryCode;
@@ -256,6 +266,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         (next.year == now.year && next.month > now.month)) {
       return;
     }
+    _changed();
     setState(() {
       _period = yearMonth(next.year, next.month);
       _preview = null;
@@ -330,12 +341,18 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           );
   }
 
+  /// #4058 — the button names the amount it issues, and is pressed only
+  /// on a preview that was read.
   Widget _submitButton(BuildContext context, List<InvoiceLine> lines) {
+    final preview = _preview;
+    final ready = preview != null && !_loading && !_previewFailed;
     return FilledButton(
           key: const ValueKey('invoice-submit'),
-          onPressed: !_readiness(lines).canIssue
+          onPressed: !ready || !_readiness(lines).canIssue
               ? null
-              : () => Navigator.of(context).pop((
+              : () {
+                  TaskSession.maybeOf(context)?.completed();
+                  Navigator.of(context).pop((
                     memberId: _memberId!,
                     period: _period,
                     detailed: _detailed,
@@ -344,10 +361,20 @@ class _InvoiceFormState extends State<_InvoiceForm> {
                     purchaseOrder:
                         _publicBuyer ? _purchaseOrder.text.trim() : '',
                     correctionReason: _correctionReason,
-                  )),
-          child: Text(widget.l10n.invoiceIssue),
+                  ));
+                },
+          child: Text(
+            ready
+                ? widget.l10n.invoiceIssueAmount(
+                    widget.currency.formatMinor(preview.totalCents),
+                  )
+                : widget.l10n.invoiceIssue,
+          ),
         );
   }
+
+  /// A chosen member or month is a change leaving asks about.
+  void _changed() => TaskSession.maybeOf(context)?.markChanged();
 
   @override
   Widget build(BuildContext context) {
@@ -386,6 +413,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
               ),
           ],
           onChanged: (value) {
+            _changed();
             setState(() {
               _memberId = value;
               _preview = null;
@@ -457,6 +485,15 @@ class _InvoiceFormState extends State<_InvoiceForm> {
           _missingBanner(_readiness(lines).block),
         const SizedBox(height: 4),
         _submitButton(context, lines),
+        // #4058 — what issuing means, said before it is done.
+        Padding(
+          padding: const EdgeInsets.only(top: 4),
+          child: Text(
+            widget.canEmail ? l10n.invoiceIssueKeptEmail : l10n.invoiceIssueKept,
+            key: const ValueKey('invoice-issue-original'),
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ),
       ],
     );
   }

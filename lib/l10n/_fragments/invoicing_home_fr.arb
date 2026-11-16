@@ -105,14 +105,6 @@
   "@invoicingTodoDrafts": {
     "description": "#3587 To do: drafts"
   },
-  "invoicingTodoReview": "Voir",
-  "@invoicingTodoReview": {
-    "description": "#3587 a To do entry's button"
-  },
-  "invoicingTodoFix": "Corriger",
-  "@invoicingTodoFix": {
-    "description": "#3587 a To do entry's button for a failure"
-  },
   "invoicingFilterOpen": "Ouvertes",
   "@invoicingFilterOpen": {
     "description": "#3587 list filter"
@@ -441,5 +433,10 @@
   "@invoicingColStatus": {
     "description": "#3587 table column"
   },
-  "invoicingUnassignedUnreadable": "L'argent reçu et non affecté n'est pas connu : cette version ne sait pas lire certaines écritures du compte, et personne n'est relancé tant qu'elles ne le sont pas. Mettez l'application à jour, puis rouvrez les factures."
+  "invoicingUnassignedUnreadable": "L'argent reçu et non affecté n'est pas connu : cette version ne sait pas lire certaines écritures du compte, et personne n'est relancé tant qu'elles ne le sont pas. Mettez l'application à jour, puis rouvrez les factures.",
+  "invoicingTodoReviewMonth": "Vérifier {month}",
+  "invoicingTodoShareReminders": "Partager les relances",
+  "invoicingTodoFixRejected": "Corriger les e-factures",
+  "invoicingCreditAmount": "avoir {amount}",
+  "invoicingSummaryToReview": "{count, plural, =0{rien à vérifier} one{1 à vérifier} other{{count} à vérifier}}"
 }

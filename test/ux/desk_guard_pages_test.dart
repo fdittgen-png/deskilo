@@ -4,7 +4,11 @@
 // builder at 1024, 1440 and 1920: /invoices, a records page, and the Me
 // overview. With SHEET=1 each writes its sheet at 390 and 1440, light and
 // dark, to build/sheets/<module>/ (docs/testing/desk-guards.md).
+import 'dart:io';
+
+import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/route_classes.dart';
+import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/floor_plan_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
@@ -54,6 +58,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -89,7 +94,31 @@ FakeOrganisationRepository _twoHouses() {
   );
 }
 
-Future<void> _open(WidgetTester tester, String path, Size size) async {
+/// #4076 -- who looks at the page: the fixture's own owner, or an
+/// administrator or a plain member of the same space (the identities of the
+/// router's golden, test/app/fixtures/route_outcomes.golden).
+enum _Persona {
+  owner(isAdmin: true, isOwner: true),
+  admin(isAdmin: true, isOwner: false),
+  member(isAdmin: false, isOwner: false);
+
+  const _Persona({required this.isAdmin, required this.isOwner});
+
+  final bool isAdmin;
+  final bool isOwner;
+
+  FakeWorkspaceRepository seen(FakeWorkspaceRepository repo) {
+    repo.myMember = repo.myMember.copyWith(isAdmin: isAdmin, isOwner: isOwner);
+    return repo;
+  }
+}
+
+Future<void> _open(
+  WidgetTester tester,
+  String path,
+  Size size, [
+  _Persona persona = _Persona.owner,
+]) async {
   final features = WorkspaceFeature.values.toSet();
   // A records page is guarded with records on it: one issued invoice.
   final money = FakeMoneyRepository();
@@ -308,7 +337,7 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
               details: 'a copy of what you hold',
             ),
           ),
-        workspace:
+        workspace: persona.seen(
             FakeWorkspaceRepository.withWorkspace(
                 featureFlags: {for (final f in features) f.name: true},
               )
@@ -347,6 +376,7 @@ Future<void> _open(WidgetTester tester, String path, Size size) async {
                     ),
                   ],
               }),
+        ),
       ),
       enabledFeaturesSyncProvider.overrideWithValue(features),
       if (records)
@@ -624,6 +654,143 @@ const _pages = [
 /// (the follow-up guards the rest, the most used modules first).
 const _guardedWorkspaceRoutes = 91;
 
+/// The widgets that draw a table row on the pages above, and the widgets a
+/// records page's table is (their widest decides the share).
+const List<Type> _rowTypes = [
+              KitTableLine,
+              CustomerRow,
+              RecordRow<Invoice>,
+              RecordsHeader<Invoice>,
+              RecordRow<Receivable>,
+              RecordsHeader<Receivable>,
+              RecordRow<ServiceItem>,
+              RecordsHeader<ServiceItem>,
+              RecordRow<GuestPassRecord>,
+              RecordsHeader<GuestPassRecord>,
+              RecordRow<Supplier>,
+              RecordsHeader<Supplier>,
+              RecordRow<_PurchaseRow>,
+              RecordsHeader<_PurchaseRow>,
+              RecordRow<Member>,
+              RecordsHeader<Member>,
+              RecordRow<FeeBand>,
+              RecordsHeader<FeeBand>,
+              RecordRow<BookExport>,
+              RecordsHeader<BookExport>,
+              RecordRow<FeatureManifestEntry>,
+              RecordsHeader<FeatureManifestEntry>,
+              RecordRow<ReportPage>,
+              RecordsHeader<ReportPage>,
+              RecordRow<RightsRequest>,
+              RecordsHeader<RightsRequest>,
+              RecordRow<RecordedPayment>,
+              RecordsHeader<RecordedPayment>,
+              RecordRow<LedgerEntry>,
+              RecordsHeader<LedgerEntry>,
+              RecordRow<UsageRecord>,
+              RecordsHeader<UsageRecord>,
+              RecordRow<PurchaseOrder>,
+              RecordsHeader<PurchaseOrder>,
+              RecordRow<PurchaseSummary>,
+              RecordsHeader<PurchaseSummary>,
+              RecordRow<OverviewHouse>,
+              RecordsHeader<OverviewHouse>,
+            ];
+
+const List<Type> _tableTypes = [
+              KitTableHeader,
+              CustomerHeader,
+              RecordsHeader<Invoice>,
+              RecordsHeader<Receivable>,
+              RecordsHeader<ServiceItem>,
+              RecordsHeader<GuestPassRecord>,
+              RecordsHeader<Supplier>,
+              RecordsHeader<_PurchaseRow>,
+              RecordsHeader<Member>,
+              RecordsHeader<FeeBand>,
+              RecordsHeader<BookExport>,
+              RecordsHeader<FeatureManifestEntry>,
+              RecordsHeader<ReportPage>,
+              RecordsHeader<RightsRequest>,
+              RecordsHeader<RecordedPayment>,
+              RecordsHeader<LedgerEntry>,
+              RecordsHeader<UsageRecord>,
+              RecordsHeader<PurchaseOrder>,
+              RecordsHeader<OverviewHouse>,
+              RecordsHeader<PurchaseSummary>,
+            ];
+
+/// The address the router holds after the page was opened.
+String _landed(WidgetTester tester) => ProviderScope.containerOf(
+  tester.element(find.byType(DeskiloApp)),
+).read(routerProvider).routerDelegate.currentConfiguration.uri.path;
+
+/// #4076 -- the personas the walk adds, and the two sizes it renders them at:
+/// one desk and one phone.
+const List<_Persona> _walkedPersonas = [_Persona.member, _Persona.admin];
+const List<Size> _personaSizes = [Size(1440, 900), Size(390, 844)];
+
+/// The router patterns [persona] may open with every feature on, read from the
+/// router's own golden: a page the router refuses a persona is not rendered
+/// as that persona (the golden holds the refusal).
+Set<String> _opensFor(_Persona persona) => {
+  for (final line in File(
+    'test/app/fixtures/route_outcomes.golden',
+  ).readAsLinesSync())
+    if (RegExp(r'^(\S+) on  (\S+) -> \(open\)$').firstMatch(line)
+        case final m? when m.group(1) == persona.name)
+      m.group(2)!,
+};
+
+/// #4076 -- what the persona walk found and has not fixed: `path|persona|
+/// width` -> the measurement. Each case is left out until its page is fixed
+/// (the list only shrinks); a test below holds that every key is a case of the
+/// walk, so a fixed page cannot leave a stale line.
+const Map<String, String> _personaFindings = {
+  '/invoices/inv-1|member|390':
+      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
+  '/invoices/inv-1|admin|390':
+      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
+  '/organisation/demo-organisation-atelier/overview|member|390':
+      'a control 334.0 x 47.0 dp (under 48)',
+  '/organisation/demo-organisation-atelier/overview|admin|390':
+      'a control 334.0 x 47.0 dp (under 48)',
+  '/members/managed|admin|390': 'a control 358.0 x 16.0 dp (under 48)',
+  '/members/member-2|admin|390': 'a control 165.8 x 22.0 dp (under 48)',
+  '/report-editor|admin|390':
+      'two controls 121.2 x 11.6 and 146.4 x 11.6 dp (under 48)',
+  '/money/cash|admin|1440':
+      'the router lands the administrator on /money/status, not on the page '
+          'its golden calls open',
+};
+
+/// What kind of page a persona meets: a member's /invoices is the member's own
+/// invoices (cards, no table of all invoices and no record beside one), so the
+/// desk's records rules do not describe it.
+PageKind _kindFor(_Persona persona, String path, PageKind kind) =>
+    persona == _Persona.member && path.startsWith('/invoices')
+    ? PageKind.document
+    : kind;
+
+/// The rules a page breaks on a phone: an overflow, more than one filled
+/// button, a control under 48 dp or without a name, and a title or line that
+/// carries information cut.
+Set<String> _phoneProblems(WidgetTester tester, List<String> details) {
+  for (final node in tappableNodes(tester)) {
+    if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
+      details.add(
+        'target ${node.size.width.toStringAsFixed(1)} x '
+        '${node.size.height.toStringAsFixed(1)}'
+        '${node.named ? '' : ' (unnamed)'}',
+      );
+    }
+  }
+  return {
+    ...guardProblems(tester, width: 390),
+    ...cutInformationProblems(details: details),
+  };
+}
+
 /// One pass sold, so the guest passes page is guarded with a record on it.
 class _OnePassSold implements GuestPassRepository {
   @override
@@ -699,68 +866,8 @@ void main() {
             tester,
             kind: kind,
             size: size,
-            rowTypes: const [
-              KitTableLine,
-              CustomerRow,
-              RecordRow<Invoice>,
-              RecordsHeader<Invoice>,
-              RecordRow<Receivable>,
-              RecordsHeader<Receivable>,
-              RecordRow<ServiceItem>,
-              RecordsHeader<ServiceItem>,
-              RecordRow<GuestPassRecord>,
-              RecordsHeader<GuestPassRecord>,
-              RecordRow<Supplier>,
-              RecordsHeader<Supplier>,
-              RecordRow<_PurchaseRow>,
-              RecordsHeader<_PurchaseRow>,
-              RecordRow<Member>,
-              RecordsHeader<Member>,
-              RecordRow<FeeBand>,
-              RecordsHeader<FeeBand>,
-              RecordRow<BookExport>,
-              RecordsHeader<BookExport>,
-              RecordRow<FeatureManifestEntry>,
-              RecordsHeader<FeatureManifestEntry>,
-              RecordRow<ReportPage>,
-              RecordsHeader<ReportPage>,
-              RecordRow<RightsRequest>,
-              RecordsHeader<RightsRequest>,
-              RecordRow<RecordedPayment>,
-              RecordsHeader<RecordedPayment>,
-              RecordRow<LedgerEntry>,
-              RecordsHeader<LedgerEntry>,
-              RecordRow<UsageRecord>,
-              RecordsHeader<UsageRecord>,
-              RecordRow<PurchaseOrder>,
-              RecordsHeader<PurchaseOrder>,
-              RecordRow<PurchaseSummary>,
-              RecordsHeader<PurchaseSummary>,
-              RecordRow<OverviewHouse>,
-              RecordsHeader<OverviewHouse>,
-            ],
-            tableTypes: const [
-              KitTableHeader,
-              CustomerHeader,
-              RecordsHeader<Invoice>,
-              RecordsHeader<Receivable>,
-              RecordsHeader<ServiceItem>,
-              RecordsHeader<GuestPassRecord>,
-              RecordsHeader<Supplier>,
-              RecordsHeader<_PurchaseRow>,
-              RecordsHeader<Member>,
-              RecordsHeader<FeeBand>,
-              RecordsHeader<BookExport>,
-              RecordsHeader<FeatureManifestEntry>,
-              RecordsHeader<ReportPage>,
-              RecordsHeader<RightsRequest>,
-              RecordsHeader<RecordedPayment>,
-              RecordsHeader<LedgerEntry>,
-              RecordsHeader<UsageRecord>,
-              RecordsHeader<PurchaseOrder>,
-              RecordsHeader<OverviewHouse>,
-              RecordsHeader<PurchaseSummary>,
-            ],
+            rowTypes: _rowTypes,
+            tableTypes: _tableTypes,
           ),
           isEmpty,
           reason: details.join('\n'),
@@ -801,4 +908,130 @@ void main() {
       }
     }
   }
+
+  // #4076 -- the same pages, seen by an administrator and by a plain member:
+  // every page the router opens for that persona is rendered as that persona
+  // at one desk and one phone size, under the same guards (the desk's at the
+  // desk, the phone's at the phone).
+  test('a persona walk has pages to render', () {
+    for (final persona in _walkedPersonas) {
+      final opens = _opensFor(persona);
+      final walked = {
+        for (final (path, _, _, _) in _pages)
+          if (opens.contains(matchRoute(path)?.pattern)) path,
+      };
+      expect(walked, isNotEmpty, reason: persona.name);
+    }
+  });
+
+  test('every finding left out of the persona walk is a case of it', () {
+    final cases = {
+      for (final persona in _walkedPersonas)
+        for (final size in _personaSizes)
+          for (final (path, _, _, _) in _pages)
+            if (_opensFor(persona).contains(matchRoute(path)?.pattern))
+              '$path|${persona.name}|${size.width.toInt()}',
+    };
+    expect(_personaFindings.keys.toSet().difference(cases), isEmpty);
+  });
+
+  for (final persona in _walkedPersonas) {
+    final opens = _opensFor(persona);
+    for (final size in _personaSizes) {
+      for (final (path, pageKind, _, _) in _pages) {
+        if (!opens.contains(matchRoute(path)?.pattern)) continue;
+        final kind = _kindFor(
+          persona,
+          path,
+          pageKind == PageKind.recordBesideTable &&
+                  !WindowClass.ofWidth(size.width).atLeast(WindowClass.large)
+              ? PageKind.document
+              : pageKind,
+        );
+        final finding =
+            _personaFindings['$path|${persona.name}|${size.width.toInt()}'];
+        testWidgets('$path as ${persona.name} at ${size.width.toInt()}: the '
+            'guards hold', skip: finding != null, (tester) async {
+          final semantics = tester.ensureSemantics();
+          await _open(tester, path, size, persona);
+          expect(
+            _landed(tester),
+            Uri.parse(path).path,
+            reason: 'the router opens it for the ${persona.name}',
+          );
+          final details = <String>[];
+          expect(
+            size.width >= 1024
+                ? deskGuardProblems(
+                    details: details,
+                    tester,
+                    kind: kind,
+                    size: size,
+                    rowTypes: _rowTypes,
+                    tableTypes: _tableTypes,
+                  )
+                : _phoneProblems(tester, details),
+            isEmpty,
+            reason: details.join('\n'),
+          );
+          semantics.dispose();
+        });
+      }
+    }
+  }
+
+  // #4076 -- each walk fails on a planted fault.
+  testWidgets('the persona walk fails on a page the persona is refused', (
+    tester,
+  ) async {
+    // The router sends a plain member away from the members' table: the
+    // landing check of the walk would name it.
+    await _open(tester, '/members', const Size(1440, 900), _Persona.member);
+    expect(_landed(tester), isNot('/members'));
+    expect(_opensFor(_Persona.member), isNot(contains('/members')));
+    expect(_opensFor(_Persona.admin), contains('/members'));
+  });
+
+  testWidgets('the phone guard fails on a planted overflow, a cut line and '
+      'a small unnamed target', (tester) async {
+    final semantics = tester.ensureSemantics();
+    tester.view
+      ..physicalSize = const Size(390, 844)
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: const Text(
+              'A title that is far too long for the bar of a phone to hold',
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+          body: Column(
+            children: [
+              const Row(
+                children: [
+                  SizedBox(width: 300, child: Text('left')),
+                  SizedBox(width: 300, child: Text('right')),
+                ],
+              ),
+              GestureDetector(
+                onTap: () {},
+                child: const SizedBox(width: 20, height: 20),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+    final details = <String>[];
+    final problems = _phoneProblems(tester, details);
+    expect(problems, contains('overflow or exception'));
+    expect(problems, contains('information cut'));
+    expect(problems, contains('unnamed control'));
+    expect(problems, contains('target under 48 dp'));
+    semantics.dispose();
+  });
 }

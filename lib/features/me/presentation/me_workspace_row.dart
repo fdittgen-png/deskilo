@@ -127,7 +127,14 @@ class MeWorkspaceRow extends StatelessWidget {
               ),
               if (environmentHint case final hint?) Padding(
                 padding: const EdgeInsets.only(top: AppSpacing.xs, right: AppSpacing.sm),
-                child: Text(hint, style: theme.textTheme.bodySmall),
+                // Two lines are always reserved: a short hint and a long one
+                // leave the row the same height (#4071).
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: _lines(context, theme.textTheme.bodySmall, 2),
+                  ),
+                  child: Text(hint, maxLines: 2, overflow: TextOverflow.ellipsis, style: theme.textTheme.bodySmall),
+                ),
               ),
             ],
           ),
@@ -135,6 +142,13 @@ class MeWorkspaceRow extends StatelessWidget {
       ),
     );
   }
+
+  static double _lines(BuildContext context, TextStyle? style, int lines) =>
+      (MediaQuery.textScalerOf(context).scale(
+                (style?.fontSize ?? 12) * (style?.height ?? 1.4),
+              ) *
+              lines)
+          .ceilToDouble();
 
   Widget _withBand(Widget card) {
     final band = brand;

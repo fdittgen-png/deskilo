@@ -24,6 +24,7 @@ import '../../../../core/time/clock.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/list_detail_scaffold.dart';
 import '../../../../core/ui/kit/records_table.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../domain/purchase.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/purchase_providers.dart';
@@ -37,9 +38,41 @@ const String _purchasesPath = '/money/purchases';
 /// Where a document opens: `/money/purchases/doc/<id>`.
 const String purchaseDocPath = '/money/purchases/doc';
 
-/// One row: the document, its supplier's name and what is still open of
-/// it (null while the payables are not read).
+/// One row: the document, its supplier's name (empty when it has none or the
+/// name is not known) and what is still open of it (null while the payables
+/// are not read).
 typedef _Row = ({PurchaseSummary doc, String supplier, int? open});
+
+/// How the suppliers' list was read, which says why a name may be missing
+/// (#4067).
+enum _SuppliersRead { loading, read, failed }
+
+/// The supplier of a row: its name, or one muted line that says why there is
+/// none; never a blank.
+Widget _supplierText(
+  BuildContext context,
+  AppLocalizations l,
+  _Row r,
+  _SuppliersRead read,
+) {
+  final String? line = r.supplier.isNotEmpty
+      ? null
+      : r.doc.supplierId == null
+      ? l.scheduleNoSupplier
+      : switch (read) {
+          _SuppliersRead.loading => '',
+          _SuppliersRead.read || _SuppliersRead.failed =>
+            l.purchasesSupplierNotRead,
+        };
+  final theme = Theme.of(context);
+  return Text(
+    line ?? r.supplier,
+    overflow: TextOverflow.ellipsis,
+    style: line == null || line.isEmpty
+        ? null
+        : TextStyle(color: theme.colorScheme.onSurfaceVariant),
+  );
+}
 
 /// The purchases table, with the open document beside it.
 class PurchasesDesk extends ConsumerWidget {
@@ -85,9 +118,10 @@ class PurchasesDesk extends ConsumerWidget {
     final payables = ref
         .watch(payablesProvider(workspaceId))
         .value; // empty-ok: an unread payable leaves the open column empty
+    final supplierRead = ref.watch(suppliersProvider(workspaceId));
     final suppliers = {
       for (final s
-          in ref.watch(suppliersProvider(workspaceId)).value ?? // empty-ok: a name is a label; an unread one is left blank
+          in supplierRead.value ?? // empty-ok: an unread supplier is said as "not read" on its row
               const <Supplier>[])
         s.id: s.name,
     };
@@ -124,6 +158,11 @@ class PurchasesDesk extends ConsumerWidget {
         Expanded(
           child: _PurchasesTable(
             rows: rows,
+            suppliersRead: switch (supplierRead) {
+              AsyncData() => _SuppliersRead.read,
+              AsyncError() => _SuppliersRead.failed,
+              _ => _SuppliersRead.loading,
+            },
             state: switch (purchases) {
               AsyncData() => RecordsState.ready,
               AsyncError() => RecordsState.failed,
@@ -144,6 +183,7 @@ class PurchasesDesk extends ConsumerWidget {
 class _PurchasesTable extends StatelessWidget {
   const _PurchasesTable({
     required this.rows,
+    required this.suppliersRead,
     required this.state,
     required this.onRetry,
     required this.today,
@@ -151,6 +191,7 @@ class _PurchasesTable extends StatelessWidget {
   });
 
   final List<_Row> rows;
+  final _SuppliersRead suppliersRead;
   final RecordsState state;
   final VoidCallback onRetry;
 
@@ -214,7 +255,7 @@ class _PurchasesTable extends StatelessWidget {
           flex: 4,
           hideable: false,
           sortKey: (r) => r.supplier.toLowerCase(),
-          cell: (_, r) => Text(r.supplier, overflow: TextOverflow.ellipsis),
+          cell: (context, r) => _supplierText(context, l, r, suppliersRead),
         ),
         RecordColumn(
           id: 'category',
@@ -285,7 +326,7 @@ class _PurchasesTable extends StatelessWidget {
         ),
       ],
       cardBuilder: (context, r) => ListTile(
-        title: Text(r.supplier, overflow: TextOverflow.ellipsis),
+        title: _supplierText(context, l, r, suppliersRead),
         subtitle: Text(r.doc.category),
         trailing: Text(figure(r, r.doc.grossCents)),
       ),

@@ -193,5 +193,10 @@
   "purchaseReceiptSubmit": "Presentar el justificante",
   "purchaseReceiptAmount": "Introduzca un importe positivo en cada línea.",
   "purchaseReceiptDeductible": "La parte deducible de cada línea gravada está entre 0 y 100 %.",
-  "purchaseReceiptSubmitted": "Justificante presentado: espera su aprobación."
+  "purchaseReceiptSubmitted": "Justificante presentado: espera su aprobación.",
+  "purchaseBillSectionSupplier": "Proveedor y documento",
+  "purchaseBillSectionAmount": "Importe e impuesto",
+  "purchaseBillSectionAccounting": "Contabilidad",
+  "purchaseBillSectionDescription": "Descripción y artículo",
+  "purchaseBillOptional": "{label} (opcional)"
 }

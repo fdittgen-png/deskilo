@@ -249,6 +249,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Needs review'), findsOneWidget, reason: 'no one has to choose to submit');
     await tester.enterText(find.byKey(const ValueKey('purchase-gross')), '1440');
+    // #4065 — what it is for is under Accounting, below the amounts.
+    await tester.ensureVisible(find.byKey(const ValueKey('purchase-purpose')));
     await tester.tap(find.byKey(const ValueKey('purchase-purpose')));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Long-lasting equipment').last);

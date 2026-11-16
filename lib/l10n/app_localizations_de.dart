@@ -340,9 +340,6 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Buchungen haben sich geändert oder sind für einen Export zu umfangreich. Laden Sie das Register neu oder wählen Sie einen kürzeren Zeitraum und versuchen Sie es erneut.';
 
   @override
-  String get accountingStatusAllBooks => 'Alles in der Buchhaltung';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure oder mehr';
   }
@@ -354,10 +351,22 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Bücher abgeschlossen bis';
 
   @override
+  String get accountingStatusDue => 'Zu erledigen';
+
+  @override
   String get accountingStatusLastExport => 'Letzter Export';
 
   @override
   String get accountingStatusNotRead => 'Konnte nicht gelesen werden';
+
+  @override
+  String get accountingStatusReference => 'Referenz';
+
+  @override
+  String get accountingStatusToFile => 'Einzureichen';
+
+  @override
+  String get accountingStatusToMatch => 'Abzugleichen';
 
   @override
   String get accountingStatusVatToFile => 'Abzugebende Umsatzsteuererklärung';
@@ -5894,6 +5903,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDayEmpty => 'Nichts an diesem Tag.';
 
   @override
+  String calendarDecisionsEntry(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Entscheidungen ($count)',
+      one: 'Entscheidungen ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get calendarDeskAll => 'Alle';
 
   @override
@@ -5921,10 +5941,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDeskExport => 'Exportieren';
 
   @override
+  String calendarDeskFilterChip(String filter, String value) {
+    return '$filter: $value';
+  }
+
+  @override
   String get calendarDeskFilterKind => 'Art des Platzes';
 
   @override
   String get calendarDeskFilterLevel => 'Ebene';
+
+  @override
+  String calendarDeskFiltersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filter · $count',
+      one: 'Filter · $count',
+      zero: 'Filter',
+    );
+    return '$_temp0';
+  }
 
   @override
   String calendarDeskFreeDay(String place, String day) {
@@ -8354,7 +8391,19 @@ class AppLocalizationsDe extends AppLocalizations {
   String get documentsCategoryStatutes => 'Satzung & Rechtliches';
 
   @override
+  String get documentsColAdded => 'Hinzugefügt';
+
+  @override
+  String get documentsColAudience => 'Sichtbar für';
+
+  @override
+  String get documentsColGroup => 'Gruppe';
+
+  @override
   String get documentsDelete => 'Dokument entfernen?';
+
+  @override
+  String get documentsEditAudience => 'Sichtbarkeit ändern';
 
   @override
   String get documentsEmpty =>
@@ -15408,6 +15457,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceCopyWithPaymentStatus => 'Kopie mit Zahlungsstatus';
 
   @override
+  String get invoiceCorrectionKeepsKind =>
+      'Eine Korrektur hat die Art der Rechnung, die sie ersetzt.';
+
+  @override
   String get invoiceCorrectionReason => 'Grund der Berichtigung';
 
   @override
@@ -15811,11 +15864,24 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String invoiceIssueAmount(String amount) {
+    return 'Rechnung ausstellen · $amount';
+  }
+
+  @override
   String get invoiceIssueCheckAgain => 'Erneut prüfen';
 
   @override
   String get invoiceIssueDeclined =>
       'Die Freigabe wurde abgelehnt oder ist abgelaufen. Es wurde keine Rechnung ausgestellt.';
+
+  @override
+  String get invoiceIssueKept =>
+      'Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie teilen oder laden sie von der Rechnung aus herunter.';
+
+  @override
+  String get invoiceIssueKeptEmail =>
+      'Die ausgestellte Rechnung wird als Original aufbewahrt, das nicht mehr geändert werden kann; Sie senden sie per E-Mail, teilen oder laden sie von der Rechnung aus herunter.';
 
   @override
   String get invoiceIssueNotFoundYet =>
@@ -17068,6 +17134,11 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String invoicingCreditAmount(String amount) {
+    return 'Guthaben $amount';
+  }
+
+  @override
   String invoicingCustomerCount(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -17332,6 +17403,18 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingStatusToMatch => 'Zahlung eingegangen · zuzuordnen';
 
   @override
+  String invoicingSummaryToReview(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count zu prüfen',
+      one: '1 zu prüfen',
+      zero: 'nichts zu prüfen',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get invoicingTodo => 'Zu tun';
 
   @override
@@ -17341,7 +17424,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingTodoDrafts => 'Entwürfe ausstellen';
 
   @override
-  String get invoicingTodoFix => 'Beheben';
+  String get invoicingTodoFixRejected => 'E-Rechnungen beheben';
 
   @override
   String get invoicingTodoKeep => 'Aufbewahren';
@@ -17383,7 +17466,12 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoicingTodoReminders => 'Mahnungen von Hand teilen';
 
   @override
-  String get invoicingTodoReview => 'Ansehen';
+  String invoicingTodoReviewMonth(String month) {
+    return '$month prüfen';
+  }
+
+  @override
+  String get invoicingTodoShareReminders => 'Mahnungen teilen';
 
   @override
   String get invoicingTools => 'Werkzeuge der Rechnungsstellung';
@@ -25551,11 +25639,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseBillNoOrder => 'Keine Bestellung';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (optional)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Bestellung';
 
   @override
   String get purchaseBillOrderHint =>
       'Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Buchhaltung';
+
+  @override
+  String get purchaseBillSectionAmount => 'Betrag und Steuer';
+
+  @override
+  String get purchaseBillSectionDescription => 'Beschreibung und Artikel';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Lieferant und Beleg';
 
   @override
   String get purchaseEntryAdd => 'Einkauf / Ausgabe hinzufügen';
@@ -26266,6 +26371,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get purchasesSupplier => 'Lieferant';
+
+  @override
+  String get purchasesSupplierNotRead => 'Nicht gelesen';
 
   @override
   String get purchasesTabDocuments => 'Belege';
@@ -30748,6 +30856,14 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupAdvancedSettings => 'Erweiterte Einstellungen';
 
   @override
+  String setupAllSteps(int done, int total) {
+    return 'Alle Schritte: $done von $total';
+  }
+
+  @override
+  String get setupAllStepsNote => 'Mit den Schritten für später';
+
+  @override
   String get setupAnswerUnknown => 'Weiß ich noch nicht';
 
   @override
@@ -31031,6 +31147,17 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get setupGoalChange => 'Ändern';
+
+  @override
+  String setupGoalChecks(int ready, int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Dieses Ziel: $ready von $required Prüfungen erledigt',
+      one: 'Dieses Ziel: $ready von $required Prüfung erledigt',
+    );
+    return '$_temp0';
+  }
 
   @override
   String setupGoalLine(String milestone) {
@@ -32588,6 +32715,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get setupStepOpenScreen => 'Öffnen';
 
   @override
+  String setupStepPosition(int number, int total, String name) {
+    return 'Schritt $number von $total · $name';
+  }
+
+  @override
   String get setupStepPreviewTitle => 'Was Ihre Mitglieder sehen';
 
   @override
@@ -33013,7 +33145,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get spaceYoursNow => 'Von Ihnen für dieses Zeitfenster reserviert.';
 
   @override
+  String get statementDeskBalanceCredit =>
+      'Guthaben: dieser Betrag steht Ihnen zu';
+
+  @override
+  String get statementDeskBalanceOwed =>
+      'Geschuldet: Sie schulden diesen Betrag';
+
+  @override
+  String get statementDeskBalanceSettled => 'Ausgeglichen: nichts ist offen';
+
+  @override
   String get statementDeskColLine => 'Posten';
+
+  @override
+  String get statementDeskNoMovements =>
+      'Keine weiteren Bewegungen in diesem Monat: die Zahlen oben sind die ganze Abrechnung.';
+
+  @override
+  String statementDeskUsed(int used, int allowance) {
+    String _temp0 = intl.Intl.pluralLogic(
+      allowance,
+      locale: localeName,
+      other: '$allowance Halbtagen',
+      one: '1 Halbtag',
+    );
+    return '$used von $_temp0';
+  }
 
   @override
   String get statusAwaiting => 'Offen';
