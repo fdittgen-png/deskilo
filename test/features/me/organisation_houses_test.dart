@@ -4,6 +4,7 @@
 // under the organisation's name, the head first and then by country, and a
 // business outside the organisation stays where the person put it; inside a
 // house, the chip lists the organisation's other houses and nothing else.
+import 'package:deskilo/app/shell/desk_rail.dart';
 import 'package:deskilo/app/shell/house_switch.dart';
 import 'package:deskilo/app/shell/space_chip.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
@@ -322,6 +323,25 @@ void main() {
       expect(find.byKey(const ValueKey('space-chip-houses')), findsNothing);
     });
 
+    // #4129 -- the mark says the title opens the houses, and only then.
+    testWidgets('the chip shows its mark inside a house, 48 dp', (tester) async {
+      await pumpChip(tester, _london);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('space-chip-mark')), findsOneWidget);
+      expect(
+        tester.getSize(find.byKey(const ValueKey('space-chip-houses'))).height,
+        greaterThanOrEqualTo(48),
+      );
+    });
+
+    testWidgets('a business outside an organisation shows no mark', (
+      tester,
+    ) async {
+      await pumpChip(tester, _berlin);
+      await tester.pumpAndSettle();
+      expect(find.byKey(const ValueKey('space-chip-mark')), findsNothing);
+    });
+
     testWidgets('the sheet answers the house picked', (tester) async {
       Workspace? picked;
       await pumpApp(
@@ -342,4 +362,65 @@ void main() {
       expect(picked?.id, 'zh');
     });
   });
+
+  // #4129 -- the rail names a house in whole words, in every language, and
+  // announces it as `Name — Country · CUR`.
+  for (final code in ['en', 'fr', 'de', 'es', 'it']) {
+    testWidgets('the rail: no house label is cut inside a word ($code)', (
+      tester,
+    ) async {
+      final semantics = tester.ensureSemantics();
+      final long = _space(
+        'hud',
+        'Hudson Co operative Cooperativa Internationale',
+        'US',
+        'USD',
+      );
+      await pumpApp(
+        tester,
+        SizedBox(
+          width: 80,
+          child: DeskRail(
+            destinations: const [],
+            groups: const [],
+            account: const [],
+            path: '/',
+            badgeOf: (_) => 0,
+            onBackToMe: () {},
+            current: long,
+            houses: [_zurich, _head],
+          ),
+        ),
+        locale: Locale(code),
+        size: const Size(400, 900),
+      );
+      await tester.pumpAndSettle();
+      final words = long.name.split(' ');
+      final lines = [
+        for (final i in [0, 1])
+          ?tester
+              .widgetList<Text>(
+                find.descendant(
+                  of: find.byKey(const ValueKey('rail-house-hud')),
+                  matching: find.byKey(ValueKey('rail-house-line-$i')),
+                ),
+              )
+              .firstOrNull,
+      ];
+      expect(lines, isNotEmpty);
+      for (final line in lines) {
+        expect(line.softWrap, isFalse);
+        expect(line.maxLines, 1);
+        for (final word in line.data!.replaceAll('…', '').split(' ')) {
+          if (word.isNotEmpty) expect(words, contains(word));
+        }
+      }
+      final node = tester.getSemantics(
+        find.byKey(const ValueKey('rail-house-hud')),
+      );
+      expect(node.label, contains(' — '));
+      expect(node.label, contains('USD'));
+      semantics.dispose();
+    });
+  }
 }

@@ -17,6 +17,7 @@ import '../../../../core/i18n/country_names.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/adaptive/task_surface.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
@@ -69,11 +70,12 @@ class OrganisationSheet extends ConsumerWidget {
 
   /// Opens the sheet of [workspace]'s organisation.
   /// The id of a house made from it, if one was.
+  /// #4129 -- a task: a sheet on a phone, a side task at the desk.
   static Future<String?> open(BuildContext context, Workspace workspace) =>
-      showAppSheet<String>(
-        context: context,
-        showDragHandle: true,
-        isScrollControlled: true,
+      showTask<String>(
+        context,
+        size: TaskSize.standard,
+        sessionKey: ('organisation', workspace.id),
         builder: (_) => OrganisationSheet(workspace: workspace),
       );
 

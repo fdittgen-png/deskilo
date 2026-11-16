@@ -12,6 +12,7 @@ import '../../core/theme/app_spacing.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
+import 'house_switch.dart';
 import 'shell_drawer_entries.dart';
 import 'shell_nav_groups.dart';
 
@@ -24,6 +25,7 @@ class DeskRail extends StatelessWidget {
     required this.path,
     required this.badgeOf,
     required this.onBackToMe,
+    this.current,
     this.houses = const [],
     this.onHouse,
     super.key,
@@ -36,11 +38,33 @@ class DeskRail extends StatelessWidget {
   final int Function(DrawerEntry) badgeOf;
   final VoidCallback onBackToMe;
 
+  /// #4129 -- the business one is in, listed first among the houses where
+  /// there are other houses, and marked as the current one.
+  final Workspace? current;
+
   /// #4006 — the other houses of the organisation, one tap away.
   final List<Workspace> houses;
   final ValueChanged<Workspace>? onHouse;
 
   bool _current(DrawerEntry e) => entryIsCurrent(e, path);
+
+  /// A house: its name in whole words, announced and explained as
+  /// `Name — Country · CUR`.
+  Widget _houseItem(
+    BuildContext context,
+    Workspace house, {
+    bool selected = false,
+  }) {
+    final full = houseLabel(context.l10n, house);
+    return _RailItem(
+      key: ValueKey('rail-house-${house.id}'),
+      icon: WorkspaceAvatar(workspace: house, radius: 12),
+      label: full,
+      shown: _WholeWords(text: house.name),
+      selected: selected,
+      onTap: onHouse == null || selected ? null : () => onHouse!(house),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,13 +90,9 @@ class DeskRail extends StatelessWidget {
               label: context.l10n.spaceBackToMe,
               onTap: onBackToMe,
             ),
-            for (final house in houses)
-              _RailItem(
-                key: ValueKey('rail-house-${house.id}'),
-                icon: WorkspaceAvatar(workspace: house, radius: 12),
-                label: house.name,
-                onTap: onHouse == null ? null : () => onHouse!(house),
-              ),
+            if (houses.isNotEmpty && current != null)
+              _houseItem(context, current!, selected: true),
+            for (final house in houses) _houseItem(context, house),
             const Divider(),
             for (final e in destinations) item(e),
             const Divider(),
@@ -93,6 +113,7 @@ class _RailItem extends StatelessWidget {
     required this.icon,
     required this.label,
     required this.onTap,
+    this.shown,
     this.selected = false,
     this.badge = 0,
     super.key,
@@ -100,6 +121,10 @@ class _RailItem extends StatelessWidget {
 
   final Widget icon;
   final String label;
+
+  /// What is drawn under the icon when it is not [label] as plain text; the
+  /// tooltip and the assistive name stay [label] (#4129).
+  final Widget? shown;
   final VoidCallback? onTap;
   final bool selected;
   final int badge;
@@ -108,7 +133,7 @@ class _RailItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    return Semantics(
+    final item = Semantics(
       selected: selected,
       button: true,
       label: label,
@@ -133,17 +158,88 @@ class _RailItem extends StatelessWidget {
                       : icon,
                 ),
               ),
-              Text(
-                label,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.labelSmall,
-              ),
+              shown ??
+                  Text(
+                    label,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: theme.textTheme.labelSmall,
+                  ),
             ],
           ),
         ),
       ),
+    );
+    return shown == null
+        ? item
+        : Tooltip(message: label, excludeFromSemantics: true, child: item);
+  }
+}
+
+/// #4129 -- [text] in at most two lines of whole words: a word that does not
+/// fit its line is scaled down, never cut, and what does not fit two lines is
+/// left out with an ellipsis after the last whole word. The full name is the
+/// item's tooltip and its name to assistive technology.
+class _WholeWords extends StatelessWidget {
+  const _WholeWords({required this.text});
+
+  static const int lines = 2;
+  static const String ellipsis = '…';
+
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = Theme.of(context).textTheme.labelSmall;
+    final scaler = MediaQuery.textScalerOf(context);
+    final direction = Directionality.of(context);
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        double width(String line) {
+          final painter = TextPainter(
+            text: TextSpan(text: line, style: style),
+            textDirection: direction,
+            textScaler: scaler,
+          )..layout();
+          final w = painter.width;
+          painter.dispose();
+          return w;
+        }
+
+        final words = text.split(RegExp(r'\s+')).where((w) => w.isNotEmpty);
+        final rows = <String>[];
+        var rest = words.toList();
+        while (rest.isNotEmpty && rows.length < lines) {
+          var row = rest.first;
+          var used = 1;
+          while (used < rest.length &&
+              width('$row ${rest[used]}') <= constraints.maxWidth) {
+            row = '$row ${rest[used]}';
+            used++;
+          }
+          rest = rest.sublist(used);
+          rows.add(row);
+        }
+        if (rest.isNotEmpty) rows[rows.length - 1] = '${rows.last}$ellipsis';
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            for (final (i, row) in rows.indexed)
+              FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  row,
+                  key: ValueKey('rail-house-line-$i'),
+                  maxLines: 1,
+                  softWrap: false,
+                  textAlign: TextAlign.center,
+                  style: style,
+                ),
+              ),
+          ],
+        );
+      },
     );
   }
 }

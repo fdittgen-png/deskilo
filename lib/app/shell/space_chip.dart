@@ -216,9 +216,21 @@ Widget _announced(
           constraints: const BoxConstraints(
             minHeight: kMinInteractiveDimension,
           ),
-          child: Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: chip,
+          // #4129 -- the mark that says the title opens the houses.
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: chip,
+                ),
+              ),
+              const Icon(
+                Icons.arrow_drop_down,
+                key: ValueKey('space-chip-mark'),
+              ),
+            ],
           ),
         ),
       ),
