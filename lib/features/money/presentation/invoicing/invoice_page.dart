@@ -157,7 +157,10 @@ class InvoicePage extends ConsumerWidget {
       key: ValueKey('invoice-page-$invoiceId'),
       appBar: AppBar(
         automaticallyImplyLeading: onClose == null,
-        title: PageTitle(l.invoicePageTitle(invoice.number)),
+        title: PageTitle(
+          l.invoicePageTitle(invoice.number),
+          whenCut: invoice.number,
+        ),
         actions: [
           InvoiceMoreMenu(
             invoice: invoice,

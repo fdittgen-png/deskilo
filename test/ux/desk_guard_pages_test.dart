@@ -747,10 +747,6 @@ Set<String> _opensFor(_Persona persona) => {
 /// (the list only shrinks); a test below holds that every key is a case of the
 /// walk, so a fixed page cannot leave a stale line.
 const Map<String, String> _personaFindings = {
-  '/invoices/inv-1|member|390':
-      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
-  '/invoices/inv-1|admin|390':
-      'the bar title "Invoice INV-2026-0001" is cut: 212.8 px wide',
   '/organisation/demo-organisation-atelier/overview|member|390':
       'a control 334.0 x 47.0 dp (under 48)',
   '/organisation/demo-organisation-atelier/overview|admin|390':
