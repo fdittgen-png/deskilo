@@ -3803,7 +3803,7 @@ routine public.window_outside_working_hours(p_local_start timestamp without time
 routine public.withdraw_instance_delegation(p_user uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c6fe02abd94f
 routine public.withdraw_mcp_eligibility() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:60fa13bb036f
 routine public.withdraw_payment_claim(p_intent uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:8716f9848a45
-routine public.withdraw_payment_declaration(p_event uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:0a84e44aabbc
+routine public.withdraw_payment_declaration(p_event uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:597a44f2204b
 routine public.withdraw_tax_reference(p_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d0f9881bbbcd
 routine public.work_hours_provenance(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:55b4b4acd88c
 routine public.workspace_application_thread(p_event_id uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:526d8c191121

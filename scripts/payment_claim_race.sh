@@ -26,9 +26,9 @@
 #   (h) #4140: the business confirming a declared payment held open; the
 #       member taking it back waits on the event's lock, then is refused as
 #       already decided (DKC13): the payment stands, credited;
-#   (i) the reverse: the member taking it back held open; the business's
-#       decision waits, then is refused as already decided: withdrawn,
-#       nothing credited, its invoice free.
+#   (i) the reverse, which proves the decision's lock: the member taking it
+#       back held open; the business's decision waits, then is refused as
+#       already decided: withdrawn, nothing credited, its invoice free.
 # Afterwards each claimed invoice is in exactly one open claim, R in none. Fresh ids per run;
 # invoices cannot be deleted (invoices_no_mutation, 0183), so cleanup only
 # removes what it can and a failure is a warning.
@@ -41,7 +41,6 @@ cleanup() {
   local original_status=$?
   psql "$url" -X -q -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL ||
 delete from public.payment_intents where workspace_id = '$ws';
-delete from public.ledger_entries where workspace_id = '$ws';
 delete from public.events where workspace_id = '$ws';
 SQL
     echo "::warning::payment claim race fixture cleanup failed" >&2

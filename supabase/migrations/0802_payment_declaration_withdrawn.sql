@@ -8,18 +8,22 @@
 -- 0797) is ended as `withdrawn`, which closes its claim and frees the
 -- invoices it names (open_claim_invoices reads only a pending declaration),
 -- and the business reads in its events that it was withdrawn and by whom
--- (payload `withdrawn_by`, the member who did it). The member who owes it,
--- or whoever issues the business's invoices for them, may withdraw it; a
--- declaration already confirmed, refused, expired or withdrawn is refused
--- with its own code (DKC13); another member's, or an unknown one, gets the
--- same answer as for a payment (DKC08).
+-- (payload `withdrawn_by`, the member who did it). A withdrawal is the
+-- declarer's own act: the member the declaration is for, or the member who
+-- recorded it (an administrator who declared for someone takes their own
+-- mistake back). Whoever else wants a declaration ended refuses it through
+-- the decision, under the business's validation policy. A declaration
+-- already confirmed, refused, expired or withdrawn is refused with its own
+-- code (DKC13); anyone else's, an unknown one, or an event that is not a
+-- payment gets the same answer as for a payment (DKC08).
 --
 -- The business deciding while the member withdraws ends in exactly one of
 -- the two: both lock the event before they read its status, so whichever
 -- comes second meets a decided event (respond_to_event: DKD01; the
 -- withdrawal: DKC13). respond_to_event read the event without a lock; it now
--- takes the row's lock first (scripts/payment_claim_race.sh, cases h and i).
--- The withdrawal checks the caller's right before it locks anything.
+-- takes the row's lock first (scripts/payment_claim_race.sh, case i: the
+-- decision waits for a withdrawal held open). The withdrawal checks the
+-- caller's right before it locks anything.
 
 -- ── the status ───────────────────────────────────────────────────────────
 do $constraint$
@@ -31,10 +35,13 @@ begin
   if v_def is null or position('CHECK (' in v_def) <> 1 then
     raise exception 'events_status_check anchor missing' using errcode = 'P0001';
   end if;
+  -- Added NOT VALID, then validated: the table is not held under the full
+  -- lock while every event is checked.
   if position('withdrawn' in v_def) = 0 then
     alter table public.events drop constraint events_status_check;
     execute 'alter table public.events add constraint events_status_check '
-      || replace(v_def, 'CHECK (', 'CHECK (status = ''withdrawn''::text OR ');
+      || replace(v_def, 'CHECK (', 'CHECK (status = ''withdrawn''::text OR ') || ' NOT VALID';
+    alter table public.events validate constraint events_status_check;
   end if;
 end;
 $constraint$;
@@ -68,8 +75,7 @@ begin
   select * into v_actor from public.members
    where workspace_id = v_event.workspace_id and user_id = auth.uid() and status = 'active';
   if v_event.id is null or v_actor.id is null
-     or not (v_actor.id = v_event.subject_member_id
-             or public.has_permission(v_event.workspace_id, 'issueInvoices')) then
+     or v_actor.id not in (v_event.subject_member_id, v_event.actor_member_id) then
     raise exception 'not one of your payments' using errcode = 'DKC08';
   end if;
   -- Then the lock, as the decision takes it, and the event read again under
