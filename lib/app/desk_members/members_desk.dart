@@ -161,6 +161,7 @@ class _MembersTable extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(workspaceMembersProvider),
       keyOf: (m) => m.id,
       searchText: (m) => '${view.names[m.id] ?? ''} ${view.emails[m.id] ?? ''}',

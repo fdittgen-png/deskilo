@@ -369,6 +369,7 @@ class UsageTable extends ConsumerWidget {
         AsyncData() => RecordsState.ready,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(usageReadProvider(period)),
       keyOf: (r) => r.id,
       searchText: (r) => '${r.spaceLabel} ${whose(r)}',

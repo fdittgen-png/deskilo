@@ -98,6 +98,7 @@ class _PlansTable extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(feeBandsProvider),
       keyOf: (b) => b.id,
       searchText: (b) => _shares(context, b),

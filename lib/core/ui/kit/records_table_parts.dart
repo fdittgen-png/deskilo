@@ -11,6 +11,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../cache/read_failure.dart';
 import '../../l10n/context_l10n.dart';
 import '../../shortcuts/app_shortcuts.dart';
 import '../../theme/app_spacing.dart';
@@ -460,19 +461,32 @@ class _SelectShown extends Intent {
 }
 
 /// What a table says when its rows could not be read, with the way to retry.
+/// #4097 — a refusal (the server's refusal, told by its type and code, not
+/// by its message) says that the person has no access, in the words of the
+/// shared read state; "Try again" stays, as on every read (#3061): the
+/// access may just have been given.
 class RecordsFailed extends StatelessWidget {
-  const RecordsFailed({required this.onRetry, super.key});
+  const RecordsFailed({required this.onRetry, this.error, super.key});
 
   final VoidCallback? onRetry;
+
+  /// Why the read failed; null says the plain failure.
+  final Object? error;
 
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
+    final denied =
+        error != null && classifyReadFailure(error!) == ReadFailure.denied;
     return Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(l10n.recordsFailed, key: const ValueKey('records-failed')),
+          Text(
+            denied ? l10n.readStateDenied : l10n.recordsFailed,
+            key: ValueKey(denied ? 'records-denied' : 'records-failed'),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: AppSpacing.sm),
           if (onRetry case final retry?)
             FilledButton(

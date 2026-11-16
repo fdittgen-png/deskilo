@@ -168,6 +168,7 @@ class PurchasesDesk extends ConsumerWidget {
               AsyncError() => RecordsState.failed,
               _ => RecordsState.loading,
             },
+            error: purchases.error,
             onRetry: () => ref.invalidate(purchasesProvider(workspaceId)),
             today: ref
                 .watch(invoicingBusinessProvider)
@@ -185,6 +186,7 @@ class _PurchasesTable extends StatelessWidget {
     required this.rows,
     required this.suppliersRead,
     required this.state,
+    this.error,
     required this.onRetry,
     required this.today,
     required this.onOpen,
@@ -193,6 +195,9 @@ class _PurchasesTable extends StatelessWidget {
   final List<_Row> rows;
   final _SuppliersRead suppliersRead;
   final RecordsState state;
+
+  /// #4097 — why the read failed, for the table to tell a refusal.
+  final Object? error;
   final VoidCallback onRetry;
 
   /// The business's day: what "this month" is.
@@ -212,6 +217,7 @@ class _PurchasesTable extends StatelessWidget {
       tableId: 'purchases',
       rows: rows,
       state: state,
+      error: error,
       onRetry: onRetry,
       keyOf: (r) => r.doc.id,
       searchText: (r) => '${r.supplier} ${r.doc.category} ${r.doc.reference}',
