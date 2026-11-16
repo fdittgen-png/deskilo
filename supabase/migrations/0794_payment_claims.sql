@@ -251,6 +251,7 @@ begin
     p_resolution, p_note, p_amount_cents);
 end;
 $function$;
+revoke execute on function public.match_invoice(uuid, uuid, text, text, integer) from public, anon;
 
 -- ── 2. claims ───────────────────────────────────────────────────────────
 -- The invoices in an open claim of [p_workspace], and why.
