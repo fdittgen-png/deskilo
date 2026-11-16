@@ -20329,6 +20329,96 @@ abstract class AppLocalizations {
   /// **'Full history, usage and other servers'**
   String get financesFullHistory;
 
+  /// #3556 My finances: the button on an invoice that files it in one of my groups (tooltip)
+  ///
+  /// In en, this message translates to:
+  /// **'Add to a group'**
+  String get financesGroupAdd;
+
+  /// #3556 Sheet title: which groups invoice {number} is in; {number} is the invoice number
+  ///
+  /// In en, this message translates to:
+  /// **'Groups of {number}'**
+  String financesGroupAddTitle(String number);
+
+  /// #3556 Group header: how many invoices the group names
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 invoice} other{{count} invoices}}'**
+  String financesGroupCount(int count);
+
+  /// #3556 Sheet: creates the group named in the field and files the invoice in it
+  ///
+  /// In en, this message translates to:
+  /// **'Create and add'**
+  String get financesGroupCreate;
+
+  /// #3556 Deletes the group (tooltip)
+  ///
+  /// In en, this message translates to:
+  /// **'Delete the group'**
+  String get financesGroupDelete;
+
+  /// #3556 Confirmation before deleting a group; {name} is its name; the invoices are not touched
+  ///
+  /// In en, this message translates to:
+  /// **'Delete “{name}”? The invoices stay as they are.'**
+  String financesGroupDeleteConfirm(String name);
+
+  /// #3556 A group could not be saved or read now
+  ///
+  /// In en, this message translates to:
+  /// **'The group could not be saved. Try again.'**
+  String get financesGroupFailed;
+
+  /// #3556 A group name refused: empty or longer than 80 characters
+  ///
+  /// In en, this message translates to:
+  /// **'A name has 1 to 80 characters.'**
+  String get financesGroupNameShape;
+
+  /// #3556 A group name refused: the person already has a group of that name
+  ///
+  /// In en, this message translates to:
+  /// **'You already have a group with this name.'**
+  String get financesGroupNameTaken;
+
+  /// #3556 Sheet: the field naming a new group
+  ///
+  /// In en, this message translates to:
+  /// **'New group'**
+  String get financesGroupNewName;
+
+  /// #3556 Removes an invoice from the group (tooltip); the invoice itself is unchanged
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from the group'**
+  String get financesGroupRemove;
+
+  /// #3556 Renames the group (tooltip and dialog title)
+  ///
+  /// In en, this message translates to:
+  /// **'Rename the group'**
+  String get financesGroupRename;
+
+  /// #3556 Group header: how many of its invoices cannot be read now, and that the totals leave them out
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 invoice can\'t be read now: the totals leave it out.} other{{count} invoices can\'t be read now: the totals leave them out.}}'**
+  String financesGroupUnreadable(int count);
+
+  /// #3556 Group header: one invoice that cannot be read now, named by its number as last seen
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · can\'t be read now'**
+  String financesGroupUnreadableItem(String number);
+
+  /// #3556 My finances: label of the row of my own groups of invoices, beside the workspace filter
+  ///
+  /// In en, this message translates to:
+  /// **'Groups'**
+  String get financesGroups;
+
   /// #2557 C5 Me › Finances: hides one compact card's amount again.
   ///
   /// In en, this message translates to:

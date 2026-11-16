@@ -12652,6 +12652,75 @@ class AppLocalizationsFr extends AppLocalizations {
       'Historique complet, consommation et autres serveurs';
 
   @override
+  String get financesGroupAdd => 'Ajouter à un groupe';
+
+  @override
+  String financesGroupAddTitle(String number) {
+    return 'Groupes de $number';
+  }
+
+  @override
+  String financesGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count factures',
+      one: '1 facture',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get financesGroupCreate => 'Créer et ajouter';
+
+  @override
+  String get financesGroupDelete => 'Supprimer le groupe';
+
+  @override
+  String financesGroupDeleteConfirm(String name) {
+    return 'Supprimer « $name » ? Les factures restent telles quelles.';
+  }
+
+  @override
+  String get financesGroupFailed =>
+      'Le groupe n’a pas pu être enregistré. Réessayez.';
+
+  @override
+  String get financesGroupNameShape => 'Un nom compte de 1 à 80 caractères.';
+
+  @override
+  String get financesGroupNameTaken => 'Vous avez déjà un groupe de ce nom.';
+
+  @override
+  String get financesGroupNewName => 'Nouveau groupe';
+
+  @override
+  String get financesGroupRemove => 'Retirer du groupe';
+
+  @override
+  String get financesGroupRename => 'Renommer le groupe';
+
+  @override
+  String financesGroupUnreadable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count factures ne peuvent pas être lues pour l’instant : les totaux les laissent de côté.',
+      one: '1 facture ne peut pas être lue pour l’instant : les totaux la laissent de côté.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String financesGroupUnreadableItem(String number) {
+    return '$number · illisible pour l’instant';
+  }
+
+  @override
+  String get financesGroups => 'Groupes';
+
+  @override
   String get financesHideAmount => 'Masquer le montant';
 
   @override

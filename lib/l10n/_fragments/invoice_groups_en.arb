@@ -1,0 +1,87 @@
+{
+  "financesGroups": "Groups",
+  "@financesGroups": {
+    "description": "#3556 My finances: label of the row of my own groups of invoices, beside the workspace filter"
+  },
+  "financesGroupAdd": "Add to a group",
+  "@financesGroupAdd": {
+    "description": "#3556 My finances: the button on an invoice that files it in one of my groups (tooltip)"
+  },
+  "financesGroupAddTitle": "Groups of {number}",
+  "@financesGroupAddTitle": {
+    "description": "#3556 Sheet title: which groups invoice {number} is in; {number} is the invoice number",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "financesGroupNewName": "New group",
+  "@financesGroupNewName": {
+    "description": "#3556 Sheet: the field naming a new group"
+  },
+  "financesGroupCreate": "Create and add",
+  "@financesGroupCreate": {
+    "description": "#3556 Sheet: creates the group named in the field and files the invoice in it"
+  },
+  "financesGroupNameTaken": "You already have a group with this name.",
+  "@financesGroupNameTaken": {
+    "description": "#3556 A group name refused: the person already has a group of that name"
+  },
+  "financesGroupNameShape": "A name has 1 to 80 characters.",
+  "@financesGroupNameShape": {
+    "description": "#3556 A group name refused: empty or longer than 80 characters"
+  },
+  "financesGroupCount": "{count, plural, one{1 invoice} other{{count} invoices}}",
+  "@financesGroupCount": {
+    "description": "#3556 Group header: how many invoices the group names",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesGroupUnreadable": "{count, plural, one{1 invoice can't be read now: the totals leave it out.} other{{count} invoices can't be read now: the totals leave them out.}}",
+  "@financesGroupUnreadable": {
+    "description": "#3556 Group header: how many of its invoices cannot be read now, and that the totals leave them out",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "financesGroupUnreadableItem": "{number} · can't be read now",
+  "@financesGroupUnreadableItem": {
+    "description": "#3556 Group header: one invoice that cannot be read now, named by its number as last seen",
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "financesGroupRemove": "Remove from the group",
+  "@financesGroupRemove": {
+    "description": "#3556 Removes an invoice from the group (tooltip); the invoice itself is unchanged"
+  },
+  "financesGroupRename": "Rename the group",
+  "@financesGroupRename": {
+    "description": "#3556 Renames the group (tooltip and dialog title)"
+  },
+  "financesGroupDelete": "Delete the group",
+  "@financesGroupDelete": {
+    "description": "#3556 Deletes the group (tooltip)"
+  },
+  "financesGroupDeleteConfirm": "Delete “{name}”? The invoices stay as they are.",
+  "@financesGroupDeleteConfirm": {
+    "description": "#3556 Confirmation before deleting a group; {name} is its name; the invoices are not touched",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "financesGroupFailed": "The group could not be saved. Try again.",
+  "@financesGroupFailed": {
+    "description": "#3556 A group could not be saved or read now"
+  }
+}

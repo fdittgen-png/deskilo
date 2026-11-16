@@ -7907,6 +7907,21 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesGroupAdd": "Aggiungi a un gruppo",
+  "financesGroupAddTitle": "Gruppi di {number}",
+  "financesGroupCount": "{count, plural, one{1 fattura} other{{count} fatture}}",
+  "financesGroupCreate": "Crea e aggiungi",
+  "financesGroupDelete": "Elimina il gruppo",
+  "financesGroupDeleteConfirm": "Eliminare «{name}»? Le fatture restano come sono.",
+  "financesGroupFailed": "Non è stato possibile salvare il gruppo. Riprovi.",
+  "financesGroupNameShape": "Un nome ha da 1 a 80 caratteri.",
+  "financesGroupNameTaken": "Ha già un gruppo con questo nome.",
+  "financesGroupNewName": "Nuovo gruppo",
+  "financesGroupRemove": "Rimuovi dal gruppo",
+  "financesGroupRename": "Rinomina il gruppo",
+  "financesGroupUnreadable": "{count, plural, one{1 fattura non è leggibile ora: i totali la escludono.} other{{count} fatture non sono leggibili ora: i totali le escludono.}}",
+  "financesGroupUnreadableItem": "{number} · non leggibile ora",
+  "financesGroups": "Gruppi",
   "financesHideAmount": "Nascondi l'importo",
   "financesHostsUnavailable": "Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.",
   "@financesHostsUnavailable": {

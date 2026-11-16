@@ -30,6 +30,7 @@ import 'package:deskilo/core/demo/data/finance_kpi_repository.dart'
 import 'package:deskilo/core/demo/data/guest_participation_repository.dart';
 import 'package:deskilo/core/demo/data/identity_binding_repository.dart';
 import 'package:deskilo/core/demo/data/instance_repository.dart';
+import 'package:deskilo/core/demo/data/invoice_group_repository.dart';
 import 'package:deskilo/core/demo/data/local_setup_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_admin_repository.dart';
 import 'package:deskilo/core/demo/data/mcp_connection_repository.dart';
@@ -116,6 +117,7 @@ import 'package:deskilo/features/money/providers/account_activity_providers.dart
 import 'package:deskilo/features/money/providers/company_lookup_providers.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
+import 'package:deskilo/features/money/providers/invoice_group_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_original_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/recorded_payments_providers.dart'
@@ -247,6 +249,10 @@ List<Override> formatPinOverrides({String locale = 'en_GB'}) {
 }
 
 List<Override> standardTestOverrides({
+  /// #3556 — the person's own groups of invoices; none unless a test brings
+  /// some, and the personal home's installation they name.
+  FakeInvoiceGroupRepository? invoiceGroups,
+  String? homeInstallation,
   /// #4007 — the person's organisations; none unless a test gives some.
   FakeOrganisationRepository? organisations,
   // #3853 — a test of the stored originals brings its own store.
@@ -470,6 +476,8 @@ List<Override> standardTestOverrides({
       // #2559 C1 -- no app-switcher cover outside a native runner.
       switcherCoverProvider.overrideWithValue(SwitcherCover.inert()),
       accountActivityRepositoryProvider.overrideWithValue(accountActivity ?? FakeAccountActivityRepository()),
+      invoiceGroupRepositoryProvider.overrideWithValue(invoiceGroups ?? FakeInvoiceGroupRepository()), // #3556
+      financeHomeInstallationProvider.overrideWith((ref) async => homeInstallation),
       workspaceApplicationRepositoryProvider.overrideWithValue(applications ?? FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(personalPreferences ?? FakePersonalPreferencesRepository()),
     identityBindingRepositoryProvider

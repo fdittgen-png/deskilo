@@ -12504,6 +12504,74 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesFullHistory => 'Full history, usage and other servers';
 
   @override
+  String get financesGroupAdd => 'Add to a group';
+
+  @override
+  String financesGroupAddTitle(String number) {
+    return 'Groups of $number';
+  }
+
+  @override
+  String financesGroupCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices',
+      one: '1 invoice',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get financesGroupCreate => 'Create and add';
+
+  @override
+  String get financesGroupDelete => 'Delete the group';
+
+  @override
+  String financesGroupDeleteConfirm(String name) {
+    return 'Delete “$name”? The invoices stay as they are.';
+  }
+
+  @override
+  String get financesGroupFailed => 'The group could not be saved. Try again.';
+
+  @override
+  String get financesGroupNameShape => 'A name has 1 to 80 characters.';
+
+  @override
+  String get financesGroupNameTaken =>
+      'You already have a group with this name.';
+
+  @override
+  String get financesGroupNewName => 'New group';
+
+  @override
+  String get financesGroupRemove => 'Remove from the group';
+
+  @override
+  String get financesGroupRename => 'Rename the group';
+
+  @override
+  String financesGroupUnreadable(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count invoices can\'t be read now: the totals leave them out.',
+      one: '1 invoice can\'t be read now: the totals leave it out.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String financesGroupUnreadableItem(String number) {
+    return '$number · can\'t be read now';
+  }
+
+  @override
+  String get financesGroups => 'Groups';
+
+  @override
   String get financesHideAmount => 'Hide amount';
 
   @override

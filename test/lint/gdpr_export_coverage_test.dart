@@ -167,6 +167,13 @@ const Map<String, String> _notExported = {
           'member id, a client-generated uuid and a pointer to the '
           'reservation, and the RESERVATION is exported; the row itself '
           'says only that the app asked twice',
+  'personal_invoice_groups':
+      '#3556 (0798) — a person\'s own filing of invoices on their personal '
+          'home, about no workspace: export_my_data is keyed by a workspace; '
+          'the groups are in export_my_personal_data_v1 (invoice_groups)',
+  'personal_invoice_group_items':
+      '#3556 (0798) — the invoices a personal group names, by reference: '
+          'exported with their group in export_my_personal_data_v1',
   'membership_facts':
       '#2563 C2 — a personal home\'s verified copy of a membership the '
           'workspace\'s own installation asserted. export_my_data is keyed '

@@ -1,0 +1,17 @@
+{
+  "financesGroups": "Gruppi",
+  "financesGroupAdd": "Aggiungi a un gruppo",
+  "financesGroupAddTitle": "Gruppi di {number}",
+  "financesGroupNewName": "Nuovo gruppo",
+  "financesGroupCreate": "Crea e aggiungi",
+  "financesGroupNameTaken": "Ha già un gruppo con questo nome.",
+  "financesGroupNameShape": "Un nome ha da 1 a 80 caratteri.",
+  "financesGroupCount": "{count, plural, one{1 fattura} other{{count} fatture}}",
+  "financesGroupUnreadable": "{count, plural, one{1 fattura non è leggibile ora: i totali la escludono.} other{{count} fatture non sono leggibili ora: i totali le escludono.}}",
+  "financesGroupUnreadableItem": "{number} · non leggibile ora",
+  "financesGroupRemove": "Rimuovi dal gruppo",
+  "financesGroupRename": "Rinomina il gruppo",
+  "financesGroupDelete": "Elimina il gruppo",
+  "financesGroupDeleteConfirm": "Eliminare «{name}»? Le fatture restano come sono.",
+  "financesGroupFailed": "Non è stato possibile salvare il gruppo. Riprovi."
+}
