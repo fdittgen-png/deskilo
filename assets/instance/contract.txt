@@ -473,7 +473,7 @@ constraint events.events_actor_member_id_fkey FOREIGN KEY (actor_member_id) REFE
 constraint events.events_actor_member_id_same_workspace FOREIGN KEY (workspace_id, actor_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
 constraint events.events_pkey PRIMARY KEY (id)
 constraint events.events_reservation_id_fkey FOREIGN KEY (reservation_id) REFERENCES reservations(id) ON DELETE SET NULL
-constraint events.events_status_check CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))
+constraint events.events_status_check CHECK (((status = 'withdrawn'::text) OR (status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text]))))
 constraint events.events_subject_member_id_fkey FOREIGN KEY (subject_member_id) REFERENCES members(id) ON DELETE RESTRICT
 constraint events.events_subject_member_id_same_workspace FOREIGN KEY (workspace_id, subject_member_id) REFERENCES members(workspace_id, id) ON DELETE RESTRICT
 constraint events.events_type_check CHECK (((type = 'credential_change'::text) OR ((type = 'kiosk_device'::text) OR ((type = 'invoice_issued'::text) OR ((type = 'settlement_review'::text) OR ((type = 'privacy_incident'::text) OR ((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text])))))))))))
@@ -3461,7 +3461,7 @@ routine public.resolve_supplier_review(p_candidate_id uuid, p_supplier_id uuid) 
 routine public.resolved_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:b5eaa7447fca
 routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolean | function | definer | stable | exec:service_role | body:68f0a969d9ee
 routine public.resource_kind_feature(p_kind text) -> text | function | invoker | immutable | exec:service_role | body:7629d243b2ff
-routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:af0350f197f6
+routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:316c86ab38e5
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
 routine public.retention_assess(p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date) -> jsonb | function | definer | stable | exec:service_role | body:ee78b6ec5fbf
 routine public.retention_assess_records(p_workspace_id uuid, p_classes text[], p_records jsonb) -> jsonb | function | definer | stable | exec:service_role | body:1207a116ab3b
@@ -3803,6 +3803,7 @@ routine public.window_outside_working_hours(p_local_start timestamp without time
 routine public.withdraw_instance_delegation(p_user uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c6fe02abd94f
 routine public.withdraw_mcp_eligibility() -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:60fa13bb036f
 routine public.withdraw_payment_claim(p_intent uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:8716f9848a45
+routine public.withdraw_payment_declaration(p_event uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:597a44f2204b
 routine public.withdraw_tax_reference(p_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d0f9881bbbcd
 routine public.work_hours_provenance(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:55b4b4acd88c
 routine public.workspace_application_thread(p_event_id uuid, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:526d8c191121

@@ -22,7 +22,13 @@
 #   (f) the reverse: the new payment held open; the hand-over waits, then
 #       is refused and leaves the lapsed claim never handed;
 #   (g) the boundary: the hand-over of a claim still inside the window held
-#       open; a new payment of its invoice waits, then is refused (DKC06).
+#       open; a new payment of its invoice waits, then is refused (DKC06);
+#   (h) #4140: the business confirming a declared payment held open; the
+#       member taking it back waits on the event's lock, then is refused as
+#       already decided (DKC13): the payment stands, credited;
+#   (i) the reverse, which proves the decision's lock: the member taking it
+#       back held open; the business's decision waits, then is refused as
+#       already decided: withdrawn, nothing credited, its invoice free.
 # Afterwards each claimed invoice is in exactly one open claim, R in none. Fresh ids per run;
 # invoices cannot be deleted (invoices_no_mutation, 0183), so cleanup only
 # removes what it can and a failure is a warning.
@@ -52,7 +58,8 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin, status, j
 values ('$ws', '$owner', true, true, 'active', '2026-01-01'),
        ('$ws', '$payer', false, false, 'active', '2026-01-01');
 delete from public.validation_policies where workspace_id = '$ws';
--- X, Y, Z of one month for (a)-(c); P, Q, R of another for (d); S, T, U for (e)-(g)
+-- X, Y, Z of one month for (a)-(c); P, Q, R of another for (d); S, T, U for (e)-(g);
+-- H, I for (h), (i)
 insert into public.invoices (workspace_id, member_id, issuer_member_id, number, period, title, lines, total_cents,
                              currency, member_name, workspace_name, issuer_name, signature, kind, issued_at)
 select '$ws', p.id, o.id, 'CLAIM-' || m || '-' || k || '-' || substr('$ws', 1, 8), m, m, '[]', 1500,
@@ -60,7 +67,8 @@ select '$ws', p.id, o.id, 'CLAIM-' || m || '-' || k || '-' || substr('$ws', 1, 8
   from public.members p, public.members o,
        (values ('2031-02', 'full'), ('2031-02', 'usage'), ('2031-02', 'subscription'),
                ('2031-03', 'full'), ('2031-03', 'usage'), ('2031-03', 'subscription'),
-               ('2031-04', 'full'), ('2031-04', 'usage'), ('2031-04', 'subscription')) v(m, k)
+               ('2031-04', 'full'), ('2031-04', 'usage'), ('2031-04', 'subscription'),
+               ('2031-05', 'full'), ('2031-06', 'full')) v(m, k)
  where p.user_id = '$payer' and o.user_id = '$owner';
 SQL
 q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
@@ -69,10 +77,16 @@ inv() { q "select id from public.invoices where workspace_id = '$ws' and period 
 x=$(inv 2031-02 full); y=$(inv 2031-02 usage); z=$(inv 2031-02 subscription)
 p=$(inv 2031-03 full); qq=$(inv 2031-03 usage); r=$(inv 2031-03 subscription)
 s=$(inv 2031-04 full); t=$(inv 2031-04 usage); u=$(inv 2031-04 subscription)
+vh=$(inv 2031-05 full); vi=$(inv 2031-06 full)
 as_payer="select set_config('request.jwt.claims', '{\"sub\":\"$payer\",\"role\":\"authenticated\"}', true); set local role authenticated;"
 online() { echo "$as_payer select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '${2:-2031-02}', 1500, 'EUR', null, array['$1']::uuid[]);"; }
 online2() { echo "$as_payer select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '2031-03', 3000, 'EUR', null, array['$1', '$2']::uuid[]);"; }
 declared() { echo "$as_payer select 'declared' from public.record_payment('$ws', '$member', 1500, '', 'transfer', null, null, array['$1']::uuid[]);"; }
+as_owner="select set_config('request.jwt.claims', '{\"sub\":\"$owner\",\"role\":\"authenticated\"}', true); set local role authenticated;"
+# #4140 — a declared payment of one invoice, committed: its event's id
+declaration() { q "$as_payer select public.record_payment('$ws', '$member', 1500, '', 'transfer', null, null, array['$1']::uuid[])" | tail -1; }
+confirm() { echo "$as_owner select 'confirmed' from public.respond_to_event('$1', true);"; }
+take_back() { echo "$as_payer select 'withdrawn' from public.withdraw_payment_declaration('$1');"; }
 # the payment flow's hand-over (service_role only)
 hand() { echo "set local role service_role; select case when public.hand_payment_intent('$1') then 'handed' else 'refused' end;"; }
 # a claim of one invoice, never handed to its provider
@@ -92,6 +106,7 @@ lapsed() {
   echo "$id"
 }
 ls_=$(lapsed "$s"); lt=$(lapsed "$t"); lu=$(claim "$u")
+dh=$(declaration "$vh"); di=$(declaration "$vi")
 wait_marker() {
   local i=0
   while (( i < 100 )); do [[ -e "$1" ]] && return 0; sleep 0.1; ((i+=1)); done
@@ -141,6 +156,18 @@ race d "$(online2 "$p" "$qq")" "$(online2 "$qq" "$r")" opened 'is already in a p
 race e "$(hand "$ls_")" "$(online "$s" 2031-04)" refused opened
 race f "$(online "$t" 2031-04)" "$(hand "$lt")" opened refused
 race g "$(hand "$lu")" "$(online "$u" 2031-04)" handed 'is already in a payment being processed'
+race h "$(confirm "$dh")" "$(take_back "$dh")" confirmed 'this declaration was already decided'
+race i "$(take_back "$di")" "$(confirm "$di")" withdrawn 'already decided'
+# exactly one of the two: confirmed and credited once, or withdrawn and
+# credited nothing
+for want in "$dh:confirmed:1" "$di:withdrawn:0"; do
+  id=${want%%:*}; rest=${want#*:}
+  got=$(q "select e.status || ':' || (select count(*) from public.ledger_entries l where l.event_id = e.id) from public.events e where e.id = '$id'")
+  if [[ "$got" != "$rest" ]]; then
+    echo "::error::declaration $id ended $got, expected $rest" >&2
+    exit 1
+  fi
+done
 for id in "$ls_" "$lt"; do
   if [[ "$(q "select handed_at is null from public.payment_intents where id = '$id'")" != t ]]; then
     echo "::error::the lapsed claim $id was handed to its provider" >&2
@@ -149,11 +176,11 @@ for id in "$ls_" "$lt"; do
 done
 # each claimed invoice in exactly one open claim; R, which only the refused
 # payment named, in none
-for want in "$x:1" "$y:1" "$z:1" "$p:1" "$qq:1" "$r:0" "$s:1" "$t:1" "$u:1"; do
+for want in "$x:1" "$y:1" "$z:1" "$p:1" "$qq:1" "$r:0" "$s:1" "$t:1" "$u:1" "$vh:0" "$vi:0"; do
   id=${want%%:*}; n=$(q "select count(*) from public.open_claim_invoices('$ws') o where o.invoice_id = '$id'")
   if [[ "$n" != "${want##*:}" ]]; then
     echo "::error::invoice $id is in $n open claims, expected ${want##*:}" >&2
     exit 1
   fi
 done
-echo "payment claim race: an invoice is in one open claim; the second payment waits and is refused, overlapping sets refused, a lapsed claim is never handed over beside a new payment, a claim handed inside the window holds its invoice"
+echo "payment claim race: an invoice is in one open claim; the second payment waits and is refused, overlapping sets refused, a lapsed claim is never handed over beside a new payment, a claim handed inside the window holds its invoice; a declaration is either decided or taken back, never both"
