@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
+import '../../../../core/ui/kit/kit_metrics.dart';
 import '../../../profile/presentation/widgets/member_avatar.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../workspace/domain/member.dart';
@@ -194,12 +195,16 @@ class MemberNowCard extends StatelessWidget {
     required this.upcoming,
     required this.targets,
     required this.onOpen,
+    required this.onAll,
   });
 
   final ReservationInfo? info;
   final List<Reservation> upcoming;
   final Map<String, String> targets;
   final void Function(Reservation reservation) onOpen;
+
+  /// #4069 — opens every booking of the member: the calendar, filtered.
+  final VoidCallback onAll;
 
   @override
   Widget build(BuildContext context) {
@@ -236,6 +241,9 @@ class MemberNowCard extends StatelessWidget {
     final rest = info == null
         ? upcoming
         : upcoming.where((r) => r.id != info!.reservation.id).toList();
+    // #4069 — the next few, then a link to the rest: the money and the
+    // actions stay within reach of a member with many bookings.
+    final shown = rest.take(KitMetrics.previewRows).toList();
     return Card(
       key: const ValueKey('member-page-now'),
       child: Padding(
@@ -263,7 +271,7 @@ class MemberNowCard extends StatelessWidget {
                 ]),
               ),
             ),
-            for (final r in rest)
+            for (final r in shown)
               InkWell(
                 key: ValueKey('member-page-reservation-${r.id}'),
                 borderRadius: AppRadius.mdAll,
@@ -285,6 +293,15 @@ class MemberNowCard extends StatelessWidget {
                     Icon(Icons.chevron_right,
                         size: 18, color: theme.colorScheme.onSurfaceVariant),
                   ]),
+                ),
+              ),
+            if (rest.length > shown.length)
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: TextButton(
+                  key: const ValueKey('member-page-all-bookings'),
+                  onPressed: onAll,
+                  child: Text(l10n.memberPageAllBookings(upcoming.length)),
                 ),
               ),
           ],

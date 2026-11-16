@@ -9,11 +9,14 @@ import '../../../../core/links/link_launcher.dart';
 import '../../../../core/presence/presence_rules.dart';
 import '../../../../core/settings/directory_windows.dart';
 import '../../../../core/text/collation.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/empty_state.dart';
+import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/presentation/widgets/reservation_detail_sheet.dart';
@@ -63,6 +66,15 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
   /// relative labels count up instead of freezing.
   Timer? _presenceTimer;
 
+  /// #4069 — the search above the list: by name and e-mail.
+  final _search = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _search.addListener(() => _update(() {}));
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -75,7 +87,25 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
   @override
   void dispose() {
     _presenceTimer?.cancel();
+    _search.dispose();
     super.dispose();
+  }
+
+  /// [members] whose name or e-mail holds what is typed, case and accents
+  /// aside; every one while nothing is typed.
+  List<Member> _matching(
+    List<Member> members,
+    Map<String, String> names,
+    Map<String, String> emails,
+  ) {
+    final query = foldForSearch(_search.text.trim());
+    if (query.isEmpty) return members;
+    return [
+      for (final m in members)
+        if (foldForSearch(names[m.id] ?? '').contains(query) ||
+            foldForSearch(emails[m.id] ?? '').contains(query))
+          m,
+    ];
   }
 
   @override
@@ -127,11 +157,12 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
     return switch (membersAsync) {
       AsyncData(value: final members) => Builder(
         builder: (context) {
-          final active =
+          final everyone =
               members.where((m) => m.status == MemberStatus.active).toList()
                 ..sort(
                   (a, b) => compareNames((names[a.id] ?? ''), (names[b.id] ?? '')),
                 );
+          final active = _matching(everyone, names, emails);
           return RefreshIndicator(
             onRefresh: () => _refresh(ref),
             child: ListView(
@@ -139,7 +170,12 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
               children: [
                 if (groupUri != null)
                   DirectoryGroupTile(onOpen: () => _openLink(context, ref, groupUri)),
-                if (active.isEmpty)
+                ..._searchAndNoOne(
+                  l10n,
+                  anyone: everyone.isNotEmpty,
+                  found: active.isNotEmpty,
+                ),
+                if (everyone.isEmpty)
                   Padding(
                     padding: const EdgeInsets.only(top: 48),
                     child: EmptyState(
@@ -209,6 +245,45 @@ class _DirectoryScreenState extends ConsumerState<DirectoryScreen> {
       _ => const LoadingView(),
     };
   }
+
+  /// #4069 — the search above the list, while the space has anyone to
+  /// find; and a search that finds no one says so, with the way to see
+  /// everyone again.
+  List<Widget> _searchAndNoOne(
+    AppLocalizations l10n, {
+    required bool anyone,
+    required bool found,
+  }) => [
+    if (anyone)
+      Padding(
+        padding: const EdgeInsets.fromLTRB(
+          AppSpacing.screenGutter,
+          AppSpacing.sm,
+          AppSpacing.screenGutter,
+          AppSpacing.xs,
+        ),
+        child: AppTextField(
+          key: const ValueKey('directory-search'),
+          controller: _search,
+          label: l10n.directorySearchLabel,
+          textInputAction: TextInputAction.search,
+        ),
+      ),
+    if (anyone && !found) ...[
+      EmptyState(
+        key: const ValueKey('directory-search-none'),
+        icon: Icons.search_off,
+        title: l10n.directorySearchNone(_search.text.trim()),
+      ),
+      Center(
+        child: TextButton(
+          key: const ValueKey('directory-search-clear'),
+          onPressed: _search.clear,
+          child: Text(l10n.discoveryClearSearch),
+        ),
+      ),
+    ],
+  ];
 
   /// Lets the section extensions rebuild (setState is protected).
   void _update(VoidCallback fn) => setState(fn);

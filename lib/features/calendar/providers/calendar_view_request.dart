@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/widgets.dart' show BuildContext;
+import 'package:flutter/widgets.dart' show BuildContext, VoidCallback;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -38,4 +38,27 @@ void requestAlertsIfAddressAsks(BuildContext context, WidgetRef ref) {
   if (_addressAsksAlerts(context)) {
     ref.read(calendarAlertsRequestProvider.notifier).request();
   }
+}
+
+/// #4069 — calls [onMember] with the member `/calendar?member=ID` names (a
+/// member's "All bookings"), now and each time a later address names one;
+/// returns how to stop listening. The hub sits in the shell's indexed
+/// stack, so it is told rather than rebuilt.
+VoidCallback listenForAddressedMember(
+  BuildContext context,
+  void Function(String memberId) onMember,
+) {
+  final router = GoRouter.maybeOf(context);
+  if (router == null) return () {};
+  String? last;
+  void take() {
+    final id = router.routeInformationProvider.value.uri.queryParameters['member'];
+    final named = id == null || id.isEmpty ? null : id;
+    if (named != null && named != last) onMember(named);
+    last = named;
+  }
+
+  take();
+  router.routeInformationProvider.addListener(take);
+  return () => router.routeInformationProvider.removeListener(take);
 }

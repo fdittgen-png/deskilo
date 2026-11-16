@@ -5064,6 +5064,8 @@
   "directoryReservedNow": "Jetzt reserviert",
   "directoryReservedNowSeat": "Jetzt reserviert · {seat}",
   "directoryReservedToday": "Heute reserviert",
+  "directorySearchLabel": "Nach Name oder E-Mail suchen",
+  "directorySearchNone": "Niemand passt zu „{query}“",
   "directoryTilesFailed": "Der Kartenhintergrund konnte nicht geladen werden.",
   "directoryTitle": "Mitglieder",
   "directoryWhatsapp": "Auf WhatsApp schreiben",
@@ -12585,6 +12587,7 @@
   "memberOveragePolicyLabel": "Wenn die Tage aufgebraucht sind",
   "memberOveragePolicyTooltip": "Mehrverbrauch",
   "memberPageAddService": "Leistung hinzufügen",
+  "memberPageAllBookings": "{count, plural, one{Alle Buchungen ({count})} other{Alle Buchungen ({count})}}",
   "memberPageCheckedIn": "Eingecheckt · {seat} · seit {time}",
   "@memberPageCheckedIn": {
     "placeholders": {

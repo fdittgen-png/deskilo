@@ -10737,6 +10737,19 @@
   "@directoryReservedToday": {
     "description": "Directory status chip: member has an active reservation later today"
   },
+  "directorySearchLabel": "Search by name or e-mail",
+  "@directorySearchLabel": {
+    "description": "#4069 — the label of the members directory's search field."
+  },
+  "directorySearchNone": "No one matches “{query}”",
+  "@directorySearchNone": {
+    "description": "#4069 — the directory's search found no one.",
+    "placeholders": {
+      "query": {
+        "type": "String"
+      }
+    }
+  },
   "directoryTilesFailed": "The map background could not be loaded.",
   "@directoryTilesFailed": {
     "description": "Shown as a text over the directory map (directory) when its background tiles fail to load; a Try again follows."
@@ -27527,6 +27540,15 @@
   "memberPageAddService": "Add a service",
   "@memberPageAddService": {
     "description": "Shown as a button or chip label in member activity tiles (members)."
+  },
+  "memberPageAllBookings": "{count, plural, one{All bookings ({count})} other{All bookings ({count})}}",
+  "@memberPageAllBookings": {
+    "description": "#4069 — under a member's next bookings: opens the calendar filtered to them, with how many they have.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "memberPageCheckedIn": "Checked in · {seat} · since {time}",
   "@memberPageCheckedIn": {
