@@ -10,7 +10,7 @@
 -- refusal changes nothing; a withdrawn claim frees its invoices; a callback
 -- delivered twice applies once; without a claim nothing changes. Rolled back.
 begin;
-select plan(41);
+select plan(43);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -82,6 +82,8 @@ returns uuid language sql as $$
 $$;
 create or replace function pg_temp.refusal(p_sql text) returns text language plpgsql as $$
 begin execute p_sql; return null; exception when others then return sqlerrm; end $$;
+create or replace function pg_temp.refusal_code(p_sql text) returns text language plpgsql as $$
+begin execute p_sql; return null; exception when others then return sqlstate; end $$;
 grant execute on all functions in schema pg_temp to authenticated;
 
 -- ── Opening a claim, as Ada ─────────────────────────────────────────────
@@ -94,6 +96,10 @@ select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'
   'condition 1: another amount with a claim is refused in words');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'), current_setting('t.b1')::uuid], 5500, '2026-10')$$),
   'an invoice of this payment is not one of yours to pay', 'condition 4: another member''s invoice');
+select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'), current_setting('t.b1')::uuid], 5500, '2026-10')$$),
+  'DKC02', 'and the app reads it by its code');
+select is(pg_temp.refusal_code($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5')], 1400, '2026-10')$$),
+  'DKC07', 'the amount refusal has its code');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'), '00000000-0000-4000-8000-00000355dead'::uuid], 1500, '2026-10')$$),
   'an invoice of this payment is not one of yours to pay', 'condition 4: an unknown id, the same answer');
 select is(pg_temp.refusal($$select pg_temp.open_intent(array[pg_temp.inv('CL-A5'), pg_temp.inv('EL-W1')], 5500, '2026-10')$$),

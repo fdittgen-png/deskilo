@@ -62,12 +62,12 @@ begin
   -- #3671: one lock order everywhere: the invoice, its aggregate, then the
   -- payment; two parts against one remainder wait for each other.
   select * into v_invoice from public.invoices where id = p_invoice_id for update;
-  if v_invoice.id is null then raise exception 'unknown invoice'; end if;
+  if v_invoice.id is null then raise exception 'unknown invoice' using errcode = 'P0001'; end if;
   if v_invoice.voided_at is not null then
     raise exception 'invoice is voided' using errcode = 'DKI03';
   end if;
   if v_invoice.settled_by_invoice_id is not null then
-    raise exception 'invoice is settled';
+    raise exception 'invoice is settled' using errcode = 'P0001';
   end if;
   select * into v_existing from public.invoice_matches
     where invoice_id = p_invoice_id for update;
@@ -87,7 +87,7 @@ begin
   -- #3671: an invoice a waiting part already covers takes nothing more,
   -- not even an intended overpayment.
   if v_due <= 0 then
-    raise exception 'nothing is due on this invoice';
+    raise exception 'nothing is due on this invoice' using errcode = 'P0001';
   end if;
   -- #3556 — who matches was decided by the caller: match_invoice checks
   -- the permission of the person; a claim's settlement names the payer.
@@ -101,7 +101,7 @@ begin
       and member_id = v_invoice.member_id
       and kind = 'credit' and category in ('payment', 'adjustment')
     for update;
-  if v_payment.id is null then raise exception 'unknown payment'; end if;
+  if v_payment.id is null then raise exception 'unknown payment' using errcode = 'P0001'; end if;
   -- A credit already BAKED into an issued invoice (negative line at
   -- derivation) was spent there — it cannot settle a second document.
   if exists (
@@ -110,7 +110,7 @@ begin
       and i.period = v_payment.period
       and i.voided_at is null
       and i.issued_at > v_payment.created_at) then
-    raise exception 'credit already deducted on an issued invoice';
+    raise exception 'credit already deducted on an issued invoice' using errcode = 'P0001';
   end if;
   -- #3671: a payment may settle several invoices, each its own part; what
   -- is left of it is its amount less the parts already taken. Without an
@@ -119,30 +119,30 @@ begin
   if v_left <= 0 or exists (select 1 from public.invoice_match_payments
                              where payment_ledger_id = p_payment_ledger_id
                                and invoice_id = p_invoice_id) then
-    raise exception 'payment already matched';
+    raise exception 'payment already matched' using errcode = 'P0001';
   end if;
   if p_amount_cents is not null and (p_amount_cents <= 0 or p_amount_cents > v_left) then
-    raise exception 'the amount is more than what is left of the payment';
+    raise exception 'the amount is more than what is left of the payment' using errcode = 'P0001';
   end if;
   v_paid := coalesce(p_amount_cents, v_left);
 
   if p_resolution not in
       ('exact','over_forced','over_credit_note','under_accepted') then
-    raise exception 'unknown resolution';
+    raise exception 'unknown resolution' using errcode = 'P0001';
   end if;
   -- All amount rules compare against what is STILL DUE (#506).
   if p_resolution = 'exact' and v_paid <> v_due then
-    raise exception 'amount does not match the invoice';
+    raise exception 'amount does not match the invoice' using errcode = 'P0001';
   end if;
   if p_resolution in ('over_forced','over_credit_note')
      and v_paid <= v_due then
-    raise exception 'amount does not exceed the invoice';
+    raise exception 'amount does not exceed the invoice' using errcode = 'P0001';
   end if;
   if p_resolution = 'under_accepted' and v_paid >= v_due then
-    raise exception 'amount is not below the invoice';
+    raise exception 'amount is not below the invoice' using errcode = 'P0001';
   end if;
   if p_resolution in ('over_forced','under_accepted') and v_note = '' then
-    raise exception 'a note is required';
+    raise exception 'a note is required' using errcode = 'P0001';
   end if;
 
   select coalesce(display_name, '') into v_actor_name
@@ -237,7 +237,7 @@ declare
   v_actor public.members;
 begin
   select workspace_id into v_workspace from public.invoices where id = p_invoice_id;
-  if v_workspace is null then raise exception 'unknown invoice'; end if;
+  if v_workspace is null then raise exception 'unknown invoice' using errcode = 'P0001'; end if;
   -- #816 — the matrix alone decides who matches.
   v_actor := public.issuing_member(v_workspace);
   -- #513 — the CENTRAL permission decides: owner always passes,
@@ -245,7 +245,7 @@ begin
   -- legacy adminInvoicing flag keeps granting inside
   -- has_permission for compatibility.
   if not public.has_permission(v_workspace, 'issueInvoices') then
-    raise exception 'admins may not issue invoices here';
+    raise exception 'admins may not issue invoices here' using errcode = 'P0001';
   end if;
   perform public.match_invoice_part(v_actor, p_invoice_id, p_payment_ledger_id,
     p_resolution, p_note, p_amount_cents);
@@ -271,17 +271,17 @@ language sql stable security definer set search_path = public as $fn$
 $fn$;
 revoke execute on function public.open_claim_invoices(uuid) from public, anon, authenticated;
 
--- Why [p_member] cannot claim [p_ids] in [p_workspace] for [p_period]; null
--- when the claim stands.
-create or replace function public.payment_claim_refusal(
+-- Refuses [p_member]'s claim of [p_ids] in [p_workspace] for [p_period],
+-- each reason with its code (DKC01-DKC06); returns when the claim stands.
+create or replace function public.check_payment_claim(
   p_workspace uuid, p_member uuid, p_ids uuid[], p_period text)
-returns text language plpgsql stable security definer set search_path = public as $fn$
+returns void language plpgsql stable security definer set search_path = public as $fn$
 declare
   v_months text;
   v_bad text;
 begin
   if coalesce(cardinality(p_ids), 0) = 0 then
-    return 'a payment of invoices names at least one invoice';
+    raise exception 'a payment of invoices names at least one invoice' using errcode = 'DKC01';
   end if;
   -- One answer for another member's invoice, an unknown id and another
   -- business's invoice, before anything about them is read back.
@@ -289,15 +289,15 @@ begin
               where not exists (select 1 from public.invoices i
                                  where i.id = x and i.workspace_id = p_workspace
                                    and i.member_id = p_member)) then
-    return 'an invoice of this payment is not one of yours to pay';
+    raise exception 'an invoice of this payment is not one of yours to pay' using errcode = 'DKC02';
   end if;
   select string_agg(distinct i.period, ', ' order by i.period) into v_months
     from public.invoices i where i.id = any (p_ids);
   if (select count(distinct i.period) from public.invoices i where i.id = any (p_ids)) > 1 then
-    return format('a payment settles invoices of one month: this selection spans %s', v_months);
+    raise exception 'a payment settles invoices of one month: this selection spans %', v_months using errcode = 'DKC03';
   end if;
   if p_period is not null and p_period <> v_months then
-    return format('these invoices are of %s, not of %s', v_months, p_period);
+    raise exception 'these invoices are of %, not of %', v_months, p_period using errcode = 'DKC04';
   end if;
   select string_agg(i.number, ', ' order by i.number) into v_bad
     from public.invoices i
@@ -305,17 +305,18 @@ begin
      and (i.voided_at is not null or i.settled_by_invoice_id is not null
           or public.invoice_still_due_cents(i.id) <= 0);
   if v_bad is not null then
-    return format('nothing is due on %s', v_bad);
+    raise exception 'nothing is due on %', v_bad using errcode = 'DKC05';
   end if;
   select string_agg(format('%s is already in %s', i.number, o.reason), '; ' order by i.number) into v_bad
     from public.open_claim_invoices(p_workspace) o
     join public.invoices i on i.id = o.invoice_id
    where o.invoice_id = any (p_ids);
-  if v_bad is not null then return v_bad; end if;
-  return null;
+  if v_bad is not null then
+    raise exception '%', v_bad using errcode = 'DKC06';
+  end if;
 end;
 $fn$;
-revoke execute on function public.payment_claim_refusal(uuid, uuid, uuid[], text) from public, anon, authenticated;
+revoke execute on function public.check_payment_claim(uuid, uuid, uuid[], text) from public, anon, authenticated;
 
 -- Applies the payment [p_ledger] of [p_payer] to the claimed invoices
 -- [p_ids], oldest first, each at what it still owes (whole: never more than
@@ -380,7 +381,6 @@ declare
   v_me public.members;
   v_old public.payment_intents;
   v_claim uuid[];
-  v_refusal text;
   v_due bigint;
 begin
   v_me := public.my_active_member(p_workspace_id);
@@ -388,18 +388,18 @@ begin
   -- onlinePayments off no new payment is opened; a payment already open
   -- is still settled by its provider (servicing it).
   if not public.feature_operation_allowed(p_workspace_id, 'onlinePayments', 'accept_new') then
-    raise exception 'online payments are off in this workspace';
+    raise exception 'online payments are off in this workspace' using errcode = 'P0001';
   end if;
   if p_member_id <> v_me.id and not public.has_permission(p_workspace_id, 'issueInvoices') then
-    raise exception 'a payment is opened for yourself, or by whoever issues the invoices';
+    raise exception 'a payment is opened for yourself, or by whoever issues the invoices' using errcode = 'P0001';
   end if;
   select upper(currency_code) into v_ws_currency from public.workspaces where public.workspaces.id = p_workspace_id;
-  if v_ws_currency is null then raise exception 'unknown workspace'; end if;
+  if v_ws_currency is null then raise exception 'unknown workspace' using errcode = 'P0001'; end if;
   if upper(coalesce(p_currency, '')) <> v_ws_currency then
-    raise exception 'a payment is taken in the workspace currency (%), not %', v_ws_currency, p_currency;
+    raise exception 'a payment is taken in the workspace currency (%), not %', v_ws_currency, p_currency using errcode = 'P0001';
   end if;
   if p_amount_cents is null or p_amount_cents <= 0 then
-    raise exception 'a payment intent needs a positive amount';
+    raise exception 'a payment intent needs a positive amount' using errcode = 'P0001';
   end if;
   -- #3556 — the claim, in one canonical order: a retry names the same set.
   if p_invoice_ids is not null then
@@ -415,7 +415,7 @@ begin
          or v_old.period <> p_period or v_old.amount_cents <> p_amount_cents
          or upper(v_old.currency) <> v_ws_currency
          or v_old.claimed_invoice_ids is distinct from v_claim then
-        raise exception 'payment request conflict: this request id was opened with another payment';
+        raise exception 'payment request conflict: this request id was opened with another payment' using errcode = 'P0001';
       end if;
       return query select v_old.id, v_old.reference, v_old.status, v_old.order_id, v_old.created_at, true;
       return;
@@ -423,11 +423,11 @@ begin
   end if;
 
   if v_claim is not null then
-    v_refusal := public.payment_claim_refusal(p_workspace_id, p_member_id, v_claim, p_period);
-    if v_refusal is not null then raise exception '%', v_refusal; end if;
+    perform public.check_payment_claim(p_workspace_id, p_member_id, v_claim, p_period);
     select sum(public.invoice_still_due_cents(x)) into v_due from unnest(v_claim) x;
     if p_amount_cents <> v_due then
-      raise exception 'a payment of these invoices is what they still owe (% in minor units), not %', v_due, p_amount_cents;
+      raise exception 'a payment of these invoices is what they still owe (% in minor units), not %', v_due, p_amount_cents
+        using errcode = 'DKC07';
     end if;
   end if;
 
@@ -457,38 +457,37 @@ declare
   v_paid_on date := coalesce(p_paid_on, current_date);
   v_period text := coalesce(p_period, to_char(now(), 'YYYY-MM'));
   v_claim uuid[];
-  v_refusal text;
   v_due bigint;
   v_payload jsonb;
 begin
   select * into v_actor from public.members
     where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
-  if v_actor.id is null then raise exception 'not an active member'; end if;
-  if p_amount_cents <= 0 then raise exception 'amount must be positive'; end if;
+  if v_actor.id is null then raise exception 'not an active member' using errcode = 'P0001'; end if;
+  if p_amount_cents <= 0 then raise exception 'amount must be positive' using errcode = 'P0001'; end if;
   -- #2137 -- or whoever holds issueInvoices, through a role.
   if v_actor.id <> p_member_id and not (v_actor.is_admin or v_actor.is_owner
        or public.has_permission(p_workspace_id, 'issueInvoices')) then
-    raise exception 'only admins record payments for others';
+    raise exception 'only admins record payments for others' using errcode = 'P0001';
   end if;
   -- Free-form-but-bounded method tag; the app sends one of the
   -- PaymentMethod enum wire names ('' = not specified, old clients).
-  if length(p_method) > 32 then raise exception 'method too long'; end if;
+  if length(p_method) > 32 then raise exception 'method too long' using errcode = 'P0001'; end if;
   -- #3556 — a claim is of one month: the payment's period is theirs.
   if p_invoice_ids is not null then
     v_claim := array(select distinct x from unnest(p_invoice_ids) x where x is not null order by 1);
-    v_refusal := public.payment_claim_refusal(p_workspace_id, p_member_id, v_claim, p_period);
-    if v_refusal is not null then raise exception '%', v_refusal; end if;
+    perform public.check_payment_claim(p_workspace_id, p_member_id, v_claim, p_period);
     select min(i.period) into v_period from public.invoices i where i.id = any (v_claim);
     select sum(public.invoice_still_due_cents(x)) into v_due from unnest(v_claim) x;
     if p_amount_cents <> v_due then
-      raise exception 'a payment of these invoices is what they still owe (% in minor units), not %', v_due, p_amount_cents;
+      raise exception 'a payment of these invoices is what they still owe (% in minor units), not %', v_due, p_amount_cents
+        using errcode = 'DKC07';
     end if;
   end if;
-  if v_period !~ '^[0-9]{4}-[0-9]{2}$' then raise exception 'invalid period'; end if;
+  if v_period !~ '^[0-9]{4}-[0-9]{2}$' then raise exception 'invalid period' using errcode = 'P0001'; end if;
   -- Money cannot have moved tomorrow. One day of slack absorbs the gap
   -- between the server's UTC date and a workspace east of it.
   if v_paid_on > current_date + 1 then
-    raise exception 'payment date is in the future';
+    raise exception 'payment date is in the future' using errcode = 'P0001';
   end if;
   v_payload := jsonb_build_object(
       'amount_cents', p_amount_cents,
@@ -533,11 +532,11 @@ begin
     where provider = p_provider and order_id = p_order_id
     for update;
   if v_intent.id is null then
-    raise exception 'unknown payment intent %/%', p_provider, p_order_id;
+    raise exception 'unknown payment intent %/%', p_provider, p_order_id using errcode = 'P0001';
   end if;
   if v_intent.status in ('captured', 'reversed') then return; end if;
   if p_amount_cents is not null and p_amount_cents <> v_intent.amount_cents then
-    raise exception 'captured amount % does not match the intent (%)', p_amount_cents, v_intent.amount_cents;
+    raise exception 'captured amount % does not match the intent (%)', p_amount_cents, v_intent.amount_cents using errcode = 'P0001';
   end if;
   insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period)
   values (v_intent.workspace_id, v_intent.member_id, 'credit', 'payment', v_intent.amount_cents,
@@ -601,13 +600,13 @@ begin
   if v_intent.id is null
      or not exists (select 1 from public.members m
                      where m.id = v_intent.member_id and m.user_id = auth.uid()) then
-    raise exception 'not one of your payments';
+    raise exception 'not one of your payments' using errcode = 'DKC08';
   end if;
   if v_intent.claimed_invoice_ids is null or v_intent.claim_withdrawn_at is not null then
-    raise exception 'this payment names no invoices to free';
+    raise exception 'this payment names no invoices to free' using errcode = 'DKC09';
   end if;
   if v_intent.status <> 'created' then
-    raise exception 'this payment is no longer being processed';
+    raise exception 'this payment is no longer being processed' using errcode = 'DKC10';
   end if;
   update public.payment_intents set claim_withdrawn_at = now() where id = p_intent;
 end;

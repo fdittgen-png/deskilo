@@ -637,6 +637,11 @@ const Map<String, Set<String>> _notExportedColumns = {
     // #3925 — when a person looked at a reversal: the decision surface's
     // working state, not a fact of the payment (its reversal is exported).
     'reversal_reviewed_at',
+    // #3556 — the invoices a payment still being processed names, and when
+    // its member withdrew them: working state until the money arrives; what
+    // a settled payment paid is its invoice matches, which are exported.
+    'claimed_invoice_ids',
+    'claim_withdrawn_at',
   },
   'einvoice_inbox': {
     // The received document itself: it travels as a file of its own, not
