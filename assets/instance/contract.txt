@@ -3227,7 +3227,10 @@ routine public.public_identity_authority() -> jsonb | function | invoker | stabl
 routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:3c93dadf6767
 routine public.public_network_require(p_operation text) -> void | function | invoker | stable | exec:service_role | body:fee911e507ab
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
-routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:924f6f1fc7b1
+routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:ca65ba55d59f
+routine public.public_workspace_offer(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:1701cc9184e5
+routine public.public_workspace_setting_text(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:e429ee221f9d
+routine public.public_workspace_tax_treatment(p_workspace uuid) -> text | function | definer | stable | exec:service_role | body:abbcb49cec6a
 routine public.publish_privacy_notice(p_workspace_id uuid, p_version text, p_manifest jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:fc12cf39df7d
 routine public.purchase_allocations_guard() -> trigger | function | invoker | volatile | exec:service_role | body:d49cfc07ddd5
 routine public.purchase_apply_event_state(p_event events) -> void | function | definer | volatile | exec:service_role | body:866a954639c4
@@ -3309,8 +3312,8 @@ routine public.record_vies_check(p_member_id uuid, p_vat_id text, p_status text,
 routine public.record_workspace_application_decision() -> trigger | function | definer | volatile | exec:service_role | body:9c3fe56cd597
 routine public.record_workspace_export(p_workspace_id uuid, p_sha256 text, p_row_count integer) -> workspace_recovery_evidence | function | definer | volatile | exec:authenticated,service_role | body:32f4d263514d
 routine public.refresh_public_person_card(p_user uuid) -> void | function | definer | volatile | exec:service_role | body:92b2d2dba224
-routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:dc0e56065f83
-routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:4ddfb2ff4fe1
+routine public.refresh_public_profile_cards() -> trigger | function | definer | volatile | exec:service_role | body:7f06cc08be01
+routine public.refresh_public_workspace_card(p_workspace uuid) -> void | function | definer | volatile | exec:service_role | body:892cbaf73476
 routine public.refuse_match_of_moved_credit() -> trigger | function | definer | volatile | exec:service_role | body:785020e28721
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_id uuid, p_line_no integer, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:b5137c57cdf6
 routine public.register_asset_candidate_v1(p_workspace_id uuid, p_purchase_line_id uuid, p_description text, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c55d031a8ede
@@ -4145,12 +4148,15 @@ trigger seats.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal A
 trigger seats.seats_resource_guard CREATE TRIGGER seats_resource_guard BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION seats_resource_guard()
 trigger seats.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.seats FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger services.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.services REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
+trigger services.refresh_public_services CREATE TRIGGER refresh_public_services AFTER INSERT OR DELETE OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger services.services_keep_stock_history CREATE TRIGGER services_keep_stock_history BEFORE DELETE ON public.services FOR EACH ROW EXECUTE FUNCTION services_keep_stock_history()
 trigger services.services_stock_ledger_after CREATE TRIGGER services_stock_ledger_after AFTER INSERT ON public.services FOR EACH ROW EXECUTE FUNCTION services_stock_ledger_after()
 trigger services.services_stock_ledger_before CREATE TRIGGER services_stock_ledger_before BEFORE INSERT OR UPDATE OF stock, inventory_unit, tracking ON public.services FOR EACH ROW EXECUTE FUNCTION services_stock_ledger_before()
 trigger services.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.services FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_definitions.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_definitions FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setting_values.business_kind_setting_check CREATE TRIGGER business_kind_setting_check BEFORE INSERT OR UPDATE OF value ON public.setting_values FOR EACH ROW WHEN ((new.key = ANY (ARRAY['business.kind'::text, 'business.more_kinds'::text]))) EXECUTE FUNCTION business_kind_setting_check()
+trigger setting_values.refresh_public_kinds CREATE TRIGGER refresh_public_kinds AFTER INSERT OR UPDATE ON public.setting_values FOR EACH ROW WHEN ((new.key = ANY (ARRAY['business.kind'::text, 'business.more_kinds'::text]))) EXECUTE FUNCTION refresh_public_profile_cards()
+trigger setting_values.refresh_public_kinds_removed CREATE TRIGGER refresh_public_kinds_removed AFTER DELETE ON public.setting_values FOR EACH ROW WHEN ((old.key = ANY (ARRAY['business.kind'::text, 'business.more_kinds'::text]))) EXECUTE FUNCTION refresh_public_profile_cards()
 trigger setting_values.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setting_values FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger setup_step_drafts.setup_step_drafts_step_known CREATE TRIGGER setup_step_drafts_step_known BEFORE INSERT OR UPDATE OF step ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION setup_step_drafts_step_known()
 trigger setup_step_drafts.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.setup_step_drafts FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
@@ -4217,7 +4223,7 @@ trigger workspace_templates.template_regional_capture CREATE TRIGGER template_re
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspaces.analytics_opening_hours CREATE TRIGGER analytics_opening_hours AFTER INSERT OR UPDATE OF booking_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION analytics_workspace_changed()
 trigger workspaces.dunning_rules_sync_setting CREATE TRIGGER dunning_rules_sync_setting AFTER INSERT OR UPDATE OF dunning_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION dunning_rules_sync_setting()
-trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal, visibility, visibility_set_at ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
+trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal, visibility, visibility_set_at, vat_regime, country_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger workspaces.retire_invite_code CREATE TRIGGER retire_invite_code AFTER UPDATE OF invite_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION retire_invite_code()
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()
 trigger workspaces.workspace_document_language_confirm CREATE TRIGGER workspace_document_language_confirm BEFORE UPDATE OF default_locale ON public.workspaces FOR EACH ROW WHEN (((old.document_language_confirmed IS FALSE) AND (NOT (new.document_language_confirmed IS DISTINCT FROM old.document_language_confirmed)))) EXECUTE FUNCTION workspace_document_language_confirm()
