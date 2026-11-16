@@ -2239,8 +2239,9 @@
     {
       "key": "siteDocuments",
       "maturity": "unreviewed",
-      "lifecycle": "active",
-      "capabilities": []
+      "lifecycle": "retired",
+      "capabilities": [],
+      "deprecated_in": "1.0.3"
     },
     {
       "key": "spaceInquiries",

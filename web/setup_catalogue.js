@@ -268,10 +268,6 @@ window.SETUP_REGISTRY={
    false
   ],
   [
-   "siteDocuments",
-   false
-  ],
-  [
    "vatGroups",
    false
   ],
@@ -688,7 +684,6 @@ window.SETUP_REGISTRY={
   "workspaceStatus": "invoicing",
   "expenseRepartitionWizard": "expenseRepartition",
   "multiSite": "placeBooking",
-  "siteDocuments": "multiSite",
   "vatGroups": "vatManagement",
   "vatRateHistory": "vatManagement",
   "vatCounterparty": "vatManagement",

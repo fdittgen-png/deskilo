@@ -198,7 +198,6 @@
         "settlementFold": false,
         "setupGuide": true,
         "singleRoomLevelNames": true,
-        "siteDocuments": false,
         "spaceInquiries": true,
         "spaceQrCodes": true,
         "stockManagement": false,

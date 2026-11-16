@@ -134,8 +134,6 @@ String featureName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.expenseRepartitionWizard =>
         l10n.featureExpenseRepartitionWizard,
       WorkspaceFeature.multiSite => l10n.featureMultiSite,
-      WorkspaceFeature.siteDocuments =>
-        l10n.featureSiteDocuments,
       WorkspaceFeature.demoMode => l10n.featureDemoMode,
       WorkspaceFeature.instanceWizard =>
         l10n.featureInstanceWizard,

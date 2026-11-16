@@ -94,6 +94,7 @@ class DocumentsTable extends StatelessWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: onRetry,
       keyOf: (d) => d.id,
       searchText: (d) => d.title,

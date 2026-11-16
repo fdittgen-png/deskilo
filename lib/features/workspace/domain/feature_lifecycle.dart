@@ -147,7 +147,6 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.workspaceStatus: _ownerBeta,
   WorkspaceFeature.expenseRepartitionWizard: _ownerBeta,
   WorkspaceFeature.multiSite: _ownerBeta,
-  WorkspaceFeature.siteDocuments: _legacy,
   WorkspaceFeature.vatGroups: _ownerBeta,
   WorkspaceFeature.vatRateHistory: _ownerBeta,
   WorkspaceFeature.vatCounterparty: _ownerBeta,
@@ -246,7 +245,18 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
 /// Keys that were registered once and are gone. They stay here so a
 /// retired key is never reused for something else with the old meaning
 /// still sitting in stored flag maps and templates.
-const Map<String, FeatureAssessment> retiredFeatureAssessments = {};
+const Map<String, FeatureAssessment> retiredFeatureAssessments = {
+  // #3997 — reserved and never read: a document names its site whatever
+  // the flag said (0169). A stored value of it is ignored.
+  'siteDocuments': FeatureAssessment(
+    maturity: FeatureMaturity.unreviewed,
+    lifecycle: FeatureLifecycle.retired,
+    deprecatedIn: '1.0.3',
+    rationale:
+        'Retired (#3997): no implementation ever read it; documents name '
+        'their site since 0169 whatever it said.',
+  ),
+};
 
 /// The assessment of [feature]; unreviewed if the map has no entry,
 /// which the lint forbids but a reader must still survive.

@@ -98,6 +98,7 @@ class SuppliersDesk extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(suppliersProvider(workspaceId)),
       keyOf: (s) => s.id,
       searchText: (s) => '${s.number} ${s.name} ${s.taxIdEntered}',

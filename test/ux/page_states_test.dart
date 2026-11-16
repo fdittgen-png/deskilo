@@ -30,8 +30,15 @@ Exception _error(_State state) => switch (state) {
   _ => Exception('the read failed'),
 };
 
-/// A records page and the read behind it, answering [state].
-typedef _Page = ({String path, String name, Override Function(_State) read});
+/// A records page and the read behind it, answering [state]. #4097 —
+/// [empty] finds what the page draws for a read that held nothing: never
+/// drawn for a failed or refused one.
+typedef _Page = ({
+  String path,
+  String name,
+  Override Function(_State) read,
+  Finder Function() empty,
+});
 
 final List<_Page> _pages = [
   (
@@ -40,6 +47,7 @@ final List<_Page> _pages = [
     read: (state) => workspaceMembersProvider.overrideWith(
       (ref) async => state == _State.empty ? const [] : throw _error(state),
     ),
+    empty: () => find.text('No members yet.'),
   ),
   (
     path: '/documents',
@@ -49,6 +57,7 @@ final List<_Page> _pages = [
           ? const <WorkspaceDocument>[]
           : throw _error(state),
     ),
+    empty: () => find.textContaining('No document yet.'),
   ),
   (
     path: '/money/purchases',
@@ -58,6 +67,7 @@ final List<_Page> _pages = [
           ? const <PurchaseSummary>[]
           : throw _error(state),
     ),
+    empty: () => find.text('No purchase yet.'),
   ),
   (
     path: '/invoices',
@@ -66,6 +76,7 @@ final List<_Page> _pages = [
       (ref) async =>
           state == _State.empty ? const <Invoice>[] : throw _error(state),
     ),
+    empty: () => find.byKey(const ValueKey('invoicing-empty')),
   ),
 ];
 
@@ -129,28 +140,7 @@ Future<void> _show(
 /// #4076 -- a state a page does not draw through the shared primitives yet:
 /// `page|state|width` -> what it draws. Left out until the page is fixed
 /// (the list only shrinks).
-const Map<String, String> _stateFindings = {
-  'invoices|failed|1440':
-      'its own words ("Invoices could not be read.") and Try again',
-  'invoices|failed|390':
-      'its own words ("Invoices could not be read.") and Try again',
-  'purchases|failed|390':
-      'nothing: no failure and no Try again, the page reads as empty',
-  'invoices|refused|1440':
-      'its own words ("Invoices could not be read.") and Try again',
-  'invoices|refused|390':
-      'its own words ("Invoices could not be read.") and Try again',
-  'purchases|refused|390':
-      'nothing: no refusal and no Try again, the page reads as empty',
-  'members|refused|1440':
-      'the records table\'s plain "The list could not be read." for a refusal',
-  'documents|refused|1440':
-      'the records table\'s plain "The list could not be read." for a refusal',
-  'documents|refused|390':
-      'the plain "The list could not be read." for a refusal',
-  'purchases|refused|1440':
-      'the records table\'s plain "The list could not be read." for a refusal',
-};
+const Map<String, String> _stateFindings = {};
 
 void main() {
   for (final page in _pages) {
@@ -169,6 +159,17 @@ void main() {
               reason: 'the page does not throw',
             );
             expect(_stateProblems(state), isEmpty, reason: key);
+            // #4097 — a failed or refused read is never an empty list; an
+            // empty one draws the page's own mark. Not checked where the mark
+            // is not the list's: the purchases page on a phone is a page of
+            // doors, and the invoicing home's empty card waits until nothing
+            // is to invoice either, which this space has.
+            if (state != _State.empty) {
+              expect(page.empty(), findsNothing, reason: '$key drawn as empty');
+            } else if (page.name != 'invoices' &&
+                (page.name != 'purchases' || size.width >= 1024)) {
+              expect(page.empty(), findsWidgets, reason: '$key: its mark');
+            }
           },
         );
       }

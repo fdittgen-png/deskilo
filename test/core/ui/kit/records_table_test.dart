@@ -16,6 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../helpers/mouse.dart';
 import '../../../helpers/pump_app.dart';
@@ -432,5 +433,32 @@ void main() {
       tester.getSize(tick.first).shortestSide,
       greaterThanOrEqualTo(kMinInteractiveDimension),
     );
+  });
+
+  // #4097 — a refusal is said as one (told by the error's type and code),
+  // a failure as a failure; both keep Try again (#3061).
+  testWidgets('the failed row tells a refusal from a failure', (tester) async {
+    var retried = 0;
+    Future<void> failedWith(Object error) => pumpApp(
+      tester,
+      RecordsFailed(error: error, onRetry: () => retried++),
+    );
+    await failedWith(const PostgrestException(message: 'x', code: '42501'));
+    expect(_k('records-denied'), findsOneWidget);
+    expect(
+      find.text(
+        'You do not have access to this. Ask a workspace administrator if '
+        'you need it.',
+      ),
+      findsOneWidget,
+    );
+    expect(_k('records-failed'), findsNothing);
+    await tester.tap(_k('records-retry'));
+    expect(retried, 1);
+
+    await failedWith(Exception('the read failed'));
+    expect(_k('records-failed'), findsOneWidget);
+    expect(_k('records-denied'), findsNothing);
+    expect(_k('records-retry'), findsOneWidget);
   });
 }

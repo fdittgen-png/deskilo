@@ -213,13 +213,16 @@ void main() {
     });
 
     test('a finding that is gone must leave the baseline', () {
-      final drift = baselineDrift({
-        ...report.findings,
-        'deadFlags': const <String>[],
-      }, baseline);
-      // Every dead flag in the baseline is gone from this tree: one line each.
+      // #3997 — a dead flag the baseline still holds, removed from the tree.
+      final drift = baselineDrift(report.findings, {
+        ...baseline,
+        'deadFlags': {
+          ...?baseline['deadFlags'],
+          'tempGoneFlag': 'reserved',
+        },
+      });
       expect(drift, hasLength(1));
-      expect(drift.join('\n'), contains('GONE siteDocuments'));
+      expect(drift.single, contains('GONE tempGoneFlag'));
     });
   });
 }
