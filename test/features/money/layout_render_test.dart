@@ -19,6 +19,7 @@ import 'package:deskilo_document_model/layout_units.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../helpers/address_window_a4.dart';
 import '../../helpers/pdf_geometry.dart';
 
 pw.Font _ttf(String path) =>

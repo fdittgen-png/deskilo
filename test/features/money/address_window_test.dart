@@ -10,6 +10,8 @@ import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/address_window_a4.dart';
+
 /// PostScript points per millimetre.
 const double _mm = 72 / 25.4;
 
