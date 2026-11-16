@@ -15393,6 +15393,51 @@ abstract class AppLocalizations {
     String reason,
   );
 
+  /// #3914 which credentials: the e-invoicing channel’s
+  ///
+  /// In en, this message translates to:
+  /// **'e-invoicing'**
+  String get eventCredentialAreaEinvoice;
+
+  /// #3914 which credentials: a payment provider’s
+  ///
+  /// In en, this message translates to:
+  /// **'payments'**
+  String get eventCredentialAreaPayment;
+
+  /// #3914 the entry: who cleared which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} cleared the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
+  /// #3914 the entry: who replaced which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} replaced the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
+  /// #3914 the entry: who set which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} set the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
   /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
@@ -15684,6 +15729,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rent difference'**
   String get eventTypeCommitmentVariance;
+
+  /// #3914 the event type: credentials of an integration changed
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials change'**
+  String get eventTypeCredentialChange;
 
   /// Event type label / filter chip
   ///

@@ -9694,6 +9694,42 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'facturation électronique';
+
+  @override
+  String get eventCredentialAreaPayment => 'paiements';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a effacé les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a remplacé les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a enregistré les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -9945,6 +9981,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Écart de loyer';
+
+  @override
+  String get eventTypeCredentialChange => 'Modification d\'identifiants';
 
   @override
   String get eventTypeExpense => 'Dépense';

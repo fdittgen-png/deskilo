@@ -9586,6 +9586,42 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'e-invoicing';
+
+  @override
+  String get eventCredentialAreaPayment => 'payments';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor cleared the credentials of $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor replaced the credentials of $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor set the credentials of $provider ($area): $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validated $scheduled — $reason';
   }
@@ -9833,6 +9869,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Rent difference';
+
+  @override
+  String get eventTypeCredentialChange => 'Credentials change';
 
   @override
   String get eventTypeExpense => 'Expense';
