@@ -9,6 +9,7 @@ import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import {
   effectiveConfig,
   failureOutcome,
+  handedThen,
   handleWith,
   orderFailure,
   idempotencyKey,
@@ -250,4 +251,71 @@ Deno.test("an outcome that is not definitive writes nothing: the intent stays pe
     assertEquals(res.status, 503);
     assertEquals(writes, []);
   }
+});
+
+/** A service client whose rpc records its calls and answers [data] and
+ * [error]. */
+function handOverAdmin(
+  calls: { fn: string; args: unknown }[],
+  data: unknown,
+  error: { message: string } | null,
+) {
+  return {
+    rpc: (fn: string, args: unknown) => {
+      calls.push({ fn, args });
+      return Promise.resolve({ data, error });
+    },
+  };
+}
+
+Deno.test("#3556 — the database hands the intent over before the provider is called", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
+  const seen: number[] = [];
+  const handed = await handedThen(
+    handOverAdmin(calls, true, null),
+    "intent-1",
+    "stripe",
+    () => {
+      seen.push(calls.length);
+      return Promise.resolve("order-1");
+    },
+  );
+  assertEquals(handed, { ok: true, value: "order-1" });
+  assertEquals(seen, [1], "the provider is called after the hand-over");
+  assertEquals(calls, [{ fn: "hand_payment_intent", args: { p_intent: "intent-1" } }]);
+});
+
+Deno.test("#3556 — a claim the database will not hand over calls no provider and answers intent_stale", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
+  let called = false;
+  const handed = await handedThen(
+    handOverAdmin(calls, false, null),
+    "intent-1",
+    "stripe",
+    () => {
+      called = true;
+      return Promise.resolve("order-1");
+    },
+  );
+  assertEquals(called, false);
+  if (handed.ok) throw new Error("a refused hand-over must not hand over");
+  assertEquals(handed.response.status, 409);
+  assertEquals(await handed.response.json(), { error: "intent_stale", provider: "stripe" });
+});
+
+Deno.test("#3556 — a hand-over that cannot be asked calls no provider", async () => {
+  const calls: { fn: string; args: unknown }[] = [];
+  let called = false;
+  const handed = await handedThen(
+    handOverAdmin(calls, null, { message: "permission denied" }),
+    "intent-1",
+    "stripe",
+    () => {
+      called = true;
+      return Promise.resolve("order-1");
+    },
+  );
+  assertEquals(called, false);
+  if (handed.ok) throw new Error("a failed hand-over must not hand over");
+  assertEquals(handed.response.status, 500);
 });
