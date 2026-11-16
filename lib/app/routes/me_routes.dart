@@ -179,6 +179,8 @@ StatefulShellRoute _personalShell(RouteEnv env) =>
                 DirectoryScreen(
                   embedded: true,
                   focusSearch: state.uri.queryParameters['focus'] == 'search',
+                  // #3554 — `?kind=` opens Discover narrowed to that kind.
+                  initialKind: state.uri.queryParameters['kind'],
                 ),
               ),
             ),
