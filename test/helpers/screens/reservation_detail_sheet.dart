@@ -15,7 +15,6 @@ import '../fake_floor_plan_repository.dart';
 import '../fake_reservation_repository.dart';
 import '../in_memory_default_level_store.dart';
 import '../mock_providers.dart';
-import '../shell_tab.dart';
 
 /// A 2-hour reservation of member-1 starting at [start] — on the seeded
 /// seat ('seat-4' = A1) or, when [officeId] is set instead, on the office.
@@ -73,7 +72,7 @@ Future<InMemoryDefaultLevelStore> pumpCalendarApp(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Calendar'));
+  await tester.tap(find.text('Calendar'));
   await tester.pumpAndSettle();
   return store;
 }

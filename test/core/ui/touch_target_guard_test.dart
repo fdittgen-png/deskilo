@@ -23,7 +23,6 @@ import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../../helpers/screens/day_timeline.dart' show addSecondLevel;
-import '../../helpers/shell_tab.dart';
 
 /// Pragmatic chip floor — see the header comment for the rationale.
 const double _chipFloor = 44;
@@ -105,7 +104,7 @@ void main() {
       'the timeline level chips all meet the touch-target floors',
       (tester) async {
     await pumpApp(tester);
-    await tester.tap(shellTab('Calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
 
     expect(

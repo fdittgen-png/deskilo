@@ -13,7 +13,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/mock_providers.dart';
 import '../helpers/navigation.dart';
 import '../helpers/settings_sections.dart';
-import '../helpers/shell_tab.dart';
 
 Member member({required bool isAdmin, required bool isOwner}) => Member(
       id: 'member-1',
@@ -75,7 +74,7 @@ void main() {
     await switchToPlanTab(tester);
     expect(find.byIcon(Icons.design_services_outlined), findsOneWidget);
 
-    await tester.tap(shellTab('Calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     expect(find.text('Everyone'), findsOneWidget);
 
@@ -97,7 +96,7 @@ void main() {
     // plan and the Reserve hub's week grid already show every member the
     // whole community's occupancy, so gating it here only hid one view of
     // information that was never private.
-    await tester.tap(shellTab('Calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     expect(find.text('Everyone'), findsOneWidget);
   });

@@ -11,7 +11,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/mock_providers.dart';
-import '../../helpers/shell_tab.dart';
 
 Future<void> pumpApp(
   WidgetTester tester, {
@@ -160,7 +159,7 @@ void main() {
 
     // 'Members' is at visible position 1 but branch index 2 — the tap
     // must land on the directory branch, not Calendar.
-    await tester.tap(shellTab('Members'));
+    await tester.tap(find.text('Members'));
     await tester.pumpAndSettle();
 
     final appBarTitle = find.descendant(

@@ -18,7 +18,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_calendar_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/shell_tab.dart';
 
 CalendarItem _item(CalendarKind kind, String id, DateTime at,
         {int? cents}) =>
@@ -70,7 +69,7 @@ Future<FakeCalendarRepository> pumpViews(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Calendar'));
+  await tester.tap(find.text('Calendar'));
   await tester.pumpAndSettle();
   return calendar;
 }

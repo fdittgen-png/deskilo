@@ -29,7 +29,6 @@ import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/memory_recorder_log_backend.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/events.dart' show event;
-import '../../helpers/shell_tab.dart';
 import 'fixtures/recording_fixtures.dart';
 
 class _RefusingReservations extends FakeReservationRepository {
@@ -100,7 +99,7 @@ Future<ProviderContainer> _pump(
     UncontrolledProviderScope(container: c, child: const DeskiloApp()),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Calendar'));
+  await tester.tap(find.text('Calendar'));
   await tester.pumpAndSettle();
   return c;
 }

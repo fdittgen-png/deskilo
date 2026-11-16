@@ -21,7 +21,6 @@ import '../../helpers/fake_event_repository.dart';
 import '../../helpers/fake_pref_stores.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/screens/events.dart' show event;
-import '../../helpers/shell_tab.dart';
 
 const _bellOff = {
   'eventsTab': false,
@@ -90,7 +89,7 @@ void main() {
       child: const DeskiloApp(),
     ));
     await tester.pumpAndSettle();
-    await tester.tap(shellTab('Calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     expect(find.descendant(of: find.byType(AppBar), matching: find.text('Calendar')),
         findsOneWidget);

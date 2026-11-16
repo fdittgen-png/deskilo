@@ -30,7 +30,6 @@ import 'package:flutter_test/flutter_test.dart';
 
 import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/mock_providers.dart';
-import '../../helpers/shell_tab.dart';
 
 /// What a real workspace carries, and what must never be filmed.
 const _realNames = ['Marie Dupont', 'Ahmed Benali', 'Sofia Lindgren'];
@@ -122,7 +121,7 @@ Future<void> _pumpDirectory(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Members'));
+  await tester.tap(find.text('Members'));
   await tester.pumpAndSettle();
 }
 

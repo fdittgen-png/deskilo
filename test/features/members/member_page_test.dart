@@ -20,7 +20,6 @@ import '../../helpers/fake_profile_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
-import '../../helpers/shell_tab.dart';
 
 Member _member(
   int n, {
@@ -310,7 +309,7 @@ void main() {
     await tester.pumpAndSettle();
     // The directory, the way its own tests reach it: the Members
     // destination of the bottom bar (#1307).
-    await tester.tap(shellTab('Members'));
+    await tester.tap(find.text('Members'));
     await tester.pumpAndSettle();
     await tester.tap(find.text('Dora'));
     await tester.pumpAndSettle();

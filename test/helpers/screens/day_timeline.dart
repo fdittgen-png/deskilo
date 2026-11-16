@@ -18,7 +18,6 @@ import 'package:flutter_test/flutter_test.dart';
 import '../fake_floor_plan_repository.dart';
 import '../fake_reservation_repository.dart';
 import '../mock_providers.dart';
-import '../shell_tab.dart';
 
 /// A reservation today from [startHour] to [startHour]+2 on the seeded
 /// seat ('seat-4' = A1) unless [seatId]/[officeId] say otherwise.
@@ -122,7 +121,7 @@ Future<FakeReservationRepository> pumpTimeline(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Calendar'));
+  await tester.tap(find.text('Calendar'));
   await tester.pumpAndSettle();
   await tester.tap(find.byIcon(Icons.view_timeline_outlined));
   await tester.pumpAndSettle();

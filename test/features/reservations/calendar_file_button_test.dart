@@ -25,7 +25,6 @@ import '../../helpers/in_memory_default_level_store.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 import '../../helpers/screens/reservation_detail_sheet.dart' show reservationAt;
-import '../../helpers/shell_tab.dart';
 
 /// The captured local save.
 class Saves {
@@ -69,7 +68,7 @@ Future<FakeReservationRepository> pump(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(shellTab('Calendar'));
+  await tester.tap(find.text('Calendar'));
   await tester.pumpAndSettle();
   return reservations;
 }

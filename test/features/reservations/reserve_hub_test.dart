@@ -33,7 +33,6 @@ import '../../helpers/mock_providers.dart';
 import '../../helpers/reserve_view.dart';
 import '../../helpers/screens/reserve_hub.dart' show pickHubDate, pumpHub, reservationOn, seatCenter;
 import '../../helpers/screens/time_scroller.dart' show pickChipTime;
-import '../../helpers/shell_tab.dart';
 
 const _amChip = ValueKey('reserve-am-chip');
 const _pmChip = ValueKey('reserve-pm-chip');
@@ -284,7 +283,7 @@ void main() {
 
     // Bar destinations keep working from the hub… (the calendar holds the
     // alerts now, so the Calendar is the destination tapped.)
-    await tester.tap(shellTab('Calendar'));
+    await tester.tap(find.text('Calendar'));
     await tester.pumpAndSettle();
     expect(find.byKey(_canvasKey), findsNothing);
 
