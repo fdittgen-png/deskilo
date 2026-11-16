@@ -159,9 +159,10 @@ void main() {
       find.byKey(const ValueKey('workspace-settings-organisation')),
     );
     final welcome = find.byKey(const ValueKey('house-welcome'));
-    expect(tester.widget<SwitchListTile>(welcome).value, isFalse);
+    final toggle = find.descendant(of: welcome, matching: find.byType(Switch));
+    expect(tester.widget<Switch>(toggle).value, isFalse);
     await _tap(tester, welcome);
     expect(journey.fixture.houseWelcomes, contains(demoFirstSpaceId));
-    expect(tester.widget<SwitchListTile>(welcome).value, isTrue);
+    expect(tester.widget<Switch>(toggle).value, isTrue);
   });
 }
