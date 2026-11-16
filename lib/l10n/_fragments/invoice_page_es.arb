@@ -282,7 +282,7 @@
   "invoicePageMoreMatch": "Conciliar un pago",
   "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalMismatch": "Copia: el original conservado no coincide con su huella; esta se genera ahora con los ajustes de hoy.",
-  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. La biblioteca de imágenes lista las imágenes más grandes de lo que se imprimen y las lleva una a una al tamaño de impresión.",
   "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalKept": "Original conservado el {when} por {who} · SHA-256 {digest}",
   "invoiceCopyWithPaymentStatus": "Copia con el estado del pago",

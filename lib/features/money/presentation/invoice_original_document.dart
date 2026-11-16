@@ -32,6 +32,7 @@ import 'invoice_actions.dart' show requireWorkspaceTaxReference;
 import 'invoice_documents.dart';
 import 'invoice_pdf_actions.dart' show invoiceShareOptions, savePdfToDownloads;
 import 'report_layout_actions.dart';
+import 'widgets/report_image_picker.dart' show showReportImagePicker;
 
 /// An invoice's document as a screen hands it over, from [context] and [ref].
 class InvoiceDocumentFlow {
@@ -63,7 +64,20 @@ class InvoiceDocumentFlow {
     final document = await documentOf(invoice);
     final why = _whyACopy(document);
     if (why != null && context.mounted) {
-      AppSnack.info(context, why(context.l10n));
+      final l10n = context.l10n;
+      AppSnack.info(
+        context,
+        why(l10n),
+        // #3984 — an original refused for its weight: the picture library
+        // is where the heavy pictures are found and brought to print size.
+        action: document.source == InvoiceDocumentSource.tooLarge
+            ? SnackBarAction(
+                key: const ValueKey('invoice-original-open-picture-library'),
+                label: l10n.reportImagesOpenLibrary,
+                onPressed: () => unawaited(showReportImagePicker(context, ref)),
+              )
+            : null,
+      );
     }
     return (bytes: document.bytes, fileName: document.fileName);
   }

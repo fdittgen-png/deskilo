@@ -282,7 +282,7 @@
   "invoicePageMoreMatch": "Rapprocher un paiement",
   "invoiceOriginalNotKept": "Copie : cette facture a été émise avant que son original soit conservé ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalMismatch": "Copie : l’original conservé ne correspond pas à son empreinte ; celle-ci est rendue maintenant avec les réglages d’aujourd’hui.",
-  "invoiceOriginalTooLarge": "Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.",
+  "invoiceOriginalTooLarge": "Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. La bibliothèque d’images liste les images plus grandes qu’à l’impression et les amène une à une à la taille d’impression.",
   "invoiceOriginalNotYetKept": "Copie : l’entreprise n’a pas encore conservé l’original de cette facture ; elle est rendue maintenant avec les réglages d’aujourd’hui.",
   "invoiceOriginalKept": "Original conservé le {when} par {who} · SHA-256 {digest}",
   "invoiceCopyWithPaymentStatus": "Copie avec l’état du paiement",

@@ -6,13 +6,17 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/files/file_drop.dart';
 import '../../../../core/files/file_names.dart';
 import '../../../../core/files/file_picker.dart';
+import '../../../../core/images/report_picture_bytes.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/loading_view.dart';
+import '../../../workspace/domain/workspace_permission.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../providers/money_providers.dart';
 import 'report_image_notice.dart';
+import 'report_image_print_size.dart';
 
 /// The report-image LIBRARY picker (#488): the workspace's uploaded
 /// images with an upload button. Pops with the chosen image's name, or
@@ -70,16 +74,26 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
           return;
         }
         final name = safeFileSlug(file.name);
-        final extension = file.name.toLowerCase().split('.').last;
+        // #3984 — brought to print size before it is stored; the content
+        // type is the one of the bytes, not of the name's ending.
+        final ReportPicture picture;
+        try {
+          picture = await reportPictureForPrint(bytes);
+        } on ReportPictureException {
+          if (context.mounted) {
+            AppSnack.error(context, l10n.reportImageInvalid);
+          }
+          return;
+        }
+        if (!context.mounted ||
+            ref.read(currentWorkspaceProvider).value?.id != workspace.id) {
+          return;
+        }
         await repository.uploadReportImage(
           workspace.id,
           name: name,
-          bytes: bytes,
-          contentType: switch (extension) {
-            'jpg' || 'jpeg' => 'image/jpeg',
-            'webp' => 'image/webp',
-            _ => 'image/png',
-          },
+          bytes: picture.bytes,
+          contentType: picture.contentType,
         );
         if (!context.mounted) return;
         ref
@@ -109,7 +123,31 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
        onFile: (file) => _upload(context, ref, dropped: file),
        child: SizedBox(
         width: 360,
-        child: library.isLoading
+        child: Column(
+         mainAxisSize: MainAxisSize.min,
+         crossAxisAlignment: CrossAxisAlignment.start,
+         children: [
+          if (_uploading)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 8),
+              child: Row(
+                key: const ValueKey('report-image-preparing'),
+                children: [
+                  const SizedBox(
+                    width: 16,
+                    height: 16,
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(child: Text(l10n.reportImagePreparing)),
+                ],
+              ),
+            ),
+          if (ref
+              .watch(myPermissionsProvider)
+              .contains(WorkspacePermission.designDocuments))
+            const ReportImagePrintSize(),
+          Flexible(child: library.isLoading
             ? const LoadingView()
             : library.hasError
                 ? TextButton.icon(
@@ -172,7 +210,9 @@ class _ReportImageDialogState extends ConsumerState<_ReportImageDialog> {
                       onTap: () => Navigator.of(context).pop(name),
                     ),
                 ],
-              ),
+              )),
+         ],
+        ),
        ),
       ),
       actions: [

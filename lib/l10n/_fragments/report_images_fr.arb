@@ -1,3 +1,9 @@
 {
-  "reportImagesLoadFailed": "Impossible de charger les images des rapports. Réessayez."
+  "reportImagesLoadFailed": "Impossible de charger les images des rapports. Réessayez.",
+  "reportImagePreparing": "Préparation de l’image pour l’impression…",
+  "reportImagesOversized": "{count, plural, one{{count} image enregistrée est plus grande qu’à l’impression} other{{count} images enregistrées sont plus grandes qu’à l’impression}}",
+  "reportImagesBringToPrint": "Amener à la taille d’impression",
+  "reportImagesBringing": "Les images sont amenées à la taille d’impression…",
+  "reportImagesBringFailed": "Ces images n’ont pas été modifiées et restent enregistrées comme avant : {names}",
+  "reportImagesOpenLibrary": "Ouvrir la bibliothèque d’images"
 }

@@ -21172,7 +21172,7 @@
       }
     }
   },
-  "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.",
+  "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. The picture library lists the pictures that are larger than they print and brings them to print size, one by one.",
   "@invoiceOriginalTooLarge": {
     "description": "#3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)"
   },
@@ -36739,6 +36739,10 @@
   "@reportImageInvalid": {
     "description": "#2586 report image failure"
   },
+  "reportImagePreparing": "Preparing the picture for print…",
+  "@reportImagePreparing": {
+    "description": "#3984 the picture dialog while a picture is brought to print size before it is stored"
+  },
   "reportImageProblem": "{name}: {reason}",
   "@reportImageProblem": {
     "description": "#2586 report image failure",
@@ -36775,6 +36779,23 @@
   "@reportImageUpload": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesBringFailed": "These pictures were not changed and are stored as they were: {names}",
+  "@reportImagesBringFailed": {
+    "description": "#3984 the pictures a replacement did not change, by name; each stays as it was stored",
+    "placeholders": {
+      "names": {
+        "type": "String"
+      }
+    }
+  },
+  "reportImagesBringToPrint": "Bring to print size",
+  "@reportImagesBringToPrint": {
+    "description": "#3984 the library action that brings the oversized stored pictures to print size, one by one"
+  },
+  "reportImagesBringing": "Bringing the pictures to print size…",
+  "@reportImagesBringing": {
+    "description": "#3984 the library while the oversized pictures are being replaced"
+  },
   "reportImagesEmpty": "No image yet — upload your logo, a stamp or a signature and reference it with ![name].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
@@ -36782,6 +36803,19 @@
   "reportImagesLoadFailed": "Could not load report images. Try again.",
   "@reportImagesLoadFailed": {
     "description": "Shown as the label in report image picker (money)."
+  },
+  "reportImagesOpenLibrary": "Open the picture library",
+  "@reportImagesOpenLibrary": {
+    "description": "#3984 the action of the snack that tells an original was too large: opens the picture library"
+  },
+  "reportImagesOversized": "{count, plural, one{1 stored picture is larger than it prints} other{{count} stored pictures are larger than they print}}",
+  "@reportImagesOversized": {
+    "description": "#3984 the picture library's line when stored pictures are over print size or weight",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "reportImagesTitle": "Report images",
   "@reportImagesTitle": {

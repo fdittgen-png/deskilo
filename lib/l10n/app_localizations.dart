@@ -25934,7 +25934,7 @@ abstract class AppLocalizations {
   /// #3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)
   ///
   /// In en, this message translates to:
-  /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.'**
+  /// **'Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. The picture library lists the pictures that are larger than they print and brings them to print size, one by one.'**
   String get invoiceOriginalTooLarge;
 
   /// #3853 after keeping the originals from To do: how many could not be kept; each invoice says why when opened
@@ -45156,6 +45156,12 @@ abstract class AppLocalizations {
   /// **'The file is not a usable image'**
   String get reportImageInvalid;
 
+  /// #3984 the picture dialog while a picture is brought to print size before it is stored
+  ///
+  /// In en, this message translates to:
+  /// **'Preparing the picture for print…'**
+  String get reportImagePreparing;
+
   /// #2586 report image failure
   ///
   /// In en, this message translates to:
@@ -45198,6 +45204,24 @@ abstract class AppLocalizations {
   /// **'Upload image'**
   String get reportImageUpload;
 
+  /// #3984 the pictures a replacement did not change, by name; each stays as it was stored
+  ///
+  /// In en, this message translates to:
+  /// **'These pictures were not changed and are stored as they were: {names}'**
+  String reportImagesBringFailed(String names);
+
+  /// #3984 the library action that brings the oversized stored pictures to print size, one by one
+  ///
+  /// In en, this message translates to:
+  /// **'Bring to print size'**
+  String get reportImagesBringToPrint;
+
+  /// #3984 the library while the oversized pictures are being replaced
+  ///
+  /// In en, this message translates to:
+  /// **'Bringing the pictures to print size…'**
+  String get reportImagesBringing;
+
   /// Report WYSIWYG editor + image library (#488)
   ///
   /// In en, this message translates to:
@@ -45209,6 +45233,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not load report images. Try again.'**
   String get reportImagesLoadFailed;
+
+  /// #3984 the action of the snack that tells an original was too large: opens the picture library
+  ///
+  /// In en, this message translates to:
+  /// **'Open the picture library'**
+  String get reportImagesOpenLibrary;
+
+  /// #3984 the picture library's line when stored pictures are over print size or weight
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 stored picture is larger than it prints} other{{count} stored pictures are larger than they print}}'**
+  String reportImagesOversized(int count);
 
   /// Report WYSIWYG editor + image library (#488)
   ///

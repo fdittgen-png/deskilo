@@ -400,6 +400,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<String> saveVatDeclaration({required String workspaceId, required DateTime periodStart, required DateTime periodEnd}) => taxReporting.saveVatDeclaration(workspaceId: workspaceId, periodStart: periodStart, periodEnd: periodEnd);
   @override Future<void> markVatDeclarationSubmitted({required String declarationId, required String channel, required String receipt}) => taxReporting.markVatDeclarationSubmitted(declarationId: declarationId, channel: channel, receipt: receipt);
   @override Future<List<String>> listReportImages(String workspaceId) => reportTemplates.listReportImages(workspaceId);
+  @override Future<Map<String, int>> reportImageWeights(String workspaceId) => reportTemplates.reportImageWeights(workspaceId);
   @override Future<void> uploadReportImage(String workspaceId, {required String name, required List<int> bytes, required String contentType}) => reportTemplates.uploadReportImage(workspaceId, name: name, bytes: bytes, contentType: contentType);
   @override Future<Uint8List?> fetchReportImage(String workspaceId, String name) => reportTemplates.fetchReportImage(workspaceId, name);
   @override Future<List<Invoice>> fetchInvoices(String workspaceId) => invoiceQueries.fetchInvoices(workspaceId);

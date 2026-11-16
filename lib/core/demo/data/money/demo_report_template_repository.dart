@@ -32,6 +32,11 @@ class DemoReportTemplates implements ReportTemplateRepository {
       _m.reportImages.keys.toList()..sort();
 
   @override
+  Future<Map<String, int>> reportImageWeights(String workspaceId) async => {
+    for (final e in _m.reportImages.entries) e.key: e.value.length,
+  };
+
+  @override
   Future<void> uploadReportImage(
     String workspaceId, {
     required String name,
