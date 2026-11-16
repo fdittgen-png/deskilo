@@ -34,7 +34,6 @@
   "messengerWriteToHosts": "Écrire aux hôtes",
   "messengerHostsIntro": "Votre message est lu par ces hôtes de l’entreprise :",
   "messengerHostsNone": "Personne ne répond aux messages de cette entreprise pour le moment.",
-  "messengerInquirySend": "Envoyer la demande",
   "messengerInquiriesTitle": "Demandes",
   "messengerInquiriesEmpty": "Aucune demande pour l’instant.",
   "messengerInquiryClose": "Clore la demande",

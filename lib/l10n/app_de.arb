@@ -6226,6 +6226,11 @@
     }
   },
   "eventCommitmentVarianceLine": "{actor} akzeptiert eine Abweichung von {amount} auf {reference} (fällig {date}): {reason}",
+  "eventCredentialAreaEinvoice": "E-Rechnung",
+  "eventCredentialAreaPayment": "Zahlungen",
+  "eventCredentialCleared": "{actor} hat die Zugangsdaten von {provider} ({area}) gelöscht: {keys}.",
+  "eventCredentialReplaced": "{actor} hat die Zugangsdaten von {provider} ({area}) ersetzt: {keys}.",
+  "eventCredentialSet": "{actor} hat die Zugangsdaten von {provider} ({area}) hinterlegt: {keys}.",
   "eventExpenseDeviation": "validiert {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} verteilt „{title}“ — {amount} auf 1 Mitglied} other{{actor} verteilt „{title}“ — {amount} auf {count} Mitglieder}}",
   "@eventExpenseRepartitionLine": {
@@ -6413,6 +6418,7 @@
   "eventTypeAdjustment": "Korrektur",
   "eventTypeBadgeSecurityAlert": "Schutz der Badge-Anmeldung",
   "eventTypeCommitmentVariance": "Mietabweichung",
+  "eventTypeCredentialChange": "Änderung der Zugangsdaten",
   "eventTypeExpense": "Ausgabe",
   "eventTypeExpenseRepartition": "Gemeinsame Ausgabe",
   "eventTypeExpenseSchedule": "Geplante Ausgabe",
@@ -12999,7 +13005,6 @@
   "messengerInquiryClose": "Anfrage abschließen",
   "messengerInquiryClosed": "Anfrage abgeschlossen.",
   "messengerInquiryFrom": "Von {name}",
-  "messengerInquirySend": "Anfrage senden",
   "messengerLock": "Weiterleiten sperren",
   "messengerMessageActions": "Nachrichtenaktionen",
   "messengerNoStarred": "Noch keine markierte Nachricht.",
@@ -14143,6 +14148,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Guten Tag, ich möchte mehr über „{service}“ erfahren.",
+  "placeInquiryNoWay": "Diesem Betrieb kann man von hier aus nicht schreiben.",
+  "placeInquiryReachOtherwise": "Sie erreichen ihn hier:",
+  "placeInquirySendTo": "An {business} senden",
+  "placePreviewContact": "Kontakt aufnehmen",
+  "placeServiceAsk": "Nach {service} fragen",
+  "placeServiceAskShort": "Fragen",
+  "placeServicesOther": "Weitere",
+  "placeServicesTitle": "Leistungen",
   "planAccessorySupplementHint": "Aufpreise gelten pro halbem Tag.",
   "planActiveLabel": "Aktiv",
   "planAfternoonChip": "Nachmittag",

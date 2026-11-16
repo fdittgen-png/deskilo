@@ -6226,6 +6226,11 @@
     }
   },
   "eventCommitmentVarianceLine": "{actor} accepte un écart de {amount} sur {reference} (échéance {date}) : {reason}",
+  "eventCredentialAreaEinvoice": "facturation électronique",
+  "eventCredentialAreaPayment": "paiements",
+  "eventCredentialCleared": "{actor} a effacé les identifiants de {provider} ({area}) : {keys}.",
+  "eventCredentialReplaced": "{actor} a remplacé les identifiants de {provider} ({area}) : {keys}.",
+  "eventCredentialSet": "{actor} a enregistré les identifiants de {provider} ({area}) : {keys}.",
   "eventExpenseDeviation": "validé {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} répartit « {title} » — {amount} entre {count} membre} other{{actor} répartit « {title} » — {amount} entre {count} membres}}",
   "@eventExpenseRepartitionLine": {
@@ -6413,6 +6418,7 @@
   "eventTypeAdjustment": "Ajustement",
   "eventTypeBadgeSecurityAlert": "Protection de la connexion par badge",
   "eventTypeCommitmentVariance": "Écart de loyer",
+  "eventTypeCredentialChange": "Modification d'identifiants",
   "eventTypeExpense": "Dépense",
   "eventTypeExpenseRepartition": "Dépense partagée",
   "eventTypeExpenseSchedule": "Dépense programmée",
@@ -12999,7 +13005,6 @@
   "messengerInquiryClose": "Clore la demande",
   "messengerInquiryClosed": "Demande close.",
   "messengerInquiryFrom": "De {name}",
-  "messengerInquirySend": "Envoyer la demande",
   "messengerLock": "Interdire le transfert",
   "messengerMessageActions": "Actions sur le message",
   "messengerNoStarred": "Aucun message en favori.",
@@ -14143,6 +14148,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Bonjour, j’aimerais en savoir plus sur « {service} ».",
+  "placeInquiryNoWay": "Ce commerce ne peut pas être contacté d’ici.",
+  "placeInquiryReachOtherwise": "Vous pouvez le joindre ici :",
+  "placeInquirySendTo": "Envoyer à {business}",
+  "placePreviewContact": "Prendre contact",
+  "placeServiceAsk": "Se renseigner sur {service}",
+  "placeServiceAskShort": "Demander",
+  "placeServicesOther": "Autres",
+  "placeServicesTitle": "Prestations",
   "planAccessorySupplementHint": "Les suppléments s'appliquent par demi-journée.",
   "planActiveLabel": "Active",
   "planAfternoonChip": "Après-midi",

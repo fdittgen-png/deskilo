@@ -3,7 +3,15 @@
 // #3905 -- a PayPal reversal names its order as a capture does; only a live
 // configuration's events reach a production ledger.
 import { assertEquals } from "jsr:@std/assert@1";
-import { captureIdOf, isReversalEvent, orderIdOf, processesEvents, reversalReason, takesRealMoney } from "./event_rules.ts";
+import {
+  attachableOrderId,
+  captureIdOf,
+  isReversalEvent,
+  orderIdOf,
+  processesEvents,
+  reversalReason,
+  takesRealMoney,
+} from "./event_rules.ts";
 
 Deno.test("a reversed or refunded capture names its order", () => {
   const capture = { id: "cap_1", supplementary_data: { related_ids: { order_id: "ORDER-1" } } };
@@ -49,4 +57,14 @@ Deno.test("a sandbox configuration's events are processed only with test payment
   assertEquals(processesEvents({ env: "sandbox" }, false), false);
   assertEquals(processesEvents({ env: "sandbox" }, true), true);
   assertEquals(processesEvents({ env: "live" }, false), true);
+});
+
+Deno.test("#3917: the order an event may attach is never a capture's or a refund's id", () => {
+  const related = { supplementary_data: { related_ids: { order_id: "O-1" } } };
+  assertEquals(attachableOrderId("CHECKOUT.ORDER.APPROVED", { id: "O-1" }), "O-1");
+  assertEquals(attachableOrderId("PAYMENT.CAPTURE.COMPLETED", { id: "CAP-1", ...related }), "O-1");
+  assertEquals(attachableOrderId("PAYMENT.CAPTURE.COMPLETED", { id: "CAP-1" }), "");
+  assertEquals(attachableOrderId("PAYMENT.CAPTURE.REFUNDED", { id: "REF-1", ...related }), "");
+  assertEquals(attachableOrderId("PAYMENT.CAPTURE.REVERSED", { id: "REV-1", ...related }), "");
+  assertEquals(attachableOrderId("CHECKOUT.ORDER.APPROVED", {}), "");
 });

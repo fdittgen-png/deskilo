@@ -9691,6 +9691,42 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'fatturazione elettronica';
+
+  @override
+  String get eventCredentialAreaPayment => 'pagamenti';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor ha cancellato le credenziali di $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor ha sostituito le credenziali di $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor ha impostato le credenziali di $provider ($area): $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validato $scheduled — $reason';
   }
@@ -9941,6 +9977,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Differenza di affitto';
+
+  @override
+  String get eventTypeCredentialChange => 'Modifica delle credenziali';
 
   @override
   String get eventTypeExpense => 'Spesa';
@@ -22057,9 +22096,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Invia richiesta';
-
-  @override
   String get messengerLock => 'Blocca l’inoltro';
 
   @override
@@ -24299,6 +24335,40 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 stelle';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Buongiorno, vorrei saperne di più su «$service».';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'Non è possibile scrivere a questa attività da qui.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'Può contattarla qui:';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Invia a $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Contatta';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Chiedi di $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Chiedi';
+
+  @override
+  String get placeServicesOther => 'Altri';
+
+  @override
+  String get placeServicesTitle => 'Servizi';
 
   @override
   String get planAccessorySupplementHint =>

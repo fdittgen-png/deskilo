@@ -5,6 +5,7 @@
 
 import { toMajor } from "../_shared/money.ts";
 import { mollieApi } from "../_shared/providers.ts";
+import { INTENT_KEY } from "../_shared/provisional_intent.ts";
 import { ProviderRefusal } from "./outcome.ts";
 import type { AdapterDeps, OrderAdapter, OrderInput, ProviderConfig } from "./types.ts";
 
@@ -37,9 +38,13 @@ async function createMolliePaymentWith(
       // instance behind a custom domain — Mollie refuses a URL it
       // cannot reach, localhost included, which is why the override
       // exists at all.
-      webhookUrl: cfg.webhook_url ??
-        `${deps.env("SUPABASE_URL")}/functions/v1/mollie-webhook`,
-      metadata: { reference: order.reference },
+      // #3917 -- the address names the intent: Mollie posts only the
+      // payment id, which the server may not know yet.
+      webhookUrl: withIntent(
+        cfg.webhook_url ?? `${deps.env("SUPABASE_URL")}/functions/v1/mollie-webhook`,
+        order.intentId,
+      ),
+      metadata: { reference: order.reference, [INTENT_KEY]: order.intentId },
       ...(method ? { method } : {}),
     }),
   });
@@ -48,6 +53,16 @@ async function createMolliePaymentWith(
   }
   const payment = await res.json();
   return { orderId: payment.id as string, approveUrl: payment._links.checkout.href as string };
+}
+
+/** #3917 -- [url] with the intent named in its query, beside any query it has. */
+export function withIntent(url: string, intentId: string): string {
+  if (!URL.canParse(url)) {
+    return `${url}${url.includes("?") ? "&" : "?"}intent=${encodeURIComponent(intentId)}`;
+  }
+  const u = new URL(url);
+  u.searchParams.set("intent", intentId);
+  return u.toString();
 }
 
 export const createMolliePayment: OrderAdapter = (cfg, order, deps) =>

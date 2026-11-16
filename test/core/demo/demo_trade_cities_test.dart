@@ -28,7 +28,8 @@ import 'package:flutter_test/flutter_test.dart';
 const _prices = [250, 200, 150, 200, 400, 15, 50, 20, 500];
 
 /// The facts of one trade city, written out here from the issue and the seed;
-/// netDivisor is the rate as a ratio: net = gross * 100 / netDivisor.
+/// netDivisor is the rate as a ratio: net = gross * 100 / netDivisor; level is
+/// the town's price level in percent of the base prices (#4130).
 const _zurich = (
   id: 'ws-5',
   name: 'Limmat Cowork Zurich',
@@ -37,6 +38,7 @@ const _zurich = (
   zone: 'Europe/Zurich',
   prefix: 'ch',
   vat: 8.1,
+  level: 125,
   netDivisor: 10810,
   foreign: 'EUR',
   rate: '0.9383',
@@ -49,6 +51,7 @@ const _milan = (
   zone: 'Europe/Rome',
   prefix: 'it',
   vat: 22,
+  level: 85,
   netDivisor: 12200,
   foreign: 'CHF',
   rate: '1.0657',
@@ -62,7 +65,8 @@ final _percent = [100, 50, 100, 50, 100, ...[for (var i = 0; i < 16; i++) 100]];
 /// What a member's invoice of [month] (1..12) comes to, in minor units: the
 /// membership (18000 half-time, 36000 full), plus the nine catalogue items
 /// at the quantities the seed's rule gives, written out item by item.
-int _invoiceCents(int index, int month, int percent) {
+int _invoiceCents(int index, int month, int percent, int level) {
+  int atLevel(int base) => (base * level + 50) ~/ 100;
   final quantities = [
     (index + month) % 5,
     (index + month) % 3,
@@ -74,9 +78,9 @@ int _invoiceCents(int index, int month, int percent) {
     (index + month) % 6,
     (index + month) % 2,
   ];
-  var cents = percent < 100 ? 18000 : 36000;
+  var cents = atLevel(percent < 100 ? 18000 : 36000);
   for (var i = 0; i < _prices.length; i++) {
-    cents += quantities[i] * _prices[i];
+    cents += quantities[i] * atLevel(_prices[i]);
   }
   return cents;
 }
@@ -160,7 +164,12 @@ void main() {
             final period = '$year-${month.toString().padLeft(2, '0')}';
             final id = '${facts.prefix}-invoice-$period-$index';
             final invoice = money.invoices.singleWhere((i) => i.id == id);
-            final expected = _invoiceCents(index, month, _percent[index]);
+            final expected = _invoiceCents(
+              index,
+              month,
+              _percent[index],
+              facts.level,
+            );
             billed += expected;
             expect(invoice.totalCents, expected, reason: id);
             expect(invoice.currency, facts.currency, reason: id);
@@ -230,8 +239,14 @@ void main() {
           expect(payment.createdAt.isAfter(now), isFalse, reason: 'no payment from the future');
         }
         // What Bruno still owes: September plus October, from the facts.
-        final owed = _invoiceCents(1, 9, 50) + _invoiceCents(1, 10, 50);
-        expect(owed, 41105, reason: 'the arithmetic, written out by hand');
+        final owed =
+            _invoiceCents(1, 9, 50, facts.level) +
+            _invoiceCents(1, 10, 50, facts.level);
+        expect(
+          _invoiceCents(1, 9, 50, 100) + _invoiceCents(1, 10, 50, 100),
+          41105,
+          reason: 'the arithmetic at base prices, written out by hand',
+        );
         expect(
           open.where((i) => i.memberId == 'member-2').fold<int>(0, (s, i) => s + i.totalCents),
           owed,

@@ -17,6 +17,7 @@ import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/providers/organisation_providers.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
+import '../../l10n/app_localizations.dart';
 import '../route_classes.dart';
 
 /// The other houses of the organisation [currentId] is a house of, in Me's
@@ -41,6 +42,17 @@ List<Workspace> otherHousesOf(WidgetRef ref, String? currentId) {
     ))
       ?byId[house.workspaceId],
   ];
+}
+
+/// #4129 -- how a house is named wherever houses are listed or announced:
+/// `Name — Country · CUR`; the business's name alone while it has neither.
+String houseLabel(AppLocalizations l10n, Workspace space) {
+  final where = countryAndCurrency(
+    l10n,
+    countryCode: space.countryCode,
+    currencyCode: space.currencyCode,
+  );
+  return where.isEmpty ? space.name : l10n.titleDashDetail(space.name, where);
 }
 
 /// The chip's sheet: the other houses, then the way back to Me.

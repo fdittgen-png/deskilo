@@ -46,6 +46,7 @@ Future<FakeOrganisationRepository> _open(
   FakeOrganisationRepository? given,
   Workspace? opened,
   List<Workspace> twins = const [],
+  Size size = const Size(390, 1200),
 }) async {
   final repository =
       given ??
@@ -61,7 +62,7 @@ Future<FakeOrganisationRepository> _open(
         ),
       ),
     ),
-    size: const Size(390, 1200),
+    size: size,
     overrides: [
       organisationRepositoryProvider.overrideWithValue(repository),
       myWorkspacesProvider.overrideWith(
@@ -258,5 +259,31 @@ void main() {
       isNotNull,
       reason: 'Cancel changes nothing',
     );
+  });
+
+  testWidgets('#4129 on a phone the organisation is a sheet', (tester) async {
+    await _open(tester);
+    expect(find.byKey(const ValueKey('task-sheet')), findsOneWidget);
+    expect(find.byKey(const ValueKey('organisation-sheet')), findsOneWidget);
+  });
+
+  testWidgets('#4129 at the desk the organisation is a side task, not a '
+      'sheet from the bottom edge, and its row actions keep their names', (
+    tester,
+  ) async {
+    final semantics = tester.ensureSemantics();
+    await _open(tester, size: const Size(1440, 900));
+    expect(find.byKey(const ValueKey('task-side-panel')), findsOneWidget);
+    expect(find.byKey(const ValueKey('task-sheet')), findsNothing);
+    expect(find.byKey(const ValueKey('organisation-sheet')), findsOneWidget);
+    final icons = find.descendant(
+      of: find.byKey(const ValueKey('organisation-sheet')),
+      matching: find.byType(IconButton),
+    );
+    expect(icons, findsWidgets);
+    for (final button in tester.widgetList<IconButton>(icons)) {
+      expect(button.tooltip, isNotEmpty);
+    }
+    semantics.dispose();
   });
 }

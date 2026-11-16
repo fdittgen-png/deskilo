@@ -6226,6 +6226,11 @@
     }
   },
   "eventCommitmentVarianceLine": "{actor} acepta una diferencia de {amount} en {reference} (vencimiento {date}): {reason}",
+  "eventCredentialAreaEinvoice": "facturación electrónica",
+  "eventCredentialAreaPayment": "pagos",
+  "eventCredentialCleared": "{actor} borró las credenciales de {provider} ({area}): {keys}.",
+  "eventCredentialReplaced": "{actor} sustituyó las credenciales de {provider} ({area}): {keys}.",
+  "eventCredentialSet": "{actor} registró las credenciales de {provider} ({area}): {keys}.",
   "eventExpenseDeviation": "validado {scheduled} — {reason}",
   "eventExpenseRepartitionLine": "{count, plural, one{{actor} reparte «{title}»: {amount} entre 1 socio} other{{actor} reparte «{title}»: {amount} entre {count} socios}}",
   "@eventExpenseRepartitionLine": {
@@ -6413,6 +6418,7 @@
   "eventTypeAdjustment": "Ajuste",
   "eventTypeBadgeSecurityAlert": "Protección del acceso con tarjeta",
   "eventTypeCommitmentVariance": "Diferencia de alquiler",
+  "eventTypeCredentialChange": "Cambio de credenciales",
   "eventTypeExpense": "Gasto",
   "eventTypeExpenseRepartition": "Gasto compartido",
   "eventTypeExpenseSchedule": "Gasto programado",
@@ -12999,7 +13005,6 @@
   "messengerInquiryClose": "Cerrar consulta",
   "messengerInquiryClosed": "Consulta cerrada.",
   "messengerInquiryFrom": "De {name}",
-  "messengerInquirySend": "Enviar consulta",
   "messengerLock": "Bloquear el reenvío",
   "messengerMessageActions": "Acciones del mensaje",
   "messengerNoStarred": "Aún no hay mensajes destacados.",
@@ -14143,6 +14148,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Hola, me gustaría saber más sobre «{service}».",
+  "placeInquiryNoWay": "No se puede escribir a este negocio desde aquí.",
+  "placeInquiryReachOtherwise": "Puede contactarlo aquí:",
+  "placeInquirySendTo": "Enviar a {business}",
+  "placePreviewContact": "Contactar",
+  "placeServiceAsk": "Preguntar por {service}",
+  "placeServiceAskShort": "Preguntar",
+  "placeServicesOther": "Otros",
+  "placeServicesTitle": "Servicios",
   "planAccessorySupplementHint": "Los suplementos se aplican por media jornada.",
   "planActiveLabel": "Activo",
   "planAfternoonChip": "Tarde",

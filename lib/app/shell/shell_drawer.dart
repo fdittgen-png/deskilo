@@ -24,8 +24,10 @@ import '../../features/money/presentation/widgets/purchases_sheet.dart';
 import '../../features/money/providers/purchase_approval_provider.dart';
 import '../../features/profile/presentation/widgets/personal_avatar.dart';
 import '../../features/workspace/domain/member.dart' show CoOwnerStatus;
+import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
+import '../../features/workspace/presentation/widgets/workspace_avatar.dart';
 import '../../features/workspace/presentation/widgets/workspace_emblem.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import 'desk_rail.dart';
@@ -224,6 +226,9 @@ class ShellDrawer extends ConsumerWidget {
           ? PurchaseApprovalBadge(value: approvals)
           : null,
     );
+    // #4129 -- one list of houses for the rail, the sidebar's head and the
+    // phone's chip.
+    final houses = otherHousesOf(ref, workspace?.id);
     // #3603 — the desk's rail: the same destinations and groups.
     if (rail) {
       return DeskRail(
@@ -233,7 +238,8 @@ class ShellDrawer extends ConsumerWidget {
         path: path,
         badgeOf: badgeOf,
         onBackToMe: backToMe,
-        houses: otherHousesOf(ref, workspace?.id),
+        current: workspace,
+        houses: houses,
         onHouse: (house) => unawaited(enterSpace(context, ref, house)),
       );
     }
@@ -260,7 +266,14 @@ class ShellDrawer extends ConsumerWidget {
           child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            _drawerHeading(workspace?.name ?? 'DesKilo', theme),
+            _drawerHeading(
+              context,
+              workspace?.name ?? 'DesKilo',
+              theme,
+              houses: houses,
+              onHouse: (house) => unawaited(enterSpace(context, ref, house)),
+              onBackToMe: backToMe,
+            ),
             ListTile(
               key: const ValueKey('drawer-back-to-me'),
               leading: const PersonalAvatar(),
@@ -294,10 +307,68 @@ class ShellDrawer extends ConsumerWidget {
   }
 }
 
-Widget _drawerHeading(String name, ThemeData theme) => Padding(
-  padding: AppSpacing.lgAll,
-  child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisSize: MainAxisSize.min, children: [
-    Text(name, key: const ValueKey('drawer-workspace-name'), style: theme.textTheme.titleLarge),
-    const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
-  ]),
-);
+/// The sidebar's head: the business's name; where the person has other
+/// houses of its organisation it is a menu button, with a visible mark, that
+/// lists them, each `Name — Country · CUR`, then the way back to Me (#4129).
+Widget _drawerHeading(
+  BuildContext context,
+  String name,
+  ThemeData theme, {
+  required List<Workspace> houses,
+  required ValueChanged<Workspace> onHouse,
+  required VoidCallback onBackToMe,
+}) {
+  final l10n = context.l10n;
+  final title = Text(
+    name,
+    key: const ValueKey('drawer-workspace-name'),
+    style: theme.textTheme.titleLarge,
+  );
+  return Padding(
+    padding: AppSpacing.lgAll,
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (houses.isEmpty)
+          title
+        else
+          MenuAnchor(
+            menuChildren: [
+              for (final house in houses)
+                MenuItemButton(
+                  key: ValueKey('drawer-house-${house.id}'),
+                  leadingIcon: WorkspaceAvatar(workspace: house, radius: 12),
+                  onPressed: () => onHouse(house),
+                  child: Text(houseLabel(l10n, house)),
+                ),
+              MenuItemButton(
+                key: const ValueKey('drawer-house-back-to-me'),
+                leadingIcon: const PersonalAvatar(),
+                onPressed: onBackToMe,
+                child: Text(l10n.spaceBackToMe),
+              ),
+            ],
+            builder: (context, controller, _) => Tooltip(
+              message: l10n.spaceOtherHouses,
+              child: TextButton.icon(
+                key: const ValueKey('drawer-houses'),
+                style: TextButton.styleFrom(
+                  alignment: AlignmentDirectional.centerStart,
+                  minimumSize: const Size(0, kMinInteractiveDimension),
+                  padding: EdgeInsets.zero,
+                  foregroundColor: theme.colorScheme.onSurface,
+                ),
+                iconAlignment: IconAlignment.end,
+                icon: const Icon(Icons.arrow_drop_down),
+                label: title,
+                onPressed: () =>
+                    controller.isOpen ? controller.close() : controller.open(),
+              ),
+            ),
+          ),
+        const WorkspaceEmblem(key: ValueKey('drawer-emblem')),
+      ],
+    ),
+  );
+}
