@@ -2942,7 +2942,7 @@ routine public.mcp_op_set_opening_hours(c mcp_call_context, p_args jsonb) -> jso
 routine public.mcp_op_set_payment_instructions(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:8caff7bef909
 routine public.mcp_op_set_workspace_basics(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4eec85af0fed
 routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:814d5105dd08
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:fc5ad1683b85
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
