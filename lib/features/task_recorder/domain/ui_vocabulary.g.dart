@@ -3527,6 +3527,7 @@ const Set<String> uiKeys = {
   'setup-step-two-panes',
   'setup-task-breadcrumb',
   'setup-task-context',
+  'setup-task-goal',
   'setup-task-position',
   'setup-vat-empty',
   'setup-vat-failed',

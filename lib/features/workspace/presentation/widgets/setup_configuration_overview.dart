@@ -25,7 +25,7 @@ import '../setup_step_words.dart';
 /// #4074 — a step's place in the guide and its name, as the rail numbers
 /// it ("Step 3 of 29 · Places on the plan"); null when the step is not one
 /// the space uses or the status is not read yet.
-String? setupStepPositionText(
+String? _stepPositionText(
   AppLocalizations l10n,
   SetupStatus? status,
   String stepId,
@@ -215,7 +215,7 @@ class SetupTaskContext extends StatelessWidget {
                   style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-              if (setupStepPositionText(l10n, status, stepId) case final place?)
+              if (_stepPositionText(l10n, status, stepId) case final place?)
                 Text(place, key: const ValueKey('setup-task-position')),
               if (goal != null)
                 Text(

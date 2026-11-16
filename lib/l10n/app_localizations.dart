@@ -49392,7 +49392,7 @@ abstract class AppLocalizations {
   /// **'Change'**
   String get setupGoalChange;
 
-  /// #4074 the setup head's count of the chosen goal's checks, named as the goal's.
+  /// #4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]
   ///
   /// In en, this message translates to:
   /// **'{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}'**
