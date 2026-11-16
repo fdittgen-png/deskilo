@@ -10,7 +10,7 @@
 -- refusal changes nothing; a withdrawn claim frees its invoices; a callback
 -- delivered twice applies once; without a claim nothing changes. Rolled back.
 begin;
-select plan(36);
+select plan(41);
 
 create or replace function pg_temp.seed() returns void language plpgsql as $seed$
 declare
@@ -53,9 +53,11 @@ begin
          (ws, m_a, m_o, 'CL-A4', 'A4', '[]'::jsonb, 1000, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-10', '2026-10-03', 'usage'),
          (ws, m_a, m_o, 'CL-A5', 'A5', '[]'::jsonb, 1500, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-10', '2026-10-04', 'settlement'),
          (ws, m_a, m_o, 'CL-A6', 'A6', '[]'::jsonb, 1200, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-11', '2026-11-01', 'full'),
+         (ws, m_a, m_o, 'CL-V1', 'V1', '[]'::jsonb, 900, 'EUR', 'Ada', 'Claims', 'Owner', 'sig', '2026-08', '2026-08-01', 'full'),
          (ws, m_b, m_o, 'CL-B1', 'B1', '[]'::jsonb, 4000, 'EUR', 'Ben', 'Claims', 'Owner', 'sig', '2026-10', '2026-10-01', 'full'),
          (ws2, m_a2, m_o2, 'EL-W1', 'W1', '[]'::jsonb, 4000, 'EUR', 'Ada', 'Elsewhere', 'Owner', 'sig', '2026-10', '2026-10-01', 'full'),
          (wsp, m_ap, m_op, 'FE-P1', 'P1', '[]'::jsonb, 2500, 'EUR', 'Ada', 'Four eyes', 'Owner', 'sig', '2026-10', '2026-10-01', 'full');
+  update public.invoices set voided_at = now() where number = 'CL-V1';
   perform set_config('t.ws', ws::text, true);
   perform set_config('t.wsp', wsp::text, true);
   perform set_config('t.m_a', m_a::text, true);
@@ -163,6 +165,31 @@ select lives_ok(format('select public.respond_to_event(%L, true)',
 reset role;
 select is((select m.status || ':' || m.paid_cents from public.invoice_matches m where m.invoice_id = pg_temp.inv('CL-A4')),
   'confirmed:1000', 'approving applies exactly its claim');
+insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period, event_id)
+select workspace_id, subject_member_id, 'credit', 'payment', 1000, 'replay', '2026-10', id
+  from public.events where type = 'payment' and payload -> 'claim' -> 0 ->> 'number' = 'CL-A4';
+select is((select count(*)::int from public.invoice_match_payments p where p.invoice_id = pg_temp.inv('CL-A4')),
+  1, 'a second credit naming the approved payment applies nothing more');
+select pg_temp.act('a2');
+set local role authenticated;
+select is(pg_temp.refusal(format('insert into public.ledger_entries (workspace_id, member_id, kind, category, amount_cents, description, period) values (%L, %L, %L, %L, 1, %L, %L)',
+  current_setting('t.ws'), current_setting('t.m_a'), 'credit', 'payment', 'forged', '2026-10')) is not null,
+  true, 'a client cannot write a ledger row to reach the claim');
+reset role;
+
+-- ── match_invoice: the permission first (accepted order) ────────────────
+-- Read here: as Ben, Ada's invoices are not even visible.
+select set_config('t.v1', pg_temp.inv('CL-V1')::text, true), set_config('t.a1', pg_temp.inv('CL-A1')::text, true),
+       set_config('t.a6', pg_temp.inv('CL-A6')::text, true);
+select pg_temp.act('a3');
+set local role authenticated;
+select is(pg_temp.refusal(format('select public.match_invoice(%L, %L, %L)', current_setting('t.v1'), gen_random_uuid(), 'exact')),
+  'admins may not issue invoices here', 'without the right to issue: a voided invoice gets the permission refusal');
+select is(pg_temp.refusal(format('select public.match_invoice(%L, %L, %L)', current_setting('t.a1'), gen_random_uuid(), 'exact')),
+  'admins may not issue invoices here', 'the same for a matched invoice');
+select is(pg_temp.refusal(format('select public.match_invoice(%L, %L, %L)', current_setting('t.a6'), gen_random_uuid(), 'exact')),
+  'admins may not issue invoices here', 'and for an open one');
+reset role;
 
 -- ── Withdrawn: the invoices are free ───────────────────────────────────
 select pg_temp.act('a2');

@@ -559,8 +559,14 @@ declare
 begin
   if new.kind <> 'credit' or new.category <> 'payment' then return new; end if;
   select * into v_event from public.events where id = new.event_id;
-  if v_event.id is null or v_event.type <> 'payment'
-     or jsonb_typeof(v_event.payload -> 'claim') <> 'array' then
+  -- Only the credit of an APPROVED declared payment that names invoices,
+  -- and only the first credit naming it: a second row for the same event
+  -- (a replay) applies nothing. No client writes ledger rows (the table
+  -- has a select policy only): its writers are the server's own functions.
+  if v_event.id is null or v_event.type <> 'payment' or v_event.status <> 'confirmed'
+     or jsonb_typeof(v_event.payload -> 'claim') <> 'array'
+     or exists (select 1 from public.ledger_entries l
+                 where l.event_id = new.event_id and l.id <> new.id) then
     return new;
   end if;
   perform public.apply_payment_claim(new.id,
