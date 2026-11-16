@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'notched_bar_border.dart';
 import 'shell_bar_collapse.dart';
 import 'shell_bar_double_tap.dart';
+import 'shell_bar_labels.dart';
 import 'shell_bar_toggle.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_center_button.dart';
@@ -190,27 +191,40 @@ class ShellBottomBar extends ConsumerWidget {
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
         height: ShellBarMetrics.barHeightOf(context),
-        child: Row(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  for (var i = 0; i < leftCount; i++)
-                    Expanded(child: _tab(i)),
-                ],
-              ),
-            ),
-            // Reserved gap the docked button straddles.
-            const SizedBox(width: ShellBarMetrics.centerGap),
-            Expanded(
-              child: Row(
-                children: [
-                  for (var i = leftCount; i < destinations.length; i++)
-                    Expanded(child: _tab(i)),
-                ],
-              ),
-            ),
-          ],
+        // #4098 -- one decision for every tab: the labels whole, or the
+        // icons alone with the labels as tooltips.
+        child: LayoutBuilder(
+          builder: (context, box) {
+            final tabWidth =
+                (box.maxWidth - ShellBarMetrics.centerGap) / 2 / leftCount;
+            final labels = shellBarLabelsFit(
+              context,
+              labels: [for (final d in destinations) d.label],
+              tabWidth: tabWidth,
+            );
+            return Row(
+              children: [
+                Expanded(
+                  child: Row(
+                    children: [
+                      for (var i = 0; i < leftCount; i++)
+                        Expanded(child: _tab(i, labels: labels)),
+                    ],
+                  ),
+                ),
+                // Reserved gap the docked button straddles.
+                const SizedBox(width: ShellBarMetrics.centerGap),
+                Expanded(
+                  child: Row(
+                    children: [
+                      for (var i = leftCount; i < destinations.length; i++)
+                        Expanded(child: _tab(i, labels: labels)),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
@@ -368,10 +382,11 @@ class ShellBottomBar extends ConsumerWidget {
     );
   }
 
-  Widget _tab(int index) => ShellBarTab(
+  Widget _tab(int index, {required bool labels}) => ShellBarTab(
         destination: destinations[index],
         selected: index == selectedIndex,
         onTap: () => onDestinationSelected(index),
+        showLabel: labels,
       );
 }
 
@@ -384,11 +399,17 @@ class ShellBarTab extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  /// Whether the label is drawn under the icon (#4098): when the bar cannot
+  /// hold every label whole, no tab draws one, and the label is the tab's
+  /// tooltip and spoken name.
+  final bool showLabel;
+
   const ShellBarTab({
     super.key,
     required this.destination,
     required this.selected,
     required this.onTap,
+    this.showLabel = true,
   });
 
   @override
@@ -398,7 +419,7 @@ class ShellBarTab extends StatelessWidget {
         ? theme.colorScheme.primary
         : theme.colorScheme.onSurfaceVariant;
 
-    return Semantics(
+    final tab = Semantics(
       label: destination.label,
       button: true,
       selected: selected,
@@ -417,20 +438,21 @@ class ShellBarTab extends StatelessWidget {
               ),
               child: selected ? destination.selectedIcon : destination.icon,
             ),
-            const SizedBox(height: 2),
-            Text(
-              destination.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: (theme.textTheme.labelMedium ?? const TextStyle())
-                  .copyWith(
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: color,
+            if (showLabel) ...[
+              const SizedBox(height: 2),
+              Text(
+                destination.label,
+                maxLines: 1,
+                style: shellBarLabelStyle(
+                  context,
+                  selected: selected,
+                ).copyWith(color: color),
               ),
-            ),
+            ],
           ],
         ),
       ),
     );
+    return showLabel ? tab : Tooltip(message: destination.label, child: tab);
   }
 }
