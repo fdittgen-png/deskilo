@@ -41,5 +41,9 @@
   "businessExampleTracksPurchases": "Par exemple : le loyer, le ménage et la machine à café que vous achetez pour l'espace.",
   "businessExampleDoorTablet": "Par exemple : les membres passent leur badge sur une tablette à l'entrée en arrivant.",
   "businessExampleOrganised": "Par exemple : une dépense au-delà d'un montant fixé doit être approuvée par deux membres du bureau.",
-  "setupLevelsApplyFailed": "Les choix n'ont pas pu être enregistrés. Réessayez."
+  "setupLevelsApplyFailed": "Les choix n'ont pas pu être enregistrés. Réessayez.",
+  "setupGoalChecks": "{required, plural, one{Cet objectif : {ready} contrôle sur {required} terminé} other{Cet objectif : {ready} contrôles sur {required} terminés}}",
+  "setupAllSteps": "Toutes les étapes : {done} sur {total}",
+  "setupAllStepsNote": "Avec les étapes pour plus tard",
+  "setupStepPosition": "Étape {number} sur {total} · {name}"
 }

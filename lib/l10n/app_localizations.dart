@@ -49098,6 +49098,18 @@ abstract class AppLocalizations {
   /// **'Advanced settings'**
   String get setupAdvancedSettings;
 
+  /// #4074 the setup head's count of every step the space uses, named as all steps. The numbers are figures after a label and a colon, read as values. [not a count: done, total]
+  ///
+  /// In en, this message translates to:
+  /// **'All steps: {done} of {total}'**
+  String setupAllSteps(int done, int total);
+
+  /// #4074 the line under the all-steps count: it includes steps for later.
+  ///
+  /// In en, this message translates to:
+  /// **'Includes steps for later'**
+  String get setupAllStepsNote;
+
   /// #3076 setup questions: the third answer, not decided yet
   ///
   /// In en, this message translates to:
@@ -49397,6 +49409,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Change'**
   String get setupGoalChange;
+
+  /// #4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]
+  ///
+  /// In en, this message translates to:
+  /// **'{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}'**
+  String setupGoalChecks(int ready, int required);
 
   /// #3076 — the hub states the goal the space chose, derived from the last milestone that applies.
   ///
@@ -51826,6 +51844,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Open it'**
   String get setupStepOpenScreen;
+
+  /// #4074 where a step stands in the guide and its name, beside its number. The numbers are positions, not a quantity. [not a count: number, total]
+  ///
+  /// In en, this message translates to:
+  /// **'Step {number} of {total} · {name}'**
+  String setupStepPosition(int number, int total, String name);
 
   /// #2870 setup steps: setupStepPreviewTitle
   ///

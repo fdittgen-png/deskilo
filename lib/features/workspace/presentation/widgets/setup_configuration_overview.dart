@@ -6,9 +6,66 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
+import '../../domain/launch_review.dart';
 import '../../domain/setup_status.dart';
 import '../setup_step_words.dart';
+
+/// #4074 — every step the space uses, as the rail beside the page numbers
+/// them: the steps that apply, in the guide's order, and how many are done.
+({int done, int total}) _stepsOfPlan(SetupStatus status) {
+  final steps = [for (final g in LaunchReview.from(status).groups) ...g.steps];
+  return (
+    done: steps.where((s) => s.state == SetupStepState.ready).length,
+    total: steps.length,
+  );
+}
+
+/// #4074 — a step's place in the guide and its name, as the rail numbers
+/// it ("Step 3 of 29 · Places on the plan"); null when the step is not one
+/// the space uses or the status is not read yet.
+String? _stepPositionText(
+  AppLocalizations l10n,
+  SetupStatus? status,
+  String stepId,
+) {
+  if (status == null) return null;
+  final steps = [for (final g in LaunchReview.from(status).groups) ...g.steps];
+  final at = steps.indexWhere((s) => s.step == stepId);
+  if (at < 0) return null;
+  return l10n.setupStepPosition(
+    at + 1,
+    steps.length,
+    l10n.setupStepTitle(stepId),
+  );
+}
+
+/// A count and what it is the count of, side by side with another.
+class _Count extends StatelessWidget {
+  const _Count({required this.count, required this.note, super.key});
+
+  final String count;
+  final String note;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Text(count, style: theme.textTheme.titleMedium),
+        Text(
+          note,
+          style: theme.textTheme.bodySmall?.copyWith(
+            color: theme.colorScheme.onSurfaceVariant,
+          ),
+        ),
+      ],
+    );
+  }
+}
 
 class SetupConfigurationOverview extends StatelessWidget {
   const SetupConfigurationOverview({
@@ -37,9 +94,31 @@ class SetupConfigurationOverview extends StatelessWidget {
           children: [
             Text(l10n.setupOverviewTitle, style: theme.textTheme.labelLarge),
             Text(workspaceName, style: theme.textTheme.titleLarge),
+            const SizedBox(height: AppSpacing.sm),
+            // #4074 — two counts, each named for what it counts.
+            Wrap(
+              spacing: AppSpacing.lg,
+              runSpacing: AppSpacing.sm,
+              children: [
+                if (goal != null)
+                  _Count(
+                    key: const ValueKey('setup-goal-count'),
+                    count: l10n.setupGoalChecks(goal.ready, goal.required),
+                    note: l10n.setupGoalLine(
+                      l10n.setupMilestoneName(goal.milestone),
+                    ),
+                  ),
+                _Count(
+                  key: const ValueKey('setup-all-steps-count'),
+                  count: l10n.setupAllSteps(
+                    _stepsOfPlan(status).done,
+                    _stepsOfPlan(status).total,
+                  ),
+                  note: l10n.setupAllStepsNote,
+                ),
+              ],
+            ),
             if (goal != null) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Text(l10n.setupGoalLine(l10n.setupMilestoneName(goal.milestone))),
               const SizedBox(height: AppSpacing.sm),
               Semantics(
                 container: true,
@@ -50,11 +129,10 @@ class SetupConfigurationOverview extends StatelessWidget {
                       : (goal.ready / goal.required).clamp(0, 1),
                   semanticsLabel:
                       '${l10n.setupMilestoneName(goal.milestone)} · '
-                      '${l10n.setupGuideProgress(goal.ready, goal.required)}',
+                      '${l10n.setupGoalChecks(goal.ready, goal.required)}',
                 ),
               ),
               const SizedBox(height: AppSpacing.sm),
-              Text(l10n.setupGuideProgress(goal.ready, goal.required)),
             ],
             Semantics(
               container: true,
@@ -114,40 +192,49 @@ class SetupTaskContext extends StatelessWidget {
     return Material(
       key: const ValueKey('setup-task-context'),
       color: Theme.of(context).colorScheme.surfaceContainerLow,
-      child: Padding(
-        padding: AppSpacing.mdAll,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // #3282 — where the owner is: workspace, configuration, task.
-            Semantics(
-              header: true,
-              child: Text(
-                l10n.setupTaskBreadcrumb(
-                  workspaceName,
-                  l10n.setupStepTitle(stepId),
-                ),
-                key: const ValueKey('setup-task-breadcrumb'),
-                style: Theme.of(context).textTheme.titleSmall,
-              ),
-            ),
-            if (goal != null)
-              Text(
-                '${l10n.setupMilestoneName(goal.milestone)} · '
-                '${l10n.setupGuideProgress(goal.ready, goal.required)}',
-              ),
-            Text(
-              step == null
-                  ? l10n.setupOverviewUnchecked
-                  : setupStepWord(l10n, step),
-            ),
-            if (step != null && step.blockedBy.isNotEmpty)
-              Text(
-                l10n.setupGuideWaitsFor(
-                  step.blockedBy.map(l10n.setupStepTitle).join(', '),
+      // #4074 — with enlarged text the strip scrolls within a third of the
+      // window, so the step's page below it keeps its room.
+      child: ConstrainedBox(
+        constraints: BoxConstraints(
+          maxHeight: MediaQuery.sizeOf(context).height / 3,
+        ),
+        child: SingleChildScrollView(
+          padding: AppSpacing.mdAll,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // #3282 — where the owner is: workspace, configuration, task.
+              Semantics(
+                header: true,
+                child: Text(
+                  l10n.setupTaskBreadcrumb(
+                    workspaceName,
+                    l10n.setupStepTitle(stepId),
+                  ),
+                  key: const ValueKey('setup-task-breadcrumb'),
+                  style: Theme.of(context).textTheme.titleSmall,
                 ),
               ),
-          ],
+              if (_stepPositionText(l10n, status, stepId) case final place?)
+                Text(place, key: const ValueKey('setup-task-position')),
+              if (goal != null)
+                Text(
+                  l10n.setupGoalChecks(goal.ready, goal.required),
+                  key: const ValueKey('setup-task-goal'),
+                ),
+              Text(
+                step == null
+                    ? l10n.setupOverviewUnchecked
+                    : setupStepWord(l10n, step),
+              ),
+              if (step != null && step.blockedBy.isNotEmpty)
+                Text(
+                  l10n.setupGuideWaitsFor(
+                    step.blockedBy.map(l10n.setupStepTitle).join(', '),
+                  ),
+                ),
+            ],
+          ),
         ),
       ),
     );

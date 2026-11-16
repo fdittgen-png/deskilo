@@ -39763,6 +39763,22 @@
   "@setupAdvancedSettings": {
     "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
   },
+  "setupAllSteps": "All steps: {done} of {total}",
+  "@setupAllSteps": {
+    "description": "#4074 the setup head's count of every step the space uses, named as all steps. The numbers are figures after a label and a colon, read as values. [not a count: done, total]",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupAllStepsNote": "Includes steps for later",
+  "@setupAllStepsNote": {
+    "description": "#4074 the line under the all-steps count: it includes steps for later."
+  },
   "setupAnswerUnknown": "Not sure yet",
   "@setupAnswerUnknown": {
     "description": "#3076 setup questions: the third answer, not decided yet"
@@ -40058,6 +40074,18 @@
   "setupGoalChange": "Change",
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalChecks": "{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}",
+  "@setupGoalChecks": {
+    "description": "#4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
   },
   "setupGoalLine": "Your goal: {milestone}",
   "@setupGoalLine": {
@@ -41983,6 +42011,21 @@
   "setupStepOpenScreen": "Open it",
   "@setupStepOpenScreen": {
     "description": "#2870 setup steps: setupStepOpenScreen"
+  },
+  "setupStepPosition": "Step {number} of {total} · {name}",
+  "@setupStepPosition": {
+    "description": "#4074 where a step stands in the guide and its name, beside its number. The numbers are positions, not a quantity. [not a count: number, total]",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "setupStepPreviewTitle": "What your members will see",
   "@setupStepPreviewTitle": {

@@ -41,5 +41,9 @@
   "businessExampleTracksPurchases": "Por ejemplo: el alquiler, la limpieza y la cafetera que compra para el espacio.",
   "businessExampleDoorTablet": "Por ejemplo: los miembros pasan su tarjeta por una tableta en la entrada al llegar.",
   "businessExampleOrganised": "Por ejemplo: un gasto por encima de un importe fijado necesita la aprobación de dos miembros de la junta.",
-  "setupLevelsApplyFailed": "No se pudieron guardar las opciones. Inténtelo de nuevo."
+  "setupLevelsApplyFailed": "No se pudieron guardar las opciones. Inténtelo de nuevo.",
+  "setupGoalChecks": "{required, plural, one{Este objetivo: {ready} de {required} comprobación hecha} other{Este objetivo: {ready} de {required} comprobaciones hechas}}",
+  "setupAllSteps": "Todos los pasos: {done} de {total}",
+  "setupAllStepsNote": "Incluye los pasos para más adelante",
+  "setupStepPosition": "Paso {number} de {total} · {name}"
 }
