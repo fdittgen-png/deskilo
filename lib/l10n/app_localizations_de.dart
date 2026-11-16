@@ -5932,10 +5932,27 @@ class AppLocalizationsDe extends AppLocalizations {
   String get calendarDeskExport => 'Exportieren';
 
   @override
+  String calendarDeskFilterChip(String filter, String value) {
+    return '$filter: $value';
+  }
+
+  @override
   String get calendarDeskFilterKind => 'Art des Platzes';
 
   @override
   String get calendarDeskFilterLevel => 'Ebene';
+
+  @override
+  String calendarDeskFiltersCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filter · $count',
+      one: 'Filter · $count',
+      zero: 'Filter',
+    );
+    return '$_temp0';
+  }
 
   @override
   String calendarDeskFreeDay(String place, String day) {
@@ -15436,6 +15453,10 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceCopyWithPaymentStatus => 'Kopie mit Zahlungsstatus';
+
+  @override
+  String get invoiceCorrectionKeepsKind =>
+      'Eine Korrektur hat die Art der Rechnung, die sie ersetzt.';
 
   @override
   String get invoiceCorrectionReason => 'Grund der Berichtigung';

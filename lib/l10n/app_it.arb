@@ -3485,8 +3485,10 @@
   "calendarDeskColumnState": "Stato",
   "calendarDeskColumnTo": "Al",
   "calendarDeskExport": "Esporta",
+  "calendarDeskFilterChip": "{filter}: {value}",
   "calendarDeskFilterKind": "Tipo di posto",
   "calendarDeskFilterLevel": "Livello",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtri} one{Filtri · {count}} other{Filtri · {count}}}",
   "calendarDeskFreeDay": "{place}: libero il {day}, nuova prenotazione",
   "calendarDeskFreeSlot": "{place}: libero dalle {from} alle {to}, nuova prenotazione",
   "calendarDeskMissingHour": "Gli orologi vanno avanti: dalle {from} alle {to} non esiste in questo giorno",
@@ -8986,6 +8988,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Copia con lo stato del pagamento",
+  "invoiceCorrectionKeepsKind": "Una correzione è dello stesso tipo della fattura che sostituisce.",
   "invoiceCorrectionReason": "Motivo della rettifica",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"

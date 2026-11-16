@@ -3485,8 +3485,10 @@
   "calendarDeskColumnState": "Status",
   "calendarDeskColumnTo": "Bis",
   "calendarDeskExport": "Exportieren",
+  "calendarDeskFilterChip": "{filter}: {value}",
   "calendarDeskFilterKind": "Art des Platzes",
   "calendarDeskFilterLevel": "Ebene",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filter} one{Filter · {count}} other{Filter · {count}}}",
   "calendarDeskFreeDay": "{place}: frei am {day}, neue Buchung",
   "calendarDeskFreeSlot": "{place}: frei von {from} bis {to}, neue Buchung",
   "calendarDeskMissingHour": "Die Uhren werden vorgestellt: {from} bis {to} gibt es an diesem Tag nicht",
@@ -8986,6 +8988,7 @@
     "description": "#922 chorus pro: invoiceBuyerReferenceHint"
   },
   "invoiceCopyWithPaymentStatus": "Kopie mit Zahlungsstatus",
+  "invoiceCorrectionKeepsKind": "Eine Korrektur hat die Art der Rechnung, die sie ersetzt.",
   "invoiceCorrectionReason": "Grund der Berichtigung",
   "@invoiceCorrectionReason": {
     "description": "#2440: invoiceCorrectionReason"

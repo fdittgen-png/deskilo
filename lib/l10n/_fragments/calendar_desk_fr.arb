@@ -27,5 +27,7 @@
   "bookingPriceOverage": "Demi-journée supplémentaire",
   "calendarDeskRangeLabel": "Période",
   "calendarDeskViewLabel": "Vue",
-  "calendarDecisionsEntry": "{count, plural, one{Décisions ({count})} other{Décisions ({count})}}"
+  "calendarDecisionsEntry": "{count, plural, one{Décisions ({count})} other{Décisions ({count})}}",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtres} one{Filtres · {count}} other{Filtres · {count}}}",
+  "calendarDeskFilterChip": "{filter} : {value}"
 }
