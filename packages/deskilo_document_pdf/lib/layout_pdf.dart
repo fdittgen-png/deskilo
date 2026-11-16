@@ -57,42 +57,16 @@ Future<Uint8List> buildLayoutPdf({
   final contentH = pageH - marginTop - marginBottom;
   final ctx = _Box(contentW, contentH, images, markup, diagnostics);
 
-  // The recipient: a named convention takes the millimetres from the one
-  // place they live; an explicit frame is page-absolute by definition.
-  final recipient = document.recipient;
-  final window = recipient?.window;
-  final recipientFrame = recipient?.frame;
-  final windowOn =
-      recipient != null && !recipient.isOff && (window != null || recipientFrame != null);
-  // #3981 — a named window takes its field from the paper.
-  final field = (window ?? AddressWindow.off).fieldOn(document.paper);
-  final fieldLeft = recipientFrame?.x?.resolve(pageW) ??
-      (window != null && window.isOn ? field.leftPt : 0.0);
-  final fieldTop = recipientFrame?.y?.resolve(pageH) ?? field.topPt;
-  final fieldW = recipientFrame?.w?.resolve(pageW) ?? field.widthPt;
-  final fieldH = recipientFrame?.h?.resolve(pageH) ?? field.heightPt;
-
-  // The header owns the band above the field; the body resumes where
-  // the design says, or at 90 mm under a window, or right after the
-  // header otherwise.
-  final headerH = document.header.height?.resolve(contentH) ??
-      (windowOn
-          ? (recipientFrame?.y != null ? fieldTop : field.senderLimitPt) -
-              marginTop
-          : null);
-  // #3981 — a body stated at the A4 convention's 90 mm under a named
-  // window means "where the window convention resumes": on another paper
-  // that is the paper's own line.
-  final statedBodyY = document.body.y;
-  final followsWindow = document.paper != Paper.a4 &&
-      windowOn &&
-      recipientFrame == null &&
-      statedBodyY != null &&
-      statedBodyY.unit == LengthUnit.mm &&
-      statedBodyY.value == addressWindowFlowResumeMm;
-  final bodyTop = followsWindow
-      ? field.flowResumePt
-      : statedBodyY?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
+  final place = _RecipientPlacement(
+    document,
+    pageW: pageW,
+    pageH: pageH,
+    contentH: contentH,
+    marginTop: marginTop,
+  );
+  final windowOn = place.windowOn;
+  final headerH = place.headerH;
+  final bodyTop = place.bodyTop;
   final reserve = bodyTop == null
       ? 0.0
       : math.max(0.0, bodyTop - marginTop - (headerH ?? 0));
@@ -115,15 +89,15 @@ Future<Uint8List> buildLayoutPdf({
                     ignoreMargins: true,
                     child: pw.Stack(children: [
                       pw.Positioned(
-                        left: fieldLeft,
-                        top: fieldTop,
+                        left: place.left,
+                        top: place.top,
                         child: pw.SizedBox(
-                          width: fieldW,
-                          height: fieldH,
+                          width: place.width,
+                          height: place.height,
                           child: addressWindowRecipient(
                             name: recipientName,
                             address: recipientAddress,
-                            fontSize: field.fontSizePt,
+                            fontSize: place.fontSize,
                           ),
                         ),
                       ),
@@ -464,4 +438,56 @@ Set<String> layoutImageNames(LayoutDocument document) {
     walk(zone.children);
   }
   return names;
+}
+
+/// Where the recipient sits, and what that does to the header and the body.
+/// A named convention takes the millimetres from the one place they live,
+/// for the document's paper (#3981); an explicit frame is page-absolute by
+/// definition.
+class _RecipientPlacement {
+  _RecipientPlacement(
+    LayoutDocument document, {
+    required double pageW,
+    required double pageH,
+    required double contentH,
+    required double marginTop,
+  }) {
+    final recipient = document.recipient;
+    final window = recipient?.window;
+    final frame = recipient?.frame;
+    windowOn = recipient != null &&
+        !recipient.isOff &&
+        (window != null || frame != null);
+    final field = (window ?? AddressWindow.off).fieldOn(document.paper);
+    fontSize = field.fontSizePt;
+    left = frame?.x?.resolve(pageW) ??
+        (window != null && window.isOn ? field.leftPt : 0.0);
+    top = frame?.y?.resolve(pageH) ?? field.topPt;
+    width = frame?.w?.resolve(pageW) ?? field.widthPt;
+    height = frame?.h?.resolve(pageH) ?? field.heightPt;
+    // The header owns the band above the field; the body resumes where
+    // the design says, or where the convention does under a window, or
+    // right after the header otherwise.
+    headerH = document.header.height?.resolve(contentH) ??
+        (windowOn
+            ? (frame?.y != null ? top : field.senderLimitPt) - marginTop
+            : null);
+    // A body stated at the A4 convention's 90 mm under a named window
+    // means "where the window convention resumes": on another paper that
+    // is the paper's own line.
+    final stated = document.body.y;
+    final followsWindow = document.paper != Paper.a4 &&
+        windowOn &&
+        frame == null &&
+        stated != null &&
+        stated.unit == LengthUnit.mm &&
+        stated.value == addressWindowFlowResumeMm;
+    bodyTop = followsWindow
+        ? field.flowResumePt
+        : stated?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
+  }
+
+  late final bool windowOn;
+  late final double left, top, width, height, fontSize;
+  late final double? headerH, bodyTop;
 }

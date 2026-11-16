@@ -1,0 +1,3 @@
+run 43799132792 -- https://github.com/fdittgen-png/deskilo/actions/runs/43799132792
+BRANCH CHECK: FAILED -- 6207 passed, 2 failed, 0 skipped (1 of 6 paths)
+BRANCH CHECK: FAILED -- 1044 passed, 2 failed, 0 skipped (exit 1) [test/lint]
