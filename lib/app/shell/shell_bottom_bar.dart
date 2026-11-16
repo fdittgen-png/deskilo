@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
+import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
@@ -8,10 +9,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'notched_bar_border.dart';
 import 'shell_bar_collapse.dart';
 import 'shell_bar_double_tap.dart';
+import 'shell_bar_labels.dart';
 import 'shell_bar_toggle.dart';
 import 'shell_bar_visibility.dart';
 import 'shell_center_button.dart';
 import 'shell_swipe_coach_mark.dart';
+
+/// The largest text scale the bar draws its labels at.
+const double _maxTextScale = 1.3;
 
 /// Fixed geometry of the notched bottom bar (#207).
 ///
@@ -53,6 +58,9 @@ abstract final class ShellBarMetrics {
   /// shell sets `extendBody` while hidden, so the body runs behind even
   /// this strip and the button floats over the content.
   static const double hiddenHeight = buttonDiameter;
+
+  /// Room kept under two label lines (#4098).
+  static const double twoLinePadding = 6;
 
   /// Height the widget occupies with the bar showing.
   static const double shownHeight = barHeight + rise;
@@ -180,6 +188,28 @@ class ShellBottomBar extends ConsumerWidget {
     // notched silhouette automatically (it derives its elevation shadow
     // from the ShapeBorder path), so no separate upward shadow painter is
     // needed.
+    // #4098 -- one decision for every tab, and the bar as tall as it needs.
+    final scaler = MediaQuery.textScalerOf(
+      context,
+    ).clamp(maxScaleFactor: _maxTextScale);
+    final width = MediaQuery.sizeOf(context).width;
+    final labels = width <= 0
+        ? ShellBarLabels.oneLine
+        : shellBarLabelsFor(
+            context,
+            labels: [for (final d in destinations) d.label],
+            tabWidth: (width - ShellBarMetrics.centerGap) / 2 / leftCount,
+            scaler: scaler,
+          );
+    final barHeight = labels == ShellBarLabels.twoLines
+        ? math.max(
+            ShellBarMetrics.barHeightOf(context),
+            ShellBarMetrics.tabIconSize +
+                2 +
+                2 * shellBarLabelLineHeight(context, scaler) +
+                ShellBarMetrics.twoLinePadding,
+          )
+        : ShellBarMetrics.barHeightOf(context);
     final bar = Material(
       color: theme.colorScheme.surfaceContainerHighest,
       elevation: theme.brightness == Brightness.dark ? 3 : 1,
@@ -189,14 +219,14 @@ class ShellBottomBar extends ConsumerWidget {
       shape: const NotchedBarBorder(notchRadius: ShellBarMetrics.notchRadius),
       clipBehavior: Clip.antiAlias,
       child: SizedBox(
-        height: ShellBarMetrics.barHeightOf(context),
+        height: barHeight,
         child: Row(
           children: [
             Expanded(
               child: Row(
                 children: [
                   for (var i = 0; i < leftCount; i++)
-                    Expanded(child: _tab(i)),
+                    Expanded(child: _tab(i, labels)),
                 ],
               ),
             ),
@@ -206,7 +236,7 @@ class ShellBottomBar extends ConsumerWidget {
               child: Row(
                 children: [
                   for (var i = leftCount; i < destinations.length; i++)
-                    Expanded(child: _tab(i)),
+                    Expanded(child: _tab(i, labels)),
                 ],
               ),
             ),
@@ -218,7 +248,7 @@ class ShellBottomBar extends ConsumerWidget {
     return MediaQuery.withClampedTextScaling(
       // Clamp text scaling so labels grow with the OS setting but never
       // past what the fixed-height bar can show.
-      maxScaleFactor: 1.3,
+      maxScaleFactor: _maxTextScale,
       child: SafeArea(
         top: false,
         child: ShellBarCollapse(
@@ -226,14 +256,14 @@ class ShellBottomBar extends ConsumerWidget {
           // height is the distance that covers the whole travel: the
           // control moves at roughly life size, which is what makes it
           // feel pulled rather than triggered.
-          dragExtent: ShellBarMetrics.barHeightOf(context),
+          dragExtent: barHeight,
           builder: (context, t) => _frame(
             context: context,
             ref: ref,
             t: t,
-            hidden: hidden,
             showCoach: showCoach,
             bar: bar,
+            barHeight: barHeight,
           ),
         ),
       ),
@@ -267,11 +297,13 @@ class ShellBottomBar extends ConsumerWidget {
     required BuildContext context,
     required WidgetRef ref,
     required double t,
-    required bool hidden,
     required bool showCoach,
     required Widget bar,
+    required double barHeight,
   }) {
-    final shown = ShellBarMetrics.shownHeightOf(context);
+    // Read again here: the build above watches it and builds this again.
+    final hidden = ref.read(shellBarHiddenProvider).value ?? false;
+    final shown = barHeight + ShellBarMetrics.rise;
     // Two values across a whole drag, and never a third.
     final boxHeight = t >= 1 ? ShellBarMetrics.hiddenHeight : shown;
     // The button's seat, measured from the box's bottom edge — which is
@@ -332,7 +364,7 @@ class ShellBottomBar extends ConsumerWidget {
           // Introduce the gesture once, over the bar it acts on.
           if (showCoach)
             ShellSwipeCoachMark(
-              barHeight: ShellBarMetrics.barHeightOf(context),
+              barHeight: barHeight,
               onDismiss: () => unawaited(
                 ref.read(shellSwipeCoachSeenProvider.notifier).markSeen(),
               ),
@@ -368,10 +400,12 @@ class ShellBottomBar extends ConsumerWidget {
     );
   }
 
-  Widget _tab(int index) => ShellBarTab(
+  Widget _tab(int index, ShellBarLabels labels) => ShellBarTab(
         destination: destinations[index],
         selected: index == selectedIndex,
         onTap: () => onDestinationSelected(index),
+        showLabel: labels != ShellBarLabels.none,
+        twoLines: labels == ShellBarLabels.twoLines,
       );
 }
 
@@ -384,12 +418,44 @@ class ShellBarTab extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
 
+  /// Whether the label is drawn under the icon (#4098): when the bar cannot
+  /// hold every label whole, no tab draws one, and the label is the tab's
+  /// tooltip and spoken name.
+  final bool showLabel;
+
+  /// Whether every label has two lines to be drawn in (#4098), so the icons
+  /// of the bar stay level.
+  final bool twoLines;
+
   const ShellBarTab({
     super.key,
     required this.destination,
     required this.selected,
     required this.onTap,
+    this.showLabel = true,
+    this.twoLines = false,
   });
+
+  /// The label: one line, or (#4098) two lines of room, broken at spaces.
+  Widget _label(BuildContext context, Color color) {
+    final text = Text(
+      destination.label,
+      maxLines: twoLines ? 2 : 1,
+      textAlign: TextAlign.center,
+      style: shellBarLabelStyle(
+        context,
+        selected: selected,
+      ).copyWith(color: color),
+    );
+    if (!twoLines) return text;
+    final lines =
+        2 *
+        shellBarLabelLineHeight(context, MediaQuery.textScalerOf(context));
+    return SizedBox(
+      height: lines,
+      child: Align(alignment: Alignment.topCenter, child: text),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -398,7 +464,7 @@ class ShellBarTab extends StatelessWidget {
         ? theme.colorScheme.primary
         : theme.colorScheme.onSurfaceVariant;
 
-    return Semantics(
+    final tab = Semantics(
       label: destination.label,
       button: true,
       selected: selected,
@@ -417,20 +483,14 @@ class ShellBarTab extends StatelessWidget {
               ),
               child: selected ? destination.selectedIcon : destination.icon,
             ),
-            const SizedBox(height: 2),
-            Text(
-              destination.label,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: (theme.textTheme.labelMedium ?? const TextStyle())
-                  .copyWith(
-                fontWeight: selected ? FontWeight.w600 : FontWeight.w400,
-                color: color,
-              ),
-            ),
+            if (showLabel) ...[
+              const SizedBox(height: 2),
+              _label(context, color),
+            ],
           ],
         ),
       ),
     );
+    return showLabel ? tab : Tooltip(message: destination.label, child: tab);
   }
 }
