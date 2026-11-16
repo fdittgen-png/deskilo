@@ -3,14 +3,14 @@
         "counts": {
             "enums": 0,
             "views": 0,
-            "tables": 251,
-            "columns": 3935,
+            "tables": 259,
+            "columns": 4035,
             "domains": 0,
             "partitions": 0,
-            "foreignKeys": 607
+            "foreignKeys": 613
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "3d0738d0b91cd16d292f0636e9a410e6e81b75b2949c2bbf42a8d9b14096845c",
+        "checksum": "fc194f93e5b9caa01bdb3a5c619e71811b5cf42ad351c2968d224304ba36dfe3",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 791,
+        "schemaMarker": 808,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -13192,6 +13192,13 @@
                     "definition": "CREATE UNIQUE INDEX events_invoice_issued_once ON public.events USING btree (((payload ->> 'invoice_id'::text))) WHERE (type = 'invoice_issued'::text)"
                 },
                 {
+                    "name": "events_payment_attempt_notice_once",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX events_payment_attempt_notice_once ON public.events USING btree (((payload ->> 'intent'::text))) WHERE (type = 'payment_attempt_unreadable'::text)"
+                },
+                {
                     "name": "events_pending_idx",
                     "valid": true,
                     "unique": false,
@@ -13323,7 +13330,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK ((status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text])))"
+                    "definition": "CHECK (((status = 'withdrawn'::text) OR (status = ANY (ARRAY['applied'::text, 'pending'::text, 'confirmed'::text, 'rejected'::text, 'expired'::text]))))"
                 },
                 {
                     "name": "events_subject_member_id_fkey",
@@ -13382,7 +13389,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK (((type = 'kiosk_device'::text) OR ((type = 'invoice_issued'::text) OR ((type = 'settlement_review'::text) OR ((type = 'privacy_incident'::text) OR ((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))))"
+                    "definition": "CHECK (((type = 'payment_attempt_unreadable'::text) OR ((type = 'credential_change'::text) OR ((type = 'kiosk_device'::text) OR ((type = 'invoice_issued'::text) OR ((type = 'settlement_review'::text) OR ((type = 'privacy_incident'::text) OR ((type = 'invoice_payment_reversed'::text) OR ((type = 'payment_instructions_change'::text) OR ((type = 'badge_security_alert'::text) OR (type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))))))"
                 },
                 {
                     "name": "events_workspace_id_fkey",
@@ -25512,6 +25519,281 @@
         },
         {
             "kind": "table",
+            "name": "maintenance_runs",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "job",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "started_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "finished_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "counts",
+                    "type": "jsonb",
+                    "default": "'{}'::jsonb",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "failures",
+                    "type": "jsonb",
+                    "default": "'[]'::jsonb",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                }
+            ],
+            "comment": "#3985 -- the installation's maintenance record: one row per run of an installation-wide job, its counts and what it could not do with the reason. Written by the service role through maintenance_finish_v1 only; no client reads it.",
+            "indexes": [
+                {
+                    "name": "maintenance_runs_job_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX maintenance_runs_job_idx ON public.maintenance_runs USING btree (job, finished_at DESC)"
+                },
+                {
+                    "name": "maintenance_runs_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX maintenance_runs_pkey ON public.maintenance_runs USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "maintenance_runs_counts_check",
+                    "type": "check",
+                    "columns": [
+                        "counts"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(counts) = 'object'::text))"
+                },
+                {
+                    "name": "maintenance_runs_failures_check",
+                    "type": "check",
+                    "columns": [
+                        "failures"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(failures) = 'array'::text))"
+                },
+                {
+                    "name": "maintenance_runs_job_check",
+                    "type": "check",
+                    "columns": [
+                        "job"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((job ~ '^[a-z][a-z0-9-]*$'::text))"
+                },
+                {
+                    "name": "maintenance_runs_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "maintenance_state",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "job",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "lease_token",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 2
+                },
+                {
+                    "name": "lease_until",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 3
+                },
+                {
+                    "name": "last_attempt_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                }
+            ],
+            "comment": "#3985 -- the lease of each installation-wide maintenance job and its last attempt. Written by the service role only.",
+            "indexes": [
+                {
+                    "name": "maintenance_state_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX maintenance_state_pkey ON public.maintenance_state USING btree (job)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "maintenance_state_job_check",
+                    "type": "check",
+                    "columns": [
+                        "job"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((job ~ '^[a-z][a-z0-9-]*$'::text))"
+                },
+                {
+                    "name": "maintenance_state_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "job"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (job)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
             "name": "managed_identities",
             "schema": "public",
             "columns": [
@@ -35747,6 +36029,30 @@
                     "comment": "#3925 -- when a person who sees the finances marked this reversal as looked at; null while it waits",
                     "notNull": false,
                     "position": 28
+                },
+                {
+                    "name": "claimed_invoice_ids",
+                    "type": "uuid[]",
+                    "notNull": false,
+                    "position": 29
+                },
+                {
+                    "name": "claim_withdrawn_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 30
+                },
+                {
+                    "name": "claim_outcome",
+                    "type": "jsonb",
+                    "notNull": false,
+                    "position": 31
+                },
+                {
+                    "name": "handed_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 32
                 }
             ],
             "indexes": [
@@ -35763,6 +36069,13 @@
                     "unique": false,
                     "primary": false,
                     "definition": "CREATE INDEX payment_intents_member_idx ON public.payment_intents USING btree (member_id)"
+                },
+                {
+                    "name": "payment_intents_open_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX payment_intents_open_idx ON public.payment_intents USING btree (workspace_id, created_at) WHERE (status = 'created'::text)"
                 },
                 {
                     "name": "payment_intents_pkey",
@@ -36006,6 +36319,1093 @@
                     "validated": true,
                     "deferrable": false,
                     "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "payment_reconciliation_checks",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "intent_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "last_checked_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "checks",
+                    "type": "integer",
+                    "default": "0",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "seen_state",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 5
+                },
+                {
+                    "name": "seen_client",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                }
+            ],
+            "comment": "#4126 -- when the reconciliation last read an open attempt, how often after its provider's lifetime, and what the provider last said of it under which credentials. The least recently read comes first. Written by the service role only; removed once the attempt is no longer open.",
+            "indexes": [
+                {
+                    "name": "payment_reconciliation_checks_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX payment_reconciliation_checks_pkey ON public.payment_reconciliation_checks USING btree (intent_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "payment_reconciliation_checks_checks_check",
+                    "type": "check",
+                    "columns": [
+                        "checks"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((checks >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_checks_intent_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "intent_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (intent_id) REFERENCES payment_intents(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "payment_intents",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "payment_reconciliation_checks_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "intent_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (intent_id)"
+                },
+                {
+                    "name": "payment_reconciliation_checks_seen_client_check",
+                    "type": "check",
+                    "columns": [
+                        "seen_client"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((seen_client ~ '^[0-9a-f]{16,64}$'::text))"
+                },
+                {
+                    "name": "payment_reconciliation_checks_seen_state_check",
+                    "type": "check",
+                    "columns": [
+                        "seen_state"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((seen_state ~ '^[A-Z_]{1,32}$'::text))"
+                },
+                {
+                    "name": "payment_reconciliation_checks_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "payment_reconciliation_runs",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "started_at",
+                    "type": "timestamp with time zone",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "finished_at",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "read_count",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "settled_count",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "ended_count",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "left_count",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 8
+                },
+                {
+                    "name": "abandoned_count",
+                    "type": "integer",
+                    "default": "0",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "unreadable_count",
+                    "type": "integer",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "unreadable",
+                    "type": "jsonb",
+                    "default": "'[]'::jsonb",
+                    "notNull": true,
+                    "position": 11
+                },
+                {
+                    "name": "malformed",
+                    "type": "text[]",
+                    "default": "'{}'::text[]",
+                    "notNull": true,
+                    "position": 12
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 13
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 14
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 15
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 16
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 17
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 18
+                }
+            ],
+            "comment": "#4126 -- what each reconciliation run did for a business: attempts read, settled, ended, left, ended without any known order (abandoned), and those it could not read with the reason word. Written by the service role through payment_reconciliation_finish_v1 only; no client reads it.",
+            "indexes": [
+                {
+                    "name": "payment_reconciliation_runs_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX payment_reconciliation_runs_pkey ON public.payment_reconciliation_runs USING btree (id)"
+                },
+                {
+                    "name": "payment_reconciliation_runs_workspace_idx",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX payment_reconciliation_runs_workspace_idx ON public.payment_reconciliation_runs USING btree (workspace_id, finished_at DESC)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "payment_reconciliation_runs_abandoned_count_check",
+                    "type": "check",
+                    "columns": [
+                        "abandoned_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((abandoned_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_ended_count_check",
+                    "type": "check",
+                    "columns": [
+                        "ended_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((ended_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_left_count_check",
+                    "type": "check",
+                    "columns": [
+                        "left_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((left_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "payment_reconciliation_runs_read_count_check",
+                    "type": "check",
+                    "columns": [
+                        "read_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((read_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_settled_count_check",
+                    "type": "check",
+                    "columns": [
+                        "settled_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((settled_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_unreadable_check",
+                    "type": "check",
+                    "columns": [
+                        "unreadable"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((jsonb_typeof(unreadable) = 'array'::text))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_unreadable_count_check",
+                    "type": "check",
+                    "columns": [
+                        "unreadable_count"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((unreadable_count >= 0))"
+                },
+                {
+                    "name": "payment_reconciliation_runs_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "payment_reconciliation_schedule",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "boolean",
+                    "default": "true",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "last_tick_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 2
+                },
+                {
+                    "name": "last_tick_outcome",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 3
+                },
+                {
+                    "name": "last_run_started_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                }
+            ],
+            "comment": "#4126 -- the reconciliation schedule's last tick, its outcome (posted, not_configured) and the start of its last run. Written by the service role only.",
+            "indexes": [
+                {
+                    "name": "payment_reconciliation_schedule_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX payment_reconciliation_schedule_pkey ON public.payment_reconciliation_schedule USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "payment_reconciliation_schedule_id_check",
+                    "type": "check",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (id)"
+                },
+                {
+                    "name": "payment_reconciliation_schedule_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "payment_reconciliation_state",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "workspace_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "lease_token",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 2
+                },
+                {
+                    "name": "lease_until",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 3
+                },
+                {
+                    "name": "last_attempt_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 4
+                },
+                {
+                    "name": "claimed",
+                    "type": "uuid[]",
+                    "default": "'{}'::uuid[]",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "last_finish_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "last_error",
+                    "type": "text",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "last_unfinished_at",
+                    "type": "timestamp with time zone",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 9
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 10
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 12
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 13
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 14
+                }
+            ],
+            "comment": "#4126 -- the reconciliation schedule's lease per business, the attempts it claimed, its last finish, the last error, and when a lease was last left unfinished. Written by the service role only.",
+            "indexes": [
+                {
+                    "name": "payment_reconciliation_state_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX payment_reconciliation_state_pkey ON public.payment_reconciliation_state USING btree (workspace_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "payment_reconciliation_state_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (workspace_id)"
+                },
+                {
+                    "name": "payment_reconciliation_state_workspace_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "workspace_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "workspaces",
+                        "schema": "public",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                },
+                {
+                    "name": "system_company_present",
+                    "type": "check",
+                    "columns": [
+                        "company_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((company_id IS NOT NULL))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "personal_invoice_group_items",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "group_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "default": "auth.uid()",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "network_id",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "invoice_id",
+                    "type": "uuid",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "label",
+                    "type": "text",
+                    "default": "''::text",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 6
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 7
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 10
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 11
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "personal_invoice_group_items_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX personal_invoice_group_items_pkey ON public.personal_invoice_group_items USING btree (group_id, network_id, invoice_id)"
+                },
+                {
+                    "name": "personal_invoice_group_items_user",
+                    "valid": true,
+                    "unique": false,
+                    "primary": false,
+                    "definition": "CREATE INDEX personal_invoice_group_items_user ON public.personal_invoice_group_items USING btree (user_id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "personal_invoice_group_items_group",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "group_id",
+                        "user_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (group_id, user_id) REFERENCES personal_invoice_groups(id, user_id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "personal_invoice_groups",
+                        "schema": "public",
+                        "columns": [
+                            "id",
+                            "user_id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "personal_invoice_group_items_label",
+                    "type": "check",
+                    "columns": [
+                        "label"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((char_length(label) <= 80))"
+                },
+                {
+                    "name": "personal_invoice_group_items_network_id",
+                    "type": "check",
+                    "columns": [
+                        "network_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))"
+                },
+                {
+                    "name": "personal_invoice_group_items_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "group_id",
+                        "network_id",
+                        "invoice_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (group_id, network_id, invoice_id)"
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
+                }
+            ]
+        },
+        {
+            "kind": "table",
+            "name": "personal_invoice_groups",
+            "schema": "public",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "uuid",
+                    "default": "gen_random_uuid()",
+                    "notNull": true,
+                    "position": 1
+                },
+                {
+                    "name": "user_id",
+                    "type": "uuid",
+                    "default": "auth.uid()",
+                    "notNull": true,
+                    "position": 2
+                },
+                {
+                    "name": "name",
+                    "type": "text",
+                    "notNull": true,
+                    "position": 3
+                },
+                {
+                    "name": "created_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 4
+                },
+                {
+                    "name": "modified_datetime",
+                    "type": "timestamp with time zone",
+                    "default": "now()",
+                    "notNull": true,
+                    "position": 5
+                },
+                {
+                    "name": "company_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 6
+                },
+                {
+                    "name": "site_id",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 7
+                },
+                {
+                    "name": "created_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 8
+                },
+                {
+                    "name": "modified_by_user",
+                    "type": "uuid",
+                    "notNull": false,
+                    "position": 9
+                }
+            ],
+            "indexes": [
+                {
+                    "name": "personal_invoice_groups_name_once",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX personal_invoice_groups_name_once ON public.personal_invoice_groups USING btree (user_id, lower(name))"
+                },
+                {
+                    "name": "personal_invoice_groups_owner",
+                    "valid": true,
+                    "unique": true,
+                    "primary": false,
+                    "definition": "CREATE UNIQUE INDEX personal_invoice_groups_owner ON public.personal_invoice_groups USING btree (id, user_id)"
+                },
+                {
+                    "name": "personal_invoice_groups_pkey",
+                    "valid": true,
+                    "unique": true,
+                    "primary": true,
+                    "definition": "CREATE UNIQUE INDEX personal_invoice_groups_pkey ON public.personal_invoice_groups USING btree (id)"
+                }
+            ],
+            "constraints": [
+                {
+                    "name": "personal_invoice_groups_name_shape",
+                    "type": "check",
+                    "columns": [
+                        "name"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK (((name = btrim(name)) AND ((char_length(name) >= 1) AND (char_length(name) <= 80))))"
+                },
+                {
+                    "name": "personal_invoice_groups_owner",
+                    "type": "unique",
+                    "columns": [
+                        "id",
+                        "user_id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "UNIQUE (id, user_id)"
+                },
+                {
+                    "name": "personal_invoice_groups_pkey",
+                    "type": "primary key",
+                    "columns": [
+                        "id"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "PRIMARY KEY (id)"
+                },
+                {
+                    "name": "personal_invoice_groups_user_id_fkey",
+                    "type": "foreign key",
+                    "match": "SIMPLE",
+                    "columns": [
+                        "user_id"
+                    ],
+                    "onDelete": "CASCADE",
+                    "onUpdate": "NO ACTION",
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE",
+                    "references": {
+                        "table": "users",
+                        "schema": "auth",
+                        "columns": [
+                            "id"
+                        ]
+                    },
+                    "onDeleteColumns": [
+                    ]
+                },
+                {
+                    "name": "system_columns_order",
+                    "type": "check",
+                    "columns": [
+                        "modified_datetime",
+                        "created_datetime"
+                    ],
+                    "inherited": false,
+                    "validated": true,
+                    "deferrable": false,
+                    "definition": "CHECK ((modified_datetime >= created_datetime))"
                 }
             ]
         },
@@ -58067,7 +59467,7 @@
                     "inherited": false,
                     "validated": true,
                     "deferrable": false,
-                    "definition": "CHECK (((event_type = 'kiosk_device'::text) OR ((event_type = 'invoice_issued'::text) OR ((event_type = 'settlement_review'::text) OR ((event_type = 'privacy_incident'::text) OR ((event_type = 'payment_instructions_change'::text) OR ((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))))"
+                    "definition": "CHECK (((event_type = 'payment_attempt_unreadable'::text) OR ((event_type = 'credential_change'::text) OR ((event_type = 'kiosk_device'::text) OR ((event_type = 'invoice_issued'::text) OR ((event_type = 'settlement_review'::text) OR ((event_type = 'privacy_incident'::text) OR ((event_type = 'payment_instructions_change'::text) OR ((event_type = 'badge_security_alert'::text) OR ((event_type IS NULL) OR (event_type = ANY (ARRAY['reservation'::text, 'payment'::text, 'expense'::text, 'adjustment'::text, 'service_charge'::text, 'quota'::text, 'role_change'::text, 'member_join'::text, 'space_reservation'::text, 'invoice_payment'::text, 'reservation_delete'::text, 'invoice_writeoff'::text, 'invoice_reminder'::text, 'price_negotiation'::text, 'expense_schedule'::text, 'expense_repartition'::text, 'usage_correction'::text, 'usage_record_delete'::text, 'payment_terms_change'::text, 'invoice_issue'::text, 'invoice_void'::text, 'refund'::text, 'member_status_change'::text, 'subscription_change'::text, 'matrix_change'::text, 'lease_change'::text, 'commitment_variance'::text]))))))))))))"
                 },
                 {
                     "name": "validation_policies_min_amount_check",

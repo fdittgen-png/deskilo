@@ -336,6 +336,12 @@ defined,public.payment_intents,member_id,public.members,id,payment_intents_membe
 defined,public.payment_intents,workspace_id,public.workspaces,id,payment_intents_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.payment_intents,workspace_id ledger_entry_id,public.ledger_entries,workspace_id id,payment_intents_ledger_entry_id_same_workspace,NO ACTION,NO ACTION,true
 defined,public.payment_intents,workspace_id member_id,public.members,workspace_id id,payment_intents_member_id_same_workspace,CASCADE,NO ACTION,true
+defined,public.payment_reconciliation_checks,intent_id,public.payment_intents,id,payment_reconciliation_checks_intent_id_fkey,CASCADE,NO ACTION,true
+defined,public.payment_reconciliation_checks,workspace_id,public.workspaces,id,payment_reconciliation_checks_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.payment_reconciliation_runs,workspace_id,public.workspaces,id,payment_reconciliation_runs_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.payment_reconciliation_state,workspace_id,public.workspaces,id,payment_reconciliation_state_workspace_id_fkey,CASCADE,NO ACTION,true
+defined,public.personal_invoice_group_items,group_id user_id,public.personal_invoice_groups,id user_id,personal_invoice_group_items_group,CASCADE,NO ACTION,true
+defined,public.personal_invoice_groups,user_id,auth.users,id,personal_invoice_groups_user_id_fkey,CASCADE,NO ACTION,true
 defined,public.plan_images,level_id,public.levels,id,plan_images_level_id_fkey,CASCADE,NO ACTION,true
 defined,public.plan_images,workspace_id,public.workspaces,id,plan_images_workspace_id_fkey,CASCADE,NO ACTION,true
 defined,public.plans,workspace_id,public.workspaces,id,plans_workspace_id_fkey,CASCADE,NO ACTION,true
@@ -618,6 +624,7 @@ inferred,public.membership_fact_outbox,event_id,public.events,id,,,,
 inferred,public.membership_facts,event_id,public.events,id,,,,
 inferred,public.membership_snapshot_outbox,event_id,public.events,id,,,,
 inferred,public.membership_snapshot_pages,event_id,public.events,id,,,,
+inferred,public.personal_invoice_group_items,invoice_id,public.invoices,id,,,,
 inferred,public.reservation_target_history,desk_id,public.desks,id,,,,
 inferred,public.reservation_target_history,level_id,public.levels,id,,,,
 inferred,public.reservation_target_history,office_id,public.offices,id,,,,
