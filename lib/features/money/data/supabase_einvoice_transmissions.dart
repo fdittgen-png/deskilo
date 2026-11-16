@@ -27,6 +27,24 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
   static Future<String> _unknownVersion() async => '';
 
   @override
+  Future<EInvoiceSendBasis> fetchSendBasis(String invoiceId) async =>
+      EInvoiceSendBasis.fromAnswer(
+        await _client.rpc<Object?>(
+          'invoice_send_basis',
+          params: {'p_invoice_id': invoiceId},
+        ),
+      );
+
+  @override
+  Future<SentEInvoiceDocument> fetchSentDocument(String invoiceId) async =>
+      SentEInvoiceDocument.fromAnswer(
+        await _client.rpc<Object?>(
+          'invoice_sent_document',
+          params: {'p_invoice_id': invoiceId},
+        ),
+      );
+
+  @override
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) async {
     final data = await _invokeSend({
       'action': 'config',

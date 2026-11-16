@@ -5579,6 +5579,22 @@
   "eInvoiceResolveRejected": "La plateforme a refusé l'envoi",
   "eInvoiceResolveSubmit": "Consigner",
   "eInvoiceResolveTitle": "Régler cet envoi",
+  "eInvoiceSendTodayAccount": "le compte bancaire de l'entreprise",
+  "@eInvoiceSendTodayAccount": {
+    "description": "#4120 a value sent as today’s: the bank account"
+  },
+  "eInvoiceSendTodayConfirm": "Envoyer avec celles-ci",
+  "@eInvoiceSendTodayConfirm": {
+    "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSendTodayReference": "le référentiel fiscal",
+  "@eInvoiceSendTodayReference": {
+    "description": "#4120 a value sent as today’s: the tax reference"
+  },
+  "eInvoiceSendTodayTitle": "Cette facture a été émise avant que ses valeurs ne soient conservées avec elle ; elle est envoyée avec celles d'aujourd'hui :",
+  "@eInvoiceSendTodayTitle": {
+    "description": "#4120 before Send: the values of an older invoice that are today’s"
+  },
   "eInvoiceSubdivisionField": "Département, județ ou province (p. ex. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

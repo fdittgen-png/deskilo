@@ -6,6 +6,7 @@ import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
+import 'package:deskilo/features/money/domain/einvoice_sent_from_stored.dart';
 import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
@@ -458,6 +459,8 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   @override Future<List<LedgerEntry>> fetchLedger(String memberId) => accountQueries.fetchLedger(memberId);
   @override Future<String> recordPayment({required String workspaceId, required String memberId, required int amountCents, String note = '', PaymentMethod? method, DateTime? paidOn, String? period}) => accountCommands.recordPayment(workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, note: note, method: method, paidOn: paidOn, period: period);
   @override Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId) => eInvoices.fetchEInvoiceGateway(workspaceId);
+  @override Future<EInvoiceSendBasis> fetchSendBasis(String invoiceId) => eInvoices.fetchSendBasis(invoiceId);
+  @override Future<SentEInvoiceDocument> fetchSentDocument(String invoiceId) => eInvoices.fetchSentDocument(invoiceId);
   @override Future<EInvoiceSubmission> sendEInvoice({required String workspaceId, required String invoiceId, required String fileName, required String mimeType, required List<int> bytes, String environment = 'prod', String destination = 'government', String format = '', String receiverScheme = '', String receiverId = ''}) => eInvoices.sendEInvoice(workspaceId: workspaceId, invoiceId: invoiceId, fileName: fileName, mimeType: mimeType, bytes: bytes, environment: environment, destination: destination, format: format, receiverScheme: receiverScheme, receiverId: receiverId);
   @override Future<EInvoiceSubmission> requestEInvoiceReceipt({required String workspaceId, required String transmissionId}) => eInvoices.requestEInvoiceReceipt(workspaceId: workspaceId, transmissionId: transmissionId);
   @override Future<EInvoiceResolveResult> resolveEInvoiceTransmission({required String workspaceId, required String transmissionId, required EInvoiceResolution resolution, required String reason, required String evidence, bool documentRejected = false}) => eInvoices.resolveEInvoiceTransmission(workspaceId: workspaceId, transmissionId: transmissionId, resolution: resolution, reason: reason, evidence: evidence, documentRejected: documentRejected);

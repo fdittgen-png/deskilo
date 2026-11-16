@@ -5579,6 +5579,22 @@
   "eInvoiceResolveRejected": "La plataforma rechazó el envío",
   "eInvoiceResolveSubmit": "Registrar",
   "eInvoiceResolveTitle": "Resolver este envío",
+  "eInvoiceSendTodayAccount": "la cuenta bancaria de la empresa",
+  "@eInvoiceSendTodayAccount": {
+    "description": "#4120 a value sent as today’s: the bank account"
+  },
+  "eInvoiceSendTodayConfirm": "Enviar con estos",
+  "@eInvoiceSendTodayConfirm": {
+    "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSendTodayReference": "la referencia fiscal",
+  "@eInvoiceSendTodayReference": {
+    "description": "#4120 a value sent as today’s: the tax reference"
+  },
+  "eInvoiceSendTodayTitle": "Esta factura se emitió antes de que sus valores se guardaran con ella; se envía con los de hoy:",
+  "@eInvoiceSendTodayTitle": {
+    "description": "#4120 before Send: the values of an older invoice that are today’s"
+  },
   "eInvoiceSubdivisionField": "Provincia o distrito (p. ej. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

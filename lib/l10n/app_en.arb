@@ -11522,6 +11522,22 @@
   "@eInvoiceResolveTitle": {
     "description": "#3335 - settling an uncertain e-invoice submission by hand"
   },
+  "eInvoiceSendTodayAccount": "the business's bank account",
+  "@eInvoiceSendTodayAccount": {
+    "description": "#4120 a value sent as today’s: the bank account"
+  },
+  "eInvoiceSendTodayConfirm": "Send with these",
+  "@eInvoiceSendTodayConfirm": {
+    "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSendTodayReference": "the tax reference",
+  "@eInvoiceSendTodayReference": {
+    "description": "#4120 a value sent as today’s: the tax reference"
+  },
+  "eInvoiceSendTodayTitle": "This invoice was issued before its values were kept with it, so it is sent with today's:",
+  "@eInvoiceSendTodayTitle": {
+    "description": "#4120 before Send: the values of an older invoice that are today’s"
+  },
   "eInvoiceSubdivisionField": "County or province (e.g. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

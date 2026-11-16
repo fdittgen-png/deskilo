@@ -8803,6 +8803,19 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eInvoiceResolveTitle => 'Resolver este envío';
 
   @override
+  String get eInvoiceSendTodayAccount => 'la cuenta bancaria de la empresa';
+
+  @override
+  String get eInvoiceSendTodayConfirm => 'Enviar con estos';
+
+  @override
+  String get eInvoiceSendTodayReference => 'la referencia fiscal';
+
+  @override
+  String get eInvoiceSendTodayTitle =>
+      'Esta factura se emitió antes de que sus valores se guardaran con ella; se envía con los de hoy:';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Provincia o distrito (p. ej. RO-B, MI)';
 

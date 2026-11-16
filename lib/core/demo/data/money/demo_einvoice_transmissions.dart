@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../money_repository.dart';
 
@@ -16,6 +17,21 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
   EInvoiceTestVerdict testVerdict = EInvoiceTestVerdict.none;
   String testId = '';
   int tests = 0;
+
+  /// #4120 — the Demo's invoices are sent as they were issued: nothing of a
+  /// sending is today's.
+  @override
+  Future<EInvoiceSendBasis> fetchSendBasis(String invoiceId) async =>
+      EInvoiceSendBasis.sameAsToday;
+
+  /// #4120 — the Demo keeps no sent document: refused as for an invoice never
+  /// sent, the server's answer.
+  @override
+  Future<SentEInvoiceDocument> fetchSentDocument(String invoiceId) async =>
+      throw const PostgrestException(
+        message: 'no sent document for this invoice',
+        code: 'DKN01',
+      );
 
   @override
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(

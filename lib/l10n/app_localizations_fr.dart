@@ -8846,6 +8846,19 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eInvoiceResolveTitle => 'Régler cet envoi';
 
   @override
+  String get eInvoiceSendTodayAccount => 'le compte bancaire de l\'entreprise';
+
+  @override
+  String get eInvoiceSendTodayConfirm => 'Envoyer avec celles-ci';
+
+  @override
+  String get eInvoiceSendTodayReference => 'le référentiel fiscal';
+
+  @override
+  String get eInvoiceSendTodayTitle =>
+      'Cette facture a été émise avant que ses valeurs ne soient conservées avec elle ; elle est envoyée avec celles d\'aujourd\'hui :';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Département, județ ou province (p. ex. RO-B, MI)';
 

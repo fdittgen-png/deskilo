@@ -5579,6 +5579,22 @@
   "eInvoiceResolveRejected": "Die Plattform hat den Upload abgelehnt",
   "eInvoiceResolveSubmit": "Festhalten",
   "eInvoiceResolveTitle": "Diese Übermittlung klären",
+  "eInvoiceSendTodayAccount": "das Bankkonto des Betriebs",
+  "@eInvoiceSendTodayAccount": {
+    "description": "#4120 a value sent as today’s: the bank account"
+  },
+  "eInvoiceSendTodayConfirm": "Damit versenden",
+  "@eInvoiceSendTodayConfirm": {
+    "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSendTodayReference": "die Steuerreferenz",
+  "@eInvoiceSendTodayReference": {
+    "description": "#4120 a value sent as today’s: the tax reference"
+  },
+  "eInvoiceSendTodayTitle": "Diese Rechnung wurde ausgestellt, bevor ihre Werte mit ihr gespeichert wurden; sie wird mit den heutigen versendet:",
+  "@eInvoiceSendTodayTitle": {
+    "description": "#4120 before Send: the values of an older invoice that are today’s"
+  },
   "eInvoiceSubdivisionField": "Kreis oder Provinz (z. B. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
