@@ -11915,13 +11915,6 @@ class AppLocalizationsFr extends AppLocalizations {
       'Nommer par l’étage un étage à une seule salle';
 
   @override
-  String get featureSiteDocuments => 'Sites sur les documents';
-
-  @override
-  String get featureSiteDocumentsDesc =>
-      'Les documents nomment le site concerné : l\'adresse et le SIRET du site de rattachement de l\'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l\'adresse de l\'espace sur tous les documents.';
-
-  @override
   String get featureSpaceInquiriesDesc =>
       'Une personne connectée qui trouve la page publiée peut écrire aux hôtes : les propriétaires et les administrateurs qui ont choisi d’être contacts publics. Les hôtes sont nommés avant l’écriture, et seuls cette personne et les hôtes lisent la conversation. Désactivé, le bouton et la vue Demandes disparaissent : personne n’ouvre de nouvelle demande ; celles en cours restent dans la boîte des hôtes pour y répondre et les clore.';
 

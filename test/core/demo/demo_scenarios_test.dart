@@ -264,10 +264,10 @@ const Map<WorkspaceFeature, String> _elsewhere = {
 /// The switch-only scenarios (kind toggle) the file holds today. It only
 /// falls: a feature gets a state or an action, not another switch. #4009 —
 /// what is left is not a house's to perform, each with its reason at the
-/// entry: siteDocuments (reserved, nothing reads it), uiAnimations (a
-/// per-device motion preference) and personalShell (an installation default
-/// that shapes Me, which stands above every business).
-const int _switchOnlyBudget = 3;
+/// entry: uiAnimations (a per-device motion preference) and personalShell (an
+/// installation default that shapes Me, which stands above every business).
+/// #3997 retired siteDocuments, the third.
+const int _switchOnlyBudget = 2;
 
 /// The scenarios outside the reference organisation, the ones in a house
 /// not named in [elsewhere], and the entries of [elsewhere] that are stale.
@@ -433,7 +433,6 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'two sites',
     (w) => w.f.workspaces.sites.length >= 2,
   ),
-  WorkspaceFeature.siteDocuments: _toggle('reserved: no implementation reads this flag'),
   WorkspaceFeature.planObjectDelete: _action(_owner, 'Ada deletes a drawn object of the plan; it is gone and the seats stay', (_) => planDeleteAction()),
   WorkspaceFeature.planDecor: _state(_owner, 'the ground floor carries a couch and a table drawn under its seats', (_) => planDecorState()),
   WorkspaceFeature.adminSeatBlocking: _action(

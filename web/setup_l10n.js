@@ -1052,10 +1052,6 @@ window.SETUP_L10N={
     "Sites",
     "Several addresses: levels are grouped by site, each site has its own address and registration, each member a home site, and documents name the site they concern. Off: one address for the whole workspace."
    ],
-   "siteDocuments": [
-    "Sites on documents",
-    "Documents name the site they concern: the member's home site's address and registration as the seller, and the other sites the month stood at in the details. Off: the workspace address on every document."
-   ],
    "vatGroups": [
     "VAT groups",
     "Each VAT rate carries the fiscal group of what it taxes — standard, intermediate, reduced, super-reduced, zero, exempt, not subject, refundable deposit, excise-bearing — with the category and the exemption reason the group implies. Off: bare percentages."
@@ -2873,10 +2869,6 @@ window.SETUP_L10N={
    "multiSite": [
     "Sites",
     "Plusieurs adresses : les étages sont regroupés par site, chaque site a son adresse et son SIRET, chaque adhérent un site de rattachement, et les documents nomment le site concerné. Désactivé : une seule adresse pour l'espace."
-   ],
-   "siteDocuments": [
-    "Sites sur les documents",
-    "Les documents nomment le site concerné : l'adresse et le SIRET du site de rattachement de l'adhérent côté vendeur, et les autres sites fréquentés dans le mois dans le détail. Désactivé : l'adresse de l'espace sur tous les documents."
    ],
    "vatGroups": [
     "Groupes de TVA",
@@ -4696,10 +4688,6 @@ window.SETUP_L10N={
     "Standorte",
     "Mehrere Adressen: Ebenen werden nach Standort gruppiert, jeder Standort hat eigene Adresse und Registrierung, jedes Mitglied einen Heimatstandort, und Belege nennen den betroffenen Standort. Aus: eine Adresse für den ganzen Arbeitsbereich."
    ],
-   "siteDocuments": [
-    "Standorte auf Belegen",
-    "Belege nennen den betroffenen Standort: Adresse und Registrierung des Heimatstandorts des Mitglieds als Verkäufer, und die anderen im Monat genutzten Standorte im Detail. Aus: die Adresse des Arbeitsbereichs auf jedem Beleg."
-   ],
    "vatGroups": [
     "USt-Gruppen",
     "Jeder USt-Satz trägt die steuerliche Gruppe dessen, was er besteuert — Regel-, Zwischen-, ermäßigter, stark ermäßigter, Null-Satz, steuerfrei, nicht steuerbar, Pfand, verbrauchsteuerpflichtig — mit der Kategorie und dem Befreiungsvermerk, den die Gruppe impliziert. Aus: bloße Prozentsätze."
@@ -6518,10 +6506,6 @@ window.SETUP_L10N={
     "Sedes",
     "Varias direcciones: las plantas se agrupan por sede, cada sede tiene su dirección y su registro, cada socio una sede de referencia, y los documentos nombran la sede a la que se refieren. Desactivado: una sola dirección para todo el espacio."
    ],
-   "siteDocuments": [
-    "Sedes en los documentos",
-    "Los documentos nombran la sede a la que se refieren: la dirección y el registro de la sede de referencia del socio como vendedor, y las demás sedes utilizadas en el mes en el detalle. Desactivado: la dirección del espacio en todos los documentos."
-   ],
    "vatGroups": [
     "Grupos de IVA",
     "Cada tipo de IVA lleva el grupo fiscal de lo que grava — general, intermedio, reducido, superreducido, cero, exento, no sujeto, envase retornable, con impuestos especiales — con la categoría y la mención de exención que el grupo implica. Desactivado: simples porcentajes."
@@ -8339,10 +8323,6 @@ window.SETUP_L10N={
    "multiSite": [
     "Sedi",
     "Più indirizzi: i piani sono raggruppati per sede, ogni sede ha il proprio indirizzo e la propria registrazione, ogni socio una sede di riferimento, e i documenti indicano la sede interessata. Disattivato: un solo indirizzo per tutto lo spazio."
-   ],
-   "siteDocuments": [
-    "Sedi sui documenti",
-    "I documenti indicano la sede interessata: l'indirizzo e la registrazione della sede di riferimento del socio come venditore, e le altre sedi frequentate nel mese nel dettaglio. Disattivato: l'indirizzo dello spazio su tutti i documenti."
    ],
    "vatGroups": [
     "Gruppi IVA",

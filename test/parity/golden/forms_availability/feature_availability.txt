@@ -65,7 +65,6 @@ numberSequences | everywhere | y y y y y y y y y y
 workspaceStatus | everywhere | y y y y y y y y y y
 expenseRepartitionWizard | everywhere | y y y y y y y y y y
 multiSite | everywhere | y y y y y y y y y y
-siteDocuments | everywhere | y y y y y y y y y y
 vatGroups | everywhere | y y y y y y y y y y
 vatRateHistory | everywhere | y y y y y y y y y y
 vatCounterparty | everywhere | y y y y y y y y y y
