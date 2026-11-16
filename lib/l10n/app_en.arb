@@ -7684,6 +7684,18 @@
   "@calendarDeskExport": {
     "description": "#3626 Button of the desk calendar: export the bookings of the period as a file"
   },
+  "calendarDeskFilterChip": "{filter}: {value}",
+  "@calendarDeskFilterChip": {
+    "description": "#4075 — a filter in use, as a chip beside the filter control: the filter's name and what it keeps.",
+    "placeholders": {
+      "filter": {
+        "type": "String"
+      },
+      "value": {
+        "type": "String"
+      }
+    }
+  },
   "calendarDeskFilterKind": "Kind of place",
   "@calendarDeskFilterKind": {
     "description": "#3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)"
@@ -7691,6 +7703,15 @@
   "calendarDeskFilterLevel": "Level",
   "@calendarDeskFilterLevel": {
     "description": "#3626 The desk calendar's filter by level"
+  },
+  "calendarDeskFiltersCount": "{count, plural, =0{Filters} one{Filters · {count}} other{Filters · {count}}}",
+  "@calendarDeskFiltersCount": {
+    "description": "#4075 — the desk calendar's one filter control where the four filters do not fit the line, with the number in use.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
   },
   "calendarDeskFreeDay": "{place}: free on {day}, new booking",
   "@calendarDeskFreeDay": {
@@ -34284,6 +34305,10 @@
   "purchasesSupplier": "Supplier",
   "@purchasesSupplier": {
     "description": "#2573 purchases"
+  },
+  "purchasesSupplierNotRead": "Not read",
+  "@purchasesSupplierNotRead": {
+    "description": "#4067 the purchases table: the supplier cell when the suppliers could not be read"
   },
   "purchasesTabDocuments": "Documents",
   "@purchasesTabDocuments": {

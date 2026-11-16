@@ -7,5 +7,9 @@
   },
   "@purchasesReceiptColumn": {
     "description": "#3615 the purchases table: the column marking a document with a receipt filed"
+  },
+  "purchasesSupplierNotRead": "Not read",
+  "@purchasesSupplierNotRead": {
+    "description": "#4067 the purchases table: the supplier cell when the suppliers could not be read"
   }
 }

@@ -9215,6 +9215,12 @@ abstract class AppLocalizations {
   /// **'Export'**
   String get calendarDeskExport;
 
+  /// #4075 — a filter in use, as a chip beside the filter control: the filter's name and what it keeps.
+  ///
+  /// In en, this message translates to:
+  /// **'{filter}: {value}'**
+  String calendarDeskFilterChip(String filter, String value);
+
   /// #3626 The desk calendar's filter by kind of place (seat, meeting room, parking slot)
   ///
   /// In en, this message translates to:
@@ -9226,6 +9232,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Level'**
   String get calendarDeskFilterLevel;
+
+  /// #4075 — the desk calendar's one filter control where the four filters do not fit the line, with the number in use.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Filters} one{Filters · {count}} other{Filters · {count}}}'**
+  String calendarDeskFiltersCount(int count);
 
   /// #3626 Accessibility label of a free day cell of a place in the week grid: a click opens New booking. Placeholders: {place}, {day} (a date)
   ///
@@ -41879,6 +41891,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Supplier'**
   String get purchasesSupplier;
+
+  /// #4067 the purchases table: the supplier cell when the suppliers could not be read
+  ///
+  /// In en, this message translates to:
+  /// **'Not read'**
+  String get purchasesSupplierNotRead;
 
   /// #2574 purchase payables
   ///

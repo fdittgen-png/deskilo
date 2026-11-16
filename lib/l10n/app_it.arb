@@ -3485,8 +3485,10 @@
   "calendarDeskColumnState": "Stato",
   "calendarDeskColumnTo": "Al",
   "calendarDeskExport": "Esporta",
+  "calendarDeskFilterChip": "{filter}: {value}",
   "calendarDeskFilterKind": "Tipo di posto",
   "calendarDeskFilterLevel": "Livello",
+  "calendarDeskFiltersCount": "{count, plural, =0{Filtri} one{Filtri · {count}} other{Filtri · {count}}}",
   "calendarDeskFreeDay": "{place}: libero il {day}, nuova prenotazione",
   "calendarDeskFreeSlot": "{place}: libero dalle {from} alle {to}, nuova prenotazione",
   "calendarDeskMissingHour": "Gli orologi vanno avanti: dalle {from} alle {to} non esiste in questo giorno",
@@ -15293,6 +15295,7 @@
   "@purchasesSupplier": {
     "description": "#2573 purchases"
   },
+  "purchasesSupplierNotRead": "Non letto",
   "purchasesTabDocuments": "Documenti",
   "@purchasesTabDocuments": {
     "description": "#2574 purchase payables"

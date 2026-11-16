@@ -326,9 +326,11 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             ? null
             : () => notifier.move(groupKeys, key, 1),
       ),
+      // #4071 — every row says which kind it is, so a row's height does not
+      // depend on whether the business has a test side.
       environmentHint: group.any((s) => s.isDevelopment)
           ? l10n.meTestBusinessHint
-          : null,
+          : l10n.uxRealSpaceHint,
       avatar: WorkspaceAvatar(workspace: group.first),
       // #2313 — production's identity when the pair has one.
       brand: spaceBrand(group.first),
