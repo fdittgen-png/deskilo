@@ -157,7 +157,12 @@ class ShellMenu {
       }
       for (final e in g.entries) {
         if (entryIsCurrent(e, path)) {
-          return [(label: g.title, entry: null), (label: e.label, entry: e)];
+          // #4066 — a group and its entry of the same name are one level:
+          // named once ("Accounting & VAT › Exports").
+          return [
+            if (g.title != e.label) (label: g.title, entry: null),
+            (label: e.label, entry: e),
+          ];
         }
       }
       return g.id == place && !g.isEmpty

@@ -339,9 +339,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
   @override
-  String get accountingStatusAllBooks => 'Everything in the books';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure or more';
   }
@@ -353,10 +350,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Books closed up to';
 
   @override
+  String get accountingStatusDue => 'Due';
+
+  @override
   String get accountingStatusLastExport => 'Last export';
 
   @override
   String get accountingStatusNotRead => 'Could not be read';
+
+  @override
+  String get accountingStatusReference => 'Reference';
+
+  @override
+  String get accountingStatusToFile => 'To file';
+
+  @override
+  String get accountingStatusToMatch => 'To match';
 
   @override
   String get accountingStatusVatToFile => 'VAT return to file';

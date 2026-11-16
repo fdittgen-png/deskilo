@@ -7,6 +7,7 @@
 // for; the numbers tile is the invoice series' next number as its page
 // previews it; the VAT tile is the oldest return not filed. A read that
 // fails is said on its tile, never shown as nothing to do.
+import 'package:deskilo/core/ui/kit/dashboard_grid.dart';
 import 'package:deskilo/features/money/domain/bank/bank_records.dart';
 import 'package:deskilo/features/money/domain/bank/bank_statement.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
@@ -218,5 +219,82 @@ void main() {
       _figure(tester, 'vat'),
       contains(_dates.format(DateTime(2026, 6, 30))),
     );
+  });
+
+  // #4066 — what is due first, what only states after; a tile that asks
+  // says so in words and is outlined.
+  List<String> tilesOf(WidgetTester tester, String block) => [
+    for (final t in tester.widgetList<KpiTile>(
+      find.descendant(
+        of: find.byKey(ValueKey('accounting-status-$block')),
+        matching: find.byType(KpiTile),
+      ),
+    ))
+      (t.tapKey! as ValueKey<String>).value.replaceFirst('accounting-status-', ''),
+  ];
+
+  KpiTile tile(WidgetTester tester, String name) => tester.widget<KpiTile>(
+    find.ancestor(
+      of: find.byKey(ValueKey('accounting-status-$name')),
+      matching: find.byType(KpiTile),
+    ),
+  );
+
+  testWidgets('Due leads: the VAT return, the bank, the periods; then '
+      'Reference: the last export and the next number', (tester) async {
+    await _pump(
+      tester,
+      statements: [_statement('a', 3)],
+      declarations: [_declaration('open', DateTime(2026, 4), 'draft')],
+    );
+    expect(tilesOf(tester, 'due'), ['vat', 'bank', 'periods']);
+    expect(tilesOf(tester, 'reference'), ['export', 'numbers']);
+    expect(
+      tester.getTopLeft(find.byKey(const ValueKey('accounting-status-due-title'))).dy,
+      lessThan(
+        tester.getTopLeft(find.byKey(const ValueKey('accounting-status-reference-title'))).dy,
+      ),
+    );
+    expect(find.text('Due'), findsOneWidget);
+    expect(find.text('Reference'), findsOneWidget);
+  });
+
+  testWidgets('a tile that asks says so in words and is outlined; one that '
+      'states is not', (tester) async {
+    await _pump(
+      tester,
+      statements: [_statement('a', 3)],
+      declarations: [_declaration('open', DateTime(2026, 4), 'draft')],
+    );
+    expect(tile(tester, 'vat').asks, 'To file');
+    expect(tile(tester, 'bank').asks, 'To match');
+    for (final name in ['periods', 'export', 'numbers']) {
+      expect(tile(tester, name).asks, isNull, reason: name);
+    }
+    expect(find.text('To file'), findsOneWidget);
+    expect(find.text('To match'), findsOneWidget);
+    Card card(String name) => tester.widget<Card>(
+      find.ancestor(
+        of: find.byKey(ValueKey('accounting-status-$name')),
+        matching: find.byType(Card),
+      ),
+    );
+    expect((card('vat').shape! as OutlinedBorder).side.width, 2);
+    expect(card('periods').shape, isNull, reason: 'the theme\'s card');
+  });
+
+  testWidgets('with nothing to file or match, every tile stays and none asks', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      statements: [_statement('a', 0)],
+      declarations: [_declaration('filed', DateTime(2026), 'filed')],
+    );
+    expect(tilesOf(tester, 'due'), ['vat', 'bank', 'periods']);
+    expect(tilesOf(tester, 'reference'), ['export', 'numbers']);
+    expect(find.text('To file'), findsNothing);
+    expect(find.text('To match'), findsNothing);
+    expect(_figure(tester, 'vat'), 'None');
   });
 }

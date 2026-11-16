@@ -339,9 +339,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Los asientos han cambiado o son demasiado grandes para una sola exportación. Recargue el registro, o elija un periodo más corto, e inténtelo de nuevo.';
 
   @override
-  String get accountingStatusAllBooks => 'Toda la contabilidad';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure o más';
   }
@@ -354,10 +351,22 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Libros cerrados hasta';
 
   @override
+  String get accountingStatusDue => 'Pendiente';
+
+  @override
   String get accountingStatusLastExport => 'Última exportación';
 
   @override
   String get accountingStatusNotRead => 'No se pudo leer';
+
+  @override
+  String get accountingStatusReference => 'Referencia';
+
+  @override
+  String get accountingStatusToFile => 'Por presentar';
+
+  @override
+  String get accountingStatusToMatch => 'Por conciliar';
 
   @override
   String get accountingStatusVatToFile => 'Declaración de IVA por presentar';

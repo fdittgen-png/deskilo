@@ -8,6 +8,12 @@
 // said on its tile, never shown as nothing to do. No country's rule is
 // assumed: the VAT tile names the return to file and its period, not a
 // deadline, which no jurisdiction package carries.
+//
+// #4066 — the page leads with what is due: the VAT return to file, the bank
+// movements to match, how far the books are closed. A tile that asks for
+// something says so in words and is outlined. Below, under "Reference", what
+// only states a figure (the last export, the next invoice number) and then
+// the doors of the books.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart'
     show BookExport, BookPeriodsOverview;
 import 'package:flutter/material.dart';
@@ -18,6 +24,7 @@ import 'package:intl/intl.dart' show DateFormat;
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/kit/dashboard_grid.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -145,68 +152,104 @@ class AccountingStatusGrid extends ConsumerWidget {
       _ => l.myReservationsLoadingMore,
     };
     final export = status.lastExport.value;
-    return DashboardGrid(
+    final vat = status.vatToFile.value;
+    final bank = status.bankToMatch.value;
+    // #4066 — first what asks for something, in the order it is done.
+    final due = [
+      if (shown.vat)
+        KpiTile(
+          tapKey: const ValueKey('accounting-status-vat'),
+          figureKey: const ValueKey('accounting-status-vat-figure'),
+          label: l.accountingStatusVatToFile,
+          // A period and "to file": no deadline is invented.
+          asks: vat == null ? null : l.accountingStatusToFile,
+          figure: figure(
+            status.vatToFile,
+            (p) => p == null
+                ? l.memberPageNone
+                : '${dates.format(p.from)} – ${dates.format(p.to)}',
+          ),
+          onTap: () => context.push('/vat-declarations'),
+        ),
+      if (bankDoor case final open?)
+        KpiTile(
+          tapKey: const ValueKey('accounting-status-bank'),
+          figureKey: const ValueKey('accounting-status-bank-figure'),
+          label: l.accountingStatusBankToMatch,
+          asks: bank != null && bank.count > 0
+              ? l.accountingStatusToMatch
+              : null,
+          figure: figure(
+            status.bankToMatch,
+            (b) => b.incomplete
+                ? l.accountingStatusAtLeast(format.number(b.count))
+                : format.number(b.count),
+          ),
+          onTap: open,
+        ),
+      if (shown.periods)
+        KpiTile(
+          tapKey: const ValueKey('accounting-status-periods'),
+          figureKey: const ValueKey('accounting-status-periods-figure'),
+          label: l.accountingStatusClosedUpTo,
+          figure: figure(
+            status.closedUpTo,
+            (d) => d == null ? l.memberPageNone : dates.format(d),
+          ),
+          onTap: () =>
+              showBookPeriodsSheet(context, workspaceId, isOwner: isOwner),
+        ),
+    ];
+    // Then what only states a figure, above the doors of the books.
+    final reference = [
+      if (shown.periods)
+        KpiTile(
+          tapKey: const ValueKey('accounting-status-export'),
+          figureKey: const ValueKey('accounting-status-export-figure'),
+          label: l.accountingStatusLastExport,
+          figure: figure(
+            status.lastExport,
+            (e) => e == null ? l.memberPageNone : dates.format(e.exportedAt),
+          ),
+          note: export == null ? null : _exportLine(l, dates, export),
+          onTap: () => context.push(_accountingExportsPath),
+        ),
+      if (shown.numbers)
+        KpiTile(
+          tapKey: const ValueKey('accounting-status-numbers'),
+          figureKey: const ValueKey('accounting-status-numbers-figure'),
+          label: l.numberSequenceNext,
+          figure: figure(status.nextInvoiceNumber, (n) => n),
+          onTap: () => context.push('/settings/number-sequences'),
+        ),
+    ];
+    final heading = Theme.of(context).textTheme.titleSmall;
+    return Column(
       key: const ValueKey('accounting-status'),
-      minTileWidth: kpiTileMinWidth,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        if (shown.periods)
-          KpiTile(
-            tapKey: const ValueKey('accounting-status-periods'),
-            figureKey: const ValueKey('accounting-status-periods-figure'),
-            label: l.accountingStatusClosedUpTo,
-            figure: figure(
-              status.closedUpTo,
-              (d) => d == null ? l.memberPageNone : dates.format(d),
+        for (final (id, title, tiles) in [
+          ('due', l.accountingStatusDue, due),
+          ('reference', l.accountingStatusReference, reference),
+        ])
+          if (tiles.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.only(
+                top: AppSpacing.sm,
+                bottom: AppSpacing.sm,
+              ),
+              child: Text(
+                title,
+                key: ValueKey('accounting-status-$id-title'),
+                style: heading,
+              ),
             ),
-            onTap: () =>
-                showBookPeriodsSheet(context, workspaceId, isOwner: isOwner),
-          ),
-        if (shown.periods)
-          KpiTile(
-            tapKey: const ValueKey('accounting-status-export'),
-            figureKey: const ValueKey('accounting-status-export-figure'),
-            label: l.accountingStatusLastExport,
-            figure: figure(
-              status.lastExport,
-              (e) => e == null ? l.memberPageNone : dates.format(e.exportedAt),
+            DashboardGrid(
+              key: ValueKey('accounting-status-$id'),
+              minTileWidth: kpiTileMinWidth,
+              children: tiles,
             ),
-            note: export == null ? null : _exportLine(l, dates, export),
-            onTap: () => context.push(_accountingExportsPath),
-          ),
-        if (shown.vat)
-          KpiTile(
-            tapKey: const ValueKey('accounting-status-vat'),
-            figureKey: const ValueKey('accounting-status-vat-figure'),
-            label: l.accountingStatusVatToFile,
-            figure: figure(
-              status.vatToFile,
-              (p) => p == null
-                  ? l.memberPageNone
-                  : '${dates.format(p.from)} – ${dates.format(p.to)}',
-            ),
-            onTap: () => context.push('/vat-declarations'),
-          ),
-        if (bankDoor case final open?)
-          KpiTile(
-            tapKey: const ValueKey('accounting-status-bank'),
-            figureKey: const ValueKey('accounting-status-bank-figure'),
-            label: l.accountingStatusBankToMatch,
-            figure: figure(
-              status.bankToMatch,
-              (b) => b.incomplete
-                  ? l.accountingStatusAtLeast(format.number(b.count))
-                  : format.number(b.count),
-            ),
-            onTap: open,
-          ),
-        if (shown.numbers)
-          KpiTile(
-            tapKey: const ValueKey('accounting-status-numbers'),
-            figureKey: const ValueKey('accounting-status-numbers-figure'),
-            label: l.numberSequenceNext,
-            figure: figure(status.nextInvoiceNumber, (n) => n),
-            onTap: () => context.push('/settings/number-sequences'),
-          ),
+          ],
       ],
     );
   }
