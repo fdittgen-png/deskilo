@@ -51,7 +51,7 @@ export 'money/demo_invoice_action_commands.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for
 /// assertions (they only become ledger credits after confirmation).
-class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
+class FakeMoneyRepository with DemoClaimsStore implements MoneyRepository, AccountingSourceQueries {
   /// VAT declarations (0107), newest period first on read.
   final List<VatDeclaration> vatDeclarations = [];
 
@@ -379,7 +379,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   /// demo wires each port to its own adapter, the tests keep this facade.
   late final invoiceQueries = DemoInvoiceQueries(this);
   late final accountQueries = DemoMemberAccountQueries(this);
-  late final accountCommands = DemoMemberAccountCommands(this);
+  @override late final accountCommands = DemoMemberAccountCommands(this);
   late final reportTemplates = DemoReportTemplates(this);
   late final invoiceCommands = DemoInvoiceCommands(this);
   late final taxReporting = DemoTaxReporting(this);
@@ -389,7 +389,7 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
   late final dunning = DemoDunning(this);
   late final billing = DemoBillingRules(this);
   late final numbering = DemoDocumentNumbering(this);
-  late final paymentGateway = DemoPaymentGateway(this);
+  @override late final paymentGateway = DemoPaymentGateway(this);
   late final eInvoices = DemoEInvoiceTransmissions(this);
   late final seeds = DemoMoneySeeds(this);
 

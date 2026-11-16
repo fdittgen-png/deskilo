@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'payment_claims.dart';
 import 'payment_method.dart';
 
 /// #2591 — what is recorded against a member's account: a payment, a
@@ -22,6 +23,23 @@ abstract interface class MemberAccountCommands {
     PaymentMethod? method,
     DateTime? paidOn,
     String? period,
+  });
+
+  /// #3556 (0797) — declares paid exactly the invoices of [claim]: a
+  /// pending payment event naming them, applied to them once the business
+  /// approves it. The event's id. Throws [ClaimRefused].
+  Future<String> declareInvoicesPaid({
+    required String workspaceId,
+    required String memberId,
+    required InvoiceClaim claim,
+  });
+
+  /// #3556 (0797) — withdraws the claim of my online payment [paymentId]:
+  /// its invoices are free for another payment; money that still arrives
+  /// is my credit, applied to no invoice. Throws [ClaimRefused].
+  Future<void> withdrawPaymentClaim({
+    required String workspaceId,
+    required String paymentId,
   });
 
   /// Records consumed services onto the monthly bill (#129, ADR 0008).

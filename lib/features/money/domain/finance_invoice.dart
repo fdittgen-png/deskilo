@@ -48,6 +48,13 @@ class FinanceInvoice {
     this.timezone,
     this.stillDueCents,
     this.awaitingCents,
+    this.period,
+    this.inPayment = false,
+    this.claimPaymentId,
+    this.claimHandedAt,
+    this.claimSettling = false,
+    this.paymentReceived = false,
+    this.payable = false,
   });
 
   final String id, workspaceId, workspaceName, number, currency;
@@ -62,6 +69,36 @@ class FinanceInvoice {
   /// #3877 (0755) — the server's own still-due and the parts of a payment
   /// that wait for approval; null from a host that does not answer them.
   final int? stillDueCents, awaitingCents;
+
+  /// #3556 (0805) — the month the invoice is of (`yyyy-MM`); a payment that
+  /// names invoices is of their month. Null from a host that does not say.
+  final String? period;
+
+  /// #3556 (0797) — the invoice is in a payment being processed (online or
+  /// declared): not for another.
+  final bool inPayment;
+
+  /// #3556 (0805) — the online payment whose open claim names it, the one I
+  /// may withdraw; null for a declared payment (it waits for the business).
+  final String? claimPaymentId;
+
+  /// #3556 (0805) — when that payment was handed to its provider: in
+  /// payment since then.
+  final DateTime? claimHandedAt;
+
+  /// #3556 (0805) — it was handed to its provider so recently that a
+  /// payment just made there may still be confirmed (the provider's read
+  /// age): withdrawing it says so.
+  final bool claimSettling;
+
+  /// #3556 (0797) — its money arrived and waits to be matched by the
+  /// business: not to pay again.
+  final bool paymentReceived;
+
+  /// #3556 (0797) — a payment may name it now (it takes a match, is in the
+  /// business's currency, in no payment and has none waiting). False from a
+  /// host that does not say: then it is not offered for a selection.
+  final bool payable;
 
   /// What remains to pay: the server's still-due while the invoice is open
   /// (#3877); from a host without it, the whole face value until a payment
@@ -108,6 +145,13 @@ class FinanceInvoice {
       timezone: r.stringOrNull('workspace_timezone'),
       stillDueCents: r.intOrNull('still_due_cents'),
       awaitingCents: r.intOrNull('awaiting_cents'),
+      period: r.stringOrNull('period'),
+      inPayment: r.boolOr('in_payment', fallback: false),
+      claimPaymentId: r.stringOrNull('claim_payment_id'),
+      claimHandedAt: r.dateTimeOrNull('claim_handed_at'),
+      claimSettling: r.boolOr('claim_settling', fallback: false),
+      paymentReceived: r.boolOr('payment_received', fallback: false),
+      payable: r.boolOr('payable', fallback: false),
     );
   }
 }

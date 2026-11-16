@@ -1,0 +1,91 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #3556 (1b) — the invoices I select on My finances to pay or declare paid.
+// A selection is of ONE business in ONE currency (the money goes to one
+// payee, in one currency): once the first invoice is chosen, an invoice of
+// another business or currency cannot join it. Only an invoice a payment
+// may name now (the server's `payable`) is offered. A payment is of one
+// month (0797, DKC04): a selection spanning months is paid one month at a
+// time, the oldest first, and declared as one declaration per month.
+import 'finance_overview.dart';
+
+/// One month of a selection: its invoices and what they still owe.
+typedef SelectionMonth = ({
+  String period,
+  List<FinanceInvoice> invoices,
+  int cents,
+});
+
+class FinanceSelection {
+  const FinanceSelection([this.invoices = const []]);
+
+  static const none = FinanceSelection();
+
+  final List<FinanceInvoice> invoices;
+
+  bool get isEmpty => invoices.isEmpty;
+  int get count => invoices.length;
+
+  String? get workspaceId => invoices.firstOrNull?.workspaceId;
+  String? get workspaceName => invoices.firstOrNull?.workspaceName;
+  String? get currency => invoices.firstOrNull?.currency;
+
+  /// What one invoice still owes, as the server counts it.
+  static int dueOf(FinanceInvoice i) => i.stillDueCents ?? i.remainingCents;
+
+  /// The total of the selection, in its one currency.
+  int get cents => invoices.fold(0, (sum, i) => sum + dueOf(i));
+
+  bool holds(FinanceInvoice i) =>
+      invoices.any((s) => s.workspaceId == i.workspaceId && s.id == i.id);
+
+  /// Whether a payment may name [i] at all: the server says so, and its
+  /// month is known (a host that does not say offers nothing to select).
+  static bool selectable(FinanceInvoice i) =>
+      i.payable && i.period != null;
+
+  /// Whether [i] may join this selection: selectable, and of its business
+  /// and currency.
+  bool accepts(FinanceInvoice i) =>
+      selectable(i) &&
+      (isEmpty ||
+          (i.workspaceId == workspaceId &&
+              i.currency.toUpperCase() == currency!.toUpperCase()));
+
+  /// [i] added, or removed when it is in; an invoice it does not accept
+  /// changes nothing.
+  FinanceSelection toggled(FinanceInvoice i) {
+    if (holds(i)) {
+      return FinanceSelection([
+        for (final s in invoices)
+          if (!(s.workspaceId == i.workspaceId && s.id == i.id)) s,
+      ]);
+    }
+    return accepts(i) ? FinanceSelection([...invoices, i]) : this;
+  }
+
+  /// The selection without [paid].
+  FinanceSelection without(Iterable<FinanceInvoice> paid) => FinanceSelection([
+    for (final s in invoices)
+      if (!paid.any((p) => p.workspaceId == s.workspaceId && p.id == s.id)) s,
+  ]);
+
+  /// The months it spans, oldest first, each with its invoices (oldest
+  /// first) and what they still owe.
+  List<SelectionMonth> get months {
+    final byPeriod = <String, List<FinanceInvoice>>{};
+    for (final i in invoices) {
+      (byPeriod[i.period!] ??= []).add(i);
+    }
+    final periods = byPeriod.keys.toList()..sort();
+    return [
+      for (final p in periods)
+        (
+          period: p,
+          invoices: [...byPeriod[p]!]
+            ..sort((a, b) => a.issuedAt.compareTo(b.issuedAt)),
+          cents: byPeriod[p]!.fold(0, (sum, i) => sum + dueOf(i)),
+        ),
+    ];
+  }
+}

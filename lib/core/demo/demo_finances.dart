@@ -7,6 +7,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
+import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/account_activity.dart';
 import '../../features/money/domain/billing_rules.dart';
 import '../../features/money/domain/finance_overview.dart';
@@ -54,7 +55,15 @@ FinanceOverview _overviewOf(
   FinanceInvoice row(Invoice i) {
     final paid = money.invoiceMatchesStore[i.id]?.paidCents ?? 0;
     final reminders = money.invoiceReminders[i.id] ?? const <DateTime>[];
+    final claim = _claimOf(money, i);
+    final declared = claim != null && claim.startsWith('evt-payment-');
+    final open = i.settledByInvoiceId == null && paid < i.totalCents;
     return FinanceInvoice(
+      period: i.period,
+      inPayment: claim != null,
+      claimPaymentId: declared ? null : claim,
+      payable: open && claim == null,
+      stillDueCents: open ? i.totalCents - paid : 0,
       id: i.id,
       workspaceId: i.workspaceId,
       workspaceName: names[i.workspaceId] ?? i.workspaceName,
@@ -187,3 +196,19 @@ List<AccountActivity> _usageRows(_Space s, String me) => [
         minutes: u.countedMinutes,
       ),
 ];
+
+// #3556 — which payment names [i] in [money]: an online order's claim (by
+// its order id) or a declared payment's (by its event id), as 0797 holds
+// them; a withdrawn one names nothing, and a declared payment's claim ends
+// when the business decides it.
+String? _claimOf(FakeMoneyRepository money, Invoice i) => money.claims.entries
+    .where((c) => c.value.contains(i.id) && _claimOpen(money, c.key))
+    .map((c) => c.key)
+    .firstOrNull;
+
+bool _claimOpen(FakeMoneyRepository money, String claim) =>
+    !claim.startsWith('evt-payment-') ||
+    (money.eventRepository?.events
+            .where((e) => e.id == claim)
+            .every((e) => e.status == EventStatus.pending) ??
+        true);

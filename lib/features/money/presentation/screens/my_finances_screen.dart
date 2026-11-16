@@ -34,6 +34,7 @@ import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
+import '../widgets/finance_selection_bar.dart';
 import '../widgets/finances_owed_summary.dart';
 import '../widgets/host_payment_pages.dart';
 import '../widgets/invoice_groups_bar.dart';
@@ -76,6 +77,8 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
+        // #3556 — a selection's count, total, Pay and I have paid.
+        bottomNavigationBar: const FinanceSelectionBar(),
         appBar: AppBar(
           title: PageTitle(l10n.tabMoney),
           actions: [const InvoiceProcessHelpButton(),

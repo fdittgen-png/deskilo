@@ -9,6 +9,7 @@ import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import {
   effectiveConfig,
   failureOutcome,
+  claimRefusal,
   handedThen,
   handleWith,
   orderFailure,
@@ -318,4 +319,77 @@ Deno.test("#3556 — a hand-over that cannot be asked calls no provider", async 
   assertEquals(called, false);
   if (handed.ok) throw new Error("a failed hand-over must not hand over");
   assertEquals(handed.response.status, 500);
+});
+
+Deno.test("#3556 — a claim the database refuses is answered by its code, not as our failure", async () => {
+  const refused = claimRefusal({ code: "DKC06" });
+  assertEquals(refused?.status, 409);
+  assertEquals(await refused?.json(), { error: "claim_refused", code: "DKC06" });
+  assertEquals(claimRefusal({ code: "P0001" }), null, "another refusal stays a failure to open");
+  assertEquals(claimRefusal(null), null);
+});
+
+/** A member of a production workspace with Stripe configured, as the
+ * service client reads them, for [me]. */
+function readyAdmin(me: string, read: string[]) {
+  return recordingAdmin({
+    members: { id: me, user_id: "user-1", workspace_id: "11111111-1111-4111-8111-111111111111", status: "active" },
+    workspaces: { environment: "prod", currency_code: "EUR", name: "Atelier" },
+    payment_credentials: {
+      config: { secret_key: "sk_live_x", return_url: "https://r", webhook_secret: "whsec_x" },
+    },
+  }, read);
+}
+
+Deno.test("#3556 — a claim the database refuses answers 409 with its code and no provider is called", async () => {
+  const me = "55555555-5555-4555-8555-555555555555";
+  const calls: string[] = [];
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (input: RequestInfo | URL) => {
+    calls.push(String(input));
+    return Promise.resolve(Response.json({}));
+  };
+  try {
+    const claimed = new Request("http://localhost/create-payment-order", {
+      method: "POST",
+      headers: { Authorization: "Bearer t" },
+      body: JSON.stringify({
+        workspace_id: "11111111-1111-4111-8111-111111111111",
+        member_id: me,
+        provider: "stripe",
+        amount_cents: 1000,
+        period: "2026-10",
+        request_id: "22222222-2222-4222-8222-222222222222",
+        invoice_ids: ["66666666-6666-4666-8666-666666666666"],
+      }),
+    });
+    const opened: unknown[] = [];
+    const res = await handleWith(claimed, readyAdmin(me, []), () => ({
+      rpc: (fn: string, args: unknown) => {
+        opened.push({ fn, args });
+        return Promise.resolve({ data: null, error: { code: "DKC06", message: "already in a payment" } });
+      },
+    }));
+    assertEquals(res.status, 409);
+    assertEquals(await res.json(), { error: "claim_refused", code: "DKC06" });
+    assertEquals(opened.length, 1, "the intent was asked for once");
+    assertEquals(calls, [], "no provider was called");
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});
+
+Deno.test("#3556 — the function says it takes a payment's claim", async () => {
+  const me = "55555555-5555-4555-8555-555555555555";
+  const probe = new Request("http://localhost/create-payment-order", {
+    method: "POST",
+    headers: { Authorization: "Bearer t" },
+    body: JSON.stringify({
+      workspace_id: "11111111-1111-4111-8111-111111111111",
+      action: "config",
+    }),
+  });
+  const res = await handleWith(probe, readyAdmin(me, []));
+  assertEquals(res.status, 200);
+  assertEquals((await res.json()).claims, true);
 });

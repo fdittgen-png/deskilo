@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo/features/money/domain/payment_claims.dart';
 import 'package:deskilo/features/money/domain/payment_gateway_repository.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
@@ -8,6 +9,7 @@ import 'package:deskilo/features/money/domain/payment_test_check.dart';
 import 'package:deskilo/features/money/domain/settlement_fetch.dart';
 
 import '../money_repository.dart';
+import 'demo_member_account_commands.dart' show checkDemoClaim;
 
 /// #3961 — what the Demo's stand-in for the provider's page answers.
 enum DemoPaymentOutcome { paid, cancelled, noAnswer }
@@ -37,6 +39,23 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   /// rehearsal of the other Demo spaces and of the tests' own fakes.
   bool standIn = false;
 
+  /// #3556 — the provider does not answer (a test's network, say).
+  bool unreachable = false;
+
+  /// #3556 — the next claimed order is made but its answer is lost on the
+  /// way back (the app retries it under the same request id).
+  bool loseNextAnswer = false;
+
+  /// #3556 — the request ids of the claimed orders, in order.
+  final requestIds = <String?>[];
+
+  /// #3556 — false: a payment function older than the claim (it says
+  /// nothing of claims).
+  bool takesClaims = true;
+
+  /// #3556 — the function drops the claim and says it named none.
+  bool dropsClaim = false;
+
   final Map<String, String> _orderOfRequest = {};
 
   @override
@@ -60,6 +79,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       PaymentGatewayConfig(
         providers: List.of(_m.paymentProviders),
         missing: _m.paymentMissing,
+        claims: takesClaims,
       );
 
   @override
@@ -119,7 +139,48 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   }) async {
     _m.paymentOrders.add((provider, amountCents));
     final url = _m.paymentApprovalUrl;
-    return url != null ? PaymentOrderStart(approveUrl: url, orderId: 'order-1') : _withoutApprovalUrl(provider, memberId, amountCents, currencyCode, period, requestId);
+    return url != null ? PaymentOrderStart(approveUrl: url, orderId: 'order-${_m.paymentOrders.length}') : _withoutApprovalUrl(provider, memberId, amountCents, currencyCode, period, requestId);
+  }
+
+  @override
+  Future<PaymentOrderStart> createClaimOrder({
+    required PaymentProvider provider,
+    required String workspaceId,
+    required String memberId,
+    required String currencyCode,
+    required InvoiceClaim claim,
+    String? requestId,
+  }) async {
+    // #3556 — a provider that cannot be reached: nothing is ordered.
+    if (unreachable) {
+      throw const PaymentGatewayException(503, 'provider not reachable');
+    }
+    // the claim is refused as the server refuses it (0797)
+    checkDemoClaim(_m, memberId: memberId, claim: claim, currency: currencyCode);
+    requestIds.add(requestId);
+    if (loseNextAnswer) {
+      loseNextAnswer = false;
+      throw const PaymentGatewayException(503, 'the answer was lost');
+    }
+    final start = await createPaymentOrder(
+      provider: provider,
+      workspaceId: workspaceId,
+      memberId: memberId,
+      amountCents: claim.amountCents,
+      currencyCode: currencyCode,
+      period: claim.period,
+      requestId: requestId,
+    );
+    // #3556 — the invoices this payment names are in it until it is paid,
+    // failed or withdrawn.
+    if (start.orderId case final order?) _m.claims[order] = [...claim.invoiceIds];
+    return PaymentOrderStart(
+      approveUrl: start.approveUrl,
+      orderId: start.orderId,
+      missing: start.missing,
+      alreadyPaid: start.alreadyPaid,
+      claimed: dropsClaim ? 0 : claim.invoiceIds.length,
+    );
   }
 
   /// No approval address was given: the Demo's stand-in opens an order of its
@@ -207,6 +268,8 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         return;
       case DemoPaymentOutcome.cancelled:
         _m.paymentIntents[i] = _with(intent, status: 'failed');
+        // #3556 — a failed payment frees the invoices it named.
+        _m.claims.remove(orderId);
       case DemoPaymentOutcome.paid:
         _m.paymentIntents[i] = _with(
           intent,
@@ -271,9 +334,15 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         occurredOn: now,
       ),
     );
+    // #3556 — a payment that named its invoices is applied to them alone
+    // (0797); its claim ends with the capture. One whose claim was
+    // withdrawn applies to nothing: the money is the member's credit.
+    final withdrawn = _m.withdrawnClaims.contains(intent.orderId);
+    final claim = withdrawn ? const <String>[] : _m.claims.remove(intent.orderId);
     final open = [
       for (final inv in _m.invoices)
         if (inv.memberId == intent.memberId &&
+            (claim == null || claim.contains(inv.id)) &&
             inv.period == intent.period &&
             inv.totalCents > 0 &&
             !inv.isVoided &&

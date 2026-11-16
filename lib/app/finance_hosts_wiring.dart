@@ -6,11 +6,14 @@
 // below me in the feature graph.
 import 'package:flutter_riverpod/misc.dart' show Override;
 
+import '../core/session/session_source.dart';
 import '../features/me/application/my_reservation_sources.dart';
 import '../features/me/providers/me_providers.dart';
 import '../features/money/domain/finance_hosts.dart';
 import '../features/money/providers/finance_host_providers.dart';
+import '../features/money/providers/finance_selection_provider.dart';
 import '../features/money/providers/invoice_group_providers.dart';
+import '../features/workspace/providers/workspace_providers.dart';
 
 /// Puts the hosts in a scope's overrides (main.dart, the demo container).
 final Override financeHostsFromMe = financeHostsProvider.overrideWith((
@@ -37,3 +40,18 @@ final Override financeHomeFromMe = financeHomeInstallationProvider.overrideWith(
     return home.isEmpty ? null : home;
   },
 );
+
+/// #3556 (1b) — My finances enters the business of the invoices it pays or
+/// withdraws, as Open does: the workspace selected, its own host, my member
+/// there; nothing when the account changed meanwhile (CACHE-01, #2557).
+final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
+    .overrideWith(
+      (ref) => (workspaceId) async {
+        final principal = ref.read(sessionStateProvider).value;
+        await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+        if (ref.read(sessionStateProvider).value != principal) return null;
+        final workspace = await ref.read(currentWorkspaceProvider.future);
+        final member = await ref.read(myMemberProvider.future);
+        return workspace?.id == workspaceId ? member?.id : null;
+      },
+    );

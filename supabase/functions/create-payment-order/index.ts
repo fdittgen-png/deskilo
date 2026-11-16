@@ -63,8 +63,15 @@ export function handle(req: Request): Promise<Response> {
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 /** The request on the service client [admin] (the tests hand in their own). */
-// deno-lint-ignore no-explicit-any
-export async function handleWith(req: Request, admin: any): Promise<Response> {
+export async function handleWith(
+  req: Request,
+  // deno-lint-ignore no-explicit-any
+  admin: any,
+  // #3556 — the client that opens the intent as the caller; a test gives
+  // its own.
+  // deno-lint-ignore no-explicit-any
+  callerOf: (token: string) => any = asCaller,
+): Promise<Response> {
   // #1553 — the preflight is answered before anything else: it
   // carries no JWT, so any auth or body work would refuse the
   // browser's question instead of answering it.
@@ -123,7 +130,9 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
       if (gap.length === 0) providers.push(provider);
     }
     console.log("payment config probe", { workspaceId, providers, missing });
-    return json({ providers, missing });
+    // #3556 — this function takes a payment's claim of invoices: an app
+    // pays a selection only where its host's function says so.
+    return json({ providers, missing, claims: true });
   }
 
   // AuthZ first: the JWT's user (verified above) must BE the active member
@@ -168,7 +177,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   const currency = String(ws?.currency_code ?? "EUR").toUpperCase();
   const parsed = parsePaymentOrderRequest(body, currency);
   if (!parsed.ok) return json(parsed.body, parsed.status);
-  const { provider, memberId, amountCents, period, requestId } = parsed.request;
+  const { provider, memberId, amountCents, period, requestId, invoiceIds } = parsed.request;
 
   let cfg: Record<string, string>;
   try {
@@ -203,14 +212,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   // intent_open_failed before reaching a provider. `getUser(token)` above
   // verifies the token; it does not make later calls run as that user.
   // Credentials and the order-id patch stay on the privileged client.
-  const caller = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_ANON_KEY")!,
-    {
-      global: { headers: { Authorization: `Bearer ${token}` } },
-      auth: { persistSession: false, autoRefreshToken: false },
-    },
-  );
+  const caller = callerOf(token);
   const { data: opened, error: openError } = await caller.rpc(
     "open_payment_intent",
     {
@@ -221,10 +223,13 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
       p_amount_cents: amountCents,
       p_currency: currency,
       p_request_id: requestId,
+      p_invoice_ids: invoiceIds,
     },
   );
   const intent = Array.isArray(opened) ? opened[0] : opened;
   if (openError || !intent?.reference) {
+    const refused = claimRefusal(openError);
+    if (refused) return refused;
     console.error("payment intent open failed", openError?.message);
     return json({ error: "intent_open_failed" }, 500);
   }
@@ -282,10 +287,37 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
       provider,
       order_id: order.orderId,
       approve_url: order.approveUrl,
+      // #3556 — how many invoices the payment names, so the app can tell
+      // its claim was taken.
+      claimed: invoiceIds?.length ?? 0,
     });
   } catch (e) {
     return orderFailure(admin, String(intent.id), provider, e, intent.reused === true);
   }
+}
+
+/** The client that opens the intent as the caller (#1450). */
+function asCaller(token: string) {
+  return createClient(
+    Deno.env.get("SUPABASE_URL")!,
+    Deno.env.get("SUPABASE_ANON_KEY")!,
+    {
+      global: { headers: { Authorization: `Bearer ${token}` } },
+      auth: { persistSession: false, autoRefreshToken: false },
+    },
+  );
+}
+
+/** #3556 — the database refused the payment's claim of its invoices (an
+ * invoice already in another payment, an amount that is not what they
+ * still owe, another currency, a withdrawn claim retried, ...): the app
+ * answers it by its code (0797's DKC codes), never as a failure of ours.
+ * Null for any other error. */
+export function claimRefusal(
+  error: { code?: string | null } | null | undefined,
+): Response | null {
+  const code = error?.code ?? "";
+  return /^DKC\d{2}$/.test(code) ? json({ error: "claim_refused", code }, 409) : null;
 }
 
 /** #3556 — the intent is handed to its provider BEFORE the provider is

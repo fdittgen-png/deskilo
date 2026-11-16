@@ -10,12 +10,18 @@ import type { Provider } from "./types.ts";
 /** #2014 B — the client's request id: a UUID, or absent (legacy). */
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
+/** #3556 — the most invoices one payment names (a month's documents of
+ * one business; the database refuses a claim it cannot settle). */
+export const MAX_CLAIMED_INVOICES = 100;
+
 export interface PaymentOrderRequest {
   provider: Provider;
   memberId: string;
   amountCents: number;
   period: string;
   requestId: string | null;
+  /** #3556 — the invoices this payment pays (its claim); null without. */
+  invoiceIds: string[] | null;
 }
 
 export type ParsedRequest =
@@ -43,12 +49,31 @@ export function parsePaymentOrderRequest(
   const amountCents = body.amount_cents as number;
   const period = body.period as string;
   const requestId = body.request_id == null ? null : String(body.request_id);
+  // #3556 — absent: a payment of the account, as before. Present: a
+  // non-empty list of invoice ids; the database checks whose and which.
+  const rawIds = body.invoice_ids;
+  const invoiceIds = rawIds == null ? null : rawIds;
+  const idsValid = invoiceIds === null || (
+    Array.isArray(invoiceIds) && invoiceIds.length > 0 &&
+    invoiceIds.length <= MAX_CLAIMED_INVOICES &&
+    invoiceIds.every((id) => typeof id === "string" && UUID_RE.test(id))
+  );
   if (
     !isProvider(provider) || !memberId ||
     !Number.isInteger(amountCents) || amountCents <= 0 || !period ||
-    (requestId !== null && !UUID_RE.test(requestId))
+    (requestId !== null && !UUID_RE.test(requestId)) || !idsValid
   ) {
     return { ok: false, status: 400, body: { error: "invalid_request" } };
   }
-  return { ok: true, request: { provider, memberId, amountCents, period, requestId } };
+  return {
+    ok: true,
+    request: {
+      provider,
+      memberId,
+      amountCents,
+      period,
+      requestId,
+      invoiceIds: invoiceIds as string[] | null,
+    },
+  };
 }
