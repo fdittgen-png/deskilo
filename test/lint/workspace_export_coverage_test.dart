@@ -244,6 +244,16 @@ const Map<String, String> _notExported = {
   'provider_settlement_costs':
       '#3504 -- the costs a payment provider kept in a settlement, as it reported them: '
           'the provider issues and keeps them; the payout they belong to is a provider_payouts row',
+  'payment_reconciliation_checks':
+      '#4126 -- when the reconciliation last asked about an open attempt and how often: '
+          'operating state of a job, nothing a business owns or exports',
+  'payment_reconciliation_runs':
+      '#4126 -- what each reconciliation run did with the attempts left open with a payment '
+          'provider (counts, and attempt ids with a reason word): an operational record of a '
+          'job, kept for its retention; the payments themselves are exported',
+  'payment_reconciliation_state':
+      '#4126 -- the reconciliation schedule\'s lease per business: operating state of a job, '
+          'nothing a business owns or exports',
   'provider_settlement_polls':
       '#3510 -- the settlement schedule\'s own state (where a read continues, its lease, '
           'failures and next attempt): operating state of a job, nothing a business owns or exports',

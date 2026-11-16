@@ -39450,6 +39450,10 @@
   "@settingHintRecordsHostingCountry": {
     "description": "#2378 records location"
   },
+  "settingHintRecordsInvoiceOriginalsSweep": "report or remove. What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report names it in the maintenance record and removes nothing; remove deletes it, which cannot be undone.",
+  "@settingHintRecordsInvoiceOriginalsSweep": {
+    "description": "#3985 what report and remove do; the two values are the setting’s own words"
+  },
   "settingHintRetentionUsYears": "Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -39769,6 +39773,10 @@
   "settingLabelRecordsHostingCountry": "Country where this installation keeps its data",
   "@settingLabelRecordsHostingCountry": {
     "description": "#2378 records location"
+  },
+  "settingLabelRecordsInvoiceOriginalsSweep": "Unreferenced invoice PDFs",
+  "@settingLabelRecordsInvoiceOriginalsSweep": {
+    "description": "#3985 the operator switch of the sweep of unreferenced invoice PDFs"
   },
   "settingLabelRetentionUsYears": "Record retention, US state (years)",
   "@settingLabelRetentionUsYears": {

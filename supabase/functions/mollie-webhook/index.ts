@@ -17,13 +17,13 @@
 // amount, the method the intent was opened for (a Wero intent settles
 // only a Wero payment), and a live payment under a live key (#3905: a
 // test-mode payment never credits a ledger). Anything else is refused and
-// nothing is credited (payment_rules.ts). A paid payment shown charged back
+// nothing is credited (_shared/mollie_payment_rules.ts). A paid payment shown charged back
 // or refunded is recorded as reversed instead.
 
 import { configOf } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { mollieApi } from "../_shared/providers.ts";
-import { type Intent, mismatch, reversalOf } from "./payment_rules.ts";
+import { type Intent, mismatch, reversalOf } from "../_shared/mollie_payment_rules.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
 import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 

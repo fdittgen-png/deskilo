@@ -33,8 +33,11 @@ import 'package:flutter_test/flutter_test.dart';
 const _modules = {
   'create-payment-order': ['index.ts', 'paypal.ts', 'mollie.ts', 'stripe.ts'],
   // #3905 — mollie-webhook's rules on a fetched payment (its amount among
-  // them) moved to a module of their own.
-  'mollie-webhook': ['index.ts', 'payment_rules.ts'],
+  // them) moved to a module of their own, shared since #4126 with the
+  // reconciliation.
+  'mollie-webhook': ['index.ts', '../_shared/mollie_payment_rules.ts'],
+  // #4126 — the PayPal capture is shared with the reconciliation.
+  'paypal-webhook': ['index.ts', '../_shared/paypal_capture.ts'],
 };
 
 String _src(String slug) => [

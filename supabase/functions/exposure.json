@@ -17,6 +17,10 @@
       "class": "user_facing",
       "authority": "a workspace admin's native session"
     },
+    "maintenance": {
+      "class": "system",
+      "authority": "the database's maintenance jobs (maintenance_tick) through the gateway with the anon key and the Vault secret in x-deskilo-maintenance-secret, or the exact service credential; one installation-wide job per request (invoice-originals-sweep: reports, or removes through the Storage API when the operator switched it on)"
+    },
     "mollie-settlements": {
       "class": "user_facing",
       "authority": "a billing manager's native session, checked by has_permission (manageBilling) and the onlinePayments flag; the key read by the service role only"
@@ -52,6 +56,10 @@
     "stripe-webhook": {
       "class": "webhook",
       "authority": "Stripe-Signature HMAC"
+    },
+    "payment-reconcile": {
+      "class": "system",
+      "authority": "the hourly database job (payment_reconciliation_tick) through the gateway with the anon key and the Vault secret in x-deskilo-reconcile-secret, or the exact service credential; reads each attempt's provider with the business's stored credentials and settles through settle_online_payment"
     },
     "paypal-webhook": {
       "class": "webhook",

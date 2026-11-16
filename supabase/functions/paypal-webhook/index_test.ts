@@ -190,3 +190,9 @@ Deno.test("a failed read of the intents is a 500, nothing written", async () => 
   assertEquals((await call(f, capture(INTENT))).status, 500);
   assertEquals(f.rpcCalls, []);
 });
+
+Deno.test("#4126: a settlement that throws after the capture is answered 500, as before", async () => {
+  const f = fake();
+  f.admin.rpc = () => Promise.reject(new Error("connection lost"));
+  assertEquals((await call(f, approved())).status, 500);
+});

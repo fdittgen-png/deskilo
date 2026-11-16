@@ -152,7 +152,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   // up exactly like the real one; only the charge is refused.
   const { data: ws } = await admin
     .from("workspaces")
-    .select("environment, currency_code")
+    .select("environment, currency_code, name")
     .eq("id", workspaceId)
     .maybeSingle();
   if ((ws?.environment ?? "dev") !== "prod") {
@@ -247,7 +247,14 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
     const handed = await handedThen(admin, String(intent.id), provider, () =>
       ORDER_ADAPTERS[provider](
         cfg,
-        { amountCents, currency, reference, key, intentId: String(intent.id) },
+        {
+          amountCents,
+          currency,
+          reference,
+          key,
+          intentId: String(intent.id),
+          payee: String(ws?.name ?? ""),
+        },
         runtimeDeps(),
       ));
     if (!handed.ok) return handed.response;

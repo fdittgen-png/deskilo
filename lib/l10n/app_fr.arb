@@ -18352,6 +18352,7 @@
   },
   "settingHintRecordsCraReference": "Pour une entreprise canadienne : la référence de l'autorisation de l'ARC (LTA art. 286, LIR art. 230) lorsque ses registres sont conservés hors du Canada. Vide signifie qu'aucune n'est enregistrée.",
   "settingHintRecordsHostingCountry": "Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l'application n'indique alors aucun lieu.",
+  "settingHintRecordsInvoiceOriginalsSweep": "report ou remove. Ce que fait la maintenance nocturne d'un PDF de facture téléversé qu'aucun original enregistré ne nomme, un jour après son téléversement : report le cite dans le journal de maintenance et ne supprime rien ; remove le supprime, ce qui est irréversible.",
   "settingHintRetentionUsYears": "Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s'applique. Pas un conseil juridique : vérifiez le délai de votre État.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -18546,6 +18547,7 @@
   },
   "settingLabelRecordsCraReference": "Autorisation de l'ARC de conserver les registres hors du Canada",
   "settingLabelRecordsHostingCountry": "Pays où cette installation conserve ses données",
+  "settingLabelRecordsInvoiceOriginalsSweep": "PDF de factures non référencés",
   "settingLabelRetentionUsYears": "Conservation aux États-Unis, État (années)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

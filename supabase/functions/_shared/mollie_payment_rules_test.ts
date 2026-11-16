@@ -3,7 +3,7 @@
 // #3905 -- a Mollie payment credits a ledger only in live mode, under a live
 // key; a paid payment shown charged back or refunded is a reversal.
 import { assertEquals } from "jsr:@std/assert@1";
-import { type Intent, mismatch, reversalOf } from "./payment_rules.ts";
+import { type Intent, mismatch, reversalOf } from "./mollie_payment_rules.ts";
 
 const intent: Intent = {
   workspace_id: "ws-1",

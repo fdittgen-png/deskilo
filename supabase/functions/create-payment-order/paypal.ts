@@ -6,6 +6,7 @@
 import { toMajor } from "../_shared/money.ts";
 import { paypalApi } from "../_shared/providers.ts";
 import { ProviderRefusal } from "./outcome.ts";
+import { PAYER_TEXT_LIMITS, payerText } from "./payer_text.ts";
 import type { OrderAdapter } from "./types.ts";
 
 export const createPaypalOrder: OrderAdapter = async (cfg, order, deps) => {
@@ -38,7 +39,7 @@ export const createPaypalOrder: OrderAdapter = async (cfg, order, deps) => {
         },
         // #3917 -- the capture's notifications carry it back.
         custom_id: order.intentId,
-        description: order.reference,
+        description: payerText(order.payee, order.reference, PAYER_TEXT_LIMITS.paypal),
       }],
       application_context: {
         return_url: cfg.return_url,

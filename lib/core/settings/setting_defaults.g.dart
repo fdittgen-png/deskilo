@@ -140,6 +140,8 @@ abstract final class SettingDefaults {
   static const String recordsCraAuthorisationReference = '';
   /// `records.hosting_country`
   static const String recordsHostingCountry = '';
+  /// `records.invoice_originals_sweep`
+  static const String recordsInvoiceOriginalsSweep = 'report';
   /// `retention.us_years`
   static const int retentionUsYears = 0;
   /// `security.badge_identify_per_source_limit`

@@ -12,5 +12,7 @@
   "recordsLocationCraReference": "Autorizzazione della CRA: {reference}",
   "recordsLocationCraNone": "Nessuna autorizzazione della CRA è registrata. Un responsabile della fatturazione la registra nelle impostazioni dello spazio.",
   "recordsLocationAoNotice": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE (§ 146 co. 2a AO). Nulla dichiara questa installazione lì.",
-  "recordsLocationAoOutside": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE; altrove serve l'autorizzazione dell'ufficio delle imposte (§ 146 co. 2b AO). Questa installazione è dichiarata fuori dall'UE."
+  "recordsLocationAoOutside": "Un'impresa tedesca tiene i libri elettronici in Germania o in un altro Stato membro dell'UE; altrove serve l'autorizzazione dell'ufficio delle imposte (§ 146 co. 2b AO). Questa installazione è dichiarata fuori dall'UE.",
+  "settingLabelRecordsInvoiceOriginalsSweep": "PDF di fatture non referenziati",
+  "settingHintRecordsInvoiceOriginalsSweep": "report o remove. Cosa fa la manutenzione notturna di un PDF di fattura caricato che nessun originale registrato nomina, un giorno dopo il caricamento: report lo cita nel registro di manutenzione e non elimina nulla; remove lo elimina, cosa irreversibile."
 }

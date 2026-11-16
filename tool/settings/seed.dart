@@ -1524,6 +1524,25 @@ final List<({SettingSeed row, String since})> settingSeeds = [
       note: 'Whether a move may leave less than nothing at a place. Off: the move is refused with its code and nothing moves. On: it is recorded and the place shows a negative quantity until goods arrive. The shelf count of a catalogue item never shows less than zero.',
     ),
   ),
+  (
+    since: 'invoice_originals_sweep',
+    row: (
+      key: 'records.invoice_originals_sweep',
+      type: 'enum',
+      defaultValue: 'report',
+      min: null,
+      max: null,
+      unit: '',
+      group: 'records',
+      scopes: ['platform'],
+      editPermission: 'workspaceSettings',
+      floor: null,
+      editable: true,
+      choices: ['report', 'remove'],
+      source: 'invoice_originals_sweep_claim_v1 (#3985)',
+      note: 'What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report counts and names it in the maintenance record and removes nothing; remove deletes it from the store, which cannot be undone. A file a recorded original names is never touched.',
+    ),
+  ),
 ];
 
 String _q(String s) => "'${s.replaceAll("'", "''")}'";
