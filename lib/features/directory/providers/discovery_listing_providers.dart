@@ -9,14 +9,14 @@ part 'discovery_listing_providers.g.dart';
 
 Duration? _noRetry(int count, Object error) => null;
 
-/// What discovery has loaded for [query]: the directory's first page of
+/// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
-/// more of. A new query is a new listing; an answer that arrives after its
-/// listing was left is dropped, so it never replaces a newer one.
+/// more of. A new query or kind is a new listing; an answer that arrives
+/// after its listing was left is dropped, so it never replaces a newer one.
 @Riverpod(retry: _noRetry)
 class DiscoveryListing extends _$DiscoveryListing {
   @override
-  Future<DiscoveryResults> build(String query) async {
+  Future<DiscoveryResults> build(DiscoveryFilter filter) async {
     final repository = ref.watch(publicDiscoveryRepositoryProvider);
     final first = await repository.sources();
     var results = const DiscoveryResults().withSources(first);
@@ -35,7 +35,12 @@ class DiscoveryListing extends _$DiscoveryListing {
     try {
       final page = await ref
           .read(publicDiscoveryRepositoryProvider)
-          .workspaces(listing.source, query, page: listing.pages);
+          .workspaces(
+            listing.source,
+            filter.query,
+            page: listing.pages,
+            kind: filter.kind,
+          );
       return listing.loaded(page);
     } on Object catch (e, st) {
       TraceLogger.instance.warn(

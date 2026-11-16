@@ -8246,6 +8246,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'All kinds';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Nothing found in “$kind”';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Practices';
+
+  @override
+  String get discoveryKindSalons => 'Salons';
+
+  @override
+  String get discoveryKindServices => 'Other services';
+
+  @override
+  String get discoveryKindStudios => 'Studios';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count directories cannot narrow by kind: they were not asked.',
+      one: 'One directory cannot narrow by kind: it was not asked.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,

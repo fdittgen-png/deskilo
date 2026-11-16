@@ -11,27 +11,16 @@ import 'package:go_router/go_router.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
-import '../../../l10n/app_localizations.dart';
 import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/public_workspace.dart';
+import 'public_service_line.dart';
 
-/// The words of a price's tax treatment.
-String _taxWords(AppLocalizations l10n, PublicTaxTreatment t) => switch (t) {
-  PublicTaxTreatment.included => l10n.portalOfferTaxIncluded,
-  PublicTaxTreatment.excluded => l10n.portalOfferTaxExcluded,
-  PublicTaxTreatment.none => l10n.portalOfferTaxNone,
-};
-
-/// One published service in a line: its name, duration, price and tax word.
-String _serviceLine(BuildContext context, PublicService s) {
-  final l10n = context.l10n;
-  return [
-    s.name,
-    if (s.durationMinutes case final minutes?) l10n.portalOfferMinutes(minutes),
-    appFormatOf(context).money(s.priceMinor, currency: s.currency),
-    _taxWords(l10n, s.taxTreatment),
-  ].join(' · ');
-}
+/// One published service in a line, its price in the business's format.
+String _serviceLine(BuildContext context, PublicService s) => publicServiceLine(
+  context.l10n,
+  s,
+  appFormatOf(context).money(s.priceMinor, currency: s.currency),
+);
 
 class PublicOfferPreview extends StatelessWidget {
   const PublicOfferPreview({required this.offer, super.key});

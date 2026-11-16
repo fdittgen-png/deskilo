@@ -12,6 +12,24 @@
 // already listed as it stands.
 import 'public_workspace.dart';
 
+/// #3554 — what one discovery listing asks of every source: the words typed
+/// and, when chosen, one business kind. A new filter is a new listing.
+class DiscoveryFilter {
+  const DiscoveryFilter(this.query, {this.kind});
+
+  final String query;
+
+  /// A kind code of the app's catalogue, or null for every kind.
+  final String? kind;
+
+  @override
+  bool operator ==(Object other) =>
+      other is DiscoveryFilter && other.query == query && other.kind == kind;
+
+  @override
+  int get hashCode => Object.hash(query, kind);
+}
+
 /// One source installation of public cards: its origin and the
 /// publishable key its anonymous reads carry.
 class DirectorySource {

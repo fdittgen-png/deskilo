@@ -17,6 +17,7 @@ import '../../../core/ui/kit/retry_notice.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../core/ui/view_toggle.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
@@ -26,6 +27,7 @@ import 'directory_carousel.dart';
 import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'directory_pages.dart';
+import 'discovery_kind_chips.dart';
 import 'discovery_list_view.dart';
 import 'discovery_split.dart';
 import 'map_disclosure_dialog.dart';
@@ -36,9 +38,14 @@ class DirectoryScreen extends ConsumerStatefulWidget {
     super.key,
     this.embedded = false,
     this.focusSearch = false,
+    this.initialKind,
   });
 
   final bool embedded;
+
+  /// #3554 — the kind Discover opens narrowed to (`?kind=`); one the app's
+  /// catalogue does not know is ignored.
+  final String? initialKind;
 
   /// The search box takes focus when the screen opens (#3545: Home sends a
   /// person here to type or look, never to an empty list).
@@ -50,6 +57,11 @@ class DirectoryScreen extends ConsumerStatefulWidget {
 class _DirectoryState extends ConsumerState<DirectoryScreen> {
   final _search = TextEditingController();
   String _query = '';
+
+  /// #3554 — the chosen kind, or null for every kind.
+  late String? _kind = discoverableBusinessKinds.contains(widget.initialKind)
+      ? widget.initialKind
+      : null;
 
   PublicWorkspace? _selected;
 
@@ -65,7 +77,8 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     super.dispose();
   }
 
-  DiscoveryListingProvider get _provider => discoveryListingProvider(_query);
+  DiscoveryListingProvider get _provider =>
+      discoveryListingProvider(DiscoveryFilter(_query, kind: _kind));
 
   void _select(PublicWorkspace w) => setState(() => _selected = w);
 
@@ -188,6 +201,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     _mapKey = GlobalKey(debugLabel: 'discovery-map');
   });
 
+  /// #3554 — another kind is a new listing too, the words typed kept.
+  void _chooseKind(String? kind) => setState(() {
+    _kind = kind;
+    _selected = null;
+    _mapKey = GlobalKey(debugLabel: 'discovery-map');
+  });
+
   Widget _map(DiscoveryResults result) => DirectoryMap(
     key: _mapKey,
     workspaces: result.workspaces,
@@ -200,12 +220,13 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   Widget _list(DiscoveryResults result, {required bool beside}) =>
       DiscoveryListView(
         key: _listKey,
-        query: _query,
+        filter: DiscoveryFilter(_query, kind: _kind),
         results: result,
         selected: _selected,
         onView: _open,
         onLocate: _locate,
         onClear: _clear,
+        onAllKinds: () => _chooseKind(null),
         revealSelected: beside,
       );
 
@@ -352,6 +373,10 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     required bool split,
   }) => Column(children: [
     searchField,
+    // Above the results: the chosen kind survives a listing that loads,
+    // finds nothing or fails.
+    DiscoveryKindChips(selected: _kind, onChanged: _chooseKind),
+    const SizedBox(height: AppSpacing.sm),
     Expanded(
       child: switch (rows) {
         AsyncData(value: final result) => split
