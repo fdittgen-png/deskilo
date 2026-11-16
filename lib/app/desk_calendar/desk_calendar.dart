@@ -43,6 +43,7 @@ class DeskCalendarAddress {
     required this.day,
     this.mode = DeskMode.grid,
     this.reservationId,
+    this.memberId,
   });
 
   static const String path = '/calendar';
@@ -56,6 +57,11 @@ class DeskCalendarAddress {
   /// The booking open beside the grid.
   final String? reservationId;
 
+  /// #4069 — the member the calendar opens filtered to
+  /// (`/calendar?member=ID`, from a member's "All bookings"). It sets the
+  /// filter once; the address the calendar then keeps does not carry it.
+  final String? memberId;
+
   /// The address [query] names; anything missing or malformed reads as the
   /// default (a week around [today]).
   factory DeskCalendarAddress.parse(
@@ -64,6 +70,7 @@ class DeskCalendarAddress {
   }) {
     final day = _dayOf(query['day']) ?? today;
     final res = query['res'];
+    final member = query['member'];
     return DeskCalendarAddress(
       view: DeskView.values.asNameMap()[query['view']] ?? DeskView.week,
       day: day,
@@ -72,6 +79,7 @@ class DeskCalendarAddress {
           ? DeskMode.alerts
           : DeskMode.values.asNameMap()[query['mode']] ?? DeskMode.grid,
       reservationId: res == null || res.isEmpty ? null : res,
+      memberId: member == null || member.isEmpty ? null : member,
     );
   }
 

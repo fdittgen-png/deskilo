@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/theme/app_elevation.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
@@ -46,6 +45,9 @@ class DirectoryMemberRow extends StatelessWidget {
     final whatsappUri = card.whatsappUri;
     final tile = ListTile(
       key: const ValueKey('directory-whatsapp'),
+      // #4069 — compact: name and role, then the status in text and icon.
+      // Dense text, not a denser layout: its buttons keep 48 dp.
+      dense: true,
       leading: _avatar(theme),
       title: Row(
         children: [
@@ -168,14 +170,11 @@ class DirectoryMemberRow extends StatelessWidget {
             theme.colorScheme.surfaceContainerLow,
           )
         : theme.colorScheme.surfaceContainerLow;
+    // #4069 — a row, not a raised card: more people in one view.
     return Container(
       margin: const EdgeInsets.symmetric(
         horizontal: AppSpacing.screenGutter,
-        vertical: AppSpacing.xs,
-      ),
-      decoration: BoxDecoration(
-        borderRadius: AppRadius.lgAll,
-        boxShadow: AppElevation.low(brightness),
+        vertical: AppSpacing.xs / 2,
       ),
       child: Material(
         color: cardColor,
@@ -203,7 +202,7 @@ class DirectoryMemberRow extends StatelessWidget {
       background: Container(
         margin: const EdgeInsets.symmetric(
           horizontal: AppSpacing.screenGutter,
-          vertical: AppSpacing.xs,
+          vertical: AppSpacing.xs / 2,
         ),
         decoration: BoxDecoration(
           color: AppStatusColors.successOf(brightness),

@@ -8185,6 +8185,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get directoryReservedToday => 'Reserved today';
 
   @override
+  String get directorySearchLabel => 'Search by name or e-mail';
+
+  @override
+  String directorySearchNone(String query) {
+    return 'No one matches “$query”';
+  }
+
+  @override
   String get directoryTilesFailed => 'The map background could not be loaded.';
 
   @override
@@ -20983,6 +20991,17 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get memberPageAddService => 'Add a service';
+
+  @override
+  String memberPageAllBookings(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'All bookings ($count)',
+      one: 'All bookings ($count)',
+    );
+    return '$_temp0';
+  }
 
   @override
   String memberPageCheckedIn(String seat, String time) {

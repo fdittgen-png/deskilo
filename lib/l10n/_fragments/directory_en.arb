@@ -192,5 +192,19 @@
   "memberPageNowHeading": "Right now",
   "@memberPageNowHeading": {
     "description": "Shown as a text in member header cards (members)."
+  },
+  "memberPageAllBookings": "{count, plural, one{All bookings ({count})} other{All bookings ({count})}}",
+  "directorySearchLabel": "Search by name or e-mail",
+  "directorySearchNone": "No one matches “{query}”",
+  "@memberPageAllBookings": {
+    "description": "#4069 — under a member's next bookings: opens the calendar filtered to them, with how many they have.",
+    "placeholders": {"count": {"type": "int"}}
+  },
+  "@directorySearchLabel": {
+    "description": "#4069 — the label of the members directory's search field."
+  },
+  "@directorySearchNone": {
+    "description": "#4069 — the directory's search found no one.",
+    "placeholders": {"query": {"type": "String"}}
   }
 }

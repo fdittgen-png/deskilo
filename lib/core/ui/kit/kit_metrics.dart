@@ -48,4 +48,8 @@ abstract final class KitMetrics {
   /// #3628 — a list of choices beside the one shown at the desk (the roles
   /// of the space, the sections of a settings page).
   static const double choiceListWidth = 280;
+
+  /// #4069 — how many of a list's next records a summary shows before its
+  /// link to the rest ("All bookings (14)"): a member's next bookings.
+  static const int previewRows = 3;
 }
