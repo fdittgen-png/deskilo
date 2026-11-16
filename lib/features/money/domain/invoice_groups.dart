@@ -2,7 +2,7 @@
 //
 // #3556 (part 2) — a person's own groups of invoices ("2026 taxes", "To
 // reimburse"), across businesses, installations and currencies. A group is
-// the person's filing on their personal home (0800): it never changes an
+// the person's filing on their personal home (0801): it never changes an
 // invoice and no business sees it. It names each invoice by reference — the
 // installation-qualified workspace Me already uses (`<installation>:<local>`)
 // and the invoice's id — with the number it had when filed, and stores no
@@ -73,10 +73,10 @@ class InvoiceGroup {
   bool holds(InvoiceRef ref) => items.any((i) => i.ref == ref);
 }
 
-/// The longest name a group may have (0800's constraint).
+/// The longest name a group may have (0801's constraint).
 const int invoiceGroupNameMax = 80;
 
-/// The longest number a reference keeps (0800's constraint).
+/// The longest number a reference keeps (0801's constraint).
 const int invoiceGroupNumberMax = 80;
 
 /// Why a group's name was refused.

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3556 (part 2) — my groups of invoices, read and written on my personal
-// home, directly under row security (0800): my own rows only.
+// home, directly under row security (0801): my own rows only.
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/invoice_groups.dart';

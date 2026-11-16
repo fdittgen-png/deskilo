@@ -139,11 +139,11 @@ begin
                        where i.group_id = g.id and i.user_id = v_me))
          order by g.name), '[]'::jsonb)
        from public.personal_invoice_groups g where g.user_id = v_me));$a$);
-  if v_def is null then raise exception '0800: export_my_personal_data_v1 coverage anchor missing' using errcode = 'P0001'; end if;
+  if v_def is null then raise exception '0801: export_my_personal_data_v1 coverage anchor missing' using errcode = 'P0001'; end if;
   execute v_def;
 end
 $migration$;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(800);
+select public.set_deskilo_schema_version(801);
