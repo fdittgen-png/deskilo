@@ -284,7 +284,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get accountingJournalsDeliveries =>
-      'Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.';
+      'Übermittlungen an Pennylane und Business Central verwenden diese Codes ebenfalls; das Journal muss dort unter demselben Code bestehen.';
 
   @override
   String get accountingJournalsIntro =>

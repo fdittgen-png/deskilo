@@ -93,6 +93,8 @@ function company(
     loseWrite?: number;
     limitAfter?: number;
     noApplication?: boolean;
+    /** #4003 — the codes this company gives its general (other) and bank journals. */
+    journalCodes?: { other: string; bank: string };
   } = {},
 ) {
   const held: Record<string, Row[]> = {
@@ -202,8 +204,8 @@ function company(
       }
       if (rest === "bankAccounts") return list([{ id: "bank-1", number: "B010" }]);
       if (rest === "taxGroups") return list(Object.keys(RATES).map((code) => ({ id: `tax-${code}`, code })));
-      if (rest === "journals") return list([{ id: "jnl-od", code: "OD" }, { id: "jnl-bq", code: "BQ" }]);
-      if (rest === "customerPaymentJournals") return list([{ id: "pay-bq", code: "BQ" }]);
+      if (rest === "journals") return list([{ id: "jnl-od", code: opts.journalCodes?.other ?? "OD" }, { id: "jnl-bq", code: opts.journalCodes?.bank ?? "BQ" }]);
+      if (rest === "customerPaymentJournals") return list([{ id: "pay-bq", code: opts.journalCodes?.bank ?? "BQ" }]);
       if (rest === "customers" || rest === "vendors" || rest === "generalLedgerEntries") return list(where(held[rest], url));
       if (rest === "salesInvoices" || rest === "salesCreditMemos") return list(where(held[rest], url));
       const one = /^(salesInvoices|salesCreditMemos)\((.+)\)$/.exec(rest);
@@ -344,7 +346,7 @@ async function run(
   s: ReturnType<typeof company>,
   log: Log,
   postings: Posting[],
-  opts: { targetId?: string; maps?: AccountingMap[]; credited?: Record<string, string>; party?: PostingParty; tenant?: string; secret?: string } = {},
+  opts: { targetId?: string; maps?: AccountingMap[]; credited?: Record<string, string>; party?: PostingParty; tenant?: string; secret?: string; journals?: Record<string, string> } = {},
 ) {
   const useMaps = opts.maps ?? maps;
   const adapter = businessCentral({
@@ -353,6 +355,7 @@ async function run(
     tenant: opts.tenant ?? `${TENANT}/${ENVIRONMENT}/${COMPANY}`,
     targetId: opts.targetId ?? "business_central_de",
     env: () => undefined,
+    journals: opts.journals,
   });
   const refused = await adapter.prepare();
   if (refused) return { refused, statuses: [] as string[] };
@@ -629,4 +632,26 @@ Deno.test("Business Central's call limit stops the run's remaining calls", async
   assert(statuses.some((x) => x !== "acknowledged"));
   assert(errorOf(log).includes("call limit"), errorOf(log));
   assertEquals(s.calls.length, 13);
+});
+
+// ── #4003: the business's own journals ─────────────────────────────────────
+
+const ownJournals = { sales: "VT", bank: "BNP", purchases: "ACH", other: "DIV" };
+
+Deno.test("a company whose journals carry the business's codes takes the whole year", async () => {
+  const s = company({ journalCodes: { other: "DIV", bank: "BNP" } });
+  const log = new Log();
+  assertEquals((await run(s, log, year, { journals: ownJournals })).statuses, year.map(() => "acknowledged"));
+  // The write-off went to the general journal the business names.
+  assert(s.calls.some((c) => c.path.includes("journals(jnl-od)/")));
+});
+
+Deno.test("with no journals set the standard codes are looked up, and a business's code the company lacks is refused by name", async () => {
+  const standard = company();
+  assertEquals((await run(standard, new Log(), year, { journals: undefined })).statuses, year.map(() => "acknowledged"));
+  const log = new Log();
+  const s = company();
+  const result = await run(s, log, [invoice, writeOff], { journals: ownJournals });
+  assertEquals(result.statuses, ["acknowledged", "failed"]);
+  assert(errorOf(log).includes("Business Central holds no general journal DIV"), errorOf(log));
 });

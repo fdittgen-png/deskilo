@@ -191,6 +191,45 @@ export interface AdapterContext {
    * `eu_member` rows say (`is_eu_country`); null when it could not be
    * asked. Given where a target's company may be in any member state. */
   isEuCountry?: (code: string) => Promise<boolean | null>;
+  /** #4003 — the business's own journal code of each posting journal
+   * (sales, bank, purchases, other), read from `workspaces.accounting_journals`
+   * through [journalCodesOf]; absent when the business set none: the
+   * standard codes apply. */
+  journals?: Record<string, string>;
+}
+
+/** #4003 — the business's journal codes by posting journal, from the value
+ * stored in `workspaces.accounting_journals` (`{role: {code, label}}`), or
+ * undefined when none is stored or it is not whole (all four journals, each
+ * with a code and a label): then the standard codes apply. The same rule as
+ * the app's `FecJournals.fromJson` (a stored value is whole or ignored, never
+ * cleaned into another journal); an empty code is never taken. */
+export function journalCodesOf(stored: unknown): Record<string, string> | undefined {
+  if (typeof stored !== "object" || stored === null || Array.isArray(stored)) return undefined;
+  const value = stored as Record<string, unknown>;
+  // The app's role `misc` is the posting engine's journal `other`.
+  const roles: [string, string][] = [["sales", "sales"], ["bank", "bank"], ["purchases", "purchases"], ["misc", "other"]];
+  const codes: Record<string, string> = {};
+  for (const [role, journal] of roles) {
+    const entry = value[role];
+    if (typeof entry !== "object" || entry === null) return undefined;
+    const { code, label } = entry as Record<string, unknown>;
+    if (typeof code !== "string" || typeof label !== "string" || code.trim() === "") return undefined;
+    codes[journal] = code;
+  }
+  return codes;
+}
+
+/** #4003 — the code of the target's journal for the posting journal
+ * [journal]: the business's when set, else the [standard] code of the
+ * target's table; never empty when the standard has one. */
+export function journalCode(
+  ctx: Pick<AdapterContext, "journals">,
+  journal: string,
+  standard: Record<string, string>,
+): string {
+  const own = ctx.journals?.[journal];
+  return own !== undefined && own.trim() !== "" ? own : standard[journal] ?? "";
 }
 
 /** A target that takes postings through the delivery kit. */

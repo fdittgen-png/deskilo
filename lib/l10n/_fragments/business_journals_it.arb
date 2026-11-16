@@ -11,7 +11,7 @@
   "accountingJournalLabelRequired": "Inserisca una descrizione.",
   "accountingJournalCharacter": "Niente a capo, tabulazioni né | qui: le esportazioni separano i loro campi con essi.",
   "accountingJournalDuplicate": "Un altro registro ha già questo codice.",
-  "accountingJournalsDeliveries": "Gli invii a un sistema contabile collegato usano ancora i codici standard.",
+  "accountingJournalsDeliveries": "Gli invii a Pennylane e Business Central usano anche questi codici; il giornale deve esistere lì con lo stesso codice.",
   "accountingJournalsRenumber": "Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.",
   "accountingJournalsStandard": "Usa i codici standard",
   "accountingJournalsNotAllowed": "Solo un proprietario imposta i registri contabili.",

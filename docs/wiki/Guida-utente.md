@@ -6210,7 +6210,7 @@ Il software del suo commercialista conosce i suoi registri con codici propri, e 
 - Ogni esportazione contabile dell'app li usa: il FEC, il giornale generico, i libri mastri SAF-T e i libri stampati.
 - Un codice non ha a capo, tabulazioni né |, e due registri non condividono mai un codice; il modulo dice quale campo correggere.
 - Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.
-- Gli invii a un sistema contabile collegato usano ancora i codici standard.
+- Gli invii a Pennylane e Business Central usano anche questi codici; il giornale deve esistere lì con lo stesso codice.
 
 **Vedi anche:** [Esportazioni contabili](#esportazioni-contabili)
 

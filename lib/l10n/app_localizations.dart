@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// #3470 business journals
   ///
   /// In en, this message translates to:
-  /// **'Deliveries to a connected accounting system still use the standard codes.'**
+  /// **'Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.'**
   String get accountingJournalsDeliveries;
 
   /// #3470 business journals

@@ -6210,7 +6210,7 @@ Your accountant's software knows your journals by its own codes, and you want ev
 - Every accounting export the app writes uses them: the FEC, the generic journal, the SAF-T ledgers and the printed books.
 - A code has no line break, tab or |, and two journals never share a code; the form says which field to fix.
 - A changed code also changes the entry numbers of a period you export again.
-- Deliveries to a connected accounting system still use the standard codes.
+- Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.
 
 **See also:** [Accounting exports](#accounting-exports)
 

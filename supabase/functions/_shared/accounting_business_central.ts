@@ -77,6 +77,7 @@
 import { type AccountingMap, type CreateOutcome, DETAIL_LENGTH, type MapNeed, type RemoteDocument } from "./accounting_delivery.ts";
 import {
   type AdapterContext,
+  journalCode,
   type Posting,
   type PostingAdapter,
   type PostingLine,
@@ -320,7 +321,7 @@ const ledgerLines = (p: Posting): PostingLine[] => p.lines.filter((l) => !PARTY_
 
 /** Why [p] cannot go to this company as mapped, naming the mapping key;
  * null when every account and tax code is the company's. */
-function problemOfPosting(p: Posting, maps: AccountingMap[], company: Company): string | null {
+function problemOfPosting(p: Posting, maps: AccountingMap[], company: Company, code: string): string | null {
   if (p.lines.some((l) => l.role === ROLE.vatPending && amountOf(l) > 0)) {
     return "deferred tax (vat_pending): a document taxed on its tax point is not delivered to Business Central yet";
   }
@@ -342,7 +343,6 @@ function problemOfPosting(p: Posting, maps: AccountingMap[], company: Company): 
     if (orphan) return `the tax of ${roleKey(orphan)} has no sale line of its rate group`;
     return null;
   }
-  const code = JOURNAL_CODES[p.journal] ?? "";
   const journals = entity === "customerPayments" ? company.paymentJournals : company.journals;
   if (!journals.some((j) => j.code === code)) {
     return `Business Central holds no ${entity === "customerPayments" ? "customer payment" : "general"} journal ${code || p.journal}`;
@@ -463,6 +463,8 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
   /** Set once Business Central refused a call for its limits: the run
    * sends no more. */
   let limited = "";
+  /** #4003 — the business's journal code of a posting, else the standard. */
+  const codeOf = (p: Posting) => journalCode(ctx, p.journal, JOURNAL_CODES);
 
   async function call(url: string, init: RequestInit & { etag?: string } = {}): Promise<Answer> {
     if (limited) return { ok: false, status: 429, detail: limited };
@@ -613,7 +615,7 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
 
   /** The journal of [p] by its code, from the run's lists. */
   function journalOf(p: Posting): Row | undefined {
-    const code = JOURNAL_CODES[p.journal];
+    const code = codeOf(p);
     const journals = entityOf(p.kind) === "customerPayments" ? company!.paymentJournals : company!.journals;
     return journals.find((j) => j.code === code);
   }
@@ -841,7 +843,7 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
       async function entryState(number: string, invoiceId?: string): Promise<RemoteDocument[] | string> {
         if (!company) return "the Business Central company was not read before the delivery";
         const journal = journalOf(p);
-        if (!journal) return `Business Central holds no journal ${JOURNAL_CODES[p.journal] ?? p.journal}`;
+        if (!journal) return `Business Central holds no journal ${codeOf(p) || p.journal}`;
         const pending = entity === "customerPayments"
           ? await journalLines("customerPaymentJournals", journal, "customerPayments")
           : await journalLines("journals", journal, "journalLines");
@@ -876,7 +878,7 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
           if (p.currency !== company.baseCurrency) {
             return refused(`the document is in ${p.currency}; this Business Central company keeps its books in ${company.baseCurrency}`);
           }
-          const problem = problemOfPosting(p, maps, company);
+          const problem = problemOfPosting(p, maps, company, codeOf(p));
           if (problem) return refused(problem);
           if (entity === "salesInvoices" || entity === "salesCreditMemos") return createSale(p, entity, party, maps, credited);
           if (entity === "customerPayments") return createPayment(p, key, party);
@@ -902,7 +904,7 @@ export function businessCentral(ctx: AdapterContext): PostingAdapter {
           // A journal is posted as a whole: only while it holds this
           // delivery's lines alone.
           const journal = journalOf(p);
-          if (!journal) return refused(`Business Central holds no journal ${JOURNAL_CODES[p.journal] ?? p.journal}`);
+          if (!journal) return refused(`Business Central holds no journal ${codeOf(p) || p.journal}`);
           const owner = entity === "customerPayments" ? "customerPaymentJournals" : "journals";
           const pending = await journalLines(owner, journal, entity === "customerPayments" ? "customerPayments" : "journalLines");
           if (typeof pending === "string") return lost(pending);

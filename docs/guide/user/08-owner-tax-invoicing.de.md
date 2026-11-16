@@ -1281,7 +1281,7 @@ Die Software Ihrer Steuerberatung kennt Ihre Journale unter eigenen Codes, und j
 - Jeder Buchhaltungsexport der App verwendet sie: der FEC, das allgemeine Journal, die SAF-T-Hauptbücher und die gedruckten Bücher.
 - Ein Code hat keinen Zeilenumbruch, keinen Tabulator und kein |, und zwei Journale teilen nie einen Code; das Formular sagt, welches Feld zu korrigieren ist.
 - Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.
-- Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.
+- Übermittlungen an Pennylane und Business Central verwenden diese Codes ebenfalls; das Journal muss dort unter demselben Code bestehen.
 
 **Siehe auch:** [Buchhaltungsexporte](help:user.invoicing.accounting-export)
 

@@ -195,7 +195,7 @@
   "accountingJournalMisc": "Sonstige Buchungen",
   "accountingJournalPurchases": "Einkauf",
   "accountingJournalSales": "Verkauf",
-  "accountingJournalsDeliveries": "Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.",
+  "accountingJournalsDeliveries": "Übermittlungen an Pennylane und Business Central verwenden diese Codes ebenfalls; das Journal muss dort unter demselben Code bestehen.",
   "accountingJournalsIntro": "Code und Bezeichnung jedes Journals, so wie die Software Ihrer Steuerberatung sie kennt. Jeder Buchhaltungsexport der App verwendet sie.",
   "accountingJournalsNotAllowed": "Nur ein Inhaber legt die Buchungsjournale fest.",
   "accountingJournalsRefused": "Die Journale wurden nicht gespeichert: Prüfen Sie das Journal {journal}.",

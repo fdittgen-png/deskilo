@@ -195,7 +195,7 @@
   "accountingJournalMisc": "Operazioni diverse",
   "accountingJournalPurchases": "Acquisti",
   "accountingJournalSales": "Vendite",
-  "accountingJournalsDeliveries": "Gli invii a un sistema contabile collegato usano ancora i codici standard.",
+  "accountingJournalsDeliveries": "Gli invii a Pennylane e Business Central usano anche questi codici; il giornale deve esistere lì con lo stesso codice.",
   "accountingJournalsIntro": "Il codice e la descrizione di ogni registro, come li conosce il software del suo commercialista. Ogni esportazione contabile dell'app li usa.",
   "accountingJournalsNotAllowed": "Solo un proprietario imposta i registri contabili.",
   "accountingJournalsRefused": "I registri non sono stati salvati: controlli il registro {journal}.",

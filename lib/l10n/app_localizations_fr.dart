@@ -283,7 +283,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get accountingJournalsDeliveries =>
-      'Les envois vers un logiciel comptable connecté utilisent toujours les codes standard.';
+      'Les envois vers Pennylane et Business Central utilisent aussi ces codes ; le journal doit y exister sous le même code.';
 
   @override
   String get accountingJournalsIntro =>
