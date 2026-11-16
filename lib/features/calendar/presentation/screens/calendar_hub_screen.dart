@@ -52,21 +52,17 @@ import '../widgets/calendar_week_strip.dart';
 
 /// THE CALENDAR HUB (#718): the dated view of everything.
 ///
-/// THE CALENDAR IS A SELECTOR, NOT A STAGE. The date is picked and the
-/// screen is the FEED: one list, grouped by day, every dated fact the
-/// member may see, filtered by kind, each row opening its source.
+/// THE CALENDAR IS A SELECTOR, NOT A STAGE. The date is picked and the screen is the FEED: one list, grouped by
+/// day, every dated fact the member may see, filtered by kind, each row opening its source.
 ///
-/// #818 — three ways to pick: the AGENDA (from today forward, the next
-/// thirty days — the question most people bring), the WEEK (a strip of
-/// seven pills with markers and counts) and the MONTH (a compact grid
-/// with markers, today ringed, closed days muted). The arrows step by
-/// the view, Today jumps back, and the feed names its days relatively.
-/// With `calendarViews` off the hub keeps the plain day/range selector.
+/// #818 — three ways to pick: the AGENDA (from today forward, the next thirty days — the question most people
+/// bring), the WEEK (a strip of seven pills with markers and counts) and the MONTH (a compact grid with markers,
+/// today ringed, closed days muted). The arrows step by the view, Today jumps back, and the feed names its days
+/// relatively. With `calendarViews` off the hub keeps the plain day/range selector.
 ///
-/// WHOSE. Your own by default. A member with the finance or member
-/// permission can switch to another member and sees exactly what the
-/// server allows for THAT member; a kind the server declines comes back
-/// LOCKED and is shown as such (#719).
+/// WHOSE. Your own by default. A member with the finance or member permission can switch to another member and sees
+/// exactly what the server allows for THAT member; a kind the server declines comes back LOCKED and is shown as
+/// such (#719).
 class CalendarHubScreen extends ConsumerStatefulWidget {
   const CalendarHubScreen({super.key, this.deskAlerts});
 
@@ -89,6 +85,7 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
 
   Set<CalendarKind>? _kinds;
   String? _memberId;
+  VoidCallback? _stopMember;
 
   /// The calendar is also where alerts and events live: this view shows the
   /// workspace's alert feed (what used to be the Alerts destination).
@@ -106,14 +103,20 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     ref.listenManual(appFormatProvider, (_, f) => _selection = _selection.withFirstWeekday(weekStartOf(f)));
     // #3065 — /calendar?view=alerts opens the alerts on reload or a link.
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) requestAlertsIfAddressAsks(context, ref);
+      if (!mounted) return; requestAlertsIfAddressAsks(context, ref);
+      _stopMember = listenForAddressedMember(context, (id) => _whose(id, {CalendarKind.reservation})); // #4069 — "All bookings"
     });
   }
 
+  @override
+  void dispose() { _stopMember?.call(); super.dispose(); }
+
+  /// Whose bookings and which kinds the calendar shows.
+  void _whose(String? memberId, Set<CalendarKind>? kinds) => setState(() { _memberId = memberId; _kinds = kinds; });
+
   bool get _viewsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarViews);
 
-  /// #843 — decisions on the timeline. Off, the chip is gone and the
-  /// query never asks for the kind, so the server sends none.
+  /// #843 — decisions on the timeline. Off, the chip is gone and the query never asks for the kind, so the server sends none.
   bool get _validationsOn => ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.calendarValidations);
 
   /// The kinds to ask for: null means "everything the workspace offers",
@@ -245,8 +248,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
       case ConversationLink(:final id):
         await showConversationThread(context, ref, conversationId: id);
       case EventLink(:final id):
-        // #843 — a validation row promised a decision, so it opens the
-        // trail, not the feed the alert lives in.
+        // #843 — a validation row promised a decision, so it opens the trail, not the feed the
+        // alert lives in.
         if (item.kind == CalendarKind.validation) {
           await showValidationTrailSheet(context, eventId: id);
           return;
@@ -286,8 +289,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     final names = ref.watch(memberNamesProvider).value ?? const {};
     final me = ref.watch(myMemberProvider).value;
     final permissions = ref.watch(myPermissionsProvider);
-    // Looking at OTHER members is a permission, not a role: finances or
-    // member administration. The server re-checks per kind anyway.
+    // Looking at OTHER members is a permission, not a role: finances or member administration. The
+    // server re-checks per kind anyway.
     final mayPickMember =
         permissions.contains(WorkspacePermission.viewFinances) ||
             permissions.contains(WorkspacePermission.manageMembers);
@@ -298,16 +301,14 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         .contains(WorkspaceFeature.eventsTab);
     final page = ref.watch(calendarItemsProvider(viewsOn ? _viewQuery : _plainQuery));
 
+    final mine = _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation);
     final chips = CalendarKindChips(
       kinds: _kinds,
-      myBookings: _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation),
-      onMyBookings: () => setState(() {
-        _kinds = _memberId == null && _kinds?.length == 1 && _kinds!.contains(CalendarKind.reservation) ? null : {CalendarKind.reservation};
-        _memberId = null;
-      }),
-      onReset: () => setState(() { _memberId = null; _kinds = null; }),
-      // #843 — a workspace that does not want decisions on its timeline
-      // is not offered the chip either.
+      myBookings: mine,
+      onMyBookings: () => _whose(null, mine ? null : {CalendarKind.reservation}),
+      onReset: () => _whose(null, null),
+      // #843 — a workspace that does not want decisions on its timeline is not offered the chip
+      // either.
       offered: [
         for (final kind in CalendarKind.values)
           if (kind != CalendarKind.validation || _validationsOn) kind,
@@ -373,12 +374,10 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     }
     return Scaffold(
       body: LayoutBuilder(builder: (context, constraints) {
-        // #1183 — the split used to be for the views that carry a
-        // picker. Sideways, the AGENDA needed it most: the view bar,
-        // the step bar and the filter chips are fixed rows, and on a
-        // 360 dp-tall screen they left the feed four pixels less than
-        // it needed — a `RenderFlex overflowed by 4.0 pixels` that
-        // nothing on screen explained. In the side panel those rows
+        // #1183 — the split used to be for the views that carry a picker. Sideways, the AGENDA
+        // needed it most: the view bar, the step bar and the filter chips are fixed rows, and on a
+        // 360 dp-tall screen they left the feed four pixels less than it needed — a `RenderFlex
+        // overflowed by 4.0 pixels` that nothing on screen explained. In the side panel those rows
         // scroll on their own and the feed gets the whole height.
         final landscape = phoneLandscape(constraints);
         if (landscape) {
@@ -606,8 +605,8 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
         days = [s.anchor];
         empty = l10n.calendarDayEmpty;
     }
-    // The agenda and the week list only the days that carry something
-    // (or are closed); the month's single day always shows its header.
+    // The agenda and the week list only the days that carry something (or are closed); the month's
+    // single day always shows its header.
     return CalendarFeed(
       page: shown,
       names: names,
@@ -653,6 +652,6 @@ class _CalendarHubScreenState extends ConsumerState<CalendarHubScreen> {
     recordTaskStep(ref, RecorderActions.calendarChooseWhose, payload: {
       'calendar_of': picked == myId ? 'mine' : 'someone_else',
     }); // #1881 B
-    setState(() => _memberId = picked == myId ? null : picked);
+    _whose(picked == myId ? null : picked, _kinds);
   }
 }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/motion/motion.dart';
@@ -259,13 +260,8 @@ class _MemberPageBody extends ConsumerWidget {
                 presence: presence,
                 now: now,
               ),
-              const SizedBox(height: AppSpacing.md),
-              MemberNowCard(
-                info: info,
-                upcoming: upcoming,
-                targets: targets,
-                onOpen: (r) => showReservationDetail(context, ref, r),
-              ),
+              // #4069 — who they are and their status, then what the
+              // reader may do, then the money; the bookings after.
               if (quickActions.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.md),
                 // #1187 — the actions were a Wrap of buttons each sized to
@@ -274,10 +270,24 @@ class _MemberPageBody extends ConsumerWidget {
                 // so the group reads as a group.
                 _actionGrid(quickActions),
               ],
-              // Role-gated INSIDE each card, as on the old sheet.
-              MemberContactCard(member: member, isSelf: isSelf),
               // Beside the members' table the money is its own tab.
               if (framed) MemberMoneyCard(memberId: member.id, isSelf: isSelf),
+              const SizedBox(height: AppSpacing.md),
+              MemberNowCard(
+                info: info,
+                upcoming: upcoming,
+                targets: targets,
+                onOpen: (r) => showReservationDetail(context, ref, r),
+                // The calendar, filtered to this member.
+                onAll: () => context.go(
+                  Uri(
+                    path: '/calendar',
+                    queryParameters: {'member': member.id},
+                  ).toString(),
+                ),
+              ),
+              // Role-gated INSIDE each card, as on the old sheet.
+              MemberContactCard(member: member, isSelf: isSelf),
             ],
           ),
           // #2085 — the one place a member is given a role.

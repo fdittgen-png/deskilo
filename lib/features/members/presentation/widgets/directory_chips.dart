@@ -36,12 +36,14 @@ Widget? directoryPresenceChip(
       label: l10n.directoryOnline,
       foreground: AppStatusColors.successOf(theme.brightness),
       outlined: true,
+      icon: Icons.wifi_tethering,
     );
   }
   return _DirectoryPill(
     chipKey: key,
     label: relativeLastSeen(l10n, card.now, card.presence.lastSeenAt!),
     foreground: theme.colorScheme.onSurfaceVariant,
+    icon: Icons.schedule,
   );
 }
 
@@ -83,6 +85,7 @@ Widget? directoryReservationChip(
           : (l10n.directoryCheckedInSeat(seatName)),
       foreground: AppStatusColors.onSuccessOf(brightness),
       background: AppStatusColors.successOf(brightness),
+      icon: Icons.event_available,
     ),
     ReservedNow() => _DirectoryPill(
       chipKey: key,
@@ -91,6 +94,7 @@ Widget? directoryReservationChip(
           : (l10n.directoryReservedNowSeat(seatName)),
       foreground: theme.colorScheme.primary,
       outlined: true,
+      icon: Icons.event_seat_outlined,
     ),
     UpcomingReservation() => _DirectoryPill(
       chipKey: key,
@@ -98,6 +102,7 @@ Widget? directoryReservationChip(
           appFormatOf(context), info.reservation, seatName),
       foreground: theme.colorScheme.onSurfaceVariant,
       outlined: true,
+      icon: Icons.event_outlined,
     ),
   };
 }
@@ -201,6 +206,7 @@ class _DirectoryPill extends StatelessWidget {
     required this.foreground,
     this.background,
     this.outlined = false,
+    this.icon,
   });
 
   final Key chipKey;
@@ -208,6 +214,9 @@ class _DirectoryPill extends StatelessWidget {
   final Color foreground;
   final Color? background;
   final bool outlined;
+
+  /// #4069 — a status says itself in text and an icon.
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -222,11 +231,23 @@ class _DirectoryPill extends StatelessWidget {
         border: outlined ? Border.all(color: foreground) : null,
         borderRadius: AppRadius.xlAll,
       ),
-      child: Text(
-        label,
-        style: Theme.of(
-          context,
-        ).textTheme.labelSmall?.copyWith(color: foreground),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon case final icon?) ...[
+            Icon(icon, size: 12, color: foreground),
+            const SizedBox(width: AppSpacing.xs / 2),
+          ],
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(
+                context,
+              ).textTheme.labelSmall?.copyWith(color: foreground),
+            ),
+          ),
+        ],
       ),
     );
   }

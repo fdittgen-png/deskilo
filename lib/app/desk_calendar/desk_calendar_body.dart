@@ -72,12 +72,22 @@ class DeskCalendarBody extends ConsumerStatefulWidget {
 }
 
 class _DeskCalendarBodyState extends ConsumerState<DeskCalendarBody> {
-  DeskFilter _filter = const DeskFilter();
+  // #4069 — `/calendar?member=ID` opens filtered to that member.
+  late DeskFilter _filter = DeskFilter(memberId: _address.memberId);
   double _zoom = 1;
   bool _exporting = false;
 
   DeskCalendarAddress get _address => widget.address;
   WorkspaceCalendar get _calendar => widget.calendar;
+
+  @override
+  void didUpdateWidget(DeskCalendarBody old) {
+    super.didUpdateWidget(old);
+    final member = widget.address.memberId;
+    if (member != null && member != old.address.memberId) {
+      _filter = _filter.withMember(member);
+    }
+  }
 
   void _go(DeskCalendarAddress next) => context.go(next.location);
 

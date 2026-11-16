@@ -80,5 +80,8 @@
       }
     }
   },
-  "memberPageNowHeading": "En ce moment"
+  "memberPageNowHeading": "En ce moment",
+  "memberPageAllBookings": "{count, plural, one{Toutes les réservations ({count})} other{Toutes les réservations ({count})}}",
+  "directorySearchLabel": "Rechercher par nom ou e-mail",
+  "directorySearchNone": "Personne ne correspond à « {query} »"
 }
