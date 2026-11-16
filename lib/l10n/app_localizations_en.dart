@@ -15309,6 +15309,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceCopyWithPaymentStatus => 'Copy with payment status';
 
   @override
+  String get invoiceCorrectionKeepsKind =>
+      'A correction is of the kind of the invoice it replaces.';
+
+  @override
   String get invoiceCorrectionReason => 'Reason for the correction';
 
   @override

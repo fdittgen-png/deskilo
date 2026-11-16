@@ -15423,6 +15423,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get invoiceCopyWithPaymentStatus => 'Copia con lo stato del pagamento';
 
   @override
+  String get invoiceCorrectionKeepsKind =>
+      'Una correzione è dello stesso tipo della fattura che sostituisce.';
+
+  @override
   String get invoiceCorrectionReason => 'Motivo della rettifica';
 
   @override

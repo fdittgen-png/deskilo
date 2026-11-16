@@ -9463,6 +9463,7 @@ const Set<String> uiLabelKeys = {
   'invoiceBuyerReference',
   'invoiceBuyerReferenceHint',
   'invoiceCopyWithPaymentStatus',
+  'invoiceCorrectionKeepsKind',
   'invoiceCorrectionReason',
   'invoiceCorrectionReasonR1',
   'invoiceCorrectionReasonR2',
