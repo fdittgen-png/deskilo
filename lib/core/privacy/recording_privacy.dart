@@ -173,6 +173,8 @@ PersonalInfo recordingIdentity(String key, PersonalInfo real) {
     street: real.street.isEmpty ? '' : person.street,
     postalCode: real.postalCode.isEmpty ? '' : person.postalCode,
     city: real.city.isEmpty ? '' : person.city,
+    // A region names a province, as coarse as the country beside it.
+    subdivision: real.subdivision,
     countryCode: real.countryCode,
     phone: real.phone.isEmpty ? '' : person.phone,
     email: real.email.isEmpty ? '' : person.email,

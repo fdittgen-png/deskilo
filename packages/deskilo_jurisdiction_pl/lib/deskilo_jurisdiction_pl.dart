@@ -3,3 +3,4 @@
 library;
 
 export 'src/ksef_fa3_profile.dart';
+export 'src/pl_postal_layout.dart';

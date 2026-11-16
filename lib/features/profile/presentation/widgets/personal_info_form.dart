@@ -241,6 +241,7 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
       value.postalBlock(
         workspaceCountry: widget.workspaceCountry,
         courtesyWord: courtesyWord(l10n, value.courtesy),
+        countryName: (code) => localizedCountryName(l10n, code),
       ),
     ].where((l) => l.isNotEmpty).join('\n');
     final preview = previewLines.isEmpty

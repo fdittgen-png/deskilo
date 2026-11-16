@@ -5,4 +5,5 @@ library;
 export 'src/ch_archive.dart';
 export 'src/ch_invoice_mentions.dart';
 export 'src/ch_payment_slip.dart';
+export 'src/ch_postal_layout.dart';
 export 'src/ch_vat_filing.dart';

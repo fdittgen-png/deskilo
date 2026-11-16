@@ -7,6 +7,7 @@ library;
 
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
 import 'purchase_order.dart';
 
 /// How the document writes an amount (minor units of the order's
@@ -39,7 +40,12 @@ Map<String, Object?> purchaseOrderReportData(
   'client_address': [
     if (supplier != null) ...[
       supplier.street,
-      [supplier.postalCode, supplier.city].where((p) => p.isNotEmpty).join(' '),
+      // #3649 -- in the order of the supplier's country.
+      ...postalLayoutOf(supplier.countryCode).render(
+        postalCode: supplier.postalCode,
+        city: supplier.city,
+        capitals: false,
+      ),
       supplier.countryCode,
     ],
   ].where((p) => p.trim().isNotEmpty).join('\n'),

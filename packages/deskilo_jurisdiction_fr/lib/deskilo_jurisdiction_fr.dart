@@ -6,4 +6,5 @@ export 'src/ca3_writer.dart' show frenchSiren;
 export 'src/fr_archive.dart';
 export 'src/fr_fec_format.dart';
 export 'src/fr_invoice_mentions.dart';
+export 'src/fr_postal_layout.dart';
 export 'src/fr_vat_filing.dart';

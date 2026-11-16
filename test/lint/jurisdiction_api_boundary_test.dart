@@ -233,6 +233,7 @@ void main() {
         'src/invoice_mentions_contribution.dart',
         'src/invoice_profile_contribution.dart',
         'src/payment_slip_contribution.dart',
+        'src/postal_layout_contribution.dart',
         'src/register_contribution.dart',
         'src/validation_result.dart',
         'src/vat_filing_contribution.dart',

@@ -63,6 +63,9 @@ enum RefusalKind {
 
   /// More than one installed add-on claims the payment slip of that country.
   conflictingPaymentSlip,
+
+  /// More than one installed add-on claims the postal layout of that country.
+  conflictingPostalLayout,
 }
 
 sealed class CapabilityResolution {
@@ -334,6 +337,36 @@ PaymentSlipContribution? resolvePaymentSlip(
   if (matches.single.descriptor.contractVersion != paymentSlipContractVersion) {
     throw StateError(
       'payment slip of $country: ${RefusalKind.contractMismatch.name}',
+    );
+  }
+  return matches.single;
+}
+
+String _postalLayoutCapabilityId(String country) => 'postal_layout.$country';
+
+/// The installed postal layout of [context]'s country: null when the country
+/// has none of its own (it is written with the default layout, never with
+/// another country's), or the composition's fault as a [StateError].
+PostalLayoutContribution? resolvePostalLayout(
+  LegalContext context,
+  List<PostalLayoutContribution> installed,
+) {
+  final country = context.normalized;
+  if (country.isEmpty) return null;
+  final id = _postalLayoutCapabilityId(country);
+  final matches = [
+    for (final c in installed)
+      if (c.descriptor.capabilityId == id) c,
+  ];
+  if (matches.isEmpty) return null;
+  if (matches.length > 1) {
+    throw StateError(
+      'postal layout of $country: ${RefusalKind.conflictingPostalLayout.name}',
+    );
+  }
+  if (matches.single.descriptor.contractVersion != postalLayoutContractVersion) {
+    throw StateError(
+      'postal layout of $country: ${RefusalKind.contractMismatch.name}',
     );
   }
   return matches.single;

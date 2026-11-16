@@ -2,6 +2,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/widgets.dart';
 
+import '../../../core/i18n/country_names.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
@@ -48,6 +49,7 @@ ReportStrings reportStringsOf(
     nameDashLabel: l10n.titleDashDetail('{name}', '{label}'),
     cancelledLine: l10n.invoiceLineCancelled,
     daysOpen: l10n.reminderPdfDaysOpenLine,
+    countryName: (code) => localizedCountryName(l10n, code),
   );
 }
 
