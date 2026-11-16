@@ -339,9 +339,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.';
 
   @override
-  String get accountingStatusAllBooks => 'Tutta la contabilità';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure o più';
   }
@@ -353,10 +350,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Contabilità chiusa fino al';
 
   @override
+  String get accountingStatusDue => 'Da fare';
+
+  @override
   String get accountingStatusLastExport => 'Ultima esportazione';
 
   @override
   String get accountingStatusNotRead => 'Non è stato possibile leggerlo';
+
+  @override
+  String get accountingStatusReference => 'Riferimento';
+
+  @override
+  String get accountingStatusToFile => 'Da presentare';
+
+  @override
+  String get accountingStatusToMatch => 'Da riconciliare';
 
   @override
   String get accountingStatusVatToFile => 'Dichiarazione IVA da presentare';

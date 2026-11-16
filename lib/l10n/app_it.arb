@@ -213,12 +213,15 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Tutta la contabilità",
   "accountingStatusAtLeast": "{figure} o più",
   "accountingStatusBankToMatch": "Movimenti bancari da abbinare",
   "accountingStatusClosedUpTo": "Contabilità chiusa fino al",
+  "accountingStatusDue": "Da fare",
   "accountingStatusLastExport": "Ultima esportazione",
   "accountingStatusNotRead": "Non è stato possibile leggerlo",
+  "accountingStatusReference": "Riferimento",
+  "accountingStatusToFile": "Da presentare",
+  "accountingStatusToMatch": "Da riconciliare",
   "accountingStatusVatToFile": "Dichiarazione IVA da presentare",
   "acctConnConnectToken": "Collega con un token API",
   "acctConnDetail": "Risposta del sistema: {detail}",
