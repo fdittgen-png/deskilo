@@ -27,7 +27,9 @@ class ConnectionsScreen extends ConsumerWidget {
           builder: (_) => const ConnectionDialog(),
         ),
         tooltip: l.portalConnect,
-        child: const Icon(Icons.add),
+        // #4113 — the button's name: a tooltip alone reaches no screen
+        // reader through the floating button.
+        child: Icon(Icons.add, semanticLabel: l.portalConnect),
       ),
       body: switch (sources) {
         AsyncData(value: final rows) => ListView(

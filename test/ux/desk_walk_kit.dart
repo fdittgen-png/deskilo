@@ -464,14 +464,6 @@ const Map<String, String> waitsAt768 = {};
 /// page is fixed (the list only shrinks); a test below holds that every key is
 /// a case of the walk.
 const Map<String, String> deskFindings = {
-  '/demo|768': 'unreachable by Tab',
-  '/demo|1024': 'unreachable by Tab',
-  '/demo|1440': 'unreachable by Tab',
-  '/demo|1920': 'unreachable by Tab',
-  '/connections|768': 'an unnamed control',
-  '/connections|1024': 'an unnamed control',
-  '/connections|1440': 'an unnamed control',
-  '/connections|1920': 'an unnamed control',
 };
 
 
@@ -580,12 +572,6 @@ Set<String> personaDeskForwards(WalkPersona persona) => {
 /// (the list only shrinks); a test below holds that every key is a case of the
 /// walk, so a fixed page cannot leave a stale line.
 const Map<String, String> personaFindings = {
-  '/connections|member|1440': 'an unnamed control',
-  '/connections|member|390': 'an unnamed control',
-  '/task-wizard|member|390': 'two filled buttons on one phone screen',
-  '/connections|admin|1440': 'an unnamed control',
-  '/connections|admin|390': 'an unnamed control',
-  '/task-wizard|admin|390': 'two filled buttons on one phone screen',
 };
 
 /// What kind of page a persona meets: a member's /invoices is the member's own
@@ -609,6 +595,7 @@ Set<String> phoneProblems(WidgetTester tester, List<String> details) {
       );
     }
   }
+  details.addAll(unnamedControlDetails(tester));
   return {
     ...guardProblems(tester, width: 390),
     ...cutInformationProblems(details: details),
@@ -688,11 +675,19 @@ void runDeskWalk(List<DeskWalkPage> pages, {required bool pictures}) {
         // A long task (#3608) is its own focus scope: Tab walks the page. A
         // record beside its table is walked with the shell around it (#3891).
         // #3619 — a settings form is a task page that is not a long task.
+        // #4113 -- a page that opens its own sheet on arrival (the demo's
+        // entry) is walked in that sheet: the page under a modal is out of
+        // Tab's reach by design.
         final longTask = find.byType(LongTaskPage);
+        final sheet = find.byType(BottomSheet);
         expect(
           await keyboardProblems(
             tester,
-            within: longTask.evaluate().isNotEmpty ? longTask : null,
+            within: longTask.evaluate().isNotEmpty
+                ? longTask
+                : sheet.evaluate().isNotEmpty
+                ? sheet
+                : null,
           ),
           isEmpty,
         );

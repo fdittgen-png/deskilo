@@ -85,7 +85,7 @@ class TaskWizardScreen extends ConsumerWidget {
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.assistant_navigation),
               title: Text(builtinGuideTitle(l10n, g)),
-              trailing: FilledButton(
+              trailing: FilledButton.tonal(
                 key: ValueKey('task-wizard-start-builtin-${g.name}'),
                 onPressed: () => _start(context, ref, builtinGuide(l10n, g)),
                 child: Text(l10n.guideStart),
@@ -434,7 +434,7 @@ class _GuideTile extends ConsumerWidget {
         spacing: AppSpacing.xs,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
-          FilledButton(
+          FilledButton.tonal(
             key: ValueKey('task-wizard-start-${stored.id}'),
             onPressed: () =>
                 guide.steps.any(
