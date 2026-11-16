@@ -2464,7 +2464,7 @@ routine public.book_periods_v1(p_workspace_id uuid) -> jsonb | function | define
 routine public.book_profiles(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f5fb693f89e2
 routine public.book_role_account_type(p_role text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:aedea518c9ee
 routine public.book_write_gate(p_workspace_id uuid, p_issuer_site_id uuid) -> void | function | definer | stable | exec:service_role | body:8f1d77f94f98
-routine public.booking_prices(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> TABLE(reservation_id uuid, member_id uuid, kind text, amount_cents integer, currency text) | function | definer | stable | exec:authenticated,service_role | body:4ff349a266a9
+routine public.booking_prices(p_workspace_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> TABLE(reservation_id uuid, member_id uuid, kind text, amount_cents integer, currency text) | function | definer | stable | exec:authenticated,service_role | body:c711f5263cb7
 routine public.branding_clean(p_incoming jsonb, p_strict boolean) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d4ef2aaa9fd9
 routine public.business_document_language(p_locale text, p_country text, p_on date) -> text | function | definer | stable | exec:service_role | body:aa4b68900fc1
 routine public.business_kind_setting_check() -> trigger | function | invoker | volatile | exec:service_role | body:50eaa3943a8a
@@ -3006,6 +3006,7 @@ routine public.member_first_open_period(p_member_id uuid, p_day date) -> date | 
 routine public.member_frozen_terms(p_member_id uuid, p_first date) -> member_period_terms | function | definer | stable | exec:service_role | body:f8146efdc728
 routine public.member_has_permission(p_member_id uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:72a50d0622b7
 routine public.member_may_give_role(p_giver uuid, p_role workspace_roles) -> boolean | function | definer | stable | exec:service_role | body:cdf8bdeace64
+routine public.member_months_extra_half_days(p_workspace_id uuid, p_members uuid[], p_periods text[]) -> TABLE(member_id uuid, period text, extra_half_days integer) | function | definer | stable | exec:service_role | body:87b45428a154
 routine public.member_notes_announce_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7358450eb8ce
 routine public.member_notes_mentions_guard() -> trigger | function | definer | volatile | exec:service_role | body:890b2c3ae02a
 routine public.member_notes_refs_guard() -> trigger | function | definer | volatile | exec:authenticated,service_role | body:7c2de38ad227
