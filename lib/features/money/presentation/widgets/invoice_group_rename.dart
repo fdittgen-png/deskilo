@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../domain/invoice_groups.dart';
 import '../../providers/invoice_group_providers.dart';
@@ -59,8 +60,14 @@ class _RenameDialogState extends ConsumerState<_RenameDialog> {
           await ref
               .read(invoiceGroupsProvider.notifier)
               .rename(widget.group.id, checked.name!);
-        } on InvoiceGroupRefused catch (r) {
-          // trace-exempt: a refused name is shown under its field
+        } on InvoiceGroupRefused catch (r, st) {
+          // a refused name is shown under its field
+          TraceLogger.instance.warn(
+            'money',
+            'invoice group name refused: ${r.reason.name}',
+            error: r,
+            stackTrace: st,
+          );
           refusal = r.reason;
         }
       },

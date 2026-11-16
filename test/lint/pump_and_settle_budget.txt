@@ -39,6 +39,7 @@
 # review {"path":"test/features/task_recorder/calendar_journey_test.dart","before":18,"after":20,"invariant":"#4021 the journey opens the Filters sheet before choosing its kinds and closes it before opening an item","cost":"two settles for the sheet in and out, in one journey test"}
 # review {"path":"test/features/workspace/organisation_sheet_test.dart","before":0,"after":13,"invariant":"#4006 the organisation page: each command opens its dialog or its picker, is confirmed, and the page reads the organisations again before the next step","cost":"four tests of about 1 s each; every settle waits for the sheet, a dialog, a picker or the read that follows a command"}
 # review {"path":"test/features/workspace/organisation_sheet_test.dart","before":13,"after":19,"invariant":"#4006 every change of the organisation is confirmed first: each command test opens the confirmation and answers it, and one test cancels it","cost":"one settle per confirmation shown and answered; five tests of about 1 s each"}
+# review {"path":"test/features/money/invoice_groups_screen_test.dart","before":0,"after":16,"invariant":"#3556 a person files invoices in their own groups on My finances: each step (the row action, the sheet, a switch, the new group, the chip, rename, delete and its confirmation) settles once before the stored groups or the header are read","cost":"4 tests in 2 s locally"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -102,6 +103,7 @@
 10 test/features/money/guest_pass_invoice_screen_test.dart
 12 test/features/money/guest_passes_screen_test.dart
 14 test/features/money/input_vat_test.dart
+16 test/features/money/invoice_groups_screen_test.dart
 11 test/features/money/invoice_journey_test.dart
 11 test/features/money/invoice_register_table_test.dart
 21 test/features/money/invoice_register_test.dart

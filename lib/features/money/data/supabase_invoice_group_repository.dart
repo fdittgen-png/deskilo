@@ -70,15 +70,15 @@ class SupabaseInvoiceGroupRepository implements InvoiceGroupRepository {
   Future<T> _named<T>(Future<T> Function() write) async {
     try {
       return await write();
-    } on PostgrestException catch (e) {
+    } on PostgrestException catch (e, st) {
       // trace-exempt: rethrown as the refusal the sheet names, or as is
-      switch (e.code) {
-        case '23505':
-          throw const InvoiceGroupRefused(InvoiceGroupRefusal.nameTaken);
-        case '23514':
-          throw const InvoiceGroupRefused(InvoiceGroupRefusal.nameShape);
-      }
-      rethrow;
+      final refusal = switch (e.code) {
+        '23505' => InvoiceGroupRefusal.nameTaken,
+        '23514' => InvoiceGroupRefusal.nameShape,
+        _ => null,
+      };
+      if (refusal == null) rethrow;
+      Error.throwWithStackTrace(InvoiceGroupRefused(refusal), st);
     }
   }
 }

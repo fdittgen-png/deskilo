@@ -4,6 +4,7 @@
 // tests'. The same rules as 0800: a name is trimmed, 1 to 80 characters,
 // used once per person whatever its case; an invoice is in a group once.
 import '../../../features/money/domain/invoice_groups.dart';
+import '../../text/collation.dart';
 
 class FakeInvoiceGroupRepository implements InvoiceGroupRepository {
   FakeInvoiceGroupRepository({List<InvoiceGroup> groups = const []})
@@ -27,7 +28,7 @@ class FakeInvoiceGroupRepository implements InvoiceGroupRepository {
     return [
       for (final g in [
         ..._groups,
-      ]..sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())))
+      ]..sort((a, b) => compareNames(a.name, b.name)))
         InvoiceGroup(id: g.id, name: g.name, items: List.unmodifiable(g.items)),
     ];
   }

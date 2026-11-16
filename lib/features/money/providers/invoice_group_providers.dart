@@ -79,7 +79,7 @@ InvoiceRef? Function(FinanceInvoice) invoiceRefResolver(Ref ref) {
 /// Each of my groups as the overview reads it now, by group id.
 @riverpod
 Map<String, InvoiceGroupView> invoiceGroupViews(Ref ref) {
-  final groups = ref.watch(invoiceGroupsProvider).value ?? const [];
+  final groups = ref.watch(invoiceGroupsProvider).value ?? const []; // empty-ok: while the groups are read or failed, no group narrows the lists; the groups row shows the failure with Try again
   final overview =
       ref.watch(financeOverviewProvider).value ?? const FinanceOverview(); // empty-ok: before the overview answers, a group shows its references as unreadable, never an old amount
   final home = ref.watch(financeHomeInstallationProvider).value;

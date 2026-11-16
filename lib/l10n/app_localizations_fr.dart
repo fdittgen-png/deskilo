@@ -12704,7 +12704,7 @@ class AppLocalizationsFr extends AppLocalizations {
       count,
       locale: localeName,
       other: '$count factures',
-      one: '1 facture',
+      one: '$count facture',
     );
     return '$_temp0';
   }
@@ -12746,7 +12746,8 @@ class AppLocalizationsFr extends AppLocalizations {
       locale: localeName,
       other:
           '$count factures ne peuvent pas être lues pour l’instant : les totaux les laissent de côté.',
-      one: '1 facture ne peut pas être lue pour l’instant : les totaux la laissent de côté.',
+      one:
+          '$count facture ne peut pas être lue pour l’instant : les totaux la laissent de côté.',
     );
     return '$_temp0';
   }

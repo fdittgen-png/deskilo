@@ -13,6 +13,7 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../domain/invoice_groups.dart';
 import '../../providers/invoice_group_providers.dart';
 import 'invoice_group_rename.dart';
@@ -31,8 +32,19 @@ class InvoiceGroupsBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final groups = ref.watch(invoiceGroupsProvider).value ?? const [];
-    if (groups.isEmpty) return const SizedBox.shrink();
+    final read = ref.watch(invoiceGroupsProvider);
+    // a failed read is said, with Try again: never an absence of groups
+    if (read case AsyncError(:final error) when !read.hasValue) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+        child: ReadFailureBanner(
+          error: error,
+          onRetry: () => ref.invalidate(invoiceGroupsProvider),
+        ),
+      );
+    }
+    final groups = read.value;
+    if (groups == null || groups.isEmpty) return const SizedBox.shrink();
     final view = selected == null
         ? null
         : ref.watch(invoiceGroupViewsProvider)[selected];

@@ -9,7 +9,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
+import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
@@ -68,8 +70,14 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
       action: () async {
         try {
           await write(ref.read(invoiceGroupsProvider.notifier));
-        } on InvoiceGroupRefused catch (r) {
-          // trace-exempt: a refused name is shown under its field
+        } on InvoiceGroupRefused catch (r, st) {
+          // a refused name is shown under its field
+          TraceLogger.instance.warn(
+            'money',
+            'invoice group name refused: ${r.reason.name}',
+            error: r,
+            stackTrace: st,
+          );
           refusal = r.reason;
         }
       },
@@ -99,7 +107,8 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final groups = ref.watch(invoiceGroupsProvider).value ?? const [];
+    final read = ref.watch(invoiceGroupsProvider);
+    final groups = read.value;
     final media = MediaQuery.of(context);
     return Padding(
       key: const ValueKey('invoice-group-sheet'),
@@ -113,7 +122,12 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
               l10n.financesGroupAddTitle(widget.invoice.number),
               style: Theme.of(context).textTheme.titleMedium,
             ),
-            for (final g in groups)
+            if (read case AsyncError(:final error) when !read.hasValue)
+              ReadFailureBanner(
+                error: error,
+                onRetry: () => ref.invalidate(invoiceGroupsProvider),
+              ),
+            for (final g in groups ?? const <InvoiceGroup>[])
               CheckboxListTile(
                 key: ValueKey('invoice-group-toggle-${g.id}'),
                 contentPadding: EdgeInsets.zero,
