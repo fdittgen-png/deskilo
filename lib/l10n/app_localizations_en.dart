@@ -15422,6 +15422,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Open the legal identity';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'The e-invoice cannot be sent until these are added (the invoice can still be issued):';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Valid, but the strict national profiles also want:';
 
@@ -15984,6 +15991,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get invoiceMissingBuyerName => 'The customer\'s name or company';
 
   @override
+  String get invoiceMissingBuyerRegion =>
+      'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada — enter it in the customer\'s address';
+
+  @override
   String get invoiceMissingBuyerTaxId =>
       'The customer\'s tax identifier: the NIF of a business customer in Spain, the codice fiscale or partita IVA of a customer in Italy, the SIREN of a business customer in France';
 
@@ -16026,6 +16037,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get invoiceMissingSellerQstNumber =>
       'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)';
+
+  @override
+  String get invoiceMissingSellerRegion =>
+      'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada — enter it in the legal identity, under “E-invoicing address”';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
@@ -16083,6 +16098,11 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invoiceMonthDone => 'Done';
+
+  @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Its e-invoice will need: $what';
+  }
 
   @override
   String get invoiceMonthFix => 'Fix';
@@ -24469,6 +24489,47 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get portalNoLongerPublished => 'This place is no longer published.';
+
+  @override
+  String get portalOfferEdit => 'Choose the public services';
+
+  @override
+  String get portalOfferInquiriesNo => 'You take no inquiries';
+
+  @override
+  String get portalOfferInquiriesYes => 'Visitors can write to you';
+
+  @override
+  String portalOfferKinds(String kinds) {
+    return 'Kind: $kinds';
+  }
+
+  @override
+  String portalOfferMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '$minutes min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalOfferNoServices =>
+      'No service is public yet. A service appears here once it is active and marked public.';
+
+  @override
+  String get portalOfferTaxExcluded => 'plus tax';
+
+  @override
+  String get portalOfferTaxIncluded => 'tax included';
+
+  @override
+  String get portalOfferTaxNone => 'no tax';
+
+  @override
+  String get portalOfferTitle => 'What the page says you offer';
 
   @override
   String get portalOpenMe => 'Me: my account and my places';

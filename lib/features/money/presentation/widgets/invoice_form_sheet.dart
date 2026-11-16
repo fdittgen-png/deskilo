@@ -21,21 +21,22 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
+import '../../domain/invoice_issue_draft.dart';
 import '../../domain/invoice_issue_readiness.dart';
 import '../../domain/invoice_mail.dart' show invoiceEmailKey;
 import '../../providers/money_providers.dart';
-import '../invoice_issue_block_text.dart';
+import '../e_invoice_identity.dart';
 import '../invoice_original_document.dart';
+import '../issue_judgement.dart';
+import 'einvoice_gaps_warning.dart';
 import 'invoice_correction_reason_field.dart';
 import 'invoice_issue_runner.dart';
-import 'invoice_missing_sales_tax.dart';
+import 'invoice_missing_banner.dart';
 import 'invoice_preview_body.dart';
 
-/// Issues an invoice — plain, or a REPLACEMENT (0061) prefilled from
-/// [replaces]. Since 0062 nothing is typed here: the issuer picks the
-/// member and the MONTH, the sheet previews the positions the server
-/// derives from that month's tracked data, and issuing snapshots exactly
-/// those.
+/// Issues an invoice — plain, or a REPLACEMENT (0061) of [replaces]. Since
+/// 0062 nothing is typed: the issuer picks the member and the MONTH, the
+/// sheet previews what the server derives, and issuing snapshots it.
 ///
 /// The month defaults to the PREVIOUS one — the completed month whose
 /// positions no longer move — matching the hub's to-invoice list. Issuing
@@ -85,15 +86,13 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
       ),
-      readiness: (memberId, period, correctionReason) =>
-          repo.invoiceIssueReadiness(
-        workspaceId: workspace.id,
+      readiness: (memberId, period, correctionReason) => judgeIssue(ref, workspace.id, (
         memberId: memberId,
         period: period,
         replacesId: replaces?.id,
         kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
         correctionReason: correctionReason,
-      ),
+      ), iban: workspaceIban(workspace)),
       // Only preselect a member the dropdown offers: the wrong invoice's member may have left.
       initialMemberId:
           members.any((m) => m.id == (memberId ?? replaces?.memberId))
@@ -167,15 +166,13 @@ class _InvoiceForm extends StatefulWidget {
   final Future<({List<InvoiceLine> lines, int totalCents})> Function(
       String memberId, String period) preview;
 
-  /// #1916 — what the server would refuse to issue for, as stable keys.
-  final Future<List<String>> Function(
+  /// #1916/#4105 — what the server refuses, and the channel's gaps.
+  final Future<IssueJudgement> Function(
       String memberId, String period, String correctionReason) readiness;
   final String? initialMemberId;
   final String initialPeriod;
 
-  /// The running instant, read from `clockProvider` by the caller — this
-  /// sheet is a plain State with no `ref` of its own, and a wall-clock
-  /// read here would put the month ceiling back on the real calendar.
+  /// The running instant from `clockProvider` (never a wall-clock read).
   final DateTime now;
 
   final bool initialDetailed;
@@ -199,7 +196,8 @@ class _InvoiceFormState extends State<_InvoiceForm> {
   // The preview answer could not be read: unavailable, never an empty month.
   bool _previewFailed = false;
   // #1916 — the essentials the server would refuse to issue without.
-  List<String> _missing = const [];
+  IssueJudgement _judged = noJudgement;
+  List<String> get _missing => _judged.missing;
   bool _loading = false;
   // #2440 — RD 1619/2012 art. 15 (R1-R5); asked only when the server
   // names it as missing, so no country is guessed here.
@@ -223,9 +221,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     setState(() => _loading = true);
     try {
       final result = await widget.preview(memberId, period);
-      var missing = const <String>[];
+      var judged = noJudgement;
       try {
-        missing = await widget.readiness(memberId, period, _correctionReason);
+        judged = await widget.readiness(memberId, period, _correctionReason);
       } on Object catch (e, st) {
         // Advisory: the server still refuses an incomplete issue.
         TraceLogger.instance.error('money', 'invoice readiness failed',
@@ -235,7 +233,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       setState(() {
         _preview = result;
         _previewFailed = false;
-        _missing = missing;
+        _judged = judged;
         _loading = false;
       });
     } on Object catch (e, st) {
@@ -247,7 +245,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
       setState(() {
         _preview = null;
         _previewFailed = true;
-        _missing = const [];
+        _judged = noJudgement;
         _loading = false;
       });
     }
@@ -270,7 +268,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
     setState(() {
       _period = yearMonth(next.year, next.month);
       _preview = null;
-      _missing = const [];
+      _judged = noJudgement;
     });
     unawaited(_load());
   }
@@ -331,18 +329,10 @@ class _InvoiceFormState extends State<_InvoiceForm> {
         correctionReason: _correctionReason,
       );
 
-  Widget _missingBanner(InvoiceIssueBlock block) {
-    final l10n = widget.l10n;
-    return InlineBanner(
-            key: const ValueKey('invoice-missing-essentials'),
-            icon: Icons.rule_folder_outlined,
-            text: '${invoiceIssueBlockTitle(l10n, block)}:\n'
-                '${[for (final key in _missing) '• ${invoiceMissingLabel(l10n, key)}'].join('\n')}',
-          );
-  }
+  Widget _missingBanner(InvoiceIssueBlock block) =>
+      InvoiceMissingBanner(l10n: widget.l10n, block: block, missing: _missing);
 
-  /// #4058 — the button names the amount it issues, and is pressed only
-  /// on a preview that was read.
+  /// #4058 — the button names the amount; pressed only on a read preview.
   Widget _submitButton(BuildContext context, List<InvoiceLine> lines) {
     final preview = _preview;
     final ready = preview != null && !_loading && !_previewFailed;
@@ -417,7 +407,7 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             setState(() {
               _memberId = value;
               _preview = null;
-              _missing = const [];
+              _judged = noJudgement;
             });
             unawaited(_load());
           },
@@ -482,7 +472,9 @@ class _InvoiceFormState extends State<_InvoiceForm> {
             onChanged: _setCorrectionReason,
           ),
         if (_readiness(lines).block != InvoiceIssueBlock.none)
-          _missingBanner(_readiness(lines).block),
+          _missingBanner(_readiness(lines).block)
+        else if (_judged.gaps.isNotEmpty)
+          EInvoiceGapsWarning(l10n: widget.l10n, gaps: _judged.gaps),
         const SizedBox(height: 4),
         _submitButton(context, lines),
         // #4058 — what issuing means, said before it is done.

@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/backend/backend_settings.dart';
 import '../../../core/backend/connected_installations.dart';
+import '../../../core/public_network/data/public_network_client.dart';
 import '../../../core/public_network/public_network_codec.dart';
 import '../../../core/public_network/public_network_operations.dart';
 import '../../../core/public_network/public_network_spec.dart';
@@ -21,7 +24,17 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
     required this.directoryHome,
     this.local,
     http.Client Function()? transport,
-  }) : transport = transport ?? http.Client.new;
+    PublicNetworkNegotiator? negotiator,
+  }) : transport = transport ?? http.Client.new,
+       negotiator =
+           negotiator ?? PublicNetworkNegotiator(transport: transport);
+
+  /// #3553 — asks a source what it can do before a filtered search.
+  final PublicNetworkNegotiator negotiator;
+
+  /// The capability a source advertises when it can narrow its search to
+  /// one business kind.
+  static const kindFilter = 'kind_filter';
 
   /// The directory's origin and publishable key: #2561 L3 — the personal
   /// home the installation declares, resolved at each read.
@@ -117,14 +130,24 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
     DirectorySource source,
     String query, {
     int page = 0,
+    String? kind,
   }) async {
     if (validateBackendEndpoint(source.origin, source.key) != null) {
       throw StateError('invalid public endpoint');
+    }
+    // #3553 — a source that cannot narrow by kind is not asked: its cards
+    // would be unfiltered, and an empty answer would read as no result.
+    if (kind != null &&
+        !await negotiator.advertises(source.origin, source.key, kindFilter)) {
+      return const SourceCardsPage([], uncovered: true, more: false);
     }
     final size = _search.pageSize!;
     final client = _anonymous(source.origin, source.key);
     try {
       var request = client.from(_search.relation!).select(_search.selectClause);
+      if (kind != null) {
+        request = request.filter('document->kinds', 'cs', jsonEncode([kind]));
+      }
       if (query.trim().isNotEmpty) {
         request = request.ilike(
           'search_text',

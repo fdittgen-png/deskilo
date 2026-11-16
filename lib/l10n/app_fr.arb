@@ -9084,6 +9084,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Ouvrir l'identité légale",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "La facture électronique ne pourra pas être envoyée tant que ceci n'est pas ajouté (la facture peut tout de même être émise) :",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Valide, mais les profils nationaux stricts demandent aussi :",
   "invoiceEInvoicePublicRoute": "Clients du secteur public : {channel}.",
   "@invoiceEInvoicePublicRoute": {
@@ -9559,6 +9567,10 @@
   "@invoiceMissingBuyerName": {
     "description": "#1916 invoice essentials: invoiceMissingBuyerName"
   },
+  "invoiceMissingBuyerRegion": "La région du client, pour un client dans le pays de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province aux États-Unis ou au Canada — à saisir dans l'adresse du client",
+  "@invoiceMissingBuyerRegion": {
+    "description": "#4105 a missing essential: the customer's region, for a customer in the seller's country"
+  },
   "invoiceMissingBuyerTaxId": "L'identifiant fiscal du client : le NIF d'un client professionnel en Espagne, le codice fiscale ou la partita IVA d'un client en Italie, le SIREN d'un client professionnel en France",
   "@invoiceMissingBuyerTaxId": {
     "description": "#2356: invoiceMissingBuyerTaxId"
@@ -9600,6 +9612,10 @@
   "@invoiceMissingSellerQstNumber": {
     "description": "#2361: invoiceMissingSellerQstNumber"
   },
+  "invoiceMissingSellerRegion": "La région de l'adresse de l'entreprise : la province en Italie, le județ en Roumanie, l'État ou la province d'un vendeur aux États-Unis ou au Canada — à saisir dans l'identité légale, sous « Adresse de facturation électronique »",
+  "@invoiceMissingSellerRegion": {
+    "description": "#4105 a missing essential: the seller's region, which the country's invoices require"
+  },
   "invoiceMissingSellerTaxNumber": "Le numéro de TVA ou le numéro fiscal de l'entreprise (le champ d'immatriculation porte la Steuernummer ou le NIF)",
   "@invoiceMissingSellerTaxNumber": {
     "description": "#2356: invoiceMissingSellerTaxNumber"
@@ -9633,6 +9649,16 @@
   "invoiceMonthBusinessFix": "Les informations de votre entreprise sont incomplètes : {missing}",
   "invoiceMonthCheckAgain": "Vérifier à nouveau",
   "invoiceMonthDone": "Terminé",
+  "invoiceMonthEInvoiceGapsLine": "Sa facture électronique aura besoin de : {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Compléter",
   "invoiceMonthHeld": "Attend une validation",
   "invoiceMonthIssue": "{count, plural, =0{Émettre les factures} one{Émettre 1 facture · {amount}} other{Émettre {count} factures · {amount}}}",
@@ -14271,6 +14297,16 @@
   "portalMessenger": "Messagerie du compte",
   "portalMoreDirectories": "Autres annuaires",
   "portalNoLongerPublished": "Ce lieu n’est plus publié.",
+  "portalOfferEdit": "Choisir les services publics",
+  "portalOfferInquiriesNo": "Vous ne prenez pas de demandes",
+  "portalOfferInquiriesYes": "Les visiteurs peuvent vous écrire",
+  "portalOfferKinds": "Type : {kinds}",
+  "portalOfferMinutes": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
+  "portalOfferNoServices": "Aucun service n’est encore public. Un service apparaît ici dès qu’il est actif et marqué public.",
+  "portalOfferTaxExcluded": "plus taxe",
+  "portalOfferTaxIncluded": "taxe comprise",
+  "portalOfferTaxNone": "sans taxe",
+  "portalOfferTitle": "Ce que la page dit de votre offre",
   "portalOpenMe": "Moi : mon compte et mes lieux",
   "portalOwner": "Propriétaire",
   "portalPerson": "Particulier",

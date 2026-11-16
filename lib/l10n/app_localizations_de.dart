@@ -15570,6 +15570,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Rechtliche Identität öffnen';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'Die E-Rechnung kann erst versendet werden, wenn dies ergänzt ist (die Rechnung kann trotzdem ausgestellt werden):';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Gültig, doch die strengen nationalen Profile wollen zusätzlich:';
 
@@ -16141,6 +16148,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMissingBuyerName => 'Der Name oder die Firma des Kunden';
 
   @override
+  String get invoiceMissingBuyerRegion =>
+      'Die Region des Kunden, für einen Kunden im Land des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz in den USA oder Kanada — in der Anschrift des Kunden eintragen';
+
+  @override
   String get invoiceMissingBuyerTaxId =>
       'Die Steuerkennung des Kunden: die NIF eines Geschäftskunden in Spanien, den Codice fiscale oder die Partita IVA eines Kunden in Italien, die SIREN eines Geschäftskunden in Frankreich';
 
@@ -16183,6 +16194,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get invoiceMissingSellerQstNumber =>
       'Die QST-Registrierungsnummer des Betriebs von Revenu Québec im Format 1234567890 TQ0001 in der rechtlichen Identität (die Rechnung erhebt QST)';
+
+  @override
+  String get invoiceMissingSellerRegion =>
+      'Die Region der Anschrift des Betriebs: die Provinz in Italien, der Kreis in Rumänien, der Bundesstaat oder die Provinz eines Verkäufers in den USA oder Kanada — in der rechtlichen Identität unter „E-Rechnungsadresse“ eintragen';
 
   @override
   String get invoiceMissingSellerTaxNumber =>
@@ -16240,6 +16255,11 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceMonthDone => 'Fertig';
+
+  @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Die E-Rechnung braucht noch: $what';
+  }
 
   @override
   String get invoiceMonthFix => 'Ergänzen';
@@ -24706,6 +24726,47 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get portalNoLongerPublished =>
       'Dieser Ort ist nicht mehr veröffentlicht.';
+
+  @override
+  String get portalOfferEdit => 'Öffentliche Dienste auswählen';
+
+  @override
+  String get portalOfferInquiriesNo => 'Sie nehmen keine Anfragen an';
+
+  @override
+  String get portalOfferInquiriesYes => 'Besucher können Ihnen schreiben';
+
+  @override
+  String portalOfferKinds(String kinds) {
+    return 'Art: $kinds';
+  }
+
+  @override
+  String portalOfferMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes Min.',
+      one: '$minutes Min.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalOfferNoServices =>
+      'Noch kein Dienst ist öffentlich. Ein Dienst erscheint hier, sobald er aktiv und als öffentlich markiert ist.';
+
+  @override
+  String get portalOfferTaxExcluded => 'zzgl. Steuer';
+
+  @override
+  String get portalOfferTaxIncluded => 'inkl. Steuer';
+
+  @override
+  String get portalOfferTaxNone => 'ohne Steuer';
+
+  @override
+  String get portalOfferTitle => 'Was die Seite über Ihr Angebot sagt';
 
   @override
   String get portalOpenMe => 'Ich: mein Konto und meine Orte';

@@ -26,9 +26,9 @@ const _framedByClass = {
   RouteClass.operator: _framedOperator,
   RouteClass.workspace: 0,
 };
-const _framedPublicEntry = 12;
-const _framedNativeAccount = 38;
-const _framedOperator = 2;
+const _framedPublicEntry = 10;
+const _framedNativeAccount = 37;
+const _framedOperator = 1;
 
 Future<Rect> _invoicesAt(WidgetTester tester, Size size) async {
   tester.view.physicalSize = size;
@@ -121,6 +121,18 @@ void main() {
         isFalse,
         reason: r.pattern,
       );
+    }
+  });
+
+  test('#4112: Privacy, the support bundle, a new instance and the task '
+      'recorder declare the reading measure', () {
+    for (final path in const [
+      '/privacy',
+      '/help/support-bundle',
+      '/server/new-instance',
+      '/task-recorder',
+    ]) {
+      expect(measureOf(path), PageMeasure.reading, reason: path);
     }
   });
 

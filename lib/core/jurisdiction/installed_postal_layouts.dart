@@ -3,6 +3,8 @@
 // #3649 -- the postal layouts this build installs: a static list, compiled in,
 // like the other capabilities. A country not listed is written with the
 // default layout.
+import 'dart:convert' show jsonEncode;
+
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 import 'package:deskilo_jurisdiction_ca/deskilo_jurisdiction_ca.dart';
 import 'package:deskilo_jurisdiction_ch/deskilo_jurisdiction_ch.dart';
@@ -13,6 +15,7 @@ import 'package:deskilo_jurisdiction_gb/deskilo_jurisdiction_gb.dart';
 import 'package:deskilo_jurisdiction_ie/deskilo_jurisdiction_ie.dart';
 import 'package:deskilo_jurisdiction_it/deskilo_jurisdiction_it.dart';
 import 'package:deskilo_jurisdiction_pl/deskilo_jurisdiction_pl.dart';
+import 'package:deskilo_jurisdiction_ro/deskilo_jurisdiction_ro.dart';
 import 'package:deskilo_jurisdiction_us/deskilo_jurisdiction_us.dart';
 import 'package:meta/meta.dart';
 
@@ -30,6 +33,7 @@ const List<PostalLayoutContribution> installedPostalLayouts = [
   IePostalLayout(),
   ItPostalLayout(),
   PlPostalLayout(),
+  RoPostalLayout(),
   UsPostalLayout(),
 ];
 
@@ -85,7 +89,9 @@ extension RegionOfLayout on PostalLayout {
     final c = regionCode(code);
     final field = region;
     if (c.isEmpty) {
-      return field != null && field.required ? RegionRefusal.missing : null;
+      return field != null && field.requiredInForm
+          ? RegionRefusal.missing
+          : null;
     }
     if (!_regionShape.hasMatch(c)) return RegionRefusal.notACode;
     if (field == null) return null;
@@ -108,3 +114,33 @@ final RegExp _regionShape = RegExp(r'^[A-Z0-9-]{1,10}$');
 
 String _cased(String value, bool upper) =>
     upper ? value.trim().toUpperCase() : value.trim();
+
+/// #4105 -- the server's copy of each country's region facts, generated from
+/// the installed layouts (`dart run tool/build_postal_region_rules_sql.dart`):
+/// `{"IT": {"form": true, "invoice": "everyParty"}, ...}`, keyed by country,
+/// sorted.
+/// A country whose addresses have no region is absent.
+@visibleForTesting
+String postalRegionRulesJson() {
+  final rules = <String, Map<String, Object>>{
+    for (final c in installedPostalLayouts)
+      if (c.layout.region case final region?)
+        c.descriptor.capabilityId.split('.').last: {
+          'form': region.requiredInForm,
+          'invoice': region.requiredOnInvoice.name,
+        },
+  };
+  final keys = rules.keys.toList()..sort();
+  return jsonEncode({for (final k in keys) k: rules[k]});
+}
+
+/// #4105 -- `public.postal_region_rules()`, the SQL a migration carries.
+String postalRegionRulesSql() {
+  const quote = r'$fn$';
+  return '''
+create or replace function public.postal_region_rules()
+returns jsonb language sql immutable set search_path = public as $quote
+  select '${postalRegionRulesJson()}'::jsonb
+$quote;
+revoke execute on function public.postal_region_rules() from public, anon, authenticated;''';
+}

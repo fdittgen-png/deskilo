@@ -435,6 +435,7 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
         const SizedBox(height: AppSpacing.sm),
         DropdownButtonFormField<String>(
           key: const ValueKey('instance-region'),
+          isExpanded: true,
           initialValue: _region,
           decoration: InputDecoration(
             labelText: l10n.instanceRegion,

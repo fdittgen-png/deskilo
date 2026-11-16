@@ -30,9 +30,11 @@ begin
           (um,'00000000-0000-0000-0000-000000000000','authenticated','authenticated',
            'member-' || lower(cc) || tag || '@eu2356.test','',now(),now(),now());
   insert into public.workspaces(name,country_code,currency_code,timezone,created_by,street,city,postal_code,
-                                vat_regime,vat_id,legal_id,feature_flags)
+                                vat_regime,vat_id,legal_id,feature_flags,invoice_legal)
    values ('EU 2356 ' || cc || tag, cc, currency, 'Europe/Brussels', uo, '1 Synthetic Street', 'Capital', '1000',
-           regime, vat_id, legal_id, '{"invoicing":true}')
+           regime, vat_id, legal_id, '{"invoicing":true}',
+           -- #4105: each address names its region, which Italy and Romania require
+           '{"subdivision": "B"}')
    returning id into ws;
   insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (ws,uo,true,true,'2026-01-01');
   insert into public.members(workspace_id,user_id,subscription_pct,joined_at,customer_capacity)
@@ -45,7 +47,7 @@ begin
   insert into public.fee_bands(workspace_id,from_pct,to_pct,fee_cents,overage_fee_cents) values (ws,0,100,3500,1000);
   update public.profiles set first_name='Synthetic',last_name='Customer',company='Customer Ltd',
          country_code=coalesce(buyer_country, cc),street='2 Synthetic Street',city='Capital',postal_code='1000',
-         legal_id=buyer_legal
+         legal_id=buyer_legal, subdivision='B'
    where id = um;
   insert into public.ledger_entries(workspace_id,member_id,kind,category,amount_cents,description,period,vat_percent)
    values (ws,mm,'charge','adjustment',1000,'Zero-rated supply','2026-09',0);

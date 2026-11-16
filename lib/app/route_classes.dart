@@ -134,7 +134,7 @@ const List<RouteRule> routeRules = [
   // #3235 — the demo entry: public, for a signed-in person too.
   RouteRule('/demo', RouteClass.publicEntry),
   RouteRule('/help', RouteClass.publicEntry),
-  RouteRule('/privacy', RouteClass.publicEntry),
+  RouteRule('/privacy', RouteClass.publicEntry, measure: PageMeasure.reading),
   // #4057 — the same two pages opened from a business's sidebar: a business's
   // own route, so the desk (sidebar, breadcrumb, the business's theme) stays
   // around it. `/privacy` and `/task-wizard` stay what they are for Me, the
@@ -143,12 +143,12 @@ const List<RouteRule> routeRules = [
   RouteRule('/business-task-wizard', RouteClass.workspace, place: 'drawer-task-wizard', measure: PageMeasure.work),
   RouteRule('/server', RouteClass.publicEntry),
   RouteRule(kSchemaUpdateRoute, RouteClass.publicEntry),
-  RouteRule('/server/new-instance', RouteClass.operator),
+  RouteRule('/server/new-instance', RouteClass.operator, measure: PageMeasure.reading),
   RouteRule('/consent', RouteClass.nativeAccount),
   RouteRule('/profiles', RouteClass.nativeAccount),
   RouteRule('/applications', RouteClass.nativeAccount),
   // #1865 — the account's own recordings on this device.
-  RouteRule('/task-recorder', RouteClass.nativeAccount),
+  RouteRule('/task-recorder', RouteClass.nativeAccount, measure: PageMeasure.reading),
   RouteRule('/task-wizard', RouteClass.nativeAccount),
   // #1872 — reads a file the person picks, on this device; no session.
   RouteRule('/task-workbench', RouteClass.publicEntry),
@@ -193,7 +193,7 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/repartition', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
   RouteRule('/money/settlement', RouteClass.workspace, namesRole: true, place: 'drawer-tab-${ShellBranch.money}', measure: PageMeasure.work),
   RouteRule('/account-activity/history', RouteClass.nativeAccount),
-  RouteRule('/help/support-bundle', RouteClass.publicEntry),
+  RouteRule('/help/support-bundle', RouteClass.publicEntry, measure: PageMeasure.reading),
   RouteRule('/server/new-instance/first-start', RouteClass.operator),
   RouteRule('/onboarding', RouteClass.nativeAccount),
   RouteRule('/scan-join', RouteClass.nativeAccount),

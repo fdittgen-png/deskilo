@@ -12,6 +12,7 @@
 // asked of that source alone, a full page says it may have more, and a
 // failed page throws instead of answering an empty one.
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/public_network/public_network_operations.dart';
@@ -49,6 +50,15 @@ void main() {
   late Map<String, List<Map<String, Object?>>> cardsByOrigin;
   late List<Map<String, Object?>> sources;
   late Set<String> failing;
+  // #3553 — what each origin's descriptor answers: a body, or the captured
+  // answer of a server from before negotiation (no entry).
+  late Map<String, Object?> descriptors;
+
+  Map<String, dynamic> fixture(String name) =>
+      jsonDecode(
+            File('test/fixtures/public_network/$name.json').readAsStringSync(),
+          )
+          as Map<String, dynamic>;
 
   http.Client transport() => MockClient((request) async {
     seen.add(request);
@@ -58,7 +68,18 @@ void main() {
       return http.Response('unavailable', 503, request: request);
     }
     Object body;
-    if (path.endsWith('/public_directory_sources')) {
+    if (path.endsWith('/rpc/public_network_descriptor')) {
+      final d = descriptors[origin];
+      if (d == null) {
+        final legacy = fixture('legacy_server_no_descriptor');
+        return http.Response(
+          jsonEncode(legacy['body']),
+          legacy['status'] as int,
+          request: request,
+        );
+      }
+      body = d;
+    } else if (path.endsWith('/public_directory_sources')) {
       body = sources;
     } else if (path.endsWith('/public_workspace_cards')) {
       final id = request.url.queryParameters['workspace_id'];
@@ -86,6 +107,7 @@ void main() {
   setUp(() {
     seen = [];
     failing = {};
+    descriptors = {};
     sources = [
       {'origin': remote, 'publishable_key': remoteKey},
     ];
@@ -302,5 +324,74 @@ void main() {
     const preview = PublicWorkspace(idA, '', '', {'name': 'Mine'});
     expect(await repository().detail(preview), same(preview));
     expect(seen, isEmpty);
+  });
+
+  // #3553 (1b) — a kind is asked only of a source that says it can narrow
+  // by kind; another is reported as not covered, never as no result.
+  group('the kind filter', () {
+    Map<String, dynamic> descriptor({required bool kindFilter}) {
+      final d = Map<String, dynamic>.from(
+        fixture('descriptor_current')['descriptor'] as Map,
+      );
+      d['capabilities'] = [if (kindFilter) 'kind_filter', 'operation_header'];
+      return d;
+    }
+
+    Iterable<http.BaseRequest> cardReads() =>
+        seen.where((r) => r.url.path.endsWith('/public_workspace_cards'));
+
+    test('a source that advertises it is asked for that kind only', () async {
+      descriptors[remote] = descriptor(kindFilter: true);
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        kind: 'practice',
+      );
+      expect(page.uncovered, isFalse);
+      expect(
+        cardReads().last.url.queryParameters['document->kinds'],
+        'cs.["practice"]',
+      );
+    });
+
+    test('a source that does not is not asked, and is not covered', () async {
+      descriptors[remote] = descriptor(kindFilter: false);
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        kind: 'practice',
+      );
+      expect(page.uncovered, isTrue);
+      expect(page.cards, isEmpty);
+      expect(page.more, isFalse);
+      expect(cardReads(), isEmpty, reason: 'its unfiltered cards are not read');
+    });
+
+    test('a server from before negotiation is not covered either', () async {
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        kind: 'practice',
+      );
+      expect(page.uncovered, isTrue);
+      expect(cardReads(), isEmpty);
+    });
+
+    test('without a kind nothing is negotiated', () async {
+      final page = await repository().workspaces(remoteSource, '');
+      expect(page.uncovered, isFalse);
+      expect(
+        seen.where((r) => r.url.path.endsWith('/public_network_descriptor')),
+        isEmpty,
+      );
+    });
+
+    test('a listing holds an uncovered source apart from its results', () {
+      final listing = const SourceListing(remoteSource).loaded(
+        const SourceCardsPage([], uncovered: true, more: false),
+      );
+      expect(listing.uncovered, isTrue);
+      expect(DiscoveryResults(sources: [listing]).uncovered, [remote]);
+    });
   });
 }

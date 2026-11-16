@@ -34,7 +34,7 @@ begin
   insert into public.workspaces(name,country_code,currency_code,timezone,created_by,street,city,postal_code,
                                 vat_regime,feature_flags,invoice_legal)
    values ('US 2362j ' || tag, 'US', 'USD', 'America/New_York', uo, '1 Broadway', 'New York', postal,
-           'not_subject', '{"invoicing":true,"salesTax":true}', '{}')
+           'not_subject', '{"invoicing":true,"salesTax":true}', '{"subdivision": "NY"}')
    returning id into ws;
   insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (ws,uo,true,true,'2026-01-01');
   perform set_config('request.jwt.claims', json_build_object('sub',uo,'role','authenticated')::text, true);

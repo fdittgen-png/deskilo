@@ -24743,6 +24743,18 @@ abstract class AppLocalizations {
   /// **'{channel} only accepts {format}: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.'**
   String invoiceEInvoiceFormatMismatch(String channel, String format);
 
+  /// #4105 the link to where the space’s own facts are entered
+  ///
+  /// In en, this message translates to:
+  /// **'Open the legal identity'**
+  String get invoiceEInvoiceGapsOpenIdentity;
+
+  /// #4105 before issuing: what the configured channel will still need
+  ///
+  /// In en, this message translates to:
+  /// **'The e-invoice cannot be sent until these are added (the invoice can still be issued):'**
+  String get invoiceEInvoiceGapsTitle;
+
   /// E-invoice sheet: header above the non-fatal gaps
   ///
   /// In en, this message translates to:
@@ -25643,6 +25655,12 @@ abstract class AppLocalizations {
   /// **'The customer\'s name or company'**
   String get invoiceMissingBuyerName;
 
+  /// #4105 a missing essential: the customer's region, for a customer in the seller's country
+  ///
+  /// In en, this message translates to:
+  /// **'The customer\'s region, for a customer in the business\'s own country: the province in Italy, the county in Romania, the state or province in the United States or Canada — enter it in the customer\'s address'**
+  String get invoiceMissingBuyerRegion;
+
   /// #2356: invoiceMissingBuyerTaxId
   ///
   /// In en, this message translates to:
@@ -25708,6 +25726,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The business\'s QST registration number from Revenu Québec, as 1234567890 TQ0001, in the legal identity (the invoice charges the QST)'**
   String get invoiceMissingSellerQstNumber;
+
+  /// #4105 a missing essential: the seller's region, which the country's invoices require
+  ///
+  /// In en, this message translates to:
+  /// **'The region of the business\'s address: the province in Italy, the county in Romania, the state or province of a seller in the United States or Canada — enter it in the legal identity, under “E-invoicing address”'**
+  String get invoiceMissingSellerRegion;
 
   /// #2356: invoiceMissingSellerTaxNumber
   ///
@@ -25798,6 +25822,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Done'**
   String get invoiceMonthDone;
+
+  /// #4105 the month review: what one customer’s e-invoice will still need (a warning)
+  ///
+  /// In en, this message translates to:
+  /// **'Its e-invoice will need: {what}'**
+  String invoiceMonthEInvoiceGapsLine(String what);
 
   /// #3587 R1-e: opens the place where a missing detail is completed
   ///
@@ -39211,6 +39241,66 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This place is no longer published.'**
   String get portalNoLongerPublished;
+
+  /// #3553 — opens Services, where a service is marked public.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the public services'**
+  String get portalOfferEdit;
+
+  /// #3553 — the page says the business takes no inquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'You take no inquiries'**
+  String get portalOfferInquiriesNo;
+
+  /// #3553 — the page says the business takes inquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitors can write to you'**
+  String get portalOfferInquiriesYes;
+
+  /// #3553 — the business's kinds as the page publishes them, the primary first.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind: {kinds}'**
+  String portalOfferKinds(String kinds);
+
+  /// #3553 — a published service's duration.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, one{{minutes} min} other{{minutes} min}}'**
+  String portalOfferMinutes(int minutes);
+
+  /// #3553 — no service is published yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No service is public yet. A service appears here once it is active and marked public.'**
+  String get portalOfferNoServices;
+
+  /// #3553 — a tax is added to the listed price at the sale.
+  ///
+  /// In en, this message translates to:
+  /// **'plus tax'**
+  String get portalOfferTaxExcluded;
+
+  /// #3553 — the listed price contains the tax.
+  ///
+  /// In en, this message translates to:
+  /// **'tax included'**
+  String get portalOfferTaxIncluded;
+
+  /// #3553 — no tax applies to the listed price.
+  ///
+  /// In en, this message translates to:
+  /// **'no tax'**
+  String get portalOfferTaxNone;
+
+  /// #3553 — the public page editor: the read-only preview of the kinds and public services the page publishes.
+  ///
+  /// In en, this message translates to:
+  /// **'What the page says you offer'**
+  String get portalOfferTitle;
 
   /// Menu item on the account menu (globe) that opens the Me layer.
   ///

@@ -26,19 +26,14 @@ import '../../domain/workspace_permission.dart';
 import '../../providers/business_kind_providers.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/workspace_providers.dart';
+import '../business_kind_names.dart';
 import '../feature_names.dart';
 import 'feature_maturity_badge.dart';
 
 /// The name of the kind [code] (the code itself for a kind this app does
-/// not know yet).
-String _businessKindName(AppLocalizations l10n, String code) => switch (code) {
-  'coworking' => l10n.businessKindNameCoworking,
-  'studio' => l10n.businessKindNameStudio,
-  'practice' => l10n.businessKindNamePractice,
-  'salon' => l10n.businessKindNameSalon,
-  'service' => l10n.businessKindNameService,
-  _ => code,
-};
+/// not know yet: the owner chooses among codes, a card never shows one).
+String _businessKindName(AppLocalizations l10n, String code) =>
+    businessKindLabel(l10n, code) ?? code;
 
 String _kindDescription(AppLocalizations l10n, String code) => switch (code) {
   'coworking' => l10n.businessKindDescCoworking,
