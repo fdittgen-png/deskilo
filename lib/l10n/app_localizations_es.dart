@@ -283,7 +283,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get accountingJournalsDeliveries =>
-      'Los envíos a un sistema contable conectado siguen usando los códigos estándar.';
+      'Los envíos a Pennylane y Business Central también usan estos códigos; el diario debe existir allí con el mismo código.';
 
   @override
   String get accountingJournalsIntro =>
@@ -14505,6 +14505,24 @@ class AppLocalizationsEs extends AppLocalizations {
   String get instanceDoctorAllHealthy => 'Todo lo comprobado está sano.';
 
   @override
+  String instanceDoctorAppUrlForeignDetail(String functions) {
+    return '$functions\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlForeignTitle =>
+      'La dirección de la app de las funciones no es la dirección web de esta instancia';
+
+  @override
+  String instanceDoctorAppUrlMissingDetail(String functions) {
+    return '$functions\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlMissingTitle =>
+      'Las funciones que enlazan de vuelta a la app no tienen dirección de la app';
+
+  @override
   String get instanceDoctorAttention => 'Requiere atención';
 
   @override
@@ -14658,6 +14676,10 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get instanceDoctorPolicyDriftSkippedTitle =>
       'Desviación de políticas no comprobada';
+
+  @override
+  String get instanceDoctorProbeAppUrl =>
+      'Dirección de la app de las funciones';
 
   @override
   String get instanceDoctorProbeAuth => 'Configuración de autenticación';

@@ -225,7 +225,9 @@ class _NewInstanceScreenState extends ConsumerState<NewInstanceScreen> {
     await _run('configure auth', () async {
       await _builder.recordOwnerClaim(ref, _ownerEmail.text);
       await _builder.declareNetwork(ref, _network.choice, probe: this.ref.read(personalHomeProbeProvider));
-      await _builder.configureAuth(ref, authPatch: instanceAuthPatchForRuntime());
+      final signIn = instanceAuthPatchForRuntime();
+      await _builder.configureAuth(ref, authPatch: signIn);
+      await _builder.configureAppUrl(ref, authPatch: signIn);
       final endpoint = await _builder.endpointOf(ref);
       setState(() {
         _signInConfigured = true;

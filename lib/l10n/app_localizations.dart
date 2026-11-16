@@ -581,7 +581,7 @@ abstract class AppLocalizations {
   /// #3470 business journals
   ///
   /// In en, this message translates to:
-  /// **'Deliveries to a connected accounting system still use the standard codes.'**
+  /// **'Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.'**
   String get accountingJournalsDeliveries;
 
   /// #3470 business journals
@@ -23321,6 +23321,30 @@ abstract class AppLocalizations {
   /// **'Everything checked is healthy.'**
   String get instanceDoctorAllHealthy;
 
+  /// #3916 Detail: {functions} names the functions; the fix command stays as written.
+  ///
+  /// In en, this message translates to:
+  /// **'{functions}\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>'**
+  String instanceDoctorAppUrlForeignDetail(String functions);
+
+  /// #3916 Doctor alarm: DESKILO_APP_URL is not the instance's web base.
+  ///
+  /// In en, this message translates to:
+  /// **'The app address of the functions is not this instance\'s web base'**
+  String get instanceDoctorAppUrlForeignTitle;
+
+  /// #3916 Detail: {functions} names the functions; the fix command stays as written.
+  ///
+  /// In en, this message translates to:
+  /// **'{functions}\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>'**
+  String instanceDoctorAppUrlMissingDetail(String functions);
+
+  /// #3916 Doctor warning: a deployed function that links back to the app has no DESKILO_APP_URL.
+  ///
+  /// In en, this message translates to:
+  /// **'The functions that link back to the app have no app address'**
+  String get instanceDoctorAppUrlMissingTitle;
+
   /// #1308 instance wizard doctor and token
   ///
   /// In en, this message translates to:
@@ -23470,6 +23494,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Policy drift not checked'**
   String get instanceDoctorPolicyDriftSkippedTitle;
+
+  /// #3916 Name of the doctor question about the app address the functions link back to.
+  ///
+  /// In en, this message translates to:
+  /// **'App address of the functions'**
+  String get instanceDoctorProbeAppUrl;
 
   /// #3489 Doctor probe name: auth configuration.
   ///

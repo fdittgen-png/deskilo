@@ -107,7 +107,6 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
-import 'package:deskilo/features/money/domain/invoice_issue_draft.dart';
 import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart'
@@ -196,6 +195,7 @@ import 'fake_vies_repository.dart';
 import 'in_memory_default_level_store.dart';
 import 'in_memory_fakes.dart';
 import 'memory_recorder_log_backend.dart';
+import 'readiness_only_issue_drafts.dart';
 import 'test_clock.dart';
 import 'test_workspace_context.dart';
 import 'unavailable_kpi_repository.dart';

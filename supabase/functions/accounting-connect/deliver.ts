@@ -45,6 +45,7 @@ import {
   type AdapterContext,
   balanced,
   deliveryIds,
+  journalCodesOf,
   type PostingAdapter,
   type PostingParty,
   postingSha256,
@@ -169,6 +170,24 @@ async function frozenTaxOf(
     out[row.id] = breakdown;
   }
   return documentIds.every((id) => id in out) ? out : null;
+}
+
+/** #4003 — the business's journal codes (`workspaces.accounting_journals`),
+ * as the caller reads the one column; undefined when the business set none
+ * (the standard codes apply), null when the row cannot be read. */
+async function journalsOf(
+  caller: CallerDb,
+  workspaceId: string,
+): Promise<{ codes: Record<string, string> | undefined } | null> {
+  const { data, error } = await caller.from("workspaces").select(
+    "accounting_journals",
+  ).in("id", [workspaceId]);
+  if (error || !Array.isArray(data) || data.length !== 1) return null;
+  return {
+    codes: journalCodesOf(
+      (data[0] as Record<string, unknown>).accounting_journals,
+    ),
+  };
 }
 
 /** The longest an Edge function runs on the hosted platform (its
@@ -365,9 +384,12 @@ export async function deliverPeriod(
     ],
   );
   if (!credited) return json({ error: "not allowed to read the books" }, 403);
-  const adapter = adapterOf(
-    adapterContext(deps, held.target_id, token, held.remote_tenant_id),
-  );
+  const journals = await journalsOf(caller, workspaceId);
+  if (!journals) return json({ error: "not allowed to read the books" }, 403);
+  const adapter = adapterOf({
+    ...adapterContext(deps, held.target_id, token, held.remote_tenant_id),
+    journals: journals.codes,
+  });
   // #2371 — a target that checks a sale's tax against what was frozen at
   // issue is handed it; a sale that cannot be read delivers nothing.
   if (adapter.needsFrozenTax) {

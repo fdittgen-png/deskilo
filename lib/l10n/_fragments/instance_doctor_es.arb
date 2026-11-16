@@ -47,5 +47,10 @@
   "instanceDoctorAuthCodesLongTitle": "Los códigos de inicio de sesión duran más de una hora",
   "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Las contraseñas pueden tener menos de {length} carácter} other{Las contraseñas pueden tener menos de {length} caracteres}}",
   "instanceDoctorAuthReauthOffTitle": "Un cambio de contraseña no pide volver a iniciar sesión",
-  "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}"
+  "instanceDoctorAuthFixDetail": "valor  {value}\n        Solución: {command}",
+  "instanceDoctorProbeAppUrl": "Dirección de la app de las funciones",
+  "instanceDoctorAppUrlMissingTitle": "Las funciones que enlazan de vuelta a la app no tienen dirección de la app",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>",
+  "instanceDoctorAppUrlForeignTitle": "La dirección de la app de las funciones no es la dirección web de esta instancia",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>"
 }

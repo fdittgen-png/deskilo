@@ -33,11 +33,17 @@ String _probeEnglish(DoctorProbe probe) => switch (probe) {
   DoctorProbe.hardening => 'Hardening',
   DoctorProbe.roles => 'Installation roles',
   DoctorProbe.push => 'Push configuration',
+  DoctorProbe.appUrl => 'App address of the functions',
 };
 
 const String _install =
     '        Fix: dart run tool/instance.dart install --ref <ref>';
 const String _pad = '\n        ';
+
+/// #3916 -- the fix for the app address of the functions.
+const String _appUrlFix =
+    '${_pad}Fix: dart run tool/instance.dart auth --ref <ref> '
+    '--site-url <web base of the app>';
 
 /// #3904 — a sign-in warning's detail: the value as reported, and the fix.
 String _authFix(List<Object> facts) =>
@@ -140,6 +146,14 @@ String _authFix(List<Object> facts) =>
       detail:
           '${s(0)}${_pad}Fix: dart run tool/instance.dart push --ref <ref>, '
           'or set push_config to this project.',
+    ),
+    DoctorWords.appUrlMissing => (
+      title: 'The functions that link back to the app have no app address',
+      detail: '${s(0)}$_appUrlFix',
+    ),
+    DoctorWords.appUrlForeign => (
+      title: "The app address of the functions is not this instance's web base",
+      detail: '${s(0)}$_appUrlFix',
     ),
     DoctorWords.authBaseline => (
       title: 'Sign-in baseline',

@@ -11,7 +11,7 @@
   "accountingJournalLabelRequired": "Introduzca una descripción.",
   "accountingJournalCharacter": "Sin saltos de línea, tabuladores ni | aquí: las exportaciones separan sus campos con ellos.",
   "accountingJournalDuplicate": "Otro diario ya tiene este código.",
-  "accountingJournalsDeliveries": "Los envíos a un sistema contable conectado siguen usando los códigos estándar.",
+  "accountingJournalsDeliveries": "Los envíos a Pennylane y Business Central también usan estos códigos; el diario debe existir allí con el mismo código.",
   "accountingJournalsRenumber": "Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.",
   "accountingJournalsStandard": "Usar los códigos estándar",
   "accountingJournalsNotAllowed": "Solo un propietario define los diarios contables.",

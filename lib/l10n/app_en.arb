@@ -365,7 +365,7 @@
   "@accountingJournalSales": {
     "description": "#3470 business journals"
   },
-  "accountingJournalsDeliveries": "Deliveries to a connected accounting system still use the standard codes.",
+  "accountingJournalsDeliveries": "Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.",
   "@accountingJournalsDeliveries": {
     "description": "#3470 business journals"
   },
@@ -18940,6 +18940,32 @@
   "@instanceDoctorAllHealthy": {
     "description": "#3489 Instance doctor report footer when nothing is wrong."
   },
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>",
+  "@instanceDoctorAppUrlForeignDetail": {
+    "description": "#3916 Detail: {functions} names the functions; the fix command stays as written.",
+    "placeholders": {
+      "functions": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorAppUrlForeignTitle": "The app address of the functions is not this instance's web base",
+  "@instanceDoctorAppUrlForeignTitle": {
+    "description": "#3916 Doctor alarm: DESKILO_APP_URL is not the instance's web base."
+  },
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>",
+  "@instanceDoctorAppUrlMissingDetail": {
+    "description": "#3916 Detail: {functions} names the functions; the fix command stays as written.",
+    "placeholders": {
+      "functions": {
+        "type": "String"
+      }
+    }
+  },
+  "instanceDoctorAppUrlMissingTitle": "The functions that link back to the app have no app address",
+  "@instanceDoctorAppUrlMissingTitle": {
+    "description": "#3916 Doctor warning: a deployed function that links back to the app has no DESKILO_APP_URL."
+  },
   "instanceDoctorAttention": "Attention required",
   "@instanceDoctorAttention": {
     "description": "#1308 instance wizard doctor and token"
@@ -19105,6 +19131,10 @@
   "instanceDoctorPolicyDriftSkippedTitle": "Policy drift not checked",
   "@instanceDoctorPolicyDriftSkippedTitle": {
     "description": "#3489 Policy drift could not be judged."
+  },
+  "instanceDoctorProbeAppUrl": "App address of the functions",
+  "@instanceDoctorProbeAppUrl": {
+    "description": "#3916 Name of the doctor question about the app address the functions link back to."
   },
   "instanceDoctorProbeAuth": "Auth configuration",
   "@instanceDoctorProbeAuth": {

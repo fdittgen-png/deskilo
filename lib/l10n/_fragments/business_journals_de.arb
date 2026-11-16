@@ -11,7 +11,7 @@
   "accountingJournalLabelRequired": "Geben Sie eine Bezeichnung ein.",
   "accountingJournalCharacter": "Kein Zeilenumbruch, Tabulator oder | hier: Die Exporte trennen ihre Felder damit.",
   "accountingJournalDuplicate": "Ein anderes Journal hat diesen Code bereits.",
-  "accountingJournalsDeliveries": "Übermittlungen an ein verbundenes Buchhaltungssystem verwenden weiterhin die Standardcodes.",
+  "accountingJournalsDeliveries": "Übermittlungen an Pennylane und Business Central verwenden diese Codes ebenfalls; das Journal muss dort unter demselben Code bestehen.",
   "accountingJournalsRenumber": "Ein geänderter Code ändert auch die Buchungsnummern eines erneut exportierten Zeitraums.",
   "accountingJournalsStandard": "Standardcodes verwenden",
   "accountingJournalsNotAllowed": "Nur ein Inhaber legt die Buchungsjournale fest.",

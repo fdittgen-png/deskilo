@@ -5925,7 +5925,7 @@ Il software del suo commercialista conosce i suoi registri con codici propri, e 
 - Ogni esportazione contabile dell'app li usa: il FEC, il giornale generico, i libri mastri SAF-T e i libri stampati.
 - Un codice non ha a capo, tabulazioni né |, e due registri non condividono mai un codice; il modulo dice quale campo correggere.
 - Un codice cambiato cambia anche i numeri di registrazione di un periodo esportato di nuovo.
-- Gli invii a un sistema contabile collegato usano ancora i codici standard.
+- Gli invii a Pennylane e Business Central usano anche questi codici; il giornale deve esistere lì con lo stesso codice.
 
 **Vedi anche:** [Esportazioni contabili](help:user.invoicing.accounting-export)
 
@@ -8355,7 +8355,7 @@ Le notifiche push non arrivano con l'app da sole. Se gestisce il Suo spazio sull
 1. Crei un progetto Firebase e compili l'app con esso. Senza questo passaggio l'app resta con le sole notifiche locali e un membro vede **Questa versione non ha notifiche push**. La versione preparata per F-Droid non ha affatto le push ([stato F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. Per iPhone e Mac, aggiunga una chiave push Apple al progetto Firebase.
 3. Memorizzi la chiave dell'account di servizio Firebase come segreto del server e distribuisca la funzione push.
-4. Sulla Sua installazione, il costruttore imposta la riga `push_config` del database sull'URL e sulla chiave della Sua funzione push, e il doctor la verifica. `dart run tool/instance.dart push --ref <ref>` la imposta di nuovo.
+4. Sulla Sua installazione, il costruttore imposta la riga `push_config` del database sull'URL e sulla chiave della Sua funzione push, e il doctor la verifica. `dart run tool/instance.dart push --ref <ref>` la imposta di nuovo. Il costruttore imposta anche, dove le funzioni sono distribuite, l'impostazione di funzione `DESKILO_APP_URL` sull'indirizzo web della Sua app, così che le funzioni che rimandano all'app (l'interfaccia dell'assistente e l'accesso contabile) possano costruire i loro link; il doctor la segnala se manca o porta un altro indirizzo, e `dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>` la imposta di nuovo.
 5. La provi con due account, come descritto nel [piano di prova](help:setup.notify.test).
 
 **Da sapere**
