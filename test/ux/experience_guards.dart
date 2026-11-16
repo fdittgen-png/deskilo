@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-//
 // #3587 R1-a -- the experience guards as one reusable check, read from the
 // Me guards (test/ux/me_experience_test.dart, #3545): after a surface is
 // pumped, [guardProblems] names every rule it breaks -- an overflow or an
@@ -19,6 +18,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 import 'package:flutter_test/flutter_test.dart';
+part 'experience_guard_details.dart';
 
 /// The widths the guards walk: two phones, a tablet held upright (#4022) and a
 /// wide window.
@@ -405,7 +405,7 @@ Set<String> deskGuardProblems(
       problems.add(row ? 'row under 36 px' : 'target under 48 dp');
       note('target ${node.rect.size} at ${node.rect.topLeft}: ${node.label}');
     }
-    if (!node.named) problems.add('unnamed control');
+    if (!node.named) problems.add(unnamedControl(tester, node.rect, note));
   }
   return problems;
 }
