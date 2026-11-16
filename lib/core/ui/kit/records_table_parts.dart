@@ -461,10 +461,9 @@ class _SelectShown extends Intent {
 }
 
 /// What a table says when its rows could not be read, with the way to retry.
-/// #4097 — a refusal (the server's refusal, told by its type and code, not
-/// by its message) says that the person has no access, in the words of the
-/// shared read state; "Try again" stays, as on every read (#3061): the
-/// access may just have been given.
+/// #4097 — a refusal (told by the error's type and code, not its message)
+/// says the person has no access, in the shared read state's words; "Try
+/// again" stays, as on every read (#3061): access may just have been given.
 class RecordsFailed extends StatelessWidget {
   const RecordsFailed({required this.onRetry, this.error, super.key});
 

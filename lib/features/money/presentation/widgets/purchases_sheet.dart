@@ -110,12 +110,9 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    // #4097 — the read itself, so a failed or refused read is said, and
-    // "none yet" only follows a read that answered.
-    final read = widget.supplierId == null
-        ? ref.watch(purchasesProvider(workspaceId))
-        : null;
+    final read = widget.supplierId == null ? ref.watch(purchasesProvider(workspaceId)) : null;
     final purchases = read?.value ?? const <PurchaseSummary>[]; // empty-ok: drawn only once the read answered
+    final standIn = read == null ? null : ReadsAnswer.of([read]).standIn(onRetry: () => ref.invalidate(purchasesProvider(workspaceId))); // #4097 — failed, refused or loading: said, never "none yet"
     return SheetShell(
       title: l10n.purchasesTitle,
       children: [
@@ -174,15 +171,7 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
             label: Text(l10n.purchaseReceiptAdd),
           ),
           const SizedBox(height: AppSpacing.lg),
-          if (read != null && !read.hasValue)
-            if (read.hasError && !read.isLoading)
-              ReadFailureBanner(
-                error: read.error!,
-                onRetry: () => ref.invalidate(purchasesProvider(workspaceId)),
-              )
-            else
-              const LoadingView()
-          else ...[
+          if (standIn != null) standIn else ...[
             if (purchases.isEmpty) Text(l10n.purchasesEmpty),
             ..._documents(context, purchases),
           ],
