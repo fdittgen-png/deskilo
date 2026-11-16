@@ -38,6 +38,7 @@ class Supplier {
     this.postalCode = '',
     this.city = '',
     this.countryCode = '',
+    this.subdivision = '',
     this.contact = '',
     this.status = SupplierStatus.active,
     this.bankRevision = 0,
@@ -56,6 +57,7 @@ class Supplier {
       postalCode: r.stringOr('postal_code'),
       city: r.stringOr('city'),
       countryCode: r.stringOr('country_code'),
+      subdivision: r.stringOr('subdivision'),
       contact: r.stringOr('contact'),
       status: SupplierStatus.of(r.stringOrNull('status')),
       bankRevision: r.intOrNull('bank_revision') ?? 0,
@@ -80,6 +82,9 @@ class Supplier {
   final String postalCode;
   final String city;
   final String countryCode;
+
+  /// #3649 -- the region of the address, as its code.
+  final String subdivision;
   final String contact;
   final SupplierStatus status;
   final int bankRevision;
@@ -101,6 +106,7 @@ class SupplierDraft {
     this.postalCode = '',
     this.city = '',
     this.countryCode = '',
+    this.subdivision = '',
     this.contact = '',
   });
 
@@ -114,6 +120,7 @@ class SupplierDraft {
     postalCode: s.postalCode,
     city: s.city,
     countryCode: s.countryCode,
+    subdivision: s.subdivision,
     contact: s.contact,
   );
 
@@ -126,6 +133,9 @@ class SupplierDraft {
   final String postalCode;
   final String city;
   final String countryCode;
+
+  /// #3649 -- the region of the address, as its code.
+  final String subdivision;
   final String contact;
 }
 

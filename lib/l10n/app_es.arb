@@ -5235,6 +5235,10 @@
   "@eInvoiceChannelGapBuyerReference": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapBuyerSubdivision": "la región de la dirección del cliente (BT-54)",
+  "@eInvoiceChannelGapBuyerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the customer’s address"
+  },
   "eInvoiceChannelGapBuyerTaxId": "el NIF-IVA o el código fiscal del cliente",
   "@eInvoiceChannelGapBuyerTaxId": {
     "description": "#2358 channel gap"
@@ -5255,12 +5259,12 @@
   "@eInvoiceChannelGapSellerEndpoint": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapSellerSubdivision": "la región de la dirección del espacio (BT-39) en su identidad legal",
+  "@eInvoiceChannelGapSellerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the space’s address"
+  },
   "eInvoiceChannelGapSellerVatId": "el NIF-IVA del espacio",
   "@eInvoiceChannelGapSellerVatId": {
-    "description": "#2358 channel gap"
-  },
-  "eInvoiceChannelGapSubdivision": "el distrito (județ) de cada dirección rumana",
-  "@eInvoiceChannelGapSubdivision": {
     "description": "#2358 channel gap"
   },
   "eInvoiceChannelGapsTitle": "Antes de enviar por {channel}, añada:",

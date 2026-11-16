@@ -142,7 +142,11 @@ void main() {
     test('CIUS-RO needs the county of a Romanian address only', () {
       const ro = InvoiceParty(name: 'X', country: 'RO');
       expect(channelGaps(EInvoiceFormat.ciusRo, seller: ro, buyer: _buyer), [
-        ChannelGap.subdivision,
+        ChannelGap.sellerSubdivision,
+      ]);
+      // #3649 -- the reason names whose region is missing.
+      expect(channelGaps(EInvoiceFormat.ciusRo, seller: _seller, buyer: ro), [
+        ChannelGap.buyerSubdivision,
       ]);
       expect(
         channelGaps(
@@ -164,6 +168,29 @@ void main() {
       expect(channelGaps(EInvoiceFormat.ksefFa3, seller: bare, buyer: bare), [
         ChannelGap.sellerVatId,
       ]);
+    });
+
+    // #3649 -- FatturaPA writes the province of an Italian address: one that
+    // has none is refused before sending, never written empty or guessed.
+    test('FatturaPA needs the province of each Italian address', () {
+      const it = InvoiceParty(
+        name: 'X',
+        country: 'IT',
+        vatId: 'IT01234567890',
+      );
+      expect(channelGaps(EInvoiceFormat.fatturaPa, seller: it, buyer: it), [
+        ChannelGap.sellerSubdivision,
+        ChannelGap.buyerSubdivision,
+      ]);
+      expect(
+        channelGaps(
+          EInvoiceFormat.fatturaPa,
+          seller: it.copyWith(subdivision: 'MI'),
+          buyer: it.copyWith(subdivision: 'TO', country: 'FR'),
+        ),
+        isEmpty,
+        reason: 'a foreign customer has no Italian province',
+      );
     });
 
     test('the download formats need nothing beyond the norm', () {

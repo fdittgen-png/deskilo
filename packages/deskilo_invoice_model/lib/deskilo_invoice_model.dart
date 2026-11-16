@@ -23,6 +23,7 @@ export 'src/payment_reference_rules.dart';
 export 'src/payment_terms.dart';
 export 'src/place_of_supply.dart';
 export 'src/report_strings.dart';
+export 'src/subdivision.dart';
 export 'src/supply_class.dart';
 export 'src/swiss_qr_bill.dart';
 export 'src/vat_compliance.dart';

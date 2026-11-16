@@ -135,6 +135,7 @@ void main() {
       UblProfile.ciusRo.customizationId,
     ]);
     expect(ro.findAllElements('cbc:ProfileID'), isEmpty);
-    expect(_texts(ro, 'cbc:CountrySubentity'), ['BE']);
+    // #3649 -- the whole ISO 3166-2 code, from the stored part.
+    expect(_texts(ro, 'cbc:CountrySubentity'), ['DE-BE']);
   });
 }

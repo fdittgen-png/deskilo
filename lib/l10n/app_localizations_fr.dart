@@ -8535,6 +8535,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'une référence acheteur ou un numéro de commande';
 
   @override
+  String get eInvoiceChannelGapBuyerSubdivision =>
+      'la région de l’adresse du client (BT-54)';
+
+  @override
   String get eInvoiceChannelGapBuyerTaxId =>
       'le numéro de TVA ou le code fiscal du client';
 
@@ -8555,11 +8559,11 @@ class AppLocalizationsFr extends AppLocalizations {
       'l’adresse électronique de l’espace (BT-34) dans son identité légale';
 
   @override
-  String get eInvoiceChannelGapSellerVatId => 'le numéro de TVA de l’espace';
+  String get eInvoiceChannelGapSellerSubdivision =>
+      'la région de l’adresse de l’espace (BT-39) dans son identité légale';
 
   @override
-  String get eInvoiceChannelGapSubdivision =>
-      'le județ de chaque adresse roumaine';
+  String get eInvoiceChannelGapSellerVatId => 'le numéro de TVA de l’espace';
 
   @override
   String eInvoiceChannelGapsTitle(String channel) {

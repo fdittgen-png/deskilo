@@ -6,6 +6,7 @@ import 'e_invoice_totals.dart';
 import 'einvoice_format.dart';
 import 'einvoice_input.dart';
 import 'invoice.dart';
+import 'subdivision.dart';
 import 'swiss_qr_bill.dart';
 import 'vat_rate.dart';
 import 'vat_regime.dart';
@@ -222,9 +223,9 @@ class _UblWriter {
       if (p.city.isNotEmpty) cbc('CityName', p.city);
       if (p.postalCode.isNotEmpty) cbc('PostalZone', p.postalCode);
       // BT-39 / BT-54 — CIUS-RO requires the county.
-      if (profiled && p.subdivision.isNotEmpty) {
-        cbc('CountrySubentity', p.subdivision);
-      }
+      // #3649 -- CIUS-RO wants the whole ISO 3166-2 code (`RO-B`).
+      final region = subdivisionIso(p.country, p.subdivision);
+      if (profiled && region.isNotEmpty) cbc('CountrySubentity', region);
       builder.element('cac:Country', nest: () {
         cbc('IdentificationCode', p.country.toUpperCase());
       });

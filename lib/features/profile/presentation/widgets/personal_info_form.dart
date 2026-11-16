@@ -14,11 +14,11 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/phone/phone_entry.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/phone_field.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/personal_info.dart';
 import '../courtesy_words.dart';
-import 'address_region_field.dart';
 
 /// Edits a [PersonalInfo]; [onSave] receives the normalized value.
 /// Every field carries a `personal-info-<field>` key for tests.
