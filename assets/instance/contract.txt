@@ -3542,7 +3542,7 @@ routine public.set_my_about(p_profession text, p_bio text) -> void | function | 
 routine public.set_number_sequence(p_workspace_id uuid, p_journal text, p_prefix text, p_suffix text, p_date_part text, p_digits integer, p_reset text, p_next_value bigint) -> void | function | definer | volatile | exec:authenticated,service_role | body:fd0b9cb1c2f7
 routine public.set_organisation_head(p_organisation uuid, p_head uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:8732a0d954f6
 routine public.set_participant_admin(p_conversation_id uuid, p_member_id uuid, p_admin boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:619987e97aef
-routine public.set_payment_credentials(p_workspace_id uuid, p_provider text, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:e18706b9f459
+routine public.set_payment_credentials(p_workspace_id uuid, p_provider text, p_config jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:455afc1d0b3b
 routine public.set_personal_preferences(p_patch jsonb, p_workspace_id uuid, p_expected_account uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:6bb92534836b
 routine public.set_public_profile(p_publish boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:8c68799c6b52
 routine public.set_rating(p_workspace uuid, p_kind text, p_resource uuid, p_stars integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:52f6fe395e15

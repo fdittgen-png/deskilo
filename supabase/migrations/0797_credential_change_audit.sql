@@ -22,7 +22,7 @@ begin
     select pg_get_constraintdef(oid) into v_def from pg_constraint
      where conrelid=('public.'||r.table_name)::regclass and conname=r.constraint_name;
     if v_def is null or position('CHECK (' in v_def) <> 1 then
-      raise exception 'event type constraint anchor missing: %',r.constraint_name;
+      raise exception 'event type constraint anchor missing: %',r.constraint_name using errcode = 'P0001';
     end if;
     if position('credential_change' in v_def)=0 then
       execute format('alter table public.%I drop constraint %I',r.table_name,r.constraint_name);
@@ -129,7 +129,7 @@ begin
     raise exception 'not the owner of this workspace' using errcode = 'DKN01';
   end if;
   if p_provider not in ('paypal','stripe','mollie','wero') then
-    raise exception 'unknown provider';
+    raise exception 'unknown provider' using errcode = '22023';
   end if;
   select coalesce(jsonb_object_agg(key, value), '{}'::jsonb) into v_clean
     from jsonb_each(coalesce(p_config, '{}'::jsonb))
