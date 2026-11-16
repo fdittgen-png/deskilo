@@ -297,7 +297,7 @@
   "@invoiceOriginalMismatch": {
     "description": "#3853 snack: the stored original does not match its digest, a copy is shown"
   },
-  "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. Use smaller pictures in the design.",
+  "invoiceOriginalTooLarge": "Copy: the original was not kept because the pictures of the invoice design make it larger than an original may be. The picture library lists the pictures that are larger than they print and brings them to print size, one by one.",
   "@invoiceOriginalTooLarge": {
     "description": "#3853 snack: the original was refused because the invoice design's pictures make it too large (#3984)"
   },

@@ -24,6 +24,11 @@ abstract interface class ReportTemplateRepository {
   /// stamps, signature scans the templates reference with `![name]`.
   Future<List<String>> listReportImages(String workspaceId);
 
+  /// What each library image weighs in bytes, by name (#3984): the storage
+  /// listing's own metadata, so the stored pictures over the weight are found
+  /// without downloading them. A name with no size is left out.
+  Future<Map<String, int>> reportImageWeights(String workspaceId);
+
   /// Owner-only (bucket RLS): add or replace a library image.
   Future<void> uploadReportImage(
     String workspaceId, {

@@ -9667,7 +9667,7 @@
   "invoiceOriginalNotKept": "Kopie: Diese Rechnung wurde ausgestellt, bevor ihr Original aufbewahrt wurde; sie wird jetzt mit den heutigen Einstellungen erstellt.",
   "invoiceOriginalNotYetKept": "Kopie: Das Unternehmen hat das Original dieser Rechnung noch nicht aufbewahrt; sie wird jetzt mit den heutigen Einstellungen erstellt.",
   "invoiceOriginalRefused": "Kopie: Das Original dieser Rechnung konnte nicht aufbewahrt werden. {why}",
-  "invoiceOriginalTooLarge": "Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Verwenden Sie kleinere Bilder.",
+  "invoiceOriginalTooLarge": "Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Die Bildbibliothek zeigt die Bilder, die größer sind, als sie gedruckt werden, und bringt sie nacheinander auf Druckgröße.",
   "invoiceOriginalsCouldNotKeep": "{count, plural, one{Das Original von {count} Rechnung konnte nicht aufbewahrt werden. Öffnen Sie sie, um den Grund zu sehen.} other{Die Originale von {count} Rechnungen konnten nicht aufbewahrt werden. Öffnen Sie eine, um den Grund zu sehen.}}",
   "invoiceOriginalsKeeping": "{total, plural, one{Original wird aufbewahrt: {done} von {total}} other{Originale werden aufbewahrt: {done} von {total}}}",
   "invoiceOriginalsKeptNow": "{count, plural, one{Das Original von {count} Rechnung ist aufbewahrt.} other{Die Originale von {count} Rechnungen sind aufbewahrt.}}",
@@ -16780,6 +16780,7 @@
   "@reportImageInvalid": {
     "description": "#2586 report image failure"
   },
+  "reportImagePreparing": "Das Bild wird für den Druck vorbereitet …",
   "reportImageProblem": "{name}: {reason}",
   "@reportImageProblem": {
     "description": "#2586 report image failure",
@@ -16807,11 +16808,16 @@
   "@reportImageUpload": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesBringFailed": "Diese Bilder wurden nicht geändert und liegen wie zuvor gespeichert: {names}",
+  "reportImagesBringToPrint": "Auf Druckgröße bringen",
+  "reportImagesBringing": "Die Bilder werden auf Druckgröße gebracht …",
   "reportImagesEmpty": "Noch kein Bild — laden Sie Ihr Logo, einen Stempel oder eine Unterschrift hoch und referenzieren Sie es mit ![name].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportImagesLoadFailed": "Berichtsbilder konnten nicht geladen werden. Erneut versuchen.",
+  "reportImagesOpenLibrary": "Bildbibliothek öffnen",
+  "reportImagesOversized": "{count, plural, one{1 gespeichertes Bild ist größer, als es gedruckt wird} other{{count} gespeicherte Bilder sind größer, als sie gedruckt werden}}",
   "reportImagesTitle": "Berichtsbilder",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"

@@ -9667,7 +9667,7 @@
   "invoiceOriginalNotKept": "Copia: esta factura se emitió antes de que se conservara su original; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalNotYetKept": "Copia: la empresa aún no ha conservado el original de esta factura; se genera ahora con los ajustes de hoy.",
   "invoiceOriginalRefused": "Copia: no se pudo conservar el original de esta factura. {why}",
-  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. Use imágenes más pequeñas.",
+  "invoiceOriginalTooLarge": "Copia: el original no se conservó porque las imágenes del diseño de la factura lo hacen más grande de lo que puede ser un original. La biblioteca de imágenes lista las imágenes más grandes de lo que se imprimen y las lleva una a una al tamaño de impresión.",
   "invoiceOriginalsCouldNotKeep": "{count, plural, one{No se pudo conservar el original de {count} factura. Ábrala para ver por qué.} other{No se pudieron conservar los originales de {count} facturas. Abra una para ver por qué.}}",
   "invoiceOriginalsKeeping": "{total, plural, one{Conservando el original: {done} de {total}} other{Conservando los originales: {done} de {total}}}",
   "invoiceOriginalsKeptNow": "{count, plural, one{El original de {count} factura está conservado.} other{Los originales de {count} facturas están conservados.}}",
@@ -16780,6 +16780,7 @@
   "@reportImageInvalid": {
     "description": "#2586 report image failure"
   },
+  "reportImagePreparing": "Preparando la imagen para la impresión…",
   "reportImageProblem": "{name}: {reason}",
   "@reportImageProblem": {
     "description": "#2586 report image failure",
@@ -16807,11 +16808,16 @@
   "@reportImageUpload": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
+  "reportImagesBringFailed": "Estas imágenes no se cambiaron y siguen guardadas como estaban: {names}",
+  "reportImagesBringToPrint": "Llevar al tamaño de impresión",
+  "reportImagesBringing": "Llevando las imágenes al tamaño de impresión…",
   "reportImagesEmpty": "Aún no hay imágenes — suba su logotipo, un sello o una firma y referénciela con ![nombre].",
   "@reportImagesEmpty": {
     "description": "Report WYSIWYG editor + image library (#488)"
   },
   "reportImagesLoadFailed": "No se pudieron cargar las imágenes de los informes. Inténtelo de nuevo.",
+  "reportImagesOpenLibrary": "Abrir la biblioteca de imágenes",
+  "reportImagesOversized": "{count, plural, one{{count} imagen guardada es más grande de lo que se imprime} other{{count} imágenes guardadas son más grandes de lo que se imprimen}}",
   "reportImagesTitle": "Imágenes de informes",
   "@reportImagesTitle": {
     "description": "Report WYSIWYG editor + image library (#488)"

@@ -1,3 +1,9 @@
 {
-  "reportImagesLoadFailed": "Impossibile caricare le immagini dei report. Riprovi."
+  "reportImagesLoadFailed": "Impossibile caricare le immagini dei report. Riprovi.",
+  "reportImagePreparing": "Preparazione dell’immagine per la stampa…",
+  "reportImagesOversized": "{count, plural, one{{count} immagine salvata è più grande di quanto si stampa} other{{count} immagini salvate sono più grandi di quanto si stampano}}",
+  "reportImagesBringToPrint": "Porta alla dimensione di stampa",
+  "reportImagesBringing": "Le immagini vengono portate alla dimensione di stampa…",
+  "reportImagesBringFailed": "Queste immagini non sono state modificate e restano salvate come prima: {names}",
+  "reportImagesOpenLibrary": "Apri la libreria di immagini"
 }

@@ -16438,7 +16438,7 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get invoiceOriginalTooLarge =>
-      'Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. Utilisez des images plus légères.';
+      'Copie : l’original n’a pas été conservé, car les images de la mise en page de la facture le rendent plus lourd qu’un original ne peut l’être. La bibliothèque d’images liste les images plus grandes qu’à l’impression et les amène une à une à la taille d’impression.';
 
   @override
   String invoiceOriginalsCouldNotKeep(int count) {
@@ -28426,6 +28426,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportImageInvalid => 'Le fichier n\'est pas une image utilisable';
 
   @override
+  String get reportImagePreparing =>
+      'Préparation de l’image pour l’impression…';
+
+  @override
   String reportImageProblem(String name, String reason) {
     return '$name : $reason';
   }
@@ -28450,12 +28454,38 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reportImageUpload => 'Téléverser une image';
 
   @override
+  String reportImagesBringFailed(String names) {
+    return 'Ces images n’ont pas été modifiées et restent enregistrées comme avant : $names';
+  }
+
+  @override
+  String get reportImagesBringToPrint => 'Amener à la taille d’impression';
+
+  @override
+  String get reportImagesBringing =>
+      'Les images sont amenées à la taille d’impression…';
+
+  @override
   String get reportImagesEmpty =>
       'Aucune image — téléversez votre logo, un tampon ou une signature et référencez-la avec ![nom].';
 
   @override
   String get reportImagesLoadFailed =>
       'Impossible de charger les images des rapports. Réessayez.';
+
+  @override
+  String get reportImagesOpenLibrary => 'Ouvrir la bibliothèque d’images';
+
+  @override
+  String reportImagesOversized(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count images enregistrées sont plus grandes qu’à l’impression',
+      one: '$count image enregistrée est plus grande qu’à l’impression',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reportImagesTitle => 'Images des rapports';

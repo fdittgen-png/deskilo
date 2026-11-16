@@ -16407,7 +16407,7 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get invoiceOriginalTooLarge =>
-      'Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Verwenden Sie kleinere Bilder.';
+      'Kopie: Das Original wurde nicht aufbewahrt, weil die Bilder des Rechnungslayouts es größer machen, als ein Original sein darf. Die Bildbibliothek zeigt die Bilder, die größer sind, als sie gedruckt werden, und bringt sie nacheinander auf Druckgröße.';
 
   @override
   String invoiceOriginalsCouldNotKeep(int count) {
@@ -28388,6 +28388,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportImageInvalid => 'Die Datei ist kein verwendbares Bild';
 
   @override
+  String get reportImagePreparing =>
+      'Das Bild wird für den Druck vorbereitet …';
+
+  @override
   String reportImageProblem(String name, String reason) {
     return '$name: $reason';
   }
@@ -28412,12 +28416,38 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reportImageUpload => 'Bild hochladen';
 
   @override
+  String reportImagesBringFailed(String names) {
+    return 'Diese Bilder wurden nicht geändert und liegen wie zuvor gespeichert: $names';
+  }
+
+  @override
+  String get reportImagesBringToPrint => 'Auf Druckgröße bringen';
+
+  @override
+  String get reportImagesBringing =>
+      'Die Bilder werden auf Druckgröße gebracht …';
+
+  @override
   String get reportImagesEmpty =>
       'Noch kein Bild — laden Sie Ihr Logo, einen Stempel oder eine Unterschrift hoch und referenzieren Sie es mit ![name].';
 
   @override
   String get reportImagesLoadFailed =>
       'Berichtsbilder konnten nicht geladen werden. Erneut versuchen.';
+
+  @override
+  String get reportImagesOpenLibrary => 'Bildbibliothek öffnen';
+
+  @override
+  String reportImagesOversized(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count gespeicherte Bilder sind größer, als sie gedruckt werden',
+      one: '1 gespeichertes Bild ist größer, als es gedruckt wird',
+    );
+    return '$_temp0';
+  }
 
   @override
   String get reportImagesTitle => 'Berichtsbilder';
