@@ -8807,6 +8807,30 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eInvoiceResolveTitle => 'Definire questo invio';
 
   @override
+  String get eInvoiceSendTodayAccount => 'il conto bancario dell\'attività';
+
+  @override
+  String get eInvoiceSendTodayConfirm => 'Invia con questi';
+
+  @override
+  String get eInvoiceSendTodayReference => 'il riferimento fiscale';
+
+  @override
+  String get eInvoiceSendTodayTitle =>
+      'Questa fattura è stata emessa prima che i suoi valori venissero conservati con essa; viene inviata con quelli di oggi:';
+
+  @override
+  String get eInvoiceSentDownload => 'Scarica ciò che è stato inviato';
+
+  @override
+  String get eInvoiceSentNone =>
+      'Nessun documento è stato inviato per questa fattura.';
+
+  @override
+  String get eInvoiceSentNotIntact =>
+      'La copia conservata di ciò che è stato inviato non è integra: non è stata consegnata.';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Provincia o distretto (ad es. RO-B, MI)';
 

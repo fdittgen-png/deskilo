@@ -30,6 +30,7 @@ import '../domain/e_invoice_routing.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/einvoice_mandates.dart';
+import '../domain/einvoice_sent_from_stored.dart';
 import '../domain/einvoice_validation.dart';
 import '../domain/invoice_line_text.dart';
 import '../providers/money_providers.dart';
@@ -42,6 +43,7 @@ import 'invoice_original_document.dart';
 import 'invoice_pdf_actions.dart';
 import 'widgets/e_invoice_sheet.dart';
 import 'widgets/einvoice_environment_picker.dart';
+import 'widgets/einvoice_today_values.dart';
 /// SENDS the invoice: builds the document in the syntax the channel
 /// wants (#2358 — XML for a network, Factur-X for a person) and posts it
 /// to the workspace's platform through the edge function, which holds the
@@ -193,6 +195,9 @@ Future<void> exportEInvoice(
     final route = eInvoiceRouteFor(countryCode, reference: reference);
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (route == null || workspace == null) return;
+    // #4120 — the account the invoice stored, else today's, named below.
+    final basis = await _sendBasis(ref, invoice.id);
+    if (!context.mounted) return;
     // The invoice's own snapshot, or the live workspace identity for
     // pre-0069 documents (see sellerOf).
     final subject = (
@@ -200,7 +205,7 @@ Future<void> exportEInvoice(
       seller: sellerOf(invoice, workspace),
       buyer: buyerOf(invoice, workspace),
       liveSeller: workspaceParty(workspace),
-      iban: workspaceIban(workspace),
+      iban: basis.accountOr(workspaceIban(workspace)),
       workspaceId: workspace.id,
     );
     final roles = _eInvoiceRoles(ref);
@@ -219,6 +224,9 @@ Future<void> exportEInvoice(
       return;
     }
     if (export == EInvoiceExport.send || export == EInvoiceExport.sendCustomer) {
+      // #4120 — an invoice issued before its values were kept with it is
+      // sent with today's: each is named, and the person confirms first.
+      if (!await confirmTodayValues(context, basis)) return;
       await run.send(
         gateway: gateway,
         toCustomer: export == EInvoiceExport.sendCustomer,
@@ -259,6 +267,17 @@ typedef _EInvoiceSubject = ({
 /// AWAITS the probe: a cached `.value` is null on the first open, which
 /// would hide the Send button exactly when it is most wanted. A failed
 /// probe reads as "not configured".
+/// #4120 — what of the sending would be today's. A read that fails names
+/// both values as today's: they are, and the person is told before Send.
+Future<EInvoiceSendBasis> _sendBasis(WidgetRef ref, String invoiceId) async {
+  try {
+    return await ref.read(eInvoiceTransmissionsProvider).fetchSendBasis(invoiceId);
+  } on Object catch (e, st) {
+    TraceLogger.instance.warn('money', 'e-invoice send basis failed', error: e, stackTrace: st);
+    return const EInvoiceSendBasis(paymentToday: true, referenceToday: true);
+  }
+}
+
 Future<EInvoiceGatewayConfig> _probeEInvoiceGateway(WidgetRef ref) async {
   try {
     return await ref.read(eInvoiceGatewayProvider.future);
