@@ -4,6 +4,7 @@
 // injected: no network, and no provider body ever reaches an error.
 import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import { ORDER_ADAPTERS } from "./adapters.ts";
+import { withIntent } from "./mollie.ts";
 import { failureOutcome, ProviderRefusal } from "./outcome.ts";
 import { parsePaymentOrderRequest } from "./request.ts";
 import type { AdapterDeps, OrderInput } from "./types.ts";
@@ -169,5 +170,12 @@ Deno.test("#3917: every order carries its intent's own id back to the notificati
   );
   const unit = JSON.parse(paypal[1].init.body as string).purchase_units[0];
   assertEquals(unit.custom_id, order.intentId);
-  assertEquals(unit.description, `DesKilo ${order.reference}`);
+  assertEquals(unit.description, order.reference, "the reference alone: the payer reads it");
+});
+
+Deno.test("#3917: an overriding webhook address that already names an intent names this one, once", () => {
+  const url = withIntent("https://hooks.example.test/mollie?intent=old&site=a", "new");
+  const params = new URL(url).searchParams;
+  assertEquals(params.getAll("intent"), ["new"]);
+  assertEquals(params.get("site"), "a");
 });

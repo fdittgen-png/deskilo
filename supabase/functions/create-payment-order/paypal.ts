@@ -38,7 +38,7 @@ export const createPaypalOrder: OrderAdapter = async (cfg, order, deps) => {
         },
         // #3917 -- the capture's notifications carry it back.
         custom_id: order.intentId,
-        description: `DesKilo ${order.reference}`,
+        description: order.reference,
       }],
       application_context: {
         return_url: cfg.return_url,

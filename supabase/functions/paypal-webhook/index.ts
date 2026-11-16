@@ -15,7 +15,14 @@
 // never settles: the RPC is only ever called with the provider's own
 // amount, in the intent's currency.
 
-import { captureIdOf, isReversalEvent, orderIdOf, processesEvents, reversalReason } from "./event_rules.ts";
+import {
+  attachableOrderId,
+  captureIdOf,
+  isReversalEvent,
+  orderIdOf,
+  processesEvents,
+  reversalReason,
+} from "./event_rules.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
 import {
   configOf,
@@ -139,23 +146,31 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   const reversalCapture = isReversalEvent(event.event_type) ? captureIdOf(resource) : null;
 
   // Resolve the workspace from the intent, then load ITS PayPal config.
-  const lookup = admin
-    .from("payment_intents")
-    .select("id, order_id, workspace_id, amount_cents, currency, reference, status")
-    .eq("provider", "paypal");
-  const { data: byOrder } = await (reversalCapture
-    ? lookup.eq("capture_id", reversalCapture)
-    : lookup.eq("order_id", orderIdOf(resource))).maybeSingle<Intent>();
+  const lookupOnce = () => {
+    const lookup = admin
+      .from("payment_intents")
+      .select("id, order_id, workspace_id, amount_cents, currency, reference, status")
+      .eq("provider", "paypal");
+    return (reversalCapture
+      ? lookup.eq("capture_id", reversalCapture)
+      : lookup.eq("order_id", orderIdOf(resource))).maybeSingle<Intent>();
+  };
+  const { data: byOrder, error: lookupError } = await lookupOnce();
+  if (lookupError) {
+    console.error("paypal webhook: intent lookup failed");
+    return respond("lookup_failed", 500);
+  }
   // #3917 -- an intent whose provider answer was uncertain does not know its
   // order yet: the order names it (custom_id), and the order is attached once
   // PayPal has verified the event.
   let intent: Intent | null = byOrder;
   let attach: string | null = null;
-  if (!intent && !reversalCapture) {
+  const named = isReversalEvent(event.event_type) ? null : namedIntent(resource);
+  if (!intent && named) {
     const provisional = await provisionalIntent<Intent>(
       admin,
       ["paypal"],
-      namedIntent(resource),
+      named,
       "id, order_id, workspace_id, amount_cents, currency, reference, status",
     );
     if (provisional.error) {
@@ -164,6 +179,23 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     }
     intent = provisional.data;
     attach = provisional.data?.id ?? null;
+    if (!intent) {
+      // The order request's own late write may have stored the order between
+      // the two reads: read it by the order once more.
+      const again = await lookupOnce();
+      if (again.error) {
+        console.error("paypal webhook: intent lookup failed");
+        return respond("lookup_failed", 500);
+      }
+      intent = again.data;
+    }
+  }
+  const attachTo = attach ? attachableOrderId(event.event_type, resource) : "";
+  if (attach && !attachTo) {
+    // A waiting intent the event names, but no order of its own to place it
+    // by: PayPal redelivers, and nothing is written meanwhile.
+    console.error("paypal webhook: an event naming a waiting intent names no order", event.event_type);
+    return respond("order_unplaced", 500);
   }
   if (!intent) {
     console.log("paypal webhook: unknown order, ignoring", reversalCapture ?? orderIdOf(resource));
@@ -227,13 +259,17 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     return respond("ok", 200);
   }
   if (attach) {
-    const { error } = await attachOrder(admin, attach, orderIdOf(resource));
+    const { error, outcome } = await attachOrder(admin, attach, attachTo);
     if (error) {
       console.error("paypal webhook: order attach failed");
       return respond("attach_failed", 500);
     }
-    orderId = orderIdOf(resource);
-    console.log("paypal webhook: order attached to its intent", { orderId });
+    if (outcome === "other") {
+      console.log("paypal webhook: the named intent holds another order, ignoring");
+      return respond("ok", 200);
+    }
+    orderId = attachTo;
+    console.log("paypal webhook: order attached to its intent", { orderId, outcome });
   }
 
   const settle = async (

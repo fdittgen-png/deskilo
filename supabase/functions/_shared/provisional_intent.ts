@@ -39,17 +39,39 @@ export async function provisionalIntent<T>(
     .maybeSingle();
 }
 
+/** What attaching an order found: written now ("attached"), already the
+ * intent's ("same": the order request's own late write came first), or the
+ * intent holds another order ("other": this event is not its). */
+export type AttachOutcome = "attached" | "same" | "other";
+
 /** Records [orderId] as the order of intent [intentId], only while it still
- * waits for one: a retry that recorded it first keeps its own. */
+ * waits for one, and says what it found. */
 export async function attachOrder(
   // deno-lint-ignore no-explicit-any
   admin: any,
   intentId: string,
   orderId: string,
-): Promise<{ error: { message: string } | null }> {
-  return await admin
+): Promise<
+  { error: { message: string } | null; outcome: AttachOutcome | null }
+> {
+  const written = await admin
     .from("payment_intents")
     .update({ order_id: orderId })
     .eq("id", intentId)
-    .like("order_id", "pending:%");
+    .like("order_id", "pending:%")
+    .select("order_id");
+  if (written.error) return { error: written.error, outcome: null };
+  if (((written.data ?? []) as unknown[]).length > 0) {
+    return { error: null, outcome: "attached" };
+  }
+  const held = await admin
+    .from("payment_intents")
+    .select("order_id")
+    .eq("id", intentId)
+    .maybeSingle();
+  if (held.error) return { error: held.error, outcome: null };
+  return {
+    error: null,
+    outcome: held.data?.order_id === orderId ? "same" : "other",
+  };
 }

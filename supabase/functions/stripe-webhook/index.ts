@@ -204,12 +204,14 @@ export async function handle(
   // #2014 — every answer below is TRUE: 2xx only when the event was
   // handled (or genuinely is not ours); a transient failure is a 5xx so
   // Stripe redelivers it, never a silent "ok".
-  const { data: byOrder, error: lookupError } = await admin
-    .from("payment_intents")
-    .select("workspace_id")
-    .eq("provider", "stripe")
-    .eq("order_id", sessionId)
-    .maybeSingle();
+  const byOrderOnce = () =>
+    admin
+      .from("payment_intents")
+      .select("workspace_id")
+      .eq("provider", "stripe")
+      .eq("order_id", sessionId)
+      .maybeSingle();
+  const { data: byOrder, error: lookupError } = await byOrderOnce();
   if (lookupError) {
     console.error("stripe webhook: intent lookup failed");
     return new Response(NOT_READY, { status: 500 });
@@ -235,9 +237,14 @@ export async function handle(
     attach = provisional.data?.id ?? null;
   }
   if (!intent && named) {
-    // The session names an intent that waits for no order: not ours to settle.
-    console.log("stripe webhook: the named intent waits for no session, ignoring");
-    return new Response("ok", { status: 200 });
+    // The order request's own late write may have stored the session between
+    // the two reads: read it by the session once more.
+    const again = await byOrderOnce();
+    if (again.error) {
+      console.error("stripe webhook: intent lookup failed");
+      return new Response(NOT_READY, { status: 500 });
+    }
+    intent = again.data as { id?: string; workspace_id: string } | null;
   }
   if (!intent) {
     const age = deps.nowS() - Number(event.created ?? 0);
@@ -279,12 +286,16 @@ export async function handle(
     return new Response("ok", { status: 200 });
   }
   if (attach) {
-    const { error } = await attachOrder(admin, attach, sessionId);
+    const { error, outcome } = await attachOrder(admin, attach, sessionId);
     if (error) {
       console.error("stripe webhook: order attach failed");
       return new Response(NOT_READY, { status: 500 });
     }
-    console.log("stripe webhook: session attached to its intent", { session: sessionId });
+    if (outcome === "other") {
+      console.log("stripe webhook: the named intent holds another session, ignoring");
+      return new Response("ok", { status: 200 });
+    }
+    console.log("stripe webhook: session attached to its intent", { session: sessionId, outcome });
   }
 
   // #1554 — `completed` means the checkout finished, NOT that the money

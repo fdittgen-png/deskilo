@@ -89,23 +89,30 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
   const admin = deps.admin();
   // Mollie's webhook covers all its payments, including Wero (offered
   // through Mollie). Match either provider and settle with the actual one.
-  const { data: byOrder } = await admin
-    .from("payment_intents")
-    .select("workspace_id, provider, amount_cents, currency, reference")
-    .in("provider", ["mollie", "wero"])
-    .eq("order_id", paymentId)
-    .maybeSingle<Intent>();
+  const byOrderOnce = () =>
+    admin
+      .from("payment_intents")
+      .select("workspace_id, provider, amount_cents, currency, reference")
+      .in("provider", ["mollie", "wero"])
+      .eq("order_id", paymentId)
+      .maybeSingle<Intent>();
+  const { data: byOrder, error: lookupError } = await byOrderOnce();
+  if (lookupError) {
+    console.error("mollie webhook: intent lookup failed");
+    return respond("lookup_failed", 500);
+  }
   // #3917 -- an intent whose provider answer was uncertain does not know its
   // payment yet: the webhook address names it, and the payment is attached
   // once Mollie, asked with the business's own key, confirms the payment
   // carries that intent.
   let intent: Intent | null = byOrder;
   let attach: string | null = null;
+  const named = intentIdOf(new URL(req.url).searchParams.get("intent"));
   if (!intent) {
     const provisional = await provisionalIntent<Intent & { id: string }>(
       admin,
       ["mollie", "wero"],
-      intentIdOf(new URL(req.url).searchParams.get("intent")),
+      named,
       "id, workspace_id, provider, amount_cents, currency, reference",
     );
     if (provisional.error) {
@@ -114,6 +121,16 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     }
     intent = provisional.data;
     attach = provisional.data?.id ?? null;
+  }
+  if (!intent && named) {
+    // The order request's own late write may have stored the payment between
+    // the two reads: read it by the payment once more.
+    const again = await byOrderOnce();
+    if (again.error) {
+      console.error("mollie webhook: intent lookup failed");
+      return respond("lookup_failed", 500);
+    }
+    intent = again.data;
   }
   if (!intent) {
     console.log("mollie webhook: unknown payment, ignoring", paymentId);
@@ -162,12 +179,16 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
       console.log("mollie webhook: the payment does not carry the named intent, ignoring", paymentId);
       return respond("ok", 200);
     }
-    const { error } = await attachOrder(admin, attach, paymentId);
+    const { error, outcome } = await attachOrder(admin, attach, paymentId);
     if (error) {
       console.error("mollie webhook: order attach failed");
       return respond("attach_failed", 500);
     }
-    console.log("mollie webhook: payment attached to its intent", { paymentId });
+    if (outcome === "other") {
+      console.log("mollie webhook: the named intent holds another payment, ignoring", paymentId);
+      return respond("ok", 200);
+    }
+    console.log("mollie webhook: payment attached to its intent", { paymentId, outcome });
   }
 
   const status = payment.status as string;

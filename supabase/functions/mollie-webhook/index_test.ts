@@ -2,76 +2,31 @@
 //
 // #3917 -- Mollie posts only a payment id. An intent whose provider answer
 // was uncertain does not know it yet, so the webhook address names the
-// intent; the payment is attached and settled once only when Mollie, asked
+// intent; the payment is attached and settled on it only when Mollie, asked
 // with the business's own key, shows that the payment carries that intent.
-// An address that names nothing waiting, a payment that carries another
-// intent, or an unreachable Mollie attaches and settles nothing.
+// The order request's own late write wins; a redelivery takes the
+// known-payment path; an address naming nothing waiting, a payment carrying
+// another intent, an unreachable Mollie or a failed read attaches nothing.
 import { assertEquals } from "jsr:@std/assert@1";
 import { handle } from "./index.ts";
+import { intentsFake } from "../_shared/testing/intents_fake.ts";
 
 const INTENT = "00000000-0000-4000-8000-000000003917";
 const KEY = "live_businesskey";
 
-type Result = { data: unknown; error: { message: string } | null };
+const waiting = (orderId = "pending:3917") => [{
+  id: INTENT,
+  provider: "mollie",
+  order_id: orderId,
+  workspace_id: "ws-1",
+  amount_cents: 1250,
+  currency: "EUR",
+  reference: "PAY-2026-0001",
+  status: "created",
+}];
 
-function fakeAdmin(provisional: Result) {
-  const rpcCalls: string[] = [];
-  const updates: Array<{ values: unknown; filters: string[] }> = [];
-  const admin = {
-    from(table: string) {
-      const filters: string[] = [];
-      let update: unknown = null;
-      const result = (): Result => {
-        if (table === "payment_credentials") {
-          return { data: { config: { api_key: KEY } }, error: null };
-        }
-        if (filters.some((f) => f.startsWith("id="))) return provisional;
-        return { data: null, error: null };
-      };
-      const chain = {
-        select: () => chain,
-        update: (values: unknown) => {
-          update = values;
-          return chain;
-        },
-        eq: (c: string, v: unknown) => {
-          filters.push(`${c}=${v}`);
-          return chain;
-        },
-        in: (c: string, v: unknown) => {
-          filters.push(`${c} in ${v}`);
-          return chain;
-        },
-        // deno-lint-ignore no-explicit-any
-        like: (c: string, v: unknown): any => {
-          filters.push(`${c} like ${v}`);
-          if (!update) return chain;
-          updates.push({ values: update, filters: [...filters] });
-          return Promise.resolve({ data: null, error: null });
-        },
-        maybeSingle: () => Promise.resolve(result()),
-      };
-      return chain;
-    },
-    rpc(name: string) {
-      rpcCalls.push(name);
-      return Promise.resolve({ data: null, error: null });
-    },
-  };
-  return { admin, rpcCalls, updates };
-}
-
-const waiting = {
-  data: {
-    id: INTENT,
-    workspace_id: "ws-1",
-    provider: "mollie",
-    amount_cents: 1250,
-    currency: "EUR",
-    reference: "PAY-2026-0001",
-  },
-  error: null,
-};
+const fake = (opts: Partial<Parameters<typeof intentsFake>[0]> = {}) =>
+  intentsFake({ rows: waiting(), credentials: { api_key: KEY }, ...opts });
 
 const payment = (metadata: Record<string, unknown>) => ({
   id: "tr_late",
@@ -80,92 +35,112 @@ const payment = (metadata: Record<string, unknown>) => ({
   amount: { value: "12.50", currency: "EUR" },
   metadata,
 });
+const carrying = () =>
+  Promise.resolve(
+    Response.json(
+      payment({ reference: "PAY-2026-0001", deskilo_intent: INTENT }),
+    ),
+  );
 
 async function call(
-  fake: ReturnType<typeof fakeAdmin>,
+  f: ReturnType<typeof intentsFake>,
   query: string,
-  answer: () => Promise<Response>,
+  answer: () => Promise<Response> = carrying,
 ) {
-  const fetched: string[] = [];
+  const asked: Array<{ url: string; auth: string | null }> = [];
   const req = new Request(`http://x/mollie-webhook${query}`, {
     method: "POST",
     body: new URLSearchParams({ id: "tr_late" }),
     headers: { "content-type": "application/x-www-form-urlencoded" },
   });
   const res = await handle(req, {
-    // deno-lint-ignore no-explicit-any
-    admin: () => fake.admin as any,
+    admin: () => f.admin,
     env: () => undefined,
-    fetch: (input) => {
-      fetched.push(String(input));
+    fetch: (input, init) => {
+      asked.push({
+        url: String(input),
+        auth: new Headers(init?.headers).get("Authorization"),
+      });
       return answer();
     },
     allowTest: () => false,
   });
-  return { status: res.status, fetched };
+  return { status: res.status, asked };
 }
 
-Deno.test("a payment whose intent waits for it is attached and settled once", async () => {
-  const fake = fakeAdmin(waiting);
-  const { status, fetched } = await call(
-    fake,
-    `?intent=${INTENT}`,
-    () =>
-      Promise.resolve(
-        Response.json(
-          payment({ reference: "PAY-2026-0001", deskilo_intent: INTENT }),
-        ),
-      ),
-  );
+const settled = (f: ReturnType<typeof intentsFake>) =>
+  f.rpcCalls.filter((c) => c.name === "settle_online_payment").map((
+    c,
+  ) => [c.args.p_provider, c.args.p_order_id]);
+
+Deno.test("a payment whose intent waits for it: Mollie asked with the business's key, attached and settled on it", async () => {
+  const f = fake();
+  const { status, asked } = await call(f, `?intent=${INTENT}`);
   assertEquals(status, 200);
+  assertEquals(asked, [{
+    url: "https://api.mollie.com/v2/payments/tr_late",
+    auth: `Bearer ${KEY}`,
+  }]);
+  assertEquals(f.rows[0].order_id, "tr_late");
+  assertEquals(settled(f), [["mollie", "tr_late"]]);
+});
+
+Deno.test("the order request's late write before the attach: no row changed, settled on the stored payment", async () => {
+  const f = fake({
+    afterRead: (rows) => (rows[0].order_id = "tr_late"),
+    afterReadAt: 2,
+  });
+  assertEquals((await call(f, `?intent=${INTENT}`)).status, 200);
+  assertEquals(settled(f), [["mollie", "tr_late"]]);
+});
+
+Deno.test("a redelivery after the attach takes the known-payment path", async () => {
+  const f = fake();
+  await call(f, `?intent=${INTENT}`);
+  assertEquals((await call(f, `?intent=${INTENT}`)).status, 200);
   assertEquals(
-    fetched.length,
-    1,
-    "Mollie is asked with the business's own key",
+    settled(f),
+    [["mollie", "tr_late"], ["mollie", "tr_late"]],
+    "the database credits it once",
   );
-  assertEquals(fake.updates.length, 1);
-  assertEquals(fake.updates[0].values, { order_id: "tr_late" });
-  assertEquals(fake.updates[0].filters, [
-    `id=${INTENT}`,
-    "order_id like pending:%",
-  ]);
-  assertEquals(fake.rpcCalls, ["settle_online_payment"]);
 });
 
 Deno.test("an address naming nothing that waits settles nothing and answers 200", async () => {
-  const fake = fakeAdmin({ data: null, error: null });
-  const { status, fetched } = await call(
-    fake,
-    `?intent=${INTENT}`,
-    () => Promise.resolve(Response.json(payment({ deskilo_intent: INTENT }))),
-  );
+  const f = fake({ rows: waiting("tr_other") });
+  const { status, asked } = await call(f, `?intent=${INTENT}`);
   assertEquals(status, 200);
-  assertEquals(fetched, []);
-  assertEquals(fake.updates, []);
-  assertEquals(fake.rpcCalls, []);
+  assertEquals(asked, []);
+  assertEquals(f.rows[0].order_id, "tr_other");
+  assertEquals(f.rpcCalls, []);
 });
 
 Deno.test("a payment that does not carry the named intent attaches and settles nothing", async () => {
-  const fake = fakeAdmin(waiting);
+  const f = fake();
   const { status } = await call(
-    fake,
+    f,
     `?intent=${INTENT}`,
     () =>
       Promise.resolve(Response.json(payment({ reference: "PAY-2026-0001" }))),
   );
   assertEquals(status, 200);
-  assertEquals(fake.updates, []);
-  assertEquals(fake.rpcCalls, []);
+  assertEquals(f.rows[0].order_id, "pending:3917");
+  assertEquals(f.rpcCalls, []);
 });
 
 Deno.test("an unreachable Mollie changes nothing and is retried", async () => {
-  const fake = fakeAdmin(waiting);
+  const f = fake();
   const { status } = await call(
-    fake,
+    f,
     `?intent=${INTENT}`,
     () => Promise.reject(new TypeError("connection reset")),
   );
   assertEquals(status, 500);
-  assertEquals(fake.updates, []);
-  assertEquals(fake.rpcCalls, []);
+  assertEquals(f.rows[0].order_id, "pending:3917");
+  assertEquals(f.rpcCalls, []);
+});
+
+Deno.test("a failed read of the intents is a 500, nothing written", async () => {
+  const f = fake({ readError: true });
+  assertEquals((await call(f, `?intent=${INTENT}`)).status, 500);
+  assertEquals(f.rpcCalls, []);
 });
