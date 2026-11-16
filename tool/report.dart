@@ -96,7 +96,7 @@ Future<int> _render(_Args args, {required bool check}) async {
   stdout.writeln('wrote $out (${bytes.length} bytes)');
   if (!check) return 0;
   // #3852 — a design is rendered and measured on the paper it was made on.
-  return _check(bytes, document, document.paper);
+  return _check(bytes, document, document.paper, data);
 }
 
 /// #2898 — the pictures a design names (`<image name>`, `![name]`): every
@@ -112,7 +112,8 @@ Map<String, Uint8List> _images(String? dir) => {
 
 /// Measures the produced sheet against the spec — the same numbers the
 /// CI gate uses — and prints a table a designer can read with a ruler.
-int _check(Uint8List bytes, LayoutDocument document, Paper paper) {
+int _check(
+    Uint8List bytes, LayoutDocument document, Paper paper, Map<String, Object?> data) {
   final window = document.recipient?.window ??
       (document.recipient?.frame != null ? AddressWindow.right : AddressWindow.off);
   final ink = textPositions(bytes, paper: paper);
@@ -138,23 +139,54 @@ int _check(Uint8List bytes, LayoutDocument document, Paper paper) {
       issues.add(ConformanceIssue(zone.name,
           'NO RECIPIENT — the envelope shows blank and the buyer is not named'));
     }
+    if (zone.name == 'address field' && window.isOn && document.recipient?.frame == null) {
+      // The recipient's lines the data carries against the lines inside
+      // the field: a line that does not fit is not printed (#3981).
+      final name = '${data['client_name'] ?? ''}'.trim();
+      final wanted = '${name.isEmpty ? data['member'] ?? '' : name}\n${data['client_address'] ?? ''}'
+          .split('\n')
+          .where((l) => l.trim().isNotEmpty)
+          .length;
+      final printed = inZone.map((i) => i.yMm.round()).toSet().length;
+      if (inZone.isNotEmpty && printed < wanted) {
+        issues.add(ConformanceIssue(
+            zone.name,
+            'the recipient has $wanted lines, ${wanted - printed} do not fit '
+            'the ${zone.widthMm!.toStringAsFixed(0)} × '
+            '${(zone.bottomMm - zone.topMm).toStringAsFixed(0)} mm field'));
+      }
+    }
     stdout.writeln('  ${zone.name.padRight(15)} '
         '${"${zone.topMm.toStringAsFixed(0)}–${zone.bottomMm.toStringAsFixed(0)} mm".padRight(12)} '
         '${inZone.length} run(s)');
   }
-  // Nothing but the recipient between the aperture and 90 mm.
-  const fieldBottom = (addressWindowTop + addressWindowHeight) * 25.4 / 72;
-  const resume = addressWindowFlowResume * 25.4 / 72;
+  // Nothing but the recipient between the aperture and where the flow
+  // resumes. On A4 that is the band under the aperture, on the left of
+  // the page; on Letter (#3981) the whole band from the sender's limit,
+  // across the page, outside the field itself.
+  final field = window.fieldOn(paper);
   for (final i in page1) {
-    if (i.yMm > fieldBottom && i.yMm < resume && i.xMm < 100) {
-      issues.add(ConformanceIssue('tolerance band', '$i sits under the aperture'));
+    final under = paper == Paper.a4
+        ? i.yMm > field.bottomMm && i.yMm < field.flowResumeMm && i.xMm < 100
+        : i.yMm > field.senderLimitMm &&
+            i.yMm < field.flowResumeMm &&
+            !(i.yMm >= field.topMm &&
+                i.yMm <= field.bottomMm &&
+                i.xMm >= field.leftMm - 0.5 &&
+                i.xMm <= field.rightMm);
+    if (under) {
+      issues.add(ConformanceIssue(
+          'tolerance band',
+          paper == Paper.a4
+              ? '$i sits under the aperture'
+              : '$i sits between the sender and the flow, outside the field'));
     }
   }
   if (window.isOn) {
     final fieldPages = addressFieldPages(bytes,
-        leftEdgePt: window.leftEdge,
-        topPt: addressWindowTop,
-        heightPt: addressWindowHeight,
+        leftEdgePt: field.leftPt,
+        topPt: field.topPt,
+        heightPt: field.heightPt,
         paper: paper);
     if (fieldPages.toString() != '[1]') {
       issues.add(ConformanceIssue(
@@ -166,20 +198,22 @@ int _check(Uint8List bytes, LayoutDocument document, Paper paper) {
   // must not vouch for a footer zone that vanished (which is exactly how
   // a footer one line too tall slipped past this check once).
   final footerDeclared = !document.footer.isEmpty;
+  // A4's 235 mm, 62 mm above the foot of the sheet, on whatever paper.
+  final footerFrom = paper.heightMm - 62;
   for (var p = 1; p <= pages; p++) {
     final onPage = ink.where((i) => i.page == p);
-    final footerInk = onPage.where((i) => i.yMm > 235 && i.xMm < 150).toList();
+    final footerInk = onPage.where((i) => i.yMm > footerFrom && i.xMm < 150).toList();
     if (footerDeclared && footerInk.isEmpty) {
       issues.add(ConformanceIssue('footer',
           'page $p shows no footer content — a declared footer rendered '
           'nothing (content taller than its box?)'));
-    } else if (!footerDeclared && onPage.every((i) => i.yMm < 240)) {
+    } else if (!footerDeclared && onPage.every((i) => i.yMm < footerFrom + 5)) {
       issues.add(ConformanceIssue('footer', 'page $p has nothing at the bottom'));
     }
     final declared = document.footer.height;
     if (declared != null && footerInk.isNotEmpty) {
       final top = footerInk.map((i) => i.yMm).reduce((a, b) => a < b ? a : b);
-      final allowedTop = 297 - document.margin.resolve(0) * 25.4 / 72 -
+      final allowedTop = paper.heightMm - document.margin.resolve(0) * 25.4 / 72 -
           declared.resolve(0) * 25.4 / 72 - 12;
       if (top < allowedTop) {
         issues.add(ConformanceIssue('footer',

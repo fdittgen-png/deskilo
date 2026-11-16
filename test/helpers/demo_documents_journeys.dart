@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/demo/demo_fixture.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
@@ -274,13 +275,12 @@ Future<bool> exchangeAction() async {
 }
 
 /// The letter the Demo prints: the recipient sits in the window of the
-/// envelope (the sheet's own millimetre reader), on A4, with the footer.
+/// envelope (the sheet's own millimetre reader), on A4, with the footer;
+/// and the New York house's invoice, on Letter, has its recipient in the
+/// #10 window's field (#3981).
 Future<bool> addressWindowState() async {
   final p = await _printed();
-  final window = addressWindowOnPaper(
-    p.template.addressWindow ?? AddressWindow.off,
-    Paper.a4,
-  );
+  final window = p.template.addressWindow ?? AddressWindow.off;
   final xml = defaultLetterLayoutXml(
     'invoice',
     const LetterStrings(),
@@ -309,7 +309,10 @@ Future<bool> addressWindowState() async {
   final inWindow = page1
       .where((i) => i.xMm >= 100 && i.yMm >= 40 && i.yMm <= 90)
       .toList();
+  final ny = await _newYorkLetterInk(p.f);
   return allHold({
+    'the New York invoice is on Letter, recipient in the field': ny.isNotEmpty &&
+        ny.every((i) => i.xMm >= 24.9 && i.xMm <= 108.4 && i.yMm >= 55.5 && i.yMm <= 77),
     'the window is the owner\'s':
         p.template.addressWindow == AddressWindow.right,
     'on A4 the window holds': window == AddressWindow.right,
@@ -320,6 +323,45 @@ Future<bool> addressWindowState() async {
         .where((i) => i.xMm < 100 && i.yMm > 45 && i.yMm < 89.5)
         .isEmpty,
   });
+}
+
+/// The ink inside the Letter field of the New York house's first invoice,
+/// printed as the letter standard on US Letter; empty when anything else
+/// has ink between 50 and 93 mm outside it.
+Future<List<InkAt>> _newYorkLetterInk(DemoFixture f) async {
+  final invoice = f.newYork.money.invoices.firstWhere(
+    (i) => i.workspaceId == demoNewYorkSpaceId,
+  );
+  final workspace = f.workspaces.workspaces.firstWhere(
+    (w) => w.id == demoNewYorkSpaceId,
+  );
+  final data = invoiceReportData(
+    reportStringsOf(englishL10n, dateLocale: 'en', formatLocale: null),
+    invoice,
+    reference: ActiveTaxReference.current,
+    proforma: false,
+    copy: false,
+    workspace: workspace,
+  );
+  final window = addressWindowForCountry(workspace.countryCode);
+  final bytes = await buildLayoutPdf(
+    document: renderLayoutDocument(
+      defaultLetterLayoutXml('invoice', const LetterStrings(), window: window),
+      data,
+    ).onPaper(Paper.letter),
+    data: data,
+    documentTitle: 'invoice',
+    pageLabel: 'Page',
+    baseFont: _ttf('assets/fonts/Roboto-Regular.ttf'),
+    boldFont: _ttf('assets/fonts/Roboto-Bold.ttf'),
+  );
+  final page1 = textPositions(bytes, paper: Paper.letter)
+      .where((i) => i.page == 1 && i.yMm > 50 && i.yMm < 93)
+      .toList();
+  final inField = page1
+      .where((i) => i.yMm >= 55.5 && i.yMm <= 77 && i.xMm >= 24.9)
+      .toList();
+  return inField.length == page1.length ? inField : const [];
 }
 
 /// The letter standard: a person-facing kind without a design of its own is

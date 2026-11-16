@@ -164,22 +164,6 @@ class LayoutRecipient {
   final LayoutFrame? frame;
 
   bool get isOff => window == AddressWindow.off;
-
-  /// #3852 — this recipient on a sheet no window convention is written
-  /// for: a named window becomes a frame at the same millimetres, so the
-  /// recipient prints where the design puts it and no envelope is
-  /// promised. A frame, or no window, stays as it is.
-  LayoutRecipient get placedOffEnvelope => switch (window) {
-        final w? when w != AddressWindow.off && frame == null => LayoutRecipient(
-            frame: LayoutFrame(
-              x: Length(w.leftEdgeMm, LengthUnit.mm),
-              y: const Length(addressWindowTopMm, LengthUnit.mm),
-              w: const Length(addressWindowWidthMm, LengthUnit.mm),
-              h: const Length(addressWindowHeightMm, LengthUnit.mm),
-            ),
-          ),
-        _ => this,
-      };
 }
 
 /// A whole layout: the page, its margin, the four zones and the
@@ -209,9 +193,9 @@ class LayoutDocument {
   Paper get paper => Paper.fromWire(page) ?? Paper.a4;
 
   /// #3852 — the same layout on [paper]: the host prints a design on the
-  /// paper of the document, whatever paper it was made on. The window
-  /// conventions are A4 ones: on another paper the recipient keeps its
-  /// place as a frame ([LayoutRecipient.placedOffEnvelope]).
+  /// paper of the document, whatever paper it was made on. A named window
+  /// takes the field of the new paper ([AddressWindowMillimetres.fieldOn]);
+  /// an explicit frame stays where the design put it.
   LayoutDocument onPaper(Paper paper) => LayoutDocument(
     page: paper.wire,
     margin: margin,
@@ -221,7 +205,7 @@ class LayoutDocument {
     continuation: continuation,
     body: body,
     footer: footer,
-    recipient: paper == Paper.a4 ? recipient : recipient?.placedOffEnvelope,
+    recipient: recipient,
   );
 
   /// #902 — the vertical margins when the design states them apart. A

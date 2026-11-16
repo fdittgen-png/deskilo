@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 import 'package:deskilo_document_model/address_window_kind.dart';
+import 'package:deskilo_document_model/paper.dart';
 import 'package:pdf/widgets.dart' as pw;
 
 export 'package:deskilo_document_model/address_window_kind.dart';
@@ -43,6 +44,16 @@ extension AddressWindowGeometry on AddressWindow {
   bool get isOn => this != AddressWindow.off;
 }
 
+/// #3981 — the address field of a window on a paper, in points.
+extension AddressFieldPoints on AddressField {
+  double get leftPt => leftMm * _mm;
+  double get topPt => topMm * _mm;
+  double get widthPt => widthMm * _mm;
+  double get heightPt => heightMm * _mm;
+  double get senderLimitPt => senderLimitMm * _mm;
+  double get flowResumePt => flowResumeMm * _mm;
+}
+
 /// The recipient exactly as the window shows it.
 ///
 /// Deliberately plain: no tint, no frame, nothing a postal reader has
@@ -52,15 +63,16 @@ extension AddressWindowGeometry on AddressWindow {
 pw.Widget addressWindowRecipient({
   required String name,
   required String address,
+  double fontSize = 11,
 }) =>
     pw.Column(
       crossAxisAlignment: pw.CrossAxisAlignment.start,
       children: [
-        pw.Text(name, style: const pw.TextStyle(fontSize: 11)),
+        pw.Text(name, style: pw.TextStyle(fontSize: fontSize)),
         if (address.isNotEmpty)
           pw.Padding(
             padding: const pw.EdgeInsets.only(top: 2),
-            child: pw.Text(address, style: const pw.TextStyle(fontSize: 11)),
+            child: pw.Text(address, style: pw.TextStyle(fontSize: fontSize)),
           ),
       ],
     );
@@ -74,6 +86,7 @@ pw.Widget addressWindowBackground(
   AddressWindow window, {
   required int pageNumber,
   required pw.Widget child,
+  Paper paper = Paper.a4,
 }) =>
     pageNumber != 1
         ? pw.SizedBox()
@@ -81,11 +94,11 @@ pw.Widget addressWindowBackground(
             ignoreMargins: true,
             child: pw.Stack(children: [
               pw.Positioned(
-                left: window.leftEdge,
-                top: addressWindowTop,
+                left: window.fieldOn(paper).leftPt,
+                top: window.fieldOn(paper).topPt,
                 child: pw.SizedBox(
-                  width: addressWindowWidth,
-                  height: addressWindowHeight,
+                  width: window.fieldOn(paper).widthPt,
+                  height: window.fieldOn(paper).heightPt,
                   child: child,
                 ),
               ),

@@ -2,11 +2,9 @@
 //
 // #3852 — an invoice on the paper it was issued on. On Letter both engines
 // print it on the Letter sheet, with no ink off the sheet and the
-// recipient's name on page 1; on A4 nothing changes. The window
-// conventions are A4 ones: on Letter the banded invoice prints its client
-// in the flow, and a positioned design keeps its recipient where it puts
-// it, as a frame (the default letter layout's window is the right-hand
-// one). Every report kind declares the papers it is printed on.
+// recipient's name on page 1; on A4 nothing changes. On Letter a window
+// is the #3981 field of the #10 envelope (address_window_letter_test).
+// Every report kind declares the papers it is printed on.
 //
 // A letter or report made now is printed on the business's paper when its
 // kind declares it, in both engines. One invoice's ink positions on A4 and
@@ -16,7 +14,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:deskilo/features/money/domain/address_window.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf.dart';
 import 'package:deskilo/features/money/domain/invoice_report.dart';
@@ -91,7 +88,7 @@ Future<Uint8List> _banded(String recipient, Paper paper) => buildInvoicePdf(
   InvoicePdfRequest(
     invoice: _invoice(recipient),
     strings: _strings,
-    addressWindow: addressWindowOnPaper(AddressWindow.left, paper),
+    addressWindow: AddressWindow.left,
     paper: paper,
     money: (cents) => '\$${(cents / 100).toStringAsFixed(2)}',
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
@@ -233,31 +230,14 @@ Future<Uint8List> _letter(WidgetTester tester, String country, String kind,
 }
 
 void main() {
-  test('the window conventions are A4 ones', () {
-    for (final window in AddressWindow.values) {
-      expect(addressWindowOnPaper(window, Paper.a4), window);
-      expect(addressWindowOnPaper(window, Paper.letter), AddressWindow.off);
-    }
-  });
-
-  test('on Letter a named window keeps its place as a frame; A4 keeps it', () {
+  test('on Letter a named window takes the Letter field; A4 keeps its own', () {
     final made = parseLayoutXml(
       '<report-layout><recipient window="fr"/></report-layout>',
     );
     expect(made.onPaper(Paper.a4).recipient!.window, AddressWindow.right);
     final placed = made.onPaper(Paper.letter).recipient!;
-    expect(placed.window, isNull);
-    expect(placed.isOff, isFalse, reason: 'the recipient still prints');
-    final frame = placed.frame!;
-    expect(
-      [frame.x, frame.y, frame.w, frame.h].map((l) => (l!.value, l.unit)),
-      [
-        (110.0, LengthUnit.mm),
-        (45.0, LengthUnit.mm),
-        (85.0, LengthUnit.mm),
-        (40.0, LengthUnit.mm),
-      ],
-    );
+    expect(placed.window, AddressWindow.right, reason: 'the kind is kept');
+    expect(placed.frame, isNull);
     final off = parseLayoutXml(
       '<report-layout><recipient window="off"/></report-layout>',
     );

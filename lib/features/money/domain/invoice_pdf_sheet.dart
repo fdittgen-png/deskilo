@@ -55,6 +55,9 @@ class InvoiceSheet {
       request.activityText;
 
   bool get windowOn => primary && addressWindow.isOn;
+
+  /// #3981 — the address field of the window on the document's paper.
+  AddressField get _field => addressWindow.fieldOn(request.paper);
   String get numberLine => proforma
       ? (invoice.number.isEmpty
           ? strings.proforma
@@ -90,7 +93,9 @@ class InvoiceSheet {
   late final pw.Widget continuationHeader = _continuationHeader();
   late final InvoiceSheetBody _sections = InvoiceSheetBody(this);
   late final pw.Widget windowRecipient = addressWindowRecipient(
-      name: invoice.clientName, address: invoice.memberAddress);
+      name: invoice.clientName,
+      address: invoice.memberAddress,
+      fontSize: _field.fontSizePt);
 
   // An erroneous invoice must be unmistakable even at arm's length, or
   // photocopied, or seen upside down on someone's desk (0071): the word
@@ -259,6 +264,7 @@ class InvoiceSheet {
               ? null
               : (context) => addressWindowBackground(
                     addressWindow,
+                    paper: request.paper,
                     pageNumber: context.pageNumber,
                     child: windowRecipient,
                   ),
@@ -313,7 +319,7 @@ class InvoiceSheet {
                     // shrunk uniformly until it fits, so everything the
                     // design says is on the page, smaller if it must be.
                     pw.SizedBox(
-                      height: addressWindowTop - pageMargin,
+                      height: _field.senderLimitPt - pageMargin,
                       child: pw.FittedBox(
                         fit: pw.BoxFit.scaleDown,
                         alignment: pw.Alignment.topLeft,
@@ -331,7 +337,7 @@ class InvoiceSheet {
                     ...headerWidgets,
                   if (windowOn)
                     pw.SizedBox(
-                        height: addressWindowFlowResume - addressWindowTop),
+                        height: _field.flowResumePt - _field.senderLimitPt),
                 ],
               )
             : continuationHeader;

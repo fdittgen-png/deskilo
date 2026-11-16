@@ -64,19 +64,35 @@ Future<Uint8List> buildLayoutPdf({
   final recipientFrame = recipient?.frame;
   final windowOn =
       recipient != null && !recipient.isOff && (window != null || recipientFrame != null);
+  // #3981 — a named window takes its field from the paper.
+  final field = (window ?? AddressWindow.off).fieldOn(document.paper);
   final fieldLeft = recipientFrame?.x?.resolve(pageW) ??
-      (window != null && window.isOn ? window.leftEdge : 0.0);
-  final fieldTop = recipientFrame?.y?.resolve(pageH) ?? addressWindowTop;
-  final fieldW = recipientFrame?.w?.resolve(pageW) ?? addressWindowWidth;
-  final fieldH = recipientFrame?.h?.resolve(pageH) ?? addressWindowHeight;
+      (window != null && window.isOn ? field.leftPt : 0.0);
+  final fieldTop = recipientFrame?.y?.resolve(pageH) ?? field.topPt;
+  final fieldW = recipientFrame?.w?.resolve(pageW) ?? field.widthPt;
+  final fieldH = recipientFrame?.h?.resolve(pageH) ?? field.heightPt;
 
   // The header owns the band above the field; the body resumes where
   // the design says, or at 90 mm under a window, or right after the
   // header otherwise.
   final headerH = document.header.height?.resolve(contentH) ??
-      (windowOn ? fieldTop - marginTop : null);
-  final bodyTop = document.body.y?.resolve(pageH) ??
-      (windowOn ? addressWindowFlowResume : null);
+      (windowOn
+          ? (recipientFrame?.y != null ? fieldTop : field.senderLimitPt) -
+              marginTop
+          : null);
+  // #3981 — a body stated at the A4 convention's 90 mm under a named
+  // window means "where the window convention resumes": on another paper
+  // that is the paper's own line.
+  final statedBodyY = document.body.y;
+  final followsWindow = document.paper != Paper.a4 &&
+      windowOn &&
+      recipientFrame == null &&
+      statedBodyY != null &&
+      statedBodyY.unit == LengthUnit.mm &&
+      statedBodyY.value == addressWindowFlowResumeMm;
+  final bodyTop = followsWindow
+      ? field.flowResumePt
+      : statedBodyY?.resolve(pageH) ?? (windowOn ? field.flowResumePt : null);
   final reserve = bodyTop == null
       ? 0.0
       : math.max(0.0, bodyTop - marginTop - (headerH ?? 0));
@@ -107,6 +123,7 @@ Future<Uint8List> buildLayoutPdf({
                           child: addressWindowRecipient(
                             name: recipientName,
                             address: recipientAddress,
+                            fontSize: field.fontSizePt,
                           ),
                         ),
                       ),
