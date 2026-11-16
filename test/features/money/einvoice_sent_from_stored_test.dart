@@ -136,12 +136,13 @@ void main() {
             ),
           ),
         ),
-        fileSaverProvider.overrideWithValue(({
+        fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
+        typedFileSaverProvider.overrideWithValue(({
           required bytes,
           required fileName,
         }) async {
           saved.add((name: fileName, bytes: bytes));
-          return '/local/$fileName';
+          return SavedFile('/local/$fileName');
         }),
       ]),
     );
@@ -162,12 +163,13 @@ void main() {
         eInvoiceTransmissionsProvider.overrideWithValue(
           _Sent(const PostgrestException(message: 'not intact', code: 'DKI09')),
         ),
-        fileSaverProvider.overrideWithValue(({
+        fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
+        typedFileSaverProvider.overrideWithValue(({
           required bytes,
           required fileName,
         }) async {
           saved.add(fileName);
-          return null;
+          return SavedFile('/local/$fileName');
         }),
       ]),
     );

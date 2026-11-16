@@ -31,6 +31,7 @@ Future<bool> confirmTodayValues(
       ),
       actions: [
         TextButton(
+          key: const ValueKey('einvoice-today-values-cancel'),
           onPressed: () => Navigator.of(context).pop(false),
           child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
         ),

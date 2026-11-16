@@ -1310,6 +1310,7 @@ const Set<String> uiKeys = {
   'einvoice-test-member',
   'einvoice-test-send',
   'einvoice-today-values',
+  'einvoice-today-values-cancel',
   'einvoice-today-values-send',
   'einvoice-token',
   'einvoice-token-dev',

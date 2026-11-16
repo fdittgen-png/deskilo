@@ -3,16 +3,16 @@
 // #4120 -- the document an invoice's sending left with, downloaded again:
 // exactly the stored bytes, for a person who may issue invoices. A stored file
 // whose bytes no longer match their hash is said not intact, never handed out.
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
-import '../../../../core/files/file_saver.dart';
+import '../../../../core/files/file_delivery.dart';
+import '../../../../core/files/file_delivery_notice.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/refusal_text.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../domain/einvoice_sent_from_stored.dart';
 import '../../providers/money_providers.dart';
 
 /// The download of what [invoiceId]'s sending left with.
@@ -23,17 +23,12 @@ class SentEInvoiceDownload extends ConsumerWidget {
 
   Future<void> _download(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
+    final SentEInvoiceDocument sent;
     try {
-      final sent = await ref
+      sent = await ref
           .read(eInvoiceTransmissionsProvider)
           .fetchSentDocument(invoiceId);
-      final path = await ref.read(fileSaverProvider)(
-        bytes: Uint8List.fromList(sent.bytes),
-        fileName: sent.fileName,
-      );
-      if (!context.mounted) return;
-      AppSnack.success(context, l10n.commonSavedTo(path ?? ''), replace: true);
-    } on PostgrestException catch (e, st) {
+    } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
         'sent e-invoice read refused',
@@ -43,9 +38,25 @@ class SentEInvoiceDownload extends ConsumerWidget {
       if (!context.mounted) return;
       AppSnack.error(
         context,
-        e.code == 'DKI09' ? l10n.eInvoiceSentNotIntact : l10n.eInvoiceSentNone,
+        refusalCodeOf(e).code == 'DKI09'
+            ? l10n.eInvoiceSentNotIntact
+            : l10n.eInvoiceSentNone,
       );
+      return;
     }
+    Future<void> deliver() async {
+      final delivery = await deliverFile(
+        context,
+        ref,
+        bytes: sent.bytes,
+        fileName: sent.fileName,
+      );
+      if (!context.mounted) return;
+      announceFileDelivery(context, delivery, retry: deliver);
+    }
+
+    if (!context.mounted) return;
+    await deliver();
   }
 
   @override
