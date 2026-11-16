@@ -39,6 +39,12 @@ class EInvoiceSendBasis {
   final bool referenceToday;
 
   bool get anyToday => paymentToday || referenceToday;
+
+  /// The account a sending carries. A stored payment block is the invoice's
+  /// own, even an empty one: an invoice issued without an account is sent
+  /// without one, whatever account the business has since. [today] is used
+  /// only when the invoice stored no block at all, the case named before Send.
+  String accountOr(String today) => iban ?? today;
 }
 
 /// The document an invoice's sending left with, as stored

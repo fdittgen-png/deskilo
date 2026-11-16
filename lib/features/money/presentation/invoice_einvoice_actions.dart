@@ -205,7 +205,7 @@ Future<void> exportEInvoice(
       seller: sellerOf(invoice, workspace),
       buyer: buyerOf(invoice, workspace),
       liveSeller: workspaceParty(workspace),
-      iban: basis.iban ?? workspaceIban(workspace),
+      iban: basis.accountOr(workspaceIban(workspace)),
       workspaceId: workspace.id,
     );
     final roles = _eInvoiceRoles(ref);

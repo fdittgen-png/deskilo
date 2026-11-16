@@ -58,7 +58,23 @@ void main() {
       'reference_today': true,
     });
     expect(older.iban, isNull, reason: 'none stored: today\'s is used');
+    expect(older.accountOr('DE89370400440532013000'), 'DE89370400440532013000');
     expect(older.paymentToday && older.referenceToday, isTrue);
+  });
+
+  test('an invoice issued without an account is sent without one, and names nothing as today\'s', () {
+    // Issued while the business had no account; one was added since.
+    final basis = EInvoiceSendBasis.fromAnswer({
+      'payment': <String, Object?>{},
+      'payment_today': false,
+      'reference_today': false,
+    });
+    expect(
+      basis.accountOr('DE89370400440532013000'),
+      isEmpty,
+      reason: 'the stored block is the invoice\'s own, even empty',
+    );
+    expect(basis.anyToday, isFalse, reason: 'no "today\'s value" is named');
   });
 
   testWidgets(

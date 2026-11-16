@@ -9,7 +9,7 @@
 -- may issue, only as the exact stored bytes, and never once they no longer
 -- match their hash. Rolled back.
 begin;
-select plan(11);
+select plan(13);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004120' || lpad(n::text, 4, '0'))::uuid;
@@ -28,10 +28,13 @@ insert into public.members (id, workspace_id, user_id, is_owner, is_admin, statu
 values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
        (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01');
 insert into public.members (id, workspace_id, managed_name, status, subscription_pct, overage_policy, joined_at)
-values (pg_temp.u(301), pg_temp.u(101), 'Client', 'active', 100, 'blocked', '2026-01-01');
+values (pg_temp.u(301), pg_temp.u(101), 'Client', 'active', 100, 'blocked', '2026-01-01'),
+       (pg_temp.u(302), pg_temp.u(101), 'Later', 'active', 100, 'blocked', '2026-01-01');
 insert into public.managed_identities (workspace_id, member_id, identity)
 values (pg_temp.u(101), pg_temp.u(301),
-        public.managed_identity_clean('{"first_name": "Ada", "last_name": "Client", "street": "2 rue du Bac", "city": "Paris", "postal_code": "75007"}'));
+        public.managed_identity_clean('{"first_name": "Ada", "last_name": "Client", "street": "2 rue du Bac", "city": "Paris", "postal_code": "75007"}')),
+       (pg_temp.u(101), pg_temp.u(302),
+        public.managed_identity_clean('{"first_name": "Bea", "last_name": "Later", "street": "3 rue du Bac", "city": "Paris", "postal_code": "75007"}'));
 delete from public.fee_bands where workspace_id = pg_temp.u(101);
 insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage_fee_cents)
 values (pg_temp.u(101), 0, 100, 3500, 1000);
@@ -114,6 +117,16 @@ select ok(not has_table_privilege('authenticated', 'public.invoice_transmission_
   'nobody reads the stored files directly');
 select is(pg_temp.as_member(format('select public.invoice_send_basis(%L)::text', current_setting('t.inv'))),
   'ERR DKN01', 'nor the sending basis without the right to issue');
+
+-- ── issued without an account: the empty block is the invoice's own ──
+update public.workspaces set payment_instructions = '{}' where id = pg_temp.u(101);
+select set_config('t.inv2', pg_temp.as_owner(format(
+  'select public.create_invoice(%L, %L, %L)::text', pg_temp.u(101), pg_temp.u(302), '2026-09')), true);
+update public.workspaces set payment_instructions = '{"iban": "DE89370400440532013000"}' where id = pg_temp.u(101);
+select is((pg_temp.as_owner(format('select public.invoice_send_basis(%L)::text', current_setting('t.inv2')))::jsonb -> 'payment'),
+  '{}'::jsonb, 'an invoice issued without an account stores none, and an account added since is not its own');
+select is((pg_temp.as_owner(format('select public.invoice_send_basis(%L)::text', current_setting('t.inv2')))::jsonb ->> 'payment_today'),
+  'false', 'so its sending names no account as today''s: none is sent');
 
 select * from finish();
 rollback;
