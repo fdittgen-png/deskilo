@@ -95,4 +95,4 @@ revoke execute on function public.withdraw_payment_declaration(uuid) from public
 grant execute on function public.withdraw_payment_declaration(uuid) to authenticated;
 
 notify pgrst, 'reload schema';
-select public.set_deskilo_schema_version(802);
+select public.set_deskilo_schema_version(800);
