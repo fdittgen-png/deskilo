@@ -668,12 +668,6 @@ abstract class AppLocalizations {
   /// **'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.'**
   String get accountingSourceRefused;
 
-  /// #3616 heading of the doors to every part of the books, under the status tiles
-  ///
-  /// In en, this message translates to:
-  /// **'Everything in the books'**
-  String get accountingStatusAllBooks;
-
   /// #3913 A count shown when some rows could not be read by this version: the true count is at least this.
   ///
   /// In en, this message translates to:
@@ -692,6 +686,12 @@ abstract class AppLocalizations {
   /// **'Books closed up to'**
   String get accountingStatusClosedUpTo;
 
+  /// #4066 — the accounting overview's first block: what asks for something.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get accountingStatusDue;
+
   /// #3616 books status tile: the latest file handed to the accountant
   ///
   /// In en, this message translates to:
@@ -703,6 +703,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not be read'**
   String get accountingStatusNotRead;
+
+  /// #4066 — the accounting overview's second block: what only states a figure, and the doors.
+  ///
+  /// In en, this message translates to:
+  /// **'Reference'**
+  String get accountingStatusReference;
+
+  /// #4066 — said on the VAT return's tile while a return is still to file; no deadline is given.
+  ///
+  /// In en, this message translates to:
+  /// **'To file'**
+  String get accountingStatusToFile;
+
+  /// #4066 — said on the bank tile while movements wait for a match.
+  ///
+  /// In en, this message translates to:
+  /// **'To match'**
+  String get accountingStatusToMatch;
 
   /// #3616 books status tile: the period of the oldest VAT return not filed
   ///
@@ -40658,6 +40676,12 @@ abstract class AppLocalizations {
   /// **'No order'**
   String get purchaseBillNoOrder;
 
+  /// #4065 — a field's label, marked as one that may stay empty.
+  ///
+  /// In en, this message translates to:
+  /// **'{label} (optional)'**
+  String purchaseBillOptional(String label);
+
   /// #3307 goods receipts
   ///
   /// In en, this message translates to:
@@ -40669,6 +40693,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The order this bill charges: its amounts are taken and stay editable'**
   String get purchaseBillOrderHint;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Accounting'**
+  String get purchaseBillSectionAccounting;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount and tax'**
+  String get purchaseBillSectionAmount;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Description and item'**
+  String get purchaseBillSectionDescription;
+
+  /// #4065 — a heading of the supplier-bill form.
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier and document'**
+  String get purchaseBillSectionSupplier;
 
   /// #2577 the guided purchase / expense entry
   ///

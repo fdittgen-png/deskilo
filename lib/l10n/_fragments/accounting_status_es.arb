@@ -5,7 +5,6 @@
   "accountingStatusVatToFile": "Declaración de IVA por presentar",
   "accountingStatusBankToMatch": "Movimientos bancarios por conciliar",
   "accountingStatusNotRead": "No se pudo leer",
-  "accountingStatusAllBooks": "Toda la contabilidad",
   "accountingExportsBy": "Hecho por",
   "accountingExportsRows": "Filas",
   "accountingExportsFingerprint": "Huella",
@@ -17,5 +16,9 @@
   "vatReturnNotCompared": "Esta casilla se compone de compras, de una categoría o de una corrección: sus documentos no se suman aquí.",
   "vatReturnOpen": "Abrir la declaración",
   "accountingExportsTitle": "Exportaciones",
-  "accountingStatusAtLeast": "{figure} o más"
+  "accountingStatusAtLeast": "{figure} o más",
+  "accountingStatusDue": "Pendiente",
+  "accountingStatusReference": "Referencia",
+  "accountingStatusToFile": "Por presentar",
+  "accountingStatusToMatch": "Por conciliar"
 }

@@ -171,6 +171,8 @@ class _ExchangeRateFieldsState extends ConsumerState<_ExchangeRateFields> {
       children: [
         AppTextField(
           key: const ValueKey('purchase-fx-rate'),
+          // #4065 — the bill form's summary moves the focus here.
+          fieldKey: 'fxRate',
           controller: _rate,
           label: l10n.purchasesFxRate(widget.currency, widget.spaceCurrency),
           keyboardType: const TextInputType.numberWithOptions(decimal: true),

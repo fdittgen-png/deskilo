@@ -5,7 +5,6 @@
   "accountingStatusVatToFile": "Dichiarazione IVA da presentare",
   "accountingStatusBankToMatch": "Movimenti bancari da abbinare",
   "accountingStatusNotRead": "Non è stato possibile leggerlo",
-  "accountingStatusAllBooks": "Tutta la contabilità",
   "accountingExportsBy": "Fatto da",
   "accountingExportsRows": "Righe",
   "accountingExportsFingerprint": "Impronta",
@@ -17,5 +16,9 @@
   "vatReturnNotCompared": "Questa casella è fatta di acquisti, di una categoria o di una rettifica: i suoi documenti non sono sommati qui.",
   "vatReturnOpen": "Apri la dichiarazione",
   "accountingExportsTitle": "Esportazioni",
-  "accountingStatusAtLeast": "{figure} o più"
+  "accountingStatusAtLeast": "{figure} o più",
+  "accountingStatusDue": "Da fare",
+  "accountingStatusReference": "Riferimento",
+  "accountingStatusToFile": "Da presentare",
+  "accountingStatusToMatch": "Da riconciliare"
 }

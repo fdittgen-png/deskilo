@@ -339,9 +339,6 @@ class AppLocalizationsEn extends AppLocalizations {
       'The books changed or are too large for one export. Reload the register, or choose a shorter period, and try again.';
 
   @override
-  String get accountingStatusAllBooks => 'Everything in the books';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure or more';
   }
@@ -353,10 +350,22 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Books closed up to';
 
   @override
+  String get accountingStatusDue => 'Due';
+
+  @override
   String get accountingStatusLastExport => 'Last export';
 
   @override
   String get accountingStatusNotRead => 'Could not be read';
+
+  @override
+  String get accountingStatusReference => 'Reference';
+
+  @override
+  String get accountingStatusToFile => 'To file';
+
+  @override
+  String get accountingStatusToMatch => 'To match';
 
   @override
   String get accountingStatusVatToFile => 'VAT return to file';
@@ -25383,11 +25392,28 @@ class AppLocalizationsEn extends AppLocalizations {
   String get purchaseBillNoOrder => 'No order';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (optional)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Purchase order';
 
   @override
   String get purchaseBillOrderHint =>
       'The order this bill charges: its amounts are taken and stay editable';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Accounting';
+
+  @override
+  String get purchaseBillSectionAmount => 'Amount and tax';
+
+  @override
+  String get purchaseBillSectionDescription => 'Description and item';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Supplier and document';
 
   @override
   String get purchaseEntryAdd => 'Add purchase / expense';
