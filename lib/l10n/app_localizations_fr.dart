@@ -909,6 +909,32 @@ class AppLocalizationsFr extends AppLocalizations {
   String get addressNone => 'Aucune adresse';
 
   @override
+  String get addressRegionCanton => 'Canton';
+
+  @override
+  String get addressRegionCounty => 'Comté';
+
+  @override
+  String get addressRegionMissing =>
+      'Une adresse dans ce pays doit indiquer sa région.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Indiquez la région par son code : jusqu’à 10 lettres, chiffres ou tirets.';
+
+  @override
+  String get addressRegionProvince => 'Province';
+
+  @override
+  String get addressRegionRegion => 'Région';
+
+  @override
+  String get addressRegionState => 'État';
+
+  @override
+  String get addressRegionUnknown => 'Ce pays n’a pas de région avec ce code.';
+
+  @override
   String get addressSaved => 'Adresse enregistrée';
 
   @override

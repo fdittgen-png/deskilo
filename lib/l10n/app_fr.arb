@@ -356,6 +356,38 @@
   "acctTransfersTitle": "Transferts",
   "acctWhoUnknown": "une personne qui n'est plus dans l'espace",
   "addressNone": "Aucune adresse",
+  "addressRegionCanton": "Canton",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionCounty": "Comté",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionMissing": "Une adresse dans ce pays doit indiquer sa région.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Indiquez la région par son code : jusqu’à 10 lettres, chiffres ou tirets.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionProvince": "Province",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionRegion": "Région",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionState": "État",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionUnknown": "Ce pays n’a pas de région avec ce code.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  },
   "addressSaved": "Adresse enregistrée",
   "addressTitle": "Adresse",
   "addressVatIdLabel": "Numéro de TVA (si vous facturez en tant que professionnel)",

@@ -901,6 +901,33 @@ class AppLocalizationsEn extends AppLocalizations {
   String get addressNone => 'No address';
 
   @override
+  String get addressRegionCanton => 'Canton';
+
+  @override
+  String get addressRegionCounty => 'County';
+
+  @override
+  String get addressRegionMissing =>
+      'An address in this country needs its region.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Enter the region as its code: up to 10 letters, digits or hyphens.';
+
+  @override
+  String get addressRegionProvince => 'Province';
+
+  @override
+  String get addressRegionRegion => 'Region';
+
+  @override
+  String get addressRegionState => 'State';
+
+  @override
+  String get addressRegionUnknown =>
+      'This country has no region with this code.';
+
+  @override
   String get addressSaved => 'Address saved';
 
   @override

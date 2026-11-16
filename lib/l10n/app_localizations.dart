@@ -1526,6 +1526,54 @@ abstract class AppLocalizations {
   /// **'No address'**
   String get addressNone;
 
+  /// #3649 the region of an address: addressRegionCanton
+  ///
+  /// In en, this message translates to:
+  /// **'Canton'**
+  String get addressRegionCanton;
+
+  /// #3649 the region of an address: addressRegionCounty
+  ///
+  /// In en, this message translates to:
+  /// **'County'**
+  String get addressRegionCounty;
+
+  /// #3649 the region of an address: addressRegionMissing
+  ///
+  /// In en, this message translates to:
+  /// **'An address in this country needs its region.'**
+  String get addressRegionMissing;
+
+  /// #3649 the region of an address: addressRegionNotACode
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the region as its code: up to 10 letters, digits or hyphens.'**
+  String get addressRegionNotACode;
+
+  /// #3649 the region of an address: addressRegionProvince
+  ///
+  /// In en, this message translates to:
+  /// **'Province'**
+  String get addressRegionProvince;
+
+  /// #3649 the region of an address: addressRegionRegion
+  ///
+  /// In en, this message translates to:
+  /// **'Region'**
+  String get addressRegionRegion;
+
+  /// #3649 the region of an address: addressRegionState
+  ///
+  /// In en, this message translates to:
+  /// **'State'**
+  String get addressRegionState;
+
+  /// #3649 the region of an address: addressRegionUnknown
+  ///
+  /// In en, this message translates to:
+  /// **'This country has no region with this code.'**
+  String get addressRegionUnknown;
+
   /// Snackbar after saving the address
   ///
   /// In en, this message translates to:

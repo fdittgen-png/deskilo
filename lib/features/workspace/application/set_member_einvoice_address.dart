@@ -6,6 +6,7 @@
 // frozen into every invoice's buyer snapshot.
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../domain/member.dart';
 import '../domain/workspace_repository.dart';
 import '../providers/workspace_providers.dart';
@@ -27,7 +28,8 @@ class MemberEInvoiceAddresses {
   }) async {
     final id = endpointId.trim();
     final scheme = endpointScheme.trim().toUpperCase();
-    final county = subdivision.trim().toUpperCase();
+    // #3649 -- stored as every editor of an address stores a region.
+    final county = regionCode(subdivision);
     if (id == member.einvoiceEndpointId &&
         scheme == member.einvoiceEndpointScheme &&
         county == member.billingSubdivision) {
