@@ -18,7 +18,8 @@
 -- the two: both lock the event before they read its status, so whichever
 -- comes second meets a decided event (respond_to_event: DKD01; the
 -- withdrawal: DKC13). respond_to_event read the event without a lock; it now
--- takes the row's lock first (scripts/payment_claim_race.sh, case h).
+-- takes the row's lock first (scripts/payment_claim_race.sh, cases h and i).
+-- The withdrawal checks the caller's right before it locks anything.
 
 -- ── the status ───────────────────────────────────────────────────────────
 do $constraint$
@@ -61,9 +62,9 @@ declare
   v_event public.events;
   v_actor public.members;
 begin
-  -- The lock first, as the decision takes it: whichever comes second meets
-  -- a decided event.
-  select * into v_event from public.events where id = p_event and type = 'payment' for update;
+  -- The right first, without a lock: nobody waits on, or holds, a row they
+  -- have no right to. Its business and member never change.
+  select * into v_event from public.events where id = p_event and type = 'payment';
   select * into v_actor from public.members
    where workspace_id = v_event.workspace_id and user_id = auth.uid() and status = 'active';
   if v_event.id is null or v_actor.id is null
@@ -71,6 +72,9 @@ begin
              or public.has_permission(v_event.workspace_id, 'issueInvoices')) then
     raise exception 'not one of your payments' using errcode = 'DKC08';
   end if;
+  -- Then the lock, as the decision takes it, and the event read again under
+  -- it: whichever comes second meets a decided event.
+  select * into v_event from public.events where id = p_event for update;
   if v_event.status <> 'pending' then
     raise exception 'this declaration was already decided' using errcode = 'DKC13';
   end if;
