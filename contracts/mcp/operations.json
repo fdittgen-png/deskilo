@@ -613,6 +613,10 @@
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
+  "unreadable": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "used_half_days": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -855,7 +859,7 @@
    "dispatch": true,
    "handler": true,
    "title": "List my bookings",
-   "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, a label naming the place, times, status and state_digest. Use it before moving, checking in, checking out or cancelling a booking.",
+   "description": "The person's own bookings that overlap a window (at most 31 days), oldest first, with reservation_id, a label naming the place, times, status and state_digest. When some bookings of the window could not be read by this version, the readable ones are listed and unreadable says how many were left out: the list may then be incomplete. Use it before moving, checking in, checking out or cancelling a booking.",
    "rpc": null,
    "authority": {
     "kind": "self"
@@ -918,7 +922,8 @@
     "starts_at",
     "ends_at",
     "status",
-    "next_cursor"
+    "next_cursor",
+    "unreadable"
    ],
    "label": {
     "key": "mcpOpMyReservations",

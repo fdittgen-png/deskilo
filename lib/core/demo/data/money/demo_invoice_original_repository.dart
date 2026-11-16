@@ -18,6 +18,7 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
 
   final Map<String, InvoiceOriginal> _records = {};
   final Map<String, Uint8List> _files = {};
+  final Map<String, String> _xmls = {};
 
   @override
   Future<InvoiceOriginal?> originalOf(
@@ -36,6 +37,10 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
       _files[original.path] ?? Uint8List(0);
 
   @override
+  Future<String> xmlOf(String workspaceId, InvoiceOriginal original) async =>
+      _xmls[original.invoiceId] ?? '';
+
+  @override
   Future<InvoiceOriginal> store({
     required String workspaceId,
     required String invoiceId,
@@ -47,6 +52,7 @@ class DemoInvoiceOriginalRepository implements InvoiceOriginalRepository {
     final sha = pdfSha256OfBytes(pdf);
     final path = invoiceOriginalPath(workspaceId, invoiceId, sha);
     _files[path] = Uint8List.fromList(pdf);
+    _xmls[invoiceId] = xml;
     return _records[invoiceId] = InvoiceOriginal(
       invoiceId: invoiceId,
       path: path,

@@ -501,17 +501,27 @@ void main() {
     );
   });
 
-  test('#3884: bookings this version cannot read are not listed as if the list '
-      'were complete: the read is refused with the reason', () async {
-    reservations = _UnreadableReservations(reservations.reservations);
-    await armed();
-    final answer = await call('deskilo_list_my_reservations', {
+  test('#3913: bookings this version cannot read are left out and counted, '
+      'so the list never reads as complete; the readable ones are listed', () async {
+    const window = {
       'workspace_id': 'ws-1',
       'from': '2026-10-01T00:00:00+02:00',
       'to': '2026-10-31T00:00:00+01:00',
-    });
-    expect((answer['error']! as Map)['code'], 'unreadable');
-    expect(answer.containsKey('output'), isFalse);
+    };
+    await armed();
+    final whole = await call('deskilo_list_my_reservations', window);
+    final wholeOutput = whole['output']! as Map<String, Object?>;
+    expect(wholeOutput.containsKey('unreadable'), isFalse,
+        reason: 'a complete list says nothing more than before');
+    reservations = _UnreadableReservations(reservations.reservations);
+    await armed();
+    final answer = await call('deskilo_list_my_reservations', window);
+    expect(answer['ok'], isTrue, reason: '$answer');
+    final output = answer['output']! as Map<String, Object?>;
+    expect(output['unreadable'], 2);
+    expect(output['items'], isNotEmpty);
+    expect(jsonEncode(output['items']), jsonEncode(wholeOutput['items']),
+        reason: 'the readable bookings are listed as before');
     final place = await call('deskilo_get_place', {
       'workspace_id': 'ws-1',
       'reservation_id': 'r9',
