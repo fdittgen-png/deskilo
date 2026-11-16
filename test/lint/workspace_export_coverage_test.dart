@@ -645,6 +645,9 @@ const Map<String, Set<String>> _notExportedColumns = {
     // ... and what its settlement applied and left out: the applied parts
     // are the exported matches; the rest stayed the payer's credit.
     'claim_outcome',
+    // ... and when the payment flow handed the intent to its provider: when
+    // its claim may lapse, a fact of this installation's payment flow.
+    'handed_at',
   },
   'einvoice_inbox': {
     // The received document itself: it travels as a file of its own, not

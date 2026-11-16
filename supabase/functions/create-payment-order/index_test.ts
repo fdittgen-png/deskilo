@@ -9,6 +9,7 @@ import { assertEquals, assertRejects } from "jsr:@std/assert@1";
 import {
   effectiveConfig,
   failureOutcome,
+  handedThen,
   handleWith,
   orderFailure,
   idempotencyKey,
@@ -242,4 +243,67 @@ Deno.test("an outcome that is not definitive writes nothing: the intent stays pe
     assertEquals(res.status, 503);
     assertEquals(writes, []);
   }
+});
+
+/** A service client whose payment_intents update records its patch and
+ * filters, and answers [error]. */
+function handOverAdmin(
+  writes: { patch: unknown; filters: [string, string, unknown][] }[],
+  error: { message: string } | null,
+) {
+  return {
+    from: (_table: string) => ({
+      update: (patch: unknown) => {
+        const write = { patch, filters: [] as [string, string, unknown][] };
+        writes.push(write);
+        const chain = {
+          eq: (column: string, value: unknown) => {
+            write.filters.push(["eq", column, value]);
+            return chain;
+          },
+          is: (column: string, value: unknown) => {
+            write.filters.push(["is", column, value]);
+            return chain;
+          },
+          then: (resolve: (v: unknown) => void) => resolve({ error }),
+        };
+        return chain;
+      },
+    }),
+  };
+}
+
+Deno.test("#3556 — the intent is marked handed to its provider before the provider is called", async () => {
+  const writes: { patch: unknown; filters: [string, string, unknown][] }[] = [];
+  const seen: number[] = [];
+  const order = await handedThen(
+    handOverAdmin(writes, null),
+    "intent-1",
+    () => {
+      seen.push(writes.length);
+      return Promise.resolve("order-1");
+    },
+    () => "2026-11-16T10:00:00.000Z",
+  );
+  assertEquals(order, "order-1");
+  assertEquals(seen, [1], "the provider is called after the hand-over is written");
+  assertEquals(writes, [{
+    patch: { handed_at: "2026-11-16T10:00:00.000Z" },
+    filters: [["eq", "id", "intent-1"], ["is", "handed_at", null]],
+  }]);
+});
+
+Deno.test("#3556 — a hand-over that cannot be written calls no provider", async () => {
+  const writes: { patch: unknown; filters: [string, string, unknown][] }[] = [];
+  let called = false;
+  const order = await handedThen(
+    handOverAdmin(writes, { message: "permission denied" }),
+    "intent-1",
+    () => {
+      called = true;
+      return Promise.resolve("order-1");
+    },
+  );
+  assertEquals(order, null);
+  assertEquals(called, false);
 });

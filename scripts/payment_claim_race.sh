@@ -10,8 +10,13 @@
 #       payment being processed";
 #   (b) a declared payment held open; an online payment of the same invoice
 #       waits, then is refused "is already in a declared payment awaiting
-#       approval".
-# Afterwards each invoice is in exactly one open claim. Fresh ids per run;
+#       approval";
+#   (c) two online payments of the same invoice (two devices): the second
+#       waits, then is refused;
+#   (d) two claims of overlapping sets of several invoices ({P, Q} held open,
+#       {Q, R} after it): both lock by id, so there is no deadlock; the
+#       second waits and is refused, and R stays free.
+# Afterwards each claimed invoice is in exactly one open claim, R in none. Fresh ids per run;
 # invoices cannot be deleted (invoices_no_mutation, 0183), so cleanup only
 # removes what it can and a failure is a warning.
 set -euo pipefail
@@ -40,20 +45,24 @@ insert into public.members (workspace_id, user_id, is_owner, is_admin, status, j
 values ('$ws', '$owner', true, true, 'active', '2026-01-01'),
        ('$ws', '$payer', false, false, 'active', '2026-01-01');
 delete from public.validation_policies where workspace_id = '$ws';
--- two invoices of one month, each raced once
+-- X, Y, Z of one month for (a)-(c); P, Q, R of another for (d)
 insert into public.invoices (workspace_id, member_id, issuer_member_id, number, period, title, lines, total_cents,
                              currency, member_name, workspace_name, issuer_name, signature, kind, issued_at)
-select '$ws', p.id, o.id, 'CLAIM-' || k || '-' || substr('$ws', 1, 8), '2031-02', '2031-02', '[]', 1500,
-       'EUR', 'P', 'W', 'O', repeat('s', 64), k, '2031-02-01'
-  from public.members p, public.members o, unnest(array['full', 'usage']) k
+select '$ws', p.id, o.id, 'CLAIM-' || m || '-' || k || '-' || substr('$ws', 1, 8), m, m, '[]', 1500,
+       'EUR', 'P', 'W', 'O', repeat('s', 64), k, '2031-01-15'
+  from public.members p, public.members o,
+       (values ('2031-02', 'full'), ('2031-02', 'usage'), ('2031-02', 'subscription'),
+               ('2031-03', 'full'), ('2031-03', 'usage'), ('2031-03', 'subscription')) v(m, k)
  where p.user_id = '$payer' and o.user_id = '$owner';
 SQL
 q() { psql "$url" -X -qAt -v ON_ERROR_STOP=1 -c "$1"; }
 member=$(q "select id from public.members where workspace_id = '$ws' and user_id = '$payer'")
-x=$(q "select id from public.invoices where workspace_id = '$ws' and kind = 'full'")
-y=$(q "select id from public.invoices where workspace_id = '$ws' and kind = 'usage'")
+inv() { q "select id from public.invoices where workspace_id = '$ws' and period = '$1' and kind = '$2'"; }
+x=$(inv 2031-02 full); y=$(inv 2031-02 usage); z=$(inv 2031-02 subscription)
+p=$(inv 2031-03 full); qq=$(inv 2031-03 usage); r=$(inv 2031-03 subscription)
 as_payer="select set_config('request.jwt.claims', '{\"sub\":\"$payer\",\"role\":\"authenticated\"}', true); set local role authenticated;"
 online() { echo "select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '2031-02', 1500, 'EUR', null, array['$1']::uuid[]);"; }
+online2() { echo "select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '2031-03', 3000, 'EUR', null, array['$1', '$2']::uuid[]);"; }
 declared() { echo "select 'declared' from public.record_payment('$ws', '$member', 1500, '', 'transfer', null, null, array['$1']::uuid[]);"; }
 wait_marker() {
   local i=0
@@ -101,12 +110,15 @@ SQL
 }
 race a "$(online "$x")" "$(declared "$x")" opened 'is already in a payment being processed'
 race b "$(declared "$y")" "$(online "$y")" declared 'is already in a declared payment awaiting approval'
-# each invoice in exactly one open claim
-for inv in "$x" "$y"; do
-  n=$(q "select count(*) from public.open_claim_invoices('$ws') o where o.invoice_id = '$inv'")
-  if [[ "$n" != 1 ]]; then
-    echo "::error::invoice $inv is in $n open claims, expected exactly one" >&2
+race c "$(online "$z")" "$(online "$z")" opened 'is already in a payment being processed'
+race d "$(online2 "$p" "$qq")" "$(online2 "$qq" "$r")" opened 'is already in a payment being processed'
+# each claimed invoice in exactly one open claim; R, which only the refused
+# payment named, in none
+for want in "$x:1" "$y:1" "$z:1" "$p:1" "$qq:1" "$r:0"; do
+  id=${want%%:*}; n=$(q "select count(*) from public.open_claim_invoices('$ws') o where o.invoice_id = '$id'")
+  if [[ "$n" != "${want##*:}" ]]; then
+    echo "::error::invoice $id is in $n open claims, expected ${want##*:}" >&2
     exit 1
   fi
 done
-echo "payment claim race: an invoice is in one open claim, the second payment waits and is refused"
+echo "payment claim race: an invoice is in one open claim; the second payment waits and is refused, overlapping sets without a deadlock"

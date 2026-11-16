@@ -49,28 +49,36 @@ alter table public.payment_intents add column if not exists claimed_invoice_ids 
 alter table public.payment_intents add column if not exists claim_withdrawn_at timestamptz;
 -- What the claim's settlement applied, and what it left out and why.
 alter table public.payment_intents add column if not exists claim_outcome jsonb;
+-- When the payment flow handed the intent to its provider (create-payment-
+-- order writes it just before it calls the provider): from then on the
+-- money may arrive whenever the provider settles it.
+alter table public.payment_intents add column if not exists handed_at timestamptz;
 
 -- ── 0. the rules every claim reads ───────────────────────────────────────
--- How long an online claim holds its invoices: the window in which the
--- payment flow sends an intent to its provider again (KEY_RETENTION_S in
--- supabase/functions/create-payment-order/outcome.ts, which a lint keeps
--- equal to this). An intent older than that is never sent again, so its
--- claim frees its invoices.
+-- How long the claim of an intent NEVER handed to a provider holds its
+-- invoices: the window in which the payment flow would still send it
+-- (KEY_RETENTION_S in supabase/functions/create-payment-order/outcome.ts,
+-- which a lint keeps equal to this). Past it the intent is never sent, so
+-- no money can come for it.
 create or replace function public.payment_claim_window()
 returns interval language sql immutable set search_path = public as $fn$
   select interval '23 hours';
 $fn$;
 revoke execute on function public.payment_claim_window() from public, anon, authenticated;
 
--- Whether [p_intent]'s claim is open: its payment still being processed
--- (created, within the window), the claim not withdrawn. A claim is void
--- once its intent left `created` for anything but the capture.
+-- Whether [p_intent]'s claim is open: open while its money can still
+-- arrive. It ends by the capture, by the provider's word that the payment
+-- failed, was cancelled or expired (the intent leaves `created`), or by a
+-- withdrawal; by the window only when the intent was never handed to a
+-- provider. An intent handed over whose outcome is unknown stays open until
+-- the provider speaks or a person withdraws it.
 create or replace function public.payment_intent_claim_open(p_intent public.payment_intents)
 returns boolean language sql stable set search_path = public as $fn$
   select p_intent.status = 'created'
      and p_intent.claimed_invoice_ids is not null
      and p_intent.claim_withdrawn_at is null
-     and p_intent.created_at > now() - public.payment_claim_window();
+     and (p_intent.handed_at is not null
+          or p_intent.created_at > now() - public.payment_claim_window());
 $fn$;
 revoke execute on function public.payment_intent_claim_open(public.payment_intents) from public, anon, authenticated;
 
@@ -386,10 +394,14 @@ revoke execute on function public.check_payment_claim(uuid, uuid, uuid[], text, 
 -- still owes, never more than is left of the payment. An invoice that
 -- takes no match now (invoice_match_blocker, the rule match_invoice_part
 -- refuses by) or is in another currency is left out with its reason, and
--- that money stays the payer's credit on the payment. Nothing else is
--- caught: any other failure aborts the settlement whole, so the
--- provider's retry or the approval runs again. Returns what was applied
--- and what was left out.
+-- that money stays the payer's credit on the payment. The money never
+-- waits for the claim: the application runs in its own block, and a
+-- failure inside it (a period of the books closed today, a credit spent
+-- on an invoice issued meanwhile) undoes the application alone and is
+-- recorded, every invoice left out with the error's code and words, for a
+-- person to match. Only a transaction rollback (class 40: serialization
+-- failure, deadlock) is raised again, so the whole settlement is retried.
+-- Returns what was applied and what was left out.
 create or replace function public.apply_payment_claim(
   p_ledger uuid, p_ids uuid[], p_payer uuid, p_source uuid, p_currency text)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
@@ -404,6 +416,7 @@ declare
   v_left_out jsonb := '[]'::jsonb;
 begin
   select * into v_payer from public.members where id = p_payer;
+  begin
   perform 1 from public.invoices i where i.id = any (p_ids) order by i.id for update;
   for v_invoice in
     select * from public.invoices i
@@ -431,6 +444,15 @@ begin
     v_applied := v_applied || jsonb_build_array(jsonb_build_object(
       'invoice_id', v_invoice.id, 'number', v_invoice.number, 'amount_cents', v_amount));
   end loop;
+  exception
+    when transaction_rollback then raise;
+    when others then
+      return jsonb_build_object('applied', '[]'::jsonb, 'left_out', (
+        select coalesce(jsonb_agg(jsonb_build_object(
+                 'invoice_id', i.id, 'number', i.number, 'reason', 'error',
+                 'code', sqlstate, 'words', sqlerrm) order by i.number), '[]'::jsonb)
+          from public.invoices i where i.id = any (p_ids)));
+  end;
   return jsonb_build_object('applied', v_applied, 'left_out', v_left_out);
 end;
 $fn$;
@@ -509,7 +531,9 @@ begin
     -- #3556 — one open claim per invoice: the invoices locked by id (the
     -- #3671 order) before the check, so a second payment naming one of
     -- them waits for the first and then meets it (DKC06).
-    perform 1 from public.invoices i where i.id = any (v_claim) order by i.id for update;
+    perform 1 from public.invoices i
+     where i.id = any (v_claim) and i.workspace_id = p_workspace_id and i.member_id = p_member_id
+     order by i.id for update;
     perform public.check_payment_claim(p_workspace_id, p_member_id, v_claim, p_period, v_ws_currency);
     select sum(public.invoice_still_due_cents(x)) into v_due from unnest(v_claim) x;
     if p_amount_cents <> v_due then
@@ -546,6 +570,7 @@ declare
   v_claim uuid[];
   v_due bigint;
   v_payload jsonb;
+  v_currency text;
 begin
   select * into v_actor from public.members
     where workspace_id = p_workspace_id and user_id = auth.uid() and status = 'active';
@@ -562,10 +587,16 @@ begin
   -- #3556 — a claim is of one month: the payment's period is theirs.
   if p_invoice_ids is not null then
     v_claim := array(select distinct x from unnest(p_invoice_ids) x where x is not null order by 1);
-    -- One open claim per invoice: locked by id before the check (DKC06).
-    perform 1 from public.invoices i where i.id = any (v_claim) order by i.id for update;
-    perform public.check_payment_claim(p_workspace_id, p_member_id, v_claim, p_period,
-      (select w.currency_code from public.workspaces w where w.id = p_workspace_id));
+    -- One open claim per invoice: locked by id before the check (DKC06),
+    -- only this member's invoices of this business: nobody waits on, or
+    -- holds, another's rows.
+    perform 1 from public.invoices i
+     where i.id = any (v_claim) and i.workspace_id = p_workspace_id and i.member_id = p_member_id
+     order by i.id for update;
+    -- #3556 — the payment's currency, as it stands at declaration: the
+    -- approval applies by this one.
+    select upper(w.currency_code) into v_currency from public.workspaces w where w.id = p_workspace_id;
+    perform public.check_payment_claim(p_workspace_id, p_member_id, v_claim, p_period, v_currency);
     select min(i.period) into v_period from public.invoices i where i.id = any (v_claim);
     select sum(public.invoice_still_due_cents(x)) into v_due from unnest(v_claim) x;
     if p_amount_cents <> v_due then
@@ -587,7 +618,7 @@ begin
       'period', v_period);
   if v_claim is not null then
     -- What the owner reads when deciding: each claimed invoice by number.
-    v_payload := v_payload || jsonb_build_object('claim', (
+    v_payload := v_payload || jsonb_build_object('currency', v_currency, 'claim', (
       select jsonb_agg(jsonb_build_object('invoice_id', i.id, 'number', i.number)
                        order by i.issued_at nulls last, i.number)
         from public.invoices i where i.id = any (v_claim)));
@@ -677,8 +708,7 @@ begin
   update public.events
      set payload = payload || jsonb_build_object('claim_outcome', public.apply_payment_claim(new.id,
            array(select (c ->> 'invoice_id')::uuid from jsonb_array_elements(v_event.payload -> 'claim') c),
-           new.member_id, v_event.id,
-           (select w.currency_code from public.workspaces w where w.id = new.workspace_id)))
+           new.member_id, v_event.id, v_event.payload ->> 'currency'))
    where id = v_event.id;
   return new;
 end;
@@ -757,11 +787,13 @@ begin
            public.invoice_still_due_cents(i.id) as still_due_cents,
            -- #3556 — the invoice is in a payment being processed (an online
            -- payment or a declared one that names it): not for another.
-           i.id in (select c.invoice_id from claimed c) as in_payment,
+           exists (select 1 from claimed c where c.invoice_id = i.id) as in_payment,
            -- What a payment may name: the invoice takes a match now (the
-           -- rule its settlement follows) and is in no open claim.
+           -- rule its settlement follows), is in the business's currency
+           -- (a payment is taken in it) and is in no open claim.
            public.invoice_match_blocker(i.id) is null
-             and i.id not in (select c.invoice_id from claimed c) as payable,
+             and upper(i.currency) = upper(w.currency_code)
+             and not exists (select 1 from claimed c where c.invoice_id = i.id) as payable,
            coalesce((select sum(p.amount_cents) from public.invoice_match_payments p
                        join public.events e on e.id = p.event_id
                       where p.invoice_id = i.id and e.status = 'pending'), 0)

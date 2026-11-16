@@ -244,11 +244,13 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   }
   const key = idempotencyKey(String(intent.id));
   try {
-    const order = await ORDER_ADAPTERS[provider](
-      cfg,
-      { amountCents, currency, reference, key },
-      runtimeDeps(),
-    );
+    const order = await handedThen(admin, String(intent.id), () =>
+      ORDER_ADAPTERS[provider](
+        cfg,
+        { amountCents, currency, reference, key },
+        runtimeDeps(),
+      ));
+    if (order === null) return json({ error: "intent_insert_failed" }, 500);
 
     const { error: insertError } = await admin
       .from("payment_intents")
@@ -276,6 +278,29 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   } catch (e) {
     return orderFailure(admin, String(intent.id), provider, e);
   }
+}
+
+/** #3556 — the intent is marked handed to its provider BEFORE the provider
+ * is called: from then on the invoices it names wait for the provider's
+ * word (or a withdrawal), never for a clock, since the money may arrive
+ * whenever the provider settles it. A hand-over that cannot be written
+ * calls no provider (null). A reused intent keeps its first hand-over. */
+export async function handedThen<T>(
+  // deno-lint-ignore no-explicit-any
+  admin: any,
+  intentId: string,
+  call: () => Promise<T>,
+  now: () => string = () => new Date().toISOString(),
+): Promise<T | null> {
+  const { error } = await admin.from("payment_intents")
+    .update({ handed_at: now() })
+    .eq("id", intentId)
+    .is("handed_at", null);
+  if (error) {
+    console.error("payment intent hand-over failed", error.message);
+    return null;
+  }
+  return await call();
 }
 
 /** #2014 — a definitive refusal fails the intent (its number is not
