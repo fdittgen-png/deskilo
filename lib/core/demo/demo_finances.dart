@@ -62,6 +62,7 @@ FinanceOverview _overviewOf(
       period: i.period,
       inPayment: claim != null,
       claimPaymentId: declared ? null : claim,
+      claimEventId: declared ? claim : null,
       payable: open && claim == null,
       stillDueCents: open ? i.totalCents - paid : 0,
       id: i.id,

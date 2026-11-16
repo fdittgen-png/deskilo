@@ -42,5 +42,11 @@
   "financesDeclaredPart": "Enregistré : {recorded}. Non enregistré : {rest}. {reason}",
   "financesTooManyInvoices": "{max, plural, one{Un paiement porte sur {max} facture au plus. Sélectionnez-en moins.} other{Un paiement porte sur {max} factures au plus. Sélectionnez-en moins.}}",
   "financesInPaymentSince": "En cours de paiement depuis le {date}",
-  "financesWithdrawSettling": "Si vous venez de payer chez le prestataire, patientez : la confirmation prend quelques minutes."
+  "financesWithdrawSettling": "Si vous venez de payer chez le prestataire, patientez : la confirmation prend quelques minutes.",
+  "claimRefusedDecided": "L’entreprise a déjà décidé de ce paiement.",
+  "financesTakeBack": "Retirer",
+  "financesTakeBackTitle": "Retirer cette déclaration ?",
+  "financesTakeBackBody": "Vous avez déclaré avoir payé {invoices}. Une fois retirée, l’entreprise n’a plus à la confirmer et ces factures peuvent être payées à nouveau.",
+  "financesTakenBack": "Déclaration retirée. Ses factures peuvent être payées à nouveau.",
+  "financesTakeBackFailed": "La déclaration n’a pas pu être retirée. Réessayez."
 }

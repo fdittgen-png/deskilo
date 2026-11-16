@@ -10097,6 +10097,12 @@ abstract class AppLocalizations {
   /// **'One of these invoices is in another currency than the business takes payments in. Nothing was charged.'**
   String get claimRefusedCurrency;
 
+  /// #4140 — a declaration the business already decided cannot be taken back (DKC13)
+  ///
+  /// In en, this message translates to:
+  /// **'The business has already decided this payment.'**
+  String get claimRefusedDecided;
+
   /// #3556 Refusal: the payment named no invoice
   ///
   /// In en, this message translates to:
@@ -15700,6 +15706,12 @@ abstract class AppLocalizations {
   /// **'Rejected'**
   String get eventOutcomeRejected;
 
+  /// #4140 the name of the status mark on an event row: the person who declared a payment took it back before the business decided
+  ///
+  /// In en, this message translates to:
+  /// **'Taken back'**
+  String get eventOutcomeWithdrawn;
+
   /// #4136 the notice ended: the attempt ended unpaid
   ///
   /// In en, this message translates to:
@@ -20853,6 +20865,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Unpaid'**
   String get financesStateUnpaid;
+
+  /// #4140 — the action on a declared payment the business has not decided
+  ///
+  /// In en, this message translates to:
+  /// **'Take back'**
+  String get financesTakeBack;
+
+  /// #4140 — the confirmation before taking back a declaration; invoices: the invoice numbers it names
+  ///
+  /// In en, this message translates to:
+  /// **'You said you paid {invoices}. Taken back, the business is no longer asked to confirm it, and these invoices can be paid again.'**
+  String financesTakeBackBody(String invoices);
+
+  /// #4140 — said when taking back a declaration failed
+  ///
+  /// In en, this message translates to:
+  /// **'The declaration could not be taken back. Try again.'**
+  String get financesTakeBackFailed;
+
+  /// #4140 — title of the confirmation before taking back a declaration
+  ///
+  /// In en, this message translates to:
+  /// **'Take back this declaration?'**
+  String get financesTakeBackTitle;
+
+  /// #4140 — said after a declaration was taken back
+  ///
+  /// In en, this message translates to:
+  /// **'Declaration taken back. Its invoices can be paid again.'**
+  String get financesTakenBack;
 
   /// #3556 A payment names at most this many invoices
   ///

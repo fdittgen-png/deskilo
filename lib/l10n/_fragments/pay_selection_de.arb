@@ -42,5 +42,11 @@
   "financesDeclaredPart": "Erfasst: {recorded}. Nicht erfasst: {rest}. {reason}",
   "financesTooManyInvoices": "{max, plural, one{Eine Zahlung umfasst höchstens {max} Rechnung. Wählen Sie weniger aus.} other{Eine Zahlung umfasst höchstens {max} Rechnungen. Wählen Sie weniger aus.}}",
   "financesInPaymentSince": "In Zahlung seit {date}",
-  "financesWithdrawSettling": "Wenn Sie gerade beim Anbieter bezahlt haben, warten Sie: Die Bestätigung dauert einige Minuten."
+  "financesWithdrawSettling": "Wenn Sie gerade beim Anbieter bezahlt haben, warten Sie: Die Bestätigung dauert einige Minuten.",
+  "claimRefusedDecided": "Das Unternehmen hat über diese Zahlung bereits entschieden.",
+  "financesTakeBack": "Zurücknehmen",
+  "financesTakeBackTitle": "Diese Meldung zurücknehmen?",
+  "financesTakeBackBody": "Sie haben gemeldet, {invoices} bezahlt zu haben. Zurückgenommen muss das Unternehmen sie nicht mehr bestätigen, und diese Rechnungen können wieder bezahlt werden.",
+  "financesTakenBack": "Meldung zurückgenommen. Ihre Rechnungen können wieder bezahlt werden.",
+  "financesTakeBackFailed": "Die Meldung konnte nicht zurückgenommen werden. Versuchen Sie es erneut."
 }

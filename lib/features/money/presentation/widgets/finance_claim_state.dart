@@ -2,8 +2,10 @@
 //
 // #3556 (1b) — where an invoice's payment stands on My finances: in a
 // payment I may withdraw (online), in a declared one that waits for the
-// business, or received and being matched by the business. Withdrawing is
-// confirmed first, with what becomes of money that still arrives.
+// business (#4140: which I may take back while it is not decided), or
+// received and being matched by the business. Withdrawing or taking back is
+// confirmed first, with what becomes of money that still arrives, or which
+// invoices a declaration named.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,13 +26,34 @@ class FinanceClaimState extends ConsumerWidget {
 
   final FinanceInvoice invoice;
 
+  /// The invoices the payment holding [invoice] names, as read before it is
+  /// withdrawn or taken back.
+  List<FinanceInvoice> _named(WidgetRef ref) {
+    final declared = invoice.claimPaymentId == null;
+    return [
+      for (final i
+          in ref.read(financeOverviewProvider).value?.invoices ??
+              const <FinanceInvoice>[]) // empty-ok: an overview not read names no other invoice; this one is added below
+        if (i.id != invoice.id &&
+            (declared
+                ? i.claimEventId == invoice.claimEventId
+                : i.claimPaymentId == invoice.claimPaymentId))
+          i,
+      invoice,
+    ];
+  }
+
   Future<void> _withdraw(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
+    final declared = invoice.claimPaymentId == null;
+    final named = _named(ref);
     final yes = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
         key: const ValueKey('finances-withdraw-confirm'),
-        title: Text(l10n.financesWithdrawTitle),
+        title: Text(
+          declared ? l10n.financesTakeBackTitle : l10n.financesWithdrawTitle,
+        ),
         // two sentences, two paragraphs: a payment just handed may still
         // be confirmed at the provider
         content: SingleChildScrollView(
@@ -39,8 +62,16 @@ class FinanceClaimState extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 8,
             children: [
-              if (invoice.claimSettling) Text(l10n.financesWithdrawSettling),
-              Text(l10n.financesWithdrawBody),
+              if (declared)
+                Text(
+                  l10n.financesTakeBackBody(
+                    named.map((i) => i.number).join(', '),
+                  ),
+                )
+              else ...[
+                if (invoice.claimSettling) Text(l10n.financesWithdrawSettling),
+                Text(l10n.financesWithdrawBody),
+              ],
             ],
           ),
         ),
@@ -53,7 +84,9 @@ class FinanceClaimState extends ConsumerWidget {
           FilledButton(
             key: const ValueKey('finances-withdraw-yes'),
             onPressed: () => Navigator.of(context).pop(true),
-            child: Text(l10n.financesWithdraw),
+            child: Text(
+              declared ? l10n.financesTakeBack : l10n.financesWithdraw,
+            ),
           ),
         ],
       ),
@@ -64,24 +97,22 @@ class FinanceClaimState extends ConsumerWidget {
     await runGuarded(
       context,
       domain: 'money',
-      message: 'withdraw payment claim failed',
-      errorText: l10n.financesWithdrawFailed,
+      message: declared
+          ? 'take back payment declaration failed'
+          : 'withdraw payment claim failed',
+      errorText: declared
+          ? l10n.financesTakeBackFailed
+          : l10n.financesWithdrawFailed,
       action: () async {
-        // the invoices this payment named, as read before the withdrawal
-        final named = [
-          for (final i
-              in ref.read(financeOverviewProvider).value?.invoices ??
-                  const <FinanceInvoice>[]) // empty-ok: an overview not read names no other invoice; this one is added below
-            if (i.claimPaymentId == invoice.claimPaymentId) i.id,
-          invoice.id,
-        ];
         try {
           done = await ref
               .read(financeSelectionCommandsProvider)
               .withdraw(invoice);
           // a payment of them again is a new one: its request id goes
           if (done == true) {
-            ref.read(paymentRequestIdsProvider).forgetClaim(named.toSet());
+            ref
+                .read(paymentRequestIdsProvider)
+                .forgetClaim({for (final i in named) i.id});
           }
         } on ClaimRefused catch (r, st) {
           // the refusal is said in its own words below
@@ -105,7 +136,10 @@ class FinanceClaimState extends ConsumerWidget {
         l10n.financesBusinessUnavailable(invoice.workspaceName),
       );
     } else if (done == true) {
-      AppSnack.success(context, l10n.financesWithdrawn);
+      AppSnack.success(
+        context,
+        declared ? l10n.financesTakenBack : l10n.financesWithdrawn,
+      );
     }
   }
 
@@ -117,7 +151,20 @@ class FinanceClaimState extends ConsumerWidget {
     }
     if (!invoice.inPayment) return const SizedBox.shrink();
     if (invoice.claimPaymentId == null) {
-      return _Chip(l10n.financesWaitsForBusiness(invoice.workspaceName));
+      final waits = _Chip(l10n.financesWaitsForBusiness(invoice.workspaceName));
+      if (invoice.claimEventId == null) return waits;
+      return Wrap(
+        spacing: 6,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          waits,
+          TextButton(
+            key: ValueKey('finances-take-back-${invoice.id}'),
+            onPressed: () => _withdraw(context, ref),
+            child: Text(l10n.financesTakeBack),
+          ),
+        ],
+      );
     }
     final since = invoice.claimHandedAt;
     return Wrap(

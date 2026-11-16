@@ -76,6 +76,17 @@ class SupabaseMemberAccountCommands implements MemberAccountCommands {
     ),
   );
 
+  @override
+  Future<void> withdrawPaymentDeclaration({
+    required String workspaceId,
+    required String eventId,
+  }) => _claimed(
+    () => _client.rpc<void>(
+      'withdraw_payment_declaration',
+      params: {'p_event': eventId},
+    ),
+  );
+
   /// A claim the server refused, as its refusal (0797's DKC codes).
   Future<T> _claimed<T>(Future<T> Function() call) async {
     try {

@@ -66,6 +66,28 @@ class DemoMemberAccountCommands implements MemberAccountCommands {
   }
 
   @override
+  Future<void> withdrawPaymentDeclaration({
+    required String workspaceId,
+    required String eventId,
+  }) async {
+    // #4140 — as withdraw_payment_declaration (0800): only while the
+    // business has not decided it; its invoices are free again.
+    final events = _m.eventRepository?.events;
+    final i = events?.indexWhere((e) => e.id == eventId) ?? -1;
+    if (events == null || i < 0) {
+      throw const ClaimRefused(ClaimRefusal.notMyPayment);
+    }
+    if (events[i].status != EventStatus.pending) {
+      throw const ClaimRefused(ClaimRefusal.decided);
+    }
+    events[i] = events[i].copyWith(
+      status: EventStatus.withdrawn,
+      decidedAt: _m.eventRepository!.now(),
+    );
+    _m.claims.remove(eventId);
+  }
+
+  @override
   Future<String> recordPayment({
     required String workspaceId,
     required String memberId,
@@ -276,6 +298,14 @@ mixin DemoClaimsStore {
   }) => accountCommands.withdrawPaymentClaim(
     workspaceId: workspaceId,
     paymentId: paymentId,
+  );
+
+  Future<void> withdrawPaymentDeclaration({
+    required String workspaceId,
+    required String eventId,
+  }) => accountCommands.withdrawPaymentDeclaration(
+    workspaceId: workspaceId,
+    eventId: eventId,
   );
 }
 

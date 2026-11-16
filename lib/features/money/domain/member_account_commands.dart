@@ -42,6 +42,14 @@ abstract interface class MemberAccountCommands {
     required String paymentId,
   });
 
+  /// #4140 (0800) — takes back my declared payment [eventId] while the
+  /// business has not decided it: its invoices are free again and nobody is
+  /// asked to confirm it. Throws [ClaimRefused] (DKC13 once decided).
+  Future<void> withdrawPaymentDeclaration({
+    required String workspaceId,
+    required String eventId,
+  });
+
   /// Records consumed services onto the monthly bill (#129, ADR 0008).
   /// Creates a PENDING service_charge event with a name+price snapshot —
   /// the ledger charge posts only on confirmation. Members self-report
