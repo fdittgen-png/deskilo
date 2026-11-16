@@ -44,6 +44,77 @@ class PublicWorkspace {
       (document['contacts'] as List<dynamic>? ?? [])
           .map((e) => Map<String, dynamic>.from(e as Map))
           .toList();
+
+  /// #3553 — the business's kind codes, the primary one first; none from an
+  /// installation that does not publish them.
+  List<String> get kinds => [
+    for (final k in document['kinds'] as List<Object?>? ?? const [])
+      if (k is String) k,
+  ];
+
+  /// #3553 — the services the business marked public, in its own order;
+  /// none from an installation that does not publish them.
+  List<PublicService> get services => [
+    for (final s in document['services'] as List<Object?>? ?? const [])
+      ?PublicService.read(s),
+  ];
+
+  /// #3553 — whether the business takes inquiries; null where the
+  /// installation does not say.
+  bool? get takesInquiries =>
+      document['takes_inquiries'] is bool
+      ? document['takes_inquiries'] as bool
+      : null;
+}
+
+/// #3553 — what a listed price means for tax: the price contains the tax,
+/// a tax is added at the sale, or no tax applies.
+enum PublicTaxTreatment { included, excluded, none }
+
+/// #3553 — one service a business publishes: each price in its own
+/// currency, never converted.
+class PublicService {
+  const PublicService({
+    required this.name,
+    required this.priceMinor,
+    required this.currency,
+    required this.taxTreatment,
+    this.category,
+    this.durationMinutes,
+  });
+
+  /// The service in a published document, or null when it is not one this
+  /// version can show (the contract's codec already refused a malformed
+  /// card; a missing field here is a newer shape).
+  static PublicService? read(Object? raw) {
+    if (raw is! Map) return null;
+    final name = raw['name'];
+    final price = raw['price_minor'];
+    final currency = raw['currency'];
+    final tax = PublicTaxTreatment.values
+        .where((t) => t.name == raw['tax_treatment'])
+        .firstOrNull;
+    if (name is! String || price is! int || currency is! String || tax == null) {
+      return null;
+    }
+    final category = raw['category'];
+    final duration = raw['duration_minutes'];
+    return PublicService(
+      name: name,
+      priceMinor: price,
+      currency: currency,
+      taxTreatment: tax,
+      category: category is String ? category : null,
+      durationMinutes: duration is int ? duration : null,
+    );
+  }
+
+  final String name;
+  final String? category;
+  final int? durationMinutes;
+  final int priceMinor;
+  final String currency;
+  final PublicTaxTreatment taxTreatment;
 }
 
 /// #2086 — the public fields that have a counterpart in the workspace's

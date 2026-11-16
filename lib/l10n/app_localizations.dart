@@ -39242,6 +39242,66 @@ abstract class AppLocalizations {
   /// **'This place is no longer published.'**
   String get portalNoLongerPublished;
 
+  /// #3553 — opens Services, where a service is marked public.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the public services'**
+  String get portalOfferEdit;
+
+  /// #3553 — the page says the business takes no inquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'You take no inquiries'**
+  String get portalOfferInquiriesNo;
+
+  /// #3553 — the page says the business takes inquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'Visitors can write to you'**
+  String get portalOfferInquiriesYes;
+
+  /// #3553 — the business's kinds as the page publishes them, the primary first.
+  ///
+  /// In en, this message translates to:
+  /// **'Kind: {kinds}'**
+  String portalOfferKinds(String kinds);
+
+  /// #3553 — a published service's duration.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes, plural, one{{minutes} min} other{{minutes} min}}'**
+  String portalOfferMinutes(int minutes);
+
+  /// #3553 — no service is published yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No service is public yet. A service appears here once it is active and marked public.'**
+  String get portalOfferNoServices;
+
+  /// #3553 — a tax is added to the listed price at the sale.
+  ///
+  /// In en, this message translates to:
+  /// **'plus tax'**
+  String get portalOfferTaxExcluded;
+
+  /// #3553 — the listed price contains the tax.
+  ///
+  /// In en, this message translates to:
+  /// **'tax included'**
+  String get portalOfferTaxIncluded;
+
+  /// #3553 — no tax applies to the listed price.
+  ///
+  /// In en, this message translates to:
+  /// **'no tax'**
+  String get portalOfferTaxNone;
+
+  /// #3553 — the public page editor: the read-only preview of the kinds and public services the page publishes.
+  ///
+  /// In en, this message translates to:
+  /// **'What the page says you offer'**
+  String get portalOfferTitle;
+
   /// Menu item on the account menu (globe) that opens the Me layer.
   ///
   /// In en, this message translates to:

@@ -32190,6 +32190,56 @@
   "@portalNoLongerPublished": {
     "description": "Shown as the text in public workspace view (directory)."
   },
+  "portalOfferEdit": "Choose the public services",
+  "@portalOfferEdit": {
+    "description": "#3553 — opens Services, where a service is marked public."
+  },
+  "portalOfferInquiriesNo": "You take no inquiries",
+  "@portalOfferInquiriesNo": {
+    "description": "#3553 — the page says the business takes no inquiries."
+  },
+  "portalOfferInquiriesYes": "Visitors can write to you",
+  "@portalOfferInquiriesYes": {
+    "description": "#3553 — the page says the business takes inquiries."
+  },
+  "portalOfferKinds": "Kind: {kinds}",
+  "@portalOfferKinds": {
+    "description": "#3553 — the business's kinds as the page publishes them, the primary first.",
+    "placeholders": {
+      "kinds": {
+        "type": "String"
+      }
+    }
+  },
+  "portalOfferMinutes": "{minutes, plural, one{{minutes} min} other{{minutes} min}}",
+  "@portalOfferMinutes": {
+    "description": "#3553 — a published service's duration.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "portalOfferNoServices": "No service is public yet. A service appears here once it is active and marked public.",
+  "@portalOfferNoServices": {
+    "description": "#3553 — no service is published yet."
+  },
+  "portalOfferTaxExcluded": "plus tax",
+  "@portalOfferTaxExcluded": {
+    "description": "#3553 — a tax is added to the listed price at the sale."
+  },
+  "portalOfferTaxIncluded": "tax included",
+  "@portalOfferTaxIncluded": {
+    "description": "#3553 — the listed price contains the tax."
+  },
+  "portalOfferTaxNone": "no tax",
+  "@portalOfferTaxNone": {
+    "description": "#3553 — no tax applies to the listed price."
+  },
+  "portalOfferTitle": "What the page says you offer",
+  "@portalOfferTitle": {
+    "description": "#3553 — the public page editor: the read-only preview of the kinds and public services the page publishes."
+  },
   "portalOpenMe": "Me: my account and my places",
   "@portalOpenMe": {
     "description": "Menu item on the account menu (globe) that opens the Me layer."

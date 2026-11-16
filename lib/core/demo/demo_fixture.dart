@@ -68,6 +68,7 @@ import 'seed/demo_network_seed.dart';
 import 'seed/demo_newcomers_seed.dart';
 import 'seed/demo_people_seed.dart';
 import 'seed/demo_plan_booking_seed.dart' show seedDemoPhotos;
+import 'seed/demo_public_offer.dart';
 import 'seed/demo_reachable_seed.dart';
 import 'seed/demo_resource_seed.dart';
 import 'seed/demo_room_seed.dart';
@@ -220,6 +221,7 @@ class DemoFixture implements DemoSpaceParts {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
+    wireDemoPublicOffer(directory, workspaces.target, money.fetchServices); // #3553
     final (listings, twinSource) = _listSpaces(workspaces, floorPlan, roles, actor.memberId, today);
     // The wall tablet greets the member whose badge it read.
     reservations

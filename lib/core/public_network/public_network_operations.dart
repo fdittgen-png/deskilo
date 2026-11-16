@@ -334,4 +334,4 @@ const Map<String, PublicOperationSpec> publicNetworkOperations = {
 const List<int> publicNetworkProtocolVersions = [1];
 
 /// #1847 B — the capabilities this client understands.
-const Set<String> publicNetworkCapabilities = {'operation_header'};
+const Set<String> publicNetworkCapabilities = {'kind_filter', 'operation_header'};

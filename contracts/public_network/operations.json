@@ -6,7 +6,8 @@
     1
   ],
   "capabilities": {
-    "operation_header": "The server revalidates `x-deskilo-operation: <id>@<version>` before a participant mutation and refuses a version it does not support. An unlabelled request is a client from before negotiation and means the operation's `unlabelled` version."
+    "operation_header": "The server revalidates `x-deskilo-operation: <id>@<version>` before a participant mutation and refuses a version it does not support. An unlabelled request is a client from before negotiation and means the operation's `unlabelled` version.",
+    "kind_filter": "#3553: directory.workspaces.search can be narrowed to one business kind (the card's `kinds`). A client asks only a source that advertises it; a source that does not is reported as not covered by that search, never as having no result."
   },
   "roles": {
     "description": "#2561 L1 (#2413 D1). What kind of installation answers. A personal home hosts people and no workspace; a workspace host hosts coworking spaces; a combined installation (every installation from before the split, and the default) is both. The descriptor lists `roles` as installation_identity.roles holds them and `role_capabilities`, the capability version each held role carries. A role grants nothing: a client that needs a personal home checks the role and understands its capability before it trusts the installation; a server from before the roles lists neither key and is read as combined.",

@@ -73,5 +73,15 @@
   "portalPlaceNotFound": "Für diese Adresse wurde kein Ort gefunden. Prüfen Sie die Adresse und versuchen Sie es erneut.",
   "portalPlaceFailed": "Der Kartendienst hat nicht geantwortet. Versuchen Sie es erneut.",
   "portalPlaceRemove": "Ort entfernen",
-  "portalPlaceTapToMove": "Tippen Sie auf die Karte, um die Markierung zu versetzen."
+  "portalPlaceTapToMove": "Tippen Sie auf die Karte, um die Markierung zu versetzen.",
+  "portalOfferTitle": "Was die Seite über Ihr Angebot sagt",
+  "portalOfferKinds": "Art: {kinds}",
+  "portalOfferNoServices": "Noch kein Dienst ist öffentlich. Ein Dienst erscheint hier, sobald er aktiv und als öffentlich markiert ist.",
+  "portalOfferMinutes": "{minutes, plural, one{{minutes} Min.} other{{minutes} Min.}}",
+  "portalOfferTaxIncluded": "inkl. Steuer",
+  "portalOfferTaxExcluded": "zzgl. Steuer",
+  "portalOfferTaxNone": "ohne Steuer",
+  "portalOfferInquiriesYes": "Besucher können Ihnen schreiben",
+  "portalOfferInquiriesNo": "Sie nehmen keine Anfragen an",
+  "portalOfferEdit": "Öffentliche Dienste auswählen"
 }

@@ -51,9 +51,14 @@ class SourceCardsPage {
   const SourceCardsPage(
     this.cards, {
     this.incompatible = false,
+    this.uncovered = false,
     required this.more,
   });
   final List<PublicWorkspace> cards;
+
+  /// #3553 — the source cannot execute the filter asked (it does not
+  /// advertise it): it was not asked, and its silence is not "no result".
+  final bool uncovered;
 
   /// The source answered with a card this version cannot honour; its
   /// other cards are in [cards].
@@ -73,6 +78,7 @@ class SourceListing {
     this.pages = 0,
     this.more = false,
     this.incompatible = false,
+    this.uncovered = false,
     this.status = SourceStatus.loading,
   });
   final DirectorySource source;
@@ -81,6 +87,10 @@ class SourceListing {
   /// How many pages arrived; the next page asked is this one.
   final int pages;
   final bool more, incompatible;
+
+  /// #3553 — the source cannot execute the filter of this listing: it was
+  /// not asked, and holds no "no result".
+  final bool uncovered;
   final SourceStatus status;
 
   String get origin => source.origin;
@@ -96,6 +106,7 @@ class SourceListing {
     int? pages,
     bool? more,
     bool? incompatible,
+    bool? uncovered,
     required SourceStatus status,
   }) => SourceListing(
     source,
@@ -103,6 +114,7 @@ class SourceListing {
     pages: pages ?? this.pages,
     more: more ?? this.more,
     incompatible: incompatible ?? this.incompatible,
+    uncovered: uncovered ?? this.uncovered,
     status: status,
   );
 
@@ -121,6 +133,7 @@ class SourceListing {
       pages: pages + 1,
       more: page.more,
       incompatible: incompatible || page.incompatible,
+      uncovered: uncovered || page.uncovered,
       status: SourceStatus.ready,
     );
   }
@@ -230,6 +243,13 @@ class DiscoveryResults {
       if (s.incompatible) s.origin,
   ];
 
+  /// #3553 — sources that cannot execute this listing's filter: not asked,
+  /// so not covered; never counted as having no result.
+  List<String> get uncovered => [
+    for (final s in sources)
+      if (s.uncovered) s.origin,
+  ];
+
   /// How many sources answered at least one page.
   int get answered => sources.where((s) => s.pages > 0).length;
 }
@@ -243,11 +263,14 @@ abstract interface class PublicDiscoveryRepository {
   Future<DirectorySourcesPage> sources({int page = 0});
 
   /// Page [page] of [source]'s cards matching [query]; throws when the
-  /// source cannot be read.
+  /// source cannot be read. #3553 — with a [kind], only that kind's cards,
+  /// asked only of a source that advertises the filter; another answers an
+  /// uncovered page.
   Future<SourceCardsPage> workspaces(
     DirectorySource source,
     String query, {
     int page = 0,
+    String? kind,
   });
 
   /// The card as its installation publishes it NOW; null when it is no

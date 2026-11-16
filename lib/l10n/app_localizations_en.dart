@@ -24491,6 +24491,47 @@ class AppLocalizationsEn extends AppLocalizations {
   String get portalNoLongerPublished => 'This place is no longer published.';
 
   @override
+  String get portalOfferEdit => 'Choose the public services';
+
+  @override
+  String get portalOfferInquiriesNo => 'You take no inquiries';
+
+  @override
+  String get portalOfferInquiriesYes => 'Visitors can write to you';
+
+  @override
+  String portalOfferKinds(String kinds) {
+    return 'Kind: $kinds';
+  }
+
+  @override
+  String portalOfferMinutes(int minutes) {
+    String _temp0 = intl.Intl.pluralLogic(
+      minutes,
+      locale: localeName,
+      other: '$minutes min',
+      one: '$minutes min',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get portalOfferNoServices =>
+      'No service is public yet. A service appears here once it is active and marked public.';
+
+  @override
+  String get portalOfferTaxExcluded => 'plus tax';
+
+  @override
+  String get portalOfferTaxIncluded => 'tax included';
+
+  @override
+  String get portalOfferTaxNone => 'no tax';
+
+  @override
+  String get portalOfferTitle => 'What the page says you offer';
+
+  @override
   String get portalOpenMe => 'Me: my account and my places';
 
   @override
