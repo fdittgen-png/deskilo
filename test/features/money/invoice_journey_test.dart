@@ -27,6 +27,7 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
 import '../../helpers/screens/invoices.dart' show invoicingRow, owedBucketShown;
+import '../../helpers/shell_tab.dart';
 
 Invoice _invoice({
   String id = 'inv-1',
@@ -359,7 +360,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await tester.tap(find.text('My finances'));
+      await tester.tap(shellTab('My finances'));
       await tester.pumpAndSettle();
       await tester.tap(find.byKey(const ValueKey('money-face-invoices')));
       await tester.pumpAndSettle();
