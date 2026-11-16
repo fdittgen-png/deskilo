@@ -261,7 +261,7 @@ class DioSupabaseManagement implements SupabaseManagement {
 
   @override
   Future<void> setFunctionSecrets(String ref, Map<String, String> values) =>
-      _call<dynamic>(() => _dio.post(
+      _call<Object?>(() => _dio.post(
             '/v1/projects/$ref/secrets',
             data: [
               for (final e in values.entries) {'name': e.key, 'value': e.value},
@@ -270,10 +270,10 @@ class DioSupabaseManagement implements SupabaseManagement {
 
   @override
   Future<Map<String, String>> listFunctionSecretDigests(String ref) async {
-    final list = await _call<List<dynamic>>(
+    final list = await _call<List<Object?>>(
         () => _dio.get('/v1/projects/$ref/secrets'));
     return {
-      for (final s in list.cast<Map<dynamic, dynamic>>())
+      for (final s in list.cast<Map<Object?, Object?>>())
         '${s['name']}': '${s['value'] ?? ''}',
     };
   }

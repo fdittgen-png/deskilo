@@ -110,6 +110,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_practice_seed.dart`** (1) — Demo records: the practice's invoice title as the fictional business stores it (#3863), not an application label
 - **`lib/core/demo/seed/demo_city_purchase_seed.dart`** (1) — Demo records: an English supplier invoice title as the fictional business stores it, not an application label
 - **`lib/core/demo/seed/demo_city_workflow_seed.dart`** (5) — Demo records: fictional expense, badge and document titles stored by the English-speaking spaces, not application interface labels
-- **`lib/core/diagnostics/doctor_english.dart`** (19) — the operator's English: what the command line and the support bundle print for a typed doctor finding; the panel words the same findings from the ARB catalogue (instanceDoctor*) in the member's language (#3489).
+- **`lib/core/diagnostics/doctor_english.dart`** (21) — the operator's English: what the command line and the support bundle print for a typed doctor finding; the panel words the same findings from the ARB catalogue (instanceDoctor*) in the member's language (#3489, #3916).
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

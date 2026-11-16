@@ -33,7 +33,7 @@ String sha256Hex(String value) => sha256.convert(utf8.encode(value)).toString();
 
 /// A digest the Management API lists, or the digest of a raw value if an API
 /// version answers the value itself (it is hashed here, never kept).
-String secretDigest(String listed) =>
+String _secretDigest(String listed) =>
     RegExp(r'^[0-9a-f]{64}$').hasMatch(listed) ? listed : sha256Hex(listed);
 
 /// The doctor's finding on the app address of the deployed functions that
@@ -65,7 +65,7 @@ List<DoctorFinding> checkAppUrl({
   }
   final base = webBase.replaceAll(RegExp(r'/+$'), '');
   final own = {sha256Hex(base), sha256Hex('$base/')};
-  if (own.contains(secretDigest(listed))) return const [];
+  if (own.contains(_secretDigest(listed))) return const [];
   return [
     DoctorFinding.typed(
       DoctorLevel.alarm,

@@ -185,8 +185,8 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
     DoctorWords.pushOwn => l10n.instanceDoctorPushOwnTitle,
     DoctorWords.pushForeign => l10n.instanceDoctorPushForeignTitle,
-    DoctorWords.appUrlMissing => l10n.instanceDoctorAppUrlMissingTitle,
-    DoctorWords.appUrlForeign => l10n.instanceDoctorAppUrlForeignTitle,
+    DoctorWords.appUrlMissing ||
+    DoctorWords.appUrlForeign => _appUrlTitle(l10n, f.words!),
     DoctorWords.authBaseline => l10n.instanceDoctorAuthBaselineTitle,
     DoctorWords.authCodesLong => l10n.instanceDoctorAuthCodesLongTitle,
     DoctorWords.authPasswordShort =>
@@ -194,6 +194,12 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.authReauthOff => l10n.instanceDoctorAuthReauthOffTitle,
   };
 }
+
+/// #3916 -- the title of a finding about the app address of the functions.
+String _appUrlTitle(AppLocalizations l10n, DoctorWords words) =>
+    words == DoctorWords.appUrlMissing
+    ? l10n.instanceDoctorAppUrlMissingTitle
+    : l10n.instanceDoctorAppUrlForeignTitle;
 
 /// A finding's detail in the member's language. The held phrase of an
 /// installation is worded from `instanceDoctorHeld`; the sentences the doctor
