@@ -41,7 +41,8 @@ LOST=$(open_order lost-webhook)
 
 order() { curl -s "$PP/_test/orders/$1"; }
 recorded=$(order "$PAID" | python3 -c 'import json,sys; o=json.load(sys.stdin); a=o["amount"]; print(round(float(a["value"])*100), a["currency_code"], o["custom_id"], o["intent"])')
-stored=$(sql "select amount_cents || ' ' || currency || ' ' || reference from public.payment_intents where order_id = '$PAID'")
+# #3917 -- the order carries its intent's own id as its custom id.
+stored=$(sql "select amount_cents || ' ' || currency || ' ' || id from public.payment_intents where order_id = '$PAID'")
 [ "$recorded" = "$stored CAPTURE" ] || fail "PayPal recorded '$recorded', the intent says '$stored' (intent CAPTURE)"
 echo "provider record equals the intent: $recorded"
 

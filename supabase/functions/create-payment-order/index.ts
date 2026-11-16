@@ -246,7 +246,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   try {
     const order = await ORDER_ADAPTERS[provider](
       cfg,
-      { amountCents, currency, reference, key },
+      { amountCents, currency, reference, key, intentId: String(intent.id) },
       runtimeDeps(),
     );
 
@@ -274,7 +274,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
       approve_url: order.approveUrl,
     });
   } catch (e) {
-    return orderFailure(admin, String(intent.id), provider, e);
+    return orderFailure(admin, String(intent.id), provider, e, intent.reused === true);
   }
 }
 
@@ -289,8 +289,9 @@ export async function orderFailure(
   intentId: string,
   provider: string,
   e: unknown,
+  resent = false,
 ): Promise<Response> {
-  const outcome = failureOutcome(e);
+  const outcome = failureOutcome(e, resent);
   const status = e instanceof ProviderRefusal ? e.status : null;
   console.error("payment order failed", { provider, outcome, status });
   if (outcome === "failed") {

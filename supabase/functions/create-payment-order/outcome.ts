@@ -18,9 +18,13 @@ export class ProviderRefusal extends Error {
  * early, 429 too many requests) is not definitive either. */
 const NOT_DEFINITIVE = [408, 409, 425, 429];
 
-export const failureOutcome = (e: unknown): "failed" | "unknown" =>
+/** #3917 -- a [resent] intent's order may already exist under its key: a
+ * 400 to it is the provider refusing parameters that differ from the first
+ * request under that key (Stripe's idempotency_error, Mollie's 400 Bad
+ * Request for a reused key), never a refusal of the order. */
+export const failureOutcome = (e: unknown, resent = false): "failed" | "unknown" =>
   e instanceof ProviderRefusal && e.status >= 400 && e.status < 500 &&
-    !NOT_DEFINITIVE.includes(e.status)
+    !NOT_DEFINITIVE.includes(e.status) && !(resent && e.status === 400)
     ? "failed"
     : "unknown";
 
