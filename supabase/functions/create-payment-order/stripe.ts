@@ -5,6 +5,7 @@
 
 import { INTENT_KEY } from "../_shared/provisional_intent.ts";
 import { ProviderRefusal } from "./outcome.ts";
+import { PAYER_TEXT_LIMITS, payerText } from "./payer_text.ts";
 import type { OrderAdapter } from "./types.ts";
 
 /** Stripe's API root. `STRIPE_API_BASE` exists for the CI check
@@ -24,7 +25,7 @@ export const createStripeSession: OrderAdapter = async (cfg, order, deps) => {
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": order.currency.toLowerCase(),
     "line_items[0][price_data][unit_amount]": String(order.amountCents),
-    "line_items[0][price_data][product_data][name]": `DesKilo ${order.reference}`,
+    "line_items[0][price_data][product_data][name]": payerText(order.payee, order.reference, PAYER_TEXT_LIMITS.stripe),
   });
   const res = await deps.transport(`${stripeApi(deps.env)}/v1/checkout/sessions`, {
     method: "POST",

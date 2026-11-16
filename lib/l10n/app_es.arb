@@ -18352,6 +18352,7 @@
   },
   "settingHintRecordsCraReference": "Para una empresa canadiense: la referencia de la autorización de la CRA (ETA s.286, ITA s.230) cuando sus registros se conservan fuera de Canadá. Vacío significa que no se ha registrado ninguna.",
   "settingHintRecordsHostingCountry": "Dos letras (ISO 3166), p. ej. CA o DE, según lo que su contrato de alojamiento indique para la base de datos y sus copias de seguridad. Vacío significa no declarado: la aplicación no indica entonces ningún lugar.",
+  "settingHintRecordsInvoiceOriginalsSweep": "report o remove. Lo que hace el mantenimiento nocturno con un PDF de factura subido que ningún original registrado nombra, un día después de subirlo: report lo cita en el registro de mantenimiento y no borra nada; remove lo borra, lo que no se puede deshacer.",
   "settingHintRetentionUsYears": "Años que un espacio de EE. UU. conserva sus registros cuando su estado pide más que la norma federal. Un plazo más largo se aplica a todos los registros; uno más corto no cambia nada. 0 significa que se aplica la regla de conservación. No es asesoramiento legal: confirme el plazo de su estado.",
   "@settingHintRetentionUsYears": {
     "description": "#2571 retention settings"
@@ -18546,6 +18547,7 @@
   },
   "settingLabelRecordsCraReference": "Autorización de la CRA para conservar los registros fuera de Canadá",
   "settingLabelRecordsHostingCountry": "País donde esta instalación conserva sus datos",
+  "settingLabelRecordsInvoiceOriginalsSweep": "PDF de facturas sin referencia",
   "settingLabelRetentionUsYears": "Conservación en EE. UU., estado (años)",
   "@settingLabelRetentionUsYears": {
     "description": "#2571 retention settings"

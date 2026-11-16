@@ -94,6 +94,8 @@ String _bankSettingLabel(AppLocalizations l10n, String key) => switch (key) {
 /// CRA authorisation of a Canadian space.
 String _recordsSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'records.hosting_country' => l10n.settingLabelRecordsHostingCountry,
+      'records.invoice_originals_sweep' =>
+        l10n.settingLabelRecordsInvoiceOriginalsSweep,
       'business.kind' => l10n.settingLabelBusinessKind,
       'business.more_kinds' => l10n.settingLabelBusinessMoreKinds,
       'records.cra_authorisation_reference' => l10n.settingLabelRecordsCraReference,
@@ -205,6 +207,7 @@ String? _bankSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'bank.import_max_lines' => l10n.settingHintBankImportMaxLines,
       'bank.match_window_days' => l10n.settingHintBankMatchWindowDays,
       'records.hosting_country' => l10n.settingHintRecordsHostingCountry,
+      'records.invoice_originals_sweep' => l10n.settingHintRecordsInvoiceOriginalsSweep,
       'business.kind' => l10n.settingHintBusinessKind,
       'business.more_kinds' => l10n.settingHintBusinessMoreKinds,
       'records.cra_authorisation_reference' => l10n.settingHintRecordsCraReference,

@@ -30605,6 +30605,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Deux lettres (ISO 3166), par ex. CA ou DE, selon ce que votre contrat d\'hébergement indique pour la base de données et ses sauvegardes. Vide signifie non déclaré : l\'application n\'indique alors aucun lieu.';
 
   @override
+  String get settingHintRecordsInvoiceOriginalsSweep =>
+      'report ou remove. Ce que fait la maintenance nocturne d\'un PDF de facture téléversé qu\'aucun original enregistré ne nomme, un jour après son téléversement : report le cite dans le journal de maintenance et ne supprime rien ; remove le supprime, ce qui est irréversible.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Années pendant lesquelles un espace américain conserve ses pièces quand son État demande plus que la règle fédérale. Une durée plus longue s\'applique à toutes les pièces ; une durée plus courte ne change rien. 0 signifie que la règle de conservation s\'applique. Pas un conseil juridique : vérifiez le délai de votre État.';
 
@@ -30903,6 +30907,10 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelRecordsHostingCountry =>
       'Pays où cette installation conserve ses données';
+
+  @override
+  String get settingLabelRecordsInvoiceOriginalsSweep =>
+      'PDF de factures non référencés';
 
   @override
   String get settingLabelRetentionUsYears =>

@@ -48573,6 +48573,12 @@ abstract class AppLocalizations {
   /// **'Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.'**
   String get settingHintRecordsHostingCountry;
 
+  /// #3985 what report and remove do; the two values are the setting’s own words
+  ///
+  /// In en, this message translates to:
+  /// **'report or remove. What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report names it in the maintenance record and removes nothing; remove deletes it, which cannot be undone.'**
+  String get settingHintRecordsInvoiceOriginalsSweep;
+
   /// #2571 retention settings
   ///
   /// In en, this message translates to:
@@ -49052,6 +49058,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Country where this installation keeps its data'**
   String get settingLabelRecordsHostingCountry;
+
+  /// #3985 the operator switch of the sweep of unreferenced invoice PDFs
+  ///
+  /// In en, this message translates to:
+  /// **'Unreferenced invoice PDFs'**
+  String get settingLabelRecordsInvoiceOriginalsSweep;
 
   /// #2571 retention settings
   ///

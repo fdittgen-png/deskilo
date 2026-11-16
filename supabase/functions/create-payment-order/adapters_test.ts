@@ -8,6 +8,7 @@ import { withIntent } from "./mollie.ts";
 import { failureOutcome, ProviderRefusal } from "./outcome.ts";
 import { parsePaymentOrderRequest } from "./request.ts";
 import type { AdapterDeps, OrderInput } from "./types.ts";
+import { PAYER_TEXT_LIMITS, payerText } from "./payer_text.ts";
 
 const order: OrderInput = {
   amountCents: 1250,
@@ -15,6 +16,7 @@ const order: OrderInput = {
   reference: "PAY-2026-0001",
   key: "deskilo-intent-7",
   intentId: "00000000-0000-4000-8000-000000003917",
+  payee: "Atelier du Marché",
 };
 
 function deps(
@@ -170,7 +172,7 @@ Deno.test("#3917: every order carries its intent's own id back to the notificati
   );
   const unit = JSON.parse(paypal[1].init.body as string).purchase_units[0];
   assertEquals(unit.custom_id, order.intentId);
-  assertEquals(unit.description, order.reference, "the reference alone: the payer reads it");
+  assertEquals(unit.description, "Atelier du Marché — PAY-2026-0001", "the business and the reference: the payer reads it");
 });
 
 Deno.test("#3917: an overriding webhook address that already names an intent names this one, once", () => {
@@ -178,4 +180,72 @@ Deno.test("#3917: an overriding webhook address that already names an intent nam
   const params = new URL(url).searchParams;
   assertEquals(params.getAll("intent"), ["new"]);
   assertEquals(params.get("site"), "a");
+});
+
+/** What each provider receives as the text its payer reads, for [payee]. */
+async function payerTexts(payee: string) {
+  const o = { ...order, payee };
+  const stripe: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.stripe(
+    { secret_key: "sk", return_url: "https://r" },
+    o,
+    deps(Response.json({ id: "cs_1", url: "https://pay" }), stripe),
+  );
+  const mollie: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.mollie(
+    { api_key: "test_k", return_url: "https://r" },
+    o,
+    deps(Response.json({ id: "tr_1", _links: { checkout: { href: "https://c" } } }), mollie),
+  );
+  const paypal: { url: string; init: RequestInit }[] = [];
+  await ORDER_ADAPTERS.paypal(
+    { client_id: "c", client_secret: "s", env: "sandbox", return_url: "https://r" },
+    o,
+    {
+      transport: (url, init) => {
+        paypal.push({ url, init });
+        return Promise.resolve(
+          paypal.length === 1
+            ? Response.json({ access_token: "t" })
+            : Response.json({ id: "o1", links: [{ rel: "approve", href: "https://a" }] }),
+        );
+      },
+      env: () => undefined,
+    },
+  );
+  return {
+    stripe: (stripe[0].init.body as URLSearchParams).get("line_items[0][price_data][product_data][name]")!,
+    mollie: JSON.parse(mollie[0].init.body as string).description as string,
+    paypal: JSON.parse(paypal[1].init.body as string).purchase_units[0].description as string,
+  };
+}
+
+Deno.test("#4135: every provider shows the payer the business's name and the reference", async () => {
+  const texts = await payerTexts("Atelier du Marché");
+  assertEquals(texts, {
+    stripe: "Atelier du Marché — PAY-2026-0001",
+    mollie: "Atelier du Marché — PAY-2026-0001",
+    paypal: "Atelier du Marché — PAY-2026-0001",
+  });
+});
+
+Deno.test("#4135: a long name is shortened within each provider's limit, the reference never", async () => {
+  const texts = await payerTexts("Coworking ".repeat(40).trim());
+  for (const [provider, text] of Object.entries(texts)) {
+    const limit = PAYER_TEXT_LIMITS[provider as keyof typeof PAYER_TEXT_LIMITS];
+    assertEquals([...text].length <= limit, true, `${provider}: ${[...text].length} > ${limit}`);
+    assertEquals(text.endsWith("… — PAY-2026-0001"), true, provider);
+  }
+});
+
+Deno.test("#4135: characters a provider refuses never reach it", async () => {
+  const texts = await payerTexts("Atelier\n du\u0000 Marché\u200b");
+  for (const text of Object.values(texts)) {
+    assertEquals(text, "Atelier du Marché — PAY-2026-0001");
+  }
+});
+
+Deno.test("#4135: without a name, the reference alone", () => {
+  assertEquals(payerText("", "PAY-2026-0001", PAYER_TEXT_LIMITS.paypal), "PAY-2026-0001");
+  assertEquals(payerText("   ", "PAY-2026-0001", PAYER_TEXT_LIMITS.paypal), "PAY-2026-0001");
 });

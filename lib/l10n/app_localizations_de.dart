@@ -30556,6 +30556,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zwei Buchstaben (ISO 3166), z. B. CA oder DE, wie Ihr Hosting-Vertrag den Ort der Datenbank und ihrer Sicherungen angibt. Leer heißt nicht erklärt: Die App nennt dann keinen Ort.';
 
   @override
+  String get settingHintRecordsInvoiceOriginalsSweep =>
+      'report oder remove. Was die nächtliche Wartung mit einem hochgeladenen Rechnungs-PDF macht, das kein gespeichertes Original nennt, einen Tag nach dem Hochladen: report nennt es im Wartungsprotokoll und löscht nichts; remove löscht es, was nicht rückgängig zu machen ist.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Jahre, die ein US-Space seine Unterlagen aufbewahrt, wenn der Bundesstaat mehr als die bundesweite Vorgabe verlangt. Eine längere Frist gilt für alle Unterlagen; eine kürzere ändert nichts. 0 bedeutet: die Aufbewahrungsregel gilt. Keine Rechtsberatung: bitte die Frist des Bundesstaats prüfen.';
 
@@ -30845,6 +30849,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelRecordsHostingCountry =>
       'Land, in dem diese Installation ihre Daten aufbewahrt';
+
+  @override
+  String get settingLabelRecordsInvoiceOriginalsSweep =>
+      'Nicht referenzierte Rechnungs-PDFs';
 
   @override
   String get settingLabelRetentionUsYears =>

@@ -30246,6 +30246,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Two letters (ISO 3166), e.g. CA or DE, as your hosting contract states where the database and its backups are. Empty means not declared: the app then states no location.';
 
   @override
+  String get settingHintRecordsInvoiceOriginalsSweep =>
+      'report or remove. What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report names it in the maintenance record and removes nothing; remove deletes it, which cannot be undone.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Years a US space keeps its records when its state asks for longer than the federal default. A longer period extends every kind of record; a shorter one changes nothing. 0 means the retention rule applies. Never legal advice: confirm the period of your state.';
 
@@ -30524,6 +30528,10 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get settingLabelRecordsHostingCountry =>
       'Country where this installation keeps its data';
+
+  @override
+  String get settingLabelRecordsInvoiceOriginalsSweep =>
+      'Unreferenced invoice PDFs';
 
   @override
   String get settingLabelRetentionUsYears =>
