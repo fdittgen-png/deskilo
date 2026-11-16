@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #4105 -- the dry run of an issue, with the parties it would store
-// (`invoice_issue_draft`, 0793).
+// (`invoice_issue_draft`, 0792).
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

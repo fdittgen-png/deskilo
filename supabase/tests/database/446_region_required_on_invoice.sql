@@ -1,12 +1,12 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 --
--- #4105 (0793) -- the region a country's own invoices require is asked
+-- #4105 (0792) -- the region a country's own invoices require is asked
 -- before the invoice is issued: a party in the seller's own country without it
 -- is refused (`seller_region`, `buyer_region`), a buyer abroad never is, and a
 -- country whose invoices do not require it refuses nothing. The facts come
 -- from postal_region_rules(), generated from the app's layouts. Rolled back.
 begin;
-select plan(10);
+select plan(13);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004105' || lpad(n::text, 4, '0'))::uuid;
@@ -80,9 +80,55 @@ insert into public.fee_bands (workspace_id, from_pct, to_pct, fee_cents, overage
 values (pg_temp.u(102), 0, 100, 3500, 1000);
 select set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
 set local role authenticated;
+reset role;
+-- what a dry run must leave as it was: every row it would write, the
+-- document number's counter, and every sequence
+create function pg_temp.trace() returns text language sql as $$
+  select concat_ws('|',
+    (select count(*) from public.invoices where workspace_id = pg_temp.u(102)),
+    (select count(*) from public.events where workspace_id = pg_temp.u(102)),
+    (select count(*) from public.invoice_issue_notices where workspace_id = pg_temp.u(102)),
+    (select count(*) from public.ledger_entries where workspace_id = pg_temp.u(102)),
+    (select coalesce(string_agg(journal || ':' || next_value, ',' order by journal), '')
+       from public.number_sequences where workspace_id = pg_temp.u(102)),
+    (select count(*) from net.http_request_queue),
+    (select count(*) from storage.objects))
+$$;
+select set_config('t.before', pg_temp.trace(), true);
+select set_config('t.seq_before', (select coalesce(sum(last_value), 0)::text
+  from pg_sequences where schemaname = 'public' and sequencename <> 'invoice_qrr_seq'), true);
+set local role authenticated;
 select set_config('t.draft', public.invoice_issue_draft(pg_temp.u(102), pg_temp.u(301), '2026-09')::text, true);
+reset role;
+select is(pg_temp.trace(), current_setting('t.before'),
+  'a dry run stores nothing: no invoice, event, notice, ledger entry, request or file, and the number counter is unchanged');
+select is((select coalesce(sum(last_value), 0)::text from pg_sequences
+            where schemaname = 'public' and sequencename <> 'invoice_qrr_seq'),
+  current_setting('t.seq_before'), 'and it advances no sequence of the business''s records');
+set local role authenticated;
 select set_config('t.inv', public.create_invoice(pg_temp.u(102), pg_temp.u(301), '2026-09')::text, true);
 reset role;
+-- who may ask: the right to issue, refused before any buyer is read
+insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
+values (pg_temp.u(2), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
+        'mate4105@example.test', '', now(), now(), now());
+insert into public.members (workspace_id, user_id, status, joined_at)
+values (pg_temp.u(102), pg_temp.u(2), 'active', now());
+select set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(2), 'role', 'authenticated')::text, true);
+create function pg_temp.draft_err() returns text language plpgsql as $f$
+begin
+  execute 'set local role authenticated';
+  perform public.invoice_issue_draft(pg_temp.u(102), pg_temp.u(301), '2026-09');
+  execute 'reset role';
+  return '';
+exception when others then
+  execute 'reset role';
+  return sqlstate;
+end $f$;
+grant execute on function pg_temp.draft_err() to authenticated;
+select is(pg_temp.draft_err(), 'DKN01', 'a member without the right to issue is refused the draft');
+reset role;
+select set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(1), 'role', 'authenticated')::text, true);
 select is(current_setting('t.draft')::jsonb -> 'missing', '[]'::jsonb,
   'the draft of an invoice that can be issued names nothing missing');
 select is((select parties from public.invoices where id = current_setting('t.inv')::uuid),

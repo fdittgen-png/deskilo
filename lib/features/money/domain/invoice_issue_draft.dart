@@ -19,7 +19,7 @@ const IssueJudgement noJudgement = (missing: <String>[], gaps: <ChannelGap>[]);
 class IssueDraft {
   const IssueDraft({this.missing = const [], this.seller, this.buyer});
 
-  /// Reads the server's answer (`invoice_issue_draft`, 0793).
+  /// Reads the server's answer (`invoice_issue_draft`, 0792).
   factory IssueDraft.fromAnswer(Map<dynamic, dynamic> answer) {
     final parties = answer['parties'];
     return IssueDraft(

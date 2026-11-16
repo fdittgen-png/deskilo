@@ -17,7 +17,7 @@ String _territoryMissingLabel(AppLocalizations l10n, String key) => switch (key)
   _ => _regionMissingLabel(l10n, key),
 };
 
-/// #4105 -- the region the country's own invoices require (0793).
+/// #4105 -- the region the country's own invoices require (0792).
 String _regionMissingLabel(AppLocalizations l10n, String key) => switch (key) {
   'seller_region' => l10n.invoiceMissingSellerRegion,
   'buyer_region' => l10n.invoiceMissingBuyerRegion,

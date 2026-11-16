@@ -72,7 +72,7 @@ $r$)) v(f, o, n)
     v_def := pg_get_functiondef(v_fn::regprocedure);
     if position(v_new in v_def) > 0 then continue; end if;
     if (length(v_def) - length(replace(v_def, v_old, ''))) / length(v_old) <> 1 then
-      raise exception '% no longer has the shape 0793 extends: %', v_fn, left(v_old, 60) using errcode = 'P0001';
+      raise exception '% no longer has the shape 0792 extends: %', v_fn, left(v_old, 60) using errcode = 'P0001';
     end if;
     execute replace(v_def, v_old, v_new);
   end loop;
@@ -124,4 +124,4 @@ revoke execute on function public.invoice_issue_draft(uuid, uuid, text, text, uu
 grant execute on function public.invoice_issue_draft(uuid, uuid, text, text, uuid, text)
   to authenticated, service_role;
 
-select public.set_deskilo_schema_version(793);
+select public.set_deskilo_schema_version(792);
