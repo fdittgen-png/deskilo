@@ -27,8 +27,13 @@ enum ChannelGap {
   /// (BR-DE-6/7).
   sellerContact,
 
-  /// BT-39 / BT-54 — CIUS-RO wants the county of a Romanian address.
-  subdivision,
+  /// BT-39 — the region of the space's own address: CIUS-RO wants the
+  /// county of a Romanian one, FatturaPA the province of an Italian one.
+  sellerSubdivision,
+
+  /// BT-54 — the same for the customer's address (#3649: the reason names
+  /// whose region is missing).
+  buyerSubdivision,
 
   /// FatturaPA and FA(3) identify the seller by its VAT number only.
   sellerVatId,
@@ -46,7 +51,6 @@ List<ChannelGap> channelGaps(
   String iban = '',
 }) {
   bool blank(String s) => s.trim().isEmpty;
-  bool romanian(InvoiceParty p) => p.country.trim().toUpperCase() == 'RO';
   return switch (format) {
     EInvoiceFormat.peppolBis => [
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,
@@ -65,16 +69,31 @@ List<ChannelGap> channelGaps(
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,
       if (blank(buyer.endpointId)) ChannelGap.buyerEndpoint,
     ],
-    EInvoiceFormat.ciusRo => [
-      if ((romanian(seller) && blank(seller.subdivision)) ||
-          (romanian(buyer) && blank(buyer.subdivision)))
-        ChannelGap.subdivision,
-    ],
+    EInvoiceFormat.ciusRo => _regionGaps('RO', seller, buyer),
     EInvoiceFormat.fatturaPa => [
       if (blank(seller.vatId)) ChannelGap.sellerVatId,
       if (blank(buyer.vatId) && blank(buyer.legalId)) ChannelGap.buyerTaxId,
+      ..._regionGaps(seller.country.trim().toUpperCase(), seller, buyer),
     ],
     EInvoiceFormat.ksefFa3 => [if (blank(seller.vatId)) ChannelGap.sellerVatId],
     EInvoiceFormat.facturX || EInvoiceFormat.en16931Ubl => const [],
   };
+}
+
+/// #3649 -- a format that needs the region of an address in [country] names
+/// whose is missing; nothing is written in its place. FatturaPA is the format
+/// of the seller's own country, so it asks the province of an address there.
+List<ChannelGap> _regionGaps(
+  String country,
+  InvoiceParty seller,
+  InvoiceParty buyer,
+) {
+  bool lacks(InvoiceParty p) =>
+      country.isNotEmpty &&
+      p.country.trim().toUpperCase() == country &&
+      p.subdivision.trim().isEmpty;
+  return [
+    if (lacks(seller)) ChannelGap.sellerSubdivision,
+    if (lacks(buyer)) ChannelGap.buyerSubdivision,
+  ];
 }

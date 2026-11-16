@@ -76,7 +76,8 @@ String _channelGapText(AppLocalizations l10n, ChannelGap gap) =>
       ChannelGap.leitwegId => l10n.eInvoiceChannelGapLeitwegId,
       ChannelGap.paymentAccount => l10n.eInvoiceChannelGapPaymentAccount,
       ChannelGap.sellerContact => l10n.eInvoiceChannelGapSellerContact,
-      ChannelGap.subdivision => l10n.eInvoiceChannelGapSubdivision,
+      ChannelGap.sellerSubdivision => l10n.eInvoiceChannelGapSellerSubdivision,
+      ChannelGap.buyerSubdivision => l10n.eInvoiceChannelGapBuyerSubdivision,
       ChannelGap.sellerVatId => l10n.eInvoiceChannelGapSellerVatId,
       ChannelGap.buyerTaxId => l10n.eInvoiceChannelGapBuyerTaxId,
     };
