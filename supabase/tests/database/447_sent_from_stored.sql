@@ -9,7 +9,7 @@
 -- may issue, only as the exact stored bytes, and never once they no longer
 -- match their hash. Rolled back.
 begin;
-select plan(13);
+select plan(15);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004120' || lpad(n::text, 4, '0'))::uuid;
@@ -18,7 +18,7 @@ grant execute on all functions in schema pg_temp to authenticated, anon;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'sent' || n || '@example.test', '', now(), now(), now()
-  from generate_series(1, 2) n;
+  from generate_series(1, 3) n;
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, vat_regime,
                                feature_flags, street, city, postal_code, payment_instructions)
 values (pg_temp.u(101), 'Sent 4120', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 'not_subject',
@@ -26,7 +26,8 @@ values (pg_temp.u(101), 'Sent 4120', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), 
         '{"iban": "FR7630006000011234567890189", "bic": "AGRIFRPP"}');
 insert into public.members (id, workspace_id, user_id, is_owner, is_admin, status, joined_at)
 values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
-       (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01');
+       (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01'),
+       (pg_temp.u(203), pg_temp.u(101), pg_temp.u(3), false, true, 'active', '2026-01-01');
 insert into public.members (id, workspace_id, managed_name, status, subscription_pct, overage_policy, joined_at)
 values (pg_temp.u(301), pg_temp.u(101), 'Client', 'active', 100, 'blocked', '2026-01-01'),
        (pg_temp.u(302), pg_temp.u(101), 'Later', 'active', 100, 'blocked', '2026-01-01');
@@ -55,6 +56,18 @@ create function pg_temp.as_member(p_sql text) returns text language plpgsql as $
 declare v text;
 begin
   perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(2), 'role', 'authenticated')::text, true);
+  execute 'set local role authenticated';
+  execute p_sql into v;
+  execute 'reset role';
+  return v;
+exception when others then
+  execute 'reset role';
+  return 'ERR ' || sqlstate;
+end $f$;
+create function pg_temp.as_admin(p_sql text) returns text language plpgsql as $f$
+declare v text;
+begin
+  perform set_config('request.jwt.claims', json_build_object('sub', pg_temp.u(3), 'role', 'authenticated')::text, true);
   execute 'set local role authenticated';
   execute p_sql into v;
   execute 'reset role';
@@ -106,6 +119,10 @@ select is(convert_from(decode(
   '<Invoice>sent</Invoice>', 'a person who may issue reads the exact bytes that left');
 select is(pg_temp.as_member(format('select public.invoice_sent_document(%L)::text', current_setting('t.inv'))),
   'ERR DKN01', 'a member without the right to issue is refused');
+select is(pg_temp.as_admin(format('select public.invoice_sent_document(%L)::text', current_setting('t.inv'))),
+  'ERR DKN01', 'and so is an administrator without the right to issue');
+select is(pg_temp.as_admin(format('select public.invoice_send_basis(%L)::text', current_setting('t.inv'))),
+  'ERR DKN01', 'who is refused the sending basis too');
 select is(pg_temp.as_owner(format('select public.invoice_sent_document(%L)::text', gen_random_uuid())),
   'ERR DKN01', 'an unknown invoice gets the same answer');
 update public.invoice_transmission_artifacts set bytes = convert_to('<Invoice>changed</Invoice>', 'UTF8')
