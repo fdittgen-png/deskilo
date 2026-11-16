@@ -32,7 +32,7 @@ class RoPostalLayout extends PostalLayoutContribution {
     region: RegionField(
       kind: RegionKind.county,
       requiredInForm: true,
-      requiredOnInvoice: true,
+      requiredOnInvoice: RegionOnInvoice.everyParty,
       names: roRegions,
       printsName: true,
     ),

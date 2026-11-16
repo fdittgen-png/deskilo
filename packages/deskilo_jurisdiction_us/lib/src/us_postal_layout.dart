@@ -30,7 +30,7 @@ class UsPostalLayout extends PostalLayoutContribution {
     region: RegionField(
       kind: RegionKind.state,
       requiredInForm: true,
-      requiredOnInvoice: true,
+      requiredOnInvoice: RegionOnInvoice.seller,
       names: usRegions,
     ),
   );

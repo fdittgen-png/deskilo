@@ -35,7 +35,7 @@ create function pg_temp.regions(p_ws int, p_seller jsonb, p_buyer jsonb) returns
    where k in ('seller_region', 'buyer_region')
 $$;
 
-select is(public.postal_region_rules() -> 'IT' ->> 'invoice', 'true',
+select is(public.postal_region_rules() -> 'IT' ->> 'invoice', 'everyParty',
   'the server knows which countries require the region on an invoice');
 select is(pg_temp.regions(101,
     '{"street": "Via Roma 2", "city": "Milano", "country": "IT"}',
@@ -61,11 +61,11 @@ select is(pg_temp.regions(102,
 select is(pg_temp.regions(103,
     '{"street": "1 Main St", "city": "Boston", "country": "US"}',
     '{"name": "Customer", "street": "2 Elm St", "city": "Boston", "country": "US"}'),
-  'buyer_region,seller_region', 'under sales tax, the state of each American address is asked');
+  'seller_region', 'under sales tax, the seller''s own state is asked, never the customer''s');
 select is(pg_temp.regions(103,
     '{"street": "1 Main St", "city": "Boston", "country": "US", "subdivision": "MA"}',
     '{"name": "Customer", "street": "2 Elm St", "city": "Boston", "country": "US", "subdivision": "MA"}'),
-  '', 'and once the states are entered, nothing about a region is missing');
+  '', 'and once the seller''s state is entered, nothing about a region is missing');
 
 -- ── the draft an issue would store, before the number is taken ──
 insert into public.members (id, workspace_id, managed_name, status, subscription_pct, overage_policy, joined_at)

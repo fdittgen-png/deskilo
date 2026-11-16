@@ -35,12 +35,10 @@ import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/kit/select_row.dart';
 import '../../../../core/ui/kit/two_line_row.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
 import '../../application/issue_month.dart';
 import '../../application/issue_month_readiness.dart';
 import '../../providers/money_providers.dart';
-import '../e_invoice_identity.dart';
 import '../invoice_original_document.dart';
 import '../invoice_proforma.dart';
 import '../issue_judgement.dart';
@@ -58,6 +56,7 @@ class InvoiceMonthFlow extends ConsumerStatefulWidget {
     required this.entries,
     required this.currency,
     required this.workspaceId,
+    this.iban = '',
     required this.onFixCustomer,
     required this.onFixBusiness,
   });
@@ -73,6 +72,9 @@ class InvoiceMonthFlow extends ConsumerStatefulWidget {
 
   /// The business whose month is invoiced.
   final String workspaceId;
+
+  /// #4105 — the account the business is paid on: a channel may need it.
+  final String iban;
 
   /// Opens the place where a customer's billing details are completed; the
   /// list reads that customer again when it returns.
@@ -112,7 +114,6 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
   /// Rows render at once; their status fills in as each read answers.
   Future<void> _read(List<String> memberIds) {
     _state.readingAgain(memberIds);
-    final workspace = ref.read(currentWorkspaceProvider).value;
     return readMonthReadiness(
       // #4105 -- the essentials, and what each e-invoice will need.
       judge: (id) => judgeIssue(
@@ -125,7 +126,7 @@ class _InvoiceMonthFlowState extends ConsumerState<InvoiceMonthFlow> {
           replacesId: null,
           correctionReason: '',
         ),
-        iban: workspace == null ? '' : workspaceIban(workspace),
+        iban: widget.iban,
       ),
       memberIds: memberIds,
       onEach: (id, readiness) {

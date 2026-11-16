@@ -16,7 +16,7 @@
 -- ── 1. the region facts of each country (generated) ─────────────────────
 create or replace function public.postal_region_rules()
 returns jsonb language sql immutable set search_path = public as $fn$
-  select '{"CA":{"form":true,"invoice":true},"CH":{"form":false,"invoice":false},"ES":{"form":false,"invoice":false},"IE":{"form":false,"invoice":false},"IT":{"form":true,"invoice":true},"RO":{"form":true,"invoice":true},"US":{"form":true,"invoice":true}}'::jsonb
+  select '{"CA":{"form":true,"invoice":"seller"},"CH":{"form":false,"invoice":"none"},"ES":{"form":false,"invoice":"none"},"IE":{"form":false,"invoice":"none"},"IT":{"form":true,"invoice":"everyParty"},"RO":{"form":true,"invoice":"everyParty"},"US":{"form":true,"invoice":"seller"}}'::jsonb
 $fn$;
 revoke execute on function public.postal_region_rules() from public, anon, authenticated;
 
@@ -25,12 +25,14 @@ create or replace function public.invoice_region_missing(
   p_seller jsonb, p_buyer jsonb, p_seller_country text)
 returns text[] language sql stable set search_path = public as $fn$
   select array_remove(array[
-    case when coalesce((public.postal_region_rules()
-                          -> upper(btrim(coalesce(p_seller_country, ''))) ->> 'invoice')::boolean, false)
+    case when coalesce(public.postal_region_rules()
+                         -> upper(btrim(coalesce(p_seller_country, ''))) ->> 'invoice', 'none')
+                in ('seller', 'everyParty')
               and btrim(coalesce(p_seller ->> 'subdivision', '')) = ''
          then 'seller_region' end,
-    case when coalesce((public.postal_region_rules()
-                          -> upper(btrim(coalesce(p_seller_country, ''))) ->> 'invoice')::boolean, false)
+    case when coalesce(public.postal_region_rules()
+                         -> upper(btrim(coalesce(p_seller_country, ''))) ->> 'invoice', 'none')
+                = 'everyParty'
               and upper(btrim(coalesce(nullif(p_buyer ->> 'country', ''), p_seller_country, '')))
                   = upper(btrim(coalesce(p_seller_country, '')))
               and btrim(coalesce(p_buyer ->> 'subdivision', '')) = ''

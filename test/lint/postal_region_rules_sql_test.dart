@@ -40,9 +40,10 @@ void main() {
 
   test('a country with a region states both of its facts', () {
     final rules = postalRegionRulesJson();
-    expect(rules, contains('"IT":{"form":true,"invoice":true}'));
-    expect(rules, contains('"RO":{"form":true,"invoice":true}'));
-    expect(rules, contains('"ES":{"form":false,"invoice":false}'));
+    expect(rules, contains('"IT":{"form":true,"invoice":"everyParty"}'));
+    expect(rules, contains('"RO":{"form":true,"invoice":"everyParty"}'));
+    expect(rules, contains('"ES":{"form":false,"invoice":"none"}'));
+    expect(rules, contains('"US":{"form":true,"invoice":"seller"}'));
     expect(rules, isNot(contains('"FR"')), reason: 'no region field, no fact');
   });
 }

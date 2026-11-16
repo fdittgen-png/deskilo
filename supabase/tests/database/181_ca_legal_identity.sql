@@ -26,7 +26,9 @@ language sql as $$
     from unnest(public.invoice_essentials_missing('00000000-0000-4000-8000-0000002361b1'::uuid,
       '00000000-0000-4000-8000-0000002361c1'::uuid,
       jsonb_build_object('seller', jsonb_build_object('street','s','city','c','vat_regime',p_regime,
-                                                      'vat_id',p_vat_id,'legal_id',p_legal_id),
+                                                      'vat_id',p_vat_id,'legal_id',p_legal_id,
+                                                      -- #4105: the province the sales tax reads
+                                                      'subdivision','ON'),
                          'buyer', '{"name":"B","street":"s","city":"c"}'::jsonb),
       p_totals)) x;
 $$;

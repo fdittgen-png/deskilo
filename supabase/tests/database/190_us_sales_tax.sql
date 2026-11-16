@@ -51,7 +51,7 @@ begin
   insert into public.workspaces(name,country_code,currency_code,timezone,created_by,street,city,postal_code,
                                 vat_regime,feature_flags,invoice_legal)
    values ('US 2362 ' || tag, 'US', currency, 'America/New_York', uo, '1 Broadway', 'New York', postal,
-           'not_subject', flags::jsonb, '{}')
+           'not_subject', flags::jsonb, '{"subdivision": "NY"}')
    returning id into ws;
   insert into public.members(workspace_id,user_id,is_owner,is_admin,joined_at) values (ws,uo,true,true,'2026-01-01');
   insert into public.members(workspace_id,user_id,subscription_pct,joined_at,customer_capacity)

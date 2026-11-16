@@ -31,7 +31,7 @@ class CaPostalLayout extends PostalLayoutContribution {
     region: RegionField(
       kind: RegionKind.province,
       requiredInForm: true,
-      requiredOnInvoice: true,
+      requiredOnInvoice: RegionOnInvoice.seller,
       names: caRegions,
     ),
   );

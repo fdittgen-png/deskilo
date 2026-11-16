@@ -59,8 +59,7 @@ List<ChannelGap> channelGaps(
     EInvoiceFormat.peppolBis => [
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,
       if (blank(buyer.endpointId)) ChannelGap.buyerEndpoint,
-      if (blank(buyer.reference) && blank(buyer.orderReference))
-        ChannelGap.buyerReference,
+      if (blank(buyer.reference + buyer.orderReference)) ChannelGap.buyerReference,
     ],
     EInvoiceFormat.xrechnung => [
       if (blank(seller.endpointId)) ChannelGap.sellerEndpoint,

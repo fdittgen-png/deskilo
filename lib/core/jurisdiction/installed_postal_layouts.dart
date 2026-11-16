@@ -117,16 +117,17 @@ String _cased(String value, bool upper) =>
 
 /// #4105 -- the server's copy of each country's region facts, generated from
 /// the installed layouts (`dart run tool/build_postal_region_rules_sql.dart`):
-/// `{"IT": {"form": true, "invoice": true}, ...}`, keyed by country, sorted.
+/// `{"IT": {"form": true, "invoice": "everyParty"}, ...}`, keyed by country,
+/// sorted.
 /// A country whose addresses have no region is absent.
 @visibleForTesting
 String postalRegionRulesJson() {
-  final rules = <String, Map<String, bool>>{
+  final rules = <String, Map<String, Object>>{
     for (final c in installedPostalLayouts)
       if (c.layout.region case final region?)
         c.descriptor.capabilityId.split('.').last: {
           'form': region.requiredInForm,
-          'invoice': region.requiredOnInvoice,
+          'invoice': region.requiredOnInvoice.name,
         },
   };
   final keys = rules.keys.toList()..sort();
