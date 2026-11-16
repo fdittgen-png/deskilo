@@ -348,7 +348,7 @@ List<TemplateFieldSpec> _tables() => [
       _f('tables.workspace_field_definitions[].options[].labels.{locale}', 'field_definitions', _text, key: 'key'),
     ];
 
-const _siteColumns = ['name', 'street', 'postal_code', 'city', 'country_code',
+const _siteColumns = ['name', 'street', 'postal_code', 'city', 'country_code', 'subdivision',
   'legal_id', 'vat_id', 'tax_exemption_reason', 'is_default', 'sort_order'];
 
 /// The plan tree `strip_template_plan` keeps: names and geometry, never a
