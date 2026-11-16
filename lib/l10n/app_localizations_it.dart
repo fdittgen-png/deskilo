@@ -24242,7 +24242,7 @@ class AppLocalizationsIt extends AppLocalizations {
       'Non è possibile scrivere a questa attività da qui.';
 
   @override
-  String get placeInquiryReachOtherwise => 'Puoi contattarla qui:';
+  String get placeInquiryReachOtherwise => 'Può contattarla qui:';
 
   @override
   String placeInquirySendTo(String business) {

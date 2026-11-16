@@ -15,6 +15,7 @@ import 'public_service_line.dart';
 
 /// The services by category: categories in the order their first service
 /// appears, the services without one last.
+@visibleForTesting
 List<({String? category, List<(int, PublicService)> services})>
 publicServiceGroups(List<PublicService> services) {
   final groups = <String?, List<(int, PublicService)>>{};

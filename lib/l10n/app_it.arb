@@ -14130,7 +14130,7 @@
   },
   "placeInquiryAbout": "Buongiorno, vorrei saperne di più su «{service}».",
   "placeInquiryNoWay": "Non è possibile scrivere a questa attività da qui.",
-  "placeInquiryReachOtherwise": "Puoi contattarla qui:",
+  "placeInquiryReachOtherwise": "Può contattarla qui:",
   "placeInquirySendTo": "Invia a {business}",
   "placePreviewContact": "Contatta",
   "placeServiceAsk": "Chiedi di {service}",

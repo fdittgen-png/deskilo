@@ -333,9 +333,6 @@ class PublicWorkspaceView extends ConsumerWidget {
         SpaceOffers(
           workspace: workspace,
           onRequest: () => _apply(context, ref, workspace),
-          // #3554 — the inquiry is the filled action of a business that
-          // takes inquiries and publishes services; its kind only chooses
-          // the words.
           contact: _takesInquiries(workspace, withdrawn: withdrawn)
               ? (
                   label: _coworking(workspace)
