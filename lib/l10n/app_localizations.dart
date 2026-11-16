@@ -24743,6 +24743,18 @@ abstract class AppLocalizations {
   /// **'{channel} only accepts {format}: this EN 16931 file serves Peppol, public buyers and foreign customers — your platform or accountant converts the rest.'**
   String invoiceEInvoiceFormatMismatch(String channel, String format);
 
+  /// #4105 the link to where the space’s own facts are entered
+  ///
+  /// In en, this message translates to:
+  /// **'Open the legal identity'**
+  String get invoiceEInvoiceGapsOpenIdentity;
+
+  /// #4105 before issuing: what the configured channel will still need
+  ///
+  /// In en, this message translates to:
+  /// **'The e-invoice cannot be sent until these are added (the invoice can still be issued):'**
+  String get invoiceEInvoiceGapsTitle;
+
   /// E-invoice sheet: header above the non-fatal gaps
   ///
   /// In en, this message translates to:

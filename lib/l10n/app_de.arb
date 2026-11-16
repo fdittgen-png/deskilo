@@ -9084,6 +9084,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Rechtliche Identität öffnen",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "Die E-Rechnung kann erst versendet werden, wenn dies ergänzt ist (die Rechnung kann trotzdem ausgestellt werden):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Gültig, doch die strengen nationalen Profile wollen zusätzlich:",
   "invoiceEInvoicePublicRoute": "Öffentliche Auftraggeber: {channel}.",
   "@invoiceEInvoicePublicRoute": {

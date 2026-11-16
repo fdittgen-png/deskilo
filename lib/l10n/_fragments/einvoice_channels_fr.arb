@@ -292,5 +292,13 @@
   "einvoiceTestUnavailable": "La plateforme configurée n'accepte pas de document de test.",
   "einvoiceTestNotAllowed": "Seule une personne qui gère les intégrations envoie un document de test.",
   "einvoiceTestFailed": "La plateforme n'a pas pu recevoir le document de test. Réessayez plus tard.",
-  "einvoiceTestNothingToInvoice": "Ce membre n'a rien sur sa facture ce mois-ci : choisissez un autre membre."
+  "einvoiceTestNothingToInvoice": "Ce membre n'a rien sur sa facture ce mois-ci : choisissez un autre membre.",
+  "invoiceEInvoiceGapsTitle": "La facture électronique ne pourra pas être envoyée tant que ceci n'est pas ajouté (la facture peut tout de même être émise) :",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
+  "invoiceEInvoiceGapsOpenIdentity": "Ouvrir l'identité légale",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  }
 }

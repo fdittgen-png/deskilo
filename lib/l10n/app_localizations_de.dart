@@ -15570,6 +15570,13 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Rechtliche Identität öffnen';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'Die E-Rechnung kann erst versendet werden, wenn dies ergänzt ist (die Rechnung kann trotzdem ausgestellt werden):';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Gültig, doch die strengen nationalen Profile wollen zusätzlich:';
 

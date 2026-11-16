@@ -15422,6 +15422,13 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Open the legal identity';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'The e-invoice cannot be sent until these are added (the invoice can still be issued):';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Valid, but the strict national profiles also want:';
 

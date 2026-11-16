@@ -9084,6 +9084,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Abrir la identidad legal",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "La factura electrónica no podrá enviarse hasta que se añada esto (la factura puede emitirse igualmente):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Válido, pero los perfiles nacionales estrictos piden además:",
   "invoiceEInvoicePublicRoute": "Clientes del sector público: {channel}.",
   "@invoiceEInvoicePublicRoute": {

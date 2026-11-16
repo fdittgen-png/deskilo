@@ -15537,6 +15537,13 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get invoiceEInvoiceGapsOpenIdentity => 'Apri l\'identità legale';
+
+  @override
+  String get invoiceEInvoiceGapsTitle =>
+      'La fattura elettronica non potrà essere inviata finché non si aggiunge questo (la fattura può comunque essere emessa):';
+
+  @override
   String get invoiceEInvoiceIncompleteTitle =>
       'Valido, ma i profili nazionali più severi chiedono anche:';
 

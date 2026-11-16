@@ -20187,6 +20187,14 @@
       }
     }
   },
+  "invoiceEInvoiceGapsOpenIdentity": "Open the legal identity",
+  "@invoiceEInvoiceGapsOpenIdentity": {
+    "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceEInvoiceGapsTitle": "The e-invoice cannot be sent until these are added (the invoice can still be issued):",
+  "@invoiceEInvoiceGapsTitle": {
+    "description": "#4105 before issuing: what the configured channel will still need"
+  },
   "invoiceEInvoiceIncompleteTitle": "Valid, but the strict national profiles also want:",
   "@invoiceEInvoiceIncompleteTitle": {
     "description": "E-invoice sheet: header above the non-fatal gaps"

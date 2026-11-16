@@ -107,6 +107,7 @@ import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
 import 'package:deskilo/features/money/domain/credit_product.dart';
+import 'package:deskilo/features/money/domain/invoice_issue_draft.dart';
 import 'package:deskilo/features/money/domain/invoice_original.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
 import 'package:deskilo/features/money/domain/recorded_payments.dart'
@@ -763,6 +764,7 @@ List<Override> _moneyOverrides(
 ) => [
       moneyRepositoryProvider.overrideWithValue(money),
       invoiceQueriesProvider.overrideWithValue(money),
+      invoiceIssueDraftsProvider.overrideWithValue(ReadinessOnlyIssueDrafts(money)),
       memberAccountQueriesProvider.overrideWithValue(money),
       reportTemplateRepositoryProvider.overrideWithValue(money),
       invoiceCommandsProvider.overrideWithValue(money),
