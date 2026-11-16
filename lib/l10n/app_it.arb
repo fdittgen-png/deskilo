@@ -213,12 +213,15 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Tutta la contabilità",
   "accountingStatusAtLeast": "{figure} o più",
   "accountingStatusBankToMatch": "Movimenti bancari da abbinare",
   "accountingStatusClosedUpTo": "Contabilità chiusa fino al",
+  "accountingStatusDue": "Da fare",
   "accountingStatusLastExport": "Ultima esportazione",
   "accountingStatusNotRead": "Non è stato possibile leggerlo",
+  "accountingStatusReference": "Riferimento",
+  "accountingStatusToFile": "Da presentare",
+  "accountingStatusToMatch": "Da riconciliare",
   "accountingStatusVatToFile": "Dichiarazione IVA da presentare",
   "acctConnConnectToken": "Collega con un token API",
   "acctConnDetail": "Risposta del sistema: {detail}",
@@ -14756,8 +14759,13 @@
   "purchaseApproveSelected": "{count, plural, one{Approva {count} documento} other{Approva {count} documenti}}",
   "purchaseBillForOrder": "Ordine di acquisto {reference}",
   "purchaseBillNoOrder": "Nessun ordine",
+  "purchaseBillOptional": "{label} (facoltativo)",
   "purchaseBillOrder": "Ordine di acquisto",
   "purchaseBillOrderHint": "L’ordine che questa fattura addebita: i suoi importi vengono ripresi e restano modificabili",
+  "purchaseBillSectionAccounting": "Contabilità",
+  "purchaseBillSectionAmount": "Importo e imposta",
+  "purchaseBillSectionDescription": "Descrizione e articolo",
+  "purchaseBillSectionSupplier": "Fornitore e documento",
   "purchaseEntryAdd": "Aggiungi acquisto / spesa",
   "purchaseEntryMe": "Ho pagato io",
   "purchaseEntryMeHint": "La presenti come sua spesa: una volta approvata, lo spazio gliela deve.",
@@ -18706,6 +18714,8 @@
   },
   "settlementVatNote": "Le righe e la loro IVA sono riprese dalle fatture raggruppate; la dichiarazione IVA conta gli originali una sola volta.",
   "setupAdvancedSettings": "Impostazioni avanzate",
+  "setupAllSteps": "Tutti i passaggi: {done} su {total}",
+  "setupAllStepsNote": "Include i passaggi per dopo",
   "setupAnswerUnknown": "Non lo so ancora",
   "setupAnswerUnknownNote": "Non ancora deciso: {list} restano sulla scelta sicura. Non si attiva nulla per questo; torni a questa domanda qui quando lo sa.",
   "setupApprovalsApply": "Usare questa regola",
@@ -18767,6 +18777,7 @@
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
   },
+  "setupGoalChecks": "{required, plural, one{Questo obiettivo: {ready} controllo su {required} fatto} other{Questo obiettivo: {ready} controlli su {required} fatti}}",
   "setupGoalLine": "Il Suo obiettivo: {milestone}",
   "@setupGoalLine": {
     "description": "#3076 — the hub states the goal the space chose, derived from the last milestone that applies.",
@@ -19248,6 +19259,7 @@
     "description": "#3076 — on a step page of the guide: goes on to the next step still to do."
   },
   "setupStepOpenScreen": "Apra",
+  "setupStepPosition": "Passaggio {number} di {total} · {name}",
   "setupStepPreviewTitle": "Cosa vedranno i Suoi membri",
   "setupStepTitleAccounting": "Contabilità",
   "setupStepTitleApprovals": "Approvazioni",

@@ -175,15 +175,9 @@ void main() {
     final money = await pumpInvoices(tester, money: await seededMoney());
 
     await tapInvoicingTool(tester, 'invoice-template-button');
-    // #822 — the editor is a page; the document row scrolls sideways.
-    await tester.scrollUntilVisible(
+    // #4078 — the editor's document chips wrap: each one is in reach.
+    await tester.ensureVisible(
       find.byKey(const ValueKey('invoice-template-doc-r1')),
-      120,
-      scrollable: find
-          .descendant(
-              of: find.byKey(const ValueKey('invoice-template-docs')),
-              matching: find.byType(Scrollable))
-          .first,
     );
     await tester.tap(find.byKey(const ValueKey('invoice-template-doc-r1')));
     await tester.pumpAndSettle();

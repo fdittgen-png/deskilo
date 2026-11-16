@@ -193,5 +193,10 @@
   "purchaseReceiptSubmit": "Soumettre le justificatif",
   "purchaseReceiptAmount": "Saisissez un montant positif sur chaque ligne.",
   "purchaseReceiptDeductible": "La part déductible de chaque ligne taxée est comprise entre 0 et 100 %.",
-  "purchaseReceiptSubmitted": "Justificatif soumis : il attend son approbation."
+  "purchaseReceiptSubmitted": "Justificatif soumis : il attend son approbation.",
+  "purchaseBillSectionSupplier": "Fournisseur et document",
+  "purchaseBillSectionAmount": "Montant et taxe",
+  "purchaseBillSectionAccounting": "Comptabilité",
+  "purchaseBillSectionDescription": "Description et article",
+  "purchaseBillOptional": "{label} (facultatif)"
 }

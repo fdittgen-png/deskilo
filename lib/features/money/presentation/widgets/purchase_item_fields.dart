@@ -83,6 +83,8 @@ class _PurchaseItemFieldsState extends ConsumerState<PurchaseItemFields> {
         if (_itemId != null) ...[
           AppTextField(
             key: const ValueKey('purchase-quantity'),
+            // #4065 — the bill form's summary moves the focus here.
+            fieldKey: 'quantity',
             controller: _quantity,
             label: l10n.purchasesQuantity,
             keyboardType: const TextInputType.numberWithOptions(decimal: true),

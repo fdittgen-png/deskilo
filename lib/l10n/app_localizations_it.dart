@@ -339,9 +339,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le registrazioni sono cambiate o sono troppo grandi per una sola esportazione. Ricarichi il registro, o scelga un periodo più breve, e riprovi.';
 
   @override
-  String get accountingStatusAllBooks => 'Tutta la contabilità';
-
-  @override
   String accountingStatusAtLeast(String figure) {
     return '$figure o più';
   }
@@ -353,10 +350,22 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountingStatusClosedUpTo => 'Contabilità chiusa fino al';
 
   @override
+  String get accountingStatusDue => 'Da fare';
+
+  @override
   String get accountingStatusLastExport => 'Ultima esportazione';
 
   @override
   String get accountingStatusNotRead => 'Non è stato possibile leggerlo';
+
+  @override
+  String get accountingStatusReference => 'Riferimento';
+
+  @override
+  String get accountingStatusToFile => 'Da presentare';
+
+  @override
+  String get accountingStatusToMatch => 'Da riconciliare';
 
   @override
   String get accountingStatusVatToFile => 'Dichiarazione IVA da presentare';
@@ -25598,11 +25607,28 @@ class AppLocalizationsIt extends AppLocalizations {
   String get purchaseBillNoOrder => 'Nessun ordine';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (facoltativo)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Ordine di acquisto';
 
   @override
   String get purchaseBillOrderHint =>
       'L’ordine che questa fattura addebita: i suoi importi vengono ripresi e restano modificabili';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Contabilità';
+
+  @override
+  String get purchaseBillSectionAmount => 'Importo e imposta';
+
+  @override
+  String get purchaseBillSectionDescription => 'Descrizione e articolo';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Fornitore e documento';
 
   @override
   String get purchaseEntryAdd => 'Aggiungi acquisto / spesa';
@@ -30804,6 +30830,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get setupAdvancedSettings => 'Impostazioni avanzate';
 
   @override
+  String setupAllSteps(int done, int total) {
+    return 'Tutti i passaggi: $done su $total';
+  }
+
+  @override
+  String get setupAllStepsNote => 'Include i passaggi per dopo';
+
+  @override
   String get setupAnswerUnknown => 'Non lo so ancora';
 
   @override
@@ -31088,6 +31122,17 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupGoalChange => 'Cambia';
+
+  @override
+  String setupGoalChecks(int ready, int required) {
+    String _temp0 = intl.Intl.pluralLogic(
+      required,
+      locale: localeName,
+      other: 'Questo obiettivo: $ready controlli su $required fatti',
+      one: 'Questo obiettivo: $ready controllo su $required fatto',
+    );
+    return '$_temp0';
+  }
 
   @override
   String setupGoalLine(String milestone) {
@@ -32631,6 +32676,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get setupStepOpenScreen => 'Apra';
+
+  @override
+  String setupStepPosition(int number, int total, String name) {
+    return 'Passaggio $number di $total · $name';
+  }
 
   @override
   String get setupStepPreviewTitle => 'Cosa vedranno i Suoi membri';

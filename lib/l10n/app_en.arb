@@ -430,10 +430,6 @@
   "@accountingSourceRefused": {
     "description": "#2365 accounting export refused: the fiscal source changed or is over budget"
   },
-  "accountingStatusAllBooks": "Everything in the books",
-  "@accountingStatusAllBooks": {
-    "description": "#3616 heading of the doors to every part of the books, under the status tiles"
-  },
   "accountingStatusAtLeast": "{figure} or more",
   "@accountingStatusAtLeast": {
     "description": "#3913 A count shown when some rows could not be read by this version: the true count is at least this.",
@@ -452,6 +448,10 @@
   "@accountingStatusClosedUpTo": {
     "description": "#3616 books status tile: the last day of the latest closed period"
   },
+  "accountingStatusDue": "Due",
+  "@accountingStatusDue": {
+    "description": "#4066 — the accounting overview's first block: what asks for something."
+  },
   "accountingStatusLastExport": "Last export",
   "@accountingStatusLastExport": {
     "description": "#3616 books status tile: the latest file handed to the accountant"
@@ -459,6 +459,18 @@
   "accountingStatusNotRead": "Could not be read",
   "@accountingStatusNotRead": {
     "description": "#3616 books status tile whose read failed: never shown as nothing to do"
+  },
+  "accountingStatusReference": "Reference",
+  "@accountingStatusReference": {
+    "description": "#4066 — the accounting overview's second block: what only states a figure, and the doors."
+  },
+  "accountingStatusToFile": "To file",
+  "@accountingStatusToFile": {
+    "description": "#4066 — said on the VAT return's tile while a return is still to file; no deadline is given."
+  },
+  "accountingStatusToMatch": "To match",
+  "@accountingStatusToMatch": {
+    "description": "#4066 — said on the bank tile while movements wait for a match."
   },
   "accountingStatusVatToFile": "VAT return to file",
   "@accountingStatusVatToFile": {
@@ -33328,6 +33340,15 @@
   "@purchaseBillNoOrder": {
     "description": "#3307 goods receipts"
   },
+  "purchaseBillOptional": "{label} (optional)",
+  "@purchaseBillOptional": {
+    "description": "#4065 — a field's label, marked as one that may stay empty.",
+    "placeholders": {
+      "label": {
+        "type": "String"
+      }
+    }
+  },
   "purchaseBillOrder": "Purchase order",
   "@purchaseBillOrder": {
     "description": "#3307 goods receipts"
@@ -33335,6 +33356,22 @@
   "purchaseBillOrderHint": "The order this bill charges: its amounts are taken and stay editable",
   "@purchaseBillOrderHint": {
     "description": "#3307 goods receipts"
+  },
+  "purchaseBillSectionAccounting": "Accounting",
+  "@purchaseBillSectionAccounting": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionAmount": "Amount and tax",
+  "@purchaseBillSectionAmount": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionDescription": "Description and item",
+  "@purchaseBillSectionDescription": {
+    "description": "#4065 — a heading of the supplier-bill form."
+  },
+  "purchaseBillSectionSupplier": "Supplier and document",
+  "@purchaseBillSectionSupplier": {
+    "description": "#4065 — a heading of the supplier-bill form."
   },
   "purchaseEntryAdd": "Add purchase / expense",
   "@purchaseEntryAdd": {
@@ -39763,6 +39800,22 @@
   "@setupAdvancedSettings": {
     "description": "#3282 the collapsed section of the setup guide with the workspace settings, the feature switches and the plan editor."
   },
+  "setupAllSteps": "All steps: {done} of {total}",
+  "@setupAllSteps": {
+    "description": "#4074 the setup head's count of every step the space uses, named as all steps. The numbers are figures after a label and a colon, read as values. [not a count: done, total]",
+    "placeholders": {
+      "done": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      }
+    }
+  },
+  "setupAllStepsNote": "Includes steps for later",
+  "@setupAllStepsNote": {
+    "description": "#4074 the line under the all-steps count: it includes steps for later."
+  },
   "setupAnswerUnknown": "Not sure yet",
   "@setupAnswerUnknown": {
     "description": "#3076 setup questions: the third answer, not decided yet"
@@ -40058,6 +40111,18 @@
   "setupGoalChange": "Change",
   "@setupGoalChange": {
     "description": "#3076 — opens the screen where the space's levels, and so its goal, are chosen."
+  },
+  "setupGoalChecks": "{required, plural, one{This goal: {ready} of {required} check done} other{This goal: {ready} of {required} checks done}}",
+  "@setupGoalChecks": {
+    "description": "#4074 the setup head's count of the chosen goal's checks, named as the goal's. The count is of the checks (required); how many are done is a figure read as a value. [not a count: ready]",
+    "placeholders": {
+      "ready": {
+        "type": "int"
+      },
+      "required": {
+        "type": "int"
+      }
+    }
   },
   "setupGoalLine": "Your goal: {milestone}",
   "@setupGoalLine": {
@@ -41983,6 +42048,21 @@
   "setupStepOpenScreen": "Open it",
   "@setupStepOpenScreen": {
     "description": "#2870 setup steps: setupStepOpenScreen"
+  },
+  "setupStepPosition": "Step {number} of {total} · {name}",
+  "@setupStepPosition": {
+    "description": "#4074 where a step stands in the guide and its name, beside its number. The numbers are positions, not a quantity. [not a count: number, total]",
+    "placeholders": {
+      "number": {
+        "type": "int"
+      },
+      "total": {
+        "type": "int"
+      },
+      "name": {
+        "type": "String"
+      }
+    }
   },
   "setupStepPreviewTitle": "What your members will see",
   "@setupStepPreviewTitle": {

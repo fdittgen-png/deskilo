@@ -191,7 +191,10 @@ void main() {
     final pushed = await _pump(tester, _status());
     expect(find.text('Places on the plan'), findsOneWidget);
     expect(find.text('about 10–20 min'), findsOneWidget);
-    expect(find.text('1 of 2 done'), findsOneWidget);
+    expect(find.text('This goal: 1 of 2 checks done'), findsOneWidget);
+    // #4074 — the other count is named too: every step the space uses.
+    expect(find.text('All steps: 1 of 3'), findsOneWidget);
+    expect(find.text('Includes steps for later'), findsOneWidget);
     expect(
       find.byKey(const ValueKey('setup-configuration-overview')),
       findsOneWidget,
@@ -247,6 +250,11 @@ void main() {
   });
 
   testWidgets('what can wait is folded, by group', (tester) async {
+    // The list builds what is in view: room for the head's two counts.
+    tester.view
+      ..physicalSize = const Size(800, 1600)
+      ..devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
     await _pump(tester, _status());
     expect(find.byKey(const ValueKey('setup-guide-optional')), findsOneWidget);
     expect(find.byKey(const ValueKey('setup-guide-done')), findsOneWidget);

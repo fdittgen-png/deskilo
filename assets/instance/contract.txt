@@ -1351,6 +1351,7 @@ constraint profiles.profiles_postal_code_check CHECK ((char_length(postal_code) 
 constraint profiles.profiles_preferred_locale_check CHECK ((char_length(preferred_locale) <= 5))
 constraint profiles.profiles_status_text_check CHECK ((char_length(status_text) <= 40))
 constraint profiles.profiles_street_check CHECK ((char_length(street) <= 200))
+constraint profiles.profiles_subdivision_check CHECK ((subdivision ~ '^[A-Z0-9-]{0,10}$'::text))
 constraint profiles.profiles_time_zone_mode_check CHECK ((time_zone_mode = ANY (ARRAY['workspace'::text, 'device'::text])))
 constraint profiles.profiles_vat_id_check CHECK ((char_length(vat_id) <= 20))
 constraint profiles.profiles_week_start_check CHECK ((week_start = ANY (ARRAY['locale'::text, 'monday'::text, 'sunday'::text, 'saturday'::text])))
@@ -1901,6 +1902,7 @@ constraint sites.sites_name_check CHECK (((char_length(name) >= 1) AND (char_len
 constraint sites.sites_pkey PRIMARY KEY (id)
 constraint sites.sites_postal_code_check CHECK ((char_length(postal_code) <= 16))
 constraint sites.sites_street_check CHECK ((char_length(street) <= 200))
+constraint sites.sites_subdivision_check CHECK ((subdivision ~ '^[A-Z0-9-]{0,10}$'::text))
 constraint sites.sites_tax_exemption_reason_check CHECK ((char_length(tax_exemption_reason) <= 200))
 constraint sites.sites_vat_id_check CHECK ((char_length(vat_id) <= 40))
 constraint sites.sites_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
@@ -2014,6 +2016,7 @@ constraint suppliers.suppliers_pkey PRIMARY KEY (id)
 constraint suppliers.suppliers_postal_code_check CHECK ((char_length(postal_code) <= 20))
 constraint suppliers.suppliers_status_check CHECK ((status = ANY (ARRAY['active'::text, 'archived'::text])))
 constraint suppliers.suppliers_street_check CHECK ((char_length(street) <= 200))
+constraint suppliers.suppliers_subdivision_check CHECK ((subdivision ~ '^[A-Z0-9-]{0,10}$'::text))
 constraint suppliers.suppliers_supplier_number_check CHECK ((((char_length(supplier_number) >= 1) AND (char_length(supplier_number) <= 20)) AND (supplier_number = btrim(supplier_number))))
 constraint suppliers.suppliers_tax_id_entered_check CHECK ((char_length(tax_id_entered) <= 60))
 constraint suppliers.suppliers_tax_id_kind_check CHECK ((tax_id_kind = ANY (ARRAY['vat'::text, 'vat_group'::text])))
@@ -2604,7 +2607,7 @@ routine public.ensure_personal_data_admin_role(p_workspace_id uuid) -> uuid | fu
 routine public.ensure_system_columns(p_table text) -> void | function | invoker | volatile | exec:service_role | body:b82cfcf514ba
 routine public.ensure_usage_records(p_workspace_id uuid, p_period text) -> integer | function | definer | volatile | exec:service_role | body:b8c745441adc
 routine public.entity_row_key(p_table text, p_row jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:ea5668823281
-routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:a38d96e287ff
+routine public.erase_my_membership(p_workspace_id uuid) -> void | function | definer | volatile | exec:authenticated,service_role | body:3dd8d10f03a2
 routine public.eu_country_code(p_code text) -> text | function | definer | stable | exec:authenticated,service_role | body:f368137a02e3
 routine public.event_decisions_fill_workspace() -> trigger | function | invoker | volatile | exec:service_role | body:e3172b5579a2
 routine public.event_type_view_permissions(p_type text) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:70e8dbf78578
@@ -2617,7 +2620,7 @@ routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb 
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fba8d3f34792
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7a972f4910c
 routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1e0e022ae376
-routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3f34f8873416
+routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
 routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f052777a723e
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
 routine public.feature_available_in(p_country text, p_key text) -> boolean | function | invoker | stable | exec:authenticated,service_role | body:afd99a4fede6
@@ -2691,7 +2694,7 @@ routine public.import_closure_days(p_workspace_id uuid, p_days jsonb, p_apply bo
 routine public.import_floor_plan(p_workspace_id uuid, p_plan jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:bc90d83d1544
 routine public.import_floor_plan_v2(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:f20c38cf0ab5
 routine public.import_floor_plan_v3(p_workspace_id uuid, p_plan jsonb, p_accessories jsonb) -> void | function | definer | volatile | exec:authenticated,service_role | body:0d1d17272fcd
-routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:e872625879a7
+routine public.import_workspace_configuration(p_workspace_id uuid, p_configuration jsonb, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:774fa2b6f761
 routine public.imported_branding(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:fa95d80a7677
 routine public.imported_feature_flags(p_flags jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:39acec231f00
 routine public.imported_lexicon(p_current jsonb, p_incoming jsonb, p_mode text) -> jsonb | function | invoker | stable | exec:authenticated,service_role | body:8b21e6a016db
@@ -2779,7 +2782,7 @@ routine public.issue_my_badge(p_workspace_id uuid, p_label text) -> jsonb | func
 routine public.issuing_gate_of(p_country text) -> jsonb | function | definer | stable | exec:service_role | body:3f66c6bb9542
 routine public.issuing_member(p_workspace_id uuid) -> members | function | definer | stable | exec:authenticated,service_role | body:817af7b50436
 routine public.join_by_invitation(p_code text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ad163de0b3f1
-routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21324b16dcc4
+routine public.join_workspace(p_invite_code text) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:71d677dd0dc5
 routine public.jsonb_text_array(p jsonb) -> text[] | function | invoker | immutable | exec:authenticated,service_role | body:d77408f879dc
 routine public.jurisdiction_removal_facts_installation_v1(p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:147ea81a7e33
 routine public.jurisdiction_removal_facts_of(p_workspace_id uuid, p_provider text, p_format text) -> jsonb | function | definer | stable | exec:service_role | body:50e9fafb2f07
@@ -2827,7 +2830,7 @@ routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment te
 routine public.list_mcp_eligibility_requests() -> TABLE(request_id uuid, local_user_id uuid, email text, revision integer, requested_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:bc03809b5ee0
 routine public.local_workspace_of_ref(p_ref text) -> uuid | function | definer | stable | exec:service_role | body:c41164d1e388
 routine public.log_reservation_event() -> trigger | function | definer | volatile | exec:service_role | body:264bceeba808
-routine public.managed_identity_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:91130291dfdf
+routine public.managed_identity_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1fe9124b9bab
 routine public.managed_identity_name(p jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:44df5cd43c63
 routine public.managed_identity_of(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:64e64a8f7eb2
 routine public.managed_identity_public(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:84e25668bd3d
@@ -2995,7 +2998,7 @@ routine public.member_credit_balance_of(p_member_id uuid, p_at timestamp with ti
 routine public.member_credit_uses_in_period(p_member_id uuid, p_from timestamp with time zone, p_to timestamp with time zone) -> integer | function | definer | stable | exec:service_role | body:0e54da7e9595
 routine public.member_custom_permissions(p_member_id uuid) -> text[] | function | definer | stable | exec:service_role | body:8a1e975b7bd9
 routine public.member_directory_person() -> trigger | function | definer | volatile | exec:service_role | body:b7697b26f360
-routine public.member_einvoice_address(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:2af8ed4a739a
+routine public.member_einvoice_address(p_member_id uuid) -> jsonb | function | invoker | stable | exec:service_role | body:bd7e67ae9da7
 routine public.member_emails(p_workspace_id uuid) -> TABLE(member_id uuid, email text) | function | definer | stable | exec:authenticated,service_role | body:40a6b7c165b4
 routine public.member_employment_status(p_member uuid, p_employed boolean) -> boolean | function | definer | volatile | exec:authenticated,service_role | body:a460ed5e3820
 routine public.member_field_readable(p_member_id uuid, p_definition_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:33df597324ef
@@ -3617,6 +3620,7 @@ routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xm
 routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text, p_by uuid) -> boolean | function | definer | volatile | exec:service_role | body:c233f4937fef
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
 routine public.strip_template_plan(p_tree jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:c15ae0421c77
+routine public.subdivision_code(p text) -> text | function | invoker | immutable | exec:authenticated,service_role | body:a5ade2870635
 routine public.submit_expense(p_workspace_id uuid, p_amount_cents integer, p_category text, p_description text, p_supply jsonb, p_vat jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:8896fc904a9c
 routine public.submit_purchase_v1(p_workspace_id uuid, p_purchase_id uuid, p_revision integer, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:6ef3046564a5
 routine public.submit_rights_request(p_workspace_id uuid, p_kind text, p_details text, p_client_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:c27732997f52
