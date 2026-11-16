@@ -29,12 +29,14 @@ import '../../domain/finance_overview.dart';
 import '../../domain/money_face.dart';
 import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
+import '../../providers/invoice_group_providers.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
 import '../widgets/finances_owed_summary.dart';
 import '../widgets/host_payment_pages.dart';
+import '../widgets/invoice_groups_bar.dart';
 import '../widgets/invoice_process_sheet.dart';
 import '../widgets/my_finances_parts.dart';
 import '../widgets/own_finance_export_menu.dart';
@@ -54,6 +56,9 @@ class MyFinancesScreen extends ConsumerStatefulWidget {
 class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
   late FinanceFilter _filter = FinanceFilter(workspaceId: widget.workspaceId);
 
+  /// #3556 — one of my own groups, or none.
+  String? _groupId;
+
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
@@ -62,7 +67,8 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     // Me is production. A development space's documents are test data:
     // shown apart, in the development colour, and never counted.
     final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
-    final data = _filter.apply(all);
+    final group = ref.watch(invoiceGroupViewsProvider)[_groupId];
+    final data = group == null ? _filter.apply(all) : _filter.apply(all).where(group.shows);
     final (prod, dev) = (data.production(devIds), data.development(devIds));
     final (owed, options) = (prod.payable.length, all.workspaces);
     // #3682 — while a source has not answered, an empty list is not "none".
@@ -109,6 +115,10 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
                     onSelected: (id) => setState(
                         () => _filter = _filter.copyWith(workspaceId: () => id)),
                   ),
+                InvoiceGroupsBar(
+                    key: const ValueKey('my-finances-groups'),
+                    selected: group?.group.id,
+                    onSelected: (id) => setState(() => _groupId = id)),
                 if (all.invoices.isNotEmpty)
                   FinancesPeriodTypeFilter(
                     key: const ValueKey('finances-period-type-filter'),

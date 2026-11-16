@@ -28,6 +28,7 @@ import 'data/event_repository.dart';
 import 'data/event_visibility.dart';
 import 'data/floor_plan_repository.dart';
 import 'data/guest_participation_repository.dart';
+import 'data/invoice_group_repository.dart';
 import 'data/messenger_repository.dart';
 import 'data/money/demo_member_statement.dart';
 import 'data/money_repository.dart';
@@ -317,6 +318,9 @@ class DemoFixture implements DemoSpaceParts {
   final FakeDirectoryRepository directory;
   final FakeGuestParticipationRepository guests;
   final FakeMessengerRepository messenger;
+
+  /// #3556 — the persona's own groups of invoices, none until it files one.
+  final FakeInvoiceGroupRepository invoiceGroups = FakeInvoiceGroupRepository();
   final InMemoryBiViewRepository biViews;
   final FakeWorkspaceFiles files;
   final InMemoryWorkspaceImport imports;

@@ -60,6 +60,7 @@ import 'package:deskilo/features/directory/providers/messenger_providers.dart';
 import 'package:deskilo/features/directory/providers/saved_places_providers.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/money/providers/account_activity_providers.dart';
+import 'package:deskilo/features/money/providers/invoice_group_providers.dart';
 import 'package:deskilo/features/money/providers/invoice_mail_providers.dart';
 import 'package:deskilo/features/money/providers/payment_approval_providers.dart';
 import 'package:deskilo/features/money/providers/reminder_mail_providers.dart';
@@ -297,7 +298,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
           source.isEmpty || source == kDemoServerOrigin
               ? fixture.messenger
               : FakeMessengerRepository()),
-      accountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), // #2327; no connected host in Demo
+      invoiceGroupRepositoryProvider.overrideWithValue(fixture.invoiceGroups), accountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(demoActivityRepository(fixture)), // #2327; no connected host in Demo
       workspaceApplicationRepositoryProvider.overrideWithValue(FakeWorkspaceApplicationRepository()),
       personalPreferencesRepositoryProvider.overrideWithValue(FakePersonalPreferencesRepository()),
       deploymentRepositoryProvider.overrideWithValue(fixture.deployments),

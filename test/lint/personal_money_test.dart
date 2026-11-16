@@ -23,6 +23,7 @@ const List<String> _personalMoneyFiles = [
   'lib/features/money/presentation/screens/account_activity_screen.dart',
   'lib/features/money/presentation/screens/my_finances_screen.dart',
   'lib/features/money/presentation/widgets/finance_document_views.dart',
+  'lib/features/money/presentation/widgets/invoice_groups_bar.dart',
   'lib/features/money/presentation/widgets/finances_owed_summary.dart',
   'lib/features/money/presentation/widgets/host_activity.dart',
   'lib/features/money/presentation/widgets/host_payment_pages.dart',

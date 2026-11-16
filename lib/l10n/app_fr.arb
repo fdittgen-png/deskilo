@@ -7913,6 +7913,19 @@
   "@financesFullHistory": {
     "description": "Me › Finances"
   },
+  "financesGroupAdd": "Ajouter à un groupe",
+  "financesGroupAddTitle": "Groupes de {number}",
+  "financesGroupCreate": "Créer et ajouter",
+  "financesGroupDelete": "Supprimer le groupe",
+  "financesGroupDeleteConfirm": "Supprimer « {name} » ? Les factures restent telles quelles.",
+  "financesGroupFailed": "Le groupe n’a pas pu être enregistré. Réessayez.",
+  "financesGroupNameShape": "Un nom compte de 1 à 80 caractères.",
+  "financesGroupNameTaken": "Vous avez déjà un groupe de ce nom.",
+  "financesGroupNewName": "Nouveau groupe",
+  "financesGroupRemove": "Retirer du groupe",
+  "financesGroupRename": "Renommer le groupe",
+  "financesGroupUnreadable": "{count, plural, one{{count} facture ne peut pas être lue pour l’instant : les totaux la laissent de côté.} other{{count} factures ne peuvent pas être lues pour l’instant : les totaux les laissent de côté.}}",
+  "financesGroupUnreadableItem": "{number} · illisible pour l’instant",
   "financesHideAmount": "Masquer le montant",
   "financesHostsUnavailable": "Vos installations connectées n’ont pas pu être listées pour le moment ; ce qui s’affiche provient de cette installation uniquement.",
   "@financesHostsUnavailable": {

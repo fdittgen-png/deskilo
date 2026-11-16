@@ -1,0 +1,15 @@
+{
+  "financesGroupAdd": "Ajouter à un groupe",
+  "financesGroupAddTitle": "Groupes de {number}",
+  "financesGroupNewName": "Nouveau groupe",
+  "financesGroupCreate": "Créer et ajouter",
+  "financesGroupNameTaken": "Vous avez déjà un groupe de ce nom.",
+  "financesGroupNameShape": "Un nom compte de 1 à 80 caractères.",
+  "financesGroupUnreadable": "{count, plural, one{{count} facture ne peut pas être lue pour l’instant : les totaux la laissent de côté.} other{{count} factures ne peuvent pas être lues pour l’instant : les totaux les laissent de côté.}}",
+  "financesGroupUnreadableItem": "{number} · illisible pour l’instant",
+  "financesGroupRemove": "Retirer du groupe",
+  "financesGroupRename": "Renommer le groupe",
+  "financesGroupDelete": "Supprimer le groupe",
+  "financesGroupDeleteConfirm": "Supprimer « {name} » ? Les factures restent telles quelles.",
+  "financesGroupFailed": "Le groupe n’a pas pu être enregistré. Réessayez."
+}
