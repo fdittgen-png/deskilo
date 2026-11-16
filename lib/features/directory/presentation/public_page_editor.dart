@@ -18,6 +18,7 @@ import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'directory_pages.dart';
+import 'public_offer_preview.dart';
 import 'public_page_place.dart';
 import 'public_workspace_view.dart';
 
@@ -40,6 +41,9 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   /// #2086 — the inherited fields that still follow the workspace
   /// information; editing one makes it the owner's override.
   Set<String> _following = {};
+
+  /// #3553 — the page as it reads back: its kinds and public services.
+  PublicWorkspace? _offer;
 
   /// #3689 — the stored place, kept in the draft so every save carries it.
   final _place = ValueNotifier<DirectoryLocation?>(null);
@@ -77,6 +81,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           _place.value = publicPlaceOf(doc);
           _published = page['published'] == true;
           _following = publicFollowing(page);
+          _offer = PublicWorkspace('', '', '', doc);
           _loaded = true;
         });
       },
@@ -231,6 +236,21 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     ),
   );
 
+  /// Another workspace or account: what was read of the last one goes.
+  void _forget(String? workspace, String? account) {
+    _account = account;
+    _workspace = workspace;
+    _loaded = false;
+    _failed = false;
+    _loading = false;
+    _busy = false;
+    _place.value = null;
+    _offer = null;
+    for (final c in _controllers.values) {
+      c.clear();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final l = context.l10n;
@@ -238,16 +258,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     final owner = ref.watch(myMemberProvider).value?.actsAsOwner ?? false;
     final account = ref.watch(authStateProvider).value;
     if (workspace?.id != _workspace || account != _account) {
-      _account = account;
-      _workspace = workspace?.id;
-      _loaded = false;
-      _failed = false;
-      _loading = false;
-      _busy = false;
-      _place.value = null;
-      for (final c in _controllers.values) {
-        c.clear();
-      }
+      _forget(workspace?.id, account);
     }
     if (_workspace != null && owner && !_loaded && !_failed && !_loading) {
       _loading = true;
@@ -339,6 +350,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                     ),
                   ),
                 _placeSection(),
+                PublicOfferPreview(offer: _offer),
                 Padding(
                   padding: AppSpacing.smAll,
                   child: OutlinedButton(

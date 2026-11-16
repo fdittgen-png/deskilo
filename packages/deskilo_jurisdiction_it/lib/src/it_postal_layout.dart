@@ -29,7 +29,8 @@ class ItPostalLayout extends PostalLayoutContribution {
     cityInCapitals: true,
     region: RegionField(
       kind: RegionKind.province,
-      required: true,
+      requiredInForm: true,
+      requiredOnInvoice: RegionOnInvoice.everyParty,
       names: itRegions,
     ),
   );

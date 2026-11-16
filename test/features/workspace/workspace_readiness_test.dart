@@ -275,6 +275,20 @@ void main() {
         'The last recorded export is older than the recent-export window');
   });
 
+  // #4105 -- a business whose invoices require its own region is told so
+  // where it reads its readiness, before the first issue refuses it.
+  test('the region the invoices require is named among what is missing', () {
+    expect(
+      readinessReasonLabel(englishL10n, 'seller_region'),
+      startsWith("The region of the business's address"),
+    );
+    expect(
+      readinessReasonLabel(englishL10n, 'seller_region'),
+      contains('legal identity'),
+      reason: 'it says where the region is entered',
+    );
+  });
+
   test('the backend section follows the app\'s own schema check', () {
     expect(
       backendReadiness(SchemaCompatibility.current).state,

@@ -37,6 +37,7 @@ import 'demo_second_space_seed.dart';
 /// conditions and the hosts who answer (#2405).
 const _demoNeighbourQuai = PublicWorkspace('demo-quai', kDemoServerOrigin, '', {
   'name': 'Le Quai Numérique',
+  'kinds': ['coworking'],
   'address': '9 quai des Pêcheurs\n34200 Sète',
   'host_type': 'company',
   'description':
@@ -69,6 +70,7 @@ const _demoNeighbourHalles = PublicWorkspace(
   '',
   {
     'name': 'La Fabrique des Halles',
+    'kinds': ['coworking'],
     'address': '2 rue des Halles\n34500 Béziers',
     'host_type': 'association',
     'description': 'A members’ association: a workshop, desks and a kitchen.',
@@ -109,8 +111,41 @@ PublicWorkspace _demoOwnCard() => PublicWorkspace('ws-1', kDemoServerOrigin, '',
   ],
 });
 
+/// #3553 — a house in another country and currency beside the Demo space:
+/// its prices stay in francs with their own tax word, never converted.
+const _demoNeighbourZurich = PublicWorkspace('demo-zurich', kDemoServerOrigin, '', {
+  'name': 'Limmat Cowork Zurich',
+  'address': 'Beispielstrasse 12\n8005 Zurich',
+  'host_type': 'company',
+  'currency': 'CHF',
+  'kinds': ['coworking'],
+  'services': [
+    {
+      'name': 'Hot desk day',
+      'category': 'Desks',
+      'price_minor': 4500,
+      'currency': 'CHF',
+      'tax_treatment': 'included',
+    },
+    {
+      'name': 'Meeting room',
+      'category': 'Rooms',
+      'duration_minutes': 60,
+      'price_minor': 3500,
+      'currency': 'CHF',
+      'tax_treatment': 'included',
+    },
+  ],
+  'takes_inquiries': true,
+  'latitude': '47.3890',
+  'longitude': '8.5170',
+  'contacts': [
+    {'name': 'Lea Brunner', 'owner': true},
+  ],
+});
+
 /// The space's own public page, published, and the directory that lists
-/// it with its two neighbours.
+/// it with its neighbours.
 void seedDemoDirectory(FakeDirectoryRepository directory) {
   directory
     ..ownName = demoSpaceName
@@ -124,7 +159,12 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
         'website': 'https://atelier-du-marche.example.test',
       },
     }
-    ..cards.addAll([_demoOwnCard(), _demoNeighbourQuai, _demoNeighbourHalles]);
+    ..cards.addAll([
+      _demoOwnCard(),
+      _demoNeighbourQuai,
+      _demoNeighbourHalles,
+      _demoNeighbourZurich,
+    ]);
 }
 
 /// Two visits as a guest, in spaces the directory lists: one the host

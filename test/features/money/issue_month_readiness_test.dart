@@ -4,6 +4,7 @@
 // customer's own gaps on their row, the business's gaps once, a failed read
 // as "unknown" (never blocked), and a bounded number of reads at once.
 import 'package:deskilo/features/money/application/issue_month_readiness.dart';
+import 'package:deskilo/features/money/domain/einvoice_channel_check.dart';
 import 'package:deskilo/features/money/domain/invoice_queries.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -35,12 +36,21 @@ class _Queries implements InvoiceQueries {
   dynamic noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-Future<MonthReadiness> _read(_Queries q, List<String> ids) async {
+Future<MonthReadiness> _read(
+  _Queries q,
+  List<String> ids, {
+  Map<String, List<ChannelGap>> gaps = const {},
+}) async {
   var state = const MonthReadiness({});
   await readMonthReadiness(
-    queries: q,
-    workspaceId: 'ws-1',
-    period: '2026-10',
+    judge: (id) async => (
+      missing: await q.invoiceIssueReadiness(
+        workspaceId: 'ws-1',
+        memberId: id,
+        period: '2026-10',
+      ),
+      gaps: gaps[id] ?? const <ChannelGap>[],
+    ),
     memberIds: ids,
     onEach: (id, r) => state = state.with_(id, r),
   );
@@ -58,6 +68,26 @@ void main() {
     expect(r.needsFixCount, 1);
     expect(r.businessMissing, isEmpty);
   });
+
+  // #4105 -- what the e-invoices will need: the space's own once, a
+  // customer's on their row; neither stops the issue.
+  test(
+    'the space\'s e-invoice gaps are said once, a customer\'s on their row',
+    () async {
+      final r = await _read(
+        _Queries(),
+        ['anna', 'ben'],
+        gaps: {
+          'anna': [ChannelGap.sellerEndpoint, ChannelGap.buyerEndpoint],
+          'ben': [ChannelGap.sellerEndpoint],
+        },
+      );
+      expect(r.businessGaps, [ChannelGap.sellerEndpoint]);
+      expect(r.customerGaps('anna'), [ChannelGap.buyerEndpoint]);
+      expect(r.customerGaps('ben'), isEmpty);
+      expect(r.needsFixCount, 0, reason: 'a warning never stops the issue');
+    },
+  );
 
   test('a business gap shared by everyone is said once, not per row', () async {
     final q = _Queries()
@@ -90,7 +120,11 @@ void main() {
   test('reads run a bounded number at a time', () async {
     final q = _Queries();
     await _read(q, [for (var i = 0; i < 12; i++) 'm$i']);
-    expect(q.peak, lessThanOrEqualTo(4), reason: 'the named bound of the reads');
+    expect(
+      q.peak,
+      lessThanOrEqualTo(4),
+      reason: 'the named bound of the reads',
+    );
     expect(q.peak, greaterThan(1), reason: 'and more than one at once');
   });
 }

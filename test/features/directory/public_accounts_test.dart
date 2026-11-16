@@ -504,8 +504,9 @@ class _IncompatibleDirectory extends FakeDirectoryRepository {
     DirectorySource source,
     String query, {
     int page = 0,
+    String? kind,
   }) async {
-    final cards = await super.workspaces(source, query, page: page);
+    final cards = await super.workspaces(source, query, page: page, kind: kind);
     return SourceCardsPage(cards.cards, incompatible: true, more: false);
   }
 }

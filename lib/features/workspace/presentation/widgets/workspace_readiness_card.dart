@@ -77,6 +77,8 @@ String? readinessReasonLabel(AppLocalizations l10n, String? reason) =>
       'invoicing_needs_identity' =>
         l10n
             .readinessReasonInvoicingNeedsIdentity,
+      // #4105 — the region the country's invoices require of the business.
+      'seller_region' => l10n.invoiceMissingSellerRegion,
       'no_policies' =>
         l10n.readinessReasonNoPolicies,
       'no_evidence' =>
