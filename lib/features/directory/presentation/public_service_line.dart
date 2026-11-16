@@ -20,8 +20,14 @@ String publicServiceLine(
   AppLocalizations l10n,
   PublicService service,
   String price,
+) => '${service.name} · ${publicServiceTerms(l10n, service, price)}';
+
+/// "60 min · [price] · tax word": the service's terms, under its name.
+String publicServiceTerms(
+  AppLocalizations l10n,
+  PublicService service,
+  String price,
 ) => [
-  service.name,
   if (service.durationMinutes case final minutes?)
     l10n.portalOfferMinutes(minutes),
   price,

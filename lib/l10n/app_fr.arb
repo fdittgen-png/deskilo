@@ -12991,7 +12991,6 @@
   "messengerInquiryClose": "Clore la demande",
   "messengerInquiryClosed": "Demande close.",
   "messengerInquiryFrom": "De {name}",
-  "messengerInquirySend": "Envoyer la demande",
   "messengerLock": "Interdire le transfert",
   "messengerMessageActions": "Actions sur le message",
   "messengerNoStarred": "Aucun message en favori.",
@@ -14135,6 +14134,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Bonjour, j’aimerais en savoir plus sur « {service} ».",
+  "placeInquiryNoWay": "Ce commerce ne peut pas être contacté d’ici.",
+  "placeInquiryReachOtherwise": "Vous pouvez le joindre ici :",
+  "placeInquirySendTo": "Envoyer à {business}",
+  "placePreviewContact": "Prendre contact",
+  "placeServiceAsk": "Se renseigner sur {service}",
+  "placeServiceAskShort": "Demander",
+  "placeServicesOther": "Autres",
+  "placeServicesTitle": "Prestations",
   "planAccessorySupplementHint": "Les suppléments s'appliquent par demi-journée.",
   "planActiveLabel": "Active",
   "planAfternoonChip": "Après-midi",

@@ -22102,9 +22102,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Envoyer la demande';
-
-  @override
   String get messengerLock => 'Interdire le transfert';
 
   @override
@@ -24349,6 +24346,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 étoile';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Bonjour, j’aimerais en savoir plus sur « $service ».';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'Ce commerce ne peut pas être contacté d’ici.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'Vous pouvez le joindre ici :';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Envoyer à $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Prendre contact';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Se renseigner sur $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Demander';
+
+  @override
+  String get placeServicesOther => 'Autres';
+
+  @override
+  String get placeServicesTitle => 'Prestations';
 
   @override
   String get planAccessorySupplementHint =>

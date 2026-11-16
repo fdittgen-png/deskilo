@@ -21847,9 +21847,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Send inquiry';
-
-  @override
   String get messengerLock => 'Lock against forwarding';
 
   @override
@@ -24072,6 +24069,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 stars';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Hello, I would like to know more about “$service”.';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'This business cannot be written to from here.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'You can reach it here:';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Send to $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Get in touch';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Ask about $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Ask';
+
+  @override
+  String get placeServicesOther => 'Other';
+
+  @override
+  String get placeServicesTitle => 'Services';
 
   @override
   String get planAccessorySupplementHint => 'Supplements are per half-day.';

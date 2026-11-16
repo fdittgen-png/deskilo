@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
+import '../../../../core/ui/kit/copy_value.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/messenger.dart';
 import '../../domain/public_workspace.dart';
@@ -20,14 +21,22 @@ import 'refusal_text.dart';
 /// (`space_host_roster`). The message opens an inquiry — a conversation
 /// addressed to the space, not to one admin's private inbox — and the
 /// sheet continues into its thread.
+///
+/// #3554 — opened from one of the business's services ([about]), the first
+/// message names that service, and only its name: its price, duration and
+/// tax can change before the business answers. The person edits it or not,
+/// and the send button names the business it goes to. When nobody can
+/// receive it, the sheet gives the business's published e-mail or phone, or
+/// says it cannot be written to from here.
 Future<void> showInquirySheet(
   BuildContext context,
-  PublicWorkspace workspace,
-) async {
+  PublicWorkspace workspace, {
+  PublicService? about,
+}) async {
   final inquiry = await showAppSheet<String>(
     context: context,
     isScrollControlled: true,
-    builder: (_) => _InquirySheet(workspace: workspace),
+    builder: (_) => _InquirySheet(workspace: workspace, about: about),
   );
   if (inquiry == null || !context.mounted) return;
   final l10n = context.l10n;
@@ -44,9 +53,10 @@ Future<void> showInquirySheet(
 }
 
 class _InquirySheet extends ConsumerStatefulWidget {
-  const _InquirySheet({required this.workspace});
+  const _InquirySheet({required this.workspace, this.about});
 
   final PublicWorkspace workspace;
+  final PublicService? about;
 
   @override
   ConsumerState<_InquirySheet> createState() => _InquirySheetState();
@@ -55,6 +65,15 @@ class _InquirySheet extends ConsumerStatefulWidget {
 class _InquirySheetState extends ConsumerState<_InquirySheet> {
   final _body = TextEditingController();
   bool _busy = false;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final about = widget.about;
+    if (about != null && _body.text.isEmpty) {
+      _body.text = context.l10n.placeInquiryAbout(about.name);
+    }
+  }
 
   @override
   void dispose() {
@@ -115,12 +134,8 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
               ),
               Flexible(
                 child: switch (roster) {
-                  AsyncData() when hosts.isEmpty => Padding(
-                    padding: AppSpacing.lgAll,
-                    child: Text(
-                      l10n.messengerHostsNone,
-                      key: const ValueKey('inquiry-no-hosts'),
-                    ),
+                  AsyncData() when hosts.isEmpty => _NoHosts(
+                    workspace: widget.workspace,
                   ),
                   AsyncData() => ListView(
                     shrinkWrap: true,
@@ -178,7 +193,7 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
                         onPressed: _busy ? null : _send,
                         icon: const Icon(Icons.send_outlined),
                         label: Text(
-                          l10n.messengerInquirySend,
+                          l10n.placeInquirySendTo(widget.workspace.name),
                         ),
                       ),
                     ],
@@ -187,6 +202,53 @@ class _InquirySheetState extends ConsumerState<_InquirySheet> {
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+/// #3554 — nobody answers messages for the business now: its published
+/// e-mail or phone, or that it cannot be written to from here.
+class _NoHosts extends StatelessWidget {
+  const _NoHosts({required this.workspace});
+
+  final PublicWorkspace workspace;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final reach = [
+      for (final field in ['email', 'phone'])
+        if (workspace.text(field).trim() case final value
+            when value.isNotEmpty)
+          value,
+    ];
+    return Padding(
+      key: const ValueKey('inquiry-no-hosts'),
+      padding: AppSpacing.lgAll,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        spacing: AppSpacing.sm,
+        children: [
+          Text(l10n.messengerHostsNone),
+          if (reach.isEmpty)
+            Text(
+              l10n.placeInquiryNoWay,
+              key: const ValueKey('inquiry-no-way'),
+            )
+          else ...[
+            Text(l10n.placeInquiryReachOtherwise),
+            for (final (i, value) in reach.indexed)
+              CopyValue(
+                value: value,
+                child: SelectableText(
+                  value,
+                  key: ValueKey('inquiry-reach-$i'),
+                ),
+              ),
+          ],
+        ],
       ),
     );
   }

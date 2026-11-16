@@ -12991,7 +12991,6 @@
   "messengerInquiryClose": "Cerrar consulta",
   "messengerInquiryClosed": "Consulta cerrada.",
   "messengerInquiryFrom": "De {name}",
-  "messengerInquirySend": "Enviar consulta",
   "messengerLock": "Bloquear el reenvío",
   "messengerMessageActions": "Acciones del mensaje",
   "messengerNoStarred": "Aún no hay mensajes destacados.",
@@ -14135,6 +14134,15 @@
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
   },
+  "placeInquiryAbout": "Hola, me gustaría saber más sobre «{service}».",
+  "placeInquiryNoWay": "No se puede escribir a este negocio desde aquí.",
+  "placeInquiryReachOtherwise": "Puede contactarlo aquí:",
+  "placeInquirySendTo": "Enviar a {business}",
+  "placePreviewContact": "Contactar",
+  "placeServiceAsk": "Preguntar por {service}",
+  "placeServiceAskShort": "Preguntar",
+  "placeServicesOther": "Otros",
+  "placeServicesTitle": "Servicios",
   "planAccessorySupplementHint": "Los suplementos se aplican por media jornada.",
   "planActiveLabel": "Activo",
   "planAfternoonChip": "Tarde",

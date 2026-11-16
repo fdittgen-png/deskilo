@@ -223,10 +223,6 @@
   "@messengerHostsNone": {
     "description": "Inquiry sheet when the space has no host who answers (#1824)"
   },
-  "messengerInquirySend": "Send inquiry",
-  "@messengerInquirySend": {
-    "description": "Button sending the first message of an inquiry (#1824)"
-  },
   "messengerInquiriesTitle": "Inquiries",
   "@messengerInquiriesTitle": {
     "description": "Title of the space's Inquiries view and its entry in the space inbox (#1824)"

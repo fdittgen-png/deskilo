@@ -64,6 +64,8 @@ const _demoQuaiHosts = [
 ];
 
 /// A third space, so the map has a region rather than a pair of pins.
+/// #3554 — it takes no inquiries (a workshop by appointment): its page
+/// offers to join, and its e-mail to copy, never a message nobody reads.
 const _demoNeighbourHalles = PublicWorkspace(
   'demo-halles',
   kDemoServerOrigin,
@@ -76,6 +78,7 @@ const _demoNeighbourHalles = PublicWorkspace(
     'description': 'A members’ association: a workshop, desks and a kitchen.',
     'plans': 'Membership €25 a year, then €10 a day. Workshop by appointment.',
     'email': 'contact@fabrique-halles.example.test',
+    'takes_inquiries': false,
     'latitude': '43.3442',
     'longitude': '3.2158',
     'contacts': [
@@ -297,8 +300,10 @@ FakeMessengerRepository demoMessenger(
       HostRosterEntry(name: demoCast[2].name, role: 'admin'),
     ]
     ..roster[_demoNeighbourQuai.id] = _demoQuaiHosts
-    ..roster[_demoNeighbourHalles.id] = const [
-      HostRosterEntry(name: 'Yann Le Berre', role: 'owner'),
+    // #3554 — La Fabrique des Halles takes no inquiries: nobody is listed
+    // (0760). Cabinet Garrigue's owner answers hers.
+    ..roster[_demoNeighbourPractice.id] = const [
+      HostRosterEntry(name: 'Inès Garrigue', role: 'owner'),
     ]
     ..inboxRows.add({
       'context_kind': MessageContextKind.inquiryIn.wire,

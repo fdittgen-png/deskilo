@@ -1,0 +1,11 @@
+{
+  "placeServicesTitle": "Leistungen",
+  "placeServicesOther": "Weitere",
+  "placeServiceAskShort": "Fragen",
+  "placeServiceAsk": "Nach {service} fragen",
+  "placePreviewContact": "Kontakt aufnehmen",
+  "placeInquiryAbout": "Guten Tag, ich möchte mehr über „{service}“ erfahren.",
+  "placeInquirySendTo": "An {business} senden",
+  "placeInquiryNoWay": "Diesem Betrieb kann man von hier aus nicht schreiben.",
+  "placeInquiryReachOtherwise": "Sie erreichen ihn hier:"
+}

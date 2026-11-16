@@ -34,7 +34,6 @@
   "messengerWriteToHosts": "Scrivi ai gestori",
   "messengerHostsIntro": "Il suo messaggio viene letto da questi gestori dell’attività:",
   "messengerHostsNone": "In questa attività nessuno risponde ai messaggi al momento.",
-  "messengerInquirySend": "Invia richiesta",
   "messengerInquiriesTitle": "Richieste",
   "messengerInquiriesEmpty": "Ancora nessuna richiesta.",
   "messengerInquiryClose": "Chiudi richiesta",

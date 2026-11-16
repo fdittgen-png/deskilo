@@ -28785,10 +28785,6 @@
       }
     }
   },
-  "messengerInquirySend": "Send inquiry",
-  "@messengerInquirySend": {
-    "description": "Button sending the first message of an inquiry (#1824)"
-  },
   "messengerLock": "Lock against forwarding",
   "@messengerLock": {
     "description": "Author action: forbid forwarding this message (#1824)"
@@ -31650,6 +31646,57 @@
   "placeFeedbackZero": "0 stars",
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
+  },
+  "placeInquiryAbout": "Hello, I would like to know more about “{service}”.",
+  "@placeInquiryAbout": {
+    "description": "#3554 Inquiry sheet: the first message, prefilled when the person tapped a service; names the service only, never its price; {service} is its name",
+    "placeholders": {
+      "service": {
+        "type": "String"
+      }
+    }
+  },
+  "placeInquiryNoWay": "This business cannot be written to from here.",
+  "@placeInquiryNoWay": {
+    "description": "#3554 Inquiry sheet: nobody answers messages and the business published no e-mail or phone"
+  },
+  "placeInquiryReachOtherwise": "You can reach it here:",
+  "@placeInquiryReachOtherwise": {
+    "description": "#3554 Inquiry sheet: nobody answers messages; introduces the business's published e-mail and phone"
+  },
+  "placeInquirySendTo": "Send to {business}",
+  "@placeInquirySendTo": {
+    "description": "#3554 Inquiry sheet: the send button, naming the business that receives the message; {business} is its name",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "placePreviewContact": "Get in touch",
+  "@placePreviewContact": {
+    "description": "#3554 A business's page: the button that opens an inquiry to a business that is not a coworking space"
+  },
+  "placeServiceAsk": "Ask about {service}",
+  "@placeServiceAsk": {
+    "description": "#3554 A business's page: what a service row does, read by assistive technology; {service} is the service's name",
+    "placeholders": {
+      "service": {
+        "type": "String"
+      }
+    }
+  },
+  "placeServiceAskShort": "Ask",
+  "@placeServiceAskShort": {
+    "description": "#3554 A business's page: the short affordance at the end of a service row that opens an inquiry about it"
+  },
+  "placeServicesOther": "Other",
+  "@placeServicesOther": {
+    "description": "#3554 A business's page: group of the services published without a category"
+  },
+  "placeServicesTitle": "Services",
+  "@placeServicesTitle": {
+    "description": "#3554 A business's page: heading of the services it published"
   },
   "planAccessorySupplementHint": "Supplements are per half-day.",
   "@planAccessorySupplementHint": {
