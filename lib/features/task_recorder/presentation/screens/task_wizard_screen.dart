@@ -85,8 +85,6 @@ class TaskWizardScreen extends ConsumerWidget {
               contentPadding: EdgeInsets.zero,
               leading: const Icon(Icons.assistant_navigation),
               title: Text(builtinGuideTitle(l10n, g)),
-              // #4113 — a row's own action, repeated down the page: tonal. The
-              // one filled button is "Record a task", the page's own action.
               trailing: FilledButton.tonal(
                 key: ValueKey('task-wizard-start-builtin-${g.name}'),
                 onPressed: () => _start(context, ref, builtinGuide(l10n, g)),
