@@ -742,6 +742,18 @@ Set<String> _opensFor(_Persona persona) => {
       m.group(2)!,
 };
 
+/// #4096 — the routes the router's golden says the desk forwards for
+/// [persona] (a `@desk` line): there the person lands on another page of
+/// theirs, which the walk checks instead.
+Set<String> _deskForwardsFor(_Persona persona) => {
+  for (final line in File(
+    'test/app/fixtures/route_outcomes.golden',
+  ).readAsLinesSync())
+    if (RegExp(r'^(\S+) on  (\S+) @desk -> ').firstMatch(line)
+        case final m? when m.group(1) == persona.name)
+      m.group(2)!,
+};
+
 /// #4076 -- what the persona walk found and has not fixed: `path|persona|
 /// width` -> the measurement. Each case is left out until its page is fixed
 /// (the list only shrinks); a test below holds that every key is a case of the
@@ -759,9 +771,6 @@ const Map<String, String> _personaFindings = {
   '/members/member-2|admin|390': 'a control 165.8 x 22.0 dp (under 48)',
   '/report-editor|admin|390':
       'two controls 121.2 x 11.6 and 146.4 x 11.6 dp (under 48)',
-  '/money/cash|admin|1440':
-      'the router lands the administrator on /money/status, not on the page '
-          'its golden calls open',
 };
 
 /// What kind of page a persona meets: a member's /invoices is the member's own
@@ -937,6 +946,7 @@ void main() {
 
   for (final persona in _walkedPersonas) {
     final opens = _opensFor(persona);
+    final forwards = _deskForwardsFor(persona);
     for (final size in _personaSizes) {
       for (final (path, pageKind, _, _) in _pages) {
         if (!opens.contains(matchRoute(path)?.pattern)) continue;
@@ -954,18 +964,37 @@ void main() {
             'guards hold', skip: finding != null, (tester) async {
           final semantics = tester.ensureSemantics();
           await _open(tester, path, size, persona);
-          expect(
-            _landed(tester),
-            Uri.parse(path).path,
-            reason: 'the router opens it for the ${persona.name}',
-          );
+          final landed = _landed(tester);
+          // #4096 — where the golden says the desk forwards this route, the
+          // person lands on another page of the same place (a refusal sends
+          // them elsewhere), and that page is the one checked.
+          final forwarded =
+              size.width >= 1024 &&
+              forwards.contains(matchRoute(path)?.pattern) &&
+              landed != Uri.parse(path).path;
+          if (forwarded) {
+            expect(
+              Uri.parse(landed).pathSegments.first,
+              Uri.parse(path).pathSegments.first,
+              reason: 'the desk forwards $path within its place, not away',
+            );
+          } else {
+            expect(
+              landed,
+              Uri.parse(path).path,
+              reason: 'the router opens it for the ${persona.name}',
+            );
+          }
+          final landedKind = forwarded
+              ? _pages.firstWhere((p) => p.$1 == landed).$2
+              : kind;
           final details = <String>[];
           expect(
             size.width >= 1024
                 ? deskGuardProblems(
                     details: details,
                     tester,
-                    kind: kind,
+                    kind: landedKind,
                     size: size,
                     rowTypes: _rowTypes,
                     tableTypes: _tableTypes,
