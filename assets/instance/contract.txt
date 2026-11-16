@@ -2744,7 +2744,7 @@ routine public.invoice_keeps_original_stamp() -> trigger | function | invoker | 
 routine public.invoice_legal_freeze() -> trigger | function | definer | volatile | exec:service_role | body:52daa15cf036
 routine public.invoice_legal_language_freeze() -> trigger | function | definer | volatile | exec:service_role | body:61638cc259bf
 routine public.invoice_legal_paper_freeze() -> trigger | function | definer | volatile | exec:service_role | body:c90f7f5e0358
-routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ec3dc4acff5e
+routine public.invoice_legal_snapshot(p_workspace_id uuid, p_member_id uuid, p_parties jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c29dbdeda64f
 routine public.invoice_lines_for(p_member_id uuid, p_period text) -> jsonb | function | definer | stable | exec:service_role | body:3eb9323ff091
 routine public.invoice_lines_for(p_member_id uuid, p_period text, p_kind text) -> jsonb | function | definer | stable | exec:service_role | body:4ab86eeb0aaa
 routine public.invoice_match_blocker(p_invoice uuid) -> text | function | definer | stable | exec:service_role | body:e6da79730a3e
@@ -2769,6 +2769,8 @@ routine public.invoice_provenance_stamp() -> trigger | function | definer | vola
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
 routine public.invoice_region_missing(p_seller jsonb, p_buyer jsonb, p_seller_country text) -> text[] | function | invoker | stable | exec:service_role | body:4bd609229b2f
 routine public.invoice_reminder_evidence(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:5b7aa8cbdb2e
+routine public.invoice_send_basis(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3d2c32b0e706
+routine public.invoice_sent_document(p_invoice_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:be6647353314
 routine public.invoice_still_due_cents(p_invoice_id uuid) -> bigint | function | definer | stable | exec:service_role | body:47d12f7b1ff8
 routine public.invoice_transmissions_sync_phase() -> trigger | function | invoker | volatile | exec:service_role | body:3f7ae01ba028
 routine public.invoices_immutable() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:4b6279a96d18
@@ -3661,6 +3663,7 @@ routine public.system_column_names() -> text[] | function | invoker | immutable 
 routine public.system_columns_stamp() -> trigger | function | invoker | volatile | exec:authenticated,service_role | body:300c2d072fc0
 routine public.tax_reference(p_domain text, p_country text, p_on date) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:7a175f70fb39
 routine public.tax_reference_history(p_domain text, p_country text, p_key text) -> TABLE(id uuid, domain text, country text, key text, valid_from date, valid_to date, value jsonb, source text, confirmed boolean) | function | definer | stable | exec:authenticated,service_role | body:6d2fb6df5d0a
+routine public.tax_reference_revision(p_country text) -> text | function | definer | stable | exec:service_role | body:5294c0e41125
 routine public.tax_reference_valid(p_domain text, p_value jsonb) -> boolean | function | invoker | immutable | exec:service_role | body:56417e602ff9
 routine public.tax_threshold_cents(p_country text, p_key text) -> bigint | function | definer | stable | exec:service_role | body:09b4feea3488
 routine public.tell_owners_kiosk_device(p_workspace_id uuid, p_change text, p_device kiosk_devices) -> void | function | definer | volatile | exec:service_role | body:e78deb327e4f
