@@ -22,6 +22,7 @@ import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
 import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../core/ui/help_row.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/member.dart';
@@ -457,11 +458,12 @@ class _HouseWelcome extends ConsumerWidget {
     final on = ref
         .watch(houseWelcomesProvider(organisation.id, workspace.id))
         .value;
-    return SwitchListTile(
+    // The kit's toggle row: flipping it is a change of the task it is in.
+    return HelpRow.toggle(
       key: const ValueKey('house-welcome'),
       contentPadding: EdgeInsets.zero,
       value: on ?? false,
-      title: Text(l10n.houseWelcomeSwitch),
+      title: l10n.houseWelcomeSwitch,
       subtitle: Text(l10n.houseWelcomeExplain(organisation.name)),
       onChanged: on == null
           ? null

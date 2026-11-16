@@ -326,7 +326,8 @@ void main() {
     // #4129 -- the mark says the title opens the houses, and only then.
     testWidgets('the chip shows its mark inside a house, 48 dp', (tester) async {
       await pumpChip(tester, _london);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump();
       expect(find.byKey(const ValueKey('space-chip-mark')), findsOneWidget);
       expect(
         tester.getSize(find.byKey(const ValueKey('space-chip-houses'))).height,
@@ -338,7 +339,8 @@ void main() {
       tester,
     ) async {
       await pumpChip(tester, _berlin);
-      await tester.pumpAndSettle();
+      await tester.pump();
+      await tester.pump();
       expect(find.byKey(const ValueKey('space-chip-mark')), findsNothing);
     });
 
@@ -394,7 +396,7 @@ void main() {
         locale: Locale(code),
         size: const Size(400, 900),
       );
-      await tester.pumpAndSettle();
+      await tester.pump();
       final words = long.name.split(' ');
       final lines = [
         for (final i in [0, 1])
