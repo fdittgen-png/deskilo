@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4143 -- every server function that reads events follows the events'
-// reading rule or is listed with what it returns. The check runs on the
+// #4143, #4144 -- every server function that reads events, bookings or
+// places follows their reading rules or is listed with what it returns. The check runs on the
 // replayed database (supabase/tests/database/456_definer_event_readers.sql),
 // which sees every definer routine however it was written or patched. Its
 // list of reasoned exceptions is the one list; this test checks that each
@@ -14,13 +14,16 @@ import 'package:flutter_test/flutter_test.dart';
 
 const _listFile = 'supabase/tests/database/456_definer_event_readers.sql';
 
+/// #4144 -- the readers of bookings and places, the same way.
+const _placeListFile = 'supabase/tests/database/460_definer_place_readers.sql';
+
 /// The `(name, argument types)` of each `('<signature>', '<reason>')` entry
 /// of the database test's list.
 List<({String name, List<String> types, String reason})> listedReaders(
   String sql,
 ) => [
   for (final m in RegExp(
-    r"\(\s*'(\w+)\(([^)]*)\)',\s*'((?:[^']|'')+)'\s*\)",
+    r"\(\s*'(\w+)\(([^)]*)\)',\s*(?:'[a-z,]*',\s*)?'((?:[^']|'')+)'\s*\)",
   ).allMatches(sql))
     (
       name: m.group(1)!,
@@ -39,7 +42,12 @@ Map<String, List<List<String>>> contractDefiners(String contract) {
   for (final raw in contract.split('\n')) {
     final m = line.firstMatch(raw);
     if (m == null) continue;
-    final args = m.group(2)!.isEmpty ? <String>[] : m.group(2)!.split(', ');
+    // a signature counts the arguments a caller passes, not the OUT ones
+    final args = [
+      for (final a
+          in m.group(2)!.isEmpty ? const <String>[] : m.group(2)!.split(', '))
+        if (!a.startsWith('OUT ')) a,
+    ];
     out.putIfAbsent(m.group(1)!, () => []).add(args);
   }
   return out;
@@ -70,7 +78,7 @@ void main() {
       final listed = listedReaders(
         "insert into listed (sig, reason) values\n"
         "  ('feed(uuid,timestamp with time zone)',\n   'callable by the service role only'),\n"
-        "  ('gone(text)',\n   'the caller''s own');",
+        "  ('gone(text)', 'seats,levels',\n   'the caller''s own');",
       );
       expect(listed.map((l) => l.name), ['feed', 'gone']);
       expect(listed.last.reason, "the caller''s own");
@@ -81,6 +89,16 @@ void main() {
       expect(missingFromContract(listed, definers), ['gone(text)']);
     },
   );
+
+  test('every reasoned exception of the places test is a definer routine of the contract', () {
+    final listed = listedReaders(File(_placeListFile).readAsStringSync());
+    expect(listed, hasLength(60));
+    expect(listed.every((l) => l.reason.trim().isNotEmpty), isTrue);
+    final definers = contractDefiners(
+      File('assets/instance/contract.txt').readAsStringSync(),
+    );
+    expect(missingFromContract(listed, definers), isEmpty);
+  });
 
   test('every reasoned exception of the database test is a definer routine of the contract', () {
     final listed = listedReaders(File(_listFile).readAsStringSync());
