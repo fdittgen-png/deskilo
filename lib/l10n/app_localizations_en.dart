@@ -8246,6 +8246,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'All kinds';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Nothing found in “$kind”';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Practices';
+
+  @override
+  String get discoveryKindSalons => 'Salons';
+
+  @override
+  String get discoveryKindServices => 'Other services';
+
+  @override
+  String get discoveryKindStudios => 'Studios';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count directories cannot narrow by kind: they were not asked.',
+      one: 'One directory cannot narrow by kind: it was not asked.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -9586,6 +9620,42 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'e-invoicing';
+
+  @override
+  String get eventCredentialAreaPayment => 'payments';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor cleared the credentials of $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor replaced the credentials of $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor set the credentials of $provider ($area): $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validated $scheduled — $reason';
   }
@@ -9833,6 +9903,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Rent difference';
+
+  @override
+  String get eventTypeCredentialChange => 'Credentials change';
 
   @override
   String get eventTypeExpense => 'Expense';
@@ -21774,9 +21847,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Send inquiry';
-
-  @override
   String get messengerLock => 'Lock against forwarding';
 
   @override
@@ -23999,6 +24069,40 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 stars';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Hello, I would like to know more about “$service”.';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'This business cannot be written to from here.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'You can reach it here:';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Send to $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Get in touch';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Ask about $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Ask';
+
+  @override
+  String get placeServicesOther => 'Other';
+
+  @override
+  String get placeServicesTitle => 'Services';
 
   @override
   String get planAccessorySupplementHint => 'Supplements are per half-day.';

@@ -26,6 +26,7 @@ import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'connect_with_identity_sheet.dart';
 import 'messenger/inquiry_sheet.dart';
+import 'public_services_section.dart';
 import 'saved_place_button.dart';
 import 'space_offers.dart';
 import 'workspace_feedback.dart';
@@ -150,15 +151,22 @@ class PublicWorkspaceView extends ConsumerWidget {
   Future<void> _writeToHosts(
     BuildContext context,
     WidgetRef ref,
-    PublicWorkspace workspace,
-  ) async {
+    PublicWorkspace workspace, {
+    PublicService? about,
+  }) async {
     if (await _connected(context, ref, SecondaryConnectAction.inquiry) ==
             _Connection.none ||
         !context.mounted) {
       return;
     }
-    await showInquirySheet(context, workspace);
+    await showInquirySheet(context, workspace, about: about);
   }
+
+  /// #3554 — whether the hosts can be written to from here: not where the
+  /// business says it takes no inquiries (an older installation that does
+  /// not say keeps the message, as before).
+  bool _takesInquiries(PublicWorkspace workspace, {required bool withdrawn}) =>
+      !preview && !withdrawn && workspace.takesInquiries != false;
 
   /// True when the server took the request.
   Future<bool> _apply(
@@ -303,6 +311,11 @@ class PublicWorkspaceView extends ConsumerWidget {
     ];
   }
 
+  /// A coworking space, or a business whose installation publishes no kind
+  /// (the page's words before kinds existed).
+  bool _coworking(PublicWorkspace workspace) =>
+      workspace.kinds.isEmpty || workspace.kinds.first == 'coworking';
+
   /// ONE filled action, the inquiry and what asking shares.
   List<Widget> _actions(
     BuildContext context,
@@ -320,12 +333,17 @@ class PublicWorkspaceView extends ConsumerWidget {
         SpaceOffers(
           workspace: workspace,
           onRequest: () => _apply(context, ref, workspace),
-          secondary: OutlinedButton.icon(
-            key: const ValueKey('write-to-hosts'),
-            icon: const Icon(Icons.contact_support_outlined),
-            label: Text(l.spaceMessageSpace),
-            onPressed: () => _writeToHosts(context, ref, workspace),
-          ),
+          contact: _takesInquiries(workspace, withdrawn: withdrawn)
+              ? (
+                  label: _coworking(workspace)
+                      ? l.spaceMessageSpace
+                      : l.placePreviewContact,
+                  open: () => _writeToHosts(context, ref, workspace),
+                  primary:
+                      workspace.takesInquiries == true &&
+                      workspace.services.isNotEmpty,
+                )
+              : null,
         ),
         Text(
           l.spacePreviewPrivacy,
@@ -433,6 +451,13 @@ class PublicWorkspaceView extends ConsumerWidget {
               ),
             ),
           ..._details(context, ref, workspace, withdrawn: withdrawn),
+          PublicServicesSection(
+            services: workspace.services,
+            onAsk: _takesInquiries(workspace, withdrawn: withdrawn)
+                ? (service) =>
+                      _writeToHosts(context, ref, workspace, about: service)
+                : null,
+          ),
           ..._actions(context, ref, workspace, withdrawn: withdrawn),
         ],
       ),

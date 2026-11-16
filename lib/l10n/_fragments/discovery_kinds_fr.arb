@@ -1,0 +1,10 @@
+{
+  "discoveryKindAll": "Tous les types",
+  "discoveryKindCoworking": "Coworking",
+  "discoveryKindStudios": "Studios",
+  "discoveryKindPractices": "Cabinets",
+  "discoveryKindSalons": "Salons",
+  "discoveryKindServices": "Autres services",
+  "discoveryKindNoMatch": "Aucun résultat dans « {kind} »",
+  "discoveryKindUncovered": "{count, plural, =0{{count} annuaires ne savent pas trier par type : ils n’ont pas été interrogés.} one{Un annuaire ne sait pas trier par type : il n’a pas été interrogé.} other{{count} annuaires ne savent pas trier par type : ils n’ont pas été interrogés.}}"
+}

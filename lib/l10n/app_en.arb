@@ -10844,6 +10844,48 @@
       }
     }
   },
+  "discoveryKindAll": "All kinds",
+  "@discoveryKindAll": {
+    "description": "#3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result"
+  },
+  "discoveryKindCoworking": "Coworking",
+  "@discoveryKindCoworking": {
+    "description": "#3554 Discover: chip narrowing the search to coworking spaces (plural sense)"
+  },
+  "discoveryKindNoMatch": "Nothing found in “{kind}”",
+  "@discoveryKindNoMatch": {
+    "description": "#3554 Discover: a kind is chosen and no business of it was found; {kind} is the chip's label",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryKindPractices": "Practices",
+  "@discoveryKindPractices": {
+    "description": "#3554 Discover: chip narrowing the search to practices (therapists, advisers)"
+  },
+  "discoveryKindSalons": "Salons",
+  "@discoveryKindSalons": {
+    "description": "#3554 Discover: chip narrowing the search to salons"
+  },
+  "discoveryKindServices": "Other services",
+  "@discoveryKindServices": {
+    "description": "#3554 Discover: chip narrowing the search to other service businesses"
+  },
+  "discoveryKindStudios": "Studios",
+  "@discoveryKindStudios": {
+    "description": "#3554 Discover: chip narrowing the search to studios"
+  },
+  "discoveryKindUncovered": "{count, plural, one{One directory cannot narrow by kind: it was not asked.} other{{count} directories cannot narrow by kind: they were not asked.}}",
+  "@discoveryKindUncovered": {
+    "description": "#3554 Discover: directories that cannot narrow their cards by kind are not asked, so their businesses are not in this result; never read as 'none found'",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discoveryLoadedCount": "Places loaded: {loaded} · shown: {shown} · directories answering: {answered} of {sources}",
   "@discoveryLoadedCount": {
     "description": "Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: loaded, shown, answered, sources]",
@@ -12597,6 +12639,68 @@
       }
     }
   },
+  "eventCredentialAreaEinvoice": "e-invoicing",
+  "@eventCredentialAreaEinvoice": {
+    "description": "#3914 which credentials: the e-invoicing channel’s"
+  },
+  "eventCredentialAreaPayment": "payments",
+  "@eventCredentialAreaPayment": {
+    "description": "#3914 which credentials: a payment provider’s"
+  },
+  "eventCredentialCleared": "{actor} cleared the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialCleared": {
+    "description": "#3914 the entry: who cleared which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "eventCredentialReplaced": "{actor} replaced the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialReplaced": {
+    "description": "#3914 the entry: who replaced which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "eventCredentialSet": "{actor} set the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialSet": {
+    "description": "#3914 the entry: who set which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
@@ -13067,6 +13171,10 @@
   "eventTypeCommitmentVariance": "Rent difference",
   "@eventTypeCommitmentVariance": {
     "description": "Validation domain (#2575): a bill above the rent a contract expects"
+  },
+  "eventTypeCredentialChange": "Credentials change",
+  "@eventTypeCredentialChange": {
+    "description": "#3914 the event type: credentials of an integration changed"
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {
@@ -28677,10 +28785,6 @@
       }
     }
   },
-  "messengerInquirySend": "Send inquiry",
-  "@messengerInquirySend": {
-    "description": "Button sending the first message of an inquiry (#1824)"
-  },
   "messengerLock": "Lock against forwarding",
   "@messengerLock": {
     "description": "Author action: forbid forwarding this message (#1824)"
@@ -31542,6 +31646,57 @@
   "placeFeedbackZero": "0 stars",
   "@placeFeedbackZero": {
     "description": "#2185 place feedback"
+  },
+  "placeInquiryAbout": "Hello, I would like to know more about “{service}”.",
+  "@placeInquiryAbout": {
+    "description": "#3554 Inquiry sheet: the first message, prefilled when the person tapped a service; names the service only, never its price; {service} is its name",
+    "placeholders": {
+      "service": {
+        "type": "String"
+      }
+    }
+  },
+  "placeInquiryNoWay": "This business cannot be written to from here.",
+  "@placeInquiryNoWay": {
+    "description": "#3554 Inquiry sheet: nobody answers messages and the business published no e-mail or phone"
+  },
+  "placeInquiryReachOtherwise": "You can reach it here:",
+  "@placeInquiryReachOtherwise": {
+    "description": "#3554 Inquiry sheet: nobody answers messages; introduces the business's published e-mail and phone"
+  },
+  "placeInquirySendTo": "Send to {business}",
+  "@placeInquirySendTo": {
+    "description": "#3554 Inquiry sheet: the send button, naming the business that receives the message; {business} is its name",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "placePreviewContact": "Get in touch",
+  "@placePreviewContact": {
+    "description": "#3554 A business's page: the button that opens an inquiry to a business that is not a coworking space"
+  },
+  "placeServiceAsk": "Ask about {service}",
+  "@placeServiceAsk": {
+    "description": "#3554 A business's page: what a service row does, read by assistive technology; {service} is the service's name",
+    "placeholders": {
+      "service": {
+        "type": "String"
+      }
+    }
+  },
+  "placeServiceAskShort": "Ask",
+  "@placeServiceAskShort": {
+    "description": "#3554 A business's page: the short affordance at the end of a service row that opens an inquiry about it"
+  },
+  "placeServicesOther": "Other",
+  "@placeServicesOther": {
+    "description": "#3554 A business's page: group of the services published without a category"
+  },
+  "placeServicesTitle": "Services",
+  "@placeServicesTitle": {
+    "description": "#3554 A business's page: heading of the services it published"
   },
   "planAccessorySupplementHint": "Supplements are per half-day.",
   "@planAccessorySupplementHint": {

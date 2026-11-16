@@ -78,6 +78,14 @@ Deno.test("#2014 B — only a provider 4xx fails the intent; the rest is unknown
   assertEquals(failureOutcome(new DOMException("timeout", "TimeoutError")), "unknown");
 });
 
+Deno.test("#3917 -- a 400 to a resent intent is unknown: its order may exist under its key", () => {
+  // A retry across a change of the order's parameters sends them under the
+  // old key: Stripe answers 400 idempotency_error, Mollie 400 Bad Request.
+  assertEquals(failureOutcome(new ProviderRefusal(400), true), "unknown");
+  assertEquals(failureOutcome(new ProviderRefusal(402), true), "failed");
+  assertEquals(failureOutcome(new ProviderRefusal(400), false), "failed");
+});
+
 Deno.test("#2014 B — one stable idempotency key per intent", () => {
   assertEquals(idempotencyKey("i-1"), idempotencyKey("i-1"));
   assertEquals(idempotencyKey("i-1") === idempotencyKey("i-2"), false);

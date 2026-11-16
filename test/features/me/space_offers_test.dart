@@ -28,12 +28,19 @@ import 'me_app.dart';
 /// The fake linked-installation registry's own origin.
 const _here = 'https://demo.invalid';
 
-PublicWorkspace _page(String id, {String source = _here, String email = ''}) =>
-    PublicWorkspace(id, source, 'key', {
-      'name': 'Public $id',
-      'host_type': 'company',
-      'email': email,
-    });
+PublicWorkspace _page(
+  String id, {
+  String source = _here,
+  String email = '',
+  bool? takesInquiries,
+  List<Map<String, Object?>> services = const [],
+}) => PublicWorkspace(id, source, 'key', {
+  'name': 'Public $id',
+  'host_type': 'company',
+  'email': email,
+  'takes_inquiries': ?takesInquiries,
+  'services': services,
+});
 
 Future<GoRouter> _open(
   WidgetTester tester,
@@ -81,7 +88,41 @@ void main() {
     expect(find.byKey(const ValueKey('portal-request-membership')), findsOneWidget);
   });
 
-  testWidgets('a published e-mail is copied', (tester) async {
+  testWidgets('(a) a member enters first; the inquiry stays outlined, even '
+      'where it would lead elsewhere (#3554)', (tester) async {
+    await _open(
+      tester,
+      _page(
+        'ws-2',
+        takesInquiries: true,
+        services: const [
+          {
+            'name': 'Day pass',
+            'price_minor': 2500,
+            'currency': 'EUR',
+            'tax_treatment': 'included',
+          },
+        ],
+      ),
+    );
+    final buttons = tester
+        .widgetList<ButtonStyleButton>(
+          find.descendant(
+            of: find.byType(SpaceOffers),
+            matching: find.byWidgetPredicate((w) => w is ButtonStyleButton),
+          ),
+        )
+        .toList();
+    expect(buttons.map((b) => b.key), [
+      const ValueKey('portal-enter'),
+      const ValueKey('write-to-hosts'),
+    ]);
+    expect(buttons.first, isA<FilledButton>());
+    expect(buttons.last, isA<OutlinedButton>());
+  });
+
+  testWidgets('a published e-mail is copied where the business takes no '
+      'inquiries (#3554: never a third button)', (tester) async {
     String? copied;
     tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
         SystemChannels.platform, (call) async {
@@ -92,7 +133,14 @@ void main() {
     });
     addTearDown(() => tester.binding.defaultBinaryMessenger
         .setMockMethodCallHandler(SystemChannels.platform, null));
-    await _open(tester, _page('ws-elsewhere', email: 'hello@space.example'));
+    await _open(
+      tester,
+      _page(
+        'ws-elsewhere',
+        email: 'hello@space.example',
+        takesInquiries: false,
+      ),
+    );
     await tester.tap(find.byKey(const ValueKey('portal-copy-email')));
     await tester.pumpAndSettle();
     expect(copied, 'hello@space.example');

@@ -13071,6 +13071,54 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
   String discoveryDirectoriesDidNotAnswer(int count);
 
+  /// #3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result
+  ///
+  /// In en, this message translates to:
+  /// **'All kinds'**
+  String get discoveryKindAll;
+
+  /// #3554 Discover: chip narrowing the search to coworking spaces (plural sense)
+  ///
+  /// In en, this message translates to:
+  /// **'Coworking'**
+  String get discoveryKindCoworking;
+
+  /// #3554 Discover: a kind is chosen and no business of it was found; {kind} is the chip's label
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing found in “{kind}”'**
+  String discoveryKindNoMatch(String kind);
+
+  /// #3554 Discover: chip narrowing the search to practices (therapists, advisers)
+  ///
+  /// In en, this message translates to:
+  /// **'Practices'**
+  String get discoveryKindPractices;
+
+  /// #3554 Discover: chip narrowing the search to salons
+  ///
+  /// In en, this message translates to:
+  /// **'Salons'**
+  String get discoveryKindSalons;
+
+  /// #3554 Discover: chip narrowing the search to other service businesses
+  ///
+  /// In en, this message translates to:
+  /// **'Other services'**
+  String get discoveryKindServices;
+
+  /// #3554 Discover: chip narrowing the search to studios
+  ///
+  /// In en, this message translates to:
+  /// **'Studios'**
+  String get discoveryKindStudios;
+
+  /// #3554 Discover: directories that cannot narrow their cards by kind are not asked, so their businesses are not in this result; never read as 'none found'
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{One directory cannot narrow by kind: it was not asked.} other{{count} directories cannot narrow by kind: they were not asked.}}'**
+  String discoveryKindUncovered(int count);
+
   /// Shown as a text in discovery list view (directory). Placeholders: {loaded} (int), {shown} (int), {answered} (int), {sources} (int). The number is not a count: it is a figure after a label and a colon or in brackets, read as a value; the sentence has no noun to agree with. [not a count: loaded, shown, answered, sources]
   ///
   /// In en, this message translates to:
@@ -15393,6 +15441,51 @@ abstract class AppLocalizations {
     String reason,
   );
 
+  /// #3914 which credentials: the e-invoicing channel’s
+  ///
+  /// In en, this message translates to:
+  /// **'e-invoicing'**
+  String get eventCredentialAreaEinvoice;
+
+  /// #3914 which credentials: a payment provider’s
+  ///
+  /// In en, this message translates to:
+  /// **'payments'**
+  String get eventCredentialAreaPayment;
+
+  /// #3914 the entry: who cleared which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} cleared the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
+  /// #3914 the entry: who replaced which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} replaced the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
+  /// #3914 the entry: who set which provider’s credentials, and the names of the keys (never a value)
+  ///
+  /// In en, this message translates to:
+  /// **'{actor} set the credentials of {provider} ({area}): {keys}.'**
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  );
+
   /// Shown as a text in event lines (events).
   ///
   /// In en, this message translates to:
@@ -15684,6 +15777,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Rent difference'**
   String get eventTypeCommitmentVariance;
+
+  /// #3914 the event type: credentials of an integration changed
+  ///
+  /// In en, this message translates to:
+  /// **'Credentials change'**
+  String get eventTypeCredentialChange;
 
   /// Event type label / filter chip
   ///
@@ -34756,12 +34855,6 @@ abstract class AppLocalizations {
   /// **'From {name}'**
   String messengerInquiryFrom(String name);
 
-  /// Button sending the first message of an inquiry (#1824)
-  ///
-  /// In en, this message translates to:
-  /// **'Send inquiry'**
-  String get messengerInquirySend;
-
   /// Author action: forbid forwarding this message (#1824)
   ///
   /// In en, this message translates to:
@@ -38449,6 +38542,60 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'0 stars'**
   String get placeFeedbackZero;
+
+  /// #3554 Inquiry sheet: the first message, prefilled when the person tapped a service; names the service only, never its price; {service} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Hello, I would like to know more about “{service}”.'**
+  String placeInquiryAbout(String service);
+
+  /// #3554 Inquiry sheet: nobody answers messages and the business published no e-mail or phone
+  ///
+  /// In en, this message translates to:
+  /// **'This business cannot be written to from here.'**
+  String get placeInquiryNoWay;
+
+  /// #3554 Inquiry sheet: nobody answers messages; introduces the business's published e-mail and phone
+  ///
+  /// In en, this message translates to:
+  /// **'You can reach it here:'**
+  String get placeInquiryReachOtherwise;
+
+  /// #3554 Inquiry sheet: the send button, naming the business that receives the message; {business} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Send to {business}'**
+  String placeInquirySendTo(String business);
+
+  /// #3554 A business's page: the button that opens an inquiry to a business that is not a coworking space
+  ///
+  /// In en, this message translates to:
+  /// **'Get in touch'**
+  String get placePreviewContact;
+
+  /// #3554 A business's page: what a service row does, read by assistive technology; {service} is the service's name
+  ///
+  /// In en, this message translates to:
+  /// **'Ask about {service}'**
+  String placeServiceAsk(String service);
+
+  /// #3554 A business's page: the short affordance at the end of a service row that opens an inquiry about it
+  ///
+  /// In en, this message translates to:
+  /// **'Ask'**
+  String get placeServiceAskShort;
+
+  /// #3554 A business's page: group of the services published without a category
+  ///
+  /// In en, this message translates to:
+  /// **'Other'**
+  String get placeServicesOther;
+
+  /// #3554 A business's page: heading of the services it published
+  ///
+  /// In en, this message translates to:
+  /// **'Services'**
+  String get placeServicesTitle;
 
   /// Unit hint under the booking sheet's accessory chips when the accessorySupplements toggle shows (+price) suffixes (#169)
   ///

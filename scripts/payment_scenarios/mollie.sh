@@ -49,10 +49,12 @@ created() {  # created <payment> → "method value currency reference mode webho
 print(p["method"] or "-", a["value"], a["currency"], p["metadata"]["reference"], p["mode"], p["webhookUrl"])'
 }
 ref_of() { sql "select reference from public.payment_intents where order_id = '$1'"; }
+# #3917 -- the webhook address names the payment's intent.
+hook_of() { echo "$HOOK?intent=$(sql "select id from public.payment_intents where order_id = '$1'")"; }
 HOOK="$API_URL/functions/v1/mollie-webhook"
-[ "$(created "$M_PAID")" = "- 25.00 EUR $(ref_of "$M_PAID") test $HOOK" ] \
+[ "$(created "$M_PAID")" = "- 25.00 EUR $(ref_of "$M_PAID") test $(hook_of "$M_PAID")" ] \
   || fail "the Mollie payment was created as '$(created "$M_PAID")'"
-[ "$(created "$W_PAID")" = "wero 25.00 EUR $(ref_of "$W_PAID") test $HOOK" ] \
+[ "$(created "$W_PAID")" = "wero 25.00 EUR $(ref_of "$W_PAID") test $(hook_of "$W_PAID")" ] \
   || fail "the Wero payment was created as '$(created "$W_PAID")'"
 [ "$(sql "select provider from public.payment_intents where order_id = '$W_PAID'")" = "wero" ] \
   || fail "the Wero intent is not a wero intent"

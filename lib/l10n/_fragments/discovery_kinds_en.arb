@@ -1,0 +1,44 @@
+{
+  "discoveryKindAll": "All kinds",
+  "@discoveryKindAll": {
+    "description": "#3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result"
+  },
+  "discoveryKindCoworking": "Coworking",
+  "@discoveryKindCoworking": {
+    "description": "#3554 Discover: chip narrowing the search to coworking spaces (plural sense)"
+  },
+  "discoveryKindStudios": "Studios",
+  "@discoveryKindStudios": {
+    "description": "#3554 Discover: chip narrowing the search to studios"
+  },
+  "discoveryKindPractices": "Practices",
+  "@discoveryKindPractices": {
+    "description": "#3554 Discover: chip narrowing the search to practices (therapists, advisers)"
+  },
+  "discoveryKindSalons": "Salons",
+  "@discoveryKindSalons": {
+    "description": "#3554 Discover: chip narrowing the search to salons"
+  },
+  "discoveryKindServices": "Other services",
+  "@discoveryKindServices": {
+    "description": "#3554 Discover: chip narrowing the search to other service businesses"
+  },
+  "discoveryKindNoMatch": "Nothing found in “{kind}”",
+  "@discoveryKindNoMatch": {
+    "description": "#3554 Discover: a kind is chosen and no business of it was found; {kind} is the chip's label",
+    "placeholders": {
+      "kind": {
+        "type": "String"
+      }
+    }
+  },
+  "discoveryKindUncovered": "{count, plural, one{One directory cannot narrow by kind: it was not asked.} other{{count} directories cannot narrow by kind: they were not asked.}}",
+  "@discoveryKindUncovered": {
+    "description": "#3554 Discover: directories that cannot narrow their cards by kind are not asked, so their businesses are not in this result; never read as 'none found'",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
+}

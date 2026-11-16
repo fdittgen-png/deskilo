@@ -64,6 +64,8 @@ const _demoQuaiHosts = [
 ];
 
 /// A third space, so the map has a region rather than a pair of pins.
+/// #3554 — it takes no inquiries (a workshop by appointment): its page
+/// offers to join, and its e-mail to copy, never a message nobody reads.
 const _demoNeighbourHalles = PublicWorkspace(
   'demo-halles',
   kDemoServerOrigin,
@@ -76,6 +78,7 @@ const _demoNeighbourHalles = PublicWorkspace(
     'description': 'A members’ association: a workshop, desks and a kitchen.',
     'plans': 'Membership €25 a year, then €10 a day. Workshop by appointment.',
     'email': 'contact@fabrique-halles.example.test',
+    'takes_inquiries': false,
     'latitude': '43.3442',
     'longitude': '3.2158',
     'contacts': [
@@ -144,6 +147,61 @@ const _demoNeighbourZurich = PublicWorkspace('demo-zurich', kDemoServerOrigin, '
   ],
 });
 
+/// #3554 — a practice near the Demo space, so Discover's kind chips and its
+/// search over services have a practice to find: four public services (a
+/// card names three), in euros, under the franchise that adds no VAT.
+const _demoNeighbourPractice = PublicWorkspace(
+  'demo-practice-garrigue',
+  kDemoServerOrigin,
+  '',
+  {
+    'name': 'Cabinet Garrigue',
+    'address': '8 rue Conti\n34120 Pézenas',
+    'host_type': 'company',
+    'currency': 'EUR',
+    'kinds': ['practice'],
+    'services': [
+      {
+        'name': 'Relaxing massage',
+        'category': 'Massages',
+        'duration_minutes': 60,
+        'price_minor': 6500,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Back massage',
+        'category': 'Massages',
+        'duration_minutes': 30,
+        'price_minor': 3800,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Foot reflexology',
+        'category': 'Reflexology',
+        'duration_minutes': 45,
+        'price_minor': 5000,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+      {
+        'name': 'Five massages',
+        'category': 'Packages',
+        'price_minor': 29000,
+        'currency': 'EUR',
+        'tax_treatment': 'none',
+      },
+    ],
+    'takes_inquiries': true,
+    'latitude': '43.4594',
+    'longitude': '3.4248',
+    'contacts': [
+      {'name': 'Inès Garrigue', 'owner': true},
+    ],
+  },
+);
+
 /// The space's own public page, published, and the directory that lists
 /// it with its neighbours.
 void seedDemoDirectory(FakeDirectoryRepository directory) {
@@ -164,6 +222,7 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
       _demoNeighbourQuai,
       _demoNeighbourHalles,
       _demoNeighbourZurich,
+      _demoNeighbourPractice,
     ]);
 }
 
@@ -241,8 +300,10 @@ FakeMessengerRepository demoMessenger(
       HostRosterEntry(name: demoCast[2].name, role: 'admin'),
     ]
     ..roster[_demoNeighbourQuai.id] = _demoQuaiHosts
-    ..roster[_demoNeighbourHalles.id] = const [
-      HostRosterEntry(name: 'Yann Le Berre', role: 'owner'),
+    // #3554 — La Fabrique des Halles takes no inquiries: nobody is listed
+    // (0760). Cabinet Garrigue's owner answers hers.
+    ..roster[_demoNeighbourPractice.id] = const [
+      HostRosterEntry(name: 'Inès Garrigue', role: 'owner'),
     ]
     ..inboxRows.add({
       'context_kind': MessageContextKind.inquiryIn.wire,

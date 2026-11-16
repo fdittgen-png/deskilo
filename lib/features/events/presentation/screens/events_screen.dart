@@ -204,6 +204,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.settlementReview: Icons.rule_outlined,
       EventType.kioskDevice: Icons.tablet_outlined,
       EventType.paymentInstructionsChange: Icons.account_balance_outlined,
+      EventType.credentialChange: Icons.key_outlined,
       EventType.unknown: Icons.info_outline,
     };
     return icons[event.type] ?? Icons.info_outline;

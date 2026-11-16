@@ -45,14 +45,14 @@ const _reviewed = {
   // aggregate, payment `for update`) and what is still due on a standing
   // partial (invoice_still_due_cents). pgTAP 389, 388 and 199.
   'match_invoice@0718',
-  // #3556/0796 moves match_invoice's body, taken from the LIVE dev
+  // #3556/0797 moves match_invoice's body, taken from the LIVE dev
   // definition (pg_get_functiondef, the 0718 body), into match_invoice_part
   // verbatim except the actor parameter and the claim_source in the event;
   // match_invoice keeps the permission check and calls it. open_payment_intent
   // and settle_online_payment are restated from their live definitions too
-  // (0393's onlinePayments gate, 0757's captured/reversed return). pgTAP 448,
+  // (0393's onlinePayments gate, 0757's captured/reversed return). pgTAP 449,
   // 388, 199 and 160.
-  'match_invoice@0796',
+  'match_invoice@0797',
   // #2356/0407 restates set_vat_rates from the LIVE dev definition
   // (pg_get_functiondef): 0170's anchored group_key / outside_base /
   // exemption_reason columns and 0180's has_permission('manageBilling')

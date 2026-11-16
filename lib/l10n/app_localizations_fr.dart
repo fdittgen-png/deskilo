@@ -8329,6 +8329,43 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'Tous les types';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Aucun résultat dans « $kind »';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Cabinets';
+
+  @override
+  String get discoveryKindSalons => 'Salons';
+
+  @override
+  String get discoveryKindServices => 'Autres services';
+
+  @override
+  String get discoveryKindStudios => 'Studios';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count annuaires ne savent pas trier par type : ils n’ont pas été interrogés.',
+      one: 'Un annuaire ne sait pas trier par type : il n’a pas été interrogé.',
+      zero:
+          '$count annuaires ne savent pas trier par type : ils n’ont pas été interrogés.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -9694,6 +9731,42 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'facturation électronique';
+
+  @override
+  String get eventCredentialAreaPayment => 'paiements';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a effacé les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a remplacé les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor a enregistré les identifiants de $provider ($area) : $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validé $scheduled — $reason';
   }
@@ -9945,6 +10018,9 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Écart de loyer';
+
+  @override
+  String get eventTypeCredentialChange => 'Modification d\'identifiants';
 
   @override
   String get eventTypeExpense => 'Dépense';
@@ -22026,9 +22102,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Envoyer la demande';
-
-  @override
   String get messengerLock => 'Interdire le transfert';
 
   @override
@@ -24273,6 +24346,40 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 étoile';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Bonjour, j’aimerais en savoir plus sur « $service ».';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'Ce commerce ne peut pas être contacté d’ici.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'Vous pouvez le joindre ici :';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Envoyer à $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Prendre contact';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Se renseigner sur $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Demander';
+
+  @override
+  String get placeServicesOther => 'Autres';
+
+  @override
+  String get placeServicesTitle => 'Prestations';
 
   @override
   String get planAccessorySupplementHint =>

@@ -3,6 +3,7 @@
 // #2595 — the Stripe order adapter (Checkout). Stripe takes MINOR units
 // directly, so no conversion. The idempotency key is Stripe's own header.
 
+import { INTENT_KEY } from "../_shared/provisional_intent.ts";
 import { ProviderRefusal } from "./outcome.ts";
 import type { OrderAdapter } from "./types.ts";
 
@@ -18,6 +19,8 @@ export const createStripeSession: OrderAdapter = async (cfg, order, deps) => {
     success_url: cfg.return_url,
     cancel_url: cfg.return_url,
     client_reference_id: order.reference,
+    // #3917 -- the session's notifications carry it back.
+    [`metadata[${INTENT_KEY}]`]: order.intentId,
     "line_items[0][quantity]": "1",
     "line_items[0][price_data][currency]": order.currency.toLowerCase(),
     "line_items[0][price_data][unit_amount]": String(order.amountCents),

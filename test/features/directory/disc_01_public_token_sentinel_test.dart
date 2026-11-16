@@ -21,6 +21,7 @@ import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
 import 'package:deskilo/core/backend/context_client_providers.dart';
+import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
 import 'package:deskilo/features/directory/providers/discovery_listing_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -170,7 +171,7 @@ SupabaseClient _pClient(_Network network) => SupabaseClient(
 
 /// Searches, then reads the first card's live detail: the whole public path.
 Future<List<String>> _discover(ProviderContainer c) async {
-  final listing = discoveryListingProvider('');
+  final listing = discoveryListingProvider(const DiscoveryFilter(''));
   final sub = c.listen(listing, (_, _) {});
   addTearDown(sub.close);
   final results = await c.read(listing.future);

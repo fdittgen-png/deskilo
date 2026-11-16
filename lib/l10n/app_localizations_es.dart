@@ -8286,6 +8286,41 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'Todos los tipos';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Ningún resultado en «$kind»';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Consultas';
+
+  @override
+  String get discoveryKindSalons => 'Salones';
+
+  @override
+  String get discoveryKindServices => 'Otros servicios';
+
+  @override
+  String get discoveryKindStudios => 'Estudios';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count directorios no pueden filtrar por tipo: no se les ha preguntado.',
+      one: 'Un directorio no puede filtrar por tipo: no se le ha preguntado.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -9650,6 +9685,42 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'facturación electrónica';
+
+  @override
+  String get eventCredentialAreaPayment => 'pagos';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor borró las credenciales de $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor sustituyó las credenciales de $provider ($area): $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor registró las credenciales de $provider ($area): $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validado $scheduled — $reason';
   }
@@ -9897,6 +9968,9 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Diferencia de alquiler';
+
+  @override
+  String get eventTypeCredentialChange => 'Cambio de credenciales';
 
   @override
   String get eventTypeExpense => 'Gasto';
@@ -21928,9 +22002,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Enviar consulta';
-
-  @override
   String get messengerLock => 'Bloquear el reenvío';
 
   @override
@@ -24165,6 +24236,40 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 estrellas';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Hola, me gustaría saber más sobre «$service».';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'No se puede escribir a este negocio desde aquí.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'Puede contactarlo aquí:';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'Enviar a $business';
+  }
+
+  @override
+  String get placePreviewContact => 'Contactar';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Preguntar por $service';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Preguntar';
+
+  @override
+  String get placeServicesOther => 'Otros';
+
+  @override
+  String get placeServicesTitle => 'Servicios';
 
   @override
   String get planAccessorySupplementHint =>

@@ -8309,6 +8309,41 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get discoveryKindAll => 'Alle Arten';
+
+  @override
+  String get discoveryKindCoworking => 'Coworking';
+
+  @override
+  String discoveryKindNoMatch(String kind) {
+    return 'Nichts gefunden in „$kind“';
+  }
+
+  @override
+  String get discoveryKindPractices => 'Praxen';
+
+  @override
+  String get discoveryKindSalons => 'Salons';
+
+  @override
+  String get discoveryKindServices => 'Andere Dienstleistungen';
+
+  @override
+  String get discoveryKindStudios => 'Studios';
+
+  @override
+  String discoveryKindUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Verzeichnisse können nicht nach Art filtern und wurden nicht gefragt.',
+      one: 'Ein Verzeichnis kann nicht nach Art filtern und wurde nicht gefragt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String discoveryLoadedCount(
     int loaded,
     int shown,
@@ -9675,6 +9710,42 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get eventCredentialAreaEinvoice => 'E-Rechnung';
+
+  @override
+  String get eventCredentialAreaPayment => 'Zahlungen';
+
+  @override
+  String eventCredentialCleared(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) gelöscht: $keys.';
+  }
+
+  @override
+  String eventCredentialReplaced(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) ersetzt: $keys.';
+  }
+
+  @override
+  String eventCredentialSet(
+    String actor,
+    String provider,
+    String area,
+    String keys,
+  ) {
+    return '$actor hat die Zugangsdaten von $provider ($area) hinterlegt: $keys.';
+  }
+
+  @override
   String eventExpenseDeviation(Object reason, Object scheduled) {
     return 'validiert $scheduled — $reason';
   }
@@ -9925,6 +9996,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypeCommitmentVariance => 'Mietabweichung';
+
+  @override
+  String get eventTypeCredentialChange => 'Änderung der Zugangsdaten';
 
   @override
   String get eventTypeExpense => 'Ausgabe';
@@ -21981,9 +22055,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get messengerInquirySend => 'Anfrage senden';
-
-  @override
   String get messengerLock => 'Weiterleiten sperren';
 
   @override
@@ -24231,6 +24302,40 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get placeFeedbackZero => '0 Sterne';
+
+  @override
+  String placeInquiryAbout(String service) {
+    return 'Guten Tag, ich möchte mehr über „$service“ erfahren.';
+  }
+
+  @override
+  String get placeInquiryNoWay =>
+      'Diesem Betrieb kann man von hier aus nicht schreiben.';
+
+  @override
+  String get placeInquiryReachOtherwise => 'Sie erreichen ihn hier:';
+
+  @override
+  String placeInquirySendTo(String business) {
+    return 'An $business senden';
+  }
+
+  @override
+  String get placePreviewContact => 'Kontakt aufnehmen';
+
+  @override
+  String placeServiceAsk(String service) {
+    return 'Nach $service fragen';
+  }
+
+  @override
+  String get placeServiceAskShort => 'Fragen';
+
+  @override
+  String get placeServicesOther => 'Weitere';
+
+  @override
+  String get placeServicesTitle => 'Leistungen';
 
   @override
   String get planAccessorySupplementHint => 'Aufpreise gelten pro halbem Tag.';

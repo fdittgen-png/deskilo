@@ -950,4 +950,4 @@ grant execute on function public.my_finance_overview() to authenticated;
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(796);
+select public.set_deskilo_schema_version(797);

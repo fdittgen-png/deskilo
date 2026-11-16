@@ -273,7 +273,8 @@ bool _appendsSubject(WorkspaceEvent event) {
   if (namesMember ||
       event.type == EventType.paymentInstructionsChange ||
       event.type == EventType.settlementReview ||
-      event.type == EventType.kioskDevice) {
+      event.type == EventType.kioskDevice ||
+      event.type == EventType.credentialChange) {
     return false;
   }
   return !event.actorIsSubject || event.type == EventType.serviceCharge;
@@ -306,6 +307,7 @@ String _noticeOrFallbackLine(
     '${event.payload['settlement_id'] ?? ''}',
     '${event.payload['reason'] ?? ''}',
   ),
+  EventType.credentialChange => _credentialChangeLine(l10n, event, actor),
   EventType.paymentInstructionsChange => l10n.eventPaymentInstructionsChange(
     actor,
     [
@@ -328,3 +330,25 @@ String _noticeOrFallbackLine(
           ),
   _ => eventFallbackLine(l10n, event),
 };
+
+/// #3914 — who set, replaced or cleared which provider's credentials, and the
+/// names of the keys (the entry holds no value).
+String _credentialChangeLine(
+  AppLocalizations l10n,
+  WorkspaceEvent event,
+  String actor,
+) {
+  final area = event.payload['area'] == 'einvoice'
+      ? l10n.eventCredentialAreaEinvoice
+      : l10n.eventCredentialAreaPayment;
+  final provider = '${event.payload['provider'] ?? ''}';
+  final keys = [
+    if (event.payload['keys'] case final List<Object?> keys)
+      for (final k in keys) '$k',
+  ].join(', ');
+  return switch (event.payload['change']) {
+    'clear' => l10n.eventCredentialCleared(actor, provider, area, keys),
+    'replace' => l10n.eventCredentialReplaced(actor, provider, area, keys),
+    _ => l10n.eventCredentialSet(actor, provider, area, keys),
+  };
+}
