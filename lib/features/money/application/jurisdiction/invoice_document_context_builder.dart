@@ -20,7 +20,8 @@ DocumentParty _party(InvoiceParty p) => DocumentParty(
   street: p.street,
   city: p.city,
   postalCode: p.postalCode,
-  subdivision: p.subdivision,
+  // #3649 -- the region's code after the country, through the one mapping.
+  subdivision: subdivisionPart(p.country, p.subdivision),
   country: p.country,
   vatId: p.vatId,
   legalId: p.legalId,

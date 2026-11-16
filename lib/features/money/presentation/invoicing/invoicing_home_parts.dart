@@ -9,7 +9,9 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_radius.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/personal_theme.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/kit/kit_card.dart';
+import '../../providers/money_providers.dart';
 import 'invoicing_home.dart' show InvoicingSource;
 import 'invoicing_reads.dart';
 
@@ -66,6 +68,13 @@ class InvoicingFailedSource extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l = context.l10n;
+    // #4097 — the invoices themselves are the page's records: their failed
+    // or refused read is said as every records page says it.
+    if (source == InvoicingSource.invoices) {
+      if (ref.watch(invoicesProvider).error case final error?) {
+        return ReadFailureBanner(error: error, onRetry: onRetry);
+      }
+    }
     final t = PersonalTheme.of(context);
     final name = switch (source) {
       InvoicingSource.invoices => l.featureInvoicing,

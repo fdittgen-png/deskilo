@@ -1,0 +1,35 @@
+{
+  "@@locale": "it",
+  "addressRegionState": "Stato",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionProvince": "Provincia",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionCounty": "Contea",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionCanton": "Cantone",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionRegion": "Regione",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionMissing": "Un indirizzo in questo paese richiede la sua regione.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Indichi la regione con il suo codice: fino a 10 lettere, cifre o trattini.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionUnknown": "Questo paese non ha una regione con questo codice.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  }
+}

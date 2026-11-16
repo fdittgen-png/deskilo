@@ -67,6 +67,7 @@ class PurchaseOrdersDesk extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: orders.error,
       onRetry: () => ref.invalidate(purchaseOrdersProvider(workspaceId)),
       onOpen: (id) => openRecord(context, _orderPath, id),
     );
@@ -77,12 +78,16 @@ class _OrdersTable extends StatelessWidget {
   const _OrdersTable({
     required this.orders,
     required this.state,
+    this.error,
     required this.onRetry,
     required this.onOpen,
   });
 
   final List<PurchaseOrder> orders;
   final RecordsState state;
+
+  /// #4097 — why the read failed, for the table to tell a refusal.
+  final Object? error;
   final VoidCallback onRetry;
   final ValueChanged<String> onOpen;
 
@@ -97,6 +102,7 @@ class _OrdersTable extends StatelessWidget {
       tableId: 'purchase-orders',
       rows: orders,
       state: state,
+      error: error,
       onRetry: onRetry,
       keyOf: (o) => o.id,
       searchText: (o) => '${o.reference} ${o.supplierName}',

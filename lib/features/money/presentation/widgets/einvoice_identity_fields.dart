@@ -2,9 +2,12 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/form_kit.dart';
+import '../../../../l10n/app_localizations.dart';
 
 /// #2358 — the space's e-invoicing address on its legal identity: where
 /// the networks deliver to it (BT-34 and its EAS scheme), its county or
@@ -18,7 +21,12 @@ class EInvoiceIdentityForm {
   final contactEmail = TextEditingController();
   final contactPhone = TextEditingController();
 
+  /// #3649 -- why the region cannot be saved, under its field.
+  final regionError = ValueNotifier<String?>(null);
+  String _loadedRegion = '';
+
   void load(InvoiceLegal legal) {
+    _loadedRegion = regionCode(legal.subdivision);
     endpointId.text = legal.einvoiceEndpointId;
     endpointScheme.text = legal.einvoiceEndpointScheme;
     subdivision.text = legal.subdivision;
@@ -29,12 +37,25 @@ class EInvoiceIdentityForm {
   InvoiceLegal applyTo(InvoiceLegal legal) => legal.withEInvoiceAddress(
     endpointId: endpointId.text,
     endpointScheme: endpointScheme.text.toUpperCase(),
-    subdivision: subdivision.text.toUpperCase(),
+    subdivision: regionCode(subdivision.text),
     contactEmail: contactEmail.text,
     contactPhone: contactPhone.text,
   );
 
+  /// #3649 -- whether the region may be saved for an address in [country]:
+  /// the rule of every address editor, applied once the region is edited, so
+  /// an identity stored before its country asked for one keeps saving.
+  bool regionAccepted(String country, AppLocalizations l10n) {
+    final code = regionCode(subdivision.text);
+    final refusal = code == _loadedRegion
+        ? null
+        : postalLayoutOf(country).regionRefusal(code);
+    regionError.value = refusal == null ? null : regionRefusalText(l10n, refusal);
+    return refusal == null;
+  }
+
   void dispose() {
+    regionError.dispose();
     for (final c in [
       endpointId,
       endpointScheme,
@@ -48,9 +69,16 @@ class EInvoiceIdentityForm {
 }
 
 class EInvoiceIdentityFields extends StatelessWidget {
-  const EInvoiceIdentityFields({super.key, required this.form});
+  const EInvoiceIdentityFields({
+    super.key,
+    required this.form,
+    required this.country,
+  });
 
   final EInvoiceIdentityForm form;
+
+  /// The space's country, whose layout says what its region is called.
+  final String country;
 
   @override
   Widget build(BuildContext context) {
@@ -80,12 +108,19 @@ class EInvoiceIdentityFields extends StatelessWidget {
           label: l10n.eInvoiceEndpointSchemeField,
         ),
         const FormGap(),
-        AppTextField(
-          key: const ValueKey('legal-identity-subdivision'),
-          controller: form.subdivision,
-          label: l10n.eInvoiceSubdivisionField,
+        ValueListenableBuilder(
+          valueListenable: form.regionError,
+          builder: (context, error, _) => AddressRegionField(
+            fieldKey: 'legal-identity-subdivision',
+            country: country,
+            value: form.subdivision.text,
+            error: error,
+            onChanged: (v) {
+              form.subdivision.text = v;
+              form.regionError.value = null;
+            },
+          ),
         ),
-        const FormGap(),
         AppTextField(
           key: const ValueKey('legal-identity-contact-email'),
           controller: form.contactEmail,

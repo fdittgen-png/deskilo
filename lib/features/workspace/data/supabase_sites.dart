@@ -45,6 +45,7 @@ mixin SupabaseSites implements SiteRepository {
         'p_sort_order': site.sortOrder,
         'p_vat_id': site.vatId,
         'p_tax_exemption_reason': site.taxExemptionReason,
+        'p_subdivision': site.subdivision,
       },
     );
     return r as String;

@@ -90,7 +90,7 @@ select set_config('request.jwt.claims','{"sub":"00000000-0000-4000-8000-00000018
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'operational'->>'vat_id','VAT-CANARY-1833','the billing clerk reads the VAT id');
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'operational'->>'address','ADDRESS-CANARY','and the postal address');
 select is((select array_agg(k order by k) from jsonb_object_keys(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0->'operational') k),
-          array['address','city','company','country_code','courtesy','email','first_name','last_name','legal_id','phone','postal_code','preferred_locale','street','vat_id'],
+          array['address','city','company','country_code','courtesy','email','first_name','last_name','legal_id','phone','postal_code','preferred_locale','street','subdivision','vat_id'],
           'the operational group has exactly the identity documents print');
 select is(public.member_profiles('00000000-0000-4000-8000-0000001833b1',array['00000000-0000-4000-8000-0000001833a3'::uuid])->0->'operational'->>'vat_id','','the clerk reads another member too, with its own values');
 insert into seen select 'clerk', public.member_profiles('00000000-0000-4000-8000-0000001833b1',array[(select id from subj)])->0;

@@ -3,8 +3,10 @@
 // #3649 -- how an address in Italy is written below its street: the postal code, the locality in capitals, then the province code (Poste Italiane: 20121 MILANO MI).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import 'it_regions.dart';
+
 /// Bumped in the same commit as any change of how this layout writes an address.
-const itPostalLayoutImplementationVersion = '1';
+const itPostalLayoutImplementationVersion = '2';
 
 /// The postal layout of Italy.
 class ItPostalLayout extends PostalLayoutContribution {
@@ -25,5 +27,10 @@ class ItPostalLayout extends PostalLayoutContribution {
       [PostalPart.postalCode, PostalPart.city, PostalPart.region],
     ],
     cityInCapitals: true,
+    region: RegionField(
+      kind: RegionKind.province,
+      required: true,
+      names: itRegions,
+    ),
   );
 }

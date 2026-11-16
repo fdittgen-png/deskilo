@@ -1197,6 +1197,38 @@
   "@addressNone": {
     "description": "Subtitle while no address is stored"
   },
+  "addressRegionCanton": "Canton",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionCounty": "County",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionMissing": "An address in this country needs its region.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Enter the region as its code: up to 10 letters, digits or hyphens.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionProvince": "Province",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionRegion": "Region",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionState": "State",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionUnknown": "This country has no region with this code.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  },
   "addressSaved": "Address saved",
   "@addressSaved": {
     "description": "Snackbar after saving the address"
@@ -11098,6 +11130,10 @@
   "@eInvoiceChannelGapBuyerReference": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapBuyerSubdivision": "the region of the customer’s address (BT-54)",
+  "@eInvoiceChannelGapBuyerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the customer’s address"
+  },
   "eInvoiceChannelGapBuyerTaxId": "the customer’s VAT number or fiscal code",
   "@eInvoiceChannelGapBuyerTaxId": {
     "description": "#2358 channel gap"
@@ -11118,12 +11154,12 @@
   "@eInvoiceChannelGapSellerEndpoint": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapSellerSubdivision": "the region of the space’s address (BT-39) in its legal identity",
+  "@eInvoiceChannelGapSellerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the space’s address"
+  },
   "eInvoiceChannelGapSellerVatId": "the space’s VAT number",
   "@eInvoiceChannelGapSellerVatId": {
-    "description": "#2358 channel gap"
-  },
-  "eInvoiceChannelGapSubdivision": "the county of each Romanian address",
-  "@eInvoiceChannelGapSubdivision": {
     "description": "#2358 channel gap"
   },
   "eInvoiceChannelGapsTitle": "Before sending through {channel}, add:",

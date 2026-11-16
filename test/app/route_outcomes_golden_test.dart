@@ -8,6 +8,11 @@
 // whose outcome is wrong is fixed in its own change, which rewrites the
 // line. Rewrite the file with `UPDATE_ROUTE_OUTCOMES=1 flutter test
 // test/app/route_outcomes_golden_test.dart`.
+//
+// #4096 — the router is asked at the test's window and again at the desk
+// (1440×900). Where the desk lands somewhere else (it forwards `/money/cash`
+// to the first Cash door the person may open, #3926), a `@desk` line says
+// where; a route the desk answers alike adds nothing.
 import 'dart:io';
 
 import 'package:deskilo/core/demo/data/auth_repository.dart';
@@ -19,6 +24,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../helpers/router_paths.dart';
 
 const _golden = 'test/app/fixtures/route_outcomes.golden';
+
+/// The desk window the router is asked at as well (#4096).
+const _desk = Size(1440, 900);
 
 typedef _Identity = ({
   String name,
@@ -81,9 +89,11 @@ void main() {
         );
         final paths = registeredRoutePaths(app.router.configuration.routes)
           ..sort();
+        final landings = <String, String>{};
         for (final p in paths) {
           final location = concreteRoute(p);
           final landed = await resolveRoute(app, location);
+          landings[p] = landed;
           lines.add(
             '${identity.name} ${on ? 'on ' : 'off'} $p -> '
             '${landed == location ? '(open)' : landed}',
@@ -91,6 +101,27 @@ void main() {
         }
         // A fresh app per case: the next boot replaces this tree.
         await tester.pumpWidget(const SizedBox());
+        // #4096 — the same identity at the desk: only where it lands
+        // somewhere else.
+        tester.view
+          ..physicalSize = _desk
+          ..devicePixelRatio = 1;
+        final desk = await bootRouter(
+          tester,
+          auth: identity.auth(),
+          workspace: identity.workspace(flags),
+        );
+        for (final p in paths) {
+          final location = concreteRoute(p);
+          final landed = await resolveRoute(desk, location);
+          if (landed == landings[p]) continue;
+          lines.add(
+            '${identity.name} ${on ? 'on ' : 'off'} $p @desk -> '
+            '${landed == location ? '(open)' : landed}',
+          );
+        }
+        await tester.pumpWidget(const SizedBox());
+        tester.view.reset();
       }
     }
     final text = '${lines.join('\n')}\n';

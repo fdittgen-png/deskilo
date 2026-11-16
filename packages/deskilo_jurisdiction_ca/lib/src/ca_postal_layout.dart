@@ -3,8 +3,10 @@
 // #3649 -- how an address in Canada is written below its street: the municipality, the province code and the postal code on one line, in capitals (Canada Post).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import 'ca_regions.dart';
+
 /// Bumped in the same commit as any change of how this layout writes an address.
-const caPostalLayoutImplementationVersion = '1';
+const caPostalLayoutImplementationVersion = '2';
 
 /// The postal layout of Canada.
 class CaPostalLayout extends PostalLayoutContribution {
@@ -26,5 +28,10 @@ class CaPostalLayout extends PostalLayoutContribution {
     ],
     cityInCapitals: true,
     postalCodeInCapitals: true,
+    region: RegionField(
+      kind: RegionKind.province,
+      required: true,
+      names: caRegions,
+    ),
   );
 }

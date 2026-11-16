@@ -10,7 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 
 import '../../../../core/i18n/format_controller.dart';
+import '../../../../core/jurisdiction/installed_postal_layouts.dart';
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/ui/address_region_field.dart';
 import '../../../../core/ui/country_field.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
@@ -110,6 +112,10 @@ class _SupplierDialogState extends State<_SupplierDialog> {
   });
   late bool _group = _start.taxIdKind == SupplierIdKind.vatGroup;
 
+  /// #3649 -- the region of the address, and why it cannot be saved.
+  late String _region = _start.subdivision;
+  String? _regionError;
+
   /// The registry's answer under review, when the form was filled by one.
   SupplierPrefill? _prefill;
 
@@ -171,6 +177,7 @@ class _SupplierDialogState extends State<_SupplierDialog> {
     postalCode: _fields.text('postalCode'),
     city: _fields.text('city'),
     countryCode: _fields.text('countryCode'),
+    subdivision: regionCode(_region),
     contact: _fields.text('contact'),
   );
 
@@ -209,6 +216,7 @@ class _SupplierDialogState extends State<_SupplierDialog> {
       _prefill = prefill;
       _provenance = {...prefill.provenance};
       _filled = values;
+      _region = d.subdivision;
     });
     // After the state holds the answer, so the listeners compare against it.
     values.forEach((key, value) => _fields[key].text = value);
@@ -264,7 +272,35 @@ class _SupplierDialogState extends State<_SupplierDialog> {
     });
   }
 
+  /// #3649 -- the region is checked once the address is edited: a supplier
+  /// stored before its country asked for one keeps saving as it is.
+  String? _regionProblem(SupplierDraft draft) {
+    final start = _start;
+    final edited =
+        start.id == null ||
+        draft.street != start.street ||
+        draft.postalCode != start.postalCode ||
+        draft.city != start.city ||
+        draft.countryCode != start.countryCode ||
+        draft.subdivision != start.subdivision;
+    if (!edited) return null;
+    final refusal = postalLayoutOf(draft.countryCode).regionRefusal(draft.subdivision);
+    return refusal == null ? null : regionRefusalText(context.l10n, refusal);
+  }
+
+  /// The one place the region and its refusal change.
+  void _setRegion(String region, {String? error}) => setState(() {
+    _region = region;
+    _regionError = error;
+  });
+
   Future<void> _submit() async {
+    final region = _regionProblem(_draft());
+    if (region != null) {
+      _setRegion(_region, error: region);
+      _announce(region);
+      return;
+    }
     final id = await _step.submit(
       _draft(),
       context.l10n,
@@ -386,6 +422,21 @@ class _SupplierDialogState extends State<_SupplierDialog> {
               helper: _helper(l10n, 'countryCode'),
               error: _step.value.countryError,
               enabled: !_step.value.busy,
+            ),
+            ValueListenableBuilder(
+              valueListenable: _fields['countryCode'],
+              builder: (context, country, _) => AddressRegionField(
+                key: ValueKey('supplier-region-${country.text.trim().toUpperCase()}'),
+                fieldKey: 'supplier-region',
+                country: country.text.trim().toUpperCase(),
+                value: _region,
+                error: _regionError,
+                enabled: !_step.value.busy,
+                onChanged: (v) {
+                  _setRegion(v);
+                  _onEdited();
+                },
+              ),
             ),
             _field(l10n, 'contact', l10n.suppliersFieldContact, maxLength: 300),
             SupplierSaveStatus(

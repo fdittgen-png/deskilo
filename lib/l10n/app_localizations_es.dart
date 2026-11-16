@@ -904,6 +904,33 @@ class AppLocalizationsEs extends AppLocalizations {
   String get addressNone => 'Sin dirección';
 
   @override
+  String get addressRegionCanton => 'Cantón';
+
+  @override
+  String get addressRegionCounty => 'Condado';
+
+  @override
+  String get addressRegionMissing =>
+      'Una dirección en este país necesita su región.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Indique la región con su código: hasta 10 letras, cifras o guiones.';
+
+  @override
+  String get addressRegionProvince => 'Provincia';
+
+  @override
+  String get addressRegionRegion => 'Región';
+
+  @override
+  String get addressRegionState => 'Estado';
+
+  @override
+  String get addressRegionUnknown =>
+      'Este país no tiene ninguna región con este código.';
+
+  @override
   String get addressSaved => 'Dirección guardada';
 
   @override
@@ -8465,6 +8492,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'una referencia del comprador o un número de pedido';
 
   @override
+  String get eInvoiceChannelGapBuyerSubdivision =>
+      'la región de la dirección del cliente (BT-54)';
+
+  @override
   String get eInvoiceChannelGapBuyerTaxId =>
       'el NIF-IVA o el código fiscal del cliente';
 
@@ -8485,11 +8516,11 @@ class AppLocalizationsEs extends AppLocalizations {
       'la dirección electrónica del espacio (BT-34) en su identidad legal';
 
   @override
-  String get eInvoiceChannelGapSellerVatId => 'el NIF-IVA del espacio';
+  String get eInvoiceChannelGapSellerSubdivision =>
+      'la región de la dirección del espacio (BT-39) en su identidad legal';
 
   @override
-  String get eInvoiceChannelGapSubdivision =>
-      'el distrito (județ) de cada dirección rumana';
+  String get eInvoiceChannelGapSellerVatId => 'el NIF-IVA del espacio';
 
   @override
   String eInvoiceChannelGapsTitle(String channel) {

@@ -49,6 +49,7 @@ const Map<ProfilePurpose, List<String>> profilePurposeFields = {
     PersonalInfo.keyStreet,
     PersonalInfo.keyPostalCode,
     PersonalInfo.keyCity,
+    PersonalInfo.keySubdivision,
     PersonalInfo.keyCountryCode,
     PersonalInfo.keyPhone,
     PersonalInfo.keyEmail,

@@ -44,6 +44,7 @@ Map<String, Object?> purchaseOrderReportData(
       ...postalLayoutOf(supplier.countryCode).render(
         postalCode: supplier.postalCode,
         city: supplier.city,
+        region: supplier.subdivision,
         capitals: false,
       ),
       supplier.countryCode,

@@ -3,8 +3,10 @@
 // #3649 -- how an address in the United States is written below its street: the city, the state code and the ZIP code on one line, in capitals (USPS Publication 28).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import 'us_regions.dart';
+
 /// Bumped in the same commit as any change of how this layout writes an address.
-const usPostalLayoutImplementationVersion = '1';
+const usPostalLayoutImplementationVersion = '2';
 
 /// The postal layout of the United States.
 class UsPostalLayout extends PostalLayoutContribution {
@@ -25,5 +27,10 @@ class UsPostalLayout extends PostalLayoutContribution {
       [PostalPart.city, PostalPart.region, PostalPart.postalCode],
     ],
     cityInCapitals: true,
+    region: RegionField(
+      kind: RegionKind.state,
+      required: true,
+      names: usRegions,
+    ),
   );
 }

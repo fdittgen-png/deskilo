@@ -356,6 +356,38 @@
   "acctTransfersTitle": "Transferencias",
   "acctWhoUnknown": "alguien que ya no está en el espacio",
   "addressNone": "Sin dirección",
+  "addressRegionCanton": "Cantón",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionCounty": "Condado",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionMissing": "Una dirección en este país necesita su región.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Indique la región con su código: hasta 10 letras, cifras o guiones.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionProvince": "Provincia",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionRegion": "Región",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionState": "Estado",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionUnknown": "Este país no tiene ninguna región con este código.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  },
   "addressSaved": "Dirección guardada",
   "addressTitle": "Dirección",
   "addressVatIdLabel": "Número de IVA (si facturas como empresa)",
@@ -5203,6 +5235,10 @@
   "@eInvoiceChannelGapBuyerReference": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapBuyerSubdivision": "la región de la dirección del cliente (BT-54)",
+  "@eInvoiceChannelGapBuyerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the customer’s address"
+  },
   "eInvoiceChannelGapBuyerTaxId": "el NIF-IVA o el código fiscal del cliente",
   "@eInvoiceChannelGapBuyerTaxId": {
     "description": "#2358 channel gap"
@@ -5223,12 +5259,12 @@
   "@eInvoiceChannelGapSellerEndpoint": {
     "description": "#2358 channel gap"
   },
+  "eInvoiceChannelGapSellerSubdivision": "la región de la dirección del espacio (BT-39) en su identidad legal",
+  "@eInvoiceChannelGapSellerSubdivision": {
+    "description": "#3649 what a channel needs: the region of the space’s address"
+  },
   "eInvoiceChannelGapSellerVatId": "el NIF-IVA del espacio",
   "@eInvoiceChannelGapSellerVatId": {
-    "description": "#2358 channel gap"
-  },
-  "eInvoiceChannelGapSubdivision": "el distrito (județ) de cada dirección rumana",
-  "@eInvoiceChannelGapSubdivision": {
     "description": "#2358 channel gap"
   },
   "eInvoiceChannelGapsTitle": "Antes de enviar por {channel}, añada:",

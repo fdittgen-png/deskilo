@@ -90,6 +90,10 @@ SupplierPrefill prefillFromLookup({
       postalCode: pick(CompanyField.postalCode, base.postalCode),
       city: pick(CompanyField.city, base.city),
       countryCode: country.isEmpty ? request.countryCode : country,
+      // #3649 -- the region belongs to the address it was entered with.
+      subdivision: (country.isEmpty ? request.countryCode : country) == base.countryCode
+          ? base.subdivision
+          : '',
       contact: base.contact,
     ),
     provenance: provenance,

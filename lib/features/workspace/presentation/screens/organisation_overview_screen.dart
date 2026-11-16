@@ -193,7 +193,10 @@ class _OverviewBody extends ConsumerWidget {
                 key: const ValueKey('organisation-overview-one-house'),
               ),
             ),
+          // The houses take three parts of the room, the totals one: a phone
+          // shows the houses whole before it scrolls them (#4095).
           Expanded(
+            flex: 3,
             child: RecordsTable<OverviewHouse>(
               tableId: 'organisation-overview',
               rows: overview.houses,

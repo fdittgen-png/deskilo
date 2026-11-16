@@ -3,8 +3,10 @@
 // #3649 -- how an address in Ireland is written below its street: the town, the county, then the Eircode on its own line (An Post).
 import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart';
 
+import 'ie_regions.dart';
+
 /// Bumped in the same commit as any change of how this layout writes an address.
-const iePostalLayoutImplementationVersion = '1';
+const iePostalLayoutImplementationVersion = '2';
 
 /// The postal layout of Ireland.
 class IePostalLayout extends PostalLayoutContribution {
@@ -27,5 +29,10 @@ class IePostalLayout extends PostalLayoutContribution {
       [PostalPart.postalCode],
     ],
     postalCodeInCapitals: true,
+    region: RegionField(
+      kind: RegionKind.county,
+      names: ieRegions,
+      printsName: true,
+    ),
   );
 }

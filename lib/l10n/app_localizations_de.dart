@@ -906,6 +906,33 @@ class AppLocalizationsDe extends AppLocalizations {
   String get addressNone => 'Keine Adresse';
 
   @override
+  String get addressRegionCanton => 'Kanton';
+
+  @override
+  String get addressRegionCounty => 'County';
+
+  @override
+  String get addressRegionMissing =>
+      'Eine Adresse in diesem Land braucht ihre Region.';
+
+  @override
+  String get addressRegionNotACode =>
+      'Geben Sie die Region als Code ein: bis zu 10 Buchstaben, Ziffern oder Bindestriche.';
+
+  @override
+  String get addressRegionProvince => 'Provinz';
+
+  @override
+  String get addressRegionRegion => 'Region';
+
+  @override
+  String get addressRegionState => 'Bundesstaat';
+
+  @override
+  String get addressRegionUnknown =>
+      'Dieses Land hat keine Region mit diesem Code.';
+
+  @override
   String get addressSaved => 'Adresse gespeichert';
 
   @override
@@ -8487,6 +8514,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'eine Käuferreferenz oder eine Bestellnummer';
 
   @override
+  String get eInvoiceChannelGapBuyerSubdivision =>
+      'die Region der Adresse des Kunden (BT-54)';
+
+  @override
   String get eInvoiceChannelGapBuyerTaxId =>
       'die USt-IdNr. oder Steuernummer des Kunden';
 
@@ -8507,11 +8538,11 @@ class AppLocalizationsDe extends AppLocalizations {
       'die elektronische Adresse des Space (BT-34) in seiner rechtlichen Identität';
 
   @override
-  String get eInvoiceChannelGapSellerVatId => 'die USt-IdNr. des Space';
+  String get eInvoiceChannelGapSellerSubdivision =>
+      'die Region der Adresse des Space (BT-39) in seiner rechtlichen Identität';
 
   @override
-  String get eInvoiceChannelGapSubdivision =>
-      'den Kreis (județ) jeder rumänischen Adresse';
+  String get eInvoiceChannelGapSellerVatId => 'die USt-IdNr. des Space';
 
   @override
   String eInvoiceChannelGapsTitle(String channel) {

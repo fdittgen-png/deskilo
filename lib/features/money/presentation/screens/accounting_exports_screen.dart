@@ -83,6 +83,7 @@ class AccountingExportsScreen extends ConsumerWidget {
           AsyncError() => RecordsState.failed,
           _ => RecordsState.loading,
         },
+        error: read?.error,
         onRetry: workspaceId.isEmpty
             ? null
             : () => ref.invalidate(bookPeriodsProvider(workspaceId)),
