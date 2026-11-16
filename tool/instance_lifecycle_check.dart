@@ -198,6 +198,9 @@ Future<int> _run(List<String> argv) async {
     // #3904 — an install is complete with its push configuration: the same
     // step the builder runs after the migrations, for this project.
     await InstanceBuilder(a).configurePush(installDb);
+    // #3916 — and with the app's address for the functions that link back
+    // to the app: the step the builder runs with the sign-in settings.
+    await InstanceBuilder(a).configureAppUrl(installDb);
 
     final findings = await doctor(a, installDb);
     final schema = InstanceDoctor.checkSchema(

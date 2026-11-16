@@ -6210,7 +6210,7 @@ El programa de su gestor conoce sus diarios por sus propios códigos, y usted qu
 - Cada exportación contable de la aplicación los usa: el FEC, el diario genérico, los libros mayores SAF-T y los libros impresos.
 - Un código no tiene saltos de línea, tabuladores ni |, y dos diarios nunca comparten código; el formulario indica qué campo corregir.
 - Un código cambiado también cambia los números de asiento de un periodo exportado de nuevo.
-- Los envíos a un sistema contable conectado siguen usando los códigos estándar.
+- Los envíos a Pennylane y Business Central también usan estos códigos; el diario debe existir allí con el mismo código.
 
 **Véase también:** [Exportaciones contables](#exportaciones-contables)
 

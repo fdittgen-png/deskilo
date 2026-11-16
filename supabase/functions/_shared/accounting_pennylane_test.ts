@@ -7,7 +7,7 @@
 
 import { assertEquals, assertThrows } from "jsr:@std/assert@1";
 import { amount, journalEntryPayload, PayloadRefusal, pennylaneLedger } from "./accounting_pennylane.ts";
-import type { Posting } from "./accounting_postings.ts";
+import { journalCodesOf, type Posting } from "./accounting_postings.ts";
 
 Deno.test("a payment's entry balances; an unbalanced one is refused", () => {
   const entry = {
@@ -127,4 +127,68 @@ Deno.test("a delivery is refused when the token reaches another company than the
   assertEquals(await adapterFor("", { id: 42 }).prepare(), null);
   const refused = await adapterFor("41", { id: 42 }).prepare();
   assertEquals(typeof refused, "string");
+});
+
+// ── #4003: the business's own journals ─────────────────────────────────────
+
+const journalAdapter = (journals: Record<string, string> | undefined, codes: [number, string][], sent: Record<string, unknown>[]) =>
+  pennylaneLedger({
+    fetch: (async (input: string | URL | Request, init?: RequestInit) => {
+      const path = new URL(String(input)).pathname.replace(/^.*\/v2\//, "");
+      if (path === "journals") {
+        return Response.json({ items: codes.map(([id, code]) => ({ id, code })), has_more: false });
+      }
+      if (path === "ledger_entries" && init?.method === "POST") {
+        const body = JSON.parse(String(init.body));
+        sent.push(body);
+        return Response.json({ ...body, id: 900 }, { status: 201 });
+      }
+      return Response.json({ items: [] });
+    }) as typeof fetch,
+    secrets: { access_token: "t" },
+    tenant: "",
+    targetId: "pennylane_api",
+    env: () => undefined,
+    journals,
+  });
+
+const bankMaps = [
+  { kind: "account" as const, key: "bank", remoteId: "11", remoteCode: "" },
+  { kind: "account" as const, key: "customers", remoteId: "12", remoteCode: "" },
+];
+
+const ownCodes = { sales: "VT", bank: "BNP", purchases: "ACH", other: "DIV" };
+
+Deno.test("a delivery goes to the business's journal when it set one", async () => {
+  const sent: Record<string, unknown>[] = [];
+  const adapter = journalAdapter(ownCodes, [[1, "VE"], [2, "BQ"], [5, "VT"], [6, "BNP"]], sent);
+  assertEquals(await adapter.prepare(), null);
+  const created = await adapter.remote(posting, undefined, bankMaps).create("k-1", {} as never, bankMaps);
+  assertEquals(created.ok, true);
+  assertEquals(sent[0].journal_id, 6);
+});
+
+Deno.test("with no journals set the standard code is used; a code the company lacks is refused by name", async () => {
+  const sent: Record<string, unknown>[] = [];
+  const standard = journalAdapter(undefined, [[1, "VE"], [2, "BQ"], [6, "BNP"]], sent);
+  await standard.prepare();
+  assertEquals((await standard.remote(posting, undefined, bankMaps).create("k-1", {} as never, bankMaps)).ok, true);
+  assertEquals(sent[0].journal_id, 2);
+  const own = journalAdapter(ownCodes, [[1, "VE"], [2, "BQ"]], sent);
+  await own.prepare();
+  const refused = await own.remote(posting, undefined, bankMaps).create("k-2", {} as never, bankMaps);
+  assertEquals(refused.ok, false);
+  assertEquals(sent.length, 1);
+  assertEquals(!refused.ok && refused.detail.includes("BNP"), true);
+});
+
+Deno.test("the stored journals are read whole or not at all, and an empty code is never taken", () => {
+  const entry = (code: string) => ({ code, label: "L" });
+  const stored = { sales: entry("VT"), bank: entry("BNP"), purchases: entry("ACH"), misc: entry("DIV") };
+  assertEquals(journalCodesOf(stored), ownCodes);
+  assertEquals(journalCodesOf({}), undefined);
+  assertEquals(journalCodesOf(null), undefined);
+  assertEquals(journalCodesOf({ ...stored, bank: undefined }), undefined);
+  assertEquals(journalCodesOf({ ...stored, bank: entry(" ") }), undefined);
+  assertEquals(journalCodesOf({ ...stored, misc: { code: "DIV" } }), undefined);
 });

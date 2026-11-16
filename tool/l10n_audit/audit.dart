@@ -173,11 +173,11 @@ const Map<String, ({int allowed, String reason})> classifiedLiterals = {
         'the English-speaking spaces, not application interface labels',
   ),
   'lib/core/diagnostics/doctor_english.dart': (
-    allowed: 19,
+    allowed: 21,
     reason: "the operator's English: what the command line and the support "
         'bundle print for a typed doctor finding; the panel words the same '
         'findings from the ARB catalogue (instanceDoctor*) in the '
-        "member's language (#3489).",
+        "member's language (#3489, #3916).",
   ),
   'lib/core/instance/instance_builder.dart': (
     allowed: 13,

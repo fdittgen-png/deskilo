@@ -4,6 +4,8 @@
 // a customer's own month, what their details leave missing for an invoice,
 // and the buyer an issued invoice names. Empty in a test fake; the Demo sets
 // them (demo_newcomers_seed.dart).
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../../features/money/domain/statement.dart';
 
 class DemoBuyers {
@@ -18,4 +20,8 @@ class DemoBuyers {
   /// The buyer an issued invoice names, as the server snapshots it; null:
   /// the distinguishable placeholders the archive tests read.
   ({String name, String address}) Function(String memberId)? of;
+
+  /// #4105 -- the parties an issue to [memberId] would store, as the server's
+  /// draft answers them; null: the session says nothing about a channel.
+  ({InvoiceParty seller, InvoiceParty buyer}) Function(String memberId)? parties;
 }
