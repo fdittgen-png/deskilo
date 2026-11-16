@@ -25,8 +25,11 @@ import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/private_value.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/finance_overview.dart';
+import '../../domain/finance_selection.dart';
+import '../../providers/finance_selection_provider.dart';
 import '../../providers/invoice_group_providers.dart';
 import 'dev_label.dart';
+import 'finance_claim_state.dart';
 import 'invoice_group_sheet.dart';
 import 'own_finance_export_menu.dart';
 
@@ -167,6 +170,30 @@ class _FinanceDocument extends ConsumerWidget {
   final bool wide;
   final ValueChanged<FinanceInvoice> onOpen;
 
+  /// When it is due (or how late), while owed; else the day it was issued.
+  Widget _period(
+    BuildContext context, {
+    required bool overdue,
+    required TextStyle? muted,
+  }) {
+    final theme = Theme.of(context);
+    final format = personalFormatOf(context).dates(DateShape.date);
+    final due = invoice.dueOn;
+    return invoice.state.owed && due != null
+        ? Text(
+            _dueText(context.l10n, invoice, format.format(due), now),
+            style: theme.textTheme.bodySmall?.copyWith(
+              color: overdue
+                  ? theme.colorScheme.error
+                  : theme.colorScheme.onSurfaceVariant,
+            ),
+          )
+        : Text(
+            format.format(personalFormatOf(context).wall(invoice.issuedAt)),
+            style: muted,
+          );
+  }
+
   Future<void> _export(BuildContext context, WidgetRef ref) =>
       OwnFinanceExportMenu.export(
         context,
@@ -182,21 +209,12 @@ class _FinanceDocument extends ConsumerWidget {
     final l10n = context.l10n;
     final theme = Theme.of(context);
     final scheme = theme.colorScheme;
-    final format = personalFormatOf(context).dates(DateShape.date);
     final overdue = invoice.overdueAt(now);
-    final due = invoice.dueOn;
     final devTone = AppEnvironmentColors.developmentOf(theme.brightness);
     final muted = theme.textTheme.bodySmall?.copyWith(
       color: scheme.onSurfaceVariant,
     );
-    final period = invoice.state.owed && due != null
-        ? Text(
-            _dueText(l10n, invoice, format.format(due), now),
-            style: theme.textTheme.bodySmall?.copyWith(
-              color: overdue ? scheme.error : scheme.onSurfaceVariant,
-            ),
-          )
-        : Text(format.format(personalFormatOf(context).wall(invoice.issuedAt)), style: muted);
+    final period = _period(context, overdue: overdue, muted: muted);
     final workspace = isDev
         ? DevLabel(name: invoice.workspaceName, small: true)
         : Text(
@@ -217,6 +235,7 @@ class _FinanceDocument extends ConsumerWidget {
         _StateChip(_paymentState(l10n, invoice)),
         if (invoice.reminderCount > 0 && invoice.state.owed)
           _StateChip(l10n.financesRemindedTimes(invoice.reminderCount)),
+        FinanceClaimState(invoice),
       ],
     );
     final amount = Text(
@@ -243,6 +262,7 @@ class _FinanceDocument extends ConsumerWidget {
     final Widget body = wide
         ? Row(
             children: [
+              _SelectBox(invoice),
               Expanded(
                 flex: 3,
                 child: Column(
@@ -282,6 +302,7 @@ class _FinanceDocument extends ConsumerWidget {
               ),
               child: Row(
                 children: [
+                  _SelectBox(invoice),
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -324,6 +345,31 @@ class _FinanceDocument extends ConsumerWidget {
               child: body,
             )
           : body,
+    );
+  }
+}
+
+/// #3556 (1b) — a payable invoice is selected for a payment; one of
+/// another business or currency than the selection cannot join it.
+class _SelectBox extends ConsumerWidget {
+  const _SelectBox(this.invoice);
+
+  final FinanceInvoice invoice;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    if (!FinanceSelection.selectable(invoice)) return const SizedBox.shrink();
+    final selection = ref.watch(financeSelectionControllerProvider);
+    final held = selection.holds(invoice);
+    return Checkbox(
+      key: ValueKey('finances-select-${invoice.id}'),
+      semanticLabel: context.l10n.financesSelectInvoice(invoice.number),
+      value: held,
+      onChanged: held || selection.accepts(invoice)
+          ? (_) => ref
+                .read(financeSelectionControllerProvider.notifier)
+                .toggle(invoice)
+          : null,
     );
   }
 }

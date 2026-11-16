@@ -30,25 +30,6 @@ const _notForTheApp = <String, String>{
   'DKR03':
       'an operator\'s refusal: only a personal home names itself as one '
       '(0565)',
-  // #3556 (0797) — a payment's claim of invoices. No screen sends a claim
-  // yet: My finances' selection (#3556, the app piece) maps DKC02-DKC11 and
-  // removes them here; the test below fails until it does.
-  'DKC01':
-      'the app always names the invoices it pays: an empty claim is a '
-      'caller\'s fault, never a person\'s (0797)',
-  'DKC02': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC03': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC04': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC05': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC06': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC07': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC08': 'no screen withdraws a claim yet (0797); My finances reads it next',
-  'DKC09': 'no screen withdraws a claim yet (0797); My finances reads it next',
-  'DKC10': 'no screen withdraws a claim yet (0797); My finances reads it next',
-  'DKC11': 'no screen sends a claim yet (0797); My finances reads it next',
-  'DKC12':
-      'a retry of a payment whose claim was withdrawn: the payment flow '
-      'answers it, no screen meets it (0797)',
   'DKC13': 'no screen takes a declaration back yet (#4140); My finances '
       'reads it next',
 };

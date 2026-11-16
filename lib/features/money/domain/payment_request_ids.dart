@@ -9,6 +9,7 @@
 // intent failed, went stale, or the body was refused); an unknown outcome
 // keeps it.
 import '../../../core/ids/request_id.dart';
+import 'payment_claims.dart';
 import 'payment_provider.dart';
 
 class PaymentRequestIds {
@@ -36,6 +37,21 @@ class PaymentRequestIds {
     _key(workspaceId, memberId, provider, period, amountCents),
     _mint,
   );
+
+  /// #3556 — what a payment that names invoices is for: their month and
+  /// the invoices themselves, sorted (the order chosen in does not count),
+  /// passed as the period of the key. The same amount for another selection
+  /// is another payment (0797's replay check compares the claim too).
+  static String forClaim(String period, List<String> invoiceIds) =>
+      '$period|${([...invoiceIds]..sort()).join(',')}';
+
+  /// #3556 — forgets the id of the payment that named exactly
+  /// [invoiceIds] (its claim was withdrawn: a payment of them again is a
+  /// new one).
+  void forgetClaim(Iterable<String> invoiceIds) {
+    final claim = '|${([...invoiceIds]..sort()).join(',')}';
+    _ids.removeWhere((key, _) => key.endsWith(claim));
+  }
 
   /// After a failed call: forget the id when [error] is definitive.
   void afterError(
@@ -72,9 +88,11 @@ class PaymentRequestIds {
     }
   }
 
-  /// A 4xx or a provider refusal (502) is definitive; a 5xx timeout or
-  /// unknown outcome (503), a network error or anything else is not.
+  /// A 4xx or a provider refusal (502) is definitive, and so is a claim the
+  /// server refused (#3556); a 5xx timeout or unknown outcome (503), a
+  /// network error or anything else is not.
   static bool isDefinitive(Object error) =>
+      error is ClaimRefused ||
       error is PaymentGatewayException &&
-      ((error.status >= 400 && error.status < 500) || error.status == 502);
+          ((error.status >= 400 && error.status < 500) || error.status == 502);
 }

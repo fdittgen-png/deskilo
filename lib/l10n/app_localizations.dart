@@ -10073,6 +10073,84 @@ abstract class AppLocalizations {
   /// **'as {role}'**
   String chromeRoleAs(String role);
 
+  /// #3556 Refusal: an invoice is already in another payment
+  ///
+  /// In en, this message translates to:
+  /// **'One of these invoices is already in another payment. Nothing was charged.'**
+  String get claimRefusedAlreadyInPayment;
+
+  /// #3556 Refusal: the amount is not what the invoices still owe
+  ///
+  /// In en, this message translates to:
+  /// **'What these invoices still owe has changed. Refresh and try again.'**
+  String get claimRefusedAmount;
+
+  /// #3556 Refusal: an invoice cannot take a payment now (settled, voided, matched, nothing due)
+  ///
+  /// In en, this message translates to:
+  /// **'One of these invoices cannot take a payment now. Refresh to see where it stands.'**
+  String get claimRefusedCannotTake;
+
+  /// #3556 Refusal: an invoice is in another currency than the payment
+  ///
+  /// In en, this message translates to:
+  /// **'One of these invoices is in another currency than the business takes payments in. Nothing was charged.'**
+  String get claimRefusedCurrency;
+
+  /// #3556 Refusal: the payment named no invoice
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the invoices this payment is for.'**
+  String get claimRefusedEmpty;
+
+  /// #3556 Refusal: invoices of several months in one payment
+  ///
+  /// In en, this message translates to:
+  /// **'A payment is for the invoices of one month. Nothing was charged.'**
+  String get claimRefusedMonths;
+
+  /// #3556 Refusal: withdrawing a payment that is not the person's
+  ///
+  /// In en, this message translates to:
+  /// **'This payment is not yours to withdraw.'**
+  String get claimRefusedNotMyPayment;
+
+  /// #3556 Refusal: the payment is no longer being processed (paid or failed)
+  ///
+  /// In en, this message translates to:
+  /// **'This payment is no longer being processed. Refresh to see where it stands.'**
+  String get claimRefusedNotProcessing;
+
+  /// #3556 Refusal: an invoice is not the person's to pay (or unknown)
+  ///
+  /// In en, this message translates to:
+  /// **'One of these invoices is not yours to pay. Nothing was charged.'**
+  String get claimRefusedNotYours;
+
+  /// #3556 Refusal: the payment was already withdrawn
+  ///
+  /// In en, this message translates to:
+  /// **'This payment was already withdrawn.'**
+  String get claimRefusedNothingToFree;
+
+  /// #3556 Refusal of a payment's invoices whose code this version does not know
+  ///
+  /// In en, this message translates to:
+  /// **'The business refused these invoices for this payment. Refresh and try again.'**
+  String get claimRefusedOther;
+
+  /// #3556 Refusal: the payment's month is not the invoices'
+  ///
+  /// In en, this message translates to:
+  /// **'These invoices are of another month than this payment. Nothing was charged.'**
+  String get claimRefusedOtherMonth;
+
+  /// #3556 Refusal: retrying a payment whose invoices were withdrawn
+  ///
+  /// In en, this message translates to:
+  /// **'You withdrew this payment. Select the invoices again to pay them.'**
+  String get claimRefusedWithdrawn;
+
   /// Member-sheet action opening the co-owner dialog (0058)
   ///
   /// In en, this message translates to:
@@ -20320,6 +20398,12 @@ abstract class AppLocalizations {
   /// **'Being validated'**
   String get financesBeingValidated;
 
+  /// #3556 The business of the selected invoices cannot be opened right now (its server, the account changed)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} cannot be reached right now. Nothing was sent.'**
+  String financesBusinessUnavailable(String business);
+
   /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
   ///
   /// In en, this message translates to:
@@ -20379,6 +20463,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{workspace}: {count, plural, one{1 document} other{{count} documents}}'**
   String financesCoverageWorkspace(String workspace, int count);
+
+  /// #3556 Confirmation of a declaration spanning months: one declaration per month
+  ///
+  /// In en, this message translates to:
+  /// **'One declaration per month is recorded; each waits for the business to approve it.'**
+  String get financesDeclareEachMonth;
+
+  /// #3556 The declaration of the selected invoices could not be recorded
+  ///
+  /// In en, this message translates to:
+  /// **'The declaration could not be recorded. Try again.'**
+  String get financesDeclareFailed;
+
+  /// #3556 Confirmation: records the declaration(s)
+  ///
+  /// In en, this message translates to:
+  /// **'Record as paid'**
+  String get financesDeclareSend;
+
+  /// #3556 Confirmation title before declaring the selected invoices paid; {business} is the payee
+  ///
+  /// In en, this message translates to:
+  /// **'Paid to {business}'**
+  String financesDeclareTitle(String business);
+
+  /// #3556 A declaration over several months refused part-way: which months were recorded, which not, and why
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded: {recorded}. Not recorded: {rest}. {reason}'**
+  String financesDeclaredPart(String recorded, String rest, String reason);
+
+  /// #3556 After declaring: the declaration waits for the business; {business} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded. {business} approves it.'**
+  String financesDeclaredSent(String business);
 
   /// Shown as a text in my finances parts (money).
   ///
@@ -20506,6 +20626,24 @@ abstract class AppLocalizations {
   /// **'Your connected installations could not be listed right now; what is shown comes from this installation only.'**
   String get financesHostsUnavailable;
 
+  /// #3556 The button declaring the selected invoices paid (outlined)
+  ///
+  /// In en, this message translates to:
+  /// **'I have paid'**
+  String get financesIHavePaid;
+
+  /// #3556 Row state: the invoice is in an online payment being processed
+  ///
+  /// In en, this message translates to:
+  /// **'In payment'**
+  String get financesInPayment;
+
+  /// #3556 Row state: in an online payment since the day it was handed to its provider
+  ///
+  /// In en, this message translates to:
+  /// **'In payment since {date}'**
+  String financesInPaymentSince(String date);
+
   /// Shown as a text in my finances link card (money). Placeholders: {space} (String).
   ///
   /// In en, this message translates to:
@@ -20584,6 +20722,30 @@ abstract class AppLocalizations {
   /// **'Partly paid'**
   String get financesPartlyPaid;
 
+  /// #3556 The button paying online; {amount} names its currency
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {amount}'**
+  String financesPayAmount(String amount);
+
+  /// #3556 Confirmation of an online payment of several months: the oldest is paid now, these follow; {months} lists them with their amounts
+  ///
+  /// In en, this message translates to:
+  /// **'This pays the first month. Then: {months}.'**
+  String financesPayThen(String months);
+
+  /// #3556 Confirmation title before paying the selected invoices online; {business} is the payee
+  ///
+  /// In en, this message translates to:
+  /// **'Pay {business}'**
+  String financesPayTitle(String business);
+
+  /// #3556 Row state: the invoice's payment arrived and the business is matching it; {business} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received · {business} is matching it'**
+  String financesPaymentReceived(String business);
+
   /// #2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay
   ///
   /// In en, this message translates to:
@@ -20619,6 +20781,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Reminders'**
   String get financesReminders;
+
+  /// #3556 My finances: the checkbox of one invoice, for assistive technology; {number} is the invoice number
+  ///
+  /// In en, this message translates to:
+  /// **'Select {number}'**
+  String financesSelectInvoice(String number);
+
+  /// #3556 Selection bar: clears the selection (tooltip)
+  ///
+  /// In en, this message translates to:
+  /// **'Clear the selection'**
+  String get financesSelectionClear;
+
+  /// #3556 Confirmation: one invoice and what it still owes
+  ///
+  /// In en, this message translates to:
+  /// **'{number} · {amount}'**
+  String financesSelectionInvoiceAmount(String number, String amount);
+
+  /// #3556 Confirmation: one month of the selection and what its invoices still owe
+  ///
+  /// In en, this message translates to:
+  /// **'{month}: {amount}'**
+  String financesSelectionMonthAmount(String month, String amount);
+
+  /// #3556 Selection bar: why invoices of other businesses or currencies cannot be added; {business} is the selection's business
+  ///
+  /// In en, this message translates to:
+  /// **'A payment is for one business in one currency: {business}.'**
+  String financesSelectionOneBusiness(String business);
+
+  /// #3556 Selection bar: how many invoices are selected and what they still owe; {amount} names its currency
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 invoice selected · {amount}} other{{count} invoices selected · {amount}}}'**
+  String financesSelectionSummary(int count, String amount);
 
   /// #2557 C5 Me › Finances: reveals one compact card's amount.
   ///
@@ -20656,6 +20854,12 @@ abstract class AppLocalizations {
   /// **'Unpaid'**
   String get financesStateUnpaid;
 
+  /// #3556 A payment names at most this many invoices
+  ///
+  /// In en, this message translates to:
+  /// **'{max, plural, one{A payment names at most {max} invoice. Select fewer.} other{A payment names at most {max} invoices. Select fewer.}}'**
+  String financesTooManyInvoices(int max);
+
   /// #2557 C4 Me › Finances: the type filter, every document.
   ///
   /// In en, this message translates to:
@@ -20667,6 +20871,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Credit note'**
   String get financesTypeCreditNote;
+
+  /// #3556 Row state: a declared payment names the invoice and waits for the business; {business} is its name
+  ///
+  /// In en, this message translates to:
+  /// **'Declared paid · waits for {business}'**
+  String financesWaitsForBusiness(String business);
+
+  /// #3556 Withdraws an online payment that is being processed
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw'**
+  String get financesWithdraw;
+
+  /// #3556 Confirmation: what withdrawing means for money that still arrives
+  ///
+  /// In en, this message translates to:
+  /// **'Its invoices can be paid again. Money that still arrives is credited to your account and not applied to these invoices.'**
+  String get financesWithdrawBody;
+
+  /// #3556 The payment could not be withdrawn
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be withdrawn. Try again.'**
+  String get financesWithdrawFailed;
+
+  /// #3556 Withdrawal confirmation, when the payment was just handed to its provider
+  ///
+  /// In en, this message translates to:
+  /// **'If you have just paid at the provider, wait: the confirmation takes a few minutes.'**
+  String get financesWithdrawSettling;
+
+  /// #3556 Confirmation title before withdrawing a payment
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw this payment?'**
+  String get financesWithdrawTitle;
+
+  /// #3556 After withdrawing a payment
+  ///
+  /// In en, this message translates to:
+  /// **'Payment withdrawn. Its invoices can be paid again.'**
+  String get financesWithdrawn;
 
   /// #3599 Me › Finances, the summary of the Outstanding tab: the heading above what businesses still hold for me, per currency — credit notes not used yet, beyond what I owe the business that issued them.
   ///
@@ -37422,6 +37668,18 @@ abstract class AppLocalizations {
   /// **'Pay online'**
   String get payOnlineChooseTitle;
 
+  /// #3556 The payment service did not take the selected invoices: the checkout is not opened
+  ///
+  /// In en, this message translates to:
+  /// **'The payment service did not take these invoices, so the checkout was not opened. Nothing was charged.'**
+  String get payOnlineClaimNotTaken;
+
+  /// #3556 The business's payment service is too old to pay selected invoices
+  ///
+  /// In en, this message translates to:
+  /// **'This business\'s payment service must be updated before selected invoices can be paid online.'**
+  String get payOnlineClaimsUnsupported;
+
   /// Hint above the per-provider missing-config lines in the diagnostics dialog
   ///
   /// In en, this message translates to:
@@ -37498,6 +37756,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Online payment reversed'**
   String get payOnlineReversedTitle;
+
+  /// #3556 A retried online payment the server ended (failed or too old): start a new one
+  ///
+  /// In en, this message translates to:
+  /// **'This payment can no longer be continued. Start the payment again.'**
+  String get payOnlineStartAgain;
 
   /// #3905 an online payment refused because the provider holds test credentials
   ///

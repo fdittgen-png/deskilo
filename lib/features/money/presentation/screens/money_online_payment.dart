@@ -16,10 +16,13 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_preferences.dart';
 import '../../../profile/providers/personal_preferences_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../domain/payment_claims.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/payment_request_ids.dart';
+import '../../providers/finance_selection_provider.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/payment_approval_providers.dart';
+import '../claim_refusal_text.dart';
 import '../payment_provider_labels.dart';
 
 /// Starts an online payment (0043 scaffolding, #1637, #2014 B): asks the
@@ -33,22 +36,32 @@ class MoneyOnlinePayment {
   final State _state;
   final WidgetRef _ref;
 
-  /// #2014 B — the request id of a retried payment stays the same.
-  final PaymentRequestIds _requests = PaymentRequestIds();
+  /// #2014 B — the request id of a retried payment stays the same: one set
+  /// per account, shared with My finances (#3556), so a retry after a lost
+  /// answer is the same request whichever screen makes it.
+  PaymentRequestIds get _requests => _ref.read(paymentRequestIdsProvider);
 
   BuildContext get _context => _state.context;
 
-  /// Pays [amountCents] of the bill of [period].
-  Future<void> pay(int amountCents, String period) async {
+  /// Pays [amountCents] of the bill of [period]; with [invoiceIds] (#3556)
+  /// exactly those invoices of that month (the server derives what they
+  /// still owe and refuses any other amount). True once the payment is
+  /// with its provider (or was paid already); false when it was not
+  /// started — refused, failed or left — so a selection stays as it was.
+  Future<bool> pay(
+    int amountCents,
+    String period, {
+    List<String>? invoiceIds,
+  }) async {
     final l10n = _context.l10n;
     final workspace = _ref.read(currentWorkspaceProvider).value;
     final member = _ref.read(myMemberProvider).value;
-    if (workspace == null || member == null || amountCents <= 0) return;
+    if (workspace == null || member == null || amountCents <= 0) return false;
     final trace = TraceLogger.instance;
 
     // 1. What can this deployment charge with?
     final gateway = await _probe(workspace.id, l10n);
-    if (gateway == null || !_context.mounted) return;
+    if (gateway == null || !_context.mounted) return false;
     trace.log(
       TraceLevel.info,
       'payments',
@@ -57,12 +70,18 @@ class MoneyOnlinePayment {
     );
     if (gateway.providers.isEmpty) {
       await _diagnostics(l10n, gateway);
-      return;
+      return false;
+    }
+    // #3556 — a function that does not take a claim would drop it and pay
+    // the account: a selection is not paid through it.
+    if (invoiceIds != null && !gateway.claims) {
+      AppSnack.error(_context, l10n.payOnlineClaimsUnsupported);
+      return false;
     }
 
     // 2. Pick the provider (directly when only one is configured).
     final chosen = await _chooseProvider(gateway, l10n);
-    if (chosen == null || !_context.mounted) return;
+    if (chosen == null || !_context.mounted) return false;
 
     // 3. Start the order; every step lands in the payments trace.
     trace.log(
@@ -76,13 +95,26 @@ class MoneyOnlinePayment {
       workspaceId: workspace.id,
       memberId: member.id,
       provider: chosen,
-      amountCents: amountCents,
-      period: period,
+      order: InvoiceClaim(
+        period: period,
+        amountCents: amountCents,
+        invoiceIds: invoiceIds ?? const [],
+      ),
     );
-    if (order == null || !_context.mounted) return;
+    if (order == null || !_context.mounted) return false;
+    // #3556 — the function names how many invoices it took; another count
+    // is a claim not taken: its checkout is not opened.
+    if (invoiceIds != null &&
+        order.started &&
+        order.claimed != invoiceIds.length) {
+      trace.warn('payments', 'payment claim not taken: ${order.claimed}');
+      AppSnack.error(_context, l10n.payOnlineClaimNotTaken);
+      return false;
+    }
     if (order.alreadyPaid) {
       // #2014 B: retry of a paid request
-      return _ref.invalidate(myPaymentIntentsProvider);
+      _ref.invalidate(myPaymentIntentsProvider);
+      return true;
     }
     if (!order.started) {
       trace.warn(
@@ -96,7 +128,7 @@ class MoneyOnlinePayment {
           missing: {chosen.wireName: order.missing},
         ),
       );
-      return;
+      return false;
     }
     trace.log(
       TraceLevel.info,
@@ -105,6 +137,7 @@ class MoneyOnlinePayment {
     );
     // Launch failures are traced inside the shared link seam.
     await _ref.read(paymentApprovalProvider)(_context, order.approveUrl!);
+    return true;
   }
 
   Future<PaymentGatewayConfig?> _probe(
@@ -163,10 +196,13 @@ class MoneyOnlinePayment {
     required String workspaceId,
     required String memberId,
     required PaymentProvider provider,
-    required int amountCents,
-    required String period,
+    // what is paid: a month and its amount, and the invoices it names
+    // (#3556; none: a payment of the account)
+    required InvoiceClaim order,
   }) async {
+    final InvoiceClaim(:period, :amountCents, :invoiceIds) = order;
     PaymentOrderStart? start;
+    ClaimRefusal? refused;
     final ok = await runGuarded(
       _context,
       domain: 'payments',
@@ -179,21 +215,48 @@ class MoneyOnlinePayment {
         final currency = _ref.read(currentWorkspaceProvider).value?.currencyCode;
         if (currency == null) throw StateError('no workspace currency');
         try {
-          start = await _requests.run(workspaceId, memberId, provider, period,
-              amountCents, (id) => repo.createPaymentOrder(
-                  provider: provider, workspaceId: workspaceId,
-                  memberId: memberId, amountCents: amountCents,
-                  currencyCode: currency, period: period, requestId: id));
+          final claimed = invoiceIds.isNotEmpty;
+          start = await _requests.run(workspaceId, memberId, provider,
+              claimed ? PaymentRequestIds.forClaim(period, invoiceIds) : period,
+              amountCents, (id) => claimed
+                  ? repo.createClaimOrder(
+                      provider: provider, workspaceId: workspaceId,
+                      memberId: memberId, currencyCode: currency,
+                      claim: order, requestId: id)
+                  : repo.createPaymentOrder(
+                      provider: provider, workspaceId: workspaceId,
+                      memberId: memberId, amountCents: amountCents,
+                      currencyCode: currency, period: period, requestId: id));
+        } on ClaimRefused catch (r, st) {
+          // #3556 — the business's server refused the invoices named:
+          // nothing was charged; said by its own sentence.
+          TraceLogger.instance.warn('payments', 'payment claim refused: ${r.reason.code}',
+              error: r, stackTrace: st);
+          refused = r.reason;
         } on PaymentGatewayException catch (e, st) {
+          // #3556 — a retried payment the server ended (failed, or too old
+          // to send again): its id is forgotten (definitive), and the person
+          // starts the payment again.
+          final ended = e.status == 409 &&
+              (e.detail.contains('intent_failed') ||
+                  e.detail.contains('intent_stale'));
           // #3905 — a production workspace takes real payments only: an order
           // on test credentials is refused, and said in words.
-          if (e.status != 409 || !e.detail.contains('test_keys')) rethrow;
-          TraceLogger.instance.warn('payments', 'payment order refused: test credentials',
+          if (!ended && (e.status != 409 || !e.detail.contains('test_keys'))) {
+            rethrow;
+          }
+          TraceLogger.instance.warn('payments', 'payment order refused: ${e.detail}',
               error: e, stackTrace: st);
-          if (_context.mounted) AppSnack.error(_context, l10n.payOnlineTestKeys);
+          if (_context.mounted) {
+            AppSnack.error(_context,
+                ended ? l10n.payOnlineStartAgain : l10n.payOnlineTestKeys);
+          }
         }
       },
     );
+    if (refused case final r? when _context.mounted) {
+      AppSnack.error(_context, claimRefusalText(l10n, r));
+    }
     return ok ? start : null;
   }
 

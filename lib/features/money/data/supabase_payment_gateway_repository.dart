@@ -2,6 +2,7 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../core/data/paged_fetch.dart';
+import '../domain/payment_claims.dart';
 import '../domain/payment_gateway_repository.dart';
 import '../domain/payment_intent.dart';
 import '../domain/payment_provider.dart';
@@ -56,7 +57,11 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
           for (final v in (entry.value as List? ?? const [])) v as String,
         ],
     };
-    return PaymentGatewayConfig(providers: providers, missing: missing);
+    return PaymentGatewayConfig(
+      providers: providers,
+      missing: missing,
+      claims: data['claims'] == true,
+    );
   }
 
   @override
@@ -131,16 +136,38 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
     required String currencyCode,
     required String period,
     String? requestId,
-  }) async {
-    final data = await _invokePayments({
-      'provider': provider.wireName,
-      'workspace_id': workspaceId,
-      'member_id': memberId,
-      'amount_cents': amountCents,
-      'currency': currencyCode,
-      'period': period,
-      'request_id': ?requestId,
-    });
+  }) => _order({
+    'provider': provider.wireName,
+    'workspace_id': workspaceId,
+    'member_id': memberId,
+    'amount_cents': amountCents,
+    'currency': currencyCode,
+    'period': period,
+    'request_id': ?requestId,
+  });
+
+  @override
+  Future<PaymentOrderStart> createClaimOrder({
+    required PaymentProvider provider,
+    required String workspaceId,
+    required String memberId,
+    required String currencyCode,
+    required InvoiceClaim claim,
+    String? requestId,
+  }) => _order({
+    'provider': provider.wireName,
+    'workspace_id': workspaceId,
+    'member_id': memberId,
+    'amount_cents': claim.amountCents,
+    'currency': currencyCode,
+    'period': claim.period,
+    'request_id': ?requestId,
+    'invoice_ids': claim.invoiceIds,
+  });
+
+  /// One payment order from its request body.
+  Future<PaymentOrderStart> _order(Map<String, Object?> body) async {
+    final data = await _invokePayments(body);
     if (data == null) {
       return const PaymentOrderStart(
         missing: ['create-payment-order (not deployed)'],
@@ -163,9 +190,11 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
     if (approveUrl is! String || approveUrl.isEmpty) {
       throw PaymentGatewayException(500, 'no approve_url in $data');
     }
+    final claimed = data['claimed'];
     return PaymentOrderStart(
       approveUrl: Uri.parse(approveUrl),
       orderId: data['order_id'] as String?,
+      claimed: claimed is int ? claimed : null,
     );
   }
 
@@ -219,6 +248,16 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
       return data is Map ? Map<String, dynamic>.from(data) : null;
     } on FunctionException catch (e, st) {
       if (e.status == 404) return null; // function not deployed
+      // #3556 — the business's server refused the payment's claim: nothing
+      // was charged; the screen names the refusal by its code.
+      final details = e.details;
+      if (e.status == 409 &&
+          details is Map &&
+          details['error'] == 'claim_refused') {
+        final refusal = ClaimRefusal.of(details['code'] as String?);
+        // trace-exempt: rethrown as the refusal the screen names
+        if (refusal != null) Error.throwWithStackTrace(ClaimRefused(refusal), st);
+      }
       // trace-exempt: not silent — rethrown as PaymentGatewayException via
       // throwWithStackTrace; the caller's runGuarded traces it.
       Error.throwWithStackTrace(

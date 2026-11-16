@@ -29,6 +29,7 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
 import 'package:deskilo/features/money/domain/member_account_commands.dart';
 import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo/features/money/domain/payment_claims.dart';
 import 'package:deskilo/features/money/domain/payment_gateway_repository.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
@@ -156,6 +157,22 @@ class _AccountCommands implements MemberAccountCommands {
   }
 
   @override
+  Future<String> declareInvoicesPaid({
+    required String workspaceId,
+    required String memberId,
+    required InvoiceClaim claim,
+  }) async {
+    calls.add('declare:${claim.invoiceIds.join(',')}');
+    return 'event-2';
+  }
+
+  @override
+  Future<void> withdrawPaymentClaim({
+    required String workspaceId,
+    required String paymentId,
+  }) async => calls.add('withdraw:$paymentId');
+
+  @override
   Future<void> recordServiceCharge({
     required String workspaceId,
     required String subjectMemberId,
@@ -234,6 +251,16 @@ class _Payments implements PaymentGatewayRepository {
     required int amountCents,
     required String currencyCode,
     required String period,
+    String? requestId,
+  }) => throw UnimplementedError();
+
+  @override
+  Future<PaymentOrderStart> createClaimOrder({
+    required PaymentProvider provider,
+    required String workspaceId,
+    required String memberId,
+    required String currencyCode,
+    required InvoiceClaim claim,
     String? requestId,
   }) => throw UnimplementedError();
 }
