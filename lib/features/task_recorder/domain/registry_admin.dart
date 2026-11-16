@@ -98,6 +98,7 @@ const Set<String> validationRuleKeys = {
   'kiosk_device',
   'payment_instructions_change',
   'credential_change',
+  'payment_attempt_unreadable',
 };
 
 /// The validation rule that applies when a type has none of its own.

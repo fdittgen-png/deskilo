@@ -6323,6 +6323,10 @@
   "eventOutcomeConfirmed": "Confirmado",
   "eventOutcomePending": "A la espera de una decisión",
   "eventOutcomeRejected": "Rechazado",
+  "eventPaymentAttemptNoticeEnded": "terminado desde entonces",
+  "eventPaymentAttemptNoticeRead": "comprobado desde entonces",
+  "eventPaymentAttemptNoticeSettled": "pagado desde entonces",
+  "eventPaymentAttemptUnreadable": "El pago {reference} de {member} ({amount}) no se pudo comprobar en {provider}: {reason}.",
   "eventPaymentInstructionsChange": "{actor} cambió la cuenta bancaria en la que pagan los miembros, mediante un asistente y con su confirmación en la aplicación: {fields}.",
   "eventPaymentSubmitted": "{actor} registró un pago de {amount}",
   "eventPaymentTermsChangeLine": "{actor} pide fijar las condiciones de pago: {terms}",
@@ -6455,6 +6459,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Pago",
+  "eventTypePaymentAttemptUnreadable": "Pago no comprobado",
   "eventTypePaymentInstructionsChange": "Cambio de la cuenta bancaria",
   "eventTypePaymentTermsChange": "Condiciones de pago",
   "@eventTypePaymentTermsChange": {
@@ -13700,6 +13705,14 @@
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
   },
+  "paymentAttemptReasonApprovedNotCaptured": "el pagador lo aprobó hace demasiado tiempo para cobrarlo automáticamente",
+  "paymentAttemptReasonMismatch": "la respuesta del proveedor no corresponde a este pago",
+  "paymentAttemptReasonNotConfigured": "las credenciales del proveedor no están configuradas",
+  "paymentAttemptReasonRecordFailed": "la respuesta del proveedor no se pudo registrar",
+  "paymentAttemptReasonRefused": "el proveedor rechazó las credenciales de la empresa",
+  "paymentAttemptReasonUnexpectedAnswer": "el proveedor indica un reembolso o una disputa",
+  "paymentAttemptReasonUnknownOrder": "el proveedor no conoce este pago",
+  "paymentAttemptReasonUnreachable": "el proveedor no respondió",
   "paymentBankCodeLabel": "Código bancario",
   "@paymentBankCodeLabel": {
     "description": "#711 - globalization"

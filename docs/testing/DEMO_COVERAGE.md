@@ -111,6 +111,7 @@ none: it is read as reassurance.
 | Guest passes at the desk (#3308): each space sells its own passes in its own currency — Pézenas a day pass, London a day pass and a drop-in hour, New York by the hour, Leipzig none (off); a sale books the place day by day for a customer record of origin guest, invoices the pass to the guest by name, files a pending payment when paid at the desk, never sells twice for one request, and is refused without issueInvoices | `test/core/demo/demo_guest_pass_test.dart` |
 | The journeys, end to end on the real screens — mounted as `DeskiloRoot` with `demoEntry` entered, so they run on the production Demo composition and its own overrides | `test/ux/demo_journeys_test.dart` |
 | The retired blur cannot come back | `test/lint/no_render_tree_blur_test.dart` |
+| A payment attempt that cannot be checked at its provider is told to those who read the finances (#4136): Bruno paid last month's open bill online at Mollie, and the reconciliation could not reach Mollie. Ada, the owner, finds in her events which payment (its reference and amount), Bruno's name, the provider and the reason in words; the row opens Bruno's account. Bruno, whom it names, does not read it. Told once per attempt; the line says when the attempt was read again, paid or ended. | `test/core/demo/demo_attempt_notice_test.dart`, `test/features/events/payment_attempt_unreadable_entry_test.dart` |
 
 ## What the suite deliberately does not do
 

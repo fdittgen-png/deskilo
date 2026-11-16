@@ -1,0 +1,15 @@
+{
+  "eventTypePaymentAttemptUnreadable": "Pagamento non verificato",
+  "eventPaymentAttemptUnreadable": "Il pagamento {reference} di {member} ({amount}) non è stato verificato presso {provider}: {reason}.",
+  "eventPaymentAttemptNoticeRead": "verificato nel frattempo",
+  "eventPaymentAttemptNoticeSettled": "pagato nel frattempo",
+  "eventPaymentAttemptNoticeEnded": "concluso nel frattempo",
+  "paymentAttemptReasonUnreachable": "il fornitore non ha risposto",
+  "paymentAttemptReasonRefused": "il fornitore ha rifiutato le credenziali dell’azienda",
+  "paymentAttemptReasonNotConfigured": "le credenziali del fornitore non sono impostate",
+  "paymentAttemptReasonUnknownOrder": "il fornitore non conosce questo pagamento",
+  "paymentAttemptReasonMismatch": "la risposta del fornitore non corrisponde a questo pagamento",
+  "paymentAttemptReasonUnexpectedAnswer": "il fornitore segnala un rimborso o una contestazione",
+  "paymentAttemptReasonRecordFailed": "la risposta del fornitore non è stata registrata",
+  "paymentAttemptReasonApprovedNotCaptured": "il pagatore lo ha approvato troppo tempo fa perché venga incassato automaticamente"
+}

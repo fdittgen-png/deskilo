@@ -6323,6 +6323,10 @@
   "eventOutcomeConfirmed": "Confermato",
   "eventOutcomePending": "In attesa di una decisione",
   "eventOutcomeRejected": "Rifiutato",
+  "eventPaymentAttemptNoticeEnded": "concluso nel frattempo",
+  "eventPaymentAttemptNoticeRead": "verificato nel frattempo",
+  "eventPaymentAttemptNoticeSettled": "pagato nel frattempo",
+  "eventPaymentAttemptUnreadable": "Il pagamento {reference} di {member} ({amount}) non è stato verificato presso {provider}: {reason}.",
   "eventPaymentInstructionsChange": "{actor} ha modificato il conto bancario su cui pagano i membri, tramite un assistente e con la sua conferma nell'app: {fields}.",
   "eventPaymentSubmitted": "{actor} ha registrato un pagamento di {amount}",
   "eventPaymentTermsChangeLine": "{actor} chiede di fissare le condizioni di pagamento: {terms}",
@@ -6455,6 +6459,7 @@
     "description": "#982 validation domains: eventTypeMemberStatusChange"
   },
   "eventTypePayment": "Pagamento",
+  "eventTypePaymentAttemptUnreadable": "Pagamento non verificato",
   "eventTypePaymentInstructionsChange": "Modifica del conto bancario",
   "eventTypePaymentTermsChange": "Condizioni di pagamento",
   "@eventTypePaymentTermsChange": {
@@ -13700,6 +13705,14 @@
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
   },
+  "paymentAttemptReasonApprovedNotCaptured": "il pagatore lo ha approvato troppo tempo fa perché venga incassato automaticamente",
+  "paymentAttemptReasonMismatch": "la risposta del fornitore non corrisponde a questo pagamento",
+  "paymentAttemptReasonNotConfigured": "le credenziali del fornitore non sono impostate",
+  "paymentAttemptReasonRecordFailed": "la risposta del fornitore non è stata registrata",
+  "paymentAttemptReasonRefused": "il fornitore ha rifiutato le credenziali dell’azienda",
+  "paymentAttemptReasonUnexpectedAnswer": "il fornitore segnala un rimborso o una contestazione",
+  "paymentAttemptReasonUnknownOrder": "il fornitore non conosce questo pagamento",
+  "paymentAttemptReasonUnreachable": "il fornitore non ha risposto",
   "paymentBankCodeLabel": "Codice banca",
   "@paymentBankCodeLabel": {
     "description": "#711 - globalization"

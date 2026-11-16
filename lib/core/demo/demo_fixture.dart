@@ -56,6 +56,7 @@ import 'demo_space_pick.dart';
 import 'demo_space_stores.dart';
 import 'demo_trade_city_space.dart';
 import 'demo_twin_space.dart';
+import 'seed/demo_attempt_notice_seed.dart';
 import 'seed/demo_booking_seed.dart';
 import 'seed/demo_calendar_seed.dart';
 import 'seed/demo_city_people_seed.dart';
@@ -199,6 +200,7 @@ class DemoFixture implements DemoSpaceParts {
     seedDemoUseCases(workspaces: workspaces, floorPlan: floorPlan, money: money, now: today); // #3958
     seedDemoSites(workspaces, floorPlan);
     seedDemoEvents(events, today);
+    seedDemoAttemptNotice(events, today); // #4136
     seedDemoDecisions(events, today);
     seedDemoHistoryDecisions(events, today);
     seedDemoAccessories(accessories, floorPlan);

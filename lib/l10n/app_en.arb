@@ -12915,6 +12915,39 @@
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
   },
+  "eventPaymentAttemptNoticeEnded": "ended since",
+  "@eventPaymentAttemptNoticeEnded": {
+    "description": "#4136 the notice ended: the attempt ended unpaid"
+  },
+  "eventPaymentAttemptNoticeRead": "checked since",
+  "@eventPaymentAttemptNoticeRead": {
+    "description": "#4136 the notice ended: the attempt was read again at its provider"
+  },
+  "eventPaymentAttemptNoticeSettled": "paid since",
+  "@eventPaymentAttemptNoticeSettled": {
+    "description": "#4136 the notice ended: the attempt was paid"
+  },
+  "eventPaymentAttemptUnreadable": "Payment {reference} of {member} ({amount}) could not be checked at {provider}: {reason}.",
+  "@eventPaymentAttemptUnreadable": {
+    "description": "#4136 the notice: which payment, whose, how much, at which provider, and why it could not be checked",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      },
+      "member": {
+        "type": "String"
+      },
+      "amount": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
   "eventPaymentInstructionsChange": "{actor} changed the bank account members pay into, through an assistant and with their confirmation in the app: {fields}.",
   "@eventPaymentInstructionsChange": {
     "description": "#3132 the owner notice: who changed the bank account through an assistant, and which fields",
@@ -13235,6 +13268,10 @@
   "eventTypePayment": "Payment",
   "@eventTypePayment": {
     "description": "Event type label / filter chip"
+  },
+  "eventTypePaymentAttemptUnreadable": "Payment not checked",
+  "@eventTypePaymentAttemptUnreadable": {
+    "description": "#4136 the event type: a payment attempt could not be checked at its provider"
   },
   "eventTypePaymentInstructionsChange": "Bank account change",
   "@eventTypePaymentInstructionsChange": {
@@ -30900,6 +30937,38 @@
   "paymentAccountNumberLabel": "Account number",
   "@paymentAccountNumberLabel": {
     "description": "#711 - globalization"
+  },
+  "paymentAttemptReasonApprovedNotCaptured": "the payer approved it too long ago for it to be collected automatically",
+  "@paymentAttemptReasonApprovedNotCaptured": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonMismatch": "the provider’s answer does not match this payment",
+  "@paymentAttemptReasonMismatch": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonNotConfigured": "the provider’s credentials are not set",
+  "@paymentAttemptReasonNotConfigured": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonRecordFailed": "the provider’s answer could not be recorded",
+  "@paymentAttemptReasonRecordFailed": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonRefused": "the provider refused the business’s credentials",
+  "@paymentAttemptReasonRefused": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonUnexpectedAnswer": "the provider reports a refund or a dispute",
+  "@paymentAttemptReasonUnexpectedAnswer": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonUnknownOrder": "the provider does not know this payment",
+  "@paymentAttemptReasonUnknownOrder": {
+    "description": "#4136 reason"
+  },
+  "paymentAttemptReasonUnreachable": "the provider did not answer",
+  "@paymentAttemptReasonUnreachable": {
+    "description": "#4136 reason"
   },
   "paymentBankCodeLabel": "Bank code",
   "@paymentBankCodeLabel": {

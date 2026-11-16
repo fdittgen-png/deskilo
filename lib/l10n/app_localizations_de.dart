@@ -9857,6 +9857,26 @@ class AppLocalizationsDe extends AppLocalizations {
   String get eventOutcomeRejected => 'Abgelehnt';
 
   @override
+  String get eventPaymentAttemptNoticeEnded => 'inzwischen beendet';
+
+  @override
+  String get eventPaymentAttemptNoticeRead => 'inzwischen geprüft';
+
+  @override
+  String get eventPaymentAttemptNoticeSettled => 'inzwischen bezahlt';
+
+  @override
+  String eventPaymentAttemptUnreadable(
+    String reference,
+    String member,
+    String amount,
+    String provider,
+    String reason,
+  ) {
+    return 'Die Zahlung $reference von $member ($amount) konnte bei $provider nicht geprüft werden: $reason.';
+  }
+
+  @override
   String eventPaymentInstructionsChange(String actor, String fields) {
     return '$actor hat das Bankkonto, auf das Mitglieder zahlen, über einen Assistenten und mit eigener Bestätigung in der App geändert: $fields.';
   }
@@ -10045,6 +10065,9 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get eventTypePayment => 'Zahlung';
+
+  @override
+  String get eventTypePaymentAttemptUnreadable => 'Zahlung nicht geprüft';
 
   @override
   String get eventTypePaymentInstructionsChange => 'Änderung des Bankkontos';
@@ -23679,6 +23702,38 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get paymentAccountNumberLabel => 'Kontonummer';
+
+  @override
+  String get paymentAttemptReasonApprovedNotCaptured =>
+      'der Zahlende hat sie vor zu langer Zeit freigegeben, um sie automatisch einzuziehen';
+
+  @override
+  String get paymentAttemptReasonMismatch =>
+      'die Antwort des Anbieters passt nicht zu dieser Zahlung';
+
+  @override
+  String get paymentAttemptReasonNotConfigured =>
+      'die Zugangsdaten des Anbieters sind nicht hinterlegt';
+
+  @override
+  String get paymentAttemptReasonRecordFailed =>
+      'die Antwort des Anbieters konnte nicht gespeichert werden';
+
+  @override
+  String get paymentAttemptReasonRefused =>
+      'der Anbieter hat die Zugangsdaten des Unternehmens abgelehnt';
+
+  @override
+  String get paymentAttemptReasonUnexpectedAnswer =>
+      'der Anbieter meldet eine Erstattung oder einen Widerspruch';
+
+  @override
+  String get paymentAttemptReasonUnknownOrder =>
+      'der Anbieter kennt diese Zahlung nicht';
+
+  @override
+  String get paymentAttemptReasonUnreachable =>
+      'der Anbieter hat nicht geantwortet';
 
   @override
   String get paymentBankCodeLabel => 'Bankleitzahl';

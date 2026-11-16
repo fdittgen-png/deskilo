@@ -15622,6 +15622,36 @@ abstract class AppLocalizations {
   /// **'Rejected'**
   String get eventOutcomeRejected;
 
+  /// #4136 the notice ended: the attempt ended unpaid
+  ///
+  /// In en, this message translates to:
+  /// **'ended since'**
+  String get eventPaymentAttemptNoticeEnded;
+
+  /// #4136 the notice ended: the attempt was read again at its provider
+  ///
+  /// In en, this message translates to:
+  /// **'checked since'**
+  String get eventPaymentAttemptNoticeRead;
+
+  /// #4136 the notice ended: the attempt was paid
+  ///
+  /// In en, this message translates to:
+  /// **'paid since'**
+  String get eventPaymentAttemptNoticeSettled;
+
+  /// #4136 the notice: which payment, whose, how much, at which provider, and why it could not be checked
+  ///
+  /// In en, this message translates to:
+  /// **'Payment {reference} of {member} ({amount}) could not be checked at {provider}: {reason}.'**
+  String eventPaymentAttemptUnreadable(
+    String reference,
+    String member,
+    String amount,
+    String provider,
+    String reason,
+  );
+
   /// #3132 the owner notice: who changed the bank account through an assistant, and which fields
   ///
   /// In en, this message translates to:
@@ -15873,6 +15903,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Payment'**
   String get eventTypePayment;
+
+  /// #4136 the event type: a payment attempt could not be checked at its provider
+  ///
+  /// In en, this message translates to:
+  /// **'Payment not checked'**
+  String get eventTypePaymentAttemptUnreadable;
 
   /// Shown as the text in event labels (events).
   ///
@@ -37474,6 +37510,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Account number'**
   String get paymentAccountNumberLabel;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the payer approved it too long ago for it to be collected automatically'**
+  String get paymentAttemptReasonApprovedNotCaptured;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider’s answer does not match this payment'**
+  String get paymentAttemptReasonMismatch;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider’s credentials are not set'**
+  String get paymentAttemptReasonNotConfigured;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider’s answer could not be recorded'**
+  String get paymentAttemptReasonRecordFailed;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider refused the business’s credentials'**
+  String get paymentAttemptReasonRefused;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider reports a refund or a dispute'**
+  String get paymentAttemptReasonUnexpectedAnswer;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider does not know this payment'**
+  String get paymentAttemptReasonUnknownOrder;
+
+  /// #4136 reason
+  ///
+  /// In en, this message translates to:
+  /// **'the provider did not answer'**
+  String get paymentAttemptReasonUnreachable;
 
   /// #711 - globalization
   ///

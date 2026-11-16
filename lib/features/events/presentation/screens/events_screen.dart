@@ -27,6 +27,7 @@ import '../../domain/workspace_event.dart';
 import '../../providers/attention_providers.dart';
 import '../../providers/event_providers.dart';
 import '../../providers/notification_filter_providers.dart';
+import '../event_destination.dart';
 import '../event_labels.dart';
 import '../event_lines.dart';
 import '../feed_notes.dart';
@@ -205,6 +206,7 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
       EventType.kioskDevice: Icons.tablet_outlined,
       EventType.paymentInstructionsChange: Icons.account_balance_outlined,
       EventType.credentialChange: Icons.key_outlined,
+      EventType.paymentAttemptUnreadable: Icons.sync_problem_outlined,
       EventType.unknown: Icons.info_outline,
     };
     return icons[event.type] ?? Icons.info_outline;
@@ -251,6 +253,8 @@ class _EventsScreenState extends ConsumerState<EventsScreen> {
   }) {
     final decisions = facts.decisions[event.id] ?? const <EventDecision>[];
     return ListTile(
+                        key: ValueKey('event-${event.id}'),
+                        onTap: eventTap(context, event),
                         leading: Icon(_icon(event)),
                         title: Text(
                           count > 1

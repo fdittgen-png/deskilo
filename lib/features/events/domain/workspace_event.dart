@@ -125,6 +125,11 @@ enum EventType {
   /// never a value. Read by those who manage the integrations.
   credentialChange('credential_change'),
 
+  /// #4136 — a payment attempt the reconciliation could not check at its
+  /// provider: which payment, whose, and why; told once per attempt to those
+  /// who read the finances, ended when the attempt is read, paid or ended.
+  paymentAttemptUnreadable('payment_attempt_unreadable'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still

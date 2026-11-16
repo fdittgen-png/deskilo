@@ -103,6 +103,12 @@ class FakeEventRepository implements EventRepository {
         !held.contains(WorkspacePermission.managePrivacy)) {
       return false;
     }
+    // #4136 (0802) — RESTRICTIVE: an attempt not checked is read with
+    // viewFinances, whatever else would grant it.
+    if (e.type == EventType.paymentAttemptUnreadable &&
+        !held.contains(WorkspacePermission.viewFinances)) {
+      return false;
+    }
     if (e.actorMemberId == me.id || e.subjectMemberId == me.id) return true;
     if (eventTypeViewPermissions(e.type.dbName).any(held.contains)) return true;
     final policy = policyFor(e.type.dbName, policies);
