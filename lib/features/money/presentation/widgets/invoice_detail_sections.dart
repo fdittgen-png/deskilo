@@ -15,6 +15,7 @@ import '../invoice_journey.dart';
 import '../invoice_status.dart';
 import '../report_strings_l10n.dart';
 import 'einvoice_receipt_line.dart';
+import 'sent_einvoice_download.dart';
 
 /// The parts of the invoice sheet below the header: what the document
 /// says, the settlement trail, the timeline and the actions.
@@ -286,6 +287,8 @@ class InvoiceDetailSections {
           workspaceId: invoice.workspaceId,
           canAsk: canIssue,
         ),
+      // #4120 — what left, exactly as stored, for those who may issue.
+      if (sent != null && canIssue) SentEInvoiceDownload(invoiceId: invoice.id),
       if (invoice.detailed)
         line(
           l10n.invoiceAnnexSummary(

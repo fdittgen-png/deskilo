@@ -5595,6 +5595,18 @@
   "@eInvoiceSendTodayTitle": {
     "description": "#4120 before Send: the values of an older invoice that are today’s"
   },
+  "eInvoiceSentDownload": "Scarica ciò che è stato inviato",
+  "@eInvoiceSentDownload": {
+    "description": "#4120 downloads the document an invoice was sent with"
+  },
+  "eInvoiceSentNone": "Nessun documento è stato inviato per questa fattura.",
+  "@eInvoiceSentNone": {
+    "description": "#4120 no sent document to download for this invoice"
+  },
+  "eInvoiceSentNotIntact": "La copia conservata di ciò che è stato inviato non è integra: non è stata consegnata.",
+  "@eInvoiceSentNotIntact": {
+    "description": "#4120 refusal DKI09: the stored sent document no longer matches its hash"
+  },
   "eInvoiceSubdivisionField": "Provincia o distretto (ad es. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"

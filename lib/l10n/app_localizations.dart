@@ -13959,6 +13959,24 @@ abstract class AppLocalizations {
   /// **'This invoice was issued before its values were kept with it, so it is sent with today\'s:'**
   String get eInvoiceSendTodayTitle;
 
+  /// #4120 downloads the document an invoice was sent with
+  ///
+  /// In en, this message translates to:
+  /// **'Download what was sent'**
+  String get eInvoiceSentDownload;
+
+  /// #4120 no sent document to download for this invoice
+  ///
+  /// In en, this message translates to:
+  /// **'No document was sent for this invoice.'**
+  String get eInvoiceSentNone;
+
+  /// #4120 refusal DKI09: the stored sent document no longer matches its hash
+  ///
+  /// In en, this message translates to:
+  /// **'The stored copy of what was sent is not intact: it was not handed out.'**
+  String get eInvoiceSentNotIntact;
+
   /// #2358 field: county or province
   ///
   /// In en, this message translates to:

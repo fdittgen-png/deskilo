@@ -8820,6 +8820,17 @@ class AppLocalizationsIt extends AppLocalizations {
       'Questa fattura è stata emessa prima che i suoi valori venissero conservati con essa; viene inviata con quelli di oggi:';
 
   @override
+  String get eInvoiceSentDownload => 'Scarica ciò che è stato inviato';
+
+  @override
+  String get eInvoiceSentNone =>
+      'Nessun documento è stato inviato per questa fattura.';
+
+  @override
+  String get eInvoiceSentNotIntact =>
+      'La copia conservata di ciò che è stato inviato non è integra: non è stata consegnata.';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Provincia o distretto (ad es. RO-B, MI)';
 

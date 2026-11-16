@@ -326,5 +326,17 @@
   "eInvoiceSendTodayConfirm": "Invia con questi",
   "@eInvoiceSendTodayConfirm": {
     "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSentDownload": "Scarica ciò che è stato inviato",
+  "@eInvoiceSentDownload": {
+    "description": "#4120 downloads the document an invoice was sent with"
+  },
+  "eInvoiceSentNotIntact": "La copia conservata di ciò che è stato inviato non è integra: non è stata consegnata.",
+  "@eInvoiceSentNotIntact": {
+    "description": "#4120 refusal DKI09: the stored sent document no longer matches its hash"
+  },
+  "eInvoiceSentNone": "Nessun documento è stato inviato per questa fattura.",
+  "@eInvoiceSentNone": {
+    "description": "#4120 no sent document to download for this invoice"
   }
 }

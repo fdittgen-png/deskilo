@@ -8840,6 +8840,17 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Rechnung wurde ausgestellt, bevor ihre Werte mit ihr gespeichert wurden; sie wird mit den heutigen versendet:';
 
   @override
+  String get eInvoiceSentDownload => 'Herunterladen, was versendet wurde';
+
+  @override
+  String get eInvoiceSentNone =>
+      'Für diese Rechnung wurde kein Dokument versendet.';
+
+  @override
+  String get eInvoiceSentNotIntact =>
+      'Die gespeicherte Kopie des Versendeten ist nicht unversehrt: sie wurde nicht ausgegeben.';
+
+  @override
   String get eInvoiceSubdivisionField => 'Kreis oder Provinz (z. B. RO-B, MI)';
 
   @override

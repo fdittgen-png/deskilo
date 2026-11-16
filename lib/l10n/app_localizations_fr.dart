@@ -8859,6 +8859,17 @@ class AppLocalizationsFr extends AppLocalizations {
       'Cette facture a été émise avant que ses valeurs ne soient conservées avec elle ; elle est envoyée avec celles d\'aujourd\'hui :';
 
   @override
+  String get eInvoiceSentDownload => 'Télécharger ce qui a été envoyé';
+
+  @override
+  String get eInvoiceSentNone =>
+      'Aucun document n\'a été envoyé pour cette facture.';
+
+  @override
+  String get eInvoiceSentNotIntact =>
+      'La copie conservée de ce qui a été envoyé n\'est pas intacte : elle n\'a pas été délivrée.';
+
+  @override
   String get eInvoiceSubdivisionField =>
       'Département, județ ou province (p. ex. RO-B, MI)';
 

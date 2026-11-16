@@ -1,0 +1,61 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4120 -- the document an invoice's sending left with, downloaded again:
+// exactly the stored bytes, for a person who may issue invoices. A stored file
+// whose bytes no longer match their hash is said not intact, never handed out.
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
+import '../../../../core/files/file_saver.dart';
+import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/trace/trace_logger.dart';
+import '../../../../core/ui/app_snack.dart';
+import '../../providers/money_providers.dart';
+
+/// The download of what [invoiceId]'s sending left with.
+class SentEInvoiceDownload extends ConsumerWidget {
+  const SentEInvoiceDownload({super.key, required this.invoiceId});
+
+  final String invoiceId;
+
+  Future<void> _download(BuildContext context, WidgetRef ref) async {
+    final l10n = context.l10n;
+    try {
+      final sent = await ref
+          .read(eInvoiceTransmissionsProvider)
+          .fetchSentDocument(invoiceId);
+      final path = await ref.read(fileSaverProvider)(
+        bytes: Uint8List.fromList(sent.bytes),
+        fileName: sent.fileName,
+      );
+      if (!context.mounted) return;
+      AppSnack.success(context, l10n.commonSavedTo(path ?? ''), replace: true);
+    } on PostgrestException catch (e, st) {
+      TraceLogger.instance.warn(
+        'money',
+        'sent e-invoice read refused',
+        error: e,
+        stackTrace: st,
+      );
+      if (!context.mounted) return;
+      AppSnack.error(
+        context,
+        e.code == 'DKI09' ? l10n.eInvoiceSentNotIntact : l10n.eInvoiceSentNone,
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => Align(
+    alignment: AlignmentDirectional.centerStart,
+    child: TextButton.icon(
+      key: const ValueKey('invoice-detail-sent-download'),
+      icon: const Icon(Icons.download_outlined),
+      label: Text(context.l10n.eInvoiceSentDownload),
+      onPressed: () => _download(context, ref),
+    ),
+  );
+}
