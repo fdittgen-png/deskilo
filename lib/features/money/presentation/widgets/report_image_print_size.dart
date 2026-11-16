@@ -4,10 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/images/report_picture_bytes.dart';
-import '../../../../core/images/report_picture_sizes.dart';
 import '../../../../core/l10n/context_l10n.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/report_picture_library.dart';
+import '../../providers/guest_pass_providers.dart'
+    show currentWorkspaceProvider;
 import '../../providers/money_providers.dart';
 
 /// #3984 — the library's line when stored pictures are over the weight a
@@ -36,65 +36,38 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
     unawaited(_find());
   }
 
-  /// The stored pictures over the weight, from the listing's sizes.
   Future<void> _find() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    List<String> over;
     try {
-      final weights = await ref
-          .read(reportTemplateRepositoryProvider)
-          .reportImageWeights(workspace.id);
-      if (!mounted) return;
-      setState(
-        () => _over = [
-          for (final e in weights.entries)
-            if (e.value > reportPictureMaxBytes) e.key,
-        ]..sort(),
-      );
+      over = await ref
+          .read(reportPictureLibraryProvider)
+          .overWeight(workspace.id);
     } on Object {
-      // trace-exempt: the line is an offer; the library's own list shows
-      // a failed read with its retry.
-      if (mounted) setState(() => _over = const []);
+      // trace-exempt: the line is an offer; the library's own list shows a
+      // failed read with its retry.
+      over = const [];
     }
+    if (mounted) setState(() => _over = over);
   }
 
-  /// Replaces [_over] one by one; a picture whose new version could not be
-  /// written stays as it was stored.
   Future<void> _bring() async {
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
-    final repository = ref.read(reportTemplateRepositoryProvider);
     setState(() {
       _working = true;
       _failed = const [];
     });
-    final failed = <String>[];
-    for (final name in _over) {
-      try {
-        final stored = await repository.fetchReportImage(workspace.id, name);
-        if (stored == null) {
-          failed.add(name);
-          continue;
-        }
-        final made = await reportPictureForPrint(stored);
-        if (made.bytes.lengthInBytes >= stored.lengthInBytes) {
-          failed.add(name);
-          continue;
-        }
-        await repository.uploadReportImage(
+    final failed = await ref
+        .read(reportPictureLibraryProvider)
+        .bringToPrint(
           workspace.id,
-          name: name,
-          bytes: made.bytes,
-          contentType: made.contentType,
+          _over,
+          onReplaced: (name) {
+            if (mounted) ref.invalidate(reportImageBytesProvider(name));
+          },
         );
-        if (!mounted) return;
-        ref.invalidate(reportImageBytesProvider(name));
-      } on Object {
-        // trace-exempt: a picture that cannot be replaced is named below and
-        // stays as it was stored.
-        failed.add(name);
-      }
-    }
     if (!mounted) return;
     ref.invalidate(reportImagesProvider);
     setState(() {
@@ -107,7 +80,6 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
   @override
   Widget build(BuildContext context) {
     final l10n = context.l10n;
-    final scheme = Theme.of(context).colorScheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -119,19 +91,10 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(l10n.reportImagesOversized(_over.length)),
-                if (_working)
-                  Row(
-                    children: [
-                      const SizedBox(
-                        width: 16,
-                        height: 16,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(child: Text(l10n.reportImagesBringing)),
-                    ],
-                  )
-                else
+                if (_working) ...[
+                  Text(l10n.reportImagesBringing),
+                  const LinearProgressIndicator(),
+                ] else
                   TextButton.icon(
                     key: const ValueKey('report-images-bring-to-print'),
                     icon: const Icon(Icons.compress_outlined),
@@ -147,7 +110,7 @@ class _ReportImagePrintSizeState extends ConsumerState<ReportImagePrintSize> {
             child: Text(
               l10n.reportImagesBringFailed(_failed.join(', ')),
               key: const ValueKey('report-images-bring-failed'),
-              style: TextStyle(color: scheme.error),
+              style: TextStyle(color: Theme.of(context).colorScheme.error),
             ),
           ),
       ],

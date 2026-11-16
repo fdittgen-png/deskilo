@@ -37,6 +37,7 @@ const _png = 'image/png';
 
 /// The content type of [b] by its first bytes, or null when it is none of
 /// JPEG, PNG and WebP.
+@visibleForTesting
 String? reportPictureTypeOf(Uint8List b) {
   bool at(int i, List<int> sig) {
     if (b.length < i + sig.length) return false;

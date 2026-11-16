@@ -57,7 +57,6 @@ class FakeMoneyRepository implements MoneyRepository, AccountingSourceQueries {
 
   /// #2357 — the basis the fake prepares on (the server reads the space's).
   VatTaxPointBasis vatReturnBasis = VatTaxPointBasis.invoiceDate;
-
   /// #2357 (0406) — what each filed return declared (`vat_return_entries`).
   final List<VatDeclaredAmount> vatDeclared = [];
 

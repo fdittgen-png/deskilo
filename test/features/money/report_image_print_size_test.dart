@@ -1,8 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3984 — the library's line for stored pictures over the weight, its action,
-// the picker bringing a picture to print size when it is added, and a failed
-// write that leaves the stored picture as it was.
+// #3984 — invariants: a stored picture over the weight is offered for print
+// size and replaced under its name only on the person's action; a picture
+// added in the dialog is stored at print size with its type read from its
+// bytes; a failed write leaves the stored picture as it was and names it.
 import 'dart:math' as math;
 import 'dart:typed_data';
 
@@ -89,14 +90,19 @@ Future<void> _open(
   await _until(tester, () => true);
 }
 
-/// Pumps, giving real time to the codec, until [done] holds.
-Future<void> _until(WidgetTester tester, bool Function() done) async {
-  for (var i = 0; i < 400; i++) {
-    await tester.runAsync(
-      () => Future<void>.delayed(const Duration(milliseconds: 50)),
-    );
+/// Pumps, handing the event loop to the codec, until [done] holds.
+Future<void> _until(
+  WidgetTester tester,
+  bool Function() done, {
+  int atLeast = 0,
+}) async {
+  final watch = Stopwatch()..start();
+  var rounds = 0;
+  while (watch.elapsed < const Duration(seconds: 30)) {
+    rounds++;
+    await tester.runAsync(() => Future<void>.delayed(Duration.zero));
     await tester.pump(const Duration(milliseconds: 50));
-    if (i > 2 && done()) return;
+    if (rounds >= atLeast && done()) return;
   }
   fail('the condition never held');
 }
@@ -132,7 +138,11 @@ void main() {
         quality: 80,
       );
     await _open(tester, repository);
-    await _until(tester, () => find.byKey(line).evaluate().isEmpty);
+    await _until(
+      tester,
+      () => find.byKey(line).evaluate().isEmpty,
+      atLeast: 40,
+    );
     expect(find.byKey(line), findsNothing);
   });
 
@@ -165,6 +175,13 @@ void main() {
       tester,
       repository,
       pick: XFile.fromData(big, name: 'Header.PNG', path: 'Header.PNG'),
+    );
+    await _until(
+      tester,
+      () => find
+          .byKey(const ValueKey('report-image-upload'))
+          .evaluate()
+          .isNotEmpty,
     );
     await tester.tap(find.byKey(const ValueKey('report-image-upload')));
     await _until(tester, () => repository.reportImages.isNotEmpty);
