@@ -34,11 +34,6 @@ void main() {
     for (final scale in const [1.0, 1.3]) {
       testWidgets(
         'Me at ${width.toInt()} px and text $scale: no text is cut',
-        // The phone's bottom bar (shell_bottom_bar.dart) paints "Calendar"
-        // and "Members" with an ellipsis in 61 px at 320 px and text 1.3:
-        // a defect of the shell's bar on every tab, not of the Me page the
-        // issue names. Listed in the report of #4078 for an issue of its own.
-        skip: width == 320 && scale == 1.3,
         (tester) async {
           tester.platformDispatcher.textScaleFactorTestValue = scale;
           addTearDown(tester.platformDispatcher.clearTextScaleFactorTestValue);
