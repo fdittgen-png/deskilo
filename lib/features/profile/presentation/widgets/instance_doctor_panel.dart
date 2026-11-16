@@ -157,6 +157,7 @@ String _probe(AppLocalizations l10n, DoctorProbe probe) => switch (probe) {
   DoctorProbe.hardening => l10n.instanceDoctorProbeHardening,
   DoctorProbe.roles => l10n.instanceDoctorProbeRoles,
   DoctorProbe.push => l10n.instanceDoctorProbePush,
+  DoctorProbe.appUrl => l10n.instanceDoctorProbeAppUrl,
 };
 
 /// A finding's title in the member's language: the catalogue's wording where
@@ -184,6 +185,8 @@ String _title(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.rolesUnknown => l10n.instanceDoctorRolesUnknownTitle,
     DoctorWords.pushOwn => l10n.instanceDoctorPushOwnTitle,
     DoctorWords.pushForeign => l10n.instanceDoctorPushForeignTitle,
+    DoctorWords.appUrlMissing => l10n.instanceDoctorAppUrlMissingTitle,
+    DoctorWords.appUrlForeign => l10n.instanceDoctorAppUrlForeignTitle,
     DoctorWords.authBaseline => l10n.instanceDoctorAuthBaselineTitle,
     DoctorWords.authCodesLong => l10n.instanceDoctorAuthCodesLongTitle,
     DoctorWords.authPasswordShort =>
@@ -238,6 +241,10 @@ String _detail(AppLocalizations l10n, DoctorFinding f) {
     DoctorWords.pushOwn => l10n.instanceDoctorPushOwnDetail('${facts[0]}'),
     DoctorWords.pushForeign =>
       l10n.instanceDoctorPushForeignDetail('${facts[0]}'),
+    DoctorWords.appUrlMissing =>
+      l10n.instanceDoctorAppUrlMissingDetail('${facts[0]}'),
+    DoctorWords.appUrlForeign =>
+      l10n.instanceDoctorAppUrlForeignDetail('${facts[0]}'),
     DoctorWords.authBaseline =>
       l10n.instanceDoctorAuthBaselineDetail(facts[0] as int),
     DoctorWords.authCodesLong ||

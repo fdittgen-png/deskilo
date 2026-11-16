@@ -8674,6 +8674,10 @@
     }
   },
   "instanceDoctorAllHealthy": "Tout ce qui a été vérifié est en bonne santé.",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l'app>",
+  "instanceDoctorAppUrlForeignTitle": "L'adresse de l'app des fonctions n'est pas l'adresse web de cette instance",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l'app>",
+  "instanceDoctorAppUrlMissingTitle": "Les fonctions qui renvoient vers l'app n'ont pas d'adresse de l'app",
   "instanceDoctorAttention": "Attention requise",
   "instanceDoctorAuthBaselineDetail": "{length, plural, one{les codes durent au plus une heure, les mots de passe ont au moins {length} caractère, un changement de mot de passe demande de se reconnecter} other{les codes durent au plus une heure, les mots de passe ont au moins {length} caractères, un changement de mot de passe demande de se reconnecter}}",
   "instanceDoctorAuthBaselineTitle": "Socle de connexion",
@@ -8699,6 +8703,7 @@
   "instanceDoctorPoliciesMatchTitle": "Les politiques correspondent aux migrations",
   "instanceDoctorPolicyDriftSkippedDetail": "la liste attendue est vide — assets/instance/policies.txt n'a pas été lu, la dérive ne peut donc pas être jugée",
   "instanceDoctorPolicyDriftSkippedTitle": "Dérive des politiques non vérifiée",
+  "instanceDoctorProbeAppUrl": "Adresse de l'app des fonctions",
   "instanceDoctorProbeAuth": "Configuration de l'authentification",
   "instanceDoctorProbeFailedDetail": "Supabase a répondu {status} : {message}\n        Les autres contrôles se sont exécutés sans elle.",
   "instanceDoctorProbeFailedTitle": "La requête « {probe} » a échoué",

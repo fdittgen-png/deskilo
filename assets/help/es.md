@@ -8355,7 +8355,7 @@ El push no viene con la aplicación por sí solo. Si usted ejecuta su espacio en
 1. Cree un proyecto de Firebase y compile la aplicación con él. Sin esto, la aplicación se queda solo con las notificaciones locales, y un miembro ve **Esta versión no tiene notificaciones push**. La versión preparada para F-Droid no tiene push en absoluto ([estado de F-Droid](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. Para iPhone y Mac, añada una clave push de Apple al proyecto de Firebase.
 3. Guarde la clave de cuenta de servicio de Firebase como secreto del servidor y despliegue la función de push.
-4. En su propia instalación, el constructor fija la fila `push_config` de su base de datos en la URL y la clave de su propia función de push, y el doctor la verifica. `dart run tool/instance.dart push --ref <ref>` la vuelve a fijar.
+4. En su propia instalación, el constructor fija la fila `push_config` de su base de datos en la URL y la clave de su propia función de push, y el doctor la verifica. `dart run tool/instance.dart push --ref <ref>` la vuelve a fijar. El constructor fija también, donde se despliegan las funciones, el ajuste de función `DESKILO_APP_URL` en la dirección web de su app, para que las funciones que enlazan de vuelta a la app (la interfaz del asistente y el inicio de sesión contable) puedan construir sus enlaces; el doctor lo señala si falta o lleva otra dirección, y `dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>` lo vuelve a fijar.
 5. Pruébelo con dos cuentas, como se describe en [el plan de pruebas](help:setup.notify.test).
 
 **Conviene saber**

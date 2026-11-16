@@ -14552,6 +14552,24 @@ class AppLocalizationsFr extends AppLocalizations {
       'Tout ce qui a été vérifié est en bonne santé.';
 
   @override
+  String instanceDoctorAppUrlForeignDetail(String functions) {
+    return '$functions\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l\'app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlForeignTitle =>
+      'L\'adresse de l\'app des fonctions n\'est pas l\'adresse web de cette instance';
+
+  @override
+  String instanceDoctorAppUrlMissingDetail(String functions) {
+    return '$functions\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l\'app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlMissingTitle =>
+      'Les fonctions qui renvoient vers l\'app n\'ont pas d\'adresse de l\'app';
+
+  @override
   String get instanceDoctorAttention => 'Attention requise';
 
   @override
@@ -14705,6 +14723,9 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get instanceDoctorPolicyDriftSkippedTitle =>
       'Dérive des politiques non vérifiée';
+
+  @override
+  String get instanceDoctorProbeAppUrl => 'Adresse de l\'app des fonctions';
 
   @override
   String get instanceDoctorProbeAuth => 'Configuration de l\'authentification';

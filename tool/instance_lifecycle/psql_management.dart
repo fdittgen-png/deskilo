@@ -223,4 +223,15 @@ class PsqlSupabaseManagement implements SupabaseManagement {
   @override
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) async =>
       notCovered.add('auth');
+
+  /// Names only, never a value: nothing is set on a local database.
+  @override
+  Future<void> setFunctionSecrets(
+    String ref,
+    Map<String, String> values,
+  ) async => notCovered.add('secrets ${values.keys.join(', ')}');
+
+  @override
+  Future<Map<String, String>> listFunctionSecretDigests(String ref) async =>
+      const {};
 }

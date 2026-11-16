@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
@@ -179,5 +182,24 @@ class FakeSupabaseManagement implements SupabaseManagement {
   @override
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) async {
     (authPatches[ref] ??= []).add(config);
+  }
+
+  /// #3916 -- the function settings each project holds, by name.
+  final functionSecrets = <String, Map<String, String>>{};
+
+  @override
+  Future<void> setFunctionSecrets(String ref, Map<String, String> values) async {
+    _auth();
+    (functionSecrets[ref] ??= {}).addAll(values);
+  }
+
+  @override
+  Future<Map<String, String>> listFunctionSecretDigests(String ref) async {
+    _auth();
+    // The API lists a digest, never the value.
+    return {
+      for (final e in (functionSecrets[ref] ?? const <String, String>{}).entries)
+        e.key: sha256.convert(utf8.encode(e.value)).toString(),
+    };
   }
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:meta/meta.dart';
 
+import 'app_url_setting.dart';
 import 'instance_bundle.dart';
 import 'instance_network.dart';
 import 'management_api.dart';
@@ -378,6 +379,21 @@ on conflict (version) do nothing;
     } on ManagementApiException catch (e, st) {
       // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
       Error.throwWithStackTrace(InstanceStepFailure('auth', e.message), st);
+    }
+  }
+
+  /// #3916 -- sets the app's address for the functions that link back to the
+  /// app (`DESKILO_APP_URL`) from the web base the sign-in settings name:
+  /// [authPatch]'s `site_url`, or the default's. The value is sent and never
+  /// echoed; a failure names the setting only.
+  Future<void> configureAppUrl(String ref, {Map<String, Object?>? authPatch}) async {
+    try {
+      await api.setFunctionSecrets(ref, {
+        appUrlSetting: appUrlOf(authPatch ?? InstanceAuthConfig.patch),
+      });
+    } on ManagementApiException catch (e, st) {
+      // trace-exempt: rethrown as a typed failure, stack kept; the caller traces.
+      Error.throwWithStackTrace(InstanceStepFailure(appUrlSetting, e.message), st);
     }
   }
 

@@ -8674,6 +8674,10 @@
     }
   },
   "instanceDoctorAllHealthy": "Tutto ciò che è stato controllato è in salute.",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>",
+  "instanceDoctorAppUrlForeignTitle": "L'indirizzo dell'app delle funzioni non è l'indirizzo web di questa istanza",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>",
+  "instanceDoctorAppUrlMissingTitle": "Le funzioni che rimandano all'app non hanno un indirizzo dell'app",
   "instanceDoctorAttention": "Richiede attenzione",
   "instanceDoctorAuthBaselineDetail": "{length, plural, one{i codici durano al massimo un'ora, le password hanno almeno {length} carattere, un cambio di password chiede di accedere di nuovo} other{i codici durano al massimo un'ora, le password hanno almeno {length} caratteri, un cambio di password chiede di accedere di nuovo}}",
   "instanceDoctorAuthBaselineTitle": "Base di accesso",
@@ -8699,6 +8703,7 @@
   "instanceDoctorPoliciesMatchTitle": "Le policy corrispondono alle migrazioni",
   "instanceDoctorPolicyDriftSkippedDetail": "l'elenco atteso è vuoto — assets/instance/policies.txt non è stato letto, quindi la deriva non può essere valutata",
   "instanceDoctorPolicyDriftSkippedTitle": "Deriva delle policy non verificata",
+  "instanceDoctorProbeAppUrl": "Indirizzo dell'app delle funzioni",
   "instanceDoctorProbeAuth": "Configurazione dell'autenticazione",
   "instanceDoctorProbeFailedDetail": "Supabase ha risposto {status}: {message}\n        Gli altri controlli sono stati eseguiti senza.",
   "instanceDoctorProbeFailedTitle": "Interrogazione «{probe}» non riuscita",
