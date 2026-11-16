@@ -25,6 +25,7 @@ import { exponentOf, toMajor, toMinor } from "./money.ts";
 import {
   accountNeeds,
   type AdapterContext,
+  journalCode,
   mapped,
   type Posting,
   type PostingAdapter,
@@ -355,7 +356,7 @@ export function pennylaneLedger(ctx: AdapterContext): PostingAdapter {
           });
         },
         async create(key) {
-          const code = JOURNAL_CODES[posting.journal] ?? "";
+          const code = journalCode(ctx, posting.journal, JOURNAL_CODES);
           const journalId = journals[code];
           if (journalId === undefined) {
             return {

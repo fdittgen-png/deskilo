@@ -47,7 +47,7 @@
   "@accountingJournalDuplicate": {
     "description": "#3470 business journals"
   },
-  "accountingJournalsDeliveries": "Deliveries to a connected accounting system still use the standard codes.",
+  "accountingJournalsDeliveries": "Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.",
   "@accountingJournalsDeliveries": {
     "description": "#3470 business journals"
   },

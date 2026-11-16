@@ -47,5 +47,10 @@
   "instanceDoctorAuthCodesLongTitle": "Les codes de connexion durent plus d'une heure",
   "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Les mots de passe peuvent avoir moins de {length} caractère} other{Les mots de passe peuvent avoir moins de {length} caractères}}",
   "instanceDoctorAuthReauthOffTitle": "Un changement de mot de passe ne demande pas de se reconnecter",
-  "instanceDoctorAuthFixDetail": "valeur  {value}\n        Correctif : {command}"
+  "instanceDoctorAuthFixDetail": "valeur  {value}\n        Correctif : {command}",
+  "instanceDoctorProbeAppUrl": "Adresse de l'app des fonctions",
+  "instanceDoctorAppUrlMissingTitle": "Les fonctions qui renvoient vers l'app n'ont pas d'adresse de l'app",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l'app>",
+  "instanceDoctorAppUrlForeignTitle": "L'adresse de l'app des fonctions n'est pas l'adresse web de cette instance",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Correctif : dart run tool/instance.dart auth --ref <ref> --site-url <adresse web de l'app>"
 }
