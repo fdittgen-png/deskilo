@@ -883,6 +883,7 @@ Map<String, _Getter> _part2() => {
   'developerFilterAll': (l) => l.developerFilterAll,
   'directoryCheckedIn': (l) => l.directoryCheckedIn,
   'directoryLocate': (l) => l.directoryLocate,
+  'directorySearchLabel': (l) => l.directorySearchLabel,
   'documentsCategoryStatutes': (l) => l.documentsCategoryStatutes,
   'documentsProviderLabel': (l) => l.documentsProviderLabel,
   'eInvoiceGapMissingBuyerLegalId': (l) => l.eInvoiceGapMissingBuyerLegalId,
