@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #3556 (part 2) — my groups of invoices, kept in memory: the Demo's and the
-// tests'. The same rules as 0798: a name is trimmed, 1 to 80 characters,
+// tests'. The same rules as 0800: a name is trimmed, 1 to 80 characters,
 // used once per person whatever its case; an invoice is in a group once.
 import '../../../features/money/domain/invoice_groups.dart';
 

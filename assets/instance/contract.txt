@@ -895,6 +895,14 @@ constraint licence_plans.licence_plans_monthly_price_cents_check CHECK ((monthly
 constraint licence_plans.licence_plans_pkey PRIMARY KEY (code)
 constraint licence_plans.licence_plans_sort_key UNIQUE (sort)
 constraint licence_plans.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint maintenance_runs.maintenance_runs_counts_check CHECK ((jsonb_typeof(counts) = 'object'::text))
+constraint maintenance_runs.maintenance_runs_failures_check CHECK ((jsonb_typeof(failures) = 'array'::text))
+constraint maintenance_runs.maintenance_runs_job_check CHECK ((job ~ '^[a-z][a-z0-9-]*$'::text))
+constraint maintenance_runs.maintenance_runs_pkey PRIMARY KEY (id)
+constraint maintenance_runs.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint maintenance_state.maintenance_state_job_check CHECK ((job ~ '^[a-z][a-z0-9-]*$'::text))
+constraint maintenance_state.maintenance_state_pkey PRIMARY KEY (job)
+constraint maintenance_state.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint managed_identities.managed_identities_member_id_fkey FOREIGN KEY (member_id) REFERENCES members(id) ON DELETE CASCADE
 constraint managed_identities.managed_identities_member_id_same_workspace FOREIGN KEY (workspace_id, member_id) REFERENCES members(workspace_id, id) ON DELETE CASCADE
 constraint managed_identities.managed_identities_pkey PRIMARY KEY (member_id)
@@ -1245,16 +1253,32 @@ constraint payment_intents.payment_intents_status_check CHECK ((status = ANY (AR
 constraint payment_intents.payment_intents_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
 constraint payment_intents.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint payment_intents.system_company_present CHECK ((company_id IS NOT NULL))
-constraint personal_invoice_group_items.personal_invoice_group_items_group FOREIGN KEY (group_id, user_id) REFERENCES personal_invoice_groups(id, user_id) ON DELETE CASCADE
-constraint personal_invoice_group_items.personal_invoice_group_items_label CHECK ((char_length(label) <= 80))
-constraint personal_invoice_group_items.personal_invoice_group_items_network_id CHECK ((network_id ~ '^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$'::text))
-constraint personal_invoice_group_items.personal_invoice_group_items_pkey PRIMARY KEY (group_id, network_id, invoice_id)
-constraint personal_invoice_group_items.system_columns_order CHECK ((modified_datetime >= created_datetime))
-constraint personal_invoice_groups.personal_invoice_groups_name_shape CHECK (((name = btrim(name)) AND ((char_length(name) >= 1) AND (char_length(name) <= 80))))
-constraint personal_invoice_groups.personal_invoice_groups_owner UNIQUE (id, user_id)
-constraint personal_invoice_groups.personal_invoice_groups_pkey PRIMARY KEY (id)
-constraint personal_invoice_groups.personal_invoice_groups_user_id_fkey FOREIGN KEY (user_id) REFERENCES auth.users(id) ON DELETE CASCADE
-constraint personal_invoice_groups.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint payment_reconciliation_checks.payment_reconciliation_checks_checks_check CHECK ((checks >= 0))
+constraint payment_reconciliation_checks.payment_reconciliation_checks_intent_id_fkey FOREIGN KEY (intent_id) REFERENCES payment_intents(id) ON DELETE CASCADE
+constraint payment_reconciliation_checks.payment_reconciliation_checks_pkey PRIMARY KEY (intent_id)
+constraint payment_reconciliation_checks.payment_reconciliation_checks_seen_client_check CHECK ((seen_client ~ '^[0-9a-f]{16,64}$'::text))
+constraint payment_reconciliation_checks.payment_reconciliation_checks_seen_state_check CHECK ((seen_state ~ '^[A-Z_]{1,32}$'::text))
+constraint payment_reconciliation_checks.payment_reconciliation_checks_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint payment_reconciliation_checks.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint payment_reconciliation_checks.system_company_present CHECK ((company_id IS NOT NULL))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_abandoned_count_check CHECK ((abandoned_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_ended_count_check CHECK ((ended_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_left_count_check CHECK ((left_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_pkey PRIMARY KEY (id)
+constraint payment_reconciliation_runs.payment_reconciliation_runs_read_count_check CHECK ((read_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_settled_count_check CHECK ((settled_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_unreadable_check CHECK ((jsonb_typeof(unreadable) = 'array'::text))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_unreadable_count_check CHECK ((unreadable_count >= 0))
+constraint payment_reconciliation_runs.payment_reconciliation_runs_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint payment_reconciliation_runs.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint payment_reconciliation_runs.system_company_present CHECK ((company_id IS NOT NULL))
+constraint payment_reconciliation_schedule.payment_reconciliation_schedule_id_check CHECK (id)
+constraint payment_reconciliation_schedule.payment_reconciliation_schedule_pkey PRIMARY KEY (id)
+constraint payment_reconciliation_schedule.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint payment_reconciliation_state.payment_reconciliation_state_pkey PRIMARY KEY (workspace_id)
+constraint payment_reconciliation_state.payment_reconciliation_state_workspace_id_fkey FOREIGN KEY (workspace_id) REFERENCES workspaces(id) ON DELETE CASCADE
+constraint payment_reconciliation_state.system_columns_order CHECK ((modified_datetime >= created_datetime))
+constraint payment_reconciliation_state.system_company_present CHECK ((company_id IS NOT NULL))
 constraint plan_images.plan_images_h_check CHECK ((h > 0))
 constraint plan_images.plan_images_kind_check CHECK (((kind IS NULL) OR (kind = ANY (ARRAY['wall'::text, 'door'::text, 'window'::text, 'pillar'::text, 'table'::text, 'couch'::text, 'wc'::text, 'kitchen'::text]))))
 constraint plan_images.plan_images_level_id_fkey FOREIGN KEY (level_id) REFERENCES levels(id) ON DELETE CASCADE
@@ -2632,7 +2656,7 @@ routine public.expire_einvoice_dispatches_v1(p_workspace_id uuid) -> integer | f
 routine public.export_entities(p_workspace_id uuid, p_entities text[]) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:918db3b450bc
 routine public.export_floor_plan(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:fba8d3f34792
 routine public.export_my_data(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7a972f4910c
-routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:d7b715189c7e
+routine public.export_my_personal_data_v1() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1e0e022ae376
 routine public.export_workspace_configuration(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:92590453f1db
 routine public.export_workspace_records(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:f052777a723e
 routine public.extend_rights_request(p_request_id uuid, p_reason text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:04408416313f
@@ -2774,8 +2798,11 @@ routine public.invoice_member_matches_at(p_workspace_id uuid, p_member_id uuid, 
 routine public.invoice_original_invoice(p_name text) -> uuid | function | invoker | immutable | exec:authenticated,service_role | body:d0f1e82ce0d7
 routine public.invoice_original_issuer(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:67abcc34dfb1
 routine public.invoice_original_may_upload(p_name text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6b22104a894e
+routine public.invoice_original_orphan_age() -> interval | function | invoker | immutable | exec:service_role | body:51b53eee87ad
+routine public.invoice_original_sweep_cap() -> integer | function | invoker | immutable | exec:service_role | body:e6528d16b93d
 routine public.invoice_original_xml_max_bytes() -> integer | function | invoker | immutable | exec:authenticated,service_role | body:770442338eed
 routine public.invoice_originals_immutable() -> trigger | function | invoker | volatile | exec:service_role | body:8caacaa7487f
+routine public.invoice_originals_sweep_claim_v1(p_lease_seconds integer) -> TABLE(lease_token uuid, mode text, candidates jsonb) | function | definer | volatile | exec:service_role | body:48808ac823be
 routine public.invoice_payment_received(p_invoice uuid) -> boolean | function | definer | stable | exec:service_role | body:e5521568f287
 routine public.invoice_provenance_stamp() -> trigger | function | definer | volatile | exec:service_role | body:684ce055c003
 routine public.invoice_qrr_freeze() -> trigger | function | definer | volatile | exec:service_role | body:1971502e7926
@@ -2850,6 +2877,8 @@ routine public.list_all_workspaces() -> TABLE(id uuid, name text, environment te
 routine public.list_mcp_eligibility_requests() -> TABLE(request_id uuid, local_user_id uuid, email text, revision integer, requested_at timestamp with time zone) | function | definer | stable | exec:authenticated,service_role | body:bc03809b5ee0
 routine public.local_workspace_of_ref(p_ref text) -> uuid | function | definer | stable | exec:service_role | body:c41164d1e388
 routine public.log_reservation_event() -> trigger | function | definer | volatile | exec:service_role | body:264bceeba808
+routine public.maintenance_finish_v1(p_job text, p_lease_token uuid, p_started_at timestamp with time zone, p_counts jsonb, p_failures jsonb) -> boolean | function | definer | volatile | exec:service_role | body:9499093e4098
+routine public.maintenance_tick(p_job text) -> text | function | definer | volatile | exec:service_role | body:e74f59ce7621
 routine public.managed_identity_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:1fe9124b9bab
 routine public.managed_identity_name(p jsonb) -> text | function | invoker | immutable | exec:authenticated,service_role | body:44df5cd43c63
 routine public.managed_identity_of(p_member_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:64e64a8f7eb2
@@ -3186,6 +3215,23 @@ routine public.payment_instructions_plan(p_workspace_id uuid, p_args jsonb) -> j
 routine public.payment_intent_claim_open(p_intent payment_intents) -> boolean | function | invoker | stable | exec:service_role | body:0f33e81cd8ce
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_invoice_capacity_v1(p_workspace_id uuid, p_payment_ledger_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da0308457e66
+routine public.payment_open_lifetime(p_provider text) -> interval | function | invoker | immutable | exec:service_role | body:2aa434e6b827
+routine public.payment_open_lifetime_mollie() -> interval | function | invoker | immutable | exec:service_role | body:30d4790a530b
+routine public.payment_open_lifetime_paypal() -> interval | function | invoker | immutable | exec:service_role | body:206192da74b0
+routine public.payment_open_lifetime_stripe() -> interval | function | invoker | immutable | exec:service_role | body:97019dac1355
+routine public.payment_paypal_gone_after() -> interval | function | invoker | immutable | exec:service_role | body:d57a2ac4e08e
+routine public.payment_read_after(p_provider text) -> interval | function | invoker | immutable | exec:service_role | body:57073085f19b
+routine public.payment_read_after_mollie() -> interval | function | invoker | immutable | exec:service_role | body:7cd7636990f5
+routine public.payment_read_after_paypal() -> interval | function | invoker | immutable | exec:service_role | body:17b2c15ce7c6
+routine public.payment_read_after_stripe() -> interval | function | invoker | immutable | exec:service_role | body:586451421840
+routine public.payment_reconcile_backoff(p_checks integer) -> interval | function | invoker | immutable | exec:service_role | body:8d52934e7f1f
+routine public.payment_reconciliation_begin_v1() -> timestamp with time zone | function | definer | volatile | exec:service_role | body:89ee38fd3675
+routine public.payment_reconciliation_claim_v1(p_lease_seconds integer, p_run_started timestamp with time zone, p_limit integer) -> TABLE(workspace_id uuid, lease_token uuid, intents jsonb) | function | definer | volatile | exec:service_role | body:62d60bf219ab
+routine public.payment_reconciliation_due(p_workspace_id uuid) -> TABLE(intent_id uuid, last_checked_at timestamp with time zone, created_at timestamp with time zone) | function | definer | stable | exec:service_role | body:931a83903d11
+routine public.payment_reconciliation_finish_v1(p_workspace_id uuid, p_lease_token uuid, p_result jsonb) -> boolean | function | definer | volatile | exec:service_role | body:5b86dd0bd979
+routine public.payment_reconciliation_retention() -> interval | function | invoker | immutable | exec:service_role | body:ffdd0cdefdbc
+routine public.payment_reconciliation_tick() -> text | function | definer | volatile | exec:service_role | body:eddab0b00001
+routine public.payment_resend_window() -> interval | function | invoker | immutable | exec:service_role | body:cf85131d159c
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17dae5ea6441
 routine public.payment_used_cents(p_ledger uuid) -> bigint | function | definer | stable | exec:service_role | body:0510e4d33ba7
@@ -3646,6 +3692,7 @@ routine public.stock_record(p_workspace_id uuid, p_item_id uuid, p_lot_id uuid, 
 routine public.stock_take(p_workspace_id uuid, p_item_id uuid, p_location_id uuid, p_quantity numeric) -> TABLE(lot_id uuid, quantity numeric) | function | definer | stable | exec:service_role | body:c4ba4a851a37
 routine public.stock_to_inventory(p_item_id uuid, p_unit text, p_quantity numeric) -> numeric | function | definer | stable | exec:service_role | body:2a3077980693
 routine public.stock_value_at_v1(p_workspace_id uuid, p_at timestamp with time zone) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:360eeecc0bea
+routine public.storage_path_columns() -> TABLE(table_name text, column_name text, bucket text) | function | invoker | immutable | exec:service_role | body:cb1fa37f6288
 routine public.store_invoice_original(p_invoice_id uuid, p_pdf_sha256 text, p_xml text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:516b15a47957
 routine public.store_setting(p_workspace uuid, p_key text, p_value jsonb, p_note text, p_by uuid) -> boolean | function | definer | volatile | exec:service_role | body:c233f4937fef
 routine public.strip_template_configuration(p_export jsonb, p_entities text[]) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:99c23ac48e71
@@ -3999,6 +4046,8 @@ trigger ledger_entries.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_
 trigger levels.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.levels REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger levels.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.levels FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger licence_plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.licence_plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger maintenance_runs.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.maintenance_runs FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger maintenance_state.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.maintenance_state FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger managed_identities.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.managed_identities FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_action_confirmations.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.mcp_action_confirmations FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger mcp_clients.guard_oauth_client_purpose CREATE TRIGGER guard_oauth_client_purpose BEFORE INSERT OR UPDATE ON public.mcp_clients FOR EACH ROW EXECUTE FUNCTION guard_oauth_client_purpose()
@@ -4079,8 +4128,10 @@ trigger payment_credentials.zz_system_columns_stamp CREATE TRIGGER zz_system_col
 trigger payment_intents.payment_intents_ledger_matches CREATE TRIGGER payment_intents_ledger_matches BEFORE INSERT OR UPDATE OF ledger_entry_id, workspace_id, member_id, amount_cents ON public.payment_intents FOR EACH ROW EXECUTE FUNCTION payment_intents_ledger_matches()
 trigger payment_intents.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.payment_intents REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger payment_intents.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_intents FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
-trigger personal_invoice_group_items.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.personal_invoice_group_items FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
-trigger personal_invoice_groups.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.personal_invoice_groups FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger payment_reconciliation_checks.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_reconciliation_checks FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger payment_reconciliation_runs.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_reconciliation_runs FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger payment_reconciliation_schedule.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_reconciliation_schedule FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
+trigger payment_reconciliation_state.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.payment_reconciliation_state FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger plan_images.realtime_deletion_signal CREATE TRIGGER realtime_deletion_signal AFTER DELETE ON public.plan_images REFERENCING OLD TABLE AS old_rows FOR EACH STATEMENT EXECUTE FUNCTION realtime_deletion_signal()
 trigger plan_images.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.plan_images FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger plans.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.plans FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()

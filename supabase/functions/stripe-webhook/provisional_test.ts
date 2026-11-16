@@ -177,3 +177,15 @@ Deno.test("a metadata value that is not an intent id names nothing", async () =>
   assertEquals(f.rows[0].order_id, "pending:3917");
   assertEquals(f.rpcCalls, []);
 });
+
+Deno.test("#4126: an attempt the reconciliation ended for want of an order is still attached and settled by a late notification", async () => {
+  // The reconciliation's mark_payment_failed set it failed; its order is
+  // still the provisional id, and nothing filters the attach by status.
+  const f = intentsFake({
+    rows: [{ id: INTENT, provider: "stripe", order_id: "pending:3917", workspace_id: "ws-1", status: "failed" }],
+    credentials: { webhook_secret: SECRET },
+  });
+  assertEquals(await call(f), 200);
+  assertEquals(f.rows[0].order_id, "cs_late");
+  assertEquals(settled(f), [["stripe", "cs_late"]], "settle_online_payment credits it once (pgTAP 450)");
+});

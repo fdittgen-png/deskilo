@@ -122,6 +122,17 @@ verify_jwt = true
 [functions.settlement-poll]
 verify_jwt = true
 
+# #4126 — the reconciliation of attempts left open with a provider; the
+# database job calls it through the gateway with the anon key and the Vault
+# secret.
+[functions.payment-reconcile]
+verify_jwt = true
+
+# #3985 — the installation-wide maintenance jobs; the database job calls it
+# through the gateway with the anon key and the maintenance Vault secret.
+[functions.maintenance]
+verify_jwt = true
+
 [functions.send-purchase-order]
 verify_jwt = true
 

@@ -7,6 +7,7 @@ import { toMajor } from "../_shared/money.ts";
 import { mollieApi } from "../_shared/providers.ts";
 import { INTENT_KEY } from "../_shared/provisional_intent.ts";
 import { ProviderRefusal } from "./outcome.ts";
+import { PAYER_TEXT_LIMITS, payerText } from "./payer_text.ts";
 import type { AdapterDeps, OrderAdapter, OrderInput, ProviderConfig } from "./types.ts";
 
 async function createMolliePaymentWith(
@@ -24,7 +25,7 @@ async function createMolliePaymentWith(
     },
     body: JSON.stringify({
       amount: { currency: order.currency, value: toMajor(order.amountCents, order.currency) },
-      description: `DesKilo ${order.reference}`,
+      description: payerText(order.payee, order.reference, PAYER_TEXT_LIMITS.mollie),
       redirectUrl: cfg.return_url,
       // #1556 — where Mollie reports the outcome. Without it the
       // payment is created, the member pays, and nothing ever tells us:

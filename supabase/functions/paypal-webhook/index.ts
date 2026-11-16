@@ -29,9 +29,9 @@ import {
   redactedProviderLog,
 } from "../_shared/webhook_guard.ts";
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
-import { toMinor } from "../_shared/money.ts";
 import { paypalApi } from "../_shared/providers.ts";
 import { paypalFeeOf } from "../_shared/provider_settlement.ts";
+import { approvedOrderMatches, captureApprovedOrder, paypalMatches } from "../_shared/paypal_capture.ts";
 import { attachOrder, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 
 type Intent = {
@@ -81,26 +81,6 @@ async function accessToken(cfg: Record<string, string>, fetchFn: typeof fetch): 
 }
 
 /** The amount in [money] is exactly the intent's, in the intent's currency. */
-function matches(intent: Intent, money: Money): boolean {
-  const currency = (money?.currency_code ?? "").toUpperCase();
-  if (currency !== intent.currency.toUpperCase()) return false;
-  const cents = toMinor(money?.value, currency);
-  return cents !== null && cents === intent.amount_cents;
-}
-
-/** The first capture of an order body PayPal returned, if completed. */
-function completedCapture(
-  order: Record<string, unknown>,
-): { id: string; amount: Money; raw: Record<string, unknown> } | null {
-  const units = (order.purchase_units ?? []) as Array<Record<string, unknown>>;
-  const captures = ((units[0]?.payments as Record<string, unknown> | undefined)
-    ?.captures ?? []) as Array<Record<string, unknown>>;
-  const capture = captures.find((c) => c.status === "COMPLETED");
-  return capture
-    ? { id: String(capture.id), amount: capture.amount as Money, raw: capture }
-    : null;
-}
-
 const respond = (body: string, status: number) => new Response(body, { status });
 
 /** What the handler is injected with, so a test drives it (#3917). */
@@ -277,7 +257,7 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     amount: Money,
     capture: Record<string, unknown>,
   ): Promise<Response> => {
-    if (!matches(intent, amount)) {
+    if (!paypalMatches(intent, amount)) {
       console.error("paypal capture does not match the intent", {
         orderId,
         amount,
@@ -347,58 +327,40 @@ export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Re
     //
     // #1638 — refuse a foreign or altered order BEFORE any capture: the
     // approved order must carry our reference, amount and currency.
-    const unit = ((resource.purchase_units ?? []) as Array<Record<string, unknown>>)[0];
-    if (!unit || ![intent.reference, intent.id].includes(String(unit.custom_id)) || !matches(intent, unit.amount as Money)) {
+    if (!approvedOrderMatches(intent, resource)) {
       console.error("paypal approved order does not match the intent", { orderId });
       return respond("order_mismatch", 409);
     }
     if (intent.status === "captured") return respond("ok", 200);
-    try {
-      const res = await deps.fetch(
-        `${paypalApi(cfg.env)}/v2/checkout/orders/${orderId}/capture`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            // One logical capture per order: a redelivery, a retry after a
-            // lost reply or a concurrent worker all get the FIRST capture.
-            "PayPal-Request-Id": `deskilo-capture-${orderId}`,
-          },
-        },
-      );
-      if (res.ok) {
-        const capture = completedCapture(await res.json());
-        if (!capture) {
-          // PENDING and friends: the capture exists, the money has not
-          // moved; PAYMENT.CAPTURE.COMPLETED settles it later.
-          console.log("paypal capture not completed yet", orderId);
-          return respond("ok", 200);
-        }
-        return await settle(capture.id, capture.amount, capture.raw);
+    // #4126 -- the one capture, shared with the reconciliation.
+    const captured = await captureApprovedOrder(deps.fetch, paypalApi(cfg.env), token, orderId);
+    if (captured.kind === "captured") {
+      // As before the capture moved here: a settlement that throws after a
+      // capture is answered 500, so PayPal redelivers and the capture is read
+      // back under its request id.
+      try {
+        return await settle(captured.id, captured.amount, captured.raw);
+      } catch (e) {
+        console.error("paypal capture error", String(e));
+        return respond("capture_error", 500);
       }
-      const detail = await res.text();
-      if (!(res.status === 422 && detail.includes("ORDER_ALREADY_CAPTURED"))) {
-        console.error("paypal capture failed", redactedProviderLog(res.status, detail));
-        return respond("capture_failed", 500);
-      }
-      // Captured already (another path, another request id): READ the
-      // order rather than capture again, and settle what it says.
-      const orderRes = await deps.fetch(
-        `${paypalApi(cfg.env)}/v2/checkout/orders/${orderId}`,
-        { headers: { Authorization: `Bearer ${token}` } },
-      );
-      if (!orderRes.ok) {
-        console.error("paypal order read failed", orderRes.status);
-        return respond("order_read_failed", 500);
-      }
-      const capture = completedCapture(await orderRes.json());
-      if (!capture) return respond("ok", 200);
-      return await settle(capture.id, capture.amount, capture.raw);
-    } catch (e) {
-      console.error("paypal capture error", String(e));
-      return respond("capture_error", 500);
     }
+    if (captured.kind === "pending") {
+      // PENDING and friends: the capture exists, the money has not moved;
+      // PAYMENT.CAPTURE.COMPLETED settles it later.
+      console.log("paypal capture not completed yet", orderId);
+      return respond("ok", 200);
+    }
+    if (captured.stage === "capture") {
+      console.error("paypal capture failed", redactedProviderLog(captured.status ?? 0, captured.detail));
+      return respond("capture_failed", 500);
+    }
+    if (captured.stage === "read") {
+      console.error("paypal order read failed", captured.status);
+      return respond("order_read_failed", 500);
+    }
+    console.error("paypal capture error", captured.detail);
+    return respond("capture_error", 500);
   }
   if (type === "PAYMENT.CAPTURE.DENIED" || type === "CHECKOUT.ORDER.VOIDED") {
     // Only an intent still `created` becomes failed: a captured one keeps

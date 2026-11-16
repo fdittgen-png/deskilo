@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3556 (part 2, 0798) — a person's own groups of invoices: read and written
+-- #3556 (part 2, 0800) — a person's own groups of invoices: read and written
 -- by their owner only, never by another account, an assistant's delegated
 -- session or an anonymous caller; a name is trimmed, at most 80 characters
 -- and used once per person; an invoice is named by its installation-

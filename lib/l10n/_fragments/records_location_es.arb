@@ -12,5 +12,7 @@
   "recordsLocationCraReference": "Autorización de la CRA: {reference}",
   "recordsLocationCraNone": "No hay ninguna autorización de la CRA registrada. Un gestor de facturación la registra en los ajustes del espacio.",
   "recordsLocationAoNotice": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE (§ 146 apdo. 2a AO). Nada declara esta instalación allí.",
-  "recordsLocationAoOutside": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE."
+  "recordsLocationAoOutside": "Una empresa alemana lleva sus libros electrónicos en Alemania o en otro Estado miembro de la UE; fuera de ella necesita la autorización de la oficina tributaria (§ 146 apdo. 2b AO). Esta instalación está declarada fuera de la UE.",
+  "settingLabelRecordsInvoiceOriginalsSweep": "PDF de facturas sin referencia",
+  "settingHintRecordsInvoiceOriginalsSweep": "report o remove. Lo que hace el mantenimiento nocturno con un PDF de factura subido que ningún original registrado nombra, un día después de subirlo: report lo cita en el registro de mantenimiento y no borra nada; remove lo borra, lo que no se puede deshacer."
 }

@@ -64,5 +64,13 @@
   },
   "@recordsLocationAoOutside": {
     "description": "#2375 the accounting settings: a German space whose installation is declared outside the EU"
+  },
+  "settingLabelRecordsInvoiceOriginalsSweep": "Unreferenced invoice PDFs",
+  "settingHintRecordsInvoiceOriginalsSweep": "report or remove. What the nightly maintenance does with an uploaded invoice PDF that no recorded original names, a day after its upload: report names it in the maintenance record and removes nothing; remove deletes it, which cannot be undone.",
+  "@settingLabelRecordsInvoiceOriginalsSweep": {
+    "description": "#3985 the operator switch of the sweep of unreferenced invoice PDFs"
+  },
+  "@settingHintRecordsInvoiceOriginalsSweep": {
+    "description": "#3985 what report and remove do; the two values are the setting’s own words"
   }
 }

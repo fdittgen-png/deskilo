@@ -30574,6 +30574,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Due lettere (ISO 3166), ad es. CA o DE, secondo quanto il Suo contratto di hosting indica per il database e i suoi backup. Vuoto significa non dichiarato: l\'app non indica allora alcun luogo.';
 
   @override
+  String get settingHintRecordsInvoiceOriginalsSweep =>
+      'report o remove. Cosa fa la manutenzione notturna di un PDF di fattura caricato che nessun originale registrato nomina, un giorno dopo il caricamento: report lo cita nel registro di manutenzione e non elimina nulla; remove lo elimina, cosa irreversibile.';
+
+  @override
   String get settingHintRetentionUsYears =>
       'Anni per cui uno spazio statunitense conserva i documenti quando il suo stato chiede più della regola federale. Un periodo più lungo vale per tutti i documenti; uno più breve non cambia nulla. 0 significa che vale la regola di conservazione. Non è consulenza legale: verifichi il termine del Suo stato.';
 
@@ -30875,6 +30879,10 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelRecordsHostingCountry =>
       'Paese in cui questa installazione conserva i suoi dati';
+
+  @override
+  String get settingLabelRecordsInvoiceOriginalsSweep =>
+      'PDF di fatture non referenziati';
 
   @override
   String get settingLabelRetentionUsYears =>

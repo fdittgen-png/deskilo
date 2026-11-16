@@ -50,6 +50,12 @@ const Map<String, bool> functionVerifyJwt = {
   // #3510 — the hourly database job through the gateway (the anon key);
   // the Vault secret in x-deskilo-poll-secret is its authority.
   'settlement-poll': true,
+  // #4126 — the hourly database job through the gateway (the anon key);
+  // the Vault secret in x-deskilo-reconcile-secret is its authority.
+  'payment-reconcile': true,
+  // #3985 — the database's maintenance jobs through the gateway (the anon
+  // key); the Vault secret in x-deskilo-maintenance-secret is its authority.
+  'maintenance': true,
   'stripe-webhook': false,
   // #2863 — a billing manager's own session; the database answers who
   // may ask before the registry is reached.

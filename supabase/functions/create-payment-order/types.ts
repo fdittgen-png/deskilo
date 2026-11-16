@@ -19,6 +19,8 @@ export interface OrderInput {
   currency: string;
   /** The readable per-workspace reference (#928). */
   reference: string;
+  /** #4135 -- the business's own name: what the payer reads it pays. */
+  payee: string;
   /** The provider idempotency key: one per intent, the same on a retry. */
   key: string;
   /** #3917 -- the intent's own id, carried by the order so a notification
