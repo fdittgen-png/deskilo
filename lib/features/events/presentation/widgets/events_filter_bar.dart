@@ -61,6 +61,14 @@ Widget? eventOutcomeMark(BuildContext context, EventStatus status) {
         color: Theme.of(context).colorScheme.error,
       ),
     ),
+    EventStatus.withdrawn => named(
+      l10n.eventOutcomeWithdrawn,
+      Icon(
+        Icons.undo,
+        size: 18,
+        color: Theme.of(context).colorScheme.onSurfaceVariant,
+      ),
+    ),
     EventStatus.expired || EventStatus.unknown => null,
   };
 }

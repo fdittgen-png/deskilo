@@ -9838,6 +9838,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eventOutcomeRejected => 'Rifiutato';
 
   @override
+  String get eventOutcomeWithdrawn => 'Ritirato';
+
+  @override
   String get eventPaymentAttemptNoticeEnded => 'concluso nel frattempo';
 
   @override

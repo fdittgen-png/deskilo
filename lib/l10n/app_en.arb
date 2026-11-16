@@ -12915,6 +12915,10 @@
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
   },
+  "eventOutcomeWithdrawn": "Taken back",
+  "@eventOutcomeWithdrawn": {
+    "description": "#4140 the name of the status mark on an event row: the person who declared a payment took it back before the business decided"
+  },
   "eventPaymentAttemptNoticeEnded": "ended since",
   "@eventPaymentAttemptNoticeEnded": {
     "description": "#4136 the notice ended: the attempt ended unpaid"

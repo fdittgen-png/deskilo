@@ -4326,6 +4326,7 @@ Map<String, _Getter> _part11() => {
   'erasurePreviewOutside': (l) => l.erasurePreviewOutside,
   'eventAccept': (l) => l.eventAccept,
   'eventActionCreated': (l) => l.eventActionCreated,
+  'eventOutcomeWithdrawn': (l) => l.eventOutcomeWithdrawn,
   'eventTypePrivacyIncident': (l) => l.eventTypePrivacyIncident,
   'eventTypeSpaceReservation': (l) => l.eventTypeSpaceReservation,
   'exportAboutCurrency': (l) => l.exportAboutCurrency,

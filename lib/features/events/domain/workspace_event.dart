@@ -172,6 +172,10 @@ enum EventStatus {
   rejected,
   expired,
 
+  /// #4140 (0800) — the person who declared a payment took it back before
+  /// the business decided: ended, nothing confirmed or refused.
+  withdrawn,
+
   /// #1088 — see [EventType.unknown].
   unknown;
 

@@ -9832,6 +9832,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get eventOutcomeRejected => 'Rechazado';
 
   @override
+  String get eventOutcomeWithdrawn => 'Retirado';
+
+  @override
   String get eventPaymentAttemptNoticeEnded => 'terminado desde entonces';
 
   @override

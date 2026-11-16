@@ -15622,6 +15622,12 @@ abstract class AppLocalizations {
   /// **'Rejected'**
   String get eventOutcomeRejected;
 
+  /// #4140 the name of the status mark on an event row: the person who declared a payment took it back before the business decided
+  ///
+  /// In en, this message translates to:
+  /// **'Taken back'**
+  String get eventOutcomeWithdrawn;
+
   /// #4136 the notice ended: the attempt ended unpaid
   ///
   /// In en, this message translates to:

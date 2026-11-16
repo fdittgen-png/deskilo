@@ -6323,6 +6323,7 @@
   "eventOutcomeConfirmed": "Bestätigt",
   "eventOutcomePending": "Wartet auf eine Entscheidung",
   "eventOutcomeRejected": "Abgelehnt",
+  "eventOutcomeWithdrawn": "Zurückgenommen",
   "eventPaymentAttemptNoticeEnded": "inzwischen beendet",
   "eventPaymentAttemptNoticeRead": "inzwischen geprüft",
   "eventPaymentAttemptNoticeSettled": "inzwischen bezahlt",

@@ -8256,6 +8256,7 @@ const Set<String> uiLabelKeys = {
   'eventOutcomeConfirmed',
   'eventOutcomePending',
   'eventOutcomeRejected',
+  'eventOutcomeWithdrawn',
   'eventPaymentAttemptNoticeEnded',
   'eventPaymentAttemptNoticeRead',
   'eventPaymentAttemptNoticeSettled',
