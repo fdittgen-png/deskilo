@@ -3,3 +3,4 @@
 library;
 
 export 'src/ie_archive.dart';
+export 'src/ie_postal_layout.dart';

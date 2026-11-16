@@ -40,6 +40,11 @@ const String registersContractVersion = '1';
 /// capability, so it is versioned apart (ADR 0050 §4).
 const String paymentSlipContractVersion = '1';
 
+/// The version of the postal layout contract (`PostalLayoutContribution`): how
+/// a country writes the lines of an address. Its own capability, so it is
+/// versioned apart (ADR 0050 §4).
+const String postalLayoutContractVersion = '1';
+
 /// Who provides a capability and at which versions. Data, not behaviour: it
 /// travels with every artifact as provenance.
 class CapabilityDescriptor {

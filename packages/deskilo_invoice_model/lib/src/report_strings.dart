@@ -57,6 +57,7 @@ class ReportStrings {
     this.nameDashLabel = '{name} — {label}',
     this.cancelledLine = _cancelledLine,
     this.daysOpen = _daysOpen,
+    this.countryName = _countryCode,
   });
 
   /// #3652 -- the label of a whole-bookable place on a statement ("Desk 4 —
@@ -140,6 +141,10 @@ class ReportStrings {
   final String Function(int days) daysOpen;
   static String _daysOpen(int days) =>
       days == 1 ? 'Open for 1 day' : 'Open for $days days';
+  /// #3649 -- a country's name in the document's language, for the last line
+  /// of an address abroad; without the app's names, the code itself.
+  final String Function(String code) countryName;
+  static String _countryCode(String code) => code;
   static String _participation(String pct) => 'Participation $pct';
   static String _subscription(String pct) => 'Subscription $pct';
   static String _participationMonth(String month, String pct) => '$month $pct';
