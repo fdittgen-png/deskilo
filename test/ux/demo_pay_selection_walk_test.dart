@@ -9,6 +9,9 @@
 // which waits for Camden. What My finances shows is checked against the
 // invoices before and after. Two invoices of one house paid at once, and a
 // second house for the same person, are #3556 1c (Demo seed).
+// #4140 — she then takes the Camden declaration back: the confirmation names
+// its invoice, the row is payable again and nobody is asked; she declares
+// it again, a new declaration. (Camden takes no online payment in the Demo.)
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/providers/finance_overview_provider.dart';
@@ -34,7 +37,8 @@ Future<void> _tap(WidgetTester tester, String key) async {
 
 void main() {
   testWidgets('Chiara pays her euro invoices one month per tap, withdraws a '
-      'payment and declares a pound invoice of another house', (tester) async {
+      'payment, declares a pound invoice of another house, takes the '
+      'declaration back and declares it again', (tester) async {
     await pumpDemo(tester, persona: DemoPersona.admin, openHub: false);
     await goTo(tester, '/me/data?view=finances');
     await _pumps(tester, 10);
@@ -109,5 +113,27 @@ void main() {
       find.text('Declared paid · waits for Camden Yard Cowork'),
       findsOneWidget,
     );
+    expect(declared.claimEventId, isNotNull, reason: 'hers to take back');
+
+    // #4140 — taken back, paid online instead
+    await _tap(tester, 'finances-take-back-${camden.id}');
+    expect(
+      find.textContaining('You said you paid ${camden.number}.'),
+      findsOneWidget,
+    );
+    await _tap(tester, 'finances-withdraw-yes');
+    final back = now(camden);
+    expect(
+      (back.inPayment, back.claimEventId, back.payable),
+      (false, null, true),
+      reason: 'taken back: nobody is asked, payable again',
+    );
+    expect(back.stillDueCents, camden.stillDueCents);
+    await _tap(tester, 'finances-select-${camden.id}');
+    await _tap(tester, 'finances-selection-declare');
+    await _tap(tester, 'finances-confirm-send');
+    final again = now(camden).claimEventId;
+    expect(again, isNotNull, reason: 'declared again');
+    expect(again, isNot(declared.claimEventId), reason: 'a new declaration');
   });
 }

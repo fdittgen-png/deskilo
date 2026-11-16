@@ -6500,6 +6500,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'L’une de ces factures est dans une autre devise que celle des paiements de l’entreprise. Rien n’a été débité.';
 
   @override
+  String get claimRefusedDecided =>
+      'L’entreprise a déjà décidé de ce paiement.';
+
+  @override
   String get claimRefusedEmpty =>
       'Choisissez les factures que ce paiement règle.';
 
@@ -9929,6 +9933,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get eventOutcomeRejected => 'Refusé';
 
   @override
+  String get eventOutcomeWithdrawn => 'Retiré';
+
+  @override
   String get eventPaymentAttemptNoticeEnded => 'terminé depuis';
 
   @override
@@ -13020,6 +13027,25 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get financesStateUnpaid => 'Non payée';
+
+  @override
+  String get financesTakeBack => 'Retirer';
+
+  @override
+  String financesTakeBackBody(String invoices) {
+    return 'Vous avez déclaré avoir payé $invoices. Une fois retirée, l’entreprise n’a plus à la confirmer et ces factures peuvent être payées à nouveau.';
+  }
+
+  @override
+  String get financesTakeBackFailed =>
+      'La déclaration n’a pas pu être retirée. Réessayez.';
+
+  @override
+  String get financesTakeBackTitle => 'Retirer cette déclaration ?';
+
+  @override
+  String get financesTakenBack =>
+      'Déclaration retirée. Ses factures peuvent être payées à nouveau.';
 
   @override
   String financesTooManyInvoices(int max) {

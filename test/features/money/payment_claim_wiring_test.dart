@@ -150,6 +150,27 @@ void main() {
       },
     );
 
+    test('a declaration the business already decided cannot be taken back '
+        '(DKC13), asked by its event', () async {
+      final seen = <String>[];
+      final commands = SupabaseMemberAccountCommands(
+        _answering(400, {
+          'code': 'DKC13',
+          'message': 'this declaration was already decided',
+          'details': null,
+          'hint': null,
+        }, seen: seen),
+      );
+      final error = await _caught(
+        () => commands.withdrawPaymentDeclaration(
+          workspaceId: 'ws',
+          eventId: 'e-1',
+        ),
+      );
+      expect((error! as ClaimRefused).reason, ClaimRefusal.decided);
+      expect(seen.single, endsWith('/rpc/withdraw_payment_declaration'));
+    });
+
     test('another database error stays what it is', () async {
       final commands = SupabaseMemberAccountCommands(
         _answering(400, {

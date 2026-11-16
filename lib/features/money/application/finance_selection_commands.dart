@@ -8,7 +8,8 @@
 //     month recorded is told to the caller, which takes it out of its
 //     selection (the selection is the page's, never kept beyond it), so a
 //     refusal of a later month keeps only what is still to declare;
-//   * withdraw: an online payment's claim;
+//   * withdraw: an online payment's claim, or (#4140) takes back a declared
+//     one the business has not decided;
 //   * enter: the business of a selection, before its payment flow runs.
 // A refusal of the server is thrown as [ClaimRefused], nothing recorded.
 import '../domain/finance_overview.dart';
@@ -53,16 +54,25 @@ class FinanceSelectionCommands {
     return true;
   }
 
-  /// Withdraws the online payment holding [invoice]. False when there is
-  /// none or its business could not be entered.
+  /// Withdraws the online payment holding [invoice], or takes back the
+  /// declared one. False when there is none or its business could not be
+  /// entered.
   Future<bool> withdraw(FinanceInvoice invoice) async {
     final paymentId = invoice.claimPaymentId;
-    if (paymentId == null) return false;
+    final eventId = invoice.claimEventId;
+    if (paymentId == null && eventId == null) return false;
     if (await enter(invoice.workspaceId) == null) return false;
-    await commands().withdrawPaymentClaim(
-      workspaceId: invoice.workspaceId,
-      paymentId: paymentId,
-    );
+    if (paymentId != null) {
+      await commands().withdrawPaymentClaim(
+        workspaceId: invoice.workspaceId,
+        paymentId: paymentId,
+      );
+    } else {
+      await commands().withdrawPaymentDeclaration(
+        workspaceId: invoice.workspaceId,
+        eventId: eventId!,
+      );
+    }
     return true;
   }
 

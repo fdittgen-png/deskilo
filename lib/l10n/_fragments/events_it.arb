@@ -125,6 +125,7 @@
   "eventOutcomeConfirmed": "Confermato",
   "eventOutcomePending": "In attesa di una decisione",
   "eventOutcomeRejected": "Rifiutato",
+  "eventOutcomeWithdrawn": "Ritirato",
   "eventLineForSubject": "{line} per {name}",
   "eventLineRepeated": "{line} ×{count}"
 }

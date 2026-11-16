@@ -6431,6 +6431,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'One of these invoices is in another currency than the business takes payments in. Nothing was charged.';
 
   @override
+  String get claimRefusedDecided =>
+      'The business has already decided this payment.';
+
+  @override
   String get claimRefusedEmpty => 'Choose the invoices this payment is for.';
 
   @override
@@ -9817,6 +9821,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eventOutcomeRejected => 'Rejected';
 
   @override
+  String get eventOutcomeWithdrawn => 'Taken back';
+
+  @override
   String get eventPaymentAttemptNoticeEnded => 'ended since';
 
   @override
@@ -12869,6 +12876,25 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get financesStateUnpaid => 'Unpaid';
+
+  @override
+  String get financesTakeBack => 'Take back';
+
+  @override
+  String financesTakeBackBody(String invoices) {
+    return 'You said you paid $invoices. Taken back, the business is no longer asked to confirm it, and these invoices can be paid again.';
+  }
+
+  @override
+  String get financesTakeBackFailed =>
+      'The declaration could not be taken back. Try again.';
+
+  @override
+  String get financesTakeBackTitle => 'Take back this declaration?';
+
+  @override
+  String get financesTakenBack =>
+      'Declaration taken back. Its invoices can be paid again.';
 
   @override
   String financesTooManyInvoices(int max) {

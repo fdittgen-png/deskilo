@@ -344,6 +344,10 @@
   "@eventOutcomeRejected": {
     "description": "#3067 the name of the status mark on an event row"
   },
+  "eventOutcomeWithdrawn": "Taken back",
+  "@eventOutcomeWithdrawn": {
+    "description": "#4140 the name of the status mark on an event row: the person who declared a payment took it back before the business decided"
+  },
   "eventLineForSubject": "{line} for {name}",
   "@eventLineForSubject": {
     "description": "#3767 An event line followed by whose bill or account it lands on, e.g. \"Service charge booked for Ana\". {line} is the whole event sentence.",

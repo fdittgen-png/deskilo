@@ -51,6 +51,7 @@ class FinanceInvoice {
     this.period,
     this.inPayment = false,
     this.claimPaymentId,
+    this.claimEventId,
     this.claimHandedAt,
     this.claimSettling = false,
     this.paymentReceived = false,
@@ -81,6 +82,10 @@ class FinanceInvoice {
   /// #3556 (0805) — the online payment whose open claim names it, the one I
   /// may withdraw; null for a declared payment (it waits for the business).
   final String? claimPaymentId;
+
+  /// #4140 — the declared payment, waiting for the business, whose claim
+  /// names this invoice: the one I may take back. Null for an online one.
+  final String? claimEventId;
 
   /// #3556 (0805) — when that payment was handed to its provider: in
   /// payment since then.
@@ -148,6 +153,7 @@ class FinanceInvoice {
       period: r.stringOrNull('period'),
       inPayment: r.boolOr('in_payment', fallback: false),
       claimPaymentId: r.stringOrNull('claim_payment_id'),
+      claimEventId: r.stringOrNull('claim_event_id'),
       claimHandedAt: r.dateTimeOrNull('claim_handed_at'),
       claimSettling: r.boolOr('claim_settling', fallback: false),
       paymentReceived: r.boolOr('payment_received', fallback: false),
