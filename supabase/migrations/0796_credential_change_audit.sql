@@ -252,4 +252,4 @@ revoke execute on function public.clear_einvoice_credentials(uuid) from public, 
 
 notify pgrst, 'reload schema';
 
-select public.set_deskilo_schema_version(797);
+select public.set_deskilo_schema_version(796);

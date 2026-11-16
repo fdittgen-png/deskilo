@@ -1,5 +1,5 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
--- #3914 (0797): a change of a workspace's payment or e-invoicing credentials
+-- #3914 (0796): a change of a workspace's payment or e-invoicing credentials
 -- leaves one entry, read by those who manage the integrations: which area and
 -- provider, whether the credentials were set, replaced or cleared, and the
 -- names of the keys -- never a value or a part of one. Who and when are the
