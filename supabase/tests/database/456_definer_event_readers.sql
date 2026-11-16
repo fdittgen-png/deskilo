@@ -1,6 +1,7 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4143 (0803): every server function that runs with its definer's rights and
--- reads public.events applies the events' reading rule (event_readable, or
+-- reads public.events applies the events' reading rule (event_readable or
+-- event_readable_by, or
 -- each type's restrictive rule where it returns only the caller''s own events)
 -- or is listed below with what it returns. Read from the database itself:
 -- every routine with SECURITY DEFINER, whatever wrote or patched it, keyed by
@@ -49,8 +50,6 @@ insert into listed (sig, reason) values
    'callable by the service role only'),
   ('mcp_op_respond_to_validation(mcp_call_context,jsonb)',
    'callable by the service role only; the status of the event it handed to respond_to_event, which applies its own checks'),
-  ('mcp_target(uuid,text,jsonb)',
-   'callable by the service role only; the target of a validation it hands to respond_to_event, which applies its own checks'),
   ('message_ref_workspace(text,uuid)',
    'callable by the service role only'),
   ('my_finance_overview()',
@@ -92,7 +91,7 @@ insert into listed (sig, reason) values
 
 create function pg_temp.readers() returns table (sig text, applies boolean) language sql stable as $$
   select p.oid::regprocedure::text,
-         p.prosrc ~* '\m(event_readable|event_type_restriction_holds)\s*\('
+         p.prosrc ~* '\m(event_readable|event_readable_by|event_type_restriction_holds)\s*\('
     from pg_proc p join pg_namespace n on n.oid = p.pronamespace
    where n.nspname = 'public' and p.prosecdef and p.prorettype <> 'trigger'::regtype
      and p.prosrc ~* '\m(from|join)\s+("?public"?\s*\.\s*)?"?events"?\M';
@@ -110,7 +109,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
 select is((select string_agg(r.sig, ', ' order by r.sig) from pg_temp.readers() r where r.applies),
   'calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), '
   || 'can_discuss_workspace_application(uuid), export_my_data(uuid), mcp_read_v1(uuid,members,text,jsonb), '
-  || 'respond_to_event(uuid,boolean)',
+  || 'mcp_target(uuid,text,jsonb), respond_to_event(uuid,boolean)',
   'the readers that apply the rule');
 
 -- a reader under a quoted, schema-less name, made definer afterwards, is
@@ -125,7 +124,7 @@ select is((select string_agg(r.sig || ':' || r.applies, ', ' order by r.sig) fro
             where r.sig like 'zz_fixture_%'),
   'zz_fixture_reader(uuid):false, zz_fixture_ruled(uuid):true',
   'a reader is found whatever its name''s form and however it became definer; the rule is seen in its source');
-select ok((select count(*) from listed) = 38, 'the list holds 38 reasoned exceptions');
+select ok((select count(*) from listed) = 37, 'the list holds 37 reasoned exceptions');
 
 select * from finish();
 rollback;
