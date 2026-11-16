@@ -472,18 +472,6 @@ const Map<String, String> deskFindings = {
   '/connections|1024': 'an unnamed control',
   '/connections|1440': 'an unnamed control',
   '/connections|1920': 'an unnamed control',
-  '/help/support-bundle|1024': 'text 902 px wide, over 760',
-  '/help/support-bundle|1440': 'text 902 px wide, over 760',
-  '/help/support-bundle|1920': 'text 902 px wide, over 760',
-  '/privacy|1024': 'text 883 px wide, over 760',
-  '/privacy|1440': 'text 883 px wide, over 760',
-  '/privacy|1920': 'text 883 px wide, over 760',
-  '/server/new-instance|1024': 'text 889 px wide, over 760',
-  '/server/new-instance|1440': 'text 889 px wide, over 760',
-  '/server/new-instance|1920': 'text 889 px wide, over 760',
-  '/task-recorder|1024': 'text 884 px wide, over 760',
-  '/task-recorder|1440': 'text 884 px wide, over 760',
-  '/task-recorder|1920': 'text 884 px wide, over 760',
 };
 
 
@@ -594,17 +582,9 @@ Set<String> personaDeskForwards(WalkPersona persona) => {
 const Map<String, String> personaFindings = {
   '/connections|member|1440': 'an unnamed control',
   '/connections|member|390': 'an unnamed control',
-  '/help/support-bundle|member|1440': 'text 902 px wide, over 760',
-  '/privacy|member|1440': 'text 883 px wide, over 760',
-  '/server/new-instance|member|1440': 'text 889 px wide, over 760',
-  '/task-recorder|member|1440': 'text 884 px wide, over 760',
   '/task-wizard|member|390': 'two filled buttons on one phone screen',
   '/connections|admin|1440': 'an unnamed control',
   '/connections|admin|390': 'an unnamed control',
-  '/help/support-bundle|admin|1440': 'text 902 px wide, over 760',
-  '/privacy|admin|1440': 'text 883 px wide, over 760',
-  '/server/new-instance|admin|1440': 'text 889 px wide, over 760',
-  '/task-recorder|admin|1440': 'text 884 px wide, over 760',
   '/task-wizard|admin|390': 'two filled buttons on one phone screen',
 };
 
