@@ -110,14 +110,14 @@ void main() {
     });
 
     test('an internal capability is never selected', () {
-      // siteDocuments is classified internal (#1325): no implementation
-      // consumes it, so no intent may switch it on.
+      // An internal capability (#1325) is no intent's to switch on.
       for (final key in allSubprocessKeys()) {
         final change =
             resolveActivation(active: const {}, subprocessKeys: [key]);
-        expect(change.flags.containsKey(WorkspaceFeature.siteDocuments.dbKey),
-            isFalse,
-            reason: '$key would enable an internal capability');
+        for (final internal in internalCapabilities.keys) {
+          expect(change.flags.containsKey(internal.dbKey), isFalse,
+              reason: '$key would enable ${internal.name}');
+        }
       }
     });
   });

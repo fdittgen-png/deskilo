@@ -56,7 +56,7 @@ void main() {
       'invoicing': true,
       'kioskMode': true,
       'membersDirectory': false,
-      'siteDocuments': true,
+      'personalShell': true,
       'fromTheFuture': true,
     });
     final keys = [for (final g in view) g.processKey];
@@ -66,7 +66,7 @@ void main() {
         workspaceProcesses.indexWhere((p) => p.key == homeProcessOf(WorkspaceFeature.invoicing));
     expect(access, lessThan(billing));
     expect(keys.first, 'workspaceAccess');
-    expect(keys.last, isNull, reason: 'siteDocuments is reserved');
+    expect(keys.last, isNull, reason: 'personalShell is internal');
     expect(keys, isNot(contains('fromTheFuture')));
 
     final accessGroup = view.first;
@@ -77,7 +77,7 @@ void main() {
     );
     expect(accessGroup.onCount, 1);
     expect(accessGroup.offCount, 1);
-    expect(view.last.changes.single.feature, WorkspaceFeature.siteDocuments);
+    expect(view.last.changes.single.feature, WorkspaceFeature.personalShell);
     expect(view.last.changes.single.subprocessKey, isNull);
   });
 

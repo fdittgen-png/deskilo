@@ -8743,8 +8743,6 @@ const Set<String> uiLabelKeys = {
   'featureSetupGuideTitle',
   'featureSingleRoomLevelNamesDesc',
   'featureSingleRoomLevelNamesTitle',
-  'featureSiteDocuments',
-  'featureSiteDocumentsDesc',
   'featureSpaceInquiriesDesc',
   'featureSpaceInquiriesTitle',
   'featureSpaceQrCodes',
