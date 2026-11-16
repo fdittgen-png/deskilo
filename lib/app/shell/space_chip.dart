@@ -27,6 +27,9 @@ const double _avatarRadius = 16;
 /// 0.8 a title set at 16 reads like the body text beside it.
 const double _minTitleScale = 0.8;
 
+/// #4129 -- the mark beside the page's name where the chip opens the houses.
+const double _markSide = 24;
+
 /// The width [text] takes on one line in [style], as [context] paints it.
 double _lineWidth(BuildContext context, String text, TextStyle? style) {
   final painter = TextPainter(
@@ -67,10 +70,13 @@ class SpaceChip extends ConsumerWidget {
     final role = chromeRoleFor(context, ref, path);
     final chip = LayoutBuilder(
       builder: (context, constraints) {
+        // #4129 -- the mark shares the page's line only: the business's line
+        // above keeps the chip's whole width and is not left out for it.
+        final mark = houses.isEmpty ? 0.0 : _markSide;
         final page = _lineWidth(context, tabTitle, text.titleMedium);
         final withAvatar =
             space != null &&
-            avatarSide + AppSpacing.sm + page <= constraints.maxWidth;
+            avatarSide + AppSpacing.sm + page + mark <= constraints.maxWidth;
         final column =
             constraints.maxWidth -
             (withAvatar ? avatarSide + AppSpacing.sm : 0);
@@ -135,28 +141,40 @@ class SpaceChip extends ConsumerWidget {
                   // name the reader enlarged must not end up smaller than
                   // the text around it. Beyond that it is cut, and still
                   // read whole.
-                  if (page * _minTitleScale <= column)
-                    FittedBox(
-                      fit: BoxFit.scaleDown,
-                      alignment: AlignmentDirectional.centerStart,
-                      child: Text(
-                        tabTitle,
-                        key: const ValueKey('space-chip-page'),
-                        maxLines: 1,
-                        softWrap: false,
-                        style: text.titleMedium,
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: page * _minTitleScale <= column - mark
+                            ? FittedBox(
+                                fit: BoxFit.scaleDown,
+                                alignment: AlignmentDirectional.centerStart,
+                                child: Text(
+                                  tabTitle,
+                                  key: const ValueKey('space-chip-page'),
+                                  maxLines: 1,
+                                  softWrap: false,
+                                  style: text.titleMedium,
+                                ),
+                              )
+                            : Text(
+                                tabTitle,
+                                key: const ValueKey('space-chip-page'),
+                                maxLines: 1,
+                                softWrap: false,
+                                overflow: TextOverflow.ellipsis,
+                                semanticsLabel: tabTitle,
+                                style: text.titleMedium,
+                              ),
                       ),
-                    )
-                  else
-                    Text(
-                      tabTitle,
-                      key: const ValueKey('space-chip-page'),
-                      maxLines: 1,
-                      softWrap: false,
-                      overflow: TextOverflow.ellipsis,
-                      semanticsLabel: tabTitle,
-                      style: text.titleMedium,
-                    ),
+                      if (mark > 0)
+                        const Icon(
+                          Icons.arrow_drop_down,
+                          key: ValueKey('space-chip-mark'),
+                          size: _markSide,
+                        ),
+                    ],
+                  ),
                 ],
               ),
             ),
@@ -216,21 +234,9 @@ Widget _announced(
           constraints: const BoxConstraints(
             minHeight: kMinInteractiveDimension,
           ),
-          // #4129 -- the mark that says the title opens the houses.
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Flexible(
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: chip,
-                ),
-              ),
-              const Icon(
-                Icons.arrow_drop_down,
-                key: ValueKey('space-chip-mark'),
-              ),
-            ],
+          child: Align(
+            alignment: AlignmentDirectional.centerStart,
+            child: chip,
           ),
         ),
       ),
