@@ -7,6 +7,7 @@
 
 import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { stripeFeeOf } from "../_shared/provider_settlement.ts";
+import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 import { handlePayout, isPayoutEvent } from "./payout.ts";
 import { handleReversal, ignoresTestEvent, isReversalEvent } from "./reversal.ts";
 
@@ -203,7 +204,7 @@ export async function handle(
   // #2014 — every answer below is TRUE: 2xx only when the event was
   // handled (or genuinely is not ours); a transient failure is a 5xx so
   // Stripe redelivers it, never a silent "ok".
-  const { data: intent, error: lookupError } = await admin
+  const { data: byOrder, error: lookupError } = await admin
     .from("payment_intents")
     .select("workspace_id")
     .eq("provider", "stripe")
@@ -212,6 +213,31 @@ export async function handle(
   if (lookupError) {
     console.error("stripe webhook: intent lookup failed");
     return new Response(NOT_READY, { status: 500 });
+  }
+  // #3917 -- an intent whose provider answer was uncertain does not know its
+  // session yet: the session names it (metadata), and the session is attached
+  // once the signature proves the event genuine.
+  let intent = byOrder as { id?: string; workspace_id: string } | null;
+  let attach: string | null = null;
+  const named = intentIdOf((object.metadata as Record<string, unknown> | undefined)?.[INTENT_KEY]);
+  if (!intent) {
+    const provisional = await provisionalIntent<{ id: string; workspace_id: string }>(
+      admin,
+      ["stripe"],
+      named,
+      "id, workspace_id",
+    );
+    if (provisional.error) {
+      console.error("stripe webhook: intent lookup failed");
+      return new Response(NOT_READY, { status: 500 });
+    }
+    intent = provisional.data;
+    attach = provisional.data?.id ?? null;
+  }
+  if (!intent && named) {
+    // The session names an intent that waits for no order: not ours to settle.
+    console.log("stripe webhook: the named intent waits for no session, ignoring");
+    return new Response("ok", { status: 200 });
   }
   if (!intent) {
     const age = deps.nowS() - Number(event.created ?? 0);
@@ -251,6 +277,14 @@ export async function handle(
   if (ignoresTestEvent(event, deps.env)) {
     console.log("stripe test event ignored");
     return new Response("ok", { status: 200 });
+  }
+  if (attach) {
+    const { error } = await attachOrder(admin, attach, sessionId);
+    if (error) {
+      console.error("stripe webhook: order attach failed");
+      return new Response(NOT_READY, { status: 500 });
+    }
+    console.log("stripe webhook: session attached to its intent", { session: sessionId });
   }
 
   // #1554 — `completed` means the checkout finished, NOT that the money

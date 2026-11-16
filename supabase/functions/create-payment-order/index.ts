@@ -246,7 +246,7 @@ export async function handleWith(req: Request, admin: any): Promise<Response> {
   try {
     const order = await ORDER_ADAPTERS[provider](
       cfg,
-      { amountCents, currency, reference, key },
+      { amountCents, currency, reference, key, intentId: String(intent.id) },
       runtimeDeps(),
     );
 

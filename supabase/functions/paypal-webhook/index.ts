@@ -25,8 +25,10 @@ import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { toMinor } from "../_shared/money.ts";
 import { paypalApi } from "../_shared/providers.ts";
 import { paypalFeeOf } from "../_shared/provider_settlement.ts";
+import { attachOrder, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 
 type Intent = {
+  id: string;
   order_id: string;
   workspace_id: string;
   amount_cents: number;
@@ -39,6 +41,7 @@ type Money = { value?: string; currency_code?: string } | undefined;
 async function paypalConfig(
   admin: SupabaseClient,
   workspaceId: string,
+  env: (name: string) => string | undefined,
 ): Promise<Record<string, string>> {
   const stored = configOf(
     await admin
@@ -49,16 +52,16 @@ async function paypalConfig(
       .maybeSingle(),
   );
   return {
-    client_id: stored.client_id ?? Deno.env.get("PAYPAL_CLIENT_ID") ?? "",
-    secret: stored.secret ?? Deno.env.get("PAYPAL_SECRET") ?? "",
-    env: stored.env ?? Deno.env.get("PAYPAL_ENV") ?? "sandbox",
-    webhook_id: stored.webhook_id ?? Deno.env.get("PAYPAL_WEBHOOK_ID") ?? "",
+    client_id: stored.client_id ?? env("PAYPAL_CLIENT_ID") ?? "",
+    secret: stored.secret ?? env("PAYPAL_SECRET") ?? "",
+    env: stored.env ?? env("PAYPAL_ENV") ?? "sandbox",
+    webhook_id: stored.webhook_id ?? env("PAYPAL_WEBHOOK_ID") ?? "",
   };
 }
 
-async function accessToken(cfg: Record<string, string>): Promise<string> {
+async function accessToken(cfg: Record<string, string>, fetchFn: typeof fetch): Promise<string> {
   const auth = btoa(`${cfg.client_id}:${cfg.secret}`);
-  const res = await fetch(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
+  const res = await fetchFn(`${paypalApi(cfg.env)}/v1/oauth2/token`, {
     method: "POST",
     headers: {
       Authorization: `Basic ${auth}`,
@@ -93,7 +96,33 @@ function completedCapture(
 
 const respond = (body: string, status: number) => new Response(body, { status });
 
-Deno.serve(async (req: Request): Promise<Response> => {
+/** What the handler is injected with, so a test drives it (#3917). */
+export interface Deps {
+  admin: () => SupabaseClient;
+  env: (name: string) => string | undefined;
+  fetch: typeof fetch;
+  allowTest: () => boolean;
+}
+
+const defaultDeps: Deps = {
+  admin: () =>
+    createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    ),
+  env: (name) => Deno.env.get(name),
+  fetch: (input, init) => fetch(input, init),
+  allowTest: () => allowsTestPayments(),
+};
+
+/** #3917 -- the intent an event's resource names by its custom id: a
+ * capture carries it, an order carries it on its purchase unit. */
+function namedIntent(resource: Record<string, unknown>): string | null {
+  const unit = ((resource.purchase_units ?? []) as Array<Record<string, unknown>>)[0];
+  return intentIdOf(resource.custom_id ?? unit?.custom_id);
+}
+
+export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Response> {
   if (req.method !== "POST") return respond("method_not_allowed", 405);
 
   let event: Record<string, unknown>;
@@ -103,10 +132,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return respond("invalid_json", 400);
   }
 
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
+  const admin = deps.admin();
   const resource = (event.resource ?? {}) as Record<string, unknown>;
   // #3905 -- a refund-shaped reversal names its capture (its `up` link), not
   // its order: the payment is found by the capture it recorded.
@@ -115,21 +141,40 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // Resolve the workspace from the intent, then load ITS PayPal config.
   const lookup = admin
     .from("payment_intents")
-    .select("order_id, workspace_id, amount_cents, currency, reference, status")
+    .select("id, order_id, workspace_id, amount_cents, currency, reference, status")
     .eq("provider", "paypal");
-  const { data: intent } = await (reversalCapture
+  const { data: byOrder } = await (reversalCapture
     ? lookup.eq("capture_id", reversalCapture)
     : lookup.eq("order_id", orderIdOf(resource))).maybeSingle<Intent>();
+  // #3917 -- an intent whose provider answer was uncertain does not know its
+  // order yet: the order names it (custom_id), and the order is attached once
+  // PayPal has verified the event.
+  let intent: Intent | null = byOrder;
+  let attach: string | null = null;
+  if (!intent && !reversalCapture) {
+    const provisional = await provisionalIntent<Intent>(
+      admin,
+      ["paypal"],
+      namedIntent(resource),
+      "id, order_id, workspace_id, amount_cents, currency, reference, status",
+    );
+    if (provisional.error) {
+      console.error("paypal webhook: intent lookup failed");
+      return respond("lookup_failed", 500);
+    }
+    intent = provisional.data;
+    attach = provisional.data?.id ?? null;
+  }
   if (!intent) {
     console.log("paypal webhook: unknown order, ignoring", reversalCapture ?? orderIdOf(resource));
     return respond("ok", 200);
   }
-  const orderId = intent.order_id;
+  let orderId = intent.order_id;
   // #3093 E6 — a failed credential read is an error the provider retries,
   // never a quiet fall back to the installation's key.
   let cfg: Record<string, string>;
   try {
-    cfg = await paypalConfig(admin, intent.workspace_id);
+    cfg = await paypalConfig(admin, intent.workspace_id, deps.env);
   } catch (e) {
     console.error("paypal webhook credential read failed", String(e));
     return respond("config_unavailable", 500);
@@ -143,8 +188,8 @@ Deno.serve(async (req: Request): Promise<Response> => {
   // outage of the verifier is NOT a verification: 500, PayPal retries.
   let token: string;
   try {
-    token = await accessToken(cfg);
-    const verifyRes = await fetch(
+    token = await accessToken(cfg, deps.fetch);
+    const verifyRes = await deps.fetch(
       `${paypalApi(cfg.env)}/v1/notifications/verify-webhook-signature`,
       {
         method: "POST",
@@ -177,9 +222,18 @@ Deno.serve(async (req: Request): Promise<Response> => {
   }
   // #3905 -- a sandbox event settles nothing in a production ledger, unless
   // the installation takes test payments.
-  if (!processesEvents(cfg, allowsTestPayments())) {
+  if (!processesEvents(cfg, deps.allowTest())) {
     console.log("paypal test event ignored");
     return respond("ok", 200);
+  }
+  if (attach) {
+    const { error } = await attachOrder(admin, attach, orderIdOf(resource));
+    if (error) {
+      console.error("paypal webhook: order attach failed");
+      return respond("attach_failed", 500);
+    }
+    orderId = orderIdOf(resource);
+    console.log("paypal webhook: order attached to its intent", { orderId });
   }
 
   const settle = async (
@@ -258,13 +312,13 @@ Deno.serve(async (req: Request): Promise<Response> => {
     // #1638 — refuse a foreign or altered order BEFORE any capture: the
     // approved order must carry our reference, amount and currency.
     const unit = ((resource.purchase_units ?? []) as Array<Record<string, unknown>>)[0];
-    if (!unit || unit.custom_id !== intent.reference || !matches(intent, unit.amount as Money)) {
+    if (!unit || ![intent.reference, intent.id].includes(String(unit.custom_id)) || !matches(intent, unit.amount as Money)) {
       console.error("paypal approved order does not match the intent", { orderId });
       return respond("order_mismatch", 409);
     }
     if (intent.status === "captured") return respond("ok", 200);
     try {
-      const res = await fetch(
+      const res = await deps.fetch(
         `${paypalApi(cfg.env)}/v2/checkout/orders/${orderId}/capture`,
         {
           method: "POST",
@@ -294,7 +348,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       }
       // Captured already (another path, another request id): READ the
       // order rather than capture again, and settle what it says.
-      const orderRes = await fetch(
+      const orderRes = await deps.fetch(
         `${paypalApi(cfg.env)}/v2/checkout/orders/${orderId}`,
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -322,4 +376,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
   }
   console.log("paypal webhook ignored event", type);
   return respond("ok", 200);
-});
+}
+
+if (import.meta.main) Deno.serve((req) => handle(req));

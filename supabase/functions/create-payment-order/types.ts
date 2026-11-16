@@ -21,6 +21,9 @@ export interface OrderInput {
   reference: string;
   /** The provider idempotency key: one per intent, the same on a retry. */
   key: string;
+  /** #3917 -- the intent's own id, carried by the order so a notification
+   * finds its intent even before the order id is stored. */
+  intentId: string;
 }
 
 export interface OrderResult {

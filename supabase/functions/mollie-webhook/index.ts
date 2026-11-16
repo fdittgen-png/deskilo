@@ -25,6 +25,7 @@ import { createClient, SupabaseClient } from "npm:@supabase/supabase-js@2";
 import { mollieApi } from "../_shared/providers.ts";
 import { type Intent, mismatch, reversalOf } from "./payment_rules.ts";
 import { allowsTestPayments } from "../_shared/test_payments.ts";
+import { attachOrder, INTENT_KEY, intentIdOf, provisionalIntent } from "../_shared/provisional_intent.ts";
 
 // The key of the provider the intent was created with — Wero is offered
 // through Mollie but stores its own credentials.
@@ -32,6 +33,7 @@ async function apiKey(
   admin: SupabaseClient,
   workspaceId: string,
   provider: string,
+  env: (name: string) => string | undefined,
 ): Promise<string> {
   // #3093 E6 — a failed read throws; the caller answers 500, never the
   // installation's key for a workspace that has its own.
@@ -43,12 +45,31 @@ async function apiKey(
       .eq("provider", provider)
       .maybeSingle(),
   );
-  return stored.api_key ?? Deno.env.get("MOLLIE_API_KEY") ?? "";
+  return stored.api_key ?? env("MOLLIE_API_KEY") ?? "";
 }
 
 const respond = (body: string, status: number) => new Response(body, { status });
 
-Deno.serve(async (req: Request): Promise<Response> => {
+/** What the handler is injected with, so a test drives it (#3917). */
+export interface Deps {
+  admin: () => SupabaseClient;
+  env: (name: string) => string | undefined;
+  fetch: typeof fetch;
+  allowTest: () => boolean;
+}
+
+const defaultDeps: Deps = {
+  admin: () =>
+    createClient(
+      Deno.env.get("SUPABASE_URL")!,
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
+    ),
+  env: (name) => Deno.env.get(name),
+  fetch: (input, init) => fetch(input, init),
+  allowTest: () => allowsTestPayments(),
+};
+
+export async function handle(req: Request, deps: Deps = defaultDeps): Promise<Response> {
   if (req.method !== "POST") return respond("method_not_allowed", 405);
 
   const type = req.headers.get("content-type") ?? "";
@@ -65,18 +86,35 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return respond("invalid_request", 400);
   }
 
-  const admin = createClient(
-    Deno.env.get("SUPABASE_URL")!,
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!,
-  );
+  const admin = deps.admin();
   // Mollie's webhook covers all its payments, including Wero (offered
   // through Mollie). Match either provider and settle with the actual one.
-  const { data: intent } = await admin
+  const { data: byOrder } = await admin
     .from("payment_intents")
     .select("workspace_id, provider, amount_cents, currency, reference")
     .in("provider", ["mollie", "wero"])
     .eq("order_id", paymentId)
     .maybeSingle<Intent>();
+  // #3917 -- an intent whose provider answer was uncertain does not know its
+  // payment yet: the webhook address names it, and the payment is attached
+  // once Mollie, asked with the business's own key, confirms the payment
+  // carries that intent.
+  let intent: Intent | null = byOrder;
+  let attach: string | null = null;
+  if (!intent) {
+    const provisional = await provisionalIntent<Intent & { id: string }>(
+      admin,
+      ["mollie", "wero"],
+      intentIdOf(new URL(req.url).searchParams.get("intent")),
+      "id, workspace_id, provider, amount_cents, currency, reference",
+    );
+    if (provisional.error) {
+      console.error("mollie webhook: intent lookup failed");
+      return respond("lookup_failed", 500);
+    }
+    intent = provisional.data;
+    attach = provisional.data?.id ?? null;
+  }
   if (!intent) {
     console.log("mollie webhook: unknown payment, ignoring", paymentId);
     return respond("ok", 200);
@@ -84,7 +122,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
   const settleProvider = intent.provider;
   let key: string;
   try {
-    key = await apiKey(admin, intent.workspace_id, settleProvider);
+    key = await apiKey(admin, intent.workspace_id, settleProvider, deps.env);
   } catch (e) {
     console.error("mollie webhook credential read failed", String(e));
     return respond("config_unavailable", 500);
@@ -96,7 +134,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
 
   let payment: Record<string, unknown>;
   try {
-    const res = await fetch(
+    const res = await deps.fetch(
       `${mollieApi()}/v2/payments/${encodeURIComponent(paymentId)}`,
       { headers: { Authorization: `Bearer ${key}` } },
     );
@@ -116,10 +154,25 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.error("mollie answered for another payment", { paymentId, got: payment.id });
     return respond("payment_mismatch", 409);
   }
+  if (attach) {
+    // The payment must carry the intent the address named: an address can
+    // be guessed, the business's own payment cannot.
+    const carried = (payment.metadata as Record<string, unknown> | undefined)?.[INTENT_KEY];
+    if (carried !== attach) {
+      console.log("mollie webhook: the payment does not carry the named intent, ignoring", paymentId);
+      return respond("ok", 200);
+    }
+    const { error } = await attachOrder(admin, attach, paymentId);
+    if (error) {
+      console.error("mollie webhook: order attach failed");
+      return respond("attach_failed", 500);
+    }
+    console.log("mollie webhook: payment attached to its intent", { paymentId });
+  }
 
   const status = payment.status as string;
   if (status === "paid") {
-    const why = mismatch(intent, payment, key, allowsTestPayments());
+    const why = mismatch(intent, payment, key, deps.allowTest());
     if (why) {
       console.error("mollie payment does not match the intent", { paymentId, why });
       return respond(`mismatch_${why}`, 409);
@@ -162,4 +215,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
     console.log("mollie webhook: not paid yet", { paymentId, status });
   }
   return respond("ok", 200);
-});
+}
+
+if (import.meta.main) Deno.serve((req) => handle(req));
