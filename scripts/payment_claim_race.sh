@@ -78,7 +78,7 @@ inv() { q "select id from public.invoices where workspace_id = '$ws' and period 
 x=$(inv 2031-02 full); y=$(inv 2031-02 usage); z=$(inv 2031-02 subscription)
 p=$(inv 2031-03 full); qq=$(inv 2031-03 usage); r=$(inv 2031-03 subscription)
 s=$(inv 2031-04 full); t=$(inv 2031-04 usage); u=$(inv 2031-04 subscription)
-h=$(inv 2031-05 full); i=$(inv 2031-06 full)
+vh=$(inv 2031-05 full); vi=$(inv 2031-06 full)
 as_payer="select set_config('request.jwt.claims', '{\"sub\":\"$payer\",\"role\":\"authenticated\"}', true); set local role authenticated;"
 online() { echo "$as_payer select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '${2:-2031-02}', 1500, 'EUR', null, array['$1']::uuid[]);"; }
 online2() { echo "$as_payer select 'opened' from public.open_payment_intent('$ws', '$member', 'stripe', '2031-03', 3000, 'EUR', null, array['$1', '$2']::uuid[]);"; }
@@ -107,7 +107,7 @@ lapsed() {
   echo "$id"
 }
 ls_=$(lapsed "$s"); lt=$(lapsed "$t"); lu=$(claim "$u")
-dh=$(declaration "$h"); di=$(declaration "$i")
+dh=$(declaration "$vh"); di=$(declaration "$vi")
 wait_marker() {
   local i=0
   while (( i < 100 )); do [[ -e "$1" ]] && return 0; sleep 0.1; ((i+=1)); done
@@ -177,7 +177,7 @@ for id in "$ls_" "$lt"; do
 done
 # each claimed invoice in exactly one open claim; R, which only the refused
 # payment named, in none
-for want in "$x:1" "$y:1" "$z:1" "$p:1" "$qq:1" "$r:0" "$s:1" "$t:1" "$u:1" "$h:0" "$i:0"; do
+for want in "$x:1" "$y:1" "$z:1" "$p:1" "$qq:1" "$r:0" "$s:1" "$t:1" "$u:1" "$vh:0" "$vi:0"; do
   id=${want%%:*}; n=$(q "select count(*) from public.open_claim_invoices('$ws') o where o.invoice_id = '$id'")
   if [[ "$n" != "${want##*:}" ]]; then
     echo "::error::invoice $id is in $n open claims, expected ${want##*:}" >&2

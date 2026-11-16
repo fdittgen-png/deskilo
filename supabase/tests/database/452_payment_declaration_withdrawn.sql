@@ -9,7 +9,7 @@
 -- was withdrawn. The decision locks the event it decides (the race itself is
 -- scripts/payment_claim_race.sh, case h).
 begin;
-select plan(18);
+select plan(19);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004140' || lpad(n::text, 4, '0'))::uuid;
@@ -88,6 +88,8 @@ select is(pg_temp.as_user(1, format('select public.respond_to_event(%L, true)::t
   'ERR DKD01', 'nor decided by the business');
 select is(pg_temp.as_user(1, format('select public.respond_to_event(%L, true)::text', current_setting('t.e2'))),
   'ok', 'the business confirms the new declaration');
+select is((select count(*)::int from public.ledger_entries where event_id = current_setting('t.e2')::uuid),
+  1, 'and credits it once');
 select is(pg_temp.as_user(2, format('select public.withdraw_payment_declaration(%L)::text', current_setting('t.e2'))),
   'ERR DKC13', 'a confirmed declaration cannot be taken back');
 
