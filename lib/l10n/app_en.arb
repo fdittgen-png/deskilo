@@ -12597,6 +12597,68 @@
       }
     }
   },
+  "eventCredentialAreaEinvoice": "e-invoicing",
+  "@eventCredentialAreaEinvoice": {
+    "description": "#3914 which credentials: the e-invoicing channel’s"
+  },
+  "eventCredentialAreaPayment": "payments",
+  "@eventCredentialAreaPayment": {
+    "description": "#3914 which credentials: a payment provider’s"
+  },
+  "eventCredentialCleared": "{actor} cleared the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialCleared": {
+    "description": "#3914 the entry: who cleared which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "eventCredentialReplaced": "{actor} replaced the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialReplaced": {
+    "description": "#3914 the entry: who replaced which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
+  "eventCredentialSet": "{actor} set the credentials of {provider} ({area}): {keys}.",
+  "@eventCredentialSet": {
+    "description": "#3914 the entry: who set which provider’s credentials, and the names of the keys (never a value)",
+    "placeholders": {
+      "actor": {
+        "type": "String"
+      },
+      "provider": {
+        "type": "String"
+      },
+      "area": {
+        "type": "String"
+      },
+      "keys": {
+        "type": "String"
+      }
+    }
+  },
   "eventExpenseDeviation": "validated {scheduled} — {reason}",
   "@eventExpenseDeviation": {
     "description": "Shown as a text in event lines (events)."
@@ -13067,6 +13129,10 @@
   "eventTypeCommitmentVariance": "Rent difference",
   "@eventTypeCommitmentVariance": {
     "description": "Validation domain (#2575): a bill above the rent a contract expects"
+  },
+  "eventTypeCredentialChange": "Credentials change",
+  "@eventTypeCredentialChange": {
+    "description": "#3914 the event type: credentials of an integration changed"
   },
   "eventTypeExpense": "Expense",
   "@eventTypeExpense": {

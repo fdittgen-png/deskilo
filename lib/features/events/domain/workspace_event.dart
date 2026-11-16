@@ -120,6 +120,11 @@ enum EventType {
   /// every owner is told who did it and which device.
   kioskDevice('kiosk_device'),
 
+  /// #3914 — a payment provider's or the e-invoicing channel's credentials
+  /// were set, replaced or cleared: which provider and the names of the keys,
+  /// never a value. Read by those who manage the integrations.
+  credentialChange('credential_change'),
+
   /// #1088 — a wire word THIS build does not know. The `events.type`
   /// constraint has been widened six times; a client that has not been
   /// updated yet must still show the rest of the feed, and must still
