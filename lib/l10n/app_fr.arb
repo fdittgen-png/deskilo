@@ -19485,7 +19485,12 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Réservé par vous pour ce créneau.",
+  "statementDeskBalanceCredit": "Avoir : ce montant est en votre faveur",
+  "statementDeskBalanceOwed": "Dû : vous devez ce montant",
+  "statementDeskBalanceSettled": "Soldé : rien n'est dû",
   "statementDeskColLine": "Ligne",
+  "statementDeskNoMovements": "Aucun autre mouvement ce mois-ci : les chiffres ci-dessus forment tout le relevé.",
+  "statementDeskUsed": "{used} sur {allowance, plural, one{{allowance} demi-journée} other{{allowance} demi-journées}}",
   "statusAwaiting": "En attente",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"

@@ -29,14 +29,21 @@ const _statement = Statement(
   deskSupplementCents: 800,
 );
 
-Future<void> _pump(WidgetTester tester) => pumpStateScreen(
+Future<void> _pump(
+  WidgetTester tester, {
+  Statement statement = _statement,
+  Size size = const Size(1440, 1200),
+}) => pumpStateScreen(
   tester,
-  const Scaffold(
-    body: StatementDesk(statement: _statement, currencyCode: 'EUR'),
+  Scaffold(
+    body: StatementDesk(statement: statement, currencyCode: 'EUR'),
   ),
   overrides: standardTestOverrides(),
-  size: const Size(1440, 1200),
+  size: size,
 );
+
+String _text(WidgetTester tester, String key) =>
+    tester.widget<Text>(find.byKey(ValueKey(key))).data!;
 
 void main() {
   test('the lines are the statement\'s own figures and add up to its '
@@ -81,5 +88,70 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('statement-desk-tile-credits')));
     await tester.pumpAndSettle();
     expect(find.text(en.billAccessorySupplements), findsOneWidget);
+  });
+
+  testWidgets('the usage tile names its unit and the balance says owed; the '
+      'tiles carry the rows\' sign', (tester) async {
+    await _pump(tester);
+    await tester.pump(const Duration(milliseconds: 300));
+    final en = AppLocalizationsEn();
+    expect(_text(tester, 'statement-desk-used'), '24 of 20 half-days');
+    expect(en.statementDeskUsed(14, 36), '14 of 36 half-days');
+    expect(en.statementDeskUsed(1, 1), '1 of 1 half-day');
+    expect(find.text(en.statementDeskBalanceOwed), findsOneWidget);
+    expect(find.text(en.statementDeskBalanceCredit), findsNothing);
+    final subscription = find.descendant(
+      of: find.byKey(const ValueKey('statement-desk-tile-subscription')),
+      matching: find.textContaining('200'),
+    );
+    final row = find.descendant(
+      of: find.byKey(const ValueKey('statement-desk-lines')),
+      matching: find.textContaining('200'),
+    );
+    expect(tester.widget<Text>(subscription).data, startsWith('-'));
+    expect(
+      tester.widget<Text>(row.first).data,
+      tester.widget<Text>(subscription).data,
+      reason: 'the tile and its row use the same sign',
+    );
+  });
+
+  testWidgets('a positive balance reads as a credit, a zero one as settled',
+      (tester) async {
+    final en = AppLocalizationsEn();
+    await _pump(tester, statement: _statement.copyWith(balanceCents: 500));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text(en.statementDeskBalanceCredit), findsOneWidget);
+    await _pump(tester, statement: _statement.copyWith(balanceCents: 0));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.text(en.statementDeskBalanceSettled), findsOneWidget);
+  });
+
+  testWidgets('a month with only the subscription and credits shows no table '
+      'repeating the tiles', (tester) async {
+    await _pump(
+      tester,
+      statement: _statement.copyWith(
+        overageCents: 0,
+        accessorySupplementCents: 0,
+        deskSupplementCents: 0,
+        balanceCents: -5000,
+      ),
+    );
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(find.byKey(const ValueKey('statement-desk-lines')), findsNothing);
+    expect(
+      find.byKey(const ValueKey('statement-desk-no-movements')),
+      findsOneWidget,
+    );
+  });
+
+  testWidgets('at phone width the tiles read whole and nothing overflows', (
+    tester,
+  ) async {
+    await _pump(tester, size: const Size(390, 844));
+    await tester.pump(const Duration(milliseconds: 300));
+    expect(tester.takeException(), isNull);
+    expect(_text(tester, 'statement-desk-used'), '24 of 20 half-days');
   });
 }

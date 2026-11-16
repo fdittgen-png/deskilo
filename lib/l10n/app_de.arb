@@ -19485,7 +19485,12 @@
     "description": "#670 - whole-space sheet"
   },
   "spaceYoursNow": "Von Ihnen für dieses Zeitfenster reserviert.",
+  "statementDeskBalanceCredit": "Guthaben: dieser Betrag steht Ihnen zu",
+  "statementDeskBalanceOwed": "Geschuldet: Sie schulden diesen Betrag",
+  "statementDeskBalanceSettled": "Ausgeglichen: nichts ist offen",
   "statementDeskColLine": "Posten",
+  "statementDeskNoMovements": "Keine weiteren Bewegungen in diesem Monat: die Zahlen oben sind die ganze Abrechnung.",
+  "statementDeskUsed": "{used} von {allowance, plural, one{1 Halbtag} other{{allowance} Halbtagen}}",
   "statusAwaiting": "Offen",
   "@statusAwaiting": {
     "description": "#934 workspace status / repartition wizard: statusAwaiting"
