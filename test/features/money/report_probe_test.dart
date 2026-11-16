@@ -28,6 +28,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../helpers/address_window_a4.dart';
 import '../../helpers/pdf_geometry.dart';
 
 /// The design under probe. Paste a workspace's real bands in here;

@@ -400,6 +400,13 @@ packages:
       relative: true
     source: path
     version: "0.1.0"
+  deskilo_jurisdiction_ro:
+    dependency: transitive
+    description:
+      path: "../../packages/deskilo_jurisdiction_ro"
+      relative: true
+    source: path
+    version: "0.1.0"
   deskilo_jurisdiction_standards:
     dependency: transitive
     description:

@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 import '../../domain/address_window.dart';
 
@@ -25,6 +26,19 @@ abstract final class ReportPage {
 
   /// The printable height of one page — the page-break guide interval.
   static double get contentHeight => height - margins.top - margins.bottom;
+
+  /// #4119 — the sheet of [paper] in PDF points: A4 is [width] by
+  /// [height], US Letter 612 by 792.
+  static double widthOf(Paper paper) =>
+      paper == Paper.a4 ? width : paper.widthMm * _pointsPerMm;
+  static double heightOf(Paper paper) =>
+      paper == Paper.a4 ? height : paper.heightMm * _pointsPerMm;
+
+  /// The printable height of one page of [paper].
+  static double contentHeightOf(Paper paper) =>
+      heightOf(paper) - margins.top - margins.bottom;
+
+  static const double _pointsPerMm = 72 / 25.4;
 
   /// Print colors — constants of the document (PdfColors.blueGrey900 /
   /// blueGrey600 / the DesKilo accent), independent of the app theme.
@@ -85,16 +99,18 @@ Alignment reportImageAlignment(ReportImageAlign align) => switch (align) {
 /// printable-page-height, so the owner SEES where the generated PDF
 /// will break onto the next page. Pure chrome — never printed.
 class PageBreakGuidePainter extends CustomPainter {
-  const PageBreakGuidePainter();
+  const PageBreakGuidePainter({this.paper = Paper.a4});
+
+  /// The sheet the guides divide (#4119).
+  final Paper paper;
 
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = ReportPage.chrome.withValues(alpha: .6)
       ..strokeWidth = 1;
-    for (var y = ReportPage.contentHeight;
-        y < size.height;
-        y += ReportPage.contentHeight) {
+    final step = ReportPage.contentHeightOf(paper);
+    for (var y = step; y < size.height; y += step) {
       for (var x = 0.0; x < size.width; x += 10) {
         canvas.drawLine(Offset(x, y), Offset(x + 5, y), paint);
       }
@@ -102,7 +118,8 @@ class PageBreakGuidePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant PageBreakGuidePainter oldDelegate) => false;
+  bool shouldRepaint(covariant PageBreakGuidePainter oldDelegate) =>
+      oldDelegate.paper != paper;
 }
 
 /// How large the page shows against how large it is drawn: 1 at full size,
