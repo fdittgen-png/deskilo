@@ -4698,6 +4698,7 @@ const List<String> uiKeyPatterns = [
   'invoice-journey-step-{}',
   'invoice-match-payment-{}',
   'invoice-month-fix-{}',
+  'invoice-month-gaps-{}',
   'invoice-month-line-{}',
   'invoice-month-proforma-{}',
   'invoice-month-result-fix-{}',

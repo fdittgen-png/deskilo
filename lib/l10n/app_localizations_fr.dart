@@ -16288,6 +16288,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get invoiceMonthDone => 'Terminé';
 
   @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Sa facture électronique aura besoin de : $what';
+  }
+
+  @override
   String get invoiceMonthFix => 'Compléter';
 
   @override

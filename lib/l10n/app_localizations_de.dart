@@ -16257,6 +16257,11 @@ class AppLocalizationsDe extends AppLocalizations {
   String get invoiceMonthDone => 'Fertig';
 
   @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Die E-Rechnung braucht noch: $what';
+  }
+
+  @override
   String get invoiceMonthFix => 'Ergänzen';
 
   @override

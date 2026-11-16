@@ -9649,6 +9649,16 @@
   "invoiceMonthBusinessFix": "Los datos de su negocio están incompletos: {missing}",
   "invoiceMonthCheckAgain": "Comprobar de nuevo",
   "invoiceMonthDone": "Hecho",
+  "invoiceMonthEInvoiceGapsLine": "Su factura electrónica necesitará: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Completar",
   "invoiceMonthHeld": "Espera una validación",
   "invoiceMonthIssue": "{count, plural, =0{Emitir facturas} one{Emitir 1 factura · {amount}} other{Emitir {count} facturas · {amount}}}",

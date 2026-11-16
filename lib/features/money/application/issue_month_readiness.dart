@@ -8,9 +8,9 @@
 //
 // A read that fails is "unknown", never "ready" and never "blocked": the row
 // stays selectable and the server still refuses at issue time, in words.
-import 'package:meta/meta.dart';
 
-import '../domain/invoice_queries.dart';
+import '../domain/einvoice_channel_check.dart';
+import '../domain/invoice_issue_draft.dart';
 
 /// How many customers are read at once: a courtesy to the server, not a
 /// setting.
@@ -21,10 +21,11 @@ sealed class LineReadiness {
   const LineReadiness();
 }
 
-/// Nothing stops the invoice.
-@visibleForTesting
+/// Nothing stops the invoice; [gaps] is what its e-invoice will still need
+/// (#4105), a warning only.
 final class ReadinessReady extends LineReadiness {
-  const ReadinessReady();
+  const ReadinessReady([this.gaps = const []]);
+  final List<ChannelGap> gaps;
 }
 
 /// The read failed: not known, so not blocked.
@@ -85,6 +86,24 @@ class MonthReadiness {
     ];
   }
 
+  /// #4105 -- what the e-invoices of the month will need from the space
+  /// itself: said once, as it is the same for every customer.
+  List<ChannelGap> get businessGaps => {
+    for (final l in lines.values)
+      if (l is ReadinessReady)
+        for (final g in l.gaps)
+          if (isSellerGap(g)) g,
+  }.toList();
+
+  /// #4105 -- what [memberId]'s e-invoice will need from that customer.
+  List<ChannelGap> customerGaps(String memberId) => switch (lines[memberId]) {
+    ReadinessReady(:final gaps) => [
+      for (final g in gaps)
+        if (!isSellerGap(g)) g,
+    ],
+    _ => const [],
+  };
+
   /// Whether [memberId] cannot be issued until something is fixed.
   bool needsFix(String memberId) => customerMissing(memberId).isNotEmpty;
 
@@ -98,12 +117,11 @@ class MonthReadiness {
       MonthReadiness({...lines, memberId: readiness});
 }
 
-/// Reads [memberIds]' readiness for [period], [concurrency] at a time,
-/// telling [onEach] as every answer arrives (so rows fill in as they come).
+/// Reads [memberIds]' readiness, [concurrency] at a time, telling [onEach] as
+/// every answer arrives (so rows fill in as they come). [judge] is the dry
+/// run of one customer's issue (#4105: with what its e-invoice will need).
 Future<void> readMonthReadiness({
-  required InvoiceQueries queries,
-  required String workspaceId,
-  required String period,
+  required Future<IssueJudgement> Function(String memberId) judge,
   required List<String> memberIds,
   required void Function(String memberId, LineReadiness readiness) onEach,
   int concurrency = _monthReadinessConcurrency,
@@ -114,14 +132,10 @@ Future<void> readMonthReadiness({
       final id = queue.removeAt(0);
       LineReadiness readiness;
       try {
-        final missing = await queries.invoiceIssueReadiness(
-          workspaceId: workspaceId,
-          memberId: id,
-          period: period,
-        );
-        readiness = missing.isEmpty
-            ? const ReadinessReady()
-            : ReadinessMissing(missing);
+        final judged = await judge(id);
+        readiness = judged.missing.isEmpty
+            ? ReadinessReady(judged.gaps)
+            : ReadinessMissing(judged.missing);
       } on Object {
         readiness = const ReadinessUnknown();
       }

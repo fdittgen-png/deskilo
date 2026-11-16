@@ -25823,6 +25823,12 @@ abstract class AppLocalizations {
   /// **'Done'**
   String get invoiceMonthDone;
 
+  /// #4105 the month review: what one customer’s e-invoice will still need (a warning)
+  ///
+  /// In en, this message translates to:
+  /// **'Its e-invoice will need: {what}'**
+  String invoiceMonthEInvoiceGapsLine(String what);
+
   /// #3587 R1-e: opens the place where a missing detail is completed
   ///
   /// In en, this message translates to:

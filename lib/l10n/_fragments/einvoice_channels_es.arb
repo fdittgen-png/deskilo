@@ -300,5 +300,15 @@
   "invoiceEInvoiceGapsOpenIdentity": "Abrir la identidad legal",
   "@invoiceEInvoiceGapsOpenIdentity": {
     "description": "#4105 the link to where the space’s own facts are entered"
+  },
+  "invoiceMonthEInvoiceGapsLine": "Su factura electrónica necesitará: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
   }
 }

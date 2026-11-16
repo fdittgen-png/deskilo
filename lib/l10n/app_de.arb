@@ -9649,6 +9649,16 @@
   "invoiceMonthBusinessFix": "Die Angaben Ihres Betriebs sind unvollständig: {missing}",
   "invoiceMonthCheckAgain": "Erneut prüfen",
   "invoiceMonthDone": "Fertig",
+  "invoiceMonthEInvoiceGapsLine": "Die E-Rechnung braucht noch: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Ergänzen",
   "invoiceMonthHeld": "Wartet auf eine Freigabe",
   "invoiceMonthIssue": "{count, plural, =0{Rechnungen ausstellen} one{1 Rechnung ausstellen · {amount}} other{{count} Rechnungen ausstellen · {amount}}}",

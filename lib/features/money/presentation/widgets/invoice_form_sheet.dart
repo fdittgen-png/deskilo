@@ -21,9 +21,11 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/issue_invoice.dart';
+import '../../domain/invoice_issue_draft.dart';
 import '../../domain/invoice_issue_readiness.dart';
 import '../../domain/invoice_mail.dart' show invoiceEmailKey;
 import '../../providers/money_providers.dart';
+import '../e_invoice_identity.dart';
 import '../invoice_issue_block_text.dart';
 import '../invoice_original_document.dart';
 import '../issue_judgement.dart';
@@ -85,13 +87,13 @@ Future<void> showInvoiceIssueSheet(
         memberId: memberId,
         period: period,
       ),
-      readiness: (memberId, period, correctionReason) => judgeIssue(ref, workspace, (
+      readiness: (memberId, period, correctionReason) => judgeIssue(ref, workspace.id, (
         memberId: memberId,
         period: period,
         replacesId: replaces?.id,
         kind: replaces?.kind.correctionKind ?? InvoiceKind.full, // #3994
         correctionReason: correctionReason,
-      )),
+      ), iban: workspaceIban(workspace)),
       // Only preselect a member the dropdown offers: the wrong invoice's member may have left.
       initialMemberId:
           members.any((m) => m.id == (memberId ?? replaces?.memberId))

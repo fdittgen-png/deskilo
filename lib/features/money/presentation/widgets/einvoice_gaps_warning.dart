@@ -22,17 +22,9 @@ class EInvoiceGapsWarning extends StatelessWidget {
   final AppLocalizations l10n;
   final List<ChannelGap> gaps;
 
-  static const _sellerGaps = {
-    ChannelGap.sellerEndpoint,
-    ChannelGap.sellerContact,
-    ChannelGap.sellerVatId,
-    ChannelGap.sellerSubdivision,
-    ChannelGap.paymentAccount,
-  };
-
   @override
   Widget build(BuildContext context) {
-    final ownFacts = gaps.any(_sellerGaps.contains);
+    final ownFacts = gaps.any(isSellerGap);
     return InlineBanner(
       key: const ValueKey('invoice-einvoice-gaps'),
       icon: Icons.outgoing_mail,

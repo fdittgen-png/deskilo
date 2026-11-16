@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:meta/meta.dart';
 
 import 'einvoice_gateway.dart';
 
@@ -46,6 +47,7 @@ enum ChannelGap {
 
 /// What [format] still needs from [seller], [buyer] and the workspace's
 /// [iban]. Empty = the channel has everything its validator checks.
+@visibleForTesting
 List<ChannelGap> channelGaps(
   EInvoiceFormat format, {
   required InvoiceParty seller,
@@ -118,3 +120,18 @@ List<ChannelGap> channelGapsFor(
   );
   return channelGaps(format, seller: seller, buyer: buyer, iban: iban);
 }
+
+/// #4105 -- whether [gap] is the space's own (the same for every customer, said
+/// once and fixed in the legal identity) rather than one customer's.
+bool isSellerGap(ChannelGap gap) => switch (gap) {
+  ChannelGap.sellerEndpoint ||
+  ChannelGap.sellerContact ||
+  ChannelGap.sellerVatId ||
+  ChannelGap.sellerSubdivision ||
+  ChannelGap.paymentAccount => true,
+  ChannelGap.buyerEndpoint ||
+  ChannelGap.buyerReference ||
+  ChannelGap.leitwegId ||
+  ChannelGap.buyerTaxId ||
+  ChannelGap.buyerSubdivision => false,
+};

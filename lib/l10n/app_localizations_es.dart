@@ -16216,6 +16216,11 @@ class AppLocalizationsEs extends AppLocalizations {
   String get invoiceMonthDone => 'Hecho';
 
   @override
+  String invoiceMonthEInvoiceGapsLine(String what) {
+    return 'Su factura electrónica necesitará: $what';
+  }
+
+  @override
   String get invoiceMonthFix => 'Completar';
 
   @override

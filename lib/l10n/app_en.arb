@@ -21027,6 +21027,16 @@
   "@invoiceMonthDone": {
     "description": "#3587 R1-e: leave the result page"
   },
+  "invoiceMonthEInvoiceGapsLine": "Its e-invoice will need: {what}",
+  "@invoiceMonthEInvoiceGapsLine": {
+    "description": "#4105 the month review: what one customer’s e-invoice will still need (a warning)",
+    "placeholders": {
+      "what": {
+        "type": "String",
+        "example": "the customer’s electronic address"
+      }
+    }
+  },
   "invoiceMonthFix": "Fix",
   "@invoiceMonthFix": {
     "description": "#3587 R1-e: opens the place where a missing detail is completed"

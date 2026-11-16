@@ -119,6 +119,7 @@ String _cased(String value, bool upper) =>
 /// the installed layouts (`dart run tool/build_postal_region_rules_sql.dart`):
 /// `{"IT": {"form": true, "invoice": true}, ...}`, keyed by country, sorted.
 /// A country whose addresses have no region is absent.
+@visibleForTesting
 String postalRegionRulesJson() {
   final rules = <String, Map<String, bool>>{
     for (final c in installedPostalLayouts)

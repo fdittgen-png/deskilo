@@ -9,17 +9,10 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/trace/trace_logger.dart';
-import '../../workspace/domain/workspace.dart';
 import '../domain/einvoice_channel_check.dart';
 import '../domain/einvoice_gateway.dart';
+import '../domain/invoice_issue_draft.dart';
 import '../providers/money_providers.dart';
-import 'e_invoice_identity.dart';
-
-/// What stops the issue, and what the e-invoice will still need.
-typedef IssueJudgement = ({List<String> missing, List<ChannelGap> gaps});
-
-/// Nothing known yet.
-const IssueJudgement noJudgement = (missing: <String>[], gaps: <ChannelGap>[]);
 
 /// One issue to judge: whose, which month, and what it corrects.
 typedef IssueAsk = ({
@@ -30,16 +23,18 @@ typedef IssueAsk = ({
   String correctionReason,
 });
 
-/// The dry run of [ask] in [workspace], judged.
+/// The dry run of [ask] in [workspaceId], judged; [iban] is the account the
+/// space is paid on (a channel may need it).
 Future<IssueJudgement> judgeIssue(
   WidgetRef ref,
-  Workspace workspace,
-  IssueAsk ask,
-) async {
+  String workspaceId,
+  IssueAsk ask, {
+  String iban = '',
+}) async {
   final draft = await ref
       .read(invoiceIssueDraftsProvider)
       .issueDraft(
-        workspaceId: workspace.id,
+        workspaceId: workspaceId,
         memberId: ask.memberId,
         period: ask.period,
         kind: ask.kind,
@@ -58,7 +53,7 @@ Future<IssueJudgement> judgeIssue(
       gateway,
       seller: seller,
       buyer: buyer,
-      iban: workspaceIban(workspace),
+      iban: iban,
     ),
   );
 }

@@ -10,7 +10,6 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/invoice_issue_draft.dart';
 import 'package:deskilo/features/money/presentation/issue_judgement.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
-import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,14 +67,7 @@ Future<IssueJudgement> _judge(
   );
   return judgeIssue(
     captured,
-    const Workspace(
-      id: 'ws',
-      name: 'Space',
-      countryCode: 'FR',
-      inviteCode: '',
-      currencyCode: 'EUR',
-      timezone: 'Europe/Paris',
-    ),
+    'ws',
     (
       memberId: 'm',
       period: '2026-09',

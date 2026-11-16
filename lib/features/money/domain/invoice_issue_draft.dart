@@ -6,7 +6,14 @@
 // those parties, with the function the send sheet uses on the stored ones.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
+import 'einvoice_channel_check.dart';
 import 'invoice_queries.dart';
+
+/// What stops the issue, and what the e-invoice will still need (#4105).
+typedef IssueJudgement = ({List<String> missing, List<ChannelGap> gaps});
+
+/// Nothing known yet.
+const IssueJudgement noJudgement = (missing: <String>[], gaps: <ChannelGap>[]);
 
 /// The dry run of one issue.
 class IssueDraft {
