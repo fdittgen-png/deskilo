@@ -45,6 +45,7 @@ class RecordsTable<T> extends StatefulWidget {
     required this.cardBuilder,
     required this.empty,
     this.state = RecordsState.ready,
+    this.error,
     this.onRetry,
     this.complete = true,
     this.chips = const [],
@@ -83,6 +84,10 @@ class RecordsTable<T> extends StatefulWidget {
   /// What an empty table says: one sentence and one action.
   final Widget empty;
   final RecordsState state;
+
+  /// #4097 — why the read [RecordsState.failed]: a refusal is said as one,
+  /// not as a failure. Null says the plain failure.
+  final Object? error;
   final VoidCallback? onRetry;
 
   /// Whether every row the table could show is loaded.
@@ -189,7 +194,7 @@ class _RecordsTableState<T> extends State<RecordsTable<T>> {
       case RecordsState.loading:
         return const Center(child: CircularProgressIndicator());
       case RecordsState.failed:
-        return RecordsFailed(onRetry: widget.onRetry);
+        return RecordsFailed(error: widget.error, onRetry: widget.onRetry);
       case RecordsState.ready:
         break;
     }

@@ -92,6 +92,7 @@ class GuestPassRecords extends ConsumerWidget {
         AsyncError() => RecordsState.failed,
         _ => RecordsState.loading,
       },
+      error: read.error,
       onRetry: () => ref.invalidate(guestPassesSoldProvider(workspaceId)),
       rows: rows,
       keyOf: (p) => p.id,
