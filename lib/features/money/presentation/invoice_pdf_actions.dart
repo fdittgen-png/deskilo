@@ -7,6 +7,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:deskilo_document_model/paper.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -213,7 +214,9 @@ Future<void> quickViewInvoice(
         ? (template.proformaBands ?? template.invoiceBands)
         : template.invoiceBands;
     if (!bands.hasBands) bands = defaultBandsForDoc('invoice', words);
-    final report = renderReportBands(bands: bands, data: data);
+    // #4119 -- the sheet is the paper the invoice froze at issue.
+    final paper = Paper.fromWire(invoice.paper) ?? Paper.a4;
+    final report = renderReportBands(bands: bands, data: data)?.onPaper(paper);
     if (report == null) {
       AppSnack.error(
         context,
@@ -242,7 +245,7 @@ Future<void> quickViewInvoice(
         ),
       );
       if (sourceReport != null) {
-        annexReports.add((report: sourceReport, stamp: stamp));
+        annexReports.add((report: sourceReport.onPaper(paper), stamp: stamp));
       }
     }
     final images = await resolveReportImages(ref, report);

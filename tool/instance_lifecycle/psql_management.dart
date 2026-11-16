@@ -27,6 +27,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:deskilo/core/instance/app_url_setting.dart';
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/management_api.dart';
 
@@ -223,4 +224,27 @@ class PsqlSupabaseManagement implements SupabaseManagement {
   @override
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) async =>
       notCovered.add('auth');
+
+  /// What a project's functions were given, as the API lists it: names with
+  /// the digest of each value, never a value. A local database has no
+  /// function settings, so the project's are kept here, for every double of
+  /// one run, as the project itself would keep them.
+  static final Map<String, Map<String, String>> _secretDigests = {};
+
+  /// Names only, never a value: nothing is set on a local database.
+  @override
+  Future<void> setFunctionSecrets(
+    String ref,
+    Map<String, String> values,
+  ) async {
+    notCovered.add('secrets ${values.keys.join(', ')}');
+    final kept = _secretDigests.putIfAbsent(ref, () => {});
+    for (final entry in values.entries) {
+      kept[entry.key] = sha256Hex(entry.value);
+    }
+  }
+
+  @override
+  Future<Map<String, String>> listFunctionSecretDigests(String ref) async =>
+      Map.unmodifiable(_secretDigests[ref] ?? const <String, String>{});
 }

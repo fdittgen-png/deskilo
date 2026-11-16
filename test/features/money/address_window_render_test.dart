@@ -12,6 +12,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 
+import '../../helpers/address_window_a4.dart';
+
 /// Renders one page with the address block placed as the invoice places
 /// it, then reports where the text actually landed.
 Future<Uint8List> _sheet(AddressWindow window) async {

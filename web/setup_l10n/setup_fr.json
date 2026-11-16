@@ -147,7 +147,7 @@
  "identityCurrencyHint": "Code ISO 4217. L'app connaît le nombre de décimales de chacune (le yen n'en a pas, le dinar en a trois).",
  "identityTimezone": "Fuseau horaire",
  "identityTimezoneHint": "Nom IANA. Tous les créneaux de réservation s'y ancrent ; chaque membre peut afficher l'heure dans le sien.",
- "identityLanguage": "Langue de l'espace",
+ "identityLanguage": "Langue de vos documents",
  "identityLanguageHint": "Les invitations, factures et rapports y sont rédigés par défaut.",
  "identityPaper": "Papier des documents",
  "identityPaperHint": "Une facture garde le papier de son émission.",

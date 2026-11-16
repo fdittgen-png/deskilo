@@ -30,7 +30,8 @@
 // functions from the repository (not the asset — the repository is the
 // source), applies the sign-in settings and prints the endpoint.
 // `install` does the same on an existing project. `auth` applies ONLY
-// the sign-in settings: an instance created before the wizard (#977)
+// the sign-in settings (and, from the same web base, #3916, the functions'
+// `DESKILO_APP_URL`): an instance created before the wizard (#977)
 // still carries Supabase's default Site URL, `http://localhost:3000`,
 // and every confirmation e-mail it sends points at a server the new
 // member does not run (#1050). Reinstalling the schema to repair one
@@ -52,6 +53,7 @@
 // workspaces.
 import 'dart:io';
 
+import 'package:deskilo/core/instance/app_url_setting.dart';
 import 'package:deskilo/core/instance/instance_builder.dart';
 import 'package:deskilo/core/instance/instance_bundle.dart';
 import 'package:deskilo/core/instance/instance_doctor.dart';
@@ -162,10 +164,12 @@ Future<int> run(List<String> argv, {
           return 2;
         }
         await builder.configureAuth(ref, authPatch: authPatch);
+        await builder.configureAppUrl(ref, authPatch: authPatch);
         final appliedAuth = authPatch ?? InstanceAuthConfig.patch;
         stdout
           ..writeln('site URL:      ${appliedAuth['site_url']}')
           ..writeln('redirect URLs: ${appliedAuth['uri_allow_list']}')
+          ..writeln('$appUrlSetting set on the functions of $ref')
           ..writeln('sign-in settings applied to $ref');
         return 0;
       case 'push':
@@ -268,6 +272,8 @@ Future<int> _install(InstanceBuilder builder, String ref, int? skip,
     if (p.current.isNotEmpty) stdout.writeln('  ${p.done + 1}/${p.total} ${p.current}');
   });
   await builder.configureAuth(ref, authPatch: authPatch);
+  await builder.configureAppUrl(ref, authPatch: authPatch);
+  stdout.writeln('functions: $appUrlSetting is set');
   final endpoint = await builder.endpointOf(ref);
   stdout
     ..writeln('ready: ${endpoint.url}')

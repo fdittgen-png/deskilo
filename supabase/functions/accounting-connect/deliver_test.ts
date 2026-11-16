@@ -147,7 +147,7 @@ function deliveryLog() {
 }
 
 /** A Pennylane company with journals and ledger entries. */
-function pennylane() {
+function pennylane(codes: [number, string][] = [[1, "VE"], [2, "BQ"]]) {
   const entries: Record<string, unknown>[] = [];
   let next = 900;
   const st = { posts: 0, loseNextAnswer: false, gets: 0 };
@@ -157,7 +157,7 @@ function pennylane() {
       const path = url.pathname.replace(/^.*\/v2\//, "");
       if (path === "journals") {
         return Response.json({
-          items: [{ id: 1, code: "VE" }, { id: 2, code: "BQ" }],
+          items: codes.map(([id, code]) => ({ id, code })),
           has_more: false,
         });
       }
@@ -198,6 +198,13 @@ function world(opts: {
   refresh?: () => Response;
   /** The invoices table as the caller reads it; null refuses the read. */
   invoices?: { id: string; replaces_number?: string; vat_totals?: unknown }[] | null;
+  /** #4003 — `workspaces.accounting_journals` as the caller reads it; the
+   * default is '{}'. */
+  accountingJournals?: unknown;
+  /** #4003 — the workspace row cannot be read. */
+  noWorkspace?: boolean;
+  /** #4003 — the journals the Pennylane company holds (id, code). */
+  plJournals?: [number, string][];
   /** The target's API, when it is not Pennylane (#2371: a played QuickBooks). */
   fetcher?: typeof fetch;
   /** The remote company the connection reaches. */
@@ -207,7 +214,7 @@ function world(opts: {
   otherRunSending?: boolean;
 } = {}) {
   const log = deliveryLog();
-  const pl = pennylane();
+  const pl = pennylane(opts.plJournals);
   const order: string[] = [];
   const stored: Record<string, unknown>[] = [];
   const calls: { as: string; fn: string; args: Record<string, unknown> }[] = [];
@@ -259,6 +266,16 @@ function world(opts: {
             fn: `${table}.${columns}`,
             args: { [column]: values },
           });
+          if (table === "workspaces") {
+            return Promise.resolve(
+              opts.noWorkspace
+                ? { data: [], error: null }
+                : {
+                  data: [{ accounting_journals: opts.accountingJournals ?? {} }],
+                  error: null,
+                },
+            );
+          }
           if (opts.invoices === null) {
             return Promise.resolve({ data: null, error: { code: "42501" } });
           }
@@ -765,4 +782,40 @@ Deno.test("a revoked connection's recovery run makes no provider call and record
     !revoked.calls.some((c) => c.fn === "record_accounting_delivery"),
     "no delivery was recorded on a revoked connection",
   );
+});
+
+const own = (code: string) => ({ code, label: "Journal" });
+const ownJournals = {
+  sales: own("VT"),
+  bank: own("BNP"),
+  purchases: own("ACH"),
+  misc: own("DIV"),
+};
+
+Deno.test("#4003 a delivery goes to the business's journals when set, and to the standard codes with '{}'", async () => {
+  const set = world({
+    accountingJournals: ownJournals,
+    plJournals: [[1, "VE"], [2, "BQ"], [5, "VT"], [6, "BNP"]],
+  });
+  assertEquals((await (await run(set)).json()).counts, { acknowledged: 2 });
+  assertEquals(set.pl.entries.map((e) => e.journal_id), [5, 6]);
+  // Only the one column of the workspace is read.
+  assert(
+    set.calls.some((c) =>
+      c.as === "caller" && c.fn === "workspaces.accounting_journals"
+    ),
+  );
+
+  const none = world({
+    accountingJournals: {},
+    plJournals: [[1, "VE"], [2, "BQ"], [5, "VT"], [6, "BNP"]],
+  });
+  assertEquals((await (await run(none)).json()).counts, { acknowledged: 2 });
+  assertEquals(none.pl.entries.map((e) => e.journal_id), [1, 2]);
+});
+
+Deno.test("#4003 a workspace the caller cannot read delivers nothing", async () => {
+  const w = world({ noWorkspace: true });
+  assertEquals((await run(w)).status, 403);
+  assertEquals(w.pl.st.posts, 0);
 });

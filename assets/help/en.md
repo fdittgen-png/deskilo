@@ -5925,7 +5925,7 @@ Your accountant's software knows your journals by its own codes, and you want ev
 - Every accounting export the app writes uses them: the FEC, the generic journal, the SAF-T ledgers and the printed books.
 - A code has no line break, tab or |, and two journals never share a code; the form says which field to fix.
 - A changed code also changes the entry numbers of a period you export again.
-- Deliveries to a connected accounting system still use the standard codes.
+- Deliveries to Pennylane and Business Central use these codes too; the journal must exist there under the same code.
 
 **See also:** [Accounting exports](help:user.invoicing.accounting-export)
 
@@ -8355,7 +8355,7 @@ Push does not come with the app by itself. If you run your space on the shared r
 1. Create a Firebase project and build the app with it. Without this the app stays on local notifications only, and a member sees **This build has no push notifications**. The build prepared for F-Droid has no push at all ([F-Droid status](https://github.com/fdittgen-png/deskilo/blob/master/docs/guides/fdroid.md#status)).
 2. For iPhone and Mac, add an Apple push key to the Firebase project.
 3. Store the Firebase service-account key as a secret of the server and deploy the push function.
-4. On your own installation, the builder sets the `push_config` row of your database to your own push function URL and key, and the doctor verifies it. `dart run tool/instance.dart push --ref <ref>` sets it again.
+4. On your own installation, the builder sets the `push_config` row of your database to your own push function URL and key, and the doctor verifies it. `dart run tool/instance.dart push --ref <ref>` sets it again. The builder also sets the function setting `DESKILO_APP_URL` where the functions are deployed, to the web address of your app, so that the functions that link back to the app (the assistant interface and the accounting sign-in) can build their links; the doctor reports it when it is missing or another address, and `dart run tool/instance.dart auth --ref <ref> --site-url <web address of the app>` sets it again.
 5. Test it with two accounts, as described in [the test plan](help:setup.notify.test).
 
 **Good to know**

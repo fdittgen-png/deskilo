@@ -79,6 +79,15 @@ abstract class SupabaseManagement {
   /// Patches the auth configuration (e-mail confirmation, allowed
   /// redirect URIs).
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config);
+
+  /// #3916 -- sets function settings (the project's Edge secrets) by name.
+  /// The values are sent and never echoed: no message, trace or log of this
+  /// call carries one, only the names.
+  Future<void> setFunctionSecrets(String ref, Map<String, String> values);
+
+  /// #3916 -- the names of the function settings with the digest the API lists
+  /// for each. The value itself is never read.
+  Future<Map<String, String>> listFunctionSecretDigests(String ref);
 }
 
 class DioSupabaseManagement implements SupabaseManagement {
@@ -249,4 +258,23 @@ class DioSupabaseManagement implements SupabaseManagement {
   Future<void> patchAuthConfig(String ref, Map<String, Object?> config) =>
       _call<dynamic>(
           () => _dio.patch('/v1/projects/$ref/config/auth', data: config));
+
+  @override
+  Future<void> setFunctionSecrets(String ref, Map<String, String> values) =>
+      _call<Object?>(() => _dio.post(
+            '/v1/projects/$ref/secrets',
+            data: [
+              for (final e in values.entries) {'name': e.key, 'value': e.value},
+            ],
+          ));
+
+  @override
+  Future<Map<String, String>> listFunctionSecretDigests(String ref) async {
+    final list = await _call<List<Object?>>(
+        () => _dio.get('/v1/projects/$ref/secrets'));
+    return {
+      for (final s in list.cast<Map<Object?, Object?>>())
+        '${s['name']}': '${s['value'] ?? ''}',
+    };
+  }
 }

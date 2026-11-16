@@ -12,6 +12,7 @@ import '../../../features/workspace/domain/member.dart';
 import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
+import '../../jurisdiction/installed_postal_layouts.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
 import '../demo_space_ids.dart';
@@ -42,6 +43,8 @@ class DemoTradeCity {
     required this.nameOffset,
     required this.seedColor,
     required this.symbol,
+    this.region = '',
+    this.vatId = '',
   });
 
   final String id, prefix, name, countryCode, currency, timezone;
@@ -64,6 +67,30 @@ class DemoTradeCity {
   /// Where the locals' names start in the shared list of invented names.
   final int nameOffset;
   final String seedColor, symbol;
+
+  /// #4105 -- the region of the house's own address, as its code (ISO
+  /// 3166-2, after the country), and its VAT number: what its country's
+  /// invoices and its channel ask of the seller.
+  final String region, vatId;
+
+  /// #4105 -- where [memberId] is invoiced: country, region and VAT number.
+  /// In Milan every customer has a real province, except two who show what is
+  /// told before an issue: one local has none (the issue is refused, as
+  /// Italy's invoices require it) and one lives in Switzerland without a VAT
+  /// number (the e-invoice is warned about; the invoice can still be issued).
+  ({String country, String region, String vatId}) customerOf(String memberId) {
+    if (region.isEmpty) return (country: countryCode, region: '', vatId: '');
+    if (memberId == '$prefix-member-1') return (country: countryCode, region: '', vatId: '');
+    if (memberId == '$prefix-member-2') return (country: foreignCountry, region: '', vatId: '');
+    // A real province of the country's own list (ISO 3166-2), the same for a
+    // customer on every visit.
+    final provinces = postalLayoutOf(countryCode).region!.names.keys.toList();
+    return (
+      country: countryCode,
+      region: provinces[memberId.codeUnits.fold(0, (a, c) => a + c) % provinces.length],
+      vatId: '',
+    );
+  }
 
   List<String> get siteIds => [
     for (var i = 0; i < siteNames.length; i++) '$prefix-site-$i',
@@ -95,6 +122,8 @@ class DemoTradeCity {
     street: street,
     city: city,
     postalCode: postalCode,
+    vatId: vatId,
+    invoiceLegal: {if (region.isNotEmpty) 'subdivision': region},
     branding: {
       'seed_color': seedColor,
       'pattern': 'dots',
@@ -205,4 +234,6 @@ const demoMilan = DemoTradeCity(
   nameOffset: 80,
   seedColor: '#15803D',
   symbol: 'NC',
+  region: 'MI',
+  vatId: 'IT12345678903',
 );

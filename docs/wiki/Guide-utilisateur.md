@@ -6210,7 +6210,7 @@ Le logiciel de votre comptable connaît vos journaux sous ses propres codes, et 
 - Chaque export comptable de l'application les utilise : le FEC, le journal générique, les grands livres SAF-T et les livres imprimés.
 - Un code n'a ni saut de ligne, ni tabulation, ni |, et deux journaux n'ont jamais le même code ; le formulaire dit quel champ corriger.
 - Un code modifié change aussi les numéros d'écriture d'une période exportée à nouveau.
-- Les envois vers un logiciel comptable connecté utilisent toujours les codes standard.
+- Les envois vers Pennylane et Business Central utilisent aussi ces codes ; le journal doit y exister sous le même code.
 
 **Voir aussi:** [Exports comptables](#exports-comptables)
 

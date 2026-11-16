@@ -147,7 +147,7 @@
  "identityCurrencyHint": "Codice ISO 4217. L'app conosce il numero di decimali di ciascuna (lo yen non ne ha, il dinaro ne ha tre).",
  "identityTimezone": "Fuso orario",
  "identityTimezoneHint": "Nome IANA. Tutti gli slot di prenotazione vi sono ancorati; ogni membro può visualizzare l'ora nel proprio.",
- "identityLanguage": "Lingua dello spazio",
+ "identityLanguage": "Lingua dei vostri documenti",
  "identityLanguageHint": "Inviti, fatture e report vengono redatti in questa lingua per impostazione predefinita.",
  "identityPaper": "Carta dei documenti",
  "identityPaperHint": "Una fattura mantiene la carta con cui è stata emessa.",

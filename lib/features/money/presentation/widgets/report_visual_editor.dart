@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_document_model/paper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,7 +36,11 @@ class ReportVisualEditor extends ConsumerStatefulWidget {
     this.bandChoices = const {},
     this.onMoveToBand,
     this.textKeys = const [],
+    this.paper = Paper.a4,
   });
+
+  /// #4119 — the sheet the band sits on: the width a dragged element keeps.
+  final Paper paper;
 
   final TextEditingController controller;
   final String label;
@@ -244,7 +249,7 @@ class ReportVisualEditorState extends ConsumerState<ReportVisualEditor>
             child: Opacity(
               opacity: .85,
               child: Container(
-                width: ReportPage.width - ReportPage.margins.horizontal,
+                width: ReportPage.widthOf(widget.paper) - ReportPage.margins.horizontal,
                 color: ReportPage.paper,
                 padding: const EdgeInsets.all(2),
                 child: visualStyledContent(visualLines[index]),

@@ -47,5 +47,10 @@
   "instanceDoctorAuthCodesLongTitle": "I codici di accesso durano più di un'ora",
   "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Le password possono avere meno di {length} carattere} other{Le password possono avere meno di {length} caratteri}}",
   "instanceDoctorAuthReauthOffTitle": "Un cambio di password non chiede di accedere di nuovo",
-  "instanceDoctorAuthFixDetail": "valore  {value}\n        Rimedio: {command}"
+  "instanceDoctorAuthFixDetail": "valore  {value}\n        Rimedio: {command}",
+  "instanceDoctorProbeAppUrl": "Indirizzo dell'app delle funzioni",
+  "instanceDoctorAppUrlMissingTitle": "Le funzioni che rimandano all'app non hanno un indirizzo dell'app",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>",
+  "instanceDoctorAppUrlForeignTitle": "L'indirizzo dell'app delle funzioni non è l'indirizzo web di questa istanza",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Rimedio: dart run tool/instance.dart auth --ref <ref> --site-url <indirizzo web dell'app>"
 }
