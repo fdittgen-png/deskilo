@@ -60,33 +60,68 @@ bool _tileTarget(SemanticsData data, Size size) =>
     size.width >= 48 - 0.5 &&
     size.height >= 48 - 0.5;
 
+/// A tappable semantics node: its size as it is on screen, whether it is
+/// named, and (#4095) whether a scrolling viewport above it cuts it in each
+/// direction -- the size of a control half scrolled out is the size of what
+/// shows, not of the control, and the 48 dp rule is the control's.
+typedef TappableNode = ({
+  Size size,
+  bool named,
+  String label,
+  bool cutX,
+  bool cutY,
+});
+
+/// Whether [node] is under 48 dp in a direction its viewport does not cut.
+bool targetUnder48(TappableNode node) =>
+    (!node.cutX && node.size.width < 48 - 0.5) ||
+    (!node.cutY && node.size.height < 48 - 0.5);
+
 /// Every tappable semantics node with its size and whether it is named.
-List<({Size size, bool named})> tappableNodes(WidgetTester tester) {
+List<TappableNode> tappableNodes(WidgetTester tester) {
   // ignore: deprecated_member_use
   final root = tester.binding.pipelineOwner.semanticsOwner?.rootSemanticsNode;
-  final out = <({Size size, bool named})>[];
-  void walk(SemanticsNode node, {bool inTile = false}) {
+  final out = <TappableNode>[];
+  void walk(
+    SemanticsNode node,
+    Rect Function(Rect) toParent, {
+    bool inTile = false,
+  }) {
     final data = node.getSemanticsData();
     final inside = inTile || _tileTarget(data, node.rect.size);
+    Rect toGlobal(Rect r) => toParent(
+      node.transform == null ? r : MatrixUtils.transformRect(node.transform!, r),
+    );
     if (data.hasAction(SemanticsAction.tap) &&
         !(inTile && _stateControl(data)) &&
         !data.flagsCollection.isHidden &&
         !node.isInvisible) {
+      final clip = node.parentSemanticsClipRect == null
+          ? null
+          : toParent(node.parentSemanticsClipRect!);
+      final box = toGlobal(node.rect);
       out.add((
         size: node.rect.size,
+        label: data.label.trim().isNotEmpty ? data.label : data.tooltip,
         named:
             data.label.trim().isNotEmpty ||
             data.value.trim().isNotEmpty ||
             data.tooltip.trim().isNotEmpty,
+        cutX:
+            clip != null &&
+            (box.left <= clip.left + 0.5 || box.right >= clip.right - 0.5),
+        cutY:
+            clip != null &&
+            (box.top <= clip.top + 0.5 || box.bottom >= clip.bottom - 0.5),
       ));
     }
     node.visitChildren((child) {
-      walk(child, inTile: inside);
+      walk(child, toGlobal, inTile: inside);
       return true;
     });
   }
 
-  if (root != null) walk(root);
+  if (root != null) walk(root, (r) => r);
   return out;
 }
 
@@ -102,9 +137,7 @@ Set<String> guardProblems(WidgetTester tester, {required double width}) {
     problems.add('more than one filled button');
   }
   for (final node in tappableNodes(tester)) {
-    if (node.size.width < 48 - 0.5 || node.size.height < 48 - 0.5) {
-      problems.add('target under 48 dp');
-    }
+    if (targetUnder48(node)) problems.add('target under 48 dp');
     if (!node.named) problems.add('unnamed control');
   }
   return problems;
