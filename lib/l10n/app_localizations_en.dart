@@ -8788,6 +8788,29 @@ class AppLocalizationsEn extends AppLocalizations {
   String get eInvoiceResolveTitle => 'Settle this submission';
 
   @override
+  String get eInvoiceSendTodayAccount => 'the business\'s bank account';
+
+  @override
+  String get eInvoiceSendTodayConfirm => 'Send with these';
+
+  @override
+  String get eInvoiceSendTodayReference => 'the tax reference';
+
+  @override
+  String get eInvoiceSendTodayTitle =>
+      'This invoice was issued before its values were kept with it, so it is sent with today\'s:';
+
+  @override
+  String get eInvoiceSentDownload => 'Download what was sent';
+
+  @override
+  String get eInvoiceSentNone => 'No document was sent for this invoice.';
+
+  @override
+  String get eInvoiceSentNotIntact =>
+      'The stored copy of what was sent is not intact: it was not handed out.';
+
+  @override
   String get eInvoiceSubdivisionField => 'County or province (e.g. RO-B, MI)';
 
   @override

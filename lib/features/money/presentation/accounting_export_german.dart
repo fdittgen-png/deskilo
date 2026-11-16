@@ -13,6 +13,7 @@ import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
+import '../application/originals_summary.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/datev.dart';
@@ -112,15 +113,15 @@ extension GermanAccountingExports on AccountingExportRun {
           );
         }
         // The vouchers the rows link, named by their Beleglink id.
-        final vouchers = await _vouchers(
-          package.vouchers,
-          (i) => 'belege/${i.id}.pdf',
-        );
-        if (vouchers == null || !context.mounted) return;
+        final filed = await _filed(package.vouchers);
+        if (filed == null || !context.mounted) return;
         await _saveZip({
           for (final MapEntry(:key, :value) in package.files.entries)
             key: textBytes(value),
-          ...vouchers,
+          for (final i in package.vouchers)
+            'belege/${i.id}.pdf': filed[i.id]!.bytes,
+          // #4120 — the invoices filed without their stored original, named.
+          ...originalsSummaryFiles(withoutOriginal(package.vouchers, filed)),
         }, rows: package.rows);
       },
     );
@@ -151,13 +152,14 @@ extension GermanAccountingExports on AccountingExportRun {
           );
         }
         if (!context.mounted) return;
-        final pdfs = await _vouchers(exported, (i) => 'belege/${i.id}.pdf');
-        if (pdfs == null || !context.mounted) return;
+        final filed = await _filed(exported);
+        if (filed == null || !context.mounted) return;
         final vouchers = <String, Map<String, List<int>>>{
           for (final i in exported)
             i.id: {
+              // #4120 — the CII stored with the original, where one is kept.
               'belege/${i.id}.xml': textBytes(
-                facturXmlOf(
+                filed[i.id]!.xml ?? facturXmlOf(
                   context,
                   ref,
                   i,
@@ -167,7 +169,7 @@ extension GermanAccountingExports on AccountingExportRun {
                   iban: workspaceIban(workspace),
                 ),
               ),
-              'belege/${i.id}.pdf': pdfs['belege/${i.id}.pdf']!,
+              'belege/${i.id}.pdf': filed[i.id]!.bytes,
             },
         };
         final from = DateTime(year);
@@ -218,29 +220,35 @@ extension GermanAccountingExports on AccountingExportRun {
             },
           ),
         );
-        await _saveZip(files, rows: exported.length);
+        await _saveZip({
+          ...files,
+          // #4120 — the invoices filed without their stored original, named.
+          ...originalsSummaryFiles(
+            withoutOriginal(exported, filed, filesXml: true),
+          ),
+        }, rows: exported.length);
       },
     );
   }
 
-  /// The PDF/A-3 of each of [invoices] at [pathOf]; null when one did not
-  /// render, which ends the export: a package missing a voucher is never
-  /// saved as complete.
-  Future<Map<String, List<int>>?> _vouchers(
-    List<Invoice> invoices,
-    String Function(Invoice invoice) pathOf,
-  ) async {
-    final files = <String, List<int>>{};
+  /// The voucher of each of [invoices], by invoice id: its stored original,
+  /// made first if it is missing, else rendered now as before; null when one
+  /// did not render, which ends the export: a package missing a voucher is
+  /// never saved as complete.
+  Future<Map<String, FiledVoucher>?> _filed(List<Invoice> invoices) async {
+    final filed = <String, FiledVoucher>{};
     for (final invoice in invoices) {
       if (!context.mounted) return null;
-      // #3853 — the stored original, made first if it is missing; an invoice
-      // issued before originals were kept renders as before.
-      final pdf = await InvoiceDocumentFlow(context, ref).facturXFile(invoice,
-              seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
-      if (pdf.bytes.isEmpty) return null;
-      files[pathOf(invoice)] = pdf.bytes;
+      final voucher = await InvoiceDocumentFlow(context, ref).voucherOf(
+        invoice,
+        seller: sellerOf(invoice, workspace),
+        buyer: buyerOf(invoice, workspace),
+        iban: workspaceIban(workspace),
+      );
+      if (voucher.bytes.isEmpty) return null;
+      filed[invoice.id] = voucher;
     }
-    return files;
+    return filed;
   }
 
   /// Saves [files] as one zip and logs it with its digest.

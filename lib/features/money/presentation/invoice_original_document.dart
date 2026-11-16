@@ -23,6 +23,7 @@ import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../application/invoice_originals.dart';
+import '../application/originals_summary.dart';
 import '../domain/e_invoice_routing.dart';
 import '../providers/guest_pass_providers.dart' show currentWorkspaceProvider;
 import '../providers/invoice_original_providers.dart';
@@ -115,6 +116,47 @@ class InvoiceDocumentFlow {
       seller: seller,
       buyer: buyer,
       iban: iban,
+    );
+  }
+
+  /// #4120 — the voucher an archive or an export files for [invoice]: its
+  /// stored original, with the CII stored beside it ([FiledVoucher.xml], null
+  /// when it no longer matches its digest), or, where it has none, the
+  /// Factur-X rendered now for the [seller], [buyer] and [iban] given, with
+  /// where its bytes came from and why, for the summary that names it.
+  Future<FiledVoucher> voucherOf(
+    Invoice invoice, {
+    required InvoiceParty seller,
+    required InvoiceParty buyer,
+    required String iban,
+  }) async {
+    final document = await documentOf(invoice);
+    if (document.source == InvoiceDocumentSource.original) {
+      return (
+        bytes: document.bytes,
+        fileName: '${safeFileSlug('facturx ${invoice.number}')}.pdf',
+        source: document.source,
+        why: '',
+        xml: await ref.read(invoiceOriginalsProvider).storedXmlOf(invoice),
+      );
+    }
+    if (!context.mounted) {
+      return (bytes: const <int>[], fileName: '', source: document.source, why: '', xml: null);
+    }
+    final file = await buildFacturXFile(
+      context,
+      ref,
+      invoice,
+      seller: seller,
+      buyer: buyer,
+      iban: iban,
+    );
+    return (
+      bytes: file.bytes,
+      fileName: file.fileName,
+      source: document.source,
+      why: document.why,
+      xml: null,
     );
   }
 
@@ -300,3 +342,35 @@ String Function(AppLocalizations)? _whyACopy(InvoiceDocument document) =>
         l10n,
       ) => l10n.invoiceOriginalNotYetKept,
     };
+
+/// #4120 — what an archive or an export files for an invoice: its bytes, the
+/// stored CII when they are its original, and where they came from.
+typedef FiledVoucher = ({
+  List<int> bytes,
+  String fileName,
+  InvoiceDocumentSource source,
+  String why,
+  String? xml,
+});
+
+/// #4120 — the invoices of [invoices] that [filed] holds without their stored
+/// original, in order, for the summary of an archive or an export. With
+/// [filesXml] (an export that files the CII beside the PDF), an original whose
+/// stored CII no longer matches its digest is named too: its structured part
+/// was built again.
+List<FiledWithoutOriginal> withoutOriginal(
+  List<Invoice> invoices,
+  Map<String, FiledVoucher> filed, {
+  bool filesXml = false,
+}) => [
+  for (final i in invoices)
+    if (filed[i.id] case final v?)
+      if (v.source != InvoiceDocumentSource.original)
+        (number: i.number, source: v.source, why: v.why)
+      else if (filesXml && v.xml == null)
+        (
+          number: i.number,
+          source: InvoiceDocumentSource.mismatch,
+          why: 'its stored structured part does not match its digest and was built again',
+        ),
+];

@@ -22,6 +22,7 @@ import '../../../core/ui/app_snack.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../application/jurisdiction/installed_vat_filings.dart';
+import '../application/originals_summary.dart';
 import '../domain/accountant_csv.dart';
 import '../domain/accountant_handoff.dart';
 import '../domain/accounting_connection.dart';
@@ -455,10 +456,11 @@ class AccountingExportRun {
             yearInvoices[i].id: verdicts[i],
         };
         final vouchers = <String, Map<String, List<int>>>{};
+        final filed = <String, FiledVoucher>{};
         for (final invoice in yearInvoices) {
           // #3853 — the stored original, made first if it is missing; an invoice
           // issued before originals were kept renders as before.
-          final pdf = await InvoiceDocumentFlow(context, ref).facturXFile(invoice,
+          final pdf = filed[invoice.id] = await InvoiceDocumentFlow(context, ref).voucherOf(invoice,
               seller: sellerOf(invoice, workspace), buyer: buyerOf(invoice, workspace), iban: workspaceIban(workspace));
           // #1885 — a document that did not render ends the bundle: an
           // archive missing an invoice must never be saved as complete.
@@ -466,6 +468,7 @@ class AccountingExportRun {
           files['invoices/${pdf.fileName}'] = pdf.bytes;
           vouchers[invoice.id] = {'invoices/${pdf.fileName}': pdf.bytes};
         }
+        files.addAll(originalsSummaryFiles(withoutOriginal(yearInvoices, filed))); // #4120 — filed without their original, named
         files['register.csv'] = textBytes(buildInvoiceRegisterCsv(yearInvoices, integrity: integrity));
         final events = buildAuditEvents(invoices: yearInvoices, matches: matches, ledger: ledger,
             exports: exports, memberNames: memberNames);

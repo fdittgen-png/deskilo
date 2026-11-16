@@ -13983,6 +13983,48 @@ abstract class AppLocalizations {
   /// **'Settle this submission'**
   String get eInvoiceResolveTitle;
 
+  /// #4120 a value sent as today’s: the bank account
+  ///
+  /// In en, this message translates to:
+  /// **'the business\'s bank account'**
+  String get eInvoiceSendTodayAccount;
+
+  /// #4120 confirms sending an older invoice with today’s values
+  ///
+  /// In en, this message translates to:
+  /// **'Send with these'**
+  String get eInvoiceSendTodayConfirm;
+
+  /// #4120 a value sent as today’s: the tax reference
+  ///
+  /// In en, this message translates to:
+  /// **'the tax reference'**
+  String get eInvoiceSendTodayReference;
+
+  /// #4120 before Send: the values of an older invoice that are today’s
+  ///
+  /// In en, this message translates to:
+  /// **'This invoice was issued before its values were kept with it, so it is sent with today\'s:'**
+  String get eInvoiceSendTodayTitle;
+
+  /// #4120 downloads the document an invoice was sent with
+  ///
+  /// In en, this message translates to:
+  /// **'Download what was sent'**
+  String get eInvoiceSentDownload;
+
+  /// #4120 no sent document to download for this invoice
+  ///
+  /// In en, this message translates to:
+  /// **'No document was sent for this invoice.'**
+  String get eInvoiceSentNone;
+
+  /// #4120 refusal DKI09: the stored sent document no longer matches its hash
+  ///
+  /// In en, this message translates to:
+  /// **'The stored copy of what was sent is not intact: it was not handed out.'**
+  String get eInvoiceSentNotIntact;
+
   /// #2358 field: county or province
   ///
   /// In en, this message translates to:

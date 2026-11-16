@@ -5587,6 +5587,34 @@
   "eInvoiceResolveRejected": "La piattaforma ha rifiutato l'invio",
   "eInvoiceResolveSubmit": "Registra",
   "eInvoiceResolveTitle": "Definire questo invio",
+  "eInvoiceSendTodayAccount": "il conto bancario dell'attività",
+  "@eInvoiceSendTodayAccount": {
+    "description": "#4120 a value sent as today’s: the bank account"
+  },
+  "eInvoiceSendTodayConfirm": "Invia con questi",
+  "@eInvoiceSendTodayConfirm": {
+    "description": "#4120 confirms sending an older invoice with today’s values"
+  },
+  "eInvoiceSendTodayReference": "il riferimento fiscale",
+  "@eInvoiceSendTodayReference": {
+    "description": "#4120 a value sent as today’s: the tax reference"
+  },
+  "eInvoiceSendTodayTitle": "Questa fattura è stata emessa prima che i suoi valori venissero conservati con essa; viene inviata con quelli di oggi:",
+  "@eInvoiceSendTodayTitle": {
+    "description": "#4120 before Send: the values of an older invoice that are today’s"
+  },
+  "eInvoiceSentDownload": "Scarica ciò che è stato inviato",
+  "@eInvoiceSentDownload": {
+    "description": "#4120 downloads the document an invoice was sent with"
+  },
+  "eInvoiceSentNone": "Nessun documento è stato inviato per questa fattura.",
+  "@eInvoiceSentNone": {
+    "description": "#4120 no sent document to download for this invoice"
+  },
+  "eInvoiceSentNotIntact": "La copia conservata di ciò che è stato inviato non è integra: non è stata consegnata.",
+  "@eInvoiceSentNotIntact": {
+    "description": "#4120 refusal DKI09: the stored sent document no longer matches its hash"
+  },
   "eInvoiceSubdivisionField": "Provincia o distretto (ad es. RO-B, MI)",
   "@eInvoiceSubdivisionField": {
     "description": "#2358 field: county or province"
