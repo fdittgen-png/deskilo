@@ -5,7 +5,6 @@
   "financesGroupCreate": "Anlegen und hinzufügen",
   "financesGroupNameTaken": "Sie haben bereits eine Gruppe mit diesem Namen.",
   "financesGroupNameShape": "Ein Name hat 1 bis 80 Zeichen.",
-  "financesGroupCount": "{count, plural, one{1 Rechnung} other{{count} Rechnungen}}",
   "financesGroupUnreadable": "{count, plural, one{1 Rechnung ist gerade nicht lesbar: Die Summen lassen sie aus.} other{{count} Rechnungen sind gerade nicht lesbar: Die Summen lassen sie aus.}}",
   "financesGroupUnreadableItem": "{number} · gerade nicht lesbar",
   "financesGroupRemove": "Aus der Gruppe entfernen",

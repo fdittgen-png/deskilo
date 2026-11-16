@@ -12635,17 +12635,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String financesGroupCount(int count) {
-    String _temp0 = intl.Intl.pluralLogic(
-      count,
-      locale: localeName,
-      other: '$count facturas',
-      one: '1 factura',
-    );
-    return '$_temp0';
-  }
-
-  @override
   String get financesGroupCreate => 'Crear y añadir';
 
   @override

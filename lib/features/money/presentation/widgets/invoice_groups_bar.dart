@@ -171,7 +171,7 @@ class _GroupHeader extends ConsumerWidget {
               ],
             ),
             Text(
-              l10n.financesGroupCount(view.count),
+              l10n.invoicingInvoiceCount(view.count),
               key: const ValueKey('finances-group-count'),
               style: muted,
             ),

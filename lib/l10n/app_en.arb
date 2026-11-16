@@ -16520,15 +16520,6 @@
       }
     }
   },
-  "financesGroupCount": "{count, plural, one{1 invoice} other{{count} invoices}}",
-  "@financesGroupCount": {
-    "description": "#3556 Group header: how many invoices the group names",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "financesGroupCreate": "Create and add",
   "@financesGroupCreate": {
     "description": "#3556 Sheet: creates the group named in the field and files the invoice in it"

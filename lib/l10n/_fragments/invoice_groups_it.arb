@@ -5,7 +5,6 @@
   "financesGroupCreate": "Crea e aggiungi",
   "financesGroupNameTaken": "Ha già un gruppo con questo nome.",
   "financesGroupNameShape": "Un nome ha da 1 a 80 caratteri.",
-  "financesGroupCount": "{count, plural, one{1 fattura} other{{count} fatture}}",
   "financesGroupUnreadable": "{count, plural, one{1 fattura non è leggibile ora: i totali la escludono.} other{{count} fatture non sono leggibili ora: i totali le escludono.}}",
   "financesGroupUnreadableItem": "{number} · non leggibile ora",
   "financesGroupRemove": "Rimuovi dal gruppo",

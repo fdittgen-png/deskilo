@@ -28,15 +28,6 @@
   "@financesGroupNameShape": {
     "description": "#3556 A group name refused: empty or longer than 80 characters"
   },
-  "financesGroupCount": "{count, plural, one{1 invoice} other{{count} invoices}}",
-  "@financesGroupCount": {
-    "description": "#3556 Group header: how many invoices the group names",
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
   "financesGroupUnreadable": "{count, plural, one{1 invoice can't be read now: the totals leave it out.} other{{count} invoices can't be read now: the totals leave them out.}}",
   "@financesGroupUnreadable": {
     "description": "#3556 Group header: how many of its invoices cannot be read now, and that the totals leave them out",

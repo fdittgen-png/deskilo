@@ -20392,12 +20392,6 @@ abstract class AppLocalizations {
   /// **'Groups of {number}'**
   String financesGroupAddTitle(String number);
 
-  /// #3556 Group header: how many invoices the group names
-  ///
-  /// In en, this message translates to:
-  /// **'{count, plural, one{1 invoice} other{{count} invoices}}'**
-  String financesGroupCount(int count);
-
   /// #3556 Sheet: creates the group named in the field and files the invoice in it
   ///
   /// In en, this message translates to:

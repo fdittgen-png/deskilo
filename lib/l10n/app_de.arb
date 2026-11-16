@@ -7915,7 +7915,6 @@
   },
   "financesGroupAdd": "Zu einer Gruppe hinzufügen",
   "financesGroupAddTitle": "Gruppen von {number}",
-  "financesGroupCount": "{count, plural, one{1 Rechnung} other{{count} Rechnungen}}",
   "financesGroupCreate": "Anlegen und hinzufügen",
   "financesGroupDelete": "Gruppe löschen",
   "financesGroupDeleteConfirm": "„{name}“ löschen? Die Rechnungen bleiben, wie sie sind.",

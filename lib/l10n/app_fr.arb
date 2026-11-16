@@ -7915,7 +7915,6 @@
   },
   "financesGroupAdd": "Ajouter à un groupe",
   "financesGroupAddTitle": "Groupes de {number}",
-  "financesGroupCount": "{count, plural, one{{count} facture} other{{count} factures}}",
   "financesGroupCreate": "Créer et ajouter",
   "financesGroupDelete": "Supprimer le groupe",
   "financesGroupDeleteConfirm": "Supprimer « {name} » ? Les factures restent telles quelles.",
