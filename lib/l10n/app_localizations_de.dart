@@ -25616,11 +25616,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get purchaseBillNoOrder => 'Keine Bestellung';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (optional)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Bestellung';
 
   @override
   String get purchaseBillOrderHint =>
       'Die Bestellung, die diese Rechnung abrechnet: ihre Beträge werden übernommen und bleiben änderbar';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Buchhaltung';
+
+  @override
+  String get purchaseBillSectionAmount => 'Betrag und Steuer';
+
+  @override
+  String get purchaseBillSectionDescription => 'Beschreibung und Artikel';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Lieferant und Beleg';
 
   @override
   String get purchaseEntryAdd => 'Einkauf / Ausgabe hinzufügen';

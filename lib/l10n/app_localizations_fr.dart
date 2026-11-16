@@ -25656,11 +25656,28 @@ class AppLocalizationsFr extends AppLocalizations {
   String get purchaseBillNoOrder => 'Aucune commande';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (facultatif)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Bon de commande';
 
   @override
   String get purchaseBillOrderHint =>
       'La commande que cette facture règle : ses montants sont repris et restent modifiables';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Comptabilité';
+
+  @override
+  String get purchaseBillSectionAmount => 'Montant et taxe';
+
+  @override
+  String get purchaseBillSectionDescription => 'Description et article';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Fournisseur et document';
 
   @override
   String get purchaseEntryAdd => 'Ajouter un achat / une dépense';

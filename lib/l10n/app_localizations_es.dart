@@ -25542,11 +25542,28 @@ class AppLocalizationsEs extends AppLocalizations {
   String get purchaseBillNoOrder => 'Ningún pedido';
 
   @override
+  String purchaseBillOptional(String label) {
+    return '$label (opcional)';
+  }
+
+  @override
   String get purchaseBillOrder => 'Pedido de compra';
 
   @override
   String get purchaseBillOrderHint =>
       'El pedido que cobra esta factura: sus importes se toman y siguen editables';
+
+  @override
+  String get purchaseBillSectionAccounting => 'Contabilidad';
+
+  @override
+  String get purchaseBillSectionAmount => 'Importe e impuesto';
+
+  @override
+  String get purchaseBillSectionDescription => 'Descripción y artículo';
+
+  @override
+  String get purchaseBillSectionSupplier => 'Proveedor y documento';
 
   @override
   String get purchaseEntryAdd => 'Añadir compra / gasto';
