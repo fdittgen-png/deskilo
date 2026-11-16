@@ -89,9 +89,9 @@ void main() {
         {'accessorySupplements': true},
       ),
       'a child switched on writes its parent with it': (
-        WorkspaceFeature.siteDocuments,
+        WorkspaceFeature.holidayImport,
         true,
-        {'siteDocuments': true, 'multiSite': true},
+        {'holidayImport': true, 'publicHolidays': true},
       ),
     };
     for (final MapEntry(key: name, value: (feature, value, flags))

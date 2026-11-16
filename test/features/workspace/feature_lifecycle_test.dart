@@ -66,7 +66,7 @@ void main() {
       // A new shipped feature starts beta by owner decision; "unreviewed"
       // is for a reserved flag nothing consumes, so it skips the
       // experimental opt-in. The allow-list only shrinks.
-      const allowed = {'siteDocuments': 'reserved: no surface consumes it'};
+      const allowed = <String, String>{};
       final unreviewed = featureAssessments.entries
           .where((e) => e.value.maturity == FeatureMaturity.unreviewed)
           .map((e) => e.key.name)

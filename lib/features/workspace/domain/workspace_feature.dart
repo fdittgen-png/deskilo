@@ -81,7 +81,6 @@ enum WorkspaceFeature {
   workspaceStatus,
   expenseRepartitionWizard,
   multiSite,
-  siteDocuments,
   vatGroups,
   vatRateHistory,
   vatCounterparty,

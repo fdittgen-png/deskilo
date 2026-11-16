@@ -139,8 +139,6 @@ String featureDescription(AppLocalizations l10n, WorkspaceFeature feature) =>
           l10n.featureNavigationStyleDesc,
         WorkspaceFeature.configurationTransfer =>
           l10n.featureConfigurationTransferDesc,
-        WorkspaceFeature.siteDocuments =>
-          l10n.featureSiteDocumentsDesc,
         WorkspaceFeature.vatGroups =>
           l10n.featureVatGroupsDesc,
         WorkspaceFeature.vatRateHistory =>

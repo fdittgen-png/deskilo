@@ -219,16 +219,6 @@ const Map<WorkspaceFeature, FeatureManifestEntry> _manifest2 = {
     tier: FeatureTier.platform,
     defaultOn: false,
   ),
-  // #946 — documents name the site they concern: the member's home
-  // site's address and registration on the seller side, the other
-  // sites the month stood at in the details.
-  WorkspaceFeature.siteDocuments: FeatureManifestEntry(
-    feature: WorkspaceFeature.siteDocuments,
-    surface: FeatureSurface.documents,
-    tier: FeatureTier.platform,
-    defaultOn: false,
-    requires: WorkspaceFeature.multiSite,
-  ),
   // #947 — each rate carries its fiscal group: the law's category, the
   // outside-base rule, the exemption reason. Off: bare percentages.
   WorkspaceFeature.vatGroups: FeatureManifestEntry(
