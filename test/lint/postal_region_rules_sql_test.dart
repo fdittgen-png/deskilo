@@ -7,22 +7,17 @@
 // a layout changed, so the SQL is generated
 // (`dart run tool/build_postal_region_rules_sql.dart`) and this test requires
 // the latest migration defining it to carry exactly that text.
-import 'dart:io';
-
 import 'package:deskilo/core/jurisdiction/installed_postal_layouts.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'lint_sources.dart';
 
 const _definition = 'create or replace function public.postal_region_rules()';
 
 void main() {
   test('the latest migration carries the region facts the layouts generate', () {
-    final files =
-        Directory('supabase/migrations')
-            .listSync()
-            .whereType<File>()
-            .where((f) => f.path.endsWith('.sql'))
-            .toList()
-          ..sort((a, b) => a.path.compareTo(b.path));
+    final files = sqlFiles('supabase/migrations')
+      ..sort((a, b) => a.path.compareTo(b.path));
     final latest = files.reversed
         .map((f) => (f, f.readAsStringSync()))
         .firstWhere(

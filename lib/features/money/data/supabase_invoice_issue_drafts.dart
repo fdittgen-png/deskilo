@@ -21,7 +21,7 @@ class SupabaseInvoiceIssueDrafts implements InvoiceIssueDrafts {
     String? replacesId,
     String correctionReason = '',
   }) async {
-    final answer = await _client.rpc<dynamic>(
+    final answer = await _client.rpc<Object?>(
       'invoice_issue_draft',
       params: {
         'p_workspace_id': workspaceId,
@@ -32,6 +32,6 @@ class SupabaseInvoiceIssueDrafts implements InvoiceIssueDrafts {
         'p_correction_reason': correctionReason,
       },
     );
-    return IssueDraft.fromAnswer(answer as Map<dynamic, dynamic>);
+    return IssueDraft.fromAnswer(answer);
   }
 }

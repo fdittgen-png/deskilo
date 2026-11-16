@@ -135,10 +135,12 @@ String postalRegionRulesJson() {
 }
 
 /// #4105 -- `public.postal_region_rules()`, the SQL a migration carries.
-String postalRegionRulesSql() =>
-    '''
+String postalRegionRulesSql() {
+  const quote = r'$fn$';
+  return '''
 create or replace function public.postal_region_rules()
-returns jsonb language sql immutable set search_path = public as \$fn\$
+returns jsonb language sql immutable set search_path = public as $quote
   select '${postalRegionRulesJson()}'::jsonb
-\$fn\$;
+$quote;
 revoke execute on function public.postal_region_rules() from public, anon, authenticated;''';
+}

@@ -20,11 +20,12 @@ class IssueDraft {
   const IssueDraft({this.missing = const [], this.seller, this.buyer});
 
   /// Reads the server's answer (`invoice_issue_draft`, 0792).
-  factory IssueDraft.fromAnswer(Map<dynamic, dynamic> answer) {
-    final parties = answer['parties'];
+  factory IssueDraft.fromAnswer(Object? answer) {
+    final map = answer is Map ? answer : const <String, Object?>{};
+    final parties = map['parties'];
     return IssueDraft(
       missing: [
-        for (final k in answer['missing'] as List? ?? const []) k as String,
+        for (final k in map['missing'] as List? ?? const []) k as String,
       ],
       seller: parties is Map && parties['seller'] is Map
           ? InvoiceParty.fromSnapshot(parties['seller'] as Map)
