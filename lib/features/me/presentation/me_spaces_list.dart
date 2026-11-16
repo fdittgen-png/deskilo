@@ -346,15 +346,10 @@ class _MeSpacesListState extends ConsumerState<MeSpacesList> {
             if (member.status == MemberStatus.pending) l10n.meSpacePending else memberRoleLabel(l10n, member),
       }.join(' · '),
       actions: [
-        // A space without a production side keeps development at the right.
-        if (!group.any((s) => s.env.isProduction))
-          const Spacer(flex: MeSpaceCard.prodFlex),
-        for (final (space, member) in members)
-          MeSpaceCard(
-            space: space,
-            member: member,
-            lastUsed: space.id == widget.lastUsedId,
-          ),
+        // #4131 — side by side while every word fits, else one under the other.
+        Expanded(
+          child: MeSpaceActions(sides: members, lastUsedId: widget.lastUsedId),
+        ),
       ],
     );
   }

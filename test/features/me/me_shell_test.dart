@@ -257,17 +257,12 @@ void main() {
         find.descendant(of: group, matching: find.text('Open business')),
         findsOneWidget,
       );
-      expect(tester.getCenter(find.text('Test business')).dy,
-          tester.getCenter(find.text('Open business')).dy);
       // A card: the identity and its options on one line, both environments
-      // below it — no taller than that at phone width.
-      expect(tester.getSize(group).height, lessThan(230));
-      // Production is the wide green button on the left, development the
-      // narrow orange one at the right.
+      // below it, one under the other where a word would not fit (#4131) —
+      // no taller than that at phone width.
+      expect(tester.getSize(group).height, lessThan(300));
       final prod = find.byKey(const ValueKey('me-space-ws-2'));
       final dev = find.byKey(const ValueKey('me-space-ws-1'));
-      expect(tester.getSize(prod).width, greaterThan(tester.getSize(dev).width));
-      expect(tester.getTopLeft(dev).dx, greaterThan(tester.getTopLeft(prod).dx));
       Color? fill(Finder f) => tester
           .widget<FilledButton>(f)
           .style
@@ -277,8 +272,17 @@ void main() {
       for (final width in [320.0, 1200.0]) {
         tester.view.physicalSize = Size(width, 844);
         await tester.pumpAndSettle();
-        expect(tester.getCenter(find.text('Test business')).dy,
-            tester.getCenter(find.text('Open business')).dy);
+        // At 320 px the buttons stack when a word would not fit (#4131).
+        if (width > 600) {
+          // Production is the wide green button on the left, development
+          // the narrow orange one at the right.
+          expect(tester.getCenter(find.text('Test business')).dy,
+              tester.getCenter(find.text('Open business')).dy);
+          expect(tester.getSize(prod).width,
+              greaterThan(tester.getSize(dev).width));
+          expect(tester.getTopLeft(dev).dx,
+              greaterThan(tester.getTopLeft(prod).dx));
+        }
         expect(tester.takeException(), isNull);
       }
       expect(tester.takeException(), isNull);
