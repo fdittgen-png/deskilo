@@ -44,6 +44,9 @@ enum ClaimRefusal {
   /// DKC12 — a retry of a payment whose claim was withdrawn.
   withdrawn('DKC12'),
 
+  /// DKC13 — the business already decided this declaration.
+  decided('DKC13'),
+
   /// A claim's code this version does not know (a newer server's).
   other('');
 

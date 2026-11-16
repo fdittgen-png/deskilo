@@ -6470,6 +6470,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'Una de estas facturas está en otra moneda que la de los pagos del negocio. No se ha cobrado nada.';
 
   @override
+  String get claimRefusedDecided =>
+      'La empresa ya ha decidido sobre este pago.';
+
+  @override
   String get claimRefusedEmpty => 'Elija las facturas que paga este pago.';
 
   @override
@@ -12957,6 +12961,25 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesStateUnpaid => 'No pagada';
+
+  @override
+  String get financesTakeBack => 'Retirar';
+
+  @override
+  String financesTakeBackBody(String invoices) {
+    return 'Declaró haber pagado $invoices. Una vez retirada, la empresa ya no tiene que confirmarla y estas facturas pueden pagarse de nuevo.';
+  }
+
+  @override
+  String get financesTakeBackFailed =>
+      'No se pudo retirar la declaración. Inténtelo de nuevo.';
+
+  @override
+  String get financesTakeBackTitle => '¿Retirar esta declaración?';
+
+  @override
+  String get financesTakenBack =>
+      'Declaración retirada. Sus facturas pueden pagarse de nuevo.';
 
   @override
   String financesTooManyInvoices(int max) {

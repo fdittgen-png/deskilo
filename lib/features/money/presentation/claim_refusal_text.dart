@@ -19,5 +19,6 @@ String claimRefusalText(AppLocalizations l10n, ClaimRefusal r) => switch (r) {
   ClaimRefusal.notProcessing => l10n.claimRefusedNotProcessing,
   ClaimRefusal.currency => l10n.claimRefusedCurrency,
   ClaimRefusal.withdrawn => l10n.claimRefusedWithdrawn,
+  ClaimRefusal.decided => l10n.claimRefusedDecided,
   ClaimRefusal.other => l10n.claimRefusedOther,
 };

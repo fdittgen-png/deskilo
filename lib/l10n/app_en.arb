@@ -8452,6 +8452,10 @@
   "@claimRefusedCurrency": {
     "description": "#3556 Refusal: an invoice is in another currency than the payment"
   },
+  "claimRefusedDecided": "The business has already decided this payment.",
+  "@claimRefusedDecided": {
+    "description": "#4140 — a declaration the business already decided cannot be taken back (DKC13)"
+  },
   "claimRefusedEmpty": "Choose the invoices this payment is for.",
   "@claimRefusedEmpty": {
     "description": "#3556 Refusal: the payment named no invoice"
@@ -16984,6 +16988,32 @@
   "financesStateUnpaid": "Unpaid",
   "@financesStateUnpaid": {
     "description": "#2557 C4 Me › Finances: the payment state of an issued document nothing was paid on yet."
+  },
+  "financesTakeBack": "Take back",
+  "@financesTakeBack": {
+    "description": "#4140 — the action on a declared payment the business has not decided"
+  },
+  "financesTakeBackBody": "You said you paid {invoices}. Taken back, the business is no longer asked to confirm it, and these invoices can be paid again.",
+  "@financesTakeBackBody": {
+    "description": "#4140 — the confirmation before taking back a declaration; invoices: the invoice numbers it names",
+    "placeholders": {
+      "invoices": {
+        "type": "String",
+        "example": "F-2026-0012, F-2026-0013"
+      }
+    }
+  },
+  "financesTakeBackFailed": "The declaration could not be taken back. Try again.",
+  "@financesTakeBackFailed": {
+    "description": "#4140 — said when taking back a declaration failed"
+  },
+  "financesTakeBackTitle": "Take back this declaration?",
+  "@financesTakeBackTitle": {
+    "description": "#4140 — title of the confirmation before taking back a declaration"
+  },
+  "financesTakenBack": "Declaration taken back. Its invoices can be paid again.",
+  "@financesTakenBack": {
+    "description": "#4140 — said after a declaration was taken back"
   },
   "financesTooManyInvoices": "{max, plural, one{A payment names at most {max} invoice. Select fewer.} other{A payment names at most {max} invoices. Select fewer.}}",
   "@financesTooManyInvoices": {

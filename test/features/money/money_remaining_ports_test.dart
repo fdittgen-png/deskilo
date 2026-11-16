@@ -173,6 +173,12 @@ class _AccountCommands implements MemberAccountCommands {
   }) async => calls.add('withdraw:$paymentId');
 
   @override
+  Future<void> withdrawPaymentDeclaration({
+    required String workspaceId,
+    required String eventId,
+  }) async => calls.add('take back:$eventId');
+
+  @override
   Future<void> recordServiceCharge({
     required String workspaceId,
     required String subjectMemberId,

@@ -6481,6 +6481,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine dieser Rechnungen ist in einer anderen Währung, als der Betrieb Zahlungen annimmt. Es wurde nichts belastet.';
 
   @override
+  String get claimRefusedDecided =>
+      'Das Unternehmen hat über diese Zahlung bereits entschieden.';
+
+  @override
   String get claimRefusedEmpty =>
       'Wählen Sie die Rechnungen, die diese Zahlung begleicht.';
 
@@ -12986,6 +12990,25 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get financesStateUnpaid => 'Unbezahlt';
+
+  @override
+  String get financesTakeBack => 'Zurücknehmen';
+
+  @override
+  String financesTakeBackBody(String invoices) {
+    return 'Sie haben gemeldet, $invoices bezahlt zu haben. Zurückgenommen muss das Unternehmen sie nicht mehr bestätigen, und diese Rechnungen können wieder bezahlt werden.';
+  }
+
+  @override
+  String get financesTakeBackFailed =>
+      'Die Meldung konnte nicht zurückgenommen werden. Versuchen Sie es erneut.';
+
+  @override
+  String get financesTakeBackTitle => 'Diese Meldung zurücknehmen?';
+
+  @override
+  String get financesTakenBack =>
+      'Meldung zurückgenommen. Ihre Rechnungen können wieder bezahlt werden.';
 
   @override
   String financesTooManyInvoices(int max) {

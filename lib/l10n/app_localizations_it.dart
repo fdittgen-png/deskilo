@@ -6472,6 +6472,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Una di queste fatture è in una valuta diversa da quella dei pagamenti dell’attività. Non è stato addebitato nulla.';
 
   @override
+  String get claimRefusedDecided =>
+      'L’azienda ha già deciso su questo pagamento.';
+
+  @override
   String get claimRefusedEmpty =>
       'Scelga le fatture che questo pagamento salda.';
 
@@ -12968,6 +12972,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get financesStateUnpaid => 'Non pagata';
+
+  @override
+  String get financesTakeBack => 'Ritira';
+
+  @override
+  String financesTakeBackBody(String invoices) {
+    return 'Ha dichiarato di aver pagato $invoices. Una volta ritirata, l’azienda non deve più confermarla e queste fatture possono essere pagate di nuovo.';
+  }
+
+  @override
+  String get financesTakeBackFailed =>
+      'Non è stato possibile ritirare la dichiarazione. Riprovi.';
+
+  @override
+  String get financesTakeBackTitle => 'Ritirare questa dichiarazione?';
+
+  @override
+  String get financesTakenBack =>
+      'Dichiarazione ritirata. Le sue fatture possono essere pagate di nuovo.';
 
   @override
   String financesTooManyInvoices(int max) {

@@ -269,5 +269,35 @@
   "financesWithdrawSettling": "If you have just paid at the provider, wait: the confirmation takes a few minutes.",
   "@financesWithdrawSettling": {
     "description": "#3556 Withdrawal confirmation, when the payment was just handed to its provider"
+  },
+  "claimRefusedDecided": "The business has already decided this payment.",
+  "@claimRefusedDecided": {
+    "description": "#4140 — a declaration the business already decided cannot be taken back (DKC13)"
+  },
+  "financesTakeBack": "Take back",
+  "@financesTakeBack": {
+    "description": "#4140 — the action on a declared payment the business has not decided"
+  },
+  "financesTakeBackTitle": "Take back this declaration?",
+  "@financesTakeBackTitle": {
+    "description": "#4140 — title of the confirmation before taking back a declaration"
+  },
+  "financesTakeBackBody": "You said you paid {invoices}. Taken back, the business is no longer asked to confirm it, and these invoices can be paid again.",
+  "@financesTakeBackBody": {
+    "description": "#4140 — the confirmation before taking back a declaration; invoices: the invoice numbers it names",
+    "placeholders": {
+      "invoices": {
+        "type": "String",
+        "example": "F-2026-0012, F-2026-0013"
+      }
+    }
+  },
+  "financesTakenBack": "Declaration taken back. Its invoices can be paid again.",
+  "@financesTakenBack": {
+    "description": "#4140 — said after a declaration was taken back"
+  },
+  "financesTakeBackFailed": "The declaration could not be taken back. Try again.",
+  "@financesTakeBackFailed": {
+    "description": "#4140 — said when taking back a declaration failed"
   }
 }
