@@ -17,7 +17,7 @@ TextStyle shellBarLabelStyle(BuildContext context, {required bool selected}) =>
     );
 
 /// Room kept beside a label inside its tab.
-const double shellBarLabelMargin = 4;
+const double _labelMargin = 4;
 
 /// Whether every one of [labels] is whole in a tab [tabWidth] wide, at the
 /// text scale of [context] (the bar's own, already clamped).
@@ -38,7 +38,7 @@ bool shellBarLabelsFit(
     )..layout();
     final width = painter.width;
     painter.dispose();
-    if (width > tabWidth - 2 * shellBarLabelMargin) return false;
+    if (width > tabWidth - 2 * _labelMargin) return false;
   }
   return true;
 }

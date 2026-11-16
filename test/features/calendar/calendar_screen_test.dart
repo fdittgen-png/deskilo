@@ -13,6 +13,7 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/shell_tab.dart';
 
 Reservation todayReservation({
   String id = 'res-1',
@@ -60,7 +61,7 @@ Future<FakeReservationRepository> pumpCalendar(
     ),
   );
   await tester.pumpAndSettle();
-  await tester.tap(find.text('Calendar'));
+  await tester.tap(shellTab('Calendar'));
   await tester.pumpAndSettle();
   return reservations;
 }

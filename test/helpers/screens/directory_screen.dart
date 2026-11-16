@@ -19,6 +19,7 @@ import '../fake_profile_repository.dart';
 import '../fake_reservation_repository.dart';
 import '../go_route.dart';
 import '../mock_providers.dart';
+import '../shell_tab.dart';
 
 // A 1×1 transparent PNG for avatar-image tests.
 final directoryPngBytes = Uint8List.fromList([
@@ -277,6 +278,6 @@ Future<void> pumpDirectory(
     await goToRoute(tester, '/directory');
     return;
   }
-  await tester.tap(find.text('Members'));
+  await tester.tap(shellTab('Members'));
   await tester.pumpAndSettle();
 }
