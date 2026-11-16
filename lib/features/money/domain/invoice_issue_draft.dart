@@ -5,6 +5,7 @@
 // freeze. The app judges what the configured channel will need on exactly
 // those parties, with the function the send sheet uses on the stored ones.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:meta/meta.dart';
 
 import 'einvoice_channel_check.dart';
 import 'invoice_queries.dart';
@@ -56,9 +57,9 @@ abstract interface class InvoiceIssueDrafts {
   });
 }
 
-/// The essentials alone, from [queries]: for a source that cannot tell the
-/// parties an issue would store (the Demo, the test doubles). Nothing about a
-/// channel is said there.
+/// The essentials alone, from [queries]: for the test doubles, which cannot
+/// tell the parties an issue would store. Nothing about a channel is said.
+@visibleForTesting
 class ReadinessOnlyIssueDrafts implements InvoiceIssueDrafts {
   const ReadinessOnlyIssueDrafts(this.queries);
 
