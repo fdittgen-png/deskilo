@@ -63,6 +63,22 @@ class InvoiceOriginals {
   /// Whether the person may issue invoices, and so store an original.
   final bool mayIssue;
 
+  /// #4120 — the structured part (CII) stored with [invoice]'s original,
+  /// when one is kept and its text still matches the digest the server
+  /// recorded; null otherwise, and the caller builds it as before.
+  Future<String?> storedXmlOf(Invoice invoice) async {
+    if (!invoice.keepsOriginal) return null;
+    final kept = await _store.originalOf(invoice.workspaceId, invoice.id);
+    if (kept == null) return null;
+    final xml = await _store.xmlOf(kept);
+    if (kept.holdsXml(xml)) return xml;
+    TraceLogger.instance.warn(
+      'money',
+      'the stored XML of ${invoice.number} does not match its digest',
+    );
+    return null;
+  }
+
   /// The document of [invoice]: its stored original, made and stored by the
   /// first render of someone who may issue invoices, or a copy rendered now
   /// by [render] that says why it is one.

@@ -53,6 +53,16 @@ class SupabaseInvoiceOriginalRepository implements InvoiceOriginalRepository {
       _client.storage.from(_bucket).download(original.path);
 
   @override
+  Future<String> xmlOf(InvoiceOriginal original) async {
+    final row = await _client
+        .from('invoice_originals')
+        .select('xml')
+        .eq('invoice_id', original.invoiceId)
+        .single();
+    return row['xml'] as String? ?? '';
+  }
+
+  @override
   Future<InvoiceOriginal> store({
     required String workspaceId,
     required String invoiceId,

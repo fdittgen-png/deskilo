@@ -4,6 +4,7 @@
 // the invoice-originals bucket at the path its digest names, and the record
 // beside it (0772). Every later view, download or reprint serves those bytes,
 // checked against the digest recorded when they were stored.
+import 'dart:convert' show utf8;
 import 'dart:typed_data';
 
 import 'package:crypto/crypto.dart';
@@ -49,6 +50,10 @@ class InvoiceOriginal {
 
   /// Whether [pdf] is the PDF that was stored.
   bool holds(Uint8List pdf) => pdfSha256OfBytes(pdf) == pdfSha256;
+
+  /// #4120 — whether [xml] is the structured part that was stored with it,
+  /// by the digest the server computed of its UTF-8 bytes.
+  bool holdsXml(String xml) => pdfSha256OfBytes(utf8.encode(xml)) == xmlSha256;
 }
 
 /// The hex SHA-256 of [pdf], as the original's record names it.
@@ -95,6 +100,9 @@ abstract interface class InvoiceOriginalRepository {
 
   /// The stored PDF of [original], as it is held.
   Future<Uint8List> pdfOf(InvoiceOriginal original);
+
+  /// #4120 — the structured part (CII) stored with [original], as it is held.
+  Future<String> xmlOf(InvoiceOriginal original);
 
   /// Stores [pdf] as the original of the invoice [invoiceId] of [workspaceId],
   /// with its CII [xml]; the server checks the XML against the invoice.
