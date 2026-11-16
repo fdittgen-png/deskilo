@@ -17,7 +17,11 @@ final reportPictureLibraryProvider = ReportPictureLibraryProvider._();
 
 final class ReportPictureLibraryProvider
     extends
-        $FunctionalProvider<ReportPictureLibrary, ReportPictureLibrary, ReportPictureLibrary>
+        $FunctionalProvider<
+          ReportPictureLibrary,
+          ReportPictureLibrary,
+          ReportPictureLibrary
+        >
     with $Provider<ReportPictureLibrary> {
   /// The picture library's writes.
   ReportPictureLibraryProvider._()
@@ -36,8 +40,9 @@ final class ReportPictureLibraryProvider
 
   @$internal
   @override
-  $ProviderElement<ReportPictureLibrary> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
+  $ProviderElement<ReportPictureLibrary> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
 
   @override
   ReportPictureLibrary create(Ref ref) {
@@ -53,4 +58,5 @@ final class ReportPictureLibraryProvider
   }
 }
 
-String _$reportPictureLibraryHash() => r'42109f2524aa4620fef929eb434ecd4d232ae4c5';
+String _$reportPictureLibraryHash() =>
+    r'42109f2524aa4620fef929eb434ecd4d232ae4c5';
