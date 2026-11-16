@@ -175,13 +175,13 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
           ),
           const SizedBox(height: AppSpacing.lg),
           if (read != null && !read.hasValue)
-            read.hasError && !read.isLoading
-                ? ReadFailureBanner(
-                    error: read.error!,
-                    onRetry: () =>
-                        ref.invalidate(purchasesProvider(workspaceId)),
-                  )
-                : const LoadingView()
+            if (read.hasError && !read.isLoading)
+              ReadFailureBanner(
+                error: read.error!,
+                onRetry: () => ref.invalidate(purchasesProvider(workspaceId)),
+              )
+            else
+              const LoadingView()
           else ...[
             if (purchases.isEmpty) Text(l10n.purchasesEmpty),
             ..._documents(context, purchases),
