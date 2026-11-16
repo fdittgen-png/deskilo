@@ -158,16 +158,12 @@ class PersonalInfo {
     final above = (nameAbove ?? fullName).trim();
     final person = personName;
     return _postalBlock(
+      this,
       // Never repeat the line printed above; the company is normally it.
       company: company.trim() == above ? '' : company,
       person: person.isEmpty || person == above
           ? ''
           : [courtesyWord.trim(), person].where((p) => p.isNotEmpty).join(' '),
-      street: street,
-      postalCode: postalCode,
-      city: city,
-      region: subdivision,
-      countryCode: countryCode,
       workspaceCountry: workspaceCountry,
       countryName: countryName,
     );
@@ -181,7 +177,6 @@ class PersonalInfo {
     String? street,
     String? postalCode,
     String? city,
-    String? subdivision,
     String? countryCode,
     String? phone,
     String? email,
@@ -195,8 +190,7 @@ class PersonalInfo {
     street: street ?? this.street,
     postalCode: postalCode ?? this.postalCode,
     city: city ?? this.city,
-    subdivision: subdivision ?? this.subdivision,
-    countryCode: countryCode ?? this.countryCode,
+    subdivision: subdivision, countryCode: countryCode ?? this.countryCode,
     phone: phone ?? this.phone,
     email: email ?? this.email,
     vatId: vatId ?? this.vatId,
@@ -313,26 +307,26 @@ String _fullName(String first, String last) {
   return '$f $l';
 }
 
-String _postalBlock({
+String _postalBlock(
+  PersonalInfo info, {
   required String company,
   required String person,
-  required String street,
-  required String postalCode,
-  required String city,
-  required String region,
-  required String countryCode,
   required String workspaceCountry,
   String Function(String code)? countryName,
 }) {
-  final country = countryCode.trim().toUpperCase();
+  final country = info.countryCode.trim().toUpperCase();
   final home = workspaceCountry.trim().toUpperCase();
   final abroad = country.isNotEmpty && home.isNotEmpty && country != home;
   final layout = postalLayoutOf(country.isNotEmpty ? country : home);
   return [
     company.trim(),
     person.trim(),
-    street.trim(),
-    ...layout.render(postalCode: postalCode, city: city, region: region),
+    info.street.trim(),
+    ...layout.render(
+      postalCode: info.postalCode,
+      city: info.city,
+      region: info.subdivision,
+    ),
     if (abroad) (countryName?.call(country) ?? country).toUpperCase(),
   ].where((l) => l.isNotEmpty).join('\n');
 }

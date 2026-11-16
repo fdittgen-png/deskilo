@@ -231,12 +231,9 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
     ],
   );
 
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    final theme = Theme.of(context);
-    final value = _value;
-    final previewLines = [
+  /// The block as documents print it, under the name; a word when empty.
+  String _preview(AppLocalizations l10n, PersonalInfo value) {
+    final lines = [
       value.fullName,
       value.postalBlock(
         workspaceCountry: widget.workspaceCountry,
@@ -244,9 +241,15 @@ class _PersonalInfoFormState extends State<PersonalInfoForm> {
         countryName: (code) => localizedCountryName(l10n, code),
       ),
     ].where((l) => l.isNotEmpty).join('\n');
-    final preview = previewLines.isEmpty
-        ? (l10n.personalInfoNone)
-        : previewLines;
+    return lines.isEmpty ? l10n.personalInfoNone : lines;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = context.l10n;
+    final theme = Theme.of(context);
+    final value = _value;
+    final preview = _preview(l10n, value);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
