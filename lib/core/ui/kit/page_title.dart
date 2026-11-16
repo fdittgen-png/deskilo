@@ -105,10 +105,16 @@ class _PageNameInherited extends InheritedNotifier<_PageName> {
 /// A page bar's title: silent on the desk when it repeats the place's name.
 /// The top route's title is also the page's name for the crumbs.
 class PageTitle extends StatelessWidget {
-  const PageTitle(this.text, {this.overflow, super.key});
+  const PageTitle(this.text, {this.overflow, this.whenCut, super.key});
 
   final String text;
   final TextOverflow? overflow;
+
+  /// #4094 -- what the bar shows instead of [text] when [text] does not fit
+  /// its width at the theme's size: the part that tells this page from
+  /// another (an invoice's number). The full [text] stays the name a screen
+  /// reader gets and the name the crumbs hold.
+  final String? whenCut;
 
   /// Whether [text] is the name the desk already shows for the place.
   static bool repeatsPlace(BuildContext context, String text) {
@@ -128,9 +134,29 @@ class PageTitle extends StatelessWidget {
         WidgetsBinding.instance.addPostFrameCallback((_) => scope.tell(text));
       }
     }
-    return repeatsPlace(context, text)
-        ? const SizedBox.shrink()
-        : Text(text, overflow: overflow);
+    if (repeatsPlace(context, text)) return const SizedBox.shrink();
+    final short = whenCut;
+    if (short == null) return Text(text, overflow: overflow);
+    return LayoutBuilder(
+      builder: (context, box) {
+        final style = DefaultTextStyle.of(context).style;
+        final painter = TextPainter(
+          text: TextSpan(text: text, style: style),
+          textDirection: Directionality.of(context),
+          textScaler: MediaQuery.textScalerOf(context),
+          maxLines: 1,
+        )..layout();
+        final fits = painter.width <= box.maxWidth;
+        painter.dispose();
+        return fits
+            ? Text(text, overflow: overflow)
+            : Semantics(
+                label: text,
+                excludeSemantics: true,
+                child: Text(short, overflow: overflow),
+              );
+      },
+    );
   }
 }
 

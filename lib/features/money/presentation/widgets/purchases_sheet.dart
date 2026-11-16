@@ -7,6 +7,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/app_snack.dart';
+import '../../../../core/ui/async_read_body.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../domain/purchase.dart';
@@ -109,10 +110,9 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final theme = Theme.of(context);
-    final purchases = widget.supplierId == null
-        ? ref.watch(purchasesProvider(workspaceId)).value ??
-              const <PurchaseSummary>[]
-        : const <PurchaseSummary>[];
+    final read = widget.supplierId == null ? ref.watch(purchasesProvider(workspaceId)) : null;
+    final purchases = read?.value ?? const <PurchaseSummary>[]; // empty-ok: drawn only once the read answered
+    final standIn = read == null ? null : ReadsAnswer.of([read]).standIn(onRetry: () => ref.invalidate(purchasesProvider(workspaceId))); // #4097 — failed, refused or loading: said, never "none yet"
     return SheetShell(
       title: l10n.purchasesTitle,
       children: [
@@ -171,8 +171,10 @@ class _PurchasesViewState extends ConsumerState<PurchasesView> {
             label: Text(l10n.purchaseReceiptAdd),
           ),
           const SizedBox(height: AppSpacing.lg),
-          if (purchases.isEmpty) Text(l10n.purchasesEmpty),
-          ..._documents(context, purchases),
+          if (standIn != null) standIn else ...[
+            if (purchases.isEmpty) Text(l10n.purchasesEmpty),
+            ..._documents(context, purchases),
+          ],
         ],
       ],
     );

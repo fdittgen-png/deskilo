@@ -2904,6 +2904,7 @@ const Set<String> uiKeys = {
   'records-clear-selection',
   'records-columns',
   'records-count',
+  'records-denied',
   'records-dropped',
   'records-failed',
   'records-filter',

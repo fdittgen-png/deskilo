@@ -61,6 +61,11 @@ Future<void> openInvoicePage(BuildContext context, String invoiceId) =>
       ),
     );
 
+/// #4094 -- the bar's title: the words and the number, or the number alone
+/// when the bar has not the width for both.
+Widget _numberTitle(AppLocalizations l, Invoice invoice) =>
+    PageTitle(l.invoicePageTitle(invoice.number), whenCut: invoice.number);
+
 class InvoicePage extends ConsumerWidget {
   const InvoicePage({super.key, required this.invoiceId, this.onClose});
 
@@ -157,7 +162,7 @@ class InvoicePage extends ConsumerWidget {
       key: ValueKey('invoice-page-$invoiceId'),
       appBar: AppBar(
         automaticallyImplyLeading: onClose == null,
-        title: PageTitle(l.invoicePageTitle(invoice.number)),
+        title: _numberTitle(l, invoice),
         actions: [
           InvoiceMoreMenu(
             invoice: invoice,

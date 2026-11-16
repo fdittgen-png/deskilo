@@ -1055,6 +1055,7 @@ admin on  /vat-declarations/:id -> /money
 admin on  /workspace-code -> /calendar
 admin on  /workspace-overview -> /calendar
 admin on  /workspace-settings -> /calendar
+admin on  /money/cash @desk -> /money
 admin off /accessories -> /messages
 admin off /account-activity -> (open)
 admin off /account-activity/history -> (open)
@@ -1357,6 +1358,7 @@ owner on  /vat-declarations/:id -> (open)
 owner on  /workspace-code -> (open)
 owner on  /workspace-overview -> /calendar
 owner on  /workspace-settings -> (open)
+owner on  /money/cash @desk -> /money
 owner off /accessories -> /messages
 owner off /account-activity -> (open)
 owner off /account-activity/history -> (open)
