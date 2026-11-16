@@ -91,6 +91,7 @@ class InstanceNetworkField extends StatelessWidget {
               WizardText(l10n.instanceNetworkIntro),
               DropdownButtonFormField<InstanceRoleChoice>(
                 key: const ValueKey('instance-network-role'),
+                isExpanded: true,
                 initialValue: controller.role,
                 decoration: InputDecoration(
                   labelText: l10n.instanceNetworkRoleLabel,

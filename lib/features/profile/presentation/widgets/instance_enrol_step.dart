@@ -116,6 +116,7 @@ class _InstanceEnrolStepState extends State<InstanceEnrolStep> {
         else ...[
           DropdownButtonFormField<String>(
             key: const ValueKey('instance-enrol-home'),
+            isExpanded: true,
             initialValue: _home,
             decoration: InputDecoration(
               labelText: l10n.instanceEnrolHomeLabel,
