@@ -109,12 +109,18 @@ void main() {
 
   for (final (label, size) in [('390', _phone), ('1440', _desk)]) {
     testWidgets('$label px: a row with a test side and one without are the '
-        'same height, and the detail stays on one line', (tester) async {
+        'same height (side by side), and the detail stays on one line', (
+      tester,
+    ) async {
       await _open(tester, size);
-      expect(
-        _height(tester, 'me-space-pair-pair-1'),
-        _height(tester, 'me-space-pair-ws-3'),
-      );
+      // At phone width the two buttons stack when a word would not fit, and
+      // the pair is then taller by one button (#4131).
+      if (size == _desk) {
+        expect(
+          _height(tester, 'me-space-pair-pair-1'),
+          _height(tester, 'me-space-pair-ws-3'),
+        );
+      }
       final detail = tester.widget<Text>(find.textContaining('Germany').first);
       expect(detail.maxLines, 1);
     });
