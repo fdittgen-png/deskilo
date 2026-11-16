@@ -1,0 +1,35 @@
+{
+  "@@locale": "es",
+  "addressRegionState": "Estado",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionProvince": "Provincia",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionCounty": "Condado",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionCanton": "Cantón",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionRegion": "Región",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionMissing": "Una dirección en este país necesita su región.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Indique la región con su código: hasta 10 letras, cifras o guiones.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionUnknown": "Este país no tiene ninguna región con este código.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  }
+}

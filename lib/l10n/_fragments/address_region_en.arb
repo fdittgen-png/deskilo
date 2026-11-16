@@ -1,0 +1,35 @@
+{
+  "@@locale": "en",
+  "addressRegionState": "State",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionProvince": "Province",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionCounty": "County",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionCanton": "Canton",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionRegion": "Region",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionMissing": "An address in this country needs its region.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Enter the region as its code: up to 10 letters, digits or hyphens.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionUnknown": "This country has no region with this code.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  }
+}

@@ -70,6 +70,7 @@ const Map<String, Object?> _operationalRow = {
     'street': '1 rue Canary',
     'postal_code': '34120',
     'city': 'Pézenas',
+    'subdivision': 'OCC',
     'country_code': 'FR',
     'phone': '+33400000000',
     'email': 'ada@example.test',
@@ -156,6 +157,8 @@ void main() {
     expect(member.preferredLocale, 'de');
     expect(member.fullName, 'Ada PEER');
     expect(member.identity.city, 'Pézenas');
+    // #3649 -- the region travels with the address it belongs to.
+    expect(member.identity.subdivision, 'OCC');
     expect(member.displayName, 'Peer Person');
   });
 

@@ -356,6 +356,38 @@
   "acctTransfersTitle": "Trasferimenti",
   "acctWhoUnknown": "una persona che non è più nello spazio",
   "addressNone": "Nessun indirizzo",
+  "addressRegionCanton": "Cantone",
+  "@addressRegionCanton": {
+    "description": "#3649 the region of an address: addressRegionCanton"
+  },
+  "addressRegionCounty": "Contea",
+  "@addressRegionCounty": {
+    "description": "#3649 the region of an address: addressRegionCounty"
+  },
+  "addressRegionMissing": "Un indirizzo in questo paese richiede la sua regione.",
+  "@addressRegionMissing": {
+    "description": "#3649 the region of an address: addressRegionMissing"
+  },
+  "addressRegionNotACode": "Indichi la regione con il suo codice: fino a 10 lettere, cifre o trattini.",
+  "@addressRegionNotACode": {
+    "description": "#3649 the region of an address: addressRegionNotACode"
+  },
+  "addressRegionProvince": "Provincia",
+  "@addressRegionProvince": {
+    "description": "#3649 the region of an address: addressRegionProvince"
+  },
+  "addressRegionRegion": "Regione",
+  "@addressRegionRegion": {
+    "description": "#3649 the region of an address: addressRegionRegion"
+  },
+  "addressRegionState": "Stato",
+  "@addressRegionState": {
+    "description": "#3649 the region of an address: addressRegionState"
+  },
+  "addressRegionUnknown": "Questo paese non ha una regione con questo codice.",
+  "@addressRegionUnknown": {
+    "description": "#3649 the region of an address: addressRegionUnknown"
+  },
   "addressSaved": "Indirizzo salvato",
   "addressTitle": "Indirizzo",
   "addressVatIdLabel": "Partita IVA (se fattura come impresa)",
