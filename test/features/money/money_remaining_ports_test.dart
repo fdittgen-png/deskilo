@@ -242,6 +242,14 @@ class _EInvoices implements EInvoiceTransmissions {
   final calls = <String>[];
 
   @override
+  Future<EInvoiceSendBasis> fetchSendBasis(String invoiceId) async =>
+      EInvoiceSendBasis.sameAsToday;
+
+  @override
+  Future<SentEInvoiceDocument> fetchSentDocument(String invoiceId) =>
+      throw UnimplementedError();
+
+  @override
   Future<Map<String, InvoiceTransmission>> fetchInvoiceTransmissions(
     String workspaceId,
   ) async {

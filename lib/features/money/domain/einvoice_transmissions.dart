@@ -1,5 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'einvoice_gateway.dart';
+import 'einvoice_sent_from_stored.dart';
+
+export 'einvoice_sent_from_stored.dart';
 
 /// #2591 — sending an issued invoice through an e-invoicing channel, its
 /// receipts, and the owner's channel credentials.
@@ -9,6 +12,13 @@ abstract interface class EInvoiceTransmissions {
   /// [EInvoiceGatewayConfig.notConfigured], never a throw — the app hides
   /// the affordance rather than offering a button that cannot work.
   Future<EInvoiceGatewayConfig> fetchEInvoiceGateway(String workspaceId);
+
+  /// #4120 -- what of [invoiceId]'s sending would be today's, not its own.
+  Future<EInvoiceSendBasis> fetchSendBasis(String invoiceId);
+
+  /// #4120 -- the document [invoiceId]'s sending left with, exactly as
+  /// stored; refused unless the caller may issue and the bytes still match.
+  Future<SentEInvoiceDocument> fetchSentDocument(String invoiceId);
 
   /// invoiceId → its LATEST transmission (0071); invoices never sent are
   /// absent. Admin-readable.
