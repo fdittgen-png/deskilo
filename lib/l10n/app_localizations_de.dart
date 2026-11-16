@@ -12680,9 +12680,6 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
-  String get financesGroups => 'Gruppen';
-
-  @override
   String get financesHideAmount => 'Betrag ausblenden';
 
   @override

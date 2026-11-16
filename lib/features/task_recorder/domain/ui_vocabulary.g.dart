@@ -8979,7 +8979,6 @@ const Set<String> uiLabelKeys = {
   'financesGroupNewName',
   'financesGroupRemove',
   'financesGroupRename',
-  'financesGroups',
   'financesHideAmount',
   'financesHostsUnavailable',
   'financesLinkBody',

@@ -12569,9 +12569,6 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get financesGroups => 'Groups';
-
-  @override
   String get financesHideAmount => 'Hide amount';
 
   @override

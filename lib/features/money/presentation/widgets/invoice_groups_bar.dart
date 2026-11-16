@@ -15,7 +15,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../domain/invoice_groups.dart';
 import '../../providers/invoice_group_providers.dart';
-import 'invoice_group_sheet.dart';
+import 'invoice_group_rename.dart';
 
 class InvoiceGroupsBar extends ConsumerWidget {
   const InvoiceGroupsBar({
@@ -46,7 +46,7 @@ class InvoiceGroupsBar extends ConsumerWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: [
               Text(
-                l10n.financesGroups,
+                l10n.portalGroupsHeading,
                 style: Theme.of(context).textTheme.labelLarge,
               ),
               for (final g in groups)

@@ -359,6 +359,7 @@ const Set<String> demoOverriddenProviders = {
   'personalPreferencesRepositoryProvider',
   'workspaceApplicationRepositoryProvider',
   'accountActivityRepositoryProvider',
+  'invoiceGroupRepositoryProvider', // #3556
   'selectedWorkspaceAccountActivityRepositoryProvider',
   'connectedInstallationsProvider', 'connectedSourcesProvider',
   'identityConnectorProvider', // #1834

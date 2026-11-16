@@ -12654,9 +12654,6 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
-  String get financesGroups => 'Grupos';
-
-  @override
   String get financesHideAmount => 'Ocultar el importe';
 
   @override

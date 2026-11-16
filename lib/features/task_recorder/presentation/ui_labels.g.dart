@@ -936,7 +936,6 @@ Map<String, _Getter> _part2() => {
   'featureValidationScopesDesc': (l) => l.featureValidationScopesDesc,
   'featureWebMcpDesc': (l) => l.featureWebMcpDesc,
   'federationDetails': (l) => l.federationDetails,
-  'financesGroups': (l) => l.financesGroups,
   'gettingStartedEnvDev': (l) => l.gettingStartedEnvDev,
   'gettingStartedEnvProd': (l) => l.gettingStartedEnvProd,
   'guestPassRevokeStays': (l) => l.guestPassRevokeStays,

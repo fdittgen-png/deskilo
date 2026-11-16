@@ -1,8 +1,4 @@
 {
-  "financesGroups": "Groups",
-  "@financesGroups": {
-    "description": "#3556 My finances: label of the row of my own groups of invoices, beside the workspace filter"
-  },
   "financesGroupAdd": "Add to a group",
   "@financesGroupAdd": {
     "description": "#3556 My finances: the button on an invoice that files it in one of my groups (tooltip)"

@@ -7921,7 +7921,6 @@
   "financesGroupRename": "Rinomina il gruppo",
   "financesGroupUnreadable": "{count, plural, one{1 fattura non è leggibile ora: i totali la escludono.} other{{count} fatture non sono leggibili ora: i totali le escludono.}}",
   "financesGroupUnreadableItem": "{number} · non leggibile ora",
-  "financesGroups": "Gruppi",
   "financesHideAmount": "Nascondi l'importo",
   "financesHostsUnavailable": "Non è stato possibile elencare le Sue installazioni collegate in questo momento; quanto mostrato proviene solo da questa installazione.",
   "@financesHostsUnavailable": {

@@ -20413,12 +20413,6 @@ abstract class AppLocalizations {
   /// **'{number} · can\'t be read now'**
   String financesGroupUnreadableItem(String number);
 
-  /// #3556 My finances: label of the row of my own groups of invoices, beside the workspace filter
-  ///
-  /// In en, this message translates to:
-  /// **'Groups'**
-  String get financesGroups;
-
   /// #2557 C5 Me › Finances: hides one compact card's amount again.
   ///
   /// In en, this message translates to:

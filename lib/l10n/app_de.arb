@@ -7921,7 +7921,6 @@
   "financesGroupRename": "Gruppe umbenennen",
   "financesGroupUnreadable": "{count, plural, one{1 Rechnung ist gerade nicht lesbar: Die Summen lassen sie aus.} other{{count} Rechnungen sind gerade nicht lesbar: Die Summen lassen sie aus.}}",
   "financesGroupUnreadableItem": "{number} · gerade nicht lesbar",
-  "financesGroups": "Gruppen",
   "financesHideAmount": "Betrag ausblenden",
   "financesHostsUnavailable": "Ihre verbundenen Installationen konnten gerade nicht aufgelistet werden; angezeigt wird nur, was von dieser Installation stammt.",
   "@financesHostsUnavailable": {

@@ -7921,7 +7921,6 @@
   "financesGroupRename": "Renombrar el grupo",
   "financesGroupUnreadable": "{count, plural, one{1 factura no se puede leer ahora: los totales la dejan fuera.} other{{count} facturas no se pueden leer ahora: los totales las dejan fuera.}}",
   "financesGroupUnreadableItem": "{number} · no se puede leer ahora",
-  "financesGroups": "Grupos",
   "financesHideAmount": "Ocultar el importe",
   "financesHostsUnavailable": "No se han podido listar sus instalaciones conectadas en este momento; lo que se muestra procede solo de esta instalación.",
   "@financesHostsUnavailable": {

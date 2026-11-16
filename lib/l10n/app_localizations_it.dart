@@ -12663,9 +12663,6 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
-  String get financesGroups => 'Gruppi';
-
-  @override
   String get financesHideAmount => 'Nascondi l\'importo';
 
   @override

@@ -2,8 +2,7 @@
 //
 // #3556 (part 2) — which of my groups an invoice is in: each group a switch
 // (filed or not, at once), and a new group named and filed in one step. A
-// group is my own filing; nothing about the invoice changes. Also the
-// dialog that names a group again.
+// group is my own filing; nothing about the invoice changes.
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +17,7 @@ import '../../domain/invoice_groups.dart';
 import '../../providers/invoice_group_providers.dart';
 
 /// The words of a refused name.
-String _refusalText(AppLocalizations l10n, InvoiceGroupRefusal r) =>
+String invoiceGroupRefusalText(AppLocalizations l10n, InvoiceGroupRefusal r) =>
     switch (r) {
       InvoiceGroupRefusal.nameTaken => l10n.financesGroupNameTaken,
       InvoiceGroupRefusal.nameShape => l10n.financesGroupNameShape,
@@ -78,7 +77,7 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
     if (!mounted) return;
     setState(() {
       _busy = false;
-      _error = refusal == null ? null : _refusalText(l10n, refusal!);
+      _error = refusal == null ? null : invoiceGroupRefusalText(l10n, refusal!);
       if (refusal == null) _name.clear();
     });
   }
@@ -86,7 +85,9 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
   Future<void> _create() {
     final checked = invoiceGroupName(_name.text);
     if (checked.name == null) {
-      setState(() => _error = _refusalText(context.l10n, checked.refusal!));
+      setState(
+        () => _error = invoiceGroupRefusalText(context.l10n, checked.refusal!),
+      );
       return Future.value();
     }
     return _write((groups) async {
@@ -154,101 +155,6 @@ class _InvoiceGroupSheetState extends ConsumerState<_InvoiceGroupSheet> {
           ],
         ),
       ),
-    );
-  }
-}
-
-/// Names [group] again; nothing else changes.
-Future<void> showInvoiceGroupRename(BuildContext context, InvoiceGroup group) =>
-    showDialog<void>(
-      context: context,
-      builder: (_) => _RenameDialog(group: group),
-    );
-
-class _RenameDialog extends ConsumerStatefulWidget {
-  const _RenameDialog({required this.group});
-
-  final InvoiceGroup group;
-
-  @override
-  ConsumerState<_RenameDialog> createState() => _RenameDialogState();
-}
-
-class _RenameDialogState extends ConsumerState<_RenameDialog> {
-  late final _name = TextEditingController(text: widget.group.name);
-  String? _error;
-  bool _busy = false;
-
-  @override
-  void dispose() {
-    _name.dispose();
-    super.dispose();
-  }
-
-  Future<void> _save() async {
-    final l10n = context.l10n;
-    final checked = invoiceGroupName(_name.text);
-    if (checked.name == null) {
-      setState(() => _error = _refusalText(l10n, checked.refusal!));
-      return;
-    }
-    setState(() => _busy = true);
-    InvoiceGroupRefusal? refusal;
-    final ok = await runGuarded(
-      context,
-      domain: 'money',
-      message: 'invoice group rename failed',
-      errorText: l10n.financesGroupFailed,
-      action: () async {
-        try {
-          await ref
-              .read(invoiceGroupsProvider.notifier)
-              .rename(widget.group.id, checked.name!);
-        } on InvoiceGroupRefused catch (r) {
-          // trace-exempt: a refused name is shown under its field
-          refusal = r.reason;
-        }
-      },
-    );
-    if (!mounted) return;
-    if (ok && refusal == null) {
-      Navigator.of(context).pop();
-      return;
-    }
-    setState(() {
-      _busy = false;
-      if (refusal != null) _error = _refusalText(l10n, refusal!);
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = context.l10n;
-    return AlertDialog(
-      key: const ValueKey('invoice-group-rename-dialog'),
-      title: Text(l10n.financesGroupRename),
-      content: AppTextField(
-        controller: _name,
-        key: const ValueKey('invoice-group-rename-name'),
-        label: l10n.financesGroupNewName,
-        error: _error,
-        maxLength: invoiceGroupNameMax,
-        autofocus: true,
-        enabled: !_busy,
-        onSubmitted: (_) => _save(),
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('invoice-group-rename-cancel'),
-          onPressed: () => Navigator.of(context).pop(),
-          child: Text(MaterialLocalizations.of(context).cancelButtonLabel),
-        ),
-        FilledButton(
-          key: const ValueKey('invoice-group-rename-save'),
-          onPressed: _busy ? null : _save,
-          child: Text(MaterialLocalizations.of(context).saveButtonLabel),
-        ),
-      ],
     );
   }
 }

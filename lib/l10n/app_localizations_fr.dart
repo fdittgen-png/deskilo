@@ -12718,9 +12718,6 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
-  String get financesGroups => 'Groupes';
-
-  @override
   String get financesHideAmount => 'Masquer le montant';
 
   @override
