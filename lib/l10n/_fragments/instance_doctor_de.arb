@@ -47,5 +47,10 @@
   "instanceDoctorAuthCodesLongTitle": "Anmeldecodes gelten länger als eine Stunde",
   "instanceDoctorAuthPasswordShortTitle": "{length, plural, one{Passwörter dürfen kürzer als {length} Zeichen sein} other{Passwörter dürfen kürzer als {length} Zeichen sein}}",
   "instanceDoctorAuthReauthOffTitle": "Eine Passwortänderung verlangt kein erneutes Anmelden",
-  "instanceDoctorAuthFixDetail": "Wert  {value}\n        Abhilfe: {command}"
+  "instanceDoctorAuthFixDetail": "Wert  {value}\n        Abhilfe: {command}",
+  "instanceDoctorProbeAppUrl": "App-Adresse der Funktionen",
+  "instanceDoctorAppUrlMissingTitle": "Die Funktionen, die zur App zurückverlinken, haben keine App-Adresse",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Abhilfe: dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>",
+  "instanceDoctorAppUrlForeignTitle": "Die App-Adresse der Funktionen ist nicht die Web-Adresse dieser Instanz",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Abhilfe: dart run tool/instance.dart auth --ref <ref> --site-url <Web-Adresse der App>"
 }

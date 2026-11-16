@@ -8674,6 +8674,10 @@
     }
   },
   "instanceDoctorAllHealthy": "Todo lo comprobado está sano.",
+  "instanceDoctorAppUrlForeignDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>",
+  "instanceDoctorAppUrlForeignTitle": "La dirección de la app de las funciones no es la dirección web de esta instancia",
+  "instanceDoctorAppUrlMissingDetail": "{functions}\n        Solución: dart run tool/instance.dart auth --ref <ref> --site-url <dirección web de la app>",
+  "instanceDoctorAppUrlMissingTitle": "Las funciones que enlazan de vuelta a la app no tienen dirección de la app",
   "instanceDoctorAttention": "Requiere atención",
   "instanceDoctorAuthBaselineDetail": "{length, plural, one{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} carácter, un cambio de contraseña pide volver a iniciar sesión} other{los códigos duran como máximo una hora, las contraseñas tienen al menos {length} caracteres, un cambio de contraseña pide volver a iniciar sesión}}",
   "instanceDoctorAuthBaselineTitle": "Base de inicio de sesión",
@@ -8699,6 +8703,7 @@
   "instanceDoctorPoliciesMatchTitle": "Las políticas coinciden con las migraciones",
   "instanceDoctorPolicyDriftSkippedDetail": "la lista esperada está vacía: no se leyó assets/instance/policies.txt, así que no se puede juzgar la desviación",
   "instanceDoctorPolicyDriftSkippedTitle": "Desviación de políticas no comprobada",
+  "instanceDoctorProbeAppUrl": "Dirección de la app de las funciones",
   "instanceDoctorProbeAuth": "Configuración de autenticación",
   "instanceDoctorProbeFailedDetail": "Supabase respondió {status}: {message}\n        Las demás comprobaciones se ejecutaron sin ella.",
   "instanceDoctorProbeFailedTitle": "Falló la consulta «{probe}»",

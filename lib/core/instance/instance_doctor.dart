@@ -20,6 +20,7 @@
 import 'package:intl/intl.dart';
 
 import '../diagnostics/doctor_english.dart';
+import 'app_url_setting.dart';
 import 'doctor_finding.dart';
 import 'instance_auth_check.dart';
 import 'instance_builder.dart';
@@ -84,6 +85,18 @@ class InstanceDoctor {
             () async => checkInstallationRoles(await api.query(ref, installationRolesSql))),
         ...await _probe(DoctorProbe.push,
             () async => checkPushConfig(await api.query(ref, pushConfigSql), ref: ref)),
+        // #3916 -- the app address of the functions that link back to the app.
+        ...await _probe(DoctorProbe.appUrl, () async {
+          final deployed = [
+            for (final f in await api.listDeployedFunctions(ref)) f.slug,
+          ];
+          if (!deployed.any(appUrlFunctions.contains)) return const [];
+          return checkAppUrl(
+            deployed: deployed,
+            digests: await api.listFunctionSecretDigests(ref),
+            webBase: appUrlOf(expectedAuth ?? InstanceAuthConfig.patch),
+          );
+        }),
       ];
 
   Future<List<DoctorFinding>> _probe(

@@ -6,7 +6,7 @@ Every string in `lib/` that reaches a member's eyes and does NOT come from `AppL
 
 Positions read: label, field label, field hint, field helper, field error, field counter, field prefix, field suffix, tooltip, accessibility label, title, subtitle, dismiss label, document lines, bullet list, paragraphs, the text of Text/SelectableText/TextSpan, a tooltip's message, the four snack helpers and a semantics label. Keys, paths, wire values, formats, trace text and literals made only of interpolations are not user-facing and are not listed.
 
-81 literal(s) in 17 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
+83 literal(s) in 17 file(s) — each a written decision below. Anything outside them fails `test/lint/l10n_audit_test.dart`.
 
 | file | symbol/widget | literal | surface | action |
 |---|---|---|---|---|
@@ -45,38 +45,40 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_practice_seed.dart:107` | title | Beratung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:330` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:337` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:53` | title | ${_probeEnglish(f[0] as DoctorProbe)} query failed | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:59` | title | Nobody has confirmed in seven days | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:66` | title | Schema has no version | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:76` | title | Policy drift not checked | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:82` | title | Policies match the migrations | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:87` | title | Storage reads are scoped | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:92` | title | A realtime-published table is unprotected | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:98` | title | A SECURITY DEFINER function has no fixed search_path | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:104` | title | A view readable by anon runs as its owner | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:110` | title | A table holding secrets grants to an API role | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:116` | title | A storage bucket is public | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:122` | title | Installation roles not declared | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:129` | title | Installation roles are not a known set | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:135` | title | Push configuration | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:139` | title | Push and settlement calls go to another project | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:145` | title | Sign-in baseline | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:151` | title | Sign-in codes last longer than an hour | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:155` | title | Passwords may be shorter than ${n(2)} characters | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/diagnostics/doctor_english.dart:159` | title | A password change does not ask to sign in again | core/diagnostics | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:13` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:14` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:15` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:16` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:17` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:18` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:19` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:20` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:21` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:22` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:23` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:24` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
-| `lib/core/instance/instance_builder.dart:25` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:59` | title | ${_probeEnglish(f[0] as DoctorProbe)} query failed | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:65` | title | Nobody has confirmed in seven days | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:72` | title | Schema has no version | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:82` | title | Policy drift not checked | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:88` | title | Policies match the migrations | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:93` | title | Storage reads are scoped | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:98` | title | A realtime-published table is unprotected | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:104` | title | A SECURITY DEFINER function has no fixed search_path | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:110` | title | A view readable by anon runs as its owner | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:116` | title | A table holding secrets grants to an API role | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:122` | title | A storage bucket is public | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:128` | title | Installation roles not declared | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:135` | title | Installation roles are not a known set | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:141` | title | Push configuration | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:145` | title | Push and settlement calls go to another project | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:151` | title | The functions that link back to the app have no app address | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:155` | title | The app address of the functions is not this instance's web base | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:159` | title | Sign-in baseline | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:165` | title | Sign-in codes last longer than an hour | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:169` | title | Passwords may be shorter than ${n(2)} characters | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/diagnostics/doctor_english.dart:173` | title | A password change does not ask to sign in again | core/diagnostics | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:14` | label | Paris (eu-west-3) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:15` | label | Frankfurt (eu-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:16` | label | Zurich (eu-central-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:17` | label | Ireland (eu-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:18` | label | London (eu-west-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:19` | label | Stockholm (eu-north-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:20` | label | Virginia (us-east-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:21` | label | California (us-west-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:22` | label | Canada (ca-central-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:23` | label | Singapore (ap-southeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:24` | label | Tokyo (ap-northeast-1) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:25` | label | Sydney (ap-southeast-2) | core/instance | KEEP_NON_UI_LITERAL |
+| `lib/core/instance/instance_builder.dart:26` | label | São Paulo (sa-east-1) | core/instance | KEEP_NON_UI_LITERAL |
 | `lib/features/money/presentation/widgets/report_texts_panel.dart:186` | field label | text.$key | features/money | KEEP_NON_UI_LITERAL |
 | `packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart:35` | document lines (list item) | Nothing declares these records kept in Canada (ETA s.286,  | deskilo_jurisdiction_ca/lib | KEEP_NON_UI_LITERAL |
 | `packages/deskilo_jurisdiction_ca/lib/src/ca_archive.dart:36` | document lines (list item) | ITA s.230). | deskilo_jurisdiction_ca/lib | KEEP_NON_UI_LITERAL |
@@ -108,6 +110,6 @@ Positions read: label, field label, field hint, field helper, field error, field
 - **`lib/core/demo/seed/demo_practice_seed.dart`** (1) — Demo records: the practice's invoice title as the fictional business stores it (#3863), not an application label
 - **`lib/core/demo/seed/demo_city_purchase_seed.dart`** (1) — Demo records: an English supplier invoice title as the fictional business stores it, not an application label
 - **`lib/core/demo/seed/demo_city_workflow_seed.dart`** (5) — Demo records: fictional expense, badge and document titles stored by the English-speaking spaces, not application interface labels
-- **`lib/core/diagnostics/doctor_english.dart`** (19) — the operator's English: what the command line and the support bundle print for a typed doctor finding; the panel words the same findings from the ARB catalogue (instanceDoctor*) in the member's language (#3489).
+- **`lib/core/diagnostics/doctor_english.dart`** (21) — the operator's English: what the command line and the support bundle print for a typed doctor finding; the panel words the same findings from the ARB catalogue (instanceDoctor*) in the member's language (#3489, #3916).
 - **`lib/core/instance/instance_builder.dart`** (13) — cloud region names as the provider spells them — a place name plus the identifier the console shows.
 - **`lib/features/money/presentation/widgets/report_texts_panel.dart`** (1) — the field label IS the placeholder the owner types into a layout (`text.<their key>`); translating the token would stop it matching.

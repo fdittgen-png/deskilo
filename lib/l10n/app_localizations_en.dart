@@ -14384,6 +14384,24 @@ class AppLocalizationsEn extends AppLocalizations {
   String get instanceDoctorAllHealthy => 'Everything checked is healthy.';
 
   @override
+  String instanceDoctorAppUrlForeignDetail(String functions) {
+    return '$functions\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlForeignTitle =>
+      'The app address of the functions is not this instance\'s web base';
+
+  @override
+  String instanceDoctorAppUrlMissingDetail(String functions) {
+    return '$functions\n        Fix: dart run tool/instance.dart auth --ref <ref> --site-url <web base of the app>';
+  }
+
+  @override
+  String get instanceDoctorAppUrlMissingTitle =>
+      'The functions that link back to the app have no app address';
+
+  @override
   String get instanceDoctorAttention => 'Attention required';
 
   @override
@@ -14536,6 +14554,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get instanceDoctorPolicyDriftSkippedTitle =>
       'Policy drift not checked';
+
+  @override
+  String get instanceDoctorProbeAppUrl => 'App address of the functions';
 
   @override
   String get instanceDoctorProbeAuth => 'Auth configuration';
