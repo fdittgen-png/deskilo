@@ -55,7 +55,7 @@ final class AccountActivityRepositoryProvider
 }
 
 String _$accountActivityRepositoryHash() =>
-    r'b31cc15fa8bb9d76bcac09221b1c00b027d8ab03';
+    r'9c2287dfaaefaf93b77ecf48ab713a92de513bce';
 
 /// My own documents at the SELECTED workspace, read on that workspace's own
 /// installation: `my_finance_overview` runs there under the person's session
@@ -119,7 +119,7 @@ final class SelectedWorkspaceAccountActivityRepositoryProvider
 }
 
 String _$selectedWorkspaceAccountActivityRepositoryHash() =>
-    r'21e6f34f39515eb7dfb97cb425f217b6f1a3d607';
+    r'a21c82cd6b8946d0cf22746b4268dd22708ea3dd';
 
 @ProviderFor(accountActivity)
 final accountActivityProvider = AccountActivityFamily._();

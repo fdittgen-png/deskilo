@@ -15,6 +15,7 @@ import '../../features/money/domain/ledger_entry.dart';
 import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_space_routing.dart' show kDemoInstallationId;
 import 'demo_spaces.dart';
 
 /// The overview the server's `my_finance_overview` (0380) would answer for
@@ -109,6 +110,7 @@ FinanceOverview _overviewOf(
 /// #3832 - the persona's own history, derived from the spaces' records.
 FakeAccountActivityRepository demoActivityRepository(DemoFixture fixture) =>
     FakeAccountActivityRepository(
+      installationId: kDemoInstallationId,
       derive: () => demoFinanceOverview(fixture),
       deriveRows: (kind) => _accountActivity(fixture, kind),
     );

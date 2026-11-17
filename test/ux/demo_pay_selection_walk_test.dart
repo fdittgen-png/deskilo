@@ -1,17 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #3556 (1b) — the Demo walked, on today's data: Chiara owes Atelier du
-// Marché two invoices in euros (March and April) and Camden Yard Cowork
-// two in pounds. She selects the two euro invoices — a pound invoice of the
-// other house cannot join — and pays one month per tap: March is left with
-// the provider (no answer yet) and April is paid. She withdraws March's
-// payment, so March is payable again, and declares a Camden invoice paid,
-// which waits for Camden. What My finances shows is checked against the
-// invoices before and after. Two invoices of one house paid at once, and a
-// second house for the same person, are #3556 1c (Demo seed).
-// #4140 — she then takes the Camden declaration back: the confirmation names
-// its invoice, the row is payable again and nobody is asked; she declares
-// it again, a new declaration. (Camden takes no online payment in the Demo.)
+// #3556 — two invoices of the same house and month share one payment.
+// Another month stays selected; another house cannot join. After a declared
+// payment is taken back, the second house can be paid online. Every amount
+// and claim is checked against the Demo stores before and after.
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/providers/finance_overview_provider.dart';
@@ -36,10 +28,9 @@ Future<void> _tap(WidgetTester tester, String key) async {
 }
 
 void main() {
-  testWidgets('Chiara pays her euro invoices one month per tap, withdraws a '
-      'payment, declares a pound invoice of another house, takes the '
-      'declaration back and declares it again', (tester) async {
-    await pumpDemo(tester, persona: DemoPersona.admin, openHub: false);
+  testWidgets('Chiara pays two same-month invoices together, withdraws a payment, '
+      'then pays another house online after taking its declaration back', (tester) async {
+    final journey = await pumpDemo(tester, persona: DemoPersona.admin, openHub: false);
     await goTo(tester, '/me/data?view=finances');
     await _pumps(tester, 10);
     final container = ProviderScope.containerOf(
@@ -53,15 +44,17 @@ void main() {
     final before = overview();
     FinanceInvoice owed(String house, String period) =>
         before.invoices.firstWhere(
-          (i) => i.workspaceName == house && i.period == period && i.payable,
+          (i) => i.workspaceName == house && i.period == period && i.payable && i.id != 'demo-usage-chiara-extra',
         );
     final march = owed('Atelier du Marché', '2026-03');
     final april = owed('Atelier du Marché', '2026-04');
+    final extra = before.invoices.firstWhere((i) => i.id == 'demo-usage-chiara-extra');
+    expect(extra.period, april.period);
     final camden = before.invoices.firstWhere(
       (i) => i.workspaceName == 'Camden Yard Cowork' && i.payable,
     );
     // what each row owes is what its invoice still owes
-    for (final i in [march, april, camden]) {
+    for (final i in [march, extra, april, camden]) {
       expect(i.stillDueCents, i.totalCents - i.paidCents, reason: i.number);
     }
 
@@ -70,6 +63,7 @@ void main() {
       find.byKey(ValueKey('finances-select-${camden.id}')),
     );
     expect(pound.onChanged, isNull, reason: 'another house, another currency');
+    await _tap(tester, 'finances-select-${extra.id}');
     await _tap(tester, 'finances-select-${april.id}');
 
     // March first; April follows
@@ -89,12 +83,17 @@ void main() {
     await _tap(tester, 'demo-provider-pay');
     expect(now(april).state, FinanceState.paid);
     expect(now(april).stillDueCents, 0);
+    expect(now(extra).state, FinanceState.paid);
+    expect(now(extra).stillDueCents, 0);
+    final matches = journey.fixture.money.invoiceMatchesStore;
+    expect(matches[april.id]!.paymentLedgerId, matches[extra.id]!.paymentLedgerId);
+    final payment = journey.fixture.money.ledger.singleWhere((p) => p.id == matches[extra.id]!.paymentLedgerId);
+    expect(payment.amountCents, april.stillDueCents! + extra.stillDueCents!);
 
     await _tap(tester, 'finances-withdraw-${march.id}');
     await _tap(tester, 'finances-withdraw-yes');
     expect(now(march).payable, isTrue, reason: 'withdrawn: payable again');
     expect(now(march).stillDueCents, march.stillDueCents);
-
     await _tap(tester, 'finances-select-${camden.id}');
     await _tap(tester, 'finances-selection-declare');
     await _tap(tester, 'finances-confirm-send');
@@ -130,10 +129,13 @@ void main() {
     );
     expect(back.stillDueCents, camden.stillDueCents);
     await _tap(tester, 'finances-select-${camden.id}');
-    await _tap(tester, 'finances-selection-declare');
+    await _tap(tester, 'finances-selection-pay');
     await _tap(tester, 'finances-confirm-send');
-    final again = now(camden).claimEventId;
-    expect(again, isNotNull, reason: 'declared again');
-    expect(again, isNot(declared.claimEventId), reason: 'a new declaration');
+    await _tap(tester, 'demo-provider-pay');
+    expect(now(camden).state, FinanceState.paid);
+    expect(now(camden).stillDueCents, 0);
+    expect(now(camden).claimEventId, isNull);
+    expect(now(april).stillDueCents, 0,
+        reason: 'paying Camden preserves the other house’s settled invoices');
   });
 }

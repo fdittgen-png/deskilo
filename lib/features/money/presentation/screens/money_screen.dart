@@ -132,6 +132,8 @@ class _MoneyScreenState extends ConsumerState<MoneyScreen> {
     ref.listen(moneyFocusControllerProvider, (_, period) => _applyFocus(period));
     ref.listen(invoiceFocusProvider, (_, focus) => _applyInvoiceFocus(focus));
     // The space may arrive after the request: try again once it does.
+    ref.listen(readyWorkspaceContextProvider, (_, _) =>
+        _applyInvoiceFocus(ref.read(invoiceFocusProvider)));
     ref.listen(currentWorkspaceProvider, (_, _) =>
         _applyInvoiceFocus(ref.read(invoiceFocusProvider)));
     ref.listen(moneyFaceControllerProvider,

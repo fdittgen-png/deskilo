@@ -99,12 +99,13 @@ List<Override> _overrides(
   int concurrency = 2,
   Duration timeout = const Duration(seconds: 5),
   bool withoutLimits = false,
+  List<FinanceHost> hosts = const [_here, _lyon, _nice],
 }) => [
   ...standardTestOverrides(
     auth: FakeAuthRepository.signedIn(),
     accountActivity: home,
   ),
-  financeHostsProvider.overrideWith((ref) async => const [_here, _lyon, _nice]),
+  financeHostsProvider.overrideWith((ref) async => hosts),
   financeHostReaderProvider.overrideWithValue(reader),
   financeReadLimitsProvider.overrideWith(
     (ref) async => withoutLimits
@@ -139,6 +140,63 @@ _Reader _hosts() => _Reader()
 Finder _key(String key) => find.byKey(ValueKey(key));
 
 void main() {
+  test('two answered installations retain equal local finance ids in either order', () async {
+    for (final reversed in [false, true]) {
+      final reader = _Reader();
+      final first = reader.hold(_lyon.installationId);
+      final second = reader.hold(_nice.installationId);
+      FinanceOverview answer(int amount, String label) => FinanceOverview(
+        invoices: [invoice('shared-invoice', ws: 'Shared', total: amount)],
+        reminders: [FinanceReminder(
+          id: 'shared-reminder', invoiceId: 'shared-invoice',
+          invoiceNumber: label, workspaceName: 'Shared',
+          sentAt: DateTime.utc(2026, 9), level: 1, automatic: false,
+        )],
+        payments: [AccountActivity(
+          id: 'shared-payment', workspaceId: 'ws-Shared',
+          workspaceName: 'Shared', occurredAt: DateTime.utc(2026, 9),
+          reference: label, description: '', currency: 'EUR', status: 'paid',
+          amountCents: amount,
+        )],
+      );
+      final container = ProviderContainer(overrides: _overrides(_Home(), reader));
+      final subscription = container.listen(financeOverviewProvider, (_, _) {});
+      try {
+        await container.read(financeOverviewProvider.future);
+        final answers = [(first, answer(10000, 'A')), (second, answer(3000, 'B'))];
+        for (final (held, value) in reversed ? answers.reversed : answers) {
+          held.complete(value);
+          await Future<void>.delayed(Duration.zero);
+        }
+        await container.read(financeOverviewProvider.notifier).settled();
+        final result = container.read(financeOverviewProvider).requireValue;
+        expect(result.invoices.map((i) => i.totalCents), [10000, 3000]);
+        expect(result.reminders.map((r) => r.invoiceNumber), ['A', 'B']);
+        expect(result.payments.map((p) => p.amountCents), [10000, 3000]);
+      } finally {
+        subscription.close();
+        container.dispose();
+      }
+    }
+  });
+
+  test('two aliases of a verified installation are read once', () async {
+    final reader = _hosts();
+    final container = ProviderContainer(overrides: _overrides(_Home(), reader, hosts: [_lyon, _lyon]));
+    final subscription = container.listen(financeOverviewProvider, (_, _) {});
+    try {
+      await container.read(financeOverviewProvider.future);
+      await container.read(financeOverviewProvider.notifier).settled();
+      final result = container.read(financeOverviewProvider).requireValue;
+      expect(reader.reads[_lyon.installationId], 1);
+      expect(result.hosts, hasLength(1));
+      expect(result.invoices, hasLength(1));
+    } finally {
+      subscription.close();
+      container.dispose();
+    }
+  });
+
   testWidgets('every connected host my account names adds its own '
       'documents and is named in the coverage; the home\'s own '
       'installation is not asked again', (tester) async {
@@ -185,7 +243,7 @@ void main() {
     );
     expect(
       ownFinanceCsvLines(container.read(financeOverviewProvider).value!),
-      contains('"# unavailable_source","Nice",,,,,,,,,,,,,,'),
+      contains('"# unavailable_source","Nice",,,,,,,,,,,,,,,,'),
       reason: 'the file says which host it lacks',
     );
 
@@ -326,7 +384,7 @@ void main() {
     );
     expect(
       merged.invoices.map((i) => '${i.workspaceId}:${i.id}'),
-      ['ws-Office A:1', 'ws-Lyon:1'],
+      ['ws-Lyon:1', 'ws-Office A:1'],
     );
   });
 
@@ -495,7 +553,7 @@ void main() {
       );
       expect(
         merged.reminders.map((r) => '${r.workspaceId}:${r.id}'),
-        ['ws-Office A:r1', 'ws-Lyon:r1'],
+        ['ws-Lyon:r1', 'ws-Office A:r1'],
       );
       expect(
         merged.inWorkspace('ws-Lyon').reminders.map((r) => r.workspaceId),
@@ -504,7 +562,7 @@ void main() {
       );
       expect(
         merged.payments.map((p) => '${p.workspaceId}:${p.id}'),
-        ['ws-Office A:p', 'ws-Lyon:p'],
+        ['ws-Lyon:p', 'ws-Office A:p'],
       );
     });
 

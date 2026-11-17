@@ -5,13 +5,15 @@
 // own money screens point there instead of repeating it: one tap, already
 // narrowed to this space.
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
+import '../../providers/finance_overview_provider.dart';
 import '../my_finances_route.dart';
 
-class MyFinancesLinkCard extends StatelessWidget {
+class MyFinancesLinkCard extends ConsumerWidget {
   const MyFinancesLinkCard({
     super.key,
     required this.workspaceId,
@@ -22,9 +24,10 @@ class MyFinancesLinkCard extends StatelessWidget {
   final String? workspaceId, workspaceName;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final id = workspaceId;
+    final target = ref.watch(financeCurrentTargetProvider);
+    final id = target?.workspaceId == workspaceId ? target?.networkId : null;
     if (id == null) return const SizedBox.shrink();
     final theme = Theme.of(context);
     return Card(

@@ -34,7 +34,7 @@ class FinanceClaimState extends ConsumerWidget {
       for (final i
           in ref.read(financeOverviewProvider).value?.invoices ??
               const <FinanceInvoice>[]) // empty-ok: an overview not read names no other invoice; this one is added below
-        if (i.id != invoice.id &&
+        if (i.networkId == invoice.networkId && i.id != invoice.id &&
             (declared
                 ? i.claimEventId == invoice.claimEventId
                 : i.claimPaymentId == invoice.claimPaymentId))
@@ -45,6 +45,8 @@ class FinanceClaimState extends ConsumerWidget {
 
   Future<void> _withdraw(BuildContext context, WidgetRef ref) async {
     final l10n = context.l10n;
+    final commands = ref.read(financeSelectionCommandsProvider);
+    final requests = ref.read(paymentRequestIdsProvider);
     final declared = invoice.claimPaymentId == null;
     final named = _named(ref);
     final yes = await showDialog<bool>(
@@ -105,14 +107,10 @@ class FinanceClaimState extends ConsumerWidget {
           : l10n.financesWithdrawFailed,
       action: () async {
         try {
-          done = await ref
-              .read(financeSelectionCommandsProvider)
-              .withdraw(invoice);
+          done = await commands.withdraw(invoice);
           // a payment of them again is a new one: its request id goes
           if (done == true) {
-            ref
-                .read(paymentRequestIdsProvider)
-                .forgetClaim({for (final i in named) i.id});
+            requests.forgetClaim({for (final i in named) i.id}, networkId: invoice.networkId);
           }
         } on ClaimRefused catch (r, st) {
           // the refusal is said in its own words below
@@ -160,7 +158,7 @@ class FinanceClaimState extends ConsumerWidget {
           waits,
           TextButton(
             key: ValueKey('finances-take-back-${invoice.id}'),
-            onPressed: () => _withdraw(context, ref),
+            onPressed: invoice.target == null ? null : () => _withdraw(context, ref),
             child: Text(l10n.financesTakeBack),
           ),
         ],
@@ -182,7 +180,7 @@ class FinanceClaimState extends ConsumerWidget {
         ),
         TextButton(
           key: ValueKey('finances-withdraw-${invoice.id}'),
-          onPressed: () => _withdraw(context, ref),
+          onPressed: invoice.target == null ? null : () => _withdraw(context, ref),
           child: Text(l10n.financesWithdraw),
         ),
       ],

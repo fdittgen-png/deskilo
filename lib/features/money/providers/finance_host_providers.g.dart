@@ -310,7 +310,7 @@ final class HostAccountActivityProvider
 }
 
 String _$hostAccountActivityHash() =>
-    r'5db477ec13d63f60439c97d3bc03cc0f18a2f9c0';
+    r'a40eb9896b1f587518c58f68d0fca76cf469eff0';
 
 /// #2557 C7 — one page of my [kind] history on the connected host [host],
 /// through that host's own verified client ([financeHostReader]), waited

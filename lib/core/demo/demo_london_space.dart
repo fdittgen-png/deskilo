@@ -111,7 +111,8 @@ class DemoLondonData implements DemoSpaceParts {
     );
     seedCityDecisions(events, 'uk', now);
     final money = FakeMoneyRepository(events: events)
-      ..invoiceCommands.currency = 'GBP';
+      ..invoiceCommands.currency = 'GBP'
+      ..paymentGateway.standIn = true;
     seedCityExpenses(money, demoLondonSpaceId, 'uk', now);
     seedLondonMoney(money, now);
     // The return of the closed quarter, prepared by the engine every space

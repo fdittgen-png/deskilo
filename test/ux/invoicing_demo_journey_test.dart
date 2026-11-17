@@ -247,7 +247,9 @@ void main() {
               .evaluate())
         (e.widget.key! as ValueKey<String>).value,
     ];
-    expect(due, hasLength(2), reason: 'the two reminders To do counted');
+    expect(due.map(_invoiceOf), unorderedEquals([
+      'demo-usage-chiara-extra', 'demo-usage-chiara-c', 'demo-usage-ada-b',
+    ]), reason: 'the due reminders include the second same-month invoice');
     final remindedBefore = {
       for (final k in due)
         k: f.money.invoiceReminders[_invoiceOf(k)]?.length ?? 0,
@@ -255,7 +257,7 @@ void main() {
     for (final key in due) {
       await share.on(tester, find.byKey(ValueKey(key)));
     }
-    expect(share.count, 3, reason: 'send all due reminders: 3 taps');
+    expect(share.count, 4, reason: 'Review, then one Share per due invoice');
     // The queue says what was shared; its Done is the way back, not a send.
     expect(find.byKey(const ValueKey('reminder-queue-result')), findsOneWidget);
     await tester.tap(find.byKey(const ValueKey('result-done')));

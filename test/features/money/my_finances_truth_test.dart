@@ -56,6 +56,21 @@ Future<void> _everyEmptyStateSays(WidgetTester tester, String text) async {
 }
 
 void main() {
+  test('a credit only nets invoices on its own verified installation', () {
+    final debt = invoice('debt', ws: 'Same').onInstallation('A');
+    final credit = invoice('credit', ws: 'Same', total: -3000).onInstallation('B');
+    for (final rows in [[debt, credit], [credit, debt]]) {
+      final overview = FinanceOverview(invoices: rows);
+      expect(overview.owedByCurrency, {'EUR': 10000});
+      expect(overview.inMyFavourByCurrency, {'EUR': 3000});
+      expect(overview.inWorkspace('A:ws-Same').invoices, [debt]);
+      expect(overview.inWorkspace('B:ws-Same').invoices, [credit]);
+    }
+    final sameBusiness = FinanceOverview(invoices: [debt, credit.onInstallation('A')]);
+    expect(sameBusiness.owedByCurrency, {'EUR': 7000});
+    expect(sameBusiness.inMyFavourByCurrency, isEmpty);
+  });
+
   group('a source that has not answered', () {
     for (final status in [
       FinanceHostStatus.reading,

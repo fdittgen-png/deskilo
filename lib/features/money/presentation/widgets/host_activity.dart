@@ -27,7 +27,7 @@ class HostActivity extends ConsumerWidget {
     return switch (hosts) {
       AsyncData(value: final all) => Column(
         children: [
-          for (final host in all)
+          for (final host in {for (final h in all) h.installationId: h}.values)
             if (!host.hostedHere)
               _HostSection(
                 key: ValueKey('${host.installationId}:${kind.name}'),

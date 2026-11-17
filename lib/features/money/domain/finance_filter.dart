@@ -69,6 +69,6 @@ List<FinanceInvoice> newestFirst(Iterable<FinanceInvoice> invoices) =>
     [...invoices]..sort((a, b) {
       final byDate = b.issuedAt.compareTo(a.issuedAt);
       if (byDate != 0) return byDate;
-      final byWorkspace = a.workspaceId.compareTo(b.workspaceId);
+      final byWorkspace = a.networkId.compareTo(b.networkId);
       return byWorkspace != 0 ? byWorkspace : a.id.compareTo(b.id);
     });

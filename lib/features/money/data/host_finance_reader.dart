@@ -75,7 +75,9 @@ class HostFinanceReader implements FinanceHostReader {
           'asked ${host.installationId}, answered ${resolved.installationId}',
         );
       }
-      return await read(SupabaseAccountActivityRepository(resolved.client));
+      return await read(SupabaseAccountActivityRepository(
+        resolved.client, installation: () async => resolved.installationId,
+      ));
     } finally {
       resolved.lease?.release();
     }

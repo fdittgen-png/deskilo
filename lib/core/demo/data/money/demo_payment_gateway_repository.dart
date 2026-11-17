@@ -139,7 +139,16 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   }) async {
     _m.paymentOrders.add((provider, amountCents));
     final url = _m.paymentApprovalUrl;
-    return url != null ? PaymentOrderStart(approveUrl: url, orderId: 'order-${_m.paymentOrders.length}') : _withoutApprovalUrl(provider, memberId, amountCents, currencyCode, period, requestId);
+    return url != null ? PaymentOrderStart(approveUrl: url, orderId: 'order-${_m.paymentOrders.length}') : _atWorkspace(_withoutApprovalUrl(provider, memberId, amountCents, currencyCode, period, requestId), workspaceId);
+  }
+
+  PaymentOrderStart _atWorkspace(PaymentOrderStart start, String workspaceId) {
+    final approval = start.approveUrl;
+    if (approval == null) return start;
+    return PaymentOrderStart(
+      approveUrl: approval.replace(queryParameters: {...approval.queryParameters, 'workspace': workspaceId}),
+      orderId: start.orderId, alreadyPaid: start.alreadyPaid, missing: start.missing,
+    );
   }
 
   @override

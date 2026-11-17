@@ -6,6 +6,8 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/backend/operation_context.dart' show WorkspaceTarget;
+
 /// Where one of MY invoices stands (the 0067/0068 lifecycle, as the server
 /// derives it).
 enum FinanceState {
@@ -42,6 +44,7 @@ class FinanceInvoice {
     required this.paidCents,
     required this.currency,
     required this.state,
+    this.installationId,
     this.dueOn,
     this.reminderCount = 0,
     this.lastReminderAt,
@@ -59,6 +62,39 @@ class FinanceInvoice {
   });
 
   final String id, workspaceId, workspaceName, number, currency;
+
+  /// Stamped by the verified reader, never trusted from the row payload.
+  final String? installationId;
+  WorkspaceTarget? get target => installationId == null ? null
+      : WorkspaceTarget.local(installationId: installationId!, workspaceId: workspaceId);
+  String get networkId => target?.networkId ?? workspaceId;
+
+  FinanceInvoice onInstallation(String installationId) => FinanceInvoice(
+    installationId: installationId,
+    id: id,
+    workspaceId: workspaceId,
+    workspaceName: workspaceName,
+    number: number,
+    issuedAt: issuedAt,
+    totalCents: totalCents,
+    paidCents: paidCents,
+    currency: currency,
+    state: state,
+    dueOn: dueOn,
+    reminderCount: reminderCount,
+    lastReminderAt: lastReminderAt,
+    timezone: timezone,
+    stillDueCents: stillDueCents,
+    awaitingCents: awaitingCents,
+    period: period,
+    inPayment: inPayment,
+    claimPaymentId: claimPaymentId,
+    claimEventId: claimEventId,
+    claimHandedAt: claimHandedAt,
+    claimSettling: claimSettling,
+    paymentReceived: paymentReceived,
+    payable: payable,
+  );
 
   /// #3659 — the issuing business's IANA zone (0736); null when unnamed.
   final String? timezone;

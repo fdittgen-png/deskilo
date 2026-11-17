@@ -87,7 +87,7 @@ class FinanceDocumentList extends StatelessWidget {
           // different workspaces are two documents (#2557 C5).
           for (final invoice in invoices)
             KeyedSubtree(
-              key: ValueKey((invoice.workspaceId, invoice.id)),
+              key: ValueKey((invoice.networkId, invoice.id)),
               child: _FinanceDocument(
                 invoice: invoice,
                 documents: documents,
@@ -199,7 +199,7 @@ class _FinanceDocument extends ConsumerWidget {
         context,
         ref,
         documents: documents.where(
-          (i) => i.id == invoice.id && i.workspaceId == invoice.workspaceId,
+          (i) => i.id == invoice.id && i.networkId == invoice.networkId,
         ),
         label: '${invoice.workspaceName} ${invoice.number}',
       );
@@ -257,7 +257,7 @@ class _FinanceDocument extends ConsumerWidget {
       key: ValueKey('finances-export-${invoice.id}'),
       tooltip: l10n.financesExportDocument,
       icon: const Icon(Icons.download_outlined),
-      onPressed: () => _export(context, ref),
+      onPressed: invoice.target == null ? null : () => _export(context, ref),
     );
     final Widget body = wide
         ? Row(
@@ -280,7 +280,7 @@ class _FinanceDocument extends ConsumerWidget {
                   children: [
                     FilledButton.tonal(
                       key: ValueKey('finances-open-${invoice.id}'),
-                      onPressed: () => onOpen(invoice),
+                      onPressed: invoice.target == null ? null : () => onOpen(invoice),
                       child: Text(l10n.financesOpenDocument),
                     ),
                     export,
@@ -292,7 +292,7 @@ class _FinanceDocument extends ConsumerWidget {
           )
         : InkWell(
             key: ValueKey('finances-open-${invoice.id}'),
-            onTap: () => onOpen(invoice),
+            onTap: invoice.target == null ? null : () => onOpen(invoice),
             child: Padding(
               padding: const EdgeInsets.fromLTRB(
                 AppSpacing.md,

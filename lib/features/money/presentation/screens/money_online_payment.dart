@@ -16,7 +16,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../profile/domain/personal_preferences.dart';
 import '../../../profile/providers/personal_preferences_providers.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/finance_selection_commands.dart';
 import '../../domain/payment_claims.dart';
+import '../../domain/payment_gateway_repository.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/payment_request_ids.dart';
 import '../../providers/finance_selection_provider.dart';
@@ -24,6 +26,9 @@ import '../../providers/money_providers.dart';
 import '../../providers/payment_approval_providers.dart';
 import '../claim_refusal_text.dart';
 import '../payment_provider_labels.dart';
+
+typedef _PaymentTarget = ({String workspaceId, String memberId, String currency,
+  String networkId, PaymentGatewayRepository repository, PaymentRequestIds requests});
 
 /// Starts an online payment (0043 scaffolding, #1637, #2014 B): asks the
 /// deployment what it can charge with, lets the member pick a provider,
@@ -52,15 +57,15 @@ class MoneyOnlinePayment {
     int amountCents,
     String period, {
     List<String>? invoiceIds,
+    FinanceCommandTarget? captured,
   }) async {
     final l10n = _context.l10n;
-    final workspace = _ref.read(currentWorkspaceProvider).value;
-    final member = _ref.read(myMemberProvider).value;
-    if (workspace == null || member == null || amountCents <= 0) return false;
+    final payment = _payment(captured);
+    if (payment == null || amountCents <= 0 || (captured != null && !captured.isCurrent())) return false;
     final trace = TraceLogger.instance;
 
     // 1. What can this deployment charge with?
-    final gateway = await _probe(workspace.id, l10n);
+    final gateway = await _probe(payment.workspaceId, l10n, payment.repository);
     if (gateway == null || !_context.mounted) return false;
     trace.log(
       TraceLevel.info,
@@ -81,7 +86,7 @@ class MoneyOnlinePayment {
 
     // 2. Pick the provider (directly when only one is configured).
     final chosen = await _chooseProvider(gateway, l10n);
-    if (chosen == null || !_context.mounted) return false;
+    if (chosen == null || !_context.mounted || (captured != null && !captured.isCurrent())) return false;
 
     // 3. Start the order; every step lands in the payments trace.
     trace.log(
@@ -92,8 +97,7 @@ class MoneyOnlinePayment {
     );
     final order = await _startOrder(
       l10n: l10n,
-      workspaceId: workspace.id,
-      memberId: member.id,
+      payment: payment,
       provider: chosen,
       order: InvoiceClaim(
         period: period,
@@ -101,7 +105,7 @@ class MoneyOnlinePayment {
         invoiceIds: invoiceIds ?? const [],
       ),
     );
-    if (order == null || !_context.mounted) return false;
+    if (order == null || !_context.mounted || (captured != null && !captured.isCurrent())) return false;
     // #3556 — the function names how many invoices it took; another count
     // is a claim not taken: its checkout is not opened.
     if (invoiceIds != null &&
@@ -140,9 +144,27 @@ class MoneyOnlinePayment {
     return true;
   }
 
+  _PaymentTarget? _payment(FinanceCommandTarget? captured) {
+    if (captured != null) {
+      return (
+      workspaceId: captured.target.workspaceId, memberId: captured.memberId,
+      currency: captured.currency, repository: captured.gateway,
+      networkId: captured.target.networkId, requests: _requests,
+      );
+    }
+    final workspace = _ref.read(currentWorkspaceProvider).value;
+    final member = _ref.read(myMemberProvider).value;
+    if (workspace == null || member == null) return null;
+    return (workspaceId: workspace.id, memberId: member.id,
+      currency: workspace.currencyCode, repository: _ref.read(paymentGatewayRepositoryProvider),
+      networkId: _ref.read(readyWorkspaceContextProvider)?.target.networkId ?? workspace.id,
+      requests: _requests);
+  }
+
   Future<PaymentGatewayConfig?> _probe(
     String workspaceId,
     AppLocalizations l10n,
+    PaymentGatewayRepository repository,
   ) async {
     PaymentGatewayConfig? config;
     final ok = await runGuarded(
@@ -151,9 +173,7 @@ class MoneyOnlinePayment {
       message: 'payment config probe failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        config = await _ref
-            .read(paymentGatewayRepositoryProvider)
-            .fetchPaymentConfig(workspaceId);
+        config = await repository.fetchPaymentConfig(workspaceId);
       },
     );
     return ok ? config : null;
@@ -193,14 +213,15 @@ class MoneyOnlinePayment {
 
   Future<PaymentOrderStart?> _startOrder({
     required AppLocalizations l10n,
-    required String workspaceId,
-    required String memberId,
     required PaymentProvider provider,
+    required _PaymentTarget payment,
     // what is paid: a month and its amount, and the invoices it names
     // (#3556; none: a payment of the account)
     required InvoiceClaim order,
   }) async {
     final InvoiceClaim(:period, :amountCents, :invoiceIds) = order;
+    final workspaceId = payment.workspaceId;
+    final memberId = payment.memberId;
     PaymentOrderStart? start;
     ClaimRefusal? refused;
     final ok = await runGuarded(
@@ -209,14 +230,13 @@ class MoneyOnlinePayment {
       message: 'create payment order failed',
       errorText: l10n.workspaceGenericError,
       action: () async {
-        final repo = _ref.read(paymentGatewayRepositoryProvider);
+        final repo = payment.repository;
         // No workspace currency, no payment order: never one in a currency
         // nobody chose (#2488).
-        final currency = _ref.read(currentWorkspaceProvider).value?.currencyCode;
-        if (currency == null) throw StateError('no workspace currency');
+        final currency = payment.currency;
         try {
           final claimed = invoiceIds.isNotEmpty;
-          start = await _requests.run(workspaceId, memberId, provider,
+          start = await payment.requests.run(payment.networkId, memberId, provider,
               claimed ? PaymentRequestIds.forClaim(period, invoiceIds) : period,
               amountCents, (id) => claimed
                   ? repo.createClaimOrder(

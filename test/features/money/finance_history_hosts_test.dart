@@ -187,7 +187,7 @@ void main() {
     testWidgets('every connected host my account names is read through its '
         'own reader and pages on by its own cursor; the home\'s own '
         'installation is the home\'s list', (tester) async {
-      final home = FakeAccountActivityRepository()
+      final home = FakeAccountActivityRepository(installationId: 'inst-home')
         ..records[AccountActivityKind.invoices] = [
           _row('home-1', ws: 'Office A'),
         ];
@@ -223,7 +223,7 @@ void main() {
         ..rows['inst-b'] = [_row('b1')]
         ..rows['inst-c'] = [_row('c1', ws: 'Nice')]
         ..down.add('inst-c');
-      await pumpHistory(tester, FakeAccountActivityRepository(), reader);
+      await pumpHistory(tester, FakeAccountActivityRepository(installationId: 'inst-home'), reader);
 
       expect(_key('host-activity-ws-Lyon-b1'), findsOneWidget);
       expect(_key('host-activity-retry-inst-c'), findsOneWidget);
@@ -244,7 +244,7 @@ void main() {
       final reader = _Reader();
       await pumpHistory(
         tester,
-        FakeAccountActivityRepository(),
+        FakeAccountActivityRepository(installationId: 'inst-home'),
         reader,
         session: session.stream,
       );
@@ -316,7 +316,7 @@ void main() {
         'naming its record and its source', () {
       final overview = FinanceOverview(
         invoices: [invoice('b1', ws: 'Lyon', currency: 'CHF', total: 8000)],
-      ).reading(const [_lyon]).hostSettled(
+      ).onInstallation('inst-b').reading(const [_lyon]).hostSettled(
         _lyon,
         FinanceHostStatus.answered,
         FinanceOverview(invoices: [invoice('b1', ws: 'Lyon')]),
@@ -325,8 +325,8 @@ void main() {
         ownFinanceCsv(
           overview,
           payments: OwnPayments(const HostFinanceSource(_lyon), [
-            _row('old', minutes: 5, amount: 1234, currency: 'KWD'),
-            _row('new'),
+            _row('old', minutes: 5, amount: 1234, currency: 'KWD').onInstallation('inst-b'),
+            _row('new').onInstallation('inst-b'),
           ]),
         ),
       );
@@ -334,14 +334,14 @@ void main() {
         rows.first,
         'number,workspace,issued_at,due_on,state,currency,total,paid,'
         'remaining,reminders,invoice_id,record,source,paid_at,payment_id,'
-        'description',
+        'description,installation_id,workspace_id',
       );
       expect(rows, hasLength(4));
-      expect(rows[1], endsWith(',"b1",invoice,"Lyon",,,'));
+      expect(rows[1], endsWith(',"b1",invoice,"Lyon",,,,"inst-b","ws-Lyon"'));
       expect(
         rows[2],
         '"R-new","Lyon",,,"confirmed","CHF",,80.00,,,,payment,"Lyon",'
-        '2026-09-28T00:00:00.000Z,"new","Card"',
+        '2026-09-28T00:00:00.000Z,"new","Card","inst-b","ws-Lyon"',
       );
       expect(rows[3], contains(',"KWD",,1.234,'));
     });
@@ -361,15 +361,15 @@ void main() {
       );
       final rows = _lines(
         ownFinanceCsv(
-          FinanceOverview(invoices: [invoice('1')]),
-          payments: OwnPayments(const HomeFinanceSource(), [evil]),
+          FinanceOverview(invoices: [invoice('1')]).onInstallation('inst-home').answeredBy(null),
+          payments: OwnPayments(const HomeFinanceSource(), [evil.onInstallation('inst-home')]),
         ),
       );
       expect(rows[1], contains(',invoice,"home",'));
       expect(rows[2], startsWith('"\'=HYPERLINK(""http://evil"")",'));
       expect(
         rows[2],
-        endsWith(',payment,"home",2026-09-01T00:00:00.000Z,"x","\'+1 row"'),
+        endsWith(',payment,"home",2026-09-01T00:00:00.000Z,"x","\'+1 row","inst-home","ws-Office A"'),
       );
     });
 
@@ -411,7 +411,7 @@ void main() {
     Future<void> export(WidgetTester tester, String workspace) async {
       await tester.tap(_key('my-finances-export'));
       await tester.pumpAndSettle();
-      await tester.tap(_key('my-finances-export-ws-$workspace'));
+      await tester.tap(_key('my-finances-export-${workspace == 'Lyon' ? 'inst-b' : 'inst-home'}:ws-$workspace'));
       await tester.pumpAndSettle();
     }
 
@@ -429,7 +429,7 @@ void main() {
         'read on that host and named after it', (tester) async {
       final saver = _Saver();
       final reader = lyon();
-      await pumpFinances(tester, FakeAccountActivityRepository(), reader, saver);
+      await pumpFinances(tester, FakeAccountActivityRepository(installationId: 'inst-home'), reader, saver);
       await export(tester, 'Lyon');
 
       final rows = _lines(saver.files.values.single);
@@ -448,7 +448,7 @@ void main() {
     testWidgets('the home\'s workspace carries the home\'s payments',
         (tester) async {
       final saver = _Saver();
-      final home = FakeAccountActivityRepository()
+      final home = FakeAccountActivityRepository(installationId: 'inst-home')
         ..financeOverview = FinanceOverview(invoices: [invoice('1')])
         ..records[AccountActivityKind.payments] = [
           _row('pay-home', ws: 'Office A', currency: 'EUR', amount: 1200),
@@ -464,7 +464,7 @@ void main() {
         'the file; exported again, they are there', (tester) async {
       final saver = _Saver();
       final reader = lyon()..down.add('inst-b');
-      await pumpFinances(tester, FakeAccountActivityRepository(), reader, saver);
+      await pumpFinances(tester, FakeAccountActivityRepository(installationId: 'inst-home'), reader, saver);
       await export(tester, 'Lyon');
 
       var rows = _lines(saver.files.values.single);
@@ -491,7 +491,7 @@ void main() {
       final reader = lyon();
       await pumpFinances(
         tester,
-        FakeAccountActivityRepository(),
+        FakeAccountActivityRepository(installationId: 'inst-home'),
         reader,
         saver,
         session: session.stream,
@@ -517,7 +517,7 @@ void main() {
         tester,
         const MyFinancesScreen(),
         size: const Size(1440, 9000),
-        overrides: _overrides(FakeAccountActivityRepository(), reader),
+        overrides: _overrides(FakeAccountActivityRepository(installationId: 'inst-home'), reader),
       );
       await tester.pumpAndSettle();
       await _tap(tester, 'finances-tab-payments');
@@ -611,9 +611,9 @@ void main() {
       final reader = _Reader()
         ..rows['inst-b'] = [_row('pay-1')]
         ..overviews['inst-b'] = FinanceOverview(payments: [_row('pay-1')]);
-      await pumpFinances(tester, FakeAccountActivityRepository(), reader, saver);
+      await pumpFinances(tester, FakeAccountActivityRepository(installationId: 'inst-home'), reader, saver);
       await _tap(tester, 'my-finances-export');
-      await _tap(tester, 'my-finances-export-ws-Lyon');
+      await _tap(tester, 'my-finances-export-inst-b:ws-Lyon');
 
       final rows = _lines(saver.files.values.single);
       final payments = rows.where((r) => r.contains(',payment,')).toList();
@@ -625,13 +625,13 @@ void main() {
     testWidgets('the home\'s workspace with payments and no invoice has its '
         'entry, read on the home', (tester) async {
       final saver = _Saver();
-      final home = FakeAccountActivityRepository()
+      final home = FakeAccountActivityRepository(installationId: 'inst-home')
         ..records[AccountActivityKind.payments] = [
           _row('pay-home', ws: 'Office A', currency: 'EUR', amount: 1200),
         ];
       await pumpFinances(tester, home, _Reader(), saver);
       await _tap(tester, 'my-finances-export');
-      await _tap(tester, 'my-finances-export-ws-Office A');
+      await _tap(tester, 'my-finances-export-inst-home:ws-Office A');
 
       final rows = _lines(saver.files.values.single);
       expect(rows.last, contains(',"EUR",,12.00,,,,payment,"home",'));

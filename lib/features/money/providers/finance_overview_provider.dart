@@ -10,12 +10,14 @@ import '../../../core/time/business_day_providers.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/providers/workspace_providers.dart';
 import '../domain/account_activity.dart';
 import '../domain/finance_hosts.dart';
 import '../domain/finance_overview.dart';
 import '../domain/finance_sources.dart';
 import 'account_activity_providers.dart';
 import 'finance_host_providers.dart';
+import 'invoice_group_providers.dart' show financeHomeInstallationProvider;
 
 export '../domain/finance_due.dart';
 
@@ -69,19 +71,22 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
     final split = ref.watch(selectedWorkspaceHostProvider);
     // Watched before the first await; a failure of one while another is
     // awaited must not go unhandled.
+    final homeIdentity = ref.watch(financeHomeInstallationProvider.future)..ignore();
     final hostsAnswer = ref.watch(financeHostsProvider.future)..ignore();
     final limitsAnswer = ref.watch(financeReadLimitsProvider.future)..ignore();
     final selected = split == null ? null : _selectedRepository(ref);
     _selectedSource = split?.source;
     _selectedRepo = selected;
     final hosts = await _away(hostsAnswer);
-    // A selected workspace on a host read below is answered there, once.
-    final covered = split != null &&
-        (hosts ?? const <FinanceHost>[]).any((h) => h.workspaceIds.contains(split.workspaceId));
     // #2557 C4 — each host that answers is recorded, so the coverage above
     // the results names what was read as well as what was not.
-    var mine = (await home.overview()).answeredBy(null);
-    if (split != null && !covered) {
+    var mine = await home.overview();
+    if (mine.sourceInstallation == null) {
+      final installation = await homeIdentity;
+      if (installation != null) mine = mine.onInstallation(installation);
+    }
+    mine = mine.answeredBy(null);
+    if (split != null) {
       mine = await _selected(mine, selected, split.source);
     }
     // #3682 — an unread list of hosts is a source that did not answer, with
@@ -125,7 +130,7 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   /// null when the list itself could not be read.
   Future<List<FinanceHost>?> _away(Future<List<FinanceHost>> answer) async {
     try {
-      return [for (final h in await answer) if (!h.hostedHere) h];
+      return {for (final h in await answer) if (!h.hostedHere) h.installationId: h}.values.toList();
     } on Object catch (e, st) {
       TraceLogger.instance.warn(
         'money',
@@ -288,7 +293,7 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
         ? OwnPayments.unavailable(source)
         : OwnPayments(source, [
             for (final p in rows)
-              if (p.workspaceId == workspaceId) p,
+              if (p.networkId == workspaceId) p,
           ]);
   }
 
@@ -300,6 +305,8 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
   ) {
     const kind = AccountActivityKind.payments;
     switch (source) {
+      case UnavailableFinanceSource():
+        return null;
       case HomeFinanceSource():
         final home = ref.read(accountActivityRepositoryProvider);
         return (before) => home.list(kind, before: before);
@@ -308,7 +315,8 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
         if (reads == null) return null;
         final reader = ref.read(financeHostReaderProvider);
         return (before) => reads.run(
-          () => reader.activity(host, kind, before: before).timeout(_timeout),
+          () async => [for (final p in await reader.activity(host, kind, before: before).timeout(_timeout))
+            p.onInstallation(host.installationId)],
         );
       case SelectedFinanceSource(:final origin):
         final selected = _selectedRepo;
@@ -397,3 +405,16 @@ DateTime financeNow(Ref ref) {
   }
   return ref.watch(clockProvider).now();
 }
+
+/// Development filtering uses the same qualified workspace identity as the
+/// personal rows; a local id on another host cannot hide real invoices.
+final financeCurrentTargetProvider = Provider((ref) =>
+    ref.watch(readyWorkspaceContextProvider)?.target);
+
+final financeDevelopmentWorkspaceIdsProvider = Provider<Set<String>>((ref) {
+  final home = ref.watch(financeHomeInstallationProvider).value ??
+      ref.watch(financeOverviewProvider).value?.answered
+          .where((s) => s.origin == null).firstOrNull?.installationId;
+  return {for (final id in ref.watch(myDevelopmentWorkspaceIdsProvider))
+    if (home == null) id else '$home:$id'};
+});

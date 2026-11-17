@@ -66,7 +66,7 @@ void main() {
     await _pumps(tester, 5);
 
     // only the Zurich business's documents, as a person narrows the list
-    final zurich = find.byKey(ValueKey('finances-filter-${chf.workspaceId}'));
+    final zurich = find.byKey(ValueKey('finances-filter-${chf.networkId}'));
     await tester.ensureVisible(zurich);
     await tester.tap(zurich);
     await _pumps(tester, 5);

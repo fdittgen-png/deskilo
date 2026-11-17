@@ -41,6 +41,8 @@ const List<String> _columns = [
   'paid_at',
   'payment_id',
   'description',
+  'installation_id',
+  'workspace_id',
 ];
 
 /// [count] empty cells.
@@ -75,6 +77,8 @@ String _paymentRow(AccountActivity p, String source) => [
   p.occurredAt.toUtc().toIso8601String(),
   csvCell(p.id),
   csvCell(p.description),
+  csvCell(p.installationId ?? ''),
+  csvCell(p.workspaceId),
 ].join(',');
 
 /// The invoices of [overview], newest first (the id breaks a tie), then
@@ -87,7 +91,9 @@ Uint8List ownFinanceCsv(FinanceOverview overview, {OwnPayments? payments}) {
   final invoices = [...overview.invoices]
     ..sort((a, b) {
       final byDate = b.issuedAt.compareTo(a.issuedAt);
-      return byDate != 0 ? byDate : a.id.compareTo(b.id);
+      if (byDate != 0) return byDate;
+      final source = a.networkId.compareTo(b.networkId);
+      return source != 0 ? source : a.id.compareTo(b.id);
     });
   final notes = {
     for (final source in overview.notAnswered) _host(source),
@@ -110,8 +116,10 @@ Uint8List ownFinanceCsv(FinanceOverview overview, {OwnPayments? payments}) {
         '${i.reminderCount}',
         csvCell(i.id),
         'invoice',
-        csvCell(overview.sourceOf(i.workspaceId).name),
+        csvCell(overview.sourceOf(i.networkId).name),
         ..._blank(3),
+        csvCell(i.installationId ?? ''),
+        csvCell(i.workspaceId),
       ].join(','),
     if (payments != null)
       for (final p in FinanceOverview.newestFirst(payments.payments))

@@ -1043,6 +1043,7 @@ const Set<String> uiKeys = {
   'demo-usage-chiara-a',
   'demo-usage-chiara-b',
   'demo-usage-chiara-c',
+  'demo-usage-chiara-extra',
   'demo-valuation-last',
   'demo-vat-0',
   'demo-vat-10',

@@ -38,6 +38,7 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
   /// Pays the oldest month of [selection] online, after its confirmation:
   /// one provider checkout per tap; the other months stay selected.
   Future<void> _pay(FinanceSelection selection) async {
+    final commands = ref.read(financeSelectionCommandsProvider);
     final first = selection.months.first;
     if (_tooMany(selection)) return;
     final confirmed = await confirmFinanceSelection(
@@ -46,20 +47,22 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
       declare: false,
     );
     if (confirmed != true || !mounted) return;
-    if (!await ref.read(financeSelectionCommandsProvider).enterFor(selection)) {
+    final captured = await commands.capture(selection);
+    if (captured == null) {
       if (mounted) _unavailable(selection);
       return;
     }
-    if (!mounted) return;
-    final started = await MoneyOnlinePayment(this, ref).pay(
-      first.cents,
-      first.period,
-      invoiceIds: [for (final i in first.invoices) i.id],
-    );
-    if (started) {
-      ref
-          .read(financeSelectionControllerProvider.notifier)
-          .remove(first.invoices);
+    try {
+      if (!mounted) return;
+      final started = await MoneyOnlinePayment(this, ref).pay(
+        first.cents, first.period,
+        invoiceIds: [for (final i in first.invoices) i.id], captured: captured,
+      );
+      if (started) {
+        ref.read(financeSelectionControllerProvider.notifier).remove(first.invoices);
+      }
+    } finally {
+      captured.release();
     }
     // refused, failed or started: the rows are read again either way
     await refreshMyFinances(ref);
@@ -91,6 +94,7 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
   /// recorded before it, and leaves what is still to declare selected.
   Future<void> _declare(FinanceSelection selection) async {
     final l10n = context.l10n;
+    final commands = ref.read(financeSelectionCommandsProvider);
     if (_tooMany(selection)) return;
     final confirmed = await confirmFinanceSelection(
       context,
@@ -108,9 +112,7 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
       errorText: l10n.financesDeclareFailed,
       action: () async {
         try {
-          done = await ref
-              .read(financeSelectionCommandsProvider)
-              .declare(
+          done = await commands.declare(
                 selection,
                 onRecorded: (m) {
                   recorded.add(m.period);

@@ -1,5 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
+import '../../../core/backend/operation_context.dart' show WorkspaceTarget;
 import 'finance_overview.dart';
 
 /// Account RPC projection. It contains neither operator stamps nor other
@@ -43,6 +45,7 @@ class AccountActivity {
     required this.description,
     required this.currency,
     required this.status,
+    this.installationId,
     this.amountCents,
     this.minutes,
   });
@@ -53,6 +56,26 @@ class AccountActivity {
       description,
       currency,
       status;
+  /// Identity supplied by the verified reader of this page.
+  final String? installationId;
+  WorkspaceTarget? get target => installationId == null ? null
+      : WorkspaceTarget.local(installationId: installationId!, workspaceId: workspaceId);
+  String get networkId => target?.networkId ?? workspaceId;
+
+  AccountActivity onInstallation(String installationId) => AccountActivity(
+    installationId: installationId,
+    id: id,
+    workspaceId: workspaceId,
+    workspaceName: workspaceName,
+    occurredAt: occurredAt,
+    reference: reference,
+    description: description,
+    currency: currency,
+    status: status,
+    amountCents: amountCents,
+    minutes: minutes,
+  );
+
   final DateTime occurredAt;
   final int? amountCents, minutes;
   ActivityCursor get cursor => (at: occurredAt, id: id);

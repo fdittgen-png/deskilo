@@ -27,6 +27,7 @@ class FinanceSelection {
   int get count => invoices.length;
 
   String? get workspaceId => invoices.firstOrNull?.workspaceId;
+  String? get networkId => invoices.firstOrNull?.networkId;
   String? get workspaceName => invoices.firstOrNull?.workspaceName;
   String? get currency => invoices.firstOrNull?.currency;
 
@@ -37,19 +38,19 @@ class FinanceSelection {
   int get cents => invoices.fold(0, (sum, i) => sum + dueOf(i));
 
   bool holds(FinanceInvoice i) =>
-      invoices.any((s) => s.workspaceId == i.workspaceId && s.id == i.id);
+      invoices.any((s) => s.networkId == i.networkId && s.id == i.id);
 
   /// Whether a payment may name [i] at all: the server says so, and its
   /// month is known (a host that does not say offers nothing to select).
   static bool selectable(FinanceInvoice i) =>
-      i.payable && i.period != null;
+      i.target != null && i.payable && i.period != null;
 
   /// Whether [i] may join this selection: selectable, and of its business
   /// and currency.
   bool accepts(FinanceInvoice i) =>
       selectable(i) &&
       (isEmpty ||
-          (i.workspaceId == workspaceId &&
+          (i.networkId == networkId &&
               i.currency.toUpperCase() == currency!.toUpperCase()));
 
   /// [i] added, or removed when it is in; an invoice it does not accept
@@ -58,7 +59,7 @@ class FinanceSelection {
     if (holds(i)) {
       return FinanceSelection([
         for (final s in invoices)
-          if (!(s.workspaceId == i.workspaceId && s.id == i.id)) s,
+          if (!(s.networkId == i.networkId && s.id == i.id)) s,
       ]);
     }
     return accepts(i) ? FinanceSelection([...invoices, i]) : this;
@@ -67,7 +68,7 @@ class FinanceSelection {
   /// The selection without [paid].
   FinanceSelection without(Iterable<FinanceInvoice> paid) => FinanceSelection([
     for (final s in invoices)
-      if (!paid.any((p) => p.workspaceId == s.workspaceId && p.id == s.id)) s,
+      if (!paid.any((p) => p.networkId == s.networkId && p.id == s.id)) s,
   ]);
 
   /// The months it spans, oldest first, each with its invoices (oldest
