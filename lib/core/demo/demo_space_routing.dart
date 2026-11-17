@@ -52,6 +52,7 @@ import 'data/money_repository.dart';
 import 'data/my_reservations_repository.dart';
 import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
+import 'demo_finance_commands.dart';
 import 'demo_fixture.dart';
 import 'demo_space_pick.dart';
 
@@ -152,7 +153,7 @@ List<Override> demoSpaceOverrides(DemoFixture fixture) {
     myReservationsSourcesFromMe, pendingAdmissionsFromMe,
     // #2557 C5 — Me › Finances reads the same hosts; the fixture's spaces
     // are the personal home's own, answered by its own read.
-    financeHostsFromMe, financeHomeFromMe, financeWorkspaceEntryFromApp,
+    financeHostsFromMe, financeHomeFromMe, demoFinanceCommands(fixture),
     // #2552 XPRIV-01 — the persona's mask choice, as the app reads it.
     privateValuesFromAccount,
     // #2575

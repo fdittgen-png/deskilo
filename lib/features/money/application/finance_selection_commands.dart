@@ -12,72 +12,80 @@
 //     one the business has not decided;
 //   * enter: the business of a selection, before its payment flow runs.
 // A refusal of the server is thrown as [ClaimRefused], nothing recorded.
+import '../../../core/backend/operation_context.dart' show WorkspaceTarget;
 import '../domain/finance_overview.dart';
 import '../domain/finance_selection.dart';
 import '../domain/member_account_commands.dart';
 import '../domain/payment_claims.dart';
+import '../domain/payment_gateway_repository.dart';
 
-/// Enters [workspaceId] as Open does and answers my member's id there; null
-/// when it cannot be entered or the account changed meanwhile.
-typedef FinanceWorkspaceEntry = Future<String?> Function(String workspaceId);
+/// Captures this verified workspace's member and command clients. The
+/// selection of another workspace cannot change any of them.
+typedef FinanceWorkspaceEntry = Future<FinanceCommandTarget?> Function(WorkspaceTarget target);
+
+class FinanceCommandTarget {
+  const FinanceCommandTarget({required this.target, required this.memberId,
+    required this.currency, required this.commands, required this.gateway,
+    required this.isCurrent, required this.release, required this.open});
+  final WorkspaceTarget target;
+  final String memberId, currency;
+  final MemberAccountCommands commands;
+  final PaymentGatewayRepository gateway;
+  final bool Function() isCurrent;
+  final void Function() release;
+  final Future<bool> Function() open;
+}
 
 class FinanceSelectionCommands {
-  FinanceSelectionCommands({required this.enter, required this.commands});
-
+  FinanceSelectionCommands({required this.enter});
   final FinanceWorkspaceEntry enter;
 
-  /// The account commands of the business entered last.
-  final MemberAccountCommands Function() commands;
-
-  /// Declares [selection] paid, one declaration per month, telling
-  /// [onRecorded] each month recorded. False when its business could not be
-  /// entered (nothing recorded).
-  Future<bool> declare(
-    FinanceSelection selection, {
-    void Function(SelectionMonth month)? onRecorded,
-  }) async {
-    final workspaceId = selection.workspaceId!;
-    final memberId = await enter(workspaceId);
-    if (memberId == null) return false;
-    for (final month in selection.months) {
-      await commands().declareInvoicesPaid(
-        workspaceId: workspaceId,
-        memberId: memberId,
-        claim: InvoiceClaim(
-          period: month.period,
-          amountCents: month.cents,
-          invoiceIds: [for (final i in month.invoices) i.id],
-        ),
-      );
-      onRecorded?.call(month);
-    }
-    return true;
+  Future<FinanceCommandTarget?> capture(FinanceSelection selection) async {
+    final target = selection.invoices.firstOrNull?.target;
+    if (target == null || selection.invoices.any((i) => i.target != target)) return null;
+    return enter(target);
   }
 
-  /// Withdraws the online payment holding [invoice], or takes back the
-  /// declared one. False when there is none or its business could not be
-  /// entered.
+  Future<bool> declare(FinanceSelection selection, {
+    void Function(SelectionMonth month)? onRecorded,
+  }) async {
+    final captured = await capture(selection);
+    if (captured == null) return false;
+    try {
+      for (final month in selection.months) {
+        if (!captured.isCurrent()) return false;
+        await captured.commands.declareInvoicesPaid(
+          workspaceId: captured.target.workspaceId, memberId: captured.memberId,
+          claim: InvoiceClaim(period: month.period, amountCents: month.cents,
+            invoiceIds: [for (final i in month.invoices) i.id]),
+        );
+        onRecorded?.call(month);
+      }
+      return true;
+    } finally {
+      captured.release();
+    }
+  }
+
   Future<bool> withdraw(FinanceInvoice invoice) async {
     final paymentId = invoice.claimPaymentId;
     final eventId = invoice.claimEventId;
-    if (paymentId == null && eventId == null) return false;
-    if (await enter(invoice.workspaceId) == null) return false;
-    if (paymentId != null) {
-      await commands().withdrawPaymentClaim(
-        workspaceId: invoice.workspaceId,
-        paymentId: paymentId,
-      );
-    } else {
-      await commands().withdrawPaymentDeclaration(
-        workspaceId: invoice.workspaceId,
-        eventId: eventId!,
-      );
+    final target = invoice.target;
+    if (target == null || (paymentId == null && eventId == null)) return false;
+    final captured = await enter(target);
+    if (captured == null) return false;
+    try {
+      if (!captured.isCurrent()) return false;
+      if (paymentId != null) {
+        await captured.commands.withdrawPaymentClaim(
+          workspaceId: target.workspaceId, paymentId: paymentId);
+      } else {
+        await captured.commands.withdrawPaymentDeclaration(
+          workspaceId: target.workspaceId, eventId: eventId!);
+      }
+      return true;
+    } finally {
+      captured.release();
     }
-    return true;
   }
-
-  /// Enters the business of [selection] before its payment flow runs (the
-  /// flow pays in the business entered).
-  Future<bool> enterFor(FinanceSelection selection) async =>
-      await enter(selection.workspaceId!) != null;
 }

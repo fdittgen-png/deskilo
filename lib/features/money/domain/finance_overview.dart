@@ -7,6 +7,7 @@
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
+import '../../../core/backend/operation_context.dart' show WorkspaceTarget;
 import '../../../core/text/collation.dart';
 import 'account_activity.dart';
 import 'finance_due.dart';
@@ -26,6 +27,7 @@ class FinanceReminder {
     required this.level,
     required this.automatic,
     this.workspaceId,
+    this.installationId,
   });
 
   final String id, invoiceId, invoiceNumber, workspaceName;
@@ -34,9 +36,14 @@ class FinanceReminder {
   /// identity across hosts. Null until the reminder is qualified by its
   /// invoice ([FinanceOverview.qualified]).
   final String? workspaceId;
+  final String? installationId;
+  WorkspaceTarget? get target => workspaceId == null || installationId == null ? null
+      : WorkspaceTarget.local(installationId: installationId!, workspaceId: workspaceId!);
+  String? get networkId => workspaceId == null ? null
+      : installationId == null ? workspaceId : '$installationId:$workspaceId';
 
   /// This reminder, in [workspaceId].
-  FinanceReminder inWorkspace(String workspaceId) => FinanceReminder(
+  FinanceReminder inWorkspace(String? workspaceId, {String? installation}) => FinanceReminder(
         id: id,
         invoiceId: invoiceId,
         invoiceNumber: invoiceNumber,
@@ -45,6 +52,7 @@ class FinanceReminder {
         level: level,
         automatic: automatic,
         workspaceId: workspaceId,
+        installationId: installation ?? installationId,
       );
   final DateTime sentAt;
   final int level;
@@ -69,10 +77,11 @@ class FinanceReminder {
 /// ([origin] null) or a connected installation, by origin, with the
 /// workspaces whose documents it returned.
 class FinanceSourceRead {
-  const FinanceSourceRead({this.origin, this.workspaceIds = const {}});
+  const FinanceSourceRead({this.origin, this.installationId, this.workspaceIds = const {}});
 
   /// The connected host's origin; null for the personal home.
   final String? origin;
+  final String? installationId;
 
   /// The workspaces this host returned documents of.
   final Set<String> workspaceIds;
@@ -80,6 +89,7 @@ class FinanceSourceRead {
 
 class FinanceOverview {
   const FinanceOverview({
+    this.sourceInstallation,
     this.invoices = const [],
     this.reminders = const [],
     this.unavailableSources = const [],
@@ -88,6 +98,9 @@ class FinanceOverview {
     this.payments = const [],
     this.olderSettledLeftOut = false,
   });
+
+  /// The verified identity of a single reader answer, including an empty one.
+  final String? sourceInstallation;
 
   final List<FinanceInvoice> invoices;
 
@@ -135,25 +148,31 @@ class FinanceOverview {
   FinanceOverview merge(FinanceOverview other) {
     final mine = qualified();
     final theirs = other.qualified();
-    final ids = {for (final i in mine.invoices) (i.workspaceId, i.id)};
+    final ids = {for (final i in mine.invoices) (i.networkId, i.id)};
     final reminderIds = {for (final r in mine.reminders) _reminderKey(r)};
-    final paymentIds = {for (final p in payments) (p.workspaceId, p.id)};
+    final paymentIds = {for (final p in payments) (p.networkId, p.id)};
     return FinanceOverview(
       invoices: [
         ...mine.invoices,
         for (final i in theirs.invoices)
-          if (!ids.contains((i.workspaceId, i.id))) i,
-      ],
+          if (ids.add((i.networkId, i.id))) i,
+      ]..sort((a, b) {
+        final source = a.networkId.compareTo(b.networkId);
+        return source != 0 ? source : a.id.compareTo(b.id);
+      }),
       reminders: [
         ...mine.reminders,
         for (final r in theirs.reminders)
-          if (!reminderIds.contains(_reminderKey(r))) r,
-      ],
-      payments: [
+          if (reminderIds.add(_reminderKey(r))) r,
+      ]..sort((a, b) {
+        final source = (a.networkId ?? a.workspaceName).compareTo(b.networkId ?? b.workspaceName);
+        return source != 0 ? source : a.id.compareTo(b.id);
+      }),
+      payments: newestFirst([
         ...payments,
         for (final p in other.payments)
-          if (!paymentIds.contains((p.workspaceId, p.id))) p,
-      ],
+          if (paymentIds.add((p.networkId, p.id))) p,
+      ]),
       unavailableSources: [...unavailableSources, ...other.unavailableSources],
       answered: [...answered, ...other.answered],
       hosts: [...hosts, ...other.hosts],
@@ -164,20 +183,33 @@ class FinanceOverview {
   /// A reminder's identity: its invoice's workspace and its id (the
   /// workspace's name only while it is not qualified yet).
   static (String, String) _reminderKey(FinanceReminder r) =>
-      (r.workspaceId ?? r.workspaceName, r.id);
+      (r.networkId ?? '${r.installationId ?? ''}:${r.workspaceName}', r.id);
 
   /// The same documents, each reminder qualified with the workspace of its
   /// invoice in THIS answer: one answer comes from one installation, where
   /// an invoice id is one invoice. A reminder whose invoice is not here
   /// stays as it was.
+  FinanceOverview onInstallation(String installationId) {
+    final local = qualified();
+    return FinanceOverview(
+      sourceInstallation: installationId,
+      answered: answered, hosts: hosts, unavailableSources: unavailableSources,
+      olderSettledLeftOut: olderSettledLeftOut,
+      invoices: [for (final i in invoices) i.onInstallation(installationId)],
+      payments: [for (final p in payments) p.onInstallation(installationId)],
+      reminders: [for (final r in local.reminders)
+        r.inWorkspace(r.workspaceId, installation: installationId)],
+    );
+  }
+
   FinanceOverview qualified() {
     if (reminders.every((r) => r.workspaceId != null)) return this;
-    final workspaceOf = {for (final i in invoices) i.id: i.workspaceId};
+    final workspaceOf = {for (final i in invoices) (i.installationId, i.id): i.workspaceId};
     return _with(
       reminders: [
         for (final r in reminders)
-          if (r.workspaceId == null && workspaceOf[r.invoiceId] != null)
-            r.inWorkspace(workspaceOf[r.invoiceId]!)
+          if (r.workspaceId == null && workspaceOf[(r.installationId, r.invoiceId)] != null)
+            r.inWorkspace(workspaceOf[(r.installationId, r.invoiceId)])
           else
             r,
       ],
@@ -194,6 +226,7 @@ class FinanceOverview {
     List<FinanceHostRead>? hosts,
   }) =>
       FinanceOverview(
+        sourceInstallation: sourceInstallation,
         invoices: invoices ?? this.invoices,
         reminders: reminders ?? this.reminders,
         payments: payments ?? this.payments,
@@ -221,7 +254,7 @@ class FinanceOverview {
       [...payments]..sort((a, b) {
           final time = b.occurredAt.compareTo(a.occurredAt);
           if (time != 0) return time;
-          final ws = a.workspaceId.compareTo(b.workspaceId);
+          final ws = a.networkId.compareTo(b.networkId);
           return ws != 0 ? ws : a.id.compareTo(b.id);
         });
 
@@ -241,6 +274,7 @@ class FinanceOverview {
     FinanceHostStatus status, [
     FinanceOverview? answer,
   ]) {
+    answer = answer?.onInstallation(host.installationId);
     final payments = answer?.payments ?? const <AccountActivity>[];
     final read = FinanceHostRead(
       host,
@@ -280,6 +314,7 @@ class FinanceOverview {
           ...answered,
           FinanceSourceRead(
             origin: origin,
+            installationId: sourceInstallation ?? {...invoices.map((i) => i.installationId), ...payments.map((p) => p.installationId)}.nonNulls.singleOrNull,
             workspaceIds: {
               for (final i in invoices) i.workspaceId,
               for (final p in payments) p.workspaceId,
@@ -295,7 +330,7 @@ class FinanceOverview {
 
   /// The workspaces my documents come from, as (id, name), by name.
   List<(String, String)> get workspaces => _byName({
-    for (final i in invoices) i.workspaceId: i.workspaceName,
+    for (final i in invoices) i.networkId: i.workspaceName,
   });
 
   /// The workspaces my documents or my payments come from — these
@@ -304,7 +339,7 @@ class FinanceOverview {
   List<(String, String)> workspacesWith(Iterable<AccountActivity> more) {
     final seen = {for (final (id, name) in workspaces) id: name};
     for (final p in [...payments, ...more]) {
-      seen.putIfAbsent(p.workspaceId, () => p.workspaceName);
+      seen.putIfAbsent(p.networkId, () => p.workspaceName);
     }
     return _byName(seen);
   }
@@ -317,7 +352,7 @@ class FinanceOverview {
   /// reminder follows its invoice.
   FinanceOverview inWorkspace(String? workspaceId) => workspaceId == null
       ? this
-      : where((i) => i.workspaceId == workspaceId);
+      : where((i) => i.networkId == workspaceId);
 
   /// The invoices [keep] accepts, and the reminders of those invoices: a
   /// reminder follows its invoice by workspace and id, so an equal local
@@ -325,15 +360,15 @@ class FinanceOverview {
   /// their own face narrows them.
   FinanceOverview where(bool Function(FinanceInvoice) keep) {
     final mine = [for (final i in invoices) if (keep(i)) i];
-    final ids = {for (final i in mine) (i.workspaceId, i.id)};
-    final local = {for (final i in mine) i.id};
+    final ids = {for (final i in mine) (i.networkId, i.id)};
+    final local = {for (final i in mine) (i.installationId, i.id)};
     return _with(
       invoices: mine,
       reminders: [
         for (final r in qualified().reminders)
           if (r.workspaceId == null
-              ? local.contains(r.invoiceId)
-              : ids.contains((r.workspaceId!, r.invoiceId)))
+              ? local.contains((r.installationId, r.invoiceId))
+              : ids.contains((r.networkId!, r.invoiceId)))
             r,
       ],
     );
@@ -342,11 +377,11 @@ class FinanceOverview {
   /// Production only: what Me counts. A development space holds test data
   /// and never enters a total.
   FinanceOverview production(Set<String> devWorkspaceIds) =>
-      where((i) => !devWorkspaceIds.contains(i.workspaceId));
+      where((i) => !devWorkspaceIds.contains(i.networkId));
 
   /// The development spaces' documents, shown apart and marked DEV.
   FinanceOverview development(Set<String> devWorkspaceIds) =>
-      where((i) => devWorkspaceIds.contains(i.workspaceId));
+      where((i) => devWorkspaceIds.contains(i.networkId));
 
   List<FinanceInvoice> get outstanding => [
         for (final i in invoices)
@@ -382,7 +417,7 @@ class FinanceOverview {
   Map<(String, String), int> get _openByPayee {
     final out = <(String, String), int>{};
     for (final i in outstanding.where((i) => !_validatingWhole(i))) {
-      final payee = (i.workspaceId, i.currency);
+      final payee = (i.networkId, i.currency);
       out[payee] = (out[payee] ?? 0) + i.remainingCents;
     }
     return out;

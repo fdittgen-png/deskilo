@@ -4,12 +4,16 @@
 // workspace — the total, the overdue count — and one tap opens Me › Finances.
 // With nothing to pay there is no card at all.
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
+import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/features/money/application/finance_selection_commands.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
+import 'package:deskilo/features/money/providers/finance_selection_provider.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/mock_providers.dart' show kTestInstallationId;
 import '../../helpers/screens/my_finances_screen.dart' show invoice;
 import 'me_app.dart';
 
@@ -169,7 +173,7 @@ void main() {
     final spaces = twoSpaces();
     spaces.workspaces[1] = spaces.workspaces[1].copyWith(environment: 'dev');
     spaces.workspaces[0] = spaces.workspaces[0].copyWith(environment: 'prod');
-    final repo = FakeAccountActivityRepository()
+    final repo = FakeAccountActivityRepository(installationId: kTestInstallationId)
       ..financeOverview = FinanceOverview(
         invoices: [
           FinanceInvoice(
@@ -190,6 +194,16 @@ void main() {
       tester,
       workspace: spaces,
       accountActivity: repo,
+      extraOverrides: [financeWorkspaceEntryProvider.overrideWith((ref) => (target) async {
+        expect(target.installationId, kTestInstallationId);
+        final money = FakeMoneyRepository();
+        return FinanceCommandTarget(target: target, memberId: 'member-1', currency: 'EUR',
+          commands: money.accountCommands, gateway: money.paymentGateway,
+          isCurrent: () => ref.mounted, release: () {}, open: () async {
+            await ref.read(activeWorkspaceIdProvider.notifier).select(target.workspaceId);
+            return true;
+          });
+      })],
     );
     await goTo(tester, router, '/me');
     expect(find.byKey(const ValueKey('me-home-finance-glance')), findsNothing,

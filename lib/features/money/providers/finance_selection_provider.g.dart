@@ -116,7 +116,7 @@ final class FinanceSelectionProvider
   }
 }
 
-String _$financeSelectionHash() => r'7a80d16da3f05481bab709e674d181e663a82a25';
+String _$financeSelectionHash() => r'dd0c648088e57d4d82749d5cedd80f1d69f3bc5d';
 
 /// Enters a business as Open does. Nothing by default; the composition root
 /// selects the workspace (`financeWorkspaceEntryFromApp`, lib/app), where
@@ -237,7 +237,7 @@ final class FinanceSelectionCommandsProvider
 }
 
 String _$financeSelectionCommandsHash() =>
-    r'9425fbf3da6a2218ee584283c3fdf100fded8d1b';
+    r'e30cc7353b24f5e5ccf7b8e83419a3012f980cdd';
 
 /// #3556 — the request ids of my payments, one set per account, shared by
 /// My finances and the Money screen: a retry after a lost answer is the

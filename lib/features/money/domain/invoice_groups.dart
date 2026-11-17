@@ -14,7 +14,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'finance_overview.dart';
-import 'finance_sources.dart';
 
 /// One invoice, by the installation and workspace that hold it and its id.
 class InvoiceRef {
@@ -123,23 +122,15 @@ abstract interface class InvoiceGroupRepository {
   Future<void> remove(String groupId, InvoiceRef ref);
 }
 
-/// The reference of [invoice] as [overview] read it: the installation of
-/// the source that answered for its workspace — a connected host, or my
-/// personal home ([homeInstallationId]). Null when it cannot be told (a
-/// workspace read only through the selected workspace's origin, or the
-/// home's id unknown): such an invoice is not filed.
+/// The reference stamped by the invoice's verified reader. An unresolved
+/// row has no reference; another row's equal local id cannot supply it.
 InvoiceRef? invoiceRefOf(
   FinanceOverview overview,
   FinanceInvoice invoice, {
   required String? homeInstallationId,
 }) {
-  final installation = switch (overview.sourceOf(invoice.workspaceId)) {
-    HostFinanceSource(:final host) => host.installationId,
-    HomeFinanceSource() => homeInstallationId,
-    SelectedFinanceSource() => null,
-  };
-  if (installation == null || installation.isEmpty) return null;
-  return InvoiceRef('$installation:${invoice.workspaceId}', invoice.id);
+  final target = invoice.target;
+  return target == null ? null : InvoiceRef(target.networkId, invoice.id);
 }
 
 /// A group as My finances reads it now.
@@ -162,7 +153,7 @@ class InvoiceGroupView {
   int get count => group.items.length;
 
   bool shows(FinanceInvoice invoice) => invoices.any(
-    (i) => i.workspaceId == invoice.workspaceId && i.id == invoice.id,
+    (i) => i.networkId == invoice.networkId && i.id == invoice.id,
   );
 
   /// The face value of what it holds, one sum per currency, by currency

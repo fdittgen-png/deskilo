@@ -286,7 +286,8 @@ void main() {
         authOptions: const AuthClientOptions(autoRefreshToken: false),
       );
       final container = ProviderContainer(
-        overrides: [moneyClientProvider.overrideWithValue(client)],
+        overrides: [moneyClientProvider.overrideWithValue(client),
+          installationIdReaderProvider.overrideWithValue((_) async => 'inst-w')],
       );
       addTearDown(() async {
         container.dispose();
@@ -297,6 +298,7 @@ void main() {
           .overview();
       expect(requests, ['w.example/rest/v1/rpc/my_finance_overview']);
       expect(overview.invoices.single.currency, 'CHF');
+      expect(overview.invoices.single.networkId, 'inst-w:${overview.invoices.single.workspaceId}');
     },
   );
 

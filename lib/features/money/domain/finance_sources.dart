@@ -49,25 +49,30 @@ class SelectedFinanceSource extends FinanceSource {
   }
 }
 
+/// A row whose verified source is unavailable cannot dispatch an action.
+class UnavailableFinanceSource extends FinanceSource {
+  const UnavailableFinanceSource(this.name);
+  @override
+  final String name;
+}
+
 extension FinanceSourceOf on FinanceOverview {
-  /// The source that answered [workspaceId]'s documents: a connected host
-  /// that returned them (or names the workspace), else the selected
-  /// workspace's host that returned them, else the personal home.
-  FinanceSource sourceOf(String workspaceId) {
+  /// Resolve the full workspace reference, never an equal local id on a
+  /// different installation. Unknown references stay unavailable.
+  FinanceSource sourceOf(String networkId) {
     for (final h in hosts) {
       if (h.status == FinanceHostStatus.answered &&
-          (h.workspaceIds.contains(workspaceId) ||
-              h.host.workspaceIds.contains(workspaceId))) {
+          networkId.startsWith('${h.host.installationId}:')) {
         return HostFinanceSource(h.host);
       }
     }
     for (final read in answered) {
-      final origin = read.origin;
-      if (origin != null && read.workspaceIds.contains(workspaceId)) {
-        return SelectedFinanceSource(origin);
+      if (read.installationId != null && networkId.startsWith('${read.installationId}:')) {
+        return read.origin == null ? const HomeFinanceSource()
+            : SelectedFinanceSource(read.origin!);
       }
     }
-    return const HomeFinanceSource();
+    return UnavailableFinanceSource(networkId);
   }
 }
 

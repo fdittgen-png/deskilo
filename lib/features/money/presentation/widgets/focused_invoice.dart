@@ -6,6 +6,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/session/session_source.dart';
+import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/money_face.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/money_face_controller.dart';
@@ -23,14 +25,20 @@ Future<void> openFocusedInvoice(
   required String? workspaceId,
   required String countryCode,
 }) async {
-  if (focus == null || workspaceId != focus.workspaceId) return;
+  final target = ref.read(readyWorkspaceContextProvider)?.target;
+  if (focus == null || (workspaceId != focus.workspaceId && target?.networkId != focus.workspaceId)) return;
+  final principal = ref.read(sessionStateProvider).value;
+  bool current() => ref.read(sessionStateProvider).value == principal &&
+      ref.read(readyWorkspaceContextProvider)?.target == target;
   ref.read(invoiceFocusProvider.notifier).clear();
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.invoices);
-  final invoices = await ref.read(invoicesProvider.future);
+  final invoiceAnswer = ref.read(invoicesProvider.future);
+  final matchAnswer = ref.read(invoiceMatchesProvider.future)..ignore();
+  final invoices = await invoiceAnswer;
   final invoice = invoices.where((i) => i.id == focus.invoiceId).firstOrNull;
-  if (!context.mounted || invoice == null) return;
-  final matches = await ref.read(invoiceMatchesProvider.future);
-  if (!context.mounted) return;
+  if (!context.mounted || invoice == null || !current()) return;
+  final matches = await matchAnswer;
+  if (!context.mounted || !current()) return;
   await showInvoiceDetailSheet(
     context,
     ref: ref,

@@ -35,8 +35,8 @@ void main() {
     test(
       'the home\'s own invoice names the home; a host\'s names the host',
       () {
-        final home = _invoice('i1', 'ws-home', 100, 'EUR');
-        final away = _invoice('i2', _ws, 100, 'EUR');
+        final home = _invoice('i1', 'ws-home', 100, 'EUR').onInstallation(_home);
+        final away = _invoice('i2', _ws, 100, 'EUR').onInstallation(_lyon);
         final overview = FinanceOverview(
           invoices: [home, away],
           hosts: const [
@@ -83,7 +83,7 @@ void main() {
     });
   });
 
-  test('two installations\' equal local ids stay two invoices', () {
+  test('an unanswered installation leaves its group reference unreadable', () {
     const group = InvoiceGroup(
       id: 'g',
       name: 'To reimburse',
@@ -91,7 +91,7 @@ void main() {
     );
     // the overview holds the same local workspace and invoice id, but on Lyon
     final overview = FinanceOverview(
-      invoices: [_invoice('i1', _ws, 500, 'EUR')],
+      invoices: [_invoice('i1', _ws, 500, 'EUR').onInstallation(_lyon)],
       hosts: const [
         FinanceHostRead(
           _lyonHost,
@@ -105,11 +105,27 @@ void main() {
     expect(view.unreadable.single.number, 'Z-1');
   });
 
+  test('two answered installations match groups by the full reference', () {
+    final a = _invoice('same', _ws, 10000, 'EUR').onInstallation(_lyon);
+    final b = _invoice('same', _ws, 3000, 'EUR').onInstallation(_zurich);
+    for (final rows in [[a, b], [b, a]]) {
+      final overview = FinanceOverview(invoices: rows);
+      const group = InvoiceGroup(id: 'g', name: 'Zurich', items: [
+        InvoiceGroupItem(InvoiceRef('$_zurich:$_ws', 'same'), 'Z'),
+      ]);
+      final view = invoiceGroupView(group, overview, homeInstallationId: _home);
+      expect(view.invoices, [b]);
+      expect(view.shows(a), isFalse);
+      expect(view.totals, [('EUR', 3000)]);
+      expect(view.unreadable, isEmpty);
+    }
+  });
+
   test('a group reads what it names now: one total per currency, by code, '
       'and what cannot be read is named and left out', () {
-    final eur1 = _invoice('a', 'ws-a', 12000, 'EUR');
-    final chf = _invoice('b', 'ws-b', 8400, 'chf');
-    final eur2 = _invoice('c', 'ws-c', 3000, 'EUR');
+    final eur1 = _invoice('a', 'ws-a', 12000, 'EUR').onInstallation(_home);
+    final chf = _invoice('b', 'ws-b', 8400, 'chf').onInstallation(_home);
+    final eur2 = _invoice('c', 'ws-c', 3000, 'EUR').onInstallation(_home);
     const group = InvoiceGroup(
       id: 'g',
       name: 'Taxes 2026',
@@ -122,7 +138,7 @@ void main() {
     );
     final view = invoiceGroupView(
       group,
-      FinanceOverview(invoices: [eur1, chf, eur2]),
+      FinanceOverview(invoices: [eur1, chf, eur2]).onInstallation(_home),
       homeInstallationId: _home,
     );
     expect(view.count, 4);

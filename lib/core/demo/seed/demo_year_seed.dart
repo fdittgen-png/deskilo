@@ -242,6 +242,11 @@ void _seedUsageInvoices(FakeMoneyRepository money, DateTime now) {
       rooms,
       1,
     ),
+    // #3556 1c — two invoices of one month paid by one payment.
+    _usageInvoice(
+      'demo-usage-chiara-extra', 'member-3', 'Chiara Rossi', lastMonth,
+      [_line('Meeting room, 1 h', 4000, 20)], 4,
+    ),
     _usageInvoice(
       'demo-usage-chiara-c',
       'member-3',

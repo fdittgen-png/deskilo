@@ -52,7 +52,7 @@ Future<void> _show(
       overrides: [
         ...standardTestOverrides(
           auth: FakeAuthRepository.signedIn(),
-          accountActivity: FakeAccountActivityRepository()
+          accountActivity: FakeAccountActivityRepository(installationId: 'inst-home')
             ..financeOverview = overview,
         ),
         fileDeliveryModeProvider.overrideWithValue(FileDeliveryMode.direct),
@@ -69,6 +69,20 @@ Future<void> _show(
 }
 
 void main() {
+  test('each exported local id carries its installation and cannot mix hosts', () {
+    final a = invoice('same', ws: 'Same').onInstallation('A');
+    final b = invoice('same', ws: 'Same', total: 3000).onInstallation('B');
+    final all = FinanceOverview(invoices: [a]).answeredBy(null)
+        .merge(FinanceOverview(invoices: [b]).answeredBy('https://b.example'));
+    for (final row in [a, b]) {
+      final lines = _lines(ownFinanceCsv(all.inWorkspace(row.networkId)));
+      expect(lines, hasLength(2));
+      expect(lines.last, endsWith(',"${row.installationId}","ws-Same"'));
+      expect(lines.last, contains(row.installationId == 'A' ? '100.00' : '30.00'));
+    }
+    expect(all.merge(all).invoices, hasLength(2), reason: 'same verified sources deduplicate');
+  });
+
   group('the CSV of one workspace', () {
     test('amounts are exact numbers in each currency\'s own exponent, '
         'newest first, with no total', () {
@@ -99,7 +113,7 @@ void main() {
         rows.first,
         'number,workspace,issued_at,due_on,state,currency,total,paid,'
         'remaining,reminders,invoice_id,record,source,paid_at,payment_id,'
-        'description',
+        'description,installation_id,workspace_id',
       );
       expect(rows, hasLength(5));
       // Same issue day: the id breaks the tie.
@@ -163,11 +177,11 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('my-finances-export')));
       await tester.pumpAndSettle();
       expect(
-        find.byKey(const ValueKey('my-finances-export-ws-Office A')),
+        find.byKey(const ValueKey('my-finances-export-inst-home:ws-Office A')),
         findsOneWidget,
       );
       await tester.tap(
-        find.byKey(const ValueKey('my-finances-export-ws-Office B')),
+        find.byKey(const ValueKey('my-finances-export-inst-home:ws-Office B')),
       );
       await tester.pumpAndSettle();
       expect(saver.files, hasLength(1));
@@ -185,7 +199,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('my-finances-export')));
       await tester.pumpAndSettle();
       await tester.tap(
-        find.byKey(const ValueKey('my-finances-export-ws-Office A')),
+        find.byKey(const ValueKey('my-finances-export-inst-home:ws-Office A')),
       );
       await tester.pumpAndSettle();
       expect(find.textContaining('Saved to'), findsNothing);
@@ -199,7 +213,7 @@ void main() {
       await tester.tap(find.byKey(const ValueKey('my-finances-export')));
       await tester.pumpAndSettle();
       await tester.tap(
-        find.byKey(const ValueKey('my-finances-export-ws-Office A')),
+        find.byKey(const ValueKey('my-finances-export-inst-home:ws-Office A')),
       );
       await tester.pumpAndSettle();
       expect(find.textContaining('Saved to'), findsNothing);

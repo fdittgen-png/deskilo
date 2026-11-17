@@ -12,7 +12,6 @@ import '../domain/finance_overview.dart';
 import '../domain/finance_selection.dart';
 import '../domain/payment_request_ids.dart';
 import 'finance_overview_provider.dart';
-import 'money_queries_providers.dart';
 
 part 'finance_selection_provider.g.dart';
 
@@ -43,7 +42,7 @@ FinanceSelection financeSelection(Ref ref) {
   return FinanceSelection([
     for (final c in chosen.invoices)
       for (final i in overview.invoices)
-        if (i.workspaceId == c.workspaceId &&
+        if (i.networkId == c.networkId &&
             i.id == c.id &&
             FinanceSelection.selectable(i))
           i,
@@ -65,7 +64,6 @@ FinanceWorkspaceEntry financeWorkspaceEntry(Ref ref) =>
 FinanceSelectionCommands financeSelectionCommands(Ref ref) =>
     FinanceSelectionCommands(
       enter: ref.watch(financeWorkspaceEntryProvider),
-      commands: () => ref.read(memberAccountCommandsProvider),
     );
 
 /// #3556 — the request ids of my payments, one set per account, shared by

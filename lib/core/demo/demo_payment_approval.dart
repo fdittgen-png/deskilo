@@ -11,18 +11,23 @@ import '../../features/money/providers/money_providers.dart';
 import '../../features/money/providers/payment_approval_providers.dart';
 import 'data/money/demo_payment_gateway_repository.dart';
 import 'demo_fixture.dart';
+import 'demo_spaces.dart';
 import 'presentation/demo_provider_page.dart';
 
 /// The Demo's [PaymentApproval] for [fixture]'s session.
 PaymentApproval Function(Ref ref) demoPaymentApproval(DemoFixture fixture) =>
     (ref) => (BuildContext context, Uri approveUrl) async {
       final orderId = demoProviderOrderOf(approveUrl);
-      final gateway = ref.read(paymentGatewayRepositoryProvider);
-      if (orderId == null || gateway is! DemoPaymentGateway) {
+      final workspaceId = approveUrl.queryParameters['workspace'];
+      final space = DemoSpaceKey.values.where((s) => s.id == workspaceId).singleOrNull;
+      if (orderId == null || space == null) {
         await fixture.outward.openLink(approveUrl);
         return;
       }
+      final gateway = fixture.space(space).money.paymentGateway;
+      final actor = fixture.actor.memberId;
       final answer = await showDemoProviderPage(context);
+      if (fixture.actor.memberId != actor) return;
       await gateway.resolveOrder(
         orderId,
         answer ?? DemoPaymentOutcome.noAnswer,

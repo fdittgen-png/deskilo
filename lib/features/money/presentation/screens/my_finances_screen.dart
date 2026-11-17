@@ -11,24 +11,24 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/backend/operation_context.dart' show WorkspaceTarget;
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/navigation/page_spec.dart';
-import '../../../../core/session/session_source.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/status_colors.dart';
 import '../../../../core/ui/app_tab_bar.dart';
 import '../../../../core/ui/empty_state.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/loading_view.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/account_activity.dart';
 import '../../domain/finance_filter.dart';
 import '../../domain/finance_overview.dart';
 import '../../domain/money_face.dart';
 import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
+import '../../providers/finance_selection_provider.dart';
 import '../../providers/invoice_group_providers.dart';
 import '../../providers/money_face_controller.dart';
 import '../../providers/money_focus_controller.dart';
@@ -67,7 +67,7 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
     final all = overview.value ?? const FinanceOverview(); // empty-ok: the body shows it only on data; loading and a failure have their own faces (below)
     // Me is production. A development space's documents are test data:
     // shown apart, in the development colour, and never counted.
-    final devIds = ref.watch(myDevelopmentWorkspaceIdsProvider);
+    final devIds = ref.watch(financeDevelopmentWorkspaceIdsProvider);
     final group = ref.watch(invoiceGroupViewsProvider)[_groupId];
     final data = group == null ? _filter.apply(all) : _filter.apply(all).where(group.shows);
     final (prod, dev) = (data.production(devIds), data.development(devIds));
@@ -156,16 +156,19 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
 Future<void> _openMyInvoice(
   BuildContext context,
   WidgetRef ref,
-  String workspaceId,
+  WorkspaceTarget? target,
   String invoiceId,
 ) async {
   final router = GoRouter.of(context);
-  // CACHE-01 (#2557): the tap stands only for the account it was made in.
-  final principal = ref.read(sessionStateProvider).value;
-  await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
-  if (!context.mounted) return;
-  if (ref.read(sessionStateProvider).value != principal) return;
-  ref.read(invoiceFocusProvider.notifier).request(workspaceId, invoiceId);
+  if (target == null) return;
+  final captured = await ref.read(financeWorkspaceEntryProvider)(target);
+  if (captured == null) return;
+  try {
+    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
+  } finally {
+    captured.release();
+  }
+  ref.read(invoiceFocusProvider.notifier).request(target.networkId, invoiceId);
   router.go('/money');
 }
 
@@ -173,15 +176,19 @@ Future<void> _openMyInvoice(
 Future<void> _openMyPayment(
   BuildContext context,
   WidgetRef ref,
-  String workspaceId,
+  WorkspaceTarget? target,
   DateTime at,
 ) async {
   final router = GoRouter.of(context);
-  // CACHE-01 (#2557): the tap stands only for the account it was made in.
-  final principal = ref.read(sessionStateProvider).value;
-  await ref.read(activeWorkspaceIdProvider.notifier).select(workspaceId);
+  if (target == null) return;
+  final captured = await ref.read(financeWorkspaceEntryProvider)(target);
+  if (captured == null) return;
+  try {
+    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
+  } finally {
+    captured.release();
+  }
   if (!context.mounted) return;
-  if (ref.read(sessionStateProvider).value != principal) return;
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
   final local = personalFormatOf(context).wall(at);
   ref
@@ -221,7 +228,7 @@ class _Outstanding extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm),
           FinanceDocumentList(invoices: list, documents: data, now: now,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
+                  _openMyInvoice(context, ref, i.target, i.id))),
         ],
         if (dev.outstanding.isNotEmpty) ...[
           const FinancesDevSection(),
@@ -231,7 +238,7 @@ class _Outstanding extends ConsumerWidget {
               now: now,
               isDev: true,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
+                  _openMyInvoice(context, ref, i.target, i.id))),
         ],
       ],
     );
@@ -261,7 +268,7 @@ class _Paid extends ConsumerWidget {
               documents: data,
               now: now,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
+                  _openMyInvoice(context, ref, i.target, i.id))),
         if (dev.paid.isNotEmpty) ...[
           const FinancesDevSection(),
           FinanceDocumentList(
@@ -270,7 +277,7 @@ class _Paid extends ConsumerWidget {
               now: now,
               isDev: true,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.workspaceId, i.id))),
+                  _openMyInvoice(context, ref, i.target, i.id))),
         ],
       ],
     );
@@ -289,15 +296,15 @@ class _Reminders extends ConsumerWidget {
     final theme = Theme.of(context);
     final format = personalFormatOf(context).dates(DateShape.date);
     final workspaceOf = {
-      for (final i in [...data.invoices, ...dev.invoices]) i.id: i.workspaceId,
+      for (final i in [...data.invoices, ...dev.invoices]) (i.networkId, i.id): i.target,
     };
     Widget row(FinanceReminder r, {bool isDev = false}) {
       final tone = AppEnvironmentColors.developmentOf(theme.brightness);
       // A reminder opens its invoice in the reminder's own workspace: an
       // equal local invoice id on another host is another invoice.
-      final workspaceId = r.workspaceId ?? workspaceOf[r.invoiceId];
+      final target = r.target ?? workspaceOf[(r.networkId, r.invoiceId)];
       return KeyedSubtree(
-        key: ValueKey((workspaceId ?? r.workspaceName, r.id)),
+        key: ValueKey((r.networkId ?? r.workspaceName, r.id)),
         child: Card(
         key: ValueKey('finances-reminder-${r.id}'),
         margin: const EdgeInsets.only(bottom: AppSpacing.sm),
@@ -327,9 +334,9 @@ class _Reminders extends ConsumerWidget {
           ),
           trailing: const Icon(Icons.chevron_right),
           // A reminder opens the invoice it is about, in its own space.
-          onTap: workspaceId == null
+          onTap: target == null
               ? null
-              : () => _openMyInvoice(context, ref, workspaceId, r.invoiceId),
+              : () => _openMyInvoice(context, ref, target, r.invoiceId),
         ),
       ),
       );
@@ -370,7 +377,7 @@ class _Payments extends ConsumerWidget {
   final Set<String> devIds;
 
   bool _kept(AccountActivity e) =>
-      (filter.workspaceId == null || e.workspaceId == filter.workspaceId) &&
+      (filter.workspaceId == null || e.networkId == filter.workspaceId) &&
       filter.inPeriod(e.occurredAt);
 
   @override
@@ -382,11 +389,11 @@ class _Payments extends ConsumerWidget {
               children: [
                 for (final e in all.where(_kept))
                   KeyedSubtree(
-                    key: ValueKey((e.workspaceId, e.id)),
+                    key: ValueKey((e.networkId, e.id)),
                     child: Card(
                     key: ValueKey('finances-payment-${e.id}'),
                     margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                    color: devIds.contains(e.workspaceId)
+                    color: devIds.contains(e.networkId)
                         ? AppEnvironmentColors.developmentOf(
                             Theme.of(context).brightness,
                           ).withValues(alpha: .10)
@@ -394,13 +401,13 @@ class _Payments extends ConsumerWidget {
                     child: ListTile(
                       key: ValueKey('finances-payment-open-${e.id}'),
                       leading: const Icon(Icons.payments_outlined),
-                      title: devIds.contains(e.workspaceId)
+                      title: devIds.contains(e.networkId)
                           ? DevLabel(name: e.workspaceName)
                           : Text(e.workspaceName),
                       onTap: () => _openMyPayment(
                         context,
                         ref,
-                        e.workspaceId,
+                        e.target,
                         e.occurredAt,
                       ),
                       subtitle: Text([

@@ -30,7 +30,6 @@ import '../../directory/presentation/messenger/open_inbox_entry.dart';
 import '../../directory/providers/messenger_providers.dart';
 import '../../money/presentation/my_finances_route.dart';
 import '../../money/providers/finance_overview_provider.dart';
-import '../../workspace/providers/workspace_providers.dart';
 import '../application/personal_overview.dart';
 import '../domain/personal_workspace_refs.dart';
 import '../providers/me_providers.dart';
@@ -72,14 +71,14 @@ List<AttentionItem>? attentionItemsOf(
   final read = documents.value;
   final owed = read == null || read.notAnswered.isNotEmpty
       ? null
-      : read.production(ref.watch(myDevelopmentWorkspaceIdsProvider)).payable;
+      : read.production(ref.watch(financeDevelopmentWorkspaceIdsProvider)).payable;
   if (owed == null || inbox.value == null || refs == null) return null;
   return attentionItems(
     documents: [
       for (final d in owed)
         OwedDocument(
           id: d.id,
-          workspaceId: d.workspaceId,
+          workspaceId: d.networkId,
           workspaceName: d.workspaceName,
           number: d.number,
           remainingCents: d.remainingCents,
@@ -119,7 +118,7 @@ class NeedsAttentionSection extends ConsumerWidget {
     final now = ref.watch(financeNowProvider);
     // Me is production: a development space's test documents never count.
     final owed = documents.value
-        ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider))
+        ?.production(ref.watch(financeDevelopmentWorkspaceIdsProvider))
         .payable;
     // A refresh keeps what was read before; a failure says so beside it.
     final items = attentionItems(
@@ -129,7 +128,7 @@ class NeedsAttentionSection extends ConsumerWidget {
               for (final d in owed)
                 OwedDocument(
                   id: d.id,
-                  workspaceId: d.workspaceId,
+                  workspaceId: d.networkId,
                   workspaceName: d.workspaceName,
                   number: d.number,
                   remainingCents: d.remainingCents,
@@ -324,7 +323,7 @@ class FinanceGlance extends ConsumerWidget {
     final data = ref
         .watch(financeOverviewProvider)
         .value
-        ?.production(ref.watch(myDevelopmentWorkspaceIdsProvider));
+        ?.production(ref.watch(financeDevelopmentWorkspaceIdsProvider));
     // A credit a business holds for me is nothing to pay: the line shows
     // only while an invoice is owed (#3599).
     final owed = data?.owedByCurrency ?? const <String, int>{};

@@ -48,9 +48,9 @@ class PaymentRequestIds {
   /// #3556 — forgets the id of the payment that named exactly
   /// [invoiceIds] (its claim was withdrawn: a payment of them again is a
   /// new one).
-  void forgetClaim(Iterable<String> invoiceIds) {
+  void forgetClaim(Iterable<String> invoiceIds, {String? networkId}) {
     final claim = '|${([...invoiceIds]..sort()).join(',')}';
-    _ids.removeWhere((key, _) => key.endsWith(claim));
+    _ids.removeWhere((key, _) => (networkId == null || key.startsWith('$networkId|')) && key.substring(0, key.lastIndexOf('|')).endsWith(claim));
   }
 
   /// After a failed call: forget the id when [error] is definitive.

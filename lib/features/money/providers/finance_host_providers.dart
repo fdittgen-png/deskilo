@@ -100,7 +100,8 @@ Future<List<AccountActivity>> hostAccountActivity(
   final reader = ref.watch(financeHostReaderProvider);
   final limits = await limitsAnswer;
   final reads = await readsAnswer;
-  return reads.run(
+  final rows = await reads.run(
     () => reader.activity(host, kind, before: before).timeout(limits.timeout),
   );
+  return [for (final row in rows) row.onInstallation(host.installationId)];
 }

@@ -3,6 +3,8 @@
 // #3556 (1b) — a selection is of one business in one currency, only of
 // invoices a payment may name now, and splits by month, oldest first, each
 // month with what its invoices still owe.
+import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/features/money/application/finance_selection_commands.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/domain/finance_selection.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
@@ -12,6 +14,7 @@ import 'package:flutter_test/flutter_test.dart';
 FinanceInvoice _invoice(
   String id, {
   String ws = 'ws-a',
+  String? installation = 'inst-a',
   String currency = 'CHF',
   String? period = '2026-10',
   bool payable = true,
@@ -19,6 +22,7 @@ FinanceInvoice _invoice(
   DateTime? issued,
 }) => FinanceInvoice(
   id: id,
+  installationId: installation,
   workspaceId: ws,
   workspaceName: ws,
   number: 'N-$id',
@@ -58,6 +62,63 @@ void main() {
     expect(s.isEmpty, isTrue, reason: 'choosing it again removes it');
   });
 
+  test('equal local ids on different installations cannot share a selection', () {
+    final a = _invoice('same');
+    final b = _invoice('same', installation: 'inst-b');
+    final selection = FinanceSelection([a]);
+    expect(selection.holds(b), isFalse);
+    expect(selection.accepts(b), isFalse);
+    expect(selection.toggled(b).invoices, [a]);
+    expect(selection.without([b]).invoices, [a]);
+    expect(FinanceSelection.selectable(_invoice('unknown', installation: null)), isFalse);
+  });
+
+  test('commands keep the captured host across months and refuse lost access', () async {
+    final own = FakeMoneyRepository();
+    final other = FakeMoneyRepository();
+    var selected = own;
+    var live = true;
+    var released = 0;
+    final commands = FinanceSelectionCommands(enter: (target) async {
+      final store = target.installationId == 'inst-a' ? own : other;
+      return FinanceCommandTarget(
+        target: target, memberId: 'm', currency: 'CHF',
+        commands: store.accountCommands, gateway: store.paymentGateway,
+        isCurrent: () => live, release: () => released++, open: () async => true,
+      );
+    });
+    final selection = FinanceSelection([_invoice('a'), _invoice('b', period: '2026-11')]);
+    expect(await commands.declare(selection, onRecorded: (_) => selected = other), isTrue);
+    expect(selected, same(other));
+    expect(own.recordedPayments.map((p) => p.period), ['2026-10', '2026-11']);
+    expect(other.recordedPayments, isEmpty);
+    expect(released, 1);
+    live = false;
+    expect(await commands.declare(selection), isFalse);
+    expect(own.recordedPayments, hasLength(2));
+    expect(released, 2);
+  });
+
+  test('withdrawing a claim targets only the displayed installation', () async {
+    final a = FakeMoneyRepository()..claims['same-payment'] = ['same-invoice'];
+    final b = FakeMoneyRepository()..claims['same-payment'] = ['same-invoice'];
+    final commands = FinanceSelectionCommands(enter: (target) async {
+      final store = target.installationId == 'B' ? b : a;
+      return FinanceCommandTarget(target: target, memberId: 'm', currency: 'EUR',
+        commands: store.accountCommands, gateway: store.paymentGateway,
+        isCurrent: () => true, release: () {}, open: () async => true);
+    });
+    final invoice = FinanceInvoice(id: 'same-invoice', workspaceId: 'same-workspace',
+      workspaceName: 'B', number: 'B-1', issuedAt: DateTime.utc(2026),
+      totalCents: 1000, paidCents: 0, currency: 'EUR', state: FinanceState.open,
+      installationId: 'B', claimPaymentId: 'same-payment');
+    expect(await commands.withdraw(invoice), isTrue);
+    expect(a.claims['same-payment'], ['same-invoice']);
+    expect(a.withdrawnClaims, isEmpty);
+    expect(b.claims, isEmpty);
+    expect(b.withdrawnClaims, ['same-payment']);
+  });
+
   test('months, oldest first, each with what its invoices still owe', () {
     final s = FinanceSelection([
       _invoice(
@@ -82,6 +143,19 @@ void main() {
       ],
       ['2026-10 12000 o1', '2026-11 5900 n1,n2'],
     );
+  });
+
+  test('withdrawing one host claim preserves the other host retry id', () {
+    var n = 0;
+    final requests = PaymentRequestIds(() => 'request-${++n}');
+    String id(String network) => requests.idFor(network, 'member', PaymentProvider.stripe,
+      PaymentRequestIds.forClaim('2026-10', ['same']), 1000);
+    final first = id('A:workspace');
+    final other = id('B:workspace');
+    expect(first, isNot(other));
+    requests.forgetClaim(['same'], networkId: 'A:workspace');
+    expect(id('A:workspace'), isNot(first));
+    expect(id('B:workspace'), other);
   });
 
   test('a payment\'s request id belongs to its claim: another selection of the '

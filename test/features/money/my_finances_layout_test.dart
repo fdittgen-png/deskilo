@@ -66,7 +66,7 @@ Future<({FakeAccountActivityRepository remote, _Saver saver})> _pump(
   bool selectRemote = false,
 }) async {
   final saver = _Saver();
-  final remoteRepo = FakeAccountActivityRepository()
+  final remoteRepo = FakeAccountActivityRepository(installationId: 'inst-home')
     ..unavailable = remoteDown
     ..financeOverview = remote;
   await pumpApp(
@@ -76,7 +76,7 @@ Future<({FakeAccountActivityRepository remote, _Saver saver})> _pump(
     overrides: [
       ...standardTestOverrides(
         auth: FakeAuthRepository.signedIn(),
-        accountActivity: FakeAccountActivityRepository()
+        accountActivity: FakeAccountActivityRepository(installationId: 'inst-home')
           ..financeOverview = home,
       ),
       selectedWorkspaceAccountActivityRepositoryProvider.overrideWithValue(
@@ -165,7 +165,7 @@ void main() {
       );
       expect(rows, hasLength(3));
       expect(rows[1], startsWith('"INV-1"'));
-      expect(rows[2], '"# unavailable_source","two.example",,,,,,,,,,,,,,');
+      expect(rows[2], '"# unavailable_source","two.example",,,,,,,,,,,,,,,,');
     });
 
     test('every host answered: no note row', () {

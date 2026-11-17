@@ -5,14 +5,16 @@ import '../domain/account_activity.dart';
 import '../domain/finance_overview.dart';
 
 class SupabaseAccountActivityRepository implements AccountActivityRepository {
-  const SupabaseAccountActivityRepository(this.client);
+  const SupabaseAccountActivityRepository(this.client, {required this.installation});
   final SupabaseClient client;
+  final Future<String> Function() installation;
   @override
   Future<FinanceOverview> overview() async {
+    final identity = await installation();
     final result = await client.rpc<dynamic>('my_finance_overview');
     return FinanceOverview.fromJson(
       Map<String, dynamic>.from(result as Map? ?? const <String, dynamic>{}),
-    );
+    ).onInstallation(identity);
   }
 
   @override
@@ -20,6 +22,7 @@ class SupabaseAccountActivityRepository implements AccountActivityRepository {
     AccountActivityKind kind, {
     ActivityCursor? before,
   }) async {
+    final identity = await installation();
     final result = await client.rpc<List<dynamic>>(
       'my_financial_activity',
       params: {
@@ -29,7 +32,7 @@ class SupabaseAccountActivityRepository implements AccountActivityRepository {
       },
     );
     return result
-        .map((row) => AccountActivity.fromJson(row as Map<String, dynamic>))
+        .map((row) => AccountActivity.fromJson(row as Map<String, dynamic>).onInstallation(identity))
         .toList();
   }
 }

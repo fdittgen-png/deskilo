@@ -10,8 +10,11 @@ import 'credit_providers.dart';
 part 'account_activity_providers.g.dart';
 
 @Riverpod(keepAlive: true)
-AccountActivityRepository accountActivityRepository(Ref ref) =>
-    SupabaseAccountActivityRepository(ref.watch(personalClientProvider));
+AccountActivityRepository accountActivityRepository(Ref ref) {
+  final client = ref.watch(personalClientProvider);
+  final identity = ref.watch(installationIdReaderProvider);
+  return SupabaseAccountActivityRepository(client, installation: () => identity(client));
+}
 
 /// My own documents at the SELECTED workspace, read on that workspace's own
 /// installation: `my_finance_overview` runs there under the person's session
@@ -20,8 +23,11 @@ AccountActivityRepository accountActivityRepository(Ref ref) =>
 @Riverpod(keepAlive: true)
 AccountActivityRepository selectedWorkspaceAccountActivityRepository(
   Ref ref,
-) =>
-    SupabaseAccountActivityRepository(ref.watch(moneyClientProvider));
+) {
+  final client = ref.watch(moneyClientProvider);
+  final identity = ref.watch(installationIdReaderProvider);
+  return SupabaseAccountActivityRepository(client, installation: () => identity(client));
+}
 
 @riverpod
 Future<List<AccountActivity>> accountActivity(

@@ -7,16 +7,18 @@
 // payment being processed is withdrawn after a confirmation that says what
 // becomes of money still arriving; a received payment and a declared one
 // show where they stand and offer nothing to select.
-import 'package:deskilo/app/finance_hosts_wiring.dart';
 import 'package:deskilo/core/demo/data/account_activity_repository.dart';
 import 'package:deskilo/core/demo/data/invoice_group_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
+import 'package:deskilo/core/session/session_source.dart';
+import 'package:deskilo/features/money/application/finance_selection_commands.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/domain/payment_claims.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/presentation/screens/my_finances_screen.dart';
 import 'package:deskilo/features/money/providers/finance_selection_provider.dart';
 import 'package:deskilo/features/money/providers/payment_approval_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -84,26 +86,41 @@ final _groups = FakeInvoiceGroupRepository();
 Future<FakeMoneyRepository> _show(
   WidgetTester tester, {
   bool enters = true,
+  FakeAuthRepository? auth,
+  void Function(String)? targetSeen,
 }) async {
   _approved.clear();
   tester.view.physicalSize = const Size(800, 1600);
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
   final money = FakeMoneyRepository();
+  final session = auth ?? FakeAuthRepository.signedIn();
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
         ...standardTestOverrides(
-          auth: FakeAuthRepository.signedIn(),
+          auth: session,
           accountActivity: FakeAccountActivityRepository()
             ..financeOverview = _overview,
           money: money,
           invoiceGroups: _groups,
           homeInstallation: '11111111-1111-4111-8111-111111111111',
         ),
+        sessionSourceProvider.overrideWithValue(session),
         // the business is entered as the app enters it, or cannot be
         if (enters)
-          financeWorkspaceEntryFromApp
+          financeWorkspaceEntryProvider.overrideWith((ref) {
+            final principal = ref.watch(sessionStateProvider).value;
+            return (target) async {
+              targetSeen?.call(target.networkId);
+              return FinanceCommandTarget(
+              target: target, memberId: 'member-1', currency: 'EUR',
+              commands: money.accountCommands, gateway: money.paymentGateway,
+              isCurrent: () => ref.mounted && ref.read(sessionStateProvider).value == principal,
+              release: () {}, open: () async => true,
+            );
+            };
+          })
         else
           financeWorkspaceEntryProvider.overrideWithValue((_) async => null),
         // the provider's checkout opens; this test only sees that it did
@@ -201,6 +218,34 @@ void main() {
     ]);
     expect(find.text('Recorded. Atelier approves it.'), findsOneWidget);
     expect(find.byKey(const ValueKey('finances-selection-bar')), findsNothing);
+  });
+
+  testWidgets('a workspace switch during confirmation keeps the displayed target', (tester) async {
+    final targets = <String>[];
+    final money = await _show(tester, targetSeen: targets.add);
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
+    await tester.pumpAndSettle();
+    final container = ProviderScope.containerOf(tester.element(find.byType(MyFinancesScreen)));
+    container.read(activeWorkspaceIdProvider.notifier).activate('ws-other');
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(targets, ['11111111-1111-4111-8111-111111111111:ws-1']);
+    expect(money.recordedPayments.single.amountCents, 12000);
+  });
+
+  testWidgets('an account change during confirmation prevents the command', (tester) async {
+    final auth = FakeAuthRepository.signedIn();
+    final money = await _show(tester, auth: auth);
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
+    await tester.pumpAndSettle();
+    await auth.signOut();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(money.recordedPayments, isEmpty);
   });
 
   testWidgets('a refused declaration leaves the selection as it was and says '
