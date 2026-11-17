@@ -153,8 +153,8 @@ class FakeDirectoryRepository
       document.fields,
     );
     final stored = document.mode == PublicationWriteMode.patch
-        ? Map<String, dynamic>.from(pages[workspace]?['document'] as Map? ?? {})
-        : <String, dynamic>{};
+        ? Map<String, Object?>.from(pages[workspace]?['document'] as Map? ?? {})
+        : <String, Object?>{};
     for (final entry in input.entries) {
       if (entry.value == null) {
         stored.remove(entry.key);
