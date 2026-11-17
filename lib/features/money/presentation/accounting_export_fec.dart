@@ -18,7 +18,6 @@ import '../../../core/ui/app_snack.dart';
 import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
 import '../domain/archive_bundle.dart';
-import '../domain/archive_fec.dart';
 import '../domain/invoice_line_text.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';

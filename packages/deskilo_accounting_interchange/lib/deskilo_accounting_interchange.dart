@@ -6,6 +6,7 @@ library;
 export 'src/accounting_export_sources.dart';
 export 'src/accounting_format_model.dart';
 export 'src/accounting_interchange.dart';
+export 'src/archive_fec.dart';
 export 'src/customer_id_rule.dart';
 export 'src/datev.dart';
 export 'src/datev_creditors.dart';

@@ -41,7 +41,6 @@ import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
-import 'package:deskilo/features/money/domain/archive_fec.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/bc_journal_xlsx.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
