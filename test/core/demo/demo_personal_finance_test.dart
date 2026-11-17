@@ -85,6 +85,7 @@ void main() {
           fixture.newYork.money,
           fixture.zurich.money,
           fixture.milan.money,
+          fixture.practice.money,
         ])
           for (final i in money.invoices)
             if (i.memberId == person.memberId) i.id,

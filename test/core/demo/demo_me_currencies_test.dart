@@ -2,11 +2,11 @@
 //
 // Me › Finances in the Demo reads every space the person is in — the main
 // space and Leipzig (euros), London (pounds), New York (dollars), Zurich
-// (francs) and Milan (euros) — and
+// (francs), Milan and the Berlin practice (euros) — and
 // never adds one currency to another: the amount to pay is one figure per
 // currency, and every document is in its own space's currency.
 //
-// The expected amounts are summed straight from the six spaces' money (the
+// The expected amounts are summed straight from the businesses' money (the
 // invoices addressed to the person, less what was matched to them), not from
 // the overview under test.
 import 'package:deskilo/core/demo/demo_finances.dart';
@@ -17,12 +17,12 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../helpers/demo_owed.dart';
 
 void main() {
-  test('a member of six spaces owes in euros, pounds, dollars and francs, apart', () {
+  test('a customer of the houses and practice owes in four currencies, apart', () {
     final fixture = DemoFixture.build()..becomePersona(DemoPersona.member);
     final overview = demoFinanceOverview(fixture);
 
-    expect({for (final i in overview.invoices) i.workspaceId}, hasLength(6),
-        reason: 'the main space, Leipzig, London, New York, Zurich and Milan');
+    expect({for (final i in overview.invoices) i.workspaceId}, hasLength(7),
+        reason: 'the six houses and the Berlin practice');
     expect({for (final i in overview.outstanding) i.currency},
         {'EUR', 'GBP', 'USD', 'CHF'},
         reason: 'open documents in all four currencies');

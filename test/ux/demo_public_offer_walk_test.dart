@@ -8,6 +8,7 @@
 // house stands beside it, each price in its own currency with its own tax
 // word, nothing added or converted.
 import 'package:deskilo/core/demo/data/connected_installations.dart';
+import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/features/directory/domain/discovery_paging.dart';
 import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/directory/providers/directory_providers.dart';
@@ -85,7 +86,7 @@ void main() {
     // coworking spaces.
     expect(
       (await search('', kind: 'practice')).map((w) => w.id),
-      ['demo-practice-garrigue'],
+      unorderedEquals(['demo-practice-garrigue', demoPracticeSpaceId]),
     );
     expect(coworking.map((w) => w.id), isNot(contains('demo-practice-garrigue')));
     final zurich = coworking.firstWhere((w) => w.id == 'demo-zurich');

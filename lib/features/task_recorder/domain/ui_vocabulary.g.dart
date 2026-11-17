@@ -2740,6 +2740,8 @@ const Set<String> uiKeys = {
   'portal-request-membership',
   'portal-visibility-link',
   'postal-code',
+  'practice-service-0',
+  'practice-service-4',
   'preferences-reset-workspace',
   'preferences-workspace-only',
   'premises-lease-button',
