@@ -1,0 +1,26 @@
+{
+  "financesContinuePayment": "Reprendre le paiement",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
+  "financesContinueFailed": "Le paiement n’a pas pu être repris. Réessayez.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesPaymentFailed": "Échec du paiement",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
+  "financesPaymentExpired": "Lien de paiement expiré",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentWithdrawn": "Paiement retiré",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
+  "financesPaymentReversed": "Paiement annulé",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "financesContinuePayment": "Continuar pago",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
+  "financesContinueFailed": "No se ha podido continuar el pago. Inténtalo de nuevo.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesPaymentFailed": "Pago fallido",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
+  "financesPaymentExpired": "Página de pago caducada",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentWithdrawn": "Pago retirado",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
+  "financesPaymentReversed": "Pago revertido",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  }
+}

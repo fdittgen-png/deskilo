@@ -20440,6 +20440,18 @@ abstract class AppLocalizations {
   /// **'Issued by'**
   String get financesColumnWorkspace;
 
+  /// #4147: continue an existing own payment (financesContinueFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'The payment could not be continued. Try again.'**
+  String get financesContinueFailed;
+
+  /// #4147: continue an existing own payment (financesContinuePayment)
+  ///
+  /// In en, this message translates to:
+  /// **'Continue payment'**
+  String get financesContinuePayment;
+
   /// #2557 C4 Me › Finances: coverage above the results, a host that answered.
   ///
   /// In en, this message translates to:
@@ -20752,11 +20764,35 @@ abstract class AppLocalizations {
   /// **'Pay {business}'**
   String financesPayTitle(String business);
 
+  /// #4147: continue an existing own payment (financesPaymentExpired)
+  ///
+  /// In en, this message translates to:
+  /// **'Checkout expired'**
+  String get financesPaymentExpired;
+
+  /// #4147: continue an existing own payment (financesPaymentFailed)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment failed'**
+  String get financesPaymentFailed;
+
   /// #3556 Row state: the invoice's payment arrived and the business is matching it; {business} is its name
   ///
   /// In en, this message translates to:
   /// **'Payment received · {business} is matching it'**
   String financesPaymentReceived(String business);
+
+  /// #4147: continue an existing own payment (financesPaymentReversed)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment reversed'**
+  String get financesPaymentReversed;
+
+  /// #4147: continue an existing own payment (financesPaymentWithdrawn)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment withdrawn'**
+  String get financesPaymentWithdrawn;
 
   /// #2557 C7 Me › Finances › Payments: the next page of one host did not answer; the rows shown stay
   ///

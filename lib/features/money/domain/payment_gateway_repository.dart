@@ -59,6 +59,15 @@ abstract interface class PaymentGatewayRepository {
     PaymentProvider provider,
   );
 
+  /// #4147 — resumes an existing own claim on this repository's host.
+  /// The server reads its original request and money facts; none are rebuilt
+  /// from the current balance or workspace settings.
+  Future<PaymentOrderStart> resumeClaimOrder({
+    required String workspaceId,
+    required String memberId,
+    required String paymentId,
+  });
+
   /// Starts an online payment with [provider] for [amountCents] of the
   /// member's bill (docs/design/payments-integration.md). Returns the
   /// provider's approval URL + order id, or a not-configured result naming

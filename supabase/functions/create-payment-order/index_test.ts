@@ -393,3 +393,109 @@ Deno.test("#3556 — the function says it takes a payment's claim", async () => 
   assertEquals(res.status, 200);
   assertEquals((await res.json()).claims, true);
 });
+
+const continuedPayment = {
+  id: "77777777-7777-4777-8777-777777777777",
+  workspace_id: "11111111-1111-4111-8111-111111111111",
+  member_id: "55555555-5555-4555-8555-555555555555",
+  provider: "stripe", request_id: "22222222-2222-4222-8222-222222222222",
+  amount_cents: 6500, currency: "EUR", period: "2026-10",
+  invoice_ids: ["66666666-6666-4666-8666-666666666666"],
+  order_id: "checkout-original", reference: "PAY-2026-0001", status: "created",
+  created_at: new Date().toISOString(), reused: true,
+};
+
+function continueRequest(extra: Record<string, unknown> = {}) {
+  return new Request("http://localhost/create-payment-order", {
+    method: "POST", headers: { Authorization: "Bearer t" },
+    body: JSON.stringify({ action: "continue", workspace_id: continuedPayment.workspace_id,
+      payment_id: continuedPayment.id, ...extra }),
+  });
+}
+
+function resumeAdmin(handed = true) {
+  const base = recordingAdmin({
+    members: { id: continuedPayment.member_id, user_id: "user-1", workspace_id: continuedPayment.workspace_id, status: "active" },
+    workspaces: { environment: "prod", currency_code: "GBP", name: "Atelier" },
+    payment_credentials: { config: { secret_key: "sk_live_x", return_url: "https://r", webhook_secret: "whsec_x" } },
+  }, []);
+  const read = base.from;
+  const chain = { eq: () => chain, like: () => Promise.resolve({ error: null }) };
+  base.from = (table: string) => table === "payment_intents" ? { update: () => chain } : read(table);
+  base.rpc = (name: string) => {
+    assertEquals(name, "hand_payment_intent");
+    return Promise.resolve({ data: handed, error: null });
+  };
+  return base;
+}
+
+Deno.test("#4147 — a fresh device resumes the original provider, amount, currency and order key, ignoring new client facts", async () => {
+  const keys: string[] = [];
+  const amounts: string[] = [];
+  const currencies: string[] = [];
+  const providerOrders = new Map<string, string>();
+  const realFetch = globalThis.fetch;
+  globalThis.fetch = (_input, init) => {
+    const key = new Headers(init?.headers).get("Idempotency-Key")!;
+    const body = new URLSearchParams(String(init?.body));
+    keys.push(key); amounts.push(body.get("line_items[0][price_data][unit_amount]")!);
+    currencies.push(body.get("line_items[0][price_data][currency]")!);
+    providerOrders.set(key, "checkout-original");
+    return Promise.resolve(Response.json({ id: providerOrders.get(key), url: "https://checkout.example/original" }));
+  };
+  try {
+    for (const amount of [100, 500]) {
+      const calls: unknown[] = [];
+      const result = await handleWith(continueRequest({ amount_cents: amount, provider: "paypal", currency: "USD" }), resumeAdmin(), () => ({
+        rpc: (name: string, args: unknown) => {
+          calls.push(name);
+          assertEquals(name, "resume_payment_claim", "continuation never opens a new intent");
+          assertEquals(args, { p_workspace: continuedPayment.workspace_id, p_intent: continuedPayment.id });
+          return Promise.resolve({ data: { ...continuedPayment }, error: null });
+        },
+      }));
+      assertEquals(result.status, 200);
+      const answer = await result.json();
+      assertEquals(answer.order_id, "checkout-original");
+      assertEquals(answer.approve_url, "https://checkout.example/original");
+      assertEquals(answer.claimed, 1);
+      assertEquals(calls, ["resume_payment_claim"]);
+    }
+    assertEquals(keys, [idempotencyKey(continuedPayment.id), idempotencyKey(continuedPayment.id)]);
+    assertEquals(amounts, ["6500", "6500"]);
+    assertEquals(currencies, ["eur", "eur"], "neither client nor current workspace currency replaces the original");
+    assertEquals(providerOrders.size, 1);
+  } finally { globalThis.fetch = realFetch; }
+});
+
+Deno.test("#4147 — unknown, other-customer and terminal payments are unavailable and never fall through to creation", async () => {
+  for (const data of [null, { ...continuedPayment, status: "captured" }, { ...continuedPayment, status: "failed" }]) {
+    const result = await handleWith(continueRequest(), resumeAdmin(), () => ({
+      rpc: (name: string) => {
+        assertEquals(name, "resume_payment_claim");
+        return Promise.resolve({ data, error: data ? null : { code: "DKC10" } });
+      },
+    }));
+    assertEquals(result.status, 409);
+    assertEquals(await result.json(), { error: "claim_refused", code: "DKC10" });
+  }
+});
+
+Deno.test("#4147 — expiry and withdrawal during hand-over never reopen a provider order", async () => {
+  const expired = { ...continuedPayment, created_at: new Date(Date.now() - (KEY_RETENTION_S + 60) * 1000).toISOString() };
+  for (const [data, handed] of [[expired, true], [continuedPayment, false]] as const) {
+    const result = await handleWith(continueRequest(), resumeAdmin(handed), () => ({
+      rpc: () => Promise.resolve({ data, error: null }),
+    }));
+    assertEquals(result.status, 409);
+    assertEquals((await result.json()).error, "intent_stale");
+  }
+});
+
+Deno.test("#4147 — an older database withholds continuation rather than creating an intent", async () => {
+  const result = await handleWith(continueRequest(), resumeAdmin(), () => ({
+    rpc: () => Promise.resolve({ data: null, error: { code: "PGRST202" } }),
+  }));
+  assertEquals(result.status, 200);
+  assertEquals((await result.json()).status, "not_configured");
+});

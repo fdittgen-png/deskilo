@@ -63,6 +63,8 @@ FinanceOverview _overviewOf(
       period: i.period,
       inPayment: claim != null,
       claimPaymentId: declared ? null : claim,
+      claimCanContinue: money.paymentGateway.continuationState(claim) == 'ready',
+      claimPaymentState: _paymentStateOf(money, i),
       claimEventId: declared ? claim : null,
       payable: open && claim == null,
       stillDueCents: open ? i.totalCents - paid : 0,
@@ -105,6 +107,14 @@ FinanceOverview _overviewOf(
           ),
     ],
   );
+}
+
+/// The latest original payment keeps its outcome after its active claim ends.
+String? _paymentStateOf(FakeMoneyRepository money, Invoice invoice) {
+  final prior = money.paymentIntents.where((p) => p.memberId == invoice.memberId &&
+      p.claimedInvoiceIds.contains(invoice.id)).toList()
+    ..sort((a, b) => b.createdAt.compareTo(a.createdAt));
+  return prior.isEmpty ? null : money.paymentGateway.continuationState(prior.first.orderId);
 }
 
 /// #3832 - the persona's own history, derived from the spaces' records.

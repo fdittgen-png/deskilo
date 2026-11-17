@@ -250,6 +250,9 @@ class _Payments implements PaymentGatewayRepository {
   ) => throw UnimplementedError();
 
   @override
+  Future<PaymentOrderStart> resumeClaimOrder({required String workspaceId, required String memberId, required String paymentId}) => throw UnimplementedError();
+
+  @override
   Future<PaymentOrderStart> createPaymentOrder({
     required PaymentProvider provider,
     required String workspaceId,

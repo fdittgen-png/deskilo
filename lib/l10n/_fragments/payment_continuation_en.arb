@@ -1,0 +1,26 @@
+{
+  "financesContinuePayment": "Continue payment",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
+  "financesContinueFailed": "The payment could not be continued. Try again.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesPaymentFailed": "Payment failed",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
+  "financesPaymentExpired": "Checkout expired",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentWithdrawn": "Payment withdrawn",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
+  "financesPaymentReversed": "Payment reversed",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  }
+}

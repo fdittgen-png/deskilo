@@ -41,6 +41,29 @@ capture.
 
 ## 3. Architecture
 
+### Continuing a personal invoice checkout (#4147)
+
+My finances offers **Continue payment** beside Withdraw only when the issuing
+host reports `claim_can_continue`. The action retains the verified installation,
+workspace and `claimPaymentId` even if another workspace is selected. It checks
+the signed-in account and captured access again after each wait.
+
+`create-payment-order` accepts `{action: 'continue', workspace_id, payment_id}`.
+Its caller-authorized `resume_payment_claim` reads the original provider, request,
+canonical invoice IDs, amount and currency. It never opens a new intent or
+recalculates the current balance. The existing adapter receives the original
+intent's idempotency key; the existing handoff check still runs immediately
+before the provider call. Unknown and other members' payments receive the same
+unavailable result. Paid, failed, withdrawn and expired payments cannot continue;
+the 23-hour retention bound prevents replay after provider idempotency expires.
+Older hosts/functions withhold continuation with the existing update explanation.
+
+The Demo stores these original facts in its payment intent too. Its tested
+reference-organisation journey leaves the provider page, returns to My finances,
+continues the same order and pays once. Database regression464 and the payment
+endpoint tests cover durable replay, ownership and ended claims; the Dart tests
+cover fresh clients, equal local IDs across hosts and account/access changes.
+
 ```
  Flutter app                Edge Functions (Deno)            PayPal / PSP
  ───────────                ─────────────────────            ────────────

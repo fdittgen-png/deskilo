@@ -7892,6 +7892,14 @@
   "financesColumnDocument": "Dokument und Zeitraum",
   "financesColumnState": "Dokument und Zahlung",
   "financesColumnWorkspace": "Ausgestellt von",
+  "financesContinueFailed": "Die Zahlung konnte nicht fortgesetzt werden. Versuchen Sie es erneut.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesContinuePayment": "Zahlung fortsetzen",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
   "financesCoverageAnswered": "Gelesen von {host}",
   "financesCoverageHome": "Ihre Heiminstallation",
   "financesCoverageNoDocuments": "keine Dokumente",
@@ -8021,7 +8029,23 @@
   "financesPayAmount": "{amount} bezahlen",
   "financesPayThen": "Diese Zahlung begleicht den ersten Monat. Danach: {months}.",
   "financesPayTitle": "An {business} zahlen",
+  "financesPaymentExpired": "Zahlungsseite abgelaufen",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentFailed": "Zahlung fehlgeschlagen",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
   "financesPaymentReceived": "Zahlung eingegangen · {business} ordnet sie zu",
+  "financesPaymentReversed": "Zahlung rückgängig gemacht",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentWithdrawn": "Zahlung zurückgezogen",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
   "financesPaymentsMoreFailed": "{host} hat für weitere Zahlungen nicht geantwortet. Tippen, um es erneut zu versuchen.",
   "@financesPaymentsMoreFailed": {
     "placeholders": {

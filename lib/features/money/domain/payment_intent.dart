@@ -16,6 +16,9 @@ class PaymentIntent implements SystemStamped {
     required this.status,
     required this.createdAt,
     this.captureId = '',
+    this.requestId,
+    this.currency = '',
+    this.claimedInvoiceIds = const [],
     this.reference = '',
     this.reversedAt,
     this.reversalReason = '',
@@ -28,6 +31,11 @@ class PaymentIntent implements SystemStamped {
   final SystemColumns system;
 
   final String id;
+
+  /// #4147 — persisted original facts, also kept by the Demo across clients.
+  final String? requestId;
+  final String currency;
+  final List<String> claimedInvoiceIds;
   final String memberId;
 
   /// 'paypal' | 'stripe' | 'mollie' | 'wero'.
@@ -89,6 +97,7 @@ class PaymentIntent implements SystemStamped {
         status: status,
         createdAt: createdAt,
         captureId: captureId,
+        requestId: requestId, currency: currency, claimedInvoiceIds: claimedInvoiceIds,
         reference: reference,
         reversedAt: reversedAt,
         reversalReason: reversalReason,
@@ -99,6 +108,9 @@ class PaymentIntent implements SystemStamped {
   factory PaymentIntent.fromRow(Map<String, dynamic> row) => PaymentIntent(
         system: SystemColumns.fromRow(row),
         id: row['id'] as String,
+        requestId: row['request_id'] as String?,
+        currency: row['currency'] as String? ?? '',
+        claimedInvoiceIds: (row['claimed_invoice_ids'] as List? ?? const []).cast<String>(),
         memberId: row['member_id'] as String,
         provider: row['provider'] as String,
         orderId: row['order_id'] as String,

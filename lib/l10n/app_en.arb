@@ -16529,6 +16529,14 @@
   "@financesColumnWorkspace": {
     "description": "#2557 C4 Me › Finances: the rows header, the issuing workspace."
   },
+  "financesContinueFailed": "The payment could not be continued. Try again.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesContinuePayment": "Continue payment",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
   "financesCoverageAnswered": "Read from {host}",
   "@financesCoverageAnswered": {
     "description": "#2557 C4 Me › Finances: coverage above the results, a host that answered.",
@@ -16849,6 +16857,14 @@
       }
     }
   },
+  "financesPaymentExpired": "Checkout expired",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentFailed": "Payment failed",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
   "financesPaymentReceived": "Payment received · {business} is matching it",
   "@financesPaymentReceived": {
     "description": "#3556 Row state: the invoice's payment arrived and the business is matching it; {business} is its name",
@@ -16857,6 +16873,14 @@
         "type": "String"
       }
     }
+  },
+  "financesPaymentReversed": "Payment reversed",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentWithdrawn": "Payment withdrawn",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
   },
   "financesPaymentsMoreFailed": "{host} did not answer for more payments. Tap to try again.",
   "@financesPaymentsMoreFailed": {

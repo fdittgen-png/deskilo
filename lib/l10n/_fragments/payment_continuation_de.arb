@@ -1,0 +1,26 @@
+{
+  "financesContinuePayment": "Zahlung fortsetzen",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
+  "financesContinueFailed": "Die Zahlung konnte nicht fortgesetzt werden. Versuchen Sie es erneut.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesPaymentFailed": "Zahlung fehlgeschlagen",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
+  "financesPaymentExpired": "Zahlungsseite abgelaufen",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentWithdrawn": "Zahlung zurückgezogen",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
+  "financesPaymentReversed": "Zahlung rückgängig gemacht",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  }
+}

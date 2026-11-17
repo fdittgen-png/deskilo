@@ -20,6 +20,7 @@ import '../../domain/payment_claims.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/finance_selection_provider.dart';
 import '../claim_refusal_text.dart';
+import 'finance_continue_payment.dart';
 
 class FinanceClaimState extends ConsumerWidget {
   const FinanceClaimState(this.invoice, {super.key});
@@ -147,7 +148,14 @@ class FinanceClaimState extends ConsumerWidget {
     if (invoice.paymentReceived) {
       return _Chip(l10n.financesPaymentReceived(invoice.workspaceName));
     }
-    if (!invoice.inPayment) return const SizedBox.shrink();
+    final ended = switch (invoice.claimPaymentState) {
+      'failed' => l10n.financesPaymentFailed,
+      'expired' => l10n.financesPaymentExpired,
+      'withdrawn' => l10n.financesPaymentWithdrawn,
+      'reversed' => l10n.financesPaymentReversed,
+      _ => null,
+    };
+    if (!invoice.inPayment) return ended == null ? const SizedBox.shrink() : _Chip(ended);
     if (invoice.claimPaymentId == null) {
       final waits = _Chip(l10n.financesWaitsForBusiness(invoice.workspaceName));
       if (invoice.claimEventId == null) return waits;
@@ -178,6 +186,10 @@ class FinanceClaimState extends ConsumerWidget {
                       .format(personalFormatOf(context).wall(since)),
                 ),
         ),
+        if (ended != null) _Chip(ended),
+        if (invoice.claimCanContinue == true) FinanceContinuePayment(invoice),
+        if (invoice.claimCanContinue == null || invoice.claimPaymentState == 'unavailable')
+          Text(l10n.payOnlineClaimsUnsupported, style: Theme.of(context).textTheme.bodySmall),
         TextButton(
           key: ValueKey('finances-withdraw-${invoice.id}'),
           onPressed: invoice.target == null ? null : () => _withdraw(context, ref),

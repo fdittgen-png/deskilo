@@ -266,6 +266,14 @@ mixin DemoClaimsStore {
   DemoMemberAccountCommands get accountCommands;
   DemoPaymentGateway get paymentGateway;
 
+  Future<PaymentOrderStart> resumeClaimOrder({
+    required String workspaceId,
+    required String memberId,
+    required String paymentId,
+  }) => paymentGateway.resumeClaimOrder(
+    workspaceId: workspaceId, memberId: memberId, paymentId: paymentId,
+  );
+
   Future<String> declareInvoicesPaid({
     required String workspaceId,
     required String memberId,
