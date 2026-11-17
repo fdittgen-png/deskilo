@@ -6,12 +6,12 @@
 // tax. The key does not depend on the chart: SKR03 and SKR04 read the same
 // `datev/tax:<group>` rows.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev_revenue.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 String? _key(String group) =>
-    datevGroupTaxKey(ActiveTaxReference.current, group);
+    datevGroupTaxKey(ActiveTaxReference.current, group, country: 'DE');
 
 void main() {
   test('every German rate resolves to its group\'s BU-Schlüssel', () {

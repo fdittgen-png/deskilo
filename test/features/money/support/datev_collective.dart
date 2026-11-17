@@ -6,7 +6,7 @@
 // Debitor per member is datev_package_test.dart's.
 import 'dart:collection';
 
-import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
 /// Every member on Debitor 10000.
 const datevCollective = DatevDetail(

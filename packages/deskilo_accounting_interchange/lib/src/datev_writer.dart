@@ -4,9 +4,9 @@
 // the header, the column line, the sales, the purchases side and the file.
 // The format notes live on `buildDatevFile`.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show CsvDialect, csvCell;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../core/text/csv.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';

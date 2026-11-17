@@ -11,7 +11,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -59,7 +58,7 @@ Map<String, Object?> _capture() {
     }
   }
   const fec = FecAccounts();
-  const datev = DatevAccounts();
+  final datev = DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE');
   final sage = SageAccounts(reference: ActiveTaxReference.current);
   out['defaults'] = {
     'fec': [

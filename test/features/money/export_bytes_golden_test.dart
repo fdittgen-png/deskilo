@@ -25,7 +25,6 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
@@ -190,13 +189,12 @@ Map<String, String Function()> _files() => {
   'datev.csv': () => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
     invoices: _invoices,
     matches: _matches,
-    accounts: const DatevAccounts(),
+    accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
     from: DateTime.utc(2026),
     to: DateTime.utc(2026, 12, 31),
     generatedAt: DateTime.utc(2026, 5, 1, 9, 7, 3),
     consultantNumber: '1234567',
-    clientNumber: '54321',
-  )),
+    clientNumber: '54321', dayOf: WorkspaceTime.dateOf)),
   'sage.csv': () => sageOfInvoices(_invoices, _matches, country: 'FR'),
   'accountant.csv': () => buildAccountantCsv(
     invoices: _invoices,

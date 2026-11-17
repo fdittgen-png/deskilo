@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/datev.dart';
-import '../../domain/datev_problem.dart';
 import '../../domain/fec.dart';
 
 /// The account dialogs for the three mapped exports (#669).
@@ -153,7 +151,7 @@ class DatevExportSettings {
 Future<DatevExportSettings?> showDatevAccountsDialog(
   BuildContext context, {
   required String costCentre,
-  DatevAccounts initial = const DatevAccounts(),
+  required DatevAccounts initial,
 }) {
   final l10n = context.l10n;
   final consultant = TextEditingController();
@@ -239,6 +237,10 @@ Future<DatevExportSettings?> showDatevAccountsDialog(
             consultantNumber: consultant.text.trim(),
             clientNumber: client.text.trim(),
             accounts: DatevAccounts(
+              reference: initial.reference,
+              chartCountry: initial.chartCountry,
+              chart: initial.chart,
+              fiscalYearStart: initial.fiscalYearStart,
               revenue: revenue.text.trim(),
               bank: bank.text.trim(),
               expenses: expenses.text.trim(),

@@ -8,13 +8,14 @@
 // consumer takes its ledger and repartitions from that one answer and
 // refuses when the invoice list the person holds has moved.
 import 'package:deskilo/core/data/read_provenance.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';
 import 'package:deskilo/features/money/presentation/export_year_books.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -193,10 +194,10 @@ void main() {
     final s = _parse(_answer());
     // The April-2026 version is in force at 31 December 2026: the year that
     // contains 1 January 2026 began on 1 April 2025.
-    final accounts = datevAccountsFor(s.bookProfiles, const DatevAccounts(), 2026);
+    final accounts = datevAccountsFor(s.bookProfiles, DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'), 2026);
     expect(accounts.fiscalYearStart, DateTime(2025, 4));
     expect(
-      datevAccountsFor(const [], const DatevAccounts(), 2026).fiscalYearStart,
+      datevAccountsFor(const [], DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'), 2026).fiscalYearStart,
       isNull,
     );
   });

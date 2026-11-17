@@ -3,9 +3,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
-import '../../../core/jurisdiction/installed_accounting_formats.dart';
-import '../../../core/time/workspace_time.dart';
-import '../../../core/vat/tax_reference_active.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_revenue.dart';
@@ -67,40 +64,33 @@ class DatevAccounts {
     String? bank,
     String? chart,
     String? expenses,
-    String? chartCountry,
-    this.reference,
+    required this.chartCountry,
+    required this.reference,
     this.fiscalYearStart,
   }) : _givenRevenue = revenue,
        _givenBank = bank,
        _givenChart = chart,
-       _givenExpenses = expenses,
-       _givenCountry = chartCountry;
+       _givenExpenses = expenses;
 
-  /// #2481 -- the snapshot the defaults are read from (the German chart's
-  /// rows); the installed one when null.
-  final TaxReferenceSet? reference;
+  /// The captured reference whose rows supply the chart defaults.
+  final TaxReferenceSet reference;
   /// The book profile's fiscal-year start, when known (#2365).
   final DateTime? fiscalYearStart;
   final String? _givenRevenue;
   final String? _givenBank;
   final String? _givenChart;
   final String? _givenExpenses;
-  final String? _givenCountry;
 
-  /// #3429 -- the country whose chart the defaults are rows of: given, else
-  /// what the installed DATEV format declares (the German Standardkontenrahmen).
-  String get chartCountry =>
-      _givenCountry ?? accountingFormatOf('datev').chartCountry;
-
-  TaxReferenceSet get _ref => reference ?? ActiveTaxReference.current;
+  /// The country whose chart the exporting format declares.
+  final String chartCountry;
 
   /// #2365 — the SKR04 plan's own row when the chart given is SKR04
   /// ([datevChartAccount]), the German chart's otherwise.
   String _default(String role) =>
       (_givenChart == null
           ? null
-          : datevChartAccount(_ref, _givenChart, role, country: chartCountry)) ??
-      _ref.accountOf('coa', role, chartCountry);
+          : datevChartAccount(reference, _givenChart, role, country: chartCountry)) ??
+      reference.accountOf('coa', role, chartCountry);
 
   /// SKR03 8400 — Erlöse 19 % USt. The accountant re-points this when
   /// the workspace charges a different rate or none.
@@ -120,21 +110,21 @@ class DatevAccounts {
   /// #2365 — SKR03 2400, Forderungsverluste: what the owner gave up of an
   /// invoice, booked at the gross amount it was still owed.
   String get writeOff =>
-      datevChartAccount(_ref, chart, 'write_off', country: chartCountry) ??
-      _ref.accountOf('datev', 'write_off', chartCountry);
+      datevChartAccount(reference, chart, 'write_off', country: chartCountry) ??
+      reference.accountOf('datev', 'write_off', chartCountry);
 
   /// #2365 — the automatic revenue account of the rate [percent]
   /// ([datevRevenueAt]).
   String revenueAt(double percent) =>
-      datevRevenueAt(_ref, percent, revenue, chart: chart, country: chartCountry);
+      datevRevenueAt(reference, percent, revenue, chart: chart, country: chartCountry);
 
   /// Every automatic revenue account of the chart: the standard rate's and
   /// each rate group's `revenue:<group>` row.
   Set<String> get _automaticRevenue => {
     _default('revenue'),
-    for (final row in _ref.ownRows(TaxDomain.rate, chartCountry))
+    for (final row in reference.ownRows(TaxDomain.rate, chartCountry))
       ?datevAutomaticRevenue(
-        _ref,
+        reference,
         chart,
         (row.value as RateValue).group,
         _default('revenue'),
@@ -152,8 +142,8 @@ class DatevAccounts {
     if (_automaticRevenue.contains(account)) {
       return (account: account, taxKey: '');
     }
-    final group = _ref.groupOfRate(chartCountry, percent, 'S');
-    return (account: account, taxKey: datevGroupTaxKey(_ref, group, country: chartCountry) ?? '');
+    final group = reference.groupOfRate(chartCountry, percent, 'S');
+    return (account: account, taxKey: datevGroupTaxKey(reference, group, country: chartCountry) ?? '');
   }
 
   /// Why a position at [percent] cannot be booked as DATEV posts it: its
@@ -161,9 +151,9 @@ class DatevAccounts {
   /// reference does not hold; null when it can.
   DatevProblem? taxGapAt(double percent) {
     final account = revenueAt(percent);
-    final group = _ref.groupOfRate(chartCountry, percent, 'S');
+    final group = reference.groupOfRate(chartCountry, percent, 'S');
     final own = datevAutomaticRevenue(
-      _ref,
+      reference,
       chart,
       group,
       _default('revenue'),
@@ -173,7 +163,7 @@ class DatevAccounts {
     if (_automaticRevenue.contains(account)) {
       return DatevAutomaticClash(percent, account);
     }
-    return datevGroupTaxKey(_ref, group, country: chartCountry) == null
+    return datevGroupTaxKey(reference, group, country: chartCountry) == null
         ? DatevTaxKeyMissing(percent, account)
         : null;
   }
@@ -195,7 +185,7 @@ class DatevAccounts {
     bank: _givenBank,
     chart: _givenChart,
     expenses: _givenExpenses,
-    chartCountry: _givenCountry,
+    chartCountry: chartCountry,
     reference: reference,
     fiscalYearStart: start,
   );
@@ -264,7 +254,7 @@ class DatevRequest {
     this.repartitions = const [],
     this.development = false,
     this.taxPoints,
-    this.dayOf = WorkspaceTime.dateOf,
+    required this.dayOf,
     this.slice,
   });
 

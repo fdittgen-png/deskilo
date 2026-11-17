@@ -11,11 +11,7 @@
 // or misbook is not written at all.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/datev_debtors.dart';
-import 'package:deskilo/features/money/domain/datev_package.dart';
-import 'package:deskilo/features/money/domain/datev_problem.dart';
-import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -332,7 +328,7 @@ void main() {
 
     test('an account not as long as the header says', () {
       final p = _package(
-        request: datevTestRequest(accounts: const DatevAccounts(bank: '12000')),
+        request: datevTestRequest(accounts: DatevAccounts(bank: '12000', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       );
       expect(p.problems.whereType<DatevAccountLength>().map((x) => x.account), [
         '12000',
@@ -366,7 +362,7 @@ void main() {
     test('19 % on the owner\'s revenue account carries the bundled key 3; '
         '7 % stays on its automatic account without one', () {
       final p = _package(
-        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: DatevAccounts(revenue: '8000', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       );
       expect(p.problems, isEmpty);
       expect(revenueRows(p), [
@@ -386,7 +382,7 @@ void main() {
         ]),
       );
       final p = _package(
-        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: DatevAccounts(revenue: '8000', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       );
       expect(p.problems, isEmpty);
       expect(revenueRows(p).map((r) => (r.$2, r.$3)).toSet(), {
@@ -402,7 +398,7 @@ void main() {
     test('without the reference key the export stops, the rate named', () {
       withoutKeys();
       final p = _package(
-        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8000')),
+        request: datevTestRequest(accounts: DatevAccounts(revenue: '8000', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       );
       final missing = p.problems.single as DatevTaxKeyMissing;
       expect((missing.percent, missing.account), (19.0, '8000'));
@@ -411,7 +407,7 @@ void main() {
 
     test('a rate on the automatic account of another rate stops it', () {
       final p = _package(
-        request: datevTestRequest(accounts: const DatevAccounts(revenue: '8300')),
+        request: datevTestRequest(accounts: DatevAccounts(revenue: '8300', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       );
       final clash = p.problems.whereType<DatevAutomaticClash>().single;
       expect((clash.percent, clash.account), (19.0, '8300'));

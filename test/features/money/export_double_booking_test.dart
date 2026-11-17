@@ -3,9 +3,10 @@
 // #2365 fix 1 — a ledger expense credit netted on an invoice is booked ONCE
 // (the purchases journal). It used to be booked a second time as money in
 // on the bank, and a goodwill adjustment credit as cash too.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
@@ -44,14 +45,13 @@ void main() {
     final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
-      accounts: const DatevAccounts(),
+      accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
       from: DateTime(2026),
       to: DateTime(2026, 12, 31),
       generatedAt: DateTime(2027, 1, 5),
       consultantNumber: '1001',
       clientNumber: '20002',
-      ledger: SeededExportYear.ledger,
-    ));
+      ledger: SeededExportYear.ledger, dayOf: WorkspaceTime.dateOf));
     final zahlung = file
         .split('\r\n')
         .where((l) => l.contains('Zahlung INV-1'))

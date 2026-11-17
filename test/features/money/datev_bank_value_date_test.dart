@@ -6,8 +6,10 @@
 // stays the match day: it decides the row's Buchungsstapel. The facts come
 // from the accounting source's match rows (0641); a row without them is
 // byte-identical to what it was. Expectations by hand.
-import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_match_row.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -21,14 +23,13 @@ List<String> _datev(Map<String, InvoiceMatch> matches) => buildDatevFile(
     detail: datevCollective,
     invoices: SeededExportYear.acceptanceInvoices,
     matches: matches,
-    accounts: const DatevAccounts(),
+    accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
     from: DateTime(2026),
     to: DateTime(2026, 12, 31),
     generatedAt: DateTime(2027, 1, 5),
     consultantNumber: '1001',
     clientNumber: '20002',
-    ledger: SeededExportYear.ledger,
-  ),
+    ledger: SeededExportYear.ledger, dayOf: WorkspaceTime.dateOf),
 ).split('\r\n');
 
 /// The Beleginfo pairs (fields 21 to 36) of [row], as (Art, Inhalt).

@@ -5,8 +5,8 @@
 // day, lettered with the invoice so the group closes, at the gross amount
 // (the VAT regularisation is the accountant's). Seeded year: INV-3 of
 // 100.00 was paid 60.00 and the remaining 40.00 written off on 25 May.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -89,14 +89,13 @@ void main() {
     List<String> datev({Map<String, InvoiceMatch>? matches}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: matches ?? SeededExportYear.matches,
-      accounts: const DatevAccounts(),
+      accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
       from: DateTime(2026),
       to: DateTime(2026, 12, 31),
       generatedAt: DateTime(2027, 1, 5),
       consultantNumber: '1001',
       clientNumber: '20002',
-      ledger: SeededExportYear.ledger,
-    )).split('\r\n');
+      ledger: SeededExportYear.ledger, dayOf: WorkspaceTime.dateOf)).split('\r\n');
 
     test('the written-off rest is a Forderungsverlust on the write-off day', () {
       final rows = datev().where((l) => l.contains('Forderungsverlust INV-3')).toList();

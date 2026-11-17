@@ -10,10 +10,10 @@
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/declare_vat.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -190,14 +190,13 @@ void main() {
         buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: invoices,
           matches: const {},
-          accounts: const DatevAccounts(),
+          accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
           from: DateTime(2026),
           to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 10, 1, 9),
           consultantNumber: '1234567',
           clientNumber: '54321',
-          taxPoints: points,
-        ));
+          taxPoints: points, dayOf: WorkspaceTime.dateOf));
 
     test('a subscription invoiced 25 August for September carries '
         'September in field 116', () {

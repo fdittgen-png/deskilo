@@ -4,11 +4,13 @@
 // Buchungsstapel per month and journal, the Stammdaten, the vouchers the
 // rows link) and the GoBD data handover with its Verfahrensdokumentation.
 // Both read the run's one snapshot; nothing here reads the period again.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/backend/schema_version.dart';
+import '../../../core/jurisdiction/installed_accounting_formats.dart';
 import '../../../core/trace/guarded.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../../core/ui/app_snack.dart';
@@ -16,9 +18,6 @@ import '../application/generic_journal_export.dart';
 import '../application/originals_summary.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
-import '../domain/datev.dart';
-import '../domain/datev_fields.dart';
-import '../domain/datev_package.dart';
 import '../domain/gobd_package.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart' show refuseUnreadableBooks;
@@ -44,6 +43,10 @@ extension GermanAccountingExports on AccountingExportRun {
     final datev = await showDatevAccountsDialog(
       context,
       costCentre: workspace.name,
+      initial: DatevAccounts(
+        reference: taxReference,
+        chartCountry: accountingFormatOf(format.id).chartCountry,
+      ),
     );
     if (datev == null || !context.mounted) return;
     await runGuarded(
@@ -69,40 +72,8 @@ extension GermanAccountingExports on AccountingExportRun {
         if (!context.mounted || refuseUnreadableBooks(context, posted)) return;
         final sequences = await repo.fetchNumberSequences(workspace.id);
         final numbers = await memberNumbers();
-        final package = buildDatevPackage(
-          DatevPackageRequest(
-            request: DatevRequest(
-              invoices: exported,
-              matches: matches,
-              accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
-              from: DateTime(year),
-              to: DateTime(year, 12, 31),
-              generatedAt: now,
-              consultantNumber: datev.consultantNumber,
-              clientNumber: datev.clientNumber,
-              accountLength: datev.accountLength,
-              detail: DatevDetail(
-                defaultCostCentre: datev.costCentre,
-                voucherLinks: datev.voucherLinks,
-              ),
-              ledger: ledger,
-              repartitions: repartitions,
-              development: development,
-              currency: workspace.currencyCode,
-              batchName: workspace.name,
-              taxPoints: taxPoints,
-            ),
-            bookProfiles: bookProfiles,
-            closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
-            memberSequence: sequences.firstWhere(
-              (s) => s.journal == _memberJournal,
-              orElse: () => NumberSequence.defaultsFor(_memberJournal),
-            ),
-            debtorBase: datev.debtorBase,
-            memberNumbers: numbers,
-            memberNames: memberNames,
-            purchases: datevPurchasesOf(posted, datev.creditorBase),
-          ),
+        final package = datevPackage(
+          datev: datev, periods: periods, sequences: sequences, numbers: numbers,
         );
         if (!context.mounted) return;
         if (package.problems.isNotEmpty) {
@@ -125,6 +96,50 @@ extension GermanAccountingExports on AccountingExportRun {
       },
     );
   }
+
+  /// Builds the DATEV files from this run's held books, clock and settings.
+  /// The asynchronous reads finish before this boundary; it reads no provider.
+  DatevPackage datevPackage({
+    required DatevExportSettings datev,
+    required BookPeriodsOverview periods,
+    required List<NumberSequence> sequences,
+    required Map<String, String> numbers,
+  }) => buildDatevPackage(
+      DatevPackageRequest(
+        request: DatevRequest(
+          dayOf: workspaceDayOf,
+          invoices: exported,
+          matches: matches,
+          accounts: datevAccountsFor(bookProfiles, datev.accounts, year),
+          from: DateTime(year),
+          to: DateTime(year, 12, 31),
+          generatedAt: now,
+          consultantNumber: datev.consultantNumber,
+          clientNumber: datev.clientNumber,
+          accountLength: datev.accountLength,
+          detail: DatevDetail(
+            defaultCostCentre: datev.costCentre,
+            voucherLinks: datev.voucherLinks,
+          ),
+          ledger: ledger,
+          repartitions: repartitions,
+          development: development,
+          currency: workspace.currencyCode,
+          batchName: workspace.name,
+          taxPoints: taxPoints,
+        ),
+        bookProfiles: bookProfiles,
+        closed: (from, to) => periods.closedOn(from)?.contains(to) ?? false,
+        memberSequence: sequences.firstWhere(
+          (s) => s.journal == _memberJournal,
+          orElse: () => NumberSequence.defaultsFor(_memberJournal),
+        ),
+        debtorBase: datev.debtorBase,
+        memberNumbers: numbers,
+        memberNames: memberNames,
+        purchases: datevPurchasesOf(posted, datev.creditorBase),
+      ),
+    );
 
   /// #2375 — the GoBD data handover of the year: the tables of the one
   /// snapshot, every invoice's e-invoice and PDF/A-3, the

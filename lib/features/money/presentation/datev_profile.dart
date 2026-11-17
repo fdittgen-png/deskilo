@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import '../domain/datev.dart';
-import '../domain/datev_fields.dart';
 
 /// #2365 — [accounts] with the fiscal year starting where the book
 /// profiles of [year] say (every issuer agreeing); without a profile the

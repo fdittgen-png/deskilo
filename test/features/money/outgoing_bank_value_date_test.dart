@@ -7,9 +7,8 @@
 // (Valutadatum, Bankreferenz) while its Belegdatum stays the entry's date.
 // A payment without them is written as it always was. Expectations by hand.
 import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/features/money/domain/datev_creditors.dart';
-import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/fec_postings.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

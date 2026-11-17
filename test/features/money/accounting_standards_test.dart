@@ -18,9 +18,9 @@
 import 'dart:convert';
 
 import 'package:deskilo/core/country/country_catalog.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -321,13 +321,12 @@ void main() {
       final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
-        clientNumber: '54321',
-      ));
+        clientNumber: '54321', dayOf: WorkspaceTime.dateOf));
       final bytes = utf8.encode(file);
       expect(bytes.take(3).toList(), [0xEF, 0xBB, 0xBF],
           reason: 'the three bytes that decide whether a German '
@@ -345,14 +344,13 @@ void main() {
       final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: const [],
         matches: const {},
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
         clientNumber: '2',
-        batchName: name,
-      ));
+        batchName: name, dayOf: WorkspaceTime.dateOf));
       expect(file, contains(name));
 
       // And it is still there as bytes. `utf8.decode` strips a leading
@@ -382,13 +380,12 @@ void main() {
       final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: _aRealYear(),
         matches: _matches(),
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5, 1, 9),
         consultantNumber: '1234567',
-        clientNumber: '54321',
-      ));
+        clientNumber: '54321', dayOf: WorkspaceTime.dateOf));
       final lines =
           file.substring(1).split('\r\n').where((l) => l.isNotEmpty).toList();
       header = lines.first.split(';');
@@ -529,13 +526,12 @@ void main() {
       final datev = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: year,
         matches: const {},
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
-        clientNumber: '2',
-      ));
+        clientNumber: '2', dayOf: WorkspaceTime.dateOf));
       final datevRevenue = datev
           .substring(1)
           .split('\r\n')
