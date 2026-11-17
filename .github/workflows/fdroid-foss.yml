@@ -17,17 +17,37 @@ permissions:
 on:
   pull_request:
     paths:
-      - 'packages/**'
+      - 'packages/deskilo_push/**'
+      - 'packages/deskilo_push_foss/**'
       - 'pubspec.yaml'
+      - 'pubspec.lock'
+      - '.flutter-version'
       - 'lib/core/push/**'
+      - 'lib/core/backend/backend_config.dart'
+      - 'android/**'
       - 'fdroid/**'
+      - 'tool/fdroid_foss_swap.sh'
+      - 'scripts/generated_drift.sh'
+      - 'scripts/install_gradle.sh'
+      - '.github/actions/gradle-cache/**'
       - '.github/workflows/fdroid-foss.yml'
   push:
     branches: [master]
     paths:
-      - 'packages/**'
+      - 'packages/deskilo_push/**'
+      - 'packages/deskilo_push_foss/**'
       - 'pubspec.yaml'
+      - 'pubspec.lock'
+      - '.flutter-version'
       - 'lib/core/push/**'
+      - 'lib/core/backend/backend_config.dart'
+      - 'android/**'
+      - 'fdroid/**'
+      - 'tool/fdroid_foss_swap.sh'
+      - 'scripts/generated_drift.sh'
+      - 'scripts/install_gradle.sh'
+      - '.github/actions/gradle-cache/**'
+      - '.github/workflows/fdroid-foss.yml'
   workflow_dispatch:
 
 
@@ -40,11 +60,9 @@ concurrency:
 jobs:
   foss-apk:
     runs-on: ubuntu-latest
-    # #2123 — 30 minutes stopped fitting: on 2026-09-28 the FOSS-flavour
-    # test step took 18.6 min and the release build 7.9 min; by 2026-10-02
-    # the grown suite alone took 24 min and the build was cut off. Nothing
-    # hangs; the job is the whole suite plus a release build.
-    timeout-minutes: 50
+    # The full suite belongs to Quality. This job keeps flavour-specific
+    # generation/tests, the release build and the APK scans.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
@@ -93,14 +111,13 @@ jobs:
       # what build_runner writes here is byte-equal to the commit, or the
       # audit says which file is not, instead of failing a fingerprint
       # test twelve minutes later.
-      - name: Analyze and test under the FOSS flavour
+      - name: Generate and test the FOSS-specific behavior
         run: |
           bash scripts/generated_drift.sh \
             'dart run build_runner build --delete-conflicting-outputs' \
             -- '*.g.dart' '*.freezed.dart'
           flutter gen-l10n
-          flutter analyze --fatal-infos lib test
-          flutter test
+          flutter test test/app/server_choice_test.dart test/core/backend/backend_config_test.dart
 
       - name: Build the release APK
         run: flutter build apk --release --build-number=100000
