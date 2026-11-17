@@ -39,10 +39,12 @@ class PublicOpeningHours {
     final days = raw['weekdays'],
         start = raw['start_minutes'],
         end = raw['end_minutes'];
+    final weekdayField =
+        publicNetworkSchemas['PublicOpeningHours']!.fields['weekdays']!;
     if (days is! List ||
         days.length > DateTime.daysPerWeek ||
         days.any(
-          (d) => d is! int || d < DateTime.monday || d > DateTime.sunday,
+          (d) => d is! int || d < weekdayField.min! || d > weekdayField.max!,
         ) ||
         days.toSet().length != days.length ||
         start is! int ||

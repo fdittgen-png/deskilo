@@ -3888,7 +3888,6 @@ Usted dibujó el plano sobre una fotografía y quiere que la sala se transparent
 
 Usted quiere que las personas ajenas a su espacio lo encuentren y vean lo que ofrece.
 
-<!-- #2832: optional published facts and inherited regular hours. -->
 Seleccione **Equipamiento** y **Accesibilidad** solo para datos que pueda confirmar. Una opción sin marcar no publica información sobre ese dato; no significa que el negocio sea inaccesible. El **Horario de apertura** sigue los días, las horas y la zona horaria configurados para un negocio con plazas reservables. Use **Editar disponibilidad** para cambiarlos. Hasta que se configuren, la página muestra **No publicado**. Un negocio sin plazas reservables puede escribir una nota sobre sus horarios habituales en su propia zona horaria. Son horarios regulares, no una promesa de disponibilidad en tiempo real ni una lista de cierres. Guardar otro campo conserva estos datos; desmarcar una opción la elimina de la lista publicada.
 
 <p><img src="images/user-workspace-settings-public-page.es.b8fa17aa9.jpg" width="280"></p>

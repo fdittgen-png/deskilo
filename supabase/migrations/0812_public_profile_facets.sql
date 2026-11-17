@@ -146,6 +146,8 @@ as $descriptor$
             where c.role = any (i.roles)), '[]'::jsonb))
     from public.installation_identity i
 $descriptor$;
+revoke execute on function public.public_network_descriptor() from public, anon;
+grant execute on function public.public_network_descriptor() to anon, authenticated;
 
 do $refresh$
 declare v_id uuid;

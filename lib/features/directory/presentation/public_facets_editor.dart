@@ -36,7 +36,7 @@ class PublicFacetsEditor extends StatelessWidget {
           Align(
             alignment: AlignmentDirectional.centerEnd,
             child: HelpDot(
-              l.portalPublication,
+              l.publicPageFieldAmenities,
               anchor: HelpAnchor.workspacePublicPage,
             ),
           ),

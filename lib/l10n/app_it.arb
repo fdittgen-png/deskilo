@@ -14959,13 +14959,13 @@
   "@publicHolidaysSheetTitle": {
     "description": "#1274 the preview sheet's title"
   },
-  "publicPageFactsHelp": "Seleziona solo informazioni che puoi confermare. Una voce non selezionata indica che non viene pubblicata alcuna informazione al riguardo.",
+  "publicPageFactsHelp": "Selezioni solo informazioni che può confermare. Una voce non selezionata indica che non viene pubblicata alcuna informazione al riguardo.",
   "publicPageFieldAccessibility": "Accessibilità",
   "publicPageFieldAmenities": "Dotazioni",
   "publicPageFieldHours": "Orari di apertura",
   "publicPageHoursEdit": "Modifica disponibilità",
   "publicPageHoursFollow": "Gli orari seguono la disponibilità configurata e il fuso orario di questa attività.",
-  "publicPageHoursNoteHelp": "Descrivi gli orari abituali nel fuso dell’attività. Lascia vuoto se non vengono pubblicati.",
+  "publicPageHoursNoteHelp": "Descriva gli orari abituali nel fuso dell’attività. Lasci vuoto se non vengono pubblicati.",
   "publicPersonUnavailable": "Questo profilo non è pubblico.",
   "publicProfileCopied": "Link copiato.",
   "publicProfileCopy": "Copia il link",

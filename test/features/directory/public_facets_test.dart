@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// Public facts accept only catalogue IDs, preserve patch/clear distinctions
+// and follow the reference Demo business hours without inventing defaults.
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';

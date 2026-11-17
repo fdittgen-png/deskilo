@@ -26155,7 +26155,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicPageFactsHelp =>
-      'Seleziona solo informazioni che puoi confermare. Una voce non selezionata indica che non viene pubblicata alcuna informazione al riguardo.';
+      'Selezioni solo informazioni che può confermare. Una voce non selezionata indica che non viene pubblicata alcuna informazione al riguardo.';
 
   @override
   String get publicPageFieldAccessibility => 'Accessibilità';
@@ -26175,7 +26175,7 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicPageHoursNoteHelp =>
-      'Descrivi gli orari abituali nel fuso dell’attività. Lascia vuoto se non vengono pubblicati.';
+      'Descriva gli orari abituali nel fuso dell’attività. Lasci vuoto se non vengono pubblicati.';
 
   @override
   String get publicPersonUnavailable => 'Questo profilo non è pubblico.';

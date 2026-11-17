@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
+import '../../../core/i18n/app_format.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../l10n/app_localizations.dart';
@@ -27,11 +27,9 @@ String publicOpeningHoursLine(BuildContext context, PublicOpeningHours? hours) {
   if (note != null) return '$note (${hours.timezone})';
   final weekdays = hours.weekdays!;
   if (weekdays.isEmpty) return l.discoveryHoursClosed;
-  final names = DateFormat.E(Localizations.localeOf(context).toLanguageTag())
-      .dateSymbols
-      .SHORTWEEKDAYS;
-  final days = [...weekdays]..sort();
   final format = appFormatOf(context);
+  final names = format.dates(DateShape.weekday).dateSymbols.SHORTWEEKDAYS;
+  final days = [...weekdays]..sort();
   String time(int minutes) => format.wallTime(
     DateTime.fromMillisecondsSinceEpoch(
       minutes * Duration.millisecondsPerMinute,

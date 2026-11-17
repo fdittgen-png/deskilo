@@ -62,7 +62,7 @@ select is(public.my_workspace_public_page('00000000-0000-4000-8000-0000002086b2'
 select is((public.reset_workspace_public_page('00000000-0000-4000-8000-0000002086b2',null)->>'published')::boolean,false,'a reset never publishes a draft');
 reset role;
 select is((select document->>'host_type' from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1'),'association','the card follows the workspace after reset all');
-select ok((select array(select jsonb_object_keys(document) order by 1) from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1') <@ array['address','booking_unit','contacts','currency','description','email','host_type','image_url','kinds','latitude','longitude','name','phone','plan_url','plans','services','takes_inquiries','website'],'the published document carries only the contract keys');
+select ok((select array(select jsonb_object_keys(document) order by 1) from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b1') <@ array['accessibility','address','amenities','booking_unit','contacts','currency','description','email','host_type','image_url','kinds','latitude','longitude','name','opening_hours','phone','plan_url','plans','services','takes_inquiries','website'],'the published document carries only the contract keys');
 select is((select count(*) from public.public_workspace_cards where workspace_id='00000000-0000-4000-8000-0000002086b2'),0::bigint,'the draft has no public card');
 
 -- Nobody but the owner.

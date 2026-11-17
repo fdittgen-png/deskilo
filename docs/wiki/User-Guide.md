@@ -3888,7 +3888,6 @@ You drew the plan over a photograph and want the room to show through the furnit
 
 You want people outside your space to find it and see what it offers.
 
-<!-- #2832: optional published facts and inherited regular hours. -->
 Choose **Facilities** and **Accessibility** only for facts you can confirm. Leaving a choice unchecked publishes no information about that fact; it does not mean the business is inaccessible. **Opening hours** follow the configured weekdays, working hours and timezone for a business with bookable places. Use **Edit availability** to change them. Until those hours are configured, the page says **Not published**. A business without bookable places can write a regular-hours note in its own timezone. These are regular hours, not a promise of live availability or a list of closures. Saving another field keeps these facts; clearing a choice removes it from the published list.
 
 <p><img src="images/user-workspace-settings-public-page.en.b8fa17aa9.jpg" width="280"></p>

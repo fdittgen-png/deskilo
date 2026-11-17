@@ -140,9 +140,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       _draft = PublicationDraft.fromPage({'document': preview});
       _offer = PublicWorkspace(workspace, '', '', preview!);
       _facetChanges.value = {};
-      ref
-        ..invalidate(discoveryListingProvider)
-        ..invalidate(currentWorkspaceProvider);
+      ref.invalidate(discoveryListingProvider);
       await publicWorkspacePage.open<void>(
         context,
         PublicWorkspaceView(
@@ -150,6 +148,11 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           preview: true,
         ),
       );
+      // Refresh the publication flag after the routed preview returns, so a
+      // workspace redirect cannot replace the push while it carries its page.
+      if (mounted && _workspace == workspace && _account == account) {
+        ref.invalidate(currentWorkspaceProvider);
+      }
     }
   }
 
