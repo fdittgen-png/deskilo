@@ -2628,7 +2628,9 @@ Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
 
 Un invitado que no es miembro ocupa un puesto un día o unas horas, paga en recepción y recibe una factura.
 
-<!-- image: user-money-guest-passes -->
+![](assets/help/images/user-money-guest-passes--sale.en.b37e2c0fb.jpg)
+
+*Pases vendidos*
 
 **Pasos**
 
@@ -2889,7 +2891,9 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 Emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
 
-![](assets/help/images/user-money-invoicing.es.b8fa17aa9.jpg)
+![](assets/help/images/user-money-invoicing--summary.en.b37e2c0fb.jpg)
+
+*Por cobrar*
 
 **Pasos**
 
@@ -5588,7 +5592,9 @@ Sus miembros leen sus documentos en su propio idioma.
 
 Abre la facturación y ve lo que le deben, lo que queda por hacer y las facturas de cada cliente.
 
-![](assets/help/images/user-invoicing-hub.es.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-hub--tasks.en.b37e2c0fb.jpg)
+
+*Pendiente*
 
 **Pasos**
 
@@ -5613,7 +5619,9 @@ Abre la facturación y ve lo que le deben, lo que queda por hacer y las facturas
 
 El mes que acaba de terminar tiene clientes por facturar, y los factura de una vez.
 
-<!-- image: user-invoicing-month -->
+![](assets/help/images/user-invoicing-month--review.en.b37e2c0fb.jpg)
+
+*Hay que completarlo*
 
 **Pasos**
 
@@ -5663,7 +5671,9 @@ Factura un mes a un miembro.
 
 Abre una factura y ve en qué punto está, lo que pasó y lo único que hay que hacer ahora.
 
-![](assets/help/images/user-invoicing-open.es.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-open--history.en.b37e2c0fb.jpg)
+
+*Lo que pasó*
 
 **Pasos**
 
@@ -5688,7 +5698,9 @@ Abre una factura y ve en qué punto está, lo que pasó y lo único que hay que 
 
 En su espacio los recordatorios se comparten a mano, y algunos están pendientes.
 
-<!-- image: user-invoicing-reminders -->
+![](assets/help/images/user-invoicing-reminders--queue.en.b37e2c0fb.jpg)
+
+*Recordatorios por compartir*
 
 **Pasos**
 
@@ -5712,7 +5724,13 @@ En su espacio los recordatorios se comparten a mano, y algunos están pendientes
 
 Ha llegado un pago a la cuenta y usted indica qué facturas paga.
 
-<!-- image: user-invoicing-payments -->
+![](assets/help/images/user-invoicing-payments--payment.en.b37e2c0fb.jpg)
+
+*Pagos por conciliar*
+
+![](assets/help/images/user-invoicing-payments--assignment.en.b37e2c0fb.jpg)
+
+*Asignar a facturas*
 
 **Pasos**
 
@@ -5736,7 +5754,9 @@ Ha llegado un pago a la cuenta y usted indica qué facturas paga.
 
 La empresa debe dinero a un cliente por una nota de crédito, y usted registra que se le devolvió.
 
-<!-- image: user-invoicing-refunds -->
+![](assets/help/images/user-invoicing-refunds--refund.en.b37e2c0fb.jpg)
+
+*La empresa debe este reembolso*
 
 **Pasos**
 
@@ -5757,7 +5777,13 @@ La empresa debe dinero a un cliente por una nota de crédito, y usted registra q
 
 Quiere todo sobre un cliente: lo que debe, sus facturas y un estado de cuenta para enviarle.
 
-<!-- image: user-invoicing-customer -->
+![](assets/help/images/user-invoicing-customer--balance.en.b37e2c0fb.jpg)
+
+*Debe*
+
+![](assets/help/images/user-invoicing-customer--story.en.b37e2c0fb.jpg)
+
+*Historial*
 
 **Pasos**
 

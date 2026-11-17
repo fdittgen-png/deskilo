@@ -361,7 +361,16 @@ Vous voulez trouver au même endroit tout ce que l'espace vend et facture.
 
 Un invité qui n'est pas membre prend une place pour une journée ou quelques heures, paie à l'accueil et reçoit une facture.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.jpg" width="280"></p>
+
+*Pass vendus*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-money-guest-passes.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -634,7 +643,16 @@ Vous appartenez à plusieurs espaces et vous voulez toutes vos factures, vos pai
 
 Vous émettez et relancez les factures de tout l'espace et voulez savoir par où commencer.
 
-<p><img src="images/user-money-invoicing.fr.jpg" width="280"></p>
+<p><img src="images/user-money-invoicing--summary.en.jpg" width="280"></p>
+
+*À recevoir*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-money-invoicing.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 

@@ -17,7 +17,9 @@ dart run tool/build_user_guide.dart && dart run tool/build_help.dart && dart run
 - A shot waits until the screen stopped moving and no spinner is left, clicks tip bubbles away (`keepTips` keeps one),
   and grows the window until a long form no longer scrolls; `parts` cut out one control (`from`/`to` labels).
 - Steps: `hash`, `click` (text, `@arbKey`, `@arbKey|name=value`, or a list of alternatives; `via` for a tab behind the
-  overflow button), `at`, `type`, `fill`, `scroll`, `press`, `css`, `eval`, `wait`. A `url` shot photographs a static
+  overflow button), `at`, `viewport` (`[width, height]`), `type`, `fill`, `scroll`, `press`, `css`, `eval`, `wait`. A `url` shot photographs a static
   page of the build (the setup wizard) without entering the demo.
 - On a failure the runner leaves a screenshot of the screen it was stuck on in `$TMPDIR/guide-shots-fail-*.png`.
 - Defaults (1.2 device pixels, quality 62) keep a screenshot near 20 KB: the in-app help bundles five languages.
+
+The invoicing recipes enter `/#/demo` directly, so capture does not depend on the configured server being current. They use fresh English Demo data: the refund recipe issues the selected synthetic credit, and the guest-pass recipe creates a synthetic sale. The sale temporarily enlarges the viewport to show the form, then restores the phone view. `fill` focuses the Flutter field before entering text.

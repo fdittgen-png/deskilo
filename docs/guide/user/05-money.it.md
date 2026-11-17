@@ -361,7 +361,16 @@ Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
 
 Un ospite che non è membro occupa un posto per un giorno o qualche ora, paga all'accoglienza e riceve una fattura.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.jpg" width="280"></p>
+
+*Pass venduti*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-money-guest-passes.en.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -634,7 +643,16 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 Emette e sollecita le fatture di tutto lo spazio e vuole sapere da dove cominciare.
 
-<p><img src="images/user-money-invoicing.it.jpg" width="280"></p>
+<p><img src="images/user-money-invoicing--summary.en.jpg" width="280"></p>
+
+*Da incassare*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-money-invoicing.en.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 

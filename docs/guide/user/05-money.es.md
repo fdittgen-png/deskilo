@@ -361,7 +361,16 @@ Quiere encontrar en un solo lugar todo lo que el espacio vende y factura.
 
 Un invitado que no es miembro ocupa un puesto un día o unas horas, paga en recepción y recibe una factura.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.jpg" width="280"></p>
+
+*Pases vendidos*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-money-guest-passes.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -634,7 +643,16 @@ Pertenece a varios espacios y quiere ver todas sus facturas, pagos y recordatori
 
 Emite y reclama las facturas de todo el espacio y quiere saber por dónde empezar.
 
-<p><img src="images/user-money-invoicing.es.jpg" width="280"></p>
+<p><img src="images/user-money-invoicing--summary.en.jpg" width="280"></p>
+
+*Por cobrar*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-money-invoicing.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 

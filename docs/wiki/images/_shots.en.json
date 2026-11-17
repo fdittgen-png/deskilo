@@ -812,16 +812,47 @@
    "shows": "user-invoicing-accounting-export"
   },
   {
-   "id": "user-invoicing-hub",
+   "id": "user-invoicing-customer",
    "lang": "en",
-   "file": "user-invoicing-hub.en.b8fa17aa9.jpg",
-   "parts": [],
+   "file": "user-invoicing-customer.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-customer--balance.en.b37e2c0fb.jpg",
+    "user-invoicing-customer--story.en.b37e2c0fb.jpg"
+   ],
    "persona": "owner",
    "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-invoicing-hub"
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "A customer's amount owed, invoices, story and statement actions."
+  },
+  {
+   "id": "user-invoicing-hub",
+   "lang": "en",
+   "file": "user-invoicing-hub.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-hub--tasks.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "Owed to you, To do, invoice filters and customer balances in the reference business."
+  },
+  {
+   "id": "user-invoicing-month",
+   "lang": "en",
+   "file": "user-invoicing-month.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-month--review.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "April review: the selected customer credit and Studio Nord needing its postal address."
   },
   {
    "id": "user-invoicing-new-invoice",
@@ -838,14 +869,45 @@
   {
    "id": "user-invoicing-open",
    "lang": "en",
-   "file": "user-invoicing-open.en.b8fa17aa9.jpg",
-   "parts": [],
+   "file": "user-invoicing-open.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-open--history.en.b37e2c0fb.jpg"
+   ],
    "persona": "owner",
    "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-invoicing-open"
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "An overdue invoice with What happened, More and the next reminder action."
+  },
+  {
+   "id": "user-invoicing-payments",
+   "lang": "en",
+   "file": "user-invoicing-payments.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-payments--payment.en.b37e2c0fb.jpg",
+    "user-invoicing-payments--assignment.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "The unassigned transfer and its candidate invoices before any allocation."
+  },
+  {
+   "id": "user-invoicing-refunds",
+   "lang": "en",
+   "file": "user-invoicing-refunds.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-refunds--refund.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "The synthetic credit note, the refund owed and Record the refund, before recording it."
   },
   {
    "id": "user-invoicing-register",
@@ -858,6 +920,20 @@
    "version": "1.0.2+3",
    "taken": "2026-10-10",
    "shows": "user-invoicing-register"
+  },
+  {
+   "id": "user-invoicing-reminders",
+   "lang": "en",
+   "file": "user-invoicing-reminders.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-invoicing-reminders--queue.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "Reminders to share with the customer, amount, lateness, preview and sharing action."
   },
   {
    "id": "user-invoicing-settlement",
@@ -1277,6 +1353,20 @@
    "shows": "the new scheduled expense form"
   },
   {
+   "id": "user-money-guest-passes",
+   "lang": "en",
+   "file": "user-money-guest-passes.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-money-guest-passes--sale.en.b37e2c0fb.jpg"
+   ],
+   "persona": "owner",
+   "view": "phone",
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "The reference business's guest-pass catalogue and the day pass already sold."
+  },
+  {
    "id": "user-money-invoices",
    "lang": "en",
    "file": "user-money-invoices.en.b8fa17aa9.jpg",
@@ -1303,14 +1393,16 @@
   {
    "id": "user-money-invoicing",
    "lang": "en",
-   "file": "user-money-invoicing.en.b8fa17aa9.jpg",
-   "parts": [],
+   "file": "user-money-invoicing.en.b37e2c0fb.jpg",
+   "parts": [
+    "user-money-invoicing--summary.en.b37e2c0fb.jpg"
+   ],
    "persona": "owner",
    "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-money-invoicing"
+   "build": "37e2c0fb",
+   "version": "1.0.3+4",
+   "taken": "2026-11-17",
+   "shows": "The compact invoicing summary: owed, overdue, to confirm, To do and this month's figures."
   },
   {
    "id": "user-money-legal-address",

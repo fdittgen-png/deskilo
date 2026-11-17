@@ -361,7 +361,16 @@ Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort f
 
 Ein Gast, der kein Mitglied ist, nimmt einen Platz für einen Tag oder einige Stunden, zahlt am Empfang und erhält eine Rechnung.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.jpg" width="280"></p>
+
+*Verkaufte Pässe*
+
+<details>
+<summary>Vollständiger Screenshot (Englisch)</summary>
+
+<p><img src="images/user-money-guest-passes.en.jpg" width="280"></p>
+
+</details>
 
 **Schritte**
 
@@ -634,7 +643,16 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 Sie stellen die Rechnungen des ganzen Arbeitsbereichs aus, mahnen sie und möchten wissen, wo Sie anfangen.
 
-<p><img src="images/user-money-invoicing.de.jpg" width="280"></p>
+<p><img src="images/user-money-invoicing--summary.en.jpg" width="280"></p>
+
+*Offen an Sie*
+
+<details>
+<summary>Vollständiger Screenshot (Englisch)</summary>
+
+<p><img src="images/user-money-invoicing.en.jpg" width="280"></p>
+
+</details>
 
 **Schritte**
 

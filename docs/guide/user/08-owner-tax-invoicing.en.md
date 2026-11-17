@@ -930,7 +930,16 @@ Your members read their documents in their own language.
 
 You open Invoicing and see what you are owed, what to do next and every customer's invoices.
 
+<p><img src="images/user-invoicing-hub--tasks.en.jpg" width="280"></p>
+
+*To do*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
 <p><img src="images/user-invoicing-hub.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -956,7 +965,16 @@ You open Invoicing and see what you are owed, what to do next and every customer
 
 The month just ended has customers still to invoice, and you issue them in one go.
 
-<!-- image: user-invoicing-month -->
+<p><img src="images/user-invoicing-month--review.en.jpg" width="280"></p>
+
+*Needs a fix*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-invoicing-month.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -1008,7 +1026,16 @@ You invoice a member for a month.
 
 You open an invoice and see where it stands, what happened and the one thing to do now.
 
+<p><img src="images/user-invoicing-open--history.en.jpg" width="280"></p>
+
+*What happened*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
 <p><img src="images/user-invoicing-open.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -1034,7 +1061,16 @@ You open an invoice and see where it stands, what happened and the one thing to 
 
 Reminders are shared by hand in your space, and some are due.
 
-<!-- image: user-invoicing-reminders -->
+<p><img src="images/user-invoicing-reminders--queue.en.jpg" width="280"></p>
+
+*Reminders to share*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-invoicing-reminders.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -1059,7 +1095,20 @@ Reminders are shared by hand in your space, and some are due.
 
 A payment arrived on the account and you say which invoices it pays.
 
-<!-- image: user-invoicing-payments -->
+<p><img src="images/user-invoicing-payments--payment.en.jpg" width="280"></p>
+
+*Payments to match*
+
+<p><img src="images/user-invoicing-payments--assignment.en.jpg" width="280"></p>
+
+*Assign to invoices*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-invoicing-payments.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -1084,7 +1133,16 @@ A payment arrived on the account and you say which invoices it pays.
 
 The business owes a customer money back on a credit note, and you record that it was paid out.
 
-<!-- image: user-invoicing-refunds -->
+<p><img src="images/user-invoicing-refunds--refund.en.jpg" width="280"></p>
+
+*The business owes this refund*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-invoicing-refunds.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -1106,7 +1164,20 @@ The business owes a customer money back on a credit note, and you record that it
 
 You want everything about one customer: what they owe, their invoices and a statement to send them.
 
-<!-- image: user-invoicing-customer -->
+<p><img src="images/user-invoicing-customer--balance.en.jpg" width="280"></p>
+
+*Owes*
+
+<p><img src="images/user-invoicing-customer--story.en.jpg" width="280"></p>
+
+*Story*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-invoicing-customer.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
