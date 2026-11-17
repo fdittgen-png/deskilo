@@ -18,6 +18,7 @@ import 'dart:async';
 import 'package:deskilo/core/backend/backend_settings.dart';
 import 'package:deskilo/core/backend/connected_installation_providers.dart';
 import 'package:deskilo/core/backend/connected_installations.dart';
+import 'package:deskilo/core/backend/context_client_providers.dart';
 import 'package:deskilo/core/backend/federation_authority.dart';
 import 'package:deskilo/core/backend/federation_handoff.dart';
 import 'package:deskilo/core/backend/secondary_federation.dart';
@@ -27,6 +28,7 @@ import 'package:deskilo/features/me/domain/visibility.dart';
 import 'package:deskilo/features/me/providers/me_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/connected_space_providers.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -155,7 +157,8 @@ void main() {
     await tester.pumpAndSettle();
     expect(entry.calls, [(_other, 'remote-1')]);
     expect(router.state.uri.path, isNot('/server'));
-    expect(router.state.uri.path, isNot('/me'), reason: 'the space opened');
+    expect(router.state.uri.path, '/workspace-overview',
+        reason: 'the connected place-free business opened its own home');
     expect(find.byType(SnackBar), findsNothing);
   });
 
@@ -196,7 +199,8 @@ void main() {
     expect(connector.begun.single.workspaceId, 'remote-1');
     expect(connector.begun.single.action, SecondaryConnectAction.enter);
     expect(entry.calls, [(_other, 'remote-1'), (_other, 'remote-1')]);
-    expect(router.state.uri.path, isNot('/me'), reason: 'the space opened');
+    expect(router.state.uri.path, '/workspace-overview',
+        reason: 'the connected place-free business opened its own home');
   });
 
   testWidgets('the identity sign-in refused: said in the sheet, nothing is '
@@ -307,6 +311,15 @@ class _GatedSpaces implements LinkedMeRepository {
 
 /// What the fake entry was asked, and how it answers.
 class _Entry {
+  final space = const Workspace(
+    id: 'remote-1',
+    name: 'COWORKONTI',
+    countryCode: 'FR',
+    currencyCode: 'EUR',
+    timezone: 'Europe/Paris',
+    inviteCode: 'x',
+    featureFlags: {'placeBooking': false, 'workspaceOverview': true},
+  );
   final calls = <(String, String)>[];
   ConnectionFailure? failure;
 
@@ -328,14 +341,10 @@ class _FakeEntry extends ConnectedSpaceEntry {
       if (_entry.failOnce) _entry.failure = null;
       throw f;
     }
-    return Workspace(
-      id: workspaceId,
-      name: 'COWORKONTI',
-      countryCode: 'FR',
-      currencyCode: 'EUR',
-      timezone: 'Europe/Paris',
-      inviteCode: 'x',
-    );
+    // A successful entry selects before returning, just like the real reader.
+    ref.read(activeWorkspaceIdProvider.notifier)
+        .activateConnected(workspaceId, source);
+    return _entry.space;
   }
 }
 
@@ -348,12 +357,28 @@ Future<GoRouter> _openLinked(
     ..linkedSpaces[_other] = const [
       LinkedSpace(id: 'remote-1', name: 'COWORKONTI'),
     ];
+  final workspace = FakeWorkspaceRepository.withWorkspace();
+  workspace.workspaces.add(entry.space);
+  workspace.extraMyMemberships.add(workspace.myMember.copyWith(
+    workspaceId: entry.space.id,
+  ));
   final router = await pumpMeApp(
     tester,
+    workspace: workspace,
     linkedMe: linked,
     connectedSources: [_linked(_other)],
     identityConnector: connector,
-    extraOverrides: [connectedSpaceEntryProvider.overrideWith(() => _FakeEntry(entry))],
+    extraOverrides: [
+      connectedSpaceEntryProvider.overrideWith(() => _FakeEntry(entry)),
+      currentWorkspaceProvider.overrideWith((ref) async {
+        final selected = ref.watch(selectedWorkspaceHostProvider);
+        if (selected != null) {
+          expect(selected, (workspaceId: entry.space.id, source: _other));
+          return entry.space;
+        }
+        return (await ref.watch(myWorkspacesProvider.future)).first;
+      }),
+    ],
   );
   await goTo(tester, router, '/me');
   await tapIn(
