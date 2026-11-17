@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'directory_location.dart';
+import 'public_facets.dart';
 
 /// One row of `my_reachable_people`: a person I may write to, in
 /// one workspace I share with them.
@@ -36,6 +37,9 @@ class PublicWorkspace {
   String text(String field) =>
       document[field] is String ? document[field] as String : '';
   String get name => text('name');
+  List<String>? get amenities => PublicFacets.read('amenities', document['amenities']);
+  List<String>? get accessibility => PublicFacets.read('accessibility', document['accessibility']);
+  PublicOpeningHours? get openingHours => PublicOpeningHours.read(document['opening_hours']);
   DirectoryLocation? get location =>
       DirectoryLocation.parse(document['latitude'], document['longitude']);
   double? get latitude => location?.latitude;
@@ -163,9 +167,10 @@ class PublicationDraft {
   PublicationDraft.fromPage(Map<String, Object?> page) {
     final document = Map<String, Object?>.from(page['document'] as Map);
     fields = Map.unmodifiable({
-      for (final key in ['host_type', ...publicPageFields])
+      for (final key in ['host_type', ...publicPageFields, 'amenities', 'accessibility'])
         if (document.containsKey(key)) key: document[key],
       ...publicPlaceFields(publicPlaceOf(document)),
+      'opening_hours': ?PublicOpeningHours.read(document['opening_hours'])?.note,
     });
   }
 
@@ -174,13 +179,19 @@ class PublicationDraft {
   /// Only edited fields are sent; another editor's fields remain on the server.
   PublicationPatch patch(Map<String, Object?> changes) => PublicationPatch.patch({
     for (final entry in changes.entries)
-      if (fields[entry.key] != entry.value) entry.key: entry.value,
+      if (!_samePublicationValue(fields[entry.key], entry.value)) entry.key: entry.value,
     if (changes.containsKey('latitude') && changes.containsKey('longitude') &&
         (fields['latitude'] != changes['latitude'] ||
          fields['longitude'] != changes['longitude'])) ...{
       'latitude': changes['latitude'], 'longitude': changes['longitude'],
     },
   });
+}
+
+bool _samePublicationValue(Object? before, Object? after) {
+  if (before is! List || after is! List) return before == after;
+  return before.length == after.length &&
+      before.indexed.every((entry) => entry.$2 == after[entry.$1]);
 }
 
 /// Explicit write semantics shared by the editor, repository and Demo.

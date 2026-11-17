@@ -3709,6 +3709,9 @@ Vous avez dessiné le plan sur une photo et voulez que la pièce apparaisse à t
 
 Vous voulez que les personnes extérieures à votre espace le trouvent et voient ce qu'il propose.
 
+<!-- #2832: optional published facts and inherited regular hours. -->
+Choisissez **Équipements** et **Accessibilité** uniquement pour des faits que vous pouvez confirmer. Une case non cochée ne publie aucune information sur ce point ; elle ne signifie pas que l’entreprise est inaccessible. Les **Horaires d’ouverture** suivent les jours, les heures et le fuseau configurés pour une entreprise avec des places réservables. Utilisez **Modifier les disponibilités** pour les changer. Tant que ces horaires ne sont pas configurés, la page indique **Non publié**. Une entreprise sans places réservables peut rédiger une note sur ses horaires habituels dans son propre fuseau. Il ne s’agit ni d’une disponibilité en temps réel ni d’une liste de fermetures. Modifier un autre champ conserve ces faits ; décocher un choix le retire de la liste publiée.
+
 ![](assets/help/images/user-workspace-settings-public-page.fr.b8fa17aa9.jpg)
 
 **Étapes**

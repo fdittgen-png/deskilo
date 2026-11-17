@@ -51,6 +51,19 @@ Map<String, dynamic> openapi(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
 
 void main() {
+  test('SQL catalogue is generated from the same optional input ids', () {
+    final sql = File('supabase/migrations/0812_public_profile_facets.sql').readAsStringSync();
+    expect(sql, contains(renderPublicProfileFacetsSql(source())));
+    final schema = publicSchema('PublicationInput',
+      (source()['schemas'] as Map)['PublicationInput'] as Map<String, dynamic>, input: true);
+    final properties = schema['properties'] as Map;
+    final amenities = ((properties['amenities'] as Map)['anyOf'] as List).first as Map;
+    expect(amenities['uniqueItems'], isTrue);
+    expect(amenities['maxItems'], publicNetworkSchemas['PublicationInput']!.fields['amenities']!.values.length);
+    expect((amenities['items'] as Map)['enum'],
+      publicNetworkSchemas['PublicationInput']!.fields['amenities']!.values);
+  });
+
   test('publication schema describes numeric coordinates and explicit clears', () {
     final schema = publicSchema('PublicationInput',
       Map<String, dynamic>.from((source()['schemas'] as Map)['PublicationInput'] as Map),

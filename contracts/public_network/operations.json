@@ -7,7 +7,8 @@
   ],
   "capabilities": {
     "operation_header": "The server revalidates `x-deskilo-operation: <id>@<version>` before a participant mutation and refuses a version it does not support. An unlabelled request is a client from before negotiation and means the operation's `unlabelled` version.",
-    "kind_filter": "#3553: directory.workspaces.search can be narrowed to one business kind (the card's `kinds`). A client asks only a source that advertises it; a source that does not is reported as not covered by that search, never as having no result."
+    "kind_filter": "#3553: directory.workspaces.search can be narrowed to one business kind (the card's `kinds`). A client asks only a source that advertises it; a source that does not is reported as not covered by that search, never as having no result.",
+    "profile_facets": "Optional published amenities, affirmed accessibility facts and opening hours. Catalogue arrays support exact containment filtering; missing facts are unknown. Place-business hours follow configured booking rules and the workspace timezone."
   },
   "roles": {
     "description": "#2561 L1 (#2413 D1). What kind of installation answers. A personal home hosts people and no workspace; a workspace host hosts coworking spaces; a combined installation (every installation from before the split, and the default) is both. The descriptor lists `roles` as installation_identity.roles holds them and `role_capabilities`, the capability version each held role carries. A role grants nothing: a client that needs a personal home checks the role and understands its capability before it trusts the installation; a server from before the roles lists neither key and is read as combined.",
@@ -207,6 +208,31 @@
         },
         "takes_inquiries": {
           "type": "boolean"
+        },
+        "amenities": {
+          "type": "string_list",
+          "values": [
+            "wifi",
+            "meeting_room",
+            "kitchen",
+            "printer",
+            "parking",
+            "bike_parking"
+          ],
+          "maxItems": 6
+        },
+        "accessibility": {
+          "type": "string_list",
+          "values": [
+            "step_free_entrance",
+            "accessible_toilet",
+            "lift"
+          ],
+          "maxItems": 3
+        },
+        "opening_hours": {
+          "type": "object",
+          "schema": "PublicOpeningHours"
         }
       }
     },
@@ -234,7 +260,7 @@
       }
     },
     "PublicationInput": {
-      "description": "Owner-authored fields. Patch omits unchanged fields; null removes a field and restores inheritance where applicable; empty text is a blank override. Coordinates are numeric. Legacy three-argument replacement calls also accept decimal strings.",
+      "description": "Owner-authored fields. Patch omits unchanged fields; null removes a field and restores inheritance where applicable; empty text is a blank override. Coordinates are numeric. Legacy three-argument replacement calls also accept decimal strings. Amenities and accessibility are bounded catalogue-id arrays; empty arrays affirm no listed facts, never lack of accessibility. Opening-hours text is only for businesses without place booking; place hours come from configured booking rules.",
       "fields": {
         "host_type": {
           "type": "enum",
@@ -285,6 +311,31 @@
           "type": "number",
           "min": -180,
           "max": 180
+        },
+        "amenities": {
+          "type": "string_list",
+          "values": [
+            "wifi",
+            "meeting_room",
+            "kitchen",
+            "printer",
+            "parking",
+            "bike_parking"
+          ],
+          "maxItems": 6
+        },
+        "accessibility": {
+          "type": "string_list",
+          "values": [
+            "step_free_entrance",
+            "accessible_toilet",
+            "lift"
+          ],
+          "maxItems": 3
+        },
+        "opening_hours": {
+          "type": "text",
+          "maxLength": 4000
         }
       }
     },
@@ -346,6 +397,31 @@
         },
         "takes_inquiries": {
           "type": "boolean"
+        },
+        "amenities": {
+          "type": "string_list",
+          "values": [
+            "wifi",
+            "meeting_room",
+            "kitchen",
+            "printer",
+            "parking",
+            "bike_parking"
+          ],
+          "maxItems": 6
+        },
+        "accessibility": {
+          "type": "string_list",
+          "values": [
+            "step_free_entrance",
+            "accessible_toilet",
+            "lift"
+          ],
+          "maxItems": 3
+        },
+        "opening_hours": {
+          "type": "object",
+          "schema": "PublicOpeningHours"
         }
       }
     },
@@ -440,6 +516,36 @@
       "description": "The #1850 seam: maturity and lifecycle of one operation. No term is defined yet; a server listing one in must_understand makes the operation unavailable to this client.",
       "must_understand": "must_understand",
       "fields": {}
+    },
+    "PublicOpeningHours": {
+      "description": "Published regular hours in the business timezone, or an owner-written note for a business without place booking. Missing hours are unknown; this is not real-time availability or a closure calendar.",
+      "fields": {
+        "timezone": {
+          "type": "text",
+          "maxLength": 100,
+          "required": true
+        },
+        "weekdays": {
+          "type": "integer_list",
+          "min": 1,
+          "max": 7,
+          "maxItems": 7
+        },
+        "start_minutes": {
+          "type": "integer",
+          "min": 0,
+          "max": 1439
+        },
+        "end_minutes": {
+          "type": "integer",
+          "min": 1,
+          "max": 1440
+        },
+        "note": {
+          "type": "text",
+          "maxLength": 4000
+        }
+      }
     }
   },
   "operations": [

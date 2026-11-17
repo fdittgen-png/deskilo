@@ -39,6 +39,10 @@ import 'demo_second_space_seed.dart';
 /// conditions and the hosts who answer (#2405).
 const _demoNeighbourQuai = PublicWorkspace('demo-quai', kDemoServerOrigin, '', {
   'name': 'Le Quai Numérique',
+  'amenities': ['wifi', 'meeting_room', 'parking'],
+  'accessibility': ['step_free_entrance', 'accessible_toilet'],
+  'opening_hours': {'weekdays': [1, 2, 3, 4, 5], 'start_minutes': 510,
+    'end_minutes': 1140, 'timezone': 'Europe/Paris'},
   'kinds': ['coworking'],
   'address': '9 quai des Pêcheurs\n34200 Sète',
   'host_type': 'company',
@@ -215,6 +219,8 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
       'published': true,
       'document': <String, dynamic>{
         'description': _demoSpaceDescription,
+        'amenities': ['wifi', 'meeting_room', 'kitchen', 'bike_parking'],
+        'accessibility': ['lift'],
         'plans': _demoSpacePlans,
         'email': 'bonjour@atelier-du-marche.example.test',
         'website': 'https://atelier-du-marche.example.test',

@@ -7,6 +7,7 @@
 // it takes inquiries. Read live, so a service the owner marks public in
 // Services is on the page and in the search at once. Only the business the
 // Demo publishes has a page; the others publish nothing.
+import '../../../features/directory/domain/public_facets.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/workspace/domain/business_profile.dart';
 import '../../../features/workspace/domain/workspace.dart';
@@ -67,8 +68,34 @@ void wireDemoPublicOffer(
   FakeDirectoryRepository directory,
   Workspace? Function(String id) workspaceOf,
   Future<List<ServiceItem>> Function(String id) servicesOf,
-) => directory.offer = (id) async {
+  Map<String, Object?> Function(String id) bookingRulesOf,
+) {
+  directory
+    ..placeBooking = ((id) {
+    final workspace = workspaceOf(id);
+    return workspace == null || effectiveFeatures(
+      resolveEnabledFeatures(workspace.featureFlags)).contains(WorkspaceFeature.placeBooking);
+    })
+    ..timezoneOf = ((id) => workspaceOf(id)?.timezone ?? 'UTC')
+    ..offer = (id) async {
   final workspace = workspaceOf(id);
   if (workspace == null || !directory.pages.containsKey(id)) return const {};
-  return _demoPublicOffer(workspace, await servicesOf(id));
+  final stored = directory.pages[id]!['document'] as Map;
+  final hasPlaces = effectiveFeatures(resolveEnabledFeatures(workspace.featureFlags))
+      .contains(WorkspaceFeature.placeBooking);
+  final rules = bookingRulesOf(id);
+  final hours = <String, Object?>{
+    'timezone': workspace.timezone,
+    if (hasPlaces) ...{
+      'weekdays': rules['open_weekdays'],
+      'start_minutes': rules['work_start_minutes'],
+      'end_minutes': rules['work_end_minutes'],
+    } else 'note': stored['opening_hours'],
+  };
+  return {
+    ..._demoPublicOffer(workspace, await servicesOf(id)),
+    for (final field in ['amenities', 'accessibility']) field: stored[field],
+    'opening_hours': PublicOpeningHours.read(hours) == null ? null : hours,
+  };
 };
+}

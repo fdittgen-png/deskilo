@@ -7,17 +7,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/trace/guarded.dart';
+import '../../../core/ui/form_kit.dart';
 import '../../../core/ui/kit/form_scroll.dart';
 import '../../../core/ui/kit/page_bar.dart';
 import '../../../core/ui/loading_view.dart';
 import '../../../l10n/app_localizations.dart';
 import '../../auth/providers/auth_providers.dart';
+import '../../workspace/domain/workspace_feature.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/directory_location.dart';
 import '../domain/public_workspace.dart';
 import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'directory_pages.dart';
+import 'public_facets_editor.dart';
 import 'public_offer_preview.dart';
 import 'public_page_place.dart';
 import 'public_workspace_view.dart';
@@ -45,6 +48,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
   /// #3553 — the page as it reads back: its kinds and public services.
   PublicWorkspace? _offer;
   PublicationDraft? _draft;
+  final _facetChanges = ValueNotifier<Map<String, Object?>>({});
+  final _hoursNote = TextEditingController();
 
   /// #3689 — the stored place, kept in the draft so every save carries it.
   final _place = ValueNotifier<DirectoryLocation?>(null);
@@ -54,6 +59,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       c.dispose();
     }
     _place.dispose();
+    _facetChanges.dispose();
+    _hoursNote.dispose();
     super.dispose();
   }
 
@@ -84,6 +91,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           _published = page['published'] == true;
           _following = publicFollowing(page);
           _offer = PublicWorkspace('', '', '', doc);
+          _facetChanges.value = {};
+          _hoursNote.text = _offer?.openingHours?.note ?? '';
           _loaded = true;
         });
       },
@@ -118,6 +127,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
             for (final entry in _controllers.entries)
               entry.key: entry.value.text.trim(),
             ...publicPlaceFields(_place.value),
+            ..._facetChanges.value,
           }),
           following: _following,
           published: _published,
@@ -128,6 +138,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     setState(() => _busy = false);
     if (ok) {
       _draft = PublicationDraft.fromPage({'document': preview});
+      _offer = PublicWorkspace(workspace, '', '', preview!);
+      _facetChanges.value = {};
       ref
         ..invalidate(discoveryListingProvider)
         ..invalidate(currentWorkspaceProvider);
@@ -219,6 +231,28 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     }
   }
 
+  Widget _textField(String field, String label) => Padding(
+                    padding: AppSpacing.smAll,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        AppTextField(
+                          key: ValueKey('public-page-editor-text-field-$field'),
+                          controller: _controllers[field]!,
+                          enabled: !_busy,
+                          maxLength: 4000,
+                          maxLines: field == 'description' || field == 'plans'
+                              ? 3
+                              : 1,
+                          onChanged: (_) => _override(field),
+                          label: label,
+                        ),
+                        if (publicInheritedFields.contains(field))
+                          _inheritance(field, context.l10n),
+                      ],
+                    ),
+                  );
+
   Widget _inheritance(String field, AppLocalizations l) => _InheritedStatus(
     key: ValueKey('public-page-inherit-$field'),
     following: _following.contains(field),
@@ -250,6 +284,8 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     _busy = false;
     _place.value = null;
     _offer = null;
+    _facetChanges.value = {};
+    _hoursNote.clear();
     for (final c in _controllers.values) {
       c.clear();
     }
@@ -306,6 +342,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                   title: Text(l.portalPublished),
                 ),
                 DropdownButtonFormField<String>(
+                  isExpanded: true,
                   key: ValueKey('public-page-host-$_host'),
                   initialValue: _host,
                   items: [
@@ -330,30 +367,12 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
                 ),
                 _inheritance('host_type', l),
                 for (final field in _fields)
-                  Padding(
-                    padding: AppSpacing.smAll,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        TextField(
-                          key: ValueKey('public-page-editor-text-field-$field'),
-                          controller: _controllers[field],
-                          enabled: !_busy,
-                          maxLength: 4000,
-                          maxLines: field == 'description' || field == 'plans'
-                              ? 3
-                              : 1,
-                          onChanged: (_) => _override(field),
-                          decoration: InputDecoration(
-                            labelText: labels[field],
-                          ),
-                        ),
-                        if (publicInheritedFields.contains(field))
-                          _inheritance(field, l),
-                      ],
-                    ),
-                  ),
+                  _textField(field, labels[field]!),
                 _placeSection(),
+                PublicFacetsEditor(offer: _offer, changes: _facetChanges,
+                  hoursController: _hoursNote, enabled: !_busy,
+                  hasPlaces: effectiveFeatures(resolveEnabledFeatures(workspace!.featureFlags))
+                      .contains(WorkspaceFeature.placeBooking)),
                 PublicOfferPreview(offer: _offer),
                 Padding(
                   padding: AppSpacing.smAll,

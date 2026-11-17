@@ -10900,6 +10900,50 @@
       }
     }
   },
+  "discoveryFacetAccessibilityAccessibleToilet": "Accessible toilet",
+  "@discoveryFacetAccessibilityAccessibleToilet": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAccessibilityLift": "Lift",
+  "@discoveryFacetAccessibilityLift": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAccessibilityStepFreeEntrance": "Step-free entrance",
+  "@discoveryFacetAccessibilityStepFreeEntrance": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityBikeParking": "Bicycle parking",
+  "@discoveryFacetAmenityBikeParking": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityKitchen": "Kitchen",
+  "@discoveryFacetAmenityKitchen": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityMeetingRoom": "Meeting room",
+  "@discoveryFacetAmenityMeetingRoom": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityParking": "Car parking",
+  "@discoveryFacetAmenityParking": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityPrinter": "Printer",
+  "@discoveryFacetAmenityPrinter": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFacetAmenityWifi": "Wi-Fi",
+  "@discoveryFacetAmenityWifi": {
+    "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
+  },
+  "discoveryFieldNotPublished": "Not published",
+  "@discoveryFieldNotPublished": {
+    "description": "Public profile editor or preview: Not published"
+  },
+  "discoveryHoursClosed": "No regular open days published",
+  "@discoveryHoursClosed": {
+    "description": "Public profile editor or preview: No regular open days published"
+  },
   "discoveryKindAll": "All kinds",
   "@discoveryKindAll": {
     "description": "#3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result"
@@ -34038,6 +34082,34 @@
   "publicHolidaysSheetTitle": "Public holidays",
   "@publicHolidaysSheetTitle": {
     "description": "#1274 the preview sheet's title"
+  },
+  "publicPageFactsHelp": "Select only facts you can confirm. An unselected item means no information is published about it.",
+  "@publicPageFactsHelp": {
+    "description": "Public profile editor or preview: Select only facts you can confirm. An unselected item means no information is published about it."
+  },
+  "publicPageFieldAccessibility": "Accessibility",
+  "@publicPageFieldAccessibility": {
+    "description": "Public profile editor or preview: Accessibility"
+  },
+  "publicPageFieldAmenities": "Facilities",
+  "@publicPageFieldAmenities": {
+    "description": "Public profile editor or preview: Facilities"
+  },
+  "publicPageFieldHours": "Opening hours",
+  "@publicPageFieldHours": {
+    "description": "Public profile editor or preview: Opening hours"
+  },
+  "publicPageHoursEdit": "Edit availability",
+  "@publicPageHoursEdit": {
+    "description": "Public profile editor or preview: Edit availability"
+  },
+  "publicPageHoursFollow": "Hours follow the configured availability and timezone of this business.",
+  "@publicPageHoursFollow": {
+    "description": "Public profile editor or preview: Hours follow the configured availability and timezone of this business."
+  },
+  "publicPageHoursNoteHelp": "Describe regular hours in the business timezone. Leave blank if not published.",
+  "@publicPageHoursNoteHelp": {
+    "description": "Public profile editor or preview: Describe regular hours in the business timezone. Leave blank if not published."
   },
   "publicPersonUnavailable": "This profile is not public.",
   "@publicPersonUnavailable": {

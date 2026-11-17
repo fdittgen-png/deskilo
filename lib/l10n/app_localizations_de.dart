@@ -8365,6 +8365,42 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get discoveryFacetAccessibilityAccessibleToilet =>
+      'Barrierefreie Toilette';
+
+  @override
+  String get discoveryFacetAccessibilityLift => 'Aufzug';
+
+  @override
+  String get discoveryFacetAccessibilityStepFreeEntrance =>
+      'Stufenloser Eingang';
+
+  @override
+  String get discoveryFacetAmenityBikeParking => 'Fahrradparkplatz';
+
+  @override
+  String get discoveryFacetAmenityKitchen => 'Küche';
+
+  @override
+  String get discoveryFacetAmenityMeetingRoom => 'Besprechungsraum';
+
+  @override
+  String get discoveryFacetAmenityParking => 'Autoparkplatz';
+
+  @override
+  String get discoveryFacetAmenityPrinter => 'Drucker';
+
+  @override
+  String get discoveryFacetAmenityWifi => 'WLAN';
+
+  @override
+  String get discoveryFieldNotPublished => 'Nicht veröffentlicht';
+
+  @override
+  String get discoveryHoursClosed =>
+      'Keine regelmäßigen Öffnungstage veröffentlicht';
+
+  @override
   String get discoveryKindAll => 'Alle Arten';
 
   @override
@@ -26158,6 +26194,30 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get publicHolidaysSheetTitle => 'Feiertage';
+
+  @override
+  String get publicPageFactsHelp =>
+      'Wählen Sie nur Angaben, die Sie bestätigen können. Bei nicht ausgewählten Einträgen werden keine Informationen veröffentlicht.';
+
+  @override
+  String get publicPageFieldAccessibility => 'Barrierefreiheit';
+
+  @override
+  String get publicPageFieldAmenities => 'Ausstattung';
+
+  @override
+  String get publicPageFieldHours => 'Öffnungszeiten';
+
+  @override
+  String get publicPageHoursEdit => 'Verfügbarkeit bearbeiten';
+
+  @override
+  String get publicPageHoursFollow =>
+      'Die Öffnungszeiten folgen der konfigurierten Verfügbarkeit und Zeitzone dieses Betriebs.';
+
+  @override
+  String get publicPageHoursNoteHelp =>
+      'Beschreiben Sie die üblichen Zeiten in der Zeitzone des Betriebs. Leer lassen, wenn sie nicht veröffentlicht werden.';
 
   @override
   String get publicPersonUnavailable => 'Dieses Profil ist nicht öffentlich.';

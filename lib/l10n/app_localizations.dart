@@ -13155,6 +13155,72 @@ abstract class AppLocalizations {
   /// **'{count, plural, one{One directory did not answer.} other{{count} directories did not answer.}} These results may be incomplete.'**
   String discoveryDirectoriesDidNotAnswer(int count);
 
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Accessible toilet'**
+  String get discoveryFacetAccessibilityAccessibleToilet;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Lift'**
+  String get discoveryFacetAccessibilityLift;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Step-free entrance'**
+  String get discoveryFacetAccessibilityStepFreeEntrance;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Bicycle parking'**
+  String get discoveryFacetAmenityBikeParking;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen'**
+  String get discoveryFacetAmenityKitchen;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Meeting room'**
+  String get discoveryFacetAmenityMeetingRoom;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Car parking'**
+  String get discoveryFacetAmenityParking;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Printer'**
+  String get discoveryFacetAmenityPrinter;
+
+  /// Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent.
+  ///
+  /// In en, this message translates to:
+  /// **'Wi-Fi'**
+  String get discoveryFacetAmenityWifi;
+
+  /// Public profile editor or preview: Not published
+  ///
+  /// In en, this message translates to:
+  /// **'Not published'**
+  String get discoveryFieldNotPublished;
+
+  /// Public profile editor or preview: No regular open days published
+  ///
+  /// In en, this message translates to:
+  /// **'No regular open days published'**
+  String get discoveryHoursClosed;
+
   /// #3554 Discover: the chip that shows businesses of every kind; also the way back from a kind with no result
   ///
   /// In en, this message translates to:
@@ -41398,6 +41464,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Public holidays'**
   String get publicHolidaysSheetTitle;
+
+  /// Public profile editor or preview: Select only facts you can confirm. An unselected item means no information is published about it.
+  ///
+  /// In en, this message translates to:
+  /// **'Select only facts you can confirm. An unselected item means no information is published about it.'**
+  String get publicPageFactsHelp;
+
+  /// Public profile editor or preview: Accessibility
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get publicPageFieldAccessibility;
+
+  /// Public profile editor or preview: Facilities
+  ///
+  /// In en, this message translates to:
+  /// **'Facilities'**
+  String get publicPageFieldAmenities;
+
+  /// Public profile editor or preview: Opening hours
+  ///
+  /// In en, this message translates to:
+  /// **'Opening hours'**
+  String get publicPageFieldHours;
+
+  /// Public profile editor or preview: Edit availability
+  ///
+  /// In en, this message translates to:
+  /// **'Edit availability'**
+  String get publicPageHoursEdit;
+
+  /// Public profile editor or preview: Hours follow the configured availability and timezone of this business.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours follow the configured availability and timezone of this business.'**
+  String get publicPageHoursFollow;
+
+  /// Public profile editor or preview: Describe regular hours in the business timezone. Leave blank if not published.
+  ///
+  /// In en, this message translates to:
+  /// **'Describe regular hours in the business timezone. Leave blank if not published.'**
+  String get publicPageHoursNoteHelp;
 
   /// Shown as the title in public person screen (me).
   ///

@@ -57,6 +57,8 @@ void seedDemoPlanAndRules(
     ),
   ]);
   workspaces
+    ..openWeekdays['ws-1'] = [DateTime.monday, DateTime.tuesday,
+      DateTime.wednesday, DateTime.thursday, DateTime.friday]
     ..workHours['ws-1'] = const WorkHours(
       startMinutes: 8 * 60,
       halfBoundaryMinutes: 12 * 60,

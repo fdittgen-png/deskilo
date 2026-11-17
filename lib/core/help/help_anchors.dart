@@ -11,6 +11,9 @@ import 'help_anchor_index.dart';
 /// `test/lint/help_anchor_test.dart` refuses an anchor that is missing
 /// from any of the five guides, a duplicate, and a malformed id.
 abstract final class HelpAnchor {
+  /// Owner-authored public facts and inherited opening hours.
+  static const workspacePublicPage = 'user.workspace.settings.public-page';
+
   /// #3549/#3550 — the kind of business and what it proposes.
   static const workspaceBusinessKind = 'user.workspace.settings.business-kind';
 

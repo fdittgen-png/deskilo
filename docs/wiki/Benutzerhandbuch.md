@@ -3888,6 +3888,9 @@ Sie haben den Plan über ein Foto gezeichnet und möchten, dass der Raum durch d
 
 Sie möchten, dass Menschen außerhalb Ihres Spaces ihn finden und sehen, was er bietet.
 
+<!-- #2832: optional published facts and inherited regular hours. -->
+Wählen Sie **Ausstattung** und **Barrierefreiheit** nur für Angaben, die Sie bestätigen können. Eine nicht angekreuzte Option veröffentlicht keine Information zu diesem Punkt; sie bedeutet nicht, dass der Betrieb unzugänglich ist. Die **Öffnungszeiten** folgen den konfigurierten Wochentagen, Arbeitszeiten und der Zeitzone eines Betriebs mit buchbaren Plätzen. Ändern Sie diese über **Verfügbarkeit bearbeiten**. Solange sie nicht konfiguriert sind, steht dort **Nicht veröffentlicht**. Ein Betrieb ohne buchbare Plätze kann seine üblichen Zeiten als Text in der eigenen Zeitzone angeben. Das sind regelmäßige Öffnungszeiten, keine Zusage aktueller Verfügbarkeit und kein Schließkalender. Das Speichern anderer Felder erhält diese Angaben; das Abwählen entfernt eine Angabe aus der veröffentlichten Liste.
+
 <p><img src="images/user-workspace-settings-public-page.de.b8fa17aa9.jpg" width="280"></p>
 
 **Schritte**

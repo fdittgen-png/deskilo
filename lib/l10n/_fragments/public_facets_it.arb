@@ -1,0 +1,20 @@
+{
+  "publicPageFieldAmenities": "Dotazioni",
+  "publicPageFieldAccessibility": "Accessibilità",
+  "publicPageFieldHours": "Orari di apertura",
+  "publicPageFactsHelp": "Seleziona solo informazioni che puoi confermare. Una voce non selezionata indica che non viene pubblicata alcuna informazione al riguardo.",
+  "publicPageHoursFollow": "Gli orari seguono la disponibilità configurata e il fuso orario di questa attività.",
+  "publicPageHoursEdit": "Modifica disponibilità",
+  "publicPageHoursNoteHelp": "Descrivi gli orari abituali nel fuso dell’attività. Lascia vuoto se non vengono pubblicati.",
+  "discoveryFieldNotPublished": "Non pubblicato",
+  "discoveryHoursClosed": "Nessun giorno di apertura abituale pubblicato",
+  "discoveryFacetAmenityWifi": "Wi-Fi",
+  "discoveryFacetAmenityMeetingRoom": "Sala riunioni",
+  "discoveryFacetAmenityKitchen": "Cucina",
+  "discoveryFacetAmenityPrinter": "Stampante",
+  "discoveryFacetAmenityParking": "Parcheggio auto",
+  "discoveryFacetAmenityBikeParking": "Parcheggio biciclette",
+  "discoveryFacetAccessibilityStepFreeEntrance": "Ingresso senza gradini",
+  "discoveryFacetAccessibilityAccessibleToilet": "Servizi igienici accessibili",
+  "discoveryFacetAccessibilityLift": "Ascensore"
+}

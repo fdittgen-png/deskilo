@@ -27,6 +27,8 @@ FakeDirectoryRepository _directory() => FakeDirectoryRepository()
     'document': <String, dynamic>{
       'host_type': 'company',
       'description': 'Desks by the sea',
+      'amenities': ['wifi'],
+      'accessibility': ['step_free_entrance'],
       'email': 'hello@example.org',
       'plans': 'Day pass, month',
       'latitude': '43.4',
@@ -113,6 +115,8 @@ void main() {
     // #3689 — the stored place goes back as it was read.
     expect(doc['latitude'], 43.4);
     expect(doc['longitude'], 3.4);
+    expect(doc['amenities'], ['wifi']);
+    expect(doc['accessibility'], ['step_free_entrance']);
   });
 
   testWidgets('one column on a phone', (tester) async {

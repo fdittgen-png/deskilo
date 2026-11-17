@@ -139,6 +139,13 @@ class DemoFixture implements DemoSpaceParts {
       (id) => workspaces.target(id) ??
           listings.where((listing) => listing.id == id).firstOrNull?.row,
       (id) => space(DemoSpaceKey.of(id)).money.fetchServices(id),
+      (id) {
+        final rules = space(DemoSpaceKey.of(id)).workspaces;
+        return {
+          'open_weekdays': rules.openWeekdays[id],
+          ...?rules.workHours[id]?.toRules(),
+        };
+      },
     );
   }
 

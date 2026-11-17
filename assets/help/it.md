@@ -3709,6 +3709,9 @@ Ha disegnato la piantina sopra una fotografia e vuole che la stanza si veda attr
 
 Vuole che chi è fuori dal suo spazio lo trovi e veda che cosa offre.
 
+<!-- #2832: optional published facts and inherited regular hours. -->
+Seleziona **Dotazioni** e **Accessibilità** solo per informazioni che puoi confermare. Una casella non selezionata non pubblica informazioni su quel punto; non significa che l’attività sia inaccessibile. Gli **Orari di apertura** seguono giorni, orari di lavoro e fuso configurati per un’attività con posti prenotabili. Usa **Modifica disponibilità** per cambiarli. Finché non sono configurati, la pagina indica **Non pubblicato**. Un’attività senza posti prenotabili può scrivere una nota sugli orari abituali nel proprio fuso. Sono orari regolari, non una promessa di disponibilità in tempo reale né un elenco di chiusure. Salvare un altro campo conserva queste informazioni; deselezionare una voce la rimuove dall’elenco pubblicato.
+
 ![](assets/help/images/user-workspace-settings-public-page.it.b8fa17aa9.jpg)
 
 **Passaggi**
