@@ -142,7 +142,7 @@ void main() {
             );
         }
         expect(
-          money.paymentGateway.continuationState(original.orderId!),
+          money.paymentGateway.continuationState(original.orderId),
           ended,
         );
         await expectLater(resume(), throwsA(isA<ClaimRefused>()));
@@ -169,7 +169,7 @@ void main() {
         claimedInvoiceIds: p.claimedInvoiceIds,
       );
       expect(
-        money.paymentGateway.continuationState(original.orderId!),
+        money.paymentGateway.continuationState(original.orderId),
         'unavailable',
       );
       await expectLater(resume(), throwsA(isA<ClaimRefused>()));
