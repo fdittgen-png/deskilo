@@ -21,6 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/backend/context_client_providers.dart';
 import '../../core/motion/motion.dart';
 import '../../core/theme/app_radius.dart';
 import '../../core/theme/app_spacing.dart';
@@ -30,7 +31,7 @@ import '../../features/workspace/domain/workspace.dart';
 import '../../features/workspace/domain/workspace_branding.dart';
 import '../../features/workspace/presentation/widgets/brand_swatch.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
-import '../route_classes.dart';
+import 'shell_destinations.dart' show landingRouteFor;
 
 /// Enter [space]: it becomes this person's space (and their next start,
 /// unless it is [connected] from another installation: session only),
@@ -64,8 +65,18 @@ Future<void> enterSpace(
   if (!connected) {
     await ref.read(activeWorkspaceIdProvider.notifier).select(space.id);
   }
+  final host = ref.read(selectedWorkspaceHostProvider);
+  // Resolve the selected business before choosing its home. A later selection
+  // supersedes this entry, including one on another installation with this id.
+  final features = await ref.read(enabledFeaturesProvider.future);
+  if (!context.mounted) return;
+  if (ref.read(activeWorkspaceIdProvider).value != space.id ||
+      ref.read(selectedWorkspaceHostProvider) != host) {
+    return;
+  }
+  final destination = landingRouteFor(features);
   if (!animate) {
-    router.go(kDefaultHome);
+    router.go(destination);
     return;
   }
   late final OverlayEntry entry;
@@ -76,7 +87,7 @@ Future<void> enterSpace(
       pattern: brand?.pattern,
       logo: logo,
       from: from,
-      onCovered: () => router.go(kDefaultHome),
+      onCovered: () => router.go(destination),
       onDone: () => entry.remove(),
     ),
   );
