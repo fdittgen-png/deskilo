@@ -33,7 +33,6 @@ import '../domain/archive_bundle.dart';
 import '../domain/audit_trail.dart';
 import '../domain/document_numbering.dart';
 import '../domain/export_year.dart';
-import '../domain/fec.dart';
 import '../domain/fr_ereporting.dart';
 import '../domain/invoice_line_text.dart';
 import '../domain/invoice_queries.dart';
@@ -63,7 +62,6 @@ import 'invoice_documents.dart';
 import 'invoice_original_document.dart';
 import 'report_strings_l10n.dart';
 import 'vat_report_actions.dart';
-import 'vat_tax_point_labels.dart';
 import 'widgets/accountant_handoff_preflight.dart';
 import 'widgets/accounting_export_sheet.dart';
 import 'widgets/export_accounts_dialogs.dart';
@@ -266,9 +264,8 @@ class AccountingExportRun {
     // is where it can still be corrected.
     final accounts = await showFecAccountsDialog(
       context,
-      initial: workspace.vatAccount.isEmpty
-          ? const FecAccounts()
-          : FecAccounts(vat: workspace.vatAccount),
+      initial: fecAccountsOf(reference: taxReference, journals: journals,
+          vat: workspace.vatAccount.isEmpty ? null : workspace.vatAccount),
     );
     if (accounts == null || !context.mounted) return;
     await runGuarded(
@@ -277,26 +274,7 @@ class AccountingExportRun {
       message: 'FEC export failed',
       errorText: l10n.workspaceGenericError,
       action: () => save(
-        buildFecFile(FecRequest(
-          reference: taxReference,
-          currency: workspace.currencyCode,
-          invoices: exported,
-          matches: matches,
-          company: company,
-          accounts: accounts.withJournals(journals),
-          lineText: invoiceLineTextOfBooks(words, exported,
-              liveAssociation: association),
-          customersLabel: l10n.fecAccountCustomers,
-          revenueLabel: l10n.fecAccountRevenue,
-          bankLabel: l10n.bookRoleBank,
-          vatLabel: l10n.fecAccountVat,
-          ledger: ledger,
-          memberNames: memberNames,
-          repartitions: repartitions,
-          expensesLabel: l10n.fecAccountExpenses,
-          taxPoints: taxPoints,
-          vatPendingLabel: vatWords(l10n).fecAccountVatPending,
-        )),
+        documentFec(accounts),
         fecFileName(company.legalId, DateTime(year, 12, 31),
             development: development),
       ),
@@ -330,9 +308,8 @@ class AccountingExportRun {
     if (!portugal) {
       final accounts = await showSafTLedgerDialog(
         context,
-        initial: workspace.vatAccount.isEmpty
-            ? const FecAccounts()
-            : FecAccounts(vat: workspace.vatAccount),
+        initial: fecAccountsOf(reference: taxReference, journals: journals,
+          vat: workspace.vatAccount.isEmpty ? null : workspace.vatAccount),
       );
       if (!context.mounted) return;
       // The dialog distinguishes "no postings" from "cancelled": a
@@ -477,9 +454,11 @@ class AccountingExportRun {
           workspaceName: workspace.name,
           source: books.revisions, currencyCode: workspace.currencyCode,
         ));
-        final fecAccounts = (workspace.vatAccount.isEmpty ? const FecAccounts() : FecAccounts(vat: workspace.vatAccount)).withJournals(journals);
+        final fecAccounts = fecAccountsOf(reference: taxReference, journals: journals,
+          vat: workspace.vatAccount.isEmpty ? null : workspace.vatAccount);
         if (!context.mounted || !await fecActions.addYearFec(files, country: country, years: archiveYears, year: year,
             documents: (thirdParties: {fecAccounts.customers}, fec: () => buildFecFile(FecRequest(
+          dayOf: workspaceDayOf,
           reference: taxReference,
           currency: workspace.currencyCode, invoices: yearInvoices,
           matches: matches,

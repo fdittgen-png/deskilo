@@ -10,7 +10,7 @@
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/application/declare_vat.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
@@ -91,12 +91,12 @@ void main() {
     instalments: instalments,
     basis: basis, dayOf: WorkspaceTime.dateOf, reference: ActiveTaxReference.current,);
 
-  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(
+  String fec({List<VatTaxPointAmount>? taxPoints}) => buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
     invoices: [invoice],
     matches: matches,
     company: _company,
-    accounts: const FecAccounts(),
+    accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
     lineText: (line) => invoiceLineText(const ReportStrings(), line),
     taxPoints: taxPoints, reference: ActiveTaxReference.current,
   ));

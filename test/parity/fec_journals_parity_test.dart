@@ -8,8 +8,10 @@
 // `goldens/exports/fec.txt`. The
 // golden is written by the code as it stands and compared byte for byte;
 // rewrite only with `UPDATE_PARITY_GOLDENS=1`, never under CI.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -69,12 +71,12 @@ String _fec() {
     1000,
   );
   return buildFecFile(
-    FecRequest(
+    FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: [later],
       matches: const {},
       company: _seller,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (line) => line.label,
       reference: ActiveTaxReference.current,
       taxPoints: [

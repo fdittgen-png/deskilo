@@ -4,10 +4,12 @@
 // allocated to the sources it regroups — exact, partial oldest-first,
 // nothing while pending, nothing for a voided settlement — and every
 // export receives that view.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/accounting_view.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -129,12 +131,12 @@ void main() {
     final view = accountingView(money.invoices, money.invoiceMatchesStore);
     expect(view.invoices.any((i) => i.kind == InvoiceKind.settlement), isFalse);
     expect(view.matches.keys.toSet(), {x, y});
-    final fec = buildFecFile(FecRequest(
+    final fec = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: view.invoices,
       matches: view.matches,
       company: const InvoiceParty(name: 'ws'),
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (l) => l.label, reference: ActiveTaxReference.current,
     ));
     expect(fec, isNot(contains(settlement.number)));

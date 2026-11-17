@@ -6,7 +6,8 @@
 // ValidDate stay what they were: the dates are three facts, and none is
 // derived from another. A posting with no statement line is byte-identical
 // to what it was. Expectations by hand.
-import 'package:deskilo/features/money/domain/fec_postings.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -55,7 +56,7 @@ List<List<String>> _rows(List<Map<String, Object?>> postings) {
           number: 'M-0007',
           name: 'Ana Lopez',
         ),
-    },
+    }, journals: accountingJournalsOf(const {}),
   ).file;
   return [for (final l in file.split('\r\n').skip(1)) l.split('\t')];
 }

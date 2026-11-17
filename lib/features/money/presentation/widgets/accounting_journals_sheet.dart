@@ -5,6 +5,7 @@
 // software knows them. Every accounting export the app writes uses them.
 // Each problem is said under its field by the same rules the server holds;
 // a value is kept whole or not at all.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/accounting_journals.dart';
-import '../../domain/fec_accounts.dart';
 import '../../providers/money_providers.dart';
 import '../screens/money_view_data.dart';
 
@@ -162,7 +162,7 @@ class AccountingJournalsDoor extends ConsumerWidget {
             child: TextButton(
               key: const ValueKey('accounting-journals-standard'),
               onPressed: () {
-                for (final (role, j) in FecJournals.installed().byRole) {
+                for (final (role, j) in accountingJournalsOf(const {}).byRole) {
                   fields['$role.code'].text = j.code;
                   fields['$role.label'].text = j.label;
                 }

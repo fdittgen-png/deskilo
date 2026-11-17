@@ -16,9 +16,6 @@ import '../domain/accounting_format.dart';
 import '../domain/accounting_journals.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
-import '../domain/fec_accounts.dart' show FecJournals;
-import '../domain/fec_import_contract.dart';
-import '../domain/fec_postings.dart';
 
 /// What a year's journal is.
 sealed class GenericJournal {
@@ -219,7 +216,7 @@ GenericJournal postedFecOf(JournalPosted books, {FecJournals? journals}) {
       final code? => (code: code, rates: const {}),
       null => null,
     },
-    journals: journals,
+    journals: journals ?? accountingJournalsOf(const {}),
   );
   if (fec.blockers.isNotEmpty) return JournalRefused(fec.blockers);
   final contract = checkFecImportContract(

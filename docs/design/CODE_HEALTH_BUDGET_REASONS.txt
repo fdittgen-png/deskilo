@@ -20,7 +20,7 @@ fileLength lib/features/directory/data/supabase_messenger_repository.dart // #23
 fileLength lib/features/directory/domain/messenger.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/directory/presentation/messenger/context_thread_screen.dart // #2313 every control keyed for the task recorder
 fileLength lib/features/kiosk/presentation/screens/kiosk_screen.dart // #1289 the kiosk plan paints the workspace's own room colours
-fileLength lib/features/money/domain/fec_writer.dart // #2494 buildFecFile (cognitive 109, 480 lines) became FecWriter, moved whole from fec.dart (547 lines there); the length falls when the invoice, expense and repartition books split into their own files
+fileLength packages/deskilo_accounting_interchange/lib/src/fec_writer.dart // #2494 buildFecFile (cognitive 109, 480 lines) became FecWriter, moved whole from fec.dart (547 lines there); the length falls when the invoice, expense and repartition books split into their own files
 fileLength lib/features/money/domain/invoice_pdf_template.dart // #2386 within the former 600-line budget; split when next changed
 fileLength lib/features/money/presentation/accounting_export_run.dart // #2494 exportAccountingFile (cognitive 94) became AccountingExportRun, one method per format, moved whole from accounting_export.dart (505 lines there); the length falls when the bundle and SAF-T methods get their own files
 fileLength lib/features/money/presentation/report_defaults.dart // #2389 the stricter lints — cascades one section per line, reasoned ignores, if-elements.

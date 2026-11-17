@@ -53,7 +53,7 @@ const _clean = <String>[
 ];
 
 /// RATCHET: files reading the calendar statics. Only falls.
-const _calendarBudget = 49;
+const _calendarBudget = 47;
 
 /// RATCHET: files reading the tax reference static. Only falls.
 /// 2026-10-26 (#2363): 21 -> 22, `money/domain/stamp_duty.dart`: the Italian
@@ -68,7 +68,7 @@ const _calendarBudget = 49;
 /// 2026-11-08 (#3403): 17 -> 16, the wrapper file is gone.
 /// 2026-11-08 (#3403): 16 -> 13, the VAT-form wrappers (`vat_declaration`,
 /// `vat_form_catalogue`, `vat_components`) go: callers state the reference.
-const _taxBudget = 12;
+const _taxBudget = 11;
 
 final _calendarRead = RegExp(r'\bWorkspaceTime\.(?!install\()|\bWorkHours\.current\b');
 final _taxRead = RegExp(r'\bActiveTaxReference\.(?!install\()');

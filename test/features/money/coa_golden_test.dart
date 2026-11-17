@@ -11,7 +11,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
@@ -57,7 +57,7 @@ Map<String, Object?> _capture() {
       };
     }
   }
-  const fec = FecAccounts();
+  final fec = FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}));
   final datev = DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE');
   final sage = SageAccounts(reference: ActiveTaxReference.current);
   out['defaults'] = {
@@ -139,9 +139,9 @@ void main() {
             label: 'TVA',
           ),
         );
-        expect(FecAccounts(reference: ref).vat, '445711');
+        expect(FecAccounts(chartCountry: 'FR', journals: accountingJournalsOf(const {}), reference: ref).vat, '445711');
         expect(
-          const FecAccounts().vat,
+          FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})).vat,
           '445710',
           reason: 'the installed snapshot is not touched',
         );
@@ -182,7 +182,7 @@ void main() {
           'coa/04-vat',
           const AccountMapValue(format: 'coa', role: 'vat', account: '445711'),
         );
-        expect(FecAccounts(vat: '445712', reference: ref).vat, '445712');
+        expect(FecAccounts(chartCountry: 'FR', journals: accountingJournalsOf(const {}), vat: '445712', reference: ref).vat, '445712');
       },
     );
 
@@ -219,7 +219,7 @@ void main() {
 
     test('a missing row is a typed failure, not a blank account', () {
       expect(
-        () => const FecAccounts(reference: TaxReferenceSet([])).customers,
+        () => FecAccounts(chartCountry: 'FR', journals: accountingJournalsOf(const {}), reference: const TaxReferenceSet([])).customers,
         throwsA(isA<TaxReferenceUnavailable>()),
       );
     });

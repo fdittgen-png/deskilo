@@ -7,7 +7,7 @@
 // written by the code as it stands and compared byte for byte; rewrite only
 // with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec_accounts.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -61,11 +61,11 @@ void main() {
       );
     }
     text
-      ..write(_fec('fec default', const FecAccounts()))
+      ..write(_fec('fec default', FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}))))
       ..write(
         _fec(
           'fec given',
-          const FecAccounts(
+          FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}),
             customers: '4110',
             revenue: '7061',
             bank: '5121',
@@ -77,7 +77,7 @@ void main() {
         ),
       )
       ..write(
-        _fec('fec explicit reference', FecAccounts(reference: reference)),
+        _fec('fec explicit reference', FecAccounts(chartCountry: 'FR', journals: accountingJournalsOf(const {}), reference: reference)),
       );
     expectParity(
       dir: 'test/parity/golden/chart_accounts',

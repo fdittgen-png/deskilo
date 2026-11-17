@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../domain/fec.dart';
 
 /// The account dialogs for the three mapped exports (#669).
 ///
@@ -25,7 +24,7 @@ import '../../domain/fec.dart';
 /// rather than inventing them behind the owner's back.
 Future<FecAccounts?> showFecAccountsDialog(
   BuildContext context, {
-  FecAccounts initial = const FecAccounts(),
+  required FecAccounts initial,
 }) {
   final l10n = context.l10n;
   final customers = TextEditingController(text: initial.customers);
@@ -95,6 +94,9 @@ Future<FecAccounts?> showFecAccountsDialog(
         FilledButton(
           key: const ValueKey('fec-accounts-confirm'),
           onPressed: () => Navigator.of(context).pop(FecAccounts(
+            reference: initial.reference,
+            chartCountry: initial.chartCountry,
+            journals: initial.journals,
             customers: customers.text.trim(),
             revenue: revenue.text.trim(),
             bank: bank.text.trim(),
@@ -346,7 +348,7 @@ Future<SageAccounts?> showSageAccountsDialog(
 /// postings existed. The dialog returning null means the owner backed
 /// out, and nothing is written.
 class SafTLedgerChoice {
-  const SafTLedgerChoice({required this.withPostings, required this.accounts});
+  SafTLedgerChoice({required this.withPostings, required this.accounts});
 
   final bool withPostings;
   final FecAccounts accounts;
@@ -354,7 +356,7 @@ class SafTLedgerChoice {
 
 Future<SafTLedgerChoice?> showSafTLedgerDialog(
   BuildContext context, {
-  FecAccounts initial = const FecAccounts(),
+  required FecAccounts initial,
 }) {
   final l10n = context.l10n;
   final customers = TextEditingController(text: initial.customers);
@@ -398,9 +400,9 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
         TextButton(
           key: const ValueKey('saft-documents-only'),
           onPressed: () => Navigator.of(context).pop(
-            const SafTLedgerChoice(
+            SafTLedgerChoice(
               withPostings: false,
-              accounts: FecAccounts(),
+              accounts: initial,
             ),
           ),
           child: Text(l10n.saftDocumentsOnly),
@@ -410,6 +412,9 @@ Future<SafTLedgerChoice?> showSafTLedgerDialog(
           onPressed: () => Navigator.of(context).pop(SafTLedgerChoice(
             withPostings: true,
             accounts: FecAccounts(
+              reference: initial.reference,
+              chartCountry: initial.chartCountry,
+              journals: initial.journals,
               customers: customers.text.trim(),
               revenue: revenue.text.trim(),
               bank: bank.text.trim(),

@@ -2,21 +2,23 @@
 //
 // #2365 fix 5 — FEC: DateLet accompanies every EcritureLet, and ValidDate of
 // a recorded movement is the day it was recorded, not the day it happened.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/seeded_export_year.dart';
 
 List<Map<String, String>> _rows(List<LedgerEntry> ledger) {
-  final lines = buildFecFile(FecRequest(
+  final lines = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
     invoices: SeededExportYear.invoices,
     matches: SeededExportYear.matches,
     company: seededCompany,
-    accounts: const FecAccounts(),
+    accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
     lineText: (l) => l.label,
     ledger: ledger, reference: ActiveTaxReference.current,
   )).split('\r\n');

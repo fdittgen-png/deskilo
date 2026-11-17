@@ -7,9 +7,9 @@
 // typed in exactly one place. The host reads one consistent snapshot for the
 // requirements of the format it was asked for (`AccountingExportSource`).
 //
-// This is domain code, not a package: what the writers consume (`Invoice`,
-// `LedgerEntry`, `BookProfile`, the snapshot) is the money domain itself, which
-// is not packaged (ADR 0051).
+// This contract and the DATEV/FEC writers live in accounting-interchange.
+// Invoice and ledger facts belong to invoice-model; book and money values
+// belong to money-kernel. The host supplies its captured source facts (ADR 0051).
 
 /// Where a format's postings come from.
 enum ExportPosting {

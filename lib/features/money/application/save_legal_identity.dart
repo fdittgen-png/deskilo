@@ -21,9 +21,11 @@
 // a class with its repositories handed in, behind a provider, so the
 // screen asks for the decision instead of resolving the repositories
 // and performing it.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+
 import '../../workspace/domain/workspace_repository.dart';
+import '../domain/accounting_journals.dart';
 import '../domain/address_window.dart';
-import '../domain/fec_accounts.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/report_template_repository.dart';
 
@@ -95,6 +97,6 @@ class LegalIdentity {
     FecJournals journals,
   ) => _workspace.setAccountingJournals(
     workspaceId,
-    journals == FecJournals.installed() ? const {} : journals.toJson(),
+    journals == accountingJournalsOf(const {}) ? const {} : journals.toJson(),
   );
 }

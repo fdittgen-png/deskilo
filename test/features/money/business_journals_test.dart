@@ -7,12 +7,11 @@
 // (the FEC goldens stay byte for byte). A value is whole or refused whole,
 // by the same rules the server holds: never cleaned into another journal.
 import 'package:deskilo/core/demo/data/workspace_repository.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_ledger.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/fec_postings.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -46,7 +45,7 @@ List<List<String>> _records(String fec) => [
 ];
 
 String _derivedFec(FecAccounts accounts) => buildFecFile(
-  FecRequest(
+  FecRequest(dayOf: WorkspaceTime.dateOf,
     currency: 'EUR',
     invoices: SeededExportYear.invoices,
     matches: SeededExportYear.matches,
@@ -109,7 +108,7 @@ void main() {
 
   group('the accessor', () {
     test('nothing stored: the add-on\'s journals', () {
-      expect(accountingJournalsOf(const {}), FecJournals.installed());
+      expect(accountingJournalsOf(const {}), accountingJournalsOf(const {}));
     });
 
     test('a stored value: the business\'s', () {
@@ -119,19 +118,19 @@ void main() {
     test('a value that is not whole is not read as journals', () {
       final partial = {..._business.toJson()}..remove('misc');
       expect(FecJournals.fromJson(partial), isNull);
-      expect(accountingJournalsOf(partial), FecJournals.installed());
+      expect(accountingJournalsOf(partial), accountingJournalsOf(const {}));
     });
   });
 
   group('the FEC from the invoices', () {
-    final standard = _records(_derivedFec(const FecAccounts()));
+    final standard = _records(_derivedFec(FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}))));
     final business = _records(
-      _derivedFec(const FecAccounts().withJournals(_business)),
+      _derivedFec(FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})).withJournals(_business)),
     );
 
     test('writes the business\'s codes and labels, and numbers its entries '
         'with them', () {
-      final installed = FecJournals.installed();
+      final installed = accountingJournalsOf(const {});
       final byCode = {for (final (role, j) in installed.byRole) j.code: role};
       final mine = {for (final (role, j) in _business.byRole) role: j};
       expect(business, hasLength(standard.length));

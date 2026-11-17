@@ -6,7 +6,7 @@
 // payments an invoice netted.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -29,12 +29,12 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 void main() {
   test('FEC: the refund is customers debited, bank credited, lettered', () {
-    final lines = buildFecFile(FecRequest(
+    final lines = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: _matches(),
       company: seededCompany,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     )).split('\r\n');
@@ -55,12 +55,12 @@ void main() {
   });
 
   test('FEC: no refund row without a refunded match', () {
-    final file = buildFecFile(FecRequest(
+    final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     ));

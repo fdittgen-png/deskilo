@@ -4,9 +4,11 @@
 // requires in an audit (art. L47 A-I du LPF, arrêté du 29 juillet 2013).
 // Not XML: a tab-separated flat file of accounting ENTRIES, which is why —
 // unlike SAF-T — it cannot avoid account numbers.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -58,14 +60,14 @@ Invoice _invoice({
 List<Map<String, String>> _rows({
   List<Invoice>? invoices,
   Map<String, InvoiceMatch> matches = const {},
-  FecAccounts accounts = const FecAccounts(),
+  FecAccounts? accounts,
 }) {
-  final file = buildFecFile(FecRequest(
+  final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
     invoices: invoices ?? [_invoice()],
     matches: matches,
     company: _company,
-    accounts: accounts,
+    accounts: accounts ?? FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
     lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
   ));
   final lines = file.split('\r\n');
@@ -79,12 +81,12 @@ List<Map<String, String>> _rows({
 void main() {
   test('the first line is the 18 mandated columns, in the mandated order',
       () {
-    final file = buildFecFile(FecRequest(
+    final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: [_invoice()],
       matches: const {},
       company: _company,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
     ));
 
@@ -128,7 +130,7 @@ void main() {
 
   test('the accounts are the caller\'s, not the app\'s opinion', () {
     final rows = _rows(
-      accounts: const FecAccounts(
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}),
         customers: '411CLI',
         revenue: '70600',
         bank: '51200',
@@ -260,12 +262,12 @@ void main() {
   test('a workspace not booking in euro is refused, its currency named', () {
     for (final currency in ['CHF', 'DKK']) {
       expect(
-        () => buildFecFile(FecRequest(
+        () => buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
           currency: currency,
           invoices: [_invoice()],
           matches: const {},
           company: _company,
-          accounts: const FecAccounts(),
+          accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
           lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
         )),
         throwsA(isA<ArgumentError>().having((e) => e.invalidValue, 'currency', currency)),

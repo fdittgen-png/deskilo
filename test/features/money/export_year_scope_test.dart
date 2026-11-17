@@ -3,8 +3,8 @@
 // #2365 fix 2 — a file for one fiscal year carries that year's books only.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/export_year.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -62,12 +62,12 @@ void main() {
       ledger: SeededExportYear.ledger,
       repartitions: SeededExportYear.repartitions,
     );
-    final file = buildFecFile(FecRequest(
+    final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (l) => l.label,
       ledger: scope.ledger,
       repartitions: scope.repartitions, reference: ActiveTaxReference.current,

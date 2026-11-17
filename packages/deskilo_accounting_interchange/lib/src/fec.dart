@@ -4,7 +4,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
-import '../../../core/time/workspace_time.dart';
 import 'fec_accounts.dart';
 import 'fec_writer.dart';
 
@@ -140,7 +139,7 @@ class FecRequest {
     this.expensesLabel = 'Achats et charges',
     this.taxPoints,
     this.vatPendingLabel = "TVA collectée en attente d'exigibilité",
-    this.dayOf = WorkspaceTime.dateOf,
+    required this.dayOf,
   });
 
   /// The tax reference the file is stated on: the workspace's own.

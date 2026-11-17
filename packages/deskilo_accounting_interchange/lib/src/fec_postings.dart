@@ -30,10 +30,9 @@
 //     book's currency at the document's recorded rate, the original amount
 //     in Montantdevise / Idevise. Without a recorded rate the file is not
 //     written.
-import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
-    show CustomerIdRule;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'accounting_journals.dart';
+
+import 'customer_id_rule.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
 
@@ -118,14 +117,14 @@ String? fecAuxAccount(String collective, String number, CustomerIdRule rule) {
 /// document's rate in that currency's rates. Every party and document that
 /// stops the file is named in the result's blockers. A book kept in another
 /// currency than the euro is refused whole. [journals] name the journals
-/// (the country add-on's when none, #3470).
+/// supplied by the exporting business.
 PostedFecResult buildFecFromPostings(
   List<Posting> postings, {
   required Map<String, String> accountNames,
   Map<String, PostingParty> parties = const {},
   CustomerIdRule partyRule = const CustomerIdRule(),
   ({String code, Map<String, FxRate> rates})? currency,
-  FecJournals? journals,
+  required FecJournals journals,
 }) {
   final functionalCurrency = currency?.code;
   if (functionalCurrency != null && !isEuroFormatCurrency(functionalCurrency)) {
@@ -138,7 +137,7 @@ PostedFecResult buildFecFromPostings(
     accountNames: accountNames,
     parties: parties,
     partyRule: partyRule,
-    books: journals ?? FecJournals.installed(),
+    books: journals,
   );
   final rows = file.rows(
     postings,

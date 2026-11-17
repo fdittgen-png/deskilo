@@ -16,14 +16,15 @@ import 'package:deskilo/core/demo/data/purchase_repository.dart';
 import 'package:deskilo/core/features/enabled_feature_keys.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/application/purchase_commands.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/fec_postings.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -259,7 +260,7 @@ void main() {
       parties: const {
         'b-chf': PostingParty(kind: 'supplier', number: '23', name: 'Léman SA'),
       },
-      currency: (code: 'EUR', rates: const {}),
+      currency: (code: 'EUR', rates: const {}), journals: accountingJournalsOf(const {}),
     );
     expect(fec.blockers, isEmpty);
     final rows = fec.file.trim().split('\r\n').skip(1).toList();
