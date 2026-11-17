@@ -1,9 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart'
-    show AccountingJournal;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show PostingJournal;
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import '../../../core/jurisdiction/installed_accounting_formats.dart';
-import '../../../core/vat/tax_reference_active.dart';
 
 /// #3470 -- one journal: the code the books know it by, and its label. Plain
 /// strings, so the journals travel without the jurisdiction contract.
@@ -21,9 +18,8 @@ class FecJournal {
   int get hashCode => Object.hash(code, label);
 }
 
-/// #3429 -- the journals a FEC writes, as the installed FEC format declares
-/// them (`AccountingFormatContribution.journals`): code and label per role.
-/// #3470: or as the business set them, read through [FecJournals.fromJson].
+/// The journals supplied to a FEC: code and label per role.
+/// The host resolves its declaration and the business's stored values.
 class FecJournals {
   const FecJournals({
     required this.sales,
@@ -31,21 +27,6 @@ class FecJournals {
     required this.purchases,
     required this.misc,
   });
-
-  /// The journals of the installed FEC declaration.
-  factory FecJournals.installed() {
-    final declared = accountingFormatOf('fec').journals;
-    FecJournal of(String role) => switch (declared[role]) {
-      final AccountingJournal j => FecJournal(code: j.code, label: j.label),
-      null => throw StateError('the FEC declaration has no $role journal'),
-    };
-    return FecJournals(
-      sales: of('sales'),
-      bank: of('bank'),
-      purchases: of('purchases'),
-      misc: of('misc'),
-    );
-  }
 
   /// #3470 -- the roles, in the order a form and a stored value list them.
   static const roles = ['sales', 'bank', 'purchases', 'misc'];
@@ -107,8 +88,7 @@ class FecJournals {
 /// shows what it is about to book, rather than inventing it silently.
 ///
 /// #2481 -- a default is a row of the tax reference store (the French chart
-/// and the `fec` row), read when asked; [reference] is the snapshot to read
-/// from, the installed one when null.
+/// and the `fec` row), read from the supplied [reference] snapshot.
 class FecAccounts {
   const FecAccounts({
     String? customers,
@@ -118,20 +98,18 @@ class FecAccounts {
     String? expenses,
     String? vatPending,
     String? writeOff,
-    String? chartCountry,
-    FecJournals? journals,
-    this.reference,
+    required this.chartCountry,
+    required this.journals,
+    required this.reference,
   }) : _givenCustomers = customers,
        _givenRevenue = revenue,
        _givenBank = bank,
        _givenVat = vat,
        _givenExpenses = expenses,
        _givenVatPending = vatPending,
-       _givenWriteOff = writeOff,
-       _givenCountry = chartCountry,
-       _givenJournals = journals;
+       _givenWriteOff = writeOff;
 
-  final TaxReferenceSet? reference;
+  final TaxReferenceSet reference;
   final String? _givenCustomers;
   final String? _givenRevenue;
   final String? _givenBank;
@@ -139,12 +117,9 @@ class FecAccounts {
   final String? _givenExpenses;
   final String? _givenVatPending;
   final String? _givenWriteOff;
-  final String? _givenCountry;
-  final FecJournals? _givenJournals;
-
-  /// #3429 -- the journals the FEC writes: given, else the installed FEC
-  /// declaration's.
-  FecJournals get journals => _givenJournals ?? FecJournals.installed();
+  /// The supplied chart country and business journals of this export.
+  final String chartCountry;
+  final FecJournals journals;
 
   /// #3470 -- these accounts, writing the business's [journals].
   FecAccounts withJournals(FecJournals journals) => FecAccounts(
@@ -155,18 +130,13 @@ class FecAccounts {
     expenses: _givenExpenses,
     vatPending: _givenVatPending,
     writeOff: _givenWriteOff,
-    chartCountry: _givenCountry,
+    chartCountry: chartCountry,
     journals: journals,
     reference: reference,
   );
 
-  /// #3429 -- the country whose chart the defaults are rows of: given, else
-  /// what the installed FEC format declares (the plan comptable général).
-  String get chartCountry =>
-      _givenCountry ?? accountingFormatOf('fec').chartCountry;
-
   String _default(String format, String role) =>
-      (reference ?? ActiveTaxReference.current).accountOf(format, role, chartCountry);
+      reference.accountOf(format, role, chartCountry);
 
   /// PCG 411 — Clients (the receivable).
   String get customers => _givenCustomers ?? _default('coa', 'customers');
@@ -195,3 +165,14 @@ class FecAccounts {
   /// gave up of an invoice, booked at the gross amount it was still owed.
   String get writeOff => _givenWriteOff ?? _default('fec', 'write_off');
 }
+
+/// The business's journal of the posting engine's [journal] (its own
+/// `PostingJournal.code` is the engine's internal key).
+FecJournal journalFor(FecJournals journals, PostingJournal journal) =>
+    switch (journal) {
+      PostingJournal.sales => journals.sales,
+      PostingJournal.bank => journals.bank,
+      PostingJournal.purchases => journals.purchases,
+      PostingJournal.other => journals.misc,
+    };
+

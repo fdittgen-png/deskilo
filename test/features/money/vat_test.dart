@@ -7,8 +7,9 @@
 
 import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/vat_catalogue.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -509,14 +510,14 @@ void main() {
   group('FEC', () {
     List<Map<String, String>> rows({
       Invoice? invoice,
-      FecAccounts accounts = const FecAccounts(),
+      FecAccounts? accounts,
     }) {
-      final file = buildFecFile(FecRequest(
+      final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
         invoices: [invoice ?? _invoice()],
         matches: const {},
         company: _seller,
-        accounts: accounts,
+        accounts: accounts ?? FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
         lineText: _lineText, reference: ActiveTaxReference.current,
       ));
       final lines = file.split('\r\n');
@@ -595,7 +596,7 @@ void main() {
     });
 
     test('the VAT account is the owner\'s, like every other account', () {
-      final entries = rows(accounts: const FecAccounts(vat: '445711'));
+      final entries = rows(accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}), vat: '445711'));
 
       expect(entries[2]['CompteNum'], '445711');
     });

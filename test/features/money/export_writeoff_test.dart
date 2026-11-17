@@ -7,7 +7,7 @@
 // 100.00 was paid 60.00 and the remaining 40.00 written off on 25 May.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,12 +19,12 @@ import 'support/seeded_export_year.dart';
 int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 List<Map<String, String>> _fec({Map<String, InvoiceMatch>? matches}) {
-  final file = buildFecFile(FecRequest(
+  final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
     invoices: SeededExportYear.invoices,
     matches: matches ?? SeededExportYear.matches,
     company: seededCompany,
-    accounts: const FecAccounts(),
+    accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
     lineText: (l) => l.label,
     ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
   ));

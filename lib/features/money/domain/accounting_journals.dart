@@ -5,24 +5,17 @@
 // be kept (the same rules the server holds: set_accounting_journals, 0773).
 // A value is whole or refused whole; an invalid code is never cleaned into
 // another journal.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_jurisdiction_api/deskilo_jurisdiction_api.dart' show AccountingJournal;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show PostingJournal;
+import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
-import 'fec_accounts.dart';
+import '../../../core/jurisdiction/installed_accounting_formats.dart';
 
 /// The journals the business's exports write: the stored ones when the
 /// business set them, else the country add-on's defaults.
 FecJournals accountingJournalsOf(Map<String, Object?> stored) =>
-    FecJournals.fromJson(stored) ?? FecJournals.installed();
-
-/// The business's journal of the posting engine's [journal] (its own
-/// `PostingJournal.code` is the engine's internal key).
-FecJournal journalFor(FecJournals journals, PostingJournal journal) =>
-    switch (journal) {
-      PostingJournal.sales => journals.sales,
-      PostingJournal.bank => journals.bank,
-      PostingJournal.purchases => journals.purchases,
-      PostingJournal.other => journals.misc,
-    };
+    FecJournals.fromJson(stored) ?? _installedFecJournals();
 
 /// The code the business's [journals] give a posting journal, for the
 /// writers that take a function; null [journals]: the engine's own codes.
@@ -72,3 +65,28 @@ bool journalTextAllowed(String text) => !_forbidden.hasMatch(text);
   }
   return null;
 }
+
+/// The journals of the installed FEC declaration.
+FecJournals _installedFecJournals() {
+  final declared = accountingFormatOf('fec').journals;
+  FecJournal of(String role) => switch (declared[role]) {
+    final AccountingJournal j => FecJournal(code: j.code, label: j.label),
+    null => throw StateError('the FEC declaration has no $role journal'),
+  };
+  return FecJournals(
+    sales: of('sales'),
+    bank: of('bank'),
+    purchases: of('purchases'),
+    misc: of('misc'),
+  );
+}
+
+
+/// The FEC chart declared by this build, read from the captured reference.
+/// The same defaults are offered when SAF-T asks for a derived account map.
+FecAccounts fecAccountsOf({
+  required TaxReferenceSet reference,
+  required FecJournals journals,
+  String? vat,
+}) => FecAccounts(reference: reference, journals: journals, vat: vat,
+  chartCountry: accountingFormatOf('fec').chartCountry);

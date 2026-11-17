@@ -4,8 +4,10 @@
 // the invoice, never a reduction of what was sold: the gross charged and the
 // tax it contains stay as issued, the credit is no cash received, and the
 // accountant's files book the sale at its gross and its tax.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -35,11 +37,11 @@ void main() {
     'FEC: the sale books its full tax and revenue, the credit books none',
     () {
       final lines = buildFecFile(
-        FecRequest(
+        FecRequest(dayOf: WorkspaceTime.dateOf,
           invoices: SeededExportYear.invoices,
           matches: SeededExportYear.matches,
           company: seededCompany,
-          accounts: const FecAccounts(),
+          accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
           lineText: (l) => l.label,
           ledger: SeededExportYear.ledger,
           currency: 'EUR', reference: ActiveTaxReference.current,

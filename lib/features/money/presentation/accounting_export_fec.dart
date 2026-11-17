@@ -19,11 +19,12 @@ import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/archive_fec.dart';
-import '../domain/fec.dart';
-import '../domain/fec_import_contract.dart';
+import '../domain/invoice_line_text.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart';
+import 'accounting_export_run.dart';
 import 'book_report_actions.dart';
+import 'vat_tax_point_labels.dart';
 
 /// Who the FEC is for: the space, the currency it books in (the FEC is
 /// written in euros only), the issuer's legal id, and whether the space's
@@ -267,3 +268,29 @@ class FecExportActions {
 /// The FEC an archive writes from the documents when no book is kept, and
 /// the accounts its third-party lines are booked on.
 typedef YearDocumentFec = ({String Function() fec, Set<String> thirdParties});
+
+/// The document FEC export of one captured accounting run.
+extension FrenchAccountingExports on AccountingExportRun {
+  /// Writes the document FEC from this run's captured books and context.
+  String documentFec(FecAccounts accounts) => buildFecFile(FecRequest(
+      dayOf: workspaceDayOf,
+      reference: taxReference,
+      currency: workspace.currencyCode,
+      invoices: exported,
+      matches: matches,
+      company: company,
+      accounts: accounts.withJournals(journals),
+      lineText: invoiceLineTextOfBooks(words, exported,
+          liveAssociation: association),
+      customersLabel: l10n.fecAccountCustomers,
+      revenueLabel: l10n.fecAccountRevenue,
+      bankLabel: l10n.bookRoleBank,
+      vatLabel: l10n.fecAccountVat,
+      ledger: ledger,
+      memberNames: memberNames,
+      repartitions: repartitions,
+      expensesLabel: l10n.fecAccountExpenses,
+      taxPoints: taxPoints,
+      vatPendingLabel: vatWords(l10n).fecAccountVatPending,
+    ));
+}

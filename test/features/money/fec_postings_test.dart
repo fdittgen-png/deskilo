@@ -7,11 +7,10 @@
 // in part and written off), with DateLet the day of the last of them, and
 // naming its member in the auxiliary columns (#2376).
 // Expectations by hand.
-import 'package:deskilo/features/money/domain/accounting_target.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/fec_postings.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -74,7 +73,7 @@ void main() {
   final written = buildFecFromPostings(
     set.postings,
     accountNames: const {'411000': 'Clients', '512000': 'Banques'},
-    parties: parties,
+    parties: parties, journals: accountingJournalsOf(const {}),
   );
   final file = written.file;
   final rows = [
@@ -153,7 +152,7 @@ void main() {
       parties: {
         for (final MapEntry(:key, :value) in parties.entries)
           if (key != inv3.id) key: value,
-      },
+      }, journals: accountingJournalsOf(const {}),
     );
     expect(missing.file, isEmpty);
     expect(missing.blockers, [const FecBlocker(FecBlock.partyCode, 'INV-3')]);
@@ -165,7 +164,7 @@ void main() {
           key: key == inv3.id
               ? const PostingParty(kind: 'member', number: 'M 0007', name: 'Bo')
               : value,
-      },
+      }, journals: accountingJournalsOf(const {}),
     );
     expect(shared.blockers.single.block, FecBlock.partyCode);
   });
@@ -213,7 +212,7 @@ void main() {
       [chf],
       accountNames: const {},
       parties: party,
-      currency: (code: 'EUR', rates: const {}),
+      currency: (code: 'EUR', rates: const {}), journals: accountingJournalsOf(const {}),
     );
     expect(refused.blockers, [
       const FecBlocker(FecBlock.missingRate, 'INV-CHF-1 (CHF)'),
@@ -222,7 +221,7 @@ void main() {
       [chf],
       accountNames: const {},
       parties: party,
-      currency: (code: 'EUR', rates: {'chf-1': rate}),
+      currency: (code: 'EUR', rates: {'chf-1': rate}), journals: accountingJournalsOf(const {}),
     );
     final lines = [
       for (final l in fec.file.split('\r\n').skip(1)) l.split('\t'),
@@ -253,7 +252,7 @@ void main() {
         set.postings,
         accountNames: const {},
         parties: parties,
-        currency: (code: currency, rates: const {}),
+        currency: (code: currency, rates: const {}), journals: accountingJournalsOf(const {}),
       );
       expect(fec.file, isEmpty);
       expect(fec.blockers, [FecBlocker(FecBlock.currency, currency)]);

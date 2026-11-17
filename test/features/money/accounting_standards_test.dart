@@ -21,7 +21,7 @@ import 'package:deskilo/core/country/country_catalog.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -187,12 +187,12 @@ Map<String, InvoiceMatch> _matches() => {
       ),
     };
 
-String _fec({List<Invoice>? invoices}) => buildFecFile(FecRequest(
+String _fec({List<Invoice>? invoices}) => buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: invoices ?? _aRealYear(),
       matches: _matches(),
       company: _company,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (line) => invoiceLineText(const ReportStrings(), line), reference: ActiveTaxReference.current,
     ));
 

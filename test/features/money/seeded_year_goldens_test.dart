@@ -37,6 +37,7 @@ import 'package:deskilo/features/money/application/accounting_export_source.dart
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/application/jurisdiction/installed_vat_filings.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
@@ -45,8 +46,6 @@ import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/bc_journal_xlsx.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/fec_import_contract.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
@@ -318,12 +317,12 @@ JournalPosted _posted(AccountingExportInput input) => switch (input.posted) {
 String _fec(AccountingExportInput input) {
   final b = input.books;
   return buildFecFile(
-    FecRequest(
+    FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: b.invoices,
       matches: b.matches,
       company: seededCompany,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: _lineText,
       customersLabel: _l10n.fecAccountCustomers,
       revenueLabel: _l10n.fecAccountRevenue,
@@ -483,7 +482,7 @@ Future<Map<String, String>> _bundle({required bool local}) async {
               year: year,
               thirdPartyAccounts: local
                   ? thirdPartyAccountsOf(_posted(input))
-                  : {const FecAccounts().customers},
+                  : {FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})).customers},
             ),
           )
           as ArchiveFecWrite;
@@ -557,7 +556,7 @@ final Map<String, Future<String> Function()> _files = {
   'saft_pt.xml': () async =>
       _safT(await _read('saft_pt', country: 'PT'), portugal: true),
   'saft.xml': () async {
-    const fec = FecAccounts();
+    final fec = FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {}));
     return _safT(
       await _read('saft'),
       portugal: false,

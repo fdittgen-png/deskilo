@@ -39,6 +39,9 @@ package, with `AccountingSourceSnapshot` as input.
 ## Consequences
 A new format is its definition (id, claim, extension, family, sources) and a
 target that offers it; the run needs an edit only for a NEW writer family, and
-the compiler asks for it. The package placement the issue first wanted waits
-for the money domain to be packaged (#3376). What each format reads stays pinned
-by the parity goldens of `test/parity/golden/exports`.
+the compiler asks for it. The format contract and the DATEV/FEC writers now
+live in `deskilo_accounting_interchange` (#3376, #3465). `deskilo_invoice_model`
+owns invoice and ledger facts; `deskilo_money_kernel` owns book and money
+values. The host supplies its captured reference, clock, chart and journals;
+the writers read no selected-workspace state or repositories. What each format
+reads stays pinned by the parity goldens of `test/parity/golden/exports`.

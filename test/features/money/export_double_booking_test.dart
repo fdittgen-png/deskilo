@@ -5,7 +5,7 @@
 // on the bank, and a goodwill adjustment credit as cash too.
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -16,12 +16,12 @@ int _cents(String s) => (double.parse(s.replaceAll(',', '.')) * 100).round();
 
 void main() {
   test('FEC: the netted expense never reaches the bank, the payment does', () {
-    final file = buildFecFile(FecRequest(
+    final file = buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
       invoices: SeededExportYear.invoices,
       matches: SeededExportYear.matches,
       company: seededCompany,
-      accounts: const FecAccounts(),
+      accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
       lineText: (l) => l.label,
       ledger: SeededExportYear.ledger, reference: ActiveTaxReference.current,
     ));

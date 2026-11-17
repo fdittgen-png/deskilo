@@ -2,12 +2,11 @@
 // A document FEC and a posted FEC keep their supplied facts after another
 // export; frozen billing identity needs no live member lookup, and an
 // unsupported functional currency remains refused.
-import 'package:deskilo/features/money/domain/fec.dart';
-import 'package:deskilo/features/money/domain/fec_postings.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 
 TaxReferenceSet _reference(String revenue, String bank) => TaxReferenceSet([
   for (final entry in {

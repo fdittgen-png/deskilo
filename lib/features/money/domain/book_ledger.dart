@@ -8,8 +8,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'accounting_format.dart';
 import 'accounting_journals.dart';
-import 'fec_accounts.dart' show FecJournals;
-import 'fec_postings.dart';
 
 /// One account's totals over the period.
 class BookAccountTotal {
@@ -86,7 +84,7 @@ class BookLedger {
     this.parties = const {},
     this.functionalCurrency,
     FecJournals? journals,
-  }) : journals = journals ?? FecJournals.installed() {
+  }) : journals = journals ?? accountingJournalsOf(const {}) {
     final seen = <String, int>{};
     for (final p in postings) {
       final lines = inBookCurrency(p, functionalCurrency, null);

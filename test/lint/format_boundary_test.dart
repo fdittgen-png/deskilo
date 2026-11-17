@@ -77,10 +77,6 @@ const _allowed = <String, Map<String, Allowed>>{
   },
   'a rate built with a literal %': {
     'lib/features/money/domain/accountant_csv.dart': (2, _machineMoney),
-    'lib/features/money/domain/fec_writer.dart': (
-      1,
-      'a machine file: the FEC journal label of a VAT line (comma decimal, fixed by the standard)',
-    ),
     'lib/features/money/domain/report_letter_layouts.dart': (
       29,
       'layout geometry: column widths in percent units of a stored layout file, not a displayed rate',

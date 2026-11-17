@@ -3,9 +3,10 @@
 // #3470 — the owner's form for the business's accounting journals: a code
 // used twice or a forbidden character is said under its field and nothing
 // is kept; a whole value is kept; the standard codes are kept as none.
-import 'package:deskilo/features/money/domain/fec_accounts.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/presentation/widgets/accounting_journals_sheet.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -26,7 +27,7 @@ Future<FakeWorkspaceRepository> _open(WidgetTester tester) async {
           context,
           ref,
           workspaceId: workspaces.workspaces.first.id,
-          current: FecJournals.installed(),
+          current: accountingJournalsOf(const {}),
         ),
         child: const Text('open'),
       ),
@@ -80,7 +81,7 @@ void main() {
     );
     expect(kept?.sales.code, 'VT');
     expect(kept?.bank.code, 'BNP');
-    expect(kept?.misc, FecJournals.installed().misc);
+    expect(kept?.misc, accountingJournalsOf(const {}).misc);
   });
 
   testWidgets('the standard codes are kept as none', (tester) async {

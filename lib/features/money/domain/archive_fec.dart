@@ -11,9 +11,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'fec_import_contract.dart';
 
 /// The format id a final FEC is logged under.
 const String archiveFecFormatId = 'fec';

@@ -6,11 +6,11 @@ import 'dart:async';
 import 'dart:typed_data' show Uint8List;
 
 import 'package:deskilo/features/money/domain/accounting_journals.dart';
-import 'package:deskilo/features/money/domain/fec_accounts.dart' show FecJournals;
 import 'package:deskilo/features/workspace/domain/payment_instructions.dart';
 import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
 import 'package:deskilo/features/workspace/domain/workspace_document.dart';
 import 'package:deskilo/features/workspace/domain/workspace_identity_repository.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart' show FecJournals;
 
 import 'fake_workspace_state.dart';
 

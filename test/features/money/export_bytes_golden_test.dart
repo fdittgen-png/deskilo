@@ -23,9 +23,9 @@ import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/archive_bundle.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
-import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
 import 'package:deskilo/features/money/domain/vat_report.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
@@ -178,12 +178,12 @@ String _lineText(InvoiceLine line) =>
     invoiceLineText(const ReportStrings(), line);
 
 Map<String, String Function()> _files() => {
-  'fec.txt': () => buildFecFile(FecRequest(
+  'fec.txt': () => buildFecFile(FecRequest(dayOf: WorkspaceTime.dateOf,
       currency: 'EUR',
     invoices: _invoices,
     matches: _matches,
     company: _seller,
-    accounts: const FecAccounts(),
+    accounts: FecAccounts(reference: ActiveTaxReference.current, chartCountry: 'FR', journals: accountingJournalsOf(const {})),
     lineText: _lineText, reference: ActiveTaxReference.current,
   )),
   'datev.csv': () => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 

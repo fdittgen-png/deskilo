@@ -10,8 +10,8 @@ import 'dart:convert';
 
 import 'package:deskilo/features/money/application/book_period_commands.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
+import 'package:deskilo/features/money/domain/accounting_journals.dart';
 import 'package:deskilo/features/money/domain/archive_fec.dart';
-import 'package:deskilo/features/money/domain/fec_accounts.dart' show FecJournals;
 import 'package:deskilo/features/money/presentation/accounting_export_fec.dart';
 import 'package:deskilo/features/money/providers/book_period_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
@@ -23,7 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 final _year = FiscalYear(DateTime(2025, 10), DateTime(2026, 9, 30));
 // #3470 — the add-on's journals, as a business that set none.
 final _scope = (workspaceId: 'ws', currency: 'EUR', legalId: '812 345 678', development: false,
-    journals: FecJournals.installed());
+    journals: accountingJournalsOf(const {}));
 
 AccountingAmount _eur(int minor) => AccountingAmount('EUR', minor);
 
