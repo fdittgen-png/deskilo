@@ -98,8 +98,9 @@ class _ContinuePaymentState extends ConsumerState<FinanceContinuePayment> {
       memberId: target.memberId,
       paymentId: invoice.claimPaymentId!,
     );
-    if (!mounted || !current() || !target.isCurrent() || order.alreadyPaid)
+    if (!mounted || !current() || !target.isCurrent() || order.alreadyPaid) {
       return;
+    }
     if (!order.started) {
       AppSnack.error(context, l10n.payOnlineClaimsUnsupported);
       return;
