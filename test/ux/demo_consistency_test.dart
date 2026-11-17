@@ -228,8 +228,8 @@ void main() {
     await _go(tester, '/discover');
 
     // #3553 — the space, its two neighbours and a house in Zurich (CHF);
-    // #3554 — and a practice nearby, which the kind chips find.
-    expect(journey.fixture.directory.cards, hasLength(5));
+    // The two practices also appear, including the invoicing practice.
+    expect(journey.fixture.directory.cards, hasLength(6));
     for (final card in journey.fixture.directory.cards) {
       expect(_shows(card.name), isTrue, reason: card.name);
     }
