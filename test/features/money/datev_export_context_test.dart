@@ -1,4 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+// A prepared DATEV export keeps its held chart, reference, clock and books
+// after selecting another business; frozen buyers and suppliers need no
+// live member registry, and unsupported currencies remain refused.
 import 'package:deskilo/core/jurisdiction/installed_accounting_formats.dart';
 import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_german.dart';

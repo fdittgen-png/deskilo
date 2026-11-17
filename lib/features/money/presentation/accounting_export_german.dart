@@ -45,7 +45,7 @@ extension GermanAccountingExports on AccountingExportRun {
       costCentre: workspace.name,
       initial: DatevAccounts(
         reference: taxReference,
-        chartCountry: accountingFormatOf('datev').chartCountry,
+        chartCountry: accountingFormatOf(format.id).chartCountry,
       ),
     );
     if (datev == null || !context.mounted) return;
