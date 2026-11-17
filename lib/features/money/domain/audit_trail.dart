@@ -35,7 +35,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../core/i18n/money_format.dart';
 import '../../../core/text/csv.dart';
 import 'accounting_source_snapshot.dart';
-import 'ledger_entry.dart';
 
 /// The export log's format id of the fiscal-year archive.
 const String _archiveFormatId = 'bundle';

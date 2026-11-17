@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 
 import '../../events/domain/workspace_event.dart';
-import 'ledger_entry.dart';
 
 /// One pending money event shown as an open position on the bill (#132):
 /// submitted but not yet validated, so it is not part of the statement.

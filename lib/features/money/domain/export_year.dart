@@ -3,8 +3,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'accounting_source_snapshot.dart';
-import 'expense_repartition.dart';
-import 'ledger_entry.dart';
 
 /// #2365 — the books of ONE fiscal year. The export screen and the year
 /// archive hold the workspace's whole ledger and every repartition; a

@@ -24,7 +24,6 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/book_repartition.dart';
-import '../../domain/expense_repartition.dart';
 import '../../domain/workspace_status.dart';
 import '../../providers/money_providers.dart';
 import '../widgets/wizard_scaffold.dart';

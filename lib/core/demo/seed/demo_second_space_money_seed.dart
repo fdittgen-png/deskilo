@@ -10,7 +10,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/workspace_event.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../data/book_profile_repository.dart' show demoTaxReference;
 import '../data/event_repository.dart';

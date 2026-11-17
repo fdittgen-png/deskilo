@@ -14,8 +14,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_calendar_seed.dart:69` | title | Check-out | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:81` | title | Check-in | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_calendar_seed.dart:154` | title | ${e.type.dbName}.submitted | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:216` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_city_money_seed.dart:224` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:215` | label | Workspace use · $bookedHours hours at 8/hour | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_city_money_seed.dart:223` | label | Exclusive monthly hire · ${workspace.sites.where((s) => s.id == rental.siteId).firstOrNull?.name ?? rental.siteId} | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_purchase_seed.dart:227` | title | Rent and service fees | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:32` | title | Internet service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_city_workflow_seed.dart:89` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
@@ -25,15 +25,15 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_london_seed.dart:227` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_london_seed.dart:228` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_london_seed.dart:229` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:230` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:233` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:239` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:245` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_money_seed.dart:261` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:229` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:232` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:238` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:244` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_money_seed.dart:260` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_network_seed.dart:418` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_network_seed.dart:434` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_new_york_seed.dart:203` | title | Branded tote bags · $period | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_new_york_seed.dart:207` | label | Branded tote bag | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_new_york_seed.dart:202` | title | Branded tote bags · $period | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_new_york_seed.dart:206` | label | Branded tote bag | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:146` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:154` | label | Bruno · card | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:162` | label | Chiara · old card | core/demo | KEEP_NON_UI_LITERAL |

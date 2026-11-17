@@ -11,7 +11,6 @@
 // currency: an invoice in another currency is never settled this way.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
-import '../domain/ledger_entry.dart';
 import 'payment_candidates.dart';
 
 /// The id of [customerId]'s payment in [ledger] to match after a

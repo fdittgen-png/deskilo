@@ -34,10 +34,8 @@ import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.da
     show CustomerIdRule;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_journals.dart';
-import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';
-import 'posting_fx.dart';
 
 // The FEC is a French file: its labels are French, as the arrêté reads them.
 const _kindLabels = {

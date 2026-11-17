@@ -26,7 +26,6 @@
 // rate the bill and its payments block, named `reference (currency)`.
 
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'posting_fx.dart';
 import 'posting_rules.dart';
 import 'purchase.dart';
 

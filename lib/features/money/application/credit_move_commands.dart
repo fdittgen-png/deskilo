@@ -4,9 +4,10 @@
 // edited. This refuses only what cannot be right before anything is sent;
 // the server decides the rest (a matched credit, an invoiced month, a
 // closed period) and says why in its refusal.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+
 import '../../../core/data/server_error.dart';
 import '../domain/credit_move.dart';
-import '../domain/ledger_entry.dart';
 
 class CreditMoveCommands {
   const CreditMoveCommands(this._repository);

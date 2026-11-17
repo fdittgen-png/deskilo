@@ -21,9 +21,10 @@
 // ADR 0024's shape, like `record_payment.dart`: pure Dart with the
 // repository handed in, because the order is the whole behaviour and a
 // rule that only a widget can exercise is a rule nothing checks.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
+
 import '../../../core/trace/trace_logger.dart';
-import '../domain/expense_repartition.dart';
 import '../domain/money_repository.dart';
 import '../domain/workspace_status.dart';
 

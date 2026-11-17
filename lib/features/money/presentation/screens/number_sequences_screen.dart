@@ -7,6 +7,7 @@
 // not — sharing a series. Each row edits a format and previews the next
 // number; the numbers themselves are drawn in the database when a
 // document is issued, so nothing here can ever take one.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +21,6 @@ import '../../../../core/ui/kit/page_bar.dart';
 import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/number_sequence.dart';
 import '../../providers/money_providers.dart';
 
 class NumberSequencesScreen extends ConsumerWidget {

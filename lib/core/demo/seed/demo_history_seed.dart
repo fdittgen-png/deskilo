@@ -16,7 +16,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import '../../../features/events/domain/event_decision.dart';
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/expense_schedule.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/closure_day.dart';
 import '../data/event_repository.dart';

@@ -6,7 +6,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/country/country_catalog.dart';
 import '../../../features/money/domain/invoice_pdf_template.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';

@@ -12,7 +12,6 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/ui/adaptive/window_class.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/assign_payment_sheet.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';

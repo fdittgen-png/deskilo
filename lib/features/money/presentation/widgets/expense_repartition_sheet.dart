@@ -22,7 +22,6 @@ import '../../../events/providers/event_providers.dart';
 import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/book_repartition.dart';
-import '../../domain/expense_repartition.dart';
 import '../../providers/expense_repartition_providers.dart';
 import '../../providers/money_providers.dart';
 import '../period_label.dart';

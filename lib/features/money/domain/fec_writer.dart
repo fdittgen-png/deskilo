@@ -4,10 +4,8 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import '../../../core/time/workspace_time.dart';
-import 'expense_repartition.dart';
 import 'fec_accounts.dart';
 import 'fec_lettering.dart';
-import 'ledger_entry.dart';
 
 /// Writes the FEC rows: the sales journal, the bank journal, the purchases
 /// journal and the tax-point entries, then sorts them as the arrêté reads.

@@ -19,7 +19,6 @@ import '../application/generic_journal_export.dart';
 import '../domain/accounting_format.dart';
 import '../domain/archive_bundle.dart';
 import '../domain/archive_fec.dart';
-import '../domain/euro_format.dart';
 import '../domain/fec.dart';
 import '../domain/fec_import_contract.dart';
 import '../providers/book_period_providers.dart';

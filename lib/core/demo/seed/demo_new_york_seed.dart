@@ -5,7 +5,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart'
     show VatComponent;
 
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/workspace/domain/member.dart';
 import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';

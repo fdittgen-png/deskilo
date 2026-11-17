@@ -14,7 +14,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../../../features/money/domain/guest_pass.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/plan/domain/seat.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../../../features/workspace/domain/member.dart';

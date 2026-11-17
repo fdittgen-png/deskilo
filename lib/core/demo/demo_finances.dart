@@ -11,7 +11,6 @@ import '../../features/events/domain/workspace_event.dart';
 import '../../features/money/domain/account_activity.dart';
 import '../../features/money/domain/billing_rules.dart';
 import '../../features/money/domain/finance_overview.dart';
-import '../../features/money/domain/ledger_entry.dart';
 import 'data/account_activity_repository.dart';
 import 'data/money_repository.dart';
 import 'demo_fixture.dart';

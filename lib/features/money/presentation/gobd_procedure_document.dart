@@ -5,6 +5,7 @@
 // facts of the space (the server's schema version, its number sequences,
 // its country's retention clocks), in the language of the person who
 // exports it, as Markdown an auditor reads in any editor.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +13,6 @@ import '../../../core/instance/schema_compatibility.dart';
 import '../../../core/vat/retention.dart';
 import '../../../l10n/app_localizations.dart';
 import '../domain/datev_problem.dart';
-import '../domain/number_sequence.dart';
 import 'widgets/retention_clocks_tile.dart';
 
 /// The Verfahrensdokumentation's file name in the package.

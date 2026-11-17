@@ -9,7 +9,6 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
-import '../domain/ledger_entry.dart';
 import 'receivables.dart';
 
 /// How much of each payment the matches have used (#3671): the sum of the

@@ -1,10 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import '../domain/billing_rules.dart';
+import '../domain/billing_rules.dart' show BillingRules;
 import '../domain/billing_rules_repository.dart';
 import '../domain/commercial_terms_repository.dart';
 import '../domain/document_numbering.dart';
@@ -12,19 +14,16 @@ import '../domain/dunning.dart';
 import '../domain/dunning_repository.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/einvoice_transmissions.dart';
-import '../domain/expense_repartition.dart';
 import '../domain/expense_repository.dart';
 import '../domain/expense_schedule.dart';
 import '../domain/fee_band.dart';
 import '../domain/invoice_commands.dart';
 import '../domain/invoice_pdf_template.dart';
 import '../domain/invoice_queries.dart';
-import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
 import '../domain/member_account_commands.dart';
 import '../domain/member_account_queries.dart';
 import '../domain/money_repository.dart';
-import '../domain/number_sequence.dart';
 import '../domain/package.dart';
 import '../domain/payment_claims.dart';
 import '../domain/payment_gateway_repository.dart';

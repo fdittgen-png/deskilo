@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'number_sequence.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 /// #2591 — the number series of a workspace's documents and the
 /// fingerprint check of an issued invoice. The server takes the numbers;

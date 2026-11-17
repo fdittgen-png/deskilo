@@ -2,9 +2,9 @@
 //
 // #934 — the guided repartition proposes shares by subscription
 // percentage that add up to the cost exactly, and remembers the rule.
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/presentation/screens/repartition_wizard_screen.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

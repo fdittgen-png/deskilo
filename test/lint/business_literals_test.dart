@@ -62,7 +62,7 @@ const _tracked = <_Tracked>[
    pattern: r'heartbeatInterval = Duration\(minutes: \d+\)', ceiling: 1, movesIn: 'never (allowed)'),
   (what: 'language to country heuristic', file: 'lib/core/locale/device_locale.dart',
    pattern: r"'[a-z]{2}' => '[A-Z]{2}'", ceiling: 7, movesIn: 'never (allowed)'),
-  (what: 'the one currency the euro-denominated FEC and DATEV are written in', file: 'lib/features/money/domain/euro_format.dart',
+  (what: 'the one currency the euro-denominated FEC and DATEV are written in', file: 'packages/deskilo_money_kernel/lib/src/euro_format.dart',
    pattern: r"'EUR'", ceiling: 1, movesIn: 'never (allowed)'),
   // The column defaults of 0051 (invitation, 14 days) and 0272 (confirmation, 5
   // minutes) left the ratchet with 0451 (S2): create_invitation now states
@@ -80,7 +80,7 @@ const _allowed = <String, String>{
       'the beat is the client protocol; the online window beside it is the setting (S3)',
   'lib/core/locale/device_locale.dart::language to country heuristic':
       'a guess from the device language for the first screen, not a choice anybody makes; nothing legal derives from it',
-  'lib/features/money/domain/euro_format.dart::the one currency the euro-denominated FEC and DATEV are written in':
+  'packages/deskilo_money_kernel/lib/src/euro_format.dart::the one currency the euro-denominated FEC and DATEV are written in':
       'the FEC and DATEV are euro files: a workspace in another currency is refused with its currency named (#3184), never written with euro digits',
 };
 
@@ -93,7 +93,7 @@ const _allowed = <String, String>{
 const _eurHolders = {
   'packages/deskilo_money_kernel/lib/src/currencies.dart':
       'the list of currencies the picker offers: data, not a default',
-  'lib/features/money/domain/euro_format.dart':
+  'packages/deskilo_money_kernel/lib/src/euro_format.dart':
       'the one place the euro file formats (FEC, DATEV) name their currency; '
           'a workspace in another currency is refused, never written as euros',
   'packages/deskilo_invoice_model/lib/src/swiss_qr_bill.dart':

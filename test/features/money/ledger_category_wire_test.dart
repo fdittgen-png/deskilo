@@ -4,7 +4,7 @@
 // the app can read.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 /// #2570 — the ledger categories the database accepts are exactly the ones

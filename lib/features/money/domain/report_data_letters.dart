@@ -18,7 +18,6 @@ import '../../events/domain/workspace_event.dart';
 import '../../workspace/domain/workspace.dart';
 import 'fee_band.dart';
 import 'invoice_line_text.dart';
-import 'ledger_entry.dart';
 import 'report_data.dart';
 import 'report_facts.dart';
 import 'statement.dart';

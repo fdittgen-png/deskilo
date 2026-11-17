@@ -6,8 +6,8 @@
 // be named, and a part above the remainder is refused as the SQL refuses it.
 import 'package:deskilo/core/i18n/money_format.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/widgets/match_invoice_dialog.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

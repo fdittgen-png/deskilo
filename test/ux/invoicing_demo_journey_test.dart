@@ -19,7 +19,6 @@
 // close) are not counted.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/seed/demo_newcomers_seed.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';

@@ -12,7 +12,6 @@ import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
 import 'package:deskilo/features/money/domain/credit_move.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.dart';
 import 'package:deskilo/features/money/providers/credit_move_providers.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';

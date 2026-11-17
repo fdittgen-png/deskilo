@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_claims.dart';
 import 'package:deskilo/features/money/domain/payment_gateway_repository.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/domain/payment_test_check.dart';
 import 'package:deskilo/features/money/domain/settlement_fetch.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../money_repository.dart';
 import 'demo_member_account_commands.dart' show checkDemoClaim;

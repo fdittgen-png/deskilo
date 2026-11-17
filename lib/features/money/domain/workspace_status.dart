@@ -5,7 +5,6 @@
 // reimbursed and shared out, and the same per member. Computed in the
 // database so the screen and the printed report read one set of numbers.
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'expense_repartition.dart';
 
 class WorkspaceStatus {
   const WorkspaceStatus({

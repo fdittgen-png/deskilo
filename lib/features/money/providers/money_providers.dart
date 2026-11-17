@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -24,15 +25,13 @@ import '../application/schedule_expense.dart';
 import '../application/settle_invoices.dart';
 import '../application/submit_expense.dart';
 import '../data/supabase_money_repository.dart';
-import '../domain/billing_rules.dart';
+import '../domain/billing_rules.dart' show BillingRules;
 import '../domain/dunning.dart';
 import '../domain/einvoice_gateway.dart';
 import '../domain/fee_band.dart';
 import '../domain/invoice_pdf_template.dart';
-import '../domain/ledger_entry.dart';
 import '../domain/member_account.dart';
 import '../domain/money_repository.dart';
-import '../domain/number_sequence.dart';
 import '../domain/package.dart';
 import '../domain/payment_intent.dart';
 import '../domain/price_negotiation.dart';

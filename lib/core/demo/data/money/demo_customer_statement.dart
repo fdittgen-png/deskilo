@@ -4,13 +4,13 @@
 // customer page reads: the same figures, from the Demo's own rows
 // (customerStatementOfPage), one balance per currency. The Demo has no
 // server, so it has no allocation detail.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../../../features/money/application/customer_statement_of_page.dart';
 import '../../../../features/money/application/unassigned_money.dart';
 import '../../../../features/money/domain/dunning.dart';
 import '../../../../features/money/domain/invoice_queries.dart';
-import '../../../../features/money/domain/ledger_entry.dart';
 import '../../../../features/money/presentation/invoicing/receivables_adapter.dart';
 import '../../../../features/money/providers/customer_statement_providers.dart';
 import '../../demo_fixture.dart';

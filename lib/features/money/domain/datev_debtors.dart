@@ -6,11 +6,10 @@
 // collective account would leave the accountant to split every customer
 // by hand.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
 import 'datev_problem.dart';
-import 'ledger_entry.dart';
-import 'number_sequence.dart';
 
 /// The Debitor of the member number [number]: [base] plus the counter the
 /// member series [sequence] wrote into it (`M-2026-0007` is counter 7), as

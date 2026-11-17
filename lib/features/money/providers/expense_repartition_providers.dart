@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../core/trace/traced.dart';
 import '../../workspace/providers/workspace_providers.dart';
-import '../domain/expense_repartition.dart';
 import 'money_providers.dart';
 
 part 'expense_repartition_providers.g.dart';

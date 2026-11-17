@@ -7,7 +7,7 @@
 // format, and the SQL twin.
 import 'dart:io';
 
-import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

@@ -3,8 +3,8 @@
 // #934 — the workspace status as the database returns it, the net the
 // screen and the report agree on, and the repartition rule's round trip.
 
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

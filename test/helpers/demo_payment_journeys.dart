@@ -6,10 +6,10 @@
 // scenario checklist and the outcome test.
 import 'package:deskilo/core/demo/data/money/demo_payment_gateway_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'demo_outbox_journeys.dart';

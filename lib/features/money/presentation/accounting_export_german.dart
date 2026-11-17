@@ -20,7 +20,6 @@ import '../domain/datev.dart';
 import '../domain/datev_fields.dart';
 import '../domain/datev_package.dart';
 import '../domain/gobd_package.dart';
-import '../domain/number_sequence.dart';
 import '../providers/book_period_providers.dart';
 import 'accounting_export_journal.dart' show refuseUnreadableBooks;
 import 'accounting_export_run.dart';

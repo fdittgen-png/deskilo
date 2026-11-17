@@ -7,7 +7,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_xlsx/deskilo_xlsx.dart';
 import '../../../core/time/workspace_time.dart';
 import '../../events/domain/workspace_event.dart';
-import '../../money/domain/ledger_entry.dart';
 import '../../money/domain/payment_intent.dart';
 import '../../money/domain/service_item.dart';
 import '../../plan/domain/floor_plan.dart';

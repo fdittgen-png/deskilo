@@ -3,7 +3,7 @@
 // #925 — the one screen for every number series: reached from Settings
 // by the owner, live preview while typing, save through the repository.
 import 'package:deskilo/app/app.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';

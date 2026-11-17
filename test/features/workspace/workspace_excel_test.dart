@@ -6,7 +6,6 @@
 // PDF's): they get referenced by formulas and importers, so they must
 // not rename themselves with the phone's language.
 
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/workspace_excel.dart';

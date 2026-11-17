@@ -13,8 +13,8 @@
 // as it is in that harness, so its Book button writes nothing at all.
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/money/application/book_repartition.dart';
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 class _RuleRefuses extends FakeMoneyRepository {

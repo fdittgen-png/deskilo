@@ -11,8 +11,6 @@ import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_revenue.dart';
-import 'expense_repartition.dart';
-import 'ledger_entry.dart';
 
 /// Writes one period's Buchungsstapel; [buildDatevFile] is its entry point.
 class DatevWriter {

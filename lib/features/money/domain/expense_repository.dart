@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'expense_repartition.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'expense_schedule.dart';
 
 /// #2591 C4 — the narrow adapter the expense and schedule commands use

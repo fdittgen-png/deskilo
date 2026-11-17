@@ -24,7 +24,7 @@ const _configModels = <String>[
   'lib/features/money/domain/billing_rules.dart',
   'lib/features/workspace/domain/booking_policies.dart',
   // #925 — every field of a series is set on the Number sequences screen.
-  'lib/features/money/domain/number_sequence.dart',
+  'packages/deskilo_money_kernel/lib/src/number_sequence.dart',
   // #945 — every field of a site is set on the Sites screen.
   'lib/features/workspace/domain/site.dart',
 ];

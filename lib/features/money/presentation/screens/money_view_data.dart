@@ -3,6 +3,7 @@
 
 
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +19,6 @@ import '../../../workspace/domain/payment_instructions.dart';
 import '../../../workspace/domain/workspace.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/ledger_entry.dart';
 import '../../domain/member_account.dart';
 import '../../domain/money_tool_rights.dart';
 import '../../domain/payment_intent.dart';

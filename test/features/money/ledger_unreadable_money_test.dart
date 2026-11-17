@@ -12,7 +12,6 @@ import 'package:deskilo/core/ui/inline_banner.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/application/unassigned_money.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/statement.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoicing_home.dart'
     show InvoicingSource;
@@ -22,6 +21,7 @@ import 'package:deskilo/features/money/presentation/invoicing/invoicing_reads.da
 import 'package:deskilo/features/money/presentation/invoicing/payments_to_match_screen.dart';
 import 'package:deskilo/features/money/presentation/widgets/bill_view.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
