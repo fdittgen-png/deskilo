@@ -13,6 +13,7 @@ written out and each proposed rule naming its issue.
 
 | invariant | enforced by | executed by |
 |---|---|---|
+| an unreadable place or booking answers as unknown; booking events follow the booking's visibility | place visibility helpers, booking event policy and server readers (0809) | `463_place_visibility_contract.sql`, `460_definer_place_readers.sql` |
 | a seat cannot hold two overlapping reservations | `exclude using gist` on `reservations` (0005) | `23_domain_invariants.sql` |
 | a check-in is your own booking, inside its window | `check_in_reservation` | `23_domain_invariants.sql` |
 | a booking replayed with the same client request id books once | `create_reservation_once` (0214) | `24_booking_idempotency.sql` |

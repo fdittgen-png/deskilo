@@ -119,6 +119,7 @@ public.enrolled_installations.personal_native_session
 public.event_decisions.event_decisions_select
 public.event_decisions.mcp_delegated_deny
 public.events.event_type_reading_rule
+public.events.events_booking_visibility
 public.events.events_select
 public.events.mcp_delegated_deny
 public.exchange_rate_sources.exchange_rate_sources_read
