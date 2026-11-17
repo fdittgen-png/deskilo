@@ -22,8 +22,6 @@ insert into listed (sig, tables, reason) values
    'callable by the service role only'),
   ('booking_prices(uuid,timestamp with time zone,timestamp with time zone)', 'reservations',
    'the members'' billing under the finance right; a usage names what was used'),
-  ('cancel_reservation(uuid)', 'reservations',
-   'writes or checks: returns an id, nothing, or a refusal about what the caller acts on'),
   ('check_in_reservation(uuid)', 'reservations',
    'writes or checks: returns an id, nothing, or a refusal about what the caller acts on'),
   ('check_out_reservation(uuid)', 'reservations',
@@ -122,8 +120,6 @@ insert into listed (sig, tables, reason) values
    'writes or checks: returns an id, nothing, or a refusal about what the caller acts on, under the right to manage the rooms'),
   ('set_level_site(uuid,uuid)', 'levels',
    'under the sites right'),
-  ('set_seat_block(uuid,timestamp with time zone,timestamp with time zone)', 'seats',
-   'writes or checks: returns an id, nothing, or a refusal about what the caller acts on'),
   ('update_reservation(uuid,timestamp with time zone,timestamp with time zone)', 'reservations',
    'writes or checks: returns an id, nothing, or a refusal about what the caller acts on (the callers own booking)'),
   ('upsert_usage_record(uuid)', 'reservations',
@@ -156,7 +152,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             join pg_temp.readers() r on r.sig = l.sig where r.applies), '',
   'no listed function applies the rules: it leaves the list');
 select is((select string_agg(r.sig, ', ' order by r.sig) from pg_temp.readers() r where r.applies),
-  'admin_create_reservation_for(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,uuid), booking_place_hidden(uuid,uuid,uuid,uuid,uuid), calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), create_reservation(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,boolean,uuid,uuid), create_series(uuid,uuid,timestamp with time zone,timestamp with time zone,text,timestamp with time zone,uuid,uuid,uuid), desk_room_visible(uuid), kiosk_act(uuid,text,text,uuid,timestamp with time zone,timestamp with time zone,uuid), kpi_seat_capacity(uuid,timestamp with time zone,timestamp with time zone,uuid), level_visible(uuid), mcp_place_v1(uuid,members,jsonb), mcp_read_v1(uuid,members,text,jsonb), my_favorites(uuid), place_visible_to(uuid,uuid,uuid), reservation_place_visible(uuid,uuid,uuid,uuid,uuid,uuid)',
+  'admin_create_reservation_for(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,uuid), booking_event_visible(uuid,uuid), booking_place_hidden(uuid,uuid,uuid,uuid,uuid), calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), cancel_reservation(uuid), create_reservation(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,boolean,uuid,uuid), create_series(uuid,uuid,timestamp with time zone,timestamp with time zone,text,timestamp with time zone,uuid,uuid,uuid), desk_room_visible(uuid), kiosk_act(uuid,text,text,uuid,timestamp with time zone,timestamp with time zone,uuid), kpi_seat_capacity(uuid,timestamp with time zone,timestamp with time zone,uuid), level_visible(uuid), mcp_place_v1(uuid,members,jsonb), mcp_read_v1(uuid,members,text,jsonb), my_favorites(uuid), place_visible_to(uuid,uuid,uuid), reservation_place_visible(uuid,uuid,uuid,uuid,uuid,uuid), set_seat_block(uuid,timestamp with time zone,timestamp with time zone)',
   'the readers that apply the rules');
 
 create function public.zz_fixture_place_reader(p_ws uuid) returns bigint language sql stable as
@@ -172,7 +168,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 60, 'the list holds 60 reasoned exceptions');
+select ok((select count(*) from listed) = 58, 'the list holds 58 reasoned exceptions');
 
 select * from finish();
 rollback;
