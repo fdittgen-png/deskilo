@@ -1,10 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
 // #2365 fix 2 — a file for one fiscal year carries that year's books only.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/export_year.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'support/datev_collective.dart';
@@ -41,15 +42,14 @@ void main() {
     final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: scope.invoices,
       matches: SeededExportYear.matches,
-      accounts: const DatevAccounts(),
+      accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
       from: DateTime(2026),
       to: DateTime(2026, 12, 31),
       generatedAt: DateTime(2027, 1, 5),
       consultantNumber: '1001',
       clientNumber: '20002',
       ledger: scope.ledger,
-      repartitions: scope.repartitions,
-    ));
+      repartitions: scope.repartitions, dayOf: WorkspaceTime.dateOf));
     expect(file, isNot(contains('L-exp-2024')));
     expect(file, isNot(contains('R-2025')));
     expect(file, contains('L-exp-2026'));

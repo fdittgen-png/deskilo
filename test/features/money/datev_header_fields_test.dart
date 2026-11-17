@@ -2,8 +2,9 @@
 //
 // #2365 fix 6 — DATEV: the field limits, the SKR in the header and the
 // fiscal-year start from the book profile.
-import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/datev_fields.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,25 +14,24 @@ import 'support/seeded_export_year.dart';
 
 String _file({
   List<Invoice>? invoices,
-  DatevAccounts accounts = const DatevAccounts(),
+  DatevAccounts? accounts,
 }) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
   invoices: invoices ?? SeededExportYear.invoices,
   matches: SeededExportYear.matches,
-  accounts: accounts,
+  accounts: accounts ?? DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
   from: DateTime(2026),
   to: DateTime(2026, 12, 31),
   generatedAt: DateTime(2027, 1, 5),
   consultantNumber: '1001',
   clientNumber: '20002',
-  ledger: SeededExportYear.ledger,
-));
+  ledger: SeededExportYear.ledger, dayOf: WorkspaceTime.dateOf));
 
 void main() {
   test('header field 27 is the SKR of the chart', () {
     final header = _file().split('\r\n').first.split(';');
     expect(header[26], '03');
     expect(
-      _file(accounts: const DatevAccounts(chart: 'SKR04'))
+      _file(accounts: DatevAccounts(chart: 'SKR04', reference: ActiveTaxReference.current, chartCountry: 'DE'))
           .split('\r\n')
           .first
           .split(';')[26],
@@ -41,7 +41,7 @@ void main() {
 
   test('header field 13 is the fiscal-year start of the book profile', () {
     final header = _file(
-      accounts: const DatevAccounts().withFiscalYearStart(DateTime(2025, 4)),
+      accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE').withFiscalYearStart(DateTime(2025, 4)),
     ).split('\r\n').first.split(';');
     expect(header[12], '20250401');
     expect(_file().split('\r\n').first.split(';')[12], '20260101');

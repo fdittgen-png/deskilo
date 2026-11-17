@@ -9,9 +9,9 @@
 // terms are not written: DATEV's Zahlungsbedingung is a key into the
 // accountant's own terms, which DesKilo does not hold.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_jurisdiction_standards/deskilo_jurisdiction_standards.dart' show CsvDialect, csvCell;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import '../../../core/text/csv.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 

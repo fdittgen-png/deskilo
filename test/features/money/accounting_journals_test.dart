@@ -2,10 +2,11 @@
 //
 // #936 — the exports carry the purchases side, book credit notes, and
 // mark a development workspace's books.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -119,10 +120,9 @@ void main() {
   group('DATEV', () {
     String build({List<Invoice>? invoices, bool development = false}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: invoices ?? [_invoice()], matches: const {},
-          accounts: const DatevAccounts(), from: DateTime(2026), to: DateTime(2026, 12, 31),
+          accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'), from: DateTime(2026), to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 9, 6, 10), consultantNumber: '1', clientNumber: '2',
-          ledger: [_reimbursement], repartitions: [_rent], development: development,
-        ));
+          ledger: [_reimbursement], repartitions: [_rent], development: development, dayOf: WorkspaceTime.dateOf));
 
     test('a credit note swaps the accounts and stays positive', () {
       final rows = build(invoices: [_invoice(number: 'CN-1', total: -25000)]).split('\r\n');

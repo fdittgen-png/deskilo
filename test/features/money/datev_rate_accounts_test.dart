@@ -5,7 +5,9 @@
 // gross: DATEV derives the tax from the account, so the gross of two rates
 // on one account would be taxed at the wrong rate. A document of one
 // account is one booking, as before. Expectations by hand.
-import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,18 +17,17 @@ import 'support/seeded_export_year.dart';
 /// (amount, Konto, Gegenkonto) of every booking row of [invoices].
 List<(String, String, String)> _rows(
   List<Invoice> invoices, {
-  DatevAccounts accounts = const DatevAccounts(),
+  DatevAccounts? accounts,
 }) => [
   for (final r in buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
     invoices: invoices,
     matches: const {},
-    accounts: accounts,
+    accounts: accounts ?? DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
     from: DateTime(2026),
     to: DateTime(2026, 12, 31),
     generatedAt: DateTime(2027, 1, 5),
     consultantNumber: '1001',
-    clientNumber: '20002',
-  )).split('\r\n').skip(2).where((l) => l.isNotEmpty).map((l) => l.split(';')))
+    clientNumber: '20002', dayOf: WorkspaceTime.dateOf)).split('\r\n').skip(2).where((l) => l.isNotEmpty).map((l) => l.split(';')))
     (r[0], r[6], r[7]),
 ];
 
@@ -70,7 +71,7 @@ void main() {
   });
 
   test('under an SKR04 header the defaults are the SKR04 plan (0523)', () {
-    const skr04 = DatevAccounts(chart: 'SKR04');
+    final skr04 = DatevAccounts(chart: 'SKR04', reference: ActiveTaxReference.current, chartCountry: 'DE');
     expect(
       (skr04.revenue, skr04.bank),
       ('4400', '1800'),

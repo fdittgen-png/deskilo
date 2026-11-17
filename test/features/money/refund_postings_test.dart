@@ -4,8 +4,8 @@
 // (customers debited, bank credited), Sage as a payment (SP) and not a
 // receipt (SR), SAF-T's ledger the same way round; and Sage carries the
 // payments an invoice netted.
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -68,7 +68,7 @@ void main() {
   });
 
   test('DATEV: the refund debits the customers and credits the bank', () {
-    const accounts = DatevAccounts();
+    final accounts = DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE');
     final rows = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
       invoices: SeededExportYear.invoices,
       matches: _matches(),
@@ -78,8 +78,7 @@ void main() {
       generatedAt: DateTime(2027, 1, 5),
       consultantNumber: '1001',
       clientNumber: '20002',
-      ledger: SeededExportYear.ledger,
-    )).split('\r\n').where((l) => l.contains('Erstattung CN-1')).toList();
+      ledger: SeededExportYear.ledger, dayOf: WorkspaceTime.dateOf)).split('\r\n').where((l) => l.contains('Erstattung CN-1')).toList();
     expect(rows, hasLength(1));
     final f = rows.single.split(';');
     expect(f[0], '50,00');

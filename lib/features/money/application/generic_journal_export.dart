@@ -16,7 +16,6 @@ import '../domain/accounting_format.dart';
 import '../domain/accounting_journals.dart';
 import '../domain/book_chart.dart';
 import '../domain/book_profile_repository.dart';
-import '../domain/datev_creditors.dart';
 import '../domain/fec_accounts.dart' show FecJournals;
 import '../domain/fec_import_contract.dart';
 import '../domain/fec_postings.dart';

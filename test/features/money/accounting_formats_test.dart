@@ -13,13 +13,13 @@
 // shipped, and that is now a test rather than a hope.
 import 'dart:io';
 
+import 'package:deskilo/core/time/workspace_time.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/accountant_csv.dart';
 import 'package:deskilo/features/money/domain/accounting_capability.dart';
 import 'package:deskilo/features/money/domain/accounting_export_formats.dart';
 import 'package:deskilo/features/money/domain/accounting_format.dart';
 import 'package:deskilo/features/money/domain/audit_trail.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -272,13 +272,12 @@ void main() {
     String build({DateTime? issuedAt}) => buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
           invoices: [inv(issuedAt: issuedAt, vat: _vat20)],
           matches: {'i1': match()},
-          accounts: const DatevAccounts(),
+          accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
           from: DateTime(2026),
           to: DateTime(2026, 12, 31),
           generatedAt: DateTime(2026, 5, 1, 9),
           consultantNumber: '1234567',
-          clientNumber: '54321',
-        ));
+          clientNumber: '54321', dayOf: WorkspaceTime.dateOf));
 
     test('Belegdatum is DDMM — a full date lands in the wrong period', () {
       // The year comes from the header's fiscal-year start. This is the
@@ -306,13 +305,12 @@ void main() {
       final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: [inv(voidedAt: DateTime(2026, 3, 20), vat: _vat20)],
         matches: const {},
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
-        clientNumber: '2',
-      ));
+        clientNumber: '2', dayOf: WorkspaceTime.dateOf));
       expect(file, isNot(contains('INV-1')));
     });
 
@@ -322,13 +320,12 @@ void main() {
       final file = buildDatevFile(DatevRequest(currency: 'EUR', detail: datevCollective, 
         invoices: [inv(vat: _vat20)],
         matches: {'i1': match(status: 'pending')},
-        accounts: const DatevAccounts(),
+        accounts: DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
         from: DateTime(2026),
         to: DateTime(2026, 12, 31),
         generatedAt: DateTime(2026, 5),
         consultantNumber: '1',
-        clientNumber: '2',
-      ));
+        clientNumber: '2', dayOf: WorkspaceTime.dateOf));
       expect('Zahlung'.allMatches(file).length, 0);
     });
   });

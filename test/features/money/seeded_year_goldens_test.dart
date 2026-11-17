@@ -45,8 +45,6 @@ import 'package:deskilo/features/money/domain/audit_trail.dart';
 import 'package:deskilo/features/money/domain/bc_journal_xlsx.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/fec_import_contract.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
@@ -400,7 +398,7 @@ Future<DatevPackage> _datevPackage(String? chart) async {
         matches: b.matches,
         accounts: datevAccountsFor(
           b.bookProfiles,
-          DatevAccounts(chart: chart),
+          DatevAccounts(chart: chart, reference: ActiveTaxReference.current, chartCountry: 'DE'),
           _year,
         ),
         from: DateTime(_year),
@@ -412,8 +410,7 @@ Future<DatevPackage> _datevPackage(String? chart) async {
         ledger: b.ledger,
         repartitions: b.repartitions,
         batchName: 'Cowork',
-        taxPoints: _taxPoints(input),
-      ),
+        taxPoints: _taxPoints(input), dayOf: WorkspaceTime.dateOf),
       bookProfiles: b.bookProfiles,
       closed: (from, to) => !to.isAfter(DateTime(_year, 6, 30)),
       memberSequence: NumberSequence.defaultsFor('member'),

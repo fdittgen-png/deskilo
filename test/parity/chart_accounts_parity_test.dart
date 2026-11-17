@@ -7,9 +7,8 @@
 // written by the code as it stands and compared byte for byte; rewrite only
 // with `UPDATE_PARITY_GOLDENS=1`, never under CI.
 import 'package:deskilo/core/vat/tax_reference_active.dart';
-import 'package:deskilo/features/money/domain/datev.dart';
-import 'package:deskilo/features/money/domain/datev_revenue.dart';
 import 'package:deskilo/features/money/domain/fec_accounts.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'parity_golden.dart';
@@ -40,25 +39,25 @@ void main() {
   test('the chart accounts are what they were before the chart moved', () {
     final reference = ActiveTaxReference.current;
     final text = StringBuffer()
-      ..write(_datev('datev default', const DatevAccounts()))
-      ..write(_datev('datev SKR04', const DatevAccounts(chart: 'SKR04')))
+      ..write(_datev('datev default', DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE')))
+      ..write(_datev('datev SKR04', DatevAccounts(chart: 'SKR04', reference: ActiveTaxReference.current, chartCountry: 'DE')))
       ..write(
-        _datev('datev skr04 lower case', const DatevAccounts(chart: ' skr04 ')),
+        _datev('datev skr04 lower case', DatevAccounts(chart: ' skr04 ', reference: ActiveTaxReference.current, chartCountry: 'DE')),
       )
       ..write(
         _datev(
           'datev given accounts',
-          const DatevAccounts(revenue: '8195', bank: '1800', expenses: '4999'),
+          DatevAccounts(revenue: '8195', bank: '1800', expenses: '4999', reference: ActiveTaxReference.current, chartCountry: 'DE'),
         ),
       )
       ..write(
-        _datev('datev explicit reference', DatevAccounts(reference: reference)),
+        _datev('datev explicit reference', DatevAccounts(reference: reference, chartCountry: 'DE')),
       );
     for (final group in ['standard', 'reduced', 'unknown', '']) {
       text.writeln(
-        'tax key $group: ${datevGroupTaxKey(reference, group)} '
-        'revenue SKR03=${datevAutomaticRevenue(reference, 'SKR03', group, 'base')} '
-        'SKR04=${datevAutomaticRevenue(reference, 'SKR04', group, 'base')}',
+        'tax key $group: ${datevGroupTaxKey(reference, group, country: 'DE')} '
+        'revenue SKR03=${datevAutomaticRevenue(reference, 'SKR03', group, 'base', country: 'DE')} '
+        'SKR04=${datevAutomaticRevenue(reference, 'SKR04', group, 'base', country: 'DE')}',
       );
     }
     text

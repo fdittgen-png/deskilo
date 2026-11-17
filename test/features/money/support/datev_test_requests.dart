@@ -2,7 +2,9 @@
 //
 // The seeded year at German rates as a DATEV request, and a parser for the
 // files the DATEV package writes: shared by the DATEV package tests.
-import 'package:deskilo/features/money/domain/datev.dart';
+import 'package:deskilo/core/time/workspace_time.dart';
+import 'package:deskilo/core/vat/tax_reference_active.dart';
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -41,7 +43,7 @@ List<Invoice> get datevYear => [
 
 DatevRequest datevTestRequest({
   List<Invoice>? invoices,
-  DatevAccounts accounts = const DatevAccounts(),
+  DatevAccounts? accounts,
   String consultant = '1234567',
   String client = '54321',
   String currency = 'EUR',
@@ -49,7 +51,7 @@ DatevRequest datevTestRequest({
 }) => DatevRequest(
   invoices: invoices ?? datevYear,
   matches: SeededExportYear.acceptanceMatches,
-  accounts: accounts,
+  accounts: accounts ?? DatevAccounts( reference: ActiveTaxReference.current, chartCountry: 'DE'),
   from: DateTime(2026),
   to: DateTime(2026, 12, 31),
   generatedAt: DateTime(2027, 1, 5, 9),
@@ -62,8 +64,7 @@ DatevRequest datevTestRequest({
   ledger: [
     for (final e in SeededExportYear.ledger)
       if (e.createdAt.year == 2026) e,
-  ],
-);
+  ], dayOf: WorkspaceTime.dateOf);
 
 /// A parsed Buchungsstapel: its header fields and its rows' fields.
 typedef DatevTestBatch = ({List<String> header, List<List<String>> rows});

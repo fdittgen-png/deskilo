@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // A DATEV request keeps its supplied chart, reference, clock and frozen buyer
 // across another export. No live member registry is needed to name its Debitor.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
-import 'package:flutter_test/flutter_test.dart';
-
-import '../../../lib/features/money/domain/datev.dart';
-import '../../../lib/features/money/domain/datev_package.dart';
+import 'package:test/test.dart';
 
 TaxReferenceSet _reference(String chart, String revenue, String bank) =>
     TaxReferenceSet([
