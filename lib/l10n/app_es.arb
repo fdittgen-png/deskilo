@@ -7892,7 +7892,7 @@
   "financesColumnDocument": "Documento y periodo",
   "financesColumnState": "Documento y pago",
   "financesColumnWorkspace": "Emitido por",
-  "financesContinueFailed": "No se ha podido continuar el pago. Inténtalo de nuevo.",
+  "financesContinueFailed": "No se ha podido continuar el pago. Inténtelo de nuevo.",
   "@financesContinueFailed": {
     "description": "#4147: continue an existing own payment (financesContinueFailed)"
   },

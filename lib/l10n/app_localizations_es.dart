@@ -12656,7 +12656,7 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get financesContinueFailed =>
-      'No se ha podido continuar el pago. Inténtalo de nuevo.';
+      'No se ha podido continuar el pago. Inténtelo de nuevo.';
 
   @override
   String get financesContinuePayment => 'Continuar pago';

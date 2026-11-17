@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4147 — Continue keeps the displayed payment's verified host even when
+// local IDs collide; an account/access change across a wait stops handoff,
+// and ended or unsupported checkouts never fall through to a new order.
 import 'dart:async';
 
 import 'package:deskilo/core/backend/operation_context.dart';

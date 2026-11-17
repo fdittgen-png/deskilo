@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4147 — a fresh Demo client resumes only the original own payment and
+// its persisted money facts; ended claims never create a replacement or
+// a second ledger credit.
 import 'package:deskilo/core/demo/data/money/demo_payment_gateway_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';

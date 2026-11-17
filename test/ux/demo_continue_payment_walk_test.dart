@@ -1,4 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4147 — the reference organisation's real Demo flow resumes the stored
+// original request/order after leaving checkout and returning to My finances,
+// then pays and credits the selected invoice exactly once.
 import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/features/money/domain/finance_overview.dart';
 import 'package:deskilo/features/money/providers/finance_overview_provider.dart';
