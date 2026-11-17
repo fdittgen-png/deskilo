@@ -325,18 +325,90 @@
    "persona": "owner",
    "view": "phone",
    "fresh": true,
-   "shows": "user-money-invoicing",
+   "full": false,
+   "shows": "The compact invoicing summary: owed, overdue, to confirm, To do and this month's figures.",
    "steps": [
     {
      "hash": "#/invoices"
     }
    ],
-   "full": false,
    "clip": [
     0,
     0,
     390,
-    360
+    285
+   ],
+   "parts": [
+    {
+     "id": "summary",
+     "clip": [
+      0,
+      45,
+      390,
+      220
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-money-guest-passes",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "The reference business's guest-pass catalogue and the day pass already sold.",
+   "steps": [
+    {
+     "hash": "#/money/guest-passes"
+    },
+    {
+     "click": "@guestPassSell"
+    },
+    {
+     "viewport": [
+      390,
+      2200
+     ]
+    },
+    {
+     "fill": [
+      "@personalInfoFirstName",
+      "Gwen"
+     ]
+    },
+    {
+     "fill": [
+      "@personalInfoLastName",
+      "Guest"
+     ]
+    },
+    {
+     "click": "@guestPassSeat"
+    },
+    {
+     "click": "A1"
+    },
+    {
+     "click": "@commonSave",
+     "wait": 5000
+    },
+    {
+     "viewport": [
+      390,
+      844
+     ]
+    }
+   ],
+   "parts": [
+    {
+     "id": "sale",
+     "clip": [
+      12,
+      275,
+      366,
+      240
+     ]
+    }
    ]
   }
  ]

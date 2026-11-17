@@ -812,18 +812,6 @@
    "shows": "user-invoicing-accounting-export"
   },
   {
-   "id": "user-invoicing-hub",
-   "lang": "it",
-   "file": "user-invoicing-hub.it.b8fa17aa9.jpg",
-   "parts": [],
-   "persona": "owner",
-   "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-invoicing-hub"
-  },
-  {
    "id": "user-invoicing-new-invoice",
    "lang": "it",
    "file": "user-invoicing-new-invoice.it.b8fa17aa9.jpg",
@@ -834,18 +822,6 @@
    "version": "1.0.2+3",
    "taken": "2026-10-10",
    "shows": "user-invoicing-new-invoice"
-  },
-  {
-   "id": "user-invoicing-open",
-   "lang": "it",
-   "file": "user-invoicing-open.it.b8fa17aa9.jpg",
-   "parts": [],
-   "persona": "owner",
-   "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-invoicing-open"
   },
   {
    "id": "user-invoicing-register",
@@ -1299,18 +1275,6 @@
    "version": "1.0.2+3",
    "taken": "2026-10-10",
    "shows": "user-money-invoices-detail"
-  },
-  {
-   "id": "user-money-invoicing",
-   "lang": "it",
-   "file": "user-money-invoicing.it.b8fa17aa9.jpg",
-   "parts": [],
-   "persona": "owner",
-   "view": "phone",
-   "build": "8fa17aa9",
-   "version": "1.0.2+3",
-   "taken": "2026-10-10",
-   "shows": "user-money-invoicing"
   },
   {
    "id": "user-money-legal-address",

@@ -930,7 +930,16 @@ Vos membres lisent leurs documents dans leur propre langue.
 
 Vous ouvrez la facturation et voyez ce qu'on vous doit, ce qu'il reste à faire et les factures de chaque client.
 
-<p><img src="images/user-invoicing-hub.fr.jpg" width="280"></p>
+<p><img src="images/user-invoicing-hub--tasks.en.jpg" width="280"></p>
+
+*À faire*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-hub.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -956,7 +965,16 @@ Vous ouvrez la facturation et voyez ce qu'on vous doit, ce qu'il reste à faire 
 
 Le mois qui vient de s'achever a des clients encore à facturer, et vous les facturez en une fois.
 
-<!-- image: user-invoicing-month -->
+<p><img src="images/user-invoicing-month--review.en.jpg" width="280"></p>
+
+*À compléter*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-month.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -1008,7 +1026,16 @@ Vous facturez un membre pour un mois.
 
 Vous ouvrez une facture et voyez où elle en est, ce qui s'est passé et la seule chose à faire maintenant.
 
-<p><img src="images/user-invoicing-open.fr.jpg" width="280"></p>
+<p><img src="images/user-invoicing-open--history.en.jpg" width="280"></p>
+
+*Ce qui s’est passé*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-open.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -1034,7 +1061,16 @@ Vous ouvrez une facture et voyez où elle en est, ce qui s'est passé et la seul
 
 Dans votre espace, les relances se partagent à la main, et certaines sont dues.
 
-<!-- image: user-invoicing-reminders -->
+<p><img src="images/user-invoicing-reminders--queue.en.jpg" width="280"></p>
+
+*Relances à partager*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-reminders.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -1059,7 +1095,20 @@ Dans votre espace, les relances se partagent à la main, et certaines sont dues.
 
 Un paiement est arrivé sur le compte et vous dites quelles factures il paie.
 
-<!-- image: user-invoicing-payments -->
+<p><img src="images/user-invoicing-payments--payment.en.jpg" width="280"></p>
+
+*Paiements à rapprocher*
+
+<p><img src="images/user-invoicing-payments--assignment.en.jpg" width="280"></p>
+
+*Affecter aux factures*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-payments.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -1084,7 +1133,16 @@ Un paiement est arrivé sur le compte et vous dites quelles factures il paie.
 
 L'entreprise doit de l'argent à un client sur un avoir, et vous enregistrez qu'il a été remboursé.
 
-<!-- image: user-invoicing-refunds -->
+<p><img src="images/user-invoicing-refunds--refund.en.jpg" width="280"></p>
+
+*L’entreprise doit ce remboursement*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-refunds.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 
@@ -1106,7 +1164,20 @@ L'entreprise doit de l'argent à un client sur un avoir, et vous enregistrez qu'
 
 Vous voulez tout sur un client : ce qu'il doit, ses factures et un relevé à lui envoyer.
 
-<!-- image: user-invoicing-customer -->
+<p><img src="images/user-invoicing-customer--balance.en.jpg" width="280"></p>
+
+*Doit*
+
+<p><img src="images/user-invoicing-customer--story.en.jpg" width="280"></p>
+
+*Historique*
+
+<details>
+<summary>Capture complète (en anglais)</summary>
+
+<p><img src="images/user-invoicing-customer.en.jpg" width="280"></p>
+
+</details>
 
 **Étapes**
 

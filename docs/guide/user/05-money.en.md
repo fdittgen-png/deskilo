@@ -361,7 +361,16 @@ You want everything the space sells and invoices in one place.
 
 A guest who is not a member takes a place for a day or a few hours, pays at the desk and gets an invoice.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.jpg" width="280"></p>
+
+*Passes sold*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
+<p><img src="images/user-money-guest-passes.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 
@@ -634,7 +643,16 @@ You belong to several spaces and want all your invoices, payments and reminders 
 
 You issue and chase the invoices of the whole workspace and want to know where to start.
 
+<p><img src="images/user-money-invoicing--summary.en.jpg" width="280"></p>
+
+*Owed to you*
+
+<details>
+<summary>Full screenshot (English)</summary>
+
 <p><img src="images/user-money-invoicing.en.jpg" width="280"></p>
+
+</details>
 
 **Steps**
 

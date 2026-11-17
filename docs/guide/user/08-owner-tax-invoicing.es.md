@@ -930,7 +930,16 @@ Sus miembros leen sus documentos en su propio idioma.
 
 Abre la facturación y ve lo que le deben, lo que queda por hacer y las facturas de cada cliente.
 
-<p><img src="images/user-invoicing-hub.es.jpg" width="280"></p>
+<p><img src="images/user-invoicing-hub--tasks.en.jpg" width="280"></p>
+
+*Pendiente*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-hub.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -956,7 +965,16 @@ Abre la facturación y ve lo que le deben, lo que queda por hacer y las facturas
 
 El mes que acaba de terminar tiene clientes por facturar, y los factura de una vez.
 
-<!-- image: user-invoicing-month -->
+<p><img src="images/user-invoicing-month--review.en.jpg" width="280"></p>
+
+*Hay que completarlo*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-month.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -1008,7 +1026,16 @@ Factura un mes a un miembro.
 
 Abre una factura y ve en qué punto está, lo que pasó y lo único que hay que hacer ahora.
 
-<p><img src="images/user-invoicing-open.es.jpg" width="280"></p>
+<p><img src="images/user-invoicing-open--history.en.jpg" width="280"></p>
+
+*Lo que pasó*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-open.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -1034,7 +1061,16 @@ Abre una factura y ve en qué punto está, lo que pasó y lo único que hay que 
 
 En su espacio los recordatorios se comparten a mano, y algunos están pendientes.
 
-<!-- image: user-invoicing-reminders -->
+<p><img src="images/user-invoicing-reminders--queue.en.jpg" width="280"></p>
+
+*Recordatorios por compartir*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-reminders.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -1059,7 +1095,20 @@ En su espacio los recordatorios se comparten a mano, y algunos están pendientes
 
 Ha llegado un pago a la cuenta y usted indica qué facturas paga.
 
-<!-- image: user-invoicing-payments -->
+<p><img src="images/user-invoicing-payments--payment.en.jpg" width="280"></p>
+
+*Pagos por conciliar*
+
+<p><img src="images/user-invoicing-payments--assignment.en.jpg" width="280"></p>
+
+*Asignar a facturas*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-payments.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -1084,7 +1133,16 @@ Ha llegado un pago a la cuenta y usted indica qué facturas paga.
 
 La empresa debe dinero a un cliente por una nota de crédito, y usted registra que se le devolvió.
 
-<!-- image: user-invoicing-refunds -->
+<p><img src="images/user-invoicing-refunds--refund.en.jpg" width="280"></p>
+
+*La empresa debe este reembolso*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-refunds.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 
@@ -1106,7 +1164,20 @@ La empresa debe dinero a un cliente por una nota de crédito, y usted registra q
 
 Quiere todo sobre un cliente: lo que debe, sus facturas y un estado de cuenta para enviarle.
 
-<!-- image: user-invoicing-customer -->
+<p><img src="images/user-invoicing-customer--balance.en.jpg" width="280"></p>
+
+*Debe*
+
+<p><img src="images/user-invoicing-customer--story.en.jpg" width="280"></p>
+
+*Historial*
+
+<details>
+<summary>Captura completa (en inglés)</summary>
+
+<p><img src="images/user-invoicing-customer.en.jpg" width="280"></p>
+
+</details>
 
 **Pasos**
 

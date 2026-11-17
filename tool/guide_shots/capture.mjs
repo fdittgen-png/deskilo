@@ -84,12 +84,10 @@ for (const lang of langs) {
     [w, h] = VIEW[view]; h0 = h;
     ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: Number(opt('dpr', '1.2')), locale: LOCALE[lang] });
     page = await ctx.newPage();
-    await page.goto(`http://localhost:${port}/`);
+    await page.goto(`http://localhost:${port}/#/demo`);
     await sleep(page, 9000);
     await page.evaluate(() => document.querySelector('flt-semantics-placeholder')?.click());
     await sleep(page, 1200);
-    await click(t('demoEntryAction'));
-    await sleep(page, 2000);
     await click(t('demoEntryStart'));
     await sleep(page, 4500);
     persona = 'owner';
@@ -150,8 +148,9 @@ for (const lang of langs) {
         if (s.via) { try { await click(target, s.nth ?? 0); } catch { await click(s.via); await sleep(page, 700); await click(target, s.nth ?? 0); } }
         else await click(target, s.nth ?? 0); await sleep(page, s.wait ?? 1400); }
       else if (s.at) { const top = await topOfApp(); await page.mouse.click(s.at[0], top + s.at[1]); await sleep(page, s.wait ?? 1400); }
+      else if (s.viewport) { [w, h] = s.viewport; await page.setViewportSize({ width: w, height: h }); await sleep(page, 1500); }
       else if (s.type) { await page.keyboard.type(s.type, { delay: 40 }); await sleep(page, 500); }
-      else if (s.fill) { const [label, value] = s.fill; await page.getByLabel(new RegExp(esc(txt(label)), 'i')).first().fill(txt(value)); await sleep(page, 500); }
+      else if (s.fill) { const [label, value] = s.fill; const field = page.getByLabel(new RegExp(esc(txt(label)), 'i')).first(); await field.click(); await sleep(page, 700); await field.fill(txt(value)); await sleep(page, 500); }
       else if (s.scroll != null) { await page.mouse.move(w / 2, h / 2); await page.mouse.wheel(0, s.scroll); await sleep(page, s.wait ?? 900); }
       else if (s.press) { await page.keyboard.press(s.press); await sleep(page, 700); }
       else if (s.css) { await page.locator(s.css).first().click(); await sleep(page, s.wait ?? 900); }

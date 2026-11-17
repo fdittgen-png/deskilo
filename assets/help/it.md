@@ -2628,7 +2628,9 @@ Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
 
 Un ospite che non è membro occupa un posto per un giorno o qualche ora, paga all'accoglienza e riceve una fattura.
 
-<!-- image: user-money-guest-passes -->
+![](assets/help/images/user-money-guest-passes--sale.en.b37e2c0fb.jpg)
+
+*Pass venduti*
 
 **Passaggi**
 
@@ -2889,7 +2891,9 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 Emette e sollecita le fatture di tutto lo spazio e vuole sapere da dove cominciare.
 
-![](assets/help/images/user-money-invoicing.it.b8fa17aa9.jpg)
+![](assets/help/images/user-money-invoicing--summary.en.b37e2c0fb.jpg)
+
+*Da incassare*
 
 **Passaggi**
 
@@ -5588,7 +5592,9 @@ I Suoi membri leggono i loro documenti nella propria lingua.
 
 Apre la fatturazione e vede cosa le è dovuto, cosa resta da fare e le fatture di ogni cliente.
 
-![](assets/help/images/user-invoicing-hub.it.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-hub--tasks.en.b37e2c0fb.jpg)
+
+*Da fare*
 
 **Passaggi**
 
@@ -5613,7 +5619,9 @@ Apre la fatturazione e vede cosa le è dovuto, cosa resta da fare e le fatture d
 
 Il mese appena concluso ha clienti ancora da fatturare, e lei li fattura in una volta.
 
-<!-- image: user-invoicing-month -->
+![](assets/help/images/user-invoicing-month--review.en.b37e2c0fb.jpg)
+
+*Da completare*
 
 **Passaggi**
 
@@ -5663,7 +5671,9 @@ Fattura un mese a un membro.
 
 Apre una fattura e vede a che punto è, cosa è successo e l'unica cosa da fare ora.
 
-![](assets/help/images/user-invoicing-open.it.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-open--history.en.b37e2c0fb.jpg)
+
+*Cosa è successo*
 
 **Passaggi**
 
@@ -5688,7 +5698,9 @@ Apre una fattura e vede a che punto è, cosa è successo e l'unica cosa da fare 
 
 Nel suo spazio i solleciti si condividono a mano, e alcuni sono dovuti.
 
-<!-- image: user-invoicing-reminders -->
+![](assets/help/images/user-invoicing-reminders--queue.en.b37e2c0fb.jpg)
+
+*Solleciti da condividere*
 
 **Passaggi**
 
@@ -5712,7 +5724,13 @@ Nel suo spazio i solleciti si condividono a mano, e alcuni sono dovuti.
 
 Un pagamento è arrivato sul conto e lei indica quali fatture paga.
 
-<!-- image: user-invoicing-payments -->
+![](assets/help/images/user-invoicing-payments--payment.en.b37e2c0fb.jpg)
+
+*Pagamenti da abbinare*
+
+![](assets/help/images/user-invoicing-payments--assignment.en.b37e2c0fb.jpg)
+
+*Assegna alle fatture*
 
 **Passaggi**
 
@@ -5736,7 +5754,9 @@ Un pagamento è arrivato sul conto e lei indica quali fatture paga.
 
 L'attività deve del denaro a un cliente per una nota di credito, e lei registra che gli è stato rimborsato.
 
-<!-- image: user-invoicing-refunds -->
+![](assets/help/images/user-invoicing-refunds--refund.en.b37e2c0fb.jpg)
+
+*L’attività deve questo rimborso*
 
 **Passaggi**
 
@@ -5757,7 +5777,13 @@ L'attività deve del denaro a un cliente per una nota di credito, e lei registra
 
 Vuole tutto su un cliente: cosa deve, le sue fatture e un estratto conto da inviargli.
 
-<!-- image: user-invoicing-customer -->
+![](assets/help/images/user-invoicing-customer--balance.en.b37e2c0fb.jpg)
+
+*Deve*
+
+![](assets/help/images/user-invoicing-customer--story.en.b37e2c0fb.jpg)
+
+*Storia*
 
 **Passaggi**
 

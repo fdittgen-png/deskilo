@@ -2628,7 +2628,9 @@ You want everything the space sells and invoices in one place.
 
 A guest who is not a member takes a place for a day or a few hours, pays at the desk and gets an invoice.
 
-<!-- image: user-money-guest-passes -->
+![](assets/help/images/user-money-guest-passes--sale.en.b37e2c0fb.jpg)
+
+*Passes sold*
 
 **Steps**
 
@@ -2889,7 +2891,9 @@ You belong to several spaces and want all your invoices, payments and reminders 
 
 You issue and chase the invoices of the whole workspace and want to know where to start.
 
-![](assets/help/images/user-money-invoicing.en.b8fa17aa9.jpg)
+![](assets/help/images/user-money-invoicing--summary.en.b37e2c0fb.jpg)
+
+*Owed to you*
 
 **Steps**
 
@@ -5588,7 +5592,9 @@ Your members read their documents in their own language.
 
 You open Invoicing and see what you are owed, what to do next and every customer's invoices.
 
-![](assets/help/images/user-invoicing-hub.en.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-hub--tasks.en.b37e2c0fb.jpg)
+
+*To do*
 
 **Steps**
 
@@ -5613,7 +5619,9 @@ You open Invoicing and see what you are owed, what to do next and every customer
 
 The month just ended has customers still to invoice, and you issue them in one go.
 
-<!-- image: user-invoicing-month -->
+![](assets/help/images/user-invoicing-month--review.en.b37e2c0fb.jpg)
+
+*Needs a fix*
 
 **Steps**
 
@@ -5663,7 +5671,9 @@ You invoice a member for a month.
 
 You open an invoice and see where it stands, what happened and the one thing to do now.
 
-![](assets/help/images/user-invoicing-open.en.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-open--history.en.b37e2c0fb.jpg)
+
+*What happened*
 
 **Steps**
 
@@ -5688,7 +5698,9 @@ You open an invoice and see where it stands, what happened and the one thing to 
 
 Reminders are shared by hand in your space, and some are due.
 
-<!-- image: user-invoicing-reminders -->
+![](assets/help/images/user-invoicing-reminders--queue.en.b37e2c0fb.jpg)
+
+*Reminders to share*
 
 **Steps**
 
@@ -5712,7 +5724,13 @@ Reminders are shared by hand in your space, and some are due.
 
 A payment arrived on the account and you say which invoices it pays.
 
-<!-- image: user-invoicing-payments -->
+![](assets/help/images/user-invoicing-payments--payment.en.b37e2c0fb.jpg)
+
+*Payments to match*
+
+![](assets/help/images/user-invoicing-payments--assignment.en.b37e2c0fb.jpg)
+
+*Assign to invoices*
 
 **Steps**
 
@@ -5736,7 +5754,9 @@ A payment arrived on the account and you say which invoices it pays.
 
 The business owes a customer money back on a credit note, and you record that it was paid out.
 
-<!-- image: user-invoicing-refunds -->
+![](assets/help/images/user-invoicing-refunds--refund.en.b37e2c0fb.jpg)
+
+*The business owes this refund*
 
 **Steps**
 
@@ -5757,7 +5777,13 @@ The business owes a customer money back on a credit note, and you record that it
 
 You want everything about one customer: what they owe, their invoices and a statement to send them.
 
-<!-- image: user-invoicing-customer -->
+![](assets/help/images/user-invoicing-customer--balance.en.b37e2c0fb.jpg)
+
+*Owes*
+
+![](assets/help/images/user-invoicing-customer--story.en.b37e2c0fb.jpg)
+
+*Story*
 
 **Steps**
 

@@ -736,10 +736,28 @@
    "id": "user-invoicing-hub",
    "persona": "owner",
    "view": "phone",
-   "shows": "user-invoicing-hub",
+   "fresh": true,
+   "full": false,
+   "shows": "Owed to you, To do, invoice filters and customer balances in the reference business.",
    "steps": [
     {
      "hash": "#/invoices"
+    }
+   ],
+   "parts": [
+    {
+     "id": "tasks",
+     "steps": [
+      {
+       "click": "@invoicingTodo"
+      }
+     ],
+     "clip": [
+      0,
+      0,
+      390,
+      580
+     ]
     }
    ]
   },
@@ -762,16 +780,31 @@
    "id": "user-invoicing-open",
    "persona": "owner",
    "view": "phone",
-   "shows": "user-invoicing-open",
+   "fresh": true,
+   "full": false,
+   "shows": "An overdue invoice with What happened, More and the next reminder action.",
    "steps": [
     {
      "hash": "#/invoices"
     },
     {
-     "click": "@invoiceTabOpen"
+     "click": "Ada Lindqvist"
+    },
+    {
+     "click": "U-2026-04-02"
     }
    ],
-   "fresh": true
+   "parts": [
+    {
+     "id": "history",
+     "clip": [
+      12,
+      188,
+      366,
+      345
+     ]
+    }
+   ]
   },
   {
    "id": "user-invoicing-wizard",
@@ -897,6 +930,212 @@
     }
    ],
    "full": false
+  },
+  {
+   "id": "user-invoicing-month",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "April review: the selected customer credit and Studio Nord needing its postal address.",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "@invoicingTodoReviewMonth|month=April"
+    }
+   ],
+   "parts": [
+    {
+     "id": "review",
+     "clip": [
+      12,
+      204,
+      366,
+      146
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-invoicing-reminders",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "Reminders to share with the customer, amount, lateness, preview and sharing action.",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "@invoicingTodoShareReminders"
+    }
+   ],
+   "parts": [
+    {
+     "id": "queue",
+     "clip": [
+      12,
+      108,
+      366,
+      385
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-invoicing-payments",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "The unassigned transfer and its candidate invoices before any allocation.",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "@invoicingTodoMatch"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "@invoicingActionMatch"
+    }
+   ],
+   "parts": [
+    {
+     "id": "payment",
+     "clip": [
+      12,
+      108,
+      366,
+      220
+     ]
+    },
+    {
+     "id": "assignment",
+     "steps": [
+      {
+       "click": "@assignPaymentAction"
+      }
+     ],
+     "clip": [
+      0,
+      180,
+      390,
+      588
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-invoicing-refunds",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "The synthetic credit note, the refund owed and Record the refund, before recording it.",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "@invoicingTodoReviewMonth|month=April"
+    },
+    {
+     "click": "Issue 1 invoice",
+     "wait": 6500
+    },
+    {
+     "click": "@invoiceMonthDone",
+     "wait": 2500
+    },
+    {
+     "click": "@invoicingTodoRefunds"
+    },
+    {
+     "click": "@invoicingTodo"
+    },
+    {
+     "click": "Farid Haddad"
+    },
+    {
+     "click": "INV-2026-0001"
+    }
+   ],
+   "parts": [
+    {
+     "id": "refund",
+     "clip": [
+      12,
+      56,
+      366,
+      434
+     ]
+    }
+   ]
+  },
+  {
+   "id": "user-invoicing-customer",
+   "persona": "owner",
+   "view": "phone",
+   "fresh": true,
+   "full": false,
+   "shows": "A customer's amount owed, invoices, story and statement actions.",
+   "steps": [
+    {
+     "hash": "#/invoices"
+    },
+    {
+     "click": "Ada Lindqvist"
+    }
+   ],
+   "parts": [
+    {
+     "id": "balance",
+     "clip": [
+      0,
+      0,
+      390,
+      194
+     ]
+    },
+    {
+     "id": "story",
+     "steps": [
+      {
+       "scroll": 100000,
+       "wait": 2000
+      },
+      {
+       "scroll": 100000,
+       "wait": 2000
+      }
+     ],
+     "clip": [
+      0,
+      75,
+      390,
+      640
+     ]
+    }
+   ]
   }
  ]
 }

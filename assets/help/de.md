@@ -2628,7 +2628,9 @@ Sie möchten alles, was der Raum verkauft und in Rechnung stellt, an einem Ort f
 
 Ein Gast, der kein Mitglied ist, nimmt einen Platz für einen Tag oder einige Stunden, zahlt am Empfang und erhält eine Rechnung.
 
-<!-- image: user-money-guest-passes -->
+![](assets/help/images/user-money-guest-passes--sale.en.b37e2c0fb.jpg)
+
+*Verkaufte Pässe*
 
 **Schritte**
 
@@ -2889,7 +2891,9 @@ Sie gehören mehreren Spaces an und möchten alle Ihre Rechnungen, Zahlungen und
 
 Sie stellen die Rechnungen des ganzen Arbeitsbereichs aus, mahnen sie und möchten wissen, wo Sie anfangen.
 
-![](assets/help/images/user-money-invoicing.de.b8fa17aa9.jpg)
+![](assets/help/images/user-money-invoicing--summary.en.b37e2c0fb.jpg)
+
+*Offen an Sie*
 
 **Schritte**
 
@@ -5588,7 +5592,9 @@ Ihre Mitglieder lesen ihre Dokumente in ihrer eigenen Sprache.
 
 Sie öffnen die Rechnungsstellung und sehen, was Ihnen geschuldet wird, was als Nächstes zu tun ist und die Rechnungen jedes Kunden.
 
-![](assets/help/images/user-invoicing-hub.de.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-hub--tasks.en.b37e2c0fb.jpg)
+
+*Zu tun*
 
 **Schritte**
 
@@ -5613,7 +5619,9 @@ Sie öffnen die Rechnungsstellung und sehen, was Ihnen geschuldet wird, was als 
 
 Im gerade beendeten Monat sind noch Kunden abzurechnen, und Sie stellen ihre Rechnungen in einem Durchgang aus.
 
-<!-- image: user-invoicing-month -->
+![](assets/help/images/user-invoicing-month--review.en.b37e2c0fb.jpg)
+
+*Muss ergänzt werden*
 
 **Schritte**
 
@@ -5663,7 +5671,9 @@ Sie stellen einem Mitglied einen Monat in Rechnung.
 
 Sie öffnen eine Rechnung und sehen, wo sie steht, was geschah und das eine, was jetzt zu tun ist.
 
-![](assets/help/images/user-invoicing-open.de.b8fa17aa9.jpg)
+![](assets/help/images/user-invoicing-open--history.en.b37e2c0fb.jpg)
+
+*Was geschah*
 
 **Schritte**
 
@@ -5688,7 +5698,9 @@ Sie öffnen eine Rechnung und sehen, wo sie steht, was geschah und das eine, was
 
 In Ihrem Raum werden Mahnungen von Hand geteilt, und einige sind fällig.
 
-<!-- image: user-invoicing-reminders -->
+![](assets/help/images/user-invoicing-reminders--queue.en.b37e2c0fb.jpg)
+
+*Zu teilende Mahnungen*
 
 **Schritte**
 
@@ -5712,7 +5724,13 @@ In Ihrem Raum werden Mahnungen von Hand geteilt, und einige sind fällig.
 
 Eine Zahlung ist auf dem Konto eingegangen, und Sie sagen, welche Rechnungen sie bezahlt.
 
-<!-- image: user-invoicing-payments -->
+![](assets/help/images/user-invoicing-payments--payment.en.b37e2c0fb.jpg)
+
+*Zahlungen zuordnen*
+
+![](assets/help/images/user-invoicing-payments--assignment.en.b37e2c0fb.jpg)
+
+*Rechnungen zuordnen*
 
 **Schritte**
 
@@ -5736,7 +5754,9 @@ Eine Zahlung ist auf dem Konto eingegangen, und Sie sagen, welche Rechnungen sie
 
 Der Betrieb schuldet einem Kunden Geld aus einer Gutschrift, und Sie erfassen, dass es ausgezahlt wurde.
 
-<!-- image: user-invoicing-refunds -->
+![](assets/help/images/user-invoicing-refunds--refund.en.b37e2c0fb.jpg)
+
+*Der Betrieb schuldet diese Erstattung*
 
 **Schritte**
 
@@ -5757,7 +5777,13 @@ Der Betrieb schuldet einem Kunden Geld aus einer Gutschrift, und Sie erfassen, d
 
 Sie möchten alles zu einem Kunden: was er schuldet, seine Rechnungen und einen Kontoauszug zum Versenden.
 
-<!-- image: user-invoicing-customer -->
+![](assets/help/images/user-invoicing-customer--balance.en.b37e2c0fb.jpg)
+
+*Schuldet*
+
+![](assets/help/images/user-invoicing-customer--story.en.b37e2c0fb.jpg)
+
+*Verlauf*
 
 **Schritte**
 

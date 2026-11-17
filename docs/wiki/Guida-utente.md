@@ -2744,7 +2744,16 @@ Vuole trovare in un solo posto tutto ciò che lo spazio vende e fattura.
 
 Un ospite che non è membro occupa un posto per un giorno o qualche ora, paga all'accoglienza e riceve una fattura.
 
-<!-- image: user-money-guest-passes -->
+<p><img src="images/user-money-guest-passes--sale.en.b37e2c0fb.jpg" width="280"></p>
+
+*Pass venduti*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-money-guest-passes.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -3017,7 +3026,16 @@ Appartiene a più spazi e vuole tutte le Sue fatture, i Suoi pagamenti e i Suoi 
 
 Emette e sollecita le fatture di tutto lo spazio e vuole sapere da dove cominciare.
 
-<p><img src="images/user-money-invoicing.it.b8fa17aa9.jpg" width="280"></p>
+<p><img src="images/user-money-invoicing--summary.en.b37e2c0fb.jpg" width="280"></p>
+
+*Da incassare*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-money-invoicing.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -5859,7 +5877,16 @@ I Suoi membri leggono i loro documenti nella propria lingua.
 
 Apre la fatturazione e vede cosa le è dovuto, cosa resta da fare e le fatture di ogni cliente.
 
-<p><img src="images/user-invoicing-hub.it.b8fa17aa9.jpg" width="280"></p>
+<p><img src="images/user-invoicing-hub--tasks.en.b37e2c0fb.jpg" width="280"></p>
+
+*Da fare*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-hub.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -5885,7 +5912,16 @@ Apre la fatturazione e vede cosa le è dovuto, cosa resta da fare e le fatture d
 
 Il mese appena concluso ha clienti ancora da fatturare, e lei li fattura in una volta.
 
-<!-- image: user-invoicing-month -->
+<p><img src="images/user-invoicing-month--review.en.b37e2c0fb.jpg" width="280"></p>
+
+*Da completare*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-month.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -5937,7 +5973,16 @@ Fattura un mese a un membro.
 
 Apre una fattura e vede a che punto è, cosa è successo e l'unica cosa da fare ora.
 
-<p><img src="images/user-invoicing-open.it.b8fa17aa9.jpg" width="280"></p>
+<p><img src="images/user-invoicing-open--history.en.b37e2c0fb.jpg" width="280"></p>
+
+*Cosa è successo*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-open.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -5963,7 +6008,16 @@ Apre una fattura e vede a che punto è, cosa è successo e l'unica cosa da fare 
 
 Nel suo spazio i solleciti si condividono a mano, e alcuni sono dovuti.
 
-<!-- image: user-invoicing-reminders -->
+<p><img src="images/user-invoicing-reminders--queue.en.b37e2c0fb.jpg" width="280"></p>
+
+*Solleciti da condividere*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-reminders.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -5988,7 +6042,20 @@ Nel suo spazio i solleciti si condividono a mano, e alcuni sono dovuti.
 
 Un pagamento è arrivato sul conto e lei indica quali fatture paga.
 
-<!-- image: user-invoicing-payments -->
+<p><img src="images/user-invoicing-payments--payment.en.b37e2c0fb.jpg" width="280"></p>
+
+*Pagamenti da abbinare*
+
+<p><img src="images/user-invoicing-payments--assignment.en.b37e2c0fb.jpg" width="280"></p>
+
+*Assegna alle fatture*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-payments.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -6013,7 +6080,16 @@ Un pagamento è arrivato sul conto e lei indica quali fatture paga.
 
 L'attività deve del denaro a un cliente per una nota di credito, e lei registra che gli è stato rimborsato.
 
-<!-- image: user-invoicing-refunds -->
+<p><img src="images/user-invoicing-refunds--refund.en.b37e2c0fb.jpg" width="280"></p>
+
+*L’attività deve questo rimborso*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-refunds.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
@@ -6035,7 +6111,20 @@ L'attività deve del denaro a un cliente per una nota di credito, e lei registra
 
 Vuole tutto su un cliente: cosa deve, le sue fatture e un estratto conto da inviargli.
 
-<!-- image: user-invoicing-customer -->
+<p><img src="images/user-invoicing-customer--balance.en.b37e2c0fb.jpg" width="280"></p>
+
+*Deve*
+
+<p><img src="images/user-invoicing-customer--story.en.b37e2c0fb.jpg" width="280"></p>
+
+*Storia*
+
+<details>
+<summary>Schermata completa (in inglese)</summary>
+
+<p><img src="images/user-invoicing-customer.en.b37e2c0fb.jpg" width="280"></p>
+
+</details>
 
 **Passaggi**
 
