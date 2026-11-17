@@ -24,6 +24,7 @@ enum PublicFieldType {
   uuid,
   datetime,
   integer,
+  number,
   integerList,
   stringList,
   text,

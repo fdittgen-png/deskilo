@@ -10,20 +10,20 @@ class PublicationActions {
   Future<Map<String, dynamic>> ownPage(String workspace) =>
       repository.ownPage(workspace);
 
-  /// Saves the page. An inherited field named in [following] is left out,
-  /// so it keeps following the workspace information (#2086); any other
-  /// value, even blank, is the owner's override.
+  /// Saves the typed edit. An inherited field in [following] is cleared,
+  /// so it follows the workspace information; blank text remains an override.
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document, {
+    PublicationPatch document, {
     Set<String> following = const {},
     required bool published,
   }) {
-    final normalized = {
-      for (final entry in document.entries)
-        if (!(following.contains(entry.key) &&
-            publicInheritedFields.contains(entry.key)))
-          entry.key: entry.value.trim(),
+    final normalized = <String, Object?>{
+      for (final entry in document.fields.entries)
+        entry.key: entry.value is String
+            ? (entry.value as String).trim() : entry.value,
+      for (final field in following.intersection(publicInheritedFields.toSet()))
+        field: null,
     };
     final host = normalized['host_type'];
     if (host != null && !{'association', 'company', 'person'}.contains(host)) {
@@ -31,6 +31,7 @@ class PublicationActions {
     }
     for (final key in ['website', 'image_url', 'plan_url']) {
       final value = normalized[key] ?? '';
+      if (value is! String) throw ArgumentError('public link must be text');
       if (value.isEmpty) continue;
       final uri = Uri.tryParse(value);
       if (uri == null ||
@@ -40,13 +41,18 @@ class PublicationActions {
         throw ArgumentError('public links require HTTPS');
       }
     }
-    // #3689 — the place is both coordinates or neither, and a real one.
-    final lat = normalized['latitude'] ?? '', lon = normalized['longitude'] ?? '';
-    if ((lat.isEmpty != lon.isEmpty) ||
-        (lat.isNotEmpty && DirectoryLocation.parse(lat, lon) == null)) {
-      throw ArgumentError('invalid coordinates');
+    if (normalized.containsKey('latitude') || normalized.containsKey('longitude')) {
+      final lat = normalized['latitude'], lon = normalized['longitude'];
+      if ((lat == null) != (lon == null) ||
+          (lat != null && (lat is! num || lon is! num ||
+              DirectoryLocation.parse(lat, lon) == null))) {
+        throw ArgumentError('invalid coordinates');
+      }
     }
-    return repository.savePage(workspace, normalized, published: published);
+    final patch = document.mode == PublicationWriteMode.patch
+        ? PublicationPatch.patch(normalized)
+        : PublicationPatch.replace(normalized);
+    return repository.savePage(workspace, patch, published: published);
   }
 
   /// #2086 — back to the workspace information: [fields], or every

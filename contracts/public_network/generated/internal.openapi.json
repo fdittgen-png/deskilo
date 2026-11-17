@@ -100,7 +100,7 @@
         "x-deskilo-features": [
           "publicListings"
         ],
-        "x-deskilo-idempotency": "replace: the same document and flag saved twice has one effect; last write wins, there is no expected-revision check yet",
+        "x-deskilo-idempotency": "Explicit replace or patch. Patch preserves omitted fields; null removes a field. Last write wins for each supplied field; no expected-revision check.",
         "x-deskilo-side-effects": [
           "upserts the page row",
           "sets the publicListings flag to the published value",
@@ -136,6 +136,11 @@
                   "p_published": {
                     "type": "boolean",
                     "x-sql-type": "boolean"
+                  },
+                  "p_mode": {
+                    "type": "string",
+                    "x-sql-type": "text",
+                    "default": "replace"
                   }
                 }
               }
@@ -444,58 +449,137 @@
         "x-must-understand": "must_understand"
       },
       "PublicationInput": {
-        "description": "What the owner may write. Exactly the keys save_workspace_public_page accepts; every value is a string. An inherited field (host_type, address) that is absent follows the workspace's own information (#2086); a present one, even blank, overrides it.",
+        "description": "Owner-authored fields. Patch omits unchanged fields; null removes a field and restores inheritance where applicable; empty text is a blank override. Coordinates are numeric. Legacy three-argument replacement calls also accept decimal strings.",
         "type": "object",
         "additionalProperties": false,
         "required": [],
         "properties": {
           "host_type": {
-            "type": "string",
-            "enum": [
-              "association",
-              "company",
-              "person"
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "association",
+                  "company",
+                  "person"
+                ]
+              },
+              {
+                "type": "null"
+              }
             ]
           },
           "description": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "address": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "email": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "phone": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "website": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "image_url": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "plan_url": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "plans": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "latitude": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": -90,
+                "maximum": 90
+              },
+              {
+                "type": "null"
+              }
+            ]
           },
           "longitude": {
-            "type": "string",
-            "maxLength": 4000
+            "anyOf": [
+              {
+                "type": "number",
+                "minimum": -180,
+                "maximum": 180
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },

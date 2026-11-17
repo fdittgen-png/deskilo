@@ -120,17 +120,9 @@ class _SetupPublicPageStepState extends ConsumerState<SetupPublicPageStep> {
       for (final field in _edited)
         if (_controllers[field]!.text.trim() != (stored[field] ?? '')) field,
     };
-    // The whole page, as the page editor sends it: what this step does not
-    // edit goes back as it was read.
-    final document = <String, String>{
-      'host_type': stored['host_type'] as String? ?? 'association',
-      for (final field in publicPageFields)
-        field: _edited.contains(field)
-            ? _controllers[field]!.text
-            : stored[field] as String? ?? '',
-      // #3689 — the stored place goes back as it was read.
-      ...publicPlaceFields(publicPlaceOf(stored)),
-    };
+    final document = PublicationDraft.fromPage({'document': stored}).patch({
+      for (final field in _edited) field: _controllers[field]!.text.trim(),
+    });
     final following = _following.difference(changed);
     _busy.value = true;
     Map<String, Object?>? saved;

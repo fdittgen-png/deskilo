@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import '../../../features/directory/domain/discovery_paging.dart';
 import '../../../features/directory/domain/public_workspace.dart';
+import '../../public_network/public_network_codec.dart';
 import '../../public_network/public_network_negotiator.dart';
 import '../../public_network/public_network_operations.dart';
 
@@ -144,13 +145,29 @@ class FakeDirectoryRepository
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document, {
+    PublicationPatch document, {
     required bool published,
   }) async {
-    pages[workspace] = {
-      'published': published,
-      'document': <String, dynamic>{...document},
-    };
+    final input = encodePublicInput(
+      PublicNetworkOperations.publicationPageSave.input['p_document']!,
+      document.fields,
+    );
+    final stored = document.mode == PublicationWriteMode.patch
+        ? Map<String, dynamic>.from(pages[workspace]?['document'] as Map? ?? {})
+        : <String, dynamic>{};
+    for (final entry in input.entries) {
+      if (entry.value == null) {
+        stored.remove(entry.key);
+      } else {
+        stored[entry.key] = entry.value;
+      }
+    }
+    final place = publicPlaceOf(stored);
+    stored
+      ..remove('latitude')
+      ..remove('longitude');
+    if (place != null) stored.addAll(publicPlaceFields(place));
+    pages[workspace] = {'published': published, 'document': stored};
     return _resolved(workspace);
   }
 

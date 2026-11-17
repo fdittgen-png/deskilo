@@ -10,6 +10,7 @@ import 'dart:convert';
 import 'package:deskilo/core/public_network/public_network_codec.dart';
 import 'package:deskilo/core/public_network/public_network_operations.dart';
 import 'package:deskilo/features/directory/data/supabase_publication_repository.dart';
+import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/testing.dart';
@@ -84,10 +85,10 @@ void main() {
       'invite_code': 'CANARY-INVITE',
       'contacts': <Object>[],
     };
-    final preview = await repository().savePage(workspace, {
+    final preview = await repository().savePage(workspace, PublicationPatch.replace({
       'host_type': 'company',
       'description': 'Open to all',
-    }, published: true);
+    }), published: true);
     expect(preview['description'], 'Open to all');
     expect('$preview', isNot(contains('CANARY')));
     final call = seen.single;
@@ -144,7 +145,7 @@ void main() {
   test('#2086 a save without the inherited fields is a valid input: they '
       'follow the workspace information', () async {
     answer = {'name': 'Mine', 'host_type': 'association'};
-    await repository().savePage(workspace, {'description': 'Desks'}, published: true);
+    await repository().savePage(workspace, PublicationPatch.replace({'description': 'Desks'}), published: true);
     expect(
       ((jsonDecode(seen.single.body) as Map)['p_document'] as Map).keys,
       ['description'],
@@ -154,12 +155,52 @@ void main() {
   test('an input key the contract does not list is refused before any '
       'request', () async {
     await expectLater(
-      repository().savePage(workspace, {
+      repository().savePage(workspace, PublicationPatch.replace({
         'host_type': 'company',
         'internal_note': 'never public',
-      }, published: false),
+      }), published: false),
       throwsA(isA<PublicContractRefusal>()),
     );
     expect(seen, isEmpty);
   });
+  test('typed patch sends numeric coordinates and an explicit clear', () async {
+    answer = {'name': 'Mine', 'host_type': 'company',
+      'latitude': '43.4', 'longitude': '3.4'};
+    await repository().savePage(workspace, PublicationPatch.patch({
+      'latitude': 43.4, 'longitude': 3.4, 'plans': null,
+    }), published: true);
+    final body = jsonDecode(seen.single.body) as Map;
+    expect(body['p_mode'], 'patch');
+    expect(body['p_document'], {
+      'latitude': 43.4, 'longitude': 3.4, 'plans': null,
+    });
+  });
+
+  test('a typed draft sends only changed writable fields', () {
+    final draft = PublicationDraft.fromPage({'document': {
+      'name': 'Server-owned name', 'description': 'Before',
+      'plans': 'Keep', 'latitude': '43.4', 'longitude': '3.4',
+      'services': <Object>[],
+    }});
+    final patch = draft.patch({'description': 'After'});
+    expect(patch.fields, {'description': 'After'});
+    expect(patch.mode, PublicationWriteMode.patch);
+    expect(draft.fields['plans'], 'Keep');
+    expect(draft.fields['latitude'], 43.4);
+    expect(draft.fields.containsKey('services'), isFalse);
+  });
+
+  test('invalid typed values are refused before transport', () async {
+    for (final fields in <Map<String, Object?>>[
+      {'latitude': double.nan}, {'latitude': 91}, {'description': <Object>[]},
+    ]) {
+      await expectLater(
+        repository().savePage(workspace, PublicationPatch.patch(fields),
+          published: false),
+        throwsA(isA<PublicContractRefusal>()),
+      );
+    }
+    expect(seen, isEmpty);
+  });
+
 }

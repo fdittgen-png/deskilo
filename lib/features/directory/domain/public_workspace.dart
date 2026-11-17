@@ -135,12 +135,10 @@ const publicPageFields = [
   'plans',
 ];
 
-/// #3689 — where the page's business is on the map, as a save sends it:
-/// the pair, or both empty (no stored place, visitors' maps look up the
-/// address). Every save carries it, so an edit of another field keeps it.
-Map<String, String> publicPlaceFields(DirectoryLocation? place) => {
-  'latitude': place == null ? '' : '${place.latitude}',
-  'longitude': place == null ? '' : '${place.longitude}',
+/// Numeric map coordinates, or nulls that explicitly clear the stored place.
+Map<String, Object?> publicPlaceFields(DirectoryLocation? place) => {
+  'latitude': place?.latitude,
+  'longitude': place?.longitude,
 };
 
 /// The stored place of a `publication.page.read` document, if it has one.
@@ -159,6 +157,47 @@ Set<String> publicFollowing(Map<String, dynamic> page) {
   };
 }
 
+/// The writable values read by an editor, excluding server-owned offer fields.
+/// Coordinates are numeric in the draft even when a legacy projection uses text.
+class PublicationDraft {
+  PublicationDraft.fromPage(Map<String, Object?> page) {
+    final document = Map<String, Object?>.from(page['document'] as Map);
+    fields = Map.unmodifiable({
+      for (final key in ['host_type', ...publicPageFields])
+        if (document.containsKey(key)) key: document[key],
+      ...publicPlaceFields(publicPlaceOf(document)),
+    });
+  }
+
+  late final Map<String, Object?> fields;
+
+  /// Only edited fields are sent; another editor's fields remain on the server.
+  PublicationPatch patch(Map<String, Object?> changes) => PublicationPatch.patch({
+    for (final entry in changes.entries)
+      if (fields[entry.key] != entry.value) entry.key: entry.value,
+    if (changes.containsKey('latitude') && changes.containsKey('longitude') &&
+        (fields['latitude'] != changes['latitude'] ||
+         fields['longitude'] != changes['longitude'])) ...{
+      'latitude': changes['latitude'], 'longitude': changes['longitude'],
+    },
+  });
+}
+
+/// Explicit write semantics shared by the editor, repository and Demo.
+/// An omitted patch field is untouched; null removes it (restoring inheritance
+/// for inherited fields); an empty string is a deliberate blank override.
+class PublicationPatch {
+  PublicationPatch.patch(Map<String, Object?> fields)
+    : fields = Map.unmodifiable(fields), mode = PublicationWriteMode.patch;
+  PublicationPatch.replace(Map<String, Object?> fields)
+    : fields = Map.unmodifiable(fields), mode = PublicationWriteMode.replace;
+
+  final Map<String, Object?> fields;
+  final PublicationWriteMode mode;
+}
+
+enum PublicationWriteMode { replace, patch }
+
 /// #1847 — the MANAGEMENT interface: the owner authors the public page.
 abstract interface class PublicationRepository {
   /// `{published, document, following}` — the owner's own page, draft
@@ -176,7 +215,7 @@ abstract interface class PublicationRepository {
   /// Saves and publishes or withdraws; answers the public projection.
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document, {
+    PublicationPatch document, {
     required bool published,
   });
 }

@@ -61,18 +61,18 @@ void main() {
         'following; a blank override is kept', () async {
       await const PublicationActions(_Recorder()).savePage(
         _ws,
-        {'host_type': 'company', 'address': ' ', 'description': 'Desks'},
+        PublicationPatch.replace({'host_type': 'company', 'address': ' ', 'description': 'Desks'}),
         following: {'host_type', 'description'},
         published: false,
       );
-      expect(_Recorder.last, {'address': '', 'description': 'Desks'});
+      expect(_Recorder.last, {'host_type': null, 'address': '', 'description': 'Desks'});
     });
 
     test('a host type is still checked when the owner sets one', () {
       expect(
         () =>
             const PublicationActions(_Recorder())
-                .savePage(_ws, {'host_type': 'castle'}, published: false),
+                .savePage(_ws, PublicationPatch.replace({'host_type': 'castle'}), published: false),
         throwsArgumentError,
       );
     });
@@ -149,10 +149,10 @@ void main() {
   testWidgets('reset one: "Use workspace information" returns that field '
       'only, and keeps an unsaved edit elsewhere', (tester) async {
     final repo = _repo();
-    await repo.savePage(_ws, {
+    await repo.savePage(_ws, PublicationPatch.replace({
       'host_type': 'person',
       'address': 'Desk 9, Public Row',
-    }, published: true);
+    }), published: true);
     await _pumpEditor(tester, repo);
     expect(_status('address', 'Customised'), findsOneWidget);
     expect(_status('host_type', 'Customised'), findsOneWidget);
@@ -182,11 +182,11 @@ void main() {
   testWidgets('reset all asks first; cancelling changes nothing, confirming '
       'returns every inherited field', (tester) async {
     final repo = _repo();
-    await repo.savePage(_ws, {
+    await repo.savePage(_ws, PublicationPatch.replace({
       'host_type': 'person',
       'address': 'Desk 9, Public Row',
       'description': 'Kept',
-    }, published: false);
+    }), published: false);
     await _pumpEditor(tester, repo);
     await tester.tap(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.pumpAndSettle();
@@ -216,7 +216,7 @@ void main() {
 /// Records what the actions hand the repository.
 class _Recorder implements PublicationRepository {
   const _Recorder();
-  static Map<String, String>? last;
+  static Map<String, Object?>? last;
   @override
   Future<Map<String, dynamic>> ownPage(String workspace) async => {};
   @override
@@ -227,10 +227,10 @@ class _Recorder implements PublicationRepository {
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document, {
+    PublicationPatch document, {
     required bool published,
   }) async {
-    last = document;
+    last = document.fields;
     return {};
   }
 }

@@ -110,13 +110,9 @@ Object? _decodeValue(
       return v;
     case PublicFieldType.text:
       return text();
+    case PublicFieldType.number:
     case PublicFieldType.integer:
-      if (value is! int ||
-          (field.min != null && value < field.min!) ||
-          (field.max != null && value > field.max!)) {
-        throw refuse('not an integer in range');
-      }
-      return value;
+      return _decodeNumber(schema, name, field, value);
     case PublicFieldType.integerList:
       if (value is! List || value.any((v) => v is! int)) {
         throw refuse('not a list of integers');
@@ -187,12 +183,21 @@ Object? _decodeValue(
   }
 }
 
-/// Refuses an input object for [schemaName] that carries a key the
-/// contract does not list, a non-string value, an over-long value or a
-/// missing/unknown required enum — before anything is sent.
-Map<String, String> encodePublicInput(
+Object _decodeNumber(String schema, String name, PublicField field, Object value) {
+  if (value is! num || !value.isFinite ||
+      (field.type == PublicFieldType.integer && value is! int) ||
+      (field.min != null && value < field.min!) ||
+      (field.max != null && value > field.max!)) {
+    throw PublicContractRefusal(schema, name, 'not a number in range');
+  }
+  return value;
+}
+
+/// Strictly validates every supplied input value against the generated schema.
+/// Null clears an optional field; an omitted field is not part of the patch.
+Map<String, Object?> encodePublicInput(
   String schemaName,
-  Map<String, String> input,
+  Map<String, Object?> input,
 ) {
   final schema = _schema(schemaName);
   for (final key in input.keys) {
@@ -200,21 +205,17 @@ Map<String, String> encodePublicInput(
       throw PublicContractRefusal(schemaName, key, 'unknown input');
     }
   }
+  final result = <String, Object?>{};
   for (final entry in schema.fields.entries) {
     final value = input[entry.key];
-    final field = entry.value;
     if (value == null) {
-      if (field.required) {
+      if (entry.value.required) {
         throw PublicContractRefusal(schemaName, entry.key, 'missing');
       }
+      if (input.containsKey(entry.key)) result[entry.key] = null;
       continue;
     }
-    if (field.maxLength != null && value.length > field.maxLength!) {
-      throw PublicContractRefusal(schemaName, entry.key, 'too long');
-    }
-    if (field.type == PublicFieldType.enum_ && !field.values.contains(value)) {
-      throw PublicContractRefusal(schemaName, entry.key, 'unknown state');
-    }
+    result[entry.key] = _decodeValue(schemaName, entry.key, entry.value, value);
   }
-  return Map.unmodifiable(input);
+  return Map.unmodifiable(result);
 }

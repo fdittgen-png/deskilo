@@ -43,10 +43,10 @@ class SupabasePublicationRepository implements PublicationRepository {
   @override
   Future<Map<String, dynamic>> savePage(
     String workspace,
-    Map<String, String> document, {
+    PublicationPatch document, {
     required bool published,
   }) async {
-    final input = encodePublicInput(_save.input['p_document']!, document);
+    final input = encodePublicInput(_save.input['p_document']!, document.fields);
     return decodePublicRecord(
       _save.output!,
       await client.rpc<Object?>(
@@ -55,6 +55,7 @@ class SupabasePublicationRepository implements PublicationRepository {
           'p_workspace': workspace,
           'p_document': input,
           'p_published': published,
+          'p_mode': document.mode.name,
         },
       ),
     );

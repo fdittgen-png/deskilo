@@ -111,8 +111,8 @@ void main() {
     expect(doc['host_type'], 'company');
     expect(doc.containsKey('address'), isFalse, reason: 'still following');
     // #3689 — the stored place goes back as it was read.
-    expect(doc['latitude'], '43.4');
-    expect(doc['longitude'], '3.4');
+    expect(doc['latitude'], 43.4);
+    expect(doc['longitude'], 3.4);
   });
 
   testWidgets('one column on a phone', (tester) async {
