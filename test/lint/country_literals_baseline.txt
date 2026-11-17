@@ -56,8 +56,8 @@ packages/deskilo_accounting_interchange/lib/src/sage.dart :: 3 :: the Sage expor
 packages/deskilo_accounting_interchange/lib/src/sage_documents.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
 packages/deskilo_accounting_interchange/lib/src/sage_postings.dart :: 4 :: the Sage export's tax-code tables (incl. the AE category): format data of the interchange package
 packages/deskilo_invoice_model/lib/src/invoice.dart :: 2 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
-packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 7 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
-packages/deskilo_invoice_model/lib/src/invoice_ubl.dart :: 10 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
+packages/deskilo_invoice_model/lib/src/invoice_cii.dart :: 5 :: XML element name ID and VAT scheme identifier VA: standard syntax, not country decisions
+packages/deskilo_invoice_model/lib/src/invoice_ubl.dart :: 10 :: XML element name ID: standard syntax, not country decisions
 packages/deskilo_invoice_model/lib/src/place_of_supply.dart :: 1 :: UNCL5305 category codes (AE) and national syntax profiles inside the EN 16931 builders: category/profile data, the national builders are #3429 items
 packages/deskilo_money_kernel/lib/src/posting.dart :: 2 :: the posting engine's internal journal keys; the codes the exports write are the business's accounting journals, read through accountingJournalsOf (#3470)
 packages/deskilo_vat_declaration/lib/src/vat_form_catalogue.dart :: 4 :: the per-country return form catalogue: data rows of the forms the tax reference fills (country is the row key)

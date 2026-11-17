@@ -8,9 +8,17 @@ import 'package:deskilo/core/jurisdiction/installed_invoice_rules.dart';
 import 'package:deskilo/core/jurisdiction/installed_payment_slips.dart';
 import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
+import 'package:deskilo/features/money/presentation/invoice_documents.dart';
+import 'package:deskilo/features/workspace/domain/workspace.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
+import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:xml/xml.dart';
+
+import '../../helpers/mock_providers.dart';
 Invoice _invoice({String replacesNumber = ''}) => Invoice(
       id: 'inv-1',
       workspaceId: 'ws-1',
@@ -54,6 +62,36 @@ const _buyer = InvoiceParty(
   country: 'FR',
 );
 
+/// #3500 — the same frozen clauses on two documents; applicability and
+/// registration schemes come from each document's own supplied country.
+Invoice _frozen(String country) => _invoice().copyWith(
+  sellerParty: _sellerO.copyWith(country: country, legalId: '10825191900016'),
+  buyerParty: _buyer.copyWith(country: country, legalId: '901234567'),
+  documentLanguage: 'en', formatLocale: 'en_US',
+  dueOn: DateTime(2026, 8, 25),
+  legalSnapshot: {
+    'seller_kind': 'business', 'seller_country': country, 'buyer_country': country,
+    'buyer_capacity': 'business',
+    'clauses': {
+      'payment_terms': 'Frozen payment terms',
+      'recovery_indemnity': 'Frozen recovery indemnity',
+      'late_penalty': 'Frozen late-payment penalty',
+      'escompte': 'Frozen early-payment discount',
+    },
+  },
+);
+
+List<(String, String)> _notes(XmlDocument doc) => [
+  for (final note in doc.findAllElements('ram:IncludedNote'))
+    (note.findElements('ram:SubjectCode').single.innerText,
+     note.findElements('ram:Content').single.innerText),
+];
+
+List<String?> _schemes(XmlDocument doc) => [
+  for (final org in doc.findAllElements('ram:SpecifiedLegalOrganization'))
+    org.findElements('ram:ID').single.getAttribute('schemeID'),
+];
+
 XmlDocument _doc({
   Invoice? invoice,
   InvoiceParty seller = _sellerO,
@@ -84,6 +122,65 @@ List<String> _order(XmlDocument doc, String parent) => doc
     .toList();
 
 void main() {
+  test('FR writes its frozen CIUS notes and registration schemes; DE writes neither', () {
+    final fr = _frozen('FR');
+    final de = _frozen('DE');
+    final french = _doc(invoice: fr, seller: fr.sellerParty!, buyer: fr.buyerParty!);
+    final german = _doc(invoice: de, seller: de.sellerParty!, buyer: de.buyerParty!);
+    expect(_notes(french), [
+      ('PMT', 'Frozen recovery indemnity'),
+      ('PMD', 'Frozen late-payment penalty'),
+      ('AAB', 'Frozen early-payment discount'),
+    ]);
+    expect(_schemes(french), ['0009', '0002']);
+    expect(_notes(german), isEmpty);
+    expect(_schemes(german), [null, null]);
+  });
+
+  testWidgets('the real Factur-X consumer renders frozen FR and DE documents '
+      'identically after selecting another business/country', (tester) async {
+    Workspace business(String id, String country, String kind) => Workspace(
+      id: id, name: country, countryCode: country, currencyCode: 'EUR',
+      timezone: 'UTC', inviteCode: 'INVITE1234', defaultLocale: country.toLowerCase(),
+      invoiceLegal: {'seller_kind': kind, 'late_penalty': 'Changed live penalty'},
+    );
+    final workspaces = FakeWorkspaceRepository(workspaces: [
+      business('ws-1', 'FR', 'business'), business('ws-2', 'DE', 'association'),
+    ]);
+    final container = ProviderContainer(overrides: standardTestOverrides(
+      auth: FakeAuthRepository.signedIn(), workspace: workspaces,
+    ));
+    addTearDown(container.dispose);
+    late String Function(Invoice) render;
+    await tester.pumpWidget(UncontrolledProviderScope(container: container,
+      child: MaterialApp(localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: Consumer(builder: (context, ref, child) {
+          ref.watch(currentWorkspaceProvider);
+          render = (invoice) => facturXmlOf(context, ref, invoice,
+            seller: invoice.sellerParty!, buyer: invoice.buyerParty!, iban: '',
+            reference: ActiveTaxReference.current);
+          return const SizedBox.shrink();
+        }),
+      ),
+    ));
+    await tester.pumpAndSettle();
+    final fr = _frozen('FR'), de = _frozen('DE');
+    expect(container.read(currentWorkspaceProvider).requireValue!.countryCode, 'FR');
+    final before = [render(fr), render(de)];
+    await container.read(activeWorkspaceIdProvider.notifier).select('ws-2');
+    await tester.pumpAndSettle();
+    expect(container.read(currentWorkspaceProvider).requireValue!.countryCode, 'DE');
+    final after = [render(fr), render(de)];
+    expect(after, before, reason: 'every XML byte follows the frozen document');
+    expect(_notes(XmlDocument.parse(after.first)), hasLength(3));
+    expect(_schemes(XmlDocument.parse(after.first)), ['0009', '0002']);
+    expect(_notes(XmlDocument.parse(after.last)), isEmpty);
+    expect(_schemes(XmlDocument.parse(after.last)), [null, null]);
+    expect(after.first, contains('Frozen payment terms'));
+    expect(after.first, isNot(contains('Changed live penalty')));
+  });
+
   test('the document declares the EN 16931 guideline and the invoice head',
       () {
     final doc = _doc();

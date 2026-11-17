@@ -20,6 +20,14 @@ NationalInvoiceRules get installedNationalInvoiceRules => NationalInvoiceRules(
       if (c.exemptionReasonCode.isNotEmpty)
         c.descriptor.country: c.exemptionReasonCode,
   },
+  ciusNotesCountries: {
+    for (final c in installedInvoiceMentions)
+      if (c.writesNationalCiusNotes) c.descriptor.country,
+  },
+  legalIdSchemes: {
+    for (final c in installedInvoiceMentions)
+      c.descriptor.country: c.legalIdScheme,
+  },
 );
 
 /// The account a document names with the rules it is judged by (the payment

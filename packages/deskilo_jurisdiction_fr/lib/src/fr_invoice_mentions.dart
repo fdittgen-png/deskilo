@@ -31,6 +31,21 @@ class FrInvoiceMentions extends InvoiceMentionsContribution {
   bool get requiresDomesticBuyerLegalId => true;
 
   @override
+  bool get writesNationalCiusNotes => true;
+
+  /// SIREN (nine digits) and SIRET (fourteen digits); any other identifier
+  /// stays plain text. Moved from the CII writer without changing the rule.
+  @override
+  String legalIdScheme(String legalId) {
+    final compact = legalId.replaceAll(' ', '');
+    final digits = compact.replaceAll(RegExp('[^0-9]'), '');
+    if (digits != compact) return '';
+    if (digits.length == 9) return '0002';
+    if (digits.length == 14) return '0009';
+    return '';
+  }
+
+  @override
   String get exemptionReasonCode => 'VATEX-FR-FRANCHISE';
 
   @override

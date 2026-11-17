@@ -38,10 +38,11 @@ Iterable<XmlElement> _els(XmlDocument doc, String name) =>
 void main() {
   test('the seller\'s SIRET carries scheme 0009, a SIREN 0002, and a '
       'foreign or odd id none', () {
-    expect(legalIdScheme('10825191900016', 'FR'), '0009');
-    expect(legalIdScheme('108 251 919', 'FR'), '0002');
-    expect(legalIdScheme('HRB 12345', 'DE'), '');
-    expect(legalIdScheme('12345', 'FR'), '');
+    final rules = installedNationalInvoiceRules;
+    expect(rules.legalIdSchemeOf('FR', '10825191900016'), '0009');
+    expect(rules.legalIdSchemeOf('FR', '108 251 919'), '0002');
+    expect(rules.legalIdSchemeOf('DE', 'HRB 12345'), '');
+    expect(rules.legalIdSchemeOf('FR', '12345'), '');
     final org = _els(_xml(), 'SpecifiedLegalOrganization').first;
     final id = org.findElements('ram:ID').first;
     expect((id.innerText, id.getAttribute('schemeID')), ('10825191900016', '0009'));

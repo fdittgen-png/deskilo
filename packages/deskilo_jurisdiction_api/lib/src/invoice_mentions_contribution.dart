@@ -84,6 +84,14 @@ abstract class InvoiceMentionsContribution {
   /// Additive: the contract stays at version 1.
   bool get requiresDomesticBuyerLegalId => false;
 
+  /// Whether the national CII profile writes the invoice's frozen payment
+  /// clauses as CIUS notes. Additive: the contract stays at version 1.
+  bool get writesNationalCiusNotes => false;
+
+  /// The ISO 6523 scheme of a legal registration; empty when this country's
+  /// rules do not identify it. Additive: the contract stays at version 1.
+  String legalIdScheme(String legalId) => '';
+
   /// The VATEX code a seller of this country names for a VAT exemption of
   /// category E, where the code list has a national one; '' when it has none.
   /// Additive: the contract stays at version 1.

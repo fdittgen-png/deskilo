@@ -13,6 +13,8 @@ class NationalInvoiceRules {
   const NationalInvoiceRules({
     required this.domesticBuyerLegalIdCountries,
     required this.exemptionReasonCodes,
+    required this.ciusNotesCountries,
+    required this.legalIdSchemes,
   });
 
   /// Upper-case ISO codes of the countries whose domestic business-to-business
@@ -21,6 +23,19 @@ class NationalInvoiceRules {
 
   /// The VATEX exemption code by upper-case ISO country code.
   final Map<String, String> exemptionReasonCodes;
+
+  /// Upper-case country codes whose CII profile writes the frozen clauses
+  /// as national CIUS notes. The text stays on the issued invoice.
+  final Set<String> ciusNotesCountries;
+
+  /// Legal-registration scheme rules keyed by upper-case country code.
+  final Map<String, String Function(String)> legalIdSchemes;
+
+  bool writesNationalCiusNotes(String countryCode) =>
+      ciusNotesCountries.contains(countryCode.toUpperCase());
+
+  String legalIdSchemeOf(String countryCode, String legalId) =>
+      legalIdSchemes[countryCode.trim().toUpperCase()]?.call(legalId) ?? '';
 
   /// The code a seller of [countryCode] names for an exemption; '' when none.
   String exemptionReasonCodeOf(String countryCode) =>
