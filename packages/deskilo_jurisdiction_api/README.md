@@ -11,6 +11,10 @@ Flutter, no Supabase, no Riverpod (`test/lint/jurisdiction_api_boundary_test`).
 * `VatFilingContribution.validate` -> `ValidationResult` (stable issue codes,
   no user-facing text) and `.build` -> `GeneratedArtifact` (bytes, media type,
   file name, SHA-256 and provenance).
+* `InvoiceMentionsContribution` supplies national invoice decisions, including
+  `writesNationalCiusNotes` and `legalIdScheme` (#3500). These additive version-1
+  members default to no notes and no scheme; the host composes them into the
+  invoice model's neutral rules, while clause text remains frozen on the invoice.
 
 The host keeps source loading, authorization, dialogs, file saving, tracing
 and export logging. The resolver (`lib/core/jurisdiction/`) chooses the

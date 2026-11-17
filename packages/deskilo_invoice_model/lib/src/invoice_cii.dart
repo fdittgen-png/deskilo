@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
-import 'package:meta/meta.dart';
 import 'package:xml/xml.dart';
 
 import 'e_invoice_totals.dart';
@@ -147,7 +146,7 @@ class _CiiWriter {
   /// early-payment discount (AAB), as frozen with the invoice.
   void legalNotes() {
     final clauses = invoice.legalClauses?.clauses;
-    if (clauses == null || seller.country.toUpperCase() != 'FR') return;
+    if (clauses == null || !input.nationalRules.writesNationalCiusNotes(seller.country)) return;
     for (final (code, text) in [
       ('PMT', clauses.recoveryIndemnity),
       ('PMD', clauses.latePenalty),
@@ -257,7 +256,7 @@ class _CiiWriter {
   void partyLegalId(InvoiceParty p) {
     if (p.legalId.isEmpty) return;
     builder.element('ram:SpecifiedLegalOrganization', nest: () {
-      final scheme = legalIdScheme(p.legalId, p.country);
+      final scheme = input.nationalRules.legalIdSchemeOf(p.country, p.legalId);
       ram('ID', p.legalId.replaceAll(' ', ''),
           scheme.isEmpty ? const {} : {'schemeID': scheme});
     });
@@ -392,19 +391,4 @@ class _CiiWriter {
   final month = int.tryParse(parts[1]);
   if (year == null || month == null) return null;
   return (start: DateTime(year, month), end: DateTime(year, month + 1, 0));
-}
-
-/// #941 — the ISO 6523 scheme of a French legal registration, by its
-/// digit count: 9 is a SIREN (0002), 14 a SIRET (0009). Anything else,
-/// or another country, carries no scheme — a reader then treats the id
-/// as plain text, which is honest.
-@visibleForTesting
-String legalIdScheme(String legalId, String country) {
-  if (country.trim().toUpperCase() != 'FR') return '';
-  final compact = legalId.replaceAll(' ', '');
-  final digits = compact.replaceAll(RegExp('[^0-9]'), '');
-  if (digits != compact) return '';
-  if (digits.length == 9) return '0002';
-  if (digits.length == 14) return '0009';
-  return '';
 }

@@ -15,3 +15,9 @@ paths otherwise re-export until the sweep.
 
 `invoice.freezed.dart` is generated inside this package; the generated-code
 gate runs `build_runner` here too (#3421).
+
+`EInvoiceInput.nationalRules` carries the installed national decisions,
+including CIUS-note applicability and legal-registration schemes (#3500).
+The CII writer selects them from each supplied document party's country;
+the payment-clause text stays in the invoice's frozen legal snapshot. It
+does not select a rule from the application's current business or settings.
