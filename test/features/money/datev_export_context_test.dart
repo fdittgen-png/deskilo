@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/core/jurisdiction/installed_accounting_formats.dart';
+import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_german.dart';
 import 'package:deskilo/features/money/presentation/accounting_export_run.dart';
 import 'package:deskilo/features/money/presentation/widgets/export_accounts_dialogs.dart';
@@ -7,6 +8,7 @@ import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter/material.dart';
@@ -24,13 +26,14 @@ TaxReferenceSet _reference(String chart, String revenue, String bank) =>
         'revenue': revenue,
         'bank': bank,
         'expenses': '4900',
+        'write_off': '2400',
       }.entries)
         TaxReferenceRow(
           country: 'DE',
-          key: 'coa/${entry.key}',
+          key: '${entry.key == 'write_off' ? 'datev' : 'coa'}/${entry.key}',
           validFrom: '2020-01-01',
           value: AccountMapValue(
-            format: 'coa',
+            format: entry.key == 'write_off' ? 'datev' : 'coa',
             role: entry.key,
             account: entry.value,
           ),
@@ -38,6 +41,34 @@ TaxReferenceSet _reference(String chart, String revenue, String bank) =>
           confirmed: true,
         ),
     ]);
+
+Posting _purchase() => Posting(
+  journal: PostingJournal.purchases,
+  date: DateTime(2026, 4, 10),
+  kind: PostingKind.supplierBill,
+  documentId: 'supplier-bill',
+  documentNumber: 'BILL-7',
+  lines: [
+    PostingLine(
+      role: BookRole.expenses,
+      accountCode: '4980',
+      debit: AccountingAmount('EUR', 2500),
+      credit: AccountingAmount('EUR', 0),
+    ),
+    PostingLine(
+      role: BookRole.suppliers,
+      accountCode: '1600',
+      debit: AccountingAmount('EUR', 0),
+      credit: AccountingAmount('EUR', 2500),
+    ),
+  ],
+);
+
+const _supplier = PostingParty(
+  kind: 'supplier',
+  number: '7',
+  name: 'Frozen supplier',
+);
 
 DatevPackage _export(AccountingExportRun run, DatevExportSettings settings) =>
     run.datevPackage(
@@ -68,7 +99,7 @@ void main() {
             workspaces: [
               business('ws-1', 'AT', 'EUR'),
               business('ws-2', 'DE', 'EUR'),
-            business('ws-3', 'US', 'USD'),
+              business('ws-3', 'US', 'USD'),
             ],
           ),
         ),
@@ -103,20 +134,32 @@ void main() {
               issuedAt: DateTime.utc(2026, 3, 1, 0, 30),
               memberId: 'departed-subject',
             );
+        final matches = {
+          invoice.id: InvoiceMatch(
+            invoiceId: invoice.id,
+            paidCents: 4000,
+            resolution: 'partial',
+            matchedAt: DateTime(2026, 5, 1),
+          ),
+        };
         final result =
             AccountingExportRun(context, ref, [invoice], label: 'Export')
               ..taxReference = reference
               ..workspaceDayOf = dayOf
               ..year = 2026
-              ..matches = const {}
+              ..matches = matches
               ..now = DateTime.utc(2027, 1, 5)
               ..development = false
-              ..posted = null
+              ..posted = JournalPosted(
+                [_purchase()],
+                year: FiscalYear.calendar(2026),
+                parties: const {'supplier-bill': _supplier},
+              )
               ..taxPoints = const []
               ..memberNames = const {}
               ..books = (
                 invoices: [invoice],
-                matches: const {},
+                matches: matches,
                 instalments: const {},
                 ledger: const [],
                 repartitions: const [],
@@ -130,7 +173,10 @@ void main() {
                 purchases: const [],
               );
         // The real start() reads the workspace before opening the format sheet.
-        expect(result.workspace.id, container.read(currentWorkspaceProvider).requireValue!.id);
+        expect(
+          result.workspace.id,
+          container.read(currentWorkspaceProvider).requireValue!.id,
+        );
         return result;
       }
 
@@ -172,6 +218,16 @@ void main() {
       expect(firstA.problems, isEmpty);
       expect(firstA.files.values.join(), contains('Ana Kowalczyk'));
       expect(firstA.files.values.join(), contains('10042'));
+      expect(firstA.files.values.join(), contains('70007'));
+      expect(firstA.files.values.join(), contains('Frozen supplier'));
+      expect(
+        firstA.files.keys,
+        contains('EXTF_Buchungsstapel_202605_bank.csv'),
+      );
+      expect(
+        firstA.files.keys,
+        contains('EXTF_Buchungsstapel_202604_purchases.csv'),
+      );
 
       await container.read(activeWorkspaceIdProvider.notifier).select('ws-2');
       await tester.pumpAndSettle();
