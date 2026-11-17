@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_repository.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../money_repository.dart';
 

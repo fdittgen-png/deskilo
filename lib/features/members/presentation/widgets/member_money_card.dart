@@ -9,7 +9,6 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/l10n/lexicon.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/time/clock.dart';
-import '../../../money/domain/ledger_entry.dart';
 import '../../../money/domain/member_account.dart';
 import '../../../money/presentation/widgets/account_card.dart';
 import '../../../money/presentation/widgets/move_credit_dialog.dart';

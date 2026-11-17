@@ -4,7 +4,7 @@
 // each in the period it belongs to.
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/bill_sections.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 LedgerEntry entry({

@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../domain/document_numbering.dart';
-import '../domain/number_sequence.dart';
 
 /// #2591 — the number series and the invoice fingerprint check, with its own
 /// client. The bodies are the ones that lived in the money repository and its

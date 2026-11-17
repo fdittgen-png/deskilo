@@ -4,6 +4,7 @@
 // invoice page read an invoice the same way, from the same matches,
 // reminders, rules, holds, transmissions and payment events, so the page
 // and the line it was opened from cannot say two different things.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/foundation.dart' show visibleForTesting;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,6 @@ import '../../application/unassigned_money.dart';
 import '../../domain/customer_statement.dart';
 import '../../domain/dunning.dart';
 import '../../domain/invoice_commands.dart';
-import '../../domain/ledger_entry.dart';
 import '../../providers/bank_statement_providers.dart'
     show WorkspaceFeature, enabledFeaturesSyncProvider;
 import '../../providers/credit_move_providers.dart';

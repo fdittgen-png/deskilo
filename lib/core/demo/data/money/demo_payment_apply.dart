@@ -6,7 +6,6 @@
 // match (exact when it equals what is due, else under_accepted); all of it or
 // none of it is kept.
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../bank_unmatch_in.dart' show demoRecordMatchPayment;

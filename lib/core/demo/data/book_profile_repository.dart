@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart' show TaxReferenceSet;
 
 import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/book_chart.dart';
 import '../../../features/money/domain/book_profile_repository.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/posting_rules.dart';
 import '../../../features/money/domain/posting_rules_acquisitions.dart';
 import '../../../features/money/domain/posting_rules_purchases.dart';

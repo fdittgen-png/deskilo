@@ -12,7 +12,6 @@ import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/share/file_sharer.dart';
 import 'package:deskilo/core/ui/form_sheet.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show LogicalKeyboardKey;

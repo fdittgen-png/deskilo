@@ -8,9 +8,9 @@
 // credited. Effects the Demo does not hold a store for (a quota extension,
 // a negotiated price) stay the request's status, named in the audit.
 import 'package:deskilo/features/events/domain/workspace_event.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'event_repository.dart';

@@ -10,7 +10,6 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../features/money/domain/einvoice_gateway.dart';
 import '../../../features/money/domain/expense_schedule.dart';
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/usage_record.dart';
 import '../../../features/reservations/domain/reservation.dart';
 import '../data/money_repository.dart';

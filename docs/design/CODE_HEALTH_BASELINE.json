@@ -250,7 +250,7 @@
 
       "me -> task_recorder": 1,
 
-      "members -> money": 9,
+      "members -> money": 8,
 
       "members -> plan": 3,
 
@@ -304,7 +304,7 @@
 
       "workspace -> events": 15,
 
-      "workspace -> money": 40,
+      "workspace -> money": 38,
 
       "workspace -> plan": 25,
 
@@ -752,7 +752,6 @@
     {"id":"lib/features/money/domain/invoice_pdf.dart#buildBandedLetterPdf({required InvoiceReport report,required String pageLabel,Map<String, Uint8List> reportImages,required String documentTitle,required pw.Font baseFont,required pw.Font boldFont,String watermark})","cog":1,"cyc":2,"len":39,"params":7},
     {"id":"lib/features/money/domain/invoice_report.dart#_parseLines(List<String> lines)","cog":43,"cyc":18,"len":60,"params":1},
     {"id":"lib/features/money/domain/invoicing_wizard.dart#WizardTally.copyWith({int? issued,int? shared,int? reminded,int? paymentsDecided,int? paymentsRegistered,int? matched,int? settled,int? writeoffs,int? refunds})","cog":0,"cyc":10,"len":22,"params":9},
-    {"id":"lib/features/money/domain/number_sequence.dart#NumberSequence.copyWith({String? prefix,String? suffix,NumberDatePart? datePart,int? digits,NumberReset? reset,int? nextValue,bool? stored})","cog":0,"cyc":8,"len":19,"params":7},
     {"id":"lib/features/money/domain/report_data.dart#legalMentionData(ReportStrings strings,Workspace? workspace,{required TaxReferenceSet reference,InvoiceParty? seller,InvoiceParty? buyer,String clientAddress,String clientName,bool reverseCharged,String counterpartyCategory,List<String> rateExemptionReasons,PaymentTerms? memberTerms,LegalClauseSnapshot? frozen,bool legacy,String? memberCapacity})","cog":4,"cyc":25,"len":118,"params":14},
     {"id":"lib/features/money/domain/report_data.dart#invoiceReportData(ReportStrings strings,Invoice invoice,{required TaxReferenceSet reference,required bool proforma,required bool copy,Workspace? workspace,PaymentTerms? memberTerms,DateTime? dueAt,String? memberCapacity})","cog":14,"cyc":19,"len":118,"params":9},
     {"id":"lib/features/money/domain/report_data_letters.dart#statementReportData(ReportStrings strings,{required Statement statement,required String workspaceName,required String memberName,required String periodLabel,required String currencyCode,required TaxReferenceSet reference,Workspace? workspace})","cog":7,"cyc":10,"len":91,"params":8},
@@ -907,6 +906,7 @@
     {"id":"packages/deskilo_invoice_model/lib/src/vat_tax_point.dart#_portions(Invoice invoice,List<TaxPointPayment> payments,VatTaxPointBasis basis,DateTime issued,int magnitude,DateTime Function(DateTime) dayOf)","cog":41,"cyc":25,"len":58,"params":6},
     {"id":"packages/deskilo_jurisdiction_es/lib/src/verifactu.dart#verifactuHuella({required String issuerNif,required String number,required String issueDate,required String type,required String taxTotal,required String grandTotal,required String previousHuella,required String generatedAt})","cog":0,"cyc":1,"len":24,"params":8},
     {"id":"packages/deskilo_jurisdiction_es/lib/src/verifactu.dart#verifactuRecordFor({required RegisterDocument invoice,required RegisterParty seller,required RegisterParty buyer,required String previousHuella,required DateTime generatedAt,String previousNumber,String previousIssueDate})","cog":13,"cyc":13,"len":63,"params":7},
+    {"id":"packages/deskilo_money_kernel/lib/src/number_sequence.dart#NumberSequence.copyWith({String? prefix,String? suffix,NumberDatePart? datePart,int? digits,NumberReset? reset,int? nextValue,bool? stored})","cog":0,"cyc":8,"len":19,"params":7},
     {"id":"packages/deskilo_task_recording/lib/action_catalogue.dart#ActionRegistry.problems(Set<String> knownPayloadFields)","cog":31,"cyc":15,"len":45,"params":1},
     {"id":"packages/deskilo_task_recording/lib/src/step_decoder.dart#StepDecoder._step(Object? raw,String path,int segmentCount,Map<String, String> attempts,Set<String> answered)","cog":34,"cyc":30,"len":120,"params":5},
     {"id":"packages/deskilo_task_recording/lib/src/step_decoder.dart#StepDecoder._action(Map<Object?, Object?> raw,String path,_Build build,Map<String, String> attempts,bool Function(Set<String>) only)","cog":28,"cyc":29,"len":99,"params":5},

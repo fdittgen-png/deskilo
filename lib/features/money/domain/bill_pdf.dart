@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:intl/intl.dart';
 import 'package:pdf/widgets.dart' as pw;
 
@@ -9,7 +10,6 @@ import '../../events/domain/workspace_event.dart';
 import 'bill_sections.dart';
 import 'invoice_pdf.dart';
 import 'invoice_report.dart';
-import 'ledger_entry.dart';
 import 'statement.dart';
 
 /// Localized labels for the bill PDF (#133). The domain layer stays

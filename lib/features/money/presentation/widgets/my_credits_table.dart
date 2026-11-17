@@ -4,6 +4,7 @@
 // credited, as a records table — the day, what it was, its month and its
 // amount, the total per currency under the amount. The ledger's own credit
 // lines, as the bill's "Payments & credits" card lists them for one month.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../../core/i18n/app_format.dart';
@@ -11,7 +12,6 @@ import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/ui/kit/records_table.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/ledger_entry.dart';
 
 /// What a credit line is, as the bill names it when it has no description.
 String _creditLabel(AppLocalizations l, LedgerEntry e) =>

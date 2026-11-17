@@ -3,7 +3,7 @@
 // #2440 — a Spanish correction names its reason (RD 1619/2012 art. 15):
 // the issue form asks for R1-R5 only when the server says it is missing,
 // holds the submit button until one is chosen, and sends the code.
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

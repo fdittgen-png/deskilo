@@ -16,8 +16,8 @@ import 'package:deskilo/features/money/domain/datev_debtors.dart';
 import 'package:deskilo/features/money/domain/datev_package.dart';
 import 'package:deskilo/features/money/domain/datev_problem.dart';
 import 'package:deskilo/features/money/domain/datev_stammdaten.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:flutter_test/flutter_test.dart';
 

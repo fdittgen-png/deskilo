@@ -7,7 +7,6 @@
 // ended in, read from the match the server now has.
 import 'package:deskilo/features/money/application/confirmed_payment.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 

@@ -18,7 +18,6 @@ import 'package:deskilo/features/money/application/generic_journal_export.dart';
 import 'package:deskilo/features/money/application/purchase_commands.dart';
 import 'package:deskilo/features/money/domain/book_profile_repository.dart';
 import 'package:deskilo/features/money/domain/fec_postings.dart';
-import 'package:deskilo/features/money/domain/posting_fx.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
 import 'package:deskilo/features/money/presentation/widgets/purchases_sheet.dart';
 import 'package:deskilo/features/money/providers/credit_providers.dart';

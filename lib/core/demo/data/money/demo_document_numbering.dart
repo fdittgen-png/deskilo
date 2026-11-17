@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/document_numbering.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../money_repository.dart';
 

@@ -3,9 +3,7 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/data/read_provenance.dart';
-import 'expense_repartition.dart';
 import 'invoice_match_row.dart';
-import 'ledger_entry.dart';
 
 /// Why a fiscal source was not accepted. None of them is a smaller file:
 /// the export stops and says which.

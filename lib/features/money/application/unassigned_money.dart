@@ -13,7 +13,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:meta/meta.dart';
 
 import '../domain/invoice_queries.dart';
-import '../domain/ledger_entry.dart';
 import 'credit_move_commands.dart';
 import 'payment_candidates.dart';
 import 'receivables.dart';

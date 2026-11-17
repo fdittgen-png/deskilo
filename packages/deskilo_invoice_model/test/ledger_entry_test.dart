@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // Ledger values retain their billing subject, booking/event dates, immutable
 // copy semantics and unreadable-row refusal without a live member lookup.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:test/test.dart';
-
-import '../../../lib/features/money/domain/ledger_entry.dart';
 
 void main() {
   test(

@@ -19,11 +19,8 @@ import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 
 import 'accounting_source_snapshot.dart';
 import 'audit_trail.dart';
-import 'expense_repartition.dart';
 import 'gobd_dtd.dart';
 import 'gobd_tables.dart';
-import 'ledger_entry.dart';
-import 'number_sequence.dart';
 
 /// How a column is typed in the index.
 enum GobdType { text, amount, number, percent, date }

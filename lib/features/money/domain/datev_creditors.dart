@@ -15,7 +15,6 @@ import 'package:meta/meta.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';
-import 'euro_format.dart';
 
 /// The Kreditor of the supplier number [number]: [base] plus its counter,
 /// as long as the number is a counter and the sum falls in DATEV's Kreditor

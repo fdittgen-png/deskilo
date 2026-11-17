@@ -10,8 +10,8 @@
 // series can no longer take (its date, once numbers were issued with it)
 // says why and cannot be saved. One column on a phone.
 import 'package:deskilo/app/routes/setup_grow_pages.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/workspace/presentation/screens/setup_step_screen.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 

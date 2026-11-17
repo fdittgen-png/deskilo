@@ -10,10 +10,10 @@
 //    negative and its invoice is a credit note the business pays out.
 // Neither has an earlier month, a payment of the month, a reminder or a
 // receivable until the month is invoiced.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:meta/meta.dart';
 
-import '../../../features/money/domain/ledger_entry.dart';
 import '../../../features/money/domain/statement.dart';
 import '../../../features/profile/domain/personal_info.dart';
 import '../../../features/reservations/domain/reservation.dart';

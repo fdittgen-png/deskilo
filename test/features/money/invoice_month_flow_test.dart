@@ -12,7 +12,6 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/auth/providers/auth_providers.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/application/issue_month.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_month_flow.dart';
 import 'package:deskilo/features/money/presentation/invoicing/invoice_month_result.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';

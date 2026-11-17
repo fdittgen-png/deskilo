@@ -18,8 +18,6 @@ import 'datev_fields.dart';
 import 'datev_problem.dart';
 import 'datev_stammdaten.dart';
 import 'datev_writer.dart';
-import 'euro_format.dart';
-import 'number_sequence.dart';
 
 /// What one DATEV export is built from: the request of the year with the
 /// person's numbers and accounts, and what its sub-ledger rows need.

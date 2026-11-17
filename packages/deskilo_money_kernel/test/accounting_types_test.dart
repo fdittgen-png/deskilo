@@ -4,10 +4,6 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:test/test.dart';
 
-import '../../../lib/features/money/domain/euro_format.dart';
-import '../../../lib/features/money/domain/expense_repartition.dart';
-import '../../../lib/features/money/domain/number_sequence.dart';
-import '../../../lib/features/money/domain/posting_fx.dart';
 
 RepartitionMember _member(String id) =>
     (id: id, name: id, subscriptionPct: 100, usageDays: 1, customWeight: 1);

@@ -12,7 +12,6 @@ import 'dart:io';
 
 import 'package:deskilo/features/members/presentation/widgets/member_contact_card.dart';
 import 'package:deskilo/features/members/presentation/widgets/member_money_card.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';

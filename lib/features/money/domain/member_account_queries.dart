@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'member_account.dart';
 import 'statement.dart';
 import 'usage_record.dart';

@@ -40,7 +40,7 @@
       "outcome": "Every member has a ledger: subscription charges, extra usage, approved shared expenses split by a repartition key, recorded payments; a monthly statement reads it back and the ledger is append-only.",
       "status": "shipped",
       "features": ["expenseRepartition", "supplyExpenses", "financeFaces"],
-      "component": ["lib/features/money/domain/statement.dart", "lib/features/money/domain/expense_repartition.dart"],
+      "component": ["lib/features/money/domain/statement.dart", "packages/deskilo_money_kernel/lib/src/expense_repartition.dart"],
       "prerequisites": "The money module enabled; a repartition key per shared expense.",
       "limitations": "Statements are a view of the ledger, not an accounting ledger of the association; see accounting.export for the books.",
       "evidence": [

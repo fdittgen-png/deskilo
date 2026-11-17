@@ -13,7 +13,6 @@ import 'dart:ui' as ui;
 
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/seed/demo_purchase_seed.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/report_layout/pdf_geometry.dart';
 import 'package:deskilo/features/plan/domain/floor_plan.dart';
 import 'package:deskilo/features/plan/domain/grid_geometry.dart';

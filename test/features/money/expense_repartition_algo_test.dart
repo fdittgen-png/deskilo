@@ -2,7 +2,7 @@
 //
 // #828 — the repartition arithmetic: every method's weights, the exact
 // sum, the leftover cents, zero weights, negative amounts.
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 RepartitionMember _m(String id,

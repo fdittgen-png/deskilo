@@ -4,10 +4,10 @@
 // own invoices and ledger the way `workspace_status` (0167) computes them,
 // so the demo's status agrees with its money pages instead of reading zero.
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
-
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
+
 import 'money_repository.dart';
 
 WorkspaceStatus demoWorkspaceStatus(

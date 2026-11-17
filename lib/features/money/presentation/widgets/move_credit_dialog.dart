@@ -2,6 +2,7 @@
 //
 // #2380 — a payment booked on the wrong member: who actually paid, and
 // why it moves. The move itself is a correcting entry the server books.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,7 +17,6 @@ import '../../../workspace/domain/member.dart';
 import '../../../workspace/providers/workspace_providers.dart';
 import '../../application/credit_move_commands.dart';
 import '../../domain/credit_move.dart';
-import '../../domain/ledger_entry.dart';
 import '../../providers/bank_statement_providers.dart' show WorkspaceFeature;
 import '../../providers/credit_move_providers.dart';
 import '../../providers/money_providers.dart';

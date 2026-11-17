@@ -51,7 +51,6 @@ import 'package:deskilo/features/money/domain/fec.dart';
 import 'package:deskilo/features/money/domain/fec_import_contract.dart';
 import 'package:deskilo/features/money/domain/fr_ereporting.dart';
 import 'package:deskilo/features/money/domain/invoice_line_text.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/posting_rules.dart';
 import 'package:deskilo/features/money/domain/posting_rules_purchases.dart';
 import 'package:deskilo/features/money/presentation/datev_profile.dart';

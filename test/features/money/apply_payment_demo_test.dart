@@ -9,7 +9,7 @@ import 'package:deskilo/features/money/application/assign_payment_plan.dart';
 import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

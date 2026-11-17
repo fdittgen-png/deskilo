@@ -10,7 +10,6 @@ import 'package:deskilo/core/demo/data/customer_kpi_repository.dart';
 import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/workspace/domain/bi_modules.dart';
 import 'package:deskilo/features/workspace/domain/bi_query.dart';
 import 'package:deskilo/features/workspace/domain/kpi_contract.dart';

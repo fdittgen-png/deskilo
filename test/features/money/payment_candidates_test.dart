@@ -6,7 +6,7 @@
 // offered again.
 import 'package:deskilo/features/money/application/payment_candidates.dart';
 import 'package:deskilo/features/money/application/receivables.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 LedgerEntry _pay(

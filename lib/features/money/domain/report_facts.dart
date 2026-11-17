@@ -17,7 +17,6 @@ import '../../plan/domain/office.dart';
 import '../../workspace/domain/member.dart';
 import '../../workspace/domain/workspace.dart';
 import 'fee_band.dart';
-import 'ledger_entry.dart';
 import 'package.dart';
 import 'service_item.dart';
 import 'statement.dart';

@@ -21,3 +21,8 @@ including CIUS-note applicability and legal-registration schemes (#3500).
 The CII writer selects them from each supplied document party's country;
 the payment-clause text stays in the invoice's frozen legal snapshot. It
 does not select a rule from the application's current business or settings.
+
+`LedgerEntry`, its kind/category and unreadable-row refusal live in this package.
+The value keeps its stable billing subject, booking/event dates and system stamp;
+it needs no live member profile. Its immutable copy/equality implementation stays
+Freezed-generated here, while the money kernel remains free of that dependency.

@@ -3,18 +3,15 @@ import 'dart:typed_data';
 
 import 'package:deskilo/features/money/domain/accounting_source_queries.dart';
 import 'package:deskilo/features/money/domain/accounting_source_snapshot.dart';
-import 'package:deskilo/features/money/domain/billing_rules.dart';
+import 'package:deskilo/features/money/domain/billing_rules.dart' show BillingRules;
 import 'package:deskilo/features/money/domain/dunning.dart';
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';  import 'package:deskilo/features/money/domain/einvoice_sent_from_stored.dart';
-import 'package:deskilo/features/money/domain/expense_repartition.dart';
 import 'package:deskilo/features/money/domain/expense_schedule.dart';
 import 'package:deskilo/features/money/domain/fee_band.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/invoice_pdf_template.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
 import 'package:deskilo/features/money/domain/member_account.dart';
 import 'package:deskilo/features/money/domain/money_repository.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/package.dart';
 import 'package:deskilo/features/money/domain/payment_intent.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
@@ -27,6 +24,8 @@ import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/usage_record.dart';
 import 'package:deskilo/features/money/domain/vat_period_lock.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_vat_declaration/deskilo_vat_declaration.dart';
 
 import '../../../features/money/domain/reminder_evidence.dart';
@@ -47,6 +46,7 @@ import 'money/demo_money_seeds.dart';
 import 'money/demo_payment_gateway_repository.dart';
 import 'money/demo_report_template_repository.dart';
 import 'money/demo_tax_reporting_repository.dart';
+
 export 'money/demo_invoice_action_commands.dart';
 
 /// In-memory [MoneyRepository]; recorded payments are captured for

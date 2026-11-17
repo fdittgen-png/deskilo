@@ -7,7 +7,7 @@ import 'package:deskilo/core/demo/data/money_repository.dart';
 import 'package:deskilo/features/money/application/issue_invoice.dart';
 import 'package:deskilo/features/money/application/issue_month.dart';
 import 'package:deskilo/features/money/domain/command_receipt.dart';
-import 'package:deskilo/features/money/domain/ledger_entry.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 

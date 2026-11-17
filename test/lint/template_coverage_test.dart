@@ -25,7 +25,6 @@ import 'package:deskilo/core/l10n/lexicon.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/dunning.dart';
-import 'package:deskilo/features/money/domain/number_sequence.dart';
 import 'package:deskilo/features/money/domain/subscription_levels.dart';
 import 'package:deskilo/features/money/domain/workspace_status.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
@@ -36,6 +35,7 @@ import 'package:deskilo/features/workspace/domain/workspace_branding.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/domain/workspace_process.dart';
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../helpers/lint/configuration_classification.dart' show deployableEntityKeys, workspaceColumns;
