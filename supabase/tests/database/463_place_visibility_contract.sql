@@ -3,7 +3,7 @@
 -- direct reads and commands. Unknown and unreadable targets answer alike;
 -- the booking's member, the rental audience and sites holders retain access.
 begin;
-select plan(62);
+select plan(64);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004153' || lpad(n::text, 4, '0'))::uuid;
@@ -101,6 +101,11 @@ select is(pg_temp.visible(n, kind, id), 'true', kind || ': permitted reader ' ||
  cross join unnest(array[1,2]) n;
 select is(pg_temp.as_user(2, format('select public.reservation_place_visible(%L,%L,%L,null,null,null)',
  pg_temp.u(999),pg_temp.u(202),pg_temp.u(332))), 'false', 'a place outside the named business is unknown');
+
+select is(pg_temp.as_user(3,format('select public.reservation_place_visible(%L,%L,%L,null,null,null)',
+ pg_temp.u(101),pg_temp.u(203),pg_temp.u(332))), 'false', 'naming oneself without a booking does not grant place visibility');
+select is(pg_temp.as_user(2,format('select public.reservation_place_visible(%L,%L,%L,null,null,null)',
+ pg_temp.u(101),pg_temp.u(202),pg_temp.u(999))), 'false', 'naming oneself does not make an unknown place visible');
 
 create function pg_temp.calendar(n int, kind text) returns text language sql as $$
   select pg_temp.as_user(n, format($q$select count(*) from jsonb_array_elements(public.calendar_items(

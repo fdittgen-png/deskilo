@@ -29,6 +29,13 @@ import 'lint_sources.dart';
 /// `function` re-created after being patched, each verified by hand.
 /// Recorded as `function@recreating-migration`.
 const _reviewed = {
+  // #4153/0809 carries the live mcp_read_v1 definition, including its
+  // place, feature, consent-ceiling and event-type guards. Only booking
+  // event visibility is added to validation reads; pgTAP 463 executes them.
+  'mcp_read_v1@0809',
+  // The live capacity reader keeps its history and analytics gates. Only
+  // the live-floor visibility check excludes historical-only ids; pgTAP334.
+  'kpi_seat_capacity@0809',
   // #3745/0721 restates start_space_inquiry and send_inquiry_message from
   // the LIVE dev definitions (0316 with 0324's feature_operation_allowed
   // gate) as start_space_inquiry_v1 / send_inquiry_message_v1, and the
