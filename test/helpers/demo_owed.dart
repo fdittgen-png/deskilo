@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// What the Demo person still owes, per currency, read straight from the six
-// spaces' money (the invoices addressed to them, less what was matched), so a
+// What the Demo person still owes, per currency, read straight from the
+// businesses' money (the invoices addressed to them, less what was matched), so a
 // test of Me's overview does not derive its expectation from the overview.
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
@@ -16,6 +16,7 @@ Map<String, int> demoOwedFromTheSpaces(DemoFixture f) {
     f.newYork.money,
     f.zurich.money,
     f.milan.money,
+    f.practice.money,
   ]) {
     for (final i in money.invoices) {
       if (i.memberId != me ||

@@ -131,7 +131,9 @@ class DemoFixture implements DemoSpaceParts {
     required this.seededAt,
     required this._listings,
     required this._twinSource,
-  }) {
+  });
+
+  void _wirePublicOffer() {
     wireDemoPublicOffer(
       directory,
       (id) => workspaces.target(id) ??
@@ -284,7 +286,7 @@ class DemoFixture implements DemoSpaceParts {
       holds: holds,
       listings: listings,
       twinSource: twinSource,
-    );
+    ).._wirePublicOffer();
   }
 
   /// #1565 — the member every implicit-subject write is attributed to.
