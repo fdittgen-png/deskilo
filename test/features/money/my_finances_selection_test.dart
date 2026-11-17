@@ -225,12 +225,15 @@ void main() {
     final money = await _show(tester, targetSeen: targets.add);
     await _select(tester, 'a1');
     await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     final container = ProviderScope.containerOf(tester.element(find.byType(MyFinancesScreen)));
     container.read(activeWorkspaceIdProvider.notifier).activate('ws-other');
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     expect(targets, ['11111111-1111-4111-8111-111111111111:ws-1']);
     expect(money.recordedPayments.single.amountCents, 12000);
   });
@@ -240,11 +243,14 @@ void main() {
     final money = await _show(tester, auth: auth);
     await _select(tester, 'a1');
     await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     await auth.signOut();
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 300));
     expect(money.recordedPayments, isEmpty);
   });
 

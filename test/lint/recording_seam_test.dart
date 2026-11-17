@@ -48,6 +48,10 @@ const List<String> _seamMarkers = [
 /// portability answer made of invented people would be a data bug
 /// wearing a privacy feature.
 const Map<String, String> _exempt = {
+  'lib/app/finance_hosts_wiring.dart':
+      'captures only the member id for an owned command; renders no personal fields',
+  'lib/core/demo/demo_finance_commands.dart':
+      'captures only the synthetic member id for a Demo command; renders no personal fields',
   'lib/features/workspace/presentation/excel_export.dart':
       'writes a spreadsheet, not a frame — an export must be true',
 };

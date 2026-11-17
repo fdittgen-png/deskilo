@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/session/session_source.dart';
-import '../../../workspace/providers/workspace_providers.dart';
 import '../../domain/money_face.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/money_face_controller.dart';
@@ -25,11 +24,11 @@ Future<void> openFocusedInvoice(
   required String? workspaceId,
   required String countryCode,
 }) async {
-  final target = ref.read(readyWorkspaceContextProvider)?.target;
+  final target = ref.read(financeCurrentTargetProvider);
   if (focus == null || (workspaceId != focus.workspaceId && target?.networkId != focus.workspaceId)) return;
   final principal = ref.read(sessionStateProvider).value;
   bool current() => ref.read(sessionStateProvider).value == principal &&
-      ref.read(readyWorkspaceContextProvider)?.target == target;
+      ref.read(financeCurrentTargetProvider) == target;
   ref.read(invoiceFocusProvider.notifier).clear();
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.invoices);
   final invoiceAnswer = ref.read(invoicesProvider.future);

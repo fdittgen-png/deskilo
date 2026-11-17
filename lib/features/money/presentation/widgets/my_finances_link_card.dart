@@ -10,7 +10,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
-import '../../../workspace/providers/workspace_providers.dart';
+import '../../providers/finance_overview_provider.dart';
 import '../my_finances_route.dart';
 
 class MyFinancesLinkCard extends ConsumerWidget {
@@ -26,7 +26,7 @@ class MyFinancesLinkCard extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final target = ref.watch(readyWorkspaceContextProvider)?.target;
+    final target = ref.watch(financeCurrentTargetProvider);
     final id = target?.workspaceId == workspaceId ? target?.networkId : null;
     if (id == null) return const SizedBox.shrink();
     final theme = Theme.of(context);

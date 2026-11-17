@@ -10,7 +10,6 @@ import '../../../core/time/business_day_providers.dart';
 import '../../../core/time/clock.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../../auth/providers/auth_providers.dart';
-import '../../workspace/domain/workspace.dart';
 import '../../workspace/providers/workspace_providers.dart';
 import '../domain/account_activity.dart';
 import '../domain/finance_hosts.dart';
@@ -409,13 +408,13 @@ DateTime financeNow(Ref ref) {
 
 /// Development filtering uses the same qualified workspace identity as the
 /// personal rows; a local id on another host cannot hide real invoices.
+final financeCurrentTargetProvider = Provider((ref) =>
+    ref.watch(readyWorkspaceContextProvider)?.target);
+
 final financeDevelopmentWorkspaceIdsProvider = Provider<Set<String>>((ref) {
   final home = ref.watch(financeHomeInstallationProvider).value ??
       ref.watch(financeOverviewProvider).value?.answered
           .where((s) => s.origin == null).firstOrNull?.installationId;
-  return {for (final w in ref.watch(myWorkspacesProvider).value ?? const <Workspace>[])
-    if (w.isDevelopment)
-      if (w.networkId.isNotEmpty) w.networkId
-      else if (home == null) w.id
-      else '$home:${w.id}'};
+  return {for (final id in ref.watch(myDevelopmentWorkspaceIdsProvider))
+    if (home == null) id else '$home:$id'};
 });

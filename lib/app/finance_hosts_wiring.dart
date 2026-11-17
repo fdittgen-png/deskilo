@@ -22,7 +22,6 @@ import '../features/money/providers/finance_host_providers.dart';
 import '../features/money/providers/finance_selection_provider.dart';
 import '../features/money/providers/invoice_group_providers.dart';
 import '../features/workspace/data/supabase_workspace_repository.dart';
-import '../features/workspace/domain/member.dart';
 import '../features/workspace/providers/workspace_providers.dart';
 
 /// Puts the hosts in a scope's overrides (main.dart, the demo container).
@@ -81,7 +80,7 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
           final workspaces = await repository.fetchMyWorkspaces();
           final workspace = workspaces.where((w) => w.id == target.workspaceId).singleOrNull;
           final member = await repository.fetchMyMember(target.workspaceId);
-          if (!current() || workspace == null || member == null || member.status != MemberStatus.active) return null;
+          if (!current() || workspace == null || member == null) return null;
           retained = true;
           return FinanceCommandTarget(target: target, memberId: member.id,
             currency: workspace.currencyCode,

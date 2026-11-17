@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../features/money/application/finance_selection_commands.dart';
 import '../../features/money/providers/finance_selection_provider.dart';
-import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../session/session_source.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
@@ -27,7 +26,7 @@ Override demoFinanceCommands(DemoFixture fixture) =>
             ref.mounted &&
             ref.read(sessionStateProvider).value == principal &&
             member != null &&
-            space.workspaces.memberOf(member.id)?.status == MemberStatus.active;
+            space.workspaces.memberOf(member.id) != null;
         if (!current()) return null;
         return FinanceCommandTarget(
           target: target,
