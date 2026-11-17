@@ -288,4 +288,13 @@ void main() {
       );
     });
   });
+  test('publication input keeps numeric values and explicit null clears', () {
+    expect(encodePublicInput('PublicationInput', {
+      'latitude': 43.4, 'longitude': 3.4, 'description': null,
+    }), {'latitude': 43.4, 'longitude': 3.4, 'description': null});
+    expect(encodePublicInput('PublicationInput', {}), isEmpty);
+    expect(() => encodePublicInput('PublicationInput', {'description': []}),
+      throwsA(isA<PublicContractRefusal>()));
+  });
+
 }

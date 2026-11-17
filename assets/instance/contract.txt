@@ -3324,7 +3324,7 @@ routine public.public_identity_authority() -> jsonb | function | invoker | stabl
 routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:8624d247a0c4
 routine public.public_network_require(p_operation text) -> void | function | invoker | stable | exec:service_role | body:fee911e507ab
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
-routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:ca65ba55d59f
+routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:caf332a2ab3d
 routine public.public_workspace_offer(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:1701cc9184e5
 routine public.public_workspace_setting_text(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:e429ee221f9d
 routine public.public_workspace_tax_treatment(p_workspace uuid) -> text | function | definer | stable | exec:service_role | body:abbcb49cec6a
@@ -3564,7 +3564,7 @@ routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
 routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[], p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2800511d785e
 routine public.save_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean, p_options jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c85c87cb44a5
-routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:1f4d58ca4a5f
+routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0081ecd2c9a1
 routine public.save_workspace_settings(p_workspace_id uuid, p_expected_modified timestamp with time zone, p_settings jsonb) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:1c32aa0ab5ee
 routine public.schedule_member_pause(p_member_id uuid, p_from date, p_to date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:450aca7cfd83
 routine public.schedule_member_share_change(p_member_id uuid, p_pct integer, p_effective_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7daa1245c0c6

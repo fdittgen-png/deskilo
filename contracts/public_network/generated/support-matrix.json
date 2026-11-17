@@ -219,16 +219,16 @@
   ],
   "hashes": {
     "sources": {
-      "contracts/public_network/operations.json": "5f079d0b69824167e47fd824b382f63489ab795ef4f5af7753d177d1db1281ff",
+      "contracts/public_network/operations.json": "231d3d0e1394f6428e5126384d13012a9f45fba71a95895907d7949bbe7e3add",
       "contracts/public_network/support.json": "8457a89593641d6ef7fe028be57520f5884deb49ca28d69ba265f54b1cf85585"
     },
     "artifacts": {
-      "lib/core/public_network/public_network_operations.dart": "8a762752e70cd1f5c1a8857ed1e0bcff1d25792e5605778e162a788afa0e9ace",
+      "lib/core/public_network/public_network_operations.dart": "4e3e01a881a74616c745ce331d7d77b4f39ece67b13d1ec569a6b5b8bcdde9cd",
       "public_network_descriptor()": "cab812daed3c930b0a0792670a6236070bacc0dd7393e989dde331015683e4c8"
     },
     "evidence": {
       "supabase/tests/database/130_public_network_negotiation.sql": "1e9e84cc05cacff545b9e686c65d14066fdacf49fd15a48fd797c53fc953acb8",
-      "test/core/public_network/public_network_codec_test.dart": "f40b0596cea349131d15d97311672ba58861aa7da3922d3cdb77df52760bf15c",
+      "test/core/public_network/public_network_codec_test.dart": "a446a0310f2b8f91be2fb2e729ffeabe6e4bfdd176f0a66d9f26dbc509697c02",
       "test/core/public_network/public_network_negotiation_test.dart": "c3c75df7c058ff975575d76e7107fbc565d68353bbea8a294b2ea7b138d93c86",
       "test/features/directory/participant_negotiation_test.dart": "22379556053bb8208bfdd46e66dd1c84aacb56623ed87f7a4a80577f773ca3f1",
       "test/fixtures/public_network/descriptor_current.json": "3e7df99e5ef75e7ee7fd4be76d98f7cc11c971a3259ca2fe32079fd88babfe02",

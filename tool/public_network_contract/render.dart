@@ -36,6 +36,11 @@ Map<String, dynamic> _schemas(Map<String, dynamic> contract) =>
 Map<String, Object?> publicFieldSchema(Map<String, dynamic> f) =>
     switch (f['type']) {
       'currency' => {'type': 'string', 'pattern': r'^[A-Z]{3}$'},
+      'number' => {
+        'type': 'number',
+        if (f['min'] != null) 'minimum': f['min'],
+        if (f['max'] != null) 'maximum': f['max'],
+      },
       'decimal' => {
         'type': 'string',
         'pattern': r'^-?\d+(\.\d+)?$',
@@ -89,7 +94,12 @@ Map<String, Object?> publicSchema(
     ],
     'properties': {
       for (final e in fields.entries)
-        e.key: publicFieldSchema(Map<String, dynamic>.from(e.value as Map)),
+        e.key: input && (e.value as Map)['required'] != true
+            ? {'anyOf': [
+                publicFieldSchema(Map<String, dynamic>.from(e.value as Map)),
+                {'type': 'null'},
+              ]}
+            : publicFieldSchema(Map<String, dynamic>.from(e.value as Map)),
       if (s['must_understand'] != null)
         s['must_understand']: {
           'type': 'array',
@@ -216,7 +226,10 @@ Map<String, Object?> _operationDoc(Map<String, dynamic> op) {
             'schema': {
               'type': 'object',
               'additionalProperties': false,
-              'required': (binding['params'] as Map).keys.toList(),
+              'required': [
+                for (final key in (binding['params'] as Map).keys)
+                  if (!(binding['defaults'] as Map? ?? {}).containsKey(key)) key,
+              ],
               'properties': {
                 for (final e in Map<String, dynamic>.from(
                   binding['params'] as Map,
@@ -226,7 +239,9 @@ Map<String, Object?> _operationDoc(Map<String, dynamic> op) {
                           r'$ref':
                               '#/components/schemas/${(op['input'] as Map)[e.key]}',
                         }
-                      : {..._sqlTypes[e.value]!, 'x-sql-type': e.value},
+                      : {..._sqlTypes[e.value]!, 'x-sql-type': e.value,
+                          if ((binding['defaults'] as Map?)?.containsKey(e.key) == true)
+                            'default': (binding['defaults'] as Map)[e.key]},
               },
             },
           },

@@ -8,6 +8,7 @@ import 'package:deskilo/app/route_classes.dart';
 import 'package:deskilo/app/shell/shell_drawer_entries.dart';
 import 'package:deskilo/core/demo/data/public_directory_repository.dart';
 import 'package:deskilo/core/help/help_tips.dart';
+import 'package:deskilo/features/directory/domain/public_workspace.dart';
 import 'package:deskilo/features/profile/presentation/widgets/settings_task_section.dart';
 import 'package:deskilo/features/profile/presentation/widgets/settings_workspace_sections.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -222,9 +223,9 @@ void main() {
     testWidgets('the owner of a withdrawn public page opens the editor from '
         'Settings and finds the stored draft', (tester) async {
       final directory = FakeDirectoryRepository();
-      await directory.savePage('ws-1', {
+      await directory.savePage('ws-1', PublicationPatch.replace({
         'address': 'Desk 9, Public Row',
-      }, published: false);
+      }), published: false);
       await pumpWorkspaceSettings(
         tester,
         repository: FakeWorkspaceRepository.withWorkspace(

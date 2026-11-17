@@ -121,7 +121,7 @@ void main() {
       {'latitude': '95', 'longitude': '3.4'},
     ]) {
       expect(
-        () => actions.savePage(_ws, place, published: false),
+        () => actions.savePage(_ws, PublicationPatch.patch(place), published: false),
         throwsArgumentError,
         reason: '$place',
       );
@@ -139,8 +139,8 @@ void main() {
     );
     await _save(tester);
     expect(_stored(repo)['description'], 'Desks by the sea');
-    expect(_stored(repo)['latitude'], '43.4');
-    expect(_stored(repo)['longitude'], '3.4');
+    expect(_stored(repo)['latitude'], 43.4);
+    expect(_stored(repo)['longitude'], 3.4);
     expect(geocoder.asked, isEmpty);
   });
 
@@ -164,8 +164,8 @@ void main() {
 
     await _tap(tester, 'public-page-place-use');
     await _save(tester);
-    expect(_stored(repo)['latitude'], '${_found.latitude}');
-    expect(_stored(repo)['longitude'], '${_found.longitude}');
+    expect(_stored(repo)['latitude'], _found.latitude);
+    expect(_stored(repo)['longitude'], _found.longitude);
   });
 
   testWidgets('a tap on the map corrects the pin, and the correction is '
@@ -241,8 +241,8 @@ void main() {
     await _pumpEditor(tester, repo, _Geocoder());
     await _tap(tester, 'public-page-place-remove');
     await _save(tester);
-    expect(_stored(repo)['latitude'], '');
-    expect(_stored(repo)['longitude'], '');
+    expect(_stored(repo).containsKey('latitude'), isFalse);
+    expect(_stored(repo).containsKey('longitude'), isFalse);
   });
 
   testWidgets('from the editor to the visitor\'s map: a stored place is '

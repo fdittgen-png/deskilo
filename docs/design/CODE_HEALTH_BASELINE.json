@@ -694,7 +694,7 @@
     {"id":"lib/core/instance/mcp_readiness_checks.dart#_runtime(McpTargetEvidence e,McpReleaseExpectation release,Map<String, Object?>? db,Map<String, Object?>? runtime)","cog":28,"cyc":25,"len":226,"params":4},
     {"id":"lib/core/l10n/lexicon_defaults.dart#lexiconDefault(AppLocalizations l10n,String key)","cog":1,"cyc":36,"len":50,"params":2},
     {"id":"lib/core/l10n/rights_labels.dart#rightsStatusLabel(AppLocalizations l10n,{required String status,required DateTime dueOn,required DateTime answerBy,required DateFormat date,String? extensionReason,String? refusalReason})","cog":1,"cyc":7,"len":19,"params":7},
-    {"id":"lib/core/public_network/public_network_codec.dart#_decodeValue(String schema,String name,PublicField field,Object value)","cog":51,"cyc":54,"len":105,"params":4},
+    {"id":"lib/core/public_network/public_network_codec.dart#_decodeValue(String schema,String name,PublicField field,Object value)","cog":46,"cyc":50,"len":101,"params":4},
     {"id":"lib/core/storage/space_prefs_store.dart#SpacePrefs.copyWith({List<String>? order,Set<String>? favorites,Map<String, int>? ratings,List<SpaceGroup>? groups,Map<String, String>? groupOf,Set<String>? folded,Map<String, int>? lastUsed,SpaceSort? sort})","cog":0,"cyc":9,"len":19,"params":8},
     {"id":"lib/core/storage/space_prefs_store.dart#SpacePrefs.fromJson(Object? raw)","cog":32,"cyc":26,"len":48,"params":1},
     {"id":"lib/core/ui/app_sheet.dart#showAppSheet({required BuildContext context,required WidgetBuilder builder,bool isScrollControlled,bool? showDragHandle,bool useSafeArea,BoxConstraints? constraints,AnimationStyle? sheetAnimationStyle})","cog":0,"cyc":1,"len":26,"params":7},

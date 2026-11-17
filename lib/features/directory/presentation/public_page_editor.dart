@@ -44,6 +44,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
 
   /// #3553 — the page as it reads back: its kinds and public services.
   PublicWorkspace? _offer;
+  PublicationDraft? _draft;
 
   /// #3689 — the stored place, kept in the draft so every save carries it.
   final _place = ValueNotifier<DirectoryLocation?>(null);
@@ -77,6 +78,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
           for (final field in _fields) {
             _controllers[field]!.text = doc[field] as String? ?? '';
           }
+          _draft = PublicationDraft.fromPage(page);
           _host = doc['host_type'] as String? ?? 'association';
           _place.value = publicPlaceOf(doc);
           _published = page['published'] == true;
@@ -111,12 +113,12 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
       action: () async {
         preview = await ref.read(publicationActionsProvider).savePage(
           workspace,
-          {
+          _draft!.patch({
             'host_type': _host,
             for (final entry in _controllers.entries)
               entry.key: entry.value.text.trim(),
             ...publicPlaceFields(_place.value),
-          },
+          }),
           following: _following,
           published: _published,
         );
@@ -125,6 +127,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
     if (!mounted || _workspace != workspace || _account != account) return;
     setState(() => _busy = false);
     if (ok) {
+      _draft = PublicationDraft.fromPage({'document': preview});
       ref
         ..invalidate(discoveryListingProvider)
         ..invalidate(currentWorkspaceProvider);
@@ -177,6 +180,7 @@ class _EditorState extends ConsumerState<PublicPageEditor> {
         }
       }
       _following = publicFollowing(answer);
+      _draft = PublicationDraft.fromPage(answer);
     });
     if (page != null) ref.invalidate(discoveryListingProvider);
   }

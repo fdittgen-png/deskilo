@@ -51,6 +51,19 @@ Map<String, dynamic> openapi(String path) =>
     jsonDecode(File(path).readAsStringSync()) as Map<String, dynamic>;
 
 void main() {
+  test('publication schema describes numeric coordinates and explicit clears', () {
+    final schema = publicSchema('PublicationInput',
+      Map<String, dynamic>.from((source()['schemas'] as Map)['PublicationInput'] as Map),
+      input: true);
+    final latitude = (schema['properties'] as Map)['latitude'] as Map;
+    expect(latitude['anyOf'], [
+      {'type': 'number', 'minimum': -90, 'maximum': 90}, {'type': 'null'},
+    ]);
+    final save = (source()['operations'] as List).cast<Map<String, dynamic>>().singleWhere(
+      (op) => op['id'] == 'publication.page.save');
+    expect((save['binding'] as Map)['defaults'], {'p_mode': 'replace'});
+  });
+
   test('every committed rendering is what the generator writes', () {
     final rendered = renderPublicNetworkContract(source());
     for (final entry in rendered.entries) {
