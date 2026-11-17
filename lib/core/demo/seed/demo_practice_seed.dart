@@ -13,8 +13,10 @@ import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
 import '../data/business_kind_repository.dart';
+import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
 import '../demo_dataset.dart';
+import '../demo_persona.dart';
 import '../demo_space_ids.dart';
 import 'demo_city_money_seed.dart';
 import 'demo_city_people_seed.dart';
@@ -67,9 +69,9 @@ Workspace demoPracticeSpace() => Workspace(
 /// The practice's clients, people of the city.
 const _clients = 4;
 
-/// Ada owns the practice; its clients are people of the city (the cast's
-/// own finances stay those of the spaces they belong to). A persona switch
-/// moves the "mine" pointer.
+/// Ada owns the practice; four city clients and Bruno receive its invoices.
+/// Bruno also belongs to the coworking organisation. A persona switch moves
+/// the "mine" pointer; the city clients keep their original invoice order.
 void seedPracticePeople(FakeWorkspaceRepository space) {
   final owner = demoCast.first;
   space
@@ -98,6 +100,31 @@ void seedPracticePeople(FakeWorkspaceRepository space) {
     );
     space.memberNames[id] = demoCityPersonName(40 + i);
     space.memberEmails[id] = 'practice.client${i + 1}@example.test';
+  }
+  final customer = DemoPersona.member.person;
+  space.otherMembers.add(Member(
+    id: customer.memberId,
+    workspaceId: demoPracticeSpaceId,
+    userId: customer.userId,
+    isAdmin: false,
+    isOwner: false,
+    status: MemberStatus.active,
+  ));
+  space.memberNames[customer.memberId] = customer.name;
+  space.memberEmails[customer.memberId] = customer.email;
+}
+
+/// Publish the two timed consultations from the practice's existing catalogue.
+/// Their names, prices and tax treatment stay those of its own invoices.
+void seedPracticePublicServices(FakeMoneyRepository money) {
+  const minutes = {'practice-service-0': 60, 'practice-service-4': 15};
+  for (var i = 0; i < money.services.length; i++) {
+    final duration = minutes[money.services[i].id];
+    if (duration == null) continue;
+    money.services[i] = money.services[i].copyWith(
+      durationMinutes: duration,
+      isPublic: true,
+    );
   }
 }
 

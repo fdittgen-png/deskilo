@@ -30,8 +30,8 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_money_seed.dart:238` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:244` | label | Exempt | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:260` | title | Cleaning service | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:418` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_network_seed.dart:434` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:440` | title | Occupancy | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_network_seed.dart:456` | title | Billing | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_new_york_seed.dart:202` | title | Branded tote bags · $period | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_new_york_seed.dart:206` | label | Branded tote bag | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:146` | label | Ada · QR | core/demo | KEEP_NON_UI_LITERAL |
@@ -42,7 +42,7 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_people_seed.dart:194` | title | Wi-Fi and printer guide | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:202` | title | Insurance certificate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_people_seed.dart:291` | title | Studio team | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_practice_seed.dart:107` | title | Beratung | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_practice_seed.dart:134` | title | Beratung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:330` | title | Hausordnung | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_second_space_seed.dart:337` | title | WLAN und Drucker | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/diagnostics/doctor_english.dart:59` | title | ${_probeEnglish(f[0] as DoctorProbe)} query failed | core/diagnostics | KEEP_NON_UI_LITERAL |

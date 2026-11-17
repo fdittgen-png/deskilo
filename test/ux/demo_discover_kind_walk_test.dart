@@ -13,7 +13,7 @@ import '../helpers/screens/desk_calendar.dart' show goTo;
 
 void main() {
   testWidgets('"massage" finds the Demo practice by its service; the Practices '
-      'chip finds it alone', (tester) async {
+      'chip excludes coworking businesses', (tester) async {
     await pumpDemo(tester, openHub: false, size: const Size(1440, 1600));
     await goTo(tester, '/discover');
 

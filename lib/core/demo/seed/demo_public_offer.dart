@@ -6,7 +6,7 @@
 // each price in the business's own currency with its tax word) and whether
 // it takes inquiries. Read live, so a service the owner marks public in
 // Services is on the page and in the search at once. Only the business the
-// Demo publishes (Atelier du Marché) has a page; the others publish nothing.
+// Demo publishes has a page; the others publish nothing.
 import '../../../features/money/domain/service_item.dart';
 import '../../../features/workspace/domain/business_profile.dart';
 import '../../../features/workspace/domain/workspace.dart';
@@ -42,6 +42,7 @@ Map<String, Object?> _demoPublicOffer(
       if (s.active && s.isPublic) s,
   ]..sort((a, b) => a.sortOrder.compareTo(b.sortOrder));
   return {
+    'name': workspace.name,
     'kinds': _kinds(workspace.id),
     'services': [
       for (final s in shown.take(_publishedServices))

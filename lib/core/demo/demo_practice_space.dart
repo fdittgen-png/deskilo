@@ -62,7 +62,8 @@ class DemoPracticeData implements DemoSpaceParts {
       decider: () => space.memberOf(actor()),
     );
     final money = FakeMoneyRepository(events: events, clock: () => now)
-      ..invoiceCommands.currency = 'EUR';
+      ..invoiceCommands.currency = 'EUR'
+      ..paymentGateway.standIn = true;
     seedCityMoney(money, space, (
       workspaceId: demoPracticeSpaceId,
       prefix: 'practice',
@@ -74,6 +75,7 @@ class DemoPracticeData implements DemoSpaceParts {
       vatPercent: 19,
       siteRentals: const [],
     ), words: demoPracticeMoneyWords);
+    seedPracticePublicServices(money);
     money.accountQueries.statementSource = demoStatementSource(
       space,
       reservations,

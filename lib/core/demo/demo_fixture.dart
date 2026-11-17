@@ -131,7 +131,14 @@ class DemoFixture implements DemoSpaceParts {
     required this.seededAt,
     required this._listings,
     required this._twinSource,
-  });
+  }) {
+    wireDemoPublicOffer(
+      directory,
+      (id) => workspaces.target(id) ??
+          listings.where((listing) => listing.id == id).firstOrNull?.row,
+      (id) => space(DemoSpaceKey.of(id)).money.fetchServices(id),
+    );
+  }
 
   /// Seeds the session. [now] is the instant the demo believes it is,
   /// so "today" is always a working day inside the opening hours.
@@ -224,7 +231,6 @@ class DemoFixture implements DemoSpaceParts {
         actorName: demoCast.first.name);
     final directory = FakeDirectoryRepository();
     seedDemoDirectory(directory);
-    wireDemoPublicOffer(directory, workspaces.target, money.fetchServices); // #3553
     final (listings, twinSource) = _listSpaces(workspaces, floorPlan, roles, actor.memberId, today);
     // The wall tablet greets the member whose badge it read.
     reservations

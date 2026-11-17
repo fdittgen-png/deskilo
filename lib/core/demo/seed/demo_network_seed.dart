@@ -30,7 +30,9 @@ import '../data/public_directory_repository.dart';
 import '../demo_clock.dart';
 import '../demo_dataset.dart';
 import '../demo_persona.dart';
+import '../demo_space_ids.dart';
 import 'demo_people_seed.dart';
+import 'demo_practice_seed.dart';
 import 'demo_second_space_seed.dart';
 
 /// The second space: a whole public page, from its presentation to its
@@ -205,6 +207,7 @@ const _demoNeighbourPractice = PublicWorkspace(
 /// The space's own public page, published, and the directory that lists
 /// it with its neighbours.
 void seedDemoDirectory(FakeDirectoryRepository directory) {
+  final practice = _demoPracticeCard();
   directory
     ..ownName = demoSpaceName
     ..local['address'] = demoSpaceAddress
@@ -217,13 +220,29 @@ void seedDemoDirectory(FakeDirectoryRepository directory) {
         'website': 'https://atelier-du-marche.example.test',
       },
     }
+    ..pages[practice.id] = {'published': true, 'document': practice.document}
     ..cards.addAll([
       _demoOwnCard(),
       _demoNeighbourQuai,
       _demoNeighbourHalles,
       _demoNeighbourZurich,
       _demoNeighbourPractice,
+      practice,
     ]);
+}
+
+/// The owner-accessible practice is published under its own workspace id.
+PublicWorkspace _demoPracticeCard() {
+  final practice = demoPracticeSpace();
+  return PublicWorkspace(practice.id, kDemoServerOrigin, '', {
+    'name': practice.name,
+    'address': practice.address,
+    'host_type': 'company',
+    'currency': practice.currencyCode,
+    'contacts': [
+      {'name': demoCast.first.name, 'owner': true},
+    ],
+  });
 }
 
 /// Two visits as a guest, in spaces the directory lists: one the host
@@ -298,6 +317,9 @@ FakeMessengerRepository demoMessenger(
     ..roster['ws-1'] = [
       HostRosterEntry(name: demoCast[0].name, role: 'owner'),
       HostRosterEntry(name: demoCast[2].name, role: 'admin'),
+    ]
+    ..roster[demoPracticeSpaceId] = [
+      HostRosterEntry(name: demoCast.first.name, role: 'owner'),
     ]
     ..roster[_demoNeighbourQuai.id] = _demoQuaiHosts
     // #3554 — La Fabrique des Halles takes no inquiries: nobody is listed
