@@ -99,7 +99,7 @@ DatevPackageRequest _request(
         invoiceId: 'invoice-a',
         paidCents: 4000,
         resolution: 'partial',
-        matchedAt: DateTime(2026, 5, 1),
+        matchedAt: DateTime(2026, 5),
       ),
     },
     accounts: accounts,
