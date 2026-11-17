@@ -214,6 +214,7 @@ class SupabaseMoneyRepository implements MoneyRepository {
   @override Future<EInvoiceTestState> fetchEInvoiceTest(String workspaceId) => _eInvoices.fetchEInvoiceTest(workspaceId);
   @override Future<EInvoiceTestSent> sendEInvoiceTest({required String workspaceId, required String fileName, required List<int> bytes}) => _eInvoices.sendEInvoiceTest(workspaceId: workspaceId, fileName: fileName, bytes: bytes);
   @override Future<PaymentGatewayConfig> fetchPaymentConfig(String workspaceId) => _payments.fetchPaymentConfig(workspaceId);
+  @override Future<PaymentOrderStart> resumeClaimOrder({required String workspaceId, required String memberId, required String paymentId}) => _payments.resumeClaimOrder(workspaceId: workspaceId, memberId: memberId, paymentId: paymentId);
   @override Future<PaymentOrderStart> createPaymentOrder({required PaymentProvider provider, required String workspaceId, required String memberId, required int amountCents, required String currencyCode, required String period, String? requestId}) => _payments.createPaymentOrder(provider: provider, workspaceId: workspaceId, memberId: memberId, amountCents: amountCents, currencyCode: currencyCode, period: period, requestId: requestId);
   @override Future<Map<PaymentProvider, PaymentProviderStatus>> fetchPaymentGatewayStatus(String workspaceId) => _payments.fetchPaymentGatewayStatus(workspaceId);
   @override Future<PaymentTestCheck> testPaymentKeys(String workspaceId) => _payments.testPaymentKeys(workspaceId);

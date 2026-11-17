@@ -12572,6 +12572,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get financesColumnWorkspace => 'Issued by';
 
   @override
+  String get financesContinueFailed =>
+      'The payment could not be continued. Try again.';
+
+  @override
+  String get financesContinuePayment => 'Continue payment';
+
+  @override
   String financesCoverageAnswered(String host) {
     return 'Read from $host';
   }
@@ -12793,9 +12800,21 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentExpired => 'Checkout expired';
+
+  @override
+  String get financesPaymentFailed => 'Payment failed';
+
+  @override
   String financesPaymentReceived(String business) {
     return 'Payment received · $business is matching it';
   }
+
+  @override
+  String get financesPaymentReversed => 'Payment reversed';
+
+  @override
+  String get financesPaymentWithdrawn => 'Payment withdrawn';
 
   @override
   String financesPaymentsMoreFailed(String host) {

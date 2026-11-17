@@ -28,6 +28,7 @@ import { effectiveConfig, missingFields, refusesTestCredentials, REQUIRED } from
 import { allowsTestPayments } from "../_shared/test_payments.ts";
 import { failureOutcome, idempotencyKey, ProviderRefusal, reuseVerdict } from "./outcome.ts";
 import { parsePaymentOrderRequest } from "./request.ts";
+import { continuationOf } from "./continuation.ts";
 import { runtimeDeps } from "./types.ts";
 import type { Provider } from "./types.ts";
 
@@ -132,8 +133,12 @@ export async function handleWith(
     console.log("payment config probe", { workspaceId, providers, missing });
     // #3556 — this function takes a payment's claim of invoices: an app
     // pays a selection only where its host's function says so.
-    return json({ providers, missing, claims: true });
+    return json({ providers, missing, claims: true, continuations: true });
   }
+
+  const continued = await continuationOf(body, () => callerOf(token));
+  if (continued instanceof Response) return continued;
+  if (continued) body = continued;
 
   // AuthZ first: the JWT's user (verified above) must BE the active member
   // they pay for, in this workspace, before anything about the workspace
@@ -174,7 +179,7 @@ export async function handleWith(
   }
 
   // #1138 — the currency is the WORKSPACE's, never the body's.
-  const currency = String(ws?.currency_code ?? "EUR").toUpperCase();
+  const currency = String(continued?.currency ?? ws?.currency_code ?? "EUR").toUpperCase();
   const parsed = parsePaymentOrderRequest(body, currency);
   if (!parsed.ok) return json(parsed.body, parsed.status);
   const { provider, memberId, amountCents, period, requestId, invoiceIds } = parsed.request;
@@ -213,7 +218,7 @@ export async function handleWith(
   // verifies the token; it does not make later calls run as that user.
   // Credentials and the order-id patch stay on the privileged client.
   const caller = callerOf(token);
-  const { data: opened, error: openError } = await caller.rpc(
+  const { data: opened, error: openError } = continued ? { data: continued, error: null } : await caller.rpc(
     "open_payment_intent",
     {
       p_workspace_id: workspaceId,

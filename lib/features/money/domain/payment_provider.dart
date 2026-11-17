@@ -26,12 +26,16 @@ class PaymentGatewayConfig {
     required this.providers,
     this.missing = const {},
     this.claims = false,
+    this.continuations = false,
   });
 
   /// #3556 — the business's payment function takes a payment's claim of
   /// invoices; an older one does not say, and a selection is not paid
   /// through it (it would drop the claim and pay the account).
   final bool claims;
+
+  /// #4147 — the function resumes an existing claim without creating one.
+  final bool continuations;
 
   /// Fully configured, offerable providers (possibly empty).
   final List<PaymentProvider> providers;

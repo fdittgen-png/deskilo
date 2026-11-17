@@ -7892,6 +7892,14 @@
   "financesColumnDocument": "Documento e periodo",
   "financesColumnState": "Documento e pagamento",
   "financesColumnWorkspace": "Emesso da",
+  "financesContinueFailed": "Non è stato possibile riprendere il pagamento. Riprova.",
+  "@financesContinueFailed": {
+    "description": "#4147: continue an existing own payment (financesContinueFailed)"
+  },
+  "financesContinuePayment": "Riprendi il pagamento",
+  "@financesContinuePayment": {
+    "description": "#4147: continue an existing own payment (financesContinuePayment)"
+  },
   "financesCoverageAnswered": "Letto da {host}",
   "financesCoverageHome": "la Sua installazione principale",
   "financesCoverageNoDocuments": "nessun documento",
@@ -8021,7 +8029,23 @@
   "financesPayAmount": "Paga {amount}",
   "financesPayThen": "Questo pagamento salda il primo mese. Poi: {months}.",
   "financesPayTitle": "Pagare {business}",
+  "financesPaymentExpired": "Pagina di pagamento scaduta",
+  "@financesPaymentExpired": {
+    "description": "#4147: continue an existing own payment (financesPaymentExpired)"
+  },
+  "financesPaymentFailed": "Pagamento non riuscito",
+  "@financesPaymentFailed": {
+    "description": "#4147: continue an existing own payment (financesPaymentFailed)"
+  },
   "financesPaymentReceived": "Pagamento ricevuto · {business} lo sta abbinando",
+  "financesPaymentReversed": "Pagamento stornato",
+  "@financesPaymentReversed": {
+    "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentWithdrawn": "Pagamento ritirato",
+  "@financesPaymentWithdrawn": {
+    "description": "#4147: continue an existing own payment (financesPaymentWithdrawn)"
+  },
   "financesPaymentsMoreFailed": "{host} non ha risposto per altri pagamenti. Tocchi per riprovare.",
   "@financesPaymentsMoreFailed": {
     "placeholders": {

@@ -61,6 +61,7 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
       providers: providers,
       missing: missing,
       claims: data['claims'] == true,
+      continuations: data['continuations'] == true,
     );
   }
 
@@ -163,6 +164,15 @@ class SupabasePaymentGatewayRepository implements PaymentGatewayRepository {
     'period': claim.period,
     'request_id': ?requestId,
     'invoice_ids': claim.invoiceIds,
+  });
+
+  @override
+  Future<PaymentOrderStart> resumeClaimOrder({
+    required String workspaceId,
+    required String memberId,
+    required String paymentId,
+  }) => _order({
+    'action': 'continue', 'workspace_id': workspaceId, 'payment_id': paymentId,
   });
 
   /// One payment order from its request body.

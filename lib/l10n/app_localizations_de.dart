@@ -12682,6 +12682,13 @@ class AppLocalizationsDe extends AppLocalizations {
   String get financesColumnWorkspace => 'Ausgestellt von';
 
   @override
+  String get financesContinueFailed =>
+      'Die Zahlung konnte nicht fortgesetzt werden. Versuchen Sie es erneut.';
+
+  @override
+  String get financesContinuePayment => 'Zahlung fortsetzen';
+
+  @override
   String financesCoverageAnswered(String host) {
     return 'Gelesen von $host';
   }
@@ -12907,9 +12914,21 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentExpired => 'Zahlungsseite abgelaufen';
+
+  @override
+  String get financesPaymentFailed => 'Zahlung fehlgeschlagen';
+
+  @override
   String financesPaymentReceived(String business) {
     return 'Zahlung eingegangen · $business ordnet sie zu';
   }
+
+  @override
+  String get financesPaymentReversed => 'Zahlung rückgängig gemacht';
+
+  @override
+  String get financesPaymentWithdrawn => 'Zahlung zurückgezogen';
 
   @override
   String financesPaymentsMoreFailed(String host) {

@@ -428,7 +428,8 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
     await tester.pumpAndSettle();
-    expect(find.textContaining('must be updated'), findsOneWidget);
+    expect(find.descendant(of: find.byType(SnackBar),
+      matching: find.textContaining('must be updated')), findsOneWidget);
     expect(money.paymentOrders, isEmpty);
 
     money.paymentGateway

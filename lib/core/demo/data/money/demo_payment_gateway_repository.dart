@@ -56,7 +56,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
   /// #3556 — the function drops the claim and says it named none.
   bool dropsClaim = false;
 
-  final Map<String, String> _orderOfRequest = {};
+  bool takesContinuations = true;
 
   @override
   Future<List<PaymentIntent>> fetchPaymentIntents(String workspaceId) async =>
@@ -80,6 +80,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         providers: List.of(_m.paymentProviders),
         missing: _m.paymentMissing,
         claims: takesClaims,
+        continuations: takesContinuations,
       );
 
   @override
@@ -147,7 +148,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     if (approval == null) return start;
     return PaymentOrderStart(
       approveUrl: approval.replace(queryParameters: {...approval.queryParameters, 'workspace': workspaceId}),
-      orderId: start.orderId, alreadyPaid: start.alreadyPaid, missing: start.missing,
+      orderId: start.orderId, alreadyPaid: start.alreadyPaid, missing: start.missing, claimed: start.claimed,
     );
   }
 
@@ -182,7 +183,14 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     );
     // #3556 — the invoices this payment names are in it until it is paid,
     // failed or withdrawn.
-    if (start.orderId case final order?) _m.claims[order] = [...claim.invoiceIds];
+    if (start.orderId case final order?) {
+      _m.claims[order] = [...claim.invoiceIds];
+      final at = _m.paymentIntents.indexWhere((p) => p.orderId == order);
+      if (at >= 0) {
+        _m.paymentIntents[at] = _with(_m.paymentIntents[at],
+            status: _m.paymentIntents[at].status, claimedInvoiceIds: [...claim.invoiceIds]);
+      }
+    }
     return PaymentOrderStart(
       approveUrl: start.approveUrl,
       orderId: start.orderId,
@@ -190,6 +198,35 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
       alreadyPaid: start.alreadyPaid,
       claimed: dropsClaim ? 0 : claim.invoiceIds.length,
     );
+  }
+
+  /// The same persisted facts the host uses for its continuation action.
+  String? continuationState(String? paymentId) {
+    final payment = _m.paymentIntents.where((p) => p.orderId == paymentId).firstOrNull;
+    if (payment == null) return null;
+    if (_m.withdrawnClaims.contains(paymentId)) return 'withdrawn';
+    if (payment.status != 'created') return payment.status;
+    if (_m.clock().difference(payment.createdAt) > const Duration(hours: 23)) return 'expired';
+    if (payment.requestId == null || payment.claimedInvoiceIds.isEmpty) return 'unavailable';
+    return 'ready';
+  }
+
+  @override
+  Future<PaymentOrderStart> resumeClaimOrder({
+    required String workspaceId,
+    required String memberId,
+    required String paymentId,
+  }) async {
+    if (unreachable) throw const PaymentGatewayException(503, 'provider not reachable');
+    final payment = _m.paymentIntents.where((p) => p.orderId == paymentId).firstOrNull;
+    if (payment == null || payment.memberId != memberId || continuationState(paymentId) != 'ready' ||
+        payment.claimedInvoiceIds.any((id) => !_m.invoices.any((i) =>
+            i.id == id && i.workspaceId == workspaceId && i.memberId == memberId))) {
+      throw const ClaimRefused(ClaimRefusal.notProcessing);
+    }
+    requestIds.add(payment.requestId);
+    return _atWorkspace(PaymentOrderStart(approveUrl: _approvalUri(payment.orderId),
+      orderId: payment.orderId, claimed: payment.claimedInvoiceIds.length), workspaceId);
   }
 
   /// No approval address was given: the Demo's stand-in opens an order of its
@@ -227,9 +264,10 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     if (amountCents <= 0 || currencyCode != _m.invoiceCommands.currency) {
       throw const PaymentGatewayException(400, 'amount or currency refused');
     }
-    final known = _orderOfRequest[requestId];
-    if (known != null) {
-      final earlier = _m.paymentIntents.firstWhere((p) => p.orderId == known);
+    final earlier = requestId == null ? null : _m.paymentIntents
+        .where((p) => p.requestId == requestId).firstOrNull;
+    if (earlier != null) {
+      final known = earlier.orderId;
       if (earlier.status == 'captured') {
         return const PaymentOrderStart(alreadyPaid: true);
       }
@@ -246,6 +284,7 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     _m.paymentIntents.add(
       PaymentIntent(
         id: 'demo-intent-$n',
+        requestId: requestId, currency: currencyCode,
         memberId: memberId,
         provider: provider.wireName,
         orderId: orderId,
@@ -256,7 +295,6 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
         reference: 'PAY-${now.year}-${n.toString().padLeft(4, '0')}',
       ),
     );
-    if (requestId != null) _orderOfRequest[requestId] = orderId;
     return PaymentOrderStart(
       approveUrl: _approvalUri(orderId),
       orderId: orderId,
@@ -308,8 +346,11 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     String? captureId,
     DateTime? reversedAt,
     String? reversalReason,
+    List<String>? claimedInvoiceIds,
   }) => PaymentIntent(
     id: p.id,
+    requestId: p.requestId, currency: p.currency,
+    claimedInvoiceIds: claimedInvoiceIds ?? p.claimedInvoiceIds,
     memberId: p.memberId,
     provider: p.provider,
     orderId: p.orderId,
