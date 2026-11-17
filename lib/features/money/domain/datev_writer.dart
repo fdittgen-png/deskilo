@@ -7,7 +7,6 @@ import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import '../../../core/text/csv.dart';
-import 'billing_rules.dart';
 import 'datev.dart';
 import 'datev_fields.dart';
 import 'datev_problem.dart';

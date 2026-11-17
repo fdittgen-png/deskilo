@@ -30,9 +30,10 @@
 //     book's currency at the document's recorded rate, the original amount
 //     in Montantdevise / Idevise. Without a recorded rate the file is not
 //     written.
+import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart'
+    show CustomerIdRule;
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'accounting_journals.dart';
-import 'accounting_target.dart';
 import 'euro_format.dart';
 import 'fec.dart';
 import 'fec_lettering.dart';

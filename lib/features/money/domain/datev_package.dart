@@ -11,7 +11,6 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
-import 'billing_rules.dart';
 import 'datev.dart';
 import 'datev_creditors.dart';
 import 'datev_debtors.dart';

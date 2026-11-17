@@ -26,6 +26,7 @@ export 'src/saf_t_financial_xml.dart';
 export 'src/saf_t_ledger.dart';
 export 'src/saf_t_writer.dart';
 export 'src/sage.dart';
+export 'src/sage50_ca_journal.dart';
 export 'src/sage_documents.dart';
 export 'src/sage_postings.dart';
 export 'src/supplier.dart';
