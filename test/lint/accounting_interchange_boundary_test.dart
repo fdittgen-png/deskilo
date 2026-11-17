@@ -14,6 +14,16 @@ import 'lint_sources.dart';
 const _root = 'packages/deskilo_accounting_interchange';
 
 void main() {
+  test('format inputs never come from installed globals or the workspace clock', () {
+    final named = [
+      for (final f in filesWithExtension('$_root/lib', '.dart', recursive: true))
+        if (RegExp(r'ActiveTaxReference|WorkspaceTime|installedAccountingFormat')
+            .hasMatch(f.readAsStringSync()))
+          f.path,
+    ];
+    expect(named, isEmpty, reason: 'the application supplies each export context');
+  });
+
   test('the package imports core Dart, the kernel, the standards, crypto and '
       'its own files', () {
     final bad = <String>[];

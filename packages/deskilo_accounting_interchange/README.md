@@ -8,3 +8,10 @@ hands an accounting system), and the declaration a format makes about itself --
 formats that follow (Sage 50, the Swiss journals, the generic journal, SAF-T)
 depend on this package and the kernel only. The old paths in the application
 are one-line re-exports until the sweep PR deletes them.
+
+The Sage 50 Canada general-journal writer lives here as well. It takes the
+run's postings, comment formatter and tax split explicitly; its caller supplies
+the held tax reference and country. The package never reads the application's
+installed formats, active tax snapshot or workspace clock. The existing journal
+byte golden remains the output contract; this move does not qualify a live Sage
+import or implement the sales-invoice `.IMP` format.

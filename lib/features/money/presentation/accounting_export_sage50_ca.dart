@@ -7,7 +7,6 @@
 import 'package:deskilo_accounting_interchange/deskilo_accounting_interchange.dart';
 
 import '../application/generic_journal_export.dart';
-import '../domain/sage50_ca_journal.dart';
 import 'accounting_export_journal.dart';
 import 'accounting_export_run.dart';
 import 'posting_kind_labels.dart';
