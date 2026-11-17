@@ -3150,7 +3150,7 @@ routine public.my_conversations(p_workspace_id uuid, p_include_archived boolean)
 routine public.my_database_capabilities() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:4016e23f951e
 routine public.my_directory_person() -> uuid | function | definer | stable | exec:authenticated,service_role | body:48d6f565f410
 routine public.my_favorites(p_workspace uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:deb7553efe4e
-routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1746aa5eec99
+routine public.my_finance_overview() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:9c807012ab89
 routine public.my_financial_activity(p_kind text, p_before_at timestamp with time zone, p_before_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:84d21820a6ea
 routine public.my_group_inbox() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:6e87b3be0c6a
 routine public.my_guest_participations() -> jsonb | function | definer | stable | exec:authenticated,service_role | body:392d10602309
@@ -3231,6 +3231,7 @@ routine public.outgoing_payments_guard() -> trigger | function | invoker | volat
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_attempt_notice(p_workspace_id uuid, p_intent uuid, p_reason text) -> void | function | definer | volatile | exec:service_role | body:e7822668fb03
 routine public.payment_attempt_notice_end(p_intent uuid, p_how text) -> void | function | definer | volatile | exec:service_role | body:bc290c167684
+routine public.payment_claim_resume_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:a62acbf92044
 routine public.payment_claim_window() -> interval | function | invoker | immutable | exec:service_role | body:a44b719c310c
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d61401a27122
@@ -3487,6 +3488,7 @@ routine public.resource_kind_enabled(p_workspace_id uuid, p_kind text) -> boolea
 routine public.resource_kind_feature(p_kind text) -> text | function | invoker | immutable | exec:service_role | body:7629d243b2ff
 routine public.respond_to_event(p_event_id uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:d51d9c4b7437
 routine public.respond_to_message_request(p_conversation uuid, p_accept boolean) -> void | function | definer | volatile | exec:authenticated,service_role | body:e9a519f33e62
+routine public.resume_payment_claim(p_workspace uuid, p_intent uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:26a56994b4bb
 routine public.retention_assess(p_workspace_id uuid, p_issuer_site_id uuid, p_classes text[], p_document_date date) -> jsonb | function | definer | stable | exec:service_role | body:ee78b6ec5fbf
 routine public.retention_assess_records(p_workspace_id uuid, p_classes text[], p_records jsonb) -> jsonb | function | definer | stable | exec:service_role | body:1207a116ab3b
 routine public.retention_hold_writer(p_workspace_id uuid) -> void | function | definer | stable | exec:service_role | body:a8a4863dd41b
