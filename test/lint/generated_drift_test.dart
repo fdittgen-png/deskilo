@@ -61,7 +61,7 @@ void main() {
       final i = steps.indexWhere((s) => '${s['run']}'.contains(_call));
       expect(i, isNonNegative, reason: '$workflow: no step makes the call');
       expect(steps[i]['continue-on-error'], isNull, reason: workflow);
-      // In the audit the call shares a step with the suite: order by text.
+      // In the audit the call shares a step with focused tests: order by text.
       final script = steps.map((s) => '${s['run'] ?? ''}').join('\n');
       expect(script.indexOf(_call), lessThan(script.indexOf('flutter test')),
           reason: '$workflow: the gate precedes the suite');

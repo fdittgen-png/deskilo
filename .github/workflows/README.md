@@ -158,6 +158,16 @@ through one call, `scripts/generated_drift.sh` (#1446 C5a): build_runner
 runs, and any `.g.dart` or `.freezed.dart` that differs from the commit
 is named and fails the job.
 
+The F-Droid audit keeps code generation and l10n under the FOSS lockfile,
+then runs `server_choice_test.dart` and `backend_config_test.dart`, whose
+libre behavior differs from the store build. Quality owns the full analysis
+and test suite. The audit builds the release APK and checks its dex for
+Google dependencies and its signing block for extra metadata. Both PR and
+master-push filters follow the lockfile, push packages, flavour swap and
+Android/build inputs; unrelated packages and guide edits do not start it.
+The focused job has a 30-minute ceiling; its measured dispatch duration is
+recorded on #3476.
+
 ## What this convention does *not* touch
 
 Workflow names are **not** status-check contexts. Branch protection lists
