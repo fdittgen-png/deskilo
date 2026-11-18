@@ -290,7 +290,9 @@ Usted no tiene ningún código pero quisiera encontrar un espacio cercano. Los e
 1. Toque **Buscar un espacio de trabajo** en la pantalla de inicio de sesión, o abra **Descubrir** en [Yo](app:/me).
 2. Escriba un nombre o un lugar en **Buscar espacios**.
 3. Alterne entre el **Mapa** y la **Lista** con el botón de la parte superior.
-4. Abra un resultado para leer su página pública. Allí, **Solicitar un perfil en este espacio** pide unirse, y **Entrar** abre un espacio al que ya pertenece.
+4. Seleccione **Ver** en una tarjeta para leer su página pública. Las acciones disponibles dependen de lo que admita el negocio; **Pedir unirme** solicita la adhesión y **Entrar** abre un negocio al que ya pertenece.
+
+Las tarjetas muestran equipamientos, accesibilidad y horarios habituales publicados, junto a la imagen, el lugar y el tipo de negocio. La página agrupa esos mismos datos, el resumen, la información adicional y las opciones de contacto. **No publicado** significa desconocido: no indica que falte un equipamiento ni que el lugar sea inaccesible. Los horarios usan la zona horaria del negocio y no garantizan disponibilidad actual. Si falla la actualización, un aviso identifica los datos conservados y **Reintentar** consulta de nuevo la misma fuente.
 
 **Conviene saber**
 
