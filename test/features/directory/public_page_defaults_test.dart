@@ -45,6 +45,7 @@ Map<String, dynamic> _stored(FakeDirectoryRepository repo) =>
     repo.pages[_ws]!['document'] as Map<String, dynamic>;
 
 Future<void> _save(WidgetTester tester) async {
+  await tester.ensureVisible(find.text('Save and preview the external view'));
   await tester.tap(find.text('Save and preview the external view'));
   await tester.pumpAndSettle();
   await tester.pageBack();
@@ -188,6 +189,7 @@ void main() {
       'description': 'Kept',
     }), published: false);
     await _pumpEditor(tester, repo);
+    await tester.ensureVisible(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.tap(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.pumpAndSettle();
     expect(find.byType(AlertDialog), findsOneWidget);
@@ -195,6 +197,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(_stored(repo)['address'], 'Desk 9, Public Row');
 
+    await tester.ensureVisible(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.tap(find.byKey(const ValueKey('public-page-reset-all')));
     await tester.pumpAndSettle();
     await tester.tap(

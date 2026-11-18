@@ -58,6 +58,9 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'kinds': PublicField(PublicFieldType.stringList, maxItems: 10),
       'services': PublicField(PublicFieldType.array, schema: 'PublicService', maxItems: 12),
       'takes_inquiries': PublicField(PublicFieldType.boolean),
+      'amenities': PublicField(PublicFieldType.stringList, values: ['wifi', 'meeting_room', 'kitchen', 'printer', 'parking', 'bike_parking'], maxItems: 6),
+      'accessibility': PublicField(PublicFieldType.stringList, values: ['step_free_entrance', 'accessible_toilet', 'lift'], maxItems: 3),
+      'opening_hours': PublicField(PublicFieldType.object, schema: 'PublicOpeningHours'),
     },
     mustUnderstand: 'must_understand',
   ),
@@ -84,6 +87,9 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'plans': PublicField(PublicFieldType.text, maxLength: 4000),
       'latitude': PublicField(PublicFieldType.number, min: -90, max: 90),
       'longitude': PublicField(PublicFieldType.number, min: -180, max: 180),
+      'amenities': PublicField(PublicFieldType.stringList, values: ['wifi', 'meeting_room', 'kitchen', 'printer', 'parking', 'bike_parking'], maxItems: 6),
+      'accessibility': PublicField(PublicFieldType.stringList, values: ['step_free_entrance', 'accessible_toilet', 'lift'], maxItems: 3),
+      'opening_hours': PublicField(PublicFieldType.text, maxLength: 4000),
     },
   ),
   'PublicationDraft': PublicSchema(
@@ -103,6 +109,9 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
       'kinds': PublicField(PublicFieldType.stringList, maxItems: 10),
       'services': PublicField(PublicFieldType.array, schema: 'PublicService', maxItems: 12),
       'takes_inquiries': PublicField(PublicFieldType.boolean),
+      'amenities': PublicField(PublicFieldType.stringList, values: ['wifi', 'meeting_room', 'kitchen', 'printer', 'parking', 'bike_parking'], maxItems: 6),
+      'accessibility': PublicField(PublicFieldType.stringList, values: ['step_free_entrance', 'accessible_toilet', 'lift'], maxItems: 3),
+      'opening_hours': PublicField(PublicFieldType.object, schema: 'PublicOpeningHours'),
     },
   ),
   'PublicationPage': PublicSchema(
@@ -148,6 +157,16 @@ const Map<String, PublicSchema> publicNetworkSchemas = {
     {
     },
     mustUnderstand: 'must_understand',
+  ),
+  'PublicOpeningHours': PublicSchema(
+    'PublicOpeningHours',
+    {
+      'timezone': PublicField(PublicFieldType.text, required: true, maxLength: 100),
+      'weekdays': PublicField(PublicFieldType.integerList, min: 1, max: 7, maxItems: 7),
+      'start_minutes': PublicField(PublicFieldType.integer, min: 0, max: 1439),
+      'end_minutes': PublicField(PublicFieldType.integer, min: 1, max: 1440),
+      'note': PublicField(PublicFieldType.text, maxLength: 4000),
+    },
   ),
 };
 
@@ -334,4 +353,4 @@ const Map<String, PublicOperationSpec> publicNetworkOperations = {
 const List<int> publicNetworkProtocolVersions = [1];
 
 /// #1847 B — the capabilities this client understands.
-const Set<String> publicNetworkCapabilities = {'kind_filter', 'operation_header'};
+const Set<String> publicNetworkCapabilities = {'kind_filter', 'operation_header', 'profile_facets'};

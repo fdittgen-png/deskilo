@@ -114,15 +114,8 @@ Object? _decodeValue(
     case PublicFieldType.integer:
       return _decodeNumber(schema, name, field, value);
     case PublicFieldType.integerList:
-      if (value is! List || value.any((v) => v is! int)) {
-        throw refuse('not a list of integers');
-      }
-      return List<int>.unmodifiable(value.cast<int>());
     case PublicFieldType.stringList:
-      if (value is! List || value.any((v) => v is! String || v.length > 200)) {
-        throw refuse('not a list of strings');
-      }
-      return List<String>.unmodifiable(value.cast<String>());
+      return _decodeList(schema, name, field, value);
     case PublicFieldType.boolean:
       if (value is! bool) throw refuse('not a boolean');
       return value;
@@ -181,6 +174,27 @@ Object? _decodeValue(
       }
       return items;
   }
+}
+
+Object _decodeList(String schema, String name, PublicField field, Object value) {
+  if (value is! List ||
+      (field.maxItems != null && value.length > field.maxItems!)) {
+    throw PublicContractRefusal(schema, name, 'not a bounded list');
+  }
+  for (final item in value) {
+    final valid = field.type == PublicFieldType.stringList
+        ? item is String && item.length <= 200 &&
+            (field.values.isEmpty || field.values.contains(item))
+        : item is int && (field.min == null || item >= field.min!) &&
+            (field.max == null || item <= field.max!);
+    if (!valid) throw PublicContractRefusal(schema, name, 'invalid list item');
+  }
+  if (field.values.isNotEmpty && value.toSet().length != value.length) {
+    throw PublicContractRefusal(schema, name, 'duplicate catalogue id');
+  }
+  return field.type == PublicFieldType.stringList
+      ? List<String>.unmodifiable(value.cast<String>())
+      : List<int>.unmodifiable(value.cast<int>());
 }
 
 Object _decodeNumber(String schema, String name, PublicField field, Object value) {

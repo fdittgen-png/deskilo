@@ -66,11 +66,19 @@ Map<String, Object?> publicFieldSchema(Map<String, dynamic> f) =>
       },
       'integer_list' => {
         'type': 'array',
-        'items': {'type': 'integer'},
+        'items': {'type': 'integer',
+          if (f['min'] != null) 'minimum': f['min'],
+          if (f['max'] != null) 'maximum': f['max'],
+        },
+        if (f['maxItems'] != null) 'maxItems': f['maxItems'],
       },
       'string_list' => {
         'type': 'array',
-        'items': {'type': 'string', 'maxLength': 200},
+        'items': {'type': 'string', 'maxLength': 200,
+          if (f['values'] != null) 'enum': f['values'],
+        },
+        if (f['maxItems'] != null) 'maxItems': f['maxItems'],
+        if (f['values'] != null) 'uniqueItems': true,
       },
       _ => fieldSchema(f),
     };
@@ -730,4 +738,20 @@ String renderSupportMatrix(
       'evidence': {for (final p in evidence) p: _sha256(read(p))},
     },
   });
+}
+
+/// The wire catalogue, shared by owner input validation in SQL and Dart.
+String renderPublicProfileFacetsSql(Map<String, dynamic> contract) {
+  final schemas = contract['schemas'] as Map;
+  final input = schemas['PublicationInput'] as Map;
+  final fields = input['fields'] as Map;
+  final catalogue = {
+    for (final name in ['amenities', 'accessibility'])
+      name: (fields[name] as Map)['values'],
+  };
+  return """create or replace function public.public_profile_facets_catalogue()
+returns jsonb language sql immutable set search_path=public as \$catalogue\$
+ select \$json\$${jsonEncode(catalogue)}\$json\$::jsonb
+\$catalogue\$;
+revoke execute on function public.public_profile_facets_catalogue() from public,anon,authenticated;""";
 }

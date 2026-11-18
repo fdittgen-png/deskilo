@@ -426,7 +426,8 @@
             "items": {
               "type": "string",
               "maxLength": 200
-            }
+            },
+            "maxItems": 10
           },
           "services": {
             "type": "array",
@@ -437,6 +438,40 @@
           },
           "takes_inquiries": {
             "type": "boolean"
+          },
+          "amenities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200,
+              "enum": [
+                "wifi",
+                "meeting_room",
+                "kitchen",
+                "printer",
+                "parking",
+                "bike_parking"
+              ]
+            },
+            "maxItems": 6,
+            "uniqueItems": true
+          },
+          "accessibility": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200,
+              "enum": [
+                "step_free_entrance",
+                "accessible_toilet",
+                "lift"
+              ]
+            },
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "opening_hours": {
+            "$ref": "#/components/schemas/PublicOpeningHours"
           },
           "must_understand": {
             "type": "array",
@@ -449,7 +484,7 @@
         "x-must-understand": "must_understand"
       },
       "PublicationInput": {
-        "description": "Owner-authored fields. Patch omits unchanged fields; null removes a field and restores inheritance where applicable; empty text is a blank override. Coordinates are numeric. Legacy three-argument replacement calls also accept decimal strings.",
+        "description": "Owner-authored fields. Patch omits unchanged fields; null removes a field and restores inheritance where applicable; empty text is a blank override. Coordinates are numeric. Legacy three-argument replacement calls also accept decimal strings. Amenities and accessibility are bounded catalogue-id arrays; empty arrays affirm no listed facts, never lack of accessibility. Opening-hours text is only for businesses without place booking; place hours come from configured booking rules.",
         "type": "object",
         "additionalProperties": false,
         "required": [],
@@ -580,6 +615,62 @@
                 "type": "null"
               }
             ]
+          },
+          "amenities": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "enum": [
+                    "wifi",
+                    "meeting_room",
+                    "kitchen",
+                    "printer",
+                    "parking",
+                    "bike_parking"
+                  ]
+                },
+                "maxItems": 6,
+                "uniqueItems": true
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "accessibility": {
+            "anyOf": [
+              {
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "maxLength": 200,
+                  "enum": [
+                    "step_free_entrance",
+                    "accessible_toilet",
+                    "lift"
+                  ]
+                },
+                "maxItems": 3,
+                "uniqueItems": true
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "opening_hours": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 4000
+              },
+              {
+                "type": "null"
+              }
+            ]
           }
         }
       },
@@ -638,7 +729,8 @@
             "items": {
               "type": "string",
               "maxLength": 200
-            }
+            },
+            "maxItems": 10
           },
           "services": {
             "type": "array",
@@ -649,6 +741,40 @@
           },
           "takes_inquiries": {
             "type": "boolean"
+          },
+          "amenities": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200,
+              "enum": [
+                "wifi",
+                "meeting_room",
+                "kitchen",
+                "printer",
+                "parking",
+                "bike_parking"
+              ]
+            },
+            "maxItems": 6,
+            "uniqueItems": true
+          },
+          "accessibility": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "maxLength": 200,
+              "enum": [
+                "step_free_entrance",
+                "accessible_toilet",
+                "lift"
+              ]
+            },
+            "maxItems": 3,
+            "uniqueItems": true
+          },
+          "opening_hours": {
+            "$ref": "#/components/schemas/PublicOpeningHours"
           }
         }
       },
@@ -683,6 +809,43 @@
           },
           "address": {
             "type": "boolean"
+          }
+        }
+      },
+      "PublicOpeningHours": {
+        "description": "Published regular hours in the business timezone, or an owner-written note for a business without place booking. Missing hours are unknown; this is not real-time availability or a closure calendar.",
+        "type": "object",
+        "additionalProperties": true,
+        "required": [
+          "timezone"
+        ],
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "maxLength": 100
+          },
+          "weekdays": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 7
+            },
+            "maxItems": 7
+          },
+          "start_minutes": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1439
+          },
+          "end_minutes": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 1440
+          },
+          "note": {
+            "type": "string",
+            "maxLength": 4000
           }
         }
       }

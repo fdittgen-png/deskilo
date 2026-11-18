@@ -1,0 +1,20 @@
+{
+  "publicPageFieldAmenities": "Équipements",
+  "publicPageFieldAccessibility": "Accessibilité",
+  "publicPageFieldHours": "Horaires d’ouverture",
+  "publicPageFactsHelp": "Sélectionnez uniquement les faits que vous pouvez confirmer. Un élément non sélectionné signifie qu’aucune information n’est publiée à son sujet.",
+  "publicPageHoursFollow": "Les horaires suivent les disponibilités configurées et le fuseau horaire de cette entreprise.",
+  "publicPageHoursEdit": "Modifier les disponibilités",
+  "publicPageHoursNoteHelp": "Décrivez les horaires habituels dans le fuseau de l’entreprise. Laissez vide pour ne pas les publier.",
+  "discoveryFieldNotPublished": "Non publié",
+  "discoveryHoursClosed": "Aucun jour d’ouverture habituel publié",
+  "discoveryFacetAmenityWifi": "Wi-Fi",
+  "discoveryFacetAmenityMeetingRoom": "Salle de réunion",
+  "discoveryFacetAmenityKitchen": "Cuisine",
+  "discoveryFacetAmenityPrinter": "Imprimante",
+  "discoveryFacetAmenityParking": "Parking automobile",
+  "discoveryFacetAmenityBikeParking": "Stationnement vélo",
+  "discoveryFacetAccessibilityStepFreeEntrance": "Entrée sans marche",
+  "discoveryFacetAccessibilityAccessibleToilet": "Toilettes accessibles",
+  "discoveryFacetAccessibilityLift": "Ascenseur"
+}

@@ -8300,6 +8300,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get discoveryFacetAccessibilityAccessibleToilet => 'Accessible toilet';
+
+  @override
+  String get discoveryFacetAccessibilityLift => 'Lift';
+
+  @override
+  String get discoveryFacetAccessibilityStepFreeEntrance =>
+      'Step-free entrance';
+
+  @override
+  String get discoveryFacetAmenityBikeParking => 'Bicycle parking';
+
+  @override
+  String get discoveryFacetAmenityKitchen => 'Kitchen';
+
+  @override
+  String get discoveryFacetAmenityMeetingRoom => 'Meeting room';
+
+  @override
+  String get discoveryFacetAmenityParking => 'Car parking';
+
+  @override
+  String get discoveryFacetAmenityPrinter => 'Printer';
+
+  @override
+  String get discoveryFacetAmenityWifi => 'Wi-Fi';
+
+  @override
+  String get discoveryFieldNotPublished => 'Not published';
+
+  @override
+  String get discoveryHoursClosed => 'No regular open days published';
+
+  @override
   String get discoveryKindAll => 'All kinds';
 
   @override
@@ -25898,6 +25932,30 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publicHolidaysSheetTitle => 'Public holidays';
+
+  @override
+  String get publicPageFactsHelp =>
+      'Select only facts you can confirm. An unselected item means no information is published about it.';
+
+  @override
+  String get publicPageFieldAccessibility => 'Accessibility';
+
+  @override
+  String get publicPageFieldAmenities => 'Facilities';
+
+  @override
+  String get publicPageFieldHours => 'Opening hours';
+
+  @override
+  String get publicPageHoursEdit => 'Edit availability';
+
+  @override
+  String get publicPageHoursFollow =>
+      'Hours follow the configured availability and timezone of this business.';
+
+  @override
+  String get publicPageHoursNoteHelp =>
+      'Describe regular hours in the business timezone. Leave blank if not published.';
 
   @override
   String get publicPersonUnavailable => 'This profile is not public.';

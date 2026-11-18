@@ -3321,10 +3321,12 @@ routine public.provider_settlement_postings(p_workspace_id uuid, p_issuer_site_i
 routine public.provision_database_admin(p_target uuid, p_can_provision boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ac8050f2c40a
 routine public.public_holidays(p_country text, p_year integer) -> TABLE(day date, key text) | function | invoker | immutable | exec:authenticated,service_role | body:1c6cfdb4de71
 routine public.public_identity_authority() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:4e3256312a3b
-routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:8624d247a0c4
+routine public.public_network_descriptor() -> jsonb | function | invoker | stable | exec:anon,authenticated,service_role | body:dc26a8b81da2
 routine public.public_network_require(p_operation text) -> void | function | invoker | stable | exec:service_role | body:fee911e507ab
+routine public.public_opening_hours(p_rules jsonb, p_timezone text, p_note text, p_place boolean) -> jsonb | function | invoker | immutable | exec:service_role | body:29aeabd667c9
 routine public.public_person_card_sync() -> trigger | function | definer | volatile | exec:service_role | body:542c705cbafa
-routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:caf332a2ab3d
+routine public.public_profile_facets_catalogue() -> jsonb | function | invoker | immutable | exec:service_role | body:89ecba154ea4
+routine public.public_workspace_document(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:74f2586dfd0b
 routine public.public_workspace_offer(p_workspace uuid) -> jsonb | function | definer | stable | exec:service_role | body:1701cc9184e5
 routine public.public_workspace_setting_text(p_workspace uuid, p_key text) -> text | function | definer | stable | exec:service_role | body:e429ee221f9d
 routine public.public_workspace_tax_treatment(p_workspace uuid) -> text | function | definer | stable | exec:service_role | body:abbcb49cec6a
@@ -3564,7 +3566,7 @@ routine public.save_vat_declaration(p_workspace_id uuid, p_period_start date, p_
 routine public.save_workspace_as_template(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[]) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:21c016636d3b
 routine public.save_workspace_as_template_once(p_workspace_id uuid, p_key text, p_name text, p_description text, p_visibility text, p_tags text[], p_groups text[], p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:2800511d785e
 routine public.save_workspace_field(p_workspace_id uuid, p_key text, p_type text, p_labels jsonb, p_required boolean, p_personal_data boolean, p_visibility text, p_contexts text[], p_group_key text, p_sort_order integer, p_validation jsonb, p_active boolean, p_options jsonb) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:c85c87cb44a5
-routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:0081ecd2c9a1
+routine public.save_workspace_public_page(p_workspace uuid, p_document jsonb, p_published boolean, p_mode text) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:af707d417a74
 routine public.save_workspace_settings(p_workspace_id uuid, p_expected_modified timestamp with time zone, p_settings jsonb) -> jsonb | function | invoker | volatile | exec:authenticated,service_role | body:1c32aa0ab5ee
 routine public.schedule_member_pause(p_member_id uuid, p_from date, p_to date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:450aca7cfd83
 routine public.schedule_member_share_change(p_member_id uuid, p_pct integer, p_effective_on date, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7daa1245c0c6
@@ -4338,7 +4340,7 @@ trigger workspace_templates.template_regional_capture CREATE TRIGGER template_re
 trigger workspace_templates.zz_system_columns_stamp CREATE TRIGGER zz_system_columns_stamp BEFORE INSERT OR UPDATE ON public.workspace_templates FOR EACH ROW EXECUTE FUNCTION system_columns_stamp()
 trigger workspaces.analytics_opening_hours CREATE TRIGGER analytics_opening_hours AFTER INSERT OR UPDATE OF booking_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION analytics_workspace_changed()
 trigger workspaces.dunning_rules_sync_setting CREATE TRIGGER dunning_rules_sync_setting AFTER INSERT OR UPDATE OF dunning_rules ON public.workspaces FOR EACH ROW EXECUTE FUNCTION dunning_rules_sync_setting()
-trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal, visibility, visibility_set_at, vat_regime, country_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
+trigger workspaces.refresh_public_workspace CREATE TRIGGER refresh_public_workspace AFTER UPDATE OF name, feature_flags, booking_rules, currency_code, address, street, postal_code, city, invoice_legal, visibility, visibility_set_at, vat_regime, country_code, timezone ON public.workspaces FOR EACH ROW EXECUTE FUNCTION refresh_public_profile_cards()
 trigger workspaces.retire_invite_code CREATE TRIGGER retire_invite_code AFTER UPDATE OF invite_code ON public.workspaces FOR EACH ROW EXECUTE FUNCTION retire_invite_code()
 trigger workspaces.stamp_accessory_supplements_since CREATE TRIGGER stamp_accessory_supplements_since BEFORE UPDATE OF feature_flags ON public.workspaces FOR EACH ROW EXECUTE FUNCTION stamp_accessory_supplements_since()
 trigger workspaces.workspace_document_language_confirm CREATE TRIGGER workspace_document_language_confirm BEFORE UPDATE OF default_locale ON public.workspaces FOR EACH ROW WHEN (((old.document_language_confirmed IS FALSE) AND (NOT (new.document_language_confirmed IS DISTINCT FROM old.document_language_confirmed)))) EXECUTE FUNCTION workspace_document_language_confirm()

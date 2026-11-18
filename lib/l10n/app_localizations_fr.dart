@@ -8384,6 +8384,41 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get discoveryFacetAccessibilityAccessibleToilet =>
+      'Toilettes accessibles';
+
+  @override
+  String get discoveryFacetAccessibilityLift => 'Ascenseur';
+
+  @override
+  String get discoveryFacetAccessibilityStepFreeEntrance =>
+      'Entrée sans marche';
+
+  @override
+  String get discoveryFacetAmenityBikeParking => 'Stationnement vélo';
+
+  @override
+  String get discoveryFacetAmenityKitchen => 'Cuisine';
+
+  @override
+  String get discoveryFacetAmenityMeetingRoom => 'Salle de réunion';
+
+  @override
+  String get discoveryFacetAmenityParking => 'Parking automobile';
+
+  @override
+  String get discoveryFacetAmenityPrinter => 'Imprimante';
+
+  @override
+  String get discoveryFacetAmenityWifi => 'Wi-Fi';
+
+  @override
+  String get discoveryFieldNotPublished => 'Non publié';
+
+  @override
+  String get discoveryHoursClosed => 'Aucun jour d’ouverture habituel publié';
+
+  @override
   String get discoveryKindAll => 'Tous les types';
 
   @override
@@ -26198,6 +26233,30 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get publicHolidaysSheetTitle => 'Jours fériés';
+
+  @override
+  String get publicPageFactsHelp =>
+      'Sélectionnez uniquement les faits que vous pouvez confirmer. Un élément non sélectionné signifie qu’aucune information n’est publiée à son sujet.';
+
+  @override
+  String get publicPageFieldAccessibility => 'Accessibilité';
+
+  @override
+  String get publicPageFieldAmenities => 'Équipements';
+
+  @override
+  String get publicPageFieldHours => 'Horaires d’ouverture';
+
+  @override
+  String get publicPageHoursEdit => 'Modifier les disponibilités';
+
+  @override
+  String get publicPageHoursFollow =>
+      'Les horaires suivent les disponibilités configurées et le fuseau horaire de cette entreprise.';
+
+  @override
+  String get publicPageHoursNoteHelp =>
+      'Décrivez les horaires habituels dans le fuseau de l’entreprise. Laissez vide pour ne pas les publier.';
 
   @override
   String get publicPersonUnavailable => 'Ce profil n\'est pas public.';

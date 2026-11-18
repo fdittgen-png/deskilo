@@ -117,13 +117,23 @@ class FakeDirectoryRepository
   /// The workspace's own name, which its public page always carries.
   String ownName = 'Demo workspace';
 
+  /// The same business facts the live publication projection reads.
+  bool Function(String workspace)? placeBooking;
+  String Function(String workspace)? timezoneOf;
+
   Map<String, dynamic> _resolved(String workspace) {
     final stored = Map<String, dynamic>.from(
       (pages[workspace]?['document'] as Map?) ?? const <String, dynamic>{},
     );
     return {
       ...local,
-      ...stored,
+      for (final entry in stored.entries)
+        if (entry.key != 'opening_hours') entry.key: entry.value,
+      if (!(placeBooking?.call(workspace) ?? true) &&
+          stored['opening_hours'] is String &&
+          (stored['opening_hours'] as String).trim().isNotEmpty)
+        'opening_hours': {'note': stored['opening_hours'],
+          'timezone': timezoneOf?.call(workspace) ?? 'UTC'},
       'name': ownName,
       'contacts': <Map<String, dynamic>>[],
     };
@@ -152,6 +162,11 @@ class FakeDirectoryRepository
       PublicNetworkOperations.publicationPageSave.input['p_document']!,
       document.fields,
     );
+    final note = input['opening_hours'];
+    if ((placeBooking?.call(workspace) ?? true) &&
+        note is String && note.isNotEmpty) {
+      throw StateError('opening hours follow availability');
+    }
     final stored = document.mode == PublicationWriteMode.patch
         ? Map<String, Object?>.from(pages[workspace]?['document'] as Map? ?? {})
         : <String, Object?>{};
@@ -168,7 +183,7 @@ class FakeDirectoryRepository
       ..remove('longitude');
     if (place != null) stored.addAll(publicPlaceFields(place));
     pages[workspace] = {'published': published, 'document': stored};
-    return _resolved(workspace);
+    return {..._resolved(workspace), ...?await offer?.call(workspace)};
   }
 
   @override

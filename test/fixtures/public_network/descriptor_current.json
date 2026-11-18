@@ -1,7 +1,7 @@
 {
   "provenance": {
     "kind": "captured",
-    "source": "public_network_descriptor() as migration 0347 defines it, read on the dev project inside a rolled-back transaction (pgTAP 106 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test). The `roles` and `role_capabilities` keys were observed on the dev project after migration 0559 was applied, read as anon (`set local role anon`) on its combined installation (the default of installation_identity.roles, #2561 L1), 2026-10-23; equal to the renderer's and pgTAP 262's expectation. #3553: `kind_filter` joins the capabilities with migration 0792 (the renderer's JSON); read on the dev project once 0792 is applied."
+    "source": "public_network_descriptor() as migration 0347 defines it, read on the dev project inside a rolled-back transaction (pgTAP 106 probe), 2026-10-01; equal to renderPublicNetworkDescriptorSql's JSON (pinned by public_network_contract_test). The `roles` and `role_capabilities` keys were observed on the dev project after migration 0559 was applied, read as anon (`set local role anon`) on its combined installation (the default of installation_identity.roles, #2561 L1), 2026-10-23; equal to the renderer's and pgTAP 262's expectation. #3553: `kind_filter` joins the capabilities with migration 0792 (the renderer's JSON); read on the dev project once 0792 is applied. #2832: profile_facets observed as anon inside the rolled-back migration 0812/database test 466 probe on 2026-11-17; development application remains pending."
   },
   "descriptor": {
     "protocol": "deskilo.public-network",
@@ -10,7 +10,8 @@
     ],
     "capabilities": [
       "kind_filter",
-      "operation_header"
+      "operation_header",
+      "profile_facets"
     ],
     "operations": [
       {
