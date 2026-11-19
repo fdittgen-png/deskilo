@@ -36,6 +36,8 @@
   "setupStepHintInvite": "Den Code des Bereichs teilen oder Einladungen senden.",
   "setupStepHintPricing": "Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.",
   "setupStepHintServices": "Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.",
+  "noPlacesSetupPricingHint": "Was Ihr Angebot kostet: Preise und Tarife.",
+  "noPlacesSetupServicesHint": "Was Sie Ihren Kundinnen und Kunden anbieten: jede Leistung, ihre Dauer und ihr Preis.",
   "setupStepHintPaymentMethods": "Ihre Bankverbindung und Zahlungshinweise.",
   "setupStepHintOnlinePayments": "Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.",
   "setupStepHintApprovals": "Wer Anträge freigibt und wie viele zustimmen müssen.",

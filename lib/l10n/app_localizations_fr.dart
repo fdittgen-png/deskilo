@@ -23173,6 +23173,14 @@ class AppLocalizationsFr extends AppLocalizations {
   String get nfcConfigTitle => 'Badges RFID / NFC';
 
   @override
+  String get noPlacesSetupPricingHint =>
+      'Ce que coûte votre offre : tarifs et formules.';
+
+  @override
+  String get noPlacesSetupServicesHint =>
+      'Ce que vous proposez à vos clients : chaque prestation, sa durée et son prix.';
+
+  @override
   String get noteRefAlert => 'Alerte';
 
   @override

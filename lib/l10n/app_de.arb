@@ -13390,6 +13390,8 @@
   "nfcConfigEnableDesc": "Zeigt die Karten-Antipp-Option an Kiosken und im Badge-Manager.",
   "nfcConfigIntro": "Mitglieder checken an einem Wandtablet per RFID/NFC-Karte ein. Registrieren Sie die Karte jedes Mitglieds unter Mitglieder & Tarife; am Kiosk halten sie die Karte an, um zu reservieren oder einzuchecken.",
   "nfcConfigTitle": "RFID-/NFC-Badges",
+  "noPlacesSetupPricingHint": "Was Ihr Angebot kostet: Preise und Tarife.",
+  "noPlacesSetupServicesHint": "Was Sie Ihren Kundinnen und Kunden anbieten: jede Leistung, ihre Dauer und ihr Preis.",
   "noteRefAlert": "Hinweis",
   "noteRefFilterCount": "{shown} von {total}",
   "noteRefFilterEmpty": "Keine Treffer.",
