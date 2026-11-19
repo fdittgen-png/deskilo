@@ -30,6 +30,7 @@ typedef SetupPricingBuilder = Widget Function({
   required String workspaceId,
   required String currencyCode,
   required bool carnetsOn,
+  required bool hasPlaces,
   required SetupDraftFrameBuilder draft,
 });
 
@@ -56,6 +57,7 @@ typedef SetupApprovalsBuilder = Widget Function({
 typedef SetupServicesBuilder = Widget Function({
   required String workspaceId,
   required String currencyCode,
+  required bool hasPlaces,
 });
 
 /// The purchase side's registers: [stepId] is `purchases`, `lease` or
@@ -104,10 +106,7 @@ class SetupRunPages {
     ),
     'online_payments' => _OnlinePaymentsHost(pages: this, workspace: workspace),
     'approvals' => _ApprovalsHost(pages: this, workspaceId: workspace.id),
-    'services' => services(
-      workspaceId: workspace.id,
-      currencyCode: workspace.currencyCode,
-    ),
+    'services' => _ServicesHost(pages: this, workspace: workspace),
     'purchases' || 'lease' || 'assets' => _PurchaseSideHost(
       pages: this,
       stepId: stepId,
@@ -176,7 +175,27 @@ class _PricingHost extends ConsumerWidget {
     carnetsOn: ref
         .watch(enabledFeaturesSyncProvider)
         .contains(WorkspaceFeature.carnets),
+    hasPlaces: ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.placeBooking),
     draft: setupDraftFrameFor(workspace.id, 'pricing'),
+  );
+}
+
+/// #3547 — the services page, told whether the business has bookable places:
+/// its words say what members add to a place, or what a customer is offered.
+class _ServicesHost extends ConsumerWidget {
+  const _ServicesHost({required this.pages, required this.workspace});
+  final SetupRunPages pages;
+  final Workspace workspace;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) => pages.services(
+    workspaceId: workspace.id,
+    currencyCode: workspace.currencyCode,
+    hasPlaces: ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.placeBooking),
   );
 }
 
