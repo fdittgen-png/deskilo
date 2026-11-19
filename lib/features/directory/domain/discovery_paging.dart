@@ -12,22 +12,66 @@
 // already listed as it stands.
 import 'public_workspace.dart';
 
-/// #3554 — what one discovery listing asks of every source: the words typed
-/// and, when chosen, one business kind. A new filter is a new listing.
+/// #3554 — what one discovery listing asks of every source: the words typed,
+/// when chosen one business kind, and (#2832) the published amenities and
+/// accessibility facts a business must all publish. A new filter is a new
+/// listing. The facets are catalogue ids; the same choice in another order is
+/// the same filter.
 class DiscoveryFilter {
-  const DiscoveryFilter(this.query, {this.kind});
+  const DiscoveryFilter(
+    this.query, {
+    this.kind,
+    this.amenities = const [],
+    this.accessibility = const [],
+  });
 
   final String query;
 
   /// A kind code of the app's catalogue, or null for every kind.
   final String? kind;
 
-  @override
-  bool operator ==(Object other) =>
-      other is DiscoveryFilter && other.query == query && other.kind == kind;
+  /// Catalogue ids a card must publish (exact containment); empty asks none.
+  final List<String> amenities, accessibility;
+
+  /// Whether a published facility or accessibility fact is asked for: only a
+  /// source that advertises `profile_facets` can answer it.
+  bool get hasFacets => amenities.isNotEmpty || accessibility.isNotEmpty;
+
+  /// Whether anything narrows the listing beyond the words typed.
+  bool get isNarrowed => kind != null || hasFacets;
+
+  DiscoveryFilter copyWith({
+    String? query,
+    String? Function()? kind,
+    List<String>? amenities,
+    List<String>? accessibility,
+  }) => DiscoveryFilter(
+    query ?? this.query,
+    kind: kind == null ? this.kind : kind(),
+    amenities: amenities ?? this.amenities,
+    accessibility: accessibility ?? this.accessibility,
+  );
 
   @override
-  int get hashCode => Object.hash(query, kind);
+  bool operator ==(Object other) =>
+      other is DiscoveryFilter &&
+      other.query == query &&
+      other.kind == kind &&
+      _same(other.amenities, amenities) &&
+      _same(other.accessibility, accessibility);
+
+  static List<String> _sorted(List<String> ids) => ({...ids}.toList()..sort());
+
+  static bool _same(List<String> a, List<String> b) =>
+      _sorted(a).join('\u0000') == _sorted(b).join('\u0000');
+
+  @override
+  int get hashCode => Object.hash(
+    query,
+    kind,
+    Object.hashAll(_sorted(amenities)),
+    Object.hashAll(_sorted(accessibility)),
+  );
 }
 
 /// One source installation of public cards: its origin and the
@@ -283,12 +327,17 @@ abstract interface class PublicDiscoveryRepository {
   /// Page [page] of [source]'s cards matching [query]; throws when the
   /// source cannot be read. #3553 — with a [kind], only that kind's cards,
   /// asked only of a source that advertises the filter; another answers an
-  /// uncovered page.
+  /// uncovered page. #2832 — with [amenities] or [accessibility], only cards
+  /// that publish all of them, asked only of a source that advertises
+  /// `profile_facets`; a card that publishes nothing about a fact is unknown,
+  /// not a refusal of it.
   Future<SourceCardsPage> workspaces(
     DirectorySource source,
     String query, {
     int page = 0,
     String? kind,
+    List<String> amenities = const [],
+    List<String> accessibility = const [],
   });
 
   /// The card as its installation publishes it NOW; null when it is no

@@ -36,6 +36,10 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
   /// one business kind.
   static const kindFilter = 'kind_filter';
 
+  /// #2832 — the capability a source advertises when it can narrow its
+  /// search by published amenities and accessibility facts.
+  static const profileFacets = 'profile_facets';
+
   /// The directory's origin and publishable key: #2561 L3 — the personal
   /// home the installation declares, resolved at each read.
   final Future<BackendEndpoint> Function() directoryHome;
@@ -131,14 +135,20 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
     String query, {
     int page = 0,
     String? kind,
+    List<String> amenities = const [],
+    List<String> accessibility = const [],
   }) async {
     if (validateBackendEndpoint(source.origin, source.key) != null) {
       throw StateError('invalid public endpoint');
     }
     // #3553 — a source that cannot narrow by kind is not asked: its cards
-    // would be unfiltered, and an empty answer would read as no result.
-    if (kind != null &&
-        !await negotiator.advertises(source.origin, source.key, kindFilter)) {
+    // would be unfiltered, and an empty answer would read as no result. #2832
+    // — the same for the published facts.
+    final faceted = amenities.isNotEmpty || accessibility.isNotEmpty;
+    if ((kind != null &&
+            !await negotiator.advertises(source.origin, source.key, kindFilter)) ||
+        (faceted &&
+            !await negotiator.advertises(source.origin, source.key, profileFacets))) {
       return const SourceCardsPage([], uncovered: true, more: false);
     }
     final size = _search.pageSize!;
@@ -147,6 +157,12 @@ class SupabasePublicDiscoveryRepository implements PublicDiscoveryRepository {
       var request = client.from(_search.relation!).select(_search.selectClause);
       if (kind != null) {
         request = request.filter('document->kinds', 'cs', jsonEncode([kind]));
+      }
+      if (amenities.isNotEmpty) {
+        request = request.filter('document->amenities', 'cs', jsonEncode(amenities));
+      }
+      if (accessibility.isNotEmpty) {
+        request = request.filter('document->accessibility', 'cs', jsonEncode(accessibility));
       }
       if (query.trim().isNotEmpty) {
         request = request.ilike(

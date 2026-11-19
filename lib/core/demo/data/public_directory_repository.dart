@@ -59,6 +59,10 @@ class FakeDirectoryRepository
         );
   }
 
+  /// #2832 — origins whose installation predates the facet filters: they do
+  /// not advertise `profile_facets`.
+  final withoutFacets = <String>{};
+
   /// Cards per page of one source; the contract's page size by default.
   int pageSize = PublicNetworkOperations.directoryWorkspacesSearch.pageSize!;
 
@@ -83,8 +87,17 @@ class FakeDirectoryRepository
     String query, {
     int page = 0,
     String? kind,
+    List<String> amenities = const [],
+    List<String> accessibility = const [],
   }) async {
     reads.add('${source.origin}#$page');
+    // #2832 — a source that does not advertise `profile_facets` is not asked
+    // for a fact: it answers uncovered, as the real repository's negotiation
+    // does, and its silence is not "no result".
+    if ((amenities.isNotEmpty || accessibility.isNotEmpty) &&
+        withoutFacets.contains(source.origin)) {
+      return const SourceCardsPage([], uncovered: true, more: false);
+    }
     if (fail || failPages.contains('${source.origin}#$page')) {
       throw StateError('directory unavailable');
     }
@@ -96,6 +109,10 @@ class FakeDirectoryRepository
         .where((w) => _matches(w, query))
         // #3553 — the Demo's installations narrow by kind, as this one does.
         .where((w) => kind == null || w.kinds.contains(kind))
+        // #2832 — exact containment of the published facts; a card that
+        // publishes none of them is unknown, so it does not match a fact.
+        .where((w) => amenities.every((a) => w.amenities?.contains(a) ?? false))
+        .where((w) => accessibility.every((a) => w.accessibility?.contains(a) ?? false))
         .toList();
     final slice = matching.skip(page * pageSize).take(pageSize).toList();
     return SourceCardsPage(slice, more: slice.length == pageSize);
