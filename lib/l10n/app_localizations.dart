@@ -446,6 +446,12 @@ abstract class AppLocalizations {
   /// **'Choose at checkout'**
   String get accountPaymentAsk;
 
+  /// #4225 the state of a payment that arrived and no invoice has taken yet, as the business holds it under Payments to match
+  ///
+  /// In en, this message translates to:
+  /// **'Received, waiting to be matched'**
+  String get accountPaymentAwaitingMatch;
+
   /// Shown as a text in account activity screen (money), and 1 other place.
   ///
   /// In en, this message translates to:

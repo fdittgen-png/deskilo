@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Beim Bezahlen wählen",
+  "accountPaymentAwaitingMatch": "Eingegangen, wartet auf Zuordnung",
   "accountPaymentConfirmed": "Zahlung bestätigt",
   "accountPaymentPreference": "Bevorzugte Onlinezahlung",
   "accountRefundDue": "Erstattung vom Space ausstehend",
