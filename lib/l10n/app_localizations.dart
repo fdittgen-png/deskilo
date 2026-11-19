@@ -36577,6 +36577,18 @@ abstract class AppLocalizations {
   /// **'RFID / NFC badges'**
   String get nfcConfigTitle;
 
+  /// #3547 setupStepHint: the label for case 'pricing' of a business without bookable places.
+  ///
+  /// In en, this message translates to:
+  /// **'What your offer costs: prices and plans.'**
+  String get noPlacesSetupPricingHint;
+
+  /// #3547 setupStepHint: the label for case 'services' of a business without bookable places.
+  ///
+  /// In en, this message translates to:
+  /// **'What you offer your customers: each service, how long it takes and what it costs.'**
+  String get noPlacesSetupServicesHint;
+
   /// #842 - attach-menu entry: reference an alert
   ///
   /// In en, this message translates to:

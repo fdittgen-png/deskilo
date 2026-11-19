@@ -23114,6 +23114,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nfcConfigTitle => 'Credenciales RFID / NFC';
 
   @override
+  String get noPlacesSetupPricingHint =>
+      'Lo que cuesta su oferta: precios y tarifas.';
+
+  @override
+  String get noPlacesSetupServicesHint =>
+      'Lo que ofrece a sus clientes: cada servicio, su duración y su precio.';
+
+  @override
   String get noteRefAlert => 'Aviso';
 
   @override

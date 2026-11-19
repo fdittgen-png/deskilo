@@ -13399,6 +13399,8 @@
   "nfcConfigEnableDesc": "Afficher l'option « approcher la carte » sur les bornes et dans le gestionnaire de badges.",
   "nfcConfigIntro": "Les membres pointent à une borne murale en approchant une carte RFID/NFC. Enregistrez la carte de chaque membre dans Membres & forfaits ; à la borne, ils approchent la carte pour réserver ou pointer.",
   "nfcConfigTitle": "Badges RFID / NFC",
+  "noPlacesSetupPricingHint": "Ce que coûte votre offre : tarifs et formules.",
+  "noPlacesSetupServicesHint": "Ce que vous proposez à vos clients : chaque prestation, sa durée et son prix.",
   "noteRefAlert": "Alerte",
   "noteRefFilterCount": "{shown} sur {total}",
   "noteRefFilterEmpty": "Aucun résultat.",
