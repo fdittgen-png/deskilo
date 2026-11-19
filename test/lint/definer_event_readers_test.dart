@@ -92,7 +92,7 @@ void main() {
 
   test('every reasoned exception of the places test is a definer routine of the contract', () {
     final listed = listedReaders(File(_placeListFile).readAsStringSync());
-    expect(listed, hasLength(58));
+    expect(listed, hasLength(59));
     expect(listed.every((l) => l.reason.trim().isNotEmpty), isTrue);
     final definers = contractDefiners(
       File('assets/instance/contract.txt').readAsStringSync(),
