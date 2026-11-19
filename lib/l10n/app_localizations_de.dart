@@ -26223,10 +26223,16 @@ class AppLocalizationsDe extends AppLocalizations {
   String get publicPersonUnavailable => 'Dieses Profil ist nicht öffentlich.';
 
   @override
+  String get publicProfileContacts => 'Kontaktmöglichkeiten';
+
+  @override
   String get publicProfileCopied => 'Link kopiert.';
 
   @override
   String get publicProfileCopy => 'Link kopieren';
+
+  @override
+  String get publicProfileInformation => 'Weitere Angaben';
 
   @override
   String get publicProfileOff =>
@@ -26235,6 +26241,9 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get publicProfileOn =>
       'Wer den Link hat, liest Ihren Namen, Ihren Beruf und Ihre Vorstellung.';
+
+  @override
+  String get publicProfileOverview => 'Überblick';
 
   @override
   String get publicProfilePublishAction => 'Veröffentlichen';
@@ -26246,6 +26255,25 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get publicProfilePublishTitle =>
       'Öffentliches Profil veröffentlichen?';
+
+  @override
+  String get publicProfilePublishedInfo =>
+      'Von diesem Betrieb veröffentlichte Angaben. Eine fehlende Angabe bedeutet nicht, dass eine Ausstattung nicht vorhanden ist.';
+
+  @override
+  String get publicProfileRefreshFailed =>
+      'Die Seite dieses Betriebs konnte nicht aktualisiert werden. Die bereits geladenen Angaben werden angezeigt.';
+
+  @override
+  String get publicProfileRefreshing =>
+      'Veröffentlichte Angaben werden aktualisiert…';
+
+  @override
+  String get publicProfileRegularHours =>
+      'Reguläre Zeiten in der Zeitzone des Betriebs; Ausnahmen und aktuelle Verfügbarkeit können abweichen.';
+
+  @override
+  String get publicProfileTakesInquiries => 'Nimmt Anfragen an';
 
   @override
   String get publicProfileTitle => 'Öffentliches Profil';

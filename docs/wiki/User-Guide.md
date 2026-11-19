@@ -304,7 +304,9 @@ You do not have a code but you would like to find a space near you. Spaces that 
 1. Tap **Find a workspace** on the sign-in screen, or open **Discover** on [Me](https://fdittgen-png.github.io/deskilo/#/me).
 2. Type a name or a place into **Search workspaces**.
 3. Switch between the **Map** and the **List** with the button at the top.
-4. Open a result to read its public page. There, **Request a workspace profile** asks to join, and **Enter** opens a space you already belong to.
+4. Choose **View** on a card to read its public page. The available actions depend on what the business supports; **Ask to join** requests membership and **Enter** opens a business you already belong to.
+
+Cards show published facilities, accessibility and regular hours alongside the picture, location and business kind. The page groups the same facts, the overview, additional information and contact options. **Not published** means unknown: it does not mean a facility is absent or the place is inaccessible. Regular hours use the business’s timezone and do not promise live availability. If refreshing fails, a notice identifies the retained information and **Try again** asks the same source again.
 
 **Good to know**
 

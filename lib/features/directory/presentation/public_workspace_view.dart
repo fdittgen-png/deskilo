@@ -11,7 +11,6 @@ import '../../../core/backend/secondary_federation.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/links/link_launcher.dart';
 import '../../../core/public_network/public_network_negotiator.dart';
-import '../../../core/theme/app_radius.dart';
 import '../../../core/theme/app_spacing.dart';
 import '../../../core/theme/personal_theme.dart';
 import '../../../core/trace/guarded.dart';
@@ -26,6 +25,9 @@ import '../providers/directory_providers.dart';
 import '../providers/discovery_listing_providers.dart';
 import 'connect_with_identity_sheet.dart';
 import 'messenger/inquiry_sheet.dart';
+import 'public_profile_facts.dart';
+import 'public_profile_image.dart';
+import 'public_profile_refresh_notice.dart';
 import 'public_services_section.dart';
 import 'saved_place_button.dart';
 import 'space_offers.dart';
@@ -248,12 +250,7 @@ class PublicWorkspaceView extends ConsumerWidget {
     final hasPlan = workspace.text('plan_url').isNotEmpty;
     final hasContacts = workspace.contacts.isNotEmpty;
     return [
-      for (final field in ['description', 'plans'])
-        if (workspace.text(field).isNotEmpty)
-          Padding(
-            padding: AppSpacing.smAll,
-            child: SelectableText(workspace.text(field)),
-          ),
+      PublicProfileFacts(workspace: workspace),
       // What the space published to be reached by: one card.
       if (email.isNotEmpty ||
           phone.isNotEmpty ||
@@ -268,6 +265,10 @@ class PublicWorkspaceView extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Semantics(
+                  header: true,
+                  child: Text(l.publicProfileContacts, style: Theme.of(context).textTheme.titleMedium),
+                ),
                 if (email.isNotEmpty)
                   Padding(
                     padding: AppSpacing.smAll,
@@ -373,7 +374,6 @@ class PublicWorkspaceView extends ConsumerWidget {
           );
     final withdrawn = live is AsyncData<PublicWorkspace?> && live.value == null;
     final workspace = live?.value ?? this.workspace;
-    final image = Uri.tryParse(workspace.text('image_url'));
     final runBy = switch (workspace.text('host_type')) {
       'association' => l.spaceRunByAssociation,
       'company' => l.spaceRunByCompany,
@@ -395,18 +395,7 @@ class PublicWorkspaceView extends ConsumerWidget {
       body: ListView(
         padding: AppSpacing.mdAll,
         children: [
-          if (image != null &&
-              image.scheme == 'https' &&
-              image.userInfo.isEmpty)
-            Image.network(
-              image.toString(),
-              height: 160,
-              fit: BoxFit.contain,
-              errorBuilder: (_, error, stack) =>
-                  _InitialBlock(name: workspace.name),
-            )
-          else
-            _InitialBlock(name: workspace.name),
+          PublicProfileImage(workspace: workspace),
           const SizedBox(height: AppSpacing.sm),
           Text(
             workspace.name,
@@ -442,6 +431,7 @@ class PublicWorkspaceView extends ConsumerWidget {
             ),
           ),
           WorkspaceFeedback(workspace: workspace, full: true),
+          PublicProfileRefreshNotice(workspace: this.workspace, state: live),
           if (withdrawn)
             Padding(
               padding: AppSpacing.smAll,
@@ -450,7 +440,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                 l.portalNoLongerPublished,
               ),
             ),
-          ..._details(context, ref, workspace, withdrawn: withdrawn),
+          ..._actions(context, ref, workspace, withdrawn: withdrawn),
           PublicServicesSection(
             services: workspace.services,
             onAsk: _takesInquiries(workspace, withdrawn: withdrawn)
@@ -458,7 +448,7 @@ class PublicWorkspaceView extends ConsumerWidget {
                       _writeToHosts(context, ref, workspace, about: service)
                 : null,
           ),
-          ..._actions(context, ref, workspace, withdrawn: withdrawn),
+          ..._details(context, ref, workspace, withdrawn: withdrawn),
         ],
       ),
     );
@@ -466,32 +456,6 @@ class PublicWorkspaceView extends ConsumerWidget {
     return personal
         ? Theme(data: personalThemeFrom(Theme.of(context)), child: page)
         : page;
-  }
-}
-
-/// The place's first letter on a tinted block, when it published no photo.
-class _InitialBlock extends StatelessWidget {
-  const _InitialBlock({required this.name});
-
-  final String name;
-
-  @override
-  Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
-    return Container(
-      key: const ValueKey('public-workspace-initial'),
-      height: 96,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        color: scheme.primaryContainer,
-        borderRadius: AppRadius.xlAll,
-      ),
-      child: Text(
-        name.characters.firstOrNull?.toUpperCase() ?? '',
-        style: Theme.of(context).textTheme.displaySmall
-            ?.copyWith(color: scheme.onPrimaryContainer),
-      ),
-    );
   }
 }
 

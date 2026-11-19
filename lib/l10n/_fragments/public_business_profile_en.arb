@@ -1,0 +1,34 @@
+{
+  "publicProfileOverview": "Overview",
+  "publicProfileInformation": "Additional information",
+  "publicProfilePublishedInfo": "Information published by this business. Missing information does not mean that a facility is absent.",
+  "publicProfileRegularHours": "Regular hours in the business’s timezone; exceptions and live availability may differ.",
+  "publicProfileTakesInquiries": "Accepts inquiries",
+  "publicProfileContacts": "Contact options",
+  "publicProfileRefreshing": "Refreshing published information…",
+  "publicProfileRefreshFailed": "Could not refresh this business’s page. Showing the information already loaded.",
+  "@publicProfileOverview": {
+    "description": "Public profile: Overview."
+  },
+  "@publicProfileInformation": {
+    "description": "Public profile: Information."
+  },
+  "@publicProfilePublishedInfo": {
+    "description": "Public profile: PublishedInfo."
+  },
+  "@publicProfileRegularHours": {
+    "description": "Public profile: RegularHours."
+  },
+  "@publicProfileTakesInquiries": {
+    "description": "Public profile: TakesInquiries."
+  },
+  "@publicProfileContacts": {
+    "description": "Public profile: Contacts."
+  },
+  "@publicProfileRefreshing": {
+    "description": "Public profile: Refreshing."
+  },
+  "@publicProfileRefreshFailed": {
+    "description": "Public profile: RefreshFailed."
+  }
+}

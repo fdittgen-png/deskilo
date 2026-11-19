@@ -26181,10 +26181,16 @@ class AppLocalizationsIt extends AppLocalizations {
   String get publicPersonUnavailable => 'Questo profilo non è pubblico.';
 
   @override
+  String get publicProfileContacts => 'Opzioni di contatto';
+
+  @override
   String get publicProfileCopied => 'Link copiato.';
 
   @override
   String get publicProfileCopy => 'Copia il link';
+
+  @override
+  String get publicProfileInformation => 'Informazioni aggiuntive';
 
   @override
   String get publicProfileOff =>
@@ -26195,6 +26201,9 @@ class AppLocalizationsIt extends AppLocalizations {
       'Chiunque abbia il link legge il suo nome, la sua professione e la sua presentazione.';
 
   @override
+  String get publicProfileOverview => 'Panoramica';
+
+  @override
   String get publicProfilePublishAction => 'Pubblica';
 
   @override
@@ -26203,6 +26212,25 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get publicProfilePublishTitle => 'Pubblicare un profilo pubblico?';
+
+  @override
+  String get publicProfilePublishedInfo =>
+      'Informazioni pubblicate da questa attività. Un’informazione mancante non indica che una dotazione sia assente.';
+
+  @override
+  String get publicProfileRefreshFailed =>
+      'Non è stato possibile aggiornare la pagina di questa attività. Vengono mostrate le informazioni già caricate.';
+
+  @override
+  String get publicProfileRefreshing =>
+      'Aggiornamento delle informazioni pubblicate…';
+
+  @override
+  String get publicProfileRegularHours =>
+      'Orari abituali nel fuso orario dell’attività; eccezioni e disponibilità effettiva possono differire.';
+
+  @override
+  String get publicProfileTakesInquiries => 'Accetta richieste di informazioni';
 
   @override
   String get publicProfileTitle => 'Profilo pubblico';

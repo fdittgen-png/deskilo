@@ -290,7 +290,9 @@ Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, 
 1. Tippen Sie auf dem Anmeldebildschirm auf **Arbeitsplatz finden** oder öffnen Sie auf [Ich](app:/me) **Entdecken**.
 2. Tragen Sie einen Namen oder einen Ort bei **Workspaces suchen** ein.
 3. Wechseln Sie mit der Schaltfläche oben zwischen **Karte** und **Liste**.
-4. Öffnen Sie ein Ergebnis, um die öffentliche Seite zu lesen. Dort bittet **Workspace-Profil beantragen** um die Aufnahme, und **Eintreten** öffnet einen Space, dem Sie bereits angehören.
+4. Wählen Sie auf einer Karte **Ansehen**, um die öffentliche Seite zu lesen. Die angebotenen Aktionen hängen vom Betrieb ab; **Beitritt anfragen** beantragt eine Mitgliedschaft und **Eintreten** öffnet einen Betrieb, dem Sie bereits angehören.
+
+Die Karten zeigen veröffentlichte Ausstattung, Barrierefreiheit und reguläre Zeiten neben Bild, Ort und Betriebsart. Die Seite gliedert dieselben Angaben, den Überblick, weitere Angaben und Kontaktmöglichkeiten. **Nicht veröffentlicht** bedeutet unbekannt: Es bedeutet weder, dass eine Ausstattung fehlt, noch dass der Ort nicht barrierefrei ist. Die Zeiten gelten in der Zeitzone des Betriebs und garantieren keine aktuelle Verfügbarkeit. Scheitert die Aktualisierung, kennzeichnet ein Hinweis die beibehaltenen Angaben; **Erneut versuchen** fragt dieselbe Quelle erneut ab.
 
 **Gut zu wissen**
 

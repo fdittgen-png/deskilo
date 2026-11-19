@@ -1,0 +1,10 @@
+{
+  "publicProfileOverview": "Présentation",
+  "publicProfileInformation": "Informations complémentaires",
+  "publicProfilePublishedInfo": "Informations publiées par cette entreprise. Une information manquante ne signifie pas qu’un équipement est absent.",
+  "publicProfileRegularHours": "Horaires habituels dans le fuseau horaire de l’entreprise ; les exceptions et la disponibilité réelle peuvent différer.",
+  "publicProfileTakesInquiries": "Accepte les demandes de renseignements",
+  "publicProfileContacts": "Moyens de contact",
+  "publicProfileRefreshing": "Actualisation des informations publiées…",
+  "publicProfileRefreshFailed": "Impossible d’actualiser la page de cette entreprise. Les informations déjà chargées restent affichées."
+}

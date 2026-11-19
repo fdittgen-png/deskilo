@@ -9,6 +9,8 @@ import '../../../core/ui/kit/kit_card.dart';
 import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/place_summary.dart';
 import '../domain/public_workspace.dart';
+import 'public_profile_facts.dart';
+import 'public_profile_image.dart';
 import 'public_service_line.dart';
 import 'saved_place_button.dart';
 
@@ -88,21 +90,28 @@ class DirectoryRow extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               MergeSemantics(
-                child: Column(
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(w.name, style: theme.textTheme.titleMedium),
-                    if (place.isNotEmpty) Text(place, style: muted),
-                    for (final line in services) Text(line),
-                    if (description.isNotEmpty)
-                      Text(
-                        description,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
+                    PublicProfileImage(workspace: w, compact: true),
+                    const SizedBox(width: AppSpacing.sm),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(w.name, style: theme.textTheme.titleMedium),
+                          if (place.isNotEmpty) Text(place, style: muted),
+                          for (final line in services) Text(line),
+                          if (description.isNotEmpty)
+                            Text(description, maxLines: 2, overflow: TextOverflow.ellipsis),
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),
+              const SizedBox(height: AppSpacing.sm),
+              PublicProfileFacts(workspace: w, compact: true),
               const SizedBox(height: AppSpacing.sm),
               Wrap(
                 spacing: AppSpacing.sm,

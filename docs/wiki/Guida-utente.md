@@ -304,7 +304,9 @@ Non ha un codice ma vorrebbe trovare uno spazio vicino a Lei. Gli spazi che pubb
 1. Tocchi **Trova uno spazio di lavoro** nella schermata di accesso, oppure apra **Scopri** su [Io](https://fdittgen-png.github.io/deskilo/#/me).
 2. Digiti un nome o un luogo in **Cerca spazi**.
 3. Passi dalla **Mappa** all'**Elenco** con il pulsante in alto.
-4. Apra un risultato per leggerne la pagina pubblica. Lì, **Richiedi un profilo nello spazio** chiede di aderire e **Entra** apre uno spazio a cui già appartiene.
+4. Selezioni **Vedi** su una scheda per leggere la pagina pubblica. Le azioni disponibili dipendono da ciò che l’attività supporta; **Chiedi di unirti** richiede l’adesione ed **Entra** apre un’attività di cui fa già parte.
+
+Le schede mostrano dotazioni, accessibilità e orari abituali pubblicati, accanto all’immagine, al luogo e al tipo di attività. La pagina raggruppa gli stessi dati, la panoramica, le informazioni aggiuntive e le opzioni di contatto. **Non pubblicato** significa sconosciuto: non indica che manchi una dotazione o che il luogo sia inaccessibile. Gli orari usano il fuso dell’attività e non garantiscono la disponibilità effettiva. Se l’aggiornamento non riesce, un avviso identifica i dati conservati e **Riprova** interroga di nuovo la stessa fonte.
 
 **Da sapere**
 

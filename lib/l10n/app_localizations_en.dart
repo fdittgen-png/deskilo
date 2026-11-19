@@ -25961,10 +25961,16 @@ class AppLocalizationsEn extends AppLocalizations {
   String get publicPersonUnavailable => 'This profile is not public.';
 
   @override
+  String get publicProfileContacts => 'Contact options';
+
+  @override
   String get publicProfileCopied => 'Link copied.';
 
   @override
   String get publicProfileCopy => 'Copy the link';
+
+  @override
+  String get publicProfileInformation => 'Additional information';
 
   @override
   String get publicProfileOff =>
@@ -25975,6 +25981,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Anyone with the link reads your name, profession and bio.';
 
   @override
+  String get publicProfileOverview => 'Overview';
+
+  @override
   String get publicProfilePublishAction => 'Publish';
 
   @override
@@ -25983,6 +25992,24 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get publicProfilePublishTitle => 'Publish a public profile?';
+
+  @override
+  String get publicProfilePublishedInfo =>
+      'Information published by this business. Missing information does not mean that a facility is absent.';
+
+  @override
+  String get publicProfileRefreshFailed =>
+      'Could not refresh this business’s page. Showing the information already loaded.';
+
+  @override
+  String get publicProfileRefreshing => 'Refreshing published information…';
+
+  @override
+  String get publicProfileRegularHours =>
+      'Regular hours in the business’s timezone; exceptions and live availability may differ.';
+
+  @override
+  String get publicProfileTakesInquiries => 'Accepts inquiries';
 
   @override
   String get publicProfileTitle => 'Public profile';
