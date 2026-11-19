@@ -2723,7 +2723,7 @@ routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p
 routine public.guest_participation_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:f9dca924a932
 routine public.guest_participation_self_view(p guest_participations) -> jsonb | function | invoker | stable | exec:service_role | body:bfd6829ac539
 routine public.guest_pass_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6cd39db180f6
-routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:50d0587fa8d5
+routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:bc1e03330614
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
@@ -3256,7 +3256,7 @@ routine public.payment_reconciliation_finish_v1(p_workspace_id uuid, p_lease_tok
 routine public.payment_reconciliation_retention() -> interval | function | invoker | immutable | exec:service_role | body:ffdd0cdefdbc
 routine public.payment_reconciliation_tick() -> text | function | definer | volatile | exec:service_role | body:eddab0b00001
 routine public.payment_resend_window() -> interval | function | invoker | immutable | exec:service_role | body:cf85131d159c
-routine public.payment_resend_window(p_provider text) -> interval | function | definer | stable | exec:service_role | body:3eed4968180e
+routine public.payment_resend_window(p_provider text) -> interval | function | definer | stable | exec:service_role | body:dd53229b77ba
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17dae5ea6441
 routine public.payment_used_cents(p_ledger uuid) -> bigint | function | definer | stable | exec:service_role | body:0510e4d33ba7
