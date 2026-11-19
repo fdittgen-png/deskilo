@@ -140,7 +140,11 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
       ),
       action: refused != null
           ? null
-          : SnackBarAction(label: l10n.commonRetry, onPressed: _declareAgain),
+          : SnackBarAction(
+              key: const ValueKey('finance-declare-retry'),
+              label: l10n.commonRetry,
+              onPressed: _declareAgain,
+            ),
     );
   }
 

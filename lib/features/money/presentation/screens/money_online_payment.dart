@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../../../core/trace/guarded.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -162,6 +163,7 @@ class MoneyOnlinePayment {
     final l10n = _context.l10n;
     AppSnack.error(_context, l10n.payOnlineContextNotReady,
         action: SnackBarAction(
+          key: const ValueKey('pay-not-ready-retry'),
           label: l10n.commonRetry,
           onPressed: () {
             if (_context.mounted) {
@@ -394,7 +396,7 @@ class PaymentDiagnosticsDialog extends StatelessWidget {
         children: [
           Text(
             l10n.payOnlineDiagBusiness(business),
-            style: small?.copyWith(fontWeight: FontWeight.w600),
+            style: small?.emphasised,
           ),
           Text(
             l10n.payOnlineDiagHint,

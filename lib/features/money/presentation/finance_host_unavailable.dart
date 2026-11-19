@@ -24,6 +24,10 @@ void showFinanceHostUnavailable(
     opening
         ? l10n.financesBusinessUnavailableOpen(business)
         : l10n.financesBusinessUnavailable(business),
-    action: SnackBarAction(label: l10n.commonRetry, onPressed: retry),
+    action: SnackBarAction(
+      key: const ValueKey('finance-host-retry'),
+      label: l10n.commonRetry,
+      onPressed: retry,
+    ),
   );
 }
