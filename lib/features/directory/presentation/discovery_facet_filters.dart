@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/theme/app_spacing.dart';
+import '../../../core/ui/app_sheet.dart';
 import '../domain/public_facets.dart';
 import 'public_facet_labels.dart';
 
@@ -30,7 +31,7 @@ class DiscoveryFacetFilters extends StatelessWidget {
   int get _count => amenities.length + accessibility.length;
 
   Future<void> _open(BuildContext context) async {
-    final chosen = await showModalBottomSheet<(List<String>, List<String>)>(
+    final chosen = await showAppSheet<(List<String>, List<String>)>(
       context: context,
       isScrollControlled: true,
       showDragHandle: true,
