@@ -1,13 +1,13 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- #4216 (0813): a booking's own member always sees it, whatever place it
--- names; a booking that names no place (its place was removed, its label
--- kept) is the business's, as it was: listed, its events shown, exported to
--- its member and cancelled by whoever may cancel bookings. Deciding a booking
--- request needs the right to see the booking; whoever holds the sites right
--- adds an external level and reads it back; a business without an external
--- level answers the booking rule at once.
+-- names, paused or not; a booking that names no place any more is read by
+-- its member, the sites right, the owner and the administrators, and by
+-- everyone else only when its place was not a hidden one when it was removed.
+-- Deciding a booking request needs the right to see the booking; whoever
+-- holds the sites right adds an external level and reads it back; a business
+-- without an external level answers the booking rule at once.
 begin;
-select plan(20);
+select plan(30);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004216' || lpad(n::text, 4, '0'))::uuid;
@@ -15,7 +15,7 @@ $$;
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select pg_temp.u(n), '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated',
        'places4216-' || n || '@example.test', '', now(), now(), now()
-  from generate_series(1, 4) n;
+  from generate_series(1, 6) n;
 -- administrators read the figures and the bookings, not the sites
 insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags, role_permissions)
 values (pg_temp.u(101), 'Places 4216', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1),
@@ -25,7 +25,8 @@ insert into public.members (id, workspace_id, user_id, is_owner, is_admin, statu
 values (pg_temp.u(201), pg_temp.u(101), pg_temp.u(1), true, true, 'active', '2026-01-01'),
        (pg_temp.u(202), pg_temp.u(101), pg_temp.u(2), false, false, 'active', '2026-01-01'),
        (pg_temp.u(203), pg_temp.u(101), pg_temp.u(3), false, false, 'active', '2026-01-01'),
-       (pg_temp.u(204), pg_temp.u(101), pg_temp.u(4), false, true, 'active', '2026-01-01');
+       (pg_temp.u(204), pg_temp.u(101), pg_temp.u(4), false, true, 'active', '2026-01-01'),
+       (pg_temp.u(206), pg_temp.u(101), pg_temp.u(6), false, false, 'exited', '2026-01-01');
 -- the business's own floor, and an external one whose room is rented to 202
 insert into public.levels (id, workspace_id, name, sort_order, kind)
 values (pg_temp.u(301), pg_temp.u(101), 'Ground', 0, 'own'),
@@ -79,33 +80,41 @@ $$;
 create function pg_temp.decide(n int, p_event uuid) returns text language sql as $$
   select pg_temp.as_user(n, format('select public.respond_to_event(%L, true)::text', p_event));
 $$;
+create function pg_temp.remove(p_kind text, p int) returns text language sql as $$
+  select pg_temp.as_user(1, format('select public.delete_plan_object(%L, %L)::text', p_kind, pg_temp.u(p)));
+$$;
 
--- Bookings of 202 that name no place any more: their place was removed from
--- the plan and only its label is kept. One checked in, two reserved.
+-- Bookings of 202 that name no place any more, removed before the record of
+-- whether their place was hidden was kept: one checked in, two reserved.
 insert into public.reservations (id, workspace_id, member_id, starts_at, ends_at, status, space_label)
 values (pg_temp.u(403), pg_temp.u(101), pg_temp.u(202), now() - interval '1 hour', now() + interval '1 hour', 'checked_in', 'Terrace'),
        (pg_temp.u(404), pg_temp.u(101), pg_temp.u(202), now() + interval '5 hours', now() + interval '6 hours', 'reserved', 'Terrace'),
        (pg_temp.u(405), pg_temp.u(101), pg_temp.u(202), now() + interval '7 hours', now() + interval '8 hours', 'reserved', 'Terrace');
 
--- ── 1, 2: a booking that names no place, in a business with an external level ──
-select is(pg_temp.row_of(2, 403), '1', 'its member lists a booking whose place was removed');
-select is(pg_temp.events_of(2, 403), '1', 'and sees its events');
-select is(pg_temp.row_of(1, 403) || '/' || pg_temp.events_of(1, 403), '1/1', 'the owner lists it and sees its events');
-select is(pg_temp.row_of(4, 403) || '/' || pg_temp.events_of(4, 403), '1/1', 'an administrator lists it and sees its events');
-select is(pg_temp.row_of(3, 403) || '/' || pg_temp.events_of(3, 403), pg_temp.row_of(3, 401) || '/' || pg_temp.events_of(3, 401),
-  'another member reads it as a booking of the business''s own floor');
+-- ── 1: the member's own booking, whatever place it names ──
+select is(pg_temp.row_of(2, 403) || '/' || pg_temp.events_of(2, 403), '1/1',
+  'its member lists a booking whose place was removed, and sees its events');
 select ok(pg_temp.as_user(2, format('select public.export_my_data(%L)->>''events''', pg_temp.u(101)))
             like '%' || (select id::text from public.events where reservation_id = pg_temp.u(403) limit 1) || '%',
   'the member''s own export carries its events');
+update public.members set status = 'paused' where id = pg_temp.u(202);
+select is(pg_temp.row_of(2, 403) || '/' || pg_temp.events_of(2, 403) || '/' || pg_temp.row_of(2, 402), '1/1/1',
+  'a paused member still sees their own bookings, of no place and of a rented room');
+update public.members set status = 'active' where id = pg_temp.u(202);
+
+-- ── 2: a booking removed before the record was kept, where the business has an external level ──
+select is(pg_temp.row_of(1, 403) || '/' || pg_temp.events_of(1, 403), '1/1', 'the owner lists it and sees its events');
+select is(pg_temp.row_of(4, 403) || '/' || pg_temp.events_of(4, 403), '1/1', 'an administrator lists it and sees its events');
+select is(pg_temp.row_of(3, 403) || '/' || pg_temp.events_of(3, 403), '0/0', 'another member neither lists it nor sees its events');
 select is(pg_temp.cancel(2, 404), '', 'its member cancels it');
 select is(pg_temp.cancel(1, 405), '', 'the owner cancels it');
 select is(pg_temp.cancel(2, 403), '', 'a checked-in one is cancelled by its member');
 select is((select string_agg(status, ',' order by id) from public.reservations where id in (pg_temp.u(403), pg_temp.u(404), pg_temp.u(405))),
   'cancelled,cancelled,cancelled', 'all three are cancelled');
 
--- ── the 0809 rules hold: the rented room's booking stays hidden ──
-select is(pg_temp.events_of(3, 402), '0', 'another member does not see the events of a booking in a room hidden from them');
-select is(pg_temp.events_of(2, 402), '1', 'its member does');
+-- ── 0809 holds: the rented room's booking stays hidden from an outsider ──
+select is(pg_temp.row_of(3, 402) || '/' || pg_temp.events_of(3, 402), '0/0',
+  'another member neither lists a booking in a room hidden from them nor sees its events');
 
 -- ── 4: deciding a booking request needs the right to see the booking ──
 insert into public.events (id, workspace_id, type, action, actor_member_id, subject_member_id, reservation_id, payload, status)
@@ -113,8 +122,27 @@ values (pg_temp.u(601), pg_temp.u(101), 'reservation', 'created', pg_temp.u(202)
        (pg_temp.u(602), pg_temp.u(101), 'reservation', 'created', pg_temp.u(202), pg_temp.u(202), pg_temp.u(401), '{}', 'pending');
 select is(pg_temp.decide(4, pg_temp.u(601)), pg_temp.decide(4, gen_random_uuid()),
   'a request for a booking the administrator may not see is answered as an unknown event');
+select is(pg_temp.decide(6, pg_temp.u(601)), pg_temp.decide(6, gen_random_uuid()),
+  'so it is to a member who left the business');
+select is(pg_temp.decide(5, pg_temp.u(601)), pg_temp.decide(5, gen_random_uuid()),
+  'and to someone who never belonged to it');
 select ok(pg_temp.decide(4, pg_temp.u(602)) not like '%unknown event%',
   'a request for a booking the administrator sees is not');
+
+-- ── 2: removing a place records whether it was a hidden one ──
+select is(pg_temp.remove('office', 312), '', 'the owner removes the rented room of the external level');
+select is((select removed_place_hidden from public.reservations where id = pg_temp.u(402)), true,
+  'its booking records that its place was a hidden one');
+select is(pg_temp.row_of(3, 402) || '/' || pg_temp.events_of(3, 402), '0/0',
+  'another member neither lists it nor sees its events');
+select is(pg_temp.row_of(2, 402) || '/' || pg_temp.row_of(1, 402) || '/' || pg_temp.row_of(4, 402), '1/1/1',
+  'its member, the owner and an administrator list it');
+select set_config('t.before', pg_temp.row_of(3, 401) || '/' || pg_temp.events_of(3, 401), true);
+select is(pg_temp.remove('desk', 321), '', 'the owner removes a desk of the business''s own floor');
+select is((select removed_place_hidden from public.reservations where id = pg_temp.u(401)), false,
+  'its booking records that its place was not a hidden one');
+select is(pg_temp.row_of(3, 401) || '/' || pg_temp.events_of(3, 401), current_setting('t.before'),
+  'another member reads it as before');
 
 -- ── 5: the sites right adds an external level and reads it back ──
 select is(pg_temp.as_user(1, format(
@@ -125,17 +153,23 @@ select is(pg_temp.as_user(1, format(
 select ok(not exists (select 1 from regexp_split_to_table(pg_temp.as_user(3, 'select coalesce(string_agg(x::text, '',''), '''') from public.member_workspaces_without_external_level() x'), ',') w where w = pg_temp.u(101)::text),
   'a business with an external level is not among the caller''s businesses without one');
 delete from public.room_rental_audience where rental_id = pg_temp.u(502);
-delete from public.reservations where id = pg_temp.u(402);
 delete from public.room_rentals where id = pg_temp.u(502);
 update public.levels set kind = 'own' where workspace_id = pg_temp.u(101);
-select is(pg_temp.as_user(3, format('select public.booking_event_visible(%L, %L)::text', pg_temp.u(101), gen_random_uuid())),
-  'true', 'without an external level the booking rule answers at once');
-select is(pg_temp.events_of(2, 403) || '/' || pg_temp.events_of(1, 403), '2/2',
-  'there the member and the owner see the events of a booking that names no place');
 select ok(exists (select 1 from regexp_split_to_table(pg_temp.as_user(3, 'select coalesce(string_agg(x::text, '',''), '''') from public.member_workspaces_without_external_level() x'), ',') w where w = pg_temp.u(101)::text),
   'once it has none, it is');
+select is(pg_temp.as_user(3, format(
+  'select count(*)::text from public.events where workspace_id = %L and reservation_id is not null
+      and workspace_id in (select public.member_workspaces_without_external_level())', pg_temp.u(101))),
+  pg_temp.as_user(3, format('select count(*)::text from public.events where workspace_id = %L and reservation_id is not null', pg_temp.u(101))),
+  'there the policy''s list alone admits every booking event the member reads');
+select is(pg_temp.as_user(3, format('select public.booking_event_visible(%L, %L)::text', pg_temp.u(101), gen_random_uuid())),
+  'true', 'and the booking rule answers at once');
+select is(pg_temp.as_user(5, format('select public.booking_event_visible(%L, %L)::text', pg_temp.u(101), pg_temp.u(403))),
+  'false', 'but not to someone who does not belong to the business');
+select is(pg_temp.events_of(2, 403) || '/' || pg_temp.events_of(1, 403), '2/2',
+  'there its member and the owner see the events of a booking that names no place');
 select ok(not has_function_privilege('anon', 'public.member_workspaces_without_external_level()', 'execute'),
-  'no one signed out asks it');
+  'no one signed out asks for the list');
 
 select * from finish();
 rollback;
