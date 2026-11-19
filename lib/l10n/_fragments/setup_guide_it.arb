@@ -36,6 +36,8 @@
   "setupStepHintInvite": "Condivida il codice dello spazio o invii inviti.",
   "setupStepHintPricing": "Quanto costa un posto, un abbonamento o una giornata.",
   "setupStepHintServices": "Caffè, stampa, armadietti: ciò che i membri possono aggiungere.",
+  "setupStepHintPricingNoPlaces": "Quanto costa la vostra offerta: prezzi e piani.",
+  "setupStepHintServicesNoPlaces": "Ciò che offrite ai vostri clienti: ogni servizio, la sua durata e il suo prezzo.",
   "setupStepHintPaymentMethods": "I suoi dati bancari e le istruzioni di pagamento.",
   "setupStepHintOnlinePayments": "Pagamento con carta tramite un fornitore collegato dal suo operatore.",
   "setupStepHintApprovals": "Chi convalida le richieste e quante persone devono essere d'accordo.",

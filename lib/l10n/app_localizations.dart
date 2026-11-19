@@ -52850,6 +52850,12 @@ abstract class AppLocalizations {
   /// **'What a place, a membership or a day costs.'**
   String get setupStepHintPricing;
 
+  /// #3547 setupStepHint: the label for case 'pricing' of a business without bookable places.
+  ///
+  /// In en, this message translates to:
+  /// **'What your offer costs: prices and plans.'**
+  String get setupStepHintPricingNoPlaces;
+
   /// #3485 setupStepHint: the label for case 'public_page'.
   ///
   /// In en, this message translates to:
@@ -52879,6 +52885,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Coffee, printing, lockers: what members can add.'**
   String get setupStepHintServices;
+
+  /// #3547 setupStepHint: the label for case 'services' of a business without bookable places.
+  ///
+  /// In en, this message translates to:
+  /// **'What you offer your customers: each service, how long it takes and what it costs.'**
+  String get setupStepHintServicesNoPlaces;
 
   /// #3485 setupStepHint: the label for case 'vat'.
   ///

@@ -27,10 +27,16 @@ class SetupServicesStep extends ConsumerStatefulWidget {
     super.key,
     required this.workspaceId,
     required this.currencyCode,
+    required this.hasPlaces,
   });
 
   final String workspaceId;
   final String currencyCode;
+
+  /// Whether the business has bookable places (#3547): members add coffee,
+  /// printing and lockers to a place; a business without one offers its
+  /// customers services.
+  final bool hasPlaces;
 
   @override
   ConsumerState<SetupServicesStep> createState() => _SetupServicesStepState();
@@ -84,7 +90,7 @@ class _SetupServicesStepState extends ConsumerState<SetupServicesStep> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.setupStepHint('services')),
+        Text(l10n.setupStepHintFor('services', hasPlaces: widget.hasPlaces)),
         const SizedBox(height: AppSpacing.lg),
         Text(l10n.servicesTitle, style: theme.textTheme.titleSmall),
         if (stored.isEmpty)

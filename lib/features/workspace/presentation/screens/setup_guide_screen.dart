@@ -319,9 +319,11 @@ class _NextCard extends ConsumerWidget {
     // inside the demo itself.
     final inDemo = DemoEnvironment.maybeOf(context) != null;
     // #3235 — and only where the demo is switched on.
-    final demoOn = ref
-        .watch(enabledFeaturesSyncProvider)
-        .contains(WorkspaceFeature.demoMode);
+    final features = ref.watch(enabledFeaturesSyncProvider);
+    final demoOn = features.contains(WorkspaceFeature.demoMode);
+    // #3547 — a business without places is told what it does, not what a
+    // place, a membership or a locker costs.
+    final hasPlaces = features.contains(WorkspaceFeature.placeBooking);
     return Card(
       key: const ValueKey('setup-guide-next'),
       color: theme.colorScheme.primaryContainer,
@@ -337,7 +339,7 @@ class _NextCard extends ConsumerWidget {
               style: theme.textTheme.titleLarge,
             ),
             const SizedBox(height: AppSpacing.xs),
-            Text(l10n.setupStepHint(step.step)),
+            Text(l10n.setupStepHintFor(step.step, hasPlaces: hasPlaces)),
             const SizedBox(height: AppSpacing.sm),
             Wrap(
               spacing: AppSpacing.sm,
@@ -421,15 +423,18 @@ class _Folded extends StatelessWidget {
   }
 }
 
-class _StepTile extends StatelessWidget {
+class _StepTile extends ConsumerWidget {
   const _StepTile({required this.step, required this.actions, this.status});
   final SetupStepStatus step;
   final _Actions actions;
   final SetupStatus? status;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final hasPlaces = ref
+        .watch(enabledFeaturesSyncProvider)
+        .contains(WorkspaceFeature.placeBooking);
     final waitsFor = step.blockedBy.isEmpty
         ? null
         : l10n.setupGuideWaitsFor(
@@ -445,7 +450,7 @@ class _StepTile extends StatelessWidget {
           setupStepWord(l10n, step),
           ?waitsFor,
           if (step.state == SetupStepState.needsConfiguration)
-            l10n.setupStepHint(step.step),
+            l10n.setupStepHintFor(step.step, hasPlaces: hasPlaces),
         ].join(' · '),
       ),
       trailing: Row(

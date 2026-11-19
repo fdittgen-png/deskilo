@@ -33387,6 +33387,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Was ein Platz, eine Mitgliedschaft oder ein Tag kostet.';
 
   @override
+  String get setupStepHintPricingNoPlaces =>
+      'Was Ihr Angebot kostet: Preise und Tarife.';
+
+  @override
   String get setupStepHintPublicPage =>
       'Was Menschen außerhalb des Bereichs sehen können, auch wo Sie auf der Karte sind.';
 
@@ -33404,6 +33408,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get setupStepHintServices =>
       'Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.';
+
+  @override
+  String get setupStepHintServicesNoPlaces =>
+      'Was Sie Ihren Kundinnen und Kunden anbieten: jede Leistung, ihre Dauer und ihr Preis.';
 
   @override
   String get setupStepHintVat =>

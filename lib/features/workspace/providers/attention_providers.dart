@@ -27,12 +27,16 @@ import '../../events/providers/event_providers.dart';
 import '../../money/providers/money_providers.dart';
 import '../application/process_status.dart';
 import '../domain/attention.dart';
+import '../domain/business_kind.dart';
+import '../domain/business_profile.dart';
 import '../domain/member.dart';
 import '../domain/setup_status.dart';
+import '../domain/switched_off_by_kind.dart';
 import '../domain/workspace.dart';
 import '../domain/workspace_feature.dart';
 import '../domain/workspace_permission.dart';
 import '../domain/workspace_readiness.dart';
+import 'business_kind_providers.dart';
 import 'local_setup_providers.dart';
 import 'workspace_providers.dart';
 
@@ -71,6 +75,10 @@ Future<List<Attention>> attention(Ref ref) async {
   // the first await.
   final permissions = ref.watch(myPermissionsProvider);
   final payments = ref.watch(paymentGatewayRepositoryProvider);
+  // #3547 — the business's kinds, watched and never awaited: the list does
+  // not wait on the settings, and is made again when they arrive.
+  final kinds = ref.watch(businessKindsProvider);
+  final profile = ref.watch(businessProfileProvider);
 
   // Events awaiting MY decision. `myPendingEventsProvider` already
   // applies the validation policy and the caller's own permissions, so
@@ -150,6 +158,11 @@ Future<List<Attention>> attention(Ref ref) async {
         }
       }
     }
+    // #3547 — a parent the business's own kind keeps off (the places of a
+    // practice) holds its stored children dormant: that is its choice, not
+    // setup left to do, and no line is made of it.
+    final dormant = _keptOffByKind(waiting.keys, kinds, profile);
+    waiting.removeWhere((parent, _) => dormant.contains(parent));
     for (final e in waiting.entries) {
       items.add(
         Attention(
@@ -274,3 +287,28 @@ Future<List<Attention>> _setupLines(
     return const [];
   }
 }
+
+/// The [parents] the business's kind keeps off. Until the kinds and the
+/// profile are both read, and when one of them cannot be, nothing is kept off:
+/// every waiting line stays, the conservative answer.
+Set<WorkspaceFeature> _keptOffByKind(
+  Iterable<WorkspaceFeature> parents,
+  AsyncValue<List<BusinessKind>> kinds,
+  AsyncValue<BusinessProfile> profile,
+) => switch ((kinds, profile)) {
+  (AsyncData(value: final kinds), AsyncData(value: final profile)) => {
+    for (final parent in parents)
+      if (switchedOffByKind(parent, profile, kinds)) parent,
+  },
+  (AsyncError(:final error, :final stackTrace), _) ||
+  (_, AsyncError(:final error, :final stackTrace)) => () {
+    TraceLogger.instance.warn(
+      'workspace',
+      'business kind unreadable for the attention list',
+      error: error,
+      stackTrace: stackTrace,
+    );
+    return const <WorkspaceFeature>{};
+  }(),
+  _ => const <WorkspaceFeature>{},
+};
