@@ -2,7 +2,7 @@
 -- #4147: continuation reads an existing own payment's original facts. It
 -- never opens a replacement, even after the balance or payment state changes.
 begin;
-select plan(32);
+select plan(33);
 
 create function pg_temp.seed() returns void language plpgsql as $$
 declare
