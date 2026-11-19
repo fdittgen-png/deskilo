@@ -17,6 +17,7 @@ import 'package:deskilo/features/directory/presentation/directory_map.dart';
 import 'package:deskilo/features/directory/presentation/directory_screen.dart';
 import 'package:deskilo/features/directory/presentation/member_employment_tile.dart';
 import 'package:deskilo/features/directory/presentation/public_page_editor.dart';
+import 'package:deskilo/features/directory/presentation/public_workspace_view.dart';
 import 'package:deskilo/features/directory/providers/directory_location_providers.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
@@ -345,9 +346,12 @@ void main() {
         find.byKey(const ValueKey('directory-view-https://host.example/space')),
       );
       await tester.pumpAndSettle();
+      expect(find.text('Run by a person'), findsOneWidget);
+      await tester.scrollUntilVisible(find.text('Alice'), 200,
+          scrollable: find.descendant(of: find.byType(PublicWorkspaceView),
+              matching: find.byType(Scrollable)).first);
       expect(find.text('Alice'), findsOneWidget);
       expect(find.text('Owner'), findsOneWidget);
-      expect(find.text('Run by a person'), findsOneWidget);
     },
   );
   testWidgets(

@@ -30,6 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/directory_scroll.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
@@ -209,6 +210,7 @@ void main() {
       findsOneWidget,
     );
     for (final p in places) {
+      await revealDirectoryItem(tester, find.byKey(ValueKey('directory-row-$_source/${p.id}')));
       expect(
         find.byKey(ValueKey('directory-row-$_source/${p.id}')),
         findsOneWidget,

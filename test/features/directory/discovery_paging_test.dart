@@ -20,6 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/directory_scroll.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
@@ -184,7 +185,8 @@ void main() {
       for (final id in ['b0', 'b1', 'b2']) {
         expect(find.byKey(_row(_b, id)), findsOneWidget, reason: id);
       }
-      await tester.tap(find.byKey(const ValueKey('directory-details')));
+      await revealDirectoryItem(tester, find.byKey(const ValueKey('directory-details')));
+    await tester.tap(find.byKey(const ValueKey('directory-details')));
       await tester.pumpAndSettle();
       expect(
         find.text(
@@ -212,6 +214,7 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(_row(_a, 'a0')), findsOneWidget);
     expect(find.byKey(_row(_b, 'b0')), findsNothing);
+    await revealDirectoryItem(tester, find.byKey(const ValueKey('directory-details')));
     await tester.tap(find.byKey(const ValueKey('directory-details')));
     await tester.pumpAndSettle();
     expect(
@@ -219,6 +222,7 @@ void main() {
       findsOneWidget,
     );
     directory.failPages.clear();
+    await revealDirectoryItem(tester, find.byKey(const ValueKey('directory-source-retry-$_b')));
     await tester.tap(find.byKey(const ValueKey('directory-source-retry-$_b')));
     await tester.pumpAndSettle();
     expect(find.byKey(_row(_b, 'b0')), findsOneWidget);
