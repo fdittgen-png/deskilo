@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Elegir al pagar",
+  "accountPaymentAwaitingMatch": "Recibido, pendiente de conciliar",
   "accountPaymentConfirmed": "Pago confirmado",
   "accountPaymentPreference": "Pago en línea preferido",
   "accountRefundDue": "Reembolso pendiente del espacio",

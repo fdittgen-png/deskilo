@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Scegli al pagamento",
+  "accountPaymentAwaitingMatch": "Ricevuto, in attesa di abbinamento",
   "accountPaymentConfirmed": "Pagamento confermato",
   "accountPaymentPreference": "Pagamento online preferito",
   "accountRefundDue": "Rimborso dovuto dallo spazio",

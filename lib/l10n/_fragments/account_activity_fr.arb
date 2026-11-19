@@ -4,6 +4,7 @@
   "accountActivityEmpty": "Aucun enregistrement à afficher.",
   "accountActivityFailed": "Impossible de charger votre historique financier. Appuyez pour réessayer.",
   "accountPaymentConfirmed": "Paiement confirmé",
+  "accountPaymentAwaitingMatch": "Reçu, en attente de rapprochement",
   "accountInvoiceVoided": "Facture annulée",
   "accountInvoiceRegrouped": "Inclus dans une facture de regroupement",
   "accountInvoiceIssued": "Facture émise",

@@ -272,6 +272,10 @@
   "@accountPaymentAsk": {
     "description": "Shown as a text in personal payment provider (money)."
   },
+  "accountPaymentAwaitingMatch": "Received, waiting to be matched",
+  "@accountPaymentAwaitingMatch": {
+    "description": "#4225 the state of a payment that arrived and no invoice has taken yet, as the business holds it under Payments to match"
+  },
   "accountPaymentConfirmed": "Payment confirmed",
   "@accountPaymentConfirmed": {
     "description": "Shown as a text in account activity screen (money), and 1 other place."
