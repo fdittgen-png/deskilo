@@ -126,6 +126,8 @@ insert into listed (sig, tables, reason) values
    'callable by the service role only'),
   ('usage_records_read_v1(uuid,text,uuid)', 'reservations',
    'the members'' billing under the finance right; a usage names what was used'),
+  ('member_workspaces_without_external_level()', 'levels',
+   'the caller''s own businesses that have no external level; no place'),
   ('workspace_has_external_level(uuid)', 'levels',
    'one yes or no for the business, to its members; no place'),
   ('workspace_readiness(uuid)', 'reservations,seats',
@@ -168,7 +170,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 58, 'the list holds 58 reasoned exceptions');
+select ok((select count(*) from listed) = 59, 'the list holds 59 reasoned exceptions');
 
 select * from finish();
 rollback;
