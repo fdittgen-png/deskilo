@@ -8413,7 +8413,56 @@ class AppLocalizationsFr extends AppLocalizations {
   String get discoveryFacetAmenityWifi => 'Wi-Fi';
 
   @override
+  String get discoveryFacetNoMatch =>
+      'Aucune entreprise ayant répondu ne publie tout cela.';
+
+  @override
+  String discoveryFacetsUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count annuaires ne savent pas filtrer selon ces critères : ils n’ont pas été interrogés.',
+      one: 'Un annuaire ne sait pas filtrer selon ces critères : il n’a pas été interrogé.',
+      zero:
+          '$count annuaires ne savent pas filtrer selon ces critères : ils n’ont pas été interrogés.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get discoveryFieldNotPublished => 'Non publié';
+
+  @override
+  String get discoveryFiltersAccessibility => 'Accessibilité';
+
+  @override
+  String get discoveryFiltersAmenities => 'Équipements';
+
+  @override
+  String discoveryFiltersButtonCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filtres ($count)',
+      one: 'Filtres ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryFiltersClear => 'Effacer les filtres';
+
+  @override
+  String get discoveryFiltersNote =>
+      'Une entreprise qui ne publie rien sur un point n’apparaît pas pour ce critère : ce qui n’est pas publié est inconnu, pas refusé.';
+
+  @override
+  String get discoveryFiltersShow => 'Afficher les résultats';
+
+  @override
+  String get discoveryFiltersTitle =>
+      'Filtrer selon ce que les entreprises publient';
 
   @override
   String get discoveryHoursClosed => 'Aucun jour d’ouverture habituel publié';

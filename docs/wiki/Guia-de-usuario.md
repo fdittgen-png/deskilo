@@ -308,6 +308,8 @@ Usted no tiene ningún código pero quisiera encontrar un espacio cercano. Los e
 
 Las tarjetas muestran equipamientos, accesibilidad y horarios habituales publicados, junto a la imagen, el lugar y el tipo de negocio. La página agrupa esos mismos datos, el resumen, la información adicional y las opciones de contacto. **No publicado** significa desconocido: no indica que falte un equipamiento ni que el lugar sea inaccesible. Los horarios usan la zona horaria del negocio y no garantizan disponibilidad actual. Si falla la actualización, un aviso identifica los datos conservados y **Reintentar** consulta de nuevo la misma fuente.
 
+**Filtros** acota Discover según lo que publican las empresas: instalaciones y accesibilidad, junto con el tipo de empresa y las palabras escritas. Elija los datos que necesita; una empresa solo aparece si los publica todos. Una empresa que no publica nada sobre un dato no aparece para él, porque lo no publicado es desconocido. Si un directorio no puede filtrar por estos datos, un aviso dice que no se le ha preguntado: sus empresas faltan en el resultado, no están ausentes de él. Su búsqueda, sus filtros y su selección se conservan al abrir una página y volver, o al cambiar de pestaña y regresar.
+
 **Conviene saber**
 
 - Solo se muestran los espacios que han decidido ser visibles. En la demo, el mapa muestra el espacio de demostración y dos vecinos inventados; sus páginas, una solicitud para unirse y un mensaje a sus anfitriones se quedan dentro de la demo.

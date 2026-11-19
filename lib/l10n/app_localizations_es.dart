@@ -8368,7 +8368,54 @@ class AppLocalizationsEs extends AppLocalizations {
   String get discoveryFacetAmenityWifi => 'Wi-Fi';
 
   @override
+  String get discoveryFacetNoMatch =>
+      'Ninguna empresa que ha respondido publica todo esto.';
+
+  @override
+  String discoveryFacetsUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count directorios no pueden filtrar por estos datos: no se les ha preguntado.',
+      one: 'Un directorio no puede filtrar por estos datos: no se le ha preguntado.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get discoveryFieldNotPublished => 'No publicado';
+
+  @override
+  String get discoveryFiltersAccessibility => 'Accesibilidad';
+
+  @override
+  String get discoveryFiltersAmenities => 'Instalaciones';
+
+  @override
+  String discoveryFiltersButtonCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filtros ($count)',
+      one: 'Filtros ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryFiltersClear => 'Quitar filtros';
+
+  @override
+  String get discoveryFiltersNote =>
+      'Una empresa que no publica nada sobre un dato no aparece para él: lo no publicado es desconocido, no rechazado.';
+
+  @override
+  String get discoveryFiltersShow => 'Mostrar resultados';
+
+  @override
+  String get discoveryFiltersTitle =>
+      'Filtrar por lo que publican las empresas';
 
   @override
   String get discoveryHoursClosed =>
