@@ -12,7 +12,7 @@
 --   E a fully paid claim leaves no expense line
 --   F history is append-only; who reads what
 --   G the invoice guard
--- NOT RUN here: two synchronized sessions racing the last of a claim.
+-- Two sessions racing the last of a claim: scripts/reimbursement_offset_race.sh (#4203).
 begin;
 select plan(47);
 
