@@ -23,6 +23,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 
 import '../helpers/demo_owed.dart';
+import '../helpers/directory_scroll.dart';
 import '../helpers/screens/demo_journeys.dart' show pumpDemo;
 
 Future<void> _go(WidgetTester tester, String route) async {
@@ -231,6 +232,8 @@ void main() {
     // The two practices also appear, including the invoicing practice.
     expect(journey.fixture.directory.cards, hasLength(6));
     for (final card in journey.fixture.directory.cards) {
+      // A card is built when it is scrolled to: the cards show facts now.
+      await revealDirectoryItem(tester, find.text(card.name));
       expect(_shows(card.name), isTrue, reason: card.name);
     }
     expect(journey.fixture.directory.pages['ws-1']?['published'], isTrue);
