@@ -163,9 +163,10 @@ expect "A: 90.00 was paid out" "$(paid_out "$o1")" "9000"
 before=$(counts)
 run "$(reimburse "$o1" 4000 "$rev" "$win")"
 expect "A: the winner replayed under its request id writes nothing" "$(delta "$before" "$(counts)")" "0/0/0"
-if q "$as_owner select public.record_member_reimbursement_v1('$ws', '$o1', 3999, $rev, '$win', current_date - 1, 'bank_transfer', 'race ref');" 2>&1 | grep -q "already used for a different request"; then :; else
-  echo "::error::A: a changed payload under the winner's request id was not refused" >&2; exit 1
-fi
+refused=$(q "$as_owner select public.record_member_reimbursement_v1('$ws', '$o1', 3999, $rev, '$win', current_date - 1, 'bank_transfer', 'race ref');" 2>&1 || true)
+grep -q "already used for a different request" <<<"$refused" || {
+  echo "::error::A: a changed payload under the winner's request id was not refused: $refused" >&2; exit 1
+}
 
 # (B) the reverse, on the second claim: the offset wins, the reimbursement loses
 rev=$(revision "$o2"); win=$(uid); lose=$(uid); before=$(counts)
@@ -177,7 +178,8 @@ expect "B: nothing more was paid out" "$(paid_out "$o2")" "5000"
 before=$(counts)
 run "$(offset "$o2" "$i2" 4000 "$rev" "$win")"
 expect "B: the winner replayed under its request id writes nothing" "$(delta "$before" "$(counts)")" "0/0/0"
-if q "$as_owner select public.offset_member_claim_v1('$ws', '$o2', '$i2', 3999, $rev, '$win', '');" 2>&1 | grep -q "already used for a different request"; then :; else
-  echo "::error::B: a changed payload under the winner's request id was not refused" >&2; exit 1
-fi
+refused=$(q "$as_owner select public.offset_member_claim_v1('$ws', '$o2', '$i2', 3999, $rev, '$win', '');" 2>&1 || true)
+grep -q "already used for a different request" <<<"$refused" || {
+  echo "::error::B: a changed payload under the winner's request id was not refused: $refused" >&2; exit 1
+}
 echo "reimbursement and offset race: the last 40.00 of a claim is consumed once, in both orders"
