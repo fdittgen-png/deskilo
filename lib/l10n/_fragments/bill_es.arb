@@ -20,6 +20,7 @@
   "billPackages": "Paquetes de días",
   "payOnlineButton": "Pagar en línea",
   "payOnlineNotConfigured": "Los pagos en línea aún no están configurados. Pregunte al propietario del espacio.",
+  "payOnlineContextNotReady": "La empresa aún no está lista. Inténtelo de nuevo en un momento.",
   "payOnlinePendingTitle": "Pago en línea pendiente",
   "payOnlineFailedTitle": "Pago en línea fallido",
   "payOnlinePendingDetail": "El pago {reference} ({amount} vía {provider}) aún no ha sido confirmado por el proveedor, por lo que el saldo sigue mostrando lo adeudado. Cite esta referencia si no se liquida.",

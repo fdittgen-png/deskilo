@@ -23,6 +23,7 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../helpers/mock_providers.dart';
 
@@ -88,6 +89,12 @@ Future<FakeMoneyRepository> _show(
   bool enters = true,
   FakeAuthRepository? auth,
   void Function(String)? targetSeen,
+  bool routed = false,
+  String business = 'Atelier',
+  bool admin = false,
+  List<String>? opened,
+  bool Function()? hostLost,
+  bool openFails = false,
 }) async {
   _approved.clear();
   tester.view.physicalSize = const Size(800, 1600);
@@ -114,11 +121,24 @@ Future<FakeMoneyRepository> _show(
             return (target) async {
               targetSeen?.call(target.networkId);
               return FinanceCommandTarget(
-              target: target, memberId: 'member-1', currency: 'EUR',
-              commands: money.accountCommands, gateway: money.paymentGateway,
-              isCurrent: () => ref.mounted && ref.read(sessionStateProvider).value == principal,
-              release: () {}, open: () async => true,
-            );
+                target: target,
+                memberId: 'member-1',
+                currency: 'EUR',
+                commands: money.accountCommands,
+                gateway: money.paymentGateway,
+                isCurrent: () =>
+                    ref.mounted &&
+                    ref.read(sessionStateProvider).value == principal &&
+                    !(hostLost?.call() ?? false),
+                release: () {},
+                // #4218 — who the business is, my right there, and entering it
+                businessName: business,
+                canAdminister: admin,
+                open: () async {
+                  opened?.add(target.financeKey);
+                  return !openFails;
+                },
+              );
             };
           })
         else
@@ -128,11 +148,30 @@ Future<FakeMoneyRepository> _show(
           (context, url) async => _approved.add(url),
         ),
       ],
-      child: const MaterialApp(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        home: MyFinancesScreen(),
-      ),
+      // opening an invoice navigates: that screen needs a router above it
+      child: routed
+          ? MaterialApp.router(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              routerConfig: GoRouter(
+                routes: [
+                  GoRoute(
+                    path: '/',
+                    builder: (_, _) => const MyFinancesScreen(),
+                  ),
+                  GoRoute(path: '/money', builder: (_, _) => const SizedBox()),
+                  GoRoute(
+                    path: '/payment-config',
+                    builder: (_, _) => const Text('payment-config-page'),
+                  ),
+                ],
+              ),
+            )
+          : const MaterialApp(
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              home: MyFinancesScreen(),
+            ),
     ),
   );
   await tester.pumpAndSettle();
@@ -220,25 +259,34 @@ void main() {
     expect(find.byKey(const ValueKey('finances-selection-bar')), findsNothing);
   });
 
-  testWidgets('a workspace switch during confirmation keeps the displayed target', (tester) async {
-    final targets = <String>[];
-    final money = await _show(tester, targetSeen: targets.add);
-    await _select(tester, 'a1');
-    await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
-    final container = ProviderScope.containerOf(tester.element(find.byType(MyFinancesScreen)));
-    container.read(activeWorkspaceIdProvider.notifier).activate('ws-other');
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
-    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
-    await tester.pump();
-    await tester.pump(const Duration(milliseconds: 300));
-    expect(targets, ['11111111-1111-4111-8111-111111111111:ws-1']);
-    expect(money.recordedPayments.single.amountCents, 12000);
-  });
+  testWidgets(
+    'a workspace switch during confirmation keeps the displayed target',
+    (tester) async {
+      final targets = <String>[];
+      final money = await _show(tester, targetSeen: targets.add);
+      await _select(tester, 'a1');
+      await tester.tap(
+        find.byKey(const ValueKey('finances-selection-declare')),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      final container = ProviderScope.containerOf(
+        tester.element(find.byType(MyFinancesScreen)),
+      );
+      container.read(activeWorkspaceIdProvider.notifier).activate('ws-other');
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 300));
+      expect(targets, ['11111111-1111-4111-8111-111111111111:ws-1']);
+      expect(money.recordedPayments.single.amountCents, 12000);
+    },
+  );
 
-  testWidgets('an account change during confirmation prevents the command', (tester) async {
+  testWidgets('an account change during confirmation prevents the command', (
+    tester,
+  ) async {
     final auth = FakeAuthRepository.signedIn();
     final money = await _show(tester, auth: auth);
     await _select(tester, 'a1');
@@ -428,16 +476,20 @@ void main() {
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
     await tester.pumpAndSettle();
-    expect(find.descendant(of: find.byType(SnackBar),
-      matching: find.textContaining('must be updated')), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(SnackBar),
+        matching: find.textContaining('must be updated'),
+      ),
+      findsOneWidget,
+    );
     expect(money.paymentOrders, isEmpty);
 
     money.paymentGateway
       ..takesClaims = true
       ..dropsClaim = true;
-    ScaffoldMessenger.of(
-      tester.element(find.byType(Scaffold).first),
-    ).removeCurrentSnackBar();
+    ScaffoldMessenger.of(tester.element(find.byType(Scaffold).first))
+        .removeCurrentSnackBar();
     await tester.pumpAndSettle();
     await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
     await tester.pumpAndSettle();
@@ -457,10 +509,187 @@ void main() {
     await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
     await tester.pumpAndSettle();
     expect(
-      find.text('Atelier cannot be reached right now. Nothing was sent.'),
+      find.text(
+        'Atelier cannot be reached or verified right now. Nothing was sent.',
+      ),
       findsOneWidget,
     );
     expect(money.recordedPayments, isEmpty);
+    // #4218 — and the person is offered to try again: the same action runs
+    // again from its confirmation.
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('finances-confirm-send')), findsOneWidget);
+  });
+
+  testWidgets('a Pay on a business that cannot be reached or verified says '
+      'so and offers to try again', (tester) async {
+    final money = await _show(tester, enters: false);
+    money
+      ..paymentProviders = [PaymentProvider.stripe]
+      ..paymentApprovalUrl = Uri.parse('https://checkout.example/session');
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text(
+        'Atelier cannot be reached or verified right now. Nothing was sent.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+    expect(money.paymentOrders, isEmpty);
+  });
+
+  testWidgets('an administrator paying another business\'s selection sees '
+      'THAT business named and its own configuration offered, entered first', (
+    tester,
+  ) async {
+    final opened = <String>[];
+    final money = await _show(
+      tester,
+      routed: true,
+      business: 'Lyon',
+      admin: true,
+      opened: opened,
+    );
+    money
+      ..paymentProviders = []
+      ..paymentMissing = {
+        'stripe': ['STRIPE_SECRET_KEY'],
+      };
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(find.text('Business: Lyon'), findsOneWidget);
+    expect(find.text('stripe: STRIPE_SECRET_KEY'), findsOneWidget);
+    // the button names the business, and does not open the selected one's
+    await tester.tap(find.byKey(const ValueKey('pay-config-open')));
+    await tester.pumpAndSettle();
+    expect(find.text('payment-config-page'), findsOneWidget);
+    expect(
+      opened,
+      hasLength(1),
+      reason: 'that business is entered (its host) before its configuration',
+    );
+    expect(opened.single, endsWith(':ws-1'));
+  });
+
+  testWidgets('a member who does not administer the business is told, not '
+      'shown its configuration', (tester) async {
+    final money = await _show(tester, business: 'Lyon');
+    money
+      ..paymentProviders = []
+      ..paymentMissing = {
+        'stripe': ['STRIPE_SECRET_KEY'],
+      };
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(find.byKey(const ValueKey('pay-config-open')), findsNothing);
+    expect(find.textContaining('set up yet'), findsOneWidget);
+  });
+
+  testWidgets('a declaration over two months interrupted after the first '
+      'says what was recorded, never "nothing was sent", and Try again '
+      'declares only what is still selected', (tester) async {
+    var lost = true;
+    late FakeMoneyRepository money;
+    money = await _show(
+      tester,
+      hostLost: () => lost && money.recordedPayments.isNotEmpty,
+    );
+    await _select(tester, 'a1');
+    await _select(tester, 'a2');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(money.recordedPayments.map((p) => p.period), ['2026-10']);
+    expect(
+      find.text(
+        'Recorded: October 2026. Not recorded: November 2026. '
+        'Atelier cannot be reached or verified right now.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Nothing was sent'), findsNothing);
+    expect(_box(tester, 'a2').value, isTrue, reason: 'November stays selected');
+    expect(_box(tester, 'a1').value, isFalse, reason: 'October left');
+    // the host is back: Try again offers only the second month
+    lost = false;
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('November'), findsWidgets);
+    expect(find.textContaining('October 2026'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(money.recordedPayments.map((p) => p.period), [
+      '2026-10',
+      '2026-11',
+    ], reason: 'October is not declared twice');
+  });
+
+  testWidgets('opening an invoice whose business cannot be entered says so '
+      'and offers to try again, instead of doing nothing', (tester) async {
+    await _show(tester, routed: true, openFails: true);
+    await tester.ensureVisible(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.tap(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Atelier cannot be reached or verified right now.'),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+  });
+
+  testWidgets('Configure for a business that cannot be entered says so and '
+      'offers to try again; its configuration does not open', (tester) async {
+    final money = await _show(
+      tester,
+      routed: true,
+      business: 'Lyon',
+      admin: true,
+      openFails: true,
+    );
+    money
+      ..paymentProviders = []
+      ..paymentMissing = {
+        'stripe': ['STRIPE_SECRET_KEY'],
+      };
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('pay-config-open')));
+    await tester.pumpAndSettle();
+    expect(find.text('payment-config-page'), findsNothing);
+    expect(
+      find.text('Lyon cannot be reached or verified right now.'),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+  });
+
+  testWidgets('opening an invoice of a business that cannot be reached or '
+      'verified says so, naming it, and offers to try again', (tester) async {
+    await _show(tester, enters: false, routed: true);
+    await tester.ensureVisible(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.tap(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Atelier cannot be reached or verified right now.'),
+      findsOneWidget,
+      reason: 'opening sends nothing, so the sentence does not say it',
+    );
+    expect(find.text('Try again'), findsOneWidget);
   });
 
   testWidgets('a payment says since when it is in payment, and withdrawing it '
