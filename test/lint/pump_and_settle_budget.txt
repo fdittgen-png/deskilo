@@ -44,6 +44,9 @@
 # review {"path":"test/features/money/my_finances_selection_test.dart","before":12,"after":15,"invariant":"#3556 the selection is filed in one of my groups from the bar: the menu, its entry, the sheet and the new group each settle once before the stored group is read","cost":"one test, under 1 s locally"}
 # review {"path":"test/features/money/my_finances_selection_test.dart","before":15,"after":27,"invariant":"#3556 the review of 1b: a retry after a lost answer, a declaration refused at its second month, an outdated payment service and a dropped claim, a business that cannot be entered, and the settling withdrawal: each tap, confirmation and send settles once before the request ids, the stored payments or the message are read","cost":"five tests in 2 s locally"}
 # review {"path":"test/features/directory/discovery_facets_test.dart","before":0,"after":10,"invariant":"#2832 Discover narrows by published facts: opening the sheet, choosing a fact, showing the results and clearing each settle once before the listing, the chips or the notice are read; the screen shown, hidden and shown again settles once each way before the kept search is read","cost":"seven tests in 2 s locally"}
+# review {"path":"test/features/money/my_finances_selection_test.dart","before":27,"after":36,"invariant":"#4218 a business that cannot be reached or verified is said with a way to try again (declare and Pay), opening an invoice says it too, and an administrator paying another business's selection sees that business named and its configuration offered: each tap, confirmation and send settles once before the message or the dialog is read","cost":"four tests in 2 s locally"}
+# review {"path":"test/features/money/my_finances_selection_test.dart","before":36,"after":44,"invariant":"#4218 the read of the correction: a declaration over two months interrupted after the first says what was recorded and tries again on what is still selected, and Open and Configure for a business that cannot be entered say so: each tap, confirmation and send settles once before the stored payments or the message are read","cost":"three tests in 2 s locally"}
+# review {"path":"test/features/money/money_screen_test.dart","before":38,"after":40,"invariant":"#4218 Pay online while the business identity is not known: the scroll to the button and the tap each settle once before the message and the absent order are read","cost":"one test, under 1 s locally"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -118,8 +121,8 @@
 13 test/features/money/invoicing_navigation_ux_test.dart
 17 test/features/money/invoicing_wizard_test.dart
 29 test/features/money/legal_identity_test.dart
-38 test/features/money/money_screen_test.dart
-27 test/features/money/my_finances_selection_test.dart
+40 test/features/money/money_screen_test.dart
+44 test/features/money/my_finances_selection_test.dart
 16 test/features/money/number_sequences_screen_test.dart
 12 test/features/money/payment_terms_test.dart
 18 test/features/money/price_negotiations_test.dart

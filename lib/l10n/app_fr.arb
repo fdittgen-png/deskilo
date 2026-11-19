@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Choisir au paiement",
+  "accountPaymentAwaitingMatch": "Reçu, en attente de rapprochement",
   "accountPaymentConfirmed": "Paiement confirmé",
   "accountPaymentPreference": "Paiement en ligne préféré",
   "accountRefundDue": "Remboursement dû par l'espace",
@@ -7907,7 +7908,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} est injoignable pour l’instant. Rien n’a été envoyé.",
+  "financesBusinessUnavailable": "{business} est injoignable ou n’a pas pu être vérifié pour l’instant. Rien n’a été envoyé.",
+  "financesBusinessUnavailableOpen": "{business} est injoignable ou n’a pas pu être vérifié pour l’instant.",
   "financesColumnAmount": "Montant",
   "financesColumnDocument": "Document et période",
   "financesColumnState": "Document et paiement",
@@ -13758,7 +13760,7 @@
   "payConfigConfigured": "Configuré",
   "payConfigIntro": "Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées.",
   "payConfigNotConfigured": "Non configuré",
-  "payConfigOpen": "Configurer",
+  "payConfigOpenFor": "Configurer {business}",
   "payConfigRemove": "Supprimer",
   "payConfigRemoved": "Supprimé.",
   "payConfigSecretSet": "Défini — laisser vide pour conserver",
@@ -13786,6 +13788,8 @@
   "payOnlineChooseTitle": "Payer en ligne",
   "payOnlineClaimNotTaken": "Le service de paiement n’a pas pris ces factures en compte : le paiement n’a pas été ouvert. Rien n’a été débité.",
   "payOnlineClaimsUnsupported": "Le service de paiement de cette entreprise doit être mis à jour avant de pouvoir payer en ligne des factures sélectionnées.",
+  "payOnlineContextNotReady": "L’entreprise n’est pas encore prête. Réessayez dans un instant.",
+  "payOnlineDiagBusiness": "Entreprise : {business}",
   "payOnlineDiagHint": "Il manque cette configuration côté serveur :",
   "payOnlineDiagTitle": "Paiements en ligne — non configurés",
   "payOnlineFailedDetail": "Le paiement {reference} ({amount} via {provider}) n'a pas abouti — rien n'a été crédité ; le solde reste dû.",

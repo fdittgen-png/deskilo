@@ -20,6 +20,7 @@
   "billPackages": "Pacchetti di giorni",
   "payOnlineButton": "Paga online",
   "payOnlineNotConfigured": "I pagamenti online non sono ancora configurati. Chieda al proprietario dello spazio.",
+  "payOnlineContextNotReady": "L’azienda non è ancora pronta. Riprovi tra un momento.",
   "payOnlinePendingTitle": "Pagamento online in sospeso",
   "payOnlineFailedTitle": "Pagamento online non riuscito",
   "payOnlinePendingDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è ancora stato confermato dal fornitore, quindi il saldo mostra ancora quanto dovuto. Citi questo riferimento se non va a buon fine.",

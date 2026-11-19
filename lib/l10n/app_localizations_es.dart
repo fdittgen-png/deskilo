@@ -205,6 +205,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountPaymentAsk => 'Elegir al pagar';
 
   @override
+  String get accountPaymentAwaitingMatch => 'Recibido, pendiente de conciliar';
+
+  @override
   String get accountPaymentConfirmed => 'Pago confirmado';
 
   @override
@@ -12721,7 +12724,12 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String financesBusinessUnavailable(String business) {
-    return '$business no está disponible ahora. No se ha enviado nada.';
+    return '$business no está disponible o no se ha podido verificar ahora. No se ha enviado nada.';
+  }
+
+  @override
+  String financesBusinessUnavailableOpen(String business) {
+    return '$business no está disponible o no se ha podido verificar ahora.';
   }
 
   @override
@@ -23808,7 +23816,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get payConfigNotConfigured => 'Sin configurar';
 
   @override
-  String get payConfigOpen => 'Configurar';
+  String payConfigOpenFor(String business) {
+    return 'Configurar $business';
+  }
 
   @override
   String get payConfigRemove => 'Eliminar';
@@ -23904,6 +23914,15 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get payOnlineClaimsUnsupported =>
       'El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas seleccionadas.';
+
+  @override
+  String get payOnlineContextNotReady =>
+      'La empresa aún no está lista. Inténtelo de nuevo en un momento.';
+
+  @override
+  String payOnlineDiagBusiness(String business) {
+    return 'Empresa: $business';
+  }
 
   @override
   String get payOnlineDiagHint => 'Al servidor le falta esta configuración:';
