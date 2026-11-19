@@ -23067,6 +23067,14 @@ class AppLocalizationsEs extends AppLocalizations {
   String get nfcConfigTitle => 'Credenciales RFID / NFC';
 
   @override
+  String get noPlacesSetupPricingHint =>
+      'Lo que cuesta su oferta: precios y tarifas.';
+
+  @override
+  String get noPlacesSetupServicesHint =>
+      'Lo que ofrece a sus clientes: cada servicio, su duración y su precio.';
+
+  @override
   String get noteRefAlert => 'Aviso';
 
   @override
@@ -33306,10 +33314,6 @@ class AppLocalizationsEs extends AppLocalizations {
       'Lo que cuesta un puesto, una membresía o un día.';
 
   @override
-  String get setupStepHintPricingNoPlaces =>
-      'Lo que cuesta su oferta: precios y tarifas.';
-
-  @override
   String get setupStepHintPublicPage =>
       'Lo que pueden ver las personas ajenas al espacio, incluido dónde está usted en el mapa.';
 
@@ -33326,10 +33330,6 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get setupStepHintServices =>
       'Café, impresión, taquillas: lo que los miembros pueden añadir.';
-
-  @override
-  String get setupStepHintServicesNoPlaces =>
-      'Lo que ofrece a sus clientes: cada servicio, su duración y su precio.';
 
   @override
   String get setupStepHintVat => 'Los tipos que aplica y sus declaraciones.';

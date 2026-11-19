@@ -504,8 +504,8 @@ extension DictionaryLabels on AppLocalizations {
       hasPlaces
       ? setupStepHint(key)
       : switch (key) {
-          'pricing' => setupStepHintPricingNoPlaces,
-          'services' => setupStepHintServicesNoPlaces,
+          'pricing' => noPlacesSetupPricingHint,
+          'services' => noPlacesSetupServicesHint,
           _ => setupStepHint(key),
         };
 

@@ -23103,6 +23103,14 @@ class AppLocalizationsIt extends AppLocalizations {
   String get nfcConfigTitle => 'Badge RFID / NFC';
 
   @override
+  String get noPlacesSetupPricingHint =>
+      'Quanto costa l’offerta: prezzi e piani.';
+
+  @override
+  String get noPlacesSetupServicesHint =>
+      'Ciò che si offre ai clienti: ogni servizio, la sua durata e il suo prezzo.';
+
+  @override
   String get noteRefAlert => 'Avviso';
 
   @override
@@ -33340,10 +33348,6 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanto costa un posto, un abbonamento o una giornata.';
 
   @override
-  String get setupStepHintPricingNoPlaces =>
-      'Quanto costa la vostra offerta: prezzi e piani.';
-
-  @override
   String get setupStepHintPublicPage =>
       'Cosa possono vedere le persone esterne allo spazio, compreso dove si trova sulla mappa.';
 
@@ -33360,10 +33364,6 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get setupStepHintServices =>
       'Caffè, stampa, armadietti: ciò che i membri possono aggiungere.';
-
-  @override
-  String get setupStepHintServicesNoPlaces =>
-      'Ciò che offrite ai vostri clienti: ogni servizio, la sua durata e il suo prezzo.';
 
   @override
   String get setupStepHintVat =>

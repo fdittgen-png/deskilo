@@ -147,12 +147,12 @@
   "@setupStepHintServices": {
     "description": "#3485 setupStepHint: the label for case 'services'."
   },
-  "setupStepHintPricingNoPlaces": "What your offer costs: prices and plans.",
-  "@setupStepHintPricingNoPlaces": {
+  "noPlacesSetupPricingHint": "What your offer costs: prices and plans.",
+  "@noPlacesSetupPricingHint": {
     "description": "#3547 setupStepHint: the label for case 'pricing' of a business without bookable places."
   },
-  "setupStepHintServicesNoPlaces": "What you offer your customers: each service, how long it takes and what it costs.",
-  "@setupStepHintServicesNoPlaces": {
+  "noPlacesSetupServicesHint": "What you offer your customers: each service, how long it takes and what it costs.",
+  "@noPlacesSetupServicesHint": {
     "description": "#3547 setupStepHint: the label for case 'services' of a business without bookable places."
   },
   "setupStepHintPaymentMethods": "Your bank details and payment instructions.",

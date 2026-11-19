@@ -34,6 +34,6 @@ void main() {
       await tester.pump(const Duration(milliseconds: 500));
     }
     expect(find.text(words.setupStepHint('services')), findsOneWidget);
-    expect(find.text(words.setupStepHintServicesNoPlaces), findsNothing);
+    expect(find.text(words.noPlacesSetupServicesHint), findsNothing);
   });
 }
