@@ -34115,6 +34115,10 @@
   "@publicPersonUnavailable": {
     "description": "Shown as the title in public person screen (me)."
   },
+  "publicProfileContacts": "Contact options",
+  "@publicProfileContacts": {
+    "description": "Public profile: Contacts."
+  },
   "publicProfileCopied": "Link copied.",
   "@publicProfileCopied": {
     "description": "Shown as the text in public profile tile (me)."
@@ -34123,6 +34127,10 @@
   "@publicProfileCopy": {
     "description": "Shown as the tooltip in public profile tile (me)."
   },
+  "publicProfileInformation": "Additional information",
+  "@publicProfileInformation": {
+    "description": "Public profile: Information."
+  },
   "publicProfileOff": "Off: people who are not signed in see nothing of you.",
   "@publicProfileOff": {
     "description": "Shown as the text in public profile tile (me)."
@@ -34130,6 +34138,10 @@
   "publicProfileOn": "Anyone with the link reads your name, profession and bio.",
   "@publicProfileOn": {
     "description": "Shown as the text in public profile tile (me)."
+  },
+  "publicProfileOverview": "Overview",
+  "@publicProfileOverview": {
+    "description": "Public profile: Overview."
   },
   "publicProfilePublishAction": "Publish",
   "@publicProfilePublishAction": {
@@ -34142,6 +34154,26 @@
   "publicProfilePublishTitle": "Publish a public profile?",
   "@publicProfilePublishTitle": {
     "description": "Shown as the text in public profile tile (me)."
+  },
+  "publicProfilePublishedInfo": "Information published by this business. Missing information does not mean that a facility is absent.",
+  "@publicProfilePublishedInfo": {
+    "description": "Public profile: PublishedInfo."
+  },
+  "publicProfileRefreshFailed": "Could not refresh this business’s page. Showing the information already loaded.",
+  "@publicProfileRefreshFailed": {
+    "description": "Public profile: RefreshFailed."
+  },
+  "publicProfileRefreshing": "Refreshing published information…",
+  "@publicProfileRefreshing": {
+    "description": "Public profile: Refreshing."
+  },
+  "publicProfileRegularHours": "Regular hours in the business’s timezone; exceptions and live availability may differ.",
+  "@publicProfileRegularHours": {
+    "description": "Public profile: RegularHours."
+  },
+  "publicProfileTakesInquiries": "Accepts inquiries",
+  "@publicProfileTakesInquiries": {
+    "description": "Public profile: TakesInquiries."
   },
   "publicProfileTitle": "Public profile",
   "@publicProfileTitle": {

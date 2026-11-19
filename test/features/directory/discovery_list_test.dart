@@ -20,6 +20,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/directory_scroll.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
@@ -135,7 +136,11 @@ void main() {
         auth: FakeAuthRepository(userId: 'user-2'),
       );
       expect(find.byTooltip('Remove bookmark'), findsNothing);
-      expect(find.byTooltip('Bookmark'), findsNWidgets(3));
+      for (final place in [_one, _two, _three]) {
+        await revealDirectoryItem(tester, find.byKey(_bookmark(place)));
+        expect(find.descendant(of: find.byKey(_row(place)),
+            matching: find.byTooltip('Bookmark')), findsOneWidget);
+      }
       expect(await store.read(_namespace('user-2')), isEmpty);
       expect(
         store.byNamespace.keys,
@@ -151,6 +156,7 @@ void main() {
     (tester) async {
       final store = InMemorySavedPlacesStore();
       await _show(tester, store: store);
+      await revealDirectoryItem(tester, find.byKey(_bookmark(_two)));
       await tester.tap(find.byKey(_bookmark(_two)));
       await tester.pump();
 
@@ -166,12 +172,14 @@ void main() {
       );
       expect(find.byTooltip('Remove bookmark'), findsOneWidget);
 
+      await revealDirectoryItem(tester, find.byKey(const ValueKey('directory-saved-filter')));
       await tester.tap(find.byKey(const ValueKey('directory-saved-filter')));
       await tester.pump();
       expect(find.byKey(_view(_two)), findsOneWidget);
       expect(find.byKey(_view(_one)), findsNothing);
       expect(find.byKey(_view(_three)), findsNothing);
 
+      await revealDirectoryItem(tester, find.byKey(_bookmark(_two)));
       await tester.tap(find.byKey(_bookmark(_two)));
       await tester.pump();
       expect(find.text('No places saved on this device yet.'), findsOneWidget);
