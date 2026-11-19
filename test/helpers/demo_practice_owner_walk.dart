@@ -104,7 +104,7 @@ Future<void> walkPracticeOwnerSetup(WidgetTester tester, Size size) async {
   expect(
     find.descendant(
       of: next,
-      matching: find.text(_words.setupStepHintPricingNoPlaces),
+      matching: find.text(_words.noPlacesSetupPricingHint),
     ),
     findsOneWidget,
     reason: 'the practice\'s next step is its prices and plans',
@@ -113,7 +113,7 @@ Future<void> walkPracticeOwnerSetup(WidgetTester tester, Size size) async {
   // Its services: the existing ones with their price, no coffee or lockers.
   router.go('/setup/step/services');
   await _settle(tester);
-  expect(find.text(_words.setupStepHintServicesNoPlaces), findsOneWidget);
+  expect(find.text(_words.noPlacesSetupServicesHint), findsOneWidget);
   for (final hint in _placeHints) {
     expect(find.text(hint), findsNothing, reason: hint);
   }
