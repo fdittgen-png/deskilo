@@ -126,6 +126,8 @@ insert into listed (sig, tables, reason) values
    'callable by the service role only'),
   ('usage_records_read_v1(uuid,text,uuid)', 'reservations',
    'the members'' billing under the finance right; a usage names what was used'),
+  ('member_workspaces_without_external_level()', 'levels',
+   'the caller''s own businesses that have no external level; no place'),
   ('workspace_has_external_level(uuid)', 'levels',
    'one yes or no for the business, to its members; no place'),
   ('workspace_readiness(uuid)', 'reservations,seats',
@@ -152,7 +154,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             join pg_temp.readers() r on r.sig = l.sig where r.applies), '',
   'no listed function applies the rules: it leaves the list');
 select is((select string_agg(r.sig, ', ' order by r.sig) from pg_temp.readers() r where r.applies),
-  'admin_create_reservation_for(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,uuid), booking_event_visible(uuid,uuid), booking_place_hidden(uuid,uuid,uuid,uuid,uuid), calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), cancel_reservation(uuid), create_reservation(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,boolean,uuid,uuid), create_series(uuid,uuid,timestamp with time zone,timestamp with time zone,text,timestamp with time zone,uuid,uuid,uuid), desk_room_visible(uuid), kiosk_act(uuid,text,text,uuid,timestamp with time zone,timestamp with time zone,uuid), kpi_seat_capacity(uuid,timestamp with time zone,timestamp with time zone,uuid), level_visible(uuid), mcp_place_v1(uuid,members,jsonb), mcp_read_v1(uuid,members,text,jsonb), my_favorites(uuid), place_visible_to(uuid,uuid,uuid), reservation_place_visible(uuid,uuid,uuid,uuid,uuid,uuid), set_seat_block(uuid,timestamp with time zone,timestamp with time zone)',
+  'admin_create_reservation_for(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,uuid), booking_event_visible(uuid,uuid), booking_place_hidden(uuid,uuid,uuid,uuid,uuid), calendar_items(uuid,timestamp with time zone,timestamp with time zone,text[],uuid), cancel_reservation(uuid), create_reservation(uuid,uuid,uuid,timestamp with time zone,timestamp with time zone,boolean,uuid,uuid), create_series(uuid,uuid,timestamp with time zone,timestamp with time zone,text,timestamp with time zone,uuid,uuid,uuid), desk_room_visible(uuid), kiosk_act(uuid,text,text,uuid,timestamp with time zone,timestamp with time zone,uuid), kpi_seat_capacity(uuid,timestamp with time zone,timestamp with time zone,uuid), level_visible(uuid), mcp_place_v1(uuid,members,jsonb), mcp_read_v1(uuid,members,text,jsonb), my_favorites(uuid), place_visible_to(uuid,uuid,uuid), reservation_place_visible(uuid,uuid,uuid,uuid,uuid,uuid,boolean), set_seat_block(uuid,timestamp with time zone,timestamp with time zone)',
   'the readers that apply the rules');
 
 create function public.zz_fixture_place_reader(p_ws uuid) returns bigint language sql stable as
@@ -168,7 +170,7 @@ select is((select coalesce(string_agg(l.sig, ', ' order by l.sig), '') from list
             where l.reason like 'callable by the service role only%'
               and has_function_privilege('authenticated', l.sig::regprocedure, 'execute')), '',
   'every entry listed as callable by the service role only is not executable by a signed-in client');
-select ok((select count(*) from listed) = 58, 'the list holds 58 reasoned exceptions');
+select ok((select count(*) from listed) = 59, 'the list holds 59 reasoned exceptions');
 
 select * from finish();
 rollback;
