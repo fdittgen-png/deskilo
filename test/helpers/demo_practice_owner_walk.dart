@@ -10,6 +10,7 @@
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/app/router.dart';
 import 'package:deskilo/core/demo/demo_link.dart';
+import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/features/workspace/domain/attention.dart';
 import 'package:deskilo/features/workspace/providers/attention_providers.dart';
@@ -42,15 +43,18 @@ Future<(DemoJourney, ProviderContainer, GoRouter)> openDemoSpaceAsOwner(
   WidgetTester tester, {
   required String space,
   required Size size,
+  String persona = 'owner',
 }) async {
   tester.view.physicalSize = size;
   tester.view.devicePixelRatio = 1;
   addTearDown(tester.view.reset);
-  final journey = DemoJourney.start();
+  final journey = DemoJourney.start(
+    persona: DemoPersona.values.byName(persona),
+  );
   addTearDown(journey.dispose);
   journey.root
       .read(pendingDemoLinkProvider.notifier)
-      .hold(DemoLink.parse({'space': space, 'persona': 'owner'}));
+      .hold(DemoLink.parse({'space': space, 'persona': persona}));
   await tester.pumpWidget(
     UncontrolledProviderScope(
       container: journey.root,
