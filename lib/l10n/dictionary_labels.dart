@@ -365,6 +365,25 @@ extension DictionaryLabels on AppLocalizations {
     _ => key,
   };
 
+  /// #4223 — the setup question [key] in the words of a business without
+  /// places: only the question about rooms and sites speaks of places.
+  String setupQuestionFor(String key, {required bool hasPlaces}) =>
+      !hasPlaces && key == 'several_rooms_or_sites'
+      ? noPlacesSetupQuestionSeveralSites
+      : setupQuestion(key);
+
+  /// #4223 — the example under setup question [key] for a business without
+  /// places: three examples spoke of a meeting room, a desk and an open space.
+  String businessExampleFor(String key, {required bool hasPlaces}) =>
+      hasPlaces
+      ? businessExample(key)
+      : switch (key) {
+          'approve_bookings' => noPlacesBusinessExampleApproveBookings,
+          'several_rooms_or_sites' => noPlacesBusinessExampleSeveralSites,
+          'public_page' => noPlacesBusinessExamplePublicPage,
+          _ => businessExample(key),
+        };
+
   /// #3283 — a business example under setup question [key].
   String businessExample(String key) => switch (key) {
     'approve_bookings' => businessExampleApproveBookings,
@@ -506,6 +525,7 @@ extension DictionaryLabels on AppLocalizations {
       : switch (key) {
           'pricing' => noPlacesSetupPricingHint,
           'services' => noPlacesSetupServicesHint,
+          'hours' => noPlacesSetupHoursHint,
           _ => setupStepHint(key),
         };
 

@@ -45,5 +45,9 @@
   "setupGoalChecks": "{required, plural, one{Cet objectif : {ready} contrôle sur {required} terminé} other{Cet objectif : {ready} contrôles sur {required} terminés}}",
   "setupAllSteps": "Toutes les étapes : {done} sur {total}",
   "setupAllStepsNote": "Avec les étapes pour plus tard",
-  "setupStepPosition": "Étape {number} sur {total} · {name}"
+  "setupStepPosition": "Étape {number} sur {total} · {name}",
+  "noPlacesBusinessExampleApproveBookings": "Par exemple : un client demande le jeudi et la gérante le confirme.",
+  "noPlacesBusinessExampleSeveralSites": "Par exemple : une adresse principale et une seconde en ville.",
+  "noPlacesBusinessExamplePublicPage": "Par exemple : quelqu’un qui cherche une consultation près de chez lui trouve votre page et vous écrit.",
+  "noPlacesSetupQuestionSeveralSites": "Plusieurs sites ou adresses"
 }

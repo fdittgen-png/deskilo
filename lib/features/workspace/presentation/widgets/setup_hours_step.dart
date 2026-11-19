@@ -22,6 +22,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/booking_granularity.dart';
 import '../../domain/closure_day.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/availability_actions.dart';
 import '../screens/availability_sections.dart';
@@ -37,7 +38,11 @@ class SetupHoursStep extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final features = ref.watch(enabledFeaturesSyncProvider);
     // #446: off = the 8:00–17:00 defaults, as on the availability screen.
-    final workingHoursOn = features.contains(WorkspaceFeature.workingHours);
+    // #4223 — a business whose kind keeps places off has no half-day windows
+    // to set: its page is its open days and its closures.
+    final placesOff = ref.watch(keepsPlacesOffProvider);
+    final workingHoursOn =
+        features.contains(WorkspaceFeature.workingHours) && !placesOff;
     final workHours = ref.watch(workHoursProvider).value ?? WorkHours.defaults;
     return switch ((
       ref.watch(openWeekdaysProvider),
@@ -60,6 +65,7 @@ class SetupHoursStep extends ConsumerWidget {
                 closures: closures,
                 workHours: workHours,
                 workingHoursOn: workingHoursOn,
+                hasPlaces: !placesOff,
                 holidaysOn: features.contains(WorkspaceFeature.publicHolidays),
               ),
               if (features.contains(WorkspaceFeature.placeBooking))
@@ -96,9 +102,12 @@ class _HoursForm extends StatelessWidget {
     required this.closures,
     required this.workHours,
     required this.workingHoursOn,
+    required this.hasPlaces,
     required this.holidaysOn,
   });
 
+  /// Whether the business has places: only then the hint speaks of them.
+  final bool hasPlaces;
   final AvailabilityActions actions;
   final List<int> open;
   final BookingGranularity granularity;
@@ -113,7 +122,7 @@ class _HoursForm extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Text(l10n.setupStepHint('hours')),
+        Text(l10n.setupStepHintFor('hours', hasPlaces: hasPlaces)),
         const SizedBox(height: AppSpacing.sm),
         AvailabilityWeekdays(actions: actions, open: open),
         if (workingHoursOn)

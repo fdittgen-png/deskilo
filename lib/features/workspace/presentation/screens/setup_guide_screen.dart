@@ -22,7 +22,9 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
+import '../../domain/setup_steps_for_kind.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../setup_step_words.dart';
@@ -83,7 +85,13 @@ class _SetupGuideBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final status = ref.watch(workspaceSetupStatusProvider(workspaceId));
+    // #4223 — a business whose kind keeps places off is offered no place step.
+    final noPlaces = ref.watch(keepsPlacesOffProvider);
+    final status = ref
+        .watch(workspaceSetupStatusProvider(workspaceId))
+        .whenData(
+          (s) => noPlaces ? s.withoutSteps(setupStepsNeedingPlaces) : s,
+        );
     Future<void> reload() async =>
         ref.invalidate(workspaceSetupStatusProvider(workspaceId));
     // #2869 (0545) — Later, Mark as done and Undo, by the server's rules.

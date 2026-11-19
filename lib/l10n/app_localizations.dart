@@ -36523,11 +36523,41 @@ abstract class AppLocalizations {
   /// **'RFID / NFC badges'**
   String get nfcConfigTitle;
 
+  /// #4223 the example under the approve-bookings question, for a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a client asks for Thursday and the manager confirms it.'**
+  String get noPlacesBusinessExampleApproveBookings;
+
+  /// #4223 the example under the public-page question, for a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'For example: someone looking for a consultation nearby finds your page and writes to you.'**
+  String get noPlacesBusinessExamplePublicPage;
+
+  /// #4223 the example under the several-sites question, for a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'For example: a main address and a second one across town.'**
+  String get noPlacesBusinessExampleSeveralSites;
+
+  /// #4223 setupStepHint: the label for case 'hours' of a business without bookable places.
+  ///
+  /// In en, this message translates to:
+  /// **'The days your business is open, and its closures.'**
+  String get noPlacesSetupHoursHint;
+
   /// #3547 setupStepHint: the label for case 'pricing' of a business without bookable places.
   ///
   /// In en, this message translates to:
   /// **'What your offer costs: prices and plans.'**
   String get noPlacesSetupPricingHint;
+
+  /// #4223 the several rooms or sites question, for a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'Several sites or addresses'**
+  String get noPlacesSetupQuestionSeveralSites;
 
   /// #3547 setupStepHint: the label for case 'services' of a business without bookable places.
   ///

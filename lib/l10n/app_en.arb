@@ -30179,9 +30179,29 @@
   "@nfcConfigTitle": {
     "description": "Owner NFC configuration screen title (0046)"
   },
+  "noPlacesBusinessExampleApproveBookings": "For example: a client asks for Thursday and the manager confirms it.",
+  "@noPlacesBusinessExampleApproveBookings": {
+    "description": "#4223 the example under the approve-bookings question, for a business without places"
+  },
+  "noPlacesBusinessExamplePublicPage": "For example: someone looking for a consultation nearby finds your page and writes to you.",
+  "@noPlacesBusinessExamplePublicPage": {
+    "description": "#4223 the example under the public-page question, for a business without places"
+  },
+  "noPlacesBusinessExampleSeveralSites": "For example: a main address and a second one across town.",
+  "@noPlacesBusinessExampleSeveralSites": {
+    "description": "#4223 the example under the several-sites question, for a business without places"
+  },
+  "noPlacesSetupHoursHint": "The days your business is open, and its closures.",
+  "@noPlacesSetupHoursHint": {
+    "description": "#4223 setupStepHint: the label for case 'hours' of a business without bookable places."
+  },
   "noPlacesSetupPricingHint": "What your offer costs: prices and plans.",
   "@noPlacesSetupPricingHint": {
     "description": "#3547 setupStepHint: the label for case 'pricing' of a business without bookable places."
+  },
+  "noPlacesSetupQuestionSeveralSites": "Several sites or addresses",
+  "@noPlacesSetupQuestionSeveralSites": {
+    "description": "#4223 the several rooms or sites question, for a business without places"
   },
   "noPlacesSetupServicesHint": "What you offer your customers: each service, how long it takes and what it costs.",
   "@noPlacesSetupServicesHint": {

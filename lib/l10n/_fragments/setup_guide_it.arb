@@ -38,6 +38,7 @@
   "setupStepHintServices": "Caffè, stampa, armadietti: ciò che i membri possono aggiungere.",
   "noPlacesSetupPricingHint": "Quanto costa l’offerta: prezzi e piani.",
   "noPlacesSetupServicesHint": "Ciò che si offre ai clienti: ogni servizio, la sua durata e il suo prezzo.",
+  "noPlacesSetupHoursHint": "I giorni di apertura dell’attività e le sue chiusure.",
   "setupStepHintPaymentMethods": "I suoi dati bancari e le istruzioni di pagamento.",
   "setupStepHintOnlinePayments": "Pagamento con carta tramite un fornitore collegato dal suo operatore.",
   "setupStepHintApprovals": "Chi convalida le richieste e quante persone devono essere d'accordo.",

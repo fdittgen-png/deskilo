@@ -38,6 +38,7 @@
   "setupStepHintServices": "Café, impressions, casiers : ce que les membres peuvent ajouter.",
   "noPlacesSetupPricingHint": "Ce que coûte votre offre : tarifs et formules.",
   "noPlacesSetupServicesHint": "Ce que vous proposez à vos clients : chaque prestation, sa durée et son prix.",
+  "noPlacesSetupHoursHint": "Les jours d’ouverture de votre activité, et ses fermetures.",
   "setupStepHintPaymentMethods": "Vos coordonnées bancaires et vos instructions de paiement.",
   "setupStepHintOnlinePayments": "Paiement par carte via un prestataire que votre opérateur connecte.",
   "setupStepHintApprovals": "Qui valide les demandes, et combien de personnes doivent être d'accord.",
