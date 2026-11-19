@@ -5965,7 +5965,6 @@ Map<String, _Getter> _part15() => {
   'organisationRefusedNotAHouse': (l) => l.organisationRefusedNotAHouse,
   'organisationRefusedNotAMember': (l) => l.organisationRefusedNotAMember,
   'organisationRefusedOnlyAPerson': (l) => l.organisationRefusedOnlyAPerson,
-  'payConfigOpen': (l) => l.payConfigOpen,
   'payOnlineChooseTitle': (l) => l.payOnlineChooseTitle,
   'payOnlineFailedTitle': (l) => l.payOnlineFailedTitle,
   'paymentInstructionsPaypalLabel': (l) => l.paymentInstructionsPaypalLabel,

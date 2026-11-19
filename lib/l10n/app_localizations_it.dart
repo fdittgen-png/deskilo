@@ -12688,7 +12688,12 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String financesBusinessUnavailable(String business) {
-    return '$business non è raggiungibile ora. Non è stato inviato nulla.';
+    return '$business non è raggiungibile o verificabile ora. Non è stato inviato nulla.';
+  }
+
+  @override
+  String financesBusinessUnavailableOpen(String business) {
+    return '$business non è raggiungibile o verificabile ora.';
   }
 
   @override
@@ -23791,7 +23796,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get payConfigNotConfigured => 'Non configurato';
 
   @override
-  String get payConfigOpen => 'Configura';
+  String payConfigOpenFor(String business) {
+    return 'Configura $business';
+  }
 
   @override
   String get payConfigRemove => 'Rimuovi';
@@ -23886,6 +23893,11 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get payOnlineClaimsUnsupported =>
       'Il servizio di pagamento di questa attività deve essere aggiornato prima di poter pagare online fatture selezionate.';
+
+  @override
+  String payOnlineDiagBusiness(String business) {
+    return 'Azienda: $business';
+  }
 
   @override
   String get payOnlineDiagHint => 'Sul server manca questa configurazione:';

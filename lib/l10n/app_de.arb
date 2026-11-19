@@ -7898,7 +7898,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} ist gerade nicht erreichbar. Es wurde nichts gesendet.",
+  "financesBusinessUnavailable": "{business} ist gerade nicht erreichbar oder nicht überprüfbar. Es wurde nichts gesendet.",
+  "financesBusinessUnavailableOpen": "{business} ist gerade nicht erreichbar oder nicht überprüfbar.",
   "financesColumnAmount": "Betrag",
   "financesColumnDocument": "Dokument und Zeitraum",
   "financesColumnState": "Dokument und Zahlung",
@@ -13747,7 +13748,7 @@
   "payConfigConfigured": "Eingerichtet",
   "payConfigIntro": "Geben Sie jeden Zahlungsanbieter ein, den Sie anbieten wollen. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigNotConfigured": "Nicht eingerichtet",
-  "payConfigOpen": "Einrichten",
+  "payConfigOpenFor": "{business} konfigurieren",
   "payConfigRemove": "Entfernen",
   "payConfigRemoved": "Entfernt.",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",
@@ -13775,6 +13776,7 @@
   "payOnlineChooseTitle": "Online bezahlen",
   "payOnlineClaimNotTaken": "Der Zahlungsdienst hat diese Rechnungen nicht übernommen, die Zahlung wurde nicht geöffnet. Es wurde nichts belastet.",
   "payOnlineClaimsUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.",
+  "payOnlineDiagBusiness": "Unternehmen: {business}",
   "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration:",
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",
   "payOnlineFailedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.",

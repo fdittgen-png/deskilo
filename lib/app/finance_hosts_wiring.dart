@@ -11,6 +11,7 @@ import '../core/backend/connected_pool_host_resolver.dart';
 import '../core/backend/context_client_providers.dart';
 import '../core/backend/context_clients.dart';
 import '../core/session/session_source.dart';
+import '../core/trace/trace_logger.dart';
 import '../features/me/application/my_reservation_sources.dart';
 import '../features/me/providers/me_providers.dart';
 import '../features/money/application/finance_selection_commands.dart';
@@ -59,15 +60,26 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
       final pool = ref.watch(connectedInstallationsProvider);
       return (target) async {
         if (!ref.mounted || principal == null || ref.read(sessionStateProvider).value != principal) return null;
-        final home = await identity(root);
-        final host = await resolveFinanceHost(
-          FinanceHost(installationId: target.installationId,
-            workspaceIds: [target.workspaceId], hostedHere: home == target.installationId),
-          connected: () => ref.read(connectedSourcesProvider.future),
-          resolverFor: (origin) => ConnectedPoolHostResolver(
-            active: ActiveInstallationHostResolver(root, identity), root: root,
-            pool: () => pool, sourceOf: (_) => origin),
-        );
+        // #4218 — a host that cannot be reached or verified is no entry, never
+        // an error thrown past the page: the callers say so in words and offer
+        // to try again.
+        final ResolvedWorkspaceHost host;
+        try {
+          final home = await identity(root);
+          host = await resolveFinanceHost(
+            FinanceHost(installationId: target.installationId,
+              workspaceIds: [target.workspaceId], hostedHere: home == target.installationId),
+            connected: () => ref.read(connectedSourcesProvider.future),
+            resolverFor: (origin) => ConnectedPoolHostResolver(
+              active: ActiveInstallationHostResolver(root, identity), root: root,
+              pool: () => pool, sourceOf: (_) => origin),
+          );
+        } on Object catch (e, st) {
+          TraceLogger.instance.warn('money',
+              'finance host not reached or not verified: ${target.financeKey}',
+              error: e, stackTrace: st);
+          return null;
+        }
         var retained = false;
         try {
           bool current() => ref.mounted &&
@@ -83,6 +95,7 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
           if (!current() || workspace == null || member == null) return null;
           retained = true;
           return FinanceCommandTarget(target: target, memberId: member.id,
+            businessName: workspace.name, canAdminister: member.canAdminister,
             currency: workspace.currencyCode,
             commands: SupabaseMemberAccountCommands(host.client),
             gateway: SupabasePaymentGatewayRepository(host.client),
@@ -99,6 +112,13 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
               return current() && ref.read(activeWorkspaceIdProvider).value == target.workspaceId &&
                   ref.read(selectedWorkspaceHostProvider)?.source == origin;
             });
+        } on Object catch (e, st) {
+          // The host answered and then failed (the network, a pin): the same
+          // answer as one that could not be reached.
+          TraceLogger.instance.warn('money',
+              'finance host failed while entering: ${target.financeKey}',
+              error: e, stackTrace: st);
+          return null;
         } finally {
           if (!retained) host.lease?.release();
         }

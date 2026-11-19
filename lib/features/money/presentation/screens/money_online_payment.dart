@@ -21,6 +21,7 @@ import '../../domain/payment_claims.dart';
 import '../../domain/payment_gateway_repository.dart';
 import '../../domain/payment_provider.dart';
 import '../../domain/payment_request_ids.dart';
+import '../../providers/finance_overview_provider.dart';
 import '../../providers/finance_selection_provider.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/payment_approval_providers.dart';
@@ -28,7 +29,8 @@ import '../claim_refusal_text.dart';
 import '../payment_provider_labels.dart';
 
 typedef _PaymentTarget = ({String workspaceId, String memberId, String currency,
-  String networkId, PaymentGatewayRepository repository, PaymentRequestIds requests});
+  String financeKey, PaymentGatewayRepository repository, PaymentRequestIds requests,
+  String businessName, bool canAdminister, Future<bool> Function()? open});
 
 /// Starts an online payment (0043 scaffolding, #1637, #2014 B): asks the
 /// deployment what it can charge with, lets the member pick a provider,
@@ -74,7 +76,7 @@ class MoneyOnlinePayment {
           'missing=${gateway.missing}',
     );
     if (gateway.providers.isEmpty) {
-      await _diagnostics(l10n, gateway);
+      await _diagnostics(l10n, gateway, payment);
       return false;
     }
     // #3556 — a function that does not take a claim would drop it and pay
@@ -131,6 +133,7 @@ class MoneyOnlinePayment {
           providers: const [],
           missing: {chosen.wireName: order.missing},
         ),
+        payment,
       );
       return false;
     }
@@ -149,16 +152,21 @@ class MoneyOnlinePayment {
       return (
       workspaceId: captured.target.workspaceId, memberId: captured.memberId,
       currency: captured.currency, repository: captured.gateway,
-      networkId: captured.target.networkId, requests: _requests,
+      financeKey: captured.target.financeKey, requests: _requests,
+      businessName: captured.businessName, canAdminister: captured.canAdminister,
+      open: captured.open,
       );
     }
     final workspace = _ref.read(currentWorkspaceProvider).value;
     final member = _ref.read(myMemberProvider).value;
-    if (workspace == null || member == null) return null;
+    // #4218 — no bare local id stands in for the identity: a payment of a
+    // business whose verified identity is not known is not started.
+    final target = _ref.read(financeCurrentTargetProvider);
+    if (workspace == null || member == null || target == null) return null;
     return (workspaceId: workspace.id, memberId: member.id,
       currency: workspace.currencyCode, repository: _ref.read(paymentGatewayRepositoryProvider),
-      networkId: _ref.read(readyWorkspaceContextProvider)?.target.networkId ?? workspace.id,
-      requests: _requests);
+      financeKey: target.financeKey, requests: _requests,
+      businessName: workspace.name, canAdminister: member.canAdminister, open: null);
   }
 
   Future<PaymentGatewayConfig?> _probe(
@@ -236,7 +244,7 @@ class MoneyOnlinePayment {
         final currency = payment.currency;
         try {
           final claimed = invoiceIds.isNotEmpty;
-          start = await payment.requests.run(payment.networkId, memberId, provider,
+          start = await payment.requests.run(payment.financeKey, memberId, provider,
               claimed ? PaymentRequestIds.forClaim(period, invoiceIds) : period,
               amountCents, (id) => claimed
                   ? repo.createClaimOrder(
@@ -284,13 +292,15 @@ class MoneyOnlinePayment {
   /// undeployed function or the exact missing server secrets, so "not set
   /// up" is actionable instead of a mystery. Members get the friendly
   /// snack instead.
+  ///
+  /// #4218 — for the business the payment is OF (its name, my right there,
+  /// its own configuration), never the business selected elsewhere.
   Future<void> _diagnostics(
     AppLocalizations l10n,
     PaymentGatewayConfig config,
+    _PaymentTarget payment,
   ) async {
-    final canAdminister =
-        _ref.read(myMemberProvider).value?.canAdminister ?? false;
-    if (!canAdminister) {
+    if (!payment.canAdminister) {
       AppSnack.info(
         _context,
         l10n.payOnlineNotConfigured,
@@ -304,16 +314,37 @@ class MoneyOnlinePayment {
     ];
     await showDialog<void>(
       context: _context,
-      builder: (context) => PaymentDiagnosticsDialog(lines: lines),
+      builder: (context) => PaymentDiagnosticsDialog(
+        lines: lines,
+        business: payment.businessName,
+        onConfigure: () async {
+          // The business of the payment is entered first (its host, as Open
+          // does); then its own configuration opens.
+          final open = payment.open;
+          if (open != null && !await open()) return;
+          if (_context.mounted) unawaited(_context.push('/payment-config'));
+        },
+      ),
     );
   }
 }
 
 /// The owner/admin dialog naming what an online payment is missing.
 class PaymentDiagnosticsDialog extends StatelessWidget {
-  const PaymentDiagnosticsDialog({super.key, required this.lines});
+  const PaymentDiagnosticsDialog({
+    super.key,
+    required this.lines,
+    required this.business,
+    required this.onConfigure,
+  });
 
   final List<String> lines;
+
+  /// The business these payments are missing configuration for (#4218).
+  final String business;
+
+  /// Opens that business's configuration.
+  final Future<void> Function() onConfigure;
 
   @override
   Widget build(BuildContext context) {
@@ -327,6 +358,10 @@ class PaymentDiagnosticsDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Text(
+            l10n.payOnlineDiagBusiness(business),
+            style: small?.copyWith(fontWeight: FontWeight.w600),
+          ),
           Text(
             l10n.payOnlineDiagHint,
             style: small,
@@ -352,9 +387,9 @@ class PaymentDiagnosticsDialog extends StatelessWidget {
           key: const ValueKey('pay-config-open'),
           onPressed: () {
             Navigator.of(context).pop();
-            unawaited(context.push('/payment-config'));
+            unawaited(onConfigure());
           },
-          child: Text(l10n.payConfigOpen),
+          child: Text(l10n.payConfigOpenFor(business)),
         ),
       ],
     );

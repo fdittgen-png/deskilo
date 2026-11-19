@@ -11367,7 +11367,6 @@ const Set<String> uiLabelKeys = {
   'payConfigConfigured',
   'payConfigIntro',
   'payConfigNotConfigured',
-  'payConfigOpen',
   'payConfigRemove',
   'payConfigRemoved',
   'payConfigSecretSet',

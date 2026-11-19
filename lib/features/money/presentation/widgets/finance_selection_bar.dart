@@ -21,6 +21,7 @@ import '../../providers/finance_overview_provider.dart';
 import '../../providers/finance_selection_provider.dart';
 import '../../providers/invoice_group_providers.dart';
 import '../claim_refusal_text.dart';
+import '../finance_host_unavailable.dart';
 import '../screens/money_online_payment.dart';
 import 'finance_selection_confirm.dart';
 import 'invoice_group_sheet.dart';
@@ -49,7 +50,7 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
     if (confirmed != true || !mounted) return;
     final captured = await commands.capture(selection);
     if (captured == null) {
-      if (mounted) _unavailable(selection);
+      if (mounted) _unavailable(selection, () => _run(() => _pay(selection)));
       return;
     }
     try {
@@ -83,11 +84,16 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
     return true;
   }
 
-  /// The business of [selection] could not be entered: nothing was sent.
-  void _unavailable(FinanceSelection selection) => AppSnack.error(
-    context,
-    context.l10n.financesBusinessUnavailable(selection.workspaceName ?? ''),
-  );
+  /// The business of [selection] could not be reached or verified: nothing
+  /// was sent, and the person may try again ([retry]).
+  void _unavailable(FinanceSelection selection, VoidCallback retry) =>
+      showFinanceHostUnavailable(
+        context,
+        selection.workspaceName ?? '',
+        retry: () {
+          if (mounted) retry();
+        },
+      );
 
   /// Declares [selection] paid, one declaration per month, after its one
   /// confirmation; a refusal is said in its own words, with the months
@@ -152,7 +158,7 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
               ),
       );
     } else if (done == false) {
-      _unavailable(selection);
+      _unavailable(selection, () => _run(() => _declare(selection)));
     } else if (done == true) {
       AppSnack.success(
         context,

@@ -6,12 +6,9 @@
 // screen never shows another member's document.
 import 'dart:async';
 
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
-import '../../../../core/backend/operation_context.dart' show WorkspaceTarget;
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -25,13 +22,10 @@ import '../../../../core/ui/loading_view.dart';
 import '../../domain/account_activity.dart';
 import '../../domain/finance_filter.dart';
 import '../../domain/finance_overview.dart';
-import '../../domain/money_face.dart';
 import '../../providers/account_activity_providers.dart';
 import '../../providers/finance_overview_provider.dart';
-import '../../providers/finance_selection_provider.dart';
 import '../../providers/invoice_group_providers.dart';
-import '../../providers/money_face_controller.dart';
-import '../../providers/money_focus_controller.dart';
+import '../my_finances_open.dart';
 import '../widgets/dev_label.dart';
 import '../widgets/finance_document_views.dart';
 import '../widgets/finance_selection_bar.dart';
@@ -151,52 +145,6 @@ class _MyFinancesState extends ConsumerState<MyFinancesScreen> {
   }
 }
 
-/// Opens [invoiceId] itself, in the Money screen of the space it belongs to
-/// — a development space's invoice opens in that development space.
-Future<void> _openMyInvoice(
-  BuildContext context,
-  WidgetRef ref,
-  WorkspaceTarget? target,
-  String invoiceId,
-) async {
-  final router = GoRouter.of(context);
-  if (target == null) return;
-  final captured = await ref.read(financeWorkspaceEntryProvider)(target);
-  if (captured == null) return;
-  try {
-    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
-  } finally {
-    captured.release();
-  }
-  ref.read(invoiceFocusProvider.notifier).request(target.networkId, invoiceId);
-  router.go('/money');
-}
-
-/// Opens the Payments face of [workspaceId] on the month of [at].
-Future<void> _openMyPayment(
-  BuildContext context,
-  WidgetRef ref,
-  WorkspaceTarget? target,
-  DateTime at,
-) async {
-  final router = GoRouter.of(context);
-  if (target == null) return;
-  final captured = await ref.read(financeWorkspaceEntryProvider)(target);
-  if (captured == null) return;
-  try {
-    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
-  } finally {
-    captured.release();
-  }
-  if (!context.mounted) return;
-  ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
-  final local = personalFormatOf(context).wall(at);
-  ref
-      .read(moneyFocusControllerProvider.notifier)
-      .setPeriod(yearMonth(local.year, local.month));
-  router.go('/money');
-}
-
 /// An empty list: complete only when every source answered (#3682).
 Widget _empty(BuildContext context, String key, IconData icon, String none,
         {required bool partial}) =>
@@ -228,7 +176,7 @@ class _Outstanding extends ConsumerWidget {
           const SizedBox(height: AppSpacing.sm),
           FinanceDocumentList(invoices: list, documents: data, now: now,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.target, i.id))),
+                  openMyInvoice(context, ref, i.target, i.id, i.workspaceName))),
         ],
         if (dev.outstanding.isNotEmpty) ...[
           const FinancesDevSection(),
@@ -238,7 +186,7 @@ class _Outstanding extends ConsumerWidget {
               now: now,
               isDev: true,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.target, i.id))),
+                  openMyInvoice(context, ref, i.target, i.id, i.workspaceName))),
         ],
       ],
     );
@@ -268,7 +216,7 @@ class _Paid extends ConsumerWidget {
               documents: data,
               now: now,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.target, i.id))),
+                  openMyInvoice(context, ref, i.target, i.id, i.workspaceName))),
         if (dev.paid.isNotEmpty) ...[
           const FinancesDevSection(),
           FinanceDocumentList(
@@ -277,7 +225,7 @@ class _Paid extends ConsumerWidget {
               now: now,
               isDev: true,
               onOpen: (i) => unawaited(
-                  _openMyInvoice(context, ref, i.target, i.id))),
+                  openMyInvoice(context, ref, i.target, i.id, i.workspaceName))),
         ],
       ],
     );
@@ -336,7 +284,7 @@ class _Reminders extends ConsumerWidget {
           // A reminder opens the invoice it is about, in its own space.
           onTap: target == null
               ? null
-              : () => _openMyInvoice(context, ref, target, r.invoiceId),
+              : () => openMyInvoice(context, ref, target, r.invoiceId, r.workspaceName),
         ),
       ),
       );
@@ -404,11 +352,12 @@ class _Payments extends ConsumerWidget {
                       title: devIds.contains(e.networkId)
                           ? DevLabel(name: e.workspaceName)
                           : Text(e.workspaceName),
-                      onTap: () => _openMyPayment(
+                      onTap: () => openMyPayment(
                         context,
                         ref,
                         e.target,
                         e.occurredAt,
+                        e.workspaceName,
                       ),
                       subtitle: Text([
                         if (e.description.isNotEmpty) e.description,

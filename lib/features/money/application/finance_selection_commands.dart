@@ -26,9 +26,16 @@ typedef FinanceWorkspaceEntry = Future<FinanceCommandTarget?> Function(Workspace
 class FinanceCommandTarget {
   const FinanceCommandTarget({required this.target, required this.memberId,
     required this.currency, required this.commands, required this.gateway,
-    required this.isCurrent, required this.release, required this.open});
+    required this.isCurrent, required this.release, required this.open,
+    this.businessName = '', this.canAdminister = false});
   final WorkspaceTarget target;
   final String memberId, currency;
+
+  /// The business these commands are for, and whether I administer it there
+  /// (#4218): what a payment's diagnostics say and offer, never the selected
+  /// business's.
+  final String businessName;
+  final bool canAdminister;
   final MemberAccountCommands commands;
   final PaymentGatewayRepository gateway;
   final bool Function() isCurrent;

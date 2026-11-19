@@ -7898,7 +7898,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} no está disponible ahora. No se ha enviado nada.",
+  "financesBusinessUnavailable": "{business} no está disponible o no se ha podido verificar ahora. No se ha enviado nada.",
+  "financesBusinessUnavailableOpen": "{business} no está disponible o no se ha podido verificar ahora.",
   "financesColumnAmount": "Importe",
   "financesColumnDocument": "Documento y periodo",
   "financesColumnState": "Documento y pago",
@@ -13747,7 +13748,7 @@
   "payConfigConfigured": "Configurado",
   "payConfigIntro": "Introduzca cada proveedor de pago que quiera ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigNotConfigured": "Sin configurar",
-  "payConfigOpen": "Configurar",
+  "payConfigOpenFor": "Configurar {business}",
   "payConfigRemove": "Eliminar",
   "payConfigRemoved": "Eliminado.",
   "payConfigSecretSet": "Definido — déjelo en blanco para conservarlo",
@@ -13775,6 +13776,7 @@
   "payOnlineChooseTitle": "Pagar en línea",
   "payOnlineClaimNotTaken": "El servicio de pago no tomó estas facturas, así que el pago no se abrió. No se ha cobrado nada.",
   "payOnlineClaimsUnsupported": "El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas seleccionadas.",
+  "payOnlineDiagBusiness": "Empresa: {business}",
   "payOnlineDiagHint": "Al servidor le falta esta configuración:",
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",
   "payOnlineFailedDetail": "El pago {reference} ({amount} vía {provider}) no se completó — no se abonó nada; el saldo sigue pendiente.",
