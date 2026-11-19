@@ -55,6 +55,12 @@ const INBOX_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','o
 // #3648 — the day a week starts on where a member chose none (locale.default_week_start).
 const WEEK_START=[['locale','weekStartLocale'],['monday','weekStartMonday'],['sunday','weekStartSunday'],['saturday','weekStartSaturday']];
 const BI_DETAIL_PAGE=[['10','optEntries',{n:10}],['25','optEntries',{n:25}],['50','optEntries',{n:50}],['100','optEntries',{n:100}],['200','optEntries',{n:200}]];
+// #4217 — the window to send a checkout again, per provider (platform settings
+// payments.resend_window_<provider>_minutes): below what the provider keeps a
+// request's key (Mollie 1 h, PayPal 6 h, Stripe 24 h).
+const RESEND_MOLLIE=[['15','optMinutes',{n:15}],['30','optMinutes',{n:30}],['50','optMinutes',{n:50}]];
+const RESEND_PAYPAL=[['60','optOneHour'],['120','optHours',{n:2}],['240','optHours',{n:4}],['330','optMinutes',{n:330}]];
+const RESEND_STRIPE=[['60','optOneHour'],['360','optHours',{n:6}],['720','optHours',{n:12}],['1380','optHours',{n:23}]];
 // #2563 C2 — backchannel retention (platform setting
 // federation.retention_hours): 1..720 hours.
 const FED_RETENTION=[['1','optOneHour'],['6','optHours',{n:6}],['24','optHours',{n:24}],['72','optHours',{n:72}],['168','optDays',{n:7}],['720','optDays',{n:30}]];
@@ -130,6 +136,8 @@ const PARAM_META=[
  ['enrolment.accepting','enrolAccepting','bool'],['enrolment.lifetime','enrolLifetime','enum',()=>ID_LIFETIME.map(x=>x[0])],
  ['enrolment.reconcile','enrolReconcile','enum',()=>ID_RECONCILE.map(x=>x[0])],['enrolment.skew','enrolSkew','enum',()=>ID_SKEW.map(x=>x[0])],
  ['directory.pageSize','dirPageSize','enum',()=>DIR_PAGE.map(x=>x[0])],['directory.queryLength','dirQueryLength','enum',()=>DIR_QUERY.map(x=>x[0])],
+ ['paymentResend.mollie','resendMollie','enum',()=>RESEND_MOLLIE.map(x=>x[0]),{needs:'moneyTab'}],['paymentResend.paypal','resendPaypal','enum',()=>RESEND_PAYPAL.map(x=>x[0]),{needs:'moneyTab'}],
+ ['paymentResend.stripe','resendStripe','enum',()=>RESEND_STRIPE.map(x=>x[0]),{needs:'moneyTab'}],
  ['federation.retentionHours','fedRetention','enum',()=>FED_RETENTION.map(x=>x[0])],
  ['federation.answerWait','fedAnswerWait','enum',()=>FED_ANSWER_WAIT.map(x=>x[0])],
  ['inbox.pageSize','inboxPageSize','enum',()=>INBOX_PAGE.map(x=>x[0])],

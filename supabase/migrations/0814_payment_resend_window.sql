@@ -23,6 +23,14 @@
 --      the provider may still settle it, and it is not called expired.
 
 -- BEGIN GENERATED SEED (dart run tool/build_settings_seed.dart)
+insert into public.setting_definitions
+  (key, type, default_value, min_value, max_value, unit, group_key, scopes,
+   edit_permission, floor_value, editable, choices, source, note)
+values
+('payments.resend_window_mollie_minutes', 'duration', '50'::jsonb, 1, 59, 'minutes', 'billing', array['platform'], 'manageBilling', null, true, null, 'payment_resend_window (0814)', 'How long after a checkout was first sent to Mollie (Wero included) the same checkout may be sent again under its original request. Mollie keeps a request''s key for one hour; past this window the checkout is not continued and a claim never sent lapses.'),
+('payments.resend_window_paypal_minutes', 'duration', '330'::jsonb, 1, 4260, 'minutes', 'billing', array['platform'], 'manageBilling', null, true, null, 'payment_resend_window (0814)', 'How long after a checkout was first sent to PayPal the same checkout may be sent again under its original request. PayPal keeps a request''s key for 6 hours, or up to 72 by arrangement with PayPal; past this window the checkout is not continued and a claim never sent lapses.'),
+('payments.resend_window_stripe_minutes', 'duration', '1380'::jsonb, 1, 1380, 'minutes', 'billing', array['platform'], 'manageBilling', null, true, null, 'payment_resend_window (0814)', 'How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Stripe keeps a request''s key for at least 24 hours; past this window the checkout is not continued and a claim never sent lapses.')
+on conflict (key) do nothing;
 -- END GENERATED SEED
 
 -- 3: the provider's own window. Wero rides Mollie. A provider without a
@@ -43,6 +51,7 @@ returns boolean language sql stable set search_path = public as $fn$
      and (p_intent.handed_at is not null
           or p_intent.created_at > now() - public.payment_resend_window(p_intent.provider));
 $fn$;
+revoke execute on function public.payment_intent_claim_open(public.payment_intents) from public, anon;
 
 -- 3: a checkout already handed over is sent again only inside its window,
 -- counted from the hand-over; one never handed lapses from its opening.

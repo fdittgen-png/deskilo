@@ -8040,6 +8040,14 @@
   "financesPayAmount": "Pagar {amount}",
   "financesPayThen": "Este pago salda el primer mes. Después: {months}.",
   "financesPayTitle": "Pagar a {business}",
+  "financesPaymentAwaitingProvider": "A la espera del proveedor",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
+  },
+  "financesPaymentChanged": "El pago ya no coincide",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
   "financesPaymentExpired": "Página de pago caducada",
   "@financesPaymentExpired": {
     "description": "#4147: continue an existing own payment (financesPaymentExpired)"
@@ -18449,6 +18457,18 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPaymentsResendWindowMollieMinutes": "Cuántos minutos después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Mollie conserva una solicitud.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Cuántos minutos después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que PayPal conserva una solicitud.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Cuántos minutos después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Stripe conserva una solicitud.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
   "settingHintPersonalMessageDirectoryPageSize": "Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.",
   "settingHintPersonalMessageDirectoryQueryLength": "El texto más largo que busca el directorio de la nueva conversación. Una búsqueda más larga se rechaza, nunca se recorta.",
   "settingHintPersonalReadConcurrency": "Cuántos servidores consulta a la vez el espacio personal cuando reúne sus propios datos. Un límite de las lecturas paralelas del dispositivo, no de ningún servidor.",
@@ -18643,6 +18663,18 @@
   "settingLabelMessagingThreadPollSeconds": "Actualización de la conversación",
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowMollieMinutes": "Ventana de reenvío, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Ventana de reenvío, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Ventana de reenvío, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
   },
   "settingLabelPersonalMessageDirectoryPageSize": "Entradas del directorio por página",
   "settingLabelPersonalMessageDirectoryQueryLength": "Búsqueda más larga en el directorio",

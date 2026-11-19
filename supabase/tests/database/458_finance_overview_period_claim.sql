@@ -133,7 +133,7 @@ select is((pg_temp.row_of(current_setting('t.a4')) ->> 'payable') || ':' || (pg_
 select set_config('t.p5', (select id::text from public.open_payment_intent(current_setting('t.ws')::uuid,
   current_setting('t.m_a')::uuid, 'stripe', '2026-06', 1200, 'EUR', null, array[current_setting('t.a5')::uuid])), true);
 reset role;
-update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 minute'
+update public.payment_intents set created_at = now() - public.payment_resend_window('stripe') - interval '1 minute'
  where id = current_setting('t.p5')::uuid;
 select lives_ok($$select public.settle_online_payment('stripe', (select order_id from public.payment_intents where id = current_setting('t.p5')::uuid), 'cap-p5', 1200)$$,
   'a lapsed claim''s payment is captured');

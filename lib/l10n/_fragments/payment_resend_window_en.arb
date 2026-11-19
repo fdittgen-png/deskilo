@@ -1,0 +1,26 @@
+{
+  "settingLabelPaymentsResendWindowMollieMinutes": "Resend window, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowMollieMinutes": "How many minutes after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Set it below how long Mollie keeps a request.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Resend window, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "How many minutes after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Set it below how long PayPal keeps a request.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Resend window, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "How many minutes after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Set it below how long Stripe keeps a request.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  }
+}

@@ -102,7 +102,7 @@ SQL
 lapsed() {
   local id
   id=$(claim "$1")
-  q "update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 minute' where id = '$id'" >/dev/null
+  q "update public.payment_intents set created_at = now() - public.payment_resend_window('stripe') - interval '1 minute' where id = '$id'" >/dev/null
   echo "$id"
 }
 ls_=$(lapsed "$s"); lt=$(lapsed "$t"); lu=$(claim "$u")

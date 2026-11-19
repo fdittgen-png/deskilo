@@ -1,0 +1,26 @@
+{
+  "settingLabelPaymentsResendWindowMollieMinutes": "Ventana de reenvío, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowMollieMinutes": "Cuántos minutos después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Mollie conserva una solicitud.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Ventana de reenvío, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Cuántos minutos después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que PayPal conserva una solicitud.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Ventana de reenvío, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Cuántos minutos después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Stripe conserva una solicitud.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  }
+}

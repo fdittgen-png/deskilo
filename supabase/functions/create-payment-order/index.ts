@@ -37,7 +37,6 @@ export { effectiveConfig, isProvider, missingFields } from "./config.ts";
 export {
   failureOutcome,
   idempotencyKey,
-  KEY_RETENTION_S,
   ProviderRefusal,
   reuseVerdict,
 } from "./outcome.ts";
@@ -244,7 +243,7 @@ export async function handleWith(
   // pending one is sent again under the SAME key, so the provider returns
   // the order it already made instead of a second one.
   if (intent.reused) {
-    const verdict = reuseVerdict(intent, Date.now());
+    const verdict = reuseVerdict(intent);
     if (verdict === "paid") {
       return json({ status: "paid", provider, order_id: intent.order_id });
     }

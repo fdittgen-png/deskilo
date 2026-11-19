@@ -12950,6 +12950,12 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentAwaitingProvider => 'Wartet auf den Anbieter';
+
+  @override
+  String get financesPaymentChanged => 'Die Zahlung stimmt nicht mehr';
+
+  @override
   String get financesPaymentExpired => 'Zahlungsseite abgelaufen';
 
   @override
@@ -30928,6 +30934,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Sekunden zwischen zwei Aktualisierungen einer geöffneten Unterhaltung. Niedrigere Werte belasten den Server stärker.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'Wie viele Minuten nach dem ersten Senden einer Zahlung an Mollie dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Mollie eine Anfrage behält.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'Wie viele Minuten nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die PayPal eine Anfrage behält.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'Wie viele Minuten nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Stripe eine Anfrage behält.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'Wie viele Spaces, Personen oder Gruppen die neue Unterhaltung auf einmal anzeigt; die nächsten kommen mit Mehr anzeigen.';
 
@@ -31223,6 +31241,18 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Aktualisierung der Unterhaltung';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Wiederholungsfenster, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Wiederholungsfenster, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Wiederholungsfenster, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

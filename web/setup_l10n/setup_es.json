@@ -781,5 +781,11 @@
  "businessKind_salon": "Salón — belleza, peluquería, tatuaje",
  "businessKind_service": "Otra empresa de servicios",
  "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)",
- "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública."
+ "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.",
+ "resendMollie": "Ventana de reenvío, Mollie",
+ "resendMollieHint": "Cuánto tiempo después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Mollie conserva una solicitud (1 hora). Se define en los ajustes de la app.",
+ "resendPaypal": "Ventana de reenvío, PayPal",
+ "resendPaypalHint": "Cuánto tiempo después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que PayPal conserva una solicitud (6 horas). Se define en los ajustes de la app.",
+ "resendStripe": "Ventana de reenvío, Stripe",
+ "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app."
 }

@@ -12834,6 +12834,12 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentAwaitingProvider => 'Awaiting the provider';
+
+  @override
+  String get financesPaymentChanged => 'Payment no longer matches';
+
+  @override
   String get financesPaymentExpired => 'Checkout expired';
 
   @override
@@ -30608,6 +30614,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds between two refreshes of an open conversation. Lower values load the server more.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'How many minutes after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Set it below how long Mollie keeps a request.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'How many minutes after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Set it below how long PayPal keeps a request.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'How many minutes after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Set it below how long Stripe keeps a request.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.';
 
@@ -30896,6 +30914,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelMessagingThreadPollSeconds => 'Conversation refresh';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Resend window, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Resend window, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Resend window, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

@@ -411,7 +411,7 @@ set local role authenticated;
 select lives_ok($$select pg_temp.open_intent(array[pg_temp.inv('CL-A11')], 1600, '2027-04', '00000000-0000-4000-8000-000003556f07')$$,
   'a claim of A11 that never reaches its provider');
 reset role;
-update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 minute'
+update public.payment_intents set created_at = now() - public.payment_resend_window('stripe') - interval '1 minute'
  where request_id = '00000000-0000-4000-8000-000003556f07';
 select set_config('t.f07', (select id::text from public.payment_intents where request_id = '00000000-0000-4000-8000-000003556f07'), true);
 set local role service_role;
@@ -444,7 +444,7 @@ select is(public.hand_payment_intent(current_setting('t.f08')::uuid), true,
 reset role;
 select is((select handed_at::text from public.payment_intents where id = current_setting('t.f08')::uuid),
   current_setting('t.f08_handed'), 'and keeps its first hand-over');
-update public.payment_intents set created_at = now() - public.payment_claim_window() - interval '1 day'
+update public.payment_intents set created_at = now() - public.payment_resend_window('stripe') - interval '1 day'
  where id = current_setting('t.f08')::uuid;
 select pg_temp.act('a2');
 set local role authenticated;

@@ -31,18 +31,14 @@ export const failureOutcome = (e: unknown, resent = false): "failed" | "unknown"
 /** #2014 — one provider order per intent: the same key on every retry. */
 export const idempotencyKey = (intentId: string) => `deskilo-intent-${intentId}`;
 
-/** #2014 B — providers keep an idempotency key for about a day. A reused
- * intent older than that is never sent again: the key could have expired
- * and the provider would open a second order. */
-export const KEY_RETENTION_S = 23 * 3600;
-
-/** #2014 B — what a REUSED intent allows, from its stored state. */
+/** #2014 B — what a REUSED intent allows, from its stored state. How long a
+ * provider honours a request's key is the database's to say (#4217: a
+ * platform setting per provider, counted from the hand-over): the hand-over
+ * refuses a checkout outside it and the intent is then answered as stale. */
 export function reuseVerdict(
-  intent: { status: string; created_at: string },
-  nowMs: number,
-): "paid" | "failed" | "stale" | "resend" {
+  intent: { status: string },
+): "paid" | "failed" | "resend" {
   if (intent.status === "captured") return "paid";
   if (intent.status === "failed") return "failed";
-  const ageS = (nowMs - Date.parse(intent.created_at)) / 1000;
-  return ageS > KEY_RETENTION_S ? "stale" : "resend";
+  return "resend";
 }

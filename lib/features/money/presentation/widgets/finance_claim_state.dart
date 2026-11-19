@@ -151,6 +151,8 @@ class FinanceClaimState extends ConsumerWidget {
     final ended = switch (invoice.claimPaymentState) {
       'failed' => l10n.financesPaymentFailed,
       'expired' => l10n.financesPaymentExpired,
+      'changed' => l10n.financesPaymentChanged,
+      'awaiting_provider' => l10n.financesPaymentAwaitingProvider,
       'withdrawn' => l10n.financesPaymentWithdrawn,
       'reversed' => l10n.financesPaymentReversed,
       _ => null,
