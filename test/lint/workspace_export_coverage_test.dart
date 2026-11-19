@@ -606,6 +606,12 @@ List<String> declaredNotWritten(
 
 /// Columns of an exported table left out on purpose, and why.
 const Map<String, Set<String>> _notExportedColumns = {
+  'reservations': {
+    // #4216 — whether a removed place was a hidden one: the reading rule of a
+    // booking that names no place any more, decided by this installation's
+    // plan; the booking's own facts, its label included, are its own record.
+    'removed_place_hidden',
+  },
   'invoices': {
     // #3853 — whether this installation keeps the invoice's stored original:
     // a fact of this installation's store, which the original's own record

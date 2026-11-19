@@ -25,7 +25,7 @@ Future<void> openFocusedInvoice(
   required String countryCode,
 }) async {
   final target = ref.read(financeCurrentTargetProvider);
-  if (focus == null || (workspaceId != focus.workspaceId && target?.networkId != focus.workspaceId)) return;
+  if (focus == null || (workspaceId != focus.workspaceId && target?.financeKey != focus.workspaceId)) return;
   final principal = ref.read(sessionStateProvider).value;
   bool current() => ref.read(sessionStateProvider).value == principal &&
       ref.read(financeCurrentTargetProvider) == target;

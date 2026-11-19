@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Scegli al pagamento",
+  "accountPaymentAwaitingMatch": "Ricevuto, in attesa di abbinamento",
   "accountPaymentConfirmed": "Pagamento confermato",
   "accountPaymentPreference": "Pagamento online preferito",
   "accountRefundDue": "Rimborso dovuto dallo spazio",
@@ -7898,7 +7899,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} non è raggiungibile ora. Non è stato inviato nulla.",
+  "financesBusinessUnavailable": "{business} non è raggiungibile o verificabile ora. Non è stato inviato nulla.",
+  "financesBusinessUnavailableOpen": "{business} non è raggiungibile o verificabile ora.",
   "financesColumnAmount": "Importo",
   "financesColumnDocument": "Documento e periodo",
   "financesColumnState": "Documento e pagamento",
@@ -13749,7 +13751,7 @@
   "payConfigConfigured": "Configurato",
   "payConfigIntro": "Inserisca ogni fornitore di pagamento da offrire. Le chiavi sono salvate in sicurezza sul server e non vengono più mostrate.",
   "payConfigNotConfigured": "Non configurato",
-  "payConfigOpen": "Configura",
+  "payConfigOpenFor": "Configura {business}",
   "payConfigRemove": "Rimuovi",
   "payConfigRemoved": "Rimosso.",
   "payConfigSecretSet": "Impostato — lasci vuoto per mantenere",
@@ -13777,6 +13779,8 @@
   "payOnlineChooseTitle": "Paga online",
   "payOnlineClaimNotTaken": "Il servizio di pagamento non ha preso in carico queste fatture, quindi il pagamento non è stato aperto. Non è stato addebitato nulla.",
   "payOnlineClaimsUnsupported": "Il servizio di pagamento di questa attività deve essere aggiornato prima di poter pagare online fatture selezionate.",
+  "payOnlineContextNotReady": "L’azienda non è ancora pronta. Riprovi tra un momento.",
+  "payOnlineDiagBusiness": "Azienda: {business}",
   "payOnlineDiagHint": "Sul server manca questa configurazione:",
   "payOnlineDiagTitle": "Pagamenti online — non configurati",
   "payOnlineFailedDetail": "Il pagamento {reference} ({amount} tramite {provider}) non è stato completato — nulla è stato accreditato; il saldo resta dovuto.",

@@ -352,9 +352,14 @@ class FinanceOverviewComposer extends _$FinanceOverviewComposer {
 /// Pull-to-refresh of Me › Finances: everything read again, done only once
 /// every connected host has answered or run out of its own time.
 Future<void> refreshMyFinances(WidgetRef ref) async {
-  ref.invalidate(financeOverviewProvider);
+  // #4225 — the Payments tab keeps its own list of what I paid: re-read it
+  // with the rows it follows, or a payment just made is missing from it.
+  ref
+    ..invalidate(accountActivityProvider(AccountActivityKind.payments))
+    ..invalidate(financeOverviewProvider);
   await ref.read(financeOverviewProvider.future);
   await ref.read(financeOverviewProvider.notifier).settled();
+  await ref.read(accountActivityProvider(AccountActivityKind.payments).future);
 }
 
 /// The selected workspace's repository — or null while its client is
