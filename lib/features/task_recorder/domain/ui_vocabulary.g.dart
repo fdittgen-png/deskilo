@@ -11206,6 +11206,8 @@ const Set<String> uiLabelKeys = {
   'nfcConfigEnableDesc',
   'nfcConfigIntro',
   'nfcConfigTitle',
+  'noPlacesSetupPricingHint',
+  'noPlacesSetupServicesHint',
   'noteRefAlert',
   'noteRefFilterEmpty',
   'noteRefFilterLabel',

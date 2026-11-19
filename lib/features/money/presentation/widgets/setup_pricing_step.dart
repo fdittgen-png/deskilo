@@ -41,11 +41,16 @@ class SetupPricingStep extends ConsumerWidget {
     required this.workspaceId,
     required this.currencyCode,
     required this.carnetsOn,
+    required this.hasPlaces,
     required this.draft,
   });
 
   final String workspaceId;
   final String currencyCode;
+
+  /// Whether the business has bookable places (#3547): the step's words are
+  /// about a place, a membership and a day only then.
+  final bool hasPlaces;
 
   /// Whether the workspace sells carnets: off, none is read or listed.
   final bool carnetsOn;
@@ -81,6 +86,7 @@ class SetupPricingStep extends ConsumerWidget {
       draft: draft,
       workspaceId: workspaceId,
       currencyCode: currencyCode,
+      hasPlaces: hasPlaces,
       stored: levels.requireValue,
       bands: bands.requireValue,
       packages: [
@@ -103,6 +109,7 @@ class _PricingPage extends ConsumerStatefulWidget {
     required this.draft,
     required this.workspaceId,
     required this.currencyCode,
+    required this.hasPlaces,
     required this.stored,
     required this.bands,
     required this.packages,
@@ -111,6 +118,7 @@ class _PricingPage extends ConsumerStatefulWidget {
 
   final String workspaceId;
   final String currencyCode;
+  final bool hasPlaces;
   final SubscriptionLevels stored;
   final List<FeeBand> bands;
 
@@ -186,7 +194,12 @@ class _PricingPageState extends ConsumerState<_PricingPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text(context.l10n.setupStepHint('pricing')),
+            Text(
+              context.l10n.setupStepHintFor(
+                'pricing',
+                hasPlaces: widget.hasPlaces,
+              ),
+            ),
             const SizedBox(height: AppSpacing.lg),
             ListenableBuilder(
               listenable: Listenable.merge([_presets, _busy]),

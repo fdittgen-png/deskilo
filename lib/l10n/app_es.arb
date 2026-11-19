@@ -13398,6 +13398,8 @@
   "nfcConfigEnableDesc": "Muestra la opción de acercar la tarjeta en los quioscos y en el gestor de credenciales.",
   "nfcConfigIntro": "Los miembros se registran en un quiosco de pared acercando una tarjeta RFID/NFC. Registre la tarjeta de cada miembro en Miembros y planes; en el quiosco la acercan para reservar o registrarse.",
   "nfcConfigTitle": "Credenciales RFID / NFC",
+  "noPlacesSetupPricingHint": "Lo que cuesta su oferta: precios y tarifas.",
+  "noPlacesSetupServicesHint": "Lo que ofrece a sus clientes: cada servicio, su duración y su precio.",
   "noteRefAlert": "Aviso",
   "noteRefFilterCount": "{shown} de {total}",
   "noteRefFilterEmpty": "Sin resultados.",

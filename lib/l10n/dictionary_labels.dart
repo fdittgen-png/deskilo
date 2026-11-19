@@ -496,6 +496,19 @@ extension DictionaryLabels on AppLocalizations {
     _ => key,
   };
 
+  /// The `setupStepHint` label for [key] in a business whose places are off
+  /// (#3547): the two steps whose words are about places, memberships and
+  /// lockers say what such a business actually does; every other step reads as
+  /// it always did.
+  String setupStepHintFor(String key, {required bool hasPlaces}) =>
+      hasPlaces
+      ? setupStepHint(key)
+      : switch (key) {
+          'pricing' => noPlacesSetupPricingHint,
+          'services' => noPlacesSetupServicesHint,
+          _ => setupStepHint(key),
+        };
+
   /// The `setupStepHint` label for [key].
   String setupStepHint(String key) => switch (key) {
     'basics' => setupStepHintBasics,
