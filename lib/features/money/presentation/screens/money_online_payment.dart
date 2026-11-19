@@ -26,6 +26,7 @@ import '../../providers/finance_selection_provider.dart';
 import '../../providers/money_providers.dart';
 import '../../providers/payment_approval_providers.dart';
 import '../claim_refusal_text.dart';
+import '../finance_host_unavailable.dart';
 import '../payment_provider_labels.dart';
 
 typedef _PaymentTarget = ({String workspaceId, String memberId, String currency,
@@ -62,7 +63,7 @@ class MoneyOnlinePayment {
     FinanceCommandTarget? captured,
   }) async {
     final l10n = _context.l10n;
-    final payment = _payment(captured);
+    final payment = _paymentOrSay(captured, amountCents, period, invoiceIds);
     if (payment == null || amountCents <= 0 || (captured != null && !captured.isCurrent())) return false;
     final trace = TraceLogger.instance;
 
@@ -145,6 +146,30 @@ class MoneyOnlinePayment {
     // Launch failures are traced inside the shared link seam.
     await _ref.read(paymentApprovalProvider)(_context, order.approveUrl!);
     return true;
+  }
+
+  /// The target of a payment; when the business's verified identity is not
+  /// known yet (its context is loading or failed) that is said, with a way to
+  /// try again, and not nothing (#4218).
+  _PaymentTarget? _paymentOrSay(
+    FinanceCommandTarget? captured,
+    int amountCents,
+    String period,
+    List<String>? invoiceIds,
+  ) {
+    final payment = _payment(captured);
+    if (payment != null || captured != null || amountCents <= 0) return payment;
+    final l10n = _context.l10n;
+    AppSnack.error(_context, l10n.payOnlineContextNotReady,
+        action: SnackBarAction(
+          label: l10n.commonRetry,
+          onPressed: () {
+            if (_context.mounted) {
+              unawaited(pay(amountCents, period, invoiceIds: invoiceIds));
+            }
+          },
+        ));
+    return null;
   }
 
   _PaymentTarget? _payment(FinanceCommandTarget? captured) {
@@ -288,6 +313,21 @@ class MoneyOnlinePayment {
     return ok ? start : null;
   }
 
+  /// Opens the configuration of the business the payment is OF: that business
+  /// is entered first (its host, as Open does); one that cannot be entered is
+  /// said, with a way to try again.
+  Future<void> _configure(_PaymentTarget payment) async {
+    final open = payment.open;
+    if (open != null && !await open()) {
+      if (_context.mounted) {
+        showFinanceHostUnavailable(_context, payment.businessName, opening: true,
+            retry: () => unawaited(_configure(payment)));
+      }
+      return;
+    }
+    if (_context.mounted) unawaited(_context.push('/payment-config'));
+  }
+
   /// Owner/admin diagnostics when online payments cannot run: names the
   /// undeployed function or the exact missing server secrets, so "not set
   /// up" is actionable instead of a mystery. Members get the friendly
@@ -317,13 +357,7 @@ class MoneyOnlinePayment {
       builder: (context) => PaymentDiagnosticsDialog(
         lines: lines,
         business: payment.businessName,
-        onConfigure: () async {
-          // The business of the payment is entered first (its host, as Open
-          // does); then its own configuration opens.
-          final open = payment.open;
-          if (open != null && !await open()) return;
-          if (_context.mounted) unawaited(_context.push('/payment-config'));
-        },
+        onConfigure: () => _configure(payment),
       ),
     );
   }

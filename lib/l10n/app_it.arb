@@ -13776,6 +13776,7 @@
   "payOnlineChooseTitle": "Paga online",
   "payOnlineClaimNotTaken": "Il servizio di pagamento non ha preso in carico queste fatture, quindi il pagamento non è stato aperto. Non è stato addebitato nulla.",
   "payOnlineClaimsUnsupported": "Il servizio di pagamento di questa attività deve essere aggiornato prima di poter pagare online fatture selezionate.",
+  "payOnlineContextNotReady": "L’azienda non è ancora pronta. Riprovi tra un momento.",
   "payOnlineDiagBusiness": "Azienda: {business}",
   "payOnlineDiagHint": "Sul server manca questa configurazione:",
   "payOnlineDiagTitle": "Pagamenti online — non configurati",

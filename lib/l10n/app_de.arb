@@ -13776,6 +13776,7 @@
   "payOnlineChooseTitle": "Online bezahlen",
   "payOnlineClaimNotTaken": "Der Zahlungsdienst hat diese Rechnungen nicht übernommen, die Zahlung wurde nicht geöffnet. Es wurde nichts belastet.",
   "payOnlineClaimsUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.",
+  "payOnlineContextNotReady": "Das Unternehmen ist noch nicht bereit. Versuchen Sie es gleich noch einmal.",
   "payOnlineDiagBusiness": "Unternehmen: {business}",
   "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration:",
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",

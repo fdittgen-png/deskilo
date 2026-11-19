@@ -41,10 +41,18 @@ Future<void> openMyInvoice(
     }
     return;
   }
+  final bool opened;
   try {
-    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
+    opened = await captured.open();
   } finally {
     captured.release();
+  }
+  if (!context.mounted) return;
+  if (!opened) {
+    // the business could not be entered: said, not dropped
+    showFinanceHostUnavailable(context, business, opening: true,
+        retry: () => unawaited(openMyInvoice(context, ref, target, invoiceId, business)));
+    return;
   }
   ref.read(invoiceFocusProvider.notifier).request(target.financeKey, invoiceId);
   router.go('/money');
@@ -68,12 +76,18 @@ Future<void> openMyPayment(
     }
     return;
   }
+  final bool opened;
   try {
-    if (!await captured.open() || !context.mounted || !captured.isCurrent()) return;
+    opened = await captured.open();
   } finally {
     captured.release();
   }
   if (!context.mounted) return;
+  if (!opened) {
+    showFinanceHostUnavailable(context, business, opening: true,
+        retry: () => unawaited(openMyPayment(context, ref, target, at, business)));
+    return;
+  }
   ref.read(moneyFaceControllerProvider.notifier).show(MoneyFace.payments);
   final local = personalFormatOf(context).wall(at);
   ref

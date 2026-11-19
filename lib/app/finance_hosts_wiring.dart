@@ -8,6 +8,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../core/backend/connected_installation_providers.dart';
 import '../core/backend/connected_pool_host_resolver.dart';
+import '../core/backend/connection_outcome.dart' show ConnectionFailure;
 import '../core/backend/context_client_providers.dart';
 import '../core/backend/context_clients.dart';
 import '../core/session/session_source.dart';
@@ -75,6 +76,7 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
               pool: () => pool, sourceOf: (_) => origin),
           );
         } on Object catch (e, st) {
+          if (!_isUnreached(e)) rethrow;
           TraceLogger.instance.warn('money',
               'finance host not reached or not verified: ${target.financeKey}',
               error: e, stackTrace: st);
@@ -102,19 +104,30 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
             isCurrent: current, release: () => host.lease?.release(),
             open: () async {
               if (!current()) return false;
-              final active = ref.read(activeWorkspaceIdProvider.notifier);
-              final origin = host.lease?.source;
-              if (origin == null) {
-                await active.select(target.workspaceId);
-              } else {
-                active.activateConnected(target.workspaceId, origin);
+              try {
+                final active = ref.read(activeWorkspaceIdProvider.notifier);
+                final origin = host.lease?.source;
+                if (origin == null) {
+                  await active.select(target.workspaceId);
+                } else {
+                  active.activateConnected(target.workspaceId, origin);
+                }
+                return current() && ref.read(activeWorkspaceIdProvider).value == target.workspaceId &&
+                    ref.read(selectedWorkspaceHostProvider)?.source == origin;
+              } on Object catch (e, st) {
+                // entering the business failed: it is not entered, and the
+                // caller says so
+                if (!_isUnreached(e)) rethrow;
+                TraceLogger.instance.warn('money',
+                    'finance host failed while opening: ${target.financeKey}',
+                    error: e, stackTrace: st);
+                return false;
               }
-              return current() && ref.read(activeWorkspaceIdProvider).value == target.workspaceId &&
-                  ref.read(selectedWorkspaceHostProvider)?.source == origin;
             });
         } on Object catch (e, st) {
           // The host answered and then failed (the network, a pin): the same
           // answer as one that could not be reached.
+          if (!_isUnreached(e)) rethrow;
           TraceLogger.instance.warn('money',
               'finance host failed while entering: ${target.financeKey}',
               error: e, stackTrace: st);
@@ -124,3 +137,8 @@ final Override financeWorkspaceEntryFromApp = financeWorkspaceEntryProvider
         }
       };
     });
+
+/// Whether [error] is a host that could not be reached or verified: an
+/// exception (the network, a refusal of the server) or the pool's typed
+/// refusal, which is a [StateError]. Any other error is a defect and goes on.
+bool _isUnreached(Object error) => error is Exception || error is ConnectionFailure;

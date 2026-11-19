@@ -13776,6 +13776,7 @@
   "payOnlineChooseTitle": "Pagar en línea",
   "payOnlineClaimNotTaken": "El servicio de pago no tomó estas facturas, así que el pago no se abrió. No se ha cobrado nada.",
   "payOnlineClaimsUnsupported": "El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas seleccionadas.",
+  "payOnlineContextNotReady": "La empresa aún no está lista. Inténtelo de nuevo en un momento.",
   "payOnlineDiagBusiness": "Empresa: {business}",
   "payOnlineDiagHint": "Al servidor le falta esta configuración:",
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",

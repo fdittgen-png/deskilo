@@ -37,6 +37,9 @@ class _Host {
   String installationId;
   final seen = <String>[];
 
+  /// The workspace read answers a server error, or throws a defect.
+  bool workspacesFail = false, workspacesDefect = false;
+
   String get origin => 'https://$name.example';
   BackendEndpoint get endpoint =>
       BackendEndpoint(origin, 'sb_publishable_${name}_target');
@@ -60,6 +63,15 @@ class _Host {
           request: r,
         );
       case '/rest/v1/workspaces':
+        if (workspacesDefect) throw StateError('a defect, not a host');
+        if (workspacesFail) {
+          return http.Response(
+            jsonEncode({'code': 'XX000', 'message': 'down'}),
+            500,
+            headers: {'content-type': 'application/json'},
+            request: r,
+          );
+        }
         body = [
           {
             'id': _ws,
@@ -214,5 +226,16 @@ void main() {
     lyon.installationId = 'inst-replaced';
     expect(await enter('inst-lyon'), isNull);
     expect(home.asked, isEmpty, reason: 'the home host is not asked instead');
+  });
+
+  test('a host that fails while it is entered (a server error on its '
+      'workspaces) is no entry, and nothing is thrown', () async {
+    home.workspacesFail = true;
+    expect(await enter('inst-home'), isNull);
+  });
+
+  test('a defect is not turned into "cannot be reached": it goes on', () async {
+    home.workspacesDefect = true;
+    await expectLater(enter('inst-home'), throwsStateError);
   });
 }

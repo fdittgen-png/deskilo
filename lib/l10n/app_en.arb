@@ -31226,6 +31226,10 @@
   "@payOnlineClaimsUnsupported": {
     "description": "#3556 The business's payment service is too old to pay selected invoices"
   },
+  "payOnlineContextNotReady": "The business is not ready yet. Try again in a moment.",
+  "@payOnlineContextNotReady": {
+    "description": "#4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again"
+  },
   "payOnlineDiagBusiness": "Business: {business}",
   "@payOnlineDiagBusiness": {
     "description": "#4218 Diagnostics dialog: the business whose online payments are missing configuration",

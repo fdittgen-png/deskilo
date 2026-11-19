@@ -37830,6 +37830,12 @@ abstract class AppLocalizations {
   /// **'This business\'s payment service must be updated before selected invoices can be paid online.'**
   String get payOnlineClaimsUnsupported;
 
+  /// #4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again
+  ///
+  /// In en, this message translates to:
+  /// **'The business is not ready yet. Try again in a moment.'**
+  String get payOnlineContextNotReady;
+
   /// #4218 Diagnostics dialog: the business whose online payments are missing configuration
   ///
   /// In en, this message translates to:

@@ -23925,6 +23925,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.';
 
   @override
+  String get payOnlineContextNotReady =>
+      'Das Unternehmen ist noch nicht bereit. Versuchen Sie es gleich noch einmal.';
+
+  @override
   String payOnlineDiagBusiness(String business) {
     return 'Unternehmen: $business';
   }

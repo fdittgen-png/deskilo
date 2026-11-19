@@ -93,6 +93,8 @@ Future<FakeMoneyRepository> _show(
   String business = 'Atelier',
   bool admin = false,
   List<String>? opened,
+  bool Function()? hostLost,
+  bool openFails = false,
 }) async {
   _approved.clear();
   tester.view.physicalSize = const Size(800, 1600);
@@ -126,14 +128,15 @@ Future<FakeMoneyRepository> _show(
                 gateway: money.paymentGateway,
                 isCurrent: () =>
                     ref.mounted &&
-                    ref.read(sessionStateProvider).value == principal,
+                    ref.read(sessionStateProvider).value == principal &&
+                    !(hostLost?.call() ?? false),
                 release: () {},
                 // #4218 — who the business is, my right there, and entering it
                 businessName: business,
                 canAdminister: admin,
                 open: () async {
                   opened?.add(target.financeKey);
-                  return true;
+                  return !openFails;
                 },
               );
             };
@@ -591,6 +594,88 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byKey(const ValueKey('pay-config-open')), findsNothing);
     expect(find.textContaining('set up yet'), findsOneWidget);
+  });
+
+  testWidgets('a declaration over two months interrupted after the first '
+      'says what was recorded, never "nothing was sent", and Try again '
+      'declares only what is still selected', (tester) async {
+    var lost = true;
+    late FakeMoneyRepository money;
+    money = await _show(
+      tester,
+      hostLost: () => lost && money.recordedPayments.isNotEmpty,
+    );
+    await _select(tester, 'a1');
+    await _select(tester, 'a2');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-declare')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(money.recordedPayments.map((p) => p.period), ['2026-10']);
+    expect(
+      find.text(
+        'Recorded: October 2026. Not recorded: November 2026. '
+        'Atelier cannot be reached or verified right now.',
+      ),
+      findsOneWidget,
+    );
+    expect(find.textContaining('Nothing was sent'), findsNothing);
+    expect(_box(tester, 'a2').value, isTrue, reason: 'November stays selected');
+    expect(_box(tester, 'a1').value, isFalse, reason: 'October left');
+    // the host is back: Try again offers only the second month
+    lost = false;
+    await tester.tap(find.text('Try again'));
+    await tester.pumpAndSettle();
+    expect(find.textContaining('November'), findsWidgets);
+    expect(find.textContaining('October 2026'), findsNothing);
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    expect(money.recordedPayments.map((p) => p.period), [
+      '2026-10',
+      '2026-11',
+    ], reason: 'October is not declared twice');
+  });
+
+  testWidgets('opening an invoice whose business cannot be entered says so '
+      'and offers to try again, instead of doing nothing', (tester) async {
+    await _show(tester, routed: true, openFails: true);
+    await tester.ensureVisible(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.tap(find.byKey(const ValueKey('finances-open-a1')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Atelier cannot be reached or verified right now.'),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+  });
+
+  testWidgets('Configure for a business that cannot be entered says so and '
+      'offers to try again; its configuration does not open', (tester) async {
+    final money = await _show(
+      tester,
+      routed: true,
+      business: 'Lyon',
+      admin: true,
+      openFails: true,
+    );
+    money
+      ..paymentProviders = []
+      ..paymentMissing = {
+        'stripe': ['STRIPE_SECRET_KEY'],
+      };
+    await _select(tester, 'a1');
+    await tester.tap(find.byKey(const ValueKey('finances-selection-pay')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('finances-confirm-send')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const ValueKey('pay-config-open')));
+    await tester.pumpAndSettle();
+    expect(find.text('payment-config-page'), findsNothing);
+    expect(
+      find.text('Lyon cannot be reached or verified right now.'),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
   });
 
   testWidgets('opening an invoice of a business that cannot be reached or '

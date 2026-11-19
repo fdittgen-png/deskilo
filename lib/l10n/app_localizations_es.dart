@@ -23858,6 +23858,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas seleccionadas.';
 
   @override
+  String get payOnlineContextNotReady =>
+      'La empresa aún no está lista. Inténtelo de nuevo en un momento.';
+
+  @override
   String payOnlineDiagBusiness(String business) {
     return 'Empresa: $business';
   }

@@ -6,6 +6,8 @@
 // finances, above the app's own bar, and wraps rather than hides anything
 // on a narrow screen with large text. One line says why an invoice of
 // another business or currency cannot join.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -95,6 +97,53 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
         },
       );
 
+  /// Tries a declaration again on what is selected NOW: a month already
+  /// recorded has left the selection, so it is never declared twice.
+  void _declareAgain() {
+    final now = ref.read(financeSelectionProvider);
+    if (mounted && !now.isEmpty) unawaited(_run(() => _declare(now)));
+  }
+
+  /// A declaration that stopped, said as what it did: the months recorded
+  /// before it and the months not, with why; nothing recorded reads as the
+  /// refusal or as a business that could not be reached. The host being lost
+  /// offers to try again on what is still selected.
+  void _declareStopped(
+    FinanceSelection selection, {
+    required List<String> recorded,
+    required ClaimRefusal? refused,
+  }) {
+    final l10n = context.l10n;
+    final business = selection.workspaceName ?? '';
+    if (recorded.isEmpty) {
+      if (refused != null) {
+        AppSnack.error(context, claimRefusalText(l10n, refused));
+      } else {
+        _unavailable(selection, _declareAgain);
+      }
+      return;
+    }
+    String months(List<String> periods) =>
+        periods.map((p) => monthLabel(context, p)).join(', ');
+    final rest = [
+      for (final m in selection.months)
+        if (!recorded.contains(m.period)) m.period,
+    ];
+    AppSnack.error(
+      context,
+      l10n.financesDeclaredPart(
+        months(recorded),
+        months(rest),
+        refused != null
+            ? claimRefusalText(l10n, refused)
+            : l10n.financesBusinessUnavailableOpen(business),
+      ),
+      action: refused != null
+          ? null
+          : SnackBarAction(label: l10n.commonRetry, onPressed: _declareAgain),
+    );
+  }
+
   /// Declares [selection] paid, one declaration per month, after its one
   /// confirmation; a refusal is said in its own words, with the months
   /// recorded before it, and leaves what is still to declare selected.
@@ -140,25 +189,8 @@ class _BarState extends ConsumerState<FinanceSelectionBar> {
     );
     await refreshMyFinances(ref);
     if (!mounted) return;
-    if (refused case final r?) {
-      final rest = [
-        for (final m in selection.months)
-          if (!recorded.contains(m.period)) m.period,
-      ];
-      String months(List<String> periods) =>
-          periods.map((p) => monthLabel(context, p)).join(', ');
-      AppSnack.error(
-        context,
-        recorded.isEmpty
-            ? claimRefusalText(l10n, r)
-            : l10n.financesDeclaredPart(
-                months(recorded),
-                months(rest),
-                claimRefusalText(l10n, r),
-              ),
-      );
-    } else if (done == false) {
-      _unavailable(selection, () => _run(() => _declare(selection)));
+    if (refused != null || done == false) {
+      _declareStopped(selection, recorded: recorded, refused: refused);
     } else if (done == true) {
       AppSnack.success(
         context,

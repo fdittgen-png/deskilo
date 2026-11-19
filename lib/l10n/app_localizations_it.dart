@@ -23895,6 +23895,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'Il servizio di pagamento di questa attività deve essere aggiornato prima di poter pagare online fatture selezionate.';
 
   @override
+  String get payOnlineContextNotReady =>
+      'L’azienda non è ancora pronta. Riprovi tra un momento.';
+
+  @override
   String payOnlineDiagBusiness(String business) {
     return 'Azienda: $business';
   }

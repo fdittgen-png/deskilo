@@ -146,6 +146,17 @@ class FinanceClaimState extends ConsumerWidget {
     final l10n = context.l10n;
     if (refused != null) {
       AppSnack.error(context, claimRefusalText(l10n, refused));
+    } else if (done == false &&
+        (invoice.target == null ||
+            (invoice.claimPaymentId == null && invoice.claimEventId == null))) {
+      // nothing to withdraw or take back here (no host, no payment): not a
+      // host that cannot be reached, and nothing to try again
+      AppSnack.error(
+        context,
+        invoice.claimPaymentId == null
+            ? l10n.financesTakeBackFailed
+            : l10n.financesWithdrawFailed,
+      );
     } else if (done == false) {
       showFinanceHostUnavailable(
         context,

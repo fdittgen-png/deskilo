@@ -8,6 +8,7 @@ import 'package:deskilo/core/i18n/format_controller.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/money/domain/payment_method.dart';
 import 'package:deskilo/features/money/domain/payment_provider.dart';
+import 'package:deskilo/features/money/providers/finance_overview_provider.dart';
 import 'package:deskilo/features/workspace/domain/overage_policy.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -152,6 +153,37 @@ void main() {
     expect(find.byKey(const Key('packages-card')), findsOneWidget);
     expect(find.text('Day packages'), findsOneWidget);
     expect(find.text('5-day pack (5d)'), findsOneWidget);
+  });
+
+  testWidgets(
+      'Pay online while the business\'s verified identity is not known says '
+      'so and offers to try again, and starts no order (#4218)', (tester) async {
+    final workspace = FakeWorkspaceRepository.withWorkspace();
+    workspace.workspaces[0] = workspace.workspaces[0].copyWith(
+      featureFlags: const {'onlinePayments': true},
+    );
+    final money = FakeMoneyRepository();
+    await pumpMoney(
+      tester,
+      money: money,
+      workspace: workspace,
+      extraOverrides: [financeCurrentTargetProvider.overrideWithValue(null)],
+    );
+    await tester.scrollUntilVisible(
+      find.byKey(const Key('pay-online-button')),
+      200,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.ensureVisible(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+    await tester.tap(find.byKey(const Key('pay-online-button')));
+    await tester.pumpAndSettle();
+    expect(
+      find.text('The business is not ready yet. Try again in a moment.'),
+      findsOneWidget,
+    );
+    expect(find.text('Try again'), findsOneWidget);
+    expect(money.paymentOrders, isEmpty);
   });
 
   testWidgets(

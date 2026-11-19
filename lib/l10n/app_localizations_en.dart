@@ -23698,6 +23698,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'This business\'s payment service must be updated before selected invoices can be paid online.';
 
   @override
+  String get payOnlineContextNotReady =>
+      'The business is not ready yet. Try again in a moment.';
+
+  @override
   String payOnlineDiagBusiness(String business) {
     return 'Business: $business';
   }
