@@ -3694,7 +3694,7 @@ routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | f
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
 routine public.setup_step_acknowledge(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:service_role | body:54d48a072d2e
-routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d19c6fc9dd60
+routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:3c050a5a9f7d
 routine public.setup_step_drafts_step_known() -> trigger | function | invoker | volatile | exec:service_role | body:37c49c4ff5dc
 routine public.setup_step_holds_secret(p_step text) -> boolean | function | invoker | immutable | exec:service_role | body:a73e8cca762c
 routine public.setup_step_markable(p_workspace_id uuid, p_step text) -> jsonb | function | definer | stable | exec:service_role | body:5667dc2ba638
@@ -3863,7 +3863,7 @@ routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | de
 routine public.workspace_recorded_payments_v1(p_workspace_id uuid, p_from date, p_to date, p_after jsonb, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1a8386a29b37
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:28a091daecbb
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:c591069462d9
-routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7f151a021708
+routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ecf4f8c3fa17
 routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3040dc2c43da
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:service_role | body:3cebd09878ca
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:7fcabe234314
