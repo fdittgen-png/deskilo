@@ -57,10 +57,6 @@ Future<void> walkPracticeGuide(WidgetTester tester, Size size) async {
   final status = await container.read(workspaceSetupStatusProvider(id).future);
   for (final step in status.steps) {
     if (setupStepsNeedingPlaces.contains(step.step)) continue;
-    // "Prices and plans" prices presence (levels, extra half-days, day packs):
-    // it is not a step of a business without places once the server's
-    // detector says so (the migration that follows this one).
-    if (step.step == 'pricing') continue;
     router.go('/setup/step/${step.step}');
     await settleFrames(tester);
     final words = placeWordsShown(tester);

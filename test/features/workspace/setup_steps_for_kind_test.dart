@@ -13,7 +13,15 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   test('the steps for places are those of places, the kiosk and badges, a '
       'first booking of a place and the booking limits', () {
-    expect(setupStepsNeedingPlaces, containsAll(['places', 'kiosk', 'limits']));
+    expect(
+      setupStepsNeedingPlaces,
+      containsAll(['places', 'kiosk', 'limits', 'pricing']),
+    );
+    expect(
+      [for (final s in setupSteps) if (s.alsoNeeds != null) s.id],
+      ['pricing'],
+      reason: 'the second feature is named on the pricing step alone (0815)',
+    );
     for (final id in setupStepsNeedingPlaces) {
       final step = setupSteps.firstWhere((s) => s.id == id);
       expect(step.feature, isNotNull, reason: id);
