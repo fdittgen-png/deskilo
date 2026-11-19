@@ -41513,6 +41513,12 @@ abstract class AppLocalizations {
   /// **'This profile is not public.'**
   String get publicPersonUnavailable;
 
+  /// Public profile: Contacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Contact options'**
+  String get publicProfileContacts;
+
   /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
@@ -41525,6 +41531,12 @@ abstract class AppLocalizations {
   /// **'Copy the link'**
   String get publicProfileCopy;
 
+  /// Public profile: Information.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional information'**
+  String get publicProfileInformation;
+
   /// Shown as the text in public profile tile (me).
   ///
   /// In en, this message translates to:
@@ -41536,6 +41548,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Anyone with the link reads your name, profession and bio.'**
   String get publicProfileOn;
+
+  /// Public profile: Overview.
+  ///
+  /// In en, this message translates to:
+  /// **'Overview'**
+  String get publicProfileOverview;
 
   /// Shown as the text in public profile tile (me).
   ///
@@ -41554,6 +41572,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Publish a public profile?'**
   String get publicProfilePublishTitle;
+
+  /// Public profile: PublishedInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Information published by this business. Missing information does not mean that a facility is absent.'**
+  String get publicProfilePublishedInfo;
+
+  /// Public profile: RefreshFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not refresh this business’s page. Showing the information already loaded.'**
+  String get publicProfileRefreshFailed;
+
+  /// Public profile: Refreshing.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshing published information…'**
+  String get publicProfileRefreshing;
+
+  /// Public profile: RegularHours.
+  ///
+  /// In en, this message translates to:
+  /// **'Regular hours in the business’s timezone; exceptions and live availability may differ.'**
+  String get publicProfileRegularHours;
+
+  /// Public profile: TakesInquiries.
+  ///
+  /// In en, this message translates to:
+  /// **'Accepts inquiries'**
+  String get publicProfileTakesInquiries;
 
   /// Shown as the title in public profile tile (me), and 1 other place.
   ///

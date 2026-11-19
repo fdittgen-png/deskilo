@@ -290,7 +290,9 @@ Vous n'avez pas de code mais aimeriez trouver un espace près de chez vous. Les 
 1. Touchez **Trouver un espace de travail** sur l'écran de connexion, ou ouvrez **Découvrir** sur [Moi](app:/me).
 2. Saisissez un nom ou un lieu dans **Rechercher des espaces**.
 3. Passez de la **Carte** à la **Liste** avec le bouton en haut.
-4. Ouvrez un résultat pour lire sa page publique. Là, **Demander un profil dans cet espace** demande à le rejoindre, et **Entrer** ouvre un espace dont vous faites déjà partie.
+4. Choisissez **Voir** sur une fiche pour lire sa page publique. Les actions proposées dépendent de ce que l’entreprise prend en charge ; **Demander à rejoindre** sollicite une adhésion et **Entrer** ouvre une entreprise dont vous faites déjà partie.
+
+Les fiches montrent les équipements, l’accessibilité et les horaires habituels publiés, avec l’image, le lieu et le type d’activité. La page regroupe ces mêmes informations, la présentation, les informations complémentaires et les moyens de contact. **Non publié** signifie inconnu : cela ne veut pas dire qu’un équipement est absent ou que le lieu est inaccessible. Les horaires utilisent le fuseau de l’entreprise et ne garantissent pas une disponibilité réelle. Si l’actualisation échoue, un avis signale les informations conservées et **Réessayer** interroge à nouveau la même source.
 
 **Bon à savoir**
 

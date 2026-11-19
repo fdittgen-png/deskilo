@@ -24,6 +24,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../helpers/directory_scroll.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
@@ -96,13 +97,13 @@ Future<void> _show(
   await tester.pumpAndSettle();
 }
 
-bool _saved(WidgetTester tester, PublicWorkspace w) => find
-    .descendant(
-      of: find.byKey(ValueKey('directory-row-${w.source}/${w.id}')),
-      matching: find.byTooltip('Remove bookmark'),
-    )
-    .evaluate()
-    .isNotEmpty;
+Future<bool> _saved(WidgetTester tester, PublicWorkspace w) async {
+  await revealDirectoryItem(tester, find.byKey(_bookmark(w)));
+  return find.descendant(
+    of: find.byKey(ValueKey('directory-row-${w.source}/${w.id}')),
+    matching: find.byTooltip('Remove bookmark'),
+  ).evaluate().isNotEmpty;
+}
 
 List<(String, String)> _places(InMemorySavedPlacesStore store, String user) => [
   for (final p in store.byNamespace[_namespace(user)] ?? const <SavedPlace>[])
@@ -126,8 +127,8 @@ void main() {
     );
     await tester.tap(find.byKey(_bookmark(_onA)));
     await tester.pumpAndSettle();
-    expect(_saved(tester, _onA), isTrue);
-    expect(_saved(tester, _onB), isFalse, reason: 'same UUID, other host');
+    expect(await _saved(tester, _onA), isTrue);
+    expect(await _saved(tester, _onB), isFalse, reason: 'same UUID, other host');
     expect(_places(store, 'user-a'), [(_wa, _same)]);
 
     // A workspace on W-B is selected: what A saved does not move.
@@ -135,8 +136,8 @@ void main() {
         .read(selectedWorkspaceHostProvider.notifier)
         .select(_same, _wb);
     await tester.pumpAndSettle();
-    expect(_saved(tester, _onA), isTrue);
-    expect(_saved(tester, _onB), isFalse);
+    expect(await _saved(tester, _onA), isTrue);
+    expect(await _saved(tester, _onB), isFalse);
     expect(store.byNamespace.keys, [_namespace('user-a')]);
 
     // Account B on the same device sees nothing of A's, and saves its own.
@@ -147,8 +148,8 @@ void main() {
       feedback: feedback,
       user: 'user-b',
     );
-    expect(_saved(tester, _onA), isFalse);
-    expect(_saved(tester, _onB), isFalse);
+    expect(await _saved(tester, _onA), isFalse);
+    expect(await _saved(tester, _onB), isFalse);
     await tester.tap(find.byKey(_bookmark(_onB)));
     await tester.pumpAndSettle();
     expect(_places(store, 'user-b'), [(_wb, _same)]);
@@ -162,8 +163,8 @@ void main() {
       feedback: feedback,
       user: 'user-a',
     );
-    expect(_saved(tester, _onA), isTrue);
-    expect(_saved(tester, _onB), isFalse);
+    expect(await _saved(tester, _onA), isTrue);
+    expect(await _saved(tester, _onB), isFalse);
 
     expect(directory.requests, isEmpty, reason: 'no request to join');
     expect(directory.pages, isEmpty, reason: 'nothing published');
