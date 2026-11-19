@@ -4,7 +4,7 @@
 -- per provider, from the hand-over) is open, and the provider account is the
 -- one it was handed to. A handed claim past its window awaits the provider.
 begin;
-select plan(16);
+select plan(21);
 
 create function pg_temp.seed() returns void language plpgsql as $$
 declare
@@ -127,6 +127,25 @@ select is(pg_temp.state(), 'changed/false', 'one invoice of the claim settled by
 select is(pg_temp.refusal(current_setting('t.payment')::uuid), 'DKC10:this payment cannot be continued', 'it is refused; nothing is charged');
 reset role;
 delete from public.invoice_matches where invoice_id = current_setting('t.i1')::uuid;
+
+-- the rules again where the charge happens: the hand-over of the checkout
+create function pg_temp.fresh() returns void language sql as $$
+  update public.payment_intents set handed_at = null, created_at = now() - interval '5 minutes', provider = 'stripe'
+   where id = current_setting('t.payment')::uuid;
+$$;
+select pg_temp.fresh();
+select ok(public.hand_payment_intent(current_setting('t.payment')::uuid), 'a claim that equals what is owed is handed over');
+select pg_temp.fresh();
+insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, status)
+values (current_setting('t.ws')::uuid, current_setting('t.i1')::uuid, 4000, 'exact', 'confirmed');
+select ok(not public.hand_payment_intent(current_setting('t.payment')::uuid), 'one invoice settled between the continuation and the charge: the hand-over refuses');
+select ok((select handed_at is null from public.payment_intents where id = current_setting('t.payment')::uuid), 'and nothing was handed');
+delete from public.invoice_matches where invoice_id = current_setting('t.i1')::uuid;
+update public.workspaces set feature_flags = feature_flags || '{"onlinePayments": false}' where id = current_setting('t.ws')::uuid;
+select ok(not public.hand_payment_intent(current_setting('t.payment')::uuid), 'online payments switched off before the charge: the hand-over refuses');
+update public.workspaces set feature_flags = feature_flags || '{"onlinePayments": true}' where id = current_setting('t.ws')::uuid;
+select ok(public.payment_resend_window('nothing') = interval '0', 'a provider outside the three has no window');
+update public.payment_intents set handed_at = now() - interval '5 minutes' where id = current_setting('t.payment')::uuid;
 
 -- 2: the business's online-payment setting
 update public.workspaces set feature_flags = feature_flags || '{"onlinePayments": false}' where id = current_setting('t.ws')::uuid;

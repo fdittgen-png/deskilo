@@ -2,6 +2,8 @@
 -- risk: transforming
 -- (payment_intent_claim_open and payment_claim_resume_state restated whole;
 --  hand_payment_intent patched at asserted anchors of its live definition;
+--  payment_resend_window(provider) is the new window; the zero-argument
+--  payment_resend_window() of 0798 keeps its 23 hours for reconciliation;
 --  payment_claim_window dropped once nothing calls it)
 --
 -- #4217 -- continuing a checkout, with these rules:
@@ -19,6 +21,8 @@
 --      lapses after the same window, counted from its opening.
 --   4. A claim handed over before the business last changed that provider's
 --      credentials cannot be continued: it is answered as in rule 1.
+--   The rules 1, 2, 4 hold again where the charge happens: the hand-over of a
+--   claim-backed checkout requires the claim to be 'ready' under its locks.
 --   5. A claim handed over whose window has passed is 'awaiting_provider':
 --      the provider may still settle it, and it is not called expired.
 
@@ -33,13 +37,28 @@ values
 on conflict (key) do nothing;
 -- END GENERATED SEED
 
+-- A row that existed before keeps its bounds only if they are these ones.
+do $assert$
+begin
+  if (select count(*) from public.setting_definitions
+       where (key, min_value, max_value) in (
+         ('payments.resend_window_mollie_minutes', 1, 59),
+         ('payments.resend_window_paypal_minutes', 1, 4260),
+         ('payments.resend_window_stripe_minutes', 1, 1380))) <> 3 then
+    raise exception 'the payment resend window settings are not at their bounds' using errcode = 'P0001';
+  end if;
+end;
+$assert$;
+
 -- 3: the provider's own window. Wero rides Mollie. A provider without a
 -- window has none: nothing of it is sent again.
 create or replace function public.payment_resend_window(p_provider text)
 returns interval language sql stable security definer set search_path = public as $fn$
-  select make_interval(mins => coalesce((public.setting_value(null,
-    'payments.resend_window_' || case p_provider when 'wero' then 'mollie' else p_provider end
-    || '_minutes') #>> '{}')::int, 0));
+  select case when p_provider in ('stripe', 'paypal', 'mollie', 'wero')
+    then make_interval(mins => (public.setting_value(null,
+      'payments.resend_window_' || case p_provider when 'wero' then 'mollie' else p_provider end
+      || '_minutes') #>> '{}')::int)
+    else interval '0' end;
 $fn$;
 revoke execute on function public.payment_resend_window(text) from public, anon, authenticated;
 
@@ -53,8 +72,9 @@ returns boolean language sql stable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.payment_intent_claim_open(public.payment_intents) from public, anon;
 
--- 3: a checkout already handed over is sent again only inside its window,
--- counted from the hand-over; one never handed lapses from its opening.
+-- 1, 2, 4: the rules hold where the charge happens, under the intent's and its
+-- invoices' locks, before an already handed checkout is handed again; 3: a
+-- checkout never handed lapses with the provider's window, from its opening.
 do $patch$
 declare
   v_def text := pg_get_functiondef('public.hand_payment_intent(uuid)'::regprocedure);
@@ -65,9 +85,14 @@ begin
      or (length(v_def) - length(replace(v_def, v_window, ''))) / length(v_window) <> 1 then
     raise exception 'hand_payment_intent: its anchors are not there exactly once' using errcode = 'P0001';
   end if;
-  v_def := replace(v_def, v_handed, $a$if v_intent.handed_at is not null then
-    return v_intent.handed_at > clock_timestamp() - public.payment_resend_window(v_intent.provider);
-  end if;$a$);
+  v_def := replace(v_def, v_handed, $a$if v_intent.claimed_invoice_ids is not null then
+    perform 1 from public.invoices i
+     where i.id = any (v_intent.claimed_invoice_ids)
+       and i.workspace_id = v_intent.workspace_id and i.member_id = v_intent.member_id
+     order by i.id for update;
+    if public.payment_claim_resume_state(v_intent) is distinct from 'ready' then return false; end if;
+  end if;
+  if v_intent.handed_at is not null then return true; end if;$a$);
   v_def := replace(v_def, v_window,
     $a$if v_intent.created_at <= clock_timestamp() - public.payment_resend_window(v_intent.provider) then$a$);
   execute v_def;
