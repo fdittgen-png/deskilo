@@ -205,6 +205,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get accountPaymentAsk => 'Elegir al pagar';
 
   @override
+  String get accountPaymentAwaitingMatch => 'Recibido, pendiente de conciliar';
+
+  @override
   String get accountPaymentConfirmed => 'Pago confirmado';
 
   @override

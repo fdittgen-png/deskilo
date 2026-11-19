@@ -6174,6 +6174,7 @@ const Set<String> uiLabelKeys = {
   'accountInvoiceVoided',
   'accountNet',
   'accountPaymentAsk',
+  'accountPaymentAwaitingMatch',
   'accountPaymentConfirmed',
   'accountPaymentPreference',
   'accountRefundDue',

@@ -205,6 +205,9 @@ class AppLocalizationsFr extends AppLocalizations {
   String get accountPaymentAsk => 'Choisir au paiement';
 
   @override
+  String get accountPaymentAwaitingMatch => 'Reçu, en attente de rapprochement';
+
+  @override
   String get accountPaymentConfirmed => 'Paiement confirmé';
 
   @override

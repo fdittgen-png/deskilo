@@ -204,6 +204,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get accountPaymentAsk => 'Scegli al pagamento';
 
   @override
+  String get accountPaymentAwaitingMatch =>
+      'Ricevuto, in attesa di abbinamento';
+
+  @override
   String get accountPaymentConfirmed => 'Pagamento confermato';
 
   @override

@@ -8,6 +8,7 @@
 // credited. Effects the Demo does not hold a store for (a quota extension,
 // a negotiated price) stay the request's status, named in the audit.
 import 'package:deskilo/features/events/domain/workspace_event.dart';
+import 'package:deskilo/features/money/domain/invoice_commands.dart' show PaymentAllocation;
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
@@ -40,11 +41,12 @@ void wireDecisionEffects(
     if (m != null && m.status == MemberStatus.pending) await workspaces.updateMemberStatus(m.id, to);
   }
 
-  void ledger(WorkspaceEvent e, LedgerKind kind, LedgerCategory category, int cents, String text,
+  String ledger(WorkspaceEvent e, LedgerKind kind, LedgerCategory category, int cents, String text,
       {DateTime? occurredOn}) {
     final at = now();
+    final id = 'decided-${e.id}-${next++}';
     money.ledger.add(LedgerEntry(
-      id: 'decided-${e.id}-${next++}',
+      id: id,
       memberId: e.subjectMemberId,
       kind: kind,
       category: category,
@@ -54,6 +56,7 @@ void wireDecisionEffects(
       createdAt: at,
       occurredOn: occurredOn,
     ));
+    return id;
   }
 
   int intOf(Object? v) => (v as num?)?.toInt() ?? 0;
@@ -62,6 +65,8 @@ void wireDecisionEffects(
     if (!accepted) {
       // A refusal frees what the request held, and ends a waiting join.
       cancel(e.reservationId, const {ReservationStatus.reserved, ReservationStatus.checkedIn});
+      // a refused declaration frees the invoices it named (0797)
+      money.claims.remove(e.id);
       if (e.type == EventType.memberJoin) await memberStatus(e.subjectMemberId, MemberStatus.exited);
       return;
     }
@@ -73,9 +78,10 @@ void wireDecisionEffects(
             const {ReservationStatus.reserved, ReservationStatus.checkedIn, ReservationStatus.completed});
       case EventType.payment:
         // A confirmed payment is a credit dated the day the money moved.
-        ledger(e, LedgerKind.credit, LedgerCategory.payment, intOf(e.payload['amount_cents']),
-            e.payload['note'] as String? ?? '',
-            occurredOn: DateTime.tryParse(e.payload['paid_on'] as String? ?? ''));
+        final note = e.payload['note'] as String? ?? '';
+        final credit = ledger(e, LedgerKind.credit, LedgerCategory.payment, intOf(e.payload['amount_cents']),
+            note, occurredOn: DateTime.tryParse(e.payload['paid_on'] as String? ?? ''));
+        await _applyDeclared(money, e, credit, note);
       case EventType.expense:
         final supply = e.payload['supply'];
         ledger(e, LedgerKind.credit, LedgerCategory.expense, intOf(e.payload['amount_cents']),
@@ -91,4 +97,29 @@ void wireDecisionEffects(
         break;
     }
   };
+}
+
+/// #4224 — as 0797 on a server: an approved declared payment that names
+/// invoices is applied to them, what each still owes, and its claim ends.
+Future<void> _applyDeclared(
+  FakeMoneyRepository money,
+  WorkspaceEvent e,
+  String ledgerId,
+  String note,
+) async {
+  final claim = money.claims.remove(e.id);
+  if (claim == null) return;
+  int paid(String id) => money.invoiceMatchesStore[id]?.paidCents ?? 0;
+  final parts = <PaymentAllocation>[
+    for (final inv in money.invoices)
+      if (claim.contains(inv.id) && inv.totalCents - paid(inv.id) > 0)
+        (invoiceId: inv.id, amountCents: inv.totalCents - paid(inv.id)),
+  ];
+  if (parts.isEmpty) return;
+  await money.invoiceCommands.applyPaymentToInvoices(
+    workspaceId: e.workspaceId,
+    paymentLedgerId: ledgerId,
+    allocations: parts,
+    note: note,
+  );
 }

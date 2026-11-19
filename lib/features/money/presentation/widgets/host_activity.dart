@@ -147,6 +147,7 @@ String _line(
     'failed' => l10n.payOnlineFailedTitle,
     'reversed' => l10n.payOnlineReversedTitle,
     'confirmed' => l10n.accountPaymentConfirmed,
+    'awaiting_match' => l10n.accountPaymentAwaitingMatch,
     'voided' => l10n.accountInvoiceVoided,
     'regrouped' => l10n.accountInvoiceRegrouped,
     _ => '',

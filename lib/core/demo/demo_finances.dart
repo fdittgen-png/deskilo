@@ -188,7 +188,11 @@ List<AccountActivity> _paymentRows(_Space s, String me) => [
         reference: '',
         description: l.description,
         currency: s.currency,
-        status: 'confirmed',
+        // #4225 — money that arrived and no invoice has taken yet is said as
+        // that, the state the business holds it in (Payments to match).
+        status: l.amountCents - (s.money.usedPaymentCents[l.id] ?? 0) > 0
+            ? 'awaiting_match'
+            : 'confirmed',
         amountCents: l.amountCents,
       ),
 ];

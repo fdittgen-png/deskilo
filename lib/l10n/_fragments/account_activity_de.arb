@@ -4,6 +4,7 @@
   "accountActivityEmpty": "Keine Einträge vorhanden.",
   "accountActivityFailed": "Ihr Finanzverlauf konnte nicht geladen werden. Zum Wiederholen antippen.",
   "accountPaymentConfirmed": "Zahlung bestätigt",
+  "accountPaymentAwaitingMatch": "Eingegangen, wartet auf Zuordnung",
   "accountInvoiceVoided": "Rechnung storniert",
   "accountInvoiceRegrouped": "In einer Sammelrechnung enthalten",
   "accountInvoiceIssued": "Rechnung ausgestellt",
