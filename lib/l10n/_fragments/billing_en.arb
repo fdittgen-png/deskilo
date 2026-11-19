@@ -167,9 +167,23 @@
   "@payConfigTitle": {
     "description": "Owner screen to configure online-payment providers (0047)"
   },
-  "payConfigOpen": "Configure",
-  "@payConfigOpen": {
-    "description": "Diagnostics dialog action opening the online-payments config screen"
+  "payOnlineDiagBusiness": "Business: {business}",
+  "@payOnlineDiagBusiness": {
+    "description": "#4218 Diagnostics dialog: the business whose online payments are missing configuration",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "payConfigOpenFor": "Configure {business}",
+  "@payConfigOpenFor": {
+    "description": "#4218 Diagnostics dialog action opening the online-payments config of the named business",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "payConfigIntro": "Enter each payment provider you want to offer. Keys are stored securely on the server and never shown again.",
   "@payConfigIntro": {

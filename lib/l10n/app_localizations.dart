@@ -20476,11 +20476,17 @@ abstract class AppLocalizations {
   /// **'Being validated'**
   String get financesBeingValidated;
 
-  /// #3556 The business of the selected invoices cannot be opened right now (its server, the account changed)
+  /// #3556 #4218 A command on the invoices of a business could not start: its host cannot be reached or verified (the sentence offers to try again)
   ///
   /// In en, this message translates to:
-  /// **'{business} cannot be reached right now. Nothing was sent.'**
+  /// **'{business} cannot be reached or verified right now. Nothing was sent.'**
   String financesBusinessUnavailable(String business);
+
+  /// #4218 An invoice or payment of a business cannot be opened: its host cannot be reached or verified (the sentence offers to try again)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} cannot be reached or verified right now.'**
+  String financesBusinessUnavailableOpen(String business);
 
   /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
   ///
@@ -37656,11 +37662,11 @@ abstract class AppLocalizations {
   /// **'Not configured'**
   String get payConfigNotConfigured;
 
-  /// Diagnostics dialog action opening the online-payments config screen
+  /// #4218 Diagnostics dialog action opening the online-payments config of the named business
   ///
   /// In en, this message translates to:
-  /// **'Configure'**
-  String get payConfigOpen;
+  /// **'Configure {business}'**
+  String payConfigOpenFor(String business);
 
   /// Button removing a provider's config
   ///
@@ -37823,6 +37829,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business\'s payment service must be updated before selected invoices can be paid online.'**
   String get payOnlineClaimsUnsupported;
+
+  /// #4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again
+  ///
+  /// In en, this message translates to:
+  /// **'The business is not ready yet. Try again in a moment.'**
+  String get payOnlineContextNotReady;
+
+  /// #4218 Diagnostics dialog: the business whose online payments are missing configuration
+  ///
+  /// In en, this message translates to:
+  /// **'Business: {business}'**
+  String payOnlineDiagBusiness(String business);
 
   /// Hint above the per-provider missing-config lines in the diagnostics dialog
   ///

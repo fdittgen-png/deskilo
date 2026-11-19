@@ -119,6 +119,10 @@
   "@payOnlineNotConfigured": {
     "description": "Shown when the member taps Pay online but the deployment has no payment provider configured"
   },
+  "payOnlineContextNotReady": "The business is not ready yet. Try again in a moment.",
+  "@payOnlineContextNotReady": {
+    "description": "#4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again"
+  },
   "payOnlinePendingTitle": "Online payment pending",
   "@payOnlinePendingTitle": {
     "description": "#1637 card title on the bill: an online payment the provider has not confirmed yet"

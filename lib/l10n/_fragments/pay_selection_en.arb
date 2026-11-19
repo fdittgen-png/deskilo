@@ -224,9 +224,18 @@
   "@payOnlineClaimNotTaken": {
     "description": "#3556 The payment service did not take the selected invoices: the checkout is not opened"
   },
-  "financesBusinessUnavailable": "{business} cannot be reached right now. Nothing was sent.",
+  "financesBusinessUnavailable": "{business} cannot be reached or verified right now. Nothing was sent.",
   "@financesBusinessUnavailable": {
-    "description": "#3556 The business of the selected invoices cannot be opened right now (its server, the account changed)",
+    "description": "#3556 #4218 A command on the invoices of a business could not start: its host cannot be reached or verified (the sentence offers to try again)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesBusinessUnavailableOpen": "{business} cannot be reached or verified right now.",
+  "@financesBusinessUnavailableOpen": {
+    "description": "#4218 An invoice or payment of a business cannot be opened: its host cannot be reached or verified (the sentence offers to try again)",
     "placeholders": {
       "business": {
         "type": "String"

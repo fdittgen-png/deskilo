@@ -20,6 +20,7 @@
   "billPackages": "Tagespakete",
   "payOnlineButton": "Online bezahlen",
   "payOnlineNotConfigured": "Online-Zahlungen sind noch nicht eingerichtet. Fragen Sie den Inhaber des Workspace.",
+  "payOnlineContextNotReady": "Das Unternehmen ist noch nicht bereit. Versuchen Sie es gleich noch einmal.",
   "payOnlinePendingTitle": "Online-Zahlung ausstehend",
   "payOnlineFailedTitle": "Online-Zahlung fehlgeschlagen",
   "payOnlinePendingDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde vom Anbieter noch nicht bestätigt, daher zeigt der Saldo weiterhin den offenen Betrag. Nennen Sie diese Referenz, falls sie nicht eingeht.",
