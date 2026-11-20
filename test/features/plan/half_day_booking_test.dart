@@ -16,13 +16,12 @@ import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/screens/plan_closed_day.dart' show ThrowingReservationRepository;
 import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, pumpPlan, seatCenter;
 import '../../helpers/screens/time_scroller.dart' show planPainter;
@@ -275,7 +274,7 @@ void main() {
     await pumpHalfDayPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        const PostgrestException(
+        refused(
           message: 'bookings must cover a half-day '
               '(00:00-13:00, 13:00-24:00) or the full day',
           code: 'DKK04', // #3810: the code 0739 raises

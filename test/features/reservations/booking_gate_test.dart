@@ -7,14 +7,13 @@
 // views draw closed days as closed, a legend names the seat states, and
 // the admin check-out follows the owner's policy.
 import 'dart:io';
-
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/work_hours.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/booking_gate.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/booking_sheet.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/month_grid.dart';
 import 'package:deskilo/features/reservations/presentation/widgets/space_scan_sheet.dart';
@@ -26,12 +25,11 @@ import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/reserve_view.dart';
 
 DateTime _at(int hour, [int minute = 0]) =>
@@ -262,7 +260,7 @@ void main() {
         };
         final mapped = bookingErrorText(
           englishL10n,
-          PostgrestException(
+          refused(
             message: BookingGate.serverSubstringOf(refusal),
             code: code,
             details: detail,

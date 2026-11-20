@@ -11,6 +11,7 @@ import '../../../core/time/clock.dart';
 import '../../../core/trace/act_trace.dart';
 import '../../../core/trace/trace_logger.dart';
 import '../domain/reservation.dart';
+import '../domain/reservation_refusal.dart';
 import '../domain/reservation_repository.dart';
 import 'reservation_rows.dart';
 
@@ -53,12 +54,38 @@ class SupabaseReservationRepository implements ReservationRepository {
   ) async {
     ActTrace.booking.step('$act requested', fields);
     try {
-      final result = await body();
+      final result = await _asRefusal(body);
       ActTrace.booking.step('$act accepted', fields);
       return result;
     } catch (e, st) {
       ActTrace.booking.failed('$act failed', e, st, fields);
       rethrow;
+    }
+  }
+
+  /// #4156 — the ONE place a server's refusal leaves the transport's type: a
+  /// [PostgrestException] the request ended with (after the transport retry
+  /// has decided) becomes the typed [ReservationRefused] the application and
+  /// the presentation read, its original error kept as the cause and its stack
+  /// kept. A transport failure (a timeout, a lost answer, a dropped
+  /// connection) is NOT a refusal: it passes through untouched, so the
+  /// booking's recovery under its original request id is unchanged.
+  Future<T> _asRefusal<T>(Future<T> Function() body) async {
+    try {
+      return await body();
+    } on PostgrestException catch (e, st) {
+      if (isTransientNetworkFailure(e)) rethrow;
+      Error.throwWithStackTrace(
+        ReservationRefused(
+          ReservationRefusal.fromServer(
+            code: e.code,
+            message: e.message,
+            details: e.details,
+          ),
+          cause: e,
+        ),
+        st,
+      );
     }
   }
 
@@ -301,7 +328,7 @@ class SupabaseReservationRepository implements ReservationRepository {
     DateTime? startsAt,
     DateTime? endsAt,
   }) async {
-    final result = await _client.rpc<dynamic>('kiosk_act', params: {
+    final result = await _asRefusal(() => _client.rpc<dynamic>('kiosk_act', params: {
       'p_workspace_id': workspaceId,
       'p_badge_token': badgeToken,
       'p_action': action,
@@ -309,7 +336,7 @@ class SupabaseReservationRepository implements ReservationRepository {
       'p_level_id': ?levelId,
       'p_starts_at': ?startsAt?.toUtc().toIso8601String(),
       'p_ends_at': ?endsAt?.toUtc().toIso8601String(),
-    }) as Map<String, dynamic>;
+    })) as Map<String, dynamic>;
     await _bust();
     return result['reservation_id'] as String;
   }
@@ -340,11 +367,11 @@ class SupabaseReservationRepository implements ReservationRepository {
     required DateTime startsAt,
     required DateTime endsAt,
   }) async {
-    await _client.rpc<dynamic>('update_reservation', params: {
+    await _asRefusal(() => _client.rpc<dynamic>('update_reservation', params: {
       'p_reservation_id': reservationId,
       'p_starts_at': startsAt.toUtc().toIso8601String(),
       'p_ends_at': endsAt.toUtc().toIso8601String(),
-    });
+    }));
     await _bust();
   }
 

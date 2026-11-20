@@ -16,6 +16,7 @@ import 'package:deskilo/features/plan/domain/grid_geometry.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
 import 'package:deskilo/features/plan/domain/seat.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/domain/organisation.dart';
@@ -23,7 +24,6 @@ import 'package:deskilo/features/workspace/providers/organisation_providers.dart
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 void main() {
   late DemoFixture fixture;
@@ -145,7 +145,7 @@ void main() {
             startsAt: w.start,
             endsAt: w.end,
           ),
-      throwsA(isA<PostgrestException>()),
+      throwsA(isA<ReservationRefused>()),
     );
     expect(
       fixture.house.reservations.reservations.where(

@@ -16,7 +16,7 @@ const _from = 740;
 /// RATCHET: sentences the booking mapper still reads by their words (the
 /// hierarchy guard's 23P01, a taken seat twice, the 42501 permission
 /// refusal). Only falls.
-const _bookingSentenceBudget = 4;
+const _bookingSentenceBudget = 6;
 
 final _fileName = RegExp(r'^(\d{4})_[a-z0-9_]+\.sql$');
 final _raise = RegExp(r'raise\s+exception\b[^;]*;', caseSensitive: false);
@@ -83,17 +83,20 @@ void main() {
     );
   });
 
-  test('the booking mapper reads no more sentences than before', () {
+  test('the booking refusal reads no more sentences than before', () {
+    // #4156 — the words the server's refusal is read by when it has no code of
+    // its own: one bounded place, the pure refusal value (the booking mapper's
+    // four, the kiosk's two).
     final source = handWrittenDartFiles('lib/features/reservations/domain')
-        .singleWhere((f) => f.path.endsWith('/booking_error_text.dart'))
+        .singleWhere((f) => f.path.endsWith('/reservation_refusal.dart'))
         .readAsStringSync();
-    final sentences = '.contains('.allMatches(source).length;
+    final sentences = 'words.contains('.allMatches(source).length;
     expect(
       sentences,
       lessThanOrEqualTo(_bookingSentenceBudget),
       reason:
           'give the refusal a code in its migration and map the code '
-          '(booking_refusal_codes.dart)',
+          '(booking_error_text.dart)',
     );
     expect(
       sentences,

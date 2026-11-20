@@ -7,9 +7,8 @@
 // server contract, including the pinned error substrings the UI maps.
 
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
@@ -85,8 +84,7 @@ void main() {
         ));
       await expectLater(
         repo.checkIn('res-1'),
-        throwsA(isA<PostgrestException>().having((e) => e.message, 'message',
-            contains('check-in window not open yet'))),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK17')),
       );
       expect(repo.reservations.single.status, ReservationStatus.reserved);
     });
@@ -99,8 +97,7 @@ void main() {
         ));
       await expectLater(
         repo.checkIn('res-1'),
-        throwsA(isA<PostgrestException>().having((e) => e.message, 'message',
-            contains('check-in window closed'))),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK18')),
       );
     });
 
