@@ -8,7 +8,7 @@
 -- and another workspace's manager are refused; a member reads their own
 -- changes, not another's, and a manager reads any.
 begin;
-select plan(32);
+select plan(35);
 
 create function pg_temp.act_as(p_user uuid, p_client text default null) returns void language plpgsql as $$
 begin
@@ -209,6 +209,16 @@ select set_config('t.xs', pg_temp.rows('select string_agg(state, '','' order by 
   where member_id = ''' || current_setting('t.member') || ''' and kind = ''status'' and source = ''scheduled'''), true);
 select set_config('t.x3', pg_temp.call('cancel_member_term_change', jsonb_build_object(
   'change_id', current_setting('t.pid')), '00000000-0000-4000-8000-0000003937b2')::text, true);
+-- ── a change an issued invoice already carries is refused before anyone is asked
+select set_config('request.jwt.claims', '', true);
+insert into public.invoices (id, workspace_id, member_id, issuer_member_id, number, title, lines, total_cents,
+                             currency, member_name, workspace_name, issuer_name, signature, issued_at, period, kind)
+values (gen_random_uuid(), '00000000-0000-4000-8000-0000003937c1', current_setting('t.member')::uuid,
+        current_setting('t.owner')::uuid, 'T-3937', 'T', '[]'::jsonb, 4800, 'EUR', 'A', 'B', 'O', 'sig',
+        now() + interval '1 minute', to_char(current_setting('t.m1')::date, 'YYYY-MM'), 'subscription');
+select pg_temp.act_as('00000000-0000-4000-8000-0000003937d1', 'claude-test');
+select set_config('t.k1', pg_temp.call('cancel_member_term_change', jsonb_build_object(
+  'change_id', current_setting('t.s6')::jsonb->'data'->>'change_id'), '00000000-0000-4000-8000-0000003937b3')::text, true);
 select set_config('request.jwt.claims', '', true);
 
 select is(jsonb_build_object('permission', c->'permission', 'features', c->'features', 'mutation', c->>'mutation',
@@ -223,8 +233,10 @@ select is(pg_temp.target('00000000-0000-4000-8000-0000003937e1') - 'id' - 'name'
   jsonb_build_object('kind', 'member', 'to_pct', 50, 'effective_on', current_setting('t.m1')),
   'the app is shown the member, the share and the day');
 select is(current_setting('t.before'), '0', 'and nothing is written before it');
-select is(pg_temp.got('t.s2'), 'validation_error:invalid_arguments', 'a day that is not a period''s first day is refused');
-select is(pg_temp.got('t.s3'), 'validation_error:invalid_arguments', 'so is a day long past');
+select is(pg_temp.got('t.s2') || ' ' || (current_setting('t.s2')::jsonb->'data'->>'reason' like '%first day of a period%')::text,
+  'conflict:refused true', 'a day that is not a period''s first day is refused, with the reason');
+select is(pg_temp.got('t.s3') || ' ' || (current_setting('t.s3')::jsonb->'data'->>'reason' like '%the earliest is%')::text,
+  'conflict:refused true', 'so is a day long past, and the answer names the earliest day allowed');
 select is(pg_temp.got('t.s4'), 'validation_error:invalid_arguments', 'a day that does not exist');
 select is(pg_temp.got('t.s5'), 'validation_error:invalid_arguments', 'and a share above 100');
 select is(pg_temp.asked(array['00000000-0000-4000-8000-0000003937e2', '00000000-0000-4000-8000-0000003937e3',
@@ -247,7 +259,8 @@ select is(pg_temp.got('t.r2') || ' ' || jsonb_array_length(current_setting('t.r2
 select is(pg_temp.got('t.r3'), 'denied:forbidden', 'and not another member''s');
 select is(pg_temp.got('t.r4'), 'denied:not_a_member', 'another workspace''s manager reads nothing');
 select is(pg_temp.got('t.p1'), 'requires_confirmation:', 'a pause waits for the person');
-select is(pg_temp.got('t.p2'), 'validation_error:invalid_arguments', 'a pause ending before it starts is refused');
+select is(pg_temp.got('t.p2') || ' ' || (current_setting('t.p2')::jsonb->'data'->>'reason' like '%ends after it starts%')::text,
+  'conflict:refused true', 'a pause ending before it starts is refused, with the reason');
 select is(current_setting('t.c2')::jsonb->>'status', 'acknowledged', 'the person confirms the pause in the app');
 select is(pg_temp.got('t.p3') || ' ' || (current_setting('t.p3')::jsonb->'data' ? 'first_free'), 'completed: true',
   'the same request_id pauses, and the answer names the first month it frees');
@@ -257,7 +270,14 @@ select is(current_setting('t.c3')::jsonb->>'status', 'acknowledged', 'the person
 select is(pg_temp.got('t.x2') || ' ' || (current_setting('t.x2')::jsonb->'data'->>'cancelled'), 'completed: 2',
   'cancelling a pause cancels both its ends and says how many');
 select is(current_setting('t.xs'), 'cancelled,cancelled', 'and both read as cancelled');
-select is(pg_temp.got('t.x3'), 'validation_error:invalid_arguments', 'a change no longer waiting is not put to the person');
+select is(pg_temp.got('t.x3') || ' ' || (current_setting('t.x3')::jsonb->'data'->>'reason' like '%not yet applied%')::text,
+  'conflict:refused true', 'a change no longer waiting is not put to the person, and says why');
+select is(pg_temp.got('t.k1') || ' ' || (current_setting('t.k1')::jsonb->'data'->>'reason' like '%already on an invoice%')::text,
+  'conflict:refused true', 'a change an invoice carries is refused with the command''s own reason');
+select is(pg_temp.asked(array['00000000-0000-4000-8000-0000003937b3', '00000000-0000-4000-8000-0000003937b2']::uuid[]), 0,
+  'and nobody is asked to confirm either cancellation');
+select is((select state from public.member_term_changes where id = (current_setting('t.s6')::jsonb->'data'->>'change_id')::uuid),
+  'scheduled', 'the change stays scheduled: the probe wrote nothing');
 select ok(not has_function_privilege('authenticated', 'public.mcp_op_schedule_member_pause(public.mcp_call_context,jsonb)', 'execute')
           and not has_function_privilege('authenticated', 'public.mcp_target_schedule_member_share_change(uuid,jsonb)', 'execute')
           and not has_function_privilege('authenticated', 'public.mcp_op_list_member_term_changes(public.mcp_call_context,jsonb)', 'execute'),
