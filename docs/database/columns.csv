@@ -3010,6 +3010,7 @@ public,reservations,table,19,company_id,uuid,false,,,,false,,
 public,reservations,table,20,site_id,uuid,false,,,,false,,
 public,reservations,table,21,created_by_user,uuid,false,,,,false,,
 public,reservations,table,22,modified_by_user,uuid,false,,,,false,,
+public,reservations,table,23,removed_place_hidden,boolean,false,,,,false,,"Whether the place this booking named was hidden (external level or rented room) when it was removed from the plan; null while it names a place, or when it was removed before this was recorded."
 public,resource_favorites,table,1,workspace_id,uuid,true,,,,false,public.workspaces.id,
 public,resource_favorites,table,2,member_id,uuid,true,,,,true,public.members.id,
 public,resource_favorites,table,3,kind,text,true,,,,true,,
