@@ -25,6 +25,9 @@ export interface Submission {
   /** #3881 -- the platform holds the upload but has no verdict on the
    * document yet: [receipt] is what it said, and it decides nothing. */
   pending?: boolean;
+  /** #3932 -- the platform decided the document in the answer to the upload
+   * itself (no later query exists): the handler records it as the verdict. */
+  verdict?: "accepted" | "rejected";
 }
 
 /** One provider, declared where it is implemented (#3337). The registry in

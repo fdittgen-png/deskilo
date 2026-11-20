@@ -11399,6 +11399,10 @@
   "@eInvoiceFieldCif": {
     "description": "#2358 connector field"
   },
+  "eInvoiceFieldClientCertificate": "Certificate (PEM)",
+  "@eInvoiceFieldClientCertificate": {
+    "description": "#3932 connector field: the business's certificate"
+  },
   "eInvoiceFieldClientId": "Client id",
   "@eInvoiceFieldClientId": {
     "description": "#2358 connector field"
@@ -11426,6 +11430,10 @@
   "eInvoiceFieldPassword": "Password",
   "@eInvoiceFieldPassword": {
     "description": "#2358 connector field"
+  },
+  "eInvoiceFieldPrivateKey": "Private key (PEM)",
+  "@eInvoiceFieldPrivateKey": {
+    "description": "#3932 connector field: the certificate's private key"
   },
   "eInvoiceFieldSecretSet": "Set — leave blank to keep it.",
   "@eInvoiceFieldSecretSet": {
@@ -11600,6 +11608,10 @@
   "eInvoiceMandateTitle": "E-invoicing obligations in your country:",
   "@eInvoiceMandateTitle": {
     "description": "#2358 e-invoice sheet: header above the mandate calendar"
+  },
+  "eInvoiceProviderEsVerifactu": "Verifactu (AEAT)",
+  "@eInvoiceProviderEsVerifactu": {
+    "description": "#3932 connector name"
   },
   "eInvoiceProviderFrPa": "French accredited platform (PA)",
   "@eInvoiceProviderFrPa": {

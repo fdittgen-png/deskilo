@@ -12,6 +12,7 @@ const Map<String, List<String>> eInvoiceProviderFields = {
   'it_sdi': ['base_url', 'login_url', 'username', 'password'],
   'pl_ksef': ['base_url', 'nip', 'ksef_token'],
   'ro_efactura': ['base_url', 'cif', 'access_token'],
+  'es_verifactu': ['base_url', 'client_certificate', 'private_key'],
 };
 
 /// #3882 — the key a connector field has in the test environment: the
@@ -29,6 +30,8 @@ const eInvoiceSecretFields = {
   'password',
   'ksef_token',
   'access_token',
+  'client_certificate',
+  'private_key',
 };
 
 /// The documented test environments, offered as the field's hint so an
@@ -42,4 +45,8 @@ const Map<String, Map<String, String>> eInvoiceSandboxDefaults = {
   },
   'pl_ksef': {'base_url': 'https://ksef-test.mf.gov.pl/api/v2'},
   'ro_efactura': {'base_url': 'https://api.anaf.ro/test/FCTEL/rest'},
+  'es_verifactu': {
+    'base_url':
+        'https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP',
+  },
 };
