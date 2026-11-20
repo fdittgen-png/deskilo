@@ -29,7 +29,8 @@ SetupStatus demoSetupStatus(
     country: country,
   );
   bool applies(SetupStep s) =>
-      s.feature == null || effective.contains(s.feature);
+      (s.feature == null || effective.contains(s.feature)) &&
+      (s.alsoNeeds == null || effective.contains(s.alsoNeeds));
   bool done(SetupStep s) => s.evidence == 'manual'
       ? acknowledged.contains(s.id)
       : ready.contains(s.id);
