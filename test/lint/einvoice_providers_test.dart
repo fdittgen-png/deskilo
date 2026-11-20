@@ -37,6 +37,11 @@ String _latestSecretClassifier() {
       );
 }
 
+/// The latest migration that restates the provider check.
+String _latestProviderList() => sqlFiles('supabase/migrations').reversed
+    .map((f) => f.readAsStringSync())
+    .firstWhere((s) => s.contains('einvoice_credentials_provider_check'));
+
 void main() {
   final connectors = [
     for (final f in filesWithExtension(
@@ -51,7 +56,7 @@ void main() {
   });
 
   test('the database accepts every connector the screen offers', () {
-    final sql = _latestSecretClassifier();
+    final sql = _latestProviderList();
     for (final provider in eInvoiceProviderFields.keys) {
       expect(sql, contains("'$provider'"), reason: provider);
     }

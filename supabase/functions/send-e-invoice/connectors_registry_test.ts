@@ -24,6 +24,7 @@ const REQUIRED: Record<string, string[]> = {
   it_sdi: ["base_url", "login_url", "username", "password"],
   pl_ksef: ["base_url", "nip", "ksef_token"],
   ro_efactura: ["base_url", "cif", "access_token"],
+  es_verifactu: ["base_url", "client_certificate", "private_key"],
 };
 
 const ACCEPTED: Record<string, string[]> = {
@@ -33,6 +34,7 @@ const ACCEPTED: Record<string, string[]> = {
   it_sdi: ["fatturaPa"],
   pl_ksef: ["ksefFa3"],
   ro_efactura: ["ciusRo"],
+  es_verifactu: ["verifactu"],
 };
 
 const SANDBOXES: Record<string, Record<string, string>> = {
@@ -45,9 +47,13 @@ const SANDBOXES: Record<string, Record<string, string>> = {
   },
   pl_ksef: { base_url: "https://ksef-test.mf.gov.pl/api/v2" },
   ro_efactura: { base_url: "https://api.anaf.ro/test/FCTEL/rest" },
+  es_verifactu: {
+    base_url:
+      "https://prewww1.aeat.es/wlpl/TIKE-CONT/ws/SistemaFacturacion/VerifactuSOAP",
+  },
 };
 
-Deno.test("the provider list is the six it always was, in order", () => {
+Deno.test("the provider list is the six it always was, then the Spanish one, in order", () => {
   assertEquals([...PROVIDERS], [
     "generic",
     "peppol",
@@ -55,6 +61,7 @@ Deno.test("the provider list is the six it always was, in order", () => {
     "it_sdi",
     "pl_ksef",
     "ro_efactura",
+    "es_verifactu",
   ]);
   for (const p of PROVIDERS) assert(isProvider(p));
   assert(!isProvider("nl_peppol"));

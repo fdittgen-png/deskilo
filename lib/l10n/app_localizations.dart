@@ -13779,6 +13779,12 @@ abstract class AppLocalizations {
   /// **'CIF of the space'**
   String get eInvoiceFieldCif;
 
+  /// #3932 connector field: the business's certificate
+  ///
+  /// In en, this message translates to:
+  /// **'Certificate (PEM)'**
+  String get eInvoiceFieldClientCertificate;
+
   /// #2358 connector field
   ///
   /// In en, this message translates to:
@@ -13820,6 +13826,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Password'**
   String get eInvoiceFieldPassword;
+
+  /// #3932 connector field: the certificate's private key
+  ///
+  /// In en, this message translates to:
+  /// **'Private key (PEM)'**
+  String get eInvoiceFieldPrivateKey;
 
   /// #2358 connector field: a secret is stored
   ///
@@ -14030,6 +14042,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'E-invoicing obligations in your country:'**
   String get eInvoiceMandateTitle;
+
+  /// #3932 connector name
+  ///
+  /// In en, this message translates to:
+  /// **'Verifactu (AEAT)'**
+  String get eInvoiceProviderEsVerifactu;
 
   /// #2358 connector name
   ///

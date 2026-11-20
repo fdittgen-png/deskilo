@@ -68,6 +68,7 @@ String eInvoiceProviderName(AppLocalizations l10n, String provider) =>
       'it_sdi' => l10n.eInvoiceProviderItSdi,
       'pl_ksef' => l10n.eInvoiceProviderPlKsef,
       'ro_efactura' => l10n.eInvoiceProviderRoEfactura,
+      'es_verifactu' => l10n.eInvoiceProviderEsVerifactu,
       _ => l10n.eInvoiceProviderGeneric,
     };
 
@@ -85,6 +86,8 @@ String eInvoiceFieldLabel(AppLocalizations l10n, String field) => switch (field)
   'ksef_token' => l10n.eInvoiceFieldKsefToken,
   'cif' => l10n.eInvoiceFieldCif,
   'access_token' => l10n.eInvoiceFieldAccessToken,
+  'client_certificate' => l10n.eInvoiceFieldClientCertificate,
+  'private_key' => l10n.eInvoiceFieldPrivateKey,
   _ => field,
 };
 

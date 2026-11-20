@@ -8741,6 +8741,9 @@ class AppLocalizationsIt extends AppLocalizations {
   String get eInvoiceFieldCif => 'CIF dello spazio';
 
   @override
+  String get eInvoiceFieldClientCertificate => 'Certificato (PEM)';
+
+  @override
   String get eInvoiceFieldClientId => 'ID client';
 
   @override
@@ -8761,6 +8764,9 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get eInvoiceFieldPassword => 'Password';
+
+  @override
+  String get eInvoiceFieldPrivateKey => 'Chiave privata (PEM)';
 
   @override
   String get eInvoiceFieldSecretSet => 'Salvato — lasci vuoto per conservarlo.';
@@ -8890,6 +8896,9 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get eInvoiceMandateTitle =>
       'Obblighi di fatturazione elettronica nel Suo paese:';
+
+  @override
+  String get eInvoiceProviderEsVerifactu => 'Verifactu (AEAT)';
 
   @override
   String get eInvoiceProviderFrPa => 'Piattaforma accreditata francese (PA)';
