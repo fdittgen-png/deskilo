@@ -34,6 +34,10 @@ class FlutterWindow : public Win32Window {
   // #1824 — "deskilo/capture": the messenger's screen-capture protection.
   std::unique_ptr<flutter::MethodChannel<flutter::EncodableValue>>
       capture_channel_;
+
+  // #3621 — "deskilo/window": the window's title follows the page.
+  std::unique_ptr<flutter::MethodChannel<flutter::EncodableValue>>
+      window_channel_;
 };
 
 #endif  // RUNNER_FLUTTER_WINDOW_H_

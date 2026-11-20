@@ -7,6 +7,11 @@
 #include <memory>
 #include <string>
 
+// #3621 — the window class of the program's window: its own name, so that a
+// second start finds the first copy by its class and not by its title (the
+// title follows the page).
+constexpr const wchar_t kRunnerWindowClassName[] = L"DESKILO_RUNNER_WINDOW";
+
 // A class abstraction for a high DPI-aware Win32 Window. Intended to be
 // inherited from by classes that wish to specialize with custom
 // rendering and input handling
@@ -72,6 +77,9 @@ class Win32Window {
   virtual void OnDestroy();
 
  private:
+  // #3621 — the window was left maximised: |Show| maximises it.
+  bool start_maximised_ = false;
+
   friend class WindowClassRegistrar;
 
   // OS callback called by message pump. Handles the WM_NCCREATE message which
