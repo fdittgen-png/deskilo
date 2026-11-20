@@ -1566,11 +1566,27 @@ function ksefTestStore() {
   s.grants.add("manageIntegrations");
   return s;
 }
+// #3931 -- and the Romanian one.
+function roTestStore() {
+  const s = new FakeStore();
+  s.provider = "ro_efactura";
+  s.config = {
+    base_url: "https://live.anaf.test/FCTEL/rest",
+    cif: "1234567",
+    access_token: "live-token",
+    base_url_uat: "https://api.anaf.ro/test/FCTEL/rest",
+    cif_uat: "1234567",
+    access_token_uat: "sandbox-token",
+  };
+  s.member_ = { id: "m2", is_admin: false, is_owner: false, status: "active" };
+  s.grants.add("manageIntegrations");
+  return s;
+}
 const nothing = () => new Response("{}", { status: 200 });
 
 Deno.test("#3930 each channel that takes a test document names its own syntax", async () => {
-  for (const [channel, format] of [["it_sdi", "fatturaPa"], ["pl_ksef", "ksefFa3"]]) {
-    const s = channel === "pl_ksef" ? ksefTestStore() : sdiTestStore();
+  for (const [channel, format] of [["it_sdi", "fatturaPa"], ["pl_ksef", "ksefFa3"], ["ro_efactura", "ciusRo"]]) {
+    const s = channel === "pl_ksef" ? ksefTestStore() : channel === "ro_efactura" ? roTestStore() : sdiTestStore();
     const state = await read(
       await call(s, provider(nothing).fetchImpl, { workspace_id: WS, action: "test_state" }),
     );
@@ -1605,6 +1621,29 @@ Deno.test("#3930 the Polish channel takes a test document: its sandbox is requir
   assertEquals(r.status, 409);
   assertEquals(r.body.error, "sandbox_credentials_missing");
   assertEquals(r.body.missing, ["ksef_token"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3931 a test document in another syntax than the Romanian channel's leaves nothing", async () => {
+  const s = roTestStore();
+  const p = provider(nothing);
+  const r = await read(await call(s, p.fetchImpl, { ...testBody, format: "fatturaPa" }));
+  assertEquals(r.status, 400);
+  assertEquals(r.body.error, "format_not_accepted");
+  assertEquals(r.body.formats, ["ciusRo"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3931 the Romanian channel takes a test document: its sandbox is required, never the live one", async () => {
+  const s = roTestStore();
+  delete s.config.access_token_uat;
+  const p = provider(nothing);
+  const r = await read(await call(s, p.fetchImpl, { ...testBody, format: "ciusRo" }));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_credentials_missing");
+  assertEquals(r.body.missing, ["access_token"]);
   assertEquals(s.rows.size, 0);
   assertEquals(p.posts.length, 0);
 });

@@ -19,6 +19,7 @@ import {
   ConnectorDocument,
   Fetch,
   join,
+  noVerdictYet,
   refused,
   Submission,
 } from "./common.ts";
@@ -35,6 +36,18 @@ export function xmlAttribute(
   const value = new RegExp(`\\b${attribute}="([^"]*)"`).exec(tag)?.[1];
   return value ?? "";
 }
+
+/** #3931 -- what the message state (`stare`) of e-Factura says about the
+ * document: `ok` is its acceptance (the document was processed and can be
+ * downloaded: it carries the identifier of that download); `nok` and `XML cu
+ * erori nepreluat de sistem` refuse it. Nothing else decides it: a document in
+ * processing (`in prelucrare`), a response with no state or in another shape,
+ * another state, or an `ok` without its download identifier is no verdict yet. A
+ * successful upload and its index are another step and never qualify it. */
+export const RO_STATES = {
+  accepted: "ok",
+  refused: ["nok", "XML cu erori nepreluat de sistem"],
+} as const;
 
 /** ANAF's error messages (`<Errors errorMessage="…"/>`), joined. */
 export function xmlErrors(xml: string): string {
@@ -95,7 +108,7 @@ export async function statusRoEfactura(
   const stare = xmlAttribute(text, "header", "stare");
   const download = xmlAttribute(text, "header", "id_descarcare");
   const receipt = { index_incarcare: index, stare, id_descarcare: download };
-  if (stare === "nok" || stare === "XML cu erori nepreluat de sistem") {
+  if ((RO_STATES.refused as readonly string[]).includes(stare)) {
     return {
       status: "rejected",
       externalId: index,
@@ -103,7 +116,12 @@ export async function statusRoEfactura(
       receipt,
     };
   }
-  return accepted(index, text, receipt);
+  // the platform's own acceptance: processed, with the identifier its
+  // answer can be downloaded by; anything else is no verdict yet
+  if (stare === RO_STATES.accepted && download !== "") {
+    return accepted(index, text, receipt);
+  }
+  return noVerdictYet(index, text, receipt);
 }
 
 /** The ro_efactura connector record (#3337). */
@@ -114,4 +132,5 @@ export const roEfacturaConnector: Connector = {
   sandbox: { base_url: "https://api.anaf.ro/test/FCTEL/rest" },
   submit: submitRoEfactura,
   status: statusRoEfactura,
+  testDocument: true,
 };
