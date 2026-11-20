@@ -6,5 +6,14 @@
   "discoveryKindSalons": "Salons",
   "discoveryKindServices": "Andere Dienstleistungen",
   "discoveryKindNoMatch": "Nichts gefunden in „{kind}“",
-  "discoveryKindUncovered": "{count, plural, one{Ein Verzeichnis kann nicht nach Art filtern und wurde nicht gefragt.} other{{count} Verzeichnisse können nicht nach Art filtern und wurden nicht gefragt.}}"
+  "discoveryKindUncovered": "{count, plural, one{Ein Verzeichnis kann nicht nach Art filtern und wurde nicht gefragt.} other{{count} Verzeichnisse können nicht nach Art filtern und wurden nicht gefragt.}}",
+  "discoveryFiltersButtonCount": "{count, plural, one{Filter ({count})} other{Filter ({count})}}",
+  "discoveryFiltersTitle": "Nach Veröffentlichtem filtern",
+  "discoveryFiltersAmenities": "Ausstattung",
+  "discoveryFiltersAccessibility": "Barrierefreiheit",
+  "discoveryFiltersShow": "Ergebnisse anzeigen",
+  "discoveryFiltersClear": "Filter zurücksetzen",
+  "discoveryFiltersNote": "Ein Unternehmen, das zu einer Angabe nichts veröffentlicht, erscheint dafür nicht: Unveröffentlichtes ist unbekannt, nicht abgelehnt.",
+  "discoveryFacetsUncovered": "{count, plural, one{Ein Verzeichnis kann nicht nach diesen Angaben filtern und wurde nicht gefragt.} other{{count} Verzeichnisse können nicht nach diesen Angaben filtern und wurden nicht gefragt.}}",
+  "discoveryFacetNoMatch": "Kein Unternehmen, das geantwortet hat, veröffentlicht all dies."
 }

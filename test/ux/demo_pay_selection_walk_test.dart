@@ -83,6 +83,12 @@ void main() {
     await _tap(tester, 'demo-provider-pay');
     expect(now(april).state, FinanceState.paid);
     expect(now(april).stillDueCents, 0);
+
+    // #4225 — the payment is in the Payments tab straight away, not only
+    // after a pull to refresh
+    await _tap(tester, 'finances-tab-payments');
+    expect(find.textContaining('Online payment PAY-'), findsWidgets);
+    await _tap(tester, 'finances-tab-outstanding');
     expect(now(extra).state, FinanceState.paid);
     expect(now(extra).stillDueCents, 0);
     final matches = journey.fixture.money.invoiceMatchesStore;

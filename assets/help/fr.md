@@ -294,6 +294,8 @@ Vous n'avez pas de code mais aimeriez trouver un espace près de chez vous. Les 
 
 Les fiches montrent les équipements, l’accessibilité et les horaires habituels publiés, avec l’image, le lieu et le type d’activité. La page regroupe ces mêmes informations, la présentation, les informations complémentaires et les moyens de contact. **Non publié** signifie inconnu : cela ne veut pas dire qu’un équipement est absent ou que le lieu est inaccessible. Les horaires utilisent le fuseau de l’entreprise et ne garantissent pas une disponibilité réelle. Si l’actualisation échoue, un avis signale les informations conservées et **Réessayer** interroge à nouveau la même source.
 
+**Filtres** affine Discover selon ce que les entreprises publient : équipements et accessibilité, avec le type d’entreprise et les mots saisis. Choisissez les points qui vous importent ; une entreprise n’apparaît que si elle les publie tous. Une entreprise qui ne publie rien sur un point n’apparaît pas pour ce critère, car ce qui n’est pas publié est inconnu. Si un annuaire ne sait pas filtrer selon ces critères, un avis dit qu’il n’a pas été interrogé : ses entreprises manquent au résultat, elles n’en sont pas absentes. Votre recherche, vos filtres et votre sélection restent quand vous ouvrez une page puis revenez, ou quand vous changez d’onglet et revenez.
+
 **Bon à savoir**
 
 - Seuls les espaces qui ont choisi d'être visibles sont listés. Dans la démo, la carte montre l'espace de démonstration et deux voisins inventés ; leur page, une demande pour les rejoindre et un message à leurs hôtes restent dans la démo.

@@ -13,6 +13,7 @@ import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
+import '../providers/discovery_search_providers.dart';
 import '../providers/saved_places_providers.dart';
 import 'directory_row.dart';
 
@@ -37,6 +38,7 @@ class DiscoveryListView extends ConsumerStatefulWidget {
     required this.onLocate,
     required this.onClear,
     required this.onAllKinds,
+    required this.onClearFacets,
     this.revealSelected = false,
   });
 
@@ -51,6 +53,9 @@ class DiscoveryListView extends ConsumerStatefulWidget {
 
   /// Drops the chosen kind: the way out of a kind with no result.
   final VoidCallback onAllKinds;
+
+  /// #2832 — drops the facts asked for: the way out of a result with none.
+  final VoidCallback onClearFacets;
   final bool revealSelected;
 
   @override
@@ -58,7 +63,13 @@ class DiscoveryListView extends ConsumerStatefulWidget {
 }
 
 class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
-  final _scroll = ScrollController();
+  /// #2832 — the list opens where it was left: the offset is kept with the
+  /// search, and a new filter starts at the top.
+  late final ScrollController _scroll = ScrollController(
+    initialScrollOffset: ref.read(discoverySearchProvider.notifier).scrolledTo(),
+  )..addListener(
+      () => ref.read(discoverySearchProvider.notifier).scrolled(_scroll.offset),
+    );
 
   /// The counts and the names of silent directories, shown on request.
   var _details = false;
@@ -216,6 +227,7 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
         ),
       ];
     }
+    if (widget.filter.hasFacets) return _noFacetMatch();
     if (widget.filter.kind case final kind?) return _noKindMatch(kind);
     if (query.trim().isEmpty) {
       return [
@@ -238,6 +250,27 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
           key: const ValueKey('directory-clear-search'),
           onPressed: widget.onClear,
           child: Text(l.discoveryClearSearch),
+        ),
+      ),
+    ];
+  }
+
+  /// #2832 — facts asked for and no business that answered publishes all of
+  /// them: said as that (a directory that was not asked is the notice's), with
+  /// the way back to every business.
+  List<Widget> _noFacetMatch() {
+    final l = context.l10n;
+    return [
+      EmptyState(
+        key: const ValueKey('directory-facet-no-match'),
+        icon: Icons.search_off_outlined,
+        title: l.discoveryFacetNoMatch,
+      ),
+      Center(
+        child: OutlinedButton(
+          key: const ValueKey('directory-facet-clear'),
+          onPressed: widget.onClearFacets,
+          child: Text(l.discoveryFiltersClear),
         ),
       ),
     ];
@@ -292,13 +325,20 @@ class _DiscoveryListState extends ConsumerState<DiscoveryListView> {
           ),
         ),
       // #3554 — a source that cannot narrow by kind was not asked: its
-      // businesses are missing from this result, not absent from it.
+      // businesses are missing from this result, not absent from it. #2832 —
+      // the same for the published facts.
       if (results.uncovered.isNotEmpty)
         Padding(
           padding: const EdgeInsets.only(bottom: AppSpacing.sm),
           child: Text(
-            key: const ValueKey('directory-kind-uncovered'),
-            l.discoveryKindUncovered(results.uncovered.length),
+            key: ValueKey(
+              widget.filter.hasFacets
+                  ? 'directory-facet-uncovered'
+                  : 'directory-kind-uncovered',
+            ),
+            widget.filter.hasFacets
+                ? l.discoveryFacetsUncovered(results.uncovered.length)
+                : l.discoveryKindUncovered(results.uncovered.length),
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ),

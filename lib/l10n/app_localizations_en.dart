@@ -204,6 +204,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get accountPaymentAsk => 'Choose at checkout';
 
   @override
+  String get accountPaymentAwaitingMatch => 'Received, waiting to be matched';
+
+  @override
   String get accountPaymentConfirmed => 'Payment confirmed';
 
   @override
@@ -8328,7 +8331,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String get discoveryFacetAmenityWifi => 'Wi-Fi';
 
   @override
+  String get discoveryFacetNoMatch =>
+      'No business that answered publishes all of these.';
+
+  @override
+  String discoveryFacetsUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count directories cannot filter by these facts: they were not asked.',
+      one: 'One directory cannot filter by these facts: it was not asked.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get discoveryFieldNotPublished => 'Not published';
+
+  @override
+  String get discoveryFiltersAccessibility => 'Accessibility';
+
+  @override
+  String get discoveryFiltersAmenities => 'Facilities';
+
+  @override
+  String discoveryFiltersButtonCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filters ($count)',
+      one: 'Filters ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryFiltersClear => 'Clear filters';
+
+  @override
+  String get discoveryFiltersNote =>
+      'A business that publishes nothing about a fact is not shown for it: what is unpublished is unknown, not refused.';
+
+  @override
+  String get discoveryFiltersShow => 'Show results';
+
+  @override
+  String get discoveryFiltersTitle => 'Filter by what businesses publish';
 
   @override
   String get discoveryHoursClosed => 'No regular open days published';
@@ -12590,7 +12639,12 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String financesBusinessUnavailable(String business) {
-    return '$business cannot be reached right now. Nothing was sent.';
+    return '$business cannot be reached or verified right now. Nothing was sent.';
+  }
+
+  @override
+  String financesBusinessUnavailableOpen(String business) {
+    return '$business cannot be reached or verified right now.';
   }
 
   @override
@@ -12832,6 +12886,12 @@ class AppLocalizationsEn extends AppLocalizations {
   String financesPayTitle(String business) {
     return 'Pay $business';
   }
+
+  @override
+  String get financesPaymentAwaitingProvider => 'Awaiting the provider';
+
+  @override
+  String get financesPaymentChanged => 'Payment no longer matches';
 
   @override
   String get financesPaymentExpired => 'Checkout expired';
@@ -23621,7 +23681,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get payConfigNotConfigured => 'Not configured';
 
   @override
-  String get payConfigOpen => 'Configure';
+  String payConfigOpenFor(String business) {
+    return 'Configure $business';
+  }
 
   @override
   String get payConfigRemove => 'Remove';
@@ -23716,6 +23778,15 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get payOnlineClaimsUnsupported =>
       'This business\'s payment service must be updated before selected invoices can be paid online.';
+
+  @override
+  String get payOnlineContextNotReady =>
+      'The business is not ready yet. Try again in a moment.';
+
+  @override
+  String payOnlineDiagBusiness(String business) {
+    return 'Business: $business';
+  }
 
   @override
   String get payOnlineDiagHint => 'The server is missing this configuration:';
@@ -30635,6 +30706,18 @@ class AppLocalizationsEn extends AppLocalizations {
       'Seconds between two refreshes of an open conversation. Lower values load the server more.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'How many minutes after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Set it below how long Mollie keeps a request.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'How many minutes after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Set it below how long PayPal keeps a request.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'How many minutes after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Set it below how long Stripe keeps a request.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'How many workspaces, people or groups the new discussion lists at a time; the next ones come with Show more.';
 
@@ -30923,6 +31006,18 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get settingLabelMessagingThreadPollSeconds => 'Conversation refresh';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Resend window, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Resend window, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Resend window, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

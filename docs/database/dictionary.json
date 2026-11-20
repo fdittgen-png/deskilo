@@ -4,13 +4,13 @@
             "enums": 0,
             "views": 0,
             "tables": 259,
-            "columns": 4035,
+            "columns": 4036,
             "domains": 0,
             "partitions": 0,
             "foreignKeys": 613
         },
         "source": "PostgreSQL catalogues (pg_class, pg_attribute, pg_constraint, pg_index, pg_inherits, pg_type) of the migration replay",
-        "checksum": "fc194f93e5b9caa01bdb3a5c619e71811b5cf42ad351c2968d224304ba36dfe3",
+        "checksum": "bd598388fc2bb890c7404bac0bd550dbc9f40307886c57861c3176d1aa220753",
         "excluded": [
             "pg_catalog",
             "information_schema",
@@ -19,7 +19,7 @@
             "managed platform schemas (auth, storage, realtime, ...): version-qualified, not application migrations",
             "row values, function bodies, view definitions"
         ],
-        "schemaMarker": 808,
+        "schemaMarker": 813,
         "postgresMajor": 17,
         "applicationSchema": "public"
     },
@@ -49848,6 +49848,13 @@
                     "type": "uuid",
                     "notNull": false,
                     "position": 22
+                },
+                {
+                    "name": "removed_place_hidden",
+                    "type": "boolean",
+                    "comment": "Whether the place this booking named was hidden (external level or rented room) when it was removed from the plan; null while it names a place, or when it was removed before this was recorded.",
+                    "notNull": false,
+                    "position": 23
                 }
             ],
             "indexes": [

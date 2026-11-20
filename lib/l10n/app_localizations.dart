@@ -446,6 +446,12 @@ abstract class AppLocalizations {
   /// **'Choose at checkout'**
   String get accountPaymentAsk;
 
+  /// #4225 the state of a payment that arrived and no invoice has taken yet, as the business holds it under Payments to match
+  ///
+  /// In en, this message translates to:
+  /// **'Received, waiting to be matched'**
+  String get accountPaymentAwaitingMatch;
+
   /// Shown as a text in account activity screen (money), and 1 other place.
   ///
   /// In en, this message translates to:
@@ -13209,11 +13215,65 @@ abstract class AppLocalizations {
   /// **'Wi-Fi'**
   String get discoveryFacetAmenityWifi;
 
+  /// #2832 Discover: facts chosen and no answering business publishes all of them
+  ///
+  /// In en, this message translates to:
+  /// **'No business that answered publishes all of these.'**
+  String get discoveryFacetNoMatch;
+
+  /// #2832 Discover: directories that cannot filter by published facts are not asked, so their businesses are not in this result; never read as 'none found'
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{One directory cannot filter by these facts: it was not asked.} other{{count} directories cannot filter by these facts: they were not asked.}}'**
+  String discoveryFacetsUncovered(int count);
+
   /// Public profile editor or preview: Not published
   ///
   /// In en, this message translates to:
   /// **'Not published'**
   String get discoveryFieldNotPublished;
+
+  /// #2832 Discover: the group of published accessibility facts
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get discoveryFiltersAccessibility;
+
+  /// #2832 Discover: the group of published facilities (wifi, meeting room…)
+  ///
+  /// In en, this message translates to:
+  /// **'Facilities'**
+  String get discoveryFiltersAmenities;
+
+  /// #2832 Discover: the filters button with the number of facts chosen
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Filters ({count})} other{Filters ({count})}}'**
+  String discoveryFiltersButtonCount(int count);
+
+  /// #2832 Discover: drops every fact chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get discoveryFiltersClear;
+
+  /// #2832 Discover: what an unpublished fact means (unknown, not refused)
+  ///
+  /// In en, this message translates to:
+  /// **'A business that publishes nothing about a fact is not shown for it: what is unpublished is unknown, not refused.'**
+  String get discoveryFiltersNote;
+
+  /// #2832 Discover: closes the filter sheet and shows the results
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get discoveryFiltersShow;
+
+  /// #2832 Discover: title of the sheet that narrows by what businesses publish
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by what businesses publish'**
+  String get discoveryFiltersTitle;
 
   /// Public profile editor or preview: No regular open days published
   ///
@@ -20476,11 +20536,17 @@ abstract class AppLocalizations {
   /// **'Being validated'**
   String get financesBeingValidated;
 
-  /// #3556 The business of the selected invoices cannot be opened right now (its server, the account changed)
+  /// #3556 #4218 A command on the invoices of a business could not start: its host cannot be reached or verified (the sentence offers to try again)
   ///
   /// In en, this message translates to:
-  /// **'{business} cannot be reached right now. Nothing was sent.'**
+  /// **'{business} cannot be reached or verified right now. Nothing was sent.'**
   String financesBusinessUnavailable(String business);
+
+  /// #4218 An invoice or payment of a business cannot be opened: its host cannot be reached or verified (the sentence offers to try again)
+  ///
+  /// In en, this message translates to:
+  /// **'{business} cannot be reached or verified right now.'**
+  String financesBusinessUnavailableOpen(String business);
 
   /// #2557 C4 Me › Finances: the rows header, the amount in its own currency.
   ///
@@ -20829,6 +20895,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Pay {business}'**
   String financesPayTitle(String business);
+
+  /// #4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting the provider'**
+  String get financesPaymentAwaitingProvider;
+
+  /// #4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment no longer matches'**
+  String get financesPaymentChanged;
 
   /// #4147: continue an existing own payment (financesPaymentExpired)
   ///
@@ -37698,11 +37776,11 @@ abstract class AppLocalizations {
   /// **'Not configured'**
   String get payConfigNotConfigured;
 
-  /// Diagnostics dialog action opening the online-payments config screen
+  /// #4218 Diagnostics dialog action opening the online-payments config of the named business
   ///
   /// In en, this message translates to:
-  /// **'Configure'**
-  String get payConfigOpen;
+  /// **'Configure {business}'**
+  String payConfigOpenFor(String business);
 
   /// Button removing a provider's config
   ///
@@ -37865,6 +37943,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This business\'s payment service must be updated before selected invoices can be paid online.'**
   String get payOnlineClaimsUnsupported;
+
+  /// #4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again
+  ///
+  /// In en, this message translates to:
+  /// **'The business is not ready yet. Try again in a moment.'**
+  String get payOnlineContextNotReady;
+
+  /// #4218 Diagnostics dialog: the business whose online payments are missing configuration
+  ///
+  /// In en, this message translates to:
+  /// **'Business: {business}'**
+  String payOnlineDiagBusiness(String business);
 
   /// Hint above the per-provider missing-config lines in the diagnostics dialog
   ///
@@ -49167,6 +49257,24 @@ abstract class AppLocalizations {
   /// **'Seconds between two refreshes of an open conversation. Lower values load the server more.'**
   String get settingHintMessagingThreadPollSeconds;
 
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Set it below how long Mollie keeps a request.'**
+  String get settingHintPaymentsResendWindowMollieMinutes;
+
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Set it below how long PayPal keeps a request.'**
+  String get settingHintPaymentsResendWindowPaypalMinutes;
+
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Set it below how long Stripe keeps a request.'**
+  String get settingHintPaymentsResendWindowStripeMinutes;
+
   /// #2472 personal directory: Setting hint.
   ///
   /// In en, this message translates to:
@@ -49652,6 +49760,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Conversation refresh'**
   String get settingLabelMessagingThreadPollSeconds;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, Mollie'**
+  String get settingLabelPaymentsResendWindowMollieMinutes;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, PayPal'**
+  String get settingLabelPaymentsResendWindowPaypalMinutes;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, Stripe'**
+  String get settingLabelPaymentsResendWindowStripeMinutes;
 
   /// #2472 personal directory: Setting label.
   ///

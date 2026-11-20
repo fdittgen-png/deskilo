@@ -294,6 +294,8 @@ You do not have a code but you would like to find a space near you. Spaces that 
 
 Cards show published facilities, accessibility and regular hours alongside the picture, location and business kind. The page groups the same facts, the overview, additional information and contact options. **Not published** means unknown: it does not mean a facility is absent or the place is inaccessible. Regular hours use the business’s timezone and do not promise live availability. If refreshing fails, a notice identifies the retained information and **Try again** asks the same source again.
 
+**Filters** narrows Discover by what businesses publish: facilities and accessibility, together with the kind of business and the words you typed. Choose the facts you need; a business is shown only if it publishes all of them. A business that publishes nothing about a fact is not shown for it, because what is unpublished is unknown. If a directory cannot filter by these facts, a notice says it was not asked, so its businesses are missing from the result and not absent from it. Your search, filters and selection stay when you open a page and go back, or switch to another tab and return.
+
 **Good to know**
 
 - Only spaces that chose to be visible are listed. In the demo, the map shows the demo space and two invented neighbours; their pages, a request to join and a message to their hosts all stay inside the demo.

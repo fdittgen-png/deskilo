@@ -104,6 +104,9 @@ const DEFAULTS={
  // how long a server waits for an answer before it sends a message again
  // (platform setting federation.answer_wait_seconds).
  federation:{retentionHours:'24',answerWait:'120'},
+ // #4217 — how long after its first sending a checkout may be sent again under
+ // its original request, per provider (platform settings payments.resend_window_*_minutes).
+ paymentResend:{mollie:'50',paypal:'330',stripe:'1380'},
  // #2556 — the inbox's page per source, read at the personal home and at
  // each workspace server (platform setting messaging.inbox_page_size).
  inbox:{pageSize:'50'},

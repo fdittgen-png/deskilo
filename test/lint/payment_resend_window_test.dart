@@ -1,76 +1,43 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 //
-// #4126 -- an attempt still on the provisional id of an uncertain answer is
-// ended by the reconciliation only after payment_resend_window(): until then
-// the same order request may be sent again under its key (KEY_RETENTION_S in
-// create-payment-order/outcome.ts) and would hand the payer a way to pay. The
-// two say the same time, or one of them moved without the other.
+// #4217 — a checkout is sent again under its original request only while its
+// provider still keeps that request's key. The window is one platform setting
+// per provider, and what the provider guarantees is the ceiling: the default
+// and the largest value an operator may set stay below it, so a claim never
+// reopens an order the provider no longer remembers. Nothing else carries the
+// figure: not the edge function, not a migration's function body.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 
+import '../../tool/settings/seed.dart';
 import 'lint_sources.dart';
 
-/// KEY_RETENTION_S, in seconds: a number or a product of numbers.
-int keyRetentionSeconds(String outcomeTs) {
-  final m = RegExp(r'KEY_RETENTION_S\s*=\s*([0-9_\s*]+);')
-      .firstMatch(outcomeTs);
-  if (m == null) throw StateError('KEY_RETENTION_S not found');
-  return m
-      .group(1)!
-      .split('*')
-      .map((f) => int.parse(f.replaceAll('_', '').trim()))
-      .reduce((a, b) => a * b);
-}
-
-/// The latest payment_resend_window(), in seconds.
-int resendWindowSeconds(Iterable<String> migrations) {
-  final defining = migrations
-      .where((s) => s.contains('function public.payment_resend_window()'))
-      .toList();
-  if (defining.isEmpty) {
-    throw StateError('payment_resend_window() is not defined');
-  }
-  final body = defining.last.substring(
-    defining.last.indexOf('function public.payment_resend_window()'),
-  );
-  final m = RegExp(r"interval '(\d+) (hours|minutes|seconds)'")
-      .firstMatch(body);
-  if (m == null) throw StateError('payment_resend_window() names no interval');
-  final n = int.parse(m.group(1)!);
-  return switch (m.group(2)) {
-    'hours' => n * 3600,
-    'minutes' => n * 60,
-    _ => n,
-  };
-}
+/// What each provider guarantees for a request's key, in minutes (Mollie one
+/// hour, PayPal six hours by default, Stripe at least a day), less a margin.
+const _guaranteed = {'mollie': 60, 'paypal': 360, 'stripe': 1440};
 
 void main() {
-  test('the two readings', () {
-    expect(
-      keyRetentionSeconds('export const KEY_RETENTION_S = 23 * 3600;'),
-      82800,
-    );
-    expect(
-      resendWindowSeconds([
-        "create or replace function public.payment_resend_window()\n  select interval '23 hours';",
-      ]),
-      82800,
-    );
+  test('each provider window is a setting that stays inside what the provider keeps', () {
+    for (final entry in _guaranteed.entries) {
+      final seed = settingSeeds
+          .map((s) => s.row)
+          .where((r) => r.key == 'payments.resend_window_${entry.key}_minutes')
+          .singleOrNull;
+      expect(seed, isNotNull, reason: 'no setting for ${entry.key}');
+      expect(seed!.defaultValue as int, lessThan(entry.value));
+      expect(seed.max, lessThanOrEqualTo(entry.value * 12),
+          reason: 'PayPal may extend its window by arrangement; the bound stays sane');
+      expect(seed.editable, isTrue);
+    }
   });
 
-  test('the reconciliation waits as long as an order request may be resent', () {
-    final outcome = File('supabase/functions/create-payment-order/outcome.ts')
-        .readAsStringSync();
-    final migrations = [
-      for (final f in sqlFiles('supabase/migrations'))
-        File(f.path).readAsStringSync(),
-    ];
-    expect(
-      resendWindowSeconds(migrations),
-      keyRetentionSeconds(outcome),
-      reason:
-          'payment_resend_window() and KEY_RETENTION_S must say the same time',
-    );
+  test('no function body or edge function holds a window of its own', () {
+    final edge = File('supabase/functions/create-payment-order/outcome.ts').readAsStringSync();
+    expect(edge.contains('KEY_RETENTION_S'), isFalse);
+    final migrations = sqlFiles('supabase/migrations')
+      ..sort((a, b) => a.path.compareTo(b.path));
+    final latest = migrations.lastWhere((f) => f.readAsStringSync().contains('payment_intent_claim_open'));
+    expect(latest.readAsStringSync().contains("interval '23 hours'"), isFalse);
   });
 }

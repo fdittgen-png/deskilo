@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Elegir al pagar",
+  "accountPaymentAwaitingMatch": "Recibido, pendiente de conciliar",
   "accountPaymentConfirmed": "Pago confirmado",
   "accountPaymentPreference": "Pago en línea preferido",
   "accountRefundDue": "Reembolso pendiente del espacio",
@@ -5132,7 +5133,16 @@
   "discoveryFacetAmenityParking": "Aparcamiento de coches",
   "discoveryFacetAmenityPrinter": "Impresora",
   "discoveryFacetAmenityWifi": "Wi-Fi",
+  "discoveryFacetNoMatch": "Ninguna empresa que ha respondido publica todo esto.",
+  "discoveryFacetsUncovered": "{count, plural, one{Un directorio no puede filtrar por estos datos: no se le ha preguntado.} other{{count} directorios no pueden filtrar por estos datos: no se les ha preguntado.}}",
   "discoveryFieldNotPublished": "No publicado",
+  "discoveryFiltersAccessibility": "Accesibilidad",
+  "discoveryFiltersAmenities": "Instalaciones",
+  "discoveryFiltersButtonCount": "{count, plural, one{Filtros ({count})} other{Filtros ({count})}}",
+  "discoveryFiltersClear": "Quitar filtros",
+  "discoveryFiltersNote": "Una empresa que no publica nada sobre un dato no aparece para él: lo no publicado es desconocido, no rechazado.",
+  "discoveryFiltersShow": "Mostrar resultados",
+  "discoveryFiltersTitle": "Filtrar por lo que publican las empresas",
   "discoveryHoursClosed": "No se publicaron días habituales de apertura",
   "discoveryKindAll": "Todos los tipos",
   "discoveryKindCoworking": "Coworking",
@@ -7898,7 +7908,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} no está disponible ahora. No se ha enviado nada.",
+  "financesBusinessUnavailable": "{business} no está disponible o no se ha podido verificar ahora. No se ha enviado nada.",
+  "financesBusinessUnavailableOpen": "{business} no está disponible o no se ha podido verificar ahora.",
   "financesColumnAmount": "Importe",
   "financesColumnDocument": "Documento y periodo",
   "financesColumnState": "Documento y pago",
@@ -8040,6 +8051,14 @@
   "financesPayAmount": "Pagar {amount}",
   "financesPayThen": "Este pago salda el primer mes. Después: {months}.",
   "financesPayTitle": "Pagar a {business}",
+  "financesPaymentAwaitingProvider": "A la espera del proveedor",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
+  },
+  "financesPaymentChanged": "El pago ya no coincide",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
   "financesPaymentExpired": "Página de pago caducada",
   "@financesPaymentExpired": {
     "description": "#4147: continue an existing own payment (financesPaymentExpired)"
@@ -13754,7 +13773,7 @@
   "payConfigConfigured": "Configurado",
   "payConfigIntro": "Introduzca cada proveedor de pago que quiera ofrecer. Las claves se guardan de forma segura en el servidor y no se vuelven a mostrar.",
   "payConfigNotConfigured": "Sin configurar",
-  "payConfigOpen": "Configurar",
+  "payConfigOpenFor": "Configurar {business}",
   "payConfigRemove": "Eliminar",
   "payConfigRemoved": "Eliminado.",
   "payConfigSecretSet": "Definido — déjelo en blanco para conservarlo",
@@ -13782,6 +13801,8 @@
   "payOnlineChooseTitle": "Pagar en línea",
   "payOnlineClaimNotTaken": "El servicio de pago no tomó estas facturas, así que el pago no se abrió. No se ha cobrado nada.",
   "payOnlineClaimsUnsupported": "El servicio de pago de este negocio debe actualizarse antes de poder pagar en línea facturas seleccionadas.",
+  "payOnlineContextNotReady": "La empresa aún no está lista. Inténtelo de nuevo en un momento.",
+  "payOnlineDiagBusiness": "Empresa: {business}",
   "payOnlineDiagHint": "Al servidor le falta esta configuración:",
   "payOnlineDiagTitle": "Pagos en línea — sin configurar",
   "payOnlineFailedDetail": "El pago {reference} ({amount} vía {provider}) no se completó — no se abonó nada; el saldo sigue pendiente.",
@@ -18456,6 +18477,18 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPaymentsResendWindowMollieMinutes": "Cuántos minutos después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Mollie conserva una solicitud.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Cuántos minutos después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que PayPal conserva una solicitud.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Cuántos minutos después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Stripe conserva una solicitud.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
   "settingHintPersonalMessageDirectoryPageSize": "Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.",
   "settingHintPersonalMessageDirectoryQueryLength": "El texto más largo que busca el directorio de la nueva conversación. Una búsqueda más larga se rechaza, nunca se recorta.",
   "settingHintPersonalReadConcurrency": "Cuántos servidores consulta a la vez el espacio personal cuando reúne sus propios datos. Un límite de las lecturas paralelas del dispositivo, no de ningún servidor.",
@@ -18650,6 +18683,18 @@
   "settingLabelMessagingThreadPollSeconds": "Actualización de la conversación",
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowMollieMinutes": "Ventana de reenvío, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Ventana de reenvío, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Ventana de reenvío, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
   },
   "settingLabelPersonalMessageDirectoryPageSize": "Entradas del directorio por página",
   "settingLabelPersonalMessageDirectoryQueryLength": "Búsqueda más larga en el directorio",

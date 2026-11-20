@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Beim Bezahlen wählen",
+  "accountPaymentAwaitingMatch": "Eingegangen, wartet auf Zuordnung",
   "accountPaymentConfirmed": "Zahlung bestätigt",
   "accountPaymentPreference": "Bevorzugte Onlinezahlung",
   "accountRefundDue": "Erstattung vom Space ausstehend",
@@ -5132,7 +5133,16 @@
   "discoveryFacetAmenityParking": "Autoparkplatz",
   "discoveryFacetAmenityPrinter": "Drucker",
   "discoveryFacetAmenityWifi": "WLAN",
+  "discoveryFacetNoMatch": "Kein Unternehmen, das geantwortet hat, veröffentlicht all dies.",
+  "discoveryFacetsUncovered": "{count, plural, one{Ein Verzeichnis kann nicht nach diesen Angaben filtern und wurde nicht gefragt.} other{{count} Verzeichnisse können nicht nach diesen Angaben filtern und wurden nicht gefragt.}}",
   "discoveryFieldNotPublished": "Nicht veröffentlicht",
+  "discoveryFiltersAccessibility": "Barrierefreiheit",
+  "discoveryFiltersAmenities": "Ausstattung",
+  "discoveryFiltersButtonCount": "{count, plural, one{Filter ({count})} other{Filter ({count})}}",
+  "discoveryFiltersClear": "Filter zurücksetzen",
+  "discoveryFiltersNote": "Ein Unternehmen, das zu einer Angabe nichts veröffentlicht, erscheint dafür nicht: Unveröffentlichtes ist unbekannt, nicht abgelehnt.",
+  "discoveryFiltersShow": "Ergebnisse anzeigen",
+  "discoveryFiltersTitle": "Nach Veröffentlichtem filtern",
   "discoveryHoursClosed": "Keine regelmäßigen Öffnungstage veröffentlicht",
   "discoveryKindAll": "Alle Arten",
   "discoveryKindCoworking": "Coworking",
@@ -7898,7 +7908,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} ist gerade nicht erreichbar. Es wurde nichts gesendet.",
+  "financesBusinessUnavailable": "{business} ist gerade nicht erreichbar oder nicht überprüfbar. Es wurde nichts gesendet.",
+  "financesBusinessUnavailableOpen": "{business} ist gerade nicht erreichbar oder nicht überprüfbar.",
   "financesColumnAmount": "Betrag",
   "financesColumnDocument": "Dokument und Zeitraum",
   "financesColumnState": "Dokument und Zahlung",
@@ -8040,6 +8051,14 @@
   "financesPayAmount": "{amount} bezahlen",
   "financesPayThen": "Diese Zahlung begleicht den ersten Monat. Danach: {months}.",
   "financesPayTitle": "An {business} zahlen",
+  "financesPaymentAwaitingProvider": "Wartet auf den Anbieter",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
+  },
+  "financesPaymentChanged": "Die Zahlung stimmt nicht mehr",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
   "financesPaymentExpired": "Zahlungsseite abgelaufen",
   "@financesPaymentExpired": {
     "description": "#4147: continue an existing own payment (financesPaymentExpired)"
@@ -13754,7 +13773,7 @@
   "payConfigConfigured": "Eingerichtet",
   "payConfigIntro": "Geben Sie jeden Zahlungsanbieter ein, den Sie anbieten wollen. Schlüssel werden sicher auf dem Server gespeichert und nie wieder angezeigt.",
   "payConfigNotConfigured": "Nicht eingerichtet",
-  "payConfigOpen": "Einrichten",
+  "payConfigOpenFor": "{business} konfigurieren",
   "payConfigRemove": "Entfernen",
   "payConfigRemoved": "Entfernt.",
   "payConfigSecretSet": "Gesetzt — leer lassen zum Behalten",
@@ -13782,6 +13801,8 @@
   "payOnlineChooseTitle": "Online bezahlen",
   "payOnlineClaimNotTaken": "Der Zahlungsdienst hat diese Rechnungen nicht übernommen, die Zahlung wurde nicht geöffnet. Es wurde nichts belastet.",
   "payOnlineClaimsUnsupported": "Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.",
+  "payOnlineContextNotReady": "Das Unternehmen ist noch nicht bereit. Versuchen Sie es gleich noch einmal.",
+  "payOnlineDiagBusiness": "Unternehmen: {business}",
   "payOnlineDiagHint": "Auf dem Server fehlt diese Konfiguration:",
   "payOnlineDiagTitle": "Online-Zahlungen — nicht konfiguriert",
   "payOnlineFailedDetail": "Die Zahlung {reference} ({amount} über {provider}) wurde nicht abgeschlossen — nichts wurde gutgeschrieben; der Saldo bleibt offen.",
@@ -18456,6 +18477,18 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPaymentsResendWindowMollieMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an Mollie dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Mollie eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die PayPal eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Stripe eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
   "settingHintPersonalMessageDirectoryPageSize": "Wie viele Spaces, Personen oder Gruppen die neue Unterhaltung auf einmal anzeigt; die nächsten kommen mit Mehr anzeigen.",
   "settingHintPersonalMessageDirectoryQueryLength": "Der längste Text, nach dem das Verzeichnis der neuen Unterhaltung sucht. Eine längere Suche wird abgelehnt, nie gekürzt.",
   "settingHintPersonalReadConcurrency": "Wie viele Server der persönliche Bereich gleichzeitig abfragt, wenn er Ihre eigenen Daten zusammenträgt. Eine Grenze für die parallelen Lesezugriffe des Geräts, nicht für einen Server.",
@@ -18650,6 +18683,18 @@
   "settingLabelMessagingThreadPollSeconds": "Aktualisierung der Unterhaltung",
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowMollieMinutes": "Wiederholungsfenster, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Wiederholungsfenster, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Wiederholungsfenster, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
   },
   "settingLabelPersonalMessageDirectoryPageSize": "Verzeichniseinträge pro Seite",
   "settingLabelPersonalMessageDirectoryQueryLength": "Längste Verzeichnissuche",

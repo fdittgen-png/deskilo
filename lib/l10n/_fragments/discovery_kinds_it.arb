@@ -6,5 +6,14 @@
   "discoveryKindSalons": "Saloni",
   "discoveryKindServices": "Altri servizi",
   "discoveryKindNoMatch": "Nessun risultato in «{kind}»",
-  "discoveryKindUncovered": "{count, plural, one{Un elenco non sa filtrare per tipo: non è stato interpellato.} other{{count} elenchi non sanno filtrare per tipo: non sono stati interpellati.}}"
+  "discoveryKindUncovered": "{count, plural, one{Un elenco non sa filtrare per tipo: non è stato interpellato.} other{{count} elenchi non sanno filtrare per tipo: non sono stati interpellati.}}",
+  "discoveryFiltersButtonCount": "{count, plural, one{Filtri ({count})} other{Filtri ({count})}}",
+  "discoveryFiltersTitle": "Filtra per ciò che le aziende pubblicano",
+  "discoveryFiltersAmenities": "Servizi",
+  "discoveryFiltersAccessibility": "Accessibilità",
+  "discoveryFiltersShow": "Mostra i risultati",
+  "discoveryFiltersClear": "Rimuovi i filtri",
+  "discoveryFiltersNote": "Un’azienda che non pubblica nulla su un dato non compare per quel criterio: ciò che non è pubblicato è sconosciuto, non rifiutato.",
+  "discoveryFacetsUncovered": "{count, plural, one{Un elenco non sa filtrare per questi dati: non è stato interpellato.} other{{count} elenchi non sanno filtrare per questi dati: non sono stati interpellati.}}",
+  "discoveryFacetNoMatch": "Nessuna azienda che ha risposto pubblica tutto questo."
 }

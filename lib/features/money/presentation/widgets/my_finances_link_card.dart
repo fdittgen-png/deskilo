@@ -27,7 +27,7 @@ class MyFinancesLinkCard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final target = ref.watch(financeCurrentTargetProvider);
-    final id = target?.workspaceId == workspaceId ? target?.networkId : null;
+    final id = target?.workspaceId == workspaceId ? target?.financeKey : null;
     if (id == null) return const SizedBox.shrink();
     final theme = Theme.of(context);
     return Card(

@@ -13,12 +13,18 @@ import 'workspace_feature.dart';
 /// The ids of the catalogue's steps that exist for places.
 final Set<String> setupStepsNeedingPlaces = {
   for (final step in setupSteps)
-    if (step.feature case final feature?
-        when feature == WorkspaceFeature.placeBooking ||
-            feature == WorkspaceFeature.bookingPolicies ||
-            requirementChain(feature).contains(WorkspaceFeature.placeBooking))
-      step.id,
+    if (_needsPlaces(step)) step.id,
 };
+
+bool _needsPlaces(SetupStep step) {
+  const places = WorkspaceFeature.placeBooking;
+  if (step.alsoNeeds == places) return true;
+  final feature = step.feature;
+  return feature != null &&
+      (feature == places ||
+          feature == WorkspaceFeature.bookingPolicies ||
+          requirementChain(feature).contains(places));
+}
 
 extension SetupStatusForKind on SetupStatus {
   /// This status without [ids] (the steps a business is not offered); the

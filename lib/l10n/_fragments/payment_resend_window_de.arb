@@ -1,0 +1,26 @@
+{
+  "settingLabelPaymentsResendWindowMollieMinutes": "Wiederholungsfenster, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowMollieMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an Mollie dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Mollie eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Wiederholungsfenster, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die PayPal eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Wiederholungsfenster, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Wie viele Minuten nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unterhalb der Dauer einstellen, für die Stripe eine Anfrage behält.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  }
+}

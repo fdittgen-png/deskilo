@@ -77,6 +77,7 @@
     "route": "/setup/step/pricing",
     "evidence": "pricing",
     "feature": "moneyTab",
+    "also_needs": "placeBooking",
     "required": true,
     "depends_on": [],
     "actor": "owner",

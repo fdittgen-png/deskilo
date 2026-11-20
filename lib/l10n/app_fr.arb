@@ -160,6 +160,7 @@
     }
   },
   "accountPaymentAsk": "Choisir au paiement",
+  "accountPaymentAwaitingMatch": "Reçu, en attente de rapprochement",
   "accountPaymentConfirmed": "Paiement confirmé",
   "accountPaymentPreference": "Paiement en ligne préféré",
   "accountRefundDue": "Remboursement dû par l'espace",
@@ -5132,7 +5133,16 @@
   "discoveryFacetAmenityParking": "Parking automobile",
   "discoveryFacetAmenityPrinter": "Imprimante",
   "discoveryFacetAmenityWifi": "Wi-Fi",
+  "discoveryFacetNoMatch": "Aucune entreprise ayant répondu ne publie tout cela.",
+  "discoveryFacetsUncovered": "{count, plural, =0{{count} annuaires ne savent pas filtrer selon ces critères : ils n’ont pas été interrogés.} one{Un annuaire ne sait pas filtrer selon ces critères : il n’a pas été interrogé.} other{{count} annuaires ne savent pas filtrer selon ces critères : ils n’ont pas été interrogés.}}",
   "discoveryFieldNotPublished": "Non publié",
+  "discoveryFiltersAccessibility": "Accessibilité",
+  "discoveryFiltersAmenities": "Équipements",
+  "discoveryFiltersButtonCount": "{count, plural, one{Filtres ({count})} other{Filtres ({count})}}",
+  "discoveryFiltersClear": "Effacer les filtres",
+  "discoveryFiltersNote": "Une entreprise qui ne publie rien sur un point n’apparaît pas pour ce critère : ce qui n’est pas publié est inconnu, pas refusé.",
+  "discoveryFiltersShow": "Afficher les résultats",
+  "discoveryFiltersTitle": "Filtrer selon ce que les entreprises publient",
   "discoveryHoursClosed": "Aucun jour d’ouverture habituel publié",
   "discoveryKindAll": "Tous les types",
   "discoveryKindCoworking": "Coworking",
@@ -7898,7 +7908,8 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} est injoignable pour l’instant. Rien n’a été envoyé.",
+  "financesBusinessUnavailable": "{business} est injoignable ou n’a pas pu être vérifié pour l’instant. Rien n’a été envoyé.",
+  "financesBusinessUnavailableOpen": "{business} est injoignable ou n’a pas pu être vérifié pour l’instant.",
   "financesColumnAmount": "Montant",
   "financesColumnDocument": "Document et période",
   "financesColumnState": "Document et paiement",
@@ -8040,6 +8051,14 @@
   "financesPayAmount": "Payer {amount}",
   "financesPayThen": "Ce paiement règle le premier mois. Ensuite : {months}.",
   "financesPayTitle": "Payer {business}",
+  "financesPaymentAwaitingProvider": "En attente du prestataire",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
+  },
+  "financesPaymentChanged": "Le paiement ne correspond plus",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
   "financesPaymentExpired": "Lien de paiement expiré",
   "@financesPaymentExpired": {
     "description": "#4147: continue an existing own payment (financesPaymentExpired)"
@@ -13754,7 +13773,7 @@
   "payConfigConfigured": "Configuré",
   "payConfigIntro": "Saisissez chaque prestataire de paiement à proposer. Les clés sont stockées en sécurité sur le serveur et ne sont plus affichées.",
   "payConfigNotConfigured": "Non configuré",
-  "payConfigOpen": "Configurer",
+  "payConfigOpenFor": "Configurer {business}",
   "payConfigRemove": "Supprimer",
   "payConfigRemoved": "Supprimé.",
   "payConfigSecretSet": "Défini — laisser vide pour conserver",
@@ -13782,6 +13801,8 @@
   "payOnlineChooseTitle": "Payer en ligne",
   "payOnlineClaimNotTaken": "Le service de paiement n’a pas pris ces factures en compte : le paiement n’a pas été ouvert. Rien n’a été débité.",
   "payOnlineClaimsUnsupported": "Le service de paiement de cette entreprise doit être mis à jour avant de pouvoir payer en ligne des factures sélectionnées.",
+  "payOnlineContextNotReady": "L’entreprise n’est pas encore prête. Réessayez dans un instant.",
+  "payOnlineDiagBusiness": "Entreprise : {business}",
   "payOnlineDiagHint": "Il manque cette configuration côté serveur :",
   "payOnlineDiagTitle": "Paiements en ligne — non configurés",
   "payOnlineFailedDetail": "Le paiement {reference} ({amount} via {provider}) n'a pas abouti — rien n'a été crédité ; le solde reste dû.",
@@ -18456,6 +18477,18 @@
   "@settingHintMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting hint."
   },
+  "settingHintPaymentsResendWindowMollieMinutes": "Combien de minutes après le premier envoi d'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle Mollie garde une requête.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Combien de minutes après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle PayPal garde une requête.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Combien de minutes après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle Stripe garde une requête.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
   "settingHintPersonalMessageDirectoryPageSize": "Combien d’espaces, de personnes ou de groupes la nouvelle discussion liste à la fois ; les suivants viennent avec Afficher plus.",
   "settingHintPersonalMessageDirectoryQueryLength": "Le texte le plus long que l’annuaire de la nouvelle discussion recherche. Une recherche plus longue est refusée, jamais tronquée.",
   "settingHintPersonalReadConcurrency": "Nombre de serveurs que l'espace personnel interroge en même temps lorsqu'il rassemble vos propres données. Une borne sur les lectures parallèles de l'appareil, pas sur un serveur.",
@@ -18650,6 +18683,18 @@
   "settingLabelMessagingThreadPollSeconds": "Actualisation de la conversation",
   "@settingLabelMessagingThreadPollSeconds": {
     "description": "#2487 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowMollieMinutes": "Fenêtre de réémission, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Fenêtre de réémission, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Fenêtre de réémission, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
   },
   "settingLabelPersonalMessageDirectoryPageSize": "Entrées de l’annuaire par page",
   "settingLabelPersonalMessageDirectoryQueryLength": "Recherche la plus longue dans l’annuaire",

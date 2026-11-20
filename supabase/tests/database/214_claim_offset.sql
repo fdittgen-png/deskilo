@@ -6,7 +6,7 @@
 --   A offset in full   B offset in part, then the rest   C refusals
 --   D the claim applied to an invoice   E a validation policy that would hold
 --   the match   F history
--- NOT RUN here: two sessions racing the last of a claim.
+-- Two sessions racing the last of a claim: scripts/reimbursement_offset_race.sh (#4203).
 begin;
 select plan(29);
 

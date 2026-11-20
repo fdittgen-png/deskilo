@@ -22,5 +22,13 @@
   "financesPaymentReversed": "Pago revertido",
   "@financesPaymentReversed": {
     "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentChanged": "El pago ya no coincide",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
+  "financesPaymentAwaitingProvider": "A la espera del proveedor",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
   }
 }

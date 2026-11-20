@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:deskilo/core/settings/setting_defaults.g.dart';
 import 'package:deskilo/features/money/domain/invoice_commands.dart';
 import 'package:deskilo/features/money/domain/payment_claims.dart';
 import 'package:deskilo/features/money/domain/payment_gateway_repository.dart';
@@ -200,13 +201,22 @@ class DemoPaymentGateway implements PaymentGatewayRepository {
     );
   }
 
+  /// The provider's own window (#4217), the platform setting's default.
+  Duration _resendWindowOf(String provider) => Duration(
+        minutes: switch (provider) {
+          'mollie' || 'wero' => SettingDefaults.paymentsResendWindowMollieMinutes,
+          'paypal' => SettingDefaults.paymentsResendWindowPaypalMinutes,
+          _ => SettingDefaults.paymentsResendWindowStripeMinutes,
+        },
+      );
+
   /// The same persisted facts the host uses for its continuation action.
   String? continuationState(String? paymentId) {
     final payment = _m.paymentIntents.where((p) => p.orderId == paymentId).firstOrNull;
     if (payment == null) return null;
     if (_m.withdrawnClaims.contains(paymentId)) return 'withdrawn';
     if (payment.status != 'created') return payment.status;
-    if (_m.clock().difference(payment.createdAt) > const Duration(hours: 23)) return 'expired';
+    if (_m.clock().difference(payment.createdAt) > _resendWindowOf(payment.provider)) return 'awaiting_provider';
     if (payment.requestId == null || payment.claimedInvoiceIds.isEmpty) return 'unavailable';
     return 'ready';
   }

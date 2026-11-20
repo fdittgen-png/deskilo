@@ -2723,7 +2723,7 @@ routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p
 routine public.guest_participation_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:f9dca924a932
 routine public.guest_participation_self_view(p guest_participations) -> jsonb | function | invoker | stable | exec:service_role | body:bfd6829ac539
 routine public.guest_pass_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6cd39db180f6
-routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:aaddab59d08f
+routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:69dbfab5fe16
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
@@ -3232,12 +3232,12 @@ routine public.outgoing_payments_guard() -> trigger | function | invoker | volat
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_attempt_notice(p_workspace_id uuid, p_intent uuid, p_reason text) -> void | function | definer | volatile | exec:service_role | body:e7822668fb03
 routine public.payment_attempt_notice_end(p_intent uuid, p_how text) -> void | function | definer | volatile | exec:service_role | body:bc290c167684
-routine public.payment_claim_resume_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:a62acbf92044
-routine public.payment_claim_window() -> interval | function | invoker | immutable | exec:service_role | body:a44b719c310c
+routine public.payment_claim_charge_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:ef8644a91d37
+routine public.payment_claim_resume_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:8156e6ae0995
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d61401a27122
 routine public.payment_instructions_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:098c3b53073f
-routine public.payment_intent_claim_open(p_intent payment_intents) -> boolean | function | invoker | stable | exec:service_role | body:0f33e81cd8ce
+routine public.payment_intent_claim_open(p_intent payment_intents) -> boolean | function | invoker | stable | exec:service_role | body:14df2de282e9
 routine public.payment_intent_ends_notice() -> trigger | function | definer | volatile | exec:service_role | body:4b749f1c49cc
 routine public.payment_intents_ledger_matches() -> trigger | function | invoker | volatile | exec:service_role | body:ce5bc360638e
 routine public.payment_invoice_capacity_v1(p_workspace_id uuid, p_payment_ledger_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:da0308457e66
@@ -3258,6 +3258,7 @@ routine public.payment_reconciliation_finish_v1(p_workspace_id uuid, p_lease_tok
 routine public.payment_reconciliation_retention() -> interval | function | invoker | immutable | exec:service_role | body:ffdd0cdefdbc
 routine public.payment_reconciliation_tick() -> text | function | definer | volatile | exec:service_role | body:eddab0b00001
 routine public.payment_resend_window() -> interval | function | invoker | immutable | exec:service_role | body:cf85131d159c
+routine public.payment_resend_window(p_provider text) -> interval | function | definer | stable | exec:service_role | body:dd53229b77ba
 routine public.payment_terms_clean(p jsonb) -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:5d564cd5085a
 routine public.payment_test_check(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:17dae5ea6441
 routine public.payment_used_cents(p_ledger uuid) -> bigint | function | definer | stable | exec:service_role | body:0510e4d33ba7
@@ -3694,7 +3695,7 @@ routine public.setup_levels_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | f
 routine public.setup_member_rights_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:fa33dc1d0dfa
 routine public.setup_numbering_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:c64909ab9fba
 routine public.setup_step_acknowledge(p_workspace_id uuid, p_step text) -> readiness_acknowledgements | function | definer | volatile | exec:service_role | body:54d48a072d2e
-routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:d19c6fc9dd60
+routine public.setup_step_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:3c050a5a9f7d
 routine public.setup_step_drafts_step_known() -> trigger | function | invoker | volatile | exec:service_role | body:37c49c4ff5dc
 routine public.setup_step_holds_secret(p_step text) -> boolean | function | invoker | immutable | exec:service_role | body:a73e8cca762c
 routine public.setup_step_markable(p_workspace_id uuid, p_step text) -> jsonb | function | definer | stable | exec:service_role | body:5667dc2ba638
@@ -3863,7 +3864,7 @@ routine public.workspace_readiness(p_workspace_id uuid) -> jsonb | function | de
 routine public.workspace_recorded_payments_v1(p_workspace_id uuid, p_from date, p_to date, p_after jsonb, p_limit integer) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:1a8386a29b37
 routine public.workspace_roles_export(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:service_role | body:28a091daecbb
 routine public.workspace_roles_import(p_workspace_id uuid, p_roles jsonb, p_mode text) -> void | function | definer | volatile | exec:service_role | body:c591069462d9
-routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:7f151a021708
+routine public.workspace_setup_status(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:ecf4f8c3fa17
 routine public.workspace_status(p_workspace_id uuid, p_from text, p_to text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:3040dc2c43da
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid) -> numeric | function | definer | stable | exec:service_role | body:3cebd09878ca
 routine public.workspace_tariff_vat_percent(p_workspace_id uuid, p_date date) -> numeric | function | definer | stable | exec:service_role | body:7fcabe234314
