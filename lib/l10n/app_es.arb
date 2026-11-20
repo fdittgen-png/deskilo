@@ -17365,6 +17365,7 @@
     "description": "#1643 calendar file: reservationCalendarFileWhen"
   },
   "reservationCancelledSnack": "Reserva cancelada.",
+  "reservationContextChanged": "El espacio de trabajo o la cuenta cambió mientras esto estaba abierto. No se envió nada: ábralo de nuevo.",
   "reservationDeleteReasonLabel": "Motivo (opcional)",
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"

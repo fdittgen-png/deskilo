@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/booking/my_seat_action.dart';
 import '../../../../core/i18n/app_format.dart';
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -19,14 +20,14 @@ import '../../domain/seat.dart';
 /// errors; presence gating lives in [Reservation.checkInWindowOpen].
 
 /// Sheet on MY reservation: check out / check in / cancel / request
-/// deletion, returned as 'checkout' / 'checkin' / 'cancel' /
-/// 'requestDeletion' (null = dismissed). Outside the check-in window
+/// deletion, returned as a [MySeatAction] (null = dismissed; #4157: a closed
+/// type, so an unknown choice cannot reach a command). Outside the check-in window
 /// (#408) the check-in tile is disabled and explains itself — [now] must
 /// be the REAL clock, never the browsed instant. [cancellable] and
 /// [deletionRequestable] come from the #2328 rule (`ownBookingRemoval`)
 /// the booking's detail sheet reads too, so both offer the same action
 /// for the same state.
-Future<String?> showMySeatSheet(
+Future<MySeatAction?> showMySeatSheet(
   BuildContext context, {
   required Seat seat,
   required Reservation mine,
@@ -48,7 +49,7 @@ Future<String?> showMySeatSheet(
       opensWall.day != nowWall.day;
   final opensAt = appFormatOf(context).time(mine.checkInOpensAt(granularity: granularity, leeway: leeway));
   final opensOn = appFormatOf(context).dates(DateShape.monthDay).format(opensWall);
-  return showAppSheet<String>(
+  return showAppSheet<MySeatAction>(
     context: context,
     builder: (context) => SafeArea(
       child: Column(
@@ -74,14 +75,14 @@ Future<String?> showMySeatSheet(
               key: ValueKey('check-in-sheets-plan-check-out-button-${granularity?.name}'),
               leading: const Icon(Icons.logout),
               title: Text(l10n.planCheckOutButton),
-              onTap: () => Navigator.of(context).pop('checkout'),
+              onTap: () => Navigator.of(context).pop(MySeatAction.checkOut),
             )
           else if (mine.checkInWindowOpen(now, granularity: granularity, leeway: leeway))
             ListTile(
               key: ValueKey('check-in-sheets-plan-check-in-button-${granularity?.name}'),
               leading: const Icon(Icons.login),
               title: Text(lexiconText(context, key: 'planCheckInButton', fallback: l10n.planCheckInButton)),
-              onTap: () => Navigator.of(context).pop('checkin'),
+              onTap: () => Navigator.of(context).pop(MySeatAction.checkIn),
             )
           else
             // Outside the window (#408): the tile explains itself
@@ -105,7 +106,7 @@ Future<String?> showMySeatSheet(
               title: Text(
                 l10n.planCancelReservationButton,
               ),
-              onTap: () => Navigator.of(context).pop('cancel'),
+              onTap: () => Navigator.of(context).pop(MySeatAction.cancel),
             )
           else if (deletionRequestable)
             ListTile(
@@ -114,7 +115,7 @@ Future<String?> showMySeatSheet(
               title: Text(
                 l10n.reservationDeleteRequestButton,
               ),
-              onTap: () => Navigator.of(context).pop('requestDeletion'),
+              onTap: () => Navigator.of(context).pop(MySeatAction.requestDeletion),
             ),
           const SizedBox(height: 8),
         ],

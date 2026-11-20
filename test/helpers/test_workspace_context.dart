@@ -55,20 +55,35 @@ Override testWorkspaceContext(
       );
     });
 
-WorkspaceContext _readyTestContext(String installationId) => WorkspaceContext(
-  identity: const CanonicalIdentity(
-    issuer: 'https://test.local/auth/v1',
-    subject: 'p-1',
+WorkspaceContext _readyTestContext(String installationId) =>
+    testWorkspaceContextOf(installation: installationId);
+
+/// A workspace context a test builds with exactly the parts it wants to
+/// differ: the person ([issuer], [subject]), the target ([installation],
+/// [workspaceId]), the local account, and both epochs
+/// (#4157 compares each of them).
+WorkspaceContext testWorkspaceContextOf({
+  String installation = 'inst-test',
+  String workspaceId = 'ws',
+  String issuer = 'https://test.local/auth/v1',
+  String subject = 'p-1',
+  String localUser = 'p-1',
+  int personalEpoch = 1,
+  int workspaceEpoch = 1,
+}) => WorkspaceContext(
+  identity: CanonicalIdentity(issuer: issuer, subject: subject),
+  target: WorkspaceTarget.local(
+    installationId: installation,
+    workspaceId: workspaceId,
   ),
-  target: WorkspaceTarget.local(installationId: installationId, workspaceId: 'ws'),
-  workspaceLocalUserId: 'p-1',
-  personalEpoch: 1,
-  workspaceEpoch: 1,
+  workspaceLocalUserId: localUser,
+  personalEpoch: personalEpoch,
+  workspaceEpoch: workspaceEpoch,
   settings: SettingsCapture(
     SettingsIdentity(
-      installation: installationId,
-      workspaceId: 'ws',
-      principal: 'p-1',
+      installation: installation,
+      workspaceId: workspaceId,
+      principal: localUser,
     ),
     SettingsSet.defaults(const []),
   ),
@@ -108,3 +123,25 @@ Override testSwitchableReadyWorkspaceContext({
 }) => readyWorkspaceContextProvider.overrideWith(
   (ref) => ref.watch(testContextReady) ? _readyTestContext(installationId) : null,
 );
+
+/// Which installation the selectable ready context is on ([testReadyContextOn]
+/// reads it): a test sets it to switch installation while a confirmation is
+/// open. The local workspace id stays the same on both, as it does between two
+/// installations (#4157).
+final testContextInstallation = NotifierProvider<_InstallationChoice, String>(
+  _InstallationChoice.new,
+);
+
+class _InstallationChoice extends Notifier<String> {
+  @override
+  String build() => 'inst-a';
+
+  void select(String installation) => state = installation;
+}
+
+/// A ready context that follows [testContextInstallation]: A until a test
+/// selects another installation, with the same local workspace id.
+Override testSelectableReadyWorkspaceContext() =>
+    readyWorkspaceContextProvider.overrideWith(
+      (ref) => _readyTestContext(ref.watch(testContextInstallation)),
+    );

@@ -18,7 +18,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'lint_sources.dart';
 
 /// Measured 2026-11-11 on the branch that introduced `showTask`.
-const int _formSheetCeiling = 22;
+const int _formSheetCeiling = 21;
 
 final _call = RegExp(r'\bshowAppSheet\s*(<[^(]*>)?\s*\(');
 final _field = RegExp(
