@@ -8,6 +8,7 @@ import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/presentation/einvoice_test_document.dart';
 import 'package:deskilo/features/money/presentation/widgets/einvoice_test_card.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -15,7 +16,11 @@ import '../../helpers/fake_money_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/pump_app.dart';
 
+/// The syntax each test document was asked for (#3930).
+final _builtIn = <EInvoiceFormat>[];
+
 Future<FakeMoneyRepository> _pump(WidgetTester tester) async {
+  _builtIn.clear();
   final money = FakeMoneyRepository()
     ..einvoiceGateway = const EInvoiceGatewayConfig(
       configured: true,
@@ -37,8 +42,10 @@ Future<FakeMoneyRepository> _pump(WidgetTester tester) async {
         ),
       ),
       eInvoiceTestDocumentBuilderProvider.overrideWithValue(
-        (ref, {required memberId, required period}) async =>
-            (bytes: const [1, 2, 3], fileName: 'TEST.xml'),
+        (ref, {required format, required memberId, required period}) async {
+          _builtIn.add(format);
+          return (bytes: const [1, 2, 3], fileName: 'TEST.xml');
+        },
       ),
     ],
     size: const Size(800, 1400),
@@ -70,6 +77,8 @@ void main() {
 
     await _send(tester);
     expect(find.textContaining('Test document sent'), findsOneWidget);
+    expect(_builtIn, [EInvoiceFormat.fatturaPa],
+        reason: 'the document is built in the channel\'s own syntax');
     expect(
       find.byKey(const ValueKey('einvoice-test-awaiting')),
       findsOneWidget,

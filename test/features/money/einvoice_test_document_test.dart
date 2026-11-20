@@ -62,6 +62,26 @@ void main() {
       );
     });
 
+    test('the channel\'s own syntax, as the function names it (#3930)', () {
+      expect(
+        EInvoiceTestState.fromWire({
+          'available': true,
+          'format': 'ksefFa3',
+          'test': null,
+        }).format,
+        'ksefFa3',
+      );
+      expect(
+        EInvoiceTestState.fromWire({
+          'available': true,
+          'format': 'fatturaPa',
+          'test': {'phase': 'accepted', 'document_status': 'accepted'},
+        }).format,
+        'fatturaPa',
+      );
+      expect(EInvoiceTestState.fromWire({'available': true}).format, '');
+    });
+
     test('unavailable where the channel takes no test', () {
       final state = EInvoiceTestState.fromWire({'available': false});
       expect(state.available, isFalse);

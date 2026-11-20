@@ -89,6 +89,7 @@ abstract interface class EInvoiceTransmissions {
   Future<EInvoiceTestSent> sendEInvoiceTest({
     required String workspaceId,
     required String fileName,
+    required String format,
     required List<int> bytes,
   });
 }
