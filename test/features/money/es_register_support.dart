@@ -21,7 +21,8 @@ export 'package:deskilo_jurisdiction_es/deskilo_jurisdiction_es.dart'
         modelo347Lines,
         registerDocuments,
         siiFacturasEmitidasXml,
-        verifactuRecordFor;
+        verifactuRecordFor,
+        verifactuTestRecordFor;
 
 const _party = VatFilingParty(
   countryCode: 'ES',
@@ -155,6 +156,18 @@ es.VerifactuRecord verifactuRecordFor({
   generatedAt: generatedAt,
   previousNumber: previousNumber,
   previousIssueDate: previousIssueDate,
+);
+
+es.VerifactuRecord verifactuTestRecordFor({
+  required Invoice preview,
+  required InvoiceParty seller,
+  required InvoiceParty buyer,
+  required DateTime generatedAt,
+}) => es.verifactuTestRecordFor(
+  preview: registerDocumentOf(preview),
+  seller: _partyOf(seller),
+  buyer: _partyOf(buyer),
+  generatedAt: generatedAt,
 );
 
 RegisterParty _partyOf(InvoiceParty p) => RegisterParty(
