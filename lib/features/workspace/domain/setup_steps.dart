@@ -28,6 +28,7 @@ class SetupStep {
     required this.route,
     required this.evidence,
     this.feature,
+    this.alsoNeeds,
     this.required = true,
     this.dependsOn = const [],
     this.actor = SetupActor.owner,
@@ -51,6 +52,11 @@ class SetupStep {
   /// The feature without which the step does not apply; null for always.
   final WorkspaceFeature? feature;
 
+  /// #4223 — a second feature the step needs: it applies only when both are
+  /// effective. Null for none. "Prices and plans" prices presence, so it
+  /// needs the places as well as billing.
+  final WorkspaceFeature? alsoNeeds;
+
   /// Whether its milestone waits for it.
   final bool required;
   final List<String> dependsOn;
@@ -70,6 +76,7 @@ class SetupStep {
     'route': route,
     'evidence': evidence,
     'feature': feature?.dbKey,
+    if (alsoNeeds != null) 'also_needs': alsoNeeds!.dbKey,
     'required': required,
     'depends_on': dependsOn,
     'actor': actor.name,
@@ -134,6 +141,7 @@ const List<SetupStep> setupSteps = [
     route: '/setup/step/pricing',
     evidence: 'pricing',
     feature: WorkspaceFeature.moneyTab,
+    alsoNeeds: WorkspaceFeature.placeBooking,
     estimateMinutes: 10,
   ),
   SetupStep(

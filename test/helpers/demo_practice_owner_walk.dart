@@ -108,10 +108,16 @@ Future<void> walkPracticeOwnerSetup(WidgetTester tester, Size size) async {
   expect(
     find.descendant(
       of: next,
-      matching: find.text(_words.noPlacesSetupPricingHint),
+      matching: find.text(_words.setupStepHintPaymentMethods),
     ),
     findsOneWidget,
-    reason: 'the practice\'s next step is its prices and plans',
+    reason: 'the practice\'s next step is how members pay (#4223: prices and '
+        'plans price presence, so a business without places is not asked)',
+  );
+  expect(
+    find.byKey(const ValueKey('setup-step-pricing')),
+    findsNothing,
+    reason: 'no pricing step in the practice\'s list',
   );
 
   // Its services: the existing ones with their price, no coffee or lockers.
