@@ -65,6 +65,18 @@ Future<void> walkPracticeGuide(WidgetTester tester, Size size) async {
     await settleFrames(tester);
     final words = placeWordsShown(tester);
     if (words.isNotEmpty) problems['the page of ${step.step}'] = words;
+    // #4232 — "Next" never leads to a step the practice is not offered.
+    final next = find.byKey(const ValueKey('setup-next-step'));
+    if (next.evaluate().isNotEmpty) {
+      await tester.ensureVisible(next);
+      await tester.tap(next);
+      await settleFrames(tester);
+      final at = router.routerDelegate.currentConfiguration.uri.path;
+      final to = at.startsWith('/setup/step/') ? at.substring(12) : null;
+      if (to != null && setupStepsNeedingPlaces.contains(to)) {
+        problems['Next after ${step.step}'] = [at];
+      }
+    }
   }
   expect(problems, isEmpty, reason: 'place words on pages of the guide');
   expect(

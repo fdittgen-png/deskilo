@@ -253,3 +253,106 @@ final class KeepsPlacesOffProvider extends $FunctionalProvider<bool, bool, bool>
 }
 
 String _$keepsPlacesOffHash() => r'bee267f5ef34f7812b7da4ba7392f54a2ee0861e';
+
+/// #4223, #4232 — the setup status a business is shown: a business whose kind
+/// keeps places off has no place step in it, so no list, "Next" or resume line
+/// can name one. Every reader of the guide's status reads this one.
+
+@ProviderFor(visibleSetupStatus)
+final visibleSetupStatusProvider = VisibleSetupStatusFamily._();
+
+/// #4223, #4232 — the setup status a business is shown: a business whose kind
+/// keeps places off has no place step in it, so no list, "Next" or resume line
+/// can name one. Every reader of the guide's status reads this one.
+
+final class VisibleSetupStatusProvider
+    extends
+        $FunctionalProvider<
+          AsyncValue<SetupStatus>,
+          AsyncValue<SetupStatus>,
+          AsyncValue<SetupStatus>
+        >
+    with $Provider<AsyncValue<SetupStatus>> {
+  /// #4223, #4232 — the setup status a business is shown: a business whose kind
+  /// keeps places off has no place step in it, so no list, "Next" or resume line
+  /// can name one. Every reader of the guide's status reads this one.
+  VisibleSetupStatusProvider._({
+    required VisibleSetupStatusFamily super.from,
+    required String super.argument,
+  }) : super(
+         retry: null,
+         name: r'visibleSetupStatusProvider',
+         isAutoDispose: true,
+         dependencies: null,
+         $allTransitiveDependencies: null,
+       );
+
+  @override
+  String debugGetCreateSourceHash() => _$visibleSetupStatusHash();
+
+  @override
+  String toString() {
+    return r'visibleSetupStatusProvider'
+        ''
+        '($argument)';
+  }
+
+  @$internal
+  @override
+  $ProviderElement<AsyncValue<SetupStatus>> $createElement(
+    $ProviderPointer pointer,
+  ) => $ProviderElement(pointer);
+
+  @override
+  AsyncValue<SetupStatus> create(Ref ref) {
+    final argument = this.argument as String;
+    return visibleSetupStatus(ref, argument);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(AsyncValue<SetupStatus> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<AsyncValue<SetupStatus>>(value),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is VisibleSetupStatusProvider && other.argument == argument;
+  }
+
+  @override
+  int get hashCode {
+    return argument.hashCode;
+  }
+}
+
+String _$visibleSetupStatusHash() =>
+    r'aa9c0ebdbca6434b8f0e952a58491f7a096e7d53';
+
+/// #4223, #4232 — the setup status a business is shown: a business whose kind
+/// keeps places off has no place step in it, so no list, "Next" or resume line
+/// can name one. Every reader of the guide's status reads this one.
+
+final class VisibleSetupStatusFamily extends $Family
+    with $FunctionalFamilyOverride<AsyncValue<SetupStatus>, String> {
+  VisibleSetupStatusFamily._()
+    : super(
+        retry: null,
+        name: r'visibleSetupStatusProvider',
+        dependencies: null,
+        $allTransitiveDependencies: null,
+        isAutoDispose: true,
+      );
+
+  /// #4223, #4232 — the setup status a business is shown: a business whose kind
+  /// keeps places off has no place step in it, so no list, "Next" or resume line
+  /// can name one. Every reader of the guide's status reads this one.
+
+  VisibleSetupStatusProvider call(String workspaceId) =>
+      VisibleSetupStatusProvider._(argument: workspaceId, from: this);
+
+  @override
+  String toString() => r'visibleSetupStatusProvider';
+}

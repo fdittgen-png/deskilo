@@ -24,7 +24,7 @@ import '../../domain/setup_steps.dart';
 import '../../domain/site.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
-import '../../providers/local_setup_providers.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../widgets/setup_basics_step.dart';
 import '../widgets/setup_configuration_overview.dart';
@@ -107,7 +107,7 @@ class SetupStepScreen extends ConsumerWidget {
                     workspaceName: workspace.name,
                     stepId: stepId,
                     status: ref
-                        .watch(workspaceSetupStatusProvider(workspace.id))
+                        .watch(visibleSetupStatusProvider(workspace.id))
                         .value,
                   ),
                   Expanded(

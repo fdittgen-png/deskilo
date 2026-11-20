@@ -106,7 +106,7 @@ class _SetupNotificationsStepState
         return SetupStepLayout(
           form: _form(
             context,
-            lines: notificationLines(on),
+            lines: notificationLines(on, placesOff: placesOff),
             push: on.contains(WorkspaceFeature.pushNotifications),
             lead: lead,
             // #4223 — the check-in reminder is a place's: not offered to a

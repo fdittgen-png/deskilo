@@ -7,8 +7,11 @@ import '../application/business_kind_commands.dart';
 import '../data/supabase_business_kind_repository.dart';
 import '../domain/business_kind.dart';
 import '../domain/business_profile.dart';
+import '../domain/setup_status.dart';
+import '../domain/setup_steps_for_kind.dart';
 import '../domain/switched_off_by_kind.dart';
 import '../domain/workspace_feature.dart';
+import 'local_setup_providers.dart';
 import 'settings_providers.dart';
 import 'workspace_providers.dart';
 
@@ -50,4 +53,15 @@ bool keepsPlacesOff(Ref ref) {
       switchedOffByKind(WorkspaceFeature.placeBooking, p, k),
     _ => false,
   };
+}
+
+/// #4223, #4232 — the setup status a business is shown: a business whose kind
+/// keeps places off has no place step in it, so no list, "Next" or resume line
+/// can name one. Every reader of the guide's status reads this one.
+@riverpod
+AsyncValue<SetupStatus> visibleSetupStatus(Ref ref, String workspaceId) {
+  final noPlaces = ref.watch(keepsPlacesOffProvider);
+  return ref
+      .watch(workspaceSetupStatusProvider(workspaceId))
+      .whenData((s) => noPlaces ? s.withoutSteps(setupStepsNeedingPlaces) : s);
 }
