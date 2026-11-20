@@ -24,7 +24,7 @@ import '../../../../core/shortcuts/app_shortcuts.dart';
 import '../../../../core/ui/adaptive/window_class.dart';
 import '../../../../core/ui/kit/page_title.dart';
 import '../../../../core/ui/kit/route_tab_reach.dart';
-import '../../providers/local_setup_providers.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../screens/setup_guide_screen.dart';
 import 'setup_steps_pane.dart';
@@ -205,7 +205,7 @@ class _SetupDeskState extends ConsumerState<_SetupDesk> {
   void _step(BuildContext context, WidgetRef ref, String? open, int by) {
     final workspaceId = ref.read(currentWorkspaceProvider).value?.id;
     if (workspaceId == null) return;
-    final status = ref.read(workspaceSetupStatusProvider(workspaceId)).value;
+    final status = ref.read(visibleSetupStatusProvider(workspaceId)).value;
     if (status == null) return;
     final order = setupDeskSequence(status);
     final at = open == null ? -1 : order.indexOf(open);

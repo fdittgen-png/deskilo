@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 
 final placeVocabulary = RegExp(
   r'\b(seats?|desks?|(?<!reminder )levels?|floor ?plans?|kiosks?|badges?|'
-  r'check-?ins?|meeting rooms?|half-?days?|day packs?)\b',
+  r'check[- ]?ins?|meeting rooms?|half-?days?|day packs?)\b',
   caseSensitive: false,
 );
 

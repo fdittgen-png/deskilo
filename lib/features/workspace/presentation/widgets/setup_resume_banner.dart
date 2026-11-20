@@ -13,6 +13,7 @@ import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/workspace_feature.dart';
 import '../../domain/workspace_readiness.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 
@@ -30,7 +31,7 @@ class SetupResumeBanner extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
+    final status = ref.watch(visibleSetupStatusProvider(workspaceId)).value;
     final milestone = status?.nextMilestone;
     final step = status?.nextStep;
     if (status == null || milestone == null) {
@@ -89,7 +90,7 @@ Widget? setupResumeBannerFor(
           .contains(WorkspaceFeature.setupGuide)) {
     return null;
   }
-  final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
+  final status = ref.watch(visibleSetupStatusProvider(workspaceId)).value;
   return status?.nextMilestone == null
       ? null
       : SetupResumeBanner(workspaceId: workspaceId, compact: compact);
