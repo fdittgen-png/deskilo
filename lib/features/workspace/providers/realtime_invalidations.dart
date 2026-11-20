@@ -5,7 +5,9 @@
 // workspace, the messenger); a workspace target never applies them.
 // Composed in lib/app/realtime_invalidations.dart.
 import '../../../core/realtime/invalidation_registry.dart';
+import 'attention_providers.dart';
 import 'conversation_providers.dart';
+import 'overview_kpi_providers.dart';
 import 'workspace_providers.dart';
 
 final workspaceInvalidations = [
@@ -53,6 +55,13 @@ final workspaceInvalidations = [
     const ['profiles'],
     [defaultWorkspaceIdProvider],
     scope: InvalidationScope.account,
+  ),
+  // #4233 — the Overview's own lines and figures (what waits on a decision,
+  // what is overdue) follow a decision, a posting and an invoice: the tab shell
+  // keeps the screen alive, so without this it kept its first answer.
+  InvalidationContribution(
+    const ['events', 'ledger_entries', 'invoices'],
+    [attentionProvider, overviewFigureProvider],
   ),
   InvalidationContribution(const ['member_notes'], [myNotesProvider]),
   // #702 — a MESSAGE lands live or not at all. The family, so whichever
