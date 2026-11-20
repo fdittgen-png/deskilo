@@ -13,6 +13,7 @@ import 'app/feature_sheets_wiring.dart';
 import 'app/finance_hosts_wiring.dart';
 import 'app/private_values_wiring.dart';
 import 'app/realtime_invalidations.dart';
+import 'app/recorder_target_wiring.dart';
 import 'app/server_choice_app.dart';
 import 'core/cache/read_retry.dart';
 import 'core/files/file_saver.dart';
@@ -141,6 +142,7 @@ Future<void> main() async {
         privateValuesFromAccount, // #2552
         eventSourceOpenersFromMoney, // #2573
         ...realtimeWiringFromApp, // #2495
+        ...recorderTargetsFromApp, // #4158
         ...featureSheetsFromApp, // #2495
       ],
       child: const DeskiloRoot(),

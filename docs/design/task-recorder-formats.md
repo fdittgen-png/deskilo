@@ -242,3 +242,24 @@ workspace/global publication are not supplied by generic capture/file sharing.
 Physical-device and stock-reader qualification remain separate release evidence.
 `node tool/web/task_offline_probe.mjs` tests the real worker in fresh Chromium:
 offline reopening, corrupt updates, eviction, backend exclusion and removal.
+
+## Who words a recorded target (#4158)
+
+A step is stored as identifiers; `presentation/recorder_labels.dart` is where
+they become sentences, and the recorder words almost all of them itself. The
+target of a validation-rule step is an event type, whose wording belongs to the
+events feature, so the recorder does not import it: it owns a small read-only
+contract, `RecorderTargetVocabulary` (`labelOf(l10n, action, target)`: a label,
+or null for a target it does not describe), and the app composes the events
+implementation (`lib/app/recorder_target_wiring.dart`, `EventTargetVocabulary`,
+over the canonical `eventTypeLabel`) into `recorderTargetVocabularyProvider` in
+`main`, the Demo scope and the test helper. There is no default: a scope that
+shows or exports a recording without composing it fails loudly. The recorded
+action and target strings, the package format and the default-rule and
+unknown-target fallbacks are unchanged. Pure transcript functions take the
+vocabulary explicitly (`stepText`, `recordingTranscript`,
+`recordingExportBytes`); widgets read the provider. Evidence:
+`test/features/task_recorder/target_vocabulary_test.dart`. The recorder has no
+import of the events feature, and `events <-> task_recorder` is no longer a
+mutual pair; the larger cycles (workspace, money, plan, reservations) are
+untouched and the whole graph is not claimed acyclic.

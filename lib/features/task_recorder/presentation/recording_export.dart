@@ -21,6 +21,7 @@ import '../domain/task_recording_codec.dart';
 import '../package/storyboard_review.dart';
 import '../package/task_package.dart';
 import 'recorder_labels.dart';
+import 'recorder_target_vocabulary.dart';
 
 /// The bytes of [recording] as plain JSON or as a package; null when the
 /// validator would refuse them (never offered then).
@@ -30,13 +31,18 @@ Uint8List? recordingExportBytes(
   required bool package,
   List<TaskPackageAsset> assets = const [],
   StoryboardReview? storyboard,
+  required RecorderTargetVocabulary vocabulary,
 }) {
   final text = encodeRecordingText(recording);
   if (!decodeRecordingText(text).accepted) return null;
   return package
       ? writeTaskPackage(
           recording,
-          transcript: recordingTranscript(l10n, recording),
+          transcript: recordingTranscript(
+            l10n,
+            recording,
+            vocabulary: vocabulary,
+          ),
           assets: assets,
           storyboard: storyboard,
         )

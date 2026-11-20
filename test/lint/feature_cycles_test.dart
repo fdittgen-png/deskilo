@@ -38,7 +38,6 @@ const Set<String> _mutualPairs = {
   'calendar <-> reservations',
   'directory <-> workspace',
   'events <-> money',
-  'events <-> task_recorder',
   'events <-> workspace',
   'money <-> plan',
   'money <-> workspace',

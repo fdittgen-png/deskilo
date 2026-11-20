@@ -69,9 +69,6 @@ const Set<String> _knownPairs = {
   // core/calendar (#2495), as the calendar does.
   'calendar -> task_recorder',
   'events -> task_recorder',
-  // #1884 B — the recorder names an event type's validation rule the
-  // way the validation screen does.
-  'task_recorder -> events',
   // #1823 — the Me layer is the account's home: it shows the account
   // messenger and discovery (directory), my spaces and memberships
   // (workspace), my photo and account rows (profile), and signs out (auth).

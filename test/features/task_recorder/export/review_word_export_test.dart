@@ -10,6 +10,7 @@
 import 'dart:typed_data';
 
 import 'package:archive/archive.dart';
+import 'package:deskilo/app/recorder_target_wiring.dart';
 import 'package:deskilo/core/files/file_saver.dart';
 import 'package:deskilo/features/task_recorder/domain/stored_recording.dart';
 import 'package:deskilo/features/task_recorder/domain/task_recording_codec.dart';
@@ -27,7 +28,10 @@ Future<void> _pump(WidgetTester tester, TypedFileSaver saver) async {
   ).recording!;
   await tester.pumpWidget(
     ProviderScope(
-      overrides: [typedFileSaverProvider.overrideWithValue(saver)],
+      overrides: [
+        ...recorderTargetsFromApp,
+        typedFileSaverProvider.overrideWithValue(saver),
+      ],
       child: MaterialApp(
         locale: const Locale('en'),
         localizationsDelegates: AppLocalizations.localizationsDelegates,

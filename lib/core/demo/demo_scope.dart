@@ -77,6 +77,7 @@ import 'package:flutter_riverpod/misc.dart' show Override;
 
 import '../../app/feature_sheets_wiring.dart';
 import '../../app/realtime_invalidations.dart';
+import '../../app/recorder_target_wiring.dart';
 import '../../app/shell/desk_navigation.dart';
 import '../../app/shell/shell_bar_visibility.dart';
 import '../../features/auth/providers/auth_providers.dart';
@@ -245,7 +246,7 @@ List<Override> demoOverrides(DemoFixture fixture) {
       // The repositories. Each of these would otherwise be constructed
       // from `Supabase.instance.client`; inside this scope none of them
       // is, so an external effect is impossible rather than refused.
-      authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, taskContextFromWorkspace, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, ...featureSheetsFromApp, // #2495
+      authRepositoryProvider.overrideWithValue(fixture.auth), sessionSourceFromAuth, taskContextFromWorkspace, captureReaderNameFromProfile, enabledFeatureKeysFromWorkspace, ...realtimeWiringFromApp, ...recorderTargetsFromApp, ...featureSheetsFromApp, // #2495 #4158
       workbookOriginRepositoryProvider.overrideWithValue(FakeWorkbookOriginRepository()),
       oauthConsentRepositoryProvider.overrideWithValue(FakeOAuthConsentRepository()),
       ...demoAssistantOverrides(fixture), // #3962 — identity, assistants, their requests
