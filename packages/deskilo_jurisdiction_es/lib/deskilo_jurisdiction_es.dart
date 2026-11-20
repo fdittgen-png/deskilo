@@ -11,3 +11,4 @@ export 'src/vat_register_es.dart';
 export 'src/vat_register_es_347.dart';
 export 'src/vat_register_es_sii.dart';
 export 'src/verifactu.dart';
+export 'src/verifactu_submission.dart';

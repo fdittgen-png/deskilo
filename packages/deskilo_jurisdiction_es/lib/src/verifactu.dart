@@ -38,7 +38,6 @@ const _verifactuNamespace =
 
 /// One alta record (RegistroAlta), the fields the huella covers plus the
 /// link to its predecessor.
-@visibleForTesting
 class VerifactuRecord {
   const VerifactuRecord({
     required this.issuerNif,
