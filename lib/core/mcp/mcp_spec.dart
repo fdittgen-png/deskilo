@@ -12,7 +12,7 @@ enum McpScope { discovery, own, workspace }
 
 enum McpMutation { read, write, request, decision }
 
-enum McpFieldType { uuid, datetime, month, integer, boolean, text, enum_ }
+enum McpFieldType { uuid, datetime, date, month, integer, boolean, text, enum_ }
 
 class McpField {
   const McpField(

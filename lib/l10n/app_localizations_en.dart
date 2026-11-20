@@ -19821,6 +19821,11 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpConfirmApprove => 'Your answer: approve';
 
   @override
+  String mcpConfirmCancelDated(String date) {
+    return 'Cancel the change dated $date';
+  }
+
+  @override
   String mcpConfirmClient(String client) {
     return 'Asked by: $client';
   }
@@ -19875,12 +19880,27 @@ class AppLocalizationsEn extends AppLocalizations {
   String get mcpConfirmNotFound => 'There is no such request for you.';
 
   @override
+  String mcpConfirmPauseOpen(String from) {
+    return 'Pause from $from, until resumed';
+  }
+
+  @override
+  String mcpConfirmPauseUntil(String from, String to) {
+    return 'Pause from $from until $to';
+  }
+
+  @override
   String mcpConfirmPeriod(String period) {
     return 'Period: $period';
   }
 
   @override
   String get mcpConfirmRefuse => 'Your answer: refuse';
+
+  @override
+  String mcpConfirmShareFrom(String pct, String date) {
+    return 'New subscription share: $pct % from $date';
+  }
 
   @override
   String get mcpConfirmStale =>
@@ -20439,6 +20459,9 @@ class AppLocalizationsEn extends AppLocalizations {
       'Cancel your bookings that have not started';
 
   @override
+  String get mcpOpCancelTermChange => 'Cancel a change not yet applied';
+
+  @override
   String get mcpOpCapabilities => 'See what it may do there';
 
   @override
@@ -20464,6 +20487,9 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpListMyFavorites => 'Your favourite places';
+
+  @override
+  String get mcpOpListTermChanges => 'Read a member\'s scheduled changes';
 
   @override
   String get mcpOpListWorkspaces => 'See which workspaces it may use';
@@ -20504,6 +20530,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get mcpOpRespond => 'Answer a validation request';
+
+  @override
+  String get mcpOpSchedulePause => 'Schedule a member\'s pause';
+
+  @override
+  String get mcpOpScheduleShare =>
+      'Schedule a member\'s subscription share from a date';
 
   @override
   String get mcpOpSetFavorite => 'Mark places as favourites';

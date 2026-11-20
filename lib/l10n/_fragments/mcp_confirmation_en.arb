@@ -157,5 +157,47 @@
   "mcpConfirmInvitee": "Invitation for",
   "@mcpConfirmInvitee": {
     "description": "#3132 mcp_confirmation: the label of the person an assistant proposes to invite"
+  },
+  "mcpConfirmShareFrom": "New subscription share: {pct} % from {date}",
+  "@mcpConfirmShareFrom": {
+    "description": "#3937 mcp_confirmation: the share and the day it applies from",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmPauseUntil": "Pause from {from} until {to}",
+  "@mcpConfirmPauseUntil": {
+    "description": "#3937 mcp_confirmation: a pause between two days",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmPauseOpen": "Pause from {from}, until resumed",
+  "@mcpConfirmPauseOpen": {
+    "description": "#3937 mcp_confirmation: a pause with no end date",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmCancelDated": "Cancel the change dated {date}",
+  "@mcpConfirmCancelDated": {
+    "description": "#3937 mcp_confirmation: cancelling a change not yet applied, by its day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
   }
 }

@@ -11,6 +11,7 @@ final _uuid = RegExp(
   caseSensitive: false,
 );
 final _month = RegExp(r'^\d{4}-(0[1-9]|1[0-2])$');
+final _date = RegExp(r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$');
 final _offset = RegExp(r'(Z|[+-]\d{2}:\d{2})$');
 
 /// Field errors for [input] against [spec], by field name; empty = valid.
@@ -50,6 +51,11 @@ String? _check(McpField f, Object? v) {
       return v is String && _uuid.hasMatch(v) ? null : 'invalid_uuid';
     case McpFieldType.month:
       return v is String && _month.hasMatch(v) ? null : 'invalid_month';
+    case McpFieldType.date:
+      // A real day: 2026-02-30 matches the pattern and is not one.
+      return v is String && _date.hasMatch(v) && _isRealDay(v)
+          ? null
+          : 'invalid_date';
     case McpFieldType.datetime:
       if (v is! String || !_offset.hasMatch(v)) return 'invalid_datetime';
       return DateTime.tryParse(v) == null ? 'invalid_datetime' : null;
@@ -66,4 +72,9 @@ String? _check(McpField f, Object? v) {
     case McpFieldType.enum_:
       return v is String && f.values.contains(v) ? null : 'invalid_value';
   }
+}
+
+bool _isRealDay(String v) {
+  final d = DateTime.tryParse('${v}T00:00:00Z');
+  return d != null && d.toIso8601String().startsWith(v);
 }

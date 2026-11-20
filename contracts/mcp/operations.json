@@ -80,6 +80,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "applied_on": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "applies": {
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
@@ -108,7 +112,19 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "bookings_in_free_months": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "can_respond": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "cancelled": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "change_id": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -192,7 +208,15 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "due": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "effect_applied": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "effective_on": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -248,6 +272,10 @@
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
   },
+  "first_free": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "free": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -275,6 +303,10 @@
   "group": {
    "class": "operational",
    "purpose": "a setup step, milestone, process, level or feature key and its state: configuration the person reads, never a secret (#2873)"
+  },
+  "group_id": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "half_boundary": {
    "class": "operational",
@@ -513,6 +545,10 @@
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
+  "replayed": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
   "requested_at": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
@@ -594,6 +630,14 @@
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
   "to": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "to_pct": {
+   "class": "operational",
+   "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
+  },
+  "to_status": {
    "class": "operational",
    "purpose": "a reference, state, time, count or authorised amount the tool needs (#1644)"
   },
@@ -2343,6 +2387,280 @@
     "de": "Abonnementanteil eines Mitglieds \u00e4ndern",
     "es": "Cambiar la parte de suscripci\u00f3n de un miembro",
     "it": "Modificare la quota di abbonamento di un membro"
+   }
+  },
+  {
+   "id": "list_member_term_changes",
+   "handler": true,
+   "dispatch": true,
+   "title": "A member's scheduled and applied changes",
+   "description": "The dated changes of one member's subscription share and status (pauses included), as the app shows them: each with the day it takes effect, the day it was applied, its state (pending an approval, scheduled, applied, refused or cancelled) and the reason. A manager of members reads any member of the workspace; a member reads only their own (leave member_id out). Share the dates as given: they are the business's own days.",
+   "rpc": null,
+   "authority": {
+    "kind": "member"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "read",
+   "idempotency": "none",
+   "confirmation": "none",
+   "input": {
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": false,
+     "description": "The member to read: a member_id of this workspace. Leave it out for the person's own changes."
+    }
+   },
+   "output": [
+    "items",
+    "change_id",
+    "kind",
+    "state",
+    "effective_on",
+    "applied_on",
+    "to_pct",
+    "to_status",
+    "reason",
+    "group_id",
+    "member_id"
+   ],
+   "group": "membership",
+   "label": {
+    "key": "mcpOpListTermChanges",
+    "en": "Read a member's scheduled changes",
+    "fr": "Lire les changements planifi\u00e9s d'un membre",
+    "de": "Geplante \u00c4nderungen eines Mitglieds lesen",
+    "es": "Leer los cambios programados de un miembro",
+    "it": "Leggere le modifiche programmate di un membro"
+   }
+  },
+  {
+   "id": "schedule_member_share_change",
+   "handler": true,
+   "dispatch": true,
+   "title": "Schedule a subscription share from a date",
+   "description": "Staff only: set a member's subscription share (percent) from a date, which must be the first day of a period that is not yet invoiced, today or later; the answer names the earliest date allowed when it is not. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the member and the dates; then call again with the same request_id and arguments. The workspace's validation rules may then hold the change for approval (status pending_validation): it is not in force until approved. The answer names the change, its state and its date; read the member's changes again to see what was scheduled or applied.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageMembers"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The member this change is about: a member_id of this workspace."
+    },
+    "pct": {
+     "type": "integer",
+     "required": true,
+     "min": 0,
+     "max": 100,
+     "description": "The subscription share from that date, in percent (0-100).",
+     "examples": [
+      50
+     ]
+    },
+    "effective_on": {
+     "type": "date",
+     "required": true,
+     "description": "The day the share applies from, as YYYY-MM-DD: the first day of a period, today or later.",
+     "examples": [
+      "2026-12-01"
+     ]
+    }
+   },
+   "output": [
+    "change_id",
+    "state",
+    "effective_on",
+    "event_id",
+    "replayed",
+    "member_id",
+    "member_status",
+    "subscription_pct"
+   ],
+   "group": "membership",
+   "label": {
+    "key": "mcpOpScheduleShare",
+    "en": "Schedule a member's subscription share from a date",
+    "fr": "Planifier la part d'abonnement d'un membre \u00e0 partir d'une date",
+    "de": "Abonnementanteil eines Mitglieds ab einem Datum planen",
+    "es": "Programar la parte de suscripci\u00f3n de un miembro desde una fecha",
+    "it": "Pianificare la quota di abbonamento di un membro da una data"
+   }
+  },
+  {
+   "id": "schedule_member_pause",
+   "handler": true,
+   "dispatch": true,
+   "title": "Schedule a member's pause",
+   "description": "Staff only: pause a member from a date until another, or until resumed. The member is active again on the end date. The answer names the months that stay due (already invoiced) and the first month the pause frees. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the member and the dates; then call again with the same request_id and arguments. The workspace's validation rules may then hold the pause for approval (status pending_validation). An owner cannot be paused.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageMembers"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "request",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "member_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The member to pause: a member_id of this workspace."
+    },
+    "from": {
+     "type": "date",
+     "required": true,
+     "description": "The first day of the pause, as YYYY-MM-DD: today or later.",
+     "examples": [
+      "2026-12-01"
+     ]
+    },
+    "to": {
+     "type": "date",
+     "required": false,
+     "description": "The day the member is active again, as YYYY-MM-DD, after the first day. Leave it out to pause until resumed.",
+     "examples": [
+      "2027-01-01"
+     ]
+    }
+   },
+   "output": [
+    "change_id",
+    "state",
+    "event_id",
+    "replayed",
+    "due",
+    "first_free",
+    "bookings_in_free_months",
+    "member_id",
+    "member_status",
+    "subscription_pct"
+   ],
+   "group": "membership",
+   "label": {
+    "key": "mcpOpSchedulePause",
+    "en": "Schedule a member's pause",
+    "fr": "Planifier la pause d'un membre",
+    "de": "Pause eines Mitglieds planen",
+    "es": "Programar la pausa de un miembro",
+    "it": "Pianificare la pausa di un membro"
+   }
+  },
+  {
+   "id": "cancel_member_term_change",
+   "handler": true,
+   "dispatch": true,
+   "title": "Cancel a change not yet applied",
+   "description": "Staff only: cancel a scheduled or pending change of a member's share or status. Cancelling one end of a pause cancels the pause (the answer says how many changes it cancelled). A change already applied, one that applies today, or one an issued invoice already carries is refused with its reason: schedule a new change instead. Needs the person's confirmation in the DesKilo app first (status requires_confirmation): the app shows the member and the dates; then call again with the same request_id and arguments.",
+   "rpc": null,
+   "authority": {
+    "kind": "permission",
+    "permission": "manageMembers"
+   },
+   "features": [
+    "mcpAccess"
+   ],
+   "scope": "workspace",
+   "mutation": "write",
+   "destructive": true,
+   "idempotency": "request_id",
+   "confirmation": "native",
+   "input": {
+    "request_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+     "examples": [
+      "6b1d3f0e-0000-4000-8000-000000000001"
+     ]
+    },
+    "workspace_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+     "examples": [
+      "00000000-0000-4000-8000-0000000000a1"
+     ]
+    },
+    "change_id": {
+     "type": "uuid",
+     "required": true,
+     "description": "The change to cancel: a change_id from deskilo_list_member_term_changes."
+    }
+   },
+   "output": [
+    "cancelled",
+    "change_id",
+    "member_id",
+    "member_status",
+    "subscription_pct"
+   ],
+   "group": "membership",
+   "label": {
+    "key": "mcpOpCancelTermChange",
+    "en": "Cancel a change not yet applied",
+    "fr": "Annuler un changement pas encore appliqu\u00e9",
+    "de": "Eine noch nicht wirksame \u00c4nderung abbrechen",
+    "es": "Cancelar un cambio a\u00fan no aplicado",
+    "it": "Annullare una modifica non ancora applicata"
    }
   },
   {

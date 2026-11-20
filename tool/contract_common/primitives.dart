@@ -14,6 +14,12 @@ Map<String, Object?> fieldSchema(Map<String, dynamic> f) => switch (f['type']) {
     'format': 'date-time',
     'pattern': r'(Z|[+-]\d{2}:\d{2})$',
   },
+  // #3937 — a calendar day, in the business's own day: no time and no offset.
+  'date' => {
+    'type': 'string',
+    'format': 'date',
+    'pattern': r'^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$',
+  },
   'month' => {'type': 'string', 'pattern': r'^\d{4}-(0[1-9]|1[0-2])$'},
   'integer' => {
     'type': 'integer',
