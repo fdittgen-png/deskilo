@@ -199,3 +199,57 @@ final class BusinessKindCommandsProvider
 
 String _$businessKindCommandsHash() =>
     r'2af1ec173c905963f443e2c0507542a616dfda0f';
+
+/// #4223 — whether the selected workspace's primary kind keeps places off.
+/// Watched, never awaited (the settings are a long chain): until the kinds and
+/// the profile are both read, and when one cannot be, it is false, so
+/// nothing is hidden on a guess.
+
+@ProviderFor(keepsPlacesOff)
+final keepsPlacesOffProvider = KeepsPlacesOffProvider._();
+
+/// #4223 — whether the selected workspace's primary kind keeps places off.
+/// Watched, never awaited (the settings are a long chain): until the kinds and
+/// the profile are both read, and when one cannot be, it is false, so
+/// nothing is hidden on a guess.
+
+final class KeepsPlacesOffProvider extends $FunctionalProvider<bool, bool, bool>
+    with $Provider<bool> {
+  /// #4223 — whether the selected workspace's primary kind keeps places off.
+  /// Watched, never awaited (the settings are a long chain): until the kinds and
+  /// the profile are both read, and when one cannot be, it is false, so
+  /// nothing is hidden on a guess.
+  KeepsPlacesOffProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'keepsPlacesOffProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$keepsPlacesOffHash();
+
+  @$internal
+  @override
+  $ProviderElement<bool> $createElement($ProviderPointer pointer) =>
+      $ProviderElement(pointer);
+
+  @override
+  bool create(Ref ref) {
+    return keepsPlacesOff(ref);
+  }
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(bool value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<bool>(value),
+    );
+  }
+}
+
+String _$keepsPlacesOffHash() => r'bee267f5ef34f7812b7da4ba7392f54a2ee0861e';

@@ -241,5 +241,21 @@
         "type": "String"
       }
     }
+  },
+  "noPlacesBusinessExampleApproveBookings": "For example: a client asks for Thursday and the manager confirms it.",
+  "@noPlacesBusinessExampleApproveBookings": {
+    "description": "#4223 the example under the approve-bookings question, for a business without places"
+  },
+  "noPlacesBusinessExampleSeveralSites": "For example: a main address and a second one across town.",
+  "@noPlacesBusinessExampleSeveralSites": {
+    "description": "#4223 the example under the several-sites question, for a business without places"
+  },
+  "noPlacesBusinessExamplePublicPage": "For example: someone looking for a consultation nearby finds your page and writes to you.",
+  "@noPlacesBusinessExamplePublicPage": {
+    "description": "#4223 the example under the public-page question, for a business without places"
+  },
+  "noPlacesSetupQuestionSeveralSites": "Several sites or addresses",
+  "@noPlacesSetupQuestionSeveralSites": {
+    "description": "#4223 the several rooms or sites question, for a business without places"
   }
 }

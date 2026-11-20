@@ -38,6 +38,7 @@
   "setupStepHintServices": "Kaffee, Drucken, Schließfächer: was Mitglieder dazunehmen können.",
   "noPlacesSetupPricingHint": "Was Ihr Angebot kostet: Preise und Tarife.",
   "noPlacesSetupServicesHint": "Was Sie Ihren Kundinnen und Kunden anbieten: jede Leistung, ihre Dauer und ihr Preis.",
+  "noPlacesSetupHoursHint": "Die Tage, an denen Ihr Unternehmen geöffnet ist, und seine Schließtage.",
   "setupStepHintPaymentMethods": "Ihre Bankverbindung und Zahlungshinweise.",
   "setupStepHintOnlinePayments": "Kartenzahlung über einen Anbieter, den Ihr Betreiber anbindet.",
   "setupStepHintApprovals": "Wer Anträge freigibt und wie viele zustimmen müssen.",

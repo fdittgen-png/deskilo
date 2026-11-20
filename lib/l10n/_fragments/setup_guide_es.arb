@@ -38,6 +38,7 @@
   "setupStepHintServices": "Café, impresión, taquillas: lo que los miembros pueden añadir.",
   "noPlacesSetupPricingHint": "Lo que cuesta su oferta: precios y tarifas.",
   "noPlacesSetupServicesHint": "Lo que ofrece a sus clientes: cada servicio, su duración y su precio.",
+  "noPlacesSetupHoursHint": "Los días en que su negocio está abierto y sus cierres.",
   "setupStepHintPaymentMethods": "Sus datos bancarios e instrucciones de pago.",
   "setupStepHintOnlinePayments": "Pago con tarjeta mediante un proveedor que conecta su operador.",
   "setupStepHintApprovals": "Quién valida las solicitudes y cuántas personas deben estar de acuerdo.",

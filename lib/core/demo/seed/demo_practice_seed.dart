@@ -137,7 +137,7 @@ const CityMoneyWords demoPracticeMoneyWords = (
   billsOwner: false,
   catalogue: [
     ('Consultation hour', 9000, false),
-    ('Workshop half-day', 45000, false),
+    ('Workshop, half a day', 45000, false),
     ('Written opinion', 30000, false),
     ('Document review', 6000, false),
     ('Phone advice (15 min)', 2500, false),

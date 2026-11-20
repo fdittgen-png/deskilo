@@ -23184,8 +23184,28 @@ class AppLocalizationsDe extends AppLocalizations {
   String get nfcConfigTitle => 'RFID-/NFC-Badges';
 
   @override
+  String get noPlacesBusinessExampleApproveBookings =>
+      'Zum Beispiel: Eine Kundin fragt den Donnerstag an, und die Leitung bestätigt.';
+
+  @override
+  String get noPlacesBusinessExamplePublicPage =>
+      'Zum Beispiel: Jemand sucht eine Beratung in der Nähe, findet Ihre Seite und schreibt Ihnen.';
+
+  @override
+  String get noPlacesBusinessExampleSeveralSites =>
+      'Zum Beispiel: eine Hauptadresse und eine zweite Adresse in der Stadt.';
+
+  @override
+  String get noPlacesSetupHoursHint =>
+      'Die Tage, an denen Ihr Unternehmen geöffnet ist, und seine Schließtage.';
+
+  @override
   String get noPlacesSetupPricingHint =>
       'Was Ihr Angebot kostet: Preise und Tarife.';
+
+  @override
+  String get noPlacesSetupQuestionSeveralSites =>
+      'Mehrere Standorte oder Adressen';
 
   @override
   String get noPlacesSetupServicesHint =>

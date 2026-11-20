@@ -22,6 +22,7 @@ import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/notification_lines.dart';
 import '../../domain/workspace.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/settings_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'availability_tiles.dart';
@@ -94,6 +95,7 @@ class _SetupNotificationsStepState
         definition != null &&
         definition.editable &&
         settings!.revision != 'defaults';
+    final placesOff = ref.watch(keepsPlacesOffProvider);
     final stored = definition == null
         ? SettingDefaults.bookingCheckInReminderLeadMinutes
         : settings!.read<int>(_leadKey);
@@ -107,9 +109,12 @@ class _SetupNotificationsStepState
             lines: notificationLines(on),
             push: on.contains(WorkspaceFeature.pushNotifications),
             lead: lead,
-            definition: editable ? definition : null,
+            // #4223 — the check-in reminder is a place's: not offered to a
+            // business whose kind keeps places off, nor its preview.
+            definition: editable && !placesOff ? definition : null,
+            placesOff: placesOff,
           ),
-          preview: _Preview(lead: lead),
+          preview: placesOff ? const SizedBox.shrink() : _Preview(lead: lead),
         );
       },
     );
@@ -121,6 +126,7 @@ class _SetupNotificationsStepState
     required bool push,
     required int lead,
     required SettingDefinition? definition,
+    required bool placesOff,
   }) {
     final l10n = context.l10n;
     final busy = _busy.value;
@@ -189,7 +195,7 @@ class _SetupNotificationsStepState
               child: Text(l10n.commonSave),
             ),
           ),
-        ] else
+        ] else if (!placesOff)
           Text(
             l10n.setupNotificationsLeadFixed(formatDuration(l10n, lead)),
             key: const ValueKey('setup-notifications-lead-fixed'),
