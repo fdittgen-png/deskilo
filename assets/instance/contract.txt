@@ -2723,7 +2723,7 @@ routine public.guarded_role_permissions(p_workspace_id uuid, p_incoming jsonb, p
 routine public.guest_participation_audit_append_only() -> trigger | function | invoker | volatile | exec:service_role | body:f9dca924a932
 routine public.guest_participation_self_view(p guest_participations) -> jsonb | function | invoker | stable | exec:service_role | body:bfd6829ac539
 routine public.guest_pass_reader(p_workspace_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:6cd39db180f6
-routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:bc1e03330614
+routine public.hand_payment_intent(p_intent uuid) -> boolean | function | definer | volatile | exec:service_role | body:69dbfab5fe16
 routine public.handle_new_user() -> trigger | function | definer | volatile | exec:service_role | body:283ccda0aedd
 routine public.has_badge_pin() -> boolean | function | definer | stable | exec:authenticated,service_role | body:b706db9793bb
 routine public.has_permission(ws uuid, perm text) -> boolean | function | definer | stable | exec:authenticated,service_role | body:3fbfe0580efb
@@ -3232,7 +3232,8 @@ routine public.outgoing_payments_guard() -> trigger | function | invoker | volat
 routine public.owns_workspace_template(p_template_id uuid) -> boolean | function | definer | stable | exec:authenticated,service_role | body:f91919c37225
 routine public.payment_attempt_notice(p_workspace_id uuid, p_intent uuid, p_reason text) -> void | function | definer | volatile | exec:service_role | body:e7822668fb03
 routine public.payment_attempt_notice_end(p_intent uuid, p_how text) -> void | function | definer | volatile | exec:service_role | body:bc290c167684
-routine public.payment_claim_resume_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:fff89166f301
+routine public.payment_claim_charge_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:ef8644a91d37
+routine public.payment_claim_resume_state(p_intent payment_intents) -> text | function | invoker | stable | exec:service_role | body:8156e6ae0995
 routine public.payment_config_is_secret(p_key text) -> boolean | function | invoker | immutable | exec:authenticated,service_role | body:39efd058a90d
 routine public.payment_credentials_status(p_workspace_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d61401a27122
 routine public.payment_instructions_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:098c3b53073f
