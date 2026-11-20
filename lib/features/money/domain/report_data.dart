@@ -257,9 +257,11 @@ Map<String, Object?> _lineData(ReportStrings strings, Invoice invoice,
     'negative': line.amountCents < 0,
     // #480 — quantity, unit price and per-line VAT so a template can print
     // the statutory line detail.
-    'qty': '${line.quantity}',
-    'unit_price': currency
-        .formatMinor(line.quantity > 1 ? quoted ~/ line.quantity : quoted),
+    // #4162 -- a commercial line states its exact quantity, unit and price.
+    'qty': line.printedQuantity,
+    'unit_price': line.printedUnitPrice ??
+        currency.formatMinor(
+            line.quantity > 1 ? quoted ~/ line.quantity : quoted),
     'vat_rate': line.vatPercent > 0 && !invoice.isSalesTax
         ? _rateText(strings, line.vatPercent)
         : '',
