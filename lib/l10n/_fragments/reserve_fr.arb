@@ -162,5 +162,6 @@
   "reservationNoteOverNotCheckedIn": "Cette période est terminée sans arrivée enregistrée.",
   "bookingRatePlace": "Noter cette place",
   "reserveLegendTooltip": "Légende des couleurs",
-  "reserveLegendSheetTitle": "Ce que signifient les couleurs"
+  "reserveLegendSheetTitle": "Ce que signifient les couleurs",
+  "reservationContextChanged": "L'espace de travail ou le compte a changé pendant que ceci était ouvert. Rien n'a été envoyé : rouvrez-le."
 }

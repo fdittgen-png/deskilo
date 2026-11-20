@@ -29207,6 +29207,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get reservationCancelledSnack => 'Reservation cancelled.';
 
   @override
+  String get reservationContextChanged =>
+      'The workspace or account changed while this was open. Nothing was sent: open it again.';
+
+  @override
   String get reservationDeleteReasonLabel => 'Reason (optional)';
 
   @override

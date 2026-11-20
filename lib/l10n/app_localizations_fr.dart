@@ -29555,6 +29555,10 @@ class AppLocalizationsFr extends AppLocalizations {
   String get reservationCancelledSnack => 'Réservation annulée.';
 
   @override
+  String get reservationContextChanged =>
+      'L\'espace de travail ou le compte a changé pendant que ceci était ouvert. Rien n\'a été envoyé : rouvrez-le.';
+
+  @override
   String get reservationDeleteReasonLabel => 'Motif (facultatif)';
 
   @override

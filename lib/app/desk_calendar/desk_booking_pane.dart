@@ -30,7 +30,12 @@ import '../../features/reservations/presentation/widgets/booking_range_text.dart
 import '../../features/reservations/presentation/widgets/calendar_file_button.dart';
 import '../../features/reservations/presentation/widgets/my_reservations_layout.dart' show myReservationStatusWords;
 import '../../features/reservations/presentation/widgets/reservation_detail_sheet.dart'
-    show ownBookingOffers, reservationActionsOf, watchReservationPlace;
+    show
+        BoundReservation,
+        captureBoundReservation,
+        ownBookingOffers,
+        reservationActionsOf,
+        watchReservationPlace;
 import '../../features/reservations/presentation/widgets/reservation_status_note.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/providers/workspace_providers.dart'
@@ -72,10 +77,26 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
   /// What the server refused last, said in the pane until the next action.
   String? _refusal;
 
+  /// #4157 — the commands of the context this booking was shown in, taken when
+  /// the pane opens on it (and again when it opens on another booking), never
+  /// with a rebuild: a switch of installation, workspace or account while the
+  /// pane is open leaves them on the context the booking was read under, and
+  /// every action re-reads the context before it sends.
+  BoundReservation? _bound;
+
+  @override
+  void initState() {
+    super.initState();
+    _bound = captureBoundReservation(ref);
+  }
+
   @override
   void didUpdateWidget(DeskBookingPane old) {
     super.didUpdateWidget(old);
-    if (old.bookingId != widget.bookingId) _refusal = null;
+    if (old.bookingId != widget.bookingId) {
+      _refusal = null;
+      _bound = captureBoundReservation(ref);
+    }
   }
 
   @override
@@ -165,6 +186,7 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
             onPressed: () => reservationActionsOf(
               ref,
               r,
+              bound: _bound,
             ).showOnPlan(context, ref, target.levelId),
           ),
         if (r.memberId == ref.watch(myMemberProvider).value?.id &&
@@ -185,6 +207,7 @@ class _DeskBookingPaneState extends ConsumerState<DeskBookingPane> {
     final actions = reservationActionsOf(
       ref,
       r,
+      bound: _bound,
       inPane: true,
       onRefused: (refusal) {
         if (mounted) setState(() => _refusal = refusal);
