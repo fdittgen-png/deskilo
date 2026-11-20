@@ -128,6 +128,7 @@
     }
   },
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
+  "scanCameraProgramUnavailable": "Kamera-Scan ist in diesem Programm nicht verfügbar — Code eingeben.",
   "bookingGateBlocked": "So nicht buchbar",
   "reserveAvailabilityUnavailable": "Die Verfügbarkeit konnte nicht vollständig geladen werden, deshalb wird kein Platz als frei angezeigt. Erneut versuchen.",
   "bookingRecordedPastSpaceWhen": "{space} erfasst: {when}. Dieser Zeitraum ist bereits vorbei, die Buchung bleibt als vergangener Besuch erhalten.",

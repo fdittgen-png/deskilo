@@ -20,6 +20,7 @@ on:
     paths:
       - .github/workflows/windows-msi.yml
       - windows/**
+      - test/desktop/**
   push:
     # Only the release train's tags (v1.0.0+<build>, the '+' is the
     # mark): they come with a GitHub release to attach to. An F-Droid
@@ -88,6 +89,13 @@ jobs:
           flutter-version: ${{ env.FLUTTER_VERSION }}
           channel: stable
           cache: true
+
+      # #3621 — the small desktop test folder runs on Windows itself, on the
+      # release train and on pull requests that touch the Windows target or
+      # that folder: a failure here is a Windows program that does not behave
+      # as one, found before the installer is packaged.
+      - name: Desktop tests
+        run: flutter test test/desktop
 
       - name: Build Windows release
         run: flutter build windows --release

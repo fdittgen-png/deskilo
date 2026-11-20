@@ -18114,6 +18114,7 @@
   "sampleDataFillFailed": "Die Beispieldaten konnten nicht angelegt werden.",
   "sampleDataNotCleared": "Nicht gelöscht: Die Beispieldaten sind noch in diesem Bereich.",
   "sampleDataTitle": "Beispieldaten",
+  "scanCameraProgramUnavailable": "Kamera-Scan ist in diesem Programm nicht verfügbar — Code eingeben.",
   "scanCameraWebUnavailable": "Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).",
   "scanJoinHelp": "Richten Sie die Kamera auf den Einladungs-QR — Sie sehen den Bereich, bevor Sie beitreten.",
   "@scanJoinHelp": {

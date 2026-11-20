@@ -8,6 +8,7 @@ import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
+import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/settings/booking_windows.dart';
 import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
@@ -335,7 +336,7 @@ class _BadgeCaptureState extends State<_BadgeCapture> {
           Padding(
             padding: const EdgeInsets.only(top: 12),
             child: Text(
-              l10n.scanCameraWebUnavailable,
+              scanNoCameraSentence(l10n),
               key: const ValueKey('kiosk-no-camera'),
               style: Theme.of(context).textTheme.bodySmall,
             ),

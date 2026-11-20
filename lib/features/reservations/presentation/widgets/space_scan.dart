@@ -1,5 +1,4 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -66,7 +65,7 @@ Future<void> scanSpace(BuildContext context, WidgetRef ref) async {
       workspaceId: workspace.id,
       scanBuilder:
           qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
-      explainNoCamera: kIsWeb,
+      explainNoCamera: !qrScanSupported,
       l10n: l10n,
       nfc: nfcReady ? nfcReader : null,
       seatIdForUid: (uid) => ref

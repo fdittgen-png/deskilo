@@ -30299,6 +30299,10 @@ class AppLocalizationsIt extends AppLocalizations {
   String get sampleDataTitle => 'Dati di esempio';
 
   @override
+  String get scanCameraProgramUnavailable =>
+      'La scansione con fotocamera non è disponibile in questo programma — digiti il codice.';
+
+  @override
   String get scanCameraWebUnavailable =>
       'La scansione con fotocamera non è disponibile nel browser — digiti il codice o avvicini un tag NFC al dispositivo (Chrome su Android).';
 
