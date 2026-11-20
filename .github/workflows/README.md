@@ -71,9 +71,11 @@ is fixed, not rerun.
 
 ## Dependency maintenance and workflow audit
 
-The Pub pilot updates only the root `pubspec.lock`, weekly, with one version-update
-PR open at a time and a seven-day release cooldown. It does not widen manifests,
-change `.flutter-version`, or group the whole dependency graph into one PR.
+The Pub pilot updates the root `pubspec.lock`, weekly, with one version-update
+PR open at a time and a seven-day release cooldown; a manifest changes only when
+the new version needs it (`increase-if-necessary`: the ecosystem has no
+lockfile-only value). It does not widen manifests, change `.flutter-version`, or
+group the whole dependency graph into one PR.
 Security updates have their own GitHub queue; no name exclusions are added.
 Review each resulting lockfile with the pinned Flutter CI before extending the
 pilot to independent packages. The existing Actions updater policy is unchanged.

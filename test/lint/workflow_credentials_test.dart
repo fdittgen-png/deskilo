@@ -256,7 +256,13 @@ void main() {
     expect(update['directory'], '/');
     expect(update['directories'], isNull);
     expect(update['open-pull-requests-limit'], 1);
-    expect(update['versioning-strategy'], 'lockfile-only');
+    // The value must be one the ecosystem accepts: a refused value makes the
+    // whole file invalid, and the Actions entry stops with it (#3755).
+    expect(update['versioning-strategy'], 'increase-if-necessary');
+    expect(
+      update['versioning-strategy'],
+      isIn(const ['auto', 'increase', 'increase-if-necessary', 'widen']),
+    );
     expect(update['schedule'], {'interval': 'weekly'});
     expect(update['cooldown'], {'default-days': 7});
     // Name filters also restrict security updates; the pilot must not add one.
