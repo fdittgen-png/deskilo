@@ -2,6 +2,7 @@
 //
 // A line as the server froze it (`invoices.lines`), read the way every
 // reader reads it: what a line lacks is its default, never a failure.
+import 'commercial_line_snapshot.dart';
 import 'invoice.dart';
 
 InvoiceLine invoiceLineFromSnapshot(Map<Object?, Object?> line) => InvoiceLine(
@@ -15,6 +16,7 @@ InvoiceLine invoiceLineFromSnapshot(Map<Object?, Object?> line) => InvoiceLine(
       netCents: (line['net_cents'] as num?)?.toInt(),
       taxCents: (line['tax_cents'] as num?)?.toInt() ?? 0,
       text: _textFactsOf(line['text']),
+      commercial: commercialLineFromSnapshot(line['commercial']),
     );
 
 /// One annex activity row as the server froze it (`details.ledger`).
