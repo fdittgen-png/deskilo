@@ -2,6 +2,7 @@
 -- risk: transforming
 -- (payment_intent_claim_open and payment_claim_resume_state restated whole;
 --  hand_payment_intent patched at asserted anchors of its live definition;
+--  payment_claim_charge_state (the rules, without a request id) is new;
 --  payment_resend_window(provider) is the new window; the zero-argument
 --  payment_resend_window() of 0798 keeps its 23 hours for reconciliation;
 --  payment_claim_window dropped once nothing calls it)
@@ -72,37 +73,10 @@ returns boolean language sql stable set search_path = public as $fn$
 $fn$;
 revoke execute on function public.payment_intent_claim_open(public.payment_intents) from public, anon;
 
--- 1, 2, 4: the rules hold where the charge happens, under the intent's and its
--- invoices' locks, before an already handed checkout is handed again; 3: a
--- checkout never handed lapses with the provider's window, from its opening.
-do $patch$
-declare
-  v_def text := pg_get_functiondef('public.hand_payment_intent(uuid)'::regprocedure);
-  v_handed constant text := $a$if v_intent.handed_at is not null then return true; end if;$a$;
-  v_window constant text := $a$if v_intent.created_at <= clock_timestamp() - public.payment_claim_window() then$a$;
-begin
-  if (length(v_def) - length(replace(v_def, v_handed, ''))) / length(v_handed) <> 1
-     or (length(v_def) - length(replace(v_def, v_window, ''))) / length(v_window) <> 1 then
-    raise exception 'hand_payment_intent: its anchors are not there exactly once' using errcode = 'P0001';
-  end if;
-  v_def := replace(v_def, v_handed, $a$if v_intent.claimed_invoice_ids is not null then
-    perform 1 from public.invoices i
-     where i.id = any (v_intent.claimed_invoice_ids)
-       and i.workspace_id = v_intent.workspace_id and i.member_id = v_intent.member_id
-     order by i.id for update;
-    if public.payment_claim_resume_state(v_intent) is distinct from 'ready' then return false; end if;
-  end if;
-  if v_intent.handed_at is not null then return true; end if;$a$);
-  v_def := replace(v_def, v_window,
-    $a$if v_intent.created_at <= clock_timestamp() - public.payment_resend_window(v_intent.provider) then$a$);
-  execute v_def;
-end;
-$patch$;
-
-drop function public.payment_claim_window();
-
--- 1, 2, 4, 5: what a claim answers about continuing it.
-create or replace function public.payment_claim_resume_state(p_intent public.payment_intents)
+-- 1, 2, 4, 5: what a claim answers about charging it, and about continuing it.
+-- Charging needs no request id; continuing does (the same request is sent
+-- again), so the continuation's answer adds that one condition.
+create or replace function public.payment_claim_charge_state(p_intent public.payment_intents)
 returns text language sql stable set search_path = public as $fn$
   select case
     when p_intent.id is null then null
@@ -114,7 +88,7 @@ returns text language sql stable set search_path = public as $fn$
          and p_intent.handed_at <= now() - public.payment_resend_window(p_intent.provider)
       then 'awaiting_provider'
     when not public.payment_intent_claim_open(p_intent) then 'expired'
-    when p_intent.request_id is null or coalesce(cardinality(p_intent.claimed_invoice_ids), 0) = 0 then 'unavailable'
+    when coalesce(cardinality(p_intent.claimed_invoice_ids), 0) = 0 then 'unavailable'
     -- 2
     when not public.feature_effective(p_intent.workspace_id, 'onlinePayments') then 'unavailable'
     -- 4
@@ -133,6 +107,43 @@ returns text language sql stable set search_path = public as $fn$
     else 'ready'
   end;
 $fn$;
+revoke execute on function public.payment_claim_charge_state(public.payment_intents) from public, anon, authenticated;
+
+create or replace function public.payment_claim_resume_state(p_intent public.payment_intents)
+returns text language sql stable set search_path = public as $fn$
+  select case when public.payment_claim_charge_state(p_intent) = 'ready' and p_intent.request_id is null
+              then 'unavailable'
+              else public.payment_claim_charge_state(p_intent) end;
+$fn$;
 revoke execute on function public.payment_claim_resume_state(public.payment_intents) from public, anon, authenticated;
+
+-- 1, 2, 4: the rules hold where the charge happens, under the intent's and its
+-- invoices' locks, before an already handed checkout is handed again; 3: a
+-- checkout never handed lapses with the provider's window, from its opening.
+do $patch$
+declare
+  v_def text := pg_get_functiondef('public.hand_payment_intent(uuid)'::regprocedure);
+  v_handed constant text := $a$if v_intent.handed_at is not null then return true; end if;$a$;
+  v_window constant text := $a$if v_intent.created_at <= clock_timestamp() - public.payment_claim_window() then$a$;
+begin
+  if (length(v_def) - length(replace(v_def, v_handed, ''))) / length(v_handed) <> 1
+     or (length(v_def) - length(replace(v_def, v_window, ''))) / length(v_window) <> 1 then
+    raise exception 'hand_payment_intent: its anchors are not there exactly once' using errcode = 'P0001';
+  end if;
+  v_def := replace(v_def, v_handed, $a$if v_intent.claimed_invoice_ids is not null then
+    perform 1 from public.invoices i
+     where i.id = any (v_intent.claimed_invoice_ids)
+       and i.workspace_id = v_intent.workspace_id and i.member_id = v_intent.member_id
+     order by i.id for update;
+    if public.payment_claim_charge_state(v_intent) is distinct from 'ready' then return false; end if;
+  end if;
+  if v_intent.handed_at is not null then return true; end if;$a$);
+  v_def := replace(v_def, v_window,
+    $a$if v_intent.created_at <= clock_timestamp() - public.payment_resend_window(v_intent.provider) then$a$);
+  execute v_def;
+end;
+$patch$;
+
+drop function public.payment_claim_window();
 
 select public.set_deskilo_schema_version(814);

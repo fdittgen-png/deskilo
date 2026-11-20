@@ -142,7 +142,10 @@ SQL
   wait_lock "claim-race-$1"
   wait "$holder"
   wait "$contender" || true
-  grep -qx "$4" "$scratch/$1-holder"
+  grep -qx "$4" "$scratch/$1-holder" || {
+    echo "::error::race $1: the holder answered '$(tr '\n' ' ' <"$scratch/$1-holder")', expected '$4'" >&2
+    exit 1
+  }
   if ! grep -q "$5" "$scratch/$1-contender"; then
     echo "::error::race $1: the second call did not answer '$5'" >&2
     cat "$scratch/$1-contender" >&2

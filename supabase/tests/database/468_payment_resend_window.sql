@@ -4,7 +4,7 @@
 -- per provider, from the hand-over) is open, and the provider account is the
 -- one it was handed to. A handed claim past its window awaits the provider.
 begin;
-select plan(21);
+select plan(22);
 
 create function pg_temp.seed() returns void language plpgsql as $$
 declare
@@ -135,6 +135,10 @@ create function pg_temp.fresh() returns void language sql as $$
 $$;
 select pg_temp.fresh();
 select ok(public.hand_payment_intent(current_setting('t.payment')::uuid), 'a claim that equals what is owed is handed over');
+select pg_temp.fresh();
+update public.payment_intents set request_id = null where id = current_setting('t.payment')::uuid;
+select ok(public.hand_payment_intent(current_setting('t.payment')::uuid), 'a claim opened without a request id is handed over: charging needs none');
+update public.payment_intents set request_id = current_setting('t.request')::uuid where id = current_setting('t.payment')::uuid;
 select pg_temp.fresh();
 insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolution, status)
 values (current_setting('t.ws')::uuid, current_setting('t.i1')::uuid, 4000, 'exact', 'confirmed');
