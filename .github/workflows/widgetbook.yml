@@ -5,19 +5,17 @@ permissions:
 concurrency:
   group: widgetbook-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+# The catalogue is checked where it changes (its own folder and this file); the
+# wider question, "does it still build against the app", is asked weekly and on
+# demand, not on every pull request that touches a shared control (#3755: the
+# wider filter started it on almost every feature pull request).
 on:
   pull_request:
     paths:
       - '.github/workflows/widgetbook.yml'
       - 'tool/widgetbook/**'
-      - 'lib/core/**'
-      - 'lib/app/theme.dart'
-      - 'lib/l10n/**'
-      - 'packages/**'
-      - 'assets/fonts/**'
-      - '.flutter-version'
-      - 'pubspec.*'
-      - 'analysis_options.yaml'
+  schedule:
+    - cron: '17 4 * * 1'
   workflow_dispatch:
 jobs:
   catalogue:
