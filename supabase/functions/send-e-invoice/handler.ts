@@ -24,6 +24,7 @@ import {
   type Submission,
   submit,
   SANDBOX,
+  acceptedFormats,
   takesTestDocument,
 } from "./connectors.ts";
 import { clientDetail, safeFetch } from "./connectors/safe_fetch.ts";
@@ -329,6 +330,10 @@ export async function handle(req: Request, deps: Deps): Promise<Response> {
     const verdict = (latest?.verdict ?? {}) as Record<string, unknown>;
     return json({
       available: takesTestDocument(credentials?.provider ?? "generic"),
+      // the channel's own syntax: a test document is built in it (#3930)
+      format: takesTestDocument(credentials?.provider ?? "generic")
+        ? (acceptedFormats(credentials?.provider ?? "generic")[0] ?? "")
+        : "",
       test: latest === null ? null : {
         transmission_id: latest.id,
         phase: latest.phase,
@@ -789,7 +794,12 @@ async function sendTestDocument(
   const hash = await sha256(bytes);
   const fileName = payload.file_name || "test.xml";
   const mimeType = payload.mime_type || "application/xml";
-  const format = payload.format || "fatturaPa";
+  // a test document is in the channel's own syntax, whatever the caller named
+  const formats = acceptedFormats(provider);
+  const format = payload.format || formats[0] || "";
+  if (!formats.includes(format)) {
+    return json({ error: "format_not_accepted", provider, formats }, 400);
+  }
   let prepared;
   try {
     prepared = await store.prepareTest({

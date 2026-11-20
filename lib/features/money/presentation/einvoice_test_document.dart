@@ -2,7 +2,7 @@
 //
 // #3883 — the sandbox test document that opens the issuing gate of a
 // workspace whose country routes every invoice through its national channel
-// (the SdI). It is the proforma of a member's month to invoice (the server's own
+// (the SdI, KSeF). It is the proforma of a member's month to invoice (the server's own
 // preview: nothing issued, booked or numbered), carrying a test number outside
 // the invoice sequence, in the channel's own syntax. The same builder renders
 // it as an issued invoice's document, so the test proves what will leave.
@@ -36,11 +36,12 @@ String einvoiceTestNumber(DateTime at) {
       '${two(at.hour)}${two(at.minute)}${two(at.second)}';
 }
 
-/// Builds the test document for a member's proforma of a period, as the
-/// channel's FatturaPA; null when that month tracked nothing to put on it.
+/// Builds the test document for a member's proforma of a period, in the
+/// channel's own [format]; null when that month tracked nothing to put on it.
 typedef EInvoiceTestDocumentBuilder =
     Future<({List<int> bytes, String fileName})?> Function(
       WidgetRef ref, {
+      required EInvoiceFormat format,
       required String memberId,
       required String period,
     });
@@ -53,6 +54,7 @@ final eInvoiceTestDocumentBuilderProvider =
 
 Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
   WidgetRef ref, {
+  required EInvoiceFormat format,
   required String memberId,
   required String period,
 }) async {
@@ -69,7 +71,7 @@ Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
   final words = documentStringsOf(invoiceDocumentLocale(ref, invoice));
   final association = ref.read(sellerIsAssociationProvider);
   final xml = buildChannelEInvoiceXml(
-    EInvoiceFormat.fatturaPa,
+    format,
     EInvoiceInput(
       paymentReferenceRules: installedPaymentReferenceRules,
       nationalRules: installedNationalInvoiceRules,
@@ -88,6 +90,6 @@ Future<({List<int> bytes, String fileName})?> _buildEInvoiceTestDocument(
   );
   return (
     bytes: utf8.encode(xml),
-    fileName: '${safeFileSlug('fatturaPa $number')}.xml',
+    fileName: '${safeFileSlug('${format.name} $number')}.xml',
   );
 }

@@ -271,6 +271,7 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
   Future<EInvoiceTestSent> sendEInvoiceTest({
     required String workspaceId,
     required String fileName,
+    required String format,
     required List<int> bytes,
   }) async {
     final data = await _invokeSend({
@@ -278,7 +279,7 @@ class SupabaseEInvoiceTransmissions implements EInvoiceTransmissions {
       'action': 'test',
       'file_name': fileName,
       'mime_type': 'application/xml',
-      'format': 'fatturaPa',
+      'format': format,
       'content_base64': base64Encode(bytes),
     });
     if (data == null) {

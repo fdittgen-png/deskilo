@@ -7,6 +7,7 @@
 // test number: nothing issued or booked), says where the latest one stands,
 // and asks the platform for its verdict. Shown only where the configured
 // channel takes a test document.
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,10 +64,19 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
     if (said != null) AppSnack.info(context, said!);
   }
 
-  Future<String?> _send(String workspaceId, String period) async {
+  Future<String?> _send(
+    String workspaceId,
+    String period,
+    String format,
+  ) async {
     final l10n = context.l10n;
+    final channelFormat = EInvoiceFormat.values
+        .where((f) => f.name == format)
+        .firstOrNull;
+    if (channelFormat == null) return l10n.einvoiceTestUnavailable;
     final file = await ref.read(eInvoiceTestDocumentBuilderProvider)(
       ref,
+      format: channelFormat,
       memberId: _memberId!,
       period: period,
     );
@@ -76,6 +86,7 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
         .sendEInvoiceTest(
           workspaceId: workspaceId,
           fileName: file.fileName,
+          format: format,
           bytes: file.bytes,
         );
     return _sentence(l10n, sent);
@@ -152,7 +163,7 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
                   ),
                 if (state.canSend) ...[
                   const FormGap.small(),
-                  _sender(context, workspaceId),
+                  _sender(context, workspaceId, state.format),
                 ],
               ],
             ),
@@ -164,7 +175,7 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
 
   /// The member picker and the send: the month's members with something to
   /// invoice (their proforma is never empty).
-  Widget _sender(BuildContext context, String workspaceId) {
+  Widget _sender(BuildContext context, String workspaceId, String format) {
     final l10n = context.l10n;
     return switch (ref.watch(invoicingOverviewProvider)) {
       AsyncData(value: final overview) => Column(
@@ -193,7 +204,7 @@ class _EInvoiceTestCardState extends ConsumerState<EInvoiceTestCard> {
                     workspaceId,
                     'e-invoice test document failed',
                     l10n.einvoiceTestFailed,
-                    () => _send(workspaceId, overview.period),
+                    () => _send(workspaceId, overview.period, format),
                   ),
             child: Text(l10n.einvoiceTestSend),
           ),
