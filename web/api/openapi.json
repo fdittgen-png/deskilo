@@ -80,6 +80,10 @@
                           "deskilo_request_refund",
                           "deskilo_request_member_status_change",
                           "deskilo_request_subscription_change",
+                          "deskilo_list_member_term_changes",
+                          "deskilo_schedule_member_share_change",
+                          "deskilo_schedule_member_pause",
+                          "deskilo_cancel_member_term_change",
                           "deskilo_list_pending_validations",
                           "deskilo_get_validation",
                           "deskilo_respond_to_validation",
@@ -1215,6 +1219,10 @@
               "request_refund",
               "request_member_status_change",
               "request_subscription_change",
+              "list_member_term_changes",
+              "schedule_member_share_change",
+              "schedule_member_pause",
+              "cancel_member_term_change",
               "list_pending_validations",
               "get_validation",
               "respond_to_validation",
@@ -2309,6 +2317,175 @@
         ],
         "x-operation": "request_subscription_change",
         "x-rpc": "request_subscription_change",
+        "x-handler": true
+      },
+      "ListMemberTermChangesInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The member to read: a member_id of this workspace. Leave it out for the person's own changes."
+          }
+        },
+        "required": [
+          "workspace_id"
+        ],
+        "x-operation": "list_member_term_changes",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "ScheduleMemberShareChangeInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The member this change is about: a member_id of this workspace."
+          },
+          "pct": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "The subscription share from that date, in percent (0-100).",
+            "examples": [
+              50
+            ]
+          },
+          "effective_on": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+            "description": "The day the share applies from, as YYYY-MM-DD: the first day of a period, today or later.",
+            "examples": [
+              "2026-12-01"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "member_id",
+          "pct",
+          "effective_on"
+        ],
+        "x-operation": "schedule_member_share_change",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "ScheduleMemberPauseInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "member_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The member to pause: a member_id of this workspace."
+          },
+          "from": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+            "description": "The first day of the pause, as YYYY-MM-DD: today or later.",
+            "examples": [
+              "2026-12-01"
+            ]
+          },
+          "to": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$",
+            "description": "The day the member is active again, as YYYY-MM-DD, after the first day. Leave it out to pause until resumed.",
+            "examples": [
+              "2027-01-01"
+            ]
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "member_id",
+          "from"
+        ],
+        "x-operation": "schedule_member_pause",
+        "x-rpc": null,
+        "x-handler": true
+      },
+      "CancelMemberTermChangeInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "A new random UUID for each distinct intent. Reuse the SAME request_id, with the same arguments, only to retry that intent (after a timeout, or after the person confirmed it in the DesKilo app): it never acts twice.",
+            "examples": [
+              "6b1d3f0e-0000-4000-8000-000000000001"
+            ]
+          },
+          "workspace_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The workspace to act in: a workspace_id from deskilo_list_workspaces. Never guess it.",
+            "examples": [
+              "00000000-0000-4000-8000-0000000000a1"
+            ]
+          },
+          "change_id": {
+            "type": "string",
+            "format": "uuid",
+            "description": "The change to cancel: a change_id from deskilo_list_member_term_changes."
+          }
+        },
+        "required": [
+          "request_id",
+          "workspace_id",
+          "change_id"
+        ],
+        "x-operation": "cancel_member_term_change",
+        "x-rpc": null,
         "x-handler": true
       },
       "ListPendingValidationsInput": {

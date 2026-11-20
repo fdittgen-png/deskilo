@@ -26092,6 +26092,15 @@
   "@mcpConfirmApprove": {
     "description": "#1619 mcp_confirmation"
   },
+  "mcpConfirmCancelDated": "Cancel the change dated {date}",
+  "@mcpConfirmCancelDated": {
+    "description": "#3937 mcp_confirmation: cancelling a change not yet applied, by its day",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConfirmClient": "Asked by: {client}",
   "@mcpConfirmClient": {
     "description": "#1619 mcp_confirmation",
@@ -26183,6 +26192,27 @@
   "@mcpConfirmNotFound": {
     "description": "#1619 mcp_confirmation"
   },
+  "mcpConfirmPauseOpen": "Pause from {from}, until resumed",
+  "@mcpConfirmPauseOpen": {
+    "description": "#3937 mcp_confirmation: a pause with no end date",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      }
+    }
+  },
+  "mcpConfirmPauseUntil": "Pause from {from} until {to}",
+  "@mcpConfirmPauseUntil": {
+    "description": "#3937 mcp_confirmation: a pause between two days",
+    "placeholders": {
+      "from": {
+        "type": "String"
+      },
+      "to": {
+        "type": "String"
+      }
+    }
+  },
   "mcpConfirmPeriod": "Period: {period}",
   "@mcpConfirmPeriod": {
     "description": "#1619 mcp_confirmation",
@@ -26195,6 +26225,18 @@
   "mcpConfirmRefuse": "Your answer: refuse",
   "@mcpConfirmRefuse": {
     "description": "#1619 mcp_confirmation"
+  },
+  "mcpConfirmShareFrom": "New subscription share: {pct} % from {date}",
+  "@mcpConfirmShareFrom": {
+    "description": "#3937 mcp_confirmation: the share and the day it applies from",
+    "placeholders": {
+      "pct": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
   },
   "mcpConfirmStale": "This request no longer matches the current data or your access. Nothing was done.",
   "@mcpConfirmStale": {
@@ -26868,6 +26910,10 @@
   "@mcpOpCancelReservation": {
     "description": "#2394 generated from contracts/mcp/operations.json (cancel_reservation)"
   },
+  "mcpOpCancelTermChange": "Cancel a change not yet applied",
+  "@mcpOpCancelTermChange": {
+    "description": "#2394 generated from contracts/mcp/operations.json (cancel_member_term_change)"
+  },
   "mcpOpCapabilities": "See what it may do there",
   "@mcpOpCapabilities": {
     "description": "#2394 generated from contracts/mcp/operations.json (get_capabilities)"
@@ -26903,6 +26949,10 @@
   "mcpOpListMyFavorites": "Your favourite places",
   "@mcpOpListMyFavorites": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_my_favorites)"
+  },
+  "mcpOpListTermChanges": "Read a member's scheduled changes",
+  "@mcpOpListTermChanges": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_member_term_changes)"
   },
   "mcpOpListWorkspaces": "See which workspaces it may use",
   "@mcpOpListWorkspaces": {
@@ -26955,6 +27005,14 @@
   "mcpOpRespond": "Answer a validation request",
   "@mcpOpRespond": {
     "description": "#2394 generated from contracts/mcp/operations.json (respond_to_validation)"
+  },
+  "mcpOpSchedulePause": "Schedule a member's pause",
+  "@mcpOpSchedulePause": {
+    "description": "#2394 generated from contracts/mcp/operations.json (schedule_member_pause)"
+  },
+  "mcpOpScheduleShare": "Schedule a member's subscription share from a date",
+  "@mcpOpScheduleShare": {
+    "description": "#2394 generated from contracts/mcp/operations.json (schedule_member_share_change)"
   },
   "mcpOpSetFavorite": "Mark places as favourites",
   "@mcpOpSetFavorite": {

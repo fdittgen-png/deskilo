@@ -23,5 +23,9 @@
   "mcpConfirmStepLater": "Elle sera mise de côté pour plus tard.",
   "mcpConfirmFieldChange": "{field} : {from} → {to}",
   "mcpConfirmClosureReason": "Motif : {reason}",
-  "mcpConfirmInvitee": "Invitation pour"
+  "mcpConfirmInvitee": "Invitation pour",
+  "mcpConfirmShareFrom": "Nouvelle part d'abonnement : {pct} % à partir du {date}",
+  "mcpConfirmPauseUntil": "Pause du {from} au {to}",
+  "mcpConfirmPauseOpen": "Pause à partir du {from}, jusqu'à la reprise",
+  "mcpConfirmCancelDated": "Annuler le changement daté du {date}"
 }

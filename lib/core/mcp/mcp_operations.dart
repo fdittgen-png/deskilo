@@ -287,6 +287,53 @@ const Map<String, McpOperationSpec> mcpOperations = {
     },
     output: ['event_id', 'member_id', 'member_status', 'subscription_pct', 'unchanged'], group: 'membership',
   ),
+  'list_member_term_changes': McpOperationSpec(
+    id: 'list_member_term_changes', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.member, permission: null, features: ['mcpAccess'],
+    scope: McpScope.workspace, mutation: McpMutation.read, idempotent: false, nativeConfirmation: false,
+    fields: {
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'member_id': McpField(McpFieldType.uuid),
+    },
+    output: ['items', 'change_id', 'kind', 'state', 'effective_on', 'applied_on', 'to_pct', 'to_status', 'reason', 'group_id', 'member_id'], group: 'membership',
+  ),
+  'schedule_member_share_change': McpOperationSpec(
+    id: 'schedule_member_share_change', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageMembers', features: ['mcpAccess'],
+    scope: McpScope.workspace, mutation: McpMutation.request, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'member_id': McpField(McpFieldType.uuid, required: true),
+      'pct': McpField(McpFieldType.integer, required: true, min: 0, max: 100),
+      'effective_on': McpField(McpFieldType.date, required: true),
+    },
+    output: ['change_id', 'state', 'effective_on', 'event_id', 'replayed', 'member_id', 'member_status', 'subscription_pct'], group: 'membership',
+  ),
+  'schedule_member_pause': McpOperationSpec(
+    id: 'schedule_member_pause', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageMembers', features: ['mcpAccess'],
+    scope: McpScope.workspace, mutation: McpMutation.request, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'member_id': McpField(McpFieldType.uuid, required: true),
+      'from': McpField(McpFieldType.date, required: true),
+      'to': McpField(McpFieldType.date),
+    },
+    output: ['change_id', 'state', 'event_id', 'replayed', 'due', 'first_free', 'bookings_in_free_months', 'member_id', 'member_status', 'subscription_pct'], group: 'membership',
+  ),
+  'cancel_member_term_change': McpOperationSpec(
+    id: 'cancel_member_term_change', rpc: null, handler: true, dispatch: true,
+    authority: McpAuthority.permission, permission: 'manageMembers', features: ['mcpAccess'],
+    scope: McpScope.workspace, mutation: McpMutation.write, idempotent: true, nativeConfirmation: true,
+    fields: {
+      'request_id': McpField(McpFieldType.uuid, required: true),
+      'workspace_id': McpField(McpFieldType.uuid, required: true),
+      'change_id': McpField(McpFieldType.uuid, required: true),
+    },
+    output: ['cancelled', 'change_id', 'member_id', 'member_status', 'subscription_pct'], group: 'membership',
+  ),
   'list_pending_validations': McpOperationSpec(
     id: 'list_pending_validations', rpc: null, handler: true, dispatch: true,
     authority: McpAuthority.member, permission: null, features: ['mcpAccess'],

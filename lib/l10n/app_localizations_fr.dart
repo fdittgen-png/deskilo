@@ -20049,6 +20049,11 @@ class AppLocalizationsFr extends AppLocalizations {
   String get mcpConfirmApprove => 'Votre réponse : approuver';
 
   @override
+  String mcpConfirmCancelDated(String date) {
+    return 'Annuler le changement daté du $date';
+  }
+
+  @override
   String mcpConfirmClient(String client) {
     return 'Demandé par : $client';
   }
@@ -20104,12 +20109,27 @@ class AppLocalizationsFr extends AppLocalizations {
       'Aucune demande de ce type ne vous concerne.';
 
   @override
+  String mcpConfirmPauseOpen(String from) {
+    return 'Pause à partir du $from, jusqu\'à la reprise';
+  }
+
+  @override
+  String mcpConfirmPauseUntil(String from, String to) {
+    return 'Pause du $from au $to';
+  }
+
+  @override
   String mcpConfirmPeriod(String period) {
     return 'Période : $period';
   }
 
   @override
   String get mcpConfirmRefuse => 'Votre réponse : refuser';
+
+  @override
+  String mcpConfirmShareFrom(String pct, String date) {
+    return 'Nouvelle part d\'abonnement : $pct % à partir du $date';
+  }
 
   @override
   String get mcpConfirmStale =>
@@ -20677,6 +20697,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'Annuler vos réservations qui n\'ont pas commencé';
 
   @override
+  String get mcpOpCancelTermChange =>
+      'Annuler un changement pas encore appliqué';
+
+  @override
   String get mcpOpCapabilities => 'Voir ce qu\'il peut y faire';
 
   @override
@@ -20702,6 +20726,10 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpOpListMyFavorites => 'Vos lieux favoris';
+
+  @override
+  String get mcpOpListTermChanges =>
+      'Lire les changements planifiés d\'un membre';
 
   @override
   String get mcpOpListWorkspaces => 'Voir les espaces qu\'il peut utiliser';
@@ -20745,6 +20773,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get mcpOpRespond => 'Répondre à une demande de validation';
+
+  @override
+  String get mcpOpSchedulePause => 'Planifier la pause d\'un membre';
+
+  @override
+  String get mcpOpScheduleShare =>
+      'Planifier la part d\'abonnement d\'un membre à partir d\'une date';
 
   @override
   String get mcpOpSetFavorite => 'Marquer des lieux en favoris';

@@ -267,6 +267,56 @@
     "input": "ab83126737d6093c",
     "output": "3ac5c0a95616bee2"
   },
+  "list_member_term_changes": {
+    "name": "deskilo_list_member_term_changes",
+    "title": "A member's scheduled and applied changes",
+    "annotations": {
+      "title": "A member's scheduled and applied changes",
+      "readOnlyHint": true,
+      "openWorldHint": false
+    },
+    "input": "466fb741f1835cfa",
+    "output": "628acdb7a136672c"
+  },
+  "schedule_member_share_change": {
+    "name": "deskilo_schedule_member_share_change",
+    "title": "Schedule a subscription share from a date",
+    "annotations": {
+      "title": "Schedule a subscription share from a date",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "b440c2ae37afb0c7",
+    "output": "33f3a1a85c8c7139"
+  },
+  "schedule_member_pause": {
+    "name": "deskilo_schedule_member_pause",
+    "title": "Schedule a member's pause",
+    "annotations": {
+      "title": "Schedule a member's pause",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "ee990bbade9ffcd9",
+    "output": "f27d634321f5023d"
+  },
+  "cancel_member_term_change": {
+    "name": "deskilo_cancel_member_term_change",
+    "title": "Cancel a change not yet applied",
+    "annotations": {
+      "title": "Cancel a change not yet applied",
+      "readOnlyHint": false,
+      "destructiveHint": true,
+      "idempotentHint": true,
+      "openWorldHint": false
+    },
+    "input": "bd971e2b68392e39",
+    "output": "6f4b7ff995bde074"
+  },
   "list_pending_validations": {
     "name": "deskilo_list_pending_validations",
     "title": "List requests awaiting a decision",
