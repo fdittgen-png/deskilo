@@ -308,6 +308,8 @@ Non ha un codice ma vorrebbe trovare uno spazio vicino a Lei. Gli spazi che pubb
 
 Le schede mostrano dotazioni, accessibilità e orari abituali pubblicati, accanto all’immagine, al luogo e al tipo di attività. La pagina raggruppa gli stessi dati, la panoramica, le informazioni aggiuntive e le opzioni di contatto. **Non pubblicato** significa sconosciuto: non indica che manchi una dotazione o che il luogo sia inaccessibile. Gli orari usano il fuso dell’attività e non garantiscono la disponibilità effettiva. Se l’aggiornamento non riesce, un avviso identifica i dati conservati e **Riprova** interroga di nuovo la stessa fonte.
 
+**Filtri** restringe Discover in base a ciò che le aziende pubblicano: servizi e accessibilità, insieme al tipo di azienda e alle parole digitate. Scelga i dati che le servono; un’azienda compare solo se li pubblica tutti. Un’azienda che non pubblica nulla su un dato non compare per quel criterio, perché ciò che non è pubblicato è sconosciuto. Se un elenco non sa filtrare per questi dati, un avviso dice che non è stato interpellato: le sue aziende mancano dal risultato, non ne sono assenti. La ricerca, i filtri e la selezione restano quando apre una pagina e torna indietro, o cambia scheda e ritorna.
+
 **Da sapere**
 
 - Sono elencati solo gli spazi che hanno scelto di essere visibili. Nella demo la mappa mostra lo spazio dimostrativo e due vicini inventati; le loro pagine, una richiesta di adesione e un messaggio ai loro gestori restano nella demo.

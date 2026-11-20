@@ -40,6 +40,8 @@ class DiscoveryListing extends _$DiscoveryListing {
             filter.query,
             page: listing.pages,
             kind: filter.kind,
+            amenities: filter.amenities,
+            accessibility: filter.accessibility,
           );
       return listing.loaded(page);
     } on Object catch (e, st) {

@@ -401,6 +401,11 @@ void main() {
             {'name': 'Open office', 'host_type': 'company'},
           ),
         );
+      // the filters above the list take room: a taller window keeps the card
+      // in reach of a tap
+      tester.view.physicalSize = const Size(800, 1400);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
       await showPortal(tester, const DirectoryScreen(), directory: repo);
       expect(
         find.byKey(const ValueKey('directory-incompatible')),
@@ -509,6 +514,8 @@ class _IncompatibleDirectory extends FakeDirectoryRepository {
     String query, {
     int page = 0,
     String? kind,
+    List<String> amenities = const [],
+    List<String> accessibility = const [],
   }) async {
     final cards = await super.workspaces(source, query, page: page, kind: kind);
     return SourceCardsPage(cards.cards, incompatible: true, more: false);
