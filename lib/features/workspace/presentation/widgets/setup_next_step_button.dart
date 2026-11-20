@@ -13,6 +13,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_status.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import 'setup_return_bar.dart';
@@ -32,7 +33,7 @@ class SetupNextStepButton extends ConsumerWidget {
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
     final open = routeStep ?? ref.watch(setupOpenStepProvider);
     if (workspaceId == null || open == null) return const SizedBox.shrink();
-    final status = ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
+    final status = ref.watch(visibleSetupStatusProvider(workspaceId)).value;
     final next = status?.stepAfter(open);
     return FilledButton.tonal(
       key: const ValueKey('setup-next-step'),

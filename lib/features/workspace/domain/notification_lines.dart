@@ -34,8 +34,12 @@ class NotificationLine {
 }
 
 /// The notices a workspace whose features are [on] sends, the deciders'
-/// first.
-List<NotificationLine> notificationLines(Set<WorkspaceFeature> on) {
+/// first. A business whose kind keeps places off ([placesOff], #4232) is not
+/// told "time to check in": that notice is a place's.
+List<NotificationLine> notificationLines(
+  Set<WorkspaceFeature> on, {
+  bool placesOff = false,
+}) {
   final inApp = {
     NotificationChannel.app,
     if (on.contains(WorkspaceFeature.pushNotifications))
@@ -52,11 +56,12 @@ List<NotificationLine> notificationLines(Set<WorkspaceFeature> on) {
       audience: NotifiedAudience.members,
       channels: inApp,
     ),
-    const NotificationLine(
-      'check_in',
-      audience: NotifiedAudience.members,
-      channels: {NotificationChannel.device},
-    ),
+    if (!placesOff)
+      const NotificationLine(
+        'check_in',
+        audience: NotifiedAudience.members,
+        channels: {NotificationChannel.device},
+      ),
     if (on.contains(WorkspaceFeature.memberNotifications))
       NotificationLine(
         'member_note',
