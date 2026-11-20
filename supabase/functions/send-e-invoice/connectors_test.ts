@@ -322,6 +322,44 @@ Deno.test("ro_efactura: upload by CIF, index_incarcare, stareMesaj", async () =>
   );
 });
 
+// #3931 -- the message state decides the document only through the platform's
+// own outcome: `ok` with its download identifier is acceptance, `nok` and the
+// documented refusal refuse; everything else is no verdict yet.
+Deno.test("ro_efactura: only the platform's own outcome decides the document", async () => {
+  const cfg = {
+    base_url: "https://anaf.test/FCTEL/rest",
+    cif: "1234567",
+    access_token: "a",
+  };
+  const answer = async (body: string) =>
+    await status("ro_efactura", cfg, "3828", mock(() => ok(body)).fetchImpl);
+  const decided = (r: { status: string; pending?: boolean }) =>
+    r.pending ? "unknown" : r.status;
+  assertEquals(decided(await answer('<header stare="ok" id_descarcare="991"/>')), "accepted");
+  assertEquals(decided(await answer('<header stare="nok" id_descarcare="992"/>')), "rejected");
+  assertEquals(
+    decided(await answer('<header stare="XML cu erori nepreluat de sistem"><Errors errorMessage="x"/></header>')),
+    "rejected",
+  );
+  const unknown = [
+    ["a header without a state", '<header id_descarcare="991"/>'],
+    ["an empty state", '<header stare="" id_descarcare="991"/>'],
+    ["a document in processing", '<header stare="in prelucrare"/>'],
+    ["another state", '<header stare="altceva" id_descarcare="991"/>'],
+    ["an ok without its download identifier", '<header stare="ok"/>'],
+    ["an ok with an empty download identifier", '<header stare="ok" id_descarcare=""/>'],
+    ["an unexpected XML shape", '<mesaj><stare>ok</stare></mesaj>'],
+    ["an HTML page", "<html><body>Maintenance</body></html>"],
+    ["an empty answer", ""],
+    ["a state in another case", '<header stare="OK" id_descarcare="991"/>'],
+  ] as const;
+  for (const [name, body] of unknown) {
+    const result = await answer(body);
+    assertEquals(decided(result), "unknown", name);
+    assertEquals(result.externalId, "3828", name);
+  }
+});
+
 Deno.test("every connector: a non-2xx answer is a refusal, a thrown fetch a failure", async () => {
   const cfgs: Record<string, Record<string, string>> = {
     generic: { endpoint: "https://x.test", auth_value: "t" },
