@@ -108,7 +108,7 @@ export async function statusRoEfactura(
   const stare = xmlAttribute(text, "header", "stare");
   const download = xmlAttribute(text, "header", "id_descarcare");
   const receipt = { index_incarcare: index, stare, id_descarcare: download };
-  if (RO_STATES.refused.includes(stare)) {
+  if ((RO_STATES.refused as readonly string[]).includes(stare)) {
     return {
       status: "rejected",
       externalId: index,
