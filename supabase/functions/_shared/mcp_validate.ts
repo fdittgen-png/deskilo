@@ -4,7 +4,7 @@
 // (MCP_INPUT_SCHEMAS) before the database is asked. Each problem names its
 // field with the same codes as the app's validateMcpInput
 // (lib/core/mcp/mcp_spec.dart): forbidden, unknown_field, required,
-// invalid_uuid, invalid_datetime, invalid_month, invalid_integer,
+// invalid_uuid, invalid_datetime, invalid_date, invalid_month, invalid_integer,
 // too_small, too_large, invalid_boolean, invalid_text, too_long,
 // invalid_value. SQL keeps its own checks as the last line.
 
@@ -25,6 +25,7 @@ interface InputSchema {
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const MONTH = /^\d{4}-(0[1-9]|1[0-2])$/;
+const DATE = /^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 const OFFSET = /(Z|[+-]\d{2}:\d{2})$/;
 
 function check(f: FieldSchema, v: unknown): string | null {
@@ -32,10 +33,15 @@ function check(f: FieldSchema, v: unknown): string | null {
     case "string":
       if (typeof v !== "string") {
         return f.format === "uuid" ? "invalid_uuid" : f.format === "date-time" ? "invalid_datetime"
+          : f.format === "date" ? "invalid_date"
           : f.pattern === MONTH.source ? "invalid_month" : f.enum ? "invalid_value" : "invalid_text";
       }
       if (f.format === "uuid") return UUID.test(v) ? null : "invalid_uuid";
       if (f.format === "date-time") return OFFSET.test(v) && !Number.isNaN(Date.parse(v)) ? null : "invalid_datetime";
+      if (f.format === "date") {
+        // A real day: 2026-02-30 matches the pattern and is not one.
+        return DATE.test(v) && new Date(`${v}T00:00:00Z`).toISOString().startsWith(v) ? null : "invalid_date";
+      }
       if (f.pattern === MONTH.source) return MONTH.test(v) ? null : "invalid_month";
       if (f.enum) return f.enum.includes(v) ? null : "invalid_value";
       if (f.pattern && !new RegExp(f.pattern).test(v)) return "invalid_text";

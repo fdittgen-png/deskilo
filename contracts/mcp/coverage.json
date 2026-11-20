@@ -2,7 +2,7 @@
  "contract": "deskilo.mcp.coverage",
  "version": 1,
  "_comment": "#1632 \u2014 every implemented MCP tool mapped to the executable tests that prove it; checked by tool/mcp_coverage.dart and test/tool/mcp_coverage_test.dart. A change to contracts/mcp/operations.json changes contract_sha256: review this map, then record the new fingerprint.",
- "contract_sha256": "1750ca410640f1a593b649d7079f01fb820d0a4564c84659915fd030a3bef61a",
+ "contract_sha256": "a4bee5b09af7ba73e48ae145e9ea24d489c41975bf4fbbd48a49bfb7811cb3f4",
  "catalogue_tests": [
   "test/tool/mcp_contract_test.dart",
   "test/features/mcp/mcp_native_contract_parity_test.dart",
@@ -440,6 +440,47 @@
    ],
    "state": [
     "supabase/tests/database/328_mcp_set_payment_instructions.sql"
+   ]
+  },
+  "list_member_term_changes": {
+   "positive": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ]
+  },
+  "schedule_member_share_change": {
+   "positive": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "state": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ]
+  },
+  "schedule_member_pause": {
+   "positive": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "state": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ]
+  },
+  "cancel_member_term_change": {
+   "positive": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "denial": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
+   ],
+   "state": [
+    "supabase/tests/database/470_mcp_dated_member_terms.sql"
    ]
   }
  }

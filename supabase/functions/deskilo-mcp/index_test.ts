@@ -529,6 +529,13 @@ Deno.test("#2393 arguments are checked against the schema before the database, e
                  seat_id: "6b1d3f0e-0000-4000-8000-000000000003", starts_at: "2030-01-01T08:00:00", ends_at: "2030-01-01T12:00:00Z" },
   });
   assertEquals(offsetless.json.result.structuredContent.error.fields, { starts_at: "invalid_datetime" });
+  // #3937 — a calendar day is a day: not one that does not exist, nor an instant.
+  const notADay = await rpc(ALICE, "tools/call", {
+    name: "deskilo_schedule_member_pause",
+    arguments: { request_id: "6b1d3f0e-0000-4000-8000-000000000001", workspace_id: AVAILABILITY.workspace_id,
+                 member_id: "6b1d3f0e-0000-4000-8000-000000000003", from: "2026-02-30", to: "2026-12-01T00:00:00Z" },
+  });
+  assertEquals(notADay.json.result.structuredContent.error.fields, { from: "invalid_date", to: "invalid_date" });
   const many = await rpc(ALICE, "tools/call", { name: "deskilo_get_availability", arguments: { limit: 101, kind: "sofa" } });
   const fields = many.json.result.structuredContent.error.fields;
   assertEquals(fields.workspace_id, "required");

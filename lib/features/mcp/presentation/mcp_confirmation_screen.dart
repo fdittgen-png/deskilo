@@ -199,6 +199,20 @@ class _McpConfirmationScreenState extends ConsumerState<McpConfirmationScreen> {
         l10n.mcpConfirmNewStatus('${args['status']}'),
       McpOperationId.requestSubscriptionChange =>
         l10n.mcpConfirmNewShare('${args['pct']}'),
+      McpOperationId.scheduleMemberShareChange => l10n.mcpConfirmShareFrom(
+        '${args['pct']}',
+        format.isoDay('${args['effective_on']}'),
+      ),
+      McpOperationId.scheduleMemberPause =>
+        args['to'] == null
+            ? l10n.mcpConfirmPauseOpen(format.isoDay('${args['from']}'))
+            : l10n.mcpConfirmPauseUntil(
+                format.isoDay('${args['from']}'),
+                format.isoDay('${args['to']}'),
+              ),
+      McpOperationId.cancelMemberTermChange => l10n.mcpConfirmCancelDated(
+        format.isoDay('${target['effective_on']}'),
+      ),
       McpOperationId.respondToValidation =>
         args['accept'] == true
             ? l10n.mcpConfirmApprove

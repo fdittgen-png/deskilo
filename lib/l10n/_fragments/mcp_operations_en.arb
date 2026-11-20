@@ -87,6 +87,22 @@
   "@mcpOpSubscription": {
     "description": "#2394 generated from contracts/mcp/operations.json (request_subscription_change)"
   },
+  "mcpOpListTermChanges": "Read a member's scheduled changes",
+  "@mcpOpListTermChanges": {
+    "description": "#2394 generated from contracts/mcp/operations.json (list_member_term_changes)"
+  },
+  "mcpOpScheduleShare": "Schedule a member's subscription share from a date",
+  "@mcpOpScheduleShare": {
+    "description": "#2394 generated from contracts/mcp/operations.json (schedule_member_share_change)"
+  },
+  "mcpOpSchedulePause": "Schedule a member's pause",
+  "@mcpOpSchedulePause": {
+    "description": "#2394 generated from contracts/mcp/operations.json (schedule_member_pause)"
+  },
+  "mcpOpCancelTermChange": "Cancel a change not yet applied",
+  "@mcpOpCancelTermChange": {
+    "description": "#2394 generated from contracts/mcp/operations.json (cancel_member_term_change)"
+  },
   "mcpOpPendingValidations": "See pending validation requests",
   "@mcpOpPendingValidations": {
     "description": "#2394 generated from contracts/mcp/operations.json (list_pending_validations)"

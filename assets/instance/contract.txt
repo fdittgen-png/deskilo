@@ -2971,6 +2971,7 @@ routine public.mcp_my_action_confirmations(p_answered_since timestamp with time 
 routine public.mcp_my_operations(p_installation_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:e17d1e163398
 routine public.mcp_op_add_closure_days(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ae1061a4785e
 routine public.mcp_op_apply_setup_levels(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dc393f595dfa
+routine public.mcp_op_cancel_member_term_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:16b96bad5d8f
 routine public.mcp_op_cancel_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3750646c95fe
 routine public.mcp_op_check_in(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:31473771b784
 routine public.mcp_op_check_out(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:3d30234d6be4
@@ -2985,6 +2986,7 @@ routine public.mcp_op_get_my_statement(c mcp_call_context, p_args jsonb) -> json
 routine public.mcp_op_get_place(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:70380d90b3bb
 routine public.mcp_op_get_setup_status(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a0e47cdc8ffc
 routine public.mcp_op_get_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:f6374a1f86f5
+routine public.mcp_op_list_member_term_changes(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4c92da098e6c
 routine public.mcp_op_list_my_favorites(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d7499ca9384e
 routine public.mcp_op_list_my_invoices(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:493917fb1749
 routine public.mcp_op_list_my_reservations(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:2b2e5924064e
@@ -3000,6 +3002,8 @@ routine public.mcp_op_request_refund(c mcp_call_context, p_args jsonb) -> jsonb 
 routine public.mcp_op_request_reservation_deletion(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:91f33a871cd9
 routine public.mcp_op_request_subscription_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ac638c874781
 routine public.mcp_op_respond_to_validation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:77f4a4942b8f
+routine public.mcp_op_schedule_member_pause(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:dc1e39e499a0
+routine public.mcp_op_schedule_member_share_change(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:62065577c943
 routine public.mcp_op_set_favorite(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:d4e9976095ff
 routine public.mcp_op_set_member_permissions_preset(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:fe8cde0611c8
 routine public.mcp_op_set_number_sequence(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:468ed786c617
@@ -3007,7 +3011,7 @@ routine public.mcp_op_set_opening_hours(c mcp_call_context, p_args jsonb) -> jso
 routine public.mcp_op_set_payment_instructions(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:8caff7bef909
 routine public.mcp_op_set_workspace_basics(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:4eec85af0fed
 routine public.mcp_op_update_reservation(c mcp_call_context, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bff39598b3aa
-routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:fc5ad1683b85
+routine public.mcp_operation_catalogue() -> jsonb | function | invoker | immutable | exec:authenticated,service_role | body:db049b09aecc
 routine public.mcp_operator_decider() -> jsonb | function | definer | stable | exec:service_role | body:711177ce7de3
 routine public.mcp_optional_field_names() -> text[] | function | invoker | immutable | exec:service_role | body:223bd5dd519c
 routine public.mcp_outcome(p_status text, p_data jsonb, p_code text) -> jsonb | function | invoker | immutable | exec:service_role | body:94cac01e58f4
@@ -3043,10 +3047,13 @@ routine public.mcp_statement_outcome(c mcp_call_context, p_member_id uuid, p_arg
 routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:75ce340ef690
 routine public.mcp_target_add_closure_days(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4398319ba1aa
 routine public.mcp_target_apply_setup_levels(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f41e2241a183
+routine public.mcp_target_cancel_member_term_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a9f0acfc6319
 routine public.mcp_target_create_invitations(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f8a6f13a2bb0
 routine public.mcp_target_create_membership_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e464f8deef67
 routine public.mcp_target_mark_setup_step(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:99326e24d844
 routine public.mcp_target_of(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:b7500fa5c676
+routine public.mcp_target_schedule_member_pause(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:04e745ecc189
+routine public.mcp_target_schedule_member_share_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ed64ddb8c7b1
 routine public.mcp_target_set_member_permissions_preset(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ae3b20833fc4
 routine public.mcp_target_set_number_sequence(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:409f38986b2f
 routine public.mcp_target_set_opening_hours(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2c87a40d293f
