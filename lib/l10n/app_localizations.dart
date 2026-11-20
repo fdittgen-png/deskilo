@@ -20896,6 +20896,18 @@ abstract class AppLocalizations {
   /// **'Pay {business}'**
   String financesPayTitle(String business);
 
+  /// #4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)
+  ///
+  /// In en, this message translates to:
+  /// **'Awaiting the provider'**
+  String get financesPaymentAwaitingProvider;
+
+  /// #4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)
+  ///
+  /// In en, this message translates to:
+  /// **'Payment no longer matches'**
+  String get financesPaymentChanged;
+
   /// #4147: continue an existing own payment (financesPaymentExpired)
   ///
   /// In en, this message translates to:
@@ -49245,6 +49257,24 @@ abstract class AppLocalizations {
   /// **'Seconds between two refreshes of an open conversation. Lower values load the server more.'**
   String get settingHintMessagingThreadPollSeconds;
 
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Set it below how long Mollie keeps a request.'**
+  String get settingHintPaymentsResendWindowMollieMinutes;
+
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Set it below how long PayPal keeps a request.'**
+  String get settingHintPaymentsResendWindowPaypalMinutes;
+
+  /// #4217 settings: Setting hint.
+  ///
+  /// In en, this message translates to:
+  /// **'How many minutes after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Set it below how long Stripe keeps a request.'**
+  String get settingHintPaymentsResendWindowStripeMinutes;
+
   /// #2472 personal directory: Setting hint.
   ///
   /// In en, this message translates to:
@@ -49730,6 +49760,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Conversation refresh'**
   String get settingLabelMessagingThreadPollSeconds;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, Mollie'**
+  String get settingLabelPaymentsResendWindowMollieMinutes;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, PayPal'**
+  String get settingLabelPaymentsResendWindowPaypalMinutes;
+
+  /// #4217 settings: Setting label.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend window, Stripe'**
+  String get settingLabelPaymentsResendWindowStripeMinutes;
 
   /// #2472 personal directory: Setting label.
   ///

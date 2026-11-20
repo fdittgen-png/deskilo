@@ -13043,6 +13043,12 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentAwaitingProvider => 'En attente du prestataire';
+
+  @override
+  String get financesPaymentChanged => 'Le paiement ne correspond plus';
+
+  @override
   String get financesPaymentExpired => 'Lien de paiement expiré';
 
   @override
@@ -31070,6 +31076,18 @@ class AppLocalizationsFr extends AppLocalizations {
       'Secondes entre deux actualisations d\'une conversation ouverte. Des valeurs plus basses chargent davantage le serveur.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'Combien de minutes après le premier envoi d\'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d\'origine. À régler en dessous de la durée pendant laquelle Mollie garde une requête.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'Combien de minutes après le premier envoi d\'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d\'origine. À régler en dessous de la durée pendant laquelle PayPal garde une requête.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'Combien de minutes après le premier envoi d\'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d\'origine. À régler en dessous de la durée pendant laquelle Stripe garde une requête.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'Combien d’espaces, de personnes ou de groupes la nouvelle discussion liste à la fois ; les suivants viennent avec Afficher plus.';
 
@@ -31377,6 +31395,18 @@ class AppLocalizationsFr extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Actualisation de la conversation';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Fenêtre de réémission, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Fenêtre de réémission, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Fenêtre de réémission, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

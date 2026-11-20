@@ -123,7 +123,7 @@ void main() {
     },
   );
 
-  for (final ended in ['failed', 'expired', 'withdrawn']) {
+  for (final ended in ['failed', 'awaiting_provider', 'withdrawn']) {
     test(
       '$ended cannot resume a stale overview or create another order',
       () async {
@@ -133,7 +133,7 @@ void main() {
               original.orderId!,
               DemoPaymentOutcome.cancelled,
             );
-          case 'expired':
+          case 'awaiting_provider':
             now = now.add(const Duration(hours: 24));
           case 'withdrawn':
             await money.accountCommands.withdrawPaymentClaim(

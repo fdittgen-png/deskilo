@@ -183,6 +183,10 @@ const STEPS=[
   tableRows([T('billingFrom'),T('billingTo'),T('billingFee',{currency:S.currency}),T('billingOverage',{currency:S.currency})],'tiers',(t,tp)=>[cell(`${tp}.from`,'number'),cell(`${tp}.to`,'number'),cell(`${tp}.fee`,'number'),cell(`${tp}.over`,'number')],()=>({from:'',to:'',fee:'',over:''}),'+ '+T('billingAddTier')),
   lbl(T('billingLevels'),'billing','subLevels'),h('div',{class:'chips'},...['25','50','75','80','100'].map(v=>chip(v+' %',S.subLevels.includes(v),o=>set('subLevels',o?[...S.subLevels,v]:S.subLevels.filter(x=>x!==v))))),
   checkbox(T('billingFreeLevel'),'',S.freeLevel,v=>set('freeLevel',v),'','billing'),
+  // #4217 — how long a checkout may be sent again, per payment provider.
+  selectEl(T('resendMollie'),'paymentResend.mollie',opts(RESEND_MOLLIE),T('resendMollieHint'),null,'billing'),
+  selectEl(T('resendPaypal'),'paymentResend.paypal',opts(RESEND_PAYPAL),T('resendPaypalHint'),null,'billing'),
+  selectEl(T('resendStripe'),'paymentResend.stripe',opts(RESEND_STRIPE),T('resendStripeHint'),null,'billing'),
   lbl(T('billingPackages'),'packages','packages'),h('p',{class:'hint'},T('billingPackagesHint')),help('packages'),
   tableRows([T('colName'),T('colDays'),T('colPrice',{currency:S.currency})],'packages',(p,pp)=>[cell(`${pp}.name`),cell(`${pp}.days`,'number'),cell(`${pp}.price`,'number')],()=>({name:'',days:'',price:''}),'+ '+T('billingAddPackage'))]},
  check(){const f=[];

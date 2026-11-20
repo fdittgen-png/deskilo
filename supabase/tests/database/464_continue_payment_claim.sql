@@ -2,7 +2,7 @@
 -- #4147: continuation reads an existing own payment's original facts. It
 -- never opens a replacement, even after the balance or payment state changes.
 begin;
-select plan(32);
+select plan(33);
 
 create function pg_temp.seed() returns void language plpgsql as $$
 declare
@@ -88,7 +88,9 @@ insert into public.invoice_matches (workspace_id, invoice_id, paid_cents, resolu
 values (current_setting('t.ws')::uuid, current_setting('t.i1')::uuid, 1000, 'under_accepted', 'confirmed');
 set local role authenticated;
 select is(pg_temp.invoice()->>'still_due_cents', '3000', 'the invoice balance changed');
-select is(pg_temp.resume()->>'amount_cents', '6500', 'continuation does not recalculate the amount');
+select is(pg_temp.invoice()->>'claim_can_continue', 'false', 'a claim that no longer equals what is owed offers no Continue');
+select is(pg_temp.refusal(current_setting('t.payment')::uuid), 'DKC10:this payment cannot be continued',
+  'and is refused: nothing is charged for what was already paid');
 reset role;
 select is((select count(*)::int from public.payment_intents where workspace_id = current_setting('t.ws')::uuid), 1,
   'repeated continuation creates no second intent');
@@ -132,13 +134,13 @@ set local role authenticated;
 select is(pg_temp.refusal(current_setting('t.payment')::uuid), 'DKC10:this payment cannot be continued',
   'a paid payment cannot be continued');
 reset role;
-update public.payment_intents set status = 'created', created_at = now() - interval '24 hours', handed_at = now() - interval '1 hour'
+update public.payment_intents set status = 'created', created_at = now() - interval '25 hours', handed_at = now() - interval '24 hours'
  where id = current_setting('t.payment')::uuid;
 set local role authenticated;
-select is(pg_temp.invoice()->>'claim_payment_state', 'expired', 'a handed order beyond key retention is expired');
-select is(pg_temp.invoice()->>'claim_can_continue', 'false', 'an expired order offers no Continue');
+select is(pg_temp.invoice()->>'claim_payment_state', 'awaiting_provider', 'a handed order beyond its provider''s window awaits the provider, it is not expired');
+select is(pg_temp.invoice()->>'claim_can_continue', 'false', 'it offers no Continue');
 select is(pg_temp.refusal(current_setting('t.payment')::uuid), 'DKC10:this payment cannot be continued',
-  'an old overview cannot resume an expired order');
+  'an old overview cannot resume it');
 reset role;
 update public.payment_intents set created_at = now(), request_id = null where id = current_setting('t.payment')::uuid;
 set local role authenticated;

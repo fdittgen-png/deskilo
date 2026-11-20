@@ -12988,6 +12988,12 @@ class AppLocalizationsIt extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentAwaitingProvider => 'In attesa del fornitore';
+
+  @override
+  String get financesPaymentChanged => 'Il pagamento non corrisponde più';
+
+  @override
   String get financesPaymentExpired => 'Pagina di pagamento scaduta';
 
   @override
@@ -30971,6 +30977,18 @@ class AppLocalizationsIt extends AppLocalizations {
       'Secondi tra due aggiornamenti di una conversazione aperta. Valori più bassi caricano di più il server.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'Quanti minuti dopo il primo invio di un pagamento a Mollie lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui Mollie conserva una richiesta.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'Quanti minuti dopo il primo invio di un pagamento a PayPal lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui PayPal conserva una richiesta.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'Quanti minuti dopo il primo invio di un pagamento a Stripe lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui Stripe conserva una richiesta.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'Quanti spazi, persone o gruppi la nuova conversazione elenca alla volta; i successivi arrivano con Mostra altro.';
 
@@ -31279,6 +31297,18 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Aggiornamento della conversazione';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Finestra di reinvio, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Finestra di reinvio, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Finestra di reinvio, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

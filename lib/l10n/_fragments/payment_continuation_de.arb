@@ -22,5 +22,13 @@
   "financesPaymentReversed": "Zahlung rückgängig gemacht",
   "@financesPaymentReversed": {
     "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentChanged": "Die Zahlung stimmt nicht mehr",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
+  "financesPaymentAwaitingProvider": "Wartet auf den Anbieter",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
   }
 }
