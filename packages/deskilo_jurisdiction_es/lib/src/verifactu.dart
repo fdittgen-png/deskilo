@@ -31,6 +31,13 @@ const verifactuLegend = 'VERI*FACTU';
 const verifactuMention =
     'Factura verificable en la sede electrónica de la AEAT';
 
+/// The SOAP envelope and the AEAT's submission schema (SuministroLR), which
+/// wraps the records of one submission.
+const _soapNamespace = 'http://schemas.xmlsoap.org/soap/envelope/';
+const _verifactuSubmissionNamespace =
+    'https://www2.agenciatributaria.gob.es/static_files/common/internet/'
+    'dep/aplicaciones/es/aeat/tike/cont/ws/SuministroLR.xsd';
+
 /// The AEAT schema the record elements belong to.
 const _verifactuNamespace =
     'https://www2.agenciatributaria.gob.es/static_files/common/internet/'
@@ -259,6 +266,33 @@ VerifactuRecord verifactuRecordFor({
   );
 }
 
+/// #3932 -- the record of a sandbox TEST submission, built from an invoice
+/// preview (a test number outside the series; nothing issued). It starts a
+/// chain of its own: it takes no predecessor, so it can never claim a live
+/// record's huella, and no live record can be derived from it. A test is an
+/// ordinary alta: a credit note or a replacement is refused.
+VerifactuRecord verifactuTestRecordFor({
+  required RegisterDocument preview,
+  required RegisterParty seller,
+  required RegisterParty buyer,
+  required DateTime generatedAt,
+}) {
+  if (preview.isCreditNote || preview.replacesNumber.isNotEmpty) {
+    throw ArgumentError.value(
+      preview.number,
+      'preview',
+      'a test record is an ordinary alta, not a rectification',
+    );
+  }
+  return verifactuRecordFor(
+    invoice: preview,
+    seller: seller,
+    buyer: buyer,
+    previousHuella: '',
+    generatedAt: generatedAt,
+  );
+}
+
 /// Whether every record's huella still matches its fields and names its
 /// predecessor's huella — the check an inspector runs on the stored chain.
 bool verifactuChainHolds(List<VerifactuRecord> records) {
@@ -434,6 +468,64 @@ String verifactuRecordXml(
       el('FechaHoraHusoGenRegistro', r.generatedAt);
       el('TipoHuella', '01');
       el('Huella', r.huella);
+    },
+  );
+  return b.buildDocument().toXmlString(pretty: true, indent: '  ');
+}
+
+/// #3932 -- the SOAP document of a submission of ONE record: the AEAT's
+/// RegFactuSistemaFacturacion with its header naming the issuer, wrapping the
+/// record. The authenticating certificate belongs to the connection, not to
+/// the document.
+String verifactuSubmissionXml(
+  VerifactuRecord r, {
+  required String issuerName,
+  String description = 'Servicios de espacio de trabajo',
+  VerifactuSystem system = const VerifactuSystem(),
+}) {
+  final record = XmlDocument.parse(
+    verifactuRecordXml(
+      r,
+      issuerName: issuerName,
+      description: description,
+      system: system,
+    ),
+  ).rootElement.toXmlString();
+  final b = XmlBuilder();
+  b.processing('xml', 'version="1.0" encoding="UTF-8"');
+  b.element(
+    'soapenv:Envelope',
+    nest: () {
+      b.namespace(_soapNamespace, 'soapenv');
+      b.namespace(_verifactuSubmissionNamespace, 'sum');
+      b.namespace(_verifactuNamespace, 'sum1');
+      b.element('soapenv:Header');
+      b.element(
+        'soapenv:Body',
+        nest: () {
+          b.element(
+            'sum:RegFactuSistemaFacturacion',
+            nest: () {
+              b.element(
+                'sum:Cabecera',
+                nest: () {
+                  b.element(
+                    'sum1:ObligadoEmision',
+                    nest: () {
+                      b.element(
+                        'sum1:NombreRazon',
+                        nest: () => b.text(issuerName),
+                      );
+                      b.element('sum1:NIF', nest: () => b.text(r.issuerNif));
+                    },
+                  );
+                },
+              );
+              b.element('sum:RegistroFactura', nest: () => b.xml(record));
+            },
+          );
+        },
+      );
     },
   );
   return b.buildDocument().toXmlString(pretty: true, indent: '  ');

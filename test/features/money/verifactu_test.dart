@@ -280,4 +280,87 @@ void main() {
       );
     },
   );
+
+  group('the sandbox test record (#3932)', () {
+    test('it starts a chain of its own and never touches the live one', () {
+      final live = _chain();
+      final before = [for (final r in live) r.huella];
+      final test = verifactuTestRecordFor(
+        preview: _invoice('TEST-20270203101530'),
+        seller: _seller,
+        buyer: _buyer,
+        generatedAt: _at,
+      );
+      expect(test.isFirst, isTrue);
+      expect(test.previousHuella, isEmpty);
+      expect(before, isNot(contains(test.huella)));
+      expect(verifactuChainHolds([test]), isTrue);
+      expect(verifactuChainHolds(live), isTrue);
+      expect([for (final r in live) r.huella], before);
+      expect(
+        test.huella,
+        verifactuRecordFor(
+          invoice: _invoice('TEST-20270203101530'),
+          seller: _seller,
+          buyer: _buyer,
+          previousHuella: '',
+          generatedAt: _at,
+        ).huella,
+        reason: 'the same record as the first of any chain: nothing of the '
+            'live chain enters it',
+      );
+    });
+
+    test('a test is an ordinary alta: a credit note is refused', () {
+      expect(
+        () => verifactuTestRecordFor(
+          preview: _invoice('TEST-1', credit: true),
+          seller: _seller,
+          buyer: _buyer,
+          generatedAt: _at,
+        ),
+        throwsArgumentError,
+      );
+    });
+
+    test('the submission is the SOAP document of one record, issuer named', () {
+      final test = verifactuTestRecordFor(
+        preview: _invoice('TEST-20270203101530'),
+        seller: _seller,
+        buyer: _buyer,
+        generatedAt: _at,
+      );
+      final xml = verifactuSubmissionXml(test, issuerName: 'Espacio & Test SL');
+      final doc = XmlDocument.parse(xml);
+      final envelope = doc.rootElement;
+      expect(envelope.name.qualified, 'soapenv:Envelope');
+      final body = envelope.getElement('soapenv:Body')!;
+      final submission = body.getElement('sum:RegFactuSistemaFacturacion')!;
+      final issuer = submission
+          .getElement('sum:Cabecera')!
+          .getElement('sum1:ObligadoEmision')!;
+      expect(issuer.getElement('sum1:NombreRazon')!.innerText, 'Espacio & Test SL');
+      expect(issuer.getElement('sum1:NIF')!.innerText, test.issuerNif);
+      final wrappers = submission.findElements('sum:RegistroFactura').toList();
+      expect(wrappers, hasLength(1), reason: 'a test submits exactly one record');
+      final alta = wrappers.single.getElement('sum1:RegistroAlta')!;
+      expect(
+        alta
+            .getElement('sum1:IDFactura')!
+            .getElement('sum1:NumSerieFactura')!
+            .innerText,
+        'TEST-20270203101530',
+      );
+      expect(
+        alta
+            .getElement('sum1:Encadenamiento')!
+            .getElement('sum1:PrimerRegistro')!
+            .innerText,
+        'S',
+        reason: 'the test record chains to nothing',
+      );
+      expect(alta.getElement('sum1:Huella')!.innerText, test.huella);
+      expect(xml, contains('&amp;'), reason: 'the issuer name is escaped');
+    });
+  });
 }
