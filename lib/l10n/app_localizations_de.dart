@@ -29512,6 +29512,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get reservationCancelledSnack => 'Reservierung storniert.';
 
   @override
+  String get reservationContextChanged =>
+      'Der Arbeitsbereich oder das Konto hat gewechselt, während dies geöffnet war. Es wurde nichts gesendet: Öffnen Sie es erneut.';
+
+  @override
   String get reservationDeleteReasonLabel => 'Grund (optional)';
 
   @override

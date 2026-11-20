@@ -22,13 +22,37 @@ import '../../../task_recorder/domain/action_registry.dart'
 import '../../../task_recorder/presentation/recorder_seam.dart';
 import '../../../workspace/domain/workspace_feature.dart';
 import '../../../workspace/providers/workspace_providers.dart';
+import '../../application/bound_reservation.dart';
 import '../../domain/own_booking_removal.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
 import 'booking_range_text.dart';
 import 'calendar_file_button.dart';
+import 'reservation_deletion_dialog.dart';
 import 'reservation_detail_actions.dart';
 import 'reservation_status_note.dart';
+
+export '../../application/bound_reservation.dart'
+    show BoundReservation, StaleReservationContext;
+
+/// #4157 — the reservation commands of the workspace context on screen now,
+/// taken when a confirmation OPENS (before its first await), never when its
+/// last button is tapped: the context the displayed data was read under is the
+/// one the command runs on, or it does not run. Null when there is none ready
+/// (signed out, no workspace, still resolving): the confirmation then opens
+/// nothing that could write.
+BoundReservation? captureBoundReservation(WidgetRef ref) {
+  final origin = ref.read(readyWorkspaceContextProvider);
+  if (origin == null) return null;
+  return BoundReservation(
+    origin: origin,
+    reservations: ref.read(reservationRepositoryProvider),
+    recovery: ref.read(bookingRecoveryProvider),
+    // Read NOW, each time: a disposed screen's ref throws, and a context that
+    // cannot be read is not the origin.
+    readContext: () async => ref.read(readyWorkspaceContextProvider),
+  );
+}
 
 /// Where is my reserved seat — and what can I do about it? (#182, edit
 /// pass) Time range and status icon, the resolved location chain, the
@@ -41,13 +65,27 @@ import 'reservation_status_note.dart';
 /// Pops with the resolved [SeatContext] when the user wants the jump —
 /// the caller then signals the plan tab and navigates.
 @visibleForTesting
-class ReservationDetailSheet extends ConsumerWidget {
+class ReservationDetailSheet extends ConsumerStatefulWidget {
   const ReservationDetailSheet({super.key, required this.reservation});
 
   final Reservation reservation;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ReservationDetailSheet> createState() =>
+      _ReservationDetailSheetState();
+}
+
+class _ReservationDetailSheetState
+    extends ConsumerState<ReservationDetailSheet> {
+  /// #4157 — the commands of the context this sheet OPENED in: taken once,
+  /// here, never with a rebuild. A switch of installation, workspace or
+  /// account while it is open leaves them on the context its data was read
+  /// under, and every action re-reads the context before it sends.
+  late final BoundReservation? _bound = captureBoundReservation(ref);
+
+  @override
+  Widget build(BuildContext context) {
+    final reservation = widget.reservation;
     final l10n = context.l10n;
     final r = reservation;
     final seatId = r.seatId;
@@ -57,7 +95,7 @@ class ReservationDetailSheet extends ConsumerWidget {
     final target = watchReservationPlace(ref, r).value;
 
     final myMemberId = ref.watch(myMemberProvider).value?.id;
-    final actions = reservationActionsOf(ref, r);
+    final actions = reservationActionsOf(ref, r, bound: _bound);
     // The actions belong to the owner of a still-upcoming booking; a
     // PAST or already CHECKED-IN one is never deleted directly (#492) —
     // deleting it becomes a REQUEST an owner/admin validates (was the
@@ -312,6 +350,7 @@ Future<void> showReservationDetail(
   reservationActionsOf(
     ref,
     reservation,
+    bound: null,
   ).showOnPlan(context, ref, target.levelId);
 }
 
@@ -334,6 +373,7 @@ AsyncValue<SeatContext?> watchReservationPlace(WidgetRef ref, Reservation r) {
 ReservationDetailActions reservationActionsOf(
   WidgetRef ref,
   Reservation r, {
+  required BoundReservation? bound,
   bool inPane = false,
   void Function(String refusal)? onRefused,
   void Function()? refresh,
@@ -344,7 +384,7 @@ ReservationDetailActions reservationActionsOf(
       .read(enabledFeaturesSyncProvider)
       .contains(WorkspaceFeature.seriesBooking),
   refresh: refresh ?? () => invalidateBookingData(ref),
-  repository: () => ref.read(reservationRepositoryProvider),
+  bound: bound,
   inPane: inPane,
   onRefused: onRefused,
 );
@@ -405,60 +445,43 @@ OwnBookingRemoval ownBookingRemovalOf(WidgetRef ref, Reservation r) =>
 Future<bool> requestBookingDeletion(
   BuildContext context,
   WidgetRef ref,
-  Reservation reservation,
-) async {
-  // English only where no localization is installed (a bare test app).
-  final l10n =
-      context.l10n;
-  final reasonController = TextEditingController();
-  final confirmed = await showDialog<bool>(
-    context: context,
-    builder: (dialogContext) => AlertDialog(scrollable: true,
-      title: Text(l10n.reservationDeleteRequestButton),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(l10n.reservationDeleteRequestExplain),
-          const SizedBox(height: AppSpacing.md),
-          TextField(
-            key: const ValueKey('reservation-delete-reason'),
-            controller: reasonController,
-            maxLength: 300,
-            maxLines: 2,
-            decoration: InputDecoration(
-              labelText: l10n.reservationDeleteReasonLabel,
-              counterText: '',
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        TextButton(
-          key: const ValueKey('reservation-detail-sheet-cancel'),
-          onPressed: () => Navigator.of(dialogContext).pop(false),
-          child: Text(l10n.commonCancel),
-        ),
-        FilledButton(
-          key: const ValueKey('reservation-delete-submit'),
-          onPressed: () => Navigator.of(dialogContext).pop(true),
-          child: Text(l10n.reservationDeleteSubmit),
-        ),
-      ],
-    ),
-  );
-  final reason = reasonController.text;
-  if (confirmed != true || !context.mounted) return false;
+  Reservation reservation, {
+  required BoundReservation bound,
+}) async {
+  // #4157 — the events of the context the dialog OPENS in, read before its
+  // await and used only while the context is still the one the booking was
+  // shown in.
+  if (!await bound.isCurrent()) {
+    if (context.mounted) {
+      AppSnack.info(context, context.l10n.reservationContextChanged, replace: true);
+    }
+    return false;
+  }
+  if (!context.mounted) return false;
+  final events = ref.read(eventRepositoryProvider);
+  final l10n = context.l10n;
+  final reason = await askDeletionReason(context);
+  if (reason == null || !context.mounted) return false;
+  // #4157 — the dialog was an await: the request is filed on the context the
+  // booking was shown in, or not at all.
+  if (!await bound.isCurrent()) {
+    if (context.mounted) {
+      AppSnack.info(context, l10n.reservationContextChanged, replace: true);
+    }
+    return false;
+  }
+  if (!context.mounted) return false;
   if (!await runGuarded(
     context,
     domain: 'reservations',
     message: 'reservation deletion request failed',
-    action: () => ref
-        .read(eventRepositoryProvider)
-        .requestReservationDeletion(reservation.id, reason: reason),
+    action: () =>
+        events.requestReservationDeletion(reservation.id, reason: reason),
   )) {
     return false;
   }
+  // It was filed on its own context; a later one is not told so, nor refreshed.
+  if (!await bound.isCurrent()) return true;
   invalidateBookingData(ref);
   if (!context.mounted) return true;
   AppSnack.success(context, l10n.reservationDeleteSubmitted);

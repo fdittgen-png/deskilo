@@ -47,6 +47,7 @@
 # review {"path":"test/features/money/my_finances_selection_test.dart","before":27,"after":36,"invariant":"#4218 a business that cannot be reached or verified is said with a way to try again (declare and Pay), opening an invoice says it too, and an administrator paying another business's selection sees that business named and its configuration offered: each tap, confirmation and send settles once before the message or the dialog is read","cost":"four tests in 2 s locally"}
 # review {"path":"test/features/money/my_finances_selection_test.dart","before":36,"after":44,"invariant":"#4218 the read of the correction: a declaration over two months interrupted after the first says what was recorded and tries again on what is still selected, and Open and Configure for a business that cannot be entered say so: each tap, confirmation and send settles once before the stored payments or the message are read","cost":"three tests in 2 s locally"}
 # review {"path":"test/features/money/money_screen_test.dart","before":38,"after":40,"invariant":"#4218 Pay online while the business identity is not known: the scroll to the button and the tap each settle once before the message and the absent order are read","cost":"one test, under 1 s locally"}
+# review {"path":"test/features/reservations/bound_confirmation_switch_test.dart","before":0,"after":20,"invariant":"each real confirmation (own-seat cancel, booking confirm, detail cancel, deletion request) is driven to its dialog or sheet, the context is switched, and the confirm tap settles on the stale refusal; the unchanged-context twins settle on the write","cost":"nine widget tests, about two seconds in all"}
 19 test/app/desk_members/members_desk_test.dart
 11 test/app/entry_intents_flow_test.dart
 27 test/app/shell/desk_routes_test.dart
@@ -148,6 +149,7 @@
 10 test/features/profile/status_text_edit_test.dart
 13 test/features/profile/whatsapp_edit_test.dart
 12 test/features/reservations/booking_gate_test.dart
+20 test/features/reservations/bound_confirmation_switch_test.dart
 13 test/features/reservations/calendar_file_button_test.dart
 13 test/features/reservations/checkin_rides_reservation_test.dart
 15 test/features/reservations/getting_started_card_test.dart

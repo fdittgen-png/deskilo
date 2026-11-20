@@ -46959,6 +46959,12 @@ abstract class AppLocalizations {
   /// **'Reservation cancelled.'**
   String get reservationCancelledSnack;
 
+  /// #4157: shown when a confirmation (a booking, a check-in, a cancellation, a time change, a deletion request) is dropped because the installation, workspace or account changed while it was open; nothing was sent.
+  ///
+  /// In en, this message translates to:
+  /// **'The workspace or account changed while this was open. Nothing was sent: open it again.'**
+  String get reservationContextChanged;
+
   /// Reservation deletion requests (#492)
   ///
   /// In en, this message translates to:
