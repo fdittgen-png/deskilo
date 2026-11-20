@@ -1,17 +1,19 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/setup_levels.dart';
+import '../../providers/business_kind_providers.dart';
 
 /// One collapsible group of the setup questions (#3317): each question with
 /// a business example (#3283), its yes/no switch and its "Not sure yet".
 /// The group names its unresolved questions while folded; [controller]
 /// unfolds it and [focusOf] gives each question's switch its focus, so the
 /// error summary can take the owner to the first open one.
-class SetupQuestionGroup extends StatelessWidget {
+class SetupQuestionGroup extends ConsumerWidget {
   const SetupQuestionGroup({
     super.key,
     required this.id,
@@ -41,8 +43,12 @@ class SetupQuestionGroup extends StatelessWidget {
   onAnswer;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    // #4223 — a business whose kind keeps places off reads its own examples.
+    final hasPlaces = !ref.watch(keepsPlacesOffProvider);
+    String question(String key) =>
+        l10n.setupQuestionFor(key, hasPlaces: hasPlaces);
     return Card(
       child: ExpansionTile(
         key: ValueKey('setup-questions-$id'),
@@ -58,7 +64,7 @@ class SetupQuestionGroup extends StatelessWidget {
             ? Text(
                 questions
                     .where(unknown.contains)
-                    .map(l10n.setupQuestion)
+                    .map(question)
                     .join(' · '),
               )
             : null,
@@ -69,14 +75,14 @@ class SetupQuestionGroup extends StatelessWidget {
               key: ValueKey('setup-question-$key'),
               focusNode: focusOf(key),
               contentPadding: EdgeInsets.zero,
-              title: Text(l10n.setupQuestion(key)),
+              title: Text(question(key)),
               value: answers[key],
               onChanged: busy ? null : (v) => onAnswer(key, yes: v),
               // #3283 — the question in business terms, with an example.
               subtitle: Text(
                 unknown.contains(key)
                     ? l10n.setupAnswerUnknown
-                    : l10n.businessExample(key),
+                    : l10n.businessExampleFor(key, hasPlaces: hasPlaces),
                 key: ValueKey('setup-question-$key-example'),
               ),
             ),
@@ -86,16 +92,12 @@ class SetupQuestionGroup extends StatelessWidget {
               child: FilterChip(
                 key: ValueKey('setup-question-$key-unknown'),
                 label: Semantics(
-                  label: l10n.setupChoicesQuestionUnknown(
-                    l10n.setupQuestion(key),
-                  ),
+                  label: l10n.setupChoicesQuestionUnknown(question(key)),
                   excludeSemantics: true,
                   child: Text(l10n.setupAnswerUnknown),
                 ),
                 selected: unknown.contains(key),
-                tooltip: l10n.setupChoicesQuestionUnknown(
-                  l10n.setupQuestion(key),
-                ),
+                tooltip: l10n.setupChoicesQuestionUnknown(question(key)),
                 onSelected: busy
                     ? null
                     : (on) => onAnswer(key, yes: answers[key], unknown: on),

@@ -22,13 +22,16 @@ import '../../../../l10n/app_localizations.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../application/setup_step_actions.dart';
 import '../../domain/setup_status.dart';
+import '../../domain/setup_steps_for_kind.dart';
 import '../../domain/workspace_feature.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../setup_step_words.dart';
 import '../widgets/sample_data_card.dart';
 import '../widgets/setup_advanced_settings.dart';
 import '../widgets/setup_configuration_overview.dart';
+import '../widgets/setup_guide_parts.dart';
 import '../widgets/setup_guide_progress.dart';
 import '../widgets/setup_no_invoicing_banner.dart';
 import '../widgets/setup_return_bar.dart';
@@ -83,7 +86,13 @@ class _SetupGuideBody extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
-    final status = ref.watch(workspaceSetupStatusProvider(workspaceId));
+    // #4223 — a business whose kind keeps places off is offered no place step.
+    final noPlaces = ref.watch(keepsPlacesOffProvider);
+    final status = ref
+        .watch(workspaceSetupStatusProvider(workspaceId))
+        .whenData(
+          (s) => noPlaces ? s.withoutSteps(setupStepsNeedingPlaces) : s,
+        );
     Future<void> reload() async =>
         ref.invalidate(workspaceSetupStatusProvider(workspaceId));
     // #2869 (0545) — Later, Mark as done and Undo, by the server's rules.
@@ -183,7 +192,7 @@ class _SetupGuideBody extends ConsumerWidget {
       // Every milestone the owner chose is reached: say so, and keep what
       // more the space could use within reach.
       return [
-        _AllDone(text: l10n.setupGuideAllDone),
+        SetupGuideAllDone(text: l10n.setupGuideAllDone),
         for (final (id, title, steps) in [
           ('optional', l10n.setupGuideOptional, status.optional),
           ('deferred', l10n.setupGuideDeferred, status.deferred),
@@ -240,7 +249,7 @@ class _SetupGuideBody extends ConsumerWidget {
     return [
       if (toDo.isNotEmpty) ...[
         const SizedBox(height: AppSpacing.md),
-        _Header(text: l10n.setupGuideToDo),
+        SetupGuideHeader(text: l10n.setupGuideToDo),
         for (final s in toDo)
           _StepTile(step: s, status: status, actions: actions),
       ],
@@ -378,20 +387,6 @@ class _NextCard extends ConsumerWidget {
   }
 }
 
-class _Header extends StatelessWidget {
-  const _Header({required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Semantics(
-    header: true,
-    child: Padding(
-      padding: const EdgeInsets.only(bottom: AppSpacing.xs),
-      child: Text(text, style: Theme.of(context).textTheme.titleSmall),
-    ),
-  );
-}
-
 /// A folded group; nothing when it holds no step.
 class _Folded extends StatelessWidget {
   const _Folded({
@@ -481,20 +476,5 @@ Widget? _stepAction(
       SetupStepOffer.done => l10n.setupGuideMarkDone,
       SetupStepOffer.undo => l10n.readinessSetAsideUndo,
     }),
-  );
-}
-
-
-class _AllDone extends StatelessWidget {
-  const _AllDone({required this.text});
-  final String text;
-
-  @override
-  Widget build(BuildContext context) => Card(
-    key: const ValueKey('setup-guide-all-done'),
-    child: ListTile(
-      leading: const Icon(Icons.celebration_outlined),
-      title: Text(text),
-    ),
   );
 }

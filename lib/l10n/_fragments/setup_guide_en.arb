@@ -155,6 +155,10 @@
   "@noPlacesSetupServicesHint": {
     "description": "#3547 setupStepHint: the label for case 'services' of a business without bookable places."
   },
+  "noPlacesSetupHoursHint": "The days your business is open, and its closures.",
+  "@noPlacesSetupHoursHint": {
+    "description": "#4223 setupStepHint: the label for case 'hours' of a business without bookable places."
+  },
   "setupStepHintPaymentMethods": "Your bank details and payment instructions.",
   "@setupStepHintPaymentMethods": {
     "description": "#3485 setupStepHint: the label for case 'payment_methods'."

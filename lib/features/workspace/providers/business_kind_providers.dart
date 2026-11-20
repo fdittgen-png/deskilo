@@ -7,6 +7,8 @@ import '../application/business_kind_commands.dart';
 import '../data/supabase_business_kind_repository.dart';
 import '../domain/business_kind.dart';
 import '../domain/business_profile.dart';
+import '../domain/switched_off_by_kind.dart';
+import '../domain/workspace_feature.dart';
 import 'settings_providers.dart';
 import 'workspace_providers.dart';
 
@@ -34,3 +36,18 @@ BusinessKindCommands businessKindCommands(Ref ref) => BusinessKindCommands(
   ref.watch(businessKindRepositoryProvider),
   ref.watch(workspaceRepositoryProvider),
 );
+
+/// #4223 — whether the selected workspace's primary kind keeps places off.
+/// Watched, never awaited (the settings are a long chain): until the kinds and
+/// the profile are both read, and when one cannot be, it is false, so
+/// nothing is hidden on a guess.
+@riverpod
+bool keepsPlacesOff(Ref ref) {
+  final kinds = ref.watch(businessKindsProvider);
+  final profile = ref.watch(businessProfileProvider);
+  return switch ((kinds, profile)) {
+    (AsyncData(value: final k), AsyncData(value: final p)) =>
+      switchedOffByKind(WorkspaceFeature.placeBooking, p, k),
+    _ => false,
+  };
+}

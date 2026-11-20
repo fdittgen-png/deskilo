@@ -444,6 +444,11 @@ void main() {
         contextClientsProvider.overrideWith((ref) => ContextClients(counting)),
       ],
     );
+    // The live app's own guide (the page the test opens on) reads its own
+    // business's settings through the live client: that is the live app's,
+    // before and after the visit. The visit itself must add nothing.
+    await tester.pump();
+    final beforeVisit = counting.uses;
     await _consent(tester);
     expect(live.inDemo, isTrue);
 
@@ -466,9 +471,13 @@ void main() {
 
     await tester.tap(find.byKey(DemoControls.resetKey));
     await _settle(tester);
+    expect(
+      counting.uses,
+      beforeVisit,
+      reason: 'the visit sent the live client nothing',
+    );
     await tester.tap(find.byKey(DemoControls.leaveKey));
     await _settle(tester);
     expect(live.inDemo, isFalse);
-    expect(counting.uses, 0, reason: 'the live client was never used');
   });
 }

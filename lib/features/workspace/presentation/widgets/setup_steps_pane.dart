@@ -15,6 +15,8 @@ import '../../../../core/ui/loading_view.dart';
 import '../../../../l10n/dictionary_labels.dart';
 import '../../domain/launch_review.dart';
 import '../../domain/setup_status.dart';
+import '../../domain/setup_steps_for_kind.dart';
+import '../../providers/business_kind_providers.dart';
 import '../../providers/local_setup_providers.dart';
 import '../../providers/workspace_providers.dart';
 import '../setup_step_words.dart';
@@ -58,10 +60,14 @@ class SetupStepsPane extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
     final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
-    final status = workspaceId == null
+    final shown = workspaceId == null
         ? null
         : ref.watch(workspaceSetupStatusProvider(workspaceId)).value;
-    if (status == null) return const LoadingView();
+    if (shown == null) return const LoadingView();
+    // #4223 — a business whose kind keeps places off is offered no place step.
+    final status = ref.watch(keepsPlacesOffProvider)
+        ? shown.withoutSteps(setupStepsNeedingPlaces)
+        : shown;
     final groups = LaunchReview.from(status).groups;
     final steps = [for (final g in groups) ...g.steps];
     final done = steps.where((s) => s.state == SetupStepState.ready).length;
