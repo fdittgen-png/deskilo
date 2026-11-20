@@ -12975,6 +12975,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get financesPaymentAwaitingProvider => 'A la espera del proveedor';
+
+  @override
+  String get financesPaymentChanged => 'El pago ya no coincide';
+
+  @override
   String get financesPaymentExpired => 'Página de pago caducada';
 
   @override
@@ -30934,6 +30940,18 @@ class AppLocalizationsEs extends AppLocalizations {
       'Segundos entre dos actualizaciones de una conversación abierta. Valores más bajos cargan más el servidor.';
 
   @override
+  String get settingHintPaymentsResendWindowMollieMinutes =>
+      'Cuántos minutos después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Mollie conserva una solicitud.';
+
+  @override
+  String get settingHintPaymentsResendWindowPaypalMinutes =>
+      'Cuántos minutos después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que PayPal conserva una solicitud.';
+
+  @override
+  String get settingHintPaymentsResendWindowStripeMinutes =>
+      'Cuántos minutos después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Ajústela por debajo del tiempo que Stripe conserva una solicitud.';
+
+  @override
   String get settingHintPersonalMessageDirectoryPageSize =>
       'Cuántos espacios, personas o grupos muestra la nueva conversación a la vez; los siguientes llegan con Mostrar más.';
 
@@ -31242,6 +31260,18 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get settingLabelMessagingThreadPollSeconds =>
       'Actualización de la conversación';
+
+  @override
+  String get settingLabelPaymentsResendWindowMollieMinutes =>
+      'Ventana de reenvío, Mollie';
+
+  @override
+  String get settingLabelPaymentsResendWindowPaypalMinutes =>
+      'Ventana de reenvío, PayPal';
+
+  @override
+  String get settingLabelPaymentsResendWindowStripeMinutes =>
+      'Ventana de reenvío, Stripe';
 
   @override
   String get settingLabelPersonalMessageDirectoryPageSize =>

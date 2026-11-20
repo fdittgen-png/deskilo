@@ -104,6 +104,12 @@ abstract final class SettingDefaults {
   static const int messagingMessageRequestsPerDay = 10;
   /// `messaging.thread_poll_seconds`
   static const int messagingThreadPollSeconds = 15;
+  /// `payments.resend_window_mollie_minutes`
+  static const int paymentsResendWindowMollieMinutes = 50;
+  /// `payments.resend_window_paypal_minutes`
+  static const int paymentsResendWindowPaypalMinutes = 330;
+  /// `payments.resend_window_stripe_minutes`
+  static const int paymentsResendWindowStripeMinutes = 1380;
   /// `personal.message_directory_page_size`
   static const int personalMessageDirectoryPageSize = 50;
   /// `personal.message_directory_query_length`

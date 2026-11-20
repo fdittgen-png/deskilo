@@ -781,5 +781,11 @@
  "businessKind_salon": "Salon — beauté, coiffure, tatouage",
  "businessKind_service": "Autre entreprise de services",
  "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
- "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
+ "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
+ "resendMollie": "Fenêtre de réémission, Mollie",
+ "resendMollieHint": "Combien de temps après le premier envoi d'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Mollie retient une requête (1 heure). Se règle dans les paramètres de l'app.",
+ "resendPaypal": "Fenêtre de réémission, PayPal",
+ "resendPaypalHint": "Combien de temps après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle PayPal retient une requête (6 heures). Se règle dans les paramètres de l'app.",
+ "resendStripe": "Fenêtre de réémission, Stripe",
+ "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app."
 }

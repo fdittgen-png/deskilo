@@ -257,6 +257,23 @@ void main() {
     expect(h.released, h.entered);
   });
 
+  // #4217 — where Continue is not possible the finance page says why and
+  // offers taking the declaration back.
+  for (final state in ['changed', 'awaiting_provider']) {
+    testWidgets('$state offers no Continue and offers taking the payment back', (tester) async {
+      final h = _Harness();
+      await h.show(tester, ready: false, state: state);
+      expect(_continue(_a), findsNothing);
+      expect(
+        find.descendant(
+          of: find.byKey(const ValueKey(_a)),
+          matching: find.byKey(const ValueKey('finances-withdraw-same-invoice')),
+        ),
+        findsOneWidget,
+      );
+    });
+  }
+
   for (final ended in ['failed', 'expired', 'withdrawn', 'reversed']) {
     testWidgets('$ended is stated and offers no Continue', (tester) async {
       final h = _Harness();

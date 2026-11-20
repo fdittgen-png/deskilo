@@ -786,7 +786,13 @@ window.SETUP_L10N={
    "businessKind_salon": "Salon — beauty, hair, tattoo",
    "businessKind_service": "Another service business",
    "helpAppBusinessKind": "Setup guide → first step (or Workspace settings → What kind of business is it?)",
-   "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page."
+   "businessKindNoBookingYet": "Booking of classes and appointments is not part of this version. Today you get: your services with prices, invoices, online payment, messages and your public page.",
+   "resendMollie": "Resend window, Mollie",
+   "resendMollieHint": "How long after a checkout was first sent to Mollie the same checkout may be sent again under its original request. Keep it below how long Mollie remembers a request (1 hour). Set in the app's settings.",
+   "resendPaypal": "Resend window, PayPal",
+   "resendPaypalHint": "How long after a checkout was first sent to PayPal the same checkout may be sent again under its original request. Keep it below how long PayPal remembers a request (6 hours). Set in the app's settings.",
+   "resendStripe": "Resend window, Stripe",
+   "resendStripeHint": "How long after a checkout was first sent to Stripe the same checkout may be sent again under its original request. Keep it below how long Stripe remembers a request (24 hours). Set in the app's settings."
   },
   "feature": {
    "calendarTab": [
@@ -2605,7 +2611,13 @@ window.SETUP_L10N={
    "businessKind_salon": "Salon — beauté, coiffure, tatouage",
    "businessKind_service": "Autre entreprise de services",
    "helpAppBusinessKind": "Guide de mise en place → première étape (ou Réglages de l’espace → Quel genre d’activité est-ce ?)",
-   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique."
+   "businessKindNoBookingYet": "La réservation de cours et de rendez-vous ne fait pas partie de cette version. Aujourd’hui, vous avez : vos prestations avec leurs prix, les factures, le paiement en ligne, les messages et votre page publique.",
+   "resendMollie": "Fenêtre de réémission, Mollie",
+   "resendMollieHint": "Combien de temps après le premier envoi d'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Mollie retient une requête (1 heure). Se règle dans les paramètres de l'app.",
+   "resendPaypal": "Fenêtre de réémission, PayPal",
+   "resendPaypalHint": "Combien de temps après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle PayPal retient une requête (6 heures). Se règle dans les paramètres de l'app.",
+   "resendStripe": "Fenêtre de réémission, Stripe",
+   "resendStripeHint": "Combien de temps après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À garder sous la durée pendant laquelle Stripe retient une requête (24 heures). Se règle dans les paramètres de l'app."
   },
   "feature": {
    "calendarTab": [
@@ -4424,7 +4436,13 @@ window.SETUP_L10N={
    "businessKind_salon": "Salon — Kosmetik, Friseur, Tattoo",
    "businessKind_service": "Anderes Dienstleistungsunternehmen",
    "helpAppBusinessKind": "Einrichtungsleitfaden → erster Schritt (oder Einstellungen des Space → Was für ein Unternehmen ist es?)",
-   "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite."
+   "businessKindNoBookingYet": "Die Buchung von Kursen und Terminen ist nicht Teil dieser Version. Heute erhalten Sie: Ihre Leistungen mit Preisen, Rechnungen, Online-Zahlung, Nachrichten und Ihre öffentliche Seite.",
+   "resendMollie": "Wiederholungsfenster, Mollie",
+   "resendMollieHint": "Wie lange nach dem ersten Senden einer Zahlung an Mollie dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Mollie eine Anfrage behält (1 Stunde). Wird in den Einstellungen der App festgelegt.",
+   "resendPaypal": "Wiederholungsfenster, PayPal",
+   "resendPaypalHint": "Wie lange nach dem ersten Senden einer Zahlung an PayPal dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die PayPal eine Anfrage behält (6 Stunden). Wird in den Einstellungen der App festgelegt.",
+   "resendStripe": "Wiederholungsfenster, Stripe",
+   "resendStripeHint": "Wie lange nach dem ersten Senden einer Zahlung an Stripe dieselbe Zahlung unter ihrer ursprünglichen Anfrage erneut gesendet werden darf. Unter der Dauer halten, für die Stripe eine Anfrage behält (24 Stunden). Wird in den Einstellungen der App festgelegt."
   },
   "feature": {
    "calendarTab": [
@@ -6243,7 +6261,13 @@ window.SETUP_L10N={
    "businessKind_salon": "Salón — belleza, peluquería, tatuaje",
    "businessKind_service": "Otra empresa de servicios",
    "helpAppBusinessKind": "Guía de configuración → primer paso (o Ajustes del espacio → ¿Qué tipo de negocio es?)",
-   "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública."
+   "businessKindNoBookingYet": "La reserva de clases y citas no forma parte de esta versión. Hoy obtiene: sus servicios con precios, facturas, pago en línea, mensajes y su página pública.",
+   "resendMollie": "Ventana de reenvío, Mollie",
+   "resendMollieHint": "Cuánto tiempo después del primer envío de un pago a Mollie puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Mollie conserva una solicitud (1 hora). Se define en los ajustes de la app.",
+   "resendPaypal": "Ventana de reenvío, PayPal",
+   "resendPaypalHint": "Cuánto tiempo después del primer envío de un pago a PayPal puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que PayPal conserva una solicitud (6 horas). Se define en los ajustes de la app.",
+   "resendStripe": "Ventana de reenvío, Stripe",
+   "resendStripeHint": "Cuánto tiempo después del primer envío de un pago a Stripe puede reenviarse el mismo pago con su solicitud original. Manténgala por debajo del tiempo que Stripe conserva una solicitud (24 horas). Se define en los ajustes de la app."
   },
   "feature": {
    "calendarTab": [
@@ -8062,7 +8086,13 @@ window.SETUP_L10N={
    "businessKind_salon": "Salone — estetica, parrucchiere, tatuaggio",
    "businessKind_service": "Altra impresa di servizi",
    "helpAppBusinessKind": "Guida di configurazione → primo passo (o Impostazioni dello spazio → Che tipo di attività è?)",
-   "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica."
+   "businessKindNoBookingYet": "La prenotazione di lezioni e appuntamenti non fa parte di questa versione. Oggi ha: i suoi servizi con i prezzi, le fatture, il pagamento online, i messaggi e la sua pagina pubblica.",
+   "resendMollie": "Finestra di reinvio, Mollie",
+   "resendMollieHint": "Per quanto tempo dopo il primo invio di un pagamento a Mollie lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui Mollie conserva una richiesta (1 ora). Si imposta nelle impostazioni dell'app.",
+   "resendPaypal": "Finestra di reinvio, PayPal",
+   "resendPaypalHint": "Per quanto tempo dopo il primo invio di un pagamento a PayPal lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui PayPal conserva una richiesta (6 ore). Si imposta nelle impostazioni dell'app.",
+   "resendStripe": "Finestra di reinvio, Stripe",
+   "resendStripeHint": "Per quanto tempo dopo il primo invio di un pagamento a Stripe lo stesso pagamento può essere reinviato con la sua richiesta originale. Tienila sotto il tempo per cui Stripe conserva una richiesta (24 ore). Si imposta nelle impostazioni dell'app."
   },
   "feature": {
    "calendarTab": [

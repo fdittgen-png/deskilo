@@ -118,7 +118,7 @@ String _regionSettingLabel(AppLocalizations l10n, String key) => switch (key) {
       'locale.default_country' => l10n.settingLabelLocaleDefaultCountry,
       'locale.default_locale' => l10n.settingLabelLocaleDefaultLocale,
       'locale.default_week_start' => l10n.settingLabelLocaleDefaultWeekStart,
-      _ => key,
+      _ => _paymentSettingLabel(l10n, key),
     };
 
 /// #3098, #3099 -- how often the app re-reads: after an absence, and the
@@ -230,7 +230,7 @@ String? _regionSettingHint(AppLocalizations l10n, String key) => switch (key) {
       'locale.default_country' => l10n.settingHintLocaleDefaultCountry,
       'locale.default_locale' => l10n.settingHintLocaleDefaultLocale,
       'locale.default_week_start' => l10n.settingHintLocaleDefaultWeekStart,
-      _ => null,
+      _ => _paymentSettingHint(l10n, key),
     };
 
 String? _liveUpdateSettingHint(AppLocalizations l10n, String key) => switch (key) {
@@ -308,3 +308,18 @@ String? settingRangeLabel(AppLocalizations l10n, SettingDefinition d) {
   if (max != null) return l10n.settingMaxOnly('$max', unit);
   return null;
 }
+
+/// #4217 — the window to send a checkout again, per provider.
+String _paymentSettingLabel(AppLocalizations l10n, String key) => switch (key) {
+      'payments.resend_window_mollie_minutes' => l10n.settingLabelPaymentsResendWindowMollieMinutes,
+      'payments.resend_window_paypal_minutes' => l10n.settingLabelPaymentsResendWindowPaypalMinutes,
+      'payments.resend_window_stripe_minutes' => l10n.settingLabelPaymentsResendWindowStripeMinutes,
+      _ => key,
+    };
+
+String? _paymentSettingHint(AppLocalizations l10n, String key) => switch (key) {
+      'payments.resend_window_mollie_minutes' => l10n.settingHintPaymentsResendWindowMollieMinutes,
+      'payments.resend_window_paypal_minutes' => l10n.settingHintPaymentsResendWindowPaypalMinutes,
+      'payments.resend_window_stripe_minutes' => l10n.settingHintPaymentsResendWindowStripeMinutes,
+      _ => null,
+    };

@@ -1,0 +1,26 @@
+{
+  "settingLabelPaymentsResendWindowMollieMinutes": "Fenêtre de réémission, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowMollieMinutes": "Combien de minutes après le premier envoi d'un paiement à Mollie le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle Mollie garde une requête.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Fenêtre de réémission, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Combien de minutes après le premier envoi d'un paiement à PayPal le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle PayPal garde une requête.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Fenêtre de réémission, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Combien de minutes après le premier envoi d'un paiement à Stripe le même paiement peut être renvoyé sous sa requête d'origine. À régler en dessous de la durée pendant laquelle Stripe garde une requête.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  }
+}

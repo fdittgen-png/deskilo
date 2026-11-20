@@ -1,0 +1,26 @@
+{
+  "settingLabelPaymentsResendWindowMollieMinutes": "Finestra di reinvio, Mollie",
+  "@settingLabelPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowMollieMinutes": "Quanti minuti dopo il primo invio di un pagamento a Mollie lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui Mollie conserva una richiesta.",
+  "@settingHintPaymentsResendWindowMollieMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowPaypalMinutes": "Finestra di reinvio, PayPal",
+  "@settingLabelPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowPaypalMinutes": "Quanti minuti dopo il primo invio di un pagamento a PayPal lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui PayPal conserva una richiesta.",
+  "@settingHintPaymentsResendWindowPaypalMinutes": {
+    "description": "#4217 settings: Setting hint."
+  },
+  "settingLabelPaymentsResendWindowStripeMinutes": "Finestra di reinvio, Stripe",
+  "@settingLabelPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting label."
+  },
+  "settingHintPaymentsResendWindowStripeMinutes": "Quanti minuti dopo il primo invio di un pagamento a Stripe lo stesso pagamento può essere reinviato con la sua richiesta originale. Impostala sotto il tempo per cui Stripe conserva una richiesta.",
+  "@settingHintPaymentsResendWindowStripeMinutes": {
+    "description": "#4217 settings: Setting hint."
+  }
+}

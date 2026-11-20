@@ -22,5 +22,13 @@
   "financesPaymentReversed": "Payment reversed",
   "@financesPaymentReversed": {
     "description": "#4147: continue an existing own payment (financesPaymentReversed)"
+  },
+  "financesPaymentChanged": "Payment no longer matches",
+  "@financesPaymentChanged": {
+    "description": "#4217: a payment whose claim no longer equals what is owed (financesPaymentChanged)"
+  },
+  "financesPaymentAwaitingProvider": "Awaiting the provider",
+  "@financesPaymentAwaitingProvider": {
+    "description": "#4217: a handed payment past its provider's window (financesPaymentAwaitingProvider)"
   }
 }
