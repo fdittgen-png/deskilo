@@ -78,7 +78,8 @@ List<ChannelGap> channelGaps(
       if (blank(buyer.vatId) && blank(buyer.legalId)) ChannelGap.buyerTaxId,
       ..._regionGaps(seller.country.trim().toUpperCase(), seller, buyer),
     ],
-    EInvoiceFormat.ksefFa3 => [if (blank(seller.vatId)) ChannelGap.sellerVatId],
+    EInvoiceFormat.ksefFa3 ||
+    EInvoiceFormat.verifactu => [if (blank(seller.vatId)) ChannelGap.sellerVatId],
     EInvoiceFormat.facturX || EInvoiceFormat.en16931Ubl => const [],
   };
 }
