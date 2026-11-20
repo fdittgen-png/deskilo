@@ -18,6 +18,7 @@ import 'package:deskilo/features/events/domain/validation_policy.dart';
 import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:deskilo/features/events/providers/event_providers.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -37,6 +38,13 @@ Matcher _refused(String message) => isA<PostgrestException>().having(
   'message',
   contains(message),
 );
+
+/// A booking refusal, as the data boundary raises it (#4156): the kind, and
+/// the code when the server issues one.
+Matcher _bookingRefused(ReservationRefusalKind kind, {String? code}) =>
+    isA<ReservationRefused>()
+        .having((e) => e.refusal.kind, 'kind', kind)
+        .having((e) => e.refusal.code, 'code', code);
 
 DemoFixture _as(DemoPersona persona) =>
     DemoFixture.build()..becomePersona(persona);
@@ -155,7 +163,7 @@ void main() {
           startsAt: seat.startsAt.add(const Duration(days: 400)),
           endsAt: seat.endsAt.add(const Duration(days: 400)),
         ),
-        throwsA(_refused('not an admin')),
+        throwsA(_bookingRefused(ReservationRefusalKind.unknown)),
       );
     });
 
@@ -174,7 +182,7 @@ void main() {
           startsAt: at,
           endsAt: to,
         ),
-        throwsA(_refused('unknown subject member')),
+        throwsA(_bookingRefused(ReservationRefusalKind.unknown)),
       );
       await repo.createFor(
         workspaceId: 'ws-1',
@@ -198,7 +206,7 @@ void main() {
       final theirs = _futureBookingOf(fixture, _chiara);
       await expectLater(
         repo.cancel(theirs.id),
-        throwsA(_refused('not your reservation')),
+        throwsA(_bookingRefused(ReservationRefusalKind.coded, code: 'DKK29')),
       );
       final mine = _futureBookingOf(fixture, _bruno);
       await repo.cancel(mine.id);
@@ -232,7 +240,7 @@ void main() {
           startsAt: other.startsAt,
           endsAt: other.endsAt,
         ),
-        throwsA(_refused('already reserved')),
+        throwsA(_bookingRefused(ReservationRefusalKind.alreadyReserved)),
       );
     });
   });

@@ -11,12 +11,11 @@ import 'package:deskilo/features/events/domain/workspace_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_event_repository.dart';
 import '../../helpers/mock_providers.dart';
 import '../../helpers/navigation.dart';
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/screens/money_screen.dart' show pumpMoney;
 import '../../helpers/screens/plan_closed_day.dart' show ThrowingReservationRepository, pumpAvailabilityPlan;
 import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, seatCenter;
@@ -104,7 +103,7 @@ void main() {
     await pumpAvailabilityPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        const PostgrestException(
+        refused(
           // assert_member_quota's refusal (0031), coded by 0739.
           message: 'half-day quota exceeded — request additional half-days',
           code: 'DKK02', // #3810: the code 0739 raises
