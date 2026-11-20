@@ -77,6 +77,7 @@ Deno.test("#3932 the record goes to the AEAT sandbox as SOAP, behind the busines
     AEAT.contentType,
   );
   assert(r.sent[0].init.client !== undefined);
+  assertEquals(r.sent[0].init.redirect, "manual");
   assertEquals([r.made[0].cert, r.made[0].key], [CERT, KEY]);
   assertEquals(r.made[0].closed, true);
   assertEquals(d.dispatched, 1);
@@ -131,8 +132,6 @@ Deno.test("#3932 an address that is not the AEAT's gets neither the request nor 
       r.fetchImpl,
       r.makeClient,
     );
-    // the plain-http address of a documented host is left to the destination guard
-    if (base_url.startsWith("http://")) continue;
     assertEquals([out.status, out.detail], ["failed", ES_REFUSALS.host]);
     assertEquals([r.sent.length, r.made.length, d.dispatched], [0, 0, 0]);
   }
@@ -210,4 +209,31 @@ Deno.test("#3932 the connector is a test channel with its sandbox and no status 
   assertEquals(esVerifactuConnector.testDocument, true);
   assertEquals(esVerifactuConnector.status, undefined);
   assertEquals(esVerifactuConnector.sandbox, { base_url: AEAT.sandboxUrl });
+});
+
+Deno.test("#3932 a runtime that cannot present a client certificate sends nothing and says so", async () => {
+  const r = rig();
+  const d = doc();
+  const out = await submitEsVerifactu(cfg, d, r.fetchImpl, () => {
+    throw new Error(ES_REFUSALS.mtls);
+  });
+  assertEquals([out.status, out.detail], ["failed", ES_REFUSALS.mtls]);
+  assertEquals([r.sent.length, d.dispatched], [0, 0]);
+  const before = Deno.createHttpClient;
+  // deno-lint-ignore no-explicit-any
+  (Deno as any).createHttpClient = undefined;
+  try {
+    const none = await submitEsVerifactu(cfg, doc(), r.fetchImpl);
+    assertEquals([none.status, none.detail], ["failed", ES_REFUSALS.mtls]);
+    assertEquals(r.sent.length, 0);
+  } finally {
+    Deno.createHttpClient = before;
+  }
+});
+
+Deno.test("#3932 the owner reads the fixed keys of a certificate failure, never more", async () => {
+  const { clientDetail } = await import("./connectors/safe_fetch.ts");
+  assertEquals(clientDetail("failed", ES_REFUSALS.certificate), "certificate_unreadable");
+  assertEquals(clientDetail("failed", ES_REFUSALS.mtls), "mtls_unavailable");
+  assertEquals(clientDetail("failed", "anything else"), "provider_unreachable");
 });

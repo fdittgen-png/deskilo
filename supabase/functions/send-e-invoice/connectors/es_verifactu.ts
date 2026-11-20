@@ -50,6 +50,8 @@ export const AEAT = {
 export const ES_REFUSALS = {
   host: "destination_not_allowed",
   certificate: "certificate_unreadable",
+  /** The runtime cannot present a client certificate: nothing is sent. */
+  mtls: "mtls_unavailable",
 } as const;
 
 /** The mutual-TLS client of one call; a test hands in its own. */
@@ -57,7 +59,13 @@ export type MakeClient = (cert: string, key: string) => Deno.HttpClient;
 
 /** The factory the installed connector uses; a test swaps it and puts it back. */
 export const clients: { make: MakeClient } = {
-  make: (cert, key) => Deno.createHttpClient({ cert, key }),
+  make: (cert, key) => {
+    // a runtime without client certificates must never send without one
+    if (typeof Deno?.createHttpClient !== "function") {
+      throw new Error(ES_REFUSALS.mtls);
+    }
+    return Deno.createHttpClient({ cert, key });
+  },
 };
 
 /** A PEM as stored: line breaks typed as `\n` become line breaks. */
@@ -82,12 +90,17 @@ export async function submitEsVerifactu(
   makeClient: MakeClient = (cert, key) => clients.make(cert, key),
 ): Promise<Submission> {
   let host = "";
+  let https = false;
   try {
-    host = new URL(cfg.base_url).host;
+    const url = new URL(cfg.base_url);
+    host = url.host;
+    https = url.protocol === "https:";
   } catch {
     // an unreadable address is refused below
   }
-  if (!(AEAT.hosts as readonly string[]).includes(host)) {
+  // the certificate goes to the AEAT's own hosts over https only, whatever
+  // fetch the caller hands in
+  if (!https || !(AEAT.hosts as readonly string[]).includes(host)) {
     return failed(ES_REFUSALS.host);
   }
   const cert = pem(cfg.client_certificate ?? "");
@@ -98,8 +111,12 @@ export async function submitEsVerifactu(
   let client: Deno.HttpClient;
   try {
     client = makeClient(cert, key);
-  } catch {
-    return failed(ES_REFUSALS.certificate);
+  } catch (error) {
+    return failed(
+      error instanceof Error && error.message === ES_REFUSALS.mtls
+        ? ES_REFUSALS.mtls
+        : ES_REFUSALS.certificate,
+    );
   }
   try {
     doc.onDispatch?.();
@@ -107,6 +124,7 @@ export async function submitEsVerifactu(
       method: "POST",
       headers: { "Content-Type": AEAT.contentType, "SOAPAction": "" },
       body: doc.bytes,
+      redirect: "manual",
       client,
     } as RequestInit);
     if (!res.ok) return refused(res);
