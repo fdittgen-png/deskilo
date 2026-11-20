@@ -328,6 +328,63 @@ void main() {
 
   // #3553 (1b) — a kind is asked only of a source that says it can narrow
   // by kind; another is reported as not covered, never as no result.
+  // #2832 — a source that advertises `profile_facets` is asked for exact
+  // containment of each fact; another is reported as not covered.
+  group('the facet filters', () {
+    Map<String, dynamic> descriptor({required bool facets, bool kind = false}) {
+      final d = Map<String, dynamic>.from(
+        fixture('descriptor_current')['descriptor'] as Map,
+      );
+      d['capabilities'] = [
+        if (facets) 'profile_facets',
+        if (kind) 'kind_filter',
+        'operation_header',
+      ];
+      return d;
+    }
+
+    Iterable<http.BaseRequest> cardReads() =>
+        seen.where((r) => r.url.path.endsWith('/public_workspace_cards'));
+
+    test('a source that advertises it is asked for each fact by containment',
+        () async {
+      descriptors[remote] = descriptor(facets: true);
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        amenities: const ['parking', 'wifi'],
+        accessibility: const ['lift'],
+      );
+      expect(page.uncovered, isFalse);
+      final q = cardReads().last.url.queryParameters;
+      expect(q['document->amenities'], 'cs.["parking","wifi"]');
+      expect(q['document->accessibility'], 'cs.["lift"]');
+    });
+
+    test('a source that does not is not asked, and is not covered', () async {
+      descriptors[remote] = descriptor(facets: false, kind: true);
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        amenities: const ['wifi'],
+      );
+      expect(page.uncovered, isTrue);
+      expect(page.cards, isEmpty);
+      expect(cardReads(), isEmpty, reason: 'its unfiltered cards are not read');
+    });
+
+    test('a kind alone does not need the facets capability', () async {
+      descriptors[remote] = descriptor(facets: false, kind: true);
+      final page = await repository().workspaces(
+        remoteSource,
+        '',
+        kind: 'practice',
+      );
+      expect(page.uncovered, isFalse);
+      expect(cardReads().last.url.queryParameters.containsKey('document->amenities'), isFalse);
+    });
+  });
+
   group('the kind filter', () {
     Map<String, dynamic> descriptor({required bool kindFilter}) {
       final d = Map<String, dynamic>.from(

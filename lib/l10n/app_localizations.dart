@@ -13215,11 +13215,65 @@ abstract class AppLocalizations {
   /// **'Wi-Fi'**
   String get discoveryFacetAmenityWifi;
 
+  /// #2832 Discover: facts chosen and no answering business publishes all of them
+  ///
+  /// In en, this message translates to:
+  /// **'No business that answered publishes all of these.'**
+  String get discoveryFacetNoMatch;
+
+  /// #2832 Discover: directories that cannot filter by published facts are not asked, so their businesses are not in this result; never read as 'none found'
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{One directory cannot filter by these facts: it was not asked.} other{{count} directories cannot filter by these facts: they were not asked.}}'**
+  String discoveryFacetsUncovered(int count);
+
   /// Public profile editor or preview: Not published
   ///
   /// In en, this message translates to:
   /// **'Not published'**
   String get discoveryFieldNotPublished;
+
+  /// #2832 Discover: the group of published accessibility facts
+  ///
+  /// In en, this message translates to:
+  /// **'Accessibility'**
+  String get discoveryFiltersAccessibility;
+
+  /// #2832 Discover: the group of published facilities (wifi, meeting room…)
+  ///
+  /// In en, this message translates to:
+  /// **'Facilities'**
+  String get discoveryFiltersAmenities;
+
+  /// #2832 Discover: the filters button with the number of facts chosen
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{Filters ({count})} other{Filters ({count})}}'**
+  String discoveryFiltersButtonCount(int count);
+
+  /// #2832 Discover: drops every fact chosen
+  ///
+  /// In en, this message translates to:
+  /// **'Clear filters'**
+  String get discoveryFiltersClear;
+
+  /// #2832 Discover: what an unpublished fact means (unknown, not refused)
+  ///
+  /// In en, this message translates to:
+  /// **'A business that publishes nothing about a fact is not shown for it: what is unpublished is unknown, not refused.'**
+  String get discoveryFiltersNote;
+
+  /// #2832 Discover: closes the filter sheet and shows the results
+  ///
+  /// In en, this message translates to:
+  /// **'Show results'**
+  String get discoveryFiltersShow;
+
+  /// #2832 Discover: title of the sheet that narrows by what businesses publish
+  ///
+  /// In en, this message translates to:
+  /// **'Filter by what businesses publish'**
+  String get discoveryFiltersTitle;
 
   /// Public profile editor or preview: No regular open days published
   ///

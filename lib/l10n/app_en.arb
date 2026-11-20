@@ -10940,9 +10940,55 @@
   "@discoveryFacetAmenityWifi": {
     "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
   },
+  "discoveryFacetNoMatch": "No business that answered publishes all of these.",
+  "@discoveryFacetNoMatch": {
+    "description": "#2832 Discover: facts chosen and no answering business publishes all of them"
+  },
+  "discoveryFacetsUncovered": "{count, plural, one{One directory cannot filter by these facts: it was not asked.} other{{count} directories cannot filter by these facts: they were not asked.}}",
+  "@discoveryFacetsUncovered": {
+    "description": "#2832 Discover: directories that cannot filter by published facts are not asked, so their businesses are not in this result; never read as 'none found'",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discoveryFieldNotPublished": "Not published",
   "@discoveryFieldNotPublished": {
     "description": "Public profile editor or preview: Not published"
+  },
+  "discoveryFiltersAccessibility": "Accessibility",
+  "@discoveryFiltersAccessibility": {
+    "description": "#2832 Discover: the group of published accessibility facts"
+  },
+  "discoveryFiltersAmenities": "Facilities",
+  "@discoveryFiltersAmenities": {
+    "description": "#2832 Discover: the group of published facilities (wifi, meeting room…)"
+  },
+  "discoveryFiltersButtonCount": "{count, plural, one{Filters ({count})} other{Filters ({count})}}",
+  "@discoveryFiltersButtonCount": {
+    "description": "#2832 Discover: the filters button with the number of facts chosen",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryFiltersClear": "Clear filters",
+  "@discoveryFiltersClear": {
+    "description": "#2832 Discover: drops every fact chosen"
+  },
+  "discoveryFiltersNote": "A business that publishes nothing about a fact is not shown for it: what is unpublished is unknown, not refused.",
+  "@discoveryFiltersNote": {
+    "description": "#2832 Discover: what an unpublished fact means (unknown, not refused)"
+  },
+  "discoveryFiltersShow": "Show results",
+  "@discoveryFiltersShow": {
+    "description": "#2832 Discover: closes the filter sheet and shows the results"
+  },
+  "discoveryFiltersTitle": "Filter by what businesses publish",
+  "@discoveryFiltersTitle": {
+    "description": "#2832 Discover: title of the sheet that narrows by what businesses publish"
   },
   "discoveryHoursClosed": "No regular open days published",
   "@discoveryHoursClosed": {
