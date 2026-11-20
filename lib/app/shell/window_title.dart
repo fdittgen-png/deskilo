@@ -6,12 +6,15 @@
 // navigation (Me, the account, a public page) the app's name alone. The same
 // rule on the desk and off it, so a tab on a phone reads as a window does.
 // The place is the one the desk's breadcrumb names (desk_frame.dart).
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/ui/kit/page_title.dart';
+import '../../core/window/native_window_title.dart';
 import '../../features/workspace/providers/workspace_providers.dart';
 import '../route_classes.dart';
 import 'desk_frame.dart';
@@ -56,13 +59,16 @@ class _Title extends ConsumerWidget {
         : null;
     final business = ref.watch(currentWorkspaceProvider).value?.name;
     final app = l10n.appTitle;
+    final title = place == null
+        ? app
+        : business == null
+        ? l10n.windowTitleNoBusiness(place, app)
+        : l10n.windowTitle(place, business, app);
+    // #3621 — the program window follows the page through the runner's channel.
+    unawaited(ref.read(nativeWindowTitleProvider).set(title));
     return Title(
       key: const ValueKey('window-title'),
-      title: place == null
-          ? app
-          : business == null
-          ? l10n.windowTitleNoBusiness(place, app)
-          : l10n.windowTitle(place, business, app),
+      title: title,
       color: Theme.of(context).colorScheme.primary,
       child: child,
     );
