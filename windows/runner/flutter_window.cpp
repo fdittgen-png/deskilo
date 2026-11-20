@@ -59,6 +59,28 @@ bool FlutterWindow::OnCreate() {
           result->NotImplemented();
         }
       });
+  window_channel_ =
+      std::make_unique<flutter::MethodChannel<flutter::EncodableValue>>(
+          flutter_controller_->engine()->messenger(), "deskilo/window",
+          &flutter::StandardMethodCodec::GetInstance());
+  window_channel_->SetMethodCallHandler(
+      [this](const flutter::MethodCall<flutter::EncodableValue>& call,
+             std::unique_ptr<flutter::MethodResult<flutter::EncodableValue>>
+                 result) {
+        const auto* title = std::get_if<std::string>(call.arguments());
+        if (call.method_name() != "setTitle" || title == nullptr) {
+          result->NotImplemented();
+          return;
+        }
+        const int length = MultiByteToWideChar(
+            CP_UTF8, 0, title->c_str(), static_cast<int>(title->size()),
+            nullptr, 0);
+        std::wstring wide(static_cast<size_t>(length), L'\0');
+        MultiByteToWideChar(CP_UTF8, 0, title->c_str(),
+                            static_cast<int>(title->size()), &wide[0], length);
+        SetWindowTextW(GetHandle(), wide.c_str());
+        result->Success();
+      });
   SetChildContent(flutter_controller_->view()->GetNativeWindow());
 
   flutter_controller_->engine()->SetNextFrameCallback([&]() {
@@ -75,6 +97,7 @@ bool FlutterWindow::OnCreate() {
 
 void FlutterWindow::OnDestroy() {
   capture_channel_ = nullptr;
+  window_channel_ = nullptr;
   if (flutter_controller_) {
     flutter_controller_ = nullptr;
   }

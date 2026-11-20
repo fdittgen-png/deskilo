@@ -16,7 +16,48 @@ namespace {
 #define DWMWA_USE_IMMERSIVE_DARK_MODE 20
 #endif
 
-constexpr const wchar_t kWindowClassName[] = L"FLUTTER_RUNNER_WIN32_WINDOW";
+constexpr const wchar_t* kWindowClassName = kRunnerWindowClassName;
+
+// #3621 — the smallest the window can be made, in device-independent pixels
+// (the app's own compact layout starts there), and where it remembers its place.
+constexpr int kMinimumWidth = 480;
+constexpr int kMinimumHeight = 600;
+constexpr const wchar_t kPlacementKey[] = L"Software\\DesKilo\\Window";
+constexpr const wchar_t kPlacementValue[] = L"Placement";
+
+// The window's place from the last run, only when it is still on a monitor
+// that is connected: a window left on an unplugged screen is never restored
+// out of the person's reach.
+bool LoadPlacement(WINDOWPLACEMENT* placement) {
+  DWORD size = sizeof(*placement);
+  if (RegGetValueW(HKEY_CURRENT_USER, kPlacementKey, kPlacementValue,
+                   RRF_RT_REG_BINARY, nullptr, placement,
+                   &size) != ERROR_SUCCESS) {
+    return false;
+  }
+  if (size != sizeof(*placement) || placement->length != sizeof(*placement)) {
+    return false;
+  }
+  return MonitorFromRect(&placement->rcNormalPosition, MONITOR_DEFAULTTONULL) !=
+         nullptr;
+}
+
+void SavePlacement(HWND window) {
+  WINDOWPLACEMENT placement{};
+  placement.length = sizeof(placement);
+  if (!GetWindowPlacement(window, &placement)) {
+    return;
+  }
+  HKEY key = nullptr;
+  if (RegCreateKeyExW(HKEY_CURRENT_USER, kPlacementKey, 0, nullptr, 0,
+                      KEY_SET_VALUE, nullptr, &key,
+                      nullptr) != ERROR_SUCCESS) {
+    return;
+  }
+  RegSetValueExW(key, kPlacementValue, 0, REG_BINARY,
+                 reinterpret_cast<const BYTE*>(&placement), sizeof(placement));
+  RegCloseKey(key);
+}
 
 /// Registry key for app theme preference.
 ///
@@ -146,11 +187,22 @@ bool Win32Window::Create(const std::wstring& title,
 
   UpdateTheme(window);
 
+  // #3621 — where the window was left, if that place is still on screen. The
+  // normal rectangle is restored now; a window left maximised is maximised by
+  // |Show|, once its first frame is ready.
+  WINDOWPLACEMENT saved{};
+  if (LoadPlacement(&saved)) {
+    start_maximised_ = saved.showCmd == SW_SHOWMAXIMIZED;
+    saved.showCmd = SW_HIDE;
+    SetWindowPlacement(window, &saved);
+  }
+
   return OnCreate();
 }
 
 bool Win32Window::Show() {
-  return ShowWindow(window_handle_, SW_SHOWNORMAL);
+  return ShowWindow(window_handle_,
+                    start_maximised_ ? SW_SHOWMAXIMIZED : SW_SHOWNORMAL);
 }
 
 // static
@@ -179,7 +231,18 @@ Win32Window::MessageHandler(HWND hwnd,
                             WPARAM const wparam,
                             LPARAM const lparam) noexcept {
   switch (message) {
+    case WM_GETMINMAXINFO: {
+      // #3621 — a minimum size, scaled to the window's monitor.
+      auto info = reinterpret_cast<MINMAXINFO*>(lparam);
+      const double scale = GetDpiForWindow(hwnd) / 96.0;
+      info->ptMinTrackSize.x = static_cast<LONG>(kMinimumWidth * scale);
+      info->ptMinTrackSize.y = static_cast<LONG>(kMinimumHeight * scale);
+      return 0;
+    }
+
     case WM_DESTROY:
+      // #3621 — remembered for the next start.
+      SavePlacement(hwnd);
       window_handle_ = nullptr;
       Destroy();
       if (quit_on_close_) {
