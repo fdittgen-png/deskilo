@@ -9,9 +9,10 @@
 // another member and cancelling another member's booking need an active
 // administrator or owner, as admin_create_reservation_for and
 // cancel_reservation require.
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../../features/reservations/domain/reservation_refusal.dart';
 import '../../../features/reservations/domain/reservation_repository.dart';
+import 'demo_booking_refusal.dart';
 import 'reservation_repository.dart';
 
 class RightsCheckedReservationRepository extends FakeReservationRepository {
@@ -30,7 +31,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
   /// subject admin_create_reservation_for accepts.
   bool Function(String memberId) isActiveMember = (_) => true;
 
-  PostgrestException get _refusal => const PostgrestException(
+  ReservationRefused get _refusal => demoBookingRefusal(
     message: 'not allowed to make reservations',
     code: '42501',
   );
@@ -97,13 +98,13 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     required DateTime endsAt,
   }) async {
     if (!mayActForOthers()) {
-      throw const PostgrestException(
+      throw demoBookingRefusal(
         message: 'not an admin of this workspace',
         code: 'DKN01',
       );
     }
     if (!isActiveMember(subjectMemberId)) {
-      throw const PostgrestException(message: 'unknown subject member');
+      throw demoBookingRefusal(message: 'unknown subject member');
     }
     return super.createFor(
       workspaceId: workspaceId,
@@ -120,7 +121,7 @@ class RightsCheckedReservationRepository extends FakeReservationRepository {
     final own = reservations
         .any((r) => r.id == reservationId && r.memberId == myMemberId);
     if (!own && !mayActForOthers()) {
-      throw const PostgrestException(message: 'not your reservation', code: 'DKK29');
+      throw demoBookingRefusal(message: 'not your reservation', code: 'DKK29');
     }
     return super.cancel(reservationId);
   }

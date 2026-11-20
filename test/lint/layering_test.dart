@@ -18,12 +18,10 @@
 // consequence of reaching for something two directories over.
 
 import 'dart:io';
-
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../tool/code_health_budgets.dart';
 import '../../tool/layering/analysis.dart' as layering;
-
 import 'lint_sources.dart';
 
 /// Every ordered feature→feature import pair that exists today.
@@ -230,8 +228,6 @@ const Set<String> _backendTypeOutsideData = {
   'lib/features/auth/presentation/screens/auth_screen.dart',
   'lib/features/auth/presentation/screens/linked_accounts_screen.dart',
   'lib/features/editor/presentation/widgets/seat_properties_sheet.dart',
-  'lib/features/kiosk/presentation/screens/kiosk_screen.dart',
-  'lib/features/reservations/domain/booking_error_text.dart',
   'lib/features/workspace/presentation/screens/workspace_settings_screen.dart',
   'lib/features/workspace/presentation/widgets/badge_manager_dialog.dart',
 };

@@ -17,7 +17,7 @@ import '../../core/ui/app_snack.dart';
 import '../../features/events/providers/event_providers.dart';
 import '../../features/reservations/application/book_seat.dart';
 import '../../features/reservations/application/booking_recovery.dart';
-import '../../features/reservations/domain/booking_error_text.dart';
+import '../../features/reservations/presentation/booking_error_text.dart';
 import '../../features/reservations/presentation/booking_feedback.dart';
 import '../../features/reservations/presentation/widgets/booking_recovery_sheet.dart';
 import '../../features/reservations/presentation/widgets/booking_sheet.dart';

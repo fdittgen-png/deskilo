@@ -9,15 +9,14 @@
 // it; bookingErrorText maps the substrings.
 
 import 'package:deskilo/core/l10n/context_l10n.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reservation_refused.dart';
 
 Reservation _mine({
   String id = 'res-mine',
@@ -38,8 +37,11 @@ Reservation _mine({
           status == ReservationStatus.checkedIn ? kTestNow : null,
     );
 
-Matcher _refuses(String substring) => throwsA(isA<PostgrestException>()
-    .having((e) => e.message, 'message', contains(substring)));
+/// The refusal the server raises under [code] (0739): DKK19 one place at a
+/// time, DKK20 checked in elsewhere.
+Matcher _refuses(String code) => throwsA(
+  isA<ReservationRefused>().having((e) => e.refusal.code, 'code', code),
+);
 
 void main() {
   test('the field bug: a second walk-up while checked in refuses', () async {
@@ -52,7 +54,7 @@ void main() {
         endsAt: kTestNow.add(const Duration(hours: 2)),
         checkIn: true,
       ),
-      _refuses('you already have a reservation in that period'),
+      _refuses('DKK19'),
     );
     expect(repo.reservations, hasLength(1));
   });
@@ -68,7 +70,7 @@ void main() {
         startsAt: kTestNow.add(const Duration(hours: 1)),
         endsAt: kTestNow.add(const Duration(hours: 3)),
       ),
-      _refuses('you already have a reservation in that period'),
+      _refuses('DKK19'),
     );
   });
 
@@ -96,7 +98,7 @@ void main() {
       ));
     await expectLater(
       repo.checkIn('res-next'),
-      _refuses('already checked in elsewhere'),
+      _refuses('DKK20'),
     );
   });
 
@@ -160,7 +162,7 @@ void main() {
         startsAt: kTestNow.add(const Duration(hours: 1)),
         endsAt: kTestNow.add(const Duration(hours: 3)),
       ),
-      _refuses('you already have a reservation in that period'),
+      _refuses('DKK19'),
     );
   });
 
@@ -168,7 +170,7 @@ void main() {
     // #3810 — the codes 0739 raises with these refusals.
     String map(String message) => bookingErrorText(
         englishL10n,
-        PostgrestException(
+        refused(
           message: message,
           code: message.contains('you already have a reservation')
               ? 'DKK19'

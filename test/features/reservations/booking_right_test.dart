@@ -13,24 +13,27 @@ import 'package:deskilo/core/demo/demo_persona.dart';
 import 'package:deskilo/core/demo/demo_session.dart';
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/features/plan/domain/half_day_windows.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:deskilo/features/reservations/providers/reservation_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/screens/demo_journeys.dart' show pumpDemo;
 
 const _refusal = 'not allowed to make reservations';
+
+ReservationRefusalKind? _kindOf(Object? e) =>
+    e is ReservationRefused ? e.refusal.kind : null;
 
 Future<Object?> _refused(Future<Object?> Function() call) async {
   try {
     await call();
     return null;
-  } on PostgrestException catch (e) {
+  } on ReservationRefused catch (e) {
     return e;
   }
 }
@@ -61,8 +64,7 @@ void main() {
       final single = await _refused(
         () => repo.create(workspaceId: 'ws-1', seatId: 'seat-1', startsAt: from, endsAt: to),
       );
-      expect((single! as PostgrestException).code, '42501');
-      expect((single as PostgrestException).message, _refusal);
+      expect(_kindOf(single), ReservationRefusalKind.notAllowed);
       final series = await _refused(
         () => repo.createSeries(
           workspaceId: 'ws-1',
@@ -73,7 +75,7 @@ void main() {
           until: from.add(const Duration(days: 2)),
         ),
       );
-      expect((series! as PostgrestException).message, _refusal);
+      expect(_kindOf(series), ReservationRefusalKind.notAllowed);
       expect(repo.reservations, isEmpty);
     });
 
@@ -90,7 +92,7 @@ void main() {
             endsAt: to,
           ),
         );
-        expect((e! as PostgrestException).message, _refusal, reason: action);
+        expect(_kindOf(e), ReservationRefusalKind.notAllowed, reason: action);
       }
       final other = await _refused(
         () => repo.kioskAct(
@@ -101,7 +103,7 @@ void main() {
       );
       expect(
         other,
-        isNot(isA<PostgrestException>().having((e) => e.message, 'message', _refusal)),
+        isNot(isA<ReservationRefused>()),
         reason: 'check-out is not a booking',
       );
     });
@@ -109,7 +111,7 @@ void main() {
 
   test('the member is told in words, in the member\'s language', () {
     expect(
-      bookingErrorText(englishL10n, const PostgrestException(message: _refusal), 'fallback'),
+      bookingErrorText(englishL10n, refused(message: _refusal), 'fallback'),
       contains('Ask an owner to let members book'),
     );
   });
@@ -164,7 +166,7 @@ void main() {
       final refusal = await _refused(
         () => repo.create(workspaceId: 'ws-1', seatId: seat, startsAt: afternoon.start, endsAt: afternoon.end),
       );
-      expect((refusal! as PostgrestException).message, _refusal);
+      expect(_kindOf(refusal), ReservationRefusalKind.notAllowed);
 
       // Given back, the same booking is made.
       await ownerSets(enabled: true);

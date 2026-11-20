@@ -4,8 +4,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../../../core/i18n/format_controller.dart';
 import '../../../../core/l10n/context_l10n.dart';
@@ -32,11 +30,11 @@ import '../../../plan/presentation/widgets/plan_canvas.dart';
 import '../../../plan/presentation/widgets/seat_photos.dart';
 import '../../../plan/providers/floor_plan_providers.dart';
 import '../../../profile/domain/profile.dart';
-import '../../../reservations/domain/booking_error_text.dart';
 import '../../../reservations/domain/reservation.dart';
 import '../../../reservations/domain/reservation_repository.dart'
     show KioskIdentity;
 import '../../../reservations/domain/space_act.dart';
+import '../../../reservations/presentation/booking_error_text.dart';
 import '../../../reservations/presentation/booking_gate_scope.dart';
 import '../../../reservations/presentation/widgets/booking_range_text.dart';
 import '../../../reservations/providers/reservation_providers.dart';
@@ -262,16 +260,10 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
           .error('kiosk', 'kiosk act failed', error: e, stackTrace: st);
       if (!mounted) return null;
       // #430: bookingErrorText is THE mapper; kiosk cases stay.
-      var message = switch (e is PostgrestException
-          ? kioskRefusalOf(e.message)
-          : KioskRefusal.other) {
-        KioskRefusal.badgeRejected => l10n.kioskBadgeRejected,
-        KioskRefusal.notCheckedIn => l10n.kioskNotCheckedIn,
-        KioskRefusal.other => bookingErrorText(
-            l10n,
-            e,
-            l10n.workspaceGenericError,
-          ),
+      var message = switch (e is ReservationRefused ? e.refusal.kind : null) {
+        ReservationRefusalKind.badgeRejected => l10n.kioskBadgeRejected,
+        ReservationRefusalKind.notCheckedIn => l10n.kioskNotCheckedIn,
+        _ => bookingErrorText(l10n, e, l10n.workspaceGenericError),
       };
       // #622 — an occupancy refusal NAMES the holder and points to the
       // app: the wall device cannot write messages as the member, but

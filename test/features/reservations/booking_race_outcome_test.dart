@@ -6,9 +6,10 @@
 // checkout that lost the race to another checkout or to the day-end sweep
 // says the reservation is already closed instead of a generic failure.
 import 'package:deskilo/core/l10n/context_l10n.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
+
+import '../../helpers/reservation_refused.dart';
 
 void main() {
   // #3810 — the codes 0739 raises with these refusals.
@@ -17,7 +18,7 @@ void main() {
     'the level has reservations in that period': 'DKK26',
   };
   String map(String message) => bookingErrorText(englishL10n,
-      PostgrestException(message: message, code: codes[message]), 'fallback');
+      refused(message: message, code: codes[message]), 'fallback');
 
   test('the hierarchy guard names the space chain, not the level', () {
     final text = map('that space is already reserved in that period');
@@ -39,7 +40,7 @@ void main() {
   test('the hierarchy refusal still counts as blocked by another member', () {
     expect(
       isBlockedByOtherError(
-        const PostgrestException(
+        refused(
           message: 'that space is already reserved in that period',
         ),
       ),
