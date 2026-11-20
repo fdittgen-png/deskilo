@@ -38244,6 +38244,10 @@
   "@reservationCancelledSnack": {
     "description": "Snackbar after an own reservation was cancelled from the detail sheet"
   },
+  "reservationContextChanged": "The workspace or account changed while this was open. Nothing was sent: open it again.",
+  "@reservationContextChanged": {
+    "description": "#4157: shown when a confirmation (a booking, a check-in, a cancellation, a time change, a deletion request) is dropped because the installation, workspace or account changed while it was open; nothing was sent."
+  },
   "reservationDeleteReasonLabel": "Reason (optional)",
   "@reservationDeleteReasonLabel": {
     "description": "Reservation deletion requests (#492)"

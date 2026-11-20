@@ -162,5 +162,6 @@
   "reservationNoteOverNotCheckedIn": "Dieser Zeitraum ist ohne Check-in vorbei.",
   "bookingRatePlace": "Diesen Platz bewerten",
   "reserveLegendTooltip": "Farblegende",
-  "reserveLegendSheetTitle": "Was die Farben bedeuten"
+  "reserveLegendSheetTitle": "Was die Farben bedeuten",
+  "reservationContextChanged": "Der Arbeitsbereich oder das Konto hat gewechselt, während dies geöffnet war. Es wurde nichts gesendet: Öffnen Sie es erneut."
 }

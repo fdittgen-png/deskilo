@@ -4911,6 +4911,7 @@ Map<String, _Getter> _part12() => {
   'reportSectionPrices': (l) => l.reportSectionPrices,
   'reportTextsAdd': (l) => l.reportTextsAdd,
   'reportTextsKeyExists': (l) => l.reportTextsKeyExists,
+  'reservationContextChanged': (l) => l.reservationContextChanged,
   'retentionHoldClass': (l) => l.retentionHoldClass,
   'retentionPeriodEnded': (l) => l.retentionPeriodEnded,
   'rolesFilterPermissions': (l) => l.rolesFilterPermissions,

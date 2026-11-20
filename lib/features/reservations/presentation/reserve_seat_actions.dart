@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../core/booking/my_seat_action.dart';
 import '../../../core/i18n/format_controller.dart';
 import '../../../core/l10n/context_l10n.dart';
 import '../../../core/settings/booking_windows.dart';
@@ -47,12 +48,18 @@ import 'booking_feedback.dart';
 import 'booking_gate_scope.dart';
 import 'booking_trace_points.dart';
 import 'screens/reserve_window_rules.dart';
+import 'widgets/blocked_seat_sheet.dart';
 import 'widgets/booking_recovery_sheet.dart';
 import 'widgets/booking_sheet.dart';
 import 'widgets/message_reserver.dart';
 import 'widgets/reference_open.dart';
 import 'widgets/reservation_detail_sheet.dart'
-    show ownBookingRemovalOf, requestBookingDeletion;
+    show
+        BoundReservation,
+        StaleReservationContext,
+        captureBoundReservation,
+        ownBookingRemovalOf,
+        requestBookingDeletion;
 import 'widgets/seat_day_sheet.dart';
 import 'widgets/series_preview_dialog.dart';
 import 'widgets/series_result_dialog.dart';
@@ -111,8 +118,10 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// it — closed day, seat just taken, beyond quota. A generic
   /// "something went wrong" to someone standing at a desk is useless.
   String _errorText(AppLocalizations l10n, Object error, String fallback) =>
-      bookingErrorText(l10n, error, fallback,
-          stepMinutes: granularity.stepMinutes);
+      error is StaleReservationContext // #4157: nothing was sent
+          ? l10n.reservationContextChanged
+          : bookingErrorText(l10n, error, fallback,
+              stepMinutes: granularity.stepMinutes);
 
   /// Members an admin may book FOR (#106), when the owner left the
   /// feature on. Empty = no "Book for" picker at all.
@@ -296,41 +305,34 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     to: window.end,
   );
 
-  /// Sheet on a blocked seat for owners/delegated admins (#161):
-  /// explains the block and offers to make the seat reservable again.
+  /// Sheet on a blocked seat for owners/delegated admins (#161).
   Future<void> _blockedSeatSheet(Seat seat) async {
-    final l10n = context.l10n;
-    final blockedText =
-        l10n.planSeatBlocked;
     final unblock = await showAppSheet<bool>(
       context: context,
-      builder: (context) => SafeArea(
-        child: Column(mainAxisSize: MainAxisSize.min, children: [
-          ListTile(
-            title: Text(seat.name.isEmpty ? blockedText : seat.name),
-            subtitle: seat.name.isEmpty ? null : Text(blockedText),
-          ),
-          ListTile(
-            key: const ValueKey('reserve-make-reservable'),
-            leading: const Icon(Icons.event_seat_outlined),
-            title: Text(l10n.planMakeReservable),
-            onTap: () => Navigator.of(context).pop(true),
-          ),
-          const SizedBox(height: 8),
-        ]),
-      ),
+      builder: (_) => BlockedSeatSheet(seatName: seat.name),
     );
     if (unblock != true || !mounted) return;
-    await runGuarded(
-      context,
-      domain: 'reservations',
-      message: 'set seat block failed',
-      errorText: l10n.workspaceGenericError,
-      action: () =>
-          ref.read(floorPlanRepositoryProvider).setSeatBlock(seat.id),
-    );
+    await runGuarded(context, domain: 'reservations',
+        message: 'set seat block failed', errorText: context.l10n.workspaceGenericError,
+        action: () => ref.read(floorPlanRepositoryProvider).setSeatBlock(seat.id));
     if (mounted) ref.invalidate(floorPlanProvider);
   }
+
+  /// #4157 — the commands of the context on screen, taken as a confirmation opens.
+  BoundReservation? _bindConfirmation() {
+    final bound = captureBoundReservation(ref);
+    if (bound == null) _contextChanged();
+    return bound;
+  }
+
+  /// #4157 — whether [bound] is still the context on screen (else says so).
+  Future<bool> _stillBound(BoundReservation bound) async {
+    if (await bound.isCurrent() && mounted) return true;
+    if (mounted) _contextChanged();
+    return false;
+  }
+
+  void _contextChanged() => AppSnack.info(context, context.l10n.reservationContextChanged, replace: true);
 
   /// My own seat: check in, check out, cancel (#408).
   ///
@@ -338,6 +340,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
   /// clock decides, never the browsed instant.
   Future<void> _mySeatSheet(Seat seat, Reservation mine) async {
     final l10n = context.l10n;
+    final bound = _bindConfirmation(); // #4157: acts here, or acts nowhere
+    if (bound == null) return;
     final now = ref.read(clockProvider).now();
     final leeway = ref.read(bookingWindowsProvider).checkInLeeway;
     final windowOpen = mine.checkInWindowOpen(now, granularity: granularity, leeway: leeway);
@@ -359,26 +363,21 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       deletionRequestable: removal == OwnBookingRemoval.requestDeletion,
       granularity: granularity,
     );
-    traceMySeatAction(mine: mine, action: action, windowOpen: windowOpen);
+    traceMySeatAction(mine: mine, action: action?.wireName, windowOpen: windowOpen);
     if (action == null && mounted) {
       recordTaskStep(ref, RecorderActions.closeMyReservation); // #1881
     }
     if (action == null || !mounted) return;
-    if (action == 'requestDeletion') {
-      await requestBookingDeletion(context, ref, mine);
+    if (action == MySeatAction.requestDeletion) {
+      await requestBookingDeletion(context, ref, mine, bound: bound);
       return;
     }
-    final repo = ref.read(reservationRepositoryProvider);
     // #1881 — the attempt before the command, its real answer after.
-    final command = myReservationCommand(action);
+    final command = myReservationCommand(action.wireName);
     final recorded =
         command == null ? null : recordTaskAttempt(ref, command.action);
     try {
-      await switch (action) {
-        'checkout' => repo.checkOut(mine.id),
-        'checkin' => repo.checkIn(mine.id),
-        _ => repo.cancel(mine.id),
-      };
+      await bound.perform(action, mine.id);
       if (command != null) recorded?.resolve(command.done);
     } on Object catch (e, st) {
       recorded?.resolveWith(errorObservation(e,
@@ -387,7 +386,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // #1030 — the server's own code/message/details/hint, so an
       // action that renders a generic sentence still names its cause.
       ActTrace.booking.failed('reservation-action', e, st, {
-        'action': action,
+        'action': action.wireName,
         'reservation': mine.id,
         'server': ActTrace.serverAnswer(e),
       });
@@ -399,16 +398,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       // standing at a desk nothing about what to do next.
       AppSnack.error(
         context,
-        _errorText(
-          l10n,
-          e,
-          l10n.workspaceGenericError,
-        ),
+        _errorText(l10n, e, l10n.workspaceGenericError),
         replace: true,
       );
       return;
     }
-    if (mounted) invalidateBookingData(ref);
+    // #4157 — a later switch does not make its answer the new context's.
+    if (mounted && await bound.isCurrent()) invalidateBookingData(ref);
   }
 
   /// Punctual reservation over the browsed window via the shared
@@ -456,6 +452,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     final l10n = context.l10n;
     final workspace = ref.read(currentWorkspaceProvider).value;
     if (workspace == null) return;
+    final bound = _bindConfirmation(); // #4157: booked here, or nowhere
+    if (bound == null) return;
     // Defense in depth (#161): the tap handler never routes blocked seats
     // here, but a stale plan could — the RPCs reject them anyway.
     if (seat.isBlockedAt(booked.start)) {
@@ -563,17 +561,20 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       recordTaskStep(ref, RecorderActions.cancelReview); // #1865
     }
     if (choice == null || !mounted) return;
-    // #2016 T08 — the choice belongs to the workspace the sheet opened for:
-    // after a switch it is dropped, never booked in either workspace.
-    if (ref.read(currentWorkspaceProvider).value?.id != workspace.id) return;
-    await _book(choice, seat, workspace.id, myMemberId, liveWindow: liveWindow);
+    // #2016 T08, #4157 — the choice belongs to the context the sheet opened
+    // for (installation, workspace, account, epochs — not the local workspace
+    // id alone): after a switch it is dropped, never booked in either.
+    if (!await _stillBound(bound)) return;
+    await _book(choice, seat, workspace.id, myMemberId,
+        liveWindow: liveWindow, bound: bound);
   }
 
   /// What the member chose in the booking sheet for [seat]: a block, or a
   /// booking (a series names the dates that would fail first), and what to
   /// say once the server answered.
   Future<void> _book(BookingChoice choice, Seat seat, String workspaceId,
-      String? myMemberId, {required bool liveWindow}) async {
+      String? myMemberId,
+      {required bool liveWindow, required BoundReservation bound}) async {
     final l10n = context.l10n;
     // Blocking is not a booking: it takes the seat OUT of service from
     // now, open-ended, and returns before any reservation is created.
@@ -598,6 +599,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
     if (!await confirmSeriesPreview(context, previewer, ask) || !mounted) {
       return;
     }
+    if (!await _stillBound(bound)) return; // #4157: the preview was an await
 
     // #1865 — the task recorder notes the attempt BEFORE the command and
     // what the command actually answered; it never changes either.
@@ -622,8 +624,7 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       traceIfReservedWithoutCheckIn(choice, seat, myMemberId,
           liveWindow: liveWindow);
 
-      final outcome = await bookSeat(
-        ref.read(reservationRepositoryProvider),
+      final outcome = await bound.book(
         (
           workspaceId: workspaceId,
           seatId: seat.id,
@@ -641,12 +642,13 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
           pattern: choice.pattern,
           until: choice.until,
         ),
+        // #1855 — the plain booking keeps its intent until the answer is in
+        // (the origin's own recovery).
         myMemberId: myMemberId,
-        // #1855 — the plain booking keeps its intent until the answer is in.
-        recovery: ref.read(bookingRecoveryProvider),
       );
       recorded?.resolveWith(bookingOutcomeObservation(outcome));
-      if (!mounted) return;
+      // #4157 — its answer stays with its origin, not the new context.
+      if (!await bound.isCurrent() || !mounted) return;
 
       await _announce(outcome, seat);
     } on BookingIntentNotSaved catch (e, st) {
@@ -664,7 +666,8 @@ mixin ReserveSeatActions<T extends ConsumerStatefulWidget>
       TraceLogger.instance.warn('reservations', 'booking answer lost; intent kept',
           error: e, stackTrace: st);
       recorded?.resolveWith(bookingErrorObservation(e.cause)); // still "no answer"
-      if (!mounted) return;
+      // #4157 — the intent is kept for ITS context; resumed only there.
+      if (!await bound.isCurrent() || !mounted) return;
       await showBookingRecoverySheet(context, ref, e.intent, spaceName: seat.name);
       return;
     } on Object catch (e, st) {

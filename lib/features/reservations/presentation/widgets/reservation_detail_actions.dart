@@ -34,7 +34,7 @@ class ReservationDetailActions {
     required this.readGranularity,
     required this.seriesAllowed,
     required this.refresh,
-    required this.repository,
+    required this.bound,
     this.inPane = false,
     this.onRefused,
   });
@@ -50,8 +50,22 @@ class ReservationDetailActions {
   /// The plan and lists behind the sheet are stale after a change.
   final void Function() refresh;
 
-  /// The bookings, resolved by the sheet when an action runs.
-  final ReservationRepository Function() repository;
+  /// #4157 — the commands of the context the sheet was OPENED in, taken when
+  /// it opened (never rebuilt with it). Null when no context was ready: every
+  /// action then refuses, and nothing is sent.
+  final BoundReservation? bound;
+
+  /// Runs a booking command on the opened context's repository, after proving
+  /// the context on screen is still that one.
+  Future<T> _run<T>(Future<T> Function(ReservationRepository r) command) {
+    final b = bound;
+    if (b == null) return Future.error(const StaleReservationContext());
+    return b.withReservations(command);
+  }
+
+  /// Whether an answer may be shown and the screens refreshed: it ran on the
+  /// context that is still on screen.
+  Future<bool> _stillHere() async => await bound?.isCurrent() ?? false;
 
   /// #3843 — the actions stand in a pane beside the calendar, not in a
   /// sheet: nothing closes after them, and cancel asks as a short task.
@@ -105,7 +119,14 @@ class ReservationDetailActions {
   /// #492 — the request dialog, then the sheet closes (#2328: the plan's
   /// seat sheet files the same request through [requestBookingDeletion]).
   Future<void> requestDeletion(BuildContext context, WidgetRef ref) async {
-    if (!await requestBookingDeletion(context, ref, reservation)) return;
+    final b = bound;
+    if (b == null) {
+      _refused(context, context.l10n.reservationContextChanged);
+      return;
+    }
+    if (!await requestBookingDeletion(context, ref, reservation, bound: b)) {
+      return;
+    }
     if (context.mounted) _close(context);
   }
 
@@ -154,7 +175,7 @@ class ReservationDetailActions {
     try {
       // #1234 — which occurrences a cancellation touches is a decision,
       // and it lives in application/ where a test can reach it.
-      await cancelReservation(repository(), r, scope: choice);
+      await _run((repo) => cancelReservation(repo, r, scope: choice));
     } on Object catch (e, st) {
       debugPrint('cancel failed: $e\n$st');
       TraceLogger.instance.error(
@@ -164,9 +185,16 @@ class ReservationDetailActions {
         stackTrace: st,
       );
       if (!context.mounted) return;
-      _refused(context, l10n.workspaceGenericError);
+      _refused(
+        context,
+        e is StaleReservationContext
+            ? l10n.reservationContextChanged
+            : l10n.workspaceGenericError,
+      );
       return;
     }
+    // #4157 — a late answer is not the new context's to refresh or announce.
+    if (!await _stillHere()) return;
     refresh();
     if (!context.mounted) return;
     _close(context);
@@ -218,6 +246,7 @@ class ReservationDetailActions {
       if (!context.mounted) return;
     }
 
+    final picked = window;
     final RescheduleOutcome outcome;
     try {
       // #1394 — with a pattern this is `convert_to_series` (0224): ONE
@@ -226,18 +255,20 @@ class ReservationDetailActions {
       // client-side `cancel` followed by `createSeries`, and when no date
       // could be booked the second returned NORMALLY with an empty
       // `booked`, so nothing here ever caught it.
-      outcome = await rescheduleReservation(
-        repository(),
-        r,
-        start: window.start,
-        end: window.end,
-        pattern: pattern,
-        // The horizon the booking sheet starts from. The member cannot
-        // change it HERE yet — the detail sheet has no repeat-end
-        // affordance, and adding one is its own slice (#1394).
-        until: pattern == null
-            ? null
-            : window.start.add(const Duration(days: 28)),
+      outcome = await _run(
+        (repo) => rescheduleReservation(
+          repo,
+          r,
+          start: picked.start,
+          end: picked.end,
+          pattern: pattern,
+          // The horizon the booking sheet starts from. The member cannot
+          // change it HERE yet — the detail sheet has no repeat-end
+          // affordance, and adding one is its own slice (#1394).
+          until: pattern == null
+              ? null
+              : picked.start.add(const Duration(days: 28)),
+        ),
       );
     } on Object catch (e, st) {
       debugPrint('reservation edit failed: $e\n$st');
@@ -252,15 +283,19 @@ class ReservationDetailActions {
       // not a generic "taken": the edit flow used to swallow it.
       _refused(
         context,
-        bookingErrorText(
-          l10n,
-          e,
-          l10n.reserveBookingFailed,
-          stepMinutes: granularity.stepMinutes,
-        ),
+        e is StaleReservationContext
+            ? l10n.reservationContextChanged
+            : bookingErrorText(
+                l10n,
+                e,
+                l10n.reserveBookingFailed,
+                stepMinutes: granularity.stepMinutes,
+              ),
       );
       return;
     }
+    // #4157 — a late answer is not the new context's to refresh or announce.
+    if (!await _stillHere()) return;
     refresh();
     if (!context.mounted) return;
     _close(context);
@@ -417,7 +452,7 @@ class ReservationDetailActions {
       // #1234 — "I am leaving at a different time", never "I arrived at
       // a different time": the command keeps the start out of the
       // caller's hands, which is the rule update_reservation enforces.
-      await changeReservationEnd(repository(), r, end: newEnd);
+      await _run((repo) => changeReservationEnd(repo, r, end: newEnd));
     } on Object catch (e, st) {
       TraceLogger.instance.error(
         'reservations',
@@ -428,15 +463,19 @@ class ReservationDetailActions {
       if (!context.mounted) return;
       _refused(
         context,
-        bookingErrorText(
-          l10n,
-          e,
-          l10n.reserveBookingFailed,
-          stepMinutes: granularity.stepMinutes,
-        ),
+        e is StaleReservationContext
+            ? l10n.reservationContextChanged
+            : bookingErrorText(
+                l10n,
+                e,
+                l10n.reserveBookingFailed,
+                stepMinutes: granularity.stepMinutes,
+              ),
       );
       return;
     }
+    // #4157 — a late answer is not the new context's to refresh or announce.
+    if (!await _stillHere()) return;
     refresh();
     if (!context.mounted) return;
     _close(context);

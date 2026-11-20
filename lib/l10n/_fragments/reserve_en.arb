@@ -306,5 +306,9 @@
   },
   "@reserveLegendSheetTitle": {
     "description": "#3068 Reserve hub: the title of the sheet that holds the seat legend"
+  },
+  "reservationContextChanged": "The workspace or account changed while this was open. Nothing was sent: open it again.",
+  "@reservationContextChanged": {
+    "description": "#4157: shown when a confirmation (a booking, a check-in, a cancellation, a time change, a deletion request) is dropped because the installation, workspace or account changed while it was open; nothing was sent."
   }
 }
