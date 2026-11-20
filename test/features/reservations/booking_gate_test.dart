@@ -533,7 +533,7 @@ void main() {
       });
     }
 
-    testWidgets('the browser build says why the camera box is missing',
+    testWidgets('a program without a scanner says why the camera box is missing',
         (tester) async {
       await tester.pumpWidget(MaterialApp(
         localizationsDelegates: AppLocalizations.localizationsDelegates,
@@ -549,7 +549,7 @@ void main() {
       ));
       await tester.pumpAndSettle();
       expect(find.byKey(const ValueKey('space-scan-no-camera')), findsOneWidget);
-      expect(find.textContaining('not available in the browser'),
+      expect(find.text(englishL10n.scanCameraProgramUnavailable),
           findsOneWidget);
     });
   });

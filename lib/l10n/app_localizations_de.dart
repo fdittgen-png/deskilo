@@ -30348,6 +30348,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get sampleDataTitle => 'Beispieldaten';
 
   @override
+  String get scanCameraProgramUnavailable =>
+      'Kamera-Scan ist in diesem Programm nicht verfügbar — Code eingeben.';
+
+  @override
   String get scanCameraWebUnavailable =>
       'Kamera-Scan ist im Browser nicht verfügbar — Code eingeben oder ein NFC-Tag ans Gerät halten (Chrome auf Android).';
 

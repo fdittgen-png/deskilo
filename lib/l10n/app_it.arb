@@ -18114,6 +18114,7 @@
   "sampleDataFillFailed": "Non è stato possibile creare i dati di esempio.",
   "sampleDataNotCleared": "Non cancellati: i dati di esempio sono ancora in questo spazio.",
   "sampleDataTitle": "Dati di esempio",
+  "scanCameraProgramUnavailable": "La scansione con fotocamera non è disponibile in questo programma — digiti il codice.",
   "scanCameraWebUnavailable": "La scansione con fotocamera non è disponibile nel browser — digiti il codice o avvicini un tag NFC al dispositivo (Chrome su Android).",
   "scanJoinHelp": "Inquadri il QR d’invito con la fotocamera — vedrà lo spazio prima di aderire.",
   "@scanJoinHelp": {

@@ -39271,6 +39271,10 @@
   "@sampleDataTitle": {
     "description": "#2872 setup guide: title of the sample data card, shown only in a test space"
   },
+  "scanCameraProgramUnavailable": "Camera scanning is not available in this program — type the code.",
+  "@scanCameraProgramUnavailable": {
+    "description": "Shown beside the code field in the kiosk and space scan sheets in a program that has no camera scanner (Windows, macOS); the typed code is the way in."
+  },
   "scanCameraWebUnavailable": "Camera scanning is not available in the browser — type the code, or hold an NFC tag to the device (Chrome on Android).",
   "@scanCameraWebUnavailable": {
     "description": "Shown as the text in space scan sheet (reservations), and 1 other place."
