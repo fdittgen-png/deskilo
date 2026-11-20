@@ -19,13 +19,25 @@
 # winner replayed under its request id answers without a new row while a
 # changed payload under it is refused. A holder that never took its lock or a
 # contender that never waited fails the script: nothing here can pass empty.
-# Fresh ids per run; invoices cannot be deleted (invoices_no_mutation, 0183).
+# Fresh ids per run; invoices cannot be deleted (invoices_no_mutation, 0183),
+# so the cleanup removes what it can and a failure is a warning.
 set -euo pipefail
 url=${1:?usage: reimbursement_offset_race.sh DATABASE_URL}
 uid() { uuidgen | tr 'A-Z' 'a-z'; }
 owner=$(uid); claimant=$(uid); e1=$(uid); e2=$(uid)
 scratch=$(mktemp -d)
-trap 'rm -rf "$scratch"' EXIT
+cleanup() {
+  local original_status=$?
+  if [[ -n "${ws:-}" ]]; then
+    psql "$url" -X -q -v ON_ERROR_STOP=1 >/dev/null 2>&1 <<SQL ||
+delete from public.workspaces where id = '$ws';
+SQL
+      echo "::warning::reimbursement offset race fixture cleanup failed" >&2
+  fi
+  rm -rf "$scratch"
+  exit "$original_status"
+}
+trap cleanup EXIT
 fixture=$(psql "$url" -X -qAt -v ON_ERROR_STOP=1 <<SQL | tail -1
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select u, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', u || '@offset-race.test', '', now(), now(), now()
