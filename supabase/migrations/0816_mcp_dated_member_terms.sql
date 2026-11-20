@@ -105,8 +105,9 @@ begin
     when sqlstate '55000' or sqlstate 'P0001' then
       raise exception 'the change is refused' using errcode = '22023';
   end;
-  select coalesce(nullif(v_member.managed_name, ''), p.display_name, '') into v_name
-    from (select 1) x left join public.profiles p on p.id = v_member.user_id;
+  -- the label the person is shown: read through the one name helper, never
+  -- from a profile column here (an authorization function does not read them)
+  v_name := coalesce(nullif(v_member.managed_name, ''), public.mcp_person_name(v_member.user_id), '');
   return jsonb_build_object('kind', 'member', 'id', v_member.id, 'name', v_name,
     'status', v_member.status, 'subscription_pct', v_member.subscription_pct,
     'to_pct', v_pct, 'effective_on', v_on,
@@ -145,8 +146,9 @@ begin
     when sqlstate '55000' or sqlstate 'P0001' then
       raise exception 'the pause is refused' using errcode = '22023';
   end;
-  select coalesce(nullif(v_member.managed_name, ''), p.display_name, '') into v_name
-    from (select 1) x left join public.profiles p on p.id = v_member.user_id;
+  -- the label the person is shown: read through the one name helper, never
+  -- from a profile column here (an authorization function does not read them)
+  v_name := coalesce(nullif(v_member.managed_name, ''), public.mcp_person_name(v_member.user_id), '');
   return jsonb_strip_nulls(jsonb_build_object('kind', 'member', 'id', v_member.id, 'name', v_name,
     'status', v_member.status, 'subscription_pct', v_member.subscription_pct,
     'from', v_from, 'to', v_to,
@@ -176,8 +178,9 @@ begin
   if v_change.state = 'scheduled' and v_change.due_on <= public.workspace_today(v_change.workspace_id) then
     raise exception 'this change applies today' using errcode = '22023';
   end if;
-  select coalesce(nullif(v_member.managed_name, ''), p.display_name, '') into v_name
-    from (select 1) x left join public.profiles p on p.id = v_member.user_id;
+  -- the label the person is shown: read through the one name helper, never
+  -- from a profile column here (an authorization function does not read them)
+  v_name := coalesce(nullif(v_member.managed_name, ''), public.mcp_person_name(v_member.user_id), '');
   return jsonb_strip_nulls(jsonb_build_object('kind', 'member', 'id', v_member.id, 'name', v_name,
     'status', v_member.status, 'subscription_pct', v_member.subscription_pct,
     'change_kind', v_change.kind, 'to_pct', v_change.to_pct, 'to_status', v_change.to_status,
