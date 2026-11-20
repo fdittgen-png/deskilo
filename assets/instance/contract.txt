@@ -2935,7 +2935,7 @@ routine public.mcp_client_arrival(p_client_id text, p_name text, p_redirect_uri 
 routine public.mcp_client_family(p_redirect_uris text) -> text | function | invoker | immutable | exec:service_role | body:d26372c28661
 routine public.mcp_client_revoked_invalidate() -> trigger | function | definer | volatile | exec:service_role | body:92da466c0c69
 routine public.mcp_client_status(p_client_id text) -> text | function | definer | stable | exec:service_role | body:944995134ecd
-routine public.mcp_confirm(c mcp_call_context, p_request_id uuid, p_digest text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:13d8bb740904
+routine public.mcp_confirm(c mcp_call_context, p_request_id uuid, p_digest text, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:da268ca404b0
 routine public.mcp_confirm_action(p_confirmation_id uuid, p_accept boolean) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:493e4788e261
 routine public.mcp_confirmation_expires_at() -> timestamp with time zone | function | definer | stable | exec:service_role | body:268ade52bf24
 routine public.mcp_consent_options(p_authorization_id text) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:fb230168f4f0
@@ -3047,13 +3047,13 @@ routine public.mcp_statement_outcome(c mcp_call_context, p_member_id uuid, p_arg
 routine public.mcp_target(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:75ce340ef690
 routine public.mcp_target_add_closure_days(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:4398319ba1aa
 routine public.mcp_target_apply_setup_levels(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f41e2241a183
-routine public.mcp_target_cancel_member_term_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:a9f0acfc6319
+routine public.mcp_target_cancel_member_term_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:b07ec01f6467
 routine public.mcp_target_create_invitations(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:f8a6f13a2bb0
 routine public.mcp_target_create_membership_plan(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:e464f8deef67
 routine public.mcp_target_mark_setup_step(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:99326e24d844
 routine public.mcp_target_of(p_workspace_id uuid, p_operation text, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:b7500fa5c676
-routine public.mcp_target_schedule_member_pause(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:04e745ecc189
-routine public.mcp_target_schedule_member_share_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:ed64ddb8c7b1
+routine public.mcp_target_schedule_member_pause(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:803e31fd148b
+routine public.mcp_target_schedule_member_share_change(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | volatile | exec:service_role | body:bf307bcdb134
 routine public.mcp_target_set_member_permissions_preset(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:ae3b20833fc4
 routine public.mcp_target_set_number_sequence(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:409f38986b2f
 routine public.mcp_target_set_opening_hours(p_workspace_id uuid, p_args jsonb) -> jsonb | function | definer | stable | exec:service_role | body:2c87a40d293f
