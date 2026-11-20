@@ -50,14 +50,3 @@ KioskActPlan kioskActPlan(
     KioskAction.checkOut => KioskReceipt.checkOut,
   },
 );
-
-/// How the kiosk words a refusal of kiosk_act (migration 0043).
-enum KioskRefusal { badgeRejected, notCheckedIn, other }
-
-/// The refusal [serverMessage] is; the substrings are the server's own.
-KioskRefusal kioskRefusalOf(String serverMessage) =>
-    serverMessage.contains('badge not recognized')
-    ? KioskRefusal.badgeRejected
-    : serverMessage.contains('not checked in')
-    ? KioskRefusal.notCheckedIn
-    : KioskRefusal.other;

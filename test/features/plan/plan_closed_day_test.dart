@@ -5,7 +5,6 @@
 // refusals from `assert_workspace_open` must map to a clear message
 // instead of "the seat may have just been taken".
 import 'dart:async';
-
 import 'package:deskilo/app/app.dart';
 import 'package:deskilo/core/theme/seat_state_colors.dart';
 import 'package:deskilo/features/plan/presentation/widgets/floor_plan_painter.dart';
@@ -15,11 +14,10 @@ import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_floor_plan_repository.dart';
 import '../../helpers/mock_providers.dart';
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/screens/plan_closed_day.dart' show ThrowingReservationRepository, pumpAvailabilityPlan;
 import '../../helpers/screens/plan_screen.dart' show chooseCheckInNow, seatCenter;
 
@@ -154,8 +152,7 @@ void main() {
     await pumpAvailabilityPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        const PostgrestException(
-            message: _serverClosedMessage, code: 'DKK01'),
+        refused(message: _serverClosedMessage, code: 'DKK01'),
       ),
     );
 
@@ -177,7 +174,7 @@ void main() {
     await pumpAvailabilityPlan(
       tester,
       reservations: ThrowingReservationRepository(
-        const PostgrestException(message: 'conflicting reservation exists'),
+        refused(message: 'conflicting reservation exists'),
       ),
     );
 
@@ -199,8 +196,7 @@ void main() {
       'to the closed-day message', (tester) async {
     final now = kTestNow;
     final reservations = ThrowingReservationRepository(
-      const PostgrestException(
-            message: _serverClosedMessage, code: 'DKK01'),
+      refused(message: _serverClosedMessage, code: 'DKK01'),
     )..reservations.add(
         Reservation(
           id: 'res-mine',

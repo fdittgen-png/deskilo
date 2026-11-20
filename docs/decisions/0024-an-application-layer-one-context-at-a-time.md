@@ -50,9 +50,13 @@ no widget tree — `book_seat_test.dart` runs seven cases in milliseconds
 that previously needed a screen each.
 
 **An application command does not catch.** A refusal from the server is
-information the member needs verbatim (#1030). Swallowing it to return a
-tidier type throws away the server's own words, which is the thing
-`bookingErrorText` exists to render.
+information the member needs (#1030). Swallowing it to return a tidier type
+throws away what the screen explains. Since #4156 a booking refusal reaches the
+application already read: the data boundary decodes the transport's error once
+into the pure `ReservationRefused` (a known code and its validated values, or an
+unknown refusal that carries no backend text), and `bookingErrorText`, in
+presentation, chooses the translated words from that value alone. A timeout or a
+lost answer is not a refusal and stays an unknown outcome under its request id.
 
 **It moves one context at a time, and the ratchet is a count.**
 `test/lint/layering_test.dart` now carries `_repositoryInWidgets`: how

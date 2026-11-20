@@ -24,11 +24,11 @@ import '../../../../core/trace/trace_logger.dart';
 import '../../../../core/ui/app_sheet.dart';
 import '../../../../core/ui/inline_banner.dart';
 import '../../../../l10n/app_localizations.dart';
-import '../../domain/booking_error_text.dart';
 import '../../domain/my_reservations.dart';
 import '../../domain/my_reservations_composition.dart';
 import '../../domain/reservation.dart';
 import '../../providers/reservation_providers.dart';
+import '../booking_error_text.dart';
 import 'my_reservations_body.dart';
 import 'my_reservations_layout.dart';
 

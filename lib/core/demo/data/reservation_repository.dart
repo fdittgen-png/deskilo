@@ -6,9 +6,8 @@ import 'package:deskilo/features/reservations/domain/reservation.dart';
 import 'package:deskilo/features/reservations/domain/reservation_repository.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
+import 'demo_booking_refusal.dart';
 import 'fixture_clock.dart';
 
 /// In-memory [ReservationRepository] mimicking the DB exclusion constraint
@@ -101,11 +100,11 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // 06:00 walk-in passes too). Pinned substrings like the server.
     if (_touchesOutside(startsAt, endsAt)) {
       if (outsideHoursMode == OutsideHoursMode.off) {
-        throw const PostgrestException(
+        throw demoBookingRefusal(
             message: 'bookings outside the opening hours are not allowed', code: 'DKK16');
       }
       if (outsideHoursMode == OutsideHoursMode.walkupOnly && !walkUp) {
-        throw const PostgrestException(
+        throw demoBookingRefusal(
             code: 'DKK15', message: 'only spontaneous check-ins are possible '
                 'outside the opening hours — booking ahead is not');
       }
@@ -135,7 +134,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
             start.isBefore(r.endsAt) &&
             r.startsAt.isBefore(end)).length;
     if (busy >= simultaneousAllowance) {
-      throw const PostgrestException(
+      throw demoBookingRefusal(
           message: 'you already have a reservation in that period', code: 'DKK19');
     }
   }
@@ -459,10 +458,10 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
         at.month == r.startsAt.month &&
         at.day == r.startsAt.day;
     if (at.isBefore(r.startsAt.subtract(leeway)) && !sameDay) {
-      throw const PostgrestException(message: 'check-in window not open yet', code: 'DKK17');
+      throw demoBookingRefusal(message: 'check-in window not open yet', code: 'DKK17');
     }
     if (!at.isBefore(r.endsAt)) {
-      throw const PostgrestException(message: 'check-in window closed', code: 'DKK18');
+      throw demoBookingRefusal(message: 'check-in window closed', code: 'DKK18');
     }
     // 0079/0119 mirror: stale check-ins complete at their own end;
     // check-ins still RUNNING elsewhere refuse once they reach the
@@ -477,7 +476,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
       if (other.endsAt.isAfter(at)) {
         running++;
         if (running >= simultaneousAllowance) {
-          throw const PostgrestException(
+          throw demoBookingRefusal(
               message: 'already checked in elsewhere', code: 'DKK20');
         }
         continue;
@@ -506,7 +505,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     required String badgeToken,
   }) async {
     if (badgeToken == 'bad-badge') {
-      throw const PostgrestException(message: 'badge not recognized');
+      throw demoBookingRefusal(message: 'badge not recognized');
     }
     return (name: kioskName, userId: kioskUserId, hasAvatar: kioskHasAvatar);
   }
@@ -530,12 +529,12 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // The sentinel token models an unknown/revoked badge (kiosk_act's
     // pinned refusal, 0043).
     if (badgeToken == 'bad-badge') {
-      throw const PostgrestException(message: 'badge not recognized');
+      throw demoBookingRefusal(message: 'badge not recognized');
     }
     // #430: the one-place trigger refusing a kiosk walk-up while the
     // badge member is active elsewhere — pinned substring.
     if (badgeToken == 'busy-badge') {
-      throw const PostgrestException(
+      throw demoBookingRefusal(
           message: 'you already have a reservation in that period', code: 'DKK19');
     }
     // #622 — mirror the exclusion constraint for kiosk walk-ups: an
@@ -557,7 +556,7 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
           r.startsAt.isBefore(endsAt) &&
           startsAt.isBefore(r.endsAt));
       if (blocked) {
-        throw const PostgrestException(message: 'already reserved');
+        throw demoBookingRefusal(message: 'already reserved');
       }
     }
     kioskActs.add((
@@ -615,15 +614,15 @@ class FakeReservationRepository with ReadsLeaveNothingOut implements Reservation
     // end (later than now); anything not active is uneditable.
     if (r.status == ReservationStatus.checkedIn) {
       if (startsAt != r.startsAt) {
-        throw const PostgrestException(
+        throw demoBookingRefusal(
             message: 'a running booking keeps its start', code: 'DKK31');
       }
       if (!endsAt.isAfter(now())) {
-        throw const PostgrestException(
+        throw demoBookingRefusal(
             message: 'the new end must lie ahead', code: 'DKK32');
       }
     } else if (r.status != ReservationStatus.reserved) {
-      throw const PostgrestException(
+      throw demoBookingRefusal(
           message: 'only upcoming reservations can be edited', code: 'DKK33');
     }
     if (_overlapsActive(r.seatId, r.officeId, startsAt, endsAt,
