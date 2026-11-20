@@ -48207,6 +48207,12 @@ abstract class AppLocalizations {
   /// **'Sample data'**
   String get sampleDataTitle;
 
+  /// Shown beside the code field in the kiosk and space scan sheets in a program that has no camera scanner (Windows, macOS); the typed code is the way in.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera scanning is not available in this program — type the code.'**
+  String get scanCameraProgramUnavailable;
+
   /// Shown as the text in space scan sheet (reservations), and 1 other place.
   ///
   /// In en, this message translates to:

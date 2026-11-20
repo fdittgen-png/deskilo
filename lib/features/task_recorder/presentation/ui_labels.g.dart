@@ -8290,6 +8290,7 @@ Map<String, _Getter> _part21() => {
   'roleRefusalNotAssignable': (l) => l.roleRefusalNotAssignable,
   'rolesYourRole': (l) => l.rolesYourRole,
   'saftTaxNumberLabel': (l) => l.saftTaxNumberLabel,
+  'scanCameraProgramUnavailable': (l) => l.scanCameraProgramUnavailable,
   'schemaUpdateMember': (l) => l.schemaUpdateMember,
   'searchKindMember': (l) => l.searchKindMember,
   'settingHintBookingCheckInReminderLeadMinutes': (l) => l.settingHintBookingCheckInReminderLeadMinutes,

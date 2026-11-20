@@ -245,6 +245,10 @@
   "@scanCameraWebUnavailable": {
     "description": "Shown as the text in space scan sheet (reservations), and 1 other place."
   },
+  "scanCameraProgramUnavailable": "Camera scanning is not available in this program — type the code.",
+  "@scanCameraProgramUnavailable": {
+    "description": "Shown beside the code field in the kiosk and space scan sheets in a program that has no camera scanner (Windows, macOS); the typed code is the way in."
+  },
   "bookingGateBlocked": "Not bookable as chosen",
   "@bookingGateBlocked": {
     "description": "Shown as the text in booking sheet (reservations), and 2 other places."

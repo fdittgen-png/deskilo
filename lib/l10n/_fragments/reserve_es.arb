@@ -128,6 +128,7 @@
     }
   },
   "scanCameraWebUnavailable": "El escaneo con cámara no está disponible en el navegador — escriba el código o acerque una etiqueta NFC al dispositivo (Chrome en Android).",
+  "scanCameraProgramUnavailable": "El escaneo con cámara no está disponible en este programa — escriba el código.",
   "bookingGateBlocked": "No reservable así",
   "reserveAvailabilityUnavailable": "No se pudo cargar toda la disponibilidad, por eso no se muestra ningún puesto como libre. Reintente.",
   "bookingRecordedPastSpaceWhen": "{space} registrado: {when}. Ese periodo ya ha terminado, así que se conserva como una visita pasada.",

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../../core/nfc/nfc_uid_reader.dart';
 import '../../../../core/scan/qr_scan_widget.dart';
 import '../../../../core/scan/scan_camera_box.dart';
+import '../../../../core/scan/scan_no_camera.dart';
 import '../../../../core/ui/form_sheet.dart';
 import '../../../../l10n/app_localizations.dart';
 import '../../domain/space_code.dart';
@@ -136,7 +137,7 @@ class _SpaceScanSheetState extends State<SpaceScanSheet> {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              l10n.scanCameraWebUnavailable,
+              scanNoCameraSentence(l10n),
               key: const ValueKey('space-scan-no-camera'),
               style: Theme.of(context).textTheme.bodySmall,
             ),

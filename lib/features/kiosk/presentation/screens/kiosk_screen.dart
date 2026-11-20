@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -201,7 +200,7 @@ class _KioskScreenState extends ConsumerState<KioskScreen> {
       // camera-free.
       scanBuilder:
           qrScanSupported ? ref.read(qrScanWidgetBuilderProvider) : null,
-      explainNoCamera: kIsWeb,
+      explainNoCamera: !qrScanSupported,
       refusalOf: gate == null
           ? null
           : (choice) => gate.refusalFor(

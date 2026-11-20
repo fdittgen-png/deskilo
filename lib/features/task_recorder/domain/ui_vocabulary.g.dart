@@ -12936,6 +12936,7 @@ const Set<String> uiLabelKeys = {
   'sampleDataFillFailed',
   'sampleDataNotCleared',
   'sampleDataTitle',
+  'scanCameraProgramUnavailable',
   'scanCameraWebUnavailable',
   'scanJoinHelp',
   'scanJoinNotAnInvite',
