@@ -13,18 +13,16 @@
 // must not grow a second copy back. The behavior half asks the fake —
 // whose kiosk path now goes through the same mirrored rule set.
 import 'dart:io';
-
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/time/workspace_time.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
 import 'package:deskilo/features/reservations/domain/walk_up_window.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:deskilo/features/workspace/domain/booking_granularity.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_reservation_repository.dart';
+import '../../helpers/reservation_refused.dart';
 import '../../helpers/test_clock.dart';
 
 /// The two substrings the client maps in [bookingErrorText]. They are a
@@ -152,7 +150,7 @@ void main() {
       expect(
         bookingErrorText(
             englishL10n,
-            const PostgrestException(
+            refused(
                 message: 'the booking lies entirely in the past',
                 code: 'DKK11'),
             'fallback'),
@@ -161,7 +159,7 @@ void main() {
       expect(
         bookingErrorText(
             englishL10n,
-            const PostgrestException(
+            refused(
                 message: 'a walk-up check-in must start today',
                 code: 'DKK12'),
             'fallback'),
@@ -243,8 +241,7 @@ void main() {
           startsAt: _at(17),
           endsAt: DateTime(kTestNow.year, kTestNow.month, kTestNow.day + 1),
         ),
-        throwsA(isA<PostgrestException>().having((e) => e.message, 'message',
-            contains('outside the opening hours'))),
+        throwsA(isA<ReservationRefused>().having((e) => e.refusal.code, 'code', 'DKK16')),
       );
     });
   });
@@ -287,7 +284,7 @@ void main() {
       expect(
         bookingErrorText(
           englishL10n,
-          const PostgrestException(
+          refused(
               message: 'a booking must end on the day it starts',
               code: 'DKK13'),
           'fallback',

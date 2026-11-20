@@ -5,6 +5,7 @@
 // screen only maps each answer to its call and its words.
 import 'package:deskilo/features/kiosk/domain/kiosk_act.dart';
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/reservations/domain/space_act.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -80,13 +81,18 @@ void main() {
   });
 
   group('how a refusal reads', () {
-    final table = <String, KioskRefusal>{
-      'badge not recognized': KioskRefusal.badgeRejected,
-      'reservation not checked in': KioskRefusal.notCheckedIn,
-      'that space is already reserved in that period': KioskRefusal.other,
+    // #4156 — read once at the data boundary, the kiosk reads the same value.
+    final table = <String, ReservationRefusalKind>{
+      'badge not recognized': ReservationRefusalKind.badgeRejected,
+      'reservation not checked in': ReservationRefusalKind.notCheckedIn,
+      'that space is already reserved in that period':
+          ReservationRefusalKind.spaceChainTaken,
     };
-    for (final MapEntry(key: message, value: refusal) in table.entries) {
-      test(message, () => expect(kioskRefusalOf(message), refusal));
+    for (final MapEntry(key: message, value: kind) in table.entries) {
+      test(
+        message,
+        () => expect(ReservationRefusal.fromServer(message: message).kind, kind),
+      );
     }
   });
 

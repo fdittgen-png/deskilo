@@ -10,12 +10,10 @@
 //       → 1 (today's behavior, exactly).
 // Both pinned substrings the client maps survive verbatim.
 import 'dart:io';
-
 import 'package:deskilo/features/reservations/domain/reservation.dart';
+import 'package:deskilo/features/reservations/domain/reservation_refusal.dart';
 import 'package:deskilo/features/workspace/domain/booking_policies.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:supabase_flutter/supabase_flutter.dart'
-    show PostgrestException;
 
 import '../../helpers/fake_reservation_repository.dart';
 import '../../helpers/mock_providers.dart';
@@ -38,8 +36,11 @@ Reservation _mine({
       checkedInAt: status == ReservationStatus.checkedIn ? kTestNow : null,
     );
 
-Matcher _refuses(String substring) => throwsA(isA<PostgrestException>()
-    .having((e) => e.message, 'message', contains(substring)));
+/// The refusal the server raises under [code] (0739): DKK19 one place at a
+/// time, DKK20 checked in elsewhere.
+Matcher _refuses(String code) => throwsA(
+  isA<ReservationRefused>().having((e) => e.refusal.code, 'code', code),
+);
 
 void main() {
   group('allowance resolution — member > workspace > 1 (#628)', () {
@@ -121,7 +122,7 @@ void main() {
           startsAt: kTestNow,
           endsAt: kTestNow.add(const Duration(hours: 2)),
         ),
-        _refuses('you already have a reservation in that period'),
+        _refuses('DKK19'),
       );
       expect(repo.reservations, hasLength(1));
     });
@@ -145,7 +146,7 @@ void main() {
           startsAt: kTestNow,
           endsAt: kTestNow.add(const Duration(hours: 2)),
         ),
-        _refuses('you already have a reservation in that period'),
+        _refuses('DKK19'),
       );
       expect(repo.reservations, hasLength(2),
           reason: 'the third overlap never lands');
@@ -166,7 +167,7 @@ void main() {
         if (allowance == 1) {
           await expectLater(
             repo.checkIn('res-next'),
-            _refuses('already checked in elsewhere'),
+            _refuses('DKK20'),
           );
         } else {
           await repo.checkIn('res-next');

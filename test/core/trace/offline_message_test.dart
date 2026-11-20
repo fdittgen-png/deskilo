@@ -12,7 +12,7 @@
 // it is the part that turns a lost booking from a mystery into a retry.
 import 'package:deskilo/core/l10n/context_l10n.dart';
 import 'package:deskilo/core/trace/guarded.dart';
-import 'package:deskilo/features/reservations/domain/booking_error_text.dart';
+import 'package:deskilo/features/reservations/presentation/booking_error_text.dart';
 import 'package:deskilo/l10n/app_localizations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';

@@ -55,7 +55,7 @@ void main() {
       isEmpty,
       reason:
           'map the code to its words in the app (refusal_text.dart, '
-          'booking_refusal_codes.dart), or name it in _notForTheApp with '
+          'booking_error_text.dart), or name it in _notForTheApp with '
           'the reason a person never meets it there',
     );
   });
