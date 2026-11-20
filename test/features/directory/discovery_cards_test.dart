@@ -49,6 +49,7 @@ Future<void> _pump(WidgetTester tester, DiscoveryResults results) async {
         onLocate: (_) {},
         onClear: () {},
         onAllKinds: () {},
+        onClearFacets: () {},
       ),
     ),
     size: const Size(390, 1200),

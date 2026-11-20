@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,6 +16,7 @@ import '../../providers/finance_overview_provider.dart';
 import '../../providers/finance_selection_provider.dart';
 import '../../providers/payment_approval_providers.dart';
 import '../claim_refusal_text.dart';
+import '../finance_host_unavailable.dart';
 
 /// Reopens the displayed payment on its captured host, without a new request.
 class FinanceContinuePayment extends ConsumerStatefulWidget {
@@ -51,9 +54,12 @@ class _ContinuePaymentState extends ConsumerState<FinanceContinuePayment> {
           if (!mounted || !current()) return;
           final target = captured;
           if (target == null || !target.isCurrent()) {
-            AppSnack.error(
+            showFinanceHostUnavailable(
               context,
-              l10n.financesBusinessUnavailable(invoice.workspaceName),
+              invoice.workspaceName,
+              retry: () {
+                if (mounted) unawaited(_continue());
+              },
             );
             return;
           }

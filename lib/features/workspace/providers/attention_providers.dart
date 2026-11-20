@@ -74,6 +74,7 @@ Future<List<Attention>> attention(Ref ref) async {
   // #3925 — who sees the finances, and where the payments are read, before
   // the first await.
   final permissions = ref.watch(myPermissionsProvider);
+  final features = ref.watch(enabledFeaturesSyncProvider);
   final payments = ref.watch(paymentGatewayRepositoryProvider);
   // #3547 — the business's kinds, watched and never awaited: the list does
   // not wait on the settings, and is made again when they arrive.
@@ -118,20 +119,8 @@ Future<List<Attention>> attention(Ref ref) async {
     );
   }
 
-  // The month's members with billable data and no invoice yet. ONE line
-  // for the decision, not one per member: *issue for 7 members*.
-  final overview = await ref.watch(invoicingOverviewProvider.future);
-  if (overview.toInvoice.isNotEmpty) {
-    items.add(
-      Attention(
-        kind: AttentionKind.month,
-        subject: 'invoicing',
-        action: AttentionAction.issue,
-        waitingSince: now,
-        count: overview.toInvoice.length,
-      ),
-    );
-  }
+  final issue = await _issueLine(ref, permissions, features, now);
+  if (issue != null) items.add(issue);
 
   // #2332 — configuration that is not doing what it says: switched-on
   // capabilities a switched-off prerequisite holds back (one line per
@@ -163,7 +152,14 @@ Future<List<Attention>> attention(Ref ref) async {
     // setup left to do, and no line is made of it.
     final dormant = _keptOffByKind(waiting.keys, kinds, profile);
     waiting.removeWhere((parent, _) => dormant.contains(parent));
-    for (final e in waiting.entries) {
+    // #4226 — a line that opens the features screen is for whoever may
+    // configure the space, as its setup lines are.
+    final configurable = permissions.contains(
+      WorkspacePermission.manageConfiguration,
+    )
+        ? waiting.entries
+        : <MapEntry<WorkspaceFeature, Set<WorkspaceFeature>>>[];
+    for (final e in configurable) {
       items.add(
         Attention(
           kind: AttentionKind.configuration,
@@ -312,3 +308,29 @@ Set<WorkspaceFeature> _keptOffByKind(
   }(),
   _ => const <WorkspaceFeature>{},
 };
+
+/// The month's members with billable data and no invoice yet. ONE line for
+/// the decision, not one per member: *issue for 7 members*. #4226 — only for
+/// whoever may issue invoices, who reads the whole register (0131), so
+/// everyone who sees the line reads the same number; it opens the invoices
+/// screen, or the wizard where that feature is on, never a redirect.
+Future<Attention?> _issueLine(
+  Ref ref,
+  Set<WorkspacePermission> permissions,
+  Set<WorkspaceFeature> features,
+  DateTime now,
+) async {
+  if (!permissions.contains(WorkspacePermission.issueInvoices)) return null;
+  final overview = await ref.watch(invoicingOverviewProvider.future);
+  if (overview.toInvoice.isEmpty) return null;
+  return Attention(
+    kind: AttentionKind.month,
+    subject: 'invoicing',
+    action: AttentionAction.issue,
+    waitingSince: now,
+    count: overview.toInvoice.length,
+    route: features.contains(WorkspaceFeature.invoicingWizard)
+        ? '/invoicing/wizard'
+        : '/invoices',
+  );
+}

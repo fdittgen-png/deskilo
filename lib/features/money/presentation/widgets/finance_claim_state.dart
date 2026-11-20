@@ -6,6 +6,8 @@
 // received and being matched by the business. Withdrawing or taking back is
 // confirmed first, with what becomes of money that still arrives, or which
 // invoices a declaration named.
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,6 +22,7 @@ import '../../domain/payment_claims.dart';
 import '../../providers/finance_overview_provider.dart';
 import '../../providers/finance_selection_provider.dart';
 import '../claim_refusal_text.dart';
+import '../finance_host_unavailable.dart';
 import 'finance_continue_payment.dart';
 
 class FinanceClaimState extends ConsumerWidget {
@@ -110,8 +113,10 @@ class FinanceClaimState extends ConsumerWidget {
         try {
           done = await commands.withdraw(invoice);
           // a payment of them again is a new one: its request id goes
-          if (done == true) {
-            requests.forgetClaim({for (final i in named) i.id}, networkId: invoice.networkId);
+          // (keyed by the one identity of the host: installation and workspace)
+          final key = invoice.target?.financeKey;
+          if (done == true && key != null) {
+            requests.forgetClaim({for (final i in named) i.id}, networkId: key);
           }
         } on ClaimRefused catch (r, st) {
           // the refusal is said in its own words below
@@ -126,18 +131,46 @@ class FinanceClaimState extends ConsumerWidget {
       },
     );
     await refreshMyFinances(ref);
-    if (!context.mounted) return;
-    if (refused case final r?) {
-      AppSnack.error(context, claimRefusalText(l10n, r));
-    } else if (done == false) {
+    if (context.mounted) _say(context, ref, refused: refused, done: done);
+  }
+
+  /// What a withdrawal or a take-back came to: refused in the server's words,
+  /// a business that could not be reached or verified (with a way to try
+  /// again), or done.
+  void _say(
+    BuildContext context,
+    WidgetRef ref, {
+    required ClaimRefusal? refused,
+    required bool? done,
+  }) {
+    final l10n = context.l10n;
+    if (refused != null) {
+      AppSnack.error(context, claimRefusalText(l10n, refused));
+    } else if (done == false &&
+        (invoice.target == null ||
+            (invoice.claimPaymentId == null && invoice.claimEventId == null))) {
+      // nothing to withdraw or take back here (no host, no payment): not a
+      // host that cannot be reached, and nothing to try again
       AppSnack.error(
         context,
-        l10n.financesBusinessUnavailable(invoice.workspaceName),
+        invoice.claimPaymentId == null
+            ? l10n.financesTakeBackFailed
+            : l10n.financesWithdrawFailed,
+      );
+    } else if (done == false) {
+      showFinanceHostUnavailable(
+        context,
+        invoice.workspaceName,
+        retry: () {
+          if (context.mounted) unawaited(_withdraw(context, ref));
+        },
       );
     } else if (done == true) {
       AppSnack.success(
         context,
-        declared ? l10n.financesTakenBack : l10n.financesWithdrawn,
+        invoice.claimPaymentId == null
+            ? l10n.financesTakenBack
+            : l10n.financesWithdrawn,
       );
     }
   }

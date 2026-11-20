@@ -272,6 +272,10 @@
   "@accountPaymentAsk": {
     "description": "Shown as a text in personal payment provider (money)."
   },
+  "accountPaymentAwaitingMatch": "Received, waiting to be matched",
+  "@accountPaymentAwaitingMatch": {
+    "description": "#4225 the state of a payment that arrived and no invoice has taken yet, as the business holds it under Payments to match"
+  },
   "accountPaymentConfirmed": "Payment confirmed",
   "@accountPaymentConfirmed": {
     "description": "Shown as a text in account activity screen (money), and 1 other place."
@@ -10936,9 +10940,55 @@
   "@discoveryFacetAmenityWifi": {
     "description": "Label of an owner-affirmed public facility or accessibility fact. Unselected means unknown, not absent."
   },
+  "discoveryFacetNoMatch": "No business that answered publishes all of these.",
+  "@discoveryFacetNoMatch": {
+    "description": "#2832 Discover: facts chosen and no answering business publishes all of them"
+  },
+  "discoveryFacetsUncovered": "{count, plural, one{One directory cannot filter by these facts: it was not asked.} other{{count} directories cannot filter by these facts: they were not asked.}}",
+  "@discoveryFacetsUncovered": {
+    "description": "#2832 Discover: directories that cannot filter by published facts are not asked, so their businesses are not in this result; never read as 'none found'",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "discoveryFieldNotPublished": "Not published",
   "@discoveryFieldNotPublished": {
     "description": "Public profile editor or preview: Not published"
+  },
+  "discoveryFiltersAccessibility": "Accessibility",
+  "@discoveryFiltersAccessibility": {
+    "description": "#2832 Discover: the group of published accessibility facts"
+  },
+  "discoveryFiltersAmenities": "Facilities",
+  "@discoveryFiltersAmenities": {
+    "description": "#2832 Discover: the group of published facilities (wifi, meeting room…)"
+  },
+  "discoveryFiltersButtonCount": "{count, plural, one{Filters ({count})} other{Filters ({count})}}",
+  "@discoveryFiltersButtonCount": {
+    "description": "#2832 Discover: the filters button with the number of facts chosen",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "discoveryFiltersClear": "Clear filters",
+  "@discoveryFiltersClear": {
+    "description": "#2832 Discover: drops every fact chosen"
+  },
+  "discoveryFiltersNote": "A business that publishes nothing about a fact is not shown for it: what is unpublished is unknown, not refused.",
+  "@discoveryFiltersNote": {
+    "description": "#2832 Discover: what an unpublished fact means (unknown, not refused)"
+  },
+  "discoveryFiltersShow": "Show results",
+  "@discoveryFiltersShow": {
+    "description": "#2832 Discover: closes the filter sheet and shows the results"
+  },
+  "discoveryFiltersTitle": "Filter by what businesses publish",
+  "@discoveryFiltersTitle": {
+    "description": "#2832 Discover: title of the sheet that narrows by what businesses publish"
   },
   "discoveryHoursClosed": "No regular open days published",
   "@discoveryHoursClosed": {
@@ -16548,9 +16598,18 @@
   "@financesBeingValidated": {
     "description": "Me › Finances, the summary card: the label above the amounts whose payment the business has not confirmed yet (#3682); outside To pay"
   },
-  "financesBusinessUnavailable": "{business} cannot be reached right now. Nothing was sent.",
+  "financesBusinessUnavailable": "{business} cannot be reached or verified right now. Nothing was sent.",
   "@financesBusinessUnavailable": {
-    "description": "#3556 The business of the selected invoices cannot be opened right now (its server, the account changed)",
+    "description": "#3556 #4218 A command on the invoices of a business could not start: its host cannot be reached or verified (the sentence offers to try again)",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
+  },
+  "financesBusinessUnavailableOpen": "{business} cannot be reached or verified right now.",
+  "@financesBusinessUnavailableOpen": {
+    "description": "#4218 An invoice or payment of a business cannot be opened: its host cannot be reached or verified (the sentence offers to try again)",
     "placeholders": {
       "business": {
         "type": "String"
@@ -31088,9 +31147,14 @@
   "@payConfigNotConfigured": {
     "description": "Chip: provider is not configured"
   },
-  "payConfigOpen": "Configure",
-  "@payConfigOpen": {
-    "description": "Diagnostics dialog action opening the online-payments config screen"
+  "payConfigOpenFor": "Configure {business}",
+  "@payConfigOpenFor": {
+    "description": "#4218 Diagnostics dialog action opening the online-payments config of the named business",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "payConfigRemove": "Remove",
   "@payConfigRemove": {
@@ -31227,6 +31291,19 @@
   "payOnlineClaimsUnsupported": "This business's payment service must be updated before selected invoices can be paid online.",
   "@payOnlineClaimsUnsupported": {
     "description": "#3556 The business's payment service is too old to pay selected invoices"
+  },
+  "payOnlineContextNotReady": "The business is not ready yet. Try again in a moment.",
+  "@payOnlineContextNotReady": {
+    "description": "#4218 A payment from the Money screen when the business's verified identity is not known yet (its context is loading or failed); offered with Try again"
+  },
+  "payOnlineDiagBusiness": "Business: {business}",
+  "@payOnlineDiagBusiness": {
+    "description": "#4218 Diagnostics dialog: the business whose online payments are missing configuration",
+    "placeholders": {
+      "business": {
+        "type": "String"
+      }
+    }
   },
   "payOnlineDiagHint": "The server is missing this configuration:",
   "@payOnlineDiagHint": {

@@ -115,6 +115,14 @@ class WorkspaceTarget {
   final String installationId;
   final String workspaceId;
 
+  /// The one identity My finances and the payment flow key on (#4218):
+  /// `installationId:workspaceId`, the form every finance row carries (the
+  /// server answers those rows without the stored [networkId]). A screen that
+  /// matches a row, a focus request or a payment's request id against another
+  /// uses this on both sides, so a stored id that differs (a restore into
+  /// another installation) cannot make them disagree.
+  String get financeKey => '$installationId:$workspaceId';
+
   @override
   bool operator ==(Object other) =>
       other is WorkspaceTarget &&

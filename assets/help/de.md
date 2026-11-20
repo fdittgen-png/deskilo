@@ -294,6 +294,8 @@ Sie haben keinen Code, möchten aber einen Space in Ihrer Nähe finden. Spaces, 
 
 Die Karten zeigen veröffentlichte Ausstattung, Barrierefreiheit und reguläre Zeiten neben Bild, Ort und Betriebsart. Die Seite gliedert dieselben Angaben, den Überblick, weitere Angaben und Kontaktmöglichkeiten. **Nicht veröffentlicht** bedeutet unbekannt: Es bedeutet weder, dass eine Ausstattung fehlt, noch dass der Ort nicht barrierefrei ist. Die Zeiten gelten in der Zeitzone des Betriebs und garantieren keine aktuelle Verfügbarkeit. Scheitert die Aktualisierung, kennzeichnet ein Hinweis die beibehaltenen Angaben; **Erneut versuchen** fragt dieselbe Quelle erneut ab.
 
+**Filter** grenzt Discover nach dem ein, was Unternehmen veröffentlichen: Ausstattung und Barrierefreiheit, zusammen mit der Art des Unternehmens und den eingegebenen Wörtern. Wählen Sie die Angaben, die Sie brauchen; ein Unternehmen erscheint nur, wenn es alle veröffentlicht. Ein Unternehmen, das zu einer Angabe nichts veröffentlicht, erscheint dafür nicht, denn Unveröffentlichtes ist unbekannt. Kann ein Verzeichnis nicht nach diesen Angaben filtern, sagt ein Hinweis, dass es nicht gefragt wurde: Seine Unternehmen fehlen im Ergebnis, sie sind nicht abwesend. Suche, Filter und Auswahl bleiben erhalten, wenn Sie eine Seite öffnen und zurückgehen oder den Tab wechseln und zurückkehren.
+
 **Gut zu wissen**
 
 - Nur Spaces, die sichtbar sein wollten, werden aufgelistet. In der Demo zeigt die Karte den Demo-Space und zwei erfundene Nachbarn; ihre Seiten, eine Aufnahmeanfrage und eine Nachricht an ihre Gastgeber bleiben in der Demo.

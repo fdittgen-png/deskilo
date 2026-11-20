@@ -4,6 +4,7 @@
   "accountActivityEmpty": "Nessun dato da mostrare.",
   "accountActivityFailed": "Impossibile caricare la cronologia finanziaria. Tocchi per riprovare.",
   "accountPaymentConfirmed": "Pagamento confermato",
+  "accountPaymentAwaitingMatch": "Ricevuto, in attesa di abbinamento",
   "accountInvoiceVoided": "Fattura annullata",
   "accountInvoiceRegrouped": "Incluso in una fattura di conguaglio",
   "accountInvoiceIssued": "Fattura emessa",

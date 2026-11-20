@@ -21,12 +21,14 @@ import '../../workspace/presentation/business_kind_names.dart';
 import '../domain/discovery_paging.dart';
 import '../domain/public_workspace.dart';
 import '../providers/discovery_listing_providers.dart';
+import '../providers/discovery_search_providers.dart';
 import '../providers/discovery_view_providers.dart';
 import '../providers/saved_places_providers.dart';
 import 'directory_carousel.dart';
 import 'directory_link_dialog.dart';
 import 'directory_map.dart';
 import 'directory_pages.dart';
+import 'discovery_facet_filters.dart';
 import 'discovery_kind_chips.dart';
 import 'discovery_list_view.dart';
 import 'discovery_split.dart';
@@ -56,14 +58,27 @@ class DirectoryScreen extends ConsumerStatefulWidget {
 
 class _DirectoryState extends ConsumerState<DirectoryScreen> {
   final _search = TextEditingController();
-  String _query = '';
 
-  /// #3554 — the chosen kind, or null for every kind.
-  late String? _kind = discoverableBusinessKinds.contains(widget.initialKind)
-      ? widget.initialKind
-      : null;
+  /// What was asked of every source: the words, the kind (#3554) and the
+  /// facts (#2832). It is the session's: it is read from the search kept for
+  /// it when the screen opens and written back when the person changes it, so
+  /// a detail page and Back, or another tab and back, find it as it was.
+  late DiscoveryFilter _filter;
 
   PublicWorkspace? _selected;
+
+  @override
+  void initState() {
+    super.initState();
+    final kept = ref.read(discoverySearchProvider);
+    // #3554 — a kind Discover is opened narrowed to (`?kind=`) wins over the
+    // one kept; one the app's catalogue does not know is ignored.
+    _filter = discoverableBusinessKinds.contains(widget.initialKind)
+        ? kept.filter.copyWith(kind: () => widget.initialKind)
+        : kept.filter;
+    _selected = kept.selected;
+    _search.text = _filter.query;
+  }
 
   /// One map per listing: it keeps its camera when the window crosses the
   /// split width, and a new search starts a new one.
@@ -78,9 +93,12 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   }
 
   DiscoveryListingProvider get _provider =>
-      discoveryListingProvider(DiscoveryFilter(_query, kind: _kind));
+      discoveryListingProvider(_filter);
 
-  void _select(PublicWorkspace w) => setState(() => _selected = w);
+  void _select(PublicWorkspace w) {
+    ref.read(discoverySearchProvider.notifier).select(w);
+    setState(() => _selected = w);
+  }
 
   /// The list is the first face; the map is a disclosure behind the
   /// toggle. Before it first loads from a provider, the person is told who
@@ -195,18 +213,24 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
 
   /// A new search is a new listing: every source starts again at its
   /// first page, and the old listing's late answers are dropped.
-  void _submit(String value) => setState(() {
-    _query = value;
-    _selected = null;
-    _mapKey = GlobalKey(debugLabel: 'discovery-map');
-  });
+  void _submit(String value) => _narrow(_filter.copyWith(query: value));
 
   /// #3554 — another kind is a new listing too, the words typed kept.
-  void _chooseKind(String? kind) => setState(() {
-    _kind = kind;
-    _selected = null;
-    _mapKey = GlobalKey(debugLabel: 'discovery-map');
-  });
+  void _chooseKind(String? kind) =>
+      _narrow(_filter.copyWith(kind: () => kind));
+
+  /// #2832 — so are the facts asked for: the words and the kind kept.
+  void _chooseFacets(List<String> amenities, List<String> accessibility) =>
+      _narrow(_filter.copyWith(amenities: amenities, accessibility: accessibility));
+
+  void _narrow(DiscoveryFilter filter) {
+    ref.read(discoverySearchProvider.notifier).filtered(filter);
+    setState(() {
+      _filter = filter;
+      _selected = null;
+      _mapKey = GlobalKey(debugLabel: 'discovery-map');
+    });
+  }
 
   Widget _map(DiscoveryResults result) => DirectoryMap(
     key: _mapKey,
@@ -220,13 +244,14 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
   Widget _list(DiscoveryResults result, {required bool beside}) =>
       DiscoveryListView(
         key: _listKey,
-        filter: DiscoveryFilter(_query, kind: _kind),
+        filter: _filter,
         results: result,
         selected: _selected,
         onView: _open,
         onLocate: _locate,
         onClear: _clear,
         onAllKinds: () => _chooseKind(null),
+        onClearFacets: () => _chooseFacets(const [], const []),
         revealSelected: beside,
       );
 
@@ -377,8 +402,15 @@ class _DirectoryState extends ConsumerState<DirectoryScreen> {
     // finds nothing or fails.
     DiscoveryKindChips(
       key: const ValueKey('directory-kind-chips'),
-      selected: _kind,
+      selected: _filter.kind,
       onChanged: _chooseKind,
+    ),
+    // #2832 — what businesses publish: facilities and accessibility.
+    DiscoveryFacetFilters(
+      key: const ValueKey('directory-facet-filters'),
+      amenities: _filter.amenities,
+      accessibility: _filter.accessibility,
+      onChanged: _chooseFacets,
     ),
     const SizedBox(height: AppSpacing.sm),
     Expanded(

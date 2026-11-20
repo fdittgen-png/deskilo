@@ -204,6 +204,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get accountPaymentAsk => 'Beim Bezahlen wählen';
 
   @override
+  String get accountPaymentAwaitingMatch => 'Eingegangen, wartet auf Zuordnung';
+
+  @override
   String get accountPaymentConfirmed => 'Zahlung bestätigt';
 
   @override
@@ -8394,7 +8397,53 @@ class AppLocalizationsDe extends AppLocalizations {
   String get discoveryFacetAmenityWifi => 'WLAN';
 
   @override
+  String get discoveryFacetNoMatch =>
+      'Kein Unternehmen, das geantwortet hat, veröffentlicht all dies.';
+
+  @override
+  String discoveryFacetsUncovered(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other:
+          '$count Verzeichnisse können nicht nach diesen Angaben filtern und wurden nicht gefragt.',
+      one: 'Ein Verzeichnis kann nicht nach diesen Angaben filtern und wurde nicht gefragt.',
+    );
+    return '$_temp0';
+  }
+
+  @override
   String get discoveryFieldNotPublished => 'Nicht veröffentlicht';
+
+  @override
+  String get discoveryFiltersAccessibility => 'Barrierefreiheit';
+
+  @override
+  String get discoveryFiltersAmenities => 'Ausstattung';
+
+  @override
+  String discoveryFiltersButtonCount(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Filter ($count)',
+      one: 'Filter ($count)',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get discoveryFiltersClear => 'Filter zurücksetzen';
+
+  @override
+  String get discoveryFiltersNote =>
+      'Ein Unternehmen, das zu einer Angabe nichts veröffentlicht, erscheint dafür nicht: Unveröffentlichtes ist unbekannt, nicht abgelehnt.';
+
+  @override
+  String get discoveryFiltersShow => 'Ergebnisse anzeigen';
+
+  @override
+  String get discoveryFiltersTitle => 'Nach Veröffentlichtem filtern';
 
   @override
   String get discoveryHoursClosed =>
@@ -12702,7 +12751,12 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String financesBusinessUnavailable(String business) {
-    return '$business ist gerade nicht erreichbar. Es wurde nichts gesendet.';
+    return '$business ist gerade nicht erreichbar oder nicht überprüfbar. Es wurde nichts gesendet.';
+  }
+
+  @override
+  String financesBusinessUnavailableOpen(String business) {
+    return '$business ist gerade nicht erreichbar oder nicht überprüfbar.';
   }
 
   @override
@@ -23834,7 +23888,9 @@ class AppLocalizationsDe extends AppLocalizations {
   String get payConfigNotConfigured => 'Nicht eingerichtet';
 
   @override
-  String get payConfigOpen => 'Einrichten';
+  String payConfigOpenFor(String business) {
+    return '$business konfigurieren';
+  }
 
   @override
   String get payConfigRemove => 'Entfernen';
@@ -23930,6 +23986,15 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get payOnlineClaimsUnsupported =>
       'Der Zahlungsdienst dieses Betriebs muss aktualisiert werden, bevor ausgewählte Rechnungen online bezahlt werden können.';
+
+  @override
+  String get payOnlineContextNotReady =>
+      'Das Unternehmen ist noch nicht bereit. Versuchen Sie es gleich noch einmal.';
+
+  @override
+  String payOnlineDiagBusiness(String business) {
+    return 'Unternehmen: $business';
+  }
 
   @override
   String get payOnlineDiagHint => 'Auf dem Server fehlt diese Konfiguration:';

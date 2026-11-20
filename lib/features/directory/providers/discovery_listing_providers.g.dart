@@ -62,7 +62,7 @@ final class DiscoveryListingProvider
   }
 }
 
-String _$discoveryListingHash() => r'e545a33effccb6646ca91033411ea251b7b70b38';
+String _$discoveryListingHash() => r'23eda5030a62566ff82f25824940796f4390b381';
 
 /// What discovery has loaded for [filter]: the directory's first page of
 /// sources and the first page of each, then whatever the person asks for
