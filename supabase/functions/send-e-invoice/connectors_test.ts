@@ -16,7 +16,7 @@ import {
 } from "./connectors.ts";
 import { fromBase64, toBase64 } from "./connectors/common.ts";
 import { spkiOfCertificate } from "./connectors/der.ts";
-import { KSEF, submitPlKsef } from "./connectors/pl_ksef.ts";
+import { KSEF, statusPlKsef, submitPlKsef } from "./connectors/pl_ksef.ts";
 import { xmlAttribute } from "./connectors/ro_efactura.ts";
 
 interface Call {
@@ -525,6 +525,116 @@ Deno.test("pl_ksef: token auth, session, encrypted invoice — all decryptable b
   );
   assertEquals(sent.invoiceHash, toBase64(digest));
   assert(calls.some((c) => c.url.endsWith(KSEF.closeSession("S-1"))));
+});
+
+// #3930 -- the invoice status decides the document only through the platform's
+// own outcome: 200 with the KSeF number is acceptance, a code from 400 refuses;
+// everything else is no verdict yet.
+Deno.test("pl_ksef: only the platform's own outcome decides the document", async () => {
+  const pair = await crypto.subtle.generateKey(
+    {
+      name: "RSA-OAEP",
+      modulusLength: 2048,
+      publicExponent: new Uint8Array([1, 0, 1]),
+      hash: "SHA-256",
+    },
+    true,
+    ["encrypt", "decrypt"],
+  );
+  const cert = toBase64(
+    certificateFor(
+      new Uint8Array(await crypto.subtle.exportKey("spki", pair.publicKey)),
+    ),
+  );
+  const answer = async (
+    status: Record<string, unknown> | undefined,
+    ksefNumber?: unknown,
+  ) => {
+    const { fetchImpl } = mock((call) => {
+      const path = call.url.replace("https://ksef.test/api/v2/", "");
+      if (path === KSEF.certificates) {
+        return ok([{ certificate: cert, usage: [KSEF.usageToken] }]);
+      }
+      if (path === KSEF.challenge) {
+        return ok({ challenge: "CH-1", timestampMs: 1760000000000 });
+      }
+      if (path === KSEF.tokenAuth) {
+        return ok({
+          referenceNumber: "AUTH-1",
+          authenticationToken: { token: "auth-jwt" },
+        });
+      }
+      if (path === KSEF.authStatus("AUTH-1")) {
+        return ok({ status: { code: KSEF.authDone } });
+      }
+      if (path === KSEF.redeem) {
+        return ok({ accessToken: { token: "access-jwt" } });
+      }
+      if (path === KSEF.invoiceStatus("S-1", "I-1")) {
+        return ok({
+          ...(status === undefined ? {} : { status }),
+          ...(ksefNumber === undefined ? {} : { ksefNumber }),
+        });
+      }
+      return ok("unexpected", 500);
+    });
+    return await statusPlKsef(
+      {
+        base_url: "https://ksef.test/api/v2",
+        nip: "5260001246",
+        ksef_token: "T",
+      },
+      "S-1/I-1",
+      fetchImpl,
+      () => Promise.resolve(),
+    );
+  };
+  const decided = (r: { status: string; pending?: boolean }) =>
+    r.pending ? "unknown" : r.status;
+  const number = "5260001246-20261117-0123456789AB-CD";
+  assertEquals(
+    decided(await answer({ code: 200 }, number)),
+    "accepted",
+    "200 with the KSeF number",
+  );
+  assertEquals(
+    decided(await answer({ code: "200" }, number)),
+    "accepted",
+    "the code as text",
+  );
+  assertEquals(
+    decided(await answer({ code: 450 }, "")),
+    "rejected",
+    "a refusal",
+  );
+  assertEquals(
+    decided(await answer({ code: "430" })),
+    "rejected",
+    "a refusal read from text",
+  );
+  const unknown = [
+    ["no status at all", await answer(undefined)],
+    ["a status without a code", await answer({ description: "x" })],
+    ["a non-numeric code", await answer({ code: "abc" }, number)],
+    ["an empty code", await answer({ code: "" }, number)],
+    ["a null code", await answer({ code: null }, number)],
+    ["accepted for processing (100)", await answer({ code: 100 })],
+    ["processing (150)", await answer({ code: 150 })],
+    [
+      "a code outside the reviewed ones (301)",
+      await answer({ code: 301 }, number),
+    ],
+    ["200 without the KSeF number", await answer({ code: 200 })],
+    ["200 with an empty KSeF number", await answer({ code: 200 }, "  ")],
+    [
+      "200 with a KSeF number that is not text",
+      await answer({ code: 200 }, 42),
+    ],
+  ] as const;
+  for (const [name, result] of unknown) {
+    assertEquals(decided(result), "unknown", name);
+    assertEquals(result.externalId, "S-1/I-1", name);
+  }
 });
 
 Deno.test("pl_ksef: a refused authentication sends nothing", async () => {

@@ -23,6 +23,7 @@ import {
   Fetch,
   fromBase64,
   join,
+  noVerdictYet,
   parseJson,
   refused,
   Submission,
@@ -258,6 +259,15 @@ export async function submitPlKsef(
   });
 }
 
+/** #3930 -- what the invoice status says about the document: the platform's
+ * own acceptance is the status code 200 together with the KSeF number it
+ * assigned; a code from 400 refuses the document. Nothing else decides it: a
+ * document in processing (the platform's 100 and 150), a missing or
+ * non-numeric code, a code outside these, or a 200 without a KSeF number is no
+ * verdict yet. Authentication, a session and an upload that succeeded are
+ * observations of other steps and never qualify the invoice. */
+export const KSEF_INVOICE = { accepted: 200, refusedFrom: 400 } as const;
+
 /** The invoice's processing status: the KSeF number once accepted, and
  * where its UPO (urzędowe poświadczenie odbioru) can be read. */
 export async function statusPlKsef(
@@ -297,8 +307,12 @@ export async function statusPlKsef(
     statusDescription: state?.description ?? "",
     upoDownloadUrl: body.upoDownloadUrl ?? "",
   };
-  const code = Number(state?.code);
-  if (Number.isFinite(code) && code >= 400) {
+  const code = typeof state?.code === "number"
+    ? state.code
+    : typeof state?.code === "string" && state.code.trim() !== ""
+    ? Number(state.code)
+    : NaN;
+  if (Number.isFinite(code) && code >= KSEF_INVOICE.refusedFrom) {
     return {
       status: "rejected",
       externalId,
@@ -306,7 +320,13 @@ export async function statusPlKsef(
       receipt,
     };
   }
-  return accepted(externalId, text, receipt);
+  const ksefNumber = typeof body.ksefNumber === "string"
+    ? body.ksefNumber.trim()
+    : "";
+  if (code === KSEF_INVOICE.accepted && ksefNumber !== "") {
+    return accepted(externalId, text, receipt);
+  }
+  return noVerdictYet(externalId, text, receipt);
 }
 
 /** The pl_ksef connector record (#3337). */
