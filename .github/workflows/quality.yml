@@ -1273,6 +1273,8 @@ jobs:
           bash scripts/receipted_replay_race.sh "$DB_URL"
           # #3556 — two payments naming one invoice: the second waits, then is refused.
           bash scripts/payment_claim_race.sh "$DB_URL"
+          # #4203 — a reimbursement and an invoice offset of one claim: the last 40.00 is consumed once.
+          bash scripts/reimbursement_offset_race.sh "$DB_URL"
 
       # #1329 — the feature-flag write compares its read-set and merges
       # under ONE row lock. Two real sessions prove there is no window
