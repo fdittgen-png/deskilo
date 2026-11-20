@@ -1550,6 +1550,74 @@ Deno.test("#3883 a connector whose verdict opens no gate takes no test document"
   assertEquals(p.posts.length, 0);
 });
 
+// #3930 -- the Polish channel takes a test document too, in its own syntax.
+function ksefTestStore() {
+  const s = new FakeStore();
+  s.provider = "pl_ksef";
+  s.config = {
+    base_url: "https://live.ksef.test/api/v2",
+    nip: "5260001246",
+    ksef_token: "live-token",
+    base_url_uat: "https://ksef-test.mf.gov.pl/api/v2",
+    nip_uat: "5260001246",
+    ksef_token_uat: "sandbox-token",
+  };
+  s.member_ = { id: "m2", is_admin: false, is_owner: false, status: "active" };
+  s.grants.add("manageIntegrations");
+  return s;
+}
+const nothing = () => new Response("{}", { status: 200 });
+
+Deno.test("#3930 each channel that takes a test document names its own syntax", async () => {
+  for (const [channel, format] of [["it_sdi", "fatturaPa"], ["pl_ksef", "ksefFa3"]]) {
+    const s = channel === "pl_ksef" ? ksefTestStore() : sdiTestStore();
+    const state = await read(
+      await call(s, provider(nothing).fetchImpl, { workspace_id: WS, action: "test_state" }),
+    );
+    assertEquals(state.body.available, true, channel);
+    assertEquals(state.body.format, format, channel);
+  }
+  const none = sdiTestStore();
+  none.provider = "peppol";
+  const state = await read(
+    await call(none, provider(nothing).fetchImpl, { workspace_id: WS, action: "test_state" }),
+  );
+  assertEquals(state.body.available, false);
+  assertEquals(state.body.format, "");
+});
+
+Deno.test("#3930 a test document in another syntax than its channel's leaves nothing", async () => {
+  const s = ksefTestStore();
+  const p = provider(nothing);
+  const r = await read(await call(s, p.fetchImpl, { ...testBody, format: "fatturaPa" }));
+  assertEquals(r.status, 400);
+  assertEquals(r.body.error, "format_not_accepted");
+  assertEquals(r.body.formats, ["ksefFa3"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3930 the Polish channel takes a test document: its sandbox is required, never the live one", async () => {
+  const s = ksefTestStore();
+  delete s.config.ksef_token_uat;
+  const p = provider(nothing);
+  const r = await read(await call(s, p.fetchImpl, { ...testBody, format: "ksefFa3" }));
+  assertEquals(r.status, 409);
+  assertEquals(r.body.error, "sandbox_credentials_missing");
+  assertEquals(r.body.missing, ["ksef_token"]);
+  assertEquals(s.rows.size, 0);
+  assertEquals(p.posts.length, 0);
+});
+
+Deno.test("#3930 a test without a named syntax is sent in its channel's", async () => {
+  const s = sdiTestStore();
+  const p = provider(sdiAnswer);
+  const { format: _named, ...unnamed } = testBody;
+  const r = await read(await call(s, p.fetchImpl, unnamed));
+  assertEquals(r.status, 200);
+  assertEquals([...s.rows.values()][0].format, "fatturaPa");
+});
+
 Deno.test("#3883 a second test waits for the first one's verdict, with a sentence", async () => {
   const s = sdiTestStore();
   const p = provider(sdiAnswer);
@@ -1619,7 +1687,7 @@ Deno.test("#3883 the latest test's state, for whoever manages the integrations",
   const s = sdiTestStore();
   const p = provider(sdiAnswer);
   const none = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));
-  assertEquals(none.body, { available: true, test: null });
+  assertEquals(none.body, { available: true, format: "fatturaPa", test: null });
   await call(s, p.fetchImpl, testBody);
   const test = [...s.rows.values()][0];
   const waiting = await read(await call(s, p.fetchImpl, { workspace_id: WS, action: "test_state" }));

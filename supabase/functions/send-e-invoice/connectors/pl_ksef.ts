@@ -337,4 +337,5 @@ export const plKsefConnector: Connector = {
   sandbox: { base_url: "https://ksef-test.mf.gov.pl/api/v2" },
   submit: submitPlKsef,
   status: statusPlKsef,
+  testDocument: true,
 };

@@ -329,12 +329,17 @@ enum EInvoiceTestVerdict {
 class EInvoiceTestState {
   const EInvoiceTestState({
     required this.available,
+    this.format = '',
     this.transmissionId = '',
     this.verdict = EInvoiceTestVerdict.none,
   });
 
   /// Whether the configured channel takes a test document at all.
   final bool available;
+
+  /// The channel's own syntax (an `EInvoiceFormat` name), which the test
+  /// document is built in; empty where none is offered.
+  final String format;
   final String transmissionId;
   final EInvoiceTestVerdict verdict;
 
@@ -346,13 +351,18 @@ class EInvoiceTestState {
   /// Reads the function's answer; anything unreadable is [unavailable].
   static EInvoiceTestState fromWire(Map<String, Object?> body) {
     final test = body['test'];
+    final format = body['format'] is String ? body['format'] as String : '';
     if (test is! Map) {
-      return EInvoiceTestState(available: body['available'] == true);
+      return EInvoiceTestState(
+        available: body['available'] == true,
+        format: format,
+      );
     }
     final phase = test['phase'];
     final document = test['document_status'];
     return EInvoiceTestState(
       available: body['available'] == true,
+      format: format,
       transmissionId: test['transmission_id'] is String
           ? test['transmission_id'] as String
           : '',

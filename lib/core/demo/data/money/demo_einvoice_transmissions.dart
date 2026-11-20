@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:deskilo/features/money/domain/einvoice_gateway.dart';
 import 'package:deskilo/features/money/domain/einvoice_transmissions.dart';
+import 'package:deskilo_invoice_model/deskilo_invoice_model.dart'
+    show EInvoiceFormat;
 import 'package:supabase_flutter/supabase_flutter.dart' show PostgrestException;
 
 import '../money_repository.dart';
@@ -169,6 +171,7 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
       _m.einvoiceGateway.provider == 'it_sdi'
       ? EInvoiceTestState(
           available: true,
+          format: EInvoiceFormat.fatturaPa.name,
           transmissionId: testId,
           verdict: testVerdict,
         )
@@ -178,6 +181,7 @@ class DemoEInvoiceTransmissions implements EInvoiceTransmissions {
   Future<EInvoiceTestSent> sendEInvoiceTest({
     required String workspaceId,
     required String fileName,
+    required String format,
     required List<int> bytes,
   }) async {
     if (_m.einvoiceGateway.provider != 'it_sdi') {
