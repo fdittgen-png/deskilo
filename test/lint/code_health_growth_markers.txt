@@ -6,3 +6,4 @@
 lib/features/money/presentation/widgets/book_profile_sheet.dart#_BookProfileSheetState.build(BuildContext context) :: #3680: one guard that shows the failed or waiting read instead of an empty list
 lib/features/money/presentation/widgets/expense_repartition_sheet.dart#_RepartitionWizardState.build(BuildContext context) :: #3680: one guard that shows the failed or waiting read instead of an empty list
 lib/features/money/presentation/widgets/negotiation_card.dart#NegotiationCard.build(BuildContext context,WidgetRef ref) :: #3680: one guard that shows the failed or waiting read instead of an empty list
+lib/core/mcp/mcp_operations.dart :: #3937: the generated contract grows by one spec per operation: the four dated plan-change operations of the assistant (one read, two scheduled writes and a cancel), 47 lines, as the budget's reason already says

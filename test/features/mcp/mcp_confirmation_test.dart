@@ -80,6 +80,39 @@ void main() {
     expect(find.byKey(const ValueKey('mcp-confirm-decline')), findsOneWidget);
   });
 
+  testWidgets('a dated plan change shows the member, the share or the pause '
+      'and its days; a cancellation names the day of the change', (tester) async {
+    ActionConfirmation dated(String operation, Map<String, Object?> args,
+            [Map<String, Object?> extra = const {}]) =>
+        ActionConfirmation(
+          id: _id,
+          status: ConfirmationStatus.pending,
+          operation: operation,
+          workspaceName: 'Kraftwerk',
+          clientName: 'Test assistant',
+          arguments: args,
+          target: {'kind': 'member', 'name': 'Ada Lovelace', ...extra},
+        );
+    String change() =>
+        tester.widget<Text>(find.descendant(
+          of: find.byKey(const ValueKey('mcp-confirm-change')),
+          matching: find.byType(Text),
+        ).first).data!;
+    await pump(tester, dated('schedule_member_share_change',
+        {'pct': 50, 'effective_on': '2026-12-01'}));
+    expect(find.text('Ada Lovelace'), findsOneWidget);
+    expect(change(), contains('50 %'));
+    expect(change(), contains('2026'));
+    await pump(tester, dated('schedule_member_pause',
+        {'from': '2026-12-01', 'to': '2027-01-01'}));
+    expect(change(), allOf(contains('2026'), contains('2027')));
+    await pump(tester, dated('schedule_member_pause', {'from': '2026-12-01'}));
+    expect(change(), contains('until resumed'));
+    await pump(tester, dated('cancel_member_term_change',
+        {'change_id': 'c-1'}, {'effective_on': '2026-12-01'}));
+    expect(change(), contains('Cancel the change dated'));
+  });
+
   testWidgets('Confirm sends one acceptance and says so', (tester) async {
     final repo = await pump(tester, refund());
     await tester.tap(find.byKey(const ValueKey('mcp-confirm-accept')));

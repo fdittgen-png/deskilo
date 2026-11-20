@@ -33,10 +33,10 @@ void main() {
     expect(renderMcpContract(source()), rendered, reason: 'deterministic');
   });
 
-  test('the fixed catalogue: thirty-nine operations, one prefix, no duplicates', () {
+  test('the fixed catalogue: forty-three operations, one prefix, no duplicates', () {
     final ids = [for (final o in source()['operations'] as List) (o as Map)['id']];
     expect(ids.toSet(), hasLength(ids.length));
-    expect(ids, hasLength(39));
+    expect(ids, hasLength(43));
     expect(source()['tool_prefix'], 'deskilo_');
     expect(mcpOperations.keys.toList(), ids);
   });
@@ -121,6 +121,21 @@ void main() {
           'workspace_id': '6b1d3f0e-0000-4000-8000-000000000002',
           'period': bad,
         })['period'], 'invalid_month', reason: bad);
+      }
+      // #3937 — a calendar day is a real day: no instant, no 30 February.
+      final pause = mcpOperations['schedule_member_pause']!;
+      Map<String, Object?> pauseWith(String from, [String? to]) => {
+        'request_id': '6b1d3f0e-0000-4000-8000-000000000001',
+        'workspace_id': '6b1d3f0e-0000-4000-8000-000000000002',
+        'member_id': '6b1d3f0e-0000-4000-8000-000000000003',
+        'from': from,
+        'to': ?to,
+      };
+      expect(validateMcpInput(pause, pauseWith('2026-12-01', '2027-01-01')), isEmpty);
+      expect(validateMcpInput(pause, pauseWith('2026-12-01')), isEmpty,
+          reason: 'the end is optional: until resumed');
+      for (final bad in ['2026-02-30', '2026-13-01', '2026-12-1', '2026-12-01T00:00:00Z', 'tomorrow']) {
+        expect(validateMcpInput(pause, pauseWith(bad))['from'], 'invalid_date', reason: bad);
       }
       // #2145 — always the caller's own: there is no member to name.
       expect(validateMcpInput(statement, {

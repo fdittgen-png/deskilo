@@ -53,6 +53,14 @@ String mcpOperationLabel(AppLocalizations l10n, String op) =>
         l10n.mcpOpMemberStatus,
       McpOperationId.requestSubscriptionChange =>
         l10n.mcpOpSubscription,
+      McpOperationId.listMemberTermChanges =>
+        l10n.mcpOpListTermChanges,
+      McpOperationId.scheduleMemberShareChange =>
+        l10n.mcpOpScheduleShare,
+      McpOperationId.scheduleMemberPause =>
+        l10n.mcpOpSchedulePause,
+      McpOperationId.cancelMemberTermChange =>
+        l10n.mcpOpCancelTermChange,
       McpOperationId.listPendingValidations =>
         l10n.mcpOpPendingValidations,
       McpOperationId.getValidation =>

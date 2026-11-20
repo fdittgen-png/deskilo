@@ -31489,6 +31489,12 @@ abstract class AppLocalizations {
   /// **'Your answer: approve'**
   String get mcpConfirmApprove;
 
+  /// #3937 mcp_confirmation: cancelling a change not yet applied, by its day
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the change dated {date}'**
+  String mcpConfirmCancelDated(String date);
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -31567,6 +31573,18 @@ abstract class AppLocalizations {
   /// **'There is no such request for you.'**
   String get mcpConfirmNotFound;
 
+  /// #3937 mcp_confirmation: a pause with no end date
+  ///
+  /// In en, this message translates to:
+  /// **'Pause from {from}, until resumed'**
+  String mcpConfirmPauseOpen(String from);
+
+  /// #3937 mcp_confirmation: a pause between two days
+  ///
+  /// In en, this message translates to:
+  /// **'Pause from {from} until {to}'**
+  String mcpConfirmPauseUntil(String from, String to);
+
   /// #1619 mcp_confirmation
   ///
   /// In en, this message translates to:
@@ -31578,6 +31596,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your answer: refuse'**
   String get mcpConfirmRefuse;
+
+  /// #3937 mcp_confirmation: the share and the day it applies from
+  ///
+  /// In en, this message translates to:
+  /// **'New subscription share: {pct} % from {date}'**
+  String mcpConfirmShareFrom(String pct, String date);
 
   /// #1619 mcp_confirmation
   ///
@@ -32473,6 +32497,12 @@ abstract class AppLocalizations {
   /// **'Cancel your bookings that have not started'**
   String get mcpOpCancelReservation;
 
+  /// #2394 generated from contracts/mcp/operations.json (cancel_member_term_change)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel a change not yet applied'**
+  String get mcpOpCancelTermChange;
+
   /// #2394 generated from contracts/mcp/operations.json (get_capabilities)
   ///
   /// In en, this message translates to:
@@ -32526,6 +32556,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your favourite places'**
   String get mcpOpListMyFavorites;
+
+  /// #2394 generated from contracts/mcp/operations.json (list_member_term_changes)
+  ///
+  /// In en, this message translates to:
+  /// **'Read a member\'s scheduled changes'**
+  String get mcpOpListTermChanges;
 
   /// #2394 generated from contracts/mcp/operations.json (list_workspaces)
   ///
@@ -32604,6 +32640,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Answer a validation request'**
   String get mcpOpRespond;
+
+  /// #2394 generated from contracts/mcp/operations.json (schedule_member_pause)
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule a member\'s pause'**
+  String get mcpOpSchedulePause;
+
+  /// #2394 generated from contracts/mcp/operations.json (schedule_member_share_change)
+  ///
+  /// In en, this message translates to:
+  /// **'Schedule a member\'s subscription share from a date'**
+  String get mcpOpScheduleShare;
 
   /// #2394 generated from contracts/mcp/operations.json (set_favorite)
   ///
