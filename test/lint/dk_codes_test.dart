@@ -24,6 +24,12 @@ const _notForTheApp = <String, String>{
   'DKS01':
       'an answer to an assistant: a setup step that takes credentials '
       'is for the person in the app, never the assistant (0555)',
+  'DKT01':
+      'an answer to an assistant: a dated plan change the command would '
+      'refuse is refused before the person is asked; the confirmation '
+      'target raises it with the command\'s own reason, mcp_confirm '
+      'answers it as conflict/refused and the assistant reads the reason '
+      '(0817)',
   'DKR02':
       'an operator\'s refusal: a personal home cannot drop the '
       'workspace host role while it holds workspaces (0559)',

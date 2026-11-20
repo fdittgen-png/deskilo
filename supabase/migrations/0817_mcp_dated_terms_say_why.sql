@@ -1,6 +1,6 @@
 -- SPDX-License-Identifier: AGPL-3.0-or-later
 -- risk: transforming
--- (mcp_confirm gains one handler by an anchored patch; three confirmation
+-- (mcp_confirm is restated whole with one more handler; three confirmation
 -- targets are restated; no stored state moves.)
 --
 -- 0817 (#4241) -- a dated plan change says why it is refused before the person
@@ -22,43 +22,82 @@
 -- command's message (bounded), answered as `conflict` / `refused` with that
 -- reason, as the facade answers the same refusal at execution.
 
-create or replace function pg_temp.anchor_replace(p_def text, p_old text, p_new text)
-returns text
-language plpgsql
-as $f$
-begin
-  if (length(p_def) - length(replace(p_def, p_old, ''))) / length(p_old) <> 1 then
-    return null;
-  end if;
-  return replace(p_def, p_old, p_new);
-end
-$f$;
-revoke execute on function pg_temp.anchor_replace(text, text, text) from public, anon, authenticated;
-
-do $migration$
+-- ── mcp_confirm, restated whole from its live body, with one more handler ──
+-- (0638 notes the confirmation maps only a few sqlstates; DKT01 is added before
+-- the generic invalid-argument one. Nothing else in the function changes.)
+CREATE OR REPLACE FUNCTION public.mcp_confirm(c mcp_call_context, p_request_id uuid, p_digest text, p_args jsonb)
+ RETURNS jsonb
+ LANGUAGE plpgsql
+ SECURITY DEFINER
+ SET search_path TO 'public'
+AS $function$
 declare
-  v_def text;
+  v_confirmation public.mcp_action_confirmations;
+  v_target jsonb;
 begin
-  select pg_get_functiondef(p.oid) into v_def
-    from pg_proc p join pg_namespace n on n.oid = p.pronamespace
-   where n.nspname = 'public' and p.proname = 'mcp_confirm'
-     and pg_get_function_arguments(p.oid) like 'c mcp_call_context%';
-  -- Applied once: a second run leaves the function as it is.
-  if position($a$sqlstate 'DKT01'$a$ in v_def) > 0 then return; end if;
-  v_def := pg_temp.anchor_replace(v_def,
-    $a$    when invalid_parameter_value or invalid_text_representation then
-$a$,
-    $a$    when sqlstate 'DKT01' then
+  select * into v_confirmation from public.mcp_action_confirmations
+   where installation_id = public.installation_id() and local_user_id = auth.uid()
+     and client_id = c.client_id and request_id = p_request_id
+   for update;
+  begin
+    v_target := public.mcp_target_of(c.workspace_id, c.operation, p_args);
+  exception
+    when sqlstate 'DKS01' then
+      return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+        'denied', null, 'secret_in_app_only'));
+    when insufficient_privilege then
+      return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+        'denied', null, 'not_exposed'));
+    when sqlstate 'DKT01' then
       return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
         'conflict', jsonb_build_object('reason', left(sqlerrm, 200)), 'refused'));
     when invalid_parameter_value or invalid_text_representation then
-$a$);
-  if v_def is null then
-    raise exception 'an anchor of #4241 was not found in mcp_confirm' using errcode = 'P0001';
+      return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+        'validation_error', null, 'invalid_arguments'));
+  end;
+  if v_target is null then
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'not_found', null, 'not_found'));
   end if;
-  execute v_def;
-end
-$migration$;
+  if v_confirmation.id is null then
+    insert into public.mcp_action_confirmations (installation_id, local_user_id, client_id,
+      workspace_id, eligibility_grant_id, operation, request_id, args_digest, target_revision, preview)
+    values (public.installation_id(), auth.uid(), c.client_id, c.workspace_id, c.grant_id,
+            c.operation, p_request_id, p_digest, coalesce(v_target->>'revision', ''),
+            jsonb_build_object('arguments', p_args - 'request_id', 'target', v_target - 'revision'))
+    returning * into v_confirmation;
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'requires_confirmation',
+      jsonb_build_object('confirmation_id', v_confirmation.id, 'expires_at', v_confirmation.expires_at)));
+  end if;
+  if v_confirmation.workspace_id <> c.workspace_id or v_confirmation.operation <> c.operation
+     or v_confirmation.args_digest <> p_digest then
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'conflict', null, 'request_id_reused'));
+  end if;
+  if v_confirmation.eligibility_grant_id <> c.grant_id
+     or coalesce(v_target->>'revision', '') <> v_confirmation.target_revision then
+    update public.mcp_action_confirmations set status = 'revoked'
+     where id = v_confirmation.id and status in ('pending', 'acknowledged');
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'conflict', null, 'confirmation_stale'));
+  end if;
+  if v_confirmation.status = 'pending' and v_confirmation.expires_at > now() then
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'requires_confirmation',
+      jsonb_build_object('confirmation_id', v_confirmation.id, 'expires_at', v_confirmation.expires_at)));
+  end if;
+  if v_confirmation.status <> 'acknowledged' or v_confirmation.expires_at <= now() then
+    return public.mcp_usage_note(c.spec, public.mcp_envelope(p_request_id, c.operation, c.workspace_id,
+      'denied', null,
+      case when v_confirmation.status = 'declined' then 'confirmation_declined' else 'confirmation_expired' end));
+  end if;
+  update public.mcp_action_confirmations set status = 'consumed', consumed_at = now()
+   where id = v_confirmation.id;
+  return null;
+end;
+$function$;
+revoke execute on function public.mcp_confirm(public.mcp_call_context, uuid, text, jsonb) from public, anon, authenticated;
 
 create or replace function public.mcp_target_schedule_member_share_change(p_workspace_id uuid, p_args jsonb)
 returns jsonb language plpgsql security definer set search_path = public as $fn$
