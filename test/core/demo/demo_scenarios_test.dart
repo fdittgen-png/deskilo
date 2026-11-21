@@ -21,6 +21,7 @@ import 'package:deskilo/core/demo/data/bank_statement_demo_seed.dart';
 import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
+import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
 import 'package:deskilo/core/demo/data/kpi_repositories.dart';
 import 'package:deskilo/core/demo/data/lease_commitment_repository.dart';
@@ -1241,6 +1242,22 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       final refused = await organisations.add(before.id, demoPracticeSpaceId);
       final after = (await organisations.myOrganisations()).single;
       return refused == null && after.houseOf(demoPracticeSpaceId) != null;
+    },
+  ),
+  // #4161 — the owner reads the shop stock: exact quantities, a syrup
+  // received in thirds of a litre is 0.999999 l, and its movements.
+  WorkspaceFeature.stockManagement: _action(
+    _owner,
+    'Ada reads the shop stock and finds the syrup received in thirds of a '
+    'litre at exactly 0.999999 l',
+    (w) async {
+      const stock = DemoStockQueries(demoFirstSpaceId);
+      final onHand = await stock.onHandPage(demoFirstSpaceId);
+      final moves = await stock.movementsPage(demoFirstSpaceId);
+      return onHand.rows.any(
+            (r) => r.itemName == 'Syrup' && r.quantity.text == '0.999999',
+          ) &&
+          moves.rows.isNotEmpty;
     },
   ),
   // #4164 — the owner keeps a customer with no account: a business is added

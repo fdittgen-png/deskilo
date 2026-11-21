@@ -28464,6 +28464,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'La gestión de existencias está desactivada en este negocio. No se ha movido nada.';
 
   @override
+  String get refusalStockPage =>
+      'Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.';
+
+  @override
   String get refusalStockUnit =>
       'Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.';
 
@@ -34751,6 +34755,66 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get statusTo => 'Hasta';
+
+  @override
+  String get stockCostLabel => 'Coste por unidad';
+
+  @override
+  String get stockCostNotShown => 'Coste no mostrado';
+
+  @override
+  String get stockCostUnknown => 'Coste no registrado';
+
+  @override
+  String get stockEmpty => 'Todavía no hay nada en existencias.';
+
+  @override
+  String get stockEmptyFiltered => 'Nada coincide con estos filtros.';
+
+  @override
+  String get stockEnteredLabel => 'Introducido';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Lote $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Lote';
+
+  @override
+  String get stockMovementNotFound =>
+      'Este movimiento no existe, o no tiene permiso para verlo.';
+
+  @override
+  String get stockMovementTitle => 'Movimiento';
+
+  @override
+  String get stockMovementsEmpty => 'Todavía no hay movimientos.';
+
+  @override
+  String get stockNoLot => 'Sin lote';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'No se pudieron leer las existencias. Nada se muestra como vacío: inténtelo de nuevo.';
+
+  @override
+  String get stockStoredLabel => 'Guardado';
+
+  @override
+  String get stockTabMovements => 'Movimientos';
+
+  @override
+  String get stockTabOnHand => 'En existencias';
+
+  @override
+  String get stockWhenLabel => 'Cuándo';
 
   @override
   String get subprocessAttendance => 'Asistencia y uso';

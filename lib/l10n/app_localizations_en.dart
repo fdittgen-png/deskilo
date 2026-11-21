@@ -28260,6 +28260,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Stock management is off in this business. Nothing was moved.';
 
   @override
+  String get refusalStockPage =>
+      'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.';
+
+  @override
   String get refusalStockUnit =>
       'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.';
 
@@ -34465,6 +34469,66 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get statusTo => 'To';
+
+  @override
+  String get stockCostLabel => 'Cost per unit';
+
+  @override
+  String get stockCostNotShown => 'Cost not shown';
+
+  @override
+  String get stockCostUnknown => 'Cost not recorded';
+
+  @override
+  String get stockEmpty => 'Nothing is in stock yet.';
+
+  @override
+  String get stockEmptyFiltered => 'Nothing matches these filters.';
+
+  @override
+  String get stockEnteredLabel => 'Entered';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Lot $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Lot';
+
+  @override
+  String get stockMovementNotFound =>
+      'This movement does not exist, or it is not one you may see.';
+
+  @override
+  String get stockMovementTitle => 'Movement';
+
+  @override
+  String get stockMovementsEmpty => 'No movements yet.';
+
+  @override
+  String get stockNoLot => 'No lot';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'The stock could not be read. Nothing is shown as empty: try again.';
+
+  @override
+  String get stockStoredLabel => 'Stored';
+
+  @override
+  String get stockTabMovements => 'Movements';
+
+  @override
+  String get stockTabOnHand => 'On hand';
+
+  @override
+  String get stockWhenLabel => 'When';
 
   @override
   String get subprocessAttendance => 'Attendance & usage';

@@ -35,6 +35,7 @@ import '../../features/plan/providers/accessory_providers.dart';
 import '../../features/plan/providers/charging_station_providers.dart';
 import '../../features/plan/providers/floor_plan_providers.dart';
 import '../../features/reservations/providers/reservation_providers.dart';
+import '../../features/stock/providers/stock_providers.dart';
 import '../../features/workspace/domain/member.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/kpi_providers.dart';
@@ -44,6 +45,7 @@ import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_queries.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
 import 'data/money/demo_invoice_issue_drafts.dart';
@@ -55,6 +57,7 @@ import 'data/series_previewer.dart';
 import 'data/workspace_repository.dart' show FakeWorkspaceMembership;
 import 'demo_finance_commands.dart';
 import 'demo_fixture.dart';
+import 'demo_space_ids.dart';
 import 'demo_space_pick.dart';
 
 /// Demo's one fictional installation: nothing is verified against a
@@ -269,6 +272,11 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // #2365
   accountingSourceQueriesProvider.overrideWith(
     (ref) => money(ref).accountingSource,
+  ),
+  // #4161 — the reference business keeps a small shop stock; no other Demo
+  // business keeps one.
+  stockQueriesProvider.overrideWith(
+    (ref) => const DemoStockQueries(demoFirstSpaceId),
   ),
 ];
 

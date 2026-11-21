@@ -28585,6 +28585,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La gestion des stocks est désactivée dans cette entreprise. Rien n\'a été déplacé.';
 
   @override
+  String get refusalStockPage =>
+      'Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.';
+
+  @override
   String get refusalStockUnit =>
       'Cet article n\'a pas cette unité. Ajoutez l\'unité à l\'article, ou saisissez la quantité dans une unité qu\'il connaît.';
 
@@ -34905,6 +34909,66 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get statusTo => 'Au';
+
+  @override
+  String get stockCostLabel => 'Coût par unité';
+
+  @override
+  String get stockCostNotShown => 'Coût non affiché';
+
+  @override
+  String get stockCostUnknown => 'Coût non enregistré';
+
+  @override
+  String get stockEmpty => 'Rien n’est encore en stock.';
+
+  @override
+  String get stockEmptyFiltered => 'Rien ne correspond à ces filtres.';
+
+  @override
+  String get stockEnteredLabel => 'Saisi';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Lot $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Lot';
+
+  @override
+  String get stockMovementNotFound =>
+      'Ce mouvement n’existe pas, ou vous n’avez pas le droit de le voir.';
+
+  @override
+  String get stockMovementTitle => 'Mouvement';
+
+  @override
+  String get stockMovementsEmpty => 'Aucun mouvement pour l’instant.';
+
+  @override
+  String get stockNoLot => 'Sans lot';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'Le stock n’a pas pu être lu. Rien n’est affiché comme vide : réessayez.';
+
+  @override
+  String get stockStoredLabel => 'Enregistré';
+
+  @override
+  String get stockTabMovements => 'Mouvements';
+
+  @override
+  String get stockTabOnHand => 'En stock';
+
+  @override
+  String get stockWhenLabel => 'Quand';
 
   @override
   String get subprocessAttendance => 'Présence et utilisation';

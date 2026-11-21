@@ -28547,6 +28547,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.';
 
   @override
+  String get refusalStockPage =>
+      'Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.';
+
+  @override
   String get refusalStockUnit =>
       'Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.';
 
@@ -34845,6 +34849,66 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get statusTo => 'Bis';
+
+  @override
+  String get stockCostLabel => 'Kosten je Einheit';
+
+  @override
+  String get stockCostNotShown => 'Kosten nicht angezeigt';
+
+  @override
+  String get stockCostUnknown => 'Kosten nicht erfasst';
+
+  @override
+  String get stockEmpty => 'Es ist noch nichts auf Lager.';
+
+  @override
+  String get stockEmptyFiltered => 'Zu diesen Filtern gibt es nichts.';
+
+  @override
+  String get stockEnteredLabel => 'Erfasst';
+
+  @override
+  String stockLotLabel(String code) {
+    return 'Charge $code';
+  }
+
+  @override
+  String get stockLotTitle => 'Charge';
+
+  @override
+  String get stockMovementNotFound =>
+      'Diese Bewegung gibt es nicht, oder Sie dürfen sie nicht sehen.';
+
+  @override
+  String get stockMovementTitle => 'Bewegung';
+
+  @override
+  String get stockMovementsEmpty => 'Noch keine Bewegungen.';
+
+  @override
+  String get stockNoLot => 'Ohne Charge';
+
+  @override
+  String stockQuantityWithUnit(String quantity, String unit) {
+    return '$quantity $unit';
+  }
+
+  @override
+  String get stockReadFailed =>
+      'Der Bestand konnte nicht gelesen werden. Nichts wird als leer angezeigt: Versuchen Sie es erneut.';
+
+  @override
+  String get stockStoredLabel => 'Gespeichert';
+
+  @override
+  String get stockTabMovements => 'Bewegungen';
+
+  @override
+  String get stockTabOnHand => 'Bestand';
+
+  @override
+  String get stockWhenLabel => 'Wann';
 
   @override
   String get subprocessAttendance => 'Anwesenheit und Nutzung';

@@ -18,7 +18,7 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // The Stock screen (A1/B of #4161) is the first consumer of a typed quantity.
+  // The Stock screen is the consumer of the exact quantity and the paged reads.
   'lib/core/format/decimal_input.dart::exactQuantityFromInput':
       '#4161 — the Stock screen reads a quantity a member types',
   // The workbook's sources as data: the export coverage lint reads them now,

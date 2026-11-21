@@ -59,6 +59,7 @@ const Set<String> _knownPairs = {
   // outcome to the recorder's (#2495); the recorder reads the workspace's
   // flag and active workspace for its scope.
   'reservations -> task_recorder',
+  'stock -> workspace', // #4161 the stock reads use the selected business's client
   'task_recorder -> workspace',
   // #1884 — the feature switch calls the recorder's seam.
   'workspace -> task_recorder',

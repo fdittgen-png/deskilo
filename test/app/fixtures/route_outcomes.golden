@@ -138,6 +138,8 @@ signed-out on  /setup/launch -> /auth
 signed-out on  /setup/levels -> /auth
 signed-out on  /setup/step/:id -> /auth
 signed-out on  /space/:kind/:id -> /auth
+signed-out on  /stock -> /auth
+signed-out on  /stock/movements/:id -> /auth
 signed-out on  /suppliers -> /auth
 signed-out on  /task-recorder -> /auth
 signed-out on  /task-recorder/guide -> /auth
@@ -294,6 +296,8 @@ signed-out off /setup/launch -> /auth
 signed-out off /setup/levels -> /auth
 signed-out off /setup/step/:id -> /auth
 signed-out off /space/:kind/:id -> /auth
+signed-out off /stock -> /auth
+signed-out off /stock/movements/:id -> /auth
 signed-out off /suppliers -> /auth
 signed-out off /task-recorder -> /auth
 signed-out off /task-recorder/guide -> /auth
@@ -450,6 +454,8 @@ no-space on  /setup/launch -> /me
 no-space on  /setup/levels -> /me
 no-space on  /setup/step/:id -> /me
 no-space on  /space/:kind/:id -> /me
+no-space on  /stock -> /me
+no-space on  /stock/movements/:id -> /me
 no-space on  /suppliers -> /me
 no-space on  /task-recorder -> (open)
 no-space on  /task-recorder/guide -> /task-recorder
@@ -606,6 +612,8 @@ no-space off /setup/launch -> /me
 no-space off /setup/levels -> /me
 no-space off /setup/step/:id -> /me
 no-space off /space/:kind/:id -> /me
+no-space off /stock -> /me
+no-space off /stock/movements/:id -> /me
 no-space off /suppliers -> /me
 no-space off /task-recorder -> (open)
 no-space off /task-recorder/guide -> /task-recorder
@@ -762,6 +770,8 @@ member on  /setup/launch -> /calendar
 member on  /setup/levels -> /calendar
 member on  /setup/step/:id -> /calendar
 member on  /space/:kind/:id -> (open)
+member on  /stock -> /calendar
+member on  /stock/movements/:id -> /calendar
 member on  /suppliers -> /calendar
 member on  /task-recorder -> (open)
 member on  /task-recorder/guide -> /task-recorder
@@ -918,6 +928,8 @@ member off /setup/launch -> /messages
 member off /setup/levels -> /messages
 member off /setup/step/:id -> /messages
 member off /space/:kind/:id -> /messages
+member off /stock -> /messages
+member off /stock/movements/:id -> /messages
 member off /suppliers -> /messages
 member off /task-recorder -> (open)
 member off /task-recorder/guide -> /task-recorder
@@ -1074,6 +1086,8 @@ admin on  /setup/launch -> /calendar
 admin on  /setup/levels -> /calendar
 admin on  /setup/step/:id -> /calendar
 admin on  /space/:kind/:id -> (open)
+admin on  /stock -> /calendar
+admin on  /stock/movements/:id -> /calendar
 admin on  /suppliers -> /money/suppliers
 admin on  /task-recorder -> (open)
 admin on  /task-recorder/guide -> /task-recorder
@@ -1231,6 +1245,8 @@ admin off /setup/launch -> /messages
 admin off /setup/levels -> /messages
 admin off /setup/step/:id -> /messages
 admin off /space/:kind/:id -> /messages
+admin off /stock -> /messages
+admin off /stock/movements/:id -> /messages
 admin off /suppliers -> /messages
 admin off /task-recorder -> (open)
 admin off /task-recorder/guide -> /task-recorder
@@ -1387,6 +1403,8 @@ owner on  /setup/launch -> (open)
 owner on  /setup/levels -> (open)
 owner on  /setup/step/:id -> (open)
 owner on  /space/:kind/:id -> (open)
+owner on  /stock -> /reserve
+owner on  /stock/movements/:id -> /reserve
 owner on  /suppliers -> /money/suppliers
 owner on  /task-recorder -> (open)
 owner on  /task-recorder/guide -> /task-recorder
@@ -1544,6 +1562,8 @@ owner off /setup/launch -> /workspace-settings
 owner off /setup/levels -> /workspace-settings
 owner off /setup/step/:id -> /workspace-settings
 owner off /space/:kind/:id -> /messages
+owner off /stock -> /messages
+owner off /stock/movements/:id -> /messages
 owner off /suppliers -> /messages
 owner off /task-recorder -> (open)
 owner off /task-recorder/guide -> /task-recorder

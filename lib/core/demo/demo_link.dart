@@ -49,6 +49,7 @@ const demoLinkRoutes = {
   '/einvoice-config',
   '/settings/payment-terms',
   '/settings/assistant-setup',
+  '/stock', // #4161 — the stock records
 };
 
 /// A screen the demo may start on: one of [demoLinkRoutes], or a setup
