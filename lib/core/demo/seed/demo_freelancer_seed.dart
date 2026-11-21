@@ -14,8 +14,9 @@
 // EUR 108.00 and paid; the printer's bill is EUR 120.00 and unpaid. They are
 // arithmetic fixtures, not a tax treatment of any jurisdiction.
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
-import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show yearMonth;
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay, yearMonth;
 
+import '../../../features/events/domain/workspace_event.dart';
 import '../../../features/money/domain/billing_customer.dart';
 import '../../../features/money/domain/purchase.dart';
 import '../../../features/money/domain/standalone_invoice.dart';
@@ -284,8 +285,31 @@ void seedFreelancerInvoices(FakeMoneyRepository money, DateTime today) {
   issue('kessler-a2', 'KC-2026-0002', 'kessler-customer-chiara', 'Coaching session', 5000, daysAgo: 20);
   issue('kessler-a3', 'KC-2026-0003', 'kessler-customer-lindner', 'Workshop preparation', 9000, daysAgo: 9, paid: true);
   // Chiara declared her payment of the EUR 60.00 invoice; Bruno has not
-  // confirmed it yet, so it is owed but no longer "to collect" (0797's claim).
-  money.claims['kessler-declared-a2'] = ['kessler-a2'];
+  // confirmed it yet: a pending payment event of hers (what the invoicing home
+  // counts "to confirm") and the claim on the invoice it names (0797), so it is
+  // owed but no longer "to collect".
+  const declaredId = 'kessler-declared-a2';
+  final declaredOn = today.subtract(const Duration(days: 2));
+  money.eventRepository?.events.add(
+    WorkspaceEvent(
+      id: declaredId,
+      workspaceId: demoFreelancerSpaceId,
+      type: EventType.payment,
+      action: EventAction.submitted,
+      actorMemberId: 'kessler-customer-chiara',
+      subjectMemberId: 'kessler-customer-chiara',
+      payload: {
+        'amount_cents': 6000,
+        'note': '',
+        'method': '',
+        'paid_on': isoDay(declaredOn),
+        'period': yearMonth(declaredOn.year, declaredOn.month),
+      },
+      status: EventStatus.pending,
+      createdAt: declaredOn,
+    ),
+  );
+  money.claims[declaredId] = ['kessler-a2'];
 }
 
 /// What the business owes: the printer's bill, EUR 120.00, unpaid.

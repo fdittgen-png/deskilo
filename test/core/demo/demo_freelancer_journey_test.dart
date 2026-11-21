@@ -19,8 +19,12 @@ import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
+import 'package:deskilo/features/money/application/receivables_answers.dart';
 import 'package:deskilo/features/money/domain/business_receivables.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
+import 'package:deskilo/features/money/domain/dunning.dart';
+import 'package:deskilo/features/money/presentation/invoice_journey.dart';
+import 'package:deskilo/features/money/presentation/invoicing/receivables_adapter.dart';
 import 'package:deskilo/features/money/providers/business_receivables_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -239,6 +243,37 @@ void main() {
     );
     expect(owed.single.remainingCents, 12000);
     expect(owed.single.currency, 'EUR');
+  });
+
+  test("Chiara's declared EUR 60 is to confirm on the invoicing home: one invoice, "
+      'EUR 60.00, the event Bruno decides', () async {
+    final money = space.money;
+    final events = space.events.events;
+    final reader = ReceivablesReader(
+      matches: await money.fetchInvoiceMatches(demoFreelancerSpaceId),
+      reminders: const {},
+      rules: DunningRules.defaults,
+      now: today,
+      dayOf: (instant) => DateTime.utc(instant.year, instant.month, instant.day),
+      eventFactsOf: (invoice, match) => (
+        journey: journeyFactsOf(invoice, match, events),
+        declaration: declarationOf(invoice, events),
+      ),
+    );
+    final receivables = reader.read(money.invoices);
+    final toConfirm = [
+      for (final r in receivables)
+        if (owedBucketOf(r, today) == OwedBucket.toConfirm) r,
+    ];
+
+    expect(toConfirm.map((r) => r.number), ['KC-2026-0002']);
+    expect(toConfirm.single.openMinor, 6000);
+    expect(toConfirm.single.declaredEventId, 'kessler-declared-a2');
+    expect(
+      receivables.where((r) => r.number == 'KC-2026-0003').single.paymentPending,
+      isFalse,
+      reason: 'the paid invoice is not on its way',
+    );
   });
 
   test('Me counts what Bruno may read: his business, and London through the one '
