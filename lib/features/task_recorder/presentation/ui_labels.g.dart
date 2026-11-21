@@ -7387,6 +7387,7 @@ Map<String, _Getter> _part18() => {
   'refusalAccountingClosed': (l) => l.refusalAccountingClosed,
   'refusalMemberReturnsAsNew': (l) => l.refusalMemberReturnsAsNew,
   'refusalStockMove': (l) => l.refusalStockMove,
+  'refusalStockOnlyExpired': (l) => l.refusalStockOnlyExpired,
   'registerPaymentAmount': (l) => l.registerPaymentAmount,
   'reminderOriginLegacy': (l) => l.reminderOriginLegacy,
   'repartitionAmount': (l) => l.repartitionAmount,

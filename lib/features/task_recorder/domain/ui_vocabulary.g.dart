@@ -12775,6 +12775,7 @@ const Set<String> uiLabelKeys = {
   'refusalStockMove',
   'refusalStockNotEnough',
   'refusalStockOff',
+  'refusalStockOnlyExpired',
   'refusalStockPage',
   'refusalStockStale',
   'refusalStockUnit',
