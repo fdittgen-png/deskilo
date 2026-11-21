@@ -18686,6 +18686,14 @@
   },
   "settingHintPurchaseSupplierLookupPerMinute": "Le nombre maximal de recherches fournisseur qu’une personne peut faire par minute sur ce serveur. Au-delà, rien n’est envoyé au registre et la recherche est signalée comme occupée.",
   "settingHintPurchaseSupplierLookupTimeoutSeconds": "Durée pendant laquelle le serveur attend le registre des sociétés (VIES) avant qu’une recherche fournisseur soit considérée comme expirée. La personne garde ce qu’elle a saisi et peut réessayer ou continuer à la main.",
+  "settingHintQuoteDefaultValidity": "Nombre de jours pendant lesquels un nouveau devis reste valable quand son auteur n’indique pas de date de fin. Jamais plus que la validité maximale.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "La durée la plus longue pendant laquelle un devis peut rester valable, à compter de sa date d’offre. Une validité plus longue est refusée à l’enregistrement du devis.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Jours pendant lesquels un export enregistré par l’application compte encore comme preuve récente que la reprise fonctionne. Au-delà, la reprise reste non vérifiée.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -18893,6 +18901,14 @@
   },
   "settingLabelPurchaseSupplierLookupPerMinute": "Recherches fournisseur par personne et par minute",
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Attente de la recherche fournisseur (secondes)",
+  "settingLabelQuoteDefaultValidity": "Validité par défaut d’un devis",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validité maximale d’un devis",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
   "settingLabelReadinessRecentExportDays": "Fenêtre d’export récent",
   "@settingLabelReadinessRecentExportDays": {
     "description": "#2487 settings: Setting label."

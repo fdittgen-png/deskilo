@@ -1,0 +1,18 @@
+{
+  "settingLabelQuoteDefaultValidity": "Validez predeterminada de un presupuesto",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteDefaultValidity": "Cuántos días permanece válido un presupuesto nuevo cuando su autor no indica fecha de fin. Nunca más que la validez máxima.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Validez máxima de un presupuesto",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "El máximo de tiempo que puede permanecer válido un presupuesto, contado desde su fecha de oferta. Una validez mayor se rechaza al guardar el presupuesto.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  }
+}

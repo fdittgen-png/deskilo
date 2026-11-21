@@ -31620,6 +31620,14 @@ class AppLocalizationsIt extends AppLocalizations {
       'Quanto il server attende il registro delle imprese (VIES) prima che una ricerca fornitore sia considerata scaduta. Ciò che Lei ha digitato resta; può riprovare o proseguire a mano.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'Per quanti giorni un nuovo preventivo resta valido quando l’autore non indica una data di fine. Mai oltre la validità massima.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'Il periodo più lungo in cui un preventivo può restare valido, a partire dalla data dell’offerta. Una validità maggiore viene rifiutata al salvataggio del preventivo.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Giorni in cui un’esportazione registrata dall’app vale ancora come prova recente che il ripristino funziona. Oltre, il ripristino resta non verificato.';
 
@@ -31937,6 +31945,14 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Attesa della ricerca fornitore (secondi)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity =>
+      'Validità predefinita di un preventivo';
+
+  @override
+  String get settingLabelQuoteMaxValidity =>
+      'Validità massima di un preventivo';
 
   @override
   String get settingLabelReadinessRecentExportDays =>

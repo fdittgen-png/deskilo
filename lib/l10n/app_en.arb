@@ -40916,6 +40916,14 @@
   "@settingHintPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
   },
+  "settingHintQuoteDefaultValidity": "How many days a new quote stays valid when its author states no end date. Never more than the longest validity.",
+  "@settingHintQuoteDefaultValidity": {
+    "description": "#4291 hint of the setting quotes.default_validity_days"
+  },
+  "settingHintQuoteMaxValidity": "The longest a quote may stay valid, counted from its offer date. A longer validity is refused when the quote is saved.",
+  "@settingHintQuoteMaxValidity": {
+    "description": "#4291 hint of the setting quotes.max_validity_days"
+  },
   "settingHintReadinessRecentExportDays": "Days an export the app recorded still counts as recent evidence that recovery works. Older than this, recovery reads as unverified.",
   "@settingHintReadinessRecentExportDays": {
     "description": "#2487 settings: Setting hint."
@@ -41251,6 +41259,14 @@
   "settingLabelPurchaseSupplierLookupTimeoutSeconds": "Supplier lookup wait (seconds)",
   "@settingLabelPurchaseSupplierLookupTimeoutSeconds": {
     "description": "#2863 supplier lookup"
+  },
+  "settingLabelQuoteDefaultValidity": "Default validity of a quote",
+  "@settingLabelQuoteDefaultValidity": {
+    "description": "#4291 label of the setting quotes.default_validity_days"
+  },
+  "settingLabelQuoteMaxValidity": "Longest validity of a quote",
+  "@settingLabelQuoteMaxValidity": {
+    "description": "#4291 label of the setting quotes.max_validity_days"
   },
   "settingLabelReadinessRecentExportDays": "Recent export window",
   "@settingLabelReadinessRecentExportDays": {

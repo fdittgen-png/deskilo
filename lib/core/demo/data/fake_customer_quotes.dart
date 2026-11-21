@@ -7,6 +7,7 @@
 // version is refused. Nothing here is a second tax engine: the Demo seller has
 // one rate, and the real issuer computes every real amount.
 import '../../../features/money/domain/customer_quote.dart';
+import '../../../features/money/domain/quote_validity.dart';
 import '../../../features/money/domain/standalone_invoice.dart';
 
 class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
@@ -25,6 +26,10 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
   /// The Demo seller's one VAT rate, the percent every net line is taxed at.
   final int vatPercent;
   final String currency;
+
+  /// How long a quote stays valid, as the business's own settings say (#4291):
+  /// the Demo wires it to its settings; the registry default otherwise.
+  QuoteValidity Function() validity = () => const QuoteValidity();
   final DateTime Function() _clock;
 
   final Map<String, List<_Quote>> _byWorkspace = {};
@@ -231,8 +236,9 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     _check('saveDraft', write: true);
     final today = _clock();
     final on = input.issuedOn ?? DateTime(today.year, today.month, today.day);
-    final until = input.validUntil ?? on.add(const Duration(days: 30));
-    if (until.isBefore(on) || until.isAfter(on.add(const Duration(days: 365)))) {
+    final rules = validity();
+    final until = input.validUntil ?? rules.defaultEnd(on);
+    if (!rules.allows(on, until)) {
       throw const QuoteRefusal(QuoteRefusalKind.incomplete, missing: ['valid_until']);
     }
     final q = quoteId == null
