@@ -94,6 +94,8 @@ String _laterLabel(AppLocalizations l10n, WorkspacePermission permission) =>
           l10n.permManageStock,
         WorkspacePermission.approveStockAdjustments =>
           l10n.permApproveStockAdjustments,
+        WorkspacePermission.manageBillingCustomers =>
+          l10n.permManageBillingCustomers,
         _ => permission.name,
       };
 
@@ -139,6 +141,7 @@ final Map<WorkspacePermission, String Function(AppLocalizations)> _allows = {
   WorkspacePermission.viewStock: (l10n) => l10n.permAllowsViewStock,
   WorkspacePermission.manageStock: (l10n) => l10n.permAllowsManageStock,
   WorkspacePermission.approveStockAdjustments: (l10n) => l10n.permAllowsApproveStockAdjustments,
+  WorkspacePermission.manageBillingCustomers: (l10n) => l10n.permAllowsManageBillingCustomers,
 };
 
 /// The line of what [permission] allows.

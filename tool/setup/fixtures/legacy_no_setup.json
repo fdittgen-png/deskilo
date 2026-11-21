@@ -444,7 +444,8 @@
    "managePrivacy",
    "viewStock",
    "manageStock",
-   "approveStockAdjustments"
+   "approveStockAdjustments",
+   "manageBillingCustomers"
   ],
   "member": [
    "useMessages",

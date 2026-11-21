@@ -150,7 +150,13 @@ enum WorkspacePermission {
 
   /// #3824 — approve the adjustment a count proposes (its screens come with
   /// stock S7). Not an admin default.
-  approveStockAdjustments;
+  approveStockAdjustments,
+
+  /// #4164 — create and edit the business's billing customers (the people and
+  /// businesses it invoices, with or without an account): their billed name,
+  /// postal identity, tax identifiers and delivery contact. Not an admin
+  /// default: it is given by the owner, a role or the matrix.
+  manageBillingCustomers;
 
   /// The wire name — identical to the Dart name, pinned by test.
   String get wireName => name;

@@ -45,7 +45,8 @@ PermissionModule _moduleOf(WorkspacePermission permission) =>
       WorkspacePermission.approveExpenses ||
       WorkspacePermission.managePurchases ||
       WorkspacePermission.recordOutgoingPayments ||
-      WorkspacePermission.manageLease => PermissionModule.money,
+      WorkspacePermission.manageLease ||
+      WorkspacePermission.manageBillingCustomers => PermissionModule.money,
       WorkspacePermission.viewStock ||
       WorkspacePermission.manageStock ||
       WorkspacePermission.approveStockAdjustments => PermissionModule.stock,
