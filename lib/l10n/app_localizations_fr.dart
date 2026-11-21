@@ -1273,6 +1273,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Le paiement a été utilisé entre-temps. Il est relu : vérifiez les montants.';
 
   @override
+  String get assistantFlowsBody =>
+      'Ce qu\'un assistant lit ou fait avec votre accord lui est transmis et traité par l\'entreprise qui le fournit, selon ses propres conditions ; héberger Deskilo vous-même ne rend pas ce traitement local. Il agit en votre nom, uniquement dans les espaces et pour les actions que vous approuvez, et vous pouvez le révoquer à tout moment : cela arrête les demandes futures, sans effacer ce que l\'assistant a déjà reçu.';
+
+  @override
+  String get assistantFlowsPolicyLink => 'Lire la notice de confidentialité';
+
+  @override
   String get assistantSetupActorConfigurer =>
       'Qui : une personne qui gère la configuration de cet espace de travail';
 

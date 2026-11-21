@@ -551,6 +551,8 @@
   "assignRefusePayer": "Eine Rechnung gehört nicht diesem Kunden. Nichts wurde erfasst.",
   "assignRefuseSumOver": "Die Teilbeträge sind höher als der Rest der Zahlung. Nichts wurde erfasst.",
   "assignRefuseUsed": "Die Zahlung wurde inzwischen verwendet. Sie wird neu gelesen: Prüfen Sie die Beträge.",
+  "assistantFlowsBody": "Was ein Assistent mit Ihrer Zustimmung liest oder tut, wird an ihn übermittelt und von dem Unternehmen verarbeitet, das ihn anbietet, nach dessen eigenen Bedingungen; Deskilo selbst zu betreiben macht diese Verarbeitung nicht lokal. Er handelt als Sie, nur in den Arbeitsbereichen und für die Aktionen, die Sie freigeben, und Sie können ihn jederzeit widerrufen: Das beendet künftige Anfragen, löscht aber nicht, was der Assistent schon erhalten hat.",
+  "assistantFlowsPolicyLink": "Datenschutzhinweis lesen",
   "assistantSetupActorConfigurer": "Wer: jemand, der die Konfiguration dieses Arbeitsbereichs verwaltet",
   "assistantSetupActorDatabaseAdministrator": "Wer: ein Datenbankadministrator",
   "assistantSetupActorInstanceOperator": "Wer: der Instanzinhaber oder eine Vertretung",
