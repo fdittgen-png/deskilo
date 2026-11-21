@@ -22,6 +22,8 @@ select plan(7);
 
 create temp table listed (sig text primary key, reason text not null check (length(reason) > 0));
 insert into listed (sig, reason) values
+  ('who_can_access_me(uuid)',
+   'the caller''s own row by id, and the active owners and admins it lists by status: a customer-only subject is neither'),
   ('billing_customers_v1(uuid)',
    'the business''s billing customers, read under manageBillingCustomers or a finance right (billing_customers_readable): a customer-only subject is its purpose'),
   ('workspace_readiness(uuid)',
@@ -216,7 +218,7 @@ select is((select string_agg(r.sig || ':' || r.tier, ', ' order by r.sig) from p
   'a reader is found whatever its name''s form and however it became definer; each rule is seen in its source');
 select ok((select count(*) from pg_temp.readers() where tier = 'service') > 50, 'the service-only readers are read');
 select ok((select count(*) from pg_temp.readers() where tier in ('own row', 'status gate')) > 100, 'the own-row and status-gated readers are read');
-select ok((select count(*) from listed) = 62, 'the list holds 62 reasoned exceptions');
+select ok((select count(*) from listed) = 63, 'the list holds 63 reasoned exceptions');
 
 select * from finish();
 rollback;
