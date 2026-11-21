@@ -29349,6 +29349,14 @@ class AppLocalizationsFr extends AppLocalizations {
   }
 
   @override
+  String get reportDocQuote => 'Devis';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Devis $reference';
+  }
+
+  @override
   String get reportDocSpaceCodes => 'Cartes QR des espaces';
 
   @override

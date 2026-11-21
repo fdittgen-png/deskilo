@@ -16750,6 +16750,19 @@
   },
   "reportDocPurchaseOrder": "Bon de commande",
   "reportDocPurchaseOrderTitle": "Bon de commande {reference}",
+  "reportDocQuote": "Devis",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Devis {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "Cartes QR des espaces",
   "reportDocStatus": "Situation de l'espace",
   "@reportDocStatus": {

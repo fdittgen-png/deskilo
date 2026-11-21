@@ -29223,6 +29223,14 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get reportDocQuote => 'Presupuesto';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Presupuesto $reference';
+  }
+
+  @override
   String get reportDocSpaceCodes => 'Tarjetas QR de espacios';
 
   @override

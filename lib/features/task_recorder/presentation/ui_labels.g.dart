@@ -3846,6 +3846,7 @@ Map<String, _Getter> _part9() => {
   'repartitionRuleHint': (l) => l.repartitionRuleHint,
   'repartitionStatusExpired': (l) => l.repartitionStatusExpired,
   'repartitionStepBook': (l) => l.repartitionStepBook,
+  'reportDocQuote': (l) => l.reportDocQuote,
   'reportFieldMeaningBookTotalDebit': (l) => l.reportFieldMeaningBookTotalDebit,
   'reportFieldMeaningCharges': (l) => l.reportFieldMeaningCharges,
   'reportFieldMeaningClientPhone': (l) => l.reportFieldMeaningClientPhone,

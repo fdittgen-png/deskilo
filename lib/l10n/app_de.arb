@@ -16750,6 +16750,19 @@
   },
   "reportDocPurchaseOrder": "Bestellung",
   "reportDocPurchaseOrderTitle": "Bestellung {reference}",
+  "reportDocQuote": "Angebot",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Angebot {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "QR-Karten der Plätze",
   "reportDocStatus": "Lage des Arbeitsbereichs",
   "@reportDocStatus": {
