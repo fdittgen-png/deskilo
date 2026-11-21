@@ -159,3 +159,4 @@ quickSearch | everywhere | y y y y y y y y y y
 stockManagement | everywhere | y y y y y y y y y y
 organisation | everywhere | y y y y y y y y y y
 billingCustomers | everywhere | y y y y y y y y y y
+customerQuotes | everywhere | y y y y y y y y y y

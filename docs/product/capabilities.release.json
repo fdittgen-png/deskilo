@@ -1586,6 +1586,12 @@
       "capabilities": []
     },
     {
+      "key": "customerQuotes",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "dataAccessLog",
       "maturity": "beta",
       "lifecycle": "active",
