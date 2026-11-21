@@ -37,9 +37,16 @@ create table public.configuration_choice_events (
 );
 select public.ensure_system_columns('configuration_choice_events');
 
+-- A stage is never changed, and never deleted while its business exists; it
+-- goes with the business (`workspace_id` cascades): the pattern of
+-- `stock_movements_append_only` (0747). Without it a business that confirmed a
+-- kind could never be deleted, nor its data erased.
 create or replace function public.configuration_choice_events_append_only() returns trigger
 language plpgsql set search_path = public as $fn$
 begin
+  if tg_op = 'DELETE' and not exists (select 1 from public.workspaces w where w.id = old.workspace_id) then
+    return old;
+  end if;
   raise exception 'a recorded configuration stage is never changed or deleted' using errcode = 'DKK02';
 end
 $fn$;

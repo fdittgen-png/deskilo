@@ -7,7 +7,7 @@
 -- and writes nothing again; a recorded stage is never changed or deleted; only
 -- the owner of THAT business reads the events and nobody writes them directly.
 begin;
-select plan(21);
+select plan(26);
 
 insert into auth.users (id, instance_id, aud, role, email, encrypted_password, email_confirmed_at, created_at, updated_at)
 select x, '00000000-0000-0000-0000-000000000000', 'authenticated', 'authenticated', 'kc4168-' || x || '@deskilo.test', '', now(), now(), now()
@@ -96,6 +96,25 @@ select is(pg_temp.as_user('00000000-0000-4000-8000-000000048601', $q$select coun
   'the owner reads the events of their business: two stages, the refusal and two more');
 select is(pg_temp.as_user('00000000-0000-4000-8000-000000048602', $q$select count(*)::text from public.configuration_choice_events$q$), '0',
   'an ordinary member reads none');
+
+-- a recorded stage goes with its business, and only with it (the cascade of a
+-- deleted workspace is not a deletion of the record)
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by)
+values ('00000000-0000-4000-8000-000000048612', 'Kind C', 'FR', 'EUR', 'Europe/Paris', '00000000-0000-4000-8000-000000048601');
+insert into public.configuration_choice_events (workspace_id, request_id, stage, outcome, actor_user_id, source)
+values ('00000000-0000-4000-8000-000000048612', '00000000-0000-4000-8000-000000048690', 'kind', 'applied', '00000000-0000-4000-8000-000000048601', '{}'),
+       ('00000000-0000-4000-8000-000000048612', '00000000-0000-4000-8000-000000048690', 'flags', 'applied', '00000000-0000-4000-8000-000000048601', '{}');
+select set_config('t.others', (select count(*)::text from public.configuration_choice_events where workspace_id <> '00000000-0000-4000-8000-000000048612'), false);
+select throws_ok($$delete from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'$$, 'DKK02',
+  'a recorded stage is not deleted while its business exists');
+select is((select count(*)::int from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'), 2,
+  'both stages are still there');
+select lives_ok($$delete from public.workspaces where id = '00000000-0000-4000-8000-000000048612'$$,
+  'a business that confirmed a kind can be deleted');
+select is((select count(*)::int from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'), 0,
+  'its recorded stages went with it');
+select is((select count(*)::text from public.configuration_choice_events), current_setting('t.others'),
+  'every other business keeps its own');
 
 select * from finish();
 rollback;
