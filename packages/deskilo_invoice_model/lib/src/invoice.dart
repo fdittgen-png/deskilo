@@ -3,6 +3,7 @@ import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:deskilo_tax_reference/deskilo_tax_reference.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'commercial_line_snapshot.dart';
 import 'invoice_clauses.dart';
 import 'invoice_kind.dart';
 import 'invoice_line_snapshot.dart';
@@ -24,13 +25,11 @@ sealed class InvoiceLine with _$InvoiceLine {
     required String label,
     @Default(1) int quantity,
     required int amountCents,
-
     /// The VAT rate this position was taxed at (0072). Prices are
     /// INCLUSIVE, so [amountCents] is the gross and the tax is extracted
     /// from it with `vatSplit`. 0 = no VAT (every pre-0072 line, and every
     /// credit — money moving is not a supply).
     @Default(0.0) double vatPercent,
-
     /// #831 — on a settlement, the number of the source invoice this
     /// position was carried over from; '' on every other document.
     @Default('') String sourceNumber,
@@ -39,13 +38,14 @@ sealed class InvoiceLine with _$InvoiceLine {
     /// E, O, AE, G; 0403); '' on a line issued before it, where readers
     /// derive the category from the rate and the regime as they always did.
     @Default('') String vatCategory,
-
     /// #2362 — a sales-tax line: the price quoted ([amountCents] adds its
     /// [taxCents]); null on a VAT document, where [amountCents] is quoted.
     int? netCents,
     @Default(0) int taxCents,
     /// #3809 — [label] as frozen facts (`{kind, version, values}`), or null.
     Map<String, Object?>? text,
+    /// #4162 — a `commercial` line's exact facts; read `quantityText`.
+    CommercialLine? commercial,
   }) = _InvoiceLine;
 }
 
