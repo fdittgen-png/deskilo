@@ -41,6 +41,28 @@ class QuoteTotals {
   final String currency;
 }
 
+/// A line of a sent revision as the server froze it: the invoice line
+/// snapshot, whose words are `label` and whose quantity, unit and price are the
+/// exact facts of its `commercial` member. A line without one reads as what it
+/// has, never as a failure.
+StandaloneLine _frozenLine(JsonReader r) {
+  final facts = r.objectOrNull('commercial');
+  final unit = facts?.objectOrNull('unit');
+  final price = facts?.objectOrNull('unit_price');
+  return StandaloneLine(
+    lineId: facts?.stringOrNull('line_id'),
+    description: r.stringOr('label'),
+    quantity: facts?.stringOr('quantity') ?? '',
+    unitCode: unit?.stringOr('code') ?? '',
+    unitLabel: unit?.stringOr('label') ?? '',
+    unEceCode: unit?.stringOr('un_ece_code') ?? '',
+    unitPrice: price?.stringOr('amount') ?? '',
+    grossPrice: price?.stringOr('basis') == 'gross',
+    baseQuantity: price?.stringOr('base_quantity', '1') ?? '1',
+    supply: r.stringOr('supply', 'general'),
+  );
+}
+
 /// One revision of a quote: the working draft (editable at its version) or a
 /// sent one (frozen: the lines are its snapshot).
 @immutable
@@ -69,7 +91,12 @@ class QuoteRevision {
     buyerReference: r.stringOr('buyer_reference'),
     purchaseOrder: r.stringOr('purchase_order'),
     notes: r.stringOr('notes'),
-    lines: r.objects('lines', StandaloneLine.fromJson),
+    // The working draft keeps the lines as they were entered; a SENT revision
+    // is the invoice line snapshot the issuer froze (label, commercial facts).
+    lines: r.objects(
+      'lines',
+      r.stringOr('status') == 'sent' ? _frozenLine : StandaloneLine.fromJson,
+    ),
     totals: r.objectOrNull('totals') == null
         ? null
         : QuoteTotals.fromJson(r.objectOrNull('totals')!),

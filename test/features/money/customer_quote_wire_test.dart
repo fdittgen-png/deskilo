@@ -1,0 +1,154 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4166 — a sent revision is read the way the server answers it. Its `lines`
+// are the invoice line snapshot the issuer froze (`label`, the exact facts in
+// `commercial`), not the lines as they were entered: the fixture below is the
+// line `standalone_invoice_line_v1` returned on the dev project for two hours
+// at 150 EUR net and 20 %, inside a `customer_quote_v1` answer, and the Demo's
+// quotes answer the same shape through the same reader.
+import 'package:deskilo/core/demo/data/fake_customer_quotes.dart';
+import 'package:deskilo/features/money/domain/customer_quote.dart';
+import 'package:deskilo/features/money/domain/standalone_invoice.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+/// `customer_quote_v1` for a quote sent once: the frozen line is the real
+/// snapshot, the draft is absent.
+const Map<String, Object?> _sentOnTheServer = {
+  'quote_id': 'q-1',
+  'subject_id': 's-1',
+  'reference': 'QUO-0001',
+  'status': 'sent',
+  'expired': false,
+  'revisions': [
+    {
+      'revision': 1,
+      'status': 'sent',
+      'draft_version': 1,
+      'issued_on': '2026-11-20',
+      'valid_until': '2026-12-20',
+      'buyer_reference': '',
+      'purchase_order': '',
+      'notes': '',
+      'lines': [
+        {
+          'kind': 'service',
+          'label': 'Consulting',
+          'supply': 'general',
+          'quantity': 1,
+          'commercial': {
+            'unit': {'code': 'hour', 'label': 'hours', 'un_ece_code': 'HUR'},
+            'supply': 'general',
+            'amounts': {
+              'rule': 'half_up_per_line',
+              'currency': 'EUR',
+              'net_minor': '30000',
+              'tax_minor': '6000',
+              'gross_minor': '36000',
+            },
+            'line_id': '6f1b2c3d-0000-4000-8000-000000000001',
+            'version': 1,
+            'quantity': '2',
+            'tax_facts': {
+              'category': 'S',
+              'tax_point': '2026-11-20',
+              'vat_percent': 20,
+            },
+            'unit_price': {
+              'basis': 'net',
+              'amount': '150',
+              'currency': 'EUR',
+              'base_quantity': '1',
+            },
+          },
+          'vat_percent': 20,
+          'amount_cents': 36000,
+          'vat_category': 'S',
+        },
+      ],
+      'totals': {'total_cents': 36000, 'currency': 'EUR'},
+      'content_digest': 'abc',
+      'superseded': false,
+    },
+  ],
+  'decision': null,
+  'conversion': null,
+};
+
+void main() {
+  test('a sent revision reads the frozen snapshot: what the customer was '
+      'offered, not an empty line', () {
+    final line = CustomerQuote.fromJson(_sentOnTheServer).current!.lines.single;
+
+    expect(line.description, 'Consulting');
+    expect(line.quantity, '2');
+    expect(line.unitLabel, 'hours');
+    expect(line.unitCode, 'hour');
+    expect(line.unEceCode, 'HUR');
+    expect(line.unitPrice, '150');
+    expect(line.baseQuantity, '1');
+    expect(line.grossPrice, isFalse);
+    expect(line.lineId, '6f1b2c3d-0000-4000-8000-000000000001');
+    expect(
+      CustomerQuote.fromJson(_sentOnTheServer).current!.totals!.totalCents,
+      36000,
+    );
+  });
+
+  test('a draft revision keeps the lines as they were entered', () {
+    final draft = {
+      ..._sentOnTheServer,
+      'status': 'draft',
+      'revisions': [
+        {
+          ...(_sentOnTheServer['revisions']! as List).single as Map,
+          'status': 'draft',
+          'totals': null,
+          'lines': [
+            {
+              'description': 'Consulting',
+              'quantity': '2',
+              'unit': {'code': 'hour', 'label': 'hours', 'un_ece_code': 'HUR'},
+              'unit_price': '150',
+              'basis': 'net',
+              'base_quantity': '1',
+              'supply': 'general',
+            },
+          ],
+        },
+      ],
+    };
+    final line = CustomerQuote.fromJson(draft).draft!.lines.single;
+
+    expect(line.description, 'Consulting');
+    expect(line.unitPrice, '150');
+  });
+
+  test('the Demo answers the server\'s shape: a sent quote shows what was '
+      'entered, in the same words through the same reader', () async {
+    final quotes =
+        FakeCustomerQuoteRepository(clock: () => DateTime(2026, 11, 20))
+          ..seedSent(
+            'ws-1',
+            subjectId: 's-1',
+            lines: [
+              const StandaloneLine(
+                description: 'Consulting',
+                quantity: '2',
+                unitCode: 'hour',
+                unitLabel: 'hours',
+                unitPrice: '150',
+              ),
+            ],
+            issuedOn: DateTime(2026, 11, 20),
+            validUntil: DateTime(2026, 12, 20),
+          );
+
+    final sent = (await quotes.quotes('ws-1')).single.current!;
+
+    expect(sent.lines.single.description, 'Consulting');
+    expect(sent.lines.single.quantity, '2');
+    expect(sent.lines.single.unitLabel, 'hours');
+    expect(sent.lines.single.unitPrice, '150');
+    expect(sent.totals!.totalCents, 36000, reason: '300 net + 20 % VAT');
+  });
+}
