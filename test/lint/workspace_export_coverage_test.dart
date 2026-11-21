@@ -77,6 +77,7 @@ final Set<String> _exported = {
 /// quietly becomes partial, so each one is an argument somebody has to
 /// disagree with in review.
 const Map<String, String> _notExported = {
+  'configuration_choice_events': 'the server\'s record of what each confirmation of a business kind did (#4168): append-only provenance of a configuration choice, never a business record; the settings and features it concerns are exported with the workspace, and the person who confirmed is a user id returned to them by their own rights request',
   'plans': 'retired (#4042): a business\'s tariffs are its fee bands; no screen writes a plan and the table waits to be dropped',
   'member_term_changes': 'a member\'s dated plan changes and pauses (#3858): the history of their terms, personal data returned by export_my_data to the member it belongs to; the workbook carries each member\'s current share and status',
   'member_period_terms': 'the terms each subscription invoice was computed with (#3858): derived from the invoices and the members\' plans, personal data returned by export_my_data to the member it belongs to; the workbook carries the invoices',

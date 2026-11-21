@@ -1,0 +1,8 @@
+{
+  "@@locale": "it",
+  "businessKindNameFreelancer": "Libero professionista",
+  "businessKindDescFreelancer": "Una persona che vende e fattura i propri servizi: clienti, preventivi e fatture, senza locali.",
+  "discoveryKindFreelancers": "Liberi professionisti",
+  "businessKindProfileChanged": "Questo tipo di attività è stato aggiornato durante la scelta. Chiudere questa finestra e riaprirla per rivedere ciò che propone ora.",
+  "businessKindSavedFlagsRefused": "Il tipo è stato salvato, ma le sue funzioni non sono state modificate: sono cambiate nel frattempo. Rivederle in Funzioni."
+}

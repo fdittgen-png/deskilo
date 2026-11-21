@@ -242,7 +242,9 @@ void main() {
     await _show(
       tester,
       store: InMemorySavedPlacesStore(),
-      size: const Size(360, 800),
+      // tall enough for both cards: the width is the point, and the kind chips
+      // above the list may take two lines at 360 dp
+      size: const Size(360, 1400),
     );
     final one = tester.getRect(find.byKey(_row(_one)));
     final two = tester.getRect(find.byKey(_row(_two)));
