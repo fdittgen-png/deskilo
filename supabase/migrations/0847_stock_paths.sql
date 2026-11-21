@@ -72,6 +72,9 @@ begin
       select id into v_id from public.stock_locations where workspace_id = p_workspace_id and kind = 'in_transit';
       exit when v_id is not null;
     end loop;
+    if v_id is null then
+      raise exception 'the in-transit place of this business could not be made' using errcode = 'DKG05';
+    end if;
   end if;
   return v_id;
 end;
@@ -1015,6 +1018,13 @@ begin
     $n$    if v_old.kind = 'in_transit' or exists (select 1 from public.stock_location_kinds k where k.key = v_old.kind and k.virtual) then
       perform public.stock_config_refuse('place', 'location_virtual');$n$);
   if v_next is null then raise exception '0847: the anchor of save_stock_location_v1 (place) was not found' using errcode = 'P0001'; end if;
+  -- no place is made inside the in-transit place: it would become that place's site
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$    if exists (select 1 from public.stock_locations l join public.stock_location_kinds k on k.key = l.kind
+                where l.id = v_parent and k.virtual) then$o$,
+    $n$    if exists (select 1 from public.stock_locations l join public.stock_location_kinds k on k.key = l.kind
+                where l.id = v_parent and (k.virtual or l.kind = 'in_transit')) then$n$);
+  if v_next is null then raise exception '0847: the anchor of save_stock_location_v1 (parent) was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$  if exists (select 1 from public.stock_location_kinds k where k.key = v_kind and k.virtual) then
     perform public.stock_config_refuse('kind', 'location_virtual');$o$,
@@ -1043,13 +1053,19 @@ declare
 begin
   v_def := pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure);
   v_next := pg_temp.anchor_replace(v_def,
+    $o$active, stock, vat_rate_id)$o$,
+    $n$active, stock, stockable, vat_rate_id)$n$);
+  if v_next is null then raise exception '0847: the anchor of import_workspace_configuration (columns) was not found' using errcode = 'P0001'; end if;
+  v_next := pg_temp.anchor_replace(v_next,
     $o$(v_row->>'stock')::int, public.vat_rate_id_by_label(p_workspace_id, v_row->>'vat_rate'));$o$,
     $n$case when public.stock_initialized(p_workspace_id) then null else (v_row->>'stock')::int end,
+                (v_row->>'stock') is not null,
                 public.vat_rate_id_by_label(p_workspace_id, v_row->>'vat_rate'));$n$);
   if v_next is null then raise exception '0847: the anchor of import_workspace_configuration (insert) was not found' using errcode = 'P0001'; end if;
   v_next := pg_temp.anchor_replace(v_next,
     $o$stock = (v_row->>'stock')::int,$o$,
-    $n$stock = case when public.stock_initialized(p_workspace_id) then stock else (v_row->>'stock')::int end,$n$);
+    $n$stock = case when public.stock_initialized(p_workspace_id) then stock else (v_row->>'stock')::int end,
+               stockable = stockable or (v_row->>'stock') is not null,$n$);
   if v_next is null then raise exception '0847: the anchor of import_workspace_configuration (update) was not found' using errcode = 'P0001'; end if;
   execute v_next;
 end
