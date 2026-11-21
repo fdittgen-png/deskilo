@@ -226,6 +226,9 @@ const Map<String, String> _notExported = {
   'purchase_sources':
       '#2573 — the links from a purchase to the expenses and invoices that '
           'evidence it; they name rows of this server',
+  'standalone_invoice_drafts':
+      '#4165 — an unissued working draft of a standalone invoice: not a '
+          'record until it is issued, and the issued invoice is exported',
   'financial_command_receipts':
       '#2585 — the receipt of a native financial command attempt (request id and '
           'the invoice or event it made); technical recovery state, never a '
@@ -617,6 +620,12 @@ const Map<String, Set<String>> _notExportedColumns = {
     // a fact of this installation's store, which the original's own record
     // states; the invoice's own facts are exported.
     'keeps_original',
+    // #4165 — the invoice source and its service and due dates: read by the
+    // invoice reader and the workbook with the standalone composer (A2); the
+    // lines, totals and parties of the invoice are exported.
+    'source',
+    'service_date',
+    'due_on',
   },
   'invoice_transmissions': {
     // #3335 — the dispatch bookkeeping of an e-invoice submission (its

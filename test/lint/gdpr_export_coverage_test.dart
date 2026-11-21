@@ -119,6 +119,10 @@ const Map<String, String> _notExported = {
       '#2575 — the append-only link from a lease\'s expected rent to the bill '
           'lines that replaced it; it records who linked it (a member) but is '
           'an accounting history of the space, not the person\'s own data',
+  'standalone_invoice_drafts':
+      '#4165 — a seller\'s unissued working draft: it names the customer only '
+          'by member id and holds nothing about them but the lines the seller '
+          'typed; the issued invoice, which is the record, is exported',
   'financial_command_receipts':
       '#2585 — technical recovery state of a financial command attempt (a '
           'request id, a digest and the invoice or event it made); the '
