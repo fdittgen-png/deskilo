@@ -297,5 +297,13 @@
   "featureStockReceivingDesc": "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Sorties de stock",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
+  "featureStockTakeOutDesc": "Sortir des marchandises du stock pour usage ou comme perte, avec le motif et le lot. Désactivé : ni consommation ni perte n’est proposée ; les transferts et la réception ne changent pas.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
   }
 }

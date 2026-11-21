@@ -7613,6 +7613,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockTakeOutDesc": "Waren für den Verbrauch oder als Verlust aus dem Lager nehmen, mit Grund und Charge. Aus: weder Verbrauch noch Verlust werden angeboten; Umlagerungen und Wareneingang bleiben unberührt.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Warenausgang",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
   "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.",
@@ -16244,11 +16252,19 @@
   "refusalStockConfig": "Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.",
   "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.",
   "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
+  "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
   "refusalStockLocation": "Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.",
   "refusalStockLot": "Diese Charge gehört zu einem anderen Artikel, oder der Artikel wird chargenweise geführt und keine wurde angegeben. Nichts wurde bewegt.",
   "refusalStockMove": "Diese Bewegung kann so nicht gebucht werden: eine Menge über null, ein bekannter Grund und eine bis zweihundert Zeilen, oder dieselbe Anfrage unverändert erneut. Nichts wurde bewegt.",
   "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
   "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
+  "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
   "refusalStockStale": "Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",

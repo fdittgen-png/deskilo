@@ -514,6 +514,10 @@ public.stock_reasons.personal_native_session
 public.stock_reasons.stock_reasons_read
 public.stock_receipt_allocations.mcp_delegated_deny
 public.stock_receipt_allocations.stock_receipt_allocations_select
+public.stock_transfer_lines.mcp_delegated_deny
+public.stock_transfer_lines.stock_transfer_lines_select
+public.stock_transfers.mcp_delegated_deny
+public.stock_transfers.stock_transfers_select
 public.stock_units.mcp_delegated_deny
 public.stock_units.personal_native_session
 public.stock_units.stock_units_read

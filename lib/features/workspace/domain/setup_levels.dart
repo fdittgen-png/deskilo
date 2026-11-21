@@ -269,6 +269,8 @@ const Map<SetupProcess, List<SetupLevel>> setupLevels = {
         WorkspaceFeature.stockLots,
         // #4171 — a delivery put away into stock.
         WorkspaceFeature.stockReceiving,
+        // #4170 — goods taken out for use or as a loss.
+        WorkspaceFeature.stockTakeOut,
       },
     ),
   ],
