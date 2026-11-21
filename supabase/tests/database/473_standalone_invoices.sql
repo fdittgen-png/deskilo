@@ -6,7 +6,7 @@
 -- refuses before a number is taken, two deliberate invoices of one customer
 -- and month coexist with the monthly one, and no client writes a draft.
 begin;
-select plan(34);
+select plan(35);
 
 create function pg_temp.u(n int) returns uuid language sql as $$
   select ('00000000-0000-4000-8000-00004165' || lpad(n::text, 4, '0'))::uuid;
@@ -143,6 +143,12 @@ select is(pg_temp.as_user(1, format($$select (public.create_invoice(%L, %L, to_c
 select is((select string_agg(source, ',' order by source) from public.invoices
             where workspace_id = pg_temp.u(101) and member_id = pg_temp.u(203)),
   'monthly,standalone,standalone', 'two standalone and one monthly invoice of one customer and month');
+
+-- ── the facts the draft itself lacks ──
+select is(pg_temp.as_user(1, format($$select (public.preview_standalone_invoice_v1(%L,
+    (public.save_standalone_invoice_draft_v1(%L, null, null, %L, current_date, current_date - 1, '', '', '[]'::jsonb) ->> 'draft_id')::uuid, 1) -> 'missing')::text$$,
+  pg_temp.u(101), pg_temp.u(101), pg_temp.u(203))), '["due_on_before_issue", "lines"]',
+  'a draft with no lines and a due date in the past names both');
 
 -- ── the existing paths that must not take a standalone invoice ──
 select ok(pg_temp.as_user(1, format($$select public.create_invoice(%L, %L, '2026-10', %L)::text$$,

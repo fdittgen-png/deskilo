@@ -353,14 +353,14 @@ begin
   select * into v_ws from public.workspaces where id = p_workspace_id;
   v_regime := coalesce(v_ws.vat_regime, 'not_subject');
 
-  if p_draft.service_date is null then v_missing := v_missing || 'service_date'; end if;
-  if p_draft.due_on is null then v_missing := v_missing || 'due_on';
-  elsif p_draft.due_on < current_date then v_missing := v_missing || 'due_on_before_issue';
-  elsif p_draft.due_on > current_date + 365 then v_missing := v_missing || 'due_on_too_far'; end if;
-  if jsonb_array_length(p_draft.lines) = 0 then v_missing := v_missing || 'lines'; end if;
-  if jsonb_array_length(p_draft.lines) > 100 then v_missing := v_missing || 'lines_too_many'; end if;
+  if p_draft.service_date is null then v_missing := v_missing || 'service_date'::text; end if;
+  if p_draft.due_on is null then v_missing := v_missing || 'due_on'::text;
+  elsif p_draft.due_on < current_date then v_missing := v_missing || 'due_on_before_issue'::text;
+  elsif p_draft.due_on > current_date + 365 then v_missing := v_missing || 'due_on_too_far'::text; end if;
+  if jsonb_array_length(p_draft.lines) = 0 then v_missing := v_missing || 'lines'::text; end if;
+  if jsonb_array_length(p_draft.lines) > 100 then v_missing := v_missing || 'lines_too_many'::text; end if;
   if v_ws.currency_code is null or v_ws.currency_code !~ '^[A-Z]{3}$' then
-    v_missing := v_missing || 'currency';
+    v_missing := v_missing || 'currency'::text;
   end if;
   -- a seller that adds sales tax to net amounts is not supported by this producer
   v_seller_country := coalesce(v_ws.country_code, '');
@@ -368,7 +368,7 @@ begin
   if coalesce(v_gate ->> 'tax_system', 'vat') = 'sales_tax'
      and coalesce((v_gate ->> 'supported')::boolean, false)
      and public.feature_effective(p_workspace_id, 'salesTax') then
-    v_missing := v_missing || 'sales_tax_unsupported';
+    v_missing := v_missing || 'sales_tax_unsupported'::text;
   end if;
   if cardinality(v_missing) > 0 then
     raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = array_to_string(v_missing, ',');
@@ -427,8 +427,8 @@ begin
       v_total := v_total + (v_out #>> '{line,amount_cents}')::bigint;
     end if;
   end loop;
-  if v_total > 2000000000 then v_missing := v_missing || 'total_amount'; end if;
-  if v_total <= 0 and cardinality(v_missing) = 0 then v_missing := v_missing || 'total_not_positive'; end if;
+  if v_total > 2000000000 then v_missing := v_missing || 'total_amount'::text; end if;
+  if v_total <= 0 and cardinality(v_missing) = 0 then v_missing := v_missing || 'total_not_positive'::text; end if;
   if cardinality(v_missing) > 0 then
     raise exception 'invoice_essentials_missing' using errcode = 'DKI01', detail = array_to_string(v_missing, ',');
   end if;
