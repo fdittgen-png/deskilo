@@ -90,4 +90,4 @@ alter table public.standalone_invoice_drafts
   add constraint standalone_invoice_drafts_origin_quote_id_fkey
     foreign key (origin_quote_id) references public.customer_quotes (id) on delete cascade;
 
-select public.set_deskilo_schema_version(837);
+select public.set_deskilo_schema_version(843);

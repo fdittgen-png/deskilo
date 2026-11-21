@@ -317,7 +317,7 @@ select is(pg_temp.as_user(1, $s$select count(*)::text from public.customer_quote
 update public.workspaces set feature_flags = feature_flags || '{"customerQuotes": true}'::jsonb where id = pg_temp.u(101);
 select is(pg_temp.as_user(1, $s$select count(*)::text from public.customer_quotes$s$) <> '0', true, 'switched on again, the quotes are back');
 
--- ── a business takes its quotes with it (0837) ──
+-- ── a business takes its quotes with it (0843) ──
 -- Another business with a sent quote, its recorded decision and the invoice draft its
 -- conversion prepared: every direct delete or change is refused as before, and deleting the
 -- business takes all of them. (A converted quote keeps its invoice, which is retained, and
