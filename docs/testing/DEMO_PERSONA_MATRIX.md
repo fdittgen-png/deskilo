@@ -14,12 +14,12 @@ Rows marked ✓ are asserted by `test/core/demo/demo_persona_accountability_test
 
 ## People and memberships
 
-| persona | Pézenas (`ws-1`) | Leipzig | London / New York / Zurich / Milan | the practice (`ws-7`, #3863) |
-|---|---|---|---|---|
-| owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast | owner |
-| member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan | none: its clients are people of Berlin |
-| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | none |
-| kiosk — front desk tablet (`member-kiosk`) | kiosk device | none | none | none |
+| persona | Pézenas (`ws-1`) | Leipzig | London / New York / Zurich / Milan | the practice (`ws-7`, #3863) | Kessler Conseil (`ws-10`, #4168) |
+|---|---|---|---|---|---|
+| owner — Ada (`member-1`) | owner | co-owner (active) | member of each city cast | owner | none: she is no member, the business is Bruno's alone |
+| member — Bruno (`member-2`) | member | member | as seeded per city; member in Zurich and Milan; in London also the one `finance_read` role (`viewFinances` only, #4168) | none: its clients are people of Berlin | owner (a freelancer business, no places) |
+| admin — Chiara (`member-3`) | administrator | no membership: Leipzig is not listed for her | as seeded per city | none | none |
+| kiosk — front desk tablet (`member-kiosk`) | kiosk device | none | none | none | none |
 
 ## Actions
 

@@ -20,9 +20,12 @@ import '../../../features/workspace/domain/site.dart';
 import '../../../features/workspace/domain/workspace.dart';
 import '../../../features/workspace/domain/workspace_feature.dart';
 import '../../../features/workspace/domain/workspace_permission.dart';
+import '../../../features/workspace/domain/workspace_role.dart';
 import '../data/money_repository.dart';
 import '../data/workspace_repository.dart';
+import '../data/workspace_roles_repository.dart';
 import '../demo_dataset.dart';
+import '../demo_persona.dart';
 import '../demo_space_ids.dart';
 import 'demo_city_people_seed.dart';
 import 'demo_flags.dart';
@@ -69,6 +72,29 @@ Workspace demoLondonSpace() => Workspace(
     'symbol_color': '#1D4ED8',
   },
 );
+
+/// #4168 — Bruno, a plain member here, reads this business's finances through
+/// one role of its own that grants that and nothing else: how the Demo shows a
+/// scoped finance-read grant, so Me counts the pound figures beside his
+/// freelancer business without any other right in London.
+void seedLondonFinanceRole(FakeWorkspaceRoles roles) {
+  roles.roles.add(
+    const WorkspaceRole(
+      id: 'london-role-finance-read',
+      key: 'finance_read',
+      names: {
+        'en': 'Finance reader',
+        'fr': 'Lecture des finances',
+        'de': 'Finanzen lesen',
+        'es': 'Lectura de finanzas',
+        'it': 'Lettura delle finanze',
+      },
+      permissions: {WorkspacePermission.viewFinances},
+      sortOrder: 9,
+    ),
+  );
+  roles.assignments['london-role-finance-read'] = [DemoPersona.member.memberId];
+}
 
 /// Ada (owner), Chiara (administrator) and Bruno (member) of the demo's cast
 /// hold the same roles here that their personas show.

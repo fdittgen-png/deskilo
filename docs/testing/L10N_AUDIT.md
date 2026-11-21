@@ -28,9 +28,9 @@ Positions read: label, field label, field hint, field helper, field error, field
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:48` | title | Welcome kit and day pass | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:50` | label | Welcome kit | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_french_reporting_seed.dart:51` | label | Day pass | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:227` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:228` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
-| `lib/core/demo/seed/demo_london_seed.dart:229` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:253` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:254` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |
+| `lib/core/demo/seed/demo_london_seed.dart:255` | label | Zero rate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:229` | label | Standard | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:232` | label | Intermediate | core/demo | KEEP_NON_UI_LITERAL |
 | `lib/core/demo/seed/demo_money_seed.dart:238` | label | Reduced | core/demo | KEEP_NON_UI_LITERAL |

@@ -283,6 +283,9 @@ void seedFreelancerInvoices(FakeMoneyRepository money, DateTime today) {
 
   issue('kessler-a2', 'KC-2026-0002', 'kessler-customer-chiara', 'Coaching session', 5000, daysAgo: 20);
   issue('kessler-a3', 'KC-2026-0003', 'kessler-customer-lindner', 'Workshop preparation', 9000, daysAgo: 9, paid: true);
+  // Chiara declared her payment of the EUR 60.00 invoice; Bruno has not
+  // confirmed it yet, so it is owed but no longer "to collect" (0797's claim).
+  money.claims['kessler-declared-a2'] = ['kessler-a2'];
 }
 
 /// What the business owes: the printer's bill, EUR 120.00, unpaid.

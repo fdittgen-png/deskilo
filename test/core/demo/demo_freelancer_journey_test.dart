@@ -14,12 +14,16 @@ import 'package:deskilo/core/demo/data/fake_business_payables.dart';
 import 'package:deskilo/core/demo/data/fake_business_receivables.dart';
 import 'package:deskilo/core/demo/demo_fixture.dart';
 import 'package:deskilo/core/demo/demo_persona.dart';
+import 'package:deskilo/core/demo/demo_scope.dart';
 import 'package:deskilo/core/demo/demo_space_ids.dart';
 import 'package:deskilo/core/demo/demo_space_stores.dart';
 import 'package:deskilo/core/demo/demo_spaces.dart';
 import 'package:deskilo/features/money/application/customer_quote_commands.dart';
+import 'package:deskilo/features/money/domain/business_receivables.dart';
 import 'package:deskilo/features/money/domain/customer_quote.dart';
+import 'package:deskilo/features/money/providers/business_receivables_providers.dart';
 import 'package:deskilo/features/workspace/domain/member.dart';
+import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
 import 'package:deskilo/l10n/app_localizations_en.dart';
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 import 'package:flutter/material.dart';
@@ -215,8 +219,18 @@ void main() {
     expect(summary.rows.single.currency, 'EUR');
     expect(
       summary.rows.single.toCollectCents,
+      34200,
+      reason: 'what is left of the converted quote',
+    );
+    expect(
+      summary.rows.single.declaredCents,
+      6000,
+      reason: 'Chiara declared her payment; Bruno has not confirmed it',
+    );
+    expect(
+      summary.rows.single.receivableCents,
       34200 + 6000,
-      reason: '342.00 + 60.00',
+      reason: 'the 402.00 Me shows to collect, the declared 60.00 included',
     );
     expect(
       summary.rows.single.invoices,
@@ -225,6 +239,46 @@ void main() {
     );
     expect(owed.single.remainingCents, 12000);
     expect(owed.single.currency, 'EUR');
+  });
+
+  test('Me counts what Bruno may read: his business, and London through the one '
+      'finance-read role he holds there; every other business refuses', () async {
+    final container = ProviderContainer(overrides: demoOverrides(fixture))
+      ..listen(currentWorkspaceProvider, (_, _) {});
+    addTearDown(container.dispose);
+    await container.read(currentWorkspaceProvider.future);
+
+    final sources = await container.read(myBusinessReceivablesProvider.future);
+    final answered = {
+      for (final s in sources.whereType<BusinessReceivablesAnswered>())
+        s.workspaceId: s.summary,
+    };
+    final refused = {
+      for (final s in sources.whereType<BusinessReceivablesRefused>())
+        s.workspaceId,
+    };
+
+    expect(answered.keys.toSet(), {demoFreelancerSpaceId, demoLondonSpaceId});
+    expect(
+      refused,
+      isNot(contains(demoFreelancerSpaceId)),
+      reason: 'a refusal is never a zero, and his own business is no refusal',
+    );
+    expect(refused, isNotEmpty, reason: 'a plain member reads no finances');
+    final london = answered[demoLondonSpaceId]!.rows.single;
+    expect(london.currency, 'GBP', reason: 'pounds are counted apart from euros');
+    final londonMoney = fixture.space(DemoSpaceKey.london).money;
+    expect(
+      london.toCollectCents,
+      [
+        for (final i in londonMoney.invoices)
+          if (!i.isVoided && i.settledByInvoiceId == null && i.totalCents > 0)
+            i.totalCents - (londonMoney.invoiceMatchesStore[i.id]?.paidCents ?? 0),
+      ].where((c) => c > 0).fold<int>(0, (a, b) => a + b),
+      reason: "London's own unpaid invoices, whatever they come to",
+    );
+    final own = answered[demoFreelancerSpaceId]!.rows.single;
+    expect([own.currency, own.declaredCents], ['EUR', 6000]);
   });
 
   testWidgets('Me names Kessler Conseil with the kind its owner set, beside '
