@@ -63,5 +63,17 @@
   "refusalStockPage": "This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.",
   "@refusalStockPage": {
     "description": "#4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one)."
+  },
+  "refusalStockStale": "This was changed by someone else since you opened it. Read it again, then make your change again.",
+  "@refusalStockStale": {
+    "description": "#4169 (0836) DKG10: a stock configuration save of a revision that is no longer current."
+  },
+  "refusalStockConfig": "This stock configuration is not valid: the field it names says why.",
+  "@refusalStockConfig": {
+    "description": "#4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail."
+  },
+  "refusalStockVariant": "This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.",
+  "@refusalStockVariant": {
+    "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
   }
 }

@@ -203,6 +203,7 @@
         "spaceInquiries": true,
         "spaceQrCodes": true,
         "standaloneInvoicing": false,
+        "stockLots": false,
         "stockManagement": false,
         "subscriptionInvoices": false,
         "supplyClassification": false,

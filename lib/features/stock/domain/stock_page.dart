@@ -31,6 +31,8 @@ class StockOnHandRow {
     required this.locationName,
     required this.quantity,
     required this.unit,
+    this.variantId,
+    this.variantLabel,
   });
 
   final String workspaceId;
@@ -41,6 +43,13 @@ class StockOnHandRow {
   final String locationId;
   final String locationCode;
   final String locationName;
+
+  /// #4169 -- the variant this stock is of (`Colour: Red · Size: M`), or none.
+  final String? variantId;
+  final String? variantLabel;
+
+  /// The item with its variant, as a person reads it.
+  String get itemLabel => variantLabel == null ? itemName : '$itemName · $variantLabel';
 
   /// A place as a person reads it: its code, and its name when it has one.
   String get locationLabel =>
@@ -63,6 +72,8 @@ class StockOnHandRow {
       locationName: r.stringOr('location_name'),
       quantity: ExactQuantity.parse(r.string('quantity')),
       unit: r.string('unit'),
+      variantId: r.stringOrNull('variant_id'),
+      variantLabel: r.stringOrNull('variant_label'),
     );
   }
 }
@@ -89,6 +100,8 @@ class StockMovementRow {
     required this.reason,
     required this.unitCost,
     required this.causes,
+    this.variantId,
+    this.variantLabel,
   });
 
   final String workspaceId;
@@ -107,6 +120,13 @@ class StockMovementRow {
   final String enteredUnit;
   final DateTime occurredAt;
   final String reason;
+
+  /// #4169 -- the variant that moved, or none.
+  final String? variantId;
+  final String? variantLabel;
+
+  /// The item with its variant, as a person reads it.
+  String get itemLabel => variantLabel == null ? itemName : '$itemName · $variantLabel';
 
   /// Minor units per inventory unit, frozen; null when the cost is unknown.
   final String? unitCost;
@@ -135,6 +155,8 @@ class StockMovementRow {
       occurredAt: r.dateTime('occurred_at'),
       reason: r.string('reason'),
       unitCost: r.stringOrNull('unit_cost'),
+      variantId: r.stringOrNull('variant_id'),
+      variantLabel: r.stringOrNull('variant_label'),
       causes: {
         for (final (key, column) in const [
           ('receipt_line', 'receipt_line_id'),

@@ -121,7 +121,7 @@ class _Detail extends ConsumerWidget {
     return ListView(
       padding: const EdgeInsets.all(AppSpacing.md),
       children: [
-        row('item', l10n.expenseSupplyItem, m.itemName),
+        row('item', l10n.expenseSupplyItem, m.itemLabel),
         row('from', l10n.planFromLabel, m.fromLocationCode),
         row('to', l10n.planToLabel, m.toLocationCode),
         row(

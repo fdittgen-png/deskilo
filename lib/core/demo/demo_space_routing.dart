@@ -45,6 +45,7 @@ import '../../features/workspace/providers/workspace_roles_providers.dart';
 import '../storage/resume_place_store.dart';
 import 'data/bank_statement_repository.dart';
 import 'data/demo_booking_prices.dart';
+import 'data/demo_stock_config_commands.dart';
 import 'data/demo_stock_queries.dart';
 import 'data/finance_kpi_repository.dart';
 import 'data/money/demo_credit_moves.dart';
@@ -277,6 +278,10 @@ List<Override> _moneyPortOverrides(FakeMoneyRepository Function(Ref ref) money) 
   // business keeps one.
   stockQueriesProvider.overrideWith(
     (ref) => const DemoStockQueries(demoFirstSpaceId),
+  ),
+  // #4169 — and edits its units, codes and places in memory.
+  stockConfigCommandsProvider.overrideWith(
+    (ref) => DemoStockConfigCommands(demoFirstSpaceId),
   ),
 ];
 

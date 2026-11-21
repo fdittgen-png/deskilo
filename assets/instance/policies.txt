@@ -208,8 +208,16 @@ public.invoices.invoices_select
 public.invoices.mcp_delegated_deny
 public.item_codes.item_codes_select
 public.item_codes.mcp_delegated_deny
+public.item_dimension_values.item_dimension_values_select
+public.item_dimension_values.mcp_delegated_deny
+public.item_dimensions.item_dimensions_select
+public.item_dimensions.mcp_delegated_deny
 public.item_units.item_units_select
 public.item_units.mcp_delegated_deny
+public.item_variant_values.item_variant_values_select
+public.item_variant_values.mcp_delegated_deny
+public.item_variants.item_variants_select
+public.item_variants.mcp_delegated_deny
 public.kiosk_devices.mcp_delegated_deny
 public.lease_settlements.lease_settlements_select
 public.lease_settlements.mcp_delegated_deny
@@ -509,6 +517,8 @@ public.stock_units.personal_native_session
 public.stock_units.stock_units_read
 public.supplier_bank_revisions.mcp_delegated_deny
 public.supplier_bank_revisions.supplier_bank_revisions_select
+public.supplier_item_mappings.mcp_delegated_deny
+public.supplier_item_mappings.supplier_item_mappings_select
 public.supplier_review_candidates.mcp_delegated_deny
 public.supplier_review_candidates.supplier_review_candidates_select
 public.suppliers.mcp_delegated_deny

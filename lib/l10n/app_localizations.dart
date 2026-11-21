@@ -19942,6 +19942,18 @@ abstract class AppLocalizations {
   /// **'Standalone invoices'**
   String get featureStandaloneInvoicingTitle;
 
+  /// #4169 what the lots and expiry feature does, and what off means
+  ///
+  /// In en, this message translates to:
+  /// **'Track goods by lot or by expiry date, with a shelf life. Off: no item is tracked by lot, and what was recorded is kept as it is.'**
+  String get featureStockLotsDesc;
+
+  /// #4169 the name of the lots and expiry feature
+  ///
+  /// In en, this message translates to:
+  /// **'Lots and expiry'**
+  String get featureStockLotsTitle;
+
   /// the feature's description on the Features screen (#3824)
   ///
   /// In en, this message translates to:
@@ -45339,6 +45351,12 @@ abstract class AppLocalizations {
   /// **'Your session has ended. Sign in again, then retry.'**
   String get refusalSession;
 
+  /// #4169 (0836) DKG11: a stock configuration that is not valid, the field and reason in the detail.
+  ///
+  /// In en, this message translates to:
+  /// **'This stock configuration is not valid: the field it names says why.'**
+  String get refusalStockConfig;
+
   /// refusal DKG08 (#3824): deleting an item or a movement the ledger keeps
   ///
   /// In en, this message translates to:
@@ -45387,11 +45405,23 @@ abstract class AppLocalizations {
   /// **'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.'**
   String get refusalStockPage;
 
+  /// #4169 (0836) DKG10: a stock configuration save of a revision that is no longer current.
+  ///
+  /// In en, this message translates to:
+  /// **'This was changed by someone else since you opened it. Read it again, then make your change again.'**
+  String get refusalStockStale;
+
   /// refusal DKG02 (#3824)
   ///
   /// In en, this message translates to:
   /// **'This item has no such unit. Add the unit to the item, or enter the quantity in a unit it lists.'**
   String get refusalStockUnit;
+
+  /// #4169 (0837) DKG12: an item with variants moved, sold or counted without naming one.
+  ///
+  /// In en, this message translates to:
+  /// **'This item has variants: name which one (colour, size) to move, sell or count. Nothing was changed.'**
+  String get refusalStockVariant;
 
   /// #2356: refusalVatRateVersioned
   ///
@@ -55388,6 +55418,234 @@ abstract class AppLocalizations {
   /// **'Cost not recorded'**
   String get stockCostUnknown;
 
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a dimension'**
+  String get stockDimensionAdd;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a value'**
+  String get stockDimensionAddValue;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockDimensionName;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get stockDimensionValue;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Manage dimensions'**
+  String get stockDimensionsManage;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Dimensions'**
+  String get stockDimensionsTitle;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a code'**
+  String get stockEditAddCode;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a package unit'**
+  String get stockEditAddUnit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode or code'**
+  String get stockEditCode;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode (GTIN)'**
+  String get stockEditCodeGtin;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Own code'**
+  String get stockEditCodeOwn;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Names the package unit'**
+  String get stockEditCodeUnit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Barcodes and codes'**
+  String get stockEditCodesTitle;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Default for purchases'**
+  String get stockEditDefaultPurchase;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Default for sales'**
+  String get stockEditDefaultSale;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Divided by'**
+  String get stockEditFactorDen;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Holds'**
+  String get stockEditFactorNum;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'The first movement fixed the unit and the tracking of this item.'**
+  String get stockEditInUse;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory unit'**
+  String get stockEditInventoryUnit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Inventory unit'**
+  String get stockEditInventoryUnitChoice;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Stock settings'**
+  String get stockEditItem;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Stock settings of {item}'**
+  String stockEditItemTitle(String item);
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Your role may look at the stock but not change it.'**
+  String get stockEditNoRight;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing was saved. Try again.'**
+  String get stockEditNotSaved;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Can be bought'**
+  String get stockEditPurchasable;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Remove'**
+  String get stockEditRemove;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get stockEditSave;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Can be sold'**
+  String get stockEditSellable;
+
+  /// #4169 the stock editors: a label of the lots and expiry tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf life (days)'**
+  String get stockEditShelfLife;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'This changed since you opened it. Close it and open it again.'**
+  String get stockEditStale;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Kept in stock'**
+  String get stockEditStockable;
+
+  /// #4169 the stock editors: a label of the lots and expiry tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Tracking'**
+  String get stockEditTracking;
+
+  /// #4169 the stock editors: a label of the lots and expiry tracking
+  ///
+  /// In en, this message translates to:
+  /// **'By expiry date'**
+  String get stockEditTrackingExpiry;
+
+  /// #4169 the stock editors: a label of the lots and expiry tracking
+  ///
+  /// In en, this message translates to:
+  /// **'By lot'**
+  String get stockEditTrackingLot;
+
+  /// #4169 the stock editors: a label of the lots and expiry tracking
+  ///
+  /// In en, this message translates to:
+  /// **'Not tracked'**
+  String get stockEditTrackingNone;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Package unit'**
+  String get stockEditUnitName;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'A package holds a number of inventory units; a third of a litre is 1 divided by 3.'**
+  String get stockEditUnitsHint;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Package units'**
+  String get stockEditUnitsTitle;
+
   /// #4161 empty stock, no filter
   ///
   /// In en, this message translates to:
@@ -55418,6 +55676,60 @@ abstract class AppLocalizations {
   /// **'Lot'**
   String get stockLotTitle;
 
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a supplier article'**
+  String get stockMappingAdd;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Article reference'**
+  String get stockMappingArticle;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'No variant'**
+  String get stockMappingNoVariant;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'No supplier article is mapped yet.'**
+  String get stockMappingNone;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier of the article'**
+  String get stockMappingSupplier;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase unit'**
+  String get stockMappingUnit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Variant'**
+  String get stockMappingVariant;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier articles'**
+  String get stockMappingsEdit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Supplier articles of {item}'**
+  String stockMappingsTitle(String item);
+
   /// #4161 a movement address that reads as none
   ///
   /// In en, this message translates to:
@@ -55442,6 +55754,96 @@ abstract class AppLocalizations {
   /// **'No lot'**
   String get stockNoLot;
 
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'In use'**
+  String get stockPlaceActive;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Barcode'**
+  String get stockPlaceBarcode;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Place code'**
+  String get stockPlaceCode;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Place'**
+  String get stockPlaceEditTitle;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Kind of place'**
+  String get stockPlaceKind;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Bin'**
+  String get stockPlaceKindBin;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Shelf'**
+  String get stockPlaceKindShelf;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Warehouse'**
+  String get stockPlaceKindWarehouse;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Zone'**
+  String get stockPlaceKindZone;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Name'**
+  String get stockPlaceName;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Nowhere in particular'**
+  String get stockPlaceNoParent;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Inside'**
+  String get stockPlaceParent;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Kept by the system'**
+  String get stockPlaceVirtual;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a place'**
+  String get stockPlacesAdd;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Places'**
+  String get stockPlacesTitle;
+
   /// #4161 an exact quantity and its inventory unit
   ///
   /// In en, this message translates to:
@@ -55453,6 +55855,252 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'The stock could not be read. Nothing is shown as empty: try again.'**
   String get stockReadFailed;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This code is already used.'**
+  String get stockReasonCodeDuplicate;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This code is empty or too long.'**
+  String get stockReasonCodeMalformed;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A code names this unit: change that code first.'**
+  String get stockReasonCodeUnitRemoved;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Two variants have the same combination.'**
+  String get stockReasonCombinationDuplicate;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Only one unit can be the default for purchases.'**
+  String get stockReasonDefaultPurchaseTwice;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Only one unit can be the default for sales.'**
+  String get stockReasonDefaultSaleTwice;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit does not measure the same thing as the item.'**
+  String get stockReasonDimensionMismatch;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Both numbers must be whole numbers above zero.'**
+  String get stockReasonFactorInvalid;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The check digit of this barcode is wrong.'**
+  String get stockReasonGtinCheck;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A barcode has 8 to 14 digits.'**
+  String get stockReasonGtinLength;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This item is not one of this business.'**
+  String get stockReasonItemForeign;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This kind is not known.'**
+  String get stockReasonKindUnknown;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A place cannot be inside itself.'**
+  String get stockReasonLocationCycle;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The main place stays in use.'**
+  String get stockReasonLocationDefault;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Places inside it are still in use.'**
+  String get stockReasonLocationHasChildren;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'There is stock here: move it first.'**
+  String get stockReasonLocationOccupied;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This place does not belong to this business.'**
+  String get stockReasonLocationParentForeign;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A place kept by the system cannot be used here.'**
+  String get stockReasonLocationVirtual;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This value is not valid for this field.'**
+  String get stockReasonMalformed;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This supplier article is already mapped.'**
+  String get stockReasonMappingDuplicate;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This name is already used.'**
+  String get stockReasonNameDuplicate;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A name has 1 to 60 characters.'**
+  String get stockReasonNameMalformed;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This is not valid.'**
+  String get stockReasonOther;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This number is out of range.'**
+  String get stockReasonOutOfRange;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The place it is inside is no longer in use.'**
+  String get stockReasonParentInactive;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A price is zero or more.'**
+  String get stockReasonPriceInvalid;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit belongs to the system and cannot be redefined.'**
+  String get stockReasonRegistryUnit;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'There is stock on hand: take it out first.'**
+  String get stockReasonStockOnHand;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This item holds stock without a variant: count it out first, then receive it per variant.'**
+  String get stockReasonStockWithoutVariant;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This supplier is not one of this business.'**
+  String get stockReasonSupplierForeign;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This text is too long.'**
+  String get stockReasonTooLong;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This tracking is not available.'**
+  String get stockReasonTrackingUnsupported;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is listed twice.'**
+  String get stockReasonUnitDuplicate;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'A supplier article names this unit: change that article first.'**
+  String get stockReasonUnitInUse;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'The item does not list this unit.'**
+  String get stockReasonUnitNotOfItem;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This unit is not known.'**
+  String get stockReasonUnitUnknown;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This value does not belong to this dimension.'**
+  String get stockReasonValueForeign;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a value for at least one dimension.'**
+  String get stockReasonValuesMissing;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This variant has stock: it stays in use.'**
+  String get stockReasonVariantHasStock;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'Stock or history names this variant: its combination stays as written.'**
+  String get stockReasonVariantInUse;
+
+  /// #4169 the stock editors: a text under a field the server refused
+  ///
+  /// In en, this message translates to:
+  /// **'This variant is not one of this item.'**
+  String get stockReasonVariantUnknown;
 
   /// #4161 the quantity as stored, in the inventory unit
   ///
@@ -55471,6 +56119,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'On hand'**
   String get stockTabOnHand;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Own price (minor units, optional)'**
+  String get stockVariantPrice;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a variant'**
+  String get stockVariantsAdd;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Variants'**
+  String get stockVariantsEdit;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'A variant is one value of each dimension, such as red and size M. Stock is kept per variant.'**
+  String get stockVariantsHint;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Add a dimension, such as colour or size, first.'**
+  String get stockVariantsNoDimensions;
+
+  /// #4169 the stock editors: a label or message
+  ///
+  /// In en, this message translates to:
+  /// **'Variants of {item}'**
+  String stockVariantsTitle(String item);
 
   /// #4161 when a movement happened
   ///

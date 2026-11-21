@@ -7595,6 +7595,14 @@
   "@featureStandaloneInvoicingTitle": {
     "description": "#4165 feature switch: featureStandaloneInvoicingTitle"
   },
+  "featureStockLotsDesc": "Waren nach Charge oder Verfallsdatum verfolgen, mit einer Haltbarkeit. Aus: kein Artikel wird nach Charge verfolgt, und Erfasstes bleibt unverändert.",
+  "@featureStockLotsDesc": {
+    "description": "#4169 what the lots and expiry feature does, and what off means"
+  },
+  "featureStockLotsTitle": "Chargen und Verfall",
+  "@featureStockLotsTitle": {
+    "description": "#4169 the name of the lots and expiry feature"
+  },
   "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
   "featureStockManagementTitle": "Lagerverwaltung",
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
@@ -16225,6 +16233,7 @@
     "description": "#3811 refusal DKR01: a workspace cannot be created on an installation that is a personal home"
   },
   "refusalSession": "Ihre Sitzung ist abgelaufen. Melden Sie sich erneut an und versuchen Sie es dann noch einmal.",
+  "refusalStockConfig": "Diese Bestandskonfiguration ist ungültig: Das genannte Feld nennt den Grund.",
   "refusalStockHistory": "Dieser Artikel hat Lagerbewegungen, die erhalten bleiben: Er kann nicht gelöscht werden, und seine Lagereinheit und Nachverfolgung bleiben unverändert. Deaktivieren Sie ihn oder legen Sie einen neuen Artikel an.",
   "refusalStockItem": "Dies ist kein Artikel, den dieses Unternehmen auf Lager führt. Nichts wurde bewegt.",
   "refusalStockLocation": "Dieser Ort gehört nicht zu diesem Unternehmen, wird nicht mehr genutzt oder ist zugleich Start und Ziel der Bewegung. Nichts wurde bewegt.",
@@ -16233,7 +16242,12 @@
   "refusalStockNotEnough": "So viel ist an diesem Ort nicht vorhanden. Nichts wurde bewegt.",
   "refusalStockOff": "Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.",
   "refusalStockPage": "Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.",
+  "refusalStockStale": "Jemand anderes hat dies geändert, seit Sie es geöffnet haben. Lesen Sie es erneut und nehmen Sie Ihre Änderung noch einmal vor.",
   "refusalStockUnit": "Dieser Artikel hat diese Einheit nicht. Fügen Sie die Einheit dem Artikel hinzu oder geben Sie die Menge in einer seiner Einheiten ein.",
+  "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
+  "@refusalStockVariant": {
+    "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
   "refusalVatRateVersioned": "Dieser Satz steht bereits auf ausgestellten Rechnungen, sein Prozentsatz bleibt daher unverändert. Nutzen Sie „Änderung per Gesetz“, um den neuen Wert ab einem Datum festzulegen. Es wurde nichts gespeichert.",
   "@refusalVatRateVersioned": {
     "description": "#2356: refusalVatRateVersioned"
@@ -20317,20 +20331,471 @@
   "stockCostLabel": "Kosten je Einheit",
   "stockCostNotShown": "Kosten nicht angezeigt",
   "stockCostUnknown": "Kosten nicht erfasst",
+  "stockDimensionAdd": "Dimension hinzufügen",
+  "@stockDimensionAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionAddValue": "Wert hinzufügen",
+  "@stockDimensionAddValue": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionName": "Name",
+  "@stockDimensionName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionValue": "Wert",
+  "@stockDimensionValue": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionsManage": "Dimensionen verwalten",
+  "@stockDimensionsManage": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockDimensionsTitle": "Dimensionen",
+  "@stockDimensionsTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditAddCode": "Code hinzufügen",
+  "@stockEditAddCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditAddUnit": "Verpackungseinheit hinzufügen",
+  "@stockEditAddUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCode": "Barcode oder Code",
+  "@stockEditCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeGtin": "Barcode (GTIN)",
+  "@stockEditCodeGtin": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeOwn": "Eigener Code",
+  "@stockEditCodeOwn": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodeUnit": "Bezeichnet die Verpackungseinheit",
+  "@stockEditCodeUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditCodesTitle": "Barcodes und Codes",
+  "@stockEditCodesTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditDefaultPurchase": "Standard für Einkäufe",
+  "@stockEditDefaultPurchase": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditDefaultSale": "Standard für Verkäufe",
+  "@stockEditDefaultSale": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditFactorDen": "Geteilt durch",
+  "@stockEditFactorDen": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditFactorNum": "Enthält",
+  "@stockEditFactorNum": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInUse": "Die erste Bewegung hat Einheit und Nachverfolgung dieses Artikels festgelegt.",
+  "@stockEditInUse": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInventoryUnit": "Lagereinheit",
+  "@stockEditInventoryUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditInventoryUnitChoice": "Lagereinheit",
+  "@stockEditInventoryUnitChoice": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditItem": "Lagereinstellungen",
+  "@stockEditItem": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditItemTitle": "Lagereinstellungen von {item}",
+  "@stockEditItemTitle": {
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    },
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditNoRight": "Ihre Rolle darf den Bestand ansehen, aber nicht ändern.",
+  "@stockEditNoRight": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditNotSaved": "Nichts wurde gespeichert. Bitte erneut versuchen.",
+  "@stockEditNotSaved": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditPurchasable": "Kann eingekauft werden",
+  "@stockEditPurchasable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditRemove": "Entfernen",
+  "@stockEditRemove": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditSave": "Speichern",
+  "@stockEditSave": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditSellable": "Kann verkauft werden",
+  "@stockEditSellable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditShelfLife": "Haltbarkeit (Tage)",
+  "@stockEditShelfLife": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditStale": "Das hat sich seit dem Öffnen geändert. Schließen und neu öffnen.",
+  "@stockEditStale": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditStockable": "Auf Lager geführt",
+  "@stockEditStockable": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditTracking": "Nachverfolgung",
+  "@stockEditTracking": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingExpiry": "Nach Verfallsdatum",
+  "@stockEditTrackingExpiry": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingLot": "Nach Charge",
+  "@stockEditTrackingLot": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditTrackingNone": "Nicht verfolgt",
+  "@stockEditTrackingNone": {
+    "description": "#4169 the stock editors: a label of the lots and expiry tracking"
+  },
+  "stockEditUnitName": "Verpackungseinheit",
+  "@stockEditUnitName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitsHint": "Eine Verpackung enthält eine Anzahl Lagereinheiten; ein Drittel Liter ist 1 geteilt durch 3.",
+  "@stockEditUnitsHint": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockEditUnitsTitle": "Verpackungseinheiten",
+  "@stockEditUnitsTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
   "stockEmpty": "Es ist noch nichts auf Lager.",
   "stockEmptyFiltered": "Zu diesen Filtern gibt es nichts.",
   "stockEnteredLabel": "Erfasst",
   "stockLotLabel": "Charge {code}",
   "stockLotTitle": "Charge",
+  "stockMappingAdd": "Lieferantenartikel hinzufügen",
+  "@stockMappingAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingArticle": "Artikelnummer",
+  "@stockMappingArticle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingNoVariant": "Ohne Variante",
+  "@stockMappingNoVariant": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingNone": "Noch kein Lieferantenartikel zugeordnet.",
+  "@stockMappingNone": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingSupplier": "Lieferant des Artikels",
+  "@stockMappingSupplier": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingUnit": "Einkaufseinheit",
+  "@stockMappingUnit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingVariant": "Variante",
+  "@stockMappingVariant": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingsEdit": "Lieferantenartikel",
+  "@stockMappingsEdit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockMappingsTitle": "Lieferantenartikel von {item}",
+  "@stockMappingsTitle": {
+    "description": "#4169 the stock editors: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
   "stockMovementNotFound": "Diese Bewegung gibt es nicht, oder Sie dürfen sie nicht sehen.",
   "stockMovementTitle": "Bewegung",
   "stockMovementsEmpty": "Noch keine Bewegungen.",
   "stockNoLot": "Ohne Charge",
+  "stockPlaceActive": "In Gebrauch",
+  "@stockPlaceActive": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceBarcode": "Barcode",
+  "@stockPlaceBarcode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceCode": "Code des Lagerorts",
+  "@stockPlaceCode": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceEditTitle": "Lagerort",
+  "@stockPlaceEditTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKind": "Art des Lagerorts",
+  "@stockPlaceKind": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindBin": "Fach",
+  "@stockPlaceKindBin": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindShelf": "Regal",
+  "@stockPlaceKindShelf": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindWarehouse": "Lager",
+  "@stockPlaceKindWarehouse": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceKindZone": "Zone",
+  "@stockPlaceKindZone": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceName": "Name",
+  "@stockPlaceName": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceNoParent": "Nirgendwo Bestimmtes",
+  "@stockPlaceNoParent": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceParent": "Innerhalb von",
+  "@stockPlaceParent": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlaceVirtual": "Vom System geführt",
+  "@stockPlaceVirtual": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlacesAdd": "Lagerort hinzufügen",
+  "@stockPlacesAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockPlacesTitle": "Lagerorte",
+  "@stockPlacesTitle": {
+    "description": "#4169 the stock editors: a label or message"
+  },
   "stockQuantityWithUnit": "{quantity} {unit}",
   "stockReadFailed": "Der Bestand konnte nicht gelesen werden. Nichts wird als leer angezeigt: Versuchen Sie es erneut.",
+  "stockReasonCodeDuplicate": "Dieser Code wird schon verwendet.",
+  "@stockReasonCodeDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCodeMalformed": "Dieser Code ist leer oder zu lang.",
+  "@stockReasonCodeMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCodeUnitRemoved": "Ein Code nennt diese Einheit: ändern Sie zuerst diesen Code.",
+  "@stockReasonCodeUnitRemoved": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonCombinationDuplicate": "Zwei Varianten haben dieselbe Kombination.",
+  "@stockReasonCombinationDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDefaultPurchaseTwice": "Nur eine Einheit kann Standard für Einkäufe sein.",
+  "@stockReasonDefaultPurchaseTwice": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDefaultSaleTwice": "Nur eine Einheit kann Standard für Verkäufe sein.",
+  "@stockReasonDefaultSaleTwice": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonDimensionMismatch": "Diese Einheit misst nicht dasselbe wie der Artikel.",
+  "@stockReasonDimensionMismatch": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonFactorInvalid": "Beide Zahlen müssen ganze Zahlen über null sein.",
+  "@stockReasonFactorInvalid": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonGtinCheck": "Die Prüfziffer dieses Barcodes stimmt nicht.",
+  "@stockReasonGtinCheck": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonGtinLength": "Ein Barcode hat 8 bis 14 Ziffern.",
+  "@stockReasonGtinLength": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonItemForeign": "Dieser Artikel gehört nicht zu diesem Betrieb.",
+  "@stockReasonItemForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonKindUnknown": "Diese Art ist nicht bekannt.",
+  "@stockReasonKindUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationCycle": "Ein Lagerort kann nicht in sich selbst liegen.",
+  "@stockReasonLocationCycle": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationDefault": "Der Hauptlagerort bleibt in Gebrauch.",
+  "@stockReasonLocationDefault": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationHasChildren": "Darin liegende Lagerorte sind noch in Gebrauch.",
+  "@stockReasonLocationHasChildren": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationOccupied": "Hier liegt Bestand: erst umlagern.",
+  "@stockReasonLocationOccupied": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationParentForeign": "Dieser Lagerort gehört nicht zu diesem Betrieb.",
+  "@stockReasonLocationParentForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonLocationVirtual": "Ein vom System geführter Lagerort kann hier nicht verwendet werden.",
+  "@stockReasonLocationVirtual": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonMalformed": "Dieser Wert ist für dieses Feld nicht gültig.",
+  "@stockReasonMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonMappingDuplicate": "Dieser Lieferantenartikel ist schon zugeordnet.",
+  "@stockReasonMappingDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonNameDuplicate": "Dieser Name wird schon verwendet.",
+  "@stockReasonNameDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonNameMalformed": "Ein Name hat 1 bis 60 Zeichen.",
+  "@stockReasonNameMalformed": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonOther": "Das ist nicht gültig.",
+  "@stockReasonOther": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonOutOfRange": "Diese Zahl liegt außerhalb des Bereichs.",
+  "@stockReasonOutOfRange": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonParentInactive": "Der übergeordnete Lagerort ist nicht mehr in Gebrauch.",
+  "@stockReasonParentInactive": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonPriceInvalid": "Ein Preis ist null oder größer.",
+  "@stockReasonPriceInvalid": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonRegistryUnit": "Diese Einheit gehört dem System und kann nicht neu definiert werden.",
+  "@stockReasonRegistryUnit": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonStockOnHand": "Es ist Bestand vorhanden: erst ausbuchen.",
+  "@stockReasonStockOnHand": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonStockWithoutVariant": "Dieser Artikel hat Bestand ohne Variante: erst ausbuchen, dann je Variante einbuchen.",
+  "@stockReasonStockWithoutVariant": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonSupplierForeign": "Dieser Lieferant gehört nicht zu diesem Betrieb.",
+  "@stockReasonSupplierForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTooLong": "Dieser Text ist zu lang.",
+  "@stockReasonTooLong": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonTrackingUnsupported": "Diese Nachverfolgung ist nicht verfügbar.",
+  "@stockReasonTrackingUnsupported": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitDuplicate": "Diese Einheit steht doppelt in der Liste.",
+  "@stockReasonUnitDuplicate": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitInUse": "Ein Lieferantenartikel nennt diese Einheit: ändern Sie zuerst diesen Artikel.",
+  "@stockReasonUnitInUse": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitNotOfItem": "Der Artikel führt diese Einheit nicht.",
+  "@stockReasonUnitNotOfItem": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonUnitUnknown": "Diese Einheit ist nicht bekannt.",
+  "@stockReasonUnitUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonValueForeign": "Dieser Wert gehört nicht zu dieser Dimension.",
+  "@stockReasonValueForeign": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonValuesMissing": "Wählen Sie für mindestens eine Dimension einen Wert.",
+  "@stockReasonValuesMissing": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantHasStock": "Diese Variante hat Bestand: sie bleibt in Gebrauch.",
+  "@stockReasonVariantHasStock": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantInUse": "Bestand oder Verlauf nennt diese Variante: ihre Kombination bleibt bestehen.",
+  "@stockReasonVariantInUse": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockReasonVariantUnknown": "Diese Variante gehört nicht zu diesem Artikel.",
+  "@stockReasonVariantUnknown": {
+    "description": "#4169 the stock editors: a text under a field the server refused"
+  },
   "stockStoredLabel": "Gespeichert",
   "stockTabMovements": "Bewegungen",
   "stockTabOnHand": "Bestand",
+  "stockVariantPrice": "Eigener Preis (Nebeneinheit, optional)",
+  "@stockVariantPrice": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsAdd": "Variante hinzufügen",
+  "@stockVariantsAdd": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsEdit": "Varianten",
+  "@stockVariantsEdit": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsHint": "Eine Variante ist je ein Wert jeder Dimension, etwa rot und Größe M. Der Bestand wird je Variante geführt.",
+  "@stockVariantsHint": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsNoDimensions": "Legen Sie zuerst eine Dimension an, etwa Farbe oder Größe.",
+  "@stockVariantsNoDimensions": {
+    "description": "#4169 the stock editors: a label or message"
+  },
+  "stockVariantsTitle": "Varianten von {item}",
+  "@stockVariantsTitle": {
+    "description": "#4169 the stock editors: a label or message",
+    "placeholders": {
+      "item": {
+        "type": "String"
+      }
+    }
+  },
   "stockWhenLabel": "Wann",
   "subprocessAttendance": "Anwesenheit und Nutzung",
   "subprocessAttendanceDesc": "Anwesenheit erfassen und Check-ins am Tagesende abschließen.",
