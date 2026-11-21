@@ -9194,6 +9194,8 @@ const Set<String> uiLabelKeys = {
   'featureSeatDayTimelineDesc',
   'featureSeriesBooking',
   'featureSeriesBookingDesc',
+  'featureServiceFulfilmentDesc',
+  'featureServiceFulfilmentTitle',
   'featureServices',
   'featureServicesDesc',
   'featureSettlementFoldDesc',

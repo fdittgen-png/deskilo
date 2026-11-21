@@ -1,0 +1,11 @@
+{
+  "@@locale": "it",
+  "featureServiceFulfilmentTitle": "Avanzamento dei servizi",
+  "featureServiceFulfilmentDesc": "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati.",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  }
+}

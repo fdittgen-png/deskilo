@@ -12311,6 +12311,13 @@ class AppLocalizationsDe extends AppLocalizations {
       'Eine Reservierung täglich, wöchentlich oder an Werktagen wiederholen.';
 
   @override
+  String get featureServiceFulfilmentDesc =>
+      'Verfolgen Sie eine bestellte Leistung als eigenen Auftrag: bestellt, begonnen, erledigt oder mit Begründung storniert, jeder Schritt bleibt erhalten. Angebot, Rechnung und Zahlungen bleiben daneben unverändert. Dadurch wird nichts in Rechnung gestellt oder bezahlt. Auf Anfrage, unter den Rechnungskunden.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Leistungsverfolgung';
+
+  @override
   String get featureServices => 'Leistungen';
 
   @override

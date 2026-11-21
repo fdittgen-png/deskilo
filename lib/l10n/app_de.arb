@@ -7555,6 +7555,14 @@
   },
   "featureSeriesBooking": "Serienbuchung",
   "featureSeriesBookingDesc": "Eine Reservierung täglich, wöchentlich oder an Werktagen wiederholen.",
+  "featureServiceFulfilmentDesc": "Verfolgen Sie eine bestellte Leistung als eigenen Auftrag: bestellt, begonnen, erledigt oder mit Begründung storniert, jeder Schritt bleibt erhalten. Angebot, Rechnung und Zahlungen bleiben daneben unverändert. Dadurch wird nichts in Rechnung gestellt oder bezahlt. Auf Anfrage, unter den Rechnungskunden.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Leistungsverfolgung",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Leistungen",
   "featureServicesDesc": "Leistungskatalog und Verbrauchserfassung.",
   "featureSettlementFoldDesc": "Zu einer zusammengefasste Rechnungen verschwinden als eigene Zeilen aus den Listen und ordnen sich unter der Sammelrechnung ein, die alle ihre Positionen trägt. Auf einer zusammengefassten Rechnung ist jede Aktion aus; es bleibt nur ihr PDF, gestempelt mit der Nummer, in der sie aufging. Aus: die zusammengefassten Rechnungen bleiben neben der Sammelrechnung gelistet.",

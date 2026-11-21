@@ -7555,6 +7555,14 @@
   },
   "featureSeriesBooking": "Prenotazione in serie",
   "featureSeriesBookingDesc": "Ripeta una prenotazione ogni giorno, ogni settimana o nei giorni feriali.",
+  "featureServiceFulfilmentDesc": "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Avanzamento dei servizi",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Servizi",
   "featureServicesDesc": "Catalogo dei servizi e registrazione dei consumi.",
   "featureSettlementFoldDesc": "Le fatture raggruppate in una scompaiono dalle liste come pari e si annidano sotto la fattura di raggruppamento, che porta tutte le loro righe. Su una fattura raggruppata ogni operazione è disattivata; resta solo il suo PDF, timbrato con il numero in cui è stata raggruppata. Disattivato: le fatture raggruppate restano elencate accanto a quella di raggruppamento.",

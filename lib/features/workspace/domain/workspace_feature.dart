@@ -445,7 +445,9 @@ enum WorkspaceFeature {
   /// into explicit places and new lots, with its origin kept. Asked for,
   /// under the goods ledger. Off: a delivery is recorded as before and no
   /// stock moves. Turning it on waits for #4170 (G4-A).
-  stockReceiving;
+  stockReceiving,
+  /// #4178 — an ordered service followed as an engagement; asked for, under billing customers.
+  serviceFulfilment;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

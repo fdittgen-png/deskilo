@@ -1,0 +1,11 @@
+{
+  "@@locale": "fr",
+  "featureServiceFulfilmentTitle": "Suivi des prestations",
+  "featureServiceFulfilmentDesc": "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés.",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  }
+}

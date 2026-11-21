@@ -144,6 +144,8 @@ const Set<WorkspaceFeature> defaultOffFeatures = {
   WorkspaceFeature.billingCustomers,
   // #4166 — quotes are asked for, under invoicing.
   WorkspaceFeature.customerQuotes,
+  // #4178 — following an ordered service is asked for.
+  WorkspaceFeature.serviceFulfilment,
 };
 
 /// #2566 — what a key nobody has chosen resolves to: a core feature that
@@ -252,6 +254,7 @@ void main() {
       'standaloneInvoicing': true,
       'billingCustomers': true,
       'customerQuotes': true,
+      'serviceFulfilment': true,
     });
 
     expect(enabled.contains(WorkspaceFeature.adminSeatBlocking), isTrue);

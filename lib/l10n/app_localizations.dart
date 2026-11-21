@@ -19846,6 +19846,18 @@ abstract class AppLocalizations {
   /// **'Repeat a reservation daily, weekly or on weekdays.'**
   String get featureSeriesBookingDesc;
 
+  /// a feature in the Features list (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers.'**
+  String get featureServiceFulfilmentDesc;
+
+  /// a feature in the Features list (#4178)
+  ///
+  /// In en, this message translates to:
+  /// **'Service fulfilment'**
+  String get featureServiceFulfilmentTitle;
+
   /// Feature switch: service catalog + consumptions
   ///
   /// In en, this message translates to:

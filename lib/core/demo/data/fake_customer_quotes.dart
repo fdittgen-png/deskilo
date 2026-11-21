@@ -69,7 +69,7 @@ class FakeCustomerQuoteRepository implements CustomerQuoteRepository {
     String notes = '',
   }) {
     final q = _Quote('quote-${_next++}', subjectId);
-    final rev = _Rev(1, issuedOn, validUntil, lines, notes: notes);
+    final rev = _Rev(1, issuedOn, validUntil, _withIds(lines), notes: notes);
     _freeze(rev);
     q
       ..reference = _newReference()

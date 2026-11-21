@@ -37,4 +37,14 @@ const Map<WorkspaceFeature, FeatureManifestEntry> organisationFeatureManifest =
         requires: WorkspaceFeature.invoicing,
         defaultOn: false,
       ),
+      // #4178 — the engagement a service becomes once it is ordered: its
+      // state and history, beside the quote and the invoice. Asked for, under
+      // the billing customers it is owed to.
+      WorkspaceFeature.serviceFulfilment: FeatureManifestEntry(
+        feature: WorkspaceFeature.serviceFulfilment,
+        surface: FeatureSurface.money,
+        tier: FeatureTier.platform,
+        requires: WorkspaceFeature.billingCustomers,
+        defaultOn: false,
+      ),
     };

@@ -1451,6 +1451,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Receiving into stock",
     "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves."
+   ],
+   "serviceFulfilment": [
+    "Service fulfilment",
+    "Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers."
    ]
   },
   "process": {
@@ -3298,6 +3302,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Réception en stock",
     "Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge."
+   ],
+   "serviceFulfilment": [
+    "Suivi des prestations",
+    "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés."
    ]
   },
   "process": {
@@ -5145,6 +5153,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Wareneingang ins Lager",
     "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich."
+   ],
+   "serviceFulfilment": [
+    "Leistungsverfolgung",
+    "Verfolgen Sie eine bestellte Leistung als eigenen Auftrag: bestellt, begonnen, erledigt oder mit Begründung storniert, jeder Schritt bleibt erhalten. Angebot, Rechnung und Zahlungen bleiben daneben unverändert. Dadurch wird nichts in Rechnung gestellt oder bezahlt. Auf Anfrage, unter den Rechnungskunden."
    ]
   },
   "process": {
@@ -6992,6 +7004,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Recepción en existencias",
     "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias."
+   ],
+   "serviceFulfilment": [
+    "Seguimiento de servicios",
+    "Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados."
    ]
   },
   "process": {
@@ -8839,6 +8855,10 @@ window.SETUP_L10N={
    "stockReceiving": [
     "Ricezione a magazzino",
     "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove."
+   ],
+   "serviceFulfilment": [
+    "Avanzamento dei servizi",
+    "Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati."
    ]
   },
   "process": {

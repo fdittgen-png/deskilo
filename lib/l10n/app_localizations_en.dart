@@ -12201,6 +12201,13 @@ class AppLocalizationsEn extends AppLocalizations {
       'Repeat a reservation daily, weekly or on weekdays.';
 
   @override
+  String get featureServiceFulfilmentDesc =>
+      'Follow an ordered service as an engagement of its own: ordered, started, done, or cancelled with a reason, with every step kept. The quote, the invoice and the payments stay as they are beside it. Nothing is invoiced or paid by it. Asked for, under billing customers.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Service fulfilment';
+
+  @override
   String get featureServices => 'Services';
 
   @override

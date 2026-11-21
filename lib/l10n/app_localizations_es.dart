@@ -12282,6 +12282,13 @@ class AppLocalizationsEs extends AppLocalizations {
       'Repetir una reserva a diario, semanalmente o en días laborables.';
 
   @override
+  String get featureServiceFulfilmentDesc =>
+      'Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Seguimiento de servicios';
+
+  @override
   String get featureServices => 'Servicios';
 
   @override

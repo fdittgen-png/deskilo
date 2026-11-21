@@ -13,6 +13,7 @@ import '../../features/money/providers/customer_quote_providers.dart';
 import '../../features/money/providers/einvoice_inbox_providers.dart';
 import '../../features/money/providers/premises_lease_providers.dart';
 import '../../features/money/providers/room_rental_providers.dart';
+import '../../features/money/providers/service_fulfilment_providers.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../../features/workspace/domain/workspace_permission.dart';
 import '../../features/workspace/providers/customer_kpi_providers.dart';
@@ -88,6 +89,10 @@ List<Override> demoCityCommerceOverrides(DemoFixture fixture) {
     // #4166 — each space reads its own customer quotes.
     customerQuoteRepositoryProvider.overrideWith(
       (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.customerQuotes)),
+    ),
+    // #4178 — each space reads its own engagements.
+    serviceFulfilmentRepositoryProvider.overrideWith(
+      (ref) => demoPickSpace(ref, demoMapSpaces(stores, (s) => s.serviceFulfilments)),
     ),
     // #3307 — the orders to their suppliers.
     ...demoPurchaseOrderOverrides(orderSpaces),

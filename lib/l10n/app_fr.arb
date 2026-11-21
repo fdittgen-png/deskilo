@@ -7555,6 +7555,14 @@
   },
   "featureSeriesBooking": "Réservation en série",
   "featureSeriesBookingDesc": "Répéter une réservation chaque jour, chaque semaine ou en semaine.",
+  "featureServiceFulfilmentDesc": "Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Suivi des prestations",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Services",
   "featureServicesDesc": "Catalogue de services et suivi des consommations.",
   "featureSettlementFoldDesc": "Les factures regroupées en une seule disparaissent des listes et se rangent sous la facture de regroupement, qui porte toutes leurs lignes. Sur une facture regroupée, toute opération est désactivée ; il ne reste que son PDF, tamponné du numéro dans lequel elle a été regroupée. Désactivé : les factures regroupées restent listées à côté de la facture de regroupement.",

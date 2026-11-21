@@ -480,6 +480,12 @@ public.seats.seats_external_hidden
 public.seats.seats_select
 public.seats.seats_write
 public.seats.seats_write_sites
+public.service_fulfilment_invoice_links.mcp_delegated_deny
+public.service_fulfilment_invoice_links.service_fulfilment_invoice_links_read
+public.service_fulfilment_transitions.mcp_delegated_deny
+public.service_fulfilment_transitions.service_fulfilment_transitions_read
+public.service_fulfilments.mcp_delegated_deny
+public.service_fulfilments.service_fulfilments_read
 public.services.mcp_delegated_deny
 public.services.services_select
 public.services.services_write

@@ -167,6 +167,8 @@ const workspaceProcesses = <WorkspaceProcess>[
       WorkspaceFeature.billingCustomers,
             // #4166 — before the invoices: the offer that becomes the first one.
             WorkspaceFeature.customerQuotes,
+            // #4178 — after the offer and the invoice: the work that is delivered.
+            WorkspaceFeature.serviceFulfilment,
     ]),
     WorkspaceSubprocess('collection', [
       WorkspaceFeature.onlinePayments,

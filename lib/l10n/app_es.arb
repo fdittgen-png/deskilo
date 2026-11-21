@@ -7555,6 +7555,14 @@
   },
   "featureSeriesBooking": "Reserva en serie",
   "featureSeriesBookingDesc": "Repetir una reserva a diario, semanalmente o en días laborables.",
+  "featureServiceFulfilmentDesc": "Siga un servicio pedido como un compromiso propio: pedido, iniciado, terminado o cancelado con un motivo, conservando cada paso. El presupuesto, la factura y los pagos quedan como están. Nada se factura ni se paga con él. A petición, bajo los clientes facturados.",
+  "@featureServiceFulfilmentDesc": {
+    "description": "a feature in the Features list (#4178)"
+  },
+  "featureServiceFulfilmentTitle": "Seguimiento de servicios",
+  "@featureServiceFulfilmentTitle": {
+    "description": "a feature in the Features list (#4178)"
+  },
   "featureServices": "Servicios",
   "featureServicesDesc": "Catálogo de servicios y registro de consumos.",
   "featureSettlementFoldDesc": "Las facturas reagrupadas en una desaparecen de las listas como iguales y se anidan bajo la factura de reagrupación, que lleva todas sus líneas. En una factura reagrupada toda operación está desactivada; solo queda su PDF, sellado con el número en que se reagrupó. Desactivado: las facturas reagrupadas siguen listadas junto a la de reagrupación.",

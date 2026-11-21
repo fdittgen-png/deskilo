@@ -18,6 +18,13 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
+  // The engagement screens (cut C of #4178) read and act through these.
+  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentCommandProvider':
+      '#4178 — the engagement screens take their steps through it (cut C)',
+  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentsProvider':
+      '#4178 — the engagements list screen reads it (cut C)',
+  'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentProvider':
+      '#4178 — the engagement screen reads it (cut C)',
   // The order pane's put-away (checkpoint B of #4171) saves through it.
   'lib/features/stock/providers/stock_providers.dart::stockReceivingCommandsProvider':
       '#4171 — the order pane puts a delivery away through it (checkpoint B)',

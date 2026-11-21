@@ -12346,6 +12346,13 @@ class AppLocalizationsFr extends AppLocalizations {
       'Répéter une réservation chaque jour, chaque semaine ou en semaine.';
 
   @override
+  String get featureServiceFulfilmentDesc =>
+      'Suivez une prestation commandée comme un engagement à part : commandée, commencée, terminée ou annulée avec un motif, chaque étape étant conservée. Le devis, la facture et les paiements restent tels quels à côté. Rien n\'est facturé ni payé par ce suivi. Sur demande, sous les clients facturés.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Suivi des prestations';
+
+  @override
   String get featureServices => 'Services';
 
   @override

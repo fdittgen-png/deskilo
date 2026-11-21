@@ -12293,6 +12293,13 @@ class AppLocalizationsIt extends AppLocalizations {
       'Ripeta una prenotazione ogni giorno, ogni settimana o nei giorni feriali.';
 
   @override
+  String get featureServiceFulfilmentDesc =>
+      'Seguite un servizio ordinato come un impegno a sé: ordinato, avviato, concluso o annullato con un motivo, conservando ogni passaggio. Il preventivo, la fattura e i pagamenti restano invariati accanto. Nulla viene fatturato o pagato da questo. Su richiesta, sotto i clienti fatturati.';
+
+  @override
+  String get featureServiceFulfilmentTitle => 'Avanzamento dei servizi';
+
+  @override
   String get featureServices => 'Servizi';
 
   @override

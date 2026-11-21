@@ -35,6 +35,9 @@ const _switches = <WorkspaceFeature>{
   // #4166 — customer quotes: their screens (cut 2) are where a quote is made
   // and decided, in the money area; the switch sets nothing up.
   WorkspaceFeature.customerQuotes,
+  // #4178 — service fulfilment: its screens are where an engagement is opened
+  // and followed, in the money area; the switch sets nothing up.
+  WorkspaceFeature.serviceFulfilment,
   // #3824 — the goods ledger opens itself when switched on (its places and
   // the opening of each count); its places and items are set up on the
   // stock screens of #3823, not in the setup guide.

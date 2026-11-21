@@ -311,6 +311,7 @@ String _latestName(AppLocalizations l10n, WorkspaceFeature feature) =>
       WorkspaceFeature.organisation => l10n.featureOrganisationTitle,
       WorkspaceFeature.billingCustomers => l10n.featureBillingCustomersTitle,
       WorkspaceFeature.customerQuotes => l10n.featureCustomerQuotesTitle,
+      WorkspaceFeature.serviceFulfilment => l10n.featureServiceFulfilmentTitle,
       WorkspaceFeature.stockManagement => l10n.featureStockManagementTitle,
       WorkspaceFeature.stockLots => l10n.featureStockLotsTitle,
       WorkspaceFeature.stockReceiving => l10n.featureStockReceivingTitle,
