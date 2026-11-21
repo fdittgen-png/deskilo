@@ -22,13 +22,23 @@ import '../../helpers/pump_app.dart';
 class _Kinds implements BusinessKindRepository {
   final writes = <(String, List<String>)>[];
 
+  /// #4168 — set to move the freelancer's profile after the owner opened the sheet.
+  int freelancerVersion = 1;
+
   @override
-  Future<List<BusinessKind>> kinds() async => const [
-    BusinessKind(code: 'coworking', sortOrder: 10),
-    BusinessKind(code: 'studio', sortOrder: 20, profile: _noPlaces),
-    BusinessKind(code: 'practice', sortOrder: 30, profile: _noPlaces),
-    BusinessKind(code: 'salon', sortOrder: 40, profile: _noPlaces),
-    BusinessKind(code: 'service', sortOrder: 50, profile: _noPlaces),
+  Future<List<BusinessKind>> kinds() async => [
+    const BusinessKind(code: 'coworking', sortOrder: 10),
+    const BusinessKind(code: 'studio', sortOrder: 20, profile: _noPlaces),
+    const BusinessKind(code: 'practice', sortOrder: 30, profile: _noPlaces),
+    const BusinessKind(code: 'salon', sortOrder: 40, profile: _noPlaces),
+    BusinessKind(
+      code: 'freelancer',
+      sortOrder: 45,
+      profile: _freelancer,
+      profileVersion: freelancerVersion,
+      profileDigest: 'v$freelancerVersion',
+    ),
+    const BusinessKind(code: 'service', sortOrder: 50, profile: _noPlaces),
   ];
 
   @override
@@ -37,7 +47,27 @@ class _Kinds implements BusinessKindRepository {
     required String kind,
     required List<String> moreKinds,
   }) async => writes.add((kind, moreKinds));
+
+  @override
+  Future<BusinessKindApplied> applyKind(
+    String workspaceId, {
+    required String requestId,
+    required ReviewedKind reviewed,
+    required Map<String, bool> flags,
+    required Map<String, bool> expected,
+  }) => throw const BusinessKindApplyUnsupported();
 }
+
+/// The profile 0834 seeds for the freelancer: no provider, no messages.
+const _freelancer = {
+  'placeBooking': false,
+  'moneyTab': true,
+  'services': true,
+  'invoicing': true,
+  'billingCustomers': true,
+  'customerQuotes': true,
+  'purchases': true,
+};
 
 /// The profile 0709 seeds for the kinds without places.
 const _noPlaces = {
@@ -176,5 +206,32 @@ void main() {
     await _tap(tester, key);
     await _tap(tester, 'business-kind-save');
     expect(workspace.flagWrites.last[feature], isTrue);
+  });
+
+  testWidgets('Freelancer is offered between Salon and Service; it switches '
+      'the places off and saves as its own kind', (tester) async {
+    final (kinds, workspace) = await _open(tester);
+    expect(find.byKey(const ValueKey('business-kind-freelancer')), findsOneWidget);
+    await _tap(tester, 'business-kind-freelancer');
+    expect(find.byKey(const ValueKey('business-kind-off')), findsOneWidget);
+    expect(find.byKey(const ValueKey('business-kind-no-booking-yet')), findsOneWidget);
+    await _tap(tester, 'business-kind-save');
+    expect(kinds.writes.single.$1, 'freelancer');
+    expect(workspace.flagWrites.last['placeBooking'], isFalse);
+    expect(workspace.flagWrites.last.containsKey('onlinePayments'), isFalse);
+  });
+
+  testWidgets('a profile that changed after the owner opened the sheet is '
+      'refused, nothing is written, and the owner is asked to review again',
+      (tester) async {
+    final (kinds, workspace) = await _open(tester);
+    await _tap(tester, 'business-kind-freelancer');
+    final before = workspace.flagWrites.length;
+    kinds.freelancerVersion = 2;
+    await _tap(tester, 'business-kind-save');
+    expect(kinds.writes, isEmpty);
+    expect(workspace.flagWrites.length, before);
+    expect(find.byKey(const ValueKey('form-sheet-error')), findsOneWidget);
+    expect(find.textContaining('updated while you were choosing'), findsOneWidget);
   });
 }
