@@ -105,7 +105,7 @@ insert into public.configuration_choice_events (workspace_id, request_id, stage,
 values ('00000000-0000-4000-8000-000000048612', '00000000-0000-4000-8000-000000048690', 'kind', 'applied', '00000000-0000-4000-8000-000000048601', '{}'),
        ('00000000-0000-4000-8000-000000048612', '00000000-0000-4000-8000-000000048690', 'flags', 'applied', '00000000-0000-4000-8000-000000048601', '{}');
 select set_config('t.others', (select count(*)::text from public.configuration_choice_events where workspace_id <> '00000000-0000-4000-8000-000000048612'), false);
-select throws_ok($$delete from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'$$, 'DKK02',
+select throws_ok($$delete from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'$$, 'DKK02', null,
   'a recorded stage is not deleted while its business exists');
 select is((select count(*)::int from public.configuration_choice_events where workspace_id = '00000000-0000-4000-8000-000000048612'), 2,
   'both stages are still there');
