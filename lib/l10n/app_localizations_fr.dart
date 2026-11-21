@@ -27800,6 +27800,163 @@ class AppLocalizationsFr extends AppLocalizations {
   String get quotaRequestTitle => 'Demander des demi-journées supplémentaires';
 
   @override
+  String get quoteAmend => 'Modifier';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Les montants sont calculés à l\'envoi du devis, d\'après vos propres réglages fiscaux.';
+
+  @override
+  String get quoteCancelAction => 'Annuler le devis';
+
+  @override
+  String get quoteChooseCustomer => 'Choisir un client';
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Enregistré par vous, comme émetteur : $source, le $date. C\'est votre trace de la réponse, pas la signature du client.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Supprimer le brouillon';
+
+  @override
+  String get quoteDraftSaved => 'Brouillon enregistré.';
+
+  @override
+  String get quoteEditDraft => 'Modifier le brouillon';
+
+  @override
+  String get quoteEditTitle => 'Modifier le devis';
+
+  @override
+  String get quoteFeatureOff =>
+      'Les devis sont désactivés dans cette activité.';
+
+  @override
+  String get quoteFieldIssuedOn => 'Date de l\'offre';
+
+  @override
+  String get quoteFieldNotes => 'Notes pour le client';
+
+  @override
+  String get quoteFieldOrder => 'Numéro de commande';
+
+  @override
+  String get quoteFieldReference => 'Référence du client';
+
+  @override
+  String get quoteFieldValidUntil => 'Valable jusqu\'au';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'Le devis n\'est pas encore complet : $missing.';
+  }
+
+  @override
+  String get quoteNewTitle => 'Nouveau devis';
+
+  @override
+  String get quoteNoCustomers =>
+      'Ajoutez d\'abord un client facturé : un devis lui est destiné.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'Vous ne pouvez pas faire cela avec les devis de cette activité.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Numéro de commande : $value';
+  }
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Référence du client : $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Révision $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Révisions';
+
+  @override
+  String get quoteSaveDraft => 'Enregistrer le brouillon';
+
+  @override
+  String get quoteSend => 'Envoyer';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Envoyé sous la référence $reference. Cette révision ne change jamais.';
+  }
+
+  @override
+  String get quoteStale =>
+      'Ce brouillon a changé depuis votre ouverture. Rouvrez-le pour voir le brouillon actuel.';
+
+  @override
+  String get quoteStateRefused =>
+      'Le devis n\'est plus dans un état qui le permet. Rouvrez-le.';
+
+  @override
+  String get quoteStatusAccepted => 'Accepté';
+
+  @override
+  String get quoteStatusCancelled => 'Annulé';
+
+  @override
+  String get quoteStatusConverted => 'Facturé';
+
+  @override
+  String get quoteStatusDeclined => 'Refusé';
+
+  @override
+  String get quoteStatusExpired => 'Expiré';
+
+  @override
+  String get quoteStatusSent => 'Envoyé';
+
+  @override
+  String get quoteTotal => 'Total';
+
+  @override
+  String get quoteUnreached =>
+      'La réponse n\'est pas revenue : on ne sait pas si c\'est fait. Ouvrez le devis pour voir où il en est.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Valable jusqu\'au $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'Aucun devis pour l\'instant. Faites le premier pour un client facturé.';
+
+  @override
+  String get quotesIntro =>
+      'Offres à vos clients facturés. Un devis envoyé ne change jamais ; une modification est une autre révision. Rien n\'est facturé avant que vous convertissiez un devis accepté.';
+
+  @override
+  String get quotesLoadFailed =>
+      'Les devis n\'ont pas pu être lus. Ce n\'est pas une liste vide.';
+
+  @override
+  String get quotesNew => 'Nouveau devis';
+
+  @override
+  String get quotesNotAllowed =>
+      'Vous ne pouvez pas lire les devis de cette activité.';
+
+  @override
+  String get quotesRetry => 'Réessayer';
+
+  @override
+  String get quotesTitle => 'Devis';
+
+  @override
   String get readStateDenied =>
       'Vous n’avez pas accès à cette page. Demandez à un administrateur de l’espace si vous en avez besoin.';
 

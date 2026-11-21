@@ -54,6 +54,7 @@ import 'package:deskilo/features/money/domain/bank/bank_match.dart';
 import 'package:deskilo/features/money/domain/billing_customer.dart';
 import 'package:deskilo/features/money/domain/billing_rules.dart';
 import 'package:deskilo/features/money/domain/book_chart.dart';
+import 'package:deskilo/features/money/domain/customer_quote.dart';
 import 'package:deskilo/features/money/domain/einvoice_inbox.dart';
 import 'package:deskilo/features/money/domain/lease_commitment.dart';
 import 'package:deskilo/features/money/domain/purchase.dart';
@@ -1260,6 +1261,29 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       return before > 0 &&
           after.length == before + 1 &&
           after.any((c) => c.displayName == 'Studio Nord');
+    },
+  ),
+  // #4166 — the owner sends a quote to a billing customer: the first send takes
+  // the next reference from the quote series and freezes the revision.
+  WorkspaceFeature.customerQuotes: _action(
+    _owner,
+    'Ada sends the draft quote to Hanna Weiss and it takes the next reference',
+    (w) async {
+      final quotes = w.house(DemoSpaceKey.home).stores.customerQuotes;
+      final draft = (await quotes.quotes(demoFirstSpaceId)).firstWhere(
+        (q) => q.status == QuoteStatus.draft,
+      );
+      final rev = draft.draft!;
+      final sent = await quotes.send(
+        demoFirstSpaceId,
+        draft.id,
+        revision: rev.revision,
+        version: rev.draftVersion,
+      );
+      final after = await quotes.quote(demoFirstSpaceId, draft.id);
+      return sent.reference.startsWith('QUO-') &&
+          after.status == QuoteStatus.sent &&
+          after.current?.totals != null;
     },
   ),
   // #3610 — Ctrl+K finds an invoice of the Demo by its number, and a

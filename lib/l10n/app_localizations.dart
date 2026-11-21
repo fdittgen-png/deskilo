@@ -44109,6 +44109,270 @@ abstract class AppLocalizations {
   /// **'Request extra half-days'**
   String get quotaRequestTitle;
 
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Amend'**
+  String get quoteAmend;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Amounts are worked out when you send the quote, from your own tax settings.'**
+  String get quoteAmountsOnSend;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel the quote'**
+  String get quoteCancelAction;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a customer'**
+  String get quoteChooseCustomer;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Recorded by you, as the issuer: {source}, on {date}. It is your record of the answer, not the customer\'s signature.'**
+  String quoteDecisionByIssuer(String date, String source);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Discard the draft'**
+  String get quoteDiscardDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Draft saved.'**
+  String get quoteDraftSaved;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the draft'**
+  String get quoteEditDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Edit the quote'**
+  String get quoteEditTitle;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes are switched off in this business.'**
+  String get quoteFeatureOff;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Date of the offer'**
+  String get quoteFieldIssuedOn;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Notes for the customer'**
+  String get quoteFieldNotes;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Order number'**
+  String get quoteFieldOrder;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference'**
+  String get quoteFieldReference;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until'**
+  String get quoteFieldValidUntil;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quote is not complete yet: {missing}.'**
+  String quoteIncomplete(String missing);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'New quote'**
+  String get quoteNewTitle;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Add a billing customer first: a quote is made to one.'**
+  String get quoteNoCustomers;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not do this with quotes in this business.'**
+  String get quoteNotAllowedAction;
+
+  /// customer quotes (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Order number: {value}'**
+  String quoteOrderLine(String value);
+
+  /// customer quotes (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Customer reference: {value}'**
+  String quoteReferenceLine(String value);
+
+  /// customer quotes: a revision and its status (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Revision {revision} · {status}'**
+  String quoteRevisionLine(String revision, String status);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Revisions'**
+  String get quoteRevisionsTitle;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Save draft'**
+  String get quoteSaveDraft;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Send'**
+  String get quoteSend;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent as {reference}. This revision never changes.'**
+  String quoteSentAs(String reference);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'This draft changed since you opened it. Open it again to see the current one.'**
+  String get quoteStale;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quote is no longer in a state that allows this. Open it again.'**
+  String get quoteStateRefused;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Accepted'**
+  String get quoteStatusAccepted;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Cancelled'**
+  String get quoteStatusCancelled;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Invoiced'**
+  String get quoteStatusConverted;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Declined'**
+  String get quoteStatusDeclined;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Expired'**
+  String get quoteStatusExpired;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Sent'**
+  String get quoteStatusSent;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get quoteTotal;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The answer did not come back, so it is not known whether this was done. Open the quote to see where it stands.'**
+  String get quoteUnreached;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Valid until {date}'**
+  String quoteValidUntil(String date);
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'No quotes yet. Make the first one for a billing customer.'**
+  String get quotesEmpty;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.'**
+  String get quotesIntro;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'The quotes could not be read. This is not an empty list.'**
+  String get quotesLoadFailed;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'New quote'**
+  String get quotesNew;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'You may not read the quotes of this business.'**
+  String get quotesNotAllowed;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get quotesRetry;
+
+  /// customer quotes: the quotes list, editor and detail (#4166)
+  ///
+  /// In en, this message translates to:
+  /// **'Quotes'**
+  String get quotesTitle;
+
   /// #3061 shared read-failure messages: connectivity and denied access
   ///
   /// In en, this message translates to:

@@ -41,11 +41,6 @@ const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
   WorkspaceFeature.stockManagement:
       'the goods ledger is a server foundation without a screen yet; the '
       'Demo shop of the stock epic shows it',
-  // #4166 — quotes are a server foundation without a screen yet (cut 2); the
-  // Demo's quote journey arrives with the screens.
-  WorkspaceFeature.customerQuotes:
-      'customer quotes are a server foundation without a screen yet; the '
-      'Demo journey arrives with the quote screens of cut 2',
 };
 
 /// ws-1: every feature on, except [demoFeaturesLeftOff] and anything whose

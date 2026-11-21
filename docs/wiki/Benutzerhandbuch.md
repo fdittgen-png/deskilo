@@ -2994,6 +2994,15 @@ Wählen Sie **Lieferantenverbindlichkeiten anzeigen**, um dessen Rechnungen und 
 
 Wählen Sie **Kunden hinzufügen** und geben Sie eine Firma oder einen Namen, die Anschrift, den Ländercode, die USt-IdNr. und eine E-Mail-Adresse für die Rechnung an. Die USt-IdNr. wird nur auf ihre Form geprüft, nie bestätigt. **Abgerechnet als** (Unternehmen oder Privatperson) bestimmt die Pflichtangaben und die steuerliche Behandlung; nur wer Rechnungen ausstellen darf, kann es ändern. Wählen Sie einen Kunden, um ihn zu bearbeiten. Hat jemand anderes den Kunden seit dem Öffnen geändert, wird nichts gespeichert und Sie öffnen ihn erneut. Lässt sich die Liste nicht lesen, versuchen Sie es erneut, statt sie für leer zu halten. Eine Änderung schreibt nie eine bereits ausgestellte Rechnung um: Jede behält Namen und Anschrift, mit denen sie ausgestellt wurde.
 
+<!-- anchor: user.money.quotes -->
+### Angebote
+
+**Zielgruppe:** Administrator:in · Inhaber
+
+Öffnen Sie **Geld** und dann **Angebote** (die Adresse `/money/quotes`; die Funktion **Kundenangebote** muss unter der Rechnungsstellung aktiviert sein). Hier machen Sie einem Rechnungskunden ein Angebot, bevor Sie ihm eine Rechnung stellen.
+
+Wählen Sie **Neues Angebot**, den Kunden, die Daten und fügen Sie die Positionen hinzu. **Entwurf speichern** behält ihn; **Senden** friert diese Revision ein, nimmt die nächste Referenz der Angebotsreihe und berechnet die Beträge aus Ihren eigenen Steuereinstellungen. Ein Entwurf zeigt keine Beträge: Sie entstehen erst beim Senden. Ein gesendetes Angebot ändert sich nie: **Ändern** erzeugt eine weitere Revision, **Angebot stornieren** zieht es zurück. Ein Angebot nach seinem Datum gilt als abgelaufen. Ein Angebot berechnet, bucht und bezahlt nichts; die Rechnung zu einem angenommenen kommt danach.
+
 <!-- anchor: user.money.amounts -->
 ### Wie Beträge angezeigt werden
 

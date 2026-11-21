@@ -2861,6 +2861,14 @@ Ouvrez **Argent** puis **Clients facturés** (l'adresse `/money/customers` ; la 
 
 Choisissez **Ajouter un client** et indiquez une société ou un nom, l'adresse postale, le code pays, le numéro de TVA et une adresse e-mail pour la facture. Le numéro de TVA n'est contrôlé que dans sa forme, jamais vérifié. **Facturé comme** (entreprise ou particulier) détermine les mentions légales et le traitement de la taxe ; seule une personne autorisée à émettre des factures peut le modifier. Choisissez un client pour le modifier. Si quelqu'un d'autre l'a modifié depuis votre ouverture, rien n'est enregistré et il vous est demandé de le rouvrir. Si la liste ne peut pas être lue, réessayez plutôt que de la croire vide. Modifier un client ne réécrit jamais une facture déjà émise : chacune garde le nom et l'adresse avec lesquels elle a été émise.
 
+### Devis
+
+**Public:** Administrateur·rice · Propriétaire
+
+Ouvrez **Argent** puis **Devis** (l'adresse `/money/quotes` ; la fonction **Devis clients** doit être activée sous la facturation). C'est ici que vous faites une offre à un client facturé avant de le facturer.
+
+Choisissez **Nouveau devis**, le client, les dates et ajoutez les lignes. **Enregistrer le brouillon** le garde ; **Envoyer** fige cette révision, prend la référence suivante de la série des devis et calcule les montants d'après vos propres réglages fiscaux. Un brouillon n'affiche aucun montant : ils n'existent qu'une fois le devis envoyé. Un devis envoyé ne change jamais : **Modifier** crée une autre révision et **Annuler le devis** le retire. Une offre dont la date est passée est lue comme expirée. Un devis ne facture, ne comptabilise et n'encaisse rien ; la facturation d'un devis accepté vient ensuite.
+
 ### Comment les montants sont affichés
 
 **Public:** Tout le monde

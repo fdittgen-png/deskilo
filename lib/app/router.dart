@@ -22,6 +22,7 @@ import 'route_env.dart';
 import 'route_redirect.dart';
 import 'routes/auth_routes.dart';
 import 'routes/billing_customer_routes.dart';
+import 'routes/customer_quote_routes.dart';
 import 'routes/directory_routes.dart';
 import 'routes/editor_routes.dart';
 import 'routes/events_routes.dart';
@@ -122,6 +123,7 @@ GoRouter router(Ref ref) {
       ...taskRecorderRoutes(env),
       ...moneyRoutes(env),
       ...billingCustomerRoutes(env),
+      ...customerQuoteRoutes(env),
     ],
   );
   ref.onDispose(router.dispose);

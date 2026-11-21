@@ -27760,6 +27760,163 @@ class AppLocalizationsDe extends AppLocalizations {
   String get quotaRequestTitle => 'Zusätzliche halbe Tage beantragen';
 
   @override
+  String get quoteAmend => 'Ändern';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Die Beträge werden beim Senden des Angebots aus Ihren eigenen Steuereinstellungen berechnet.';
+
+  @override
+  String get quoteCancelAction => 'Angebot stornieren';
+
+  @override
+  String get quoteChooseCustomer => 'Kunde wählen';
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Von Ihnen als Aussteller festgehalten: $source, am $date. Es ist Ihr Vermerk der Antwort, nicht die Unterschrift des Kunden.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Entwurf verwerfen';
+
+  @override
+  String get quoteDraftSaved => 'Entwurf gespeichert.';
+
+  @override
+  String get quoteEditDraft => 'Entwurf bearbeiten';
+
+  @override
+  String get quoteEditTitle => 'Angebot bearbeiten';
+
+  @override
+  String get quoteFeatureOff =>
+      'Angebote sind in diesem Unternehmen ausgeschaltet.';
+
+  @override
+  String get quoteFieldIssuedOn => 'Datum des Angebots';
+
+  @override
+  String get quoteFieldNotes => 'Hinweise für den Kunden';
+
+  @override
+  String get quoteFieldOrder => 'Bestellnummer';
+
+  @override
+  String get quoteFieldReference => 'Referenz des Kunden';
+
+  @override
+  String get quoteFieldValidUntil => 'Gültig bis';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'Das Angebot ist noch nicht vollständig: $missing.';
+  }
+
+  @override
+  String get quoteNewTitle => 'Neues Angebot';
+
+  @override
+  String get quoteNoCustomers =>
+      'Legen Sie zuerst einen Rechnungskunden an: ein Angebot gilt einem solchen.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'Sie dürfen das mit Angeboten in diesem Unternehmen nicht tun.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Bestellnummer: $value';
+  }
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Referenz des Kunden: $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Revision $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Revisionen';
+
+  @override
+  String get quoteSaveDraft => 'Entwurf speichern';
+
+  @override
+  String get quoteSend => 'Senden';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Gesendet als $reference. Diese Revision ändert sich nie.';
+  }
+
+  @override
+  String get quoteStale =>
+      'Dieser Entwurf hat sich seit dem Öffnen geändert. Öffnen Sie ihn erneut, um den aktuellen zu sehen.';
+
+  @override
+  String get quoteStateRefused =>
+      'Das Angebot ist nicht mehr in einem Zustand, der das erlaubt. Öffnen Sie es erneut.';
+
+  @override
+  String get quoteStatusAccepted => 'Angenommen';
+
+  @override
+  String get quoteStatusCancelled => 'Storniert';
+
+  @override
+  String get quoteStatusConverted => 'Berechnet';
+
+  @override
+  String get quoteStatusDeclined => 'Abgelehnt';
+
+  @override
+  String get quoteStatusExpired => 'Abgelaufen';
+
+  @override
+  String get quoteStatusSent => 'Gesendet';
+
+  @override
+  String get quoteTotal => 'Gesamt';
+
+  @override
+  String get quoteUnreached =>
+      'Die Antwort kam nicht zurück, daher ist nicht bekannt, ob es erledigt wurde. Öffnen Sie das Angebot, um den Stand zu sehen.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Gültig bis $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'Noch keine Angebote. Erstellen Sie das erste für einen Rechnungskunden.';
+
+  @override
+  String get quotesIntro =>
+      'Angebote an Ihre Rechnungskunden. Ein gesendetes Angebot ändert sich nie; eine Änderung ist eine weitere Revision. Es wird nichts berechnet, bis Sie ein angenommenes Angebot umwandeln.';
+
+  @override
+  String get quotesLoadFailed =>
+      'Die Angebote konnten nicht gelesen werden. Das ist keine leere Liste.';
+
+  @override
+  String get quotesNew => 'Neues Angebot';
+
+  @override
+  String get quotesNotAllowed =>
+      'Sie dürfen die Angebote dieses Unternehmens nicht lesen.';
+
+  @override
+  String get quotesRetry => 'Erneut versuchen';
+
+  @override
+  String get quotesTitle => 'Angebote';
+
+  @override
   String get readStateDenied =>
       'Dafür haben Sie keinen Zugriff. Fragen Sie bei Bedarf eine Administratorin oder einen Administrator des Arbeitsbereichs.';
 

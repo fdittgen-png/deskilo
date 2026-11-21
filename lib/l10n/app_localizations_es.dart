@@ -27675,6 +27675,163 @@ class AppLocalizationsEs extends AppLocalizations {
   String get quotaRequestTitle => 'Solicitar medias jornadas extra';
 
   @override
+  String get quoteAmend => 'Modificar';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Los importes se calculan al enviar el presupuesto, según su propia configuración fiscal.';
+
+  @override
+  String get quoteCancelAction => 'Cancelar el presupuesto';
+
+  @override
+  String get quoteChooseCustomer => 'Elegir un cliente';
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Registrado por usted, como emisor: $source, el $date. Es su registro de la respuesta, no la firma del cliente.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Descartar el borrador';
+
+  @override
+  String get quoteDraftSaved => 'Borrador guardado.';
+
+  @override
+  String get quoteEditDraft => 'Editar el borrador';
+
+  @override
+  String get quoteEditTitle => 'Editar el presupuesto';
+
+  @override
+  String get quoteFeatureOff =>
+      'Los presupuestos están desactivados en este negocio.';
+
+  @override
+  String get quoteFieldIssuedOn => 'Fecha de la oferta';
+
+  @override
+  String get quoteFieldNotes => 'Notas para el cliente';
+
+  @override
+  String get quoteFieldOrder => 'Número de pedido';
+
+  @override
+  String get quoteFieldReference => 'Referencia del cliente';
+
+  @override
+  String get quoteFieldValidUntil => 'Válido hasta';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'El presupuesto aún no está completo: $missing.';
+  }
+
+  @override
+  String get quoteNewTitle => 'Nuevo presupuesto';
+
+  @override
+  String get quoteNoCustomers =>
+      'Añada primero un cliente facturado: un presupuesto se hace para uno.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'No puede hacer esto con los presupuestos de este negocio.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Número de pedido: $value';
+  }
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Referencia del cliente: $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Revisión $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Revisiones';
+
+  @override
+  String get quoteSaveDraft => 'Guardar borrador';
+
+  @override
+  String get quoteSend => 'Enviar';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Enviado como $reference. Esta revisión nunca cambia.';
+  }
+
+  @override
+  String get quoteStale =>
+      'Este borrador cambió desde que lo abrió. Ábralo de nuevo para ver el actual.';
+
+  @override
+  String get quoteStateRefused =>
+      'El presupuesto ya no está en un estado que lo permita. Ábralo de nuevo.';
+
+  @override
+  String get quoteStatusAccepted => 'Aceptado';
+
+  @override
+  String get quoteStatusCancelled => 'Cancelado';
+
+  @override
+  String get quoteStatusConverted => 'Facturado';
+
+  @override
+  String get quoteStatusDeclined => 'Rechazado';
+
+  @override
+  String get quoteStatusExpired => 'Caducado';
+
+  @override
+  String get quoteStatusSent => 'Enviado';
+
+  @override
+  String get quoteTotal => 'Total';
+
+  @override
+  String get quoteUnreached =>
+      'La respuesta no volvió, así que no se sabe si se hizo. Abra el presupuesto para ver cómo está.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Válido hasta el $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'Aún no hay presupuestos. Haga el primero para un cliente facturado.';
+
+  @override
+  String get quotesIntro =>
+      'Ofertas a sus clientes facturados. Un presupuesto enviado nunca cambia; una modificación es otra revisión. No se factura nada hasta que convierta uno aceptado.';
+
+  @override
+  String get quotesLoadFailed =>
+      'No se pudieron leer los presupuestos. No es una lista vacía.';
+
+  @override
+  String get quotesNew => 'Nuevo presupuesto';
+
+  @override
+  String get quotesNotAllowed =>
+      'No puede leer los presupuestos de este negocio.';
+
+  @override
+  String get quotesRetry => 'Reintentar';
+
+  @override
+  String get quotesTitle => 'Presupuestos';
+
+  @override
   String get readStateDenied =>
       'No tiene acceso a esto. Si lo necesita, pídaselo a un administrador del espacio.';
 

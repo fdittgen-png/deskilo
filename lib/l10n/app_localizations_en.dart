@@ -27482,6 +27482,162 @@ class AppLocalizationsEn extends AppLocalizations {
   String get quotaRequestTitle => 'Request extra half-days';
 
   @override
+  String get quoteAmend => 'Amend';
+
+  @override
+  String get quoteAmountsOnSend =>
+      'Amounts are worked out when you send the quote, from your own tax settings.';
+
+  @override
+  String get quoteCancelAction => 'Cancel the quote';
+
+  @override
+  String get quoteChooseCustomer => 'Choose a customer';
+
+  @override
+  String quoteDecisionByIssuer(String date, String source) {
+    return 'Recorded by you, as the issuer: $source, on $date. It is your record of the answer, not the customer\'s signature.';
+  }
+
+  @override
+  String get quoteDiscardDraft => 'Discard the draft';
+
+  @override
+  String get quoteDraftSaved => 'Draft saved.';
+
+  @override
+  String get quoteEditDraft => 'Edit the draft';
+
+  @override
+  String get quoteEditTitle => 'Edit the quote';
+
+  @override
+  String get quoteFeatureOff => 'Quotes are switched off in this business.';
+
+  @override
+  String get quoteFieldIssuedOn => 'Date of the offer';
+
+  @override
+  String get quoteFieldNotes => 'Notes for the customer';
+
+  @override
+  String get quoteFieldOrder => 'Order number';
+
+  @override
+  String get quoteFieldReference => 'Customer reference';
+
+  @override
+  String get quoteFieldValidUntil => 'Valid until';
+
+  @override
+  String quoteIncomplete(String missing) {
+    return 'The quote is not complete yet: $missing.';
+  }
+
+  @override
+  String get quoteNewTitle => 'New quote';
+
+  @override
+  String get quoteNoCustomers =>
+      'Add a billing customer first: a quote is made to one.';
+
+  @override
+  String get quoteNotAllowedAction =>
+      'You may not do this with quotes in this business.';
+
+  @override
+  String quoteOrderLine(String value) {
+    return 'Order number: $value';
+  }
+
+  @override
+  String quoteReferenceLine(String value) {
+    return 'Customer reference: $value';
+  }
+
+  @override
+  String quoteRevisionLine(String revision, String status) {
+    return 'Revision $revision · $status';
+  }
+
+  @override
+  String get quoteRevisionsTitle => 'Revisions';
+
+  @override
+  String get quoteSaveDraft => 'Save draft';
+
+  @override
+  String get quoteSend => 'Send';
+
+  @override
+  String quoteSentAs(String reference) {
+    return 'Sent as $reference. This revision never changes.';
+  }
+
+  @override
+  String get quoteStale =>
+      'This draft changed since you opened it. Open it again to see the current one.';
+
+  @override
+  String get quoteStateRefused =>
+      'The quote is no longer in a state that allows this. Open it again.';
+
+  @override
+  String get quoteStatusAccepted => 'Accepted';
+
+  @override
+  String get quoteStatusCancelled => 'Cancelled';
+
+  @override
+  String get quoteStatusConverted => 'Invoiced';
+
+  @override
+  String get quoteStatusDeclined => 'Declined';
+
+  @override
+  String get quoteStatusExpired => 'Expired';
+
+  @override
+  String get quoteStatusSent => 'Sent';
+
+  @override
+  String get quoteTotal => 'Total';
+
+  @override
+  String get quoteUnreached =>
+      'The answer did not come back, so it is not known whether this was done. Open the quote to see where it stands.';
+
+  @override
+  String quoteValidUntil(String date) {
+    return 'Valid until $date';
+  }
+
+  @override
+  String get quotesEmpty =>
+      'No quotes yet. Make the first one for a billing customer.';
+
+  @override
+  String get quotesIntro =>
+      'Offers to your billing customers. A sent quote never changes; an amendment is another revision. Nothing is invoiced until you convert an accepted one.';
+
+  @override
+  String get quotesLoadFailed =>
+      'The quotes could not be read. This is not an empty list.';
+
+  @override
+  String get quotesNew => 'New quote';
+
+  @override
+  String get quotesNotAllowed =>
+      'You may not read the quotes of this business.';
+
+  @override
+  String get quotesRetry => 'Try again';
+
+  @override
+  String get quotesTitle => 'Quotes';
+
+  @override
   String get readStateDenied =>
       'You do not have access to this. Ask a workspace administrator if you need it.';
 

@@ -2994,6 +2994,15 @@ Abra **Dinero** y luego **Clientes facturados** (la dirección `/money/customers
 
 Elija **Añadir un cliente** e indique una empresa o un nombre, la dirección postal, el código de país, el número de IVA y un correo para la factura. El número de IVA solo se comprueba en su forma, nunca se verifica. **Facturado como** (empresa o particular) determina las menciones legales y el tratamiento fiscal; solo quien puede emitir facturas puede cambiarlo. Elija un cliente para editarlo. Si alguien más lo cambió desde que lo abrió, no se guarda nada y se le pide abrirlo de nuevo. Si no se puede leer la lista, reintente en lugar de darla por vacía. Cambiar un cliente nunca reescribe una factura ya emitida: cada una conserva el nombre y la dirección con los que se emitió.
 
+<!-- anchor: user.money.quotes -->
+### Presupuestos
+
+**Público:** Administrador/a · Propietario
+
+Abra **Dinero** y luego **Presupuestos** (la dirección `/money/quotes`; la función **Presupuestos de clientes** debe estar activada bajo la facturación). Aquí hace una oferta a un cliente facturado antes de facturarle.
+
+Elija **Nuevo presupuesto**, el cliente, las fechas y añada las líneas. **Guardar borrador** lo conserva; **Enviar** congela esa revisión, toma la siguiente referencia de la serie de presupuestos y calcula los importes según su propia configuración fiscal. Un borrador no muestra importes: existen solo cuando se envía. Un presupuesto enviado nunca cambia: **Modificar** crea otra revisión y **Cancelar el presupuesto** lo retira. Una oferta pasada de fecha se lee como caducada. Un presupuesto no factura, no contabiliza ni cobra nada; facturar uno aceptado viene después.
+
 <!-- anchor: user.money.amounts -->
 ### Cómo se muestran los importes
 

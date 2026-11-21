@@ -607,6 +607,15 @@ Aprire **Denaro** e poi **Clienti fatturati** (l'indirizzo `/money/customers`; l
 
 Scegliere **Aggiungere un cliente** e indicare un'azienda o un nome, l'indirizzo postale, il codice paese, la partita IVA e un indirizzo e-mail per la fattura. La partita IVA è controllata solo nella forma, mai verificata. **Fatturato come** (azienda o privato) determina le diciture legali e il trattamento fiscale; solo chi può emettere fatture può modificarlo. Scegliere un cliente per modificarlo. Se qualcun altro lo ha cambiato dopo l'apertura, non viene salvato nulla e si deve riaprirlo. Se l'elenco non può essere letto, riprovare invece di darlo per vuoto. Modificare un cliente non riscrive mai una fattura già emessa: ognuna conserva il nome e l'indirizzo con cui è stata emessa.
 
+<!-- anchor: user.money.quotes -->
+### Preventivi
+
+**Destinatari:** Amministratore · Proprietario
+
+Aprire **Denaro** e poi **Preventivi** (l'indirizzo `/money/quotes`; la funzione **Preventivi ai clienti** deve essere attiva sotto la fatturazione). Qui si fa un'offerta a un cliente fatturato prima di fatturargli.
+
+Scegliere **Nuovo preventivo**, il cliente, le date e aggiungere le righe. **Salva bozza** la conserva; **Invia** congela quella revisione, prende il riferimento successivo della serie dei preventivi e calcola gli importi in base alle impostazioni fiscali proprie. Una bozza non mostra importi: esistono solo dopo l'invio. Un preventivo inviato non cambia mai: **Modifica** crea un'altra revisione e **Annulla il preventivo** lo ritira. Un'offerta oltre la sua data risulta scaduta. Un preventivo non fattura, non registra e non incassa nulla; la fatturazione di uno accettato viene dopo.
+
 <!-- anchor: user.money.amounts -->
 ### Come sono mostrati gli importi
 
