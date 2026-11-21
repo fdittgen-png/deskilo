@@ -18,7 +18,6 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'statement' => l10n.invoiceTemplateDocStatement,
     'agreement' => l10n.reportDocAgreement,
     'payments' => l10n.reportDocPayments,
-    'purchase_order' => l10n.reportDocPurchaseOrder,
     'customer_statement' || 'customer_statement_period' =>
       customerStatementKindLabel(l10n, kind.id),
     'usage' => l10n.reportDocUsage,
@@ -37,6 +36,13 @@ String reportKindLabel(AppLocalizations l10n, ReportKind kind) {
     'space_codes' => l10n.reportDocSpaceCodes,
     // A kind in the registry with no label here is a bug the lint test
     // catches; falling back to the id keeps the editor usable meanwhile.
-    _ => kind.id,
+    _ => _tradingDocumentLabel(l10n, kind.id) ?? kind.id,
   };
 }
+
+/// The documents a business sends in trading: a purchase order, a quote.
+String? _tradingDocumentLabel(AppLocalizations l10n, String id) => switch (id) {
+  'purchase_order' => l10n.reportDocPurchaseOrder,
+  'quote' => l10n.reportDocQuote,
+  _ => null,
+};

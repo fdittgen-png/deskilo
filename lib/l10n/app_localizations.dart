@@ -46503,6 +46503,18 @@ abstract class AppLocalizations {
   /// **'Purchase order {reference}'**
   String reportDocPurchaseOrderTitle(String reference);
 
+  /// #4166 the quote as a printed document: its kind in the report designer and the word on the paper
+  ///
+  /// In en, this message translates to:
+  /// **'Quote'**
+  String get reportDocQuote;
+
+  /// #4166 title of a printed quote, with its reference
+  ///
+  /// In en, this message translates to:
+  /// **'Quote {reference}'**
+  String reportDocQuoteTitle(String reference);
+
   /// Shown as a text in report kind labels (money).
   ///
   /// In en, this message translates to:

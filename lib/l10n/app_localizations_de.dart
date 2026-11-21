@@ -29295,6 +29295,14 @@ class AppLocalizationsDe extends AppLocalizations {
   }
 
   @override
+  String get reportDocQuote => 'Angebot';
+
+  @override
+  String reportDocQuoteTitle(String reference) {
+    return 'Angebot $reference';
+  }
+
+  @override
   String get reportDocSpaceCodes => 'QR-Karten der Plätze';
 
   @override

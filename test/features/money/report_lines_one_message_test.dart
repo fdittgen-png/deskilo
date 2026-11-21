@@ -7,7 +7,7 @@ import 'package:deskilo/core/vat/tax_reference_active.dart';
 import 'package:deskilo/features/money/domain/report_data_letters.dart';
 import 'package:deskilo/features/money/domain/report_facts.dart';
 import 'package:deskilo/features/money/presentation/report_defaults.dart';
-import 'package:deskilo/features/money/presentation/report_defaults_purchase_order.dart';
+import 'package:deskilo/features/money/presentation/report_defaults_trading.dart';
 import 'package:deskilo/features/money/presentation/report_strings_l10n.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/l10n/app_localizations.dart';

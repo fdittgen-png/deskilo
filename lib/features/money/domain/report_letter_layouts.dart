@@ -43,6 +43,8 @@ class LetterStrings {
     this.vatNumber = 'VAT number',
     this.purchaseOrder = 'Purchase order',
     this.expectedOn = 'Expected delivery',
+    this.quote = 'Quote',
+    this.validUntil = 'Valid until',
   });
 
   final String invoice, proforma, statement, agreement, payments, usage, status,
@@ -50,13 +52,13 @@ class LetterStrings {
       reminder, issuedOn, dueOn, orderRef, serviceRef, description, qty, unitPrice, total,
       paymentsLabel,
       balance, regards, page, records, creditNote, replaces, net, vat, vatNumber,
-      purchaseOrder, expectedOn;
+      purchaseOrder, expectedOn, quote, validUntil;
 }
 
 /// The kinds a person receives — the ones the standard binds.
 bool isPersonFacingKind(String kindId) =>
     const {'invoice', 'proforma', 'statement', 'agreement', 'payments', 'usage', 'status',
-        'purchase_order'}
+        'purchase_order', 'quote'}
         .contains(kindId) ||
     RegExp(r'^r\d+$').hasMatch(kindId);
 
@@ -218,7 +220,7 @@ $simpleLines
     </table>''',
     // #3307 — the order the space sends its supplier, at the supplier's
     // address in the window.
-    'purchase_order' => _purchaseOrderBody(s, title, linesTable),
+    'purchase_order' || 'quote' => _salesBody(kindId, s, title, linesTable),
     'status' => '''
     <text style="heading">$title — {{ status_from }} → {{ status_to }}</text>
     <text style="small">{{ workspace }} · {{ issued }}</text>
@@ -318,8 +320,43 @@ String _letterTitle(String kindId, LetterStrings s, int level) =>
       'usage' => s.usage,
       'status' => s.status,
       'purchase_order' => s.purchaseOrder,
+      'quote' => s.quote,
       _ => '${s.reminder} $level',
     };
+
+/// The body of the document a business sends before or after trading: a
+/// purchase order to a supplier, a quote to a customer.
+String _salesBody(String kindId, LetterStrings s, String title, String lines) =>
+    kindId == 'quote'
+    ? _quoteBody(s, title, lines)
+    : _purchaseOrderBody(s, title, lines);
+
+/// The two columns of a totals table: the label and its amount.
+const _valueColumns = '''
+      <col w="70%"/><col w="30%" align="right"/>''';
+
+/// #4166 — the body of a quote: its reference (never an invoice number), its
+/// date and validity, the customer's own references, the lines, the net, the
+/// VAT per rate, the total, the notes and the regards.
+String _quoteBody(LetterStrings s, String title, String linesTable) =>
+    '''
+    <text style="heading">$title {{ number }}</text>
+    <text style="small">${_esc(s.issuedOn)} {{ issued }} · ${_esc(s.validUntil)} {{ valid_until }}</text>
+    {% if purchase_order != "" %}<text style="small">${_esc(s.orderRef)} {{ purchase_order }}</text>{% endif %}
+    {% if buyer_reference != "" %}<text style="small">${_esc(s.serviceRef)} {{ buyer_reference }}</text>{% endif %}
+    <spacer size="4mm"/>
+$linesTable
+    <rule/>
+    <table>
+$_valueColumns
+      <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
+      {% if has_vat %}{% for v in vat %}<row><cell>${_esc(s.vat)} {{ v.rate }}</cell><cell>{{ v.amount }}</cell></row>{% endfor %}{% endif %}
+      <row bold="true"><cell>${_esc(s.total)}</cell><cell>{{ total }}$_codeBesideTotal</cell></row>
+    </table>
+    {% if note != "" %}<spacer size="4mm"/><text>{{ note }}</text>{% endif %}
+    <spacer size="6mm"/>
+    <text>${_esc(s.regards)}</text>
+    <text>{{ issued_by }}</text>''';
 
 /// #3307 — the body of the purchase order: its number and dates, the
 /// lines, the totals, the note and the regards.
@@ -332,7 +369,7 @@ String _purchaseOrderBody(LetterStrings s, String title, String linesTable) =>
 $linesTable
     <rule/>
     <table>
-      <col w="70%"/><col w="30%" align="right"/>
+$_valueColumns
       <row><cell>${_esc(s.net)}</cell><cell>{{ net_total }}</cell></row>
       {% if has_vat %}<row><cell>${_esc(s.vat)}</cell><cell>{{ vat_total }}</cell></row>{% endif %}
       <row bold="true"><cell>${_esc(s.total)}</cell><cell>{{ total }}$_codeBesideTotal</cell></row>

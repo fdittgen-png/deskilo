@@ -38016,6 +38016,19 @@
       }
     }
   },
+  "reportDocQuote": "Quote",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Quote {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "Space QR cards",
   "@reportDocSpaceCodes": {
     "description": "Shown as a text in report kind labels (money)."

@@ -16745,6 +16745,19 @@
   },
   "reportDocPurchaseOrder": "Ordine di acquisto",
   "reportDocPurchaseOrderTitle": "Ordine di acquisto {reference}",
+  "reportDocQuote": "Preventivo",
+  "@reportDocQuote": {
+    "description": "#4166 the quote as a printed document: its kind in the report designer and the word on the paper"
+  },
+  "reportDocQuoteTitle": "Preventivo {reference}",
+  "@reportDocQuoteTitle": {
+    "description": "#4166 title of a printed quote, with its reference",
+    "placeholders": {
+      "reference": {
+        "type": "String"
+      }
+    }
+  },
   "reportDocSpaceCodes": "Schede QR degli spazi",
   "reportDocStatus": "Situazione dello spazio",
   "@reportDocStatus": {
