@@ -8,7 +8,7 @@
 -- and never a lot; the count is a read-only mirror once the ledger exists and off/on again
 -- changes nothing; a lost response is read again by its request id. Rolled back.
 begin;
-select plan(64);
+select plan(65);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -276,6 +276,9 @@ select is(pg_temp.charge(305, 1), 'DKG12', 'a sale that names no variant of an i
 
 select ok(regexp_replace(pg_get_functiondef('public.apply_stock_on_confirm()'::regprocedure), '\s+', ' ', 'g') like '%from public.services s where s.id = v_service_id for update%',
   'the legacy bridge locks the item first, as every stock command does: no deadlock with a return');
+
+select ok(regexp_replace(pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure), '\s+', ' ', 'g') like '%stock = case when public.stock_initialized(p_workspace_id) then stock else%',
+  'a configuration file''s counts are ignored once the ledger exists: the import does not write them');
 
 -- WHO MAY, AND WHERE.
 select is(pg_temp.cmd(2, 'stock_transfer_v1', 970, pg_temp.arr(pg_temp.line(303, '1', 'SHELF-B', 'MAIN'))), 'ERR DKN01 ', 'a member who only sees the stock moves nothing');

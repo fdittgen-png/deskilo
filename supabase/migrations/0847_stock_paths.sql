@@ -1030,4 +1030,27 @@ begin
 end
 $transit$;
 
+
+-- ── a configuration file's counts are ignored once the ledger exists ──
+-- The import wrote services.stock from the file; the count is now the ledger's mirror
+-- (DKG13), so the file's count would refuse the whole import. The ledger is the truth.
+do $import$
+declare
+  v_def text;
+  v_next text;
+begin
+  v_def := pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure);
+  v_next := pg_temp.anchor_replace(v_def,
+    $o$(v_row->>'stock')::int, public.vat_rate_id_by_label(p_workspace_id, v_row->>'vat_rate'));$o$,
+    $n$case when public.stock_initialized(p_workspace_id) then null else (v_row->>'stock')::int end,
+                public.vat_rate_id_by_label(p_workspace_id, v_row->>'vat_rate'));$n$);
+  if v_next is null then raise exception '0847: the anchor of import_workspace_configuration (insert) was not found' using errcode = 'P0001'; end if;
+  v_next := pg_temp.anchor_replace(v_next,
+    $o$stock = (v_row->>'stock')::int,$o$,
+    $n$stock = case when public.stock_initialized(p_workspace_id) then stock else (v_row->>'stock')::int end,$n$);
+  if v_next is null then raise exception '0847: the anchor of import_workspace_configuration (update) was not found' using errcode = 'P0001'; end if;
+  execute v_next;
+end
+$import$;
+
 select public.set_deskilo_schema_version(847);
