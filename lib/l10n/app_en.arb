@@ -16115,6 +16115,14 @@
   "@featureStockManagementTitle": {
     "description": "the feature's name (#3824)"
   },
+  "featureStockReceivingDesc": "Put the goods of a purchase-order delivery away into places and new lots, once, with their origin kept. Off: a delivery is recorded as before and no stock moves.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Receiving into stock",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "The membership fee is invoiced before the month it pays for, on a date you choose. Off: the fee stays on the whole-month invoice.",
   "@featureSubscriptionInvoicesDesc": {
     "description": "Shown as a text in feature copy (workspace)."

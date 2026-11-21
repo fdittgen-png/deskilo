@@ -7597,6 +7597,14 @@
   },
   "featureStockManagementDesc": "Seguir las mercancías: dónde están, en qué unidad, de qué lote, y cada movimiento entre dos lugares. Desactivado: un artículo del catálogo conserva su simple recuento en estantería.",
   "featureStockManagementTitle": "Gestión de existencias",
+  "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Recepción en existencias",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.",
   "featureSubscriptionInvoicesTitle": "Facturas de suscripción",
   "featureSupplyClassificationDesc": "Cada servicio del catálogo indica si está vinculado a los locales (por defecto: tributa donde se encuentra el inmueble, para cualquier cliente) o si es un servicio general, como la gestión del correo o una oficina virtual, por el que una empresa de otro Estado de la UE aplica la inversión del sujeto pasivo. Desactivado: la elección desaparece, salvo en un negocio que no reserva espacios, cuyos servicios nuevos empiezan como servicios generales.",

@@ -7597,6 +7597,14 @@
   },
   "featureStockManagementDesc": "Seguire la merce: dove si trova, in quale unità, da quale lotto, e ogni movimento tra due luoghi. Disattivato: un articolo del catalogo mantiene il suo semplice conteggio a scaffale.",
   "featureStockManagementTitle": "Gestione delle scorte",
+  "featureStockReceivingDesc": "Collocare le merci di una consegna di ordine a fornitore in ubicazioni e nuovi lotti, una sola volta, conservandone l’origine. Disattivato: una consegna è registrata come prima e nessuna giacenza si muove.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Ricezione a magazzino",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
   "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare, tranne in un'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici.",

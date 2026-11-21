@@ -439,7 +439,13 @@ enum WorkspaceFeature {
   /// #4169 — lots and expiry on goods: an item tracked by lot or by expiry
   /// date, with a shelf life. Asked for, under the goods ledger. Off: items
   /// are not tracked by lot and nothing else changes.
-  stockLots;
+  stockLots,
+
+  /// #4171 — receiving a purchase-order delivery into stock: put away once,
+  /// into explicit places and new lots, with its origin kept. Asked for,
+  /// under the goods ledger. Off: a delivery is recorded as before and no
+  /// stock moves. Turning it on waits for #4170 (G4-A).
+  stockReceiving;
 
   /// The key of this feature inside `workspaces.feature_flags`.
   String get dbKey => name;

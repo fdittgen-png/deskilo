@@ -19,26 +19,27 @@ class PurchaseOrderReceipt {
     required this.orderId,
     required this.receivedOn,
     required this.lines,
+    this.lineIds = const {},
     this.note = '',
   });
 
   factory PurchaseOrderReceipt.fromJson(Object? raw) {
     final r = JsonReader.of(raw, context: 'purchase order receipt');
+    final rows = r.objects(
+      'purchase_order_receipt_lines',
+      (l) => (
+        id: l.stringOr('id'),
+        no: l.objectOrNull('purchase_order_lines')?.integer('line_no') ?? 0,
+        qty: l.doubleOrNull('quantity') ?? 0,
+      ),
+    );
     return PurchaseOrderReceipt(
       id: r.string('id'),
       orderId: r.string('order_id'),
       receivedOn: r.dateTime('received_on'),
       note: r.stringOr('note'),
-      lines: {
-        for (final l in r.objects(
-          'purchase_order_receipt_lines',
-          (l) => (
-            no: l.objectOrNull('purchase_order_lines')?.integer('line_no') ?? 0,
-            qty: l.doubleOrNull('quantity') ?? 0,
-          ),
-        ))
-          l.no: l.qty,
-      },
+      lines: {for (final l in rows) l.no: l.qty},
+      lineIds: {for (final l in rows) l.no: l.id},
     );
   }
 
@@ -49,6 +50,10 @@ class PurchaseOrderReceipt {
 
   /// How much of each order line (by its number) arrived.
   final Map<int, double> lines;
+
+  /// The stable id of each receipt line (by the order line's number): what a
+  /// put-away names (#4171).
+  final Map<int, String> lineIds;
 }
 
 /// What a delivery cannot be.

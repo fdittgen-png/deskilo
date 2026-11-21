@@ -240,6 +240,7 @@ const Map<WorkspaceFeature, FeatureAssessment> featureAssessments = {
   WorkspaceFeature.quickSearch: _ownerBeta,
   WorkspaceFeature.stockManagement: _ownerBeta,
   WorkspaceFeature.stockLots: _ownerBeta,
+  WorkspaceFeature.stockReceiving: _ownerBeta,
   WorkspaceFeature.organisation: _ownerBeta,
   WorkspaceFeature.standaloneInvoicing: _ownerBeta,
   WorkspaceFeature.billingCustomers: _ownerBeta,

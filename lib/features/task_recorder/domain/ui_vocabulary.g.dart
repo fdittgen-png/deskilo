@@ -9212,6 +9212,8 @@ const Set<String> uiLabelKeys = {
   'featureStockLotsTitle',
   'featureStockManagementDesc',
   'featureStockManagementTitle',
+  'featureStockReceivingDesc',
+  'featureStockReceivingTitle',
   'featureSubscriptionInvoicesDesc',
   'featureSubscriptionInvoicesTitle',
   'featureSupplyClassificationDesc',

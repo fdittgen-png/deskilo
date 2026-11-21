@@ -7597,6 +7597,14 @@
   },
   "featureStockManagementDesc": "Waren verfolgen: wo sie sind, in welcher Einheit, aus welcher Charge, und jede Bewegung zwischen zwei Orten. Aus: ein Katalogartikel behält seinen einfachen Regalbestand.",
   "featureStockManagementTitle": "Lagerverwaltung",
+  "featureStockReceivingDesc": "Die Waren einer Lieferung zu einer Lieferantenbestellung einmalig in Lagerorte und neue Chargen einlagern, mit erhaltener Herkunft. Aus: eine Lieferung wird wie bisher erfasst und kein Bestand bewegt sich.",
+  "@featureStockReceivingDesc": {
+    "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockReceivingTitle": "Wareneingang ins Lager",
+  "@featureStockReceivingTitle": {
+    "description": "#4171 the name of the receiving into stock feature"
+  },
   "featureSubscriptionInvoicesDesc": "Der Mitgliedsbeitrag wird vor dem Monat berechnet, den er bezahlt, an einem Datum Ihrer Wahl. Aus: Der Beitrag bleibt auf der Monatsrechnung.",
   "featureSubscriptionInvoicesTitle": "Abo-Rechnungen",
   "featureSupplyClassificationDesc": "Jede Leistung des Katalogs gibt an, ob sie mit den Räumlichkeiten verbunden ist (Standard: steuerbar dort, wo das Gebäude liegt, für jeden Kunden) oder eine allgemeine Dienstleistung ist, etwa Postbearbeitung oder ein virtuelles Büro, für die ein Unternehmen in einem anderen EU-Staat die Steuer selbst schuldet. Aus: Die Auswahl entfällt, außer in einem Betrieb, der keine Plätze bucht; dort beginnen neue Leistungen als allgemeine Dienstleistungen.",

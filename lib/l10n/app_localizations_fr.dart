@@ -12410,6 +12410,13 @@ class AppLocalizationsFr extends AppLocalizations {
   String get featureStockManagementTitle => 'Gestion des stocks';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Ranger les marchandises d’une livraison de commande fournisseur dans des emplacements et de nouveaux lots, une seule fois, avec leur origine conservée. Désactivé : une livraison est enregistrée comme avant et aucun stock ne bouge.';
+
+  @override
+  String get featureStockReceivingTitle => 'Réception en stock';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cotisation est facturée avant le mois qu\'elle paie, à une date que vous choisissez. Désactivé : la cotisation reste sur la facture du mois.';
 

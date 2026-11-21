@@ -56,6 +56,25 @@ This page states the READ side and the CONFIGURATION side (the items' stock meta
 | Does a name bind a supplier's article to an item? | never: the mapping is an explicit save with the supplier, item, variant and unit of the same business, one mapping per supplier article, and it survives the supplier's display name |
 | Does a stock right edit a service's name or price? | no: the item is the service, and its name and prices stay under manageServices |
 
+## Receiving a delivery into stock
+
+A delivery of a purchase order (`record_purchase_order_receipt_v1`, 0684) is recorded independently of stock and stays valid with the feature off. With `stockReceiving` on (under the goods ledger, off by default; turning it on waits for #4170 G4-A), its lines are put away once: `put_away_receipt_v1` and `record_receipt_and_put_away_v1` (the delivery and its put-away in one transaction, 0684's function called unchanged under a request id derived from the command's).
+
+| question | answer |
+|---|---|
+| Who may, and when? | a member who holds managePurchases AND manageStock, with purchases, purchaseOrders, stockManagement and stockReceiving all on; a delegated assistant session and an unauthenticated caller are refused (DKN01); the feature off answers DKG01 |
+| What is frozen when goods are put away? | `stock_receipt_allocations`, insert-only: the receipt line, the item, the variant, the entered unit and quantity (in the order line's unit), the exact factor, the inventory quantity (entered times that same stored factor, rounded once), the lot, the place, the movement, and a snapshot of the order reference, the supplier's name and the line text. A later edit of a unit, a mapping, a barcode, a price or a catalogue name cannot reinterpret it |
+| Why are the supplier's name and the line text frozen? | deliberate: they are the business's purchase records, kept like invoices; they leave only with the business itself (its own deletion), never by a correction. A correction is appended |
+| Can more be put away than arrived? | never: the receipt lines are locked, in one order, before the already-put-away quantity is counted, so two request ids cannot together exceed the received quantity (`over_allocated`) |
+| Which lots? | each put-away group makes a NEW lot; a client never names an existing lot of a supplier delivery; two deliveries make two lots even with the same external label. A tracked item needs its lot code, an item tracked by expiry its date (a past date is kept as entered: it is a captured date, not a certification) |
+| What is the cost of a lot? | never guessed: `cost_state` known (with its source, `entered` or the explicit `order_price`) or unknown. A lot with no cost assertion is unknown, a known zero stays zero. The movement of an unknown lot has no unit cost, the value on hand leaves such rows out of its total and counts them (`rows_without_cost`), and a trace shows the lot's total cost as null, never 0. The order price converts by the rate between the currencies' major units and each currency's own minor digits (yen has none); a rate for an order in the business's own currency, or one at or below zero, is refused |
+| What if a request names a line twice? | a receipt line id and a line number that disagree are refused (`line_conflict`); the lines are resolved once and the locked id is the one used; a malformed id, quantity or rate is a refusal of its field, never a raw cast error |
+| What cannot be edited or deleted? | a receipt, its lines, an order that received goods and an allocation: history is appended, never edited (DKG08), until the business itself is deleted |
+| Who reads the allocations? | managePurchases or viewFinances, like the receipts they come from (they name the order and the supplier) |
+| What is not yet possible? | changing an unknown cost to a known one later is a follow-up (nothing rewrites a lot's cost today) |
+
+Evidence: `supabase/tests/database/490_stock_receiving.sql` (receipt with receiving off, two cartons of twelve, frozen factor, a retried request answers the same ids, 12 then 13 refused then 12, mixed stock/service/free-text lines, known/unknown/zero cost, the order price in dollars and yen, lot and expiry metadata, red and blue, rollback of the combined operation, permissions, immutability, an edited unit not reinterpreting an allocation, the delete of the business), `scripts/stock_receipt_race.sh` (two sessions putting away 18 of 24), `test/features/stock/supabase_stock_receiving_commands_test.dart`.
+
 ## States and transitions
 
 Declared states: `start`, `open`, `complete`.

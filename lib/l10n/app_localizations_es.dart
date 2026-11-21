@@ -12346,6 +12346,13 @@ class AppLocalizationsEs extends AppLocalizations {
   String get featureStockManagementTitle => 'Gestión de existencias';
 
   @override
+  String get featureStockReceivingDesc =>
+      'Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.';
+
+  @override
+  String get featureStockReceivingTitle => 'Recepción en existencias';
+
+  @override
   String get featureSubscriptionInvoicesDesc =>
       'La cuota se factura antes del mes que paga, en la fecha que elija. Desactivado: la cuota sigue en la factura del mes.';
 
