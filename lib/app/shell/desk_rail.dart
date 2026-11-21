@@ -5,6 +5,7 @@
 // opens its entries as a flyout. The same destinations and groups as the
 // drawer and the sidebar (shell_nav_groups.dart), never a second table.
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart' show ScrollCacheExtent;
 
 import '../../core/l10n/context_l10n.dart';
 import '../../core/theme/app_radius.dart';
@@ -17,6 +18,9 @@ import 'shell_drawer_entries.dart';
 import 'shell_nav_groups.dart';
 
 /// The rail. [badgeOf] is the count an entry carries (0 for none).
+/// A cache extent far beyond any rail: every item of it is built.
+const double _everyItem = 100000;
+
 class DeskRail extends StatelessWidget {
   const DeskRail({
     required this.destinations,
@@ -81,32 +85,30 @@ class DeskRail extends StatelessWidget {
       key: const ValueKey('desk-rail'),
       color: theme.colorScheme.surfaceContainerLow,
       child: SafeArea(
-        // Not a ListView: a lazy list drops its first items once Tab has walked
-        // past its cache, and a focus stop that was disposed can no longer be
-        // the one Tab comes back to (#4279). Every item stays built.
-        child: SingleChildScrollView(
+        // Every item stays built: a lazy list drops its first items once Tab has
+        // walked past its cache, and a focus stop that was disposed can no longer
+        // be the one Tab comes back to (#4279).
+        child: ListView(
+          scrollCacheExtent: const ScrollCacheExtent.pixels(_everyItem),
           padding: AppSpacing.xsAll,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              _RailItem(
-                key: const ValueKey('rail-back-to-me'),
-                icon: const PersonalAvatar(),
-                label: context.l10n.spaceBackToMe,
-                onTap: onBackToMe,
-              ),
-              if (houses.isNotEmpty && current != null)
-                _houseItem(context, current!, selected: true),
-              for (final house in houses) _houseItem(context, house),
-              const Divider(),
-              for (final e in destinations) item(e),
-              const Divider(),
-              for (final g in groups)
-                if (!g.isEmpty) _RailGroup(group: g, path: path),
-              const Divider(),
-              for (final e in account) item(e),
-            ],
-          ),
+          children: [
+            _RailItem(
+              key: const ValueKey('rail-back-to-me'),
+              icon: const PersonalAvatar(),
+              label: context.l10n.spaceBackToMe,
+              onTap: onBackToMe,
+            ),
+            if (houses.isNotEmpty && current != null)
+              _houseItem(context, current!, selected: true),
+            for (final house in houses) _houseItem(context, house),
+            const Divider(),
+            for (final e in destinations) item(e),
+            const Divider(),
+            for (final g in groups)
+              if (!g.isEmpty) _RailGroup(group: g, path: path),
+            const Divider(),
+            for (final e in account) item(e),
+          ],
         ),
       ),
     );
@@ -282,14 +284,17 @@ class _RailGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) => MenuAnchor(
     alignmentOffset: const Offset(AppSpacing.xs, 0),
-    style: const MenuStyle(alignment: AlignmentDirectional.topEnd),
+    style: const MenuStyle(
+      alignment: AlignmentDirectional.topEnd,
+    ),
     menuChildren: _children(group),
     builder: (context, controller, _) => _RailItem(
       key: ValueKey('rail-group-${group.id}'),
       icon: Icon(group.icon),
       label: group.title,
       selected: _active(group),
-      onTap: () => controller.isOpen ? controller.close() : controller.open(),
+      onTap: () =>
+          controller.isOpen ? controller.close() : controller.open(),
     ),
   );
 }
