@@ -109,6 +109,13 @@ enum KnownRefusal {
   /// without naming one.
   stockVariant,
 
+  /// #4170 (0847) — DKG13: a count written from outside the ledger once the
+  /// ledger exists (it keeps the stock).
+  stockLedgerKept,
+
+  /// #4170 (0847) — DKG15: what is left in the main store is past its date.
+  stockOnlyExpired,
+
   /// #4008 (0782) — DKM01: a member who left comes back as a new member,
   /// never by changing their old row (for instance to paused).
   memberReturnsAsNew,
@@ -173,6 +180,8 @@ const Map<String, KnownRefusal> _codedRefusals = {
   'DKG10': KnownRefusal.stockStale,
   'DKG11': KnownRefusal.stockConfig,
   'DKG12': KnownRefusal.stockVariant,
+  'DKG13': KnownRefusal.stockLedgerKept,
+  'DKG15': KnownRefusal.stockOnlyExpired,
   // #4008 — a member who left (0782).
   'DKM01': KnownRefusal.memberReturnsAsNew,
 };
@@ -265,6 +274,8 @@ String? _stockRefusalText(AppLocalizations l10n, KnownRefusal refusal) =>
       KnownRefusal.stockStale => l10n.refusalStockStale,
       KnownRefusal.stockConfig => l10n.refusalStockConfig,
       KnownRefusal.stockVariant => l10n.refusalStockVariant,
+      KnownRefusal.stockLedgerKept => l10n.refusalStockLedgerKept,
+      KnownRefusal.stockOnlyExpired => l10n.refusalStockOnlyExpired,
       KnownRefusal.memberReturnsAsNew => l10n.refusalMemberReturnsAsNew,
       _ => null,
     };

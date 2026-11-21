@@ -45,11 +45,11 @@ returns jsonb language sql stable as $f$
          || p_extra
 $f$;
 
-create or replace function pg_temp.move(p_request int, p_lines jsonb, p_at timestamptz default null)
+create or replace function pg_temp.move(p_request int, p_lines jsonb, p_at timestamptz default null, p_reason text default 'receipt')
 returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(1), format(
-    'select public.stock_move_v1(%L, %L, %L::jsonb, ''receipt'', %L)::text',
-    pg_temp.u(101), pg_temp.u(p_request), p_lines, p_at))
+    'select public.stock_move_v1(%L, %L, %L::jsonb, %L, %L)::text',
+    pg_temp.u(101), pg_temp.u(p_request), p_lines, p_reason, p_at))
 $f$;
 
 create or replace function pg_temp.page(p_fn text, p_user int, p_args text, p_delegated boolean default false)
@@ -83,7 +83,7 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den)
 values (pg_temp.u(101), pg_temp.u(303), 'third', 1, 3);
 
-update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 insert into public.stock_locations (workspace_id, kind, code, parent_id)
 values (pg_temp.u(101), 'shelf', 'SHELF-A', pg_temp.loc('MAIN'));
 
@@ -96,7 +96,7 @@ select pg_temp.move(505, jsonb_build_array(pg_temp.line(303, 1, 'SUPPLIER', 'MAI
 select pg_temp.move(506, jsonb_build_array(
          pg_temp.line(304, 4, 'SUPPLIER', 'MAIN', null, '{"new_lot": {"code": "A", "total_cost_minor": 400}}'),
          pg_temp.line(304, 6, 'SUPPLIER', 'MAIN', null, '{"new_lot": {"code": "B", "total_cost_minor": 900}}')), '2026-03-04 10:00+01');
-select pg_temp.move(507, jsonb_build_array(pg_temp.line(301, 2, 'MAIN', 'SHELF-A')), '2026-03-05 10:00+01');
+select pg_temp.move(507, jsonb_build_array(pg_temp.line(301, 2, 'MAIN', 'SHELF-A')), '2026-03-05 10:00+01', 'transfer');
 
 -- Exact quantities, as text.
 select is(pg_temp.page('stock_on_hand_page_v1', 1, format(', %L', pg_temp.u(303))) :: jsonb #>> '{rows,0,quantity}',

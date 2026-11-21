@@ -7613,6 +7613,14 @@
   "@featureStockReceivingTitle": {
     "description": "#4171 the name of the receiving into stock feature"
   },
+  "featureStockTakeOutDesc": "Prelevare merci dal magazzino per uso o come perdita, con motivo e lotto. Disattivato: non sono offerti consumo né perdita; i trasferimenti e la ricezione restano invariati.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Uscite di magazzino",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
   "featureSubscriptionInvoicesDesc": "La quota è fatturata prima del mese che paga, in una data scelta da Lei. Disattivato: la quota resta sulla fattura del mese.",
   "featureSubscriptionInvoicesTitle": "Fatture di abbonamento",
   "featureSupplyClassificationDesc": "Ogni servizio del catalogo indica se è connesso ai locali (predefinito: tassato dove si trova l'immobile, per qualsiasi cliente) o se è un servizio generico, come la gestione della posta o un ufficio virtuale, per cui un'impresa di un altro Stato UE applica l'inversione contabile. Disattivato: la scelta scompare, tranne in un'attività che non prenota spazi, i cui nuovi servizi partono come servizi generici.",
@@ -16244,11 +16252,19 @@
   "refusalStockConfig": "Questa configurazione di magazzino non è valida: il campo indicato ne spiega il motivo.",
   "refusalStockHistory": "Questo articolo ha movimenti di magazzino, che vengono conservati: non può essere eliminato, e la sua unità di magazzino e la sua tracciabilità restano invariate. Disattivalo o crea un nuovo articolo.",
   "refusalStockItem": "Non è un articolo che questa attività tiene a magazzino. Non è stato spostato nulla.",
+  "refusalStockLedgerKept": "La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
   "refusalStockLocation": "Questo luogo non appartiene a questa attività, non è più in uso o è sia l'origine sia la destinazione del movimento. Non è stato spostato nulla.",
   "refusalStockLot": "Questo lotto appartiene a un altro articolo, oppure l'articolo è gestito a lotti e non ne è stato indicato nessuno. Non è stato spostato nulla.",
   "refusalStockMove": "Questo movimento non può essere registrato così: una quantità sopra zero, un motivo noto e da una a duecento righe, oppure la stessa richiesta inviata di nuovo invariata. Non è stato spostato nulla.",
   "refusalStockNotEnough": "In questo luogo non ce n'è così tanto. Non è stato spostato nulla.",
   "refusalStockOff": "La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.",
+  "refusalStockOnlyExpired": "Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.",
   "refusalStockStale": "Qualcun altro lo ha modificato da quando lo ha aperto. Lo rilegga e rifaccia la sua modifica.",
   "refusalStockUnit": "Questo articolo non ha questa unità. Aggiungi l'unità all'articolo o inserisci la quantità in un'unità che ha.",

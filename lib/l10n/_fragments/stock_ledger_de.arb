@@ -21,5 +21,13 @@
   "refusalStockVariant": "Dieser Artikel hat Varianten: Geben Sie an, welche (Farbe, Größe) bewegt, verkauft oder gezählt wird. Nichts wurde geändert.",
   "@refusalStockVariant": {
     "description": "#4169 (0837) DKG12: an item with variants moved, sold or counted without naming one."
+  },
+  "refusalStockLedgerKept": "Der Bestand dieses Betriebs wird vom Lagerbuch geführt: nutzen Sie einen Lagervorgang (Umlagerung, Entnahme, Wareneingang), nicht den Zähler. Nichts wurde geändert.",
+  "@refusalStockLedgerKept": {
+    "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
+  "refusalStockOnlyExpired": "Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   }
 }

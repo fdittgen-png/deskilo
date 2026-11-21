@@ -297,5 +297,13 @@
   "featureStockReceivingDesc": "Colocar las mercancías de una entrega de pedido a proveedor en ubicaciones y nuevos lotes, una sola vez, conservando su origen. Desactivado: una entrega se registra como antes y no se mueven existencias.",
   "@featureStockReceivingDesc": {
     "description": "#4171 what the receiving into stock feature does, and what off means"
+  },
+  "featureStockTakeOutTitle": "Salidas de existencias",
+  "@featureStockTakeOutTitle": {
+    "description": "#4170 the name of the taking goods out feature"
+  },
+  "featureStockTakeOutDesc": "Sacar mercancías de las existencias para uso o como pérdida, con el motivo y el lote. Desactivado: no se ofrece consumo ni pérdida; las transferencias y la recepción no cambian.",
+  "@featureStockTakeOutDesc": {
+    "description": "#4170 what the taking goods out feature does, and what off means"
   }
 }
