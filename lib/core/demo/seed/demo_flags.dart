@@ -28,6 +28,12 @@ import '../../../features/workspace/domain/workspace_feature.dart';
 /// The features the demo's main space keeps off, and why.
 @visibleForTesting
 const Map<WorkspaceFeature, String> demoFeaturesLeftOff = {
+  // #4171 — receiving into stock has its server commands (checkpoint A) and
+  // no screen yet; the order pane's put-away and the Demo's partial-delivery
+  // flow arrive with checkpoint B, which switches it on here.
+  WorkspaceFeature.stockReceiving:
+      'receiving into stock is a server foundation without a screen yet; the '
+      'order pane and the Demo partial delivery arrive with checkpoint B',
   WorkspaceFeature.mtdSubmission:
       'UK only: off in the head, on in the London house (ws-3), where its '
       'scenario is performed (#4009); left off in the other houses',

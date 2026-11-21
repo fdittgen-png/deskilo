@@ -441,6 +441,8 @@ const List<ExportSource> workspaceExportSources = [
   ExportSource.everyColumn('item_variants'),
   ExportSource.everyColumn('item_variant_values'),
   ExportSource.everyColumn('supplier_item_mappings'),
+  // #4171 — what was put away from a delivery.
+  ExportSource.everyColumn('stock_receipt_allocations'),
   ExportSource.everyColumn('stock_locations'),
   ExportSource.everyColumn('stock_lots'),
   ExportSource.everyColumn('stock_movements'),

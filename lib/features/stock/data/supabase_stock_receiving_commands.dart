@@ -2,6 +2,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_receiving.dart';
 import 'stock_refusals.dart';
 
@@ -43,23 +44,19 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
 
   @override
   Future<PutAwayResult> recordAndPutAway(
-    String workspaceId, {
-    required String orderId,
-    required int orderRevision,
-    required String receivedOn,
-    required List<DeliveredLine> lines,
-    required List<PutAwayAllocation> allocations,
-    required String requestId,
-    String note = '',
-  }) => _call('record_receipt_and_put_away_v1', {
+    String workspaceId,
+    DeliveryDraft delivery,
+    List<PutAwayAllocation> allocations,
+    String requestId,
+  ) => _call('record_receipt_and_put_away_v1', {
     'p_workspace_id': workspaceId,
-    'p_order_id': orderId,
-    'p_revision': orderRevision,
-    'p_received_on': receivedOn,
+    'p_order_id': delivery.orderId,
+    'p_revision': delivery.orderRevision,
+    'p_received_on': delivery.receivedOn,
     'p_lines': [
-      for (final l in lines) {'line_no': l.lineNo, 'quantity': l.quantity},
+      for (final l in delivery.lines) {'line_no': l.lineNo, 'quantity': l.quantity},
     ],
-    'p_note': note,
+    'p_note': delivery.note,
     'p_request_id': requestId,
     'p_allocations': [for (final a in allocations) a.toJson()],
   });
@@ -74,6 +71,7 @@ class SupabaseStockReceivingCommands implements StockReceivingCommands {
         allocations: [for (final a in r.list('allocations')) ReceiptAllocation.fromJson(a)],
       );
     } on PostgrestException catch (e, stack) {
+      TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
       throwStockFailure(e, stack);
     }
   }

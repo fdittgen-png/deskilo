@@ -3,6 +3,7 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../../../core/trace/trace_logger.dart';
 import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_variants.dart';
@@ -262,6 +263,7 @@ class SupabaseStockConfigCommands implements StockConfigCommands {
         replayed: r.boolOr('replayed', fallback: false),
       );
     } on PostgrestException catch (e, stack) {
+      TraceLogger.instance.warn('stock', 'a stock command was refused: ${e.code}', stackTrace: stack);
       throwStockFailure(e, stack);
     }
   }

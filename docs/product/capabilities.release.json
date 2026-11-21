@@ -2284,6 +2284,12 @@
       "capabilities": []
     },
     {
+      "key": "stockReceiving",
+      "maturity": "beta",
+      "lifecycle": "active",
+      "capabilities": []
+    },
+    {
       "key": "subscriptionInvoices",
       "maturity": "beta",
       "lifecycle": "active",

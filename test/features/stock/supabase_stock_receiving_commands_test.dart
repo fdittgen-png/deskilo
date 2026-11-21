@@ -88,13 +88,15 @@ void main() {
     final h = _with(200, {'receipt_id': _receipt, 'replayed': false, 'allocations': <Object?>[]});
     await h.commands.recordAndPutAway(
       _ws,
-      orderId: 'o-1',
-      orderRevision: 3,
-      receivedOn: '2026-11-21',
-      lines: const [(lineNo: 1, quantity: '2'), (lineNo: 4, quantity: '1')],
-      allocations: const [PutAwayAllocation(lineNo: 1, quantity: '2', locationId: 'p-1', cost: PutAwayCost.orderPrice())],
-      requestId: 'req-2',
-      note: 'dock',
+      const DeliveryDraft(
+        orderId: 'o-1',
+        orderRevision: 3,
+        receivedOn: '2026-11-21',
+        lines: [(lineNo: 1, quantity: '2'), (lineNo: 4, quantity: '1')],
+        note: 'dock',
+      ),
+      const [PutAwayAllocation(lineNo: 1, quantity: '2', locationId: 'p-1', cost: PutAwayCost.orderPrice())],
+      'req-2',
     );
     final body = jsonDecode(h.sent.single.body) as Map<String, Object?>;
     expect(h.sent.single.url.path, endsWith('/rpc/record_receipt_and_put_away_v1'));

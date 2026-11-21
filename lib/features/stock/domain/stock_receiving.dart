@@ -170,6 +170,25 @@ typedef PutAwayResult = ({String receiptId, bool replayed, List<ReceiptAllocatio
 /// One line of a delivery being recorded: the order line and how much arrived.
 typedef DeliveredLine = ({int lineNo, String quantity});
 
+/// A delivery to record: the order at the revision read, the day, the lines.
+class DeliveryDraft {
+  const DeliveryDraft({
+    required this.orderId,
+    required this.orderRevision,
+    required this.receivedOn,
+    required this.lines,
+    this.note = '',
+  });
+
+  final String orderId;
+  final int orderRevision;
+
+  /// `YYYY-MM-DD`.
+  final String receivedOn;
+  final List<DeliveredLine> lines;
+  final String note;
+}
+
 abstract interface class StockReceivingCommands {
   /// What was put away of one delivery, oldest first.
   Future<List<ReceiptAllocation>> allocations(String workspaceId, String receiptId);
@@ -184,13 +203,9 @@ abstract interface class StockReceivingCommands {
 
   /// Records a delivery and puts it away in one transaction: both, or neither.
   Future<PutAwayResult> recordAndPutAway(
-    String workspaceId, {
-    required String orderId,
-    required int orderRevision,
-    required String receivedOn,
-    required List<DeliveredLine> lines,
-    required List<PutAwayAllocation> allocations,
-    required String requestId,
-    String note = '',
-  });
+    String workspaceId,
+    DeliveryDraft delivery,
+    List<PutAwayAllocation> allocations,
+    String requestId,
+  );
 }
