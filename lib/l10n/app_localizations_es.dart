@@ -28511,6 +28511,10 @@ class AppLocalizationsEs extends AppLocalizations {
       'La gestión de existencias está desactivada en este negocio. No se ha movido nada.';
 
   @override
+  String get refusalStockOnlyExpired =>
+      'Lo que queda en el almacén principal ha caducado y nunca se vende. Se rechazó la confirmación; no se retiró nada.';
+
+  @override
   String get refusalStockPage =>
       'Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.';
 

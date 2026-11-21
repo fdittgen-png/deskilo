@@ -28594,6 +28594,10 @@ class AppLocalizationsDe extends AppLocalizations {
       'Die Lagerverwaltung ist in diesem Unternehmen ausgeschaltet. Nichts wurde bewegt.';
 
   @override
+  String get refusalStockOnlyExpired =>
+      'Was im Hauptlager noch liegt, ist abgelaufen und wird nie verkauft. Die Bestätigung wurde abgelehnt; nichts wurde entnommen.';
+
+  @override
   String get refusalStockPage =>
       'Diese Seitenanfrage ist ungültig: Fordern Sie 1 bis 200 Zeilen an und setzen Sie nur an der Position fort, die eine Seite geliefert hat.';
 

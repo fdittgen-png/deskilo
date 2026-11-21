@@ -16253,6 +16253,10 @@
   "refusalStockMove": "Ce mouvement ne peut pas être enregistré tel quel : une quantité au-dessus de zéro, un motif connu et une à deux cents lignes, ou la même demande renvoyée sans changement. Rien n'a été déplacé.",
   "refusalStockNotEnough": "Il n'y en a pas autant à cet endroit. Rien n'a été déplacé.",
   "refusalStockOff": "La gestion des stocks est désactivée dans cette entreprise. Rien n'a été déplacé.",
+  "refusalStockOnlyExpired": "Ce qu’il reste au magasin principal a dépassé sa date et n’est jamais vendu. La confirmation a été refusée ; rien n’a été prélevé.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.",
   "refusalStockStale": "Quelqu’un d’autre l’a modifié depuis que vous l’avez ouvert. Relisez-le, puis refaites votre modification.",
   "refusalStockUnit": "Cet article n'a pas cette unité. Ajoutez l'unité à l'article, ou saisissez la quantité dans une unité qu'il connaît.",

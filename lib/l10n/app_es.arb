@@ -16253,6 +16253,10 @@
   "refusalStockMove": "Este movimiento no puede registrarse así: una cantidad mayor que cero, un motivo conocido y de una a doscientas líneas, o la misma solicitud reenviada sin cambios. No se ha movido nada.",
   "refusalStockNotEnough": "No hay tanto en este lugar. No se ha movido nada.",
   "refusalStockOff": "La gestión de existencias está desactivada en este negocio. No se ha movido nada.",
+  "refusalStockOnlyExpired": "Lo que queda en el almacén principal ha caducado y nunca se vende. Se rechazó la confirmación; no se retiró nada.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
+  },
   "refusalStockPage": "Esta petición de página no es válida: pida de 1 a 200 filas y continúe solo desde la posición que dio una página.",
   "refusalStockStale": "Otra persona lo ha modificado desde que lo abrió. Vuelva a leerlo y haga de nuevo su cambio.",
   "refusalStockUnit": "Este artículo no tiene esa unidad. Añada la unidad al artículo o indique la cantidad en una unidad que tenga.",

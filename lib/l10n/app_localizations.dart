@@ -45417,6 +45417,12 @@ abstract class AppLocalizations {
   /// **'Stock management is off in this business. Nothing was moved.'**
   String get refusalStockOff;
 
+  /// #4170 (0847) DKG15: only expired stock is left for a sale.
+  ///
+  /// In en, this message translates to:
+  /// **'What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.'**
+  String get refusalStockOnlyExpired;
+
   /// #4161 (0833) DKG09: a stock page request that is not valid (size outside 1..200, or a cursor that is not one).
   ///
   /// In en, this message translates to:

@@ -28307,6 +28307,10 @@ class AppLocalizationsEn extends AppLocalizations {
       'Stock management is off in this business. Nothing was moved.';
 
   @override
+  String get refusalStockOnlyExpired =>
+      'What is left in the main store is past its date and is never sold. The confirmation was refused; nothing was taken.';
+
+  @override
   String get refusalStockPage =>
       'This page request is not valid: ask for 1 to 200 rows, and continue only from the position a page gave.';
 

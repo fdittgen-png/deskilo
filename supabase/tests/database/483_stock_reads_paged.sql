@@ -83,7 +83,7 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
 insert into public.item_units (workspace_id, item_id, unit, factor_num, factor_den)
 values (pg_temp.u(101), pg_temp.u(303), 'third', 1, 3);
 
-update public.workspaces set feature_flags = '{"stockManagement": true}' where id = pg_temp.u(101);
+update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id = pg_temp.u(101);
 insert into public.stock_locations (workspace_id, kind, code, parent_id)
 values (pg_temp.u(101), 'shelf', 'SHELF-A', pg_temp.loc('MAIN'));
 

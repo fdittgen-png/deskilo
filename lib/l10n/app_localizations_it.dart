@@ -28545,6 +28545,10 @@ class AppLocalizationsIt extends AppLocalizations {
       'La gestione delle scorte è disattivata in questa attività. Non è stato spostato nulla.';
 
   @override
+  String get refusalStockOnlyExpired =>
+      'Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.';
+
+  @override
   String get refusalStockPage =>
       'Questa richiesta di pagina non è valida: richiedere da 1 a 200 righe e proseguire solo dalla posizione indicata da una pagina.';
 

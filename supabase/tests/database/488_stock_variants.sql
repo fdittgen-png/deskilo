@@ -120,7 +120,7 @@ insert into public.services (id, workspace_id, name, price_cents, active, stock,
 insert into public.suppliers (id, workspace_id, supplier_number, name) values
   (pg_temp.u(401), pg_temp.u(101), 'S-1', 'Textiles Nord'),
   (pg_temp.u(402), pg_temp.u(102), 'S-1', 'Other business supplier');
-update public.workspaces set feature_flags = '{"stockManagement": true}' where id in (pg_temp.u(101), pg_temp.u(102));
+update public.workspaces set feature_flags = '{"stockManagement": true, "stockTakeOut": true}' where id in (pg_temp.u(101), pg_temp.u(102));
 
 -- Dimensions and their values.
 select is((pg_temp.dim(1, null, null, 701, '{"name": "Colour", "values": [{"label": "Red"}, {"label": "Blue"}]}')::jsonb ->> 'revision'), '1',

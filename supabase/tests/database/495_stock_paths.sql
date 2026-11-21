@@ -8,7 +8,7 @@
 -- and never a lot; the count is a read-only mirror once the ledger exists and off/on again
 -- changes nothing; a lost response is read again by its request id. Rolled back.
 begin;
-select plan(47);
+select plan(66);
 
 create or replace function pg_temp.u(n int) returns uuid language sql immutable as $f$
   select format('00000000-0000-4000-8000-%s', lpad(n::text, 12, '0'))::uuid
@@ -59,6 +59,12 @@ $f$;
 create or replace function pg_temp.move(p_req int, p_item int, p_qty text, p_from text, p_to text, p_reason text, p_extra text default '') returns text language sql as $f$
   select pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, %L)::text', pg_temp.u(101), pg_temp.u(p_req),
     '[' || pg_temp.line(p_item, p_qty, p_from, p_to, p_extra) || ']', p_reason))
+$f$;
+create or replace function pg_temp.detail_of(p_sql text) returns text language plpgsql as $f$
+declare d text;
+begin execute p_sql; return 'no refusal';
+exception when others then get stacked diagnostics d = pg_exception_detail; return d;
+end
 $f$;
 grant execute on all functions in schema pg_temp to authenticated, anon;
 
@@ -123,6 +129,9 @@ select is(pg_temp.on_hand(301, 'SHELF-B')::text, '0.500000', 'a confirmed charge
 select pg_temp.run_as(pg_temp.u(1), format('select public.record_service_charge(%L, %L, %L, 1)::text', pg_temp.u(101), pg_temp.u(201), pg_temp.u(301)));
 select is(pg_temp.try(format($q$update public.events set status = 'confirmed' where workspace_id = %L and type = 'service_charge' and status <> 'confirmed'$q$, pg_temp.u(101))), 'DKG03',
   'less than the charge says is there: the confirmation is refused, nothing is clipped');
+select is((select pg_temp.detail_of(format($q$update public.events set status = 'confirmed' where workspace_id = %L and type = 'service_charge' and status <> 'confirmed'$q$, pg_temp.u(101)))),
+  format('{"held": "0.500000", "asked": "1", "scope": "main_store", "item_id": "%s"}', pg_temp.u(301)),
+  'and the refusal carries what the main store holds, for the screen that says it');
 select is(pg_temp.on_hand(301, 'SHELF-B')::text, '0.500000', 'and the 0.5 kg that were there are still there');
 
 -- THE NEGATIVE POLICY: one setting, an untracked item only, never a lot.
@@ -193,6 +202,92 @@ update public.workspaces set feature_flags = feature_flags || '{"stockManagement
 select is((select count(*) from public.stock_movements where workspace_id = pg_temp.u(101))::text || ' ' ||
           (select md5(string_agg(item_id::text || location_id::text || quantity::text, ',' order by item_id, location_id, lot_id, variant_id)) from public.stock_balances where workspace_id = pg_temp.u(101)),
   current_setting('t.movements') || ' ' || current_setting('t.balances'), 'switching it off and on again changes no balance and writes no opening movement');
+
+
+create or replace function pg_temp.save_place_t(p_place uuid, p_rev int, p_req int, p_body text) returns text language sql as $f$
+  select pg_temp.run_as(pg_temp.u(1), format('select public.save_stock_location_v1(%L, %L, %L, %L, %L::jsonb)::text', pg_temp.u(101), p_place, p_rev, pg_temp.u(p_req), p_body))
+$f$;
+
+-- READ-IN-REVIEW (the independent read of the first candidate): each point has its case.
+create or replace function pg_temp.charge(p_item int, p_qty int) returns text language plpgsql as $f$
+begin
+  perform pg_temp.run_as(pg_temp.u(1), format('select public.record_service_charge(%L, %L, %L, %s)::text', pg_temp.u(101), pg_temp.u(201), pg_temp.u(p_item), p_qty));
+  update public.events set status = 'confirmed' where workspace_id = pg_temp.u(101) and type = 'service_charge' and status <> 'confirmed';
+  return 'ok';
+exception when others then return sqlstate;
+end
+$f$;
+create or replace function pg_temp.lotq(p_code text) returns numeric language sql volatile as $f$
+  select coalesce(sum(b.quantity), 0) from public.stock_balances b join public.stock_lots l on l.id = b.lot_id
+   where l.lot_code = p_code and b.location_id = pg_temp.loc('MAIN')
+$f$;
+create or replace function pg_temp.ledger_state() returns text language sql volatile as $f$
+  select (select count(*) from public.stock_movements where workspace_id = pg_temp.u(101))::text || ' ' ||
+         (select md5(string_agg(item_id::text || location_id::text || quantity::text, ',' order by item_id, location_id, lot_id, variant_id)) from public.stock_balances where workspace_id = pg_temp.u(101))
+$f$;
+grant execute on all functions in schema pg_temp to authenticated, anon;
+
+-- 1. The bridge with the feature OFF after initialization: it confirms, and leaves the count and the history alone.
+select set_config('t.state', pg_temp.ledger_state(), false);
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": false}' where id = pg_temp.u(101);
+select is(pg_temp.charge(303, 1) || ' ' || (pg_temp.ledger_state() = current_setting('t.state'))::text, 'ok true',
+  'with the feature off after initialization a charge is still confirmed: no movement, no balance change');
+select is(pg_temp.try(format('insert into public.services (workspace_id, name, price_cents, active, stock) values (%L, %L, 100, true, 5)', pg_temp.u(101), 'Late count')), 'DKG13',
+  'and a new item cannot bring a count either: no movement would carry it');
+update public.workspaces set feature_flags = feature_flags || '{"stockManagement": true}' where id = pg_temp.u(101);
+
+-- 2. An expired lot, loaded with its acknowledgement, is received without asking again.
+select set_config('t.loadb', pg_temp.cmd(1, 'stock_transfer_load_v1', 980, format('%L, %s', pg_temp.loc('BRANCH-S1'),
+  pg_temp.arr(pg_temp.line(302, '1', 'MAIN', 'MAIN', format(', "lot_id": "%s", "expired_ack": true', current_setting('t.old')))))), false);
+select is(left(pg_temp.cmd(1, 'stock_transfer_receive_v1', 981, format('%L, %L::jsonb', (current_setting('t.loadb')::jsonb ->> 'transfer_id')::uuid,
+  '[{"line_id": "' || (current_setting('t.loadb')::jsonb -> 'lines' -> 0 ->> 'id') || '", "quantity": "1"}]')), 2), '{"',
+  'an expired lot in transit leaves the road: receiving does not ask for the acknowledgement again');
+
+-- 3. The in-transit place is the system's.
+select is(pg_temp.save_place_t(null, null, 982, '{"kind": "in_transit", "code": "X1", "name": "x"}'), 'ERR DKG11 {"field": "kind", "reason": "location_virtual"}', 'no second in-transit place can be created');
+select is(pg_temp.save_place_t(current_setting('t.transit')::uuid, 1, 983, '{"name": "renamed"}'), 'ERR DKG11 {"field": "place", "reason": "location_virtual"}', 'and the in-transit place is not edited');
+select is(pg_temp.try(format('insert into public.stock_locations (workspace_id, kind, code) values (%L, %L, %L)', pg_temp.u(101), 'in_transit', 'T2')), '23505', 'the database keeps one in-transit place per business');
+select ok(regexp_replace(pg_get_functiondef('public.stock_put_away_apply(uuid, uuid, uuid, uuid, jsonb)'::regprocedure), '\s+', ' ', 'g') like '%l.kind <> ''in_transit''%',
+  'a delivery is never put away into the in-transit place');
+insert into public.workspaces (id, name, country_code, currency_code, timezone, created_by, feature_flags) values (pg_temp.u(103), 'Paths C', 'FR', 'EUR', 'Europe/Paris', pg_temp.u(1), '{}');
+insert into public.stock_locations (workspace_id, kind, code) values (pg_temp.u(103), 'shelf', 'TRANSIT');
+select set_config('t.tp', 'made:' || pg_temp.try(format('select public.stock_transit_place(%L)', pg_temp.u(103))), false);
+select is((select code from public.stock_locations where workspace_id = pg_temp.u(103) and kind = 'in_transit'), 'TRANSIT-1',
+  'a place the business already called TRANSIT does not stop the system from having its own');
+
+-- 4. Two steps are for goods that change site.
+select is(pg_temp.cmd(1, 'stock_transfer_load_v1', 984, format('%L, %s', pg_temp.loc('MAIN'), pg_temp.arr(pg_temp.line(303, '1', 'SHELF-B', 'SHELF-B')))),
+  'ERR DKG11 {"field": "to_location_id", "reason": "same_site"}', 'a load onto a place of the source''s own site is refused: inside a site a transfer is one step');
+
+-- 5. The generic door asks what the typed one asks.
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": false}' where id = pg_temp.u(101);
+select is(left(pg_temp.move(985, 303, '1', 'MAIN', 'LOSS', 'loss'), 9), 'ERR DKG01', 'a generic loss with stockTakeOut off is refused like the typed one');
+update public.workspaces set feature_flags = feature_flags || '{"stockTakeOut": true}' where id = pg_temp.u(101);
+select is(pg_temp.run_as(pg_temp.u(1), format('select public.stock_move_v1(%L, %L, %L::jsonb, ''transfer'')::text', pg_temp.u(101), pg_temp.u(986),
+  '[' || pg_temp.line(303, '1', 'SHELF-B', 'MAIN') || ']'), true), 'ERR DKN01 ', 'a delegated session does not move stock through the generic door either');
+
+-- 6. The outcome reads this family, and the caller's own requests.
+select is(pg_temp.run_as(pg_temp.u(1), format('select coalesce(public.stock_command_outcome_v1(%L, %L)::text, ''none'')', pg_temp.u(101), pg_temp.u(900))), 'none',
+  'a generic move''s request is not this family''s outcome');
+update public.workspaces set role_permissions = '{"member": ["viewStock", "manageStock"]}' where id = pg_temp.u(101);
+select is(pg_temp.run_as(pg_temp.u(2), format('select coalesce(public.stock_command_outcome_v1(%L, %L)::text, ''none'')', pg_temp.u(101), pg_temp.u(960))), 'none',
+  'and a request somebody else made is not read, though the reader may move stock too');
+update public.workspaces set role_permissions = '{"member": ["viewStock"]}' where id = pg_temp.u(101);
+
+-- 7. The bridge never takes a lot past its date, and says which refusal it is.
+select is(pg_temp.charge(302, 3) || ' NEW ' || pg_temp.lotq('NEW')::text || ' OLD ' || pg_temp.lotq('OLD')::text, 'ok NEW 2.000000 OLD 2.000000',
+  'a confirmed charge of a tracked item takes from the lots fit to sell: the expired one is never touched');
+select is(pg_temp.charge(302, 4), 'DKG15', 'when what is left is past its date, the refusal says so (not "not enough")');
+insert into public.services (id, workspace_id, name, price_cents, active, stock, inventory_unit, tracking, stockable)
+values (pg_temp.u(305), pg_temp.u(101), 'Shirt', 2000, true, null, 'piece', 'none', true);
+insert into public.item_variants (workspace_id, item_id, canonical) values (pg_temp.u(101), pg_temp.u(305), 'colour:red');
+select is(pg_temp.charge(305, 1), 'DKG12', 'a sale that names no variant of an item with variants is refused as that (0837), not as "not enough"');
+
+select ok(regexp_replace(pg_get_functiondef('public.apply_stock_on_confirm()'::regprocedure), '\s+', ' ', 'g') like '%from public.services s where s.id = v_service_id for update%',
+  'the legacy bridge locks the item first, as every stock command does: no deadlock with a return');
+
+select ok(regexp_replace(pg_get_functiondef('public.import_workspace_configuration(uuid, jsonb, text)'::regprocedure), '\s+', ' ', 'g') like '%stock = case when public.stock_initialized(p_workspace_id) then stock else%',
+  'a configuration file''s counts are ignored once the ledger exists: the import does not write them');
 
 -- WHO MAY, AND WHERE.
 select is(pg_temp.cmd(2, 'stock_transfer_v1', 970, pg_temp.arr(pg_temp.line(303, '1', 'SHELF-B', 'MAIN'))), 'ERR DKN01 ', 'a member who only sees the stock moves nothing');

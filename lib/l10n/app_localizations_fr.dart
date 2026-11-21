@@ -28632,6 +28632,10 @@ class AppLocalizationsFr extends AppLocalizations {
       'La gestion des stocks est désactivée dans cette entreprise. Rien n\'a été déplacé.';
 
   @override
+  String get refusalStockOnlyExpired =>
+      'Ce qu’il reste au magasin principal a dépassé sa date et n’est jamais vendu. La confirmation a été refusée ; rien n’a été prélevé.';
+
+  @override
   String get refusalStockPage =>
       'Cette demande de page n’est pas valide : demandez de 1 à 200 lignes, et ne poursuivez qu’à partir de la position donnée par une page.';
 

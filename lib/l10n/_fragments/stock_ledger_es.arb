@@ -25,5 +25,9 @@
   "refusalStockLedgerKept": "Las existencias de este negocio las lleva su libro: use una operación de existencias (traslado, salida, recepción), no el contador. No se cambió nada.",
   "@refusalStockLedgerKept": {
     "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
+  "refusalStockOnlyExpired": "Lo que queda en el almacén principal ha caducado y nunca se vende. Se rechazó la confirmación; no se retiró nada.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   }
 }

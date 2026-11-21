@@ -25,5 +25,9 @@
   "refusalStockLedgerKept": "La giacenza di questa attività è tenuta dal suo registro: usare un’operazione di magazzino (trasferimento, prelievo, ricezione), non il contatore. Nulla è stato modificato.",
   "@refusalStockLedgerKept": {
     "description": "#4170 (0847) DKG13: a count written from outside the ledger."
+  },
+  "refusalStockOnlyExpired": "Ciò che resta nel magazzino principale è scaduto e non viene mai venduto. La conferma è stata rifiutata; nulla è stato prelevato.",
+  "@refusalStockOnlyExpired": {
+    "description": "#4170 (0847) DKG15: only expired stock is left for a sale."
   }
 }
