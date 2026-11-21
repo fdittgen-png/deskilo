@@ -500,6 +500,9 @@ Gestisce uno studio, un ambulatorio o un salone invece di uno spazio di coworkin
 - Una funzione non ancora stabile si attiva solo se la spunta; altrimenti la attivi più tardi in **Funzioni**.
 - Il coworking non propone nulla, e disattivare i posti non cancella nulla: li riattivi e planimetria e prenotazioni tornano.
 
+- **Libero professionista** è per una persona che vende servizi ai clienti: tiene disattivati i luoghi e attiva la fatturazione, i clienti di fatturazione, i preventivi e gli acquisti, mai un fornitore, i messaggi o una pagina pubblica. È un tipo a sé: **Servizio** resta com’era.
+- Me indica il tipo che ciascuna delle sue attività ha scelto, accanto al paese e alla valuta.
+
 **Vedi anche:** [Funzioni](help:user.features.processes)
 
 <!-- anchor: user.workspace.settings.country -->

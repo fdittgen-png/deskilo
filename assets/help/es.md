@@ -430,6 +430,7 @@ Abre el espacio y quiere ver primero lo que le espera, y después las cifras que
 
 **Conviene saber**
 
+- Un negocio sin lugares se abre en **Su negocio**: **Facturar a un cliente**, **Presupuestos**, **Clientes**, **Facturas** y **Me**, cada uno solo cuando su función está activada y su rol puede usarla.
 - Solo ve las cifras que su rol puede leer. Una cifra que no pudo leerse muestra **No disponible**, nunca cero.
 - **Membresías activas** cuenta membresías, no personas. **Cobros vencidos** deja fuera las facturas sin vencimiento probado o en espera y las cuenta aparte. Ambas son cifras de hoy: no se guarda historial.
 - **Personalizar** requiere el derecho a leer las cifras del espacio y el diseñador de informes.
@@ -3434,6 +3435,9 @@ Lleva un estudio, una consulta o un salón en lugar de un espacio de coworking y
 - Nada cambia hasta **Guardar**; **Cancelar** lo deja todo como está. Elegir un tipo más tarde vuelve a proponer y nunca cambia nada en silencio.
 - Una función aún no estable solo se activa si la marca; si no, actívela más tarde en **Funciones**.
 - El coworking no propone nada, y desactivar las plazas no borra nada: vuelva a activarlas y el plano y las reservas regresan.
+
+- **Autónomo** es para una persona que vende servicios a clientes: mantiene los lugares desactivados y activa la facturación, los clientes de facturación, los presupuestos y las compras, nunca un proveedor, mensajes ni una página pública. Es un tipo propio: **Servicio** sigue como estaba.
+- Me nombra el tipo que cada uno de sus negocios eligió, junto a su país y su moneda.
 
 **Véase también:** [Funciones](help:user.features.processes)
 

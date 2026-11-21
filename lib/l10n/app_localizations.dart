@@ -9101,6 +9101,18 @@ abstract class AppLocalizations {
   /// **'The colour {color} was not applied: {pair} would be unreadable.'**
   String brandColorRefused(String color, String pair);
 
+  /// #4168 title of the card of direct entries on the overview of a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'Your business'**
+  String get businessEntriesTitle;
+
+  /// #4168 the entry that opens a new invoice for a customer of a business without places
+  ///
+  /// In en, this message translates to:
+  /// **'Invoice a customer'**
+  String get businessEntryNewInvoice;
+
   /// #3283 a business example under the setup question approve_bookings.
   ///
   /// In en, this message translates to:
