@@ -1,6 +1,6 @@
 # deskilo_document_model
 
-The typed layout vocabulary (text, image, rule, spacer, table, box, columns, page zones, lengths) and its bounded XML codec. Pure Dart, `publish_to: none`, part of #2592.
+The typed layout vocabulary (text, image, rule, spacer, table, box, columns, page zones, lengths) and its bounded XML codec, and (#4160) the generic report blocks with their line markup and the `RenderedReport` bands a host hands a renderer. Pure Dart, `publish_to: none`, part of #2592.
 
 ## Version and format
 
@@ -21,4 +21,4 @@ Resolves, analyzes and tests without the app. CI step in
 dart pub get && dart analyze --fatal-infos && dart test
 ```
 
-Host obligations: pass XML that already went through the host's templating pass (the reader knows nothing about `{{ }}`); treat `LayoutException` as a typed refusal.
+Host obligations: pass XML that already went through the host's templating pass (the reader knows nothing about `{{ }}`); treat `LayoutException` as a typed refusal. For the report blocks (`report_blocks.dart`): expand the template yourself and pass the rendered text to `parseReportMarkup`; resolve the numbering of page 1 and the paper from your own document kind and pass them to `RenderedReport` (`withNumberFirstPage`, `onPaper`); a band that fails to render falls back at the host, which has the context. No persisted or XML format belongs to the blocks: the markup is plain text and nothing is serialized.

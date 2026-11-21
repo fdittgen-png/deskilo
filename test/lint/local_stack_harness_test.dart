@@ -138,6 +138,20 @@ void main() {
     expect(calls.last, contains('test/topology/personal_directory_test.dart'));
     expect(calls.last, contains('--concurrency=1'));
     expect(calls.first, isNot(contains('personal_directory_test.dart')));
+    // #4159 -- the booking adapter over signed HTTP shares the first call, and
+    // a skipped file is not evidence: its scenarios are required by name.
+    expect(calls.first, contains('test/topology/booking_http_test.dart'));
+    expect(_run(consumer), contains("! grep -q 'booking over signed HTTP'"),
+        reason: 'the no-descriptor placeholder is refused');
+    final testSource =
+        File('test/topology/booking_http_test.dart').readAsStringSync();
+    final named = RegExp(r"for scenario in ([^;]*); do")
+        .firstMatch(_run(consumer))!
+        .group(1)!;
+    for (final m in RegExp(r"'([^']+)'").allMatches(named)) {
+      expect(testSource.replaceAll(RegExp(r"'\s*\n\s*'"), ''), contains(m[1]),
+          reason: 'a required scenario names a test that exists: ${m[1]}');
+    }
     expect(_run(consumer),
         contains("grep -q 'All tests passed!' report-topology-faults.log"),
         reason: 'a skipped fault file is not evidence');
