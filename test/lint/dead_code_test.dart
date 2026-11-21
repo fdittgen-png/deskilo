@@ -25,9 +25,6 @@ const Map<String, String> _allowed = {
       '#4178 — the engagements list screen reads it (cut C)',
   'lib/features/money/providers/service_fulfilment_providers.dart::serviceFulfilmentProvider':
       '#4178 — the engagement screen reads it (cut C)',
-  // The order pane's put-away (checkpoint B of #4171) saves through it.
-  'lib/features/stock/providers/stock_providers.dart::stockReceivingCommandsProvider':
-      '#4171 — the order pane puts a delivery away through it (checkpoint B)',
   // The Stock screen is the consumer of the exact quantity and the paged reads.
   'lib/core/format/decimal_input.dart::exactQuantityFromInput':
       '#4161 — the Stock screen reads a quantity a member types',

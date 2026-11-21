@@ -16,7 +16,6 @@ import 'package:go_router/go_router.dart';
 
 import '../../../../core/l10n/context_l10n.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/time/calendar_days.dart';
 import '../../../../core/time/clock.dart';
 import '../../../../core/ui/form_kit.dart';
 import '../../../../core/ui/kit/page_title.dart';
@@ -271,6 +270,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
     // empty-ok: the rates only offer a choice; none leaves the business's default
     final rates = ref.watch(vatRatesProvider).value ?? const <VatRate>[]; // empty-ok: the rates only offer a choice
     final today = ref.watch(clockProvider).now();
+    final validity = ref.watch(quoteValidityProvider);
     return ListView(
       padding: const EdgeInsets.all(16),
       children: [
@@ -310,7 +310,7 @@ class _EditorState extends ConsumerState<CustomerQuoteEditorScreen> {
         AppDateField(
           key: const ValueKey('quote-valid-until'),
           label: l10n.quoteFieldValidUntil,
-          value: _form.validUntil ?? addCalendarDays(_form.issuedOn ?? today, 30),
+          value: _form.validUntil ?? validity.defaultEnd(_form.issuedOn ?? today),
           enabled: !locked,
           onChanged: (d) => _form
             ..validUntil = d.date

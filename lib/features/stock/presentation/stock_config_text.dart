@@ -10,6 +10,7 @@ String stockReasonText(AppLocalizations l10n, String reason) =>
     _itemReason(l10n, reason) ??
     _placeReason(l10n, reason) ??
     _variantReason(l10n, reason) ??
+    _receivingReason(l10n, reason) ??
     l10n.stockReasonOther;
 
 String? _itemReason(AppLocalizations l10n, String reason) => switch (reason) {
@@ -61,6 +62,25 @@ String? _variantReason(AppLocalizations l10n, String reason) => switch (reason) 
   'unit_in_use' => l10n.stockReasonUnitInUse,
   'code_unit_removed' => l10n.stockReasonCodeUnitRemoved,
   'malformed' => l10n.stockReasonMalformed,
+  _ => null,
+};
+
+String? _receivingReason(AppLocalizations l10n, String reason) => switch (reason) {
+  'over_allocated' => l10n.stockReasonOverAllocated,
+  'line_unknown' => l10n.stockReasonLineUnknown,
+  'line_conflict' => l10n.stockReasonLineConflict,
+  'item_not_stocked' => l10n.stockReasonItemNotStocked,
+  'unit_unmapped' => l10n.stockReasonUnitUnmapped,
+  'quantity_invalid' => l10n.stockReasonQuantityInvalid,
+  'variant_required' => l10n.stockReasonVariantRequired,
+  'lot_code_required' => l10n.stockReasonLotCodeRequired,
+  'expiry_required' => l10n.stockReasonExpiryRequired,
+  'expiry_malformed' => l10n.stockReasonExpiryMalformed,
+  'cost_invalid' => l10n.stockReasonCostInvalid,
+  'cost_rate_missing' => l10n.stockReasonCostRateMissing,
+  'lot_group_conflict' => l10n.stockReasonLotGroupConflict,
+  'receipt_unknown' => l10n.stockReasonReceiptUnknown,
+  'location_foreign' => l10n.stockReasonLocationForeign,
   _ => null,
 };
 

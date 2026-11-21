@@ -404,8 +404,8 @@ constraint customer_quote_conversions.customer_quote_conversions_draft_id_key UN
 constraint customer_quote_conversions.customer_quote_conversions_invoice_id_key UNIQUE (invoice_id)
 constraint customer_quote_conversions.customer_quote_conversions_pkey PRIMARY KEY (quote_id)
 constraint customer_quote_conversions.customer_quote_conversions_workspace_id_invoice_id_fkey FOREIGN KEY (workspace_id, invoice_id) REFERENCES invoices(workspace_id, id) ON DELETE RESTRICT
-constraint customer_quote_conversions.customer_quote_conversions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT
-constraint customer_quote_conversions.customer_quote_conversions_workspace_id_revision_id_fkey FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE RESTRICT
+constraint customer_quote_conversions.customer_quote_conversions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE CASCADE
+constraint customer_quote_conversions.customer_quote_conversions_workspace_id_revision_id_fkey FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE CASCADE
 constraint customer_quote_conversions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint customer_quote_conversions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint customer_quote_decisions.customer_quote_decisions_decision_check CHECK ((decision = ANY (ARRAY['accepted'::text, 'declined'::text])))
@@ -414,8 +414,8 @@ constraint customer_quote_decisions.customer_quote_decisions_pkey PRIMARY KEY (i
 constraint customer_quote_decisions.customer_quote_decisions_quote_id_key UNIQUE (quote_id)
 constraint customer_quote_decisions.customer_quote_decisions_recorded_by_issuer_check CHECK (recorded_by_issuer)
 constraint customer_quote_decisions.customer_quote_decisions_source_check CHECK ((source = ANY (ARRAY['received_outside_app'::text, 'verbal'::text, 'email'::text, 'other'::text])))
-constraint customer_quote_decisions.customer_quote_decisions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT
-constraint customer_quote_decisions.customer_quote_decisions_workspace_id_revision_id_fkey FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE RESTRICT
+constraint customer_quote_decisions.customer_quote_decisions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE CASCADE
+constraint customer_quote_decisions.customer_quote_decisions_workspace_id_revision_id_fkey FOREIGN KEY (workspace_id, revision_id) REFERENCES customer_quote_revisions(workspace_id, id) ON DELETE CASCADE
 constraint customer_quote_decisions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint customer_quote_decisions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint customer_quote_revisions.customer_quote_revisions_buyer_reference_check CHECK ((char_length(buyer_reference) <= 120))
@@ -430,7 +430,7 @@ constraint customer_quote_revisions.customer_quote_revisions_quote_id_revision_k
 constraint customer_quote_revisions.customer_quote_revisions_revision_check CHECK ((revision >= 1))
 constraint customer_quote_revisions.customer_quote_revisions_status_check CHECK ((status = ANY (ARRAY['draft'::text, 'sent'::text])))
 constraint customer_quote_revisions.customer_quote_revisions_workspace_id_id_key UNIQUE (workspace_id, id)
-constraint customer_quote_revisions.customer_quote_revisions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE RESTRICT
+constraint customer_quote_revisions.customer_quote_revisions_workspace_id_quote_id_fkey FOREIGN KEY (workspace_id, quote_id) REFERENCES customer_quotes(workspace_id, id) ON DELETE CASCADE
 constraint customer_quote_revisions.system_columns_order CHECK ((modified_datetime >= created_datetime))
 constraint customer_quote_revisions.system_company_present CHECK ((company_id IS NOT NULL))
 constraint customer_quotes.customer_quotes_check CHECK (((status = 'draft'::text) OR (reference IS NOT NULL)))
@@ -2074,7 +2074,7 @@ constraint space_inquiry_messages.system_columns_order CHECK ((modified_datetime
 constraint standalone_invoice_drafts.standalone_invoice_drafts_buyer_reference_check CHECK ((char_length(buyer_reference) <= 120))
 constraint standalone_invoice_drafts.standalone_invoice_drafts_check CHECK (((status = 'issued'::text) = (issued_invoice_id IS NOT NULL)))
 constraint standalone_invoice_drafts.standalone_invoice_drafts_lines_check CHECK ((jsonb_typeof(lines) = 'array'::text))
-constraint standalone_invoice_drafts.standalone_invoice_drafts_origin_quote_id_fkey FOREIGN KEY (origin_quote_id) REFERENCES customer_quotes(id) ON DELETE RESTRICT
+constraint standalone_invoice_drafts.standalone_invoice_drafts_origin_quote_id_fkey FOREIGN KEY (origin_quote_id) REFERENCES customer_quotes(id) ON DELETE CASCADE
 constraint standalone_invoice_drafts.standalone_invoice_drafts_pkey PRIMARY KEY (id)
 constraint standalone_invoice_drafts.standalone_invoice_drafts_purchase_order_check CHECK ((char_length(purchase_order) <= 120))
 constraint standalone_invoice_drafts.standalone_invoice_drafts_revision_check CHECK ((revision >= 1))
@@ -2775,7 +2775,7 @@ routine public.currency_minor_digits(p_currency text) -> integer | function | in
 routine public.current_privacy_notice(p_workspace_id uuid) -> jsonb | function | definer | stable | exec:authenticated,service_role | body:18b05ca5e88e
 routine public.customer_quote_actor(p_workspace uuid) -> members | function | definer | stable | exec:service_role | body:960642c8bb9a
 routine public.customer_quote_dry_run(p_workspace uuid, p_actor members, p_subject uuid, p_lines jsonb, p_on date) -> jsonb | function | definer | volatile | exec:service_role | body:b3481c9887f2
-routine public.customer_quote_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:c2a367655ca3
+routine public.customer_quote_frozen() -> trigger | function | invoker | volatile | exec:service_role | body:a7af5988fd9e
 routine public.customer_quote_json(q customer_quotes) -> jsonb | function | definer | stable | exec:service_role | body:06cd8bbe5e29
 routine public.customer_quote_line_clean(p_line jsonb, p_index integer) -> jsonb | function | invoker | stable | exec:service_role | body:ec2d50e7afbb
 routine public.customer_quote_lines_clean(p_lines jsonb) -> jsonb | function | invoker | stable | exec:service_role | body:d6d1d7c180dc
@@ -3578,7 +3578,7 @@ routine public.purge_expired_field_answer_holds() -> integer | function | define
 routine public.push_delivery_headers(p_anon_key text) -> jsonb | function | definer | volatile | exec:service_role | body:a8a21aab9941
 routine public.put_away_receipt_v1(p_workspace_id uuid, p_receipt_id uuid, p_request_id uuid, p_allocations jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:90a795dd947a
 routine public.qrr_check_digit(p_body text) -> integer | function | invoker | immutable | exec:service_role | body:4ae5fed98fba
-routine public.quote_draft_guard() -> trigger | function | invoker | volatile | exec:service_role | body:0024dc3e4a12
+routine public.quote_draft_guard() -> trigger | function | invoker | volatile | exec:service_role | body:22a105c48cb4
 routine public.react_to_message(p_kind text, p_message_id uuid, p_emoji text) -> void | function | definer | volatile | exec:authenticated,service_role | body:30da61c7ed4b
 routine public.readiness_section_revision(p_section jsonb) -> text | function | invoker | immutable | exec:service_role | body:c7d33070eecf
 routine public.realtime_deletion_signal() -> trigger | function | definer | volatile | exec:service_role | body:14324dc6ed47
@@ -3762,7 +3762,7 @@ routine public.save_book_mapping(p_workspace_id uuid, p_issuer_site_id uuid, p_r
 routine public.save_book_profile(p_workspace_id uuid, p_issuer_site_id uuid, p_authority_mode text, p_external_system text, p_functional_currency text, p_fiscal_year_start_month integer, p_fiscal_year_start_day integer, p_accounting_basis text, p_effective_from date, p_expected_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:a8c6b0169bf2
 routine public.save_business_mail_sender_v1(p_workspace_id uuid, p_sender_email text, p_sender_name text, p_api_key text, p_revision integer) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9d32a811aedd
 routine public.save_cost_allocation_rule_v1(p_workspace_id uuid, p_rule_id uuid, p_expected_revision integer, p_rule jsonb, p_request_id uuid) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:9938c7e70922
-routine public.save_customer_quote_draft_v1(p_workspace_id uuid, p_quote_id uuid, p_expected_version integer, p_subject uuid, p_issued_on date, p_valid_until date, p_buyer_reference text, p_purchase_order text, p_notes text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:7ade44fdddfb
+routine public.save_customer_quote_draft_v1(p_workspace_id uuid, p_quote_id uuid, p_expected_version integer, p_subject uuid, p_issued_on date, p_valid_until date, p_buyer_reference text, p_purchase_order text, p_notes text, p_lines jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:ea66229475af
 routine public.save_guest_pass_offer(p_workspace_id uuid, p_id uuid, p_name text, p_unit text, p_price_cents integer, p_vat_rate_id uuid, p_active boolean) -> uuid | function | definer | volatile | exec:authenticated,service_role | body:0e0314dc12ca
 routine public.save_item_dimension_v1(p_workspace_id uuid, p_dimension_id uuid, p_expected_revision integer, p_request_id uuid, p_dimension jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:3b904a5b5470
 routine public.save_item_variants_v1(p_workspace_id uuid, p_item_id uuid, p_expected_revision integer, p_request_id uuid, p_variants jsonb) -> jsonb | function | definer | volatile | exec:authenticated,service_role | body:d8957f4a18d0

@@ -130,4 +130,13 @@ void main() {
     ]);
     expect(h.sent.single.url.queryParameters['receipt_id'], 'eq.$_receipt');
   });
+
+  test('the allocations of an order are read through its deliveries, with the order line each came from', () async {
+    final h = _with(200, [
+      {..._row('a-1', '2.000000'), 'purchase_order_lines': {'line_no': 3}},
+    ]);
+    final read = await h.commands.allocationsOfOrder(_ws, 'o-1');
+    expect(read.single.lineNo, 3);
+    expect(h.sent.single.url.queryParameters['purchase_order_receipts.order_id'], 'eq.o-1');
+  });
 }
