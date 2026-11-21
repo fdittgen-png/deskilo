@@ -476,6 +476,8 @@ public.sites.sites_select
 public.space_inquiries.mcp_delegated_deny
 public.space_inquiry_messages.mcp_delegated_deny
 public.space_inquiry_messages.personal_native_session
+public.standalone_invoice_drafts.mcp_delegated_deny
+public.standalone_invoice_drafts.standalone_invoice_drafts_issuers_read
 public.stock_balances.mcp_delegated_deny
 public.stock_balances.stock_balances_select
 public.stock_location_kinds.mcp_delegated_deny
