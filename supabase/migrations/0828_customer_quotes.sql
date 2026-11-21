@@ -782,7 +782,10 @@ begin
      where id = v_draft.id returning * into v_draft;
     perform set_config('deskilo.quote_conversion', '', true);
   end if;
+  -- the preview runs the real issuer in a block it rolls back: the guard lets it by
+  perform set_config('deskilo.quote_conversion', v_draft.id::text, true);
   v_preview := public.preview_standalone_invoice_v1(p_workspace_id, v_draft.id, v_draft.revision);
+  perform set_config('deskilo.quote_conversion', '', true);
   return jsonb_build_object(
     'draft_id', v_draft.id, 'draft_revision', v_draft.revision, 'quote_revision', v_rev.revision,
     'preview', v_preview,
@@ -849,7 +852,9 @@ begin
     select * into v_inv from public.invoices where id = v_draft.issued_invoice_id;
     v_res := jsonb_build_object('invoice_id', v_draft.issued_invoice_id, 'number', v_inv.number);
   else
+  perform set_config('deskilo.quote_conversion', v_draft.id::text, true);
   v_prep := public.preview_standalone_invoice_v1(p_workspace_id, v_draft.id, v_draft.revision);
+  perform set_config('deskilo.quote_conversion', '', true);
   if jsonb_array_length(v_prep -> 'missing') = 0
      and ((v_prep #>> '{preview,total_cents}') is distinct from (v_rev.frozen #>> '{totals,total_cents}')
           or (v_prep #> '{preview,vat_totals}') is distinct from (v_rev.frozen #> '{totals,vat_totals}'))
