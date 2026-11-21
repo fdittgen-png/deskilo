@@ -26,37 +26,45 @@ class SupabaseStockOperations implements StockOperations {
         .neq('status', 'received')
         .order('created_datetime');
     if (transfers.isEmpty) return const [];
-    final ids = [for (final t in transfers) '${t['id']}'];
-    final lines = await _client
-        .from('stock_transfer_lines')
-        .select('id, transfer_id, item_id, variant_id, lot_id, loaded, received')
-        .eq('workspace_id', workspaceId)
-        .inFilter('transfer_id', ids)
-        .order('id');
-    final items = await _client
-        .from('services')
-        .select('id, name, inventory_unit')
-        .eq('workspace_id', workspaceId)
-        .inFilter('id', {for (final l in lines) '${l['item_id']}'}.toList());
-    final places = await _client
-        .from('stock_locations')
-        .select('id, code')
-        .eq('workspace_id', workspaceId)
-        .inFilter('id', {
-          for (final t in transfers) ...['${t['from_location_id']}', '${t['to_location_id']}'],
-        }.toList());
-    final itemById = {for (final i in items) '${i['id']}': i};
-    final codeById = {for (final p in places) '${p['id']}': '${p['code']}'};
-    return [
-      for (final t in transfers)
-        _transfer(JsonReader.of(t, context: 'stock_transfers'), lines, itemById, codeById),
+    final heads = [for (final t in transfers) JsonReader.of(t, context: 'stock_transfers')];
+    final lines = [
+      for (final l in await _client
+          .from('stock_transfer_lines')
+          .select('id, transfer_id, item_id, variant_id, lot_id, loaded::text, received::text')
+          .eq('workspace_id', workspaceId)
+          .inFilter('transfer_id', [for (final h in heads) h.string('id')])
+          .order('id'))
+        JsonReader.of(l, context: 'stock_transfer_lines'),
     ];
+    final items = {
+      for (final i in await _client
+          .from('services')
+          .select('id, name, inventory_unit')
+          .eq('workspace_id', workspaceId)
+          .inFilter('id', {for (final l in lines) l.string('item_id')}.toList()))
+        ..._byId(JsonReader.of(i, context: 'services')),
+    };
+    final codes = {
+      for (final p in await _client
+          .from('stock_locations')
+          .select('id, code')
+          .eq('workspace_id', workspaceId)
+          .inFilter('id', {
+            for (final h in heads) ...[h.string('from_location_id'), h.string('to_location_id')],
+          }.toList()))
+        ..._codeById(JsonReader.of(p, context: 'stock_locations')),
+    };
+    return [for (final h in heads) _transfer(h, lines, items, codes)];
   }
+
+  Map<String, JsonReader> _byId(JsonReader r) => {r.string('id'): r};
+
+  Map<String, String> _codeById(JsonReader r) => {r.string('id'): r.string('code')};
 
   StockTransfer _transfer(
     JsonReader t,
-    List<Map<String, dynamic>> lines,
-    Map<String, Map<String, dynamic>> items,
+    List<JsonReader> lines,
+    Map<String, JsonReader> items,
     Map<String, String> codes,
   ) {
     final id = t.string('id');
@@ -71,18 +79,18 @@ class SupabaseStockOperations implements StockOperations {
       revision: t.integer('revision'),
       lines: [
         for (final raw in lines)
-          if ('${raw['transfer_id']}' == id) _line(JsonReader.of(raw, context: 'stock_transfer_lines'), items),
+          if (raw.string('transfer_id') == id) _line(raw, items),
       ],
     );
   }
 
-  StockTransferLine _line(JsonReader r, Map<String, Map<String, dynamic>> items) {
+  StockTransferLine _line(JsonReader r, Map<String, JsonReader> items) {
     final item = items[r.string('item_id')];
     return StockTransferLine(
       id: r.string('id'),
       itemId: r.string('item_id'),
-      itemName: '${item?['name'] ?? ''}',
-      unit: '${item?['inventory_unit'] ?? ''}',
+      itemName: item?.stringOr('name') ?? '',
+      unit: item?.stringOr('inventory_unit') ?? '',
       variantId: r.stringOrNull('variant_id'),
       lotId: r.stringOrNull('lot_id'),
       loaded: ExactQuantity.parse(r.string('loaded')),
