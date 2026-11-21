@@ -270,12 +270,21 @@ select is(pg_temp.as_user(1, format($s$select public.prepare_quote_conversion_v1
   pg_temp.u(101), (select quote_id from gone))), 'ERR DKQ03', 'a cancelled quote is not converted');
 
 -- ── what the review found ──
+-- a second sent offer whose validity ended three days ago
+create temp table late2 as select gen_random_uuid() as quote_id, gen_random_uuid() as rev_id;
+insert into public.customer_quotes (id, workspace_id, subject_member_id, reference, status)
+select quote_id, pg_temp.u(101), current_setting('t.customer')::uuid, 'QUO-LATE2', 'sent' from late2;
+insert into public.customer_quote_revisions (id, quote_id, workspace_id, revision, status, issued_on, valid_until, lines,
+                                              frozen, content_digest, sent_at, sent_by_member_id)
+select rev_id, quote_id, pg_temp.u(101), 1, 'sent', current_date - 20, current_date - 3,
+       jsonb_build_array(pg_temp.line('1', '10', gen_random_uuid())), '{"totals": {"total_cents": 1200}}'::jsonb, 'x', now(), pg_temp.u(201)
+  from late2;
 -- an acceptance dated inside the validity but recorded after it ended is refused: expiry is
 -- read on the business's clock when the issuer records it, not only on the typed date
 select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'accepted', current_date - 5, 'verbal', '')::text$s$,
-  pg_temp.u(101), (select quote_id from late))), 'ERR DKQ04', 'a late recording of an acceptance dated in time is refused');
+  pg_temp.u(101), (select quote_id from late2))), 'ERR DKQ04', 'a late recording of an acceptance dated in time is refused');
 select is(pg_temp.as_user(1, format($s$select public.record_customer_quote_decision_v1(%L, %L, 1, 'declined', current_date - 5, 'carrier pigeon', '')::text$s$,
-  pg_temp.u(101), (select quote_id from late))), 'ERR DKQ06', 'the source of a decision is checked first, with a code of its own');
+  pg_temp.u(101), (select quote_id from late2))), 'ERR DKQ06', 'the source of a decision is checked first, with a code of its own');
 
 -- a quote whose invoice draft was issued before the guard existed is not left stuck: prepare refuses the
 -- issued draft and convert records the conversion from the invoice that was issued
