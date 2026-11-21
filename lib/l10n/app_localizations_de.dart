@@ -31735,6 +31735,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Wie lange der Server auf das Unternehmensregister (VIES) wartet, bevor eine Lieferantensuche als abgelaufen gilt. Die Eingaben bleiben erhalten; Sie können es erneut versuchen oder von Hand weitermachen.';
 
   @override
+  String get settingHintQuoteDefaultValidity =>
+      'Wie viele Tage ein neues Angebot gültig bleibt, wenn der Ersteller kein Enddatum angibt. Nie länger als die längste Gültigkeit.';
+
+  @override
+  String get settingHintQuoteMaxValidity =>
+      'Die längste Zeit, die ein Angebot gültig bleiben darf, gerechnet ab seinem Angebotsdatum. Eine längere Gültigkeit wird beim Speichern des Angebots abgelehnt.';
+
+  @override
   String get settingHintReadinessRecentExportDays =>
       'Tage, in denen ein von der App erfasster Export noch als aktueller Nachweis gilt, dass die Wiederherstellung funktioniert. Danach bleibt die Wiederherstellung ungeprüft.';
 
@@ -32040,6 +32048,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get settingLabelPurchaseSupplierLookupTimeoutSeconds =>
       'Wartezeit der Lieferantensuche (Sekunden)';
+
+  @override
+  String get settingLabelQuoteDefaultValidity =>
+      'Standardgültigkeit eines Angebots';
+
+  @override
+  String get settingLabelQuoteMaxValidity =>
+      'Längste Gültigkeit eines Angebots';
 
   @override
   String get settingLabelReadinessRecentExportDays =>
@@ -35148,6 +35164,77 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockPlacesTitle => 'Lagerorte';
 
   @override
+  String get stockPutAwayAction => 'Einlagern';
+
+  @override
+  String get stockPutAwayAll =>
+      'Leer gelassen: alles, was diese Lieferung von dieser Zeile bringt.';
+
+  @override
+  String get stockPutAwayAlso => 'Auch ins Lager einlagern';
+
+  @override
+  String get stockPutAwayCost => 'Kosten dieser Waren';
+
+  @override
+  String get stockPutAwayCostEntered => 'Eine Gesamtsumme, die ich eingebe';
+
+  @override
+  String get stockPutAwayCostOrder => 'Der Bestellpreis';
+
+  @override
+  String stockPutAwayCostRate(String currency) {
+    return 'Kurs zu $currency';
+  }
+
+  @override
+  String get stockPutAwayCostTotal => 'Gesamtkosten (Nebeneinheit)';
+
+  @override
+  String get stockPutAwayCostUnknown => 'Unbekannt';
+
+  @override
+  String get stockPutAwayDone => 'Eingelagert.';
+
+  @override
+  String get stockPutAwayExpiry => 'Verfallsdatum';
+
+  @override
+  String get stockPutAwayLot => 'Chargencode';
+
+  @override
+  String stockPutAwayNotStock(String line) {
+    return '$line: kein Lagerartikel, bleibt also unzugeordnet. Führen Sie ihn im Katalog auf Lager, um ihn einzulagern.';
+  }
+
+  @override
+  String get stockPutAwayNothing => 'Es ist nichts mehr einzulagern.';
+
+  @override
+  String get stockPutAwayPlace => 'Lagerort';
+
+  @override
+  String stockPutAwayProgress(String line, String put, String left) {
+    return '$line: eingelagert $put, noch einzulagern $left';
+  }
+
+  @override
+  String stockPutAwayQuantity(String unit) {
+    return 'Einzulagernde Menge ($unit)';
+  }
+
+  @override
+  String get stockPutAwayRemaining => 'Rest einlagern';
+
+  @override
+  String stockPutAwayTitle(String order) {
+    return '$order einlagern';
+  }
+
+  @override
+  String get stockPutAwayVariant => 'Variante';
+
+  @override
   String stockQuantityWithUnit(String quantity, String unit) {
     return '$quantity $unit';
   }
@@ -35171,6 +35258,14 @@ class AppLocalizationsDe extends AppLocalizations {
       'Zwei Varianten haben dieselbe Kombination.';
 
   @override
+  String get stockReasonCostInvalid =>
+      'Diese Kosten sind ungültig: eine Summe in Nebeneinheiten und ein Kurs nur für eine andere Währung.';
+
+  @override
+  String get stockReasonCostRateMissing =>
+      'Eine Bestellung in anderer Währung braucht ihren Kurs.';
+
+  @override
   String get stockReasonDefaultPurchaseTwice =>
       'Nur eine Einheit kann Standard für Einkäufe sein.';
 
@@ -35181,6 +35276,13 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonDimensionMismatch =>
       'Diese Einheit misst nicht dasselbe wie der Artikel.';
+
+  @override
+  String get stockReasonExpiryMalformed => 'Das ist kein gültiges Datum.';
+
+  @override
+  String get stockReasonExpiryRequired =>
+      'Dieser Artikel wird nach Verfallsdatum verfolgt: geben Sie es an.';
 
   @override
   String get stockReasonFactorInvalid =>
@@ -35198,7 +35300,18 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dieser Artikel gehört nicht zu diesem Betrieb.';
 
   @override
+  String get stockReasonItemNotStocked => 'Diese Zeile ist kein Lagerartikel.';
+
+  @override
   String get stockReasonKindUnknown => 'Diese Art ist nicht bekannt.';
+
+  @override
+  String get stockReasonLineConflict =>
+      'Die Zeile ist doppelt benannt und die Angaben widersprechen sich.';
+
+  @override
+  String get stockReasonLineUnknown =>
+      'Diese Lieferung hat diese Zeile nicht gebracht.';
 
   @override
   String get stockReasonLocationCycle =>
@@ -35207,6 +35320,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonLocationDefault =>
       'Der Hauptlagerort bleibt in Gebrauch.';
+
+  @override
+  String get stockReasonLocationForeign =>
+      'Wählen Sie einen Lagerort dieses Betriebs, der in Gebrauch ist.';
 
   @override
   String get stockReasonLocationHasChildren =>
@@ -35223,6 +35340,14 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonLocationVirtual =>
       'Ein vom System geführter Lagerort kann hier nicht verwendet werden.';
+
+  @override
+  String get stockReasonLotCodeRequired =>
+      'Dieser Artikel wird nach Charge verfolgt: geben Sie den Chargencode an (höchstens 64 Zeichen).';
+
+  @override
+  String get stockReasonLotGroupConflict =>
+      'Teile einer Charge müssen in Code, Datum und Kosten übereinstimmen.';
 
   @override
   String get stockReasonMalformed =>
@@ -35246,11 +35371,23 @@ class AppLocalizationsDe extends AppLocalizations {
       'Diese Zahl liegt außerhalb des Bereichs.';
 
   @override
+  String get stockReasonOverAllocated =>
+      'Es kann nicht mehr eingelagert werden, als geliefert wurde.';
+
+  @override
   String get stockReasonParentInactive =>
       'Der übergeordnete Lagerort ist nicht mehr in Gebrauch.';
 
   @override
   String get stockReasonPriceInvalid => 'Ein Preis ist null oder größer.';
+
+  @override
+  String get stockReasonQuantityInvalid =>
+      'Eine Menge ist eine Zahl über null mit höchstens sechs Dezimalstellen.';
+
+  @override
+  String get stockReasonReceiptUnknown =>
+      'Diese Lieferung gehört nicht zu diesem Betrieb.';
 
   @override
   String get stockReasonRegistryUnit =>
@@ -35291,6 +35428,10 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockReasonUnitUnknown => 'Diese Einheit ist nicht bekannt.';
 
   @override
+  String get stockReasonUnitUnmapped =>
+      'Die Einheit dieser Zeile gehört nicht zum Artikel: fügen Sie sie zuerst dem Artikel hinzu.';
+
+  @override
   String get stockReasonValueForeign =>
       'Dieser Wert gehört nicht zu dieser Dimension.';
 
@@ -35305,6 +35446,10 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonVariantInUse =>
       'Bestand oder Verlauf nennt diese Variante: ihre Kombination bleibt bestehen.';
+
+  @override
+  String get stockReasonVariantRequired =>
+      'Dieser Artikel hat Varianten: wählen Sie, welche geliefert wurde.';
 
   @override
   String get stockReasonVariantUnknown =>

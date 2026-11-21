@@ -18,9 +18,6 @@ import '../../tool/dead_code/scan.dart';
 
 /// `path::name` → why it stays, naming the issue that resolves it.
 const Map<String, String> _allowed = {
-  // The order pane's put-away (checkpoint B of #4171) saves through it.
-  'lib/features/stock/providers/stock_providers.dart::stockReceivingCommandsProvider':
-      '#4171 — the order pane puts a delivery away through it (checkpoint B)',
   // The Stock screen is the consumer of the exact quantity and the paged reads.
   'lib/core/format/decimal_input.dart::exactQuantityFromInput':
       '#4161 — the Stock screen reads a quantity a member types',

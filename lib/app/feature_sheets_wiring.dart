@@ -10,7 +10,9 @@ import '../core/navigation/feature_sheets.dart'
     show FeatureSheet, featureSheetsProvider, memberProfileOpenerProvider;
 import '../features/calendar/presentation/widgets/access_sheet.dart';
 import '../features/members/presentation/member_profile_link.dart';
+import '../features/money/presentation/purchase_order_stock_seam.dart';
 import '../features/money/presentation/screens/tax_reference_screen.dart';
+import '../features/stock/presentation/purchase_order_stock_seam_impl.dart';
 
 /// Puts the openers in a scope's overrides (main.dart, the demonstration,
 /// the widget tests' standard scope).
@@ -21,4 +23,6 @@ final List<Override> featureSheetsFromApp = [
         showTaxReferenceScreen(context, canEdit: true),
   }),
   memberProfileOpenerProvider.overrideWithValue(openMemberProfile),
+  // #4171 — what the stock adds to the order pane (money never imports it).
+  purchaseOrderStockSeamProvider.overrideWithValue(const StockPurchaseOrderSeam()),
 ];

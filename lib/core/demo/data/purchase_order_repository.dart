@@ -381,6 +381,10 @@ class FakePurchaseOrderRepository implements PurchaseOrderRepository {
           for (final e in draft.toLines())
             e['line_no']! as int: e['quantity']! as double,
         },
+        lineIds: {
+          for (final e in draft.toLines())
+            e['line_no']! as int: 'demo-receipt-${receipts.length + 1}:${e['line_no']}',
+        },
       ),
     );
     final complete = lines.every((l) => l.receivedQuantity >= l.quantity);

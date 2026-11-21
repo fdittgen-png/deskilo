@@ -3,6 +3,7 @@
 // #4166 (cut 2) -- the reference organisation's quotes: one sent to Atelier Lumi
 // (1.5 hours of consulting, valid for a month), one draft for Hanna Weiss that
 // was never sent. They are synthetic and belong to the Demo's seller space alone.
+import '../../../features/money/domain/quote_validity.dart';
 import '../../../features/money/domain/standalone_invoice.dart';
 import '../data/fake_customer_quotes.dart';
 
@@ -43,7 +44,7 @@ FakeCustomerQuoteRepository seedDemoCustomerQuotes(
       subjectId: 'demo-customer-weiss',
       lines: const [_workshop],
       issuedOn: today,
-      validUntil: today.add(const Duration(days: 30)),
+      validUntil: const QuoteValidity().defaultEnd(today),
     )
     // a third offer the customer answered: the issuer recorded its acceptance,
     // and it waits to be invoiced
