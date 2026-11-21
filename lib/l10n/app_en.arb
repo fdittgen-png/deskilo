@@ -45304,9 +45304,14 @@
       }
     }
   },
-  "stockPutAwayQuantity": "Quantity to put away",
+  "stockPutAwayQuantity": "Quantity to put away ({unit})",
   "@stockPutAwayQuantity": {
-    "description": "#4171 receiving into stock: a label or message"
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   },
   "stockPutAwayRemaining": "Put away what remains",
   "@stockPutAwayRemaining": {

@@ -21,9 +21,14 @@
   "@stockPutAwayRemaining": {
     "description": "#4171 receiving into stock: a label or message"
   },
-  "stockPutAwayQuantity": "Quantité à ranger",
+  "stockPutAwayQuantity": "Quantité à ranger ({unit})",
   "@stockPutAwayQuantity": {
-    "description": "#4171 receiving into stock: a label or message"
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   },
   "stockPutAwayPlace": "Emplacement",
   "@stockPutAwayPlace": {
@@ -70,7 +75,7 @@
       }
     }
   },
-  "stockPutAwayProgress": "{line} : {put} rangé(s), {left} restant(s) à ranger",
+  "stockPutAwayProgress": "{line} : rangé {put}, reste à ranger {left}",
   "@stockPutAwayProgress": {
     "description": "#4171 receiving into stock: a label or message",
     "placeholders": {

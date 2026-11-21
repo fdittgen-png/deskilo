@@ -35248,11 +35248,13 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String stockPutAwayProgress(String line, String put, String left) {
-    return '$line : $put rangé(s), $left restant(s) à ranger';
+    return '$line : rangé $put, reste à ranger $left';
   }
 
   @override
-  String get stockPutAwayQuantity => 'Quantité à ranger';
+  String stockPutAwayQuantity(String unit) {
+    return 'Quantité à ranger ($unit)';
+  }
 
   @override
   String get stockPutAwayRemaining => 'Ranger le reste';

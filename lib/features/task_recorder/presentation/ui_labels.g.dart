@@ -3974,7 +3974,6 @@ Map<String, _Getter> _part9() => {
   'stockMappingArticle': (l) => l.stockMappingArticle,
   'stockPlaceCode': (l) => l.stockPlaceCode,
   'stockPutAwayCostTotal': (l) => l.stockPutAwayCostTotal,
-  'stockPutAwayQuantity': (l) => l.stockPutAwayQuantity,
   'stockReasonCodeDuplicate': (l) => l.stockReasonCodeDuplicate,
   'stockReasonLineConflict': (l) => l.stockReasonLineConflict,
   'stockReasonLocationVirtual': (l) => l.stockReasonLocationVirtual,

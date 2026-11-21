@@ -14,9 +14,11 @@ import 'package:deskilo/core/demo/data/supplier_repository.dart';
 import 'package:deskilo/core/time/clock.dart';
 import 'package:deskilo/features/money/domain/purchase_order.dart';
 import 'package:deskilo/features/money/domain/service_item.dart';
+import 'package:deskilo/features/money/presentation/purchase_order_stock_seam.dart';
 import 'package:deskilo/features/money/providers/money_providers.dart';
 import 'package:deskilo/features/money/providers/purchase_order_providers.dart';
 import 'package:deskilo/features/money/providers/supplier_providers.dart';
+import 'package:deskilo/features/stock/presentation/purchase_order_stock_seam_impl.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
@@ -89,6 +91,8 @@ Widget _app(_World w, Set<WorkspacePermission> rights) => purchaseOrdersApp([
   }),
   supplierRepositoryProvider.overrideWithValue(w.suppliers),
   purchaseOrderRepositoryProvider.overrideWithValue(w.repo),
+  // what the composition root wires: the stock's own part of the order pane
+  purchaseOrderStockSeamProvider.overrideWithValue(const StockPurchaseOrderSeam()),
   stockQueriesProvider.overrideWithValue(const DemoStockQueries('ws-1')),
   stockConfigCommandsProvider.overrideWithValue(w.config),
   stockReceivingCommandsProvider.overrideWithValue(w.receiving),

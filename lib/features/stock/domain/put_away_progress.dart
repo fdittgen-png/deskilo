@@ -6,9 +6,9 @@
 // in the unit of the order line, as the delivery counted them.
 library;
 
-import '../../stock/domain/stock_receiving.dart';
-import 'purchase_order.dart';
-import 'purchase_order_receipt.dart';
+import '../../money/domain/purchase_order.dart';
+import '../../money/domain/purchase_order_receipt.dart';
+import 'stock_receiving.dart';
 
 /// One delivered line with what was put away of it.
 class DeliveredLineProgress {
@@ -52,18 +52,3 @@ List<DeliveredLineProgress> progressOfDelivery(
             .fold(0.0, (sum, a) => sum + (double.tryParse(a.enteredQuantity.text) ?? 0)),
       ),
 ];
-
-/// What is still to put away of the whole order, by line number.
-Map<int, double> remainingByLine(
-  PurchaseOrder order,
-  List<PurchaseOrderReceipt> receipts,
-  List<ReceiptAllocation> allocations,
-) {
-  final out = <int, double>{};
-  for (final receipt in receipts.where((r) => r.orderId == order.id)) {
-    for (final p in progressOfDelivery(order, receipt, allocations)) {
-      out[p.lineNo] = (out[p.lineNo] ?? 0) + p.remaining;
-    }
-  }
-  return out;
-}

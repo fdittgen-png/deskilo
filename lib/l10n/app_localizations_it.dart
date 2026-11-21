@@ -35131,11 +35131,13 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String stockPutAwayProgress(String line, String put, String left) {
-    return '$line: $put collocato/i, $left ancora da collocare';
+    return '$line: collocato $put, da collocare $left';
   }
 
   @override
-  String get stockPutAwayQuantity => 'Quantità da collocare';
+  String stockPutAwayQuantity(String unit) {
+    return 'Quantità da collocare ($unit)';
+  }
 
   @override
   String get stockPutAwayRemaining => 'Collocare il resto';

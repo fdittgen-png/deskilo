@@ -10,24 +10,42 @@
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show isoDay;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../core/ids/request_id.dart';
-import '../../../../core/l10n/context_l10n.dart';
-import '../../../../core/trace/trace_logger.dart';
-import '../../../../core/ui/app_snack.dart';
-import '../../../../core/ui/form_kit.dart';
-import '../../../../l10n/app_localizations.dart';
-import '../../../stock/domain/stock_config.dart';
-import '../../../stock/domain/stock_page.dart';
-import '../../../stock/domain/stock_receiving.dart';
-import '../../../stock/domain/stock_variants.dart';
-import '../../../stock/presentation/stock_config_text.dart';
-import '../../../stock/providers/stock_providers.dart';
-import '../../../workspace/providers/workspace_providers.dart';
-import '../../domain/purchase_order.dart';
-import '../../domain/purchase_order_receipt.dart';
-import '../../domain/put_away_progress.dart';
+import '../../../core/format/decimal_input.dart';
+import '../../../core/ids/request_id.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/app_snack.dart';
+import '../../../core/ui/form_kit.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../money/domain/purchase_order.dart';
+import '../../money/domain/purchase_order_receipt.dart';
+import '../domain/put_away_progress.dart';
+import '../domain/stock_config.dart';
+import '../domain/stock_config_commands.dart';
+import '../domain/stock_page.dart';
+import '../domain/stock_queries.dart';
+import '../domain/stock_receiving.dart';
+import '../domain/stock_variants.dart';
+import 'stock_config_text.dart';
+
+/// What the put-away asks of the stock and of the business, read from the
+/// providers by the pane and handed over whole.
+class PutAwayServices {
+  const PutAwayServices({
+    required this.commands,
+    required this.config,
+    required this.queries,
+    required this.currency,
+  });
+
+  final StockReceivingCommands commands;
+  final StockConfigCommands config;
+  final StockQueries queries;
+
+  /// The business's currency, for the rate of an order in another one.
+  final String currency;
+}
 
 /// What the form needs of the stock side, read before it opens.
 class PutAwayContext {
@@ -48,13 +66,13 @@ class PutAwayContext {
 /// be read (the caller says so).
 Future<PutAwayContext?> loadPutAwayContext(
   BuildContext context,
-  WidgetRef ref,
-  String workspaceId,
-  List<DeliveredLineProgress> lines,
-) async {
-  final config = ref.read(stockConfigCommandsProvider);
+  PutAwayServices services, {
+  required String workspaceId,
+  required List<DeliveredLineProgress> lines,
+}) async {
+  final config = services.config;
   try {
-    final places = await ref.read(stockQueriesProvider).places(workspaceId);
+    final places = await services.queries.places(workspaceId);
     final items = <int, StockItemConfig>{};
     final variants = <int, List<StockVariant>>{};
     for (final l in lines) {
@@ -65,18 +83,16 @@ Future<PutAwayContext?> loadPutAwayContext(
       items[l.lineNo] = item;
       variants[l.lineNo] = [for (final v in await config.variants(workspaceId, id)) if (v.active) v];
     }
-    return PutAwayContext(
-      places: places,
-      items: items,
-      variants: variants,
-      currency: ref.read(currentWorkspaceProvider).value?.currencyCode ?? '',
-    );
+    return PutAwayContext(places: places, items: items, variants: variants, currency: services.currency);
   } on Object catch (e, st) {
     TraceLogger.instance.error('stock', 'the put-away could not read the stock side', error: e, stackTrace: st);
     if (context.mounted) AppSnack.error(context, context.l10n.stockReadFailed);
     return null;
   }
 }
+
+/// A typed quantity, read as the person typed it (no grouping).
+double? _number(String text) => parseDecimalInput(text.trim(), grouping: false)?.toDouble();
 
 class _Part {
   _Part(this.line, String quantity)
@@ -129,7 +145,7 @@ class PutAwayDraft {
   /// One per form: a retry of the same put-away answers once.
   final String requestId = newRequestId();
 
-  static String _text(double q) => q == q.roundToDouble() ? q.toStringAsFixed(0) : '$q';
+  static String _text(double q) => q == q.truncateToDouble() ? q.truncate().toString() : '$q';
 
   bool get isEmpty => _parts.isEmpty;
 
@@ -155,7 +171,7 @@ class PutAwayDraft {
   /// The put-away may not exceed what the delivery being recorded brings.
   FieldErrors validateAgainst(AppLocalizations l10n, Map<int, double> delivered) => {
     for (final p in _parts)
-      if ((double.tryParse(_quantityOf(p, delivered)) ?? 0) > (delivered[p.line.lineNo] ?? 0))
+      if ((_number(_quantityOf(p, delivered)) ?? 0) > (delivered[p.line.lineNo] ?? 0))
         'putaway-${p.line.lineNo}-qty': stockReasonText(l10n, 'over_allocated'),
   };
 
@@ -175,7 +191,7 @@ class PutAwayDraft {
   /// [delivered]: the delivery being recorded, by line number.
   List<PutAwayAllocation> toAllocations({Map<int, double>? delivered}) => [
     for (final p in _parts)
-      if ((double.tryParse(_quantityOf(p, delivered)) ?? 0) > 0)
+      if ((_number(_quantityOf(p, delivered)) ?? 0) > 0)
         PutAwayAllocation(
           lineNo: p.line.lineNo,
           quantity: _quantityOf(p, delivered),
@@ -197,7 +213,7 @@ class PutAwayDraft {
     final errors = <String, String>{};
     for (final p in _parts) {
       if (followsDelivery && p.qty.text.trim().isEmpty) continue;
-      final q = double.tryParse(p.qty.text.trim());
+      final q = _number(p.qty.text);
       if (q == null || q < 0 || q > p.line.remaining) {
         errors['putaway-${p.line.lineNo}-qty'] = stockReasonText(l10n, q == null || q < 0 ? 'quantity_invalid' : 'over_allocated');
       }
@@ -233,7 +249,7 @@ class PutAwayDraft {
         key: ValueKey('putaway-$n-qty'),
         controller: p.qty,
         fieldKey: 'putaway-$n-qty',
-        label: '${l10n.stockPutAwayQuantity} (${p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit})',
+        label: l10n.stockPutAwayQuantity(p.line.unit.isEmpty ? item.inventoryUnit : p.line.unit),
         helper: followsDelivery ? l10n.stockPutAwayAll : null,
         keyboardType: const TextInputType.numberWithOptions(decimal: true),
         inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.]'))],
@@ -320,24 +336,25 @@ class PutAwayDraft {
   }
 }
 
-/// "Put away what remains" of one delivery, in its own sheet.
+/// "Put away what remains" of one delivery, in its own sheet; [onDone] is
+/// called after a put-away that was recorded.
 Future<bool> showPutAwaySheet(
   BuildContext context,
-  WidgetRef ref, {
+  PutAwayServices services, {
   required String workspaceId,
   required PurchaseOrder order,
   required PurchaseOrderReceipt receipt,
   required List<DeliveredLineProgress> lines,
+  required VoidCallback onDone,
 }) async {
   final l10n = context.l10n;
-  final loaded = await loadPutAwayContext(context, ref, workspaceId, lines);
+  final loaded = await loadPutAwayContext(context, services, workspaceId: workspaceId, lines: lines);
   if (loaded == null || !context.mounted) return false;
   final draft = PutAwayDraft(loaded, order, lines);
   if (draft.isEmpty) {
     AppSnack.info(context, l10n.stockPutAwayNothing);
     return false;
   }
-  final commands = ref.read(stockReceivingCommandsProvider);
   final saved = await showAppFormSheet(
     context,
     AppFormSheet(
@@ -348,7 +365,7 @@ Future<bool> showPutAwaySheet(
       validate: () => draft.validate(l10n),
       onSubmit: () async {
         try {
-          await commands.putAway(workspaceId, receipt.id, draft.toAllocations(), draft.requestId);
+          await services.commands.putAway(workspaceId, receipt.id, draft.toAllocations(), draft.requestId);
           return null;
         } on Object catch (e, st) {
           TraceLogger.instance.warn('stock', 'a put-away was not recorded: $e', stackTrace: st);
@@ -358,6 +375,6 @@ Future<bool> showPutAwaySheet(
       builder: draft.build,
     ),
   );
-  if (saved) ref.invalidate(orderPutAwayProvider((workspaceId: workspaceId, orderId: order.id)));
+  if (saved) onDone();
   return saved;
 }

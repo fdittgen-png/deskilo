@@ -55943,8 +55943,8 @@ abstract class AppLocalizations {
   /// #4171 receiving into stock: a label or message
   ///
   /// In en, this message translates to:
-  /// **'Quantity to put away'**
-  String get stockPutAwayQuantity;
+  /// **'Quantity to put away ({unit})'**
+  String stockPutAwayQuantity(String unit);
 
   /// #4171 receiving into stock: a label or message
   ///

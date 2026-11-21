@@ -14323,7 +14323,6 @@ const Set<String> uiLabelKeys = {
   'stockPutAwayLot',
   'stockPutAwayNothing',
   'stockPutAwayPlace',
-  'stockPutAwayQuantity',
   'stockPutAwayRemaining',
   'stockPutAwayVariant',
   'stockReadFailed',

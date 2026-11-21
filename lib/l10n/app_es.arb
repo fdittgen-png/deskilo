@@ -20668,7 +20668,7 @@
   "@stockPutAwayPlace": {
     "description": "#4171 receiving into stock: a label or message"
   },
-  "stockPutAwayProgress": "{line}: {put} colocado(s), {left} por colocar",
+  "stockPutAwayProgress": "{line}: colocado {put}, por colocar {left}",
   "@stockPutAwayProgress": {
     "description": "#4171 receiving into stock: a label or message",
     "placeholders": {
@@ -20683,9 +20683,14 @@
       }
     }
   },
-  "stockPutAwayQuantity": "Cantidad a colocar",
+  "stockPutAwayQuantity": "Cantidad a colocar ({unit})",
   "@stockPutAwayQuantity": {
-    "description": "#4171 receiving into stock: a label or message"
+    "description": "#4171 receiving into stock: a label or message",
+    "placeholders": {
+      "unit": {
+        "type": "String"
+      }
+    }
   },
   "stockPutAwayRemaining": "Colocar lo que falta",
   "@stockPutAwayRemaining": {

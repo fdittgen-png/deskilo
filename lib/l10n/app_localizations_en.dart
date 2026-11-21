@@ -34811,7 +34811,9 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
-  String get stockPutAwayQuantity => 'Quantity to put away';
+  String stockPutAwayQuantity(String unit) {
+    return 'Quantity to put away ($unit)';
+  }
 
   @override
   String get stockPutAwayRemaining => 'Put away what remains';
