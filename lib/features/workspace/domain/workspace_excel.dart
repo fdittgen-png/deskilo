@@ -468,7 +468,8 @@ List<XlsxSheet> buildWorkspaceExcelDetailSheets(WorkspaceExportDetails d) {
       for (final i in d.invoices)
         for (final (n, l) in i.lines.indexed)
           [
-            i.number, n + 1, l.label, l.kind, l.quantity,
+            i.number, n + 1, l.label, l.kind,
+            if (l.commercial == null) l.quantity else l.quantityText,
             l.amountCents / Currencies.minorPerMajor(i.currency), i.currency, l.vatPercent, l.vatCategory,
             if (l.sourceNumber.isEmpty) null else l.sourceNumber,
           ],

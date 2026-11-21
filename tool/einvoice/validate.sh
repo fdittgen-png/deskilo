@@ -132,6 +132,8 @@ kosit() { # kosit <sample> <label> <scenario args...>
 
 kosit en16931-ubl.xml "KoSIT 1.6.3, EN 16931 1.3.16" -s "$work/xr/scenarios.xml" -r "$work/xr"
 kosit en16931-cii.xml "KoSIT 1.6.3, EN 16931 1.3.16" -s "$work/xr/scenarios.xml" -r "$work/xr"
+kosit en16931-ubl-measured.xml "KoSIT 1.6.3, EN 16931 1.3.16 (a measured line, #4162)" -s "$work/xr/scenarios.xml" -r "$work/xr"
+kosit en16931-cii-measured.xml "KoSIT 1.6.3, EN 16931 1.3.16 (a measured line, #4162)" -s "$work/xr/scenarios.xml" -r "$work/xr"
 kosit xrechnung.xml "KoSIT 1.6.3, XRechnung 3.0.2" -s "$work/xr/scenarios.xml" -r "$work/xr"
 kosit peppol-bis.xml "KoSIT 1.6.3, Peppol BIS 3.0.21" -s "$work/bis/scenarios.xml" -r "$work/bis"
 kosit cius-ro.xml "KoSIT 1.6.3, UBL 2.1 + EN 16931 1.3.16" -s "$work/xr/cius-ro-scenarios.xml" -r "$work/xr"
