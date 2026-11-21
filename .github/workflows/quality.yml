@@ -407,6 +407,88 @@ jobs:
             "Tests=${{ steps.tests.outcome }}" \
             "Shard envelope=${{ steps.envelope.outcome }}"
 
+  # #4252 — the UX walks (test/ux/) are their own shard: the gate shard ran about
+  # 3,750 test-seconds and reached its 30-minute limit after every test had
+  # passed (run 44848532543: 26.4 minutes). The two halves carry about 2,040 (gate:
+  # lint, tool, i18n, perf, the demo slice) and 1,730 (this one) test-seconds. The
+  # rule is in tool/quality_rows/selection.dart.
+  gate2:
+    name: quality · test · UX
+    runs-on: ubuntu-latest
+    needs: [tested]
+    if: ${{ !cancelled() && needs.tested.outputs.skip != 'true' }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2
+        with:
+          flutter-version: ${{ env.FLUTTER_VERSION }}
+          channel: stable
+          cache: true
+      # #1446 C3 — the packages, keyed on the lockfile: a miss resolves
+      # them from pub.dev as before; a hit is the same tree pub would
+      # resolve, so nothing about the candidate is inferred from it.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
+      - run: flutter pub get
+
+      - name: Select the files of this shard
+        run: dart run tool/quality_shard.dart select --shard gate2 --out shard/files.txt
+
+      - name: Tests with coverage (UX)
+        id: tests
+        continue-on-error: true
+        run: |
+          mkdir -p shard
+          mapfile -t files < shard/files.txt
+          set +e
+          flutter test --coverage --concurrency "$(nproc)" --file-reporter json:shard/tests.jsonl "${files[@]}"
+          code=$?
+          set -e
+          echo "$code" > shard/tests-exit.txt
+          exit "$code"
+
+      - name: Shard envelope
+        id: envelope
+        if: always()
+        run: |
+          mkdir -p shard
+          cp coverage/lcov.info shard/lcov.info 2>/dev/null || true
+          dart run tool/quality_shard.dart envelope --shard gate2 \
+            --exit-code "$(cat shard/tests-exit.txt 2>/dev/null || echo 1)" \
+            --stream shard/tests.jsonl --lcov shard/lcov.info \
+            --candidate "$GITHUB_SHA" --run-id "$GITHUB_RUN_ID" \
+            --run-attempt "$GITHUB_RUN_ATTEMPT" \
+            --profile 'quality.yml: flutter test --coverage (shard gate2)' \
+            --sdk "$(flutter --version | head -n 1)" \
+            --out shard/envelope.json
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: testshard-gate2-attempt-${{ github.run_attempt }}
+          retention-days: 14
+          if-no-files-found: warn
+          path: |
+            shard/envelope.json
+            shard/tests.jsonl
+            shard/lcov.info
+
+      # The job is red when its tests are, and when its envelope could not
+      # be written; the aggregate additionally refuses a shard whose
+      # artifact is missing or does not validate.
+      - name: Gate
+        if: always()
+        run: |
+          bash scripts/job_gate.sh \
+            "Tests=${{ steps.tests.outcome }}" \
+            "Shard envelope=${{ steps.envelope.outcome }}"
+
   # #2600 — the features, in shards of similar cost. The split is a
   # rule in tool/quality_rows/selection.dart; a new feature folder lands in
   # the last by default.
@@ -853,7 +935,7 @@ jobs:
     name: analyze · l10n gate · test · coverage
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    needs: [tested, gate, static, money, money2, workspace, rest, core]
+    needs: [tested, gate, gate2, static, money, money2, workspace, rest, core]
     if: always() && needs.tested.outputs.skip != 'true'
     steps:
       # #3516 -- two commits: the candidate and its first parent, which is the
@@ -878,7 +960,7 @@ jobs:
           restore-keys: pub-${{ runner.os }}-${{ env.FLUTTER_VERSION }}-
       - run: flutter pub get
 
-      # #2639 — this attempt's six shards (#3166), each into the directory
+      # #2639 — this attempt's seven shards (#3166, #4252), each into the directory
       # the reader expects; a shard this attempt did not produce is looked
       # up in an earlier attempt below (#3735).
       - uses: actions/download-artifact@v4
@@ -888,6 +970,13 @@ jobs:
         with:
           name: testshard-gate-attempt-${{ github.run_attempt }}
           path: shards/testshard-gate
+      - uses: actions/download-artifact@v4
+        id: dl_gate2
+        if: always()
+        continue-on-error: true
+        with:
+          name: testshard-gate2-attempt-${{ github.run_attempt }}
+          path: shards/testshard-gate2
       - uses: actions/download-artifact@v4
         id: dl_money
         if: always()
@@ -937,7 +1026,7 @@ jobs:
           # Which attempt each shard's result came from, for the report.
           mkdir -p report
           : > report/shard-attempts.txt
-          for pair in gate:${{ steps.dl_gate.outcome }} money:${{ steps.dl_money.outcome }} \
+          for pair in gate:${{ steps.dl_gate.outcome }} gate2:${{ steps.dl_gate2.outcome }} money:${{ steps.dl_money.outcome }} \
                       workspace:${{ steps.dl_workspace.outcome }} rest:${{ steps.dl_rest.outcome }} \
                       money2:${{ steps.dl_money2.outcome }} core:${{ steps.dl_core.outcome }}; do
             shard=${pair%%:*}
@@ -1103,6 +1192,7 @@ jobs:
         run: |
           bash scripts/job_gate.sh \
             "Fast gate and its tests=${{ needs.gate.result }}" \
+            "UX tests=${{ needs.gate2.result }}" \
             "Static gates=${{ needs.static.result }}" \
             "Money a-m and reservation tests=${{ needs.money.result }}" \
             "Money n-z, me and auth tests=${{ needs.money2.result }}" \
@@ -1611,7 +1701,7 @@ jobs:
   report:
     name: quality · report
     runs-on: ubuntu-latest
-    needs: [tested, classify, gate, static, money, money2, workspace, rest, core, code, database]
+    needs: [tested, classify, gate, gate2, static, money, money2, workspace, rest, core, code, database]
     if: always() && needs.tested.outputs.skip != 'true'
     steps:
       - uses: actions/checkout@v4
@@ -1673,6 +1763,7 @@ jobs:
           bash scripts/job_gate.sh \
             "classify the change=${{ needs.classify.result }}" \
             "quality · test · gates=${{ needs.gate.result }}" \
+            "quality · test · UX=${{ needs.gate2.result }}" \
             "quality · static gates=${{ needs.static.result }}" \
             "quality · test · money a-m and reservations=${{ needs.money.result }}" \
             "quality · test · money n-z, me and auth=${{ needs.money2.result }}" \

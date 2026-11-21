@@ -15,6 +15,7 @@ const _required = 'analyze · l10n gate · test · coverage';
 const _attempt = '-attempt-\${{ github.run_attempt }}';
 const _shardJobs = {
   gateShard: 'gate',
+  gate2Shard: 'gate2',
   moneyShard: 'money',
   money2Shard: 'money2',
   workspaceShard: 'workspace',
@@ -29,6 +30,7 @@ const _shardJobs = {
 /// hung job instead of holding the runner for three quarters of an hour.
 const _timeouts = {
   gateShard: '30',
+  gate2Shard: '30',
   moneyShard: '30',
   money2Shard: '30',
   workspaceShard: '30',
@@ -219,6 +221,7 @@ void main() {
         containsAll([
           for (final n in const [
             'testshard-gate',
+            'testshard-gate2',
             'testshard-money',
             'testshard-money2',
             'testshard-workspace',
