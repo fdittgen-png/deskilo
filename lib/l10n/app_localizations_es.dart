@@ -5793,6 +5793,12 @@ class AppLocalizationsEs extends AppLocalizations {
   }
 
   @override
+  String get businessEntriesTitle => 'Su negocio';
+
+  @override
+  String get businessEntryNewInvoice => 'Facturar a un cliente';
+
+  @override
   String get businessExampleApproveBookings =>
       'Por ejemplo: un miembro pide la sala de reuniones para el jueves y la responsable la confirma.';
 

@@ -500,6 +500,9 @@ Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space
 - Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
 - Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
 
+- **Freiberufler** ist für eine Person, die Kunden Dienstleistungen verkauft: Orte bleiben ausgeschaltet, eingeschaltet werden Rechnungen, Rechnungskunden, Angebote und Einkäufe, nie ein Anbieter, Nachrichten oder eine öffentliche Seite. Es ist eine eigene Art: **Dienstleistung** bleibt, wie es war.
+- Me nennt die Art, die jedes Ihrer Geschäfte gewählt hat, neben Land und Währung.
+
 **Siehe auch:** [Funktionen](help:user.features.processes)
 
 <!-- anchor: user.workspace.settings.country -->

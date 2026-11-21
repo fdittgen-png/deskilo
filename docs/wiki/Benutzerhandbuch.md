@@ -449,6 +449,7 @@ Sie öffnen den Raum und möchten zuerst sehen, was auf Sie wartet, dann die Zah
 
 **Gut zu wissen**
 
+- Ein Geschäft ohne Orte öffnet auf **Ihr Geschäft**: **Einem Kunden eine Rechnung stellen**, **Angebote**, **Kunden**, **Rechnungen** und **Me**, jeweils nur, wenn die Funktion eingeschaltet ist und Ihre Rolle sie nutzen darf.
 - Sie sehen nur die Zahlen, die Ihre Rolle lesen darf. Eine Zahl, die nicht gelesen werden konnte, zeigt **Nicht verfügbar**, nie null.
 - **Aktive Mitgliedschaften** zählt Mitgliedschaften, nicht Personen. **Überfällige Forderungen** lässt Rechnungen ohne nachgewiesene Fälligkeit oder in der Warteschleife weg und zählt sie getrennt. Beides sind Zahlen von heute: Es wird kein Verlauf aufbewahrt.
 - **Anpassen** braucht das Recht, die Zahlen des Raums zu lesen, und den Berichtsdesigner.
@@ -3618,6 +3619,9 @@ Sie führen ein Studio, eine Praxis oder einen Salon statt eines Coworking-Space
 - Nichts ändert sich vor **Speichern**; **Abbrechen** lässt alles, wie es ist. Eine spätere Wahl schlägt erneut vor und schaltet nie stillschweigend um.
 - Eine noch nicht stabile Funktion wird nur eingeschaltet, wenn Sie sie ankreuzen; sonst später unter **Funktionen**.
 - Coworking schlägt nichts vor, und Plätze auszuschalten löscht nichts: Schalten Sie sie wieder ein, und Raumplan und Buchungen sind zurück.
+
+- **Freiberufler** ist für eine Person, die Kunden Dienstleistungen verkauft: Orte bleiben ausgeschaltet, eingeschaltet werden Rechnungen, Rechnungskunden, Angebote und Einkäufe, nie ein Anbieter, Nachrichten oder eine öffentliche Seite. Es ist eine eigene Art: **Dienstleistung** bleibt, wie es war.
+- Me nennt die Art, die jedes Ihrer Geschäfte gewählt hat, neben Land und Währung.
 
 **Siehe auch:** [Funktionen](#ganze-prozesse-ein--oder-ausschalten)
 

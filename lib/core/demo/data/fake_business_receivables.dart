@@ -7,6 +7,7 @@
 import 'package:deskilo_invoice_model/deskilo_invoice_model.dart';
 
 import '../../../features/money/domain/business_receivables.dart';
+import '../../../features/workspace/domain/workspace_permission.dart';
 import 'money_repository.dart';
 
 class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository {
@@ -15,21 +16,40 @@ class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository
   /// The money store of a space, or null when the Demo keeps none for it.
   final FakeMoneyRepository? Function(String workspaceId) _moneyOf;
 
+  /// The space's money, when the person reads finances there as the server asks
+  /// (`viewFinances`, 0830): a business with no store, or one where the person
+  /// does not hold it, refuses.
+  FakeMoneyRepository _readable(String workspaceId) {
+    final money = _moneyOf(workspaceId);
+    final held = money?.eventRepository?.viewerPermissions?.call();
+    if (money == null ||
+        (held != null && !held.contains(WorkspacePermission.viewFinances))) {
+      throw const BusinessReceivablesRefusal();
+    }
+    return money;
+  }
+
   @override
   Future<BusinessReceivables> summary(String workspaceId) async {
-    final money = _moneyOf(workspaceId);
-    if (money == null) throw const BusinessReceivablesRefusal();
-    final byCurrency = <String, ({int collect, int refund, int n})>{};
+    final money = _readable(workspaceId);
+    final byCurrency = <String, ({int collect, int declared, int refund, int n})>{};
+    final claimed = _claimedInvoiceIds(money);
     for (final Invoice i in money.invoices) {
       if (i.isVoided || i.settledByInvoiceId != null) continue;
       final paid = money.invoiceMatchesStore[i.id]?.paidCents ?? 0;
       final owed = i.totalCents - paid;
       final cents = i.totalCents < 0 ? -i.totalCents : owed;
       if (cents <= 0) continue;
-      final was = byCurrency[i.currency] ?? (collect: 0, refund: 0, n: 0);
+      final was = byCurrency[i.currency] ?? (collect: 0, declared: 0, refund: 0, n: 0);
+      final isClaimed = i.totalCents >= 0 && claimed.contains(i.id);
       byCurrency[i.currency] = i.totalCents < 0
-          ? (collect: was.collect, refund: was.refund + cents, n: was.n + 1)
-          : (collect: was.collect + cents, refund: was.refund, n: was.n + 1);
+          ? (collect: was.collect, declared: was.declared, refund: was.refund + cents, n: was.n + 1)
+          : (
+              collect: was.collect + (isClaimed ? 0 : cents),
+              declared: was.declared + (isClaimed ? cents : 0),
+              refund: was.refund,
+              n: was.n + 1,
+            );
     }
     return BusinessReceivables(
       workspaceId: workspaceId,
@@ -38,7 +58,7 @@ class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository
           BusinessReceivablesRow(
             currency: e.key,
             toCollectCents: e.value.collect,
-            declaredCents: 0,
+            declaredCents: e.value.declared,
             receivedUnmatchedCents: 0,
             awaitingCents: 0,
             refundDueCents: e.value.refund,
@@ -47,6 +67,13 @@ class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository
       ],
     );
   }
+
+  /// The invoices a payment declared and not withdrawn names: the server buckets
+  /// them as declared, not to collect (0830).
+  static Set<String> _claimedInvoiceIds(FakeMoneyRepository money) => {
+    for (final e in money.claims.entries)
+      if (!money.withdrawnClaims.contains(e.key)) ...e.value,
+  };
 
   static const _pageSize = 50;
 
@@ -57,9 +84,9 @@ class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository
     ReceivableState? state,
     ReceivablesCursor? after,
   }) async {
-    final money = _moneyOf(workspaceId);
-    if (money == null) throw const BusinessReceivablesRefusal();
+    final money = _readable(workspaceId);
     final rows = <ReceivableInvoiceRow>[];
+    final claimed = _claimedInvoiceIds(money);
     for (final Invoice i in money.invoices) {
       if (i.isVoided || i.settledByInvoiceId != null || i.currency != currency) {
         continue;
@@ -68,7 +95,11 @@ class FakeBusinessReceivablesRepository implements BusinessReceivablesRepository
       final credit = i.totalCents < 0;
       final cents = credit ? -i.totalCents : i.totalCents - paid;
       if (cents <= 0) continue;
-      final rowState = credit ? ReceivableState.refundDue : ReceivableState.toCollect;
+      final rowState = credit
+          ? ReceivableState.refundDue
+          : claimed.contains(i.id)
+          ? ReceivableState.declared
+          : ReceivableState.toCollect;
       if (state != null && state != rowState) continue;
       rows.add(
         ReceivableInvoiceRow(

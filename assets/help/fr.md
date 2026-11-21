@@ -430,6 +430,7 @@ Vous ouvrez l'espace et voulez voir d'abord ce qui vous attend, puis les chiffre
 
 **Bon à savoir**
 
+- Une activité sans lieux s’ouvre sur **Votre activité** : **Facturer un client**, **Devis**, **Clients**, **Factures** et **Me**, chacun seulement quand sa fonction est activée et que votre rôle peut l’utiliser.
 - Vous ne voyez que les chiffres que votre rôle peut lire. Un chiffre qui n'a pas pu être lu affiche **Non disponible**, jamais zéro.
 - **Adhésions actives** compte des adhésions, pas des personnes. **Créances échues** laisse de côté les factures sans échéance prouvée ou en attente, et les compte à part. Ce sont des chiffres du jour : aucun historique n'est conservé.
 - **Personnaliser** demande le droit de lire les chiffres de l'espace et le concepteur de rapports.
@@ -3450,6 +3451,9 @@ Vous tenez un studio, un cabinet ou un salon plutôt qu’un espace de coworking
 - Rien ne change avant **Enregistrer** ; **Annuler** laisse tout tel quel. Choisir un genre plus tard propose à nouveau et ne change jamais rien en silence.
 - Une fonction pas encore stable n’est activée que si vous la cochez ; sinon activez-la plus tard dans **Fonctions**.
 - Le coworking ne propose rien, et désactiver les places ne supprime rien : réactivez-les et le plan et les réservations reviennent.
+
+- **Indépendant** est pour une personne seule qui vend des services à des clients : il garde les lieux désactivés et active la facturation, les clients de facturation, les devis et les achats, jamais un prestataire, des messages ni une page publique. C’est un type à part entière : **Service** reste inchangé.
+- Me nomme le type que chacune de vos activités a choisi, à côté de son pays et de sa devise.
 
 **Voir aussi:** [Fonctions](help:user.features.processes)
 

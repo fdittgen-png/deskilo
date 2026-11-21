@@ -37,7 +37,7 @@ FakeCustomerQuoteRepository seedDemoCustomerQuotes(
       lines: const [_consulting],
       issuedOn: today.subtract(const Duration(days: 5)),
       validUntil: today.add(const Duration(days: 25)),
-      notes: 'Payable within 30 days of the invoice.',
+      extras: (notes: 'Payable within 30 days of the invoice.', amendments: const []),
     )
     ..seedDraft(
       workspaceId,

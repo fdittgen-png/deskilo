@@ -18,7 +18,8 @@
         "test/app/route_outcomes_golden_test.dart",
         "test/features/task_recorder/coverage_manifest_test.dart",
         "test/lint/route_registry_test.dart",
-        "test/lint/recorder_vocabulary_drift_test.dart"
+        "test/lint/recorder_vocabulary_drift_test.dart",
+        "test/ux/desk_guard_pages_test.dart"
       ]
     },
     {
@@ -64,7 +65,9 @@
       "tests": [
         "test/lint/setup_levels_web_test.dart",
         "test/lint/setup_levels_contract_test.dart",
-        "test/features/workspace/setup_levels_test.dart"
+        "test/features/workspace/setup_levels_test.dart",
+        "test/features/workspace/setup_page_contract_test.dart",
+        "test/features/workspace/setup_page_import_contract_test.dart"
       ]
     },
     {
@@ -102,7 +105,10 @@
         "assets/instance/contract.txt",
         "assets/instance/policies.txt"
       ],
-      "tests": [],
+      "tests": [
+        "test/tool/settings_seed_test.dart",
+        "test/tool/project_scale_test.dart"
+      ],
       "note": "database -- push the branch, run `gh workflow run db-preview.yml --ref <branch>` and wait for its verdict (about 8 minutes); commit the contract and the policies it uploads when it says they differ"
     },
     {
@@ -130,6 +136,14 @@
       ],
       "tests": [
         "test/core/demo/"
+      ]
+    },
+    {
+      "patterns": [
+        "lib/features/*/presentation/**"
+      ],
+      "tests": [
+        "test/features/workspace/feature_lifecycle_test.dart"
       ]
     },
     {
@@ -245,6 +259,16 @@
         "test/lint/no_test_file_imports_test.dart"
       ],
       "note": "#3603 -- what stood on the bottom bar, and what found the desk's entries by a bare icon: tests that pump the app and travel through the bar or its raised button (test/helpers/navigation.dart) or tap the settings gear (test/helpers/screens/*). From the expanded window class the desk replaces the bar and repeats the entries, so a shell change reaches them."
+    },
+    {
+      "patterns": [
+        "assets/help/**",
+        "docs/wiki/**",
+        "lib/l10n/_fragments/**",
+        "pubspec.yaml"
+      ],
+      "tests": [],
+      "note": "web size -- these files count toward the web size budgets in tool/web/size_budget.json (assets toward on_demand_asset_bytes, strings toward first_load and settled wire bytes); when the last build left under 1 % headroom on one of them, raise its max by this branch's added bytes in the same pull request, with the reason in its about text, or the build job fails."
     }
   ],
   "no_importer_search": [
