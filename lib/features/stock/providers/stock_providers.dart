@@ -8,6 +8,7 @@ import '../data/supabase_stock_config_commands.dart';
 import '../data/supabase_stock_operations.dart';
 import '../data/supabase_stock_queries.dart';
 import '../data/supabase_stock_receiving_commands.dart';
+import '../domain/stock_config.dart';
 import '../domain/stock_config_commands.dart';
 import '../domain/stock_operations.dart';
 import '../domain/stock_page.dart';
@@ -110,5 +111,13 @@ final stockOperationsProvider = Provider<StockOperations>(
 final openTransfersProvider = FutureProvider.autoDispose
     .family<List<StockTransfer>, String>(
       (ref, workspaceId) => ref.watch(stockOperationsProvider).openTransfers(workspaceId),
+      retry: (_, _) => null,
+    );
+
+/// Every place of a business with its kind and the place it is inside, for
+/// the sheets that choose where goods come from and go to.
+final stockPlaceConfigsProvider = FutureProvider.autoDispose
+    .family<List<StockPlaceConfig>, String>(
+      (ref, workspaceId) => ref.watch(stockConfigCommandsProvider).places(workspaceId),
       retry: (_, _) => null,
     );

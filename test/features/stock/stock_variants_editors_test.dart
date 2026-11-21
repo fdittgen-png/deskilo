@@ -7,6 +7,7 @@
 // variant reads back with its label; a dimension gains a value; a supplier
 // article is mapped once and refused for a unit the item does not list.
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
@@ -37,7 +38,7 @@ Future<void> _open(WidgetTester tester, DemoStockConfigCommands config, Size siz
     size: size,
     overrides: [
       ...standardTestOverrides(),
-      stockQueriesProvider.overrideWithValue(const DemoStockQueries('ws-1')),
+      stockQueriesProvider.overrideWithValue(DemoStockQueries(DemoStockLedger('ws-1', config))),
       stockConfigCommandsProvider.overrideWithValue(config),
       myPermissionsProvider.overrideWithValue({WorkspacePermission.viewStock, WorkspacePermission.manageStock}),
     ],

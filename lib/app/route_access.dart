@@ -47,6 +47,8 @@ const Map<String, Set<WorkspacePermission>> routePermissions = {
   // #4161 — the stock records and one movement: who sees or moves the stock.
   '/stock': {_P.viewStock, _P.manageStock},
   '/stock/movements/:id': {_P.viewStock, _P.manageStock},
+  // #4170 — the goods on their way and the commands that move goods: seen with the stock, run with manageStock.
+  '/stock/transfers': {_P.viewStock, _P.manageStock},
   '/money/customers': {_P.manageBillingCustomers, _P.issueInvoices, _P.viewFinances},
   // #4166 — the quotes read under the right to issue or the finances; the server decides who acts.
   '/money/quotes': {_P.issueInvoices, _P.viewFinances},

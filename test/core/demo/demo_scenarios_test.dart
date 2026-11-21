@@ -22,6 +22,7 @@ import 'package:deskilo/core/demo/data/book_period_repository.dart';
 import 'package:deskilo/core/demo/data/book_profile_repository.dart';
 import 'package:deskilo/core/demo/data/demo_kiosk_devices.dart';
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
 import 'package:deskilo/core/demo/data/fake_organisation_repository.dart';
@@ -1255,7 +1256,9 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
     'Ada reads the shop stock and finds the syrup received in thirds of a '
     'litre at exactly 0.999999 l',
     (w) async {
-      const stock = DemoStockQueries(demoFirstSpaceId);
+      final stock = DemoStockQueries(
+        DemoStockLedger(demoFirstSpaceId, DemoStockConfigCommands(demoFirstSpaceId)),
+      );
       final onHand = await stock.onHandPage(demoFirstSpaceId);
       final moves = await stock.movementsPage(demoFirstSpaceId);
       return onHand.rows.any(
@@ -1314,7 +1317,8 @@ final Map<WorkspaceFeature, _Scenario> _scenarios = {
       );
       seedDemoPurchaseOrders(orders, w.now);
       final config = DemoStockConfigCommands(demoFirstSpaceId);
-      final receiving = DemoStockReceivingCommands(demoFirstSpaceId, orders, config);
+      final ledger = DemoStockLedger(demoFirstSpaceId, config);
+      final receiving = DemoStockReceivingCommands(demoFirstSpaceId, orders, config, ledger);
       final place = (await config.places(demoFirstSpaceId)).firstWhere((p) => p.code == 'MAIN').id;
       await receiving.putAway(demoFirstSpaceId, 'demo-receipt-3', [
         PutAwayAllocation(lineNo: 1, quantity: '20', locationId: place),

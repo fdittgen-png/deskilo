@@ -47,6 +47,14 @@ class StockScreen extends ConsumerWidget {
       appBar: AppBar(
         title: PageTitle(l10n.permModuleStock),
         actions: [
+          // #4170: the goods on their way, and the commands that move goods
+          if (workspaceId != null)
+            IconButton(
+              key: const ValueKey('stock-transfers'),
+              icon: const Icon(Icons.local_shipping_outlined),
+              tooltip: l10n.stockTransfersTitle,
+              onPressed: () => context.go('/stock/transfers'),
+            ),
           if (workspaceId != null && mayManage && chosen != null)
             IconButton(
               key: const ValueKey('stock-edit-item'),

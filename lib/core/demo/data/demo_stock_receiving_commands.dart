@@ -13,15 +13,19 @@ import 'package:deskilo/features/stock/domain/stock_receiving.dart';
 import 'package:deskilo_money_kernel/deskilo_money_kernel.dart';
 
 import 'demo_stock_config_commands.dart';
+import 'demo_stock_ledger.dart';
 import 'purchase_order_repository.dart';
 
 /// The in-memory put-away of the reference business.
 class DemoStockReceivingCommands implements StockReceivingCommands {
-  DemoStockReceivingCommands(this.workspaceId, this._orders, this._config);
+  DemoStockReceivingCommands(this.workspaceId, this._orders, this._config, this._ledger);
 
   final String workspaceId;
   final FakePurchaseOrderRepository _orders;
   final DemoStockConfigCommands _config;
+
+  /// The ONE Demo ledger: what is put away is what the Stock screen reads.
+  final DemoStockLedger _ledger;
 
   final List<({ReceiptAllocation row, String receiptId})> _rows = [];
   final Map<String, PutAwayResult> _answers = {};
@@ -103,10 +107,47 @@ class DemoStockReceivingCommands implements StockReceivingCommands {
     for (var i = 0; i < allocations.length; i++) {
       planned.add(await _plan(receipt, order, places, running, i, allocations[i]));
     }
-    for (final row in planned) {
+    // booked on the ledger the Stock screen reads: one movement per part, from the supplier
+    final written = <ReceiptAllocation>[];
+    for (var i = 0; i < planned.length; i++) {
+      final row = planned[i];
+      final part = allocations[i];
+      final item = _ledger.itemOf(row.itemId)!;
+      final moved = await _ledger.post(
+        item: item,
+        quantity: row.inventoryQuantity,
+        from: 'demo-place-supplier',
+        to: row.locationId,
+        reason: 'receipt',
+        lotId: (part.lotCode ?? '').isEmpty ? null : row.lotId,
+        lotCode: (part.lotCode ?? '').isEmpty ? null : part.lotCode,
+        variantId: row.variantId,
+        entered: row.enteredQuantity,
+        enteredUnit: row.enteredUnit,
+      );
+      written.add(
+        ReceiptAllocation(
+          id: row.id,
+          receiptLineId: row.receiptLineId,
+          itemId: row.itemId,
+          variantId: row.variantId,
+          lotId: row.lotId,
+          locationId: row.locationId,
+          movementId: moved.id,
+          enteredQuantity: row.enteredQuantity,
+          inventoryQuantity: row.inventoryQuantity,
+          lineNo: row.lineNo,
+          enteredUnit: row.enteredUnit,
+          orderReference: row.orderReference,
+          supplierName: row.supplierName,
+          lineText: row.lineText,
+        ),
+      );
+    }
+    for (final row in written) {
       _rows.add((row: row, receiptId: receiptId));
     }
-    return planned;
+    return written;
   }
 
   /// One part, refused as the server refuses it, or the allocation it makes.

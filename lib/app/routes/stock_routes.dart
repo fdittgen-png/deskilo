@@ -8,6 +8,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../features/stock/presentation/stock_movement_screen.dart';
 import '../../features/stock/presentation/stock_screen.dart';
+import '../../features/stock/presentation/stock_transfers_screen.dart';
 import '../../features/workspace/domain/workspace_feature.dart';
 import '../route_access.dart';
 import '../route_env.dart';
@@ -24,6 +25,11 @@ List<RouteBase> stockRoutes(RouteEnv env) {
       redirect: env.guard(access),
       builder: (context, state) => const StockScreen(),
       routes: [
+        GoRoute(
+          path: 'transfers',
+          redirect: env.guard(access),
+          builder: (context, state) => const StockTransfersScreen(),
+        ),
         GoRoute(
           path: 'movements/:id',
           redirect: env.guard(access),

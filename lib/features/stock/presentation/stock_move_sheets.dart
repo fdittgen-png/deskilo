@@ -1,0 +1,188 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4170 (B) -- moving goods and taking them out, as two small forms: where the
+// goods are taken from, where they go (or that they are used or lost), which
+// item and how much. Two places of one site move the goods at once; places of
+// different sites load them onto the way, to be received on the other side. A
+// refusal says why under the sheet and moves nothing; one request id per form
+// makes a retry answer once. The quantity is read exactly, as it was typed.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import '../../../core/format/decimal_input.dart';
+import '../../../core/ids/request_id.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_kit.dart';
+import '../../../l10n/app_localizations.dart';
+import '../domain/stock_config.dart';
+import '../domain/stock_operations.dart';
+import '../domain/stock_page.dart';
+import '../domain/stock_sites.dart';
+import 'stock_config_text.dart';
+
+String _placeTitle(StockPlaceConfig p) => p.name.isEmpty ? p.code : '${p.code} · ${p.name}';
+
+/// Moves goods ([takeOut] false) or takes them out ([takeOut] true); true when
+/// done.
+Future<bool> showStockMoveSheet(
+  BuildContext context,
+  StockOperations operations, {
+  required String workspaceId,
+  required List<StockItem> items,
+  required List<StockPlaceConfig> places,
+  bool takeOut = false,
+}) {
+  final l10n = context.l10n;
+  final draft = _MoveDraft(items, places, takeOut: takeOut, locale: Localizations.localeOf(context).toString());
+  return showAppFormSheet(
+    context,
+    AppFormSheet(
+      title: takeOut ? l10n.stockTakeOutTitle : l10n.stockMoveTitle,
+      submitLabel: takeOut ? l10n.stockTakeOutSubmit : l10n.stockMoveSubmit,
+      submitKey: const ValueKey('stock-move-submit'),
+      onDispose: draft.fields.dispose,
+      validate: () => draft.validate(l10n),
+      onSubmit: () => draft.submit(l10n, operations, workspaceId),
+      builder: draft.build,
+    ),
+  );
+}
+
+class _MoveDraft {
+  _MoveDraft(this.items, List<StockPlaceConfig> places, {required this.takeOut, required this.locale})
+    : places = stockRealPlaces(places),
+      all = places,
+      fields = FormControllers({'quantity': ''});
+
+  final List<StockItem> items;
+  final List<StockPlaceConfig> places;
+  final List<StockPlaceConfig> all;
+  final bool takeOut;
+  final String locale;
+  final FormControllers fields;
+
+  /// One per form: a retry of the same submit answers once.
+  final String requestId = newRequestId();
+  String? item;
+  String? from;
+  String? to;
+  StockTakeOutReason reason = StockTakeOutReason.consumption;
+
+  StockItem? get chosen => items.where((i) => i.id == item).firstOrNull;
+
+  bool get betweenSites => from != null && to != null && stockSiteOf(from!, all) != stockSiteOf(to!, all);
+
+  ExactQuantity? get quantity => exactQuantityFromInput(fields.text('quantity'), locale: locale).value;
+
+  FieldErrors validate(AppLocalizations l10n) => {
+    if (item == null) 'item': stockReasonText(l10n, 'item_foreign'),
+    if (from == null) 'from': stockReasonText(l10n, 'location_foreign'),
+    if (!takeOut && (to == null || to == from)) 'to': stockReasonText(l10n, 'location_foreign'),
+    if (quantity == null || quantity! <= ExactQuantity.zero) 'quantity': stockReasonText(l10n, 'quantity_invalid'),
+  };
+
+  Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
+    final line = StockLineDraft(
+      itemId: item!,
+      quantity: quantity!.text,
+      fromLocationId: from!,
+      toLocationId: takeOut ? null : to,
+    );
+    try {
+      if (takeOut) {
+        await operations.takeOut(workspaceId, reason, [line], requestId);
+      } else if (betweenSites) {
+        await operations.load(workspaceId, to!, [line], requestId);
+      } else {
+        await operations.transfer(workspaceId, [line], requestId);
+      }
+      return null;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'goods were not moved: $e', stackTrace: st);
+      return stockSaveProblem(l10n, e);
+    }
+  }
+
+  Widget _dropdown(
+    BuildContext context,
+    VoidCallback refresh, {
+    required String keyName,
+    required String label,
+    required String? value,
+    required List<(String, String)> options,
+    required ValueChanged<String?> onChanged,
+  }) {
+    // read below the form's scope, where its errors are
+    return Builder(
+      builder: (scoped) => DropdownButtonFormField<String?>(
+        key: ValueKey('stock-move-$keyName'),
+        initialValue: value,
+        isExpanded: true,
+        decoration: InputDecoration(labelText: label, errorText: FormErrorsScope.maybeOf(scoped)?.errors[keyName]),
+        items: [for (final (id, text) in options) DropdownMenuItem<String?>(value: id, child: Text(text))],
+        onChanged: (v) {
+          onChanged(v);
+          refresh();
+        },
+      ),
+    );
+  }
+
+  List<Widget> build(BuildContext context, VoidCallback refresh) {
+    final l10n = context.l10n;
+    final unit = chosen?.unit ?? '';
+    final options = [for (final p in places) (p.id, _placeTitle(p))];
+    return [
+      if (takeOut) ...[
+        SegmentedButton<StockTakeOutReason>(
+          key: const ValueKey('stock-takeout-reason'),
+          showSelectedIcon: false,
+          segments: [
+            ButtonSegment(value: StockTakeOutReason.consumption, label: Text(l10n.stockTakeOutUsed)),
+            ButtonSegment(value: StockTakeOutReason.loss, label: Text(l10n.stockTakeOutLoss)),
+          ],
+          selected: {reason},
+          onSelectionChanged: (s) {
+            reason = s.first;
+            refresh();
+          },
+        ),
+        const FormGap(),
+      ],
+      _dropdown(
+        context,
+        refresh,
+        keyName: 'item',
+        label: l10n.stockMoveItem,
+        value: item,
+        options: [for (final i in items) (i.id, i.name)],
+        onChanged: (v) => item = v,
+      ),
+      const FormGap(),
+      _dropdown(context, refresh, keyName: 'from', label: l10n.stockMoveFrom, value: from, options: options, onChanged: (v) => from = v),
+      if (!takeOut) ...[
+        const FormGap(),
+        _dropdown(context, refresh, keyName: 'to', label: l10n.stockMoveTo, value: to, options: options, onChanged: (v) => to = v),
+        if (from != null && to != null && to != from) ...[
+          const FormGap(),
+          Text(
+            key: ValueKey(betweenSites ? 'stock-move-other-site' : 'stock-move-same-site'),
+            betweenSites ? l10n.stockMoveOtherSite : l10n.stockMoveSameSite,
+            style: Theme.of(context).textTheme.bodySmall,
+          ),
+        ],
+      ],
+      const FormGap(),
+      AppTextField(
+        key: const ValueKey('stock-move-quantity'),
+        controller: fields['quantity'],
+        fieldKey: 'quantity',
+        label: l10n.stockMoveQuantity(unit),
+        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+      ),
+    ];
+  }
+}

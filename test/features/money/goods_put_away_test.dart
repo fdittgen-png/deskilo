@@ -7,6 +7,7 @@
 // nothing offered to a buyer who does not manage the stock. The Demo's receiving
 // answers by the server's rules (pgTAP 490).
 import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
+import 'package:deskilo/core/demo/data/demo_stock_ledger.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/core/demo/data/demo_stock_receiving_commands.dart';
 import 'package:deskilo/core/demo/data/purchase_order_repository.dart';
@@ -65,18 +66,20 @@ Future<(FakePurchaseOrderRepository, FakeSupplierRepository)> _orders() async {
 }
 
 class _World {
-  _World(this.repo, this.suppliers, this.config, this.receiving);
+  _World(this.repo, this.suppliers, this.config, this.receiving, this.ledger);
 
   final FakePurchaseOrderRepository repo;
   final FakeSupplierRepository suppliers;
   final DemoStockConfigCommands config;
   final DemoStockReceivingCommands receiving;
+  final DemoStockLedger ledger;
 }
 
 Future<_World> _world() async {
   final (repo, suppliers) = await _orders();
   final config = DemoStockConfigCommands('ws-1');
-  return _World(repo, suppliers, config, DemoStockReceivingCommands('ws-1', repo, config));
+  final ledger = DemoStockLedger('ws-1', config);
+  return _World(repo, suppliers, config, DemoStockReceivingCommands('ws-1', repo, config, ledger), ledger);
 }
 
 Widget _app(_World w, Set<WorkspacePermission> rights) => purchaseOrdersApp([
@@ -93,7 +96,7 @@ Widget _app(_World w, Set<WorkspacePermission> rights) => purchaseOrdersApp([
   purchaseOrderRepositoryProvider.overrideWithValue(w.repo),
   // what the composition root wires: the stock's own part of the order pane
   purchaseOrderStockSeamProvider.overrideWithValue(const StockPurchaseOrderSeam()),
-  stockQueriesProvider.overrideWithValue(const DemoStockQueries('ws-1')),
+  stockQueriesProvider.overrideWithValue(DemoStockQueries(w.ledger)),
   stockConfigCommandsProvider.overrideWithValue(w.config),
   stockReceivingCommandsProvider.overrideWithValue(w.receiving),
   servicesProvider.overrideWith((ref) async => const <ServiceItem>[]),

@@ -1,0 +1,336 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+//
+// #4170 (B) -- Transfers: the goods that are on their way between two sites,
+// what each load still holds, and the actions that move goods: moving them
+// (at once inside a site, loaded onto the way between sites), receiving what
+// arrived (all or in part, onto a place of the destination site) and taking
+// goods out for use or as a loss. What is not received stays on the way and
+// stays visible. The server decides who may; this screen asks the same.
+import 'package:deskilo_money_kernel/deskilo_money_kernel.dart' show ExactQuantity;
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import '../../../core/format/decimal_input.dart';
+import '../../../core/ids/request_id.dart';
+import '../../../core/l10n/context_l10n.dart';
+import '../../../core/theme/app_spacing.dart';
+import '../../../core/trace/trace_logger.dart';
+import '../../../core/ui/form_kit.dart';
+import '../../../core/ui/kit/page_title.dart';
+import '../../../core/ui/loading_view.dart';
+import '../../../l10n/app_localizations.dart';
+import '../../workspace/domain/workspace_feature.dart';
+import '../../workspace/domain/workspace_permission.dart';
+import '../../workspace/providers/workspace_providers.dart';
+import '../domain/stock_config.dart';
+import '../domain/stock_operations.dart';
+import '../domain/stock_sites.dart';
+import '../providers/stock_providers.dart';
+import 'stock_config_text.dart';
+import 'stock_day.dart';
+import 'stock_move_sheets.dart';
+
+class StockTransfersScreen extends ConsumerWidget {
+  const StockTransfersScreen({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final workspaceId = ref.watch(currentWorkspaceProvider).value?.id;
+    final mayManage = ref.watch(myPermissionsProvider).contains(WorkspacePermission.manageStock);
+    final takeOutOn = ref.watch(enabledFeaturesSyncProvider).contains(WorkspaceFeature.stockTakeOut);
+    return Scaffold(
+      appBar: AppBar(
+        title: PageTitle(l10n.stockTransfersTitle),
+        actions: [
+          if (workspaceId != null)
+            IconButton(
+              key: const ValueKey('stock-transfers-reload'),
+              icon: const Icon(Icons.refresh),
+              tooltip: l10n.overviewLayoutReload,
+              onPressed: () => ref.invalidate(openTransfersProvider(workspaceId)),
+            ),
+        ],
+      ),
+      body: workspaceId == null
+          ? const LoadingView()
+          : ListView(
+              padding: const EdgeInsets.all(AppSpacing.md),
+              children: [
+                if (mayManage)
+                  Wrap(
+                    spacing: AppSpacing.sm,
+                    runSpacing: AppSpacing.sm,
+                    children: [
+                      FilledButton.icon(
+                        key: const ValueKey('stock-move-open'),
+                        icon: const Icon(Icons.swap_horiz),
+                        label: Text(l10n.stockMoveOpen),
+                        onPressed: () => _move(context, ref, workspaceId, takeOut: false),
+                      ),
+                      if (takeOutOn)
+                        OutlinedButton.icon(
+                          key: const ValueKey('stock-takeout-open'),
+                          icon: const Icon(Icons.outbox_outlined),
+                          label: Text(l10n.stockTakeOutOpen),
+                          onPressed: () => _move(context, ref, workspaceId, takeOut: true),
+                        ),
+                    ],
+                  ),
+                const SizedBox(height: AppSpacing.md),
+                Text(l10n.stockTransfersOnTheWay, style: Theme.of(context).textTheme.titleMedium),
+                const SizedBox(height: AppSpacing.sm),
+                _OnTheWay(workspaceId: workspaceId, mayManage: mayManage),
+              ],
+            ),
+    );
+  }
+
+  Future<void> _move(BuildContext context, WidgetRef ref, String workspaceId, {required bool takeOut}) async {
+    try {
+      final items = await ref.read(stockItemsProvider(workspaceId).future);
+      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+      if (!context.mounted) return;
+      final done = await showStockMoveSheet(
+        context,
+        ref.read(stockOperationsProvider),
+        workspaceId: workspaceId,
+        items: items,
+        places: places,
+        takeOut: takeOut,
+      );
+      if (done) ref.invalidate(openTransfersProvider(workspaceId));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the move sheet could not read the stock: $e', stackTrace: st);
+      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.stockReadFailed)));
+    }
+  }
+}
+
+class _OnTheWay extends ConsumerWidget {
+  const _OnTheWay({required this.workspaceId, required this.mayManage});
+
+  final String workspaceId;
+  final bool mayManage;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final transfers = ref.watch(openTransfersProvider(workspaceId));
+    return transfers.when(
+      loading: () => const LoadingView(),
+      error: (e, st) => Column(
+        key: const ValueKey('stock-transfers-failed'),
+        children: [
+          Text(l10n.stockReadFailed),
+          TextButton(
+            key: const ValueKey('stock-transfers-retry'),
+            onPressed: () => ref.invalidate(openTransfersProvider(workspaceId)),
+            child: Text(l10n.identityConnectRetry),
+          ),
+        ],
+      ),
+      data: (list) => list.isEmpty
+          ? Padding(
+              key: const ValueKey('stock-transfers-empty'),
+              padding: const EdgeInsets.all(AppSpacing.md),
+              child: Text(l10n.stockTransfersEmpty),
+            )
+          : Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [for (final t in list) _TransferCard(transfer: t, workspaceId: workspaceId, mayManage: mayManage)],
+            ),
+    );
+  }
+}
+
+class _TransferCard extends ConsumerWidget {
+  const _TransferCard({required this.transfer, required this.workspaceId, required this.mayManage});
+
+  final StockTransfer transfer;
+  final String workspaceId;
+  final bool mayManage;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final l10n = context.l10n;
+    final day = MaterialLocalizations.of(context).formatCompactDate(stockDayOf(ref, transfer.loadedAt));
+    return Card(
+      key: ValueKey('stock-transfer-${transfer.id}'),
+      child: Padding(
+        padding: const EdgeInsets.all(AppSpacing.md),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    l10n.stockTransferRoute(transfer.fromCode, transfer.toCode),
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                ),
+                Chip(
+                  key: ValueKey('stock-transfer-status-${transfer.id}'),
+                  label: Text(
+                    transfer.status == 'partly_received' ? l10n.stockTransferStatusPartly : l10n.stockTransferStatusLoaded,
+                  ),
+                ),
+              ],
+            ),
+            Text(l10n.stockTransferLoadedOn(day), style: Theme.of(context).textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.sm),
+            for (final line in transfer.lines)
+              if (!line.inTransit.isZero)
+                Text(
+                  key: ValueKey('stock-transfer-line-${line.id}'),
+                  l10n.stockTransferLine(line.itemName, line.inTransit.text, line.unit, line.loaded.text),
+                ),
+            if (mayManage)
+              Align(
+                alignment: Alignment.centerRight,
+                child: FilledButton(
+                  key: ValueKey('stock-transfer-receive-${transfer.id}'),
+                  onPressed: () => _receive(context, ref),
+                  child: Text(l10n.stockTransferReceive),
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<void> _receive(BuildContext context, WidgetRef ref) async {
+    try {
+      final places = await ref.read(stockPlaceConfigsProvider(workspaceId).future);
+      if (!context.mounted) return;
+      final done = await showStockReceiveSheet(
+        context,
+        ref.read(stockOperationsProvider),
+        workspaceId: workspaceId,
+        transfer: transfer,
+        places: places,
+      );
+      if (done) ref.invalidate(openTransfersProvider(workspaceId));
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'the receive sheet could not read the places: $e', stackTrace: st);
+      if (context.mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(context.l10n.stockReadFailed)));
+    }
+  }
+}
+
+/// Receives what arrived of [transfer], all or in part; true when done.
+Future<bool> showStockReceiveSheet(
+  BuildContext context,
+  StockOperations operations, {
+  required String workspaceId,
+  required StockTransfer transfer,
+  required List<StockPlaceConfig> places,
+}) {
+  final l10n = context.l10n;
+  final draft = _ReceiveDraft(transfer, places, Localizations.localeOf(context).toString());
+  return showAppFormSheet(
+    context,
+    AppFormSheet(
+      title: l10n.stockTransferReceiveTitle,
+      submitLabel: l10n.stockTransferReceive,
+      submitKey: const ValueKey('stock-receive-submit'),
+      onDispose: draft.fields.dispose,
+      validate: () => draft.validate(l10n),
+      onSubmit: () => draft.submit(l10n, operations, workspaceId),
+      builder: draft.build,
+    ),
+  );
+}
+
+class _ReceiveDraft {
+  _ReceiveDraft(this.transfer, List<StockPlaceConfig> places, this.locale)
+    : lines = [for (final l in transfer.lines) if (!l.inTransit.isZero) l],
+      targets = [
+        for (final p in stockRealPlaces(places))
+          if (stockSiteOf(p.id, places) == stockSiteOf(transfer.toLocationId, places)) p,
+      ],
+      to = transfer.toLocationId,
+      fields = FormControllers({
+        for (final l in transfer.lines)
+          if (!l.inTransit.isZero) l.id: l.inTransit.text,
+      });
+
+  final StockTransfer transfer;
+  final String locale;
+  final List<StockTransferLine> lines;
+  final List<StockPlaceConfig> targets;
+  final FormControllers fields;
+
+  /// One per form: a retry of the same receive answers once.
+  final String requestId = newRequestId();
+  String to;
+
+  ExactQuantity? _typed(StockTransferLine l) => exactQuantityFromInput(fields.text(l.id), locale: locale).value;
+
+  FieldErrors validate(AppLocalizations l10n) {
+    final errors = <String, String>{};
+    var any = false;
+    for (final l in lines) {
+      final q = _typed(l);
+      if (q == null || q < ExactQuantity.zero) {
+        errors[l.id] = stockReasonText(l10n, 'quantity_invalid');
+      } else if (q > l.inTransit) {
+        errors[l.id] = stockReasonText(l10n, 'receive_over');
+      } else if (q > ExactQuantity.zero) {
+        any = true;
+      }
+    }
+    if (!any && errors.isEmpty && lines.isNotEmpty) errors[lines.first.id] = stockReasonText(l10n, 'quantity_invalid');
+    return errors;
+  }
+
+  Future<String?> submit(AppLocalizations l10n, StockOperations operations, String workspaceId) async {
+    try {
+      await operations.receive(workspaceId, transfer.id, [
+        for (final l in lines)
+          if ((_typed(l) ?? ExactQuantity.zero) > ExactQuantity.zero)
+            (lineId: l.id, quantity: _typed(l)!.text, toLocationId: to),
+      ], requestId);
+      return null;
+    } on Object catch (e, st) {
+      TraceLogger.instance.warn('stock', 'goods were not received: $e', stackTrace: st);
+      return stockSaveProblem(l10n, e);
+    }
+  }
+
+  List<Widget> build(BuildContext context, VoidCallback refresh) {
+    final l10n = context.l10n;
+    return [
+      Text(l10n.stockTransferReceiveHint, style: Theme.of(context).textTheme.bodySmall),
+      const FormGap(),
+      DropdownButtonFormField<String>(
+        key: const ValueKey('stock-receive-to'),
+        initialValue: to,
+        isExpanded: true,
+        decoration: InputDecoration(labelText: l10n.stockTransferReceiveTo),
+        items: [
+          for (final p in targets)
+            DropdownMenuItem(value: p.id, child: Text(p.name.isEmpty ? p.code : '${p.code} · ${p.name}')),
+        ],
+        onChanged: (v) {
+          to = v ?? to;
+          refresh();
+        },
+      ),
+      for (final l in lines) ...[
+        const FormGap(),
+        AppTextField(
+          key: ValueKey('stock-receive-${l.id}'),
+          controller: fields[l.id],
+          fieldKey: l.id,
+          label: l10n.stockTransferReceiveQuantity(l.itemName, l.unit),
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+          inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9.,]'))],
+        ),
+      ],
+    ];
+  }
+}

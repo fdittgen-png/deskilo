@@ -66,7 +66,7 @@ final _anchor = DateTime.utc(2026, 11);
 
 /// The in-memory goods ledger of the reference business.
 class DemoStockLedger {
-  DemoStockLedger(this.workspaceId, this._config) {
+  DemoStockLedger(this.workspaceId, this._config, [DateTime Function()? now]) : _now = now ?? (() => _anchor) {
     for (final s in _stories.reversed) {
       _book(
         id: 'demo-stock-movement-${s.n}',
@@ -107,6 +107,7 @@ class DemoStockLedger {
   /// The business that keeps the shop stock.
   final String workspaceId;
   final DemoStockConfigCommands _config;
+  final DateTime Function() _now;
 
   /// What a retried request id answered.
   final Map<String, StockCommandResult> answers = {};
@@ -120,6 +121,9 @@ class DemoStockLedger {
   int _next = 100;
 
   bool mine(String id) => id == workspaceId;
+
+  /// The Demo's day (its own clock, read once per use).
+  DateTime get today => _now();
 
   /// A fresh movement number; the first ones belong to the story.
   int nextNumber() => _next++;
@@ -215,7 +219,7 @@ class DemoStockLedger {
       from: from,
       to: to,
       reason: reason,
-      at: at ?? _anchor,
+      at: at ?? _now(),
       lotId: lotId,
       lotCode: lotCode,
       variantId: variantId,
