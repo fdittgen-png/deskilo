@@ -1449,6 +1449,7 @@ const Set<String> uiKeys = {
   'feature-opt-in-also-on',
   'feature-opt-in-cancel',
   'feature-opt-in-confirm',
+  'feature-switch-list',
   'feature-tile-less',
   'features-feature-capability-list',
   'features-features-view-switch',

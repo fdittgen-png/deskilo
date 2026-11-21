@@ -27,6 +27,7 @@ class FeatureSwitchList extends ConsumerWidget {
     // choice must survive its parent being off.
     final raw = resolveEnabledFeatures(workspace.featureFlags);
     return FeatureCapabilityList(
+      key: const ValueKey('feature-switch-list'),
       shrinkWrap: true,
       roomyTargets: true,
       showHint: false,
