@@ -620,6 +620,21 @@ Once the customer has answered, choose **Record the answer** on a sent quote: yo
 
 On a sent quote, **Share the PDF** opens the offer as a document: a quote, with its own reference and how long it is valid, the customer, the lines and what they come to as they were frozen when it was sent (the net, the VAT per rate and the total). It is never an invoice and carries no invoice number. You can view it, save it or share it.
 
+<!-- anchor: user.money.stock -->
+### Stock
+
+**Audience:** Administrator · Owner
+
+Open **Stock** in the menu, directly below **Purchases & suppliers**. Everything about items and stock is reached there, and only there is it set up.
+
+- **Stock** shows what is on hand by item, variant, lot and place, with the exact quantity.
+- **Movements** is the log of every movement; open one to see what moved, as stored and as entered.
+- **Items** is the item registry: each item's stock settings, its variants and its supplier articles.
+- **Places** holds the sites, zones, shelves and bins with their addresses.
+- **Stock settings** keeps every stock parameter on one page: the stock features with their switches, and the stock rules. A stock setting you find elsewhere links here.
+
+An entry appears only when its feature is on and your role allows its page: someone who may only look sees the pages, not the settings. Purchases keeps what is bought; Sales keeps what is sold.
+
 <!-- anchor: user.money.amounts -->
 ### How amounts are shown
 

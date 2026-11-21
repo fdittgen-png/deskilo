@@ -279,7 +279,11 @@ const List<RouteRule> routeRules = [
   RouteRule('/money/suppliers', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/money/suppliers/:id', RouteClass.workspace, namesRole: true, place: 'drawer-suppliers', measure: PageMeasure.work), // #3615
   RouteRule('/stock', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
-  RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock', measure: PageMeasure.work), // #4161
+  RouteRule('/stock/movements', RouteClass.workspace, namesRole: true, place: 'drawer-stock-movements', measure: PageMeasure.work), // #4299
+  RouteRule('/stock/movements/:id', RouteClass.workspace, namesRole: true, place: 'drawer-stock-movements', measure: PageMeasure.work), // #4161
+  RouteRule('/stock/items', RouteClass.workspace, namesRole: true, place: 'drawer-stock-items', measure: PageMeasure.work), // #4299
+  RouteRule('/stock/places', RouteClass.workspace, namesRole: true, place: 'drawer-stock-places', measure: PageMeasure.work), // #4299
+  RouteRule('/stock/settings', RouteClass.workspace, namesRole: true, place: 'drawer-stock-settings', measure: PageMeasure.form), // #4299
   RouteRule('/money/quotes', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166
   RouteRule('/money/quotes/:id/edit', RouteClass.workspace, namesRole: true, place: 'drawer-quotes', measure: PageMeasure.reading), // #4166

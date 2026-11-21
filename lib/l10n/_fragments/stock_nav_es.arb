@@ -1,0 +1,35 @@
+{
+  "@@locale": "es",
+  "stockItemsTitle": "Artículos",
+  "stockItemsIntro": "Los artículos que la empresa mantiene y vende: los ajustes, las variantes y los artículos de proveedor de cada uno.",
+  "stockItemsEmpty": "Todavía no hay artículos. Un artículo aparece cuando un servicio o un artículo de proveedor se mantiene en existencias.",
+  "stockSettingsTitle": "Ajustes de existencias",
+  "stockSettingsFeatures": "Funciones de existencias",
+  "stockSettingsValues": "Reglas de existencias",
+  "stockSettingsElsewhere": "Los ajustes de existencias se mantienen en la página Ajustes de existencias.",
+  "stockSettingsOpen": "Abrir los ajustes de existencias",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  }
+}

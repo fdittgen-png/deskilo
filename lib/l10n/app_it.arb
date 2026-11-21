@@ -20491,6 +20491,18 @@
   "stockEmpty": "Non c’è ancora nulla in magazzino.",
   "stockEmptyFiltered": "Nulla corrisponde a questi filtri.",
   "stockEnteredLabel": "Inserito",
+  "stockItemsEmpty": "Nessun articolo per ora. Un articolo compare quando un servizio o un articolo del fornitore è tenuto in magazzino.",
+  "@stockItemsEmpty": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsIntro": "Gli articoli che l'azienda tiene e vende: le impostazioni, le varianti e gli articoli del fornitore di ciascuno.",
+  "@stockItemsIntro": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockItemsTitle": "Articoli",
+  "@stockItemsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
   "stockLotLabel": "Lotto {code}",
   "stockLotTitle": "Lotto",
   "stockMappingAdd": "Aggiungere un articolo del fornitore",
@@ -20763,6 +20775,26 @@
   "stockReasonVariantUnknown": "Questa variante non appartiene a questo articolo.",
   "@stockReasonVariantUnknown": {
     "description": "#4169 the stock editors: a text under a field the server refused"
+  },
+  "stockSettingsElsewhere": "Le impostazioni del magazzino si tengono nella pagina Impostazioni del magazzino.",
+  "@stockSettingsElsewhere": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsFeatures": "Funzioni del magazzino",
+  "@stockSettingsFeatures": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsOpen": "Apri le impostazioni del magazzino",
+  "@stockSettingsOpen": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsTitle": "Impostazioni del magazzino",
+  "@stockSettingsTitle": {
+    "description": "the stock pages and group (#4299)"
+  },
+  "stockSettingsValues": "Regole del magazzino",
+  "@stockSettingsValues": {
+    "description": "the stock pages and group (#4299)"
   },
   "stockStoredLabel": "Registrato",
   "stockTabMovements": "Movimenti",

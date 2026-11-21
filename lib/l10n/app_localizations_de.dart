@@ -35042,6 +35042,17 @@ class AppLocalizationsDe extends AppLocalizations {
   String get stockEnteredLabel => 'Erfasst';
 
   @override
+  String get stockItemsEmpty =>
+      'Noch keine Artikel. Ein Artikel entsteht, wenn eine Leistung oder ein Lieferantenartikel im Lager geführt wird.';
+
+  @override
+  String get stockItemsIntro =>
+      'Die Artikel, die das Unternehmen führt und verkauft: Einstellungen, Varianten und Lieferantenartikel je Artikel.';
+
+  @override
+  String get stockItemsTitle => 'Artikel';
+
+  @override
   String stockLotLabel(String code) {
     return 'Charge $code';
   }
@@ -35298,6 +35309,22 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get stockReasonVariantUnknown =>
       'Diese Variante gehört nicht zu diesem Artikel.';
+
+  @override
+  String get stockSettingsElsewhere =>
+      'Die Lagereinstellungen werden auf der Seite Lagereinstellungen geführt.';
+
+  @override
+  String get stockSettingsFeatures => 'Lagerfunktionen';
+
+  @override
+  String get stockSettingsOpen => 'Lagereinstellungen öffnen';
+
+  @override
+  String get stockSettingsTitle => 'Lagereinstellungen';
+
+  @override
+  String get stockSettingsValues => 'Lagerregeln';
 
   @override
   String get stockStoredLabel => 'Gespeichert';

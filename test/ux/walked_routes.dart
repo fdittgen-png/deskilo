@@ -131,6 +131,11 @@ const List<DeskWalkPage> deskWalkPages = [
   ('/money/customers', PageKind.document, 'money', 'customers'),
   // #4161 — the stock records, and one movement at its address.
   ('/stock', PageKind.document, 'stock', 'stock'),
+  // #4299 — the pages of the Stock group.
+  ('/stock/movements', PageKind.document, 'stock', 'stock-movements'),
+  ('/stock/items', PageKind.document, 'stock', 'stock-items'),
+  ('/stock/places', PageKind.document, 'stock', 'stock-places'),
+  ('/stock/settings', PageKind.document, 'stock', 'stock-settings'),
   (
     '/stock/movements/demo-stock-movement-1',
     PageKind.document,

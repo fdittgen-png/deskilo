@@ -55664,6 +55664,24 @@ abstract class AppLocalizations {
   /// **'Entered'**
   String get stockEnteredLabel;
 
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'No items yet. Items are added when a service or a supplier article is kept in stock.'**
+  String get stockItemsEmpty;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'The items the business keeps and sells: each one\'s settings, variants and supplier articles.'**
+  String get stockItemsIntro;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get stockItemsTitle;
+
   /// #4161 a lot, by its code
   ///
   /// In en, this message translates to:
@@ -56101,6 +56119,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'This variant is not one of this item.'**
   String get stockReasonVariantUnknown;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock settings are kept on the Stock settings page.'**
+  String get stockSettingsElsewhere;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock features'**
+  String get stockSettingsFeatures;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Open stock settings'**
+  String get stockSettingsOpen;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock settings'**
+  String get stockSettingsTitle;
+
+  /// the stock pages and group (#4299)
+  ///
+  /// In en, this message translates to:
+  /// **'Stock rules'**
+  String get stockSettingsValues;
 
   /// #4161 the quantity as stored, in the inventory unit
   ///

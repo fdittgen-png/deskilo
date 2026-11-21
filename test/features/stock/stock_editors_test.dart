@@ -10,7 +10,8 @@ import 'package:deskilo/features/stock/domain/stock_config_commands.dart';
 import 'package:deskilo/features/stock/domain/stock_page.dart';
 import 'package:deskilo/features/stock/domain/stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
-import 'package:deskilo/features/stock/presentation/stock_screen.dart';
+import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
+import 'package:deskilo/features/stock/presentation/stock_places_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_feature.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
@@ -94,10 +95,17 @@ class _Config implements StockConfigCommands {
   Future<StockSaved> saveMapping(String workspaceId, {required Map<String, Object?> mapping, required String requestId, String? mappingId, int? expectedRevision}) => throw UnimplementedError();
 }
 
-Future<void> _open(WidgetTester tester, _Config config, Size size, {required Set<WorkspacePermission> held, bool lots = false}) async {
+Future<void> _open(
+  WidgetTester tester,
+  _Config config,
+  Size size, {
+  required Set<WorkspacePermission> held,
+  bool lots = false,
+  Widget screen = const StockItemsScreen(),
+}) async {
   await pumpApp(
     tester,
-    const StockScreen(),
+    screen,
     size: size,
     overrides: [
       ...standardTestOverrides(),
@@ -118,13 +126,6 @@ Future<void> _settle(WidgetTester tester) async {
   }
 }
 
-Future<void> _chooseWine(WidgetTester tester) async {
-  await tester.tap(find.byKey(const ValueKey('stock-filter-item')));
-  await _settle(tester);
-  await tester.tap(find.text('Wine').last);
-  await _settle(tester);
-}
-
 const _manage = {WorkspacePermission.viewStock, WorkspacePermission.manageStock};
 
 void main() {
@@ -132,16 +133,13 @@ void main() {
     group('on a $name', () {
       testWidgets('a person who may only look sees no editor', (tester) async {
         await _open(tester, _Config(), size, held: {WorkspacePermission.viewStock});
-        await _chooseWine(tester);
-        expect(find.byKey(const ValueKey('stock-edit-item')), findsNothing);
-        expect(find.byKey(const ValueKey('stock-places')), findsNothing);
+        expect(find.byKey(const ValueKey('stock-edit-item-i-Wine')), findsNothing);
       });
 
       testWidgets('a mistake is shown under its field and nothing is sent; the fixed save sends the complete lists at the revision read', (tester) async {
         final config = _Config();
         await _open(tester, config, size, held: _manage);
-        await _chooseWine(tester);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-item')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
         await _settle(tester);
         await tester.enterText(find.byKey(const ValueKey('stock-unit-0-den')), '0');
         await tester.tap(find.byKey(const ValueKey('stock-item-save')));
@@ -161,8 +159,7 @@ void main() {
       testWidgets('a stale revision and a refusal are said in the sheet, which stays open', (tester) async {
         final config = _Config()..failWith = const StockConfigStale();
         await _open(tester, config, size, held: _manage);
-        await _chooseWine(tester);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-item')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
         await _settle(tester);
         await tester.tap(find.byKey(const ValueKey('stock-item-save')));
         await _settle(tester);
@@ -177,8 +174,7 @@ void main() {
       testWidgets('a package unit and a code are added to the lists the save sends', (tester) async {
         final config = _Config();
         await _open(tester, config, size, held: _manage);
-        await _chooseWine(tester);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-item')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
         await _settle(tester);
         await tester.ensureVisible(find.byKey(const ValueKey('stock-item-add-unit')));
         await tester.tap(find.byKey(const ValueKey('stock-item-add-unit')));
@@ -195,8 +191,7 @@ void main() {
       testWidgets('lots and expiry are offered only when asked for, and saved with the shelf life', (tester) async {
         final off = _Config();
         await _open(tester, off, size, held: _manage);
-        await _chooseWine(tester);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-item')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
         await _settle(tester);
         expect(find.byKey(const ValueKey('stock-item-tracking')), findsNothing, reason: 'stockLots off: no tracking is offered');
       });
@@ -204,8 +199,7 @@ void main() {
       testWidgets('with stockLots on the tracking and its shelf life are sent', (tester) async {
         final config = _Config();
         await _open(tester, config, size, held: _manage, lots: true);
-        await _chooseWine(tester);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-item')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-item-i-Wine')));
         await _settle(tester);
         await tester.ensureVisible(find.byKey(const ValueKey('stock-item-tracking')));
         await tester.tap(find.text(_en.stockEditTrackingExpiry));
@@ -220,8 +214,7 @@ void main() {
 
       testWidgets('the places are listed, the system ones not editable, and a new place is saved with its kind and code', (tester) async {
         final config = _Config();
-        await _open(tester, config, size, held: _manage);
-        await tester.tap(find.byKey(const ValueKey('stock-places')));
+        await _open(tester, config, size, held: _manage, screen: const StockPlacesScreen());
         await _settle(tester);
         expect(find.text('MAIN · Main'), findsOneWidget);
         expect(find.text(_en.stockPlaceVirtual), findsOneWidget);
@@ -236,8 +229,7 @@ void main() {
 
       testWidgets('a place refused for its code says why and keeps the sheet', (tester) async {
         final config = _Config()..failWith = const StockConfigRefused('code', 'code_duplicate');
-        await _open(tester, config, size, held: _manage);
-        await tester.tap(find.byKey(const ValueKey('stock-places')));
+        await _open(tester, config, size, held: _manage, screen: const StockPlacesScreen());
         await _settle(tester);
         await tester.tap(find.byKey(const ValueKey('stock-place-p-MAIN')));
         await _settle(tester);

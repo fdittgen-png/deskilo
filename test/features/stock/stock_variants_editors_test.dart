@@ -10,7 +10,7 @@ import 'package:deskilo/core/demo/data/demo_stock_config_commands.dart';
 import 'package:deskilo/core/demo/data/demo_stock_queries.dart';
 import 'package:deskilo/features/stock/domain/stock_config.dart';
 import 'package:deskilo/features/stock/domain/stock_variants.dart';
-import 'package:deskilo/features/stock/presentation/stock_screen.dart';
+import 'package:deskilo/features/stock/presentation/stock_items_screen.dart';
 import 'package:deskilo/features/stock/providers/stock_providers.dart';
 import 'package:deskilo/features/workspace/domain/workspace_permission.dart';
 import 'package:deskilo/features/workspace/providers/workspace_providers.dart';
@@ -33,7 +33,7 @@ Future<void> _settle(WidgetTester tester) async {
 Future<void> _open(WidgetTester tester, DemoStockConfigCommands config, Size size) async {
   await pumpApp(
     tester,
-    const StockScreen(),
+    const StockItemsScreen(),
     size: size,
     overrides: [
       ...standardTestOverrides(),
@@ -43,11 +43,10 @@ Future<void> _open(WidgetTester tester, DemoStockConfigCommands config, Size siz
     ],
   );
   await _settle(tester);
-  await tester.tap(find.byKey(const ValueKey('stock-filter-item')));
-  await _settle(tester);
-  await tester.tap(find.text('T-shirt').last);
-  await _settle(tester);
 }
+
+/// The Demo's T-shirt: the item whose variants and supplier articles are edited.
+const _itemId = 'demo-item-shirt';
 
 Future<void> _choose(WidgetTester tester, String key, String text) async {
   await tester.ensureVisible(find.byKey(ValueKey(key)));
@@ -63,7 +62,7 @@ void main() {
       testWidgets('a variant is one value per dimension, saved and read back with its label; the same combination twice is said under it and not sent', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-variants')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-variants-$_itemId')));
         await _settle(tester);
         await tester.tap(find.byKey(const ValueKey('stock-variants-add')));
         await _settle(tester);
@@ -88,7 +87,7 @@ void main() {
       testWidgets('a dimension gains a value, and the variant editor offers it', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-variants')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-variants-$_itemId')));
         await _settle(tester);
         await tester.ensureVisible(find.byKey(const ValueKey('stock-dimensions-manage')));
         await tester.tap(find.byKey(const ValueKey('stock-dimensions-manage')));
@@ -110,7 +109,7 @@ void main() {
       testWidgets('a supplier article is mapped to the item; the same article twice is refused under its field', (tester) async {
         final config = DemoStockConfigCommands('ws-1');
         await _open(tester, config, size);
-        await tester.tap(find.byKey(const ValueKey('stock-edit-mappings')));
+        await tester.tap(find.byKey(const ValueKey('stock-edit-mappings-$_itemId')));
         await _settle(tester);
         expect(find.byKey(const ValueKey('stock-mappings-none')), findsOneWidget);
         for (final attempt in [1, 2]) {
